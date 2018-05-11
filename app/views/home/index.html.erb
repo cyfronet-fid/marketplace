@@ -1,9 +1,10 @@
 <h1>Hello, World</h1>
 <hr>
-<div data-controller="clipboard members dashboard">
-  PIN
-  <input type="text" data-target="clipboard.source" value="1234" readonly>
-  <button data-action="clipboard#copy" class="clipboard-button">
-    Copy to Clipboard
-  </button>
-</div>
+
+<form data-controller="clipboard members dashboard" class="form-inline">
+  <div class="form-group mx-sm-3 mb-2">
+    <label for="pin" class="sr-only">PIN</label>
+    <input type="text" data-target="clipboard.source" class="form-control" id="pin" placeholder="PIN" value="12345" readonly>
+  </div>
+  <button data-action="clipboard#copy" type="submit" class="btn btn-success mb-2">Copy to Clipboard</button>
+</form>
