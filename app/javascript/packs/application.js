@@ -9,6 +9,9 @@
 import 'bootstrap'
 import 'stylesheets/application'
 
+import Turbolinks from 'turbolinks'
+Turbolinks.start()
+
 import fontawesome from '@fortawesome/fontawesome'
 import solid from '@fortawesome/fontawesome-free-solid'
 fontawesome.library.add(solid.faUser)
