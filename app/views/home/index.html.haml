@@ -1,0 +1,13 @@
+%h1 Hello, World
+%hr/
+
+Fontawesome test
+%i.fas.fa-user
+
+%hr/
+Stimulus test
+%form.form-inline{"data-controller" => "clipboard members dashboard"}
+  .form-group.mx-sm-3.mb-2
+    %label.sr-only{for: "pin"} PIN
+    %input#pin.form-control{"data-target" => "clipboard.source", placeholder: "PIN", readonly: "readonly", type: "text", value: "12345"}/
+  %button.btn.btn-success.mb-2{"data-action" => "clipboard#copy", type: "submit"} Copy to Clipboard
