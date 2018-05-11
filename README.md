@@ -1,24 +1,32 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Market place is...
 
-Things you may want to cover:
+## Development environment
 
-* Ruby version
+### Requirements
 
-* System dependencies
+We will need:
+  * ruby (specific version can be found in [.tool-versions](.tool-versions)).
+    Recommented way to manage ruby versions is to use [asdf](https://github.com/asdf-vm/asdf)
+    with [asdf-ruby](https://github.com/asdf-vm/asdf-ruby) plugin
+  * nodejs (specific version can be found in [.tool-versions](.tool-versions)).
+    Recommented way to manage nodejs versions is to use [asdf](https://github.com/asdf-vm/asdf)
+    with [asdf-nodejs](https://github.com/asdf-vm/asdf-nodejs) plugin.
+  * [postgresql](https://www.postgresql.org)
 
-* Configuration
+### Setup
 
-* Database creation
+  * First time run `/bin/setup`. It will install bundler, foreman,
+    dependencies and setup databases (development and test).
+  * After update run `/bin/update`. It will update dependencies, run db
+    migrations and restart currently started application.
 
-* Database initialization
+## Run
 
-* How to run the test suite
+To start web application in development mode (with auto refresh capability when
+css/js files change) use following command:
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+./bin/server
+```
