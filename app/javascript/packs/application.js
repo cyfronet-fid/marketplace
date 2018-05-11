@@ -9,6 +9,11 @@
 import 'bootstrap'
 import 'stylesheets/application'
 
+import fontawesome from '@fortawesome/fontawesome'
+import solid from '@fortawesome/fontawesome-free-solid'
+fontawesome.library.add(solid.faUser)
+
+
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
 

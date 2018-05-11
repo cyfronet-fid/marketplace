@@ -9,6 +9,8 @@
     "stimulus": "^1.0.1"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome": "^1.1.8",
+    "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "expose-loader": "^0.7.5",
     "webpack-dev-server": "2.11.2"
   }
