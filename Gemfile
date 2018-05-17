@@ -24,6 +24,12 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "shoulda-matchers"
   gem "capybara"
+
+  gem "pry"
+  gem "pry-byebug"
+  gem "pry-rails"
+  gem "pry-doc"
+  gem "pry-nav"
 end
 
 group :development do
