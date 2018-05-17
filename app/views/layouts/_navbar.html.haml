@@ -10,9 +10,9 @@
 
   #navbarSupportedContent.collapse.navbar-collapse
     %ul.navbar-nav.ml-auto
-      %li.nav-item.active
+      = nav_link controller: :home do
         = link_to "Getting Started", root_path, class: 'nav-link'
-      %li.nav-item
+      = nav_link controller: :services do
         = link_to "Services", services_path, class: 'nav-link'
       %li.nav-item
         = link_to "Data", root_path, class: 'nav-link'
