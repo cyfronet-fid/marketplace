@@ -2,6 +2,10 @@
 %html{lang: "en"}
   = render 'layouts/head'
   %body
-    .container-fluid
-      = render 'layouts/navbar'
-      = yield
+    = render 'layouts/navbar'
+    %main
+      .container-fluid
+        = yield
+    %footer.footer
+      .container
+        %span.text-muted 2018 EOSC Portal
