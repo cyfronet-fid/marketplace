@@ -29,3 +29,9 @@
 /node_modules
 yarn-debug.log*
 .yarn-integrity
+
+# Ignore OS speciffic files
+.DS_Store
+
+# Ignore IDE configuration
+.idea
