@@ -6,6 +6,8 @@
     %main
       .container-fluid
         = render "services/search"
+        -# - if current_controller?(:home)
+        = render "layouts/breadcrumb"
         = yield
     %footer.footer
       .container
