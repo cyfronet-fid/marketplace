@@ -1,14 +1,11 @@
 !!!
 %html{lang: "en"}
-  = render 'layouts/head'
+  = render "layouts/head"
   %body
-    = render 'layouts/navbar'
+    = render "layouts/navbar"
     %main
       .container-fluid
         = render "services/search"
-        -# - if current_controller?(:home)
         = render "layouts/breadcrumb"
         = yield
-    %footer.footer
-      .container
-        %span.text-muted 2018 EOSC Portal
+    = render "layouts/footer"
