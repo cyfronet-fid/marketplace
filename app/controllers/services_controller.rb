@@ -2,10 +2,20 @@
 
 class ServicesController < ApplicationController
   def index
-    @services = Service.paginate(page: params[:page])
+    @services = records.page(params[:page])
   end
 
   def show
     @service = Service.find(params[:id])
   end
+
+  private
+
+    def records
+      params[:q].blank? ? Service.all : Service.where(id: search_ids)
+    end
+
+    def search_ids
+      Service.search(params[:q]).records.ids
+    end
 end

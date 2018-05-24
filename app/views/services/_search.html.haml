@@ -1,8 +1,8 @@
 %p
-  %form.form-inline
+  = form_tag services_path, method: :get, role: 'search', class: 'form-inline' do
     .form-group.mb-2
       %label.sr-only{for: "search"} Search
-      %input.form-control#search{type: "text"}
+      = text_field_tag :q, params[:q], class: "form-control", placeholder: "Search..."
     %button.btn.btn-primary.mb-2
       %i.fas.fa-search
 %hr/

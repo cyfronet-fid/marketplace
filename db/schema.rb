@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 2018_05_17_072153) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["description"], name: "index_services_on_description"
+    t.index ["title"], name: "index_services_on_title"
   end
 
 end

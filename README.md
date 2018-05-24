@@ -32,6 +32,25 @@ rails dev:prime     # Remove existing services and generate 100 new services
 rails dev:prime[50] # Remove existing services and generate 50 new services
 ```
 
+## Elasticserach
+Elasticsearch is used for full text service search. On Debian/Ubuntu/Mint
+Elasticsearch installation is quite simple:
+```
+sudo apt-get install elasticsearch
+```
+
+If your disto does not include this package use [instructions from
+elasticsearch.org](https://www.elastic.co/guide/en/elastic-stack/current/index.html).
+
+Use `servie` command to control the server:
+```
+sudo service elasticsearch start
+```
+
+In order to inspect it you can use
+[ElasticHQ](http://www.elastichq.org/gettingstarted.html) (plugin option is
+quick and easy).
+
 ## Run
 
 To start web application in development mode (with auto refresh capability when
