@@ -30,6 +30,7 @@ services with random title and description (this generation is done using
 ```
 rails dev:prime     # Remove existing services and generate 100 new services
 rails dev:prime[50] # Remove existing services and generate 50 new services
+```
 
 ## Run
 
