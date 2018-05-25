@@ -3,3 +3,8 @@
 = render "research_areas"
 = render "news"
 = render "activities"
+
+- if current_user
+  = current_user.first_name
+  = current_user.last_name
+

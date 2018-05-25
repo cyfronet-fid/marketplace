@@ -11,21 +11,24 @@
   #navbarSupportedContent.collapse.navbar-collapse
     %ul.navbar-nav.ml-auto
       = nav_link controller: :home do
-        = link_to "Getting Started", root_path, class: 'nav-link'
+        = link_to "Getting Started", root_path, class: "nav-link"
       = nav_link controller: :services do
-        = link_to "Services", services_path, class: 'nav-link'
+        = link_to "Services", services_path, class: "nav-link"
       %li.nav-item
-        = link_to "Data", root_path, class: 'nav-link'
+        = link_to "Data", root_path, class: "nav-link"
       %li.nav-item
-        = link_to "Policies", root_path, class: 'nav-link'
+        = link_to "Policies", root_path, class: "nav-link"
       %li.nav-item
-        = link_to "Partners", root_path, class: 'nav-link'
+        = link_to "Partners", root_path, class: "nav-link"
       %li.nav-item
-        = link_to "Support", root_path, class: 'nav-link'
+        = link_to "Support", root_path, class: "nav-link"
       %li.nav-item
-        = link_to "Login", root_path, class: 'nav-link'
+        - if user_signed_in?
+          = link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link"
+        - else
+          = link_to "Login", user_checkin_omniauth_authorize_path, class: "nav-link"
       %li.nav-item
-        = link_to "Create account", root_path, class: 'nav-link'
+        = link_to "Create account", root_path, class: "nav-link"
       %li.nav-item
-        = link_to root_path, class: 'nav-link' do
+        = link_to root_path, class: "nav-link" do
           %i.fas.fa-shopping-cart
