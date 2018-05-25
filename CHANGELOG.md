@@ -9,6 +9,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Basic application structure and configuration (@mkasztelnik)
+- Service model, simple index and show pages integrated with elasticsearch (@mkasztelnik)
 
 ### Changed
 
