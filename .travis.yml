@@ -38,16 +38,20 @@ jobs:
     - stage: test
       script:
         - bundle exec rspec
+    - stage: test
       script:
         - bundle exec rubocop
+    - stage: test
       script:
         - gem install brakeman --no-ri --no-rdoc
         - brakeman --exit-on-warn --quiet -f plain
+
     - stage: development deploy
       install: skip
       script:
-        - echo "TODO: development deploy script"
+        - echo "development deploy script"
+        -
     - stage: production deploy
       install: skip
       script:
-        - echo "TODO: production deploy script"
+        - echo "production deploy script"
