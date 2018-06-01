@@ -29,9 +29,9 @@ install:
 stages:
   - name: test
   - name: development deploy
-    if: branch = master
+    if: branch = master AND type = push
   - name: production deploy
-    if: branch = production
+    if: branch = production AND type = push
 
 jobs:
   include:
