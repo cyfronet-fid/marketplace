@@ -26,12 +26,12 @@ install:
   - npm i -g yarn
   - yarn
 
-# stages:
-#   - test
-#   - development deploy
-#     if: branch = master
-#   - production deploy
-#     if: branch = production
+stages:
+  - name: test
+  - name: development deploy
+    if: branch = master
+  - name: production deploy
+    if: branch = production
 
 jobs:
   include:
