@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/cyfronet/marketplace.svg?branch=master)](https://travis-ci.org/cyfronet/marketplace)
+
 # README
 
 Market place is...
