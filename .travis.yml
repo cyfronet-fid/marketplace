@@ -26,5 +26,28 @@ install:
   - npm i -g yarn
   - yarn
 
-script:
-  - bundle exec rspec
+# stages:
+#   - test
+#   - development deploy
+#     if: branch = master
+#   - production deploy
+#     if: branch = production
+
+jobs:
+  include:
+    - stage: test
+      script:
+        - bundle exec rspec
+      script:
+        - bundle exec rubocop
+      script:
+        - gem install brakeman --no-ri --no-rdoc
+        - brakeman --exit-on-warn --quiet -f plain
+    # - stage: development deploy
+    #   install: skip
+    #   script:
+    #     - echo "TODO: development deploy script"
+    # - stage: production deploy
+    #   install: skip
+    #   script:
+    #     - echo "TODO: production deploy script"
