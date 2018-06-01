@@ -43,11 +43,11 @@ jobs:
       script:
         - gem install brakeman --no-ri --no-rdoc
         - brakeman --exit-on-warn --quiet -f plain
-    # - stage: development deploy
-    #   install: skip
-    #   script:
-    #     - echo "TODO: development deploy script"
-    # - stage: production deploy
-    #   install: skip
-    #   script:
-    #     - echo "TODO: production deploy script"
+    - stage: development deploy
+      install: skip
+      script:
+        - echo "TODO: development deploy script"
+    - stage: production deploy
+      install: skip
+      script:
+        - echo "TODO: production deploy script"
