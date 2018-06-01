@@ -16,8 +16,8 @@ ActiveRecord::Schema.define(version: 2018_05_25_115028) do
   enable_extension "plpgsql"
 
   create_table "services", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
+    t.string "title", null: false
+    t.text "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["description"], name: "index_services_on_description"

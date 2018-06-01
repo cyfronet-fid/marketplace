@@ -3,6 +3,11 @@
 require "rails_helper"
 
 RSpec.describe User do
+  it { should validate_presence_of(:first_name) }
+  it { should validate_presence_of(:last_name) }
+  it { should validate_presence_of(:email) }
+  it { should validate_presence_of(:uid) }
+
   context "#full_name" do
     it "is composed from first and last name" do
       user = build(:user, first_name: "John", last_name: "Rambo")
