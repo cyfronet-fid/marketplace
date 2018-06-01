@@ -55,3 +55,7 @@ jobs:
       install: skip
       script:
         - echo "production deploy script"
+
+notifications:
+    webhooks: https://www.travisbuddy.com/?insertMode=update
+    
