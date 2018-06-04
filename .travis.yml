@@ -1,0 +1,57 @@
+language: ruby
+
+rvm:
+  - 2.5.1
+
+cache:
+  bundler: true
+  directories:
+    - node_modules
+  yarn: true
+
+services:
+  - elasticsearch
+  - postgresql
+
+before_script:
+  # https://docs.travis-ci.com/user/database-setup/#ElasticSearch
+  - sleep 10
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - cp config/database.yml.travis config/database.yml
+
+install:
+  - bundle install
+  - nvm install node
+  - node -v
+  - npm i -g yarn
+  - yarn
+
+stages:
+  - name: test
+  - name: development deploy
+    if: branch = master AND type = push
+  - name: production deploy
+    if: branch = production AND type = push
+
+jobs:
+  include:
+    - stage: test
+      script:
+        - bundle exec rspec
+    - stage: test
+      script:
+        - bundle exec rubocop
+    - stage: test
+      script:
+        - gem install brakeman --no-ri --no-rdoc
+        - brakeman --exit-on-warn --quiet -f plain
+
+    - stage: development deploy
+      install: skip
+      script:
+        - echo "development deploy script"
+        -
+    - stage: production deploy
+      install: skip
+      script:
+        - echo "production deploy script"
