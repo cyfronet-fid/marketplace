@@ -61,3 +61,5 @@ css/js files change) use following command:
 ```
 ./bin/server
 ```
+
+By default application should start on [http://localhost:5000]()
