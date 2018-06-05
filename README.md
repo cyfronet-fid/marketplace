@@ -63,3 +63,10 @@ css/js files change) use following command:
 ```
 
 By default application should start on [http://localhost:5000]()
+
+## Sentry integration
+
+In production environment sentry integration can be turned on. To do so create
+dedicated env variable `SENTRY_DSN` with details how to connect to sentry
+server. Sentry environment can also be configured using `SENTRY_ENVIRONMENT`
+env variable (default set to `production`).
