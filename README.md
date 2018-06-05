@@ -25,7 +25,7 @@ We will need:
     migrations and restart currently started application.
 
 ### Generating DB entries for development
-To simplify development `dev:prive` rake task is created. Right now it generates
+To simplify development `dev:prime` rake task is created. Right now it generates
 services with random title and description (this generation is done using
 `faker` gem). In the future this task will be extended with additional data.
 
@@ -35,19 +35,25 @@ rails dev:prime[50] # Remove existing services and generate 50 new services
 ```
 
 ## Elasticserach
-Elasticsearch is used for full text service search. On Debian/Ubuntu/Mint
-Elasticsearch installation is quite simple:
+Elasticsearch is used for full text service search.
+
+On Debian/Ubuntu/Mint Elasticsearch installation is quite simple
+(but it doesn't work, see below):
 ```
 sudo apt-get install elasticsearch
 ```
 
+The version included in ubuntu 16.04 and 17.10 is buggy and outdated, so it should be
+installed manually through deb file as described below.
+
 If your disto does not include this package use [instructions from
 elasticsearch.org](https://www.elastic.co/guide/en/elastic-stack/current/index.html).
 
-Use `servie` command to control the server:
+Use `service` command to control the server:
 ```
 sudo service elasticsearch start
 ```
+or you can also use `systemctl`, it shouldn't matter which one you use.
 
 In order to inspect it you can use
 [ElasticHQ](http://www.elastichq.org/gettingstarted.html) (plugin option is
@@ -62,4 +68,4 @@ css/js files change) use following command:
 ./bin/server
 ```
 
-By default application should start on [http://localhost:5000]()
+By default application should start on [http://localhost:5000]().

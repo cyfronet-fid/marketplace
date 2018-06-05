@@ -6,5 +6,7 @@ Rails.application.routes.draw do
 
   resources :services, only: [:index, :show]
 
+  resource :profile, only: [:show]
+
   root "home#index"
 end
