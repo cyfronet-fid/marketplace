@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Deprecated
 
 ### Removed
+- Remove default devise session routes, only logout remain (@mkasztelnik)
 
 ### Fixed
 
