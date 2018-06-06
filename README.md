@@ -44,10 +44,17 @@ sudo apt-get install elasticsearch
 If your disto does not include this package use [instructions from
 elasticsearch.org](https://www.elastic.co/guide/en/elastic-stack/current/index.html).
 
-Use `servie` command to control the server:
+Use `service` command to control the server:
 ```
 sudo service elasticsearch start
 ```
+
+### Known issues
+
+On some versions of linux (ubuntu 17.10 confirmed) elastic search package available via
+`apt-get` is broken. If you run into situation where elastic search does not start, install 
+lastest debian package available [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html).
+Running elastic search via docker container is also a rather painless option.
 
 In order to inspect it you can use
 [ElasticHQ](http://www.elastichq.org/gettingstarted.html) (plugin option is
