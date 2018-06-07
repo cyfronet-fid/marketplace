@@ -4,4 +4,5 @@ require "turbolinks"
 
 class ApplicationController < ActionController::Base
   include Turbolinks::Redirection
+  include Sentryable
 end
