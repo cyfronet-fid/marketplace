@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Basic application structure and configuration (@mkasztelnik)
 - Service model, simple index and show pages integrated with elasticsearch (@mkasztelnik)
 - Sentry integration (@mkasztelnik)
+- Profile page with basic info and unauthenticated user redirection (@martaswiatkowska @jswk)
 
 ### Changed
 

@@ -22,13 +22,14 @@
         = link_to "Partners", root_path, class: "nav-link"
       %li.nav-item
         = link_to "Support", root_path, class: "nav-link"
+      - if user_signed_in?
+        %li.nav-item
+          = link_to "My profile", profile_path, class: "nav-link"
       %li.nav-item
         - if user_signed_in?
           = link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link"
         - else
-          = link_to "Login", user_checkin_omniauth_authorize_path, class: "nav-link"
-      %li.nav-item
-        = link_to "Create account", root_path, class: "nav-link"
+          = link_to "Login/Sign-up", user_checkin_omniauth_authorize_path, class: "nav-link"
       %li.nav-item
         = link_to root_path, class: "nav-link" do
           %i.fas.fa-shopping-cart
