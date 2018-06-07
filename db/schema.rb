@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_25_115028) do
+ActiveRecord::Schema.define(version: 2018_06_07_105149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "description"
+    t.string "ancestry"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ancestry"], name: "index_categories_on_ancestry"
+    t.index ["description"], name: "index_categories_on_description"
+    t.index ["name"], name: "index_categories_on_name"
+  end
 
   create_table "services", force: :cascade do |t|
     t.string "title", null: false
