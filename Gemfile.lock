@@ -45,6 +45,8 @@ GEM
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     aes_key_wrap (1.0.1)
+    ancestry (3.0.2)
+      activerecord (>= 3.2.0)
     arel (9.0.0)
     ast (2.4.0)
     attr_required (1.0.1)
@@ -338,6 +340,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ancestry
   bootsnap (>= 1.1.0)
   byebug
   capybara
