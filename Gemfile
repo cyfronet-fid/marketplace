@@ -26,6 +26,7 @@ gem "elasticsearch-rails"
 gem "devise"
 gem "omniauth"
 gem "omniauth_openid_connect"
+gem "pundit"
 
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
