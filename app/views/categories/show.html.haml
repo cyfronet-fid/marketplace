@@ -1,0 +1,9 @@
+- breadcrumb :category, @category
+
+.container-fluid
+  .row
+    .col-1
+      = render "subcategories", subcategories: @subcategories
+    .col-11
+      %h2= @category.name
+      = render "services/services", services: @services

@@ -22,7 +22,7 @@ crumb :service do |service|
 end
 
 crumb :category do |category|
-  link category.name, root_path
+  link category.name, category_path(category)
   if category.parent
     parent category.parent
   else

@@ -12,7 +12,7 @@
     %ul.navbar-nav.ml-auto
       = nav_link controller: :home do
         = link_to "Getting Started", root_path, class: "nav-link"
-      = nav_link controller: :services do
+      = nav_link controller: [:services, :categories] do
         = link_to "Services", services_path, class: "nav-link"
       %li.nav-item
         = link_to "Data", root_path, class: "nav-link"
