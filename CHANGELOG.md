@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service model, simple index and show pages integrated with elasticsearch (@mkasztelnik)
 - Sentry integration (@mkasztelnik)
 - Profile page with basic info and unauthenticated user redirection (@martaswiatkowska @jswk)
+- Service categories (@mkasztelnik)
 
 ### Changed
 
