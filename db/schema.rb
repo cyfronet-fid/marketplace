@@ -17,13 +17,21 @@ ActiveRecord::Schema.define(version: 2018_06_07_105149) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
-    t.string "description"
     t.string "ancestry"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ancestry"], name: "index_categories_on_ancestry"
-    t.index ["description"], name: "index_categories_on_description"
     t.index ["name"], name: "index_categories_on_name"
+  end
+
+  create_table "service_categories", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "category_id"
+    t.boolean "main", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_service_categories_on_category_id"
+    t.index ["service_id"], name: "index_service_categories_on_service_id"
   end
 
   create_table "services", force: :cascade do |t|

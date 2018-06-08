@@ -14,5 +14,18 @@ end
 
 crumb :service do |service|
   link service.title, service_path(service)
-  parent :services
+  if service.main_category
+    parent :category, service.main_category
+  else
+    parent :services
+  end
+end
+
+crumb :category do |category|
+  link category.name, root_path
+  if category.parent
+    parent category.parent
+  else
+    parent :services
+  end
 end
