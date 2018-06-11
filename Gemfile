@@ -49,6 +49,8 @@ group :development do
   gem "faker", require: false
 
   gem "rubocop-rails"
+  gem "rubocop", require: false
+  gem "overcommit"
 end
 
 group :test do
