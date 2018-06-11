@@ -258,19 +258,22 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  checkin_host = ENV["CHECKIN_HOST"] || "aai-dev.egi.eu"
+  root_url = ENV["ROOT_URL"] || "http://localhost:#{ENV['PORT'] || 3000}"
   config.omniauth :openid_connect,
                   name: :checkin,
                   scope: [:openid],
                   response_type: :code,
-                  issuer: "https://aai-dev.egi.eu/oidc/",
+                  issuer: "https://#{checkin_host}/oidc/",
                   discovery: true,
                   client_options: {
                     port: nil,
                     scheme: "https",
-                    host: "aai-dev.egi.eu",
+                    host: checkin_host,
                     identifier: Rails.application.credentials.checkin[:identifier],
                     secret: Rails.application.credentials.checkin[:secret],
-                    redirect_uri: "http://localhost:3000/users/auth/checkin/callback",
+                    redirect_uri: ENV["REDIRECT_URI"] ||
+                                  "#{root_url}/users/auth/checkin/callback",
                     authorization_endpoint: "/oidc/authorize",
                     token_endpoint: "/oidc/token",
                     userinfo_endpoint: "/oidc/userinfo",
