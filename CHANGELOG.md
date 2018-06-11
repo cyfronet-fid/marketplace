@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - Basic application structure and configuration (@mkasztelnik)
 - Service model, simple index and show pages integrated with elasticsearch (@mkasztelnik)
+- Initialization of elastic search indexes on application setup (@mszostak)
 - Sentry integration (@mkasztelnik)
 - Profile page with basic info and unauthenticated user redirection (@martaswiatkowska @jswk)
 - Pundit for user authorization (@mkasztelnik)
