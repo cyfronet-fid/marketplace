@@ -55,6 +55,10 @@ sudo service elasticsearch start
 ```
 or you can also use `systemctl`, it shouldn't matter which one you use.
 
+-In order to inspect it you can use
+ -[ElasticHQ](http://www.elastichq.org/gettingstarted.html) (plugin option is
+ -quick and easy).
+
 ## Run
 
 To start web application in development mode (with auto refresh capability when
@@ -88,7 +92,7 @@ ENV variables:
 
 ## Commits
 
-running `bin/server` automatically installs githooks for code linting. But if you're using
+running `bin/setuo` automatically installs githooks for code linting. But if you're using
 an IDE for repository management then you will probably experience problems with commiting
 code changes. This is related to the fact that some IDE's do not inherit user's `.bash_profile`
 or any other scripts which traditionally set environmental variables.

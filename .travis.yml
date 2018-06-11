@@ -40,6 +40,10 @@ jobs:
         - bundle exec rspec
     - stage: test
       script:
+        - bundle exec overcommit --install
+        - bundle exec overcommit --sign
+        # this will not run rubocop, because there are no modified files
+        - bundle exec overcommit -r
         - bundle exec rubocop
     - stage: test
       script:
