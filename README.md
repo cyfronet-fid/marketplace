@@ -68,7 +68,8 @@ css/js files change) use following command:
 ./bin/server
 ```
 
-By default application should start on [http://localhost:5000]().
+By default application should start on [http://localhost:5000](). You can change
+port by setting ENV variable `PORT`.
 
 ## Sentry integration
 
@@ -76,3 +77,14 @@ In production environment sentry integration can be turned on. To do so create
 dedicated env variable `SENTRY_DSN` with details how to connect to sentry
 server. Sentry environment can also be configured using `SENTRY_ENVIRONMENT`
 env variable (default set to `production`).
+
+## ENV variables
+
+We are using ENV variables to customize application. You can set the following
+ENV variables:
+
+  * `PORT` (Optional) - http server port (default 5000)
+  * `CHECKIN_HOST` (Optional) - checkin IDP host (default `aai-dev.egi.eu`)
+  * `ROOT_URL` (Optional) - root application URL (default
+    `http://localhost:#{ENV["PORT"] || 3000}` (when foreman is used to start
+    application 5000 ENV variable is set)
