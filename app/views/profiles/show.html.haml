@@ -1,0 +1,13 @@
+- breadcrumb :profile
+
+%h1= 'My user profile'
+
+%p
+  First name:
+  = current_user.first_name
+%p
+  Last name:
+  = current_user.last_name
+%p
+  Email:
+  = current_user.email
