@@ -25,7 +25,7 @@ We will need:
     migrations and restart currently started application.
 
 ### Generating DB entries for development
-To simplify development `dev:prive` rake task is created. Right now it generates
+To simplify development `dev:prime` rake task is created. Right now it generates
 services with random title and description (this generation is done using
 `faker` gem). In the future this task will be extended with additional data.
 
@@ -35,11 +35,16 @@ rails dev:prime[50] # Remove existing services and generate 50 new services
 ```
 
 ## Elasticserach
-Elasticsearch is used for full text service search. On Debian/Ubuntu/Mint
-Elasticsearch installation is quite simple:
+Elasticsearch is used for full text service search.
+
+On Debian/Ubuntu/Mint Elasticsearch installation is quite simple
+(but it doesn't always work, see below):
 ```
 sudo apt-get install elasticsearch
 ```
+
+The version included in ubuntu 16.04 and 17.10 is buggy and outdated, so it should be
+installed manually through deb file as described below.
 
 If your disto does not include this package use [instructions from
 elasticsearch.org](https://www.elastic.co/guide/en/elastic-stack/current/index.html).
@@ -48,6 +53,7 @@ Use `service` command to control the server:
 ```
 sudo service elasticsearch start
 ```
+or you can also use `systemctl`, it shouldn't matter which one you use.
 
 ### Known issues
 
@@ -69,4 +75,23 @@ css/js files change) use following command:
 ./bin/server
 ```
 
-By default application should start on [http://localhost:5000]()
+By default application should start on [http://localhost:5000](). You can change
+port by setting ENV variable `PORT`.
+
+## Sentry integration
+
+In production environment sentry integration can be turned on. To do so create
+dedicated env variable `SENTRY_DSN` with details how to connect to sentry
+server. Sentry environment can also be configured using `SENTRY_ENVIRONMENT`
+env variable (default set to `production`).
+
+## ENV variables
+
+We are using ENV variables to customize application. You can set the following
+ENV variables:
+
+  * `PORT` (Optional) - http server port (default 5000)
+  * `CHECKIN_HOST` (Optional) - checkin IDP host (default `aai-dev.egi.eu`)
+  * `ROOT_URL` (Optional) - root application URL (default
+    `http://localhost:#{ENV["PORT"] || 3000}` (when foreman is used to start
+    application 5000 ENV variable is set)
