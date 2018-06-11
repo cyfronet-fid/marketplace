@@ -16,8 +16,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Profile page with basic info and unauthenticated user redirection (@martaswiatkowska @jswk)
 - Pundit for user authorization (@mkasztelnik)
 - ENV variables to configure checkin URLs and root application URL (@mkasztelnik)
-- Custom git hooks for checking code syntax via RuboCop and commit message formatting
-- Custom git commit message template
+- Custom git hooks for checking code syntax via RuboCop and commit message formatting (@mszostak)
+- Custom git commit message template (@mszostak)
 
 ### Changed
 

@@ -21,7 +21,6 @@ chdir APP_ROOT do
   puts "== Installing git-hooks =="
   system! "overcommit --install"
   system! "overcommit --sign"
-  # system! "cp lib/githooks/* .git/hooks/"
 
   puts "== Installing dependencies =="
   system! "gem install bundler --conservative"
