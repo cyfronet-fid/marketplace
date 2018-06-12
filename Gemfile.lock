@@ -62,6 +62,8 @@ GEM
       rack (>= 1.6.0)
       rack-test (>= 0.6.3)
       xpath (~> 3.0)
+    childprocess (0.9.0)
+      ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.2)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
@@ -120,6 +122,7 @@ GEM
     httpclient (2.8.3)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
+    iniparse (1.4.4)
     json (2.1.0)
     json-jwt (1.9.4)
       activesupport
@@ -166,6 +169,9 @@ GEM
       validate_url
       webfinger (>= 1.0.1)
     orm_adapter (0.5.0)
+    overcommit (0.45.0)
+      childprocess (~> 0.6, >= 0.6.3)
+      iniparse (~> 1.4)
     parallel (1.12.1)
     parser (2.5.1.0)
       ast (~> 2.4.0)
@@ -353,6 +359,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   omniauth
   omniauth_openid_connect
+  overcommit
   pg (>= 0.18, < 2.0)
   pry
   pry-byebug
@@ -363,6 +370,7 @@ DEPENDENCIES
   pundit
   rails (~> 5.2.0)
   rspec-rails (~> 3.7)
+  rubocop
   rubocop-rails
   sass-rails (~> 5.0)
   sentry-raven
@@ -380,4 +388,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.1
+   1.16.2
