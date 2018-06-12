@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Profile page with basic info and unauthenticated user redirection (@martaswiatkowska @jswk)
 - Pundit for user authorization (@mkasztelnik)
 - ENV variables to configure checkin URLs and root application URL (@mkasztelnik)
+- Redirect user into `/` after checkin login failure (@mkasztelnik)
 
 ### Changed
 

@@ -262,7 +262,7 @@ Devise.setup do |config|
   root_url = ENV["ROOT_URL"] || "http://localhost:#{ENV['PORT'] || 3000}"
   config.omniauth :openid_connect,
                   name: :checkin,
-                  scope: [:openid],
+                  scope: [:openid, :profile, :email],
                   response_type: :code,
                   issuer: "https://#{checkin_host}/oidc/",
                   discovery: true,
