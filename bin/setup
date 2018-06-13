@@ -18,14 +18,14 @@ chdir APP_ROOT do
   puts "== Setting git messages =="
   system! "git config commit.template ./.gitmessage"
 
-  puts "== Installing git-hooks =="
-  system! "overcommit --install"
-  system! "overcommit --sign"
-
   puts "== Installing dependencies =="
   system! "gem install bundler --conservative"
   system! "gem install foreman --conservative"
   system("bundle check") || system!("bundle install")
+
+  puts "== Installing git-hooks =="
+  system! "overcommit --install"
+  system! "overcommit --sign"
 
   # Install JavaScript dependencies if using Yarn
   system("bin/yarn")
