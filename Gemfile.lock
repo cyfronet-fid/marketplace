@@ -370,7 +370,6 @@ DEPENDENCIES
   pundit
   rails (~> 5.2.0)
   rspec-rails (~> 3.7)
-  rubocop
   rubocop-rails
   sass-rails (~> 5.0)
   sentry-raven
