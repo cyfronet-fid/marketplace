@@ -1,0 +1,15 @@
+#h1 My ordered service
+
+%ul
+  %li
+    Service:
+    = @order.service.title
+  %li
+    For:
+    = @order.user.full_name
+  %li
+    Status:
+    = @order.status
+
+
+
