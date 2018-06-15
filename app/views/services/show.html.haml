@@ -2,3 +2,8 @@
 
 %h1= @service.title
 %p= @service.description
+
+- if policy(Order.new).create?
+  = form_for(Order.new) do |f|
+    = f.hidden_field :service_id, value: @service.id
+    %button{class: "btn btn-success", type: "submit"} Order
