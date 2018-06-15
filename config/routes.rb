@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   end
 
   resources :services, only: [:index, :show]
+  resources :categories, only: :show
 
   resource :profile, only: [:show]
 
