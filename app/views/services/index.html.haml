@@ -3,13 +3,11 @@
 .container-float
   .row
     .col-md-1
-      = render 'left_menu'
+      = render "categories/subcategories", subcategories: @subcategories
     .col-md-11
       %h2 Services
       %p
         Service description. When category is selected than title and this
         description shoud reflect it.
       %hr/
-      %dl
-        = render @services
-      = will_paginate @services
+      = render "services", services: @services

@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Custom git hooks for checking code syntax via RuboCop and commit message formatting (@mszostak)
 - Custom git commit message template (@mszostak)
 - Redirect user into `/` after checkin login failure (@mkasztelnik)
+- Service categories (@mkasztelnik)
 
 ### Changed
 
