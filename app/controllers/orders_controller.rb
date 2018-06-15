@@ -13,14 +13,21 @@ class OrdersController < ApplicationController
   end
 
   def create
-    order = Order.new(permitted_attributes(Order).merge(user: current_user))
-    authorize(order)
+    authorize(order_template)
+    order = Order::Create.new(order_template).call
 
-    if order.save
+    if order.persisted?
       redirect_to order_path(order)
     else
       redirect_to service_path(order.service),
                   alert: "Unable to create order"
     end
   end
+
+  private
+
+    def order_template
+      @new_order ||= Order.new(permitted_attributes(Order).
+                               merge(user: current_user))
+    end
 end

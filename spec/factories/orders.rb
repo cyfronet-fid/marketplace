@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :order do
+    status :created
     user
     service
   end

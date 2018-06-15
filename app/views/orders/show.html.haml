@@ -8,8 +8,9 @@
     For:
     = @order.user.full_name
   %li
-    Status:
+    Current status:
     = @order.status
 
+= render "order_changes", order_changes: @order.order_changes.to_a
 
 
