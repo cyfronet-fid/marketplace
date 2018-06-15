@@ -3,7 +3,7 @@
 class CreateOrders < ActiveRecord::Migration[5.2]
   def change
     create_table :orders do |t|
-      t.string :status, null: false, default: "new"
+      t.string :status, null: false
       t.belongs_to :service, null: false, index: true
       t.belongs_to :user, null: false, index: true
 

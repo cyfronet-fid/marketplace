@@ -9,10 +9,16 @@ RSpec.describe Order do
 
   it { should belong_to(:user) }
   it { should belong_to(:service) }
+  it { should have_many(:order_changes).dependent(:destroy) }
 
-  it "creates new order in new_order state" do
-    order = create(:order)
+  it "change order state" do
+    order = create(:order, status: :created)
+    order.new_change(:registered, "Order registered")
 
-    expect(order).to be_new_order
+    order_change = order.order_changes.first
+
+    expect(order).to be_registered
+    expect(order_change).to be_registered
+    expect(order_change.message).to eq("Order registered")
   end
 end

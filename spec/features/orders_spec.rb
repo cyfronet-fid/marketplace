@@ -28,7 +28,7 @@ RSpec.feature "Service order" do
 
       expect(order.service).to eq(service)
       expect(order.user).to eq(user)
-      expect(order.status).to eq("new_order")
+      expect(order).to be_created
     end
 
     scenario "I can see my ordered services" do
@@ -54,6 +54,26 @@ RSpec.feature "Service order" do
 
       expect(page).to_not have_text(other_user_order.service.title)
       expect(page).to have_text("not authorized")
+    end
+
+    scenario "I can see order change history" do
+      order = create(:order, user: user, service: service)
+
+      order.new_change(:created, "Order created")
+      order.new_change(:registered, "Order registered")
+      order.new_change(:ready, "Order ready")
+
+      visit order_path(order)
+
+      expect(page).to have_text("Current status: ready")
+
+      expect(page).to have_text("Order created")
+
+      expect(page).to have_text("Order changed from created to registered")
+      expect(page).to have_text("Order registered")
+
+      expect(page).to have_text("Order changed from registered to ready")
+      expect(page).to have_text("Order registered")
     end
   end
 
