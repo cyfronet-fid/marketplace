@@ -1,0 +1,16 @@
+#h1 My ordered service
+
+%ul
+  %li
+    Service:
+    = @order.service.title
+  %li
+    For:
+    = @order.user.full_name
+  %li
+    Current status:
+    = @order.status
+
+= render "order_changes", order_changes: @order.order_changes.to_a
+
+
