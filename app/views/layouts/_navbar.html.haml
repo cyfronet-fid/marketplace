@@ -23,7 +23,9 @@
       %li.nav-item
         = link_to "Support", root_path, class: "nav-link"
       - if user_signed_in?
-        %li.nav-item
+        = nav_link controller: :orders do
+          = link_to "My Services", orders_path, class: "nav-link"
+        = nav_link controller: :profiles do
           = link_to "My profile", profile_path, class: "nav-link"
       %li.nav-item
         - if user_signed_in?
