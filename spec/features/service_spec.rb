@@ -18,4 +18,12 @@ RSpec.feature "Service browsing" do
     expect(page.body).to have_content service.description
     expect(page.body).to have_content service.terms_of_use
   end
+
+  scenario "terms of use is rendered from markdown to html" do
+    service = create(:service, terms_of_use: "# Terms of use h1")
+
+    visit service_path(service)
+
+    expect(page.body).to match(/<h1>Terms of use h1/)
+  end
 end
