@@ -4,7 +4,7 @@
 %p= @service.description
 
 %h2 Terms of use
-= @service.terms_of_use
+= markdown(@service.terms_of_use)
 
 - if policy(Order.new).create?
   = form_for(Order.new) do |f|
