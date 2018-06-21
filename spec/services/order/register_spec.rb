@@ -16,4 +16,12 @@ RSpec.describe Order::Register do
 
     expect(order).to be_registered
   end
+
+  it "sent email to order owner" do
+    # order change email is sent only when there is more than 1 change
+    order.new_change(:created, "Order created")
+
+    expect { described_class.new(order).call }.
+      to change { ActionMailer::Base.deliveries.count }.by(1)
+  end
 end

@@ -22,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service categories (@mkasztelnik)
 - Service order possibility (@mkasztelnik)
 - Configure `database_cleaner` for rspec (@mkasztelnik)
+- Send email to order owner when order is created or updated (@mkasztelnik)
 
 ### Changed
 
