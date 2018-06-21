@@ -3,6 +3,9 @@
 %h1= @service.title
 %p= @service.description
 
+%h2 Terms of use
+= markdown(@service.terms_of_use)
+
 - if policy(Order.new).create?
   = form_for(Order.new) do |f|
     = f.hidden_field :service_id, value: @service.id

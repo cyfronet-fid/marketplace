@@ -29,6 +29,10 @@ gem "omniauth"
 gem "omniauth_openid_connect"
 gem "pundit"
 
+# Markdown
+gem "github-markup"
+gem "redcarpet"
+
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
 
