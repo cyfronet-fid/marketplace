@@ -23,6 +23,7 @@ if Rails.env.development?
       services_size.times do
         Service.create(title: Faker::Lorem.sentence,
                        description: Faker::Lorem.paragraph,
+                       terms_of_use: Faker::Lorem.paragraph,
                        categories: [all_categories.sample])
       end
 
