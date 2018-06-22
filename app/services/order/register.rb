@@ -7,7 +7,8 @@ class Order::Register
 
   def call
     register_in_jira! &&
-    update_status!
+    update_status! &&
+    notify!
   end
 
   private
@@ -22,5 +23,10 @@ class Order::Register
     def update_status!
       @order.new_change(:registered,
                         "Your order was registered in the order handling system")
+      true
+    end
+
+    def notify!
+      OrderMailer.changed(@order).deliver_later
     end
 end

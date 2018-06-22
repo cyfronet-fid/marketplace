@@ -10,6 +10,7 @@ class Order::Create
 
     if @order.save
       @order.new_change(:created, "Order created")
+      OrderMailer.created(@order).deliver_later
       Order::RegisterJob.perform_later(@order)
     end
 

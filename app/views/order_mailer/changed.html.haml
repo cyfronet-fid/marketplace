@@ -1,0 +1,7 @@
+%p Dear #{@user.full_name},
+%p
+  Your order #{link_to "##{@order.id}", order_url(@order)} was changed from
+  "#{@previous_status}" to "#{@current_status}". You can check
+  your order details using this #{link_to "link", order_url(@order)}.
+
+
