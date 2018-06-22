@@ -2,8 +2,8 @@
 
 .container-fluid
   .row
-    .col-1
+    .col-3
       = render "subcategories", subcategories: @subcategories
-    .col-11
+    .col-9
       %h2= @category.name
       = render "services/services", services: @services

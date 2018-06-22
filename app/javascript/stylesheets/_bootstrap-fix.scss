@@ -14,11 +14,18 @@ ul{
 }
 h5{
   font-weight: 600;
+  margin-bottom: 1.1rem;
   text-transform: uppercase;
   font-size: $font-size-xxs;
   &:after {
-    content: " ";
-    border-bottom: 1px solid $body-color;
+    content: "";
+    position: absolute;
+    top: 22px;
+    border-top: 1px solid $body-color;
+    width: 90%;
+    height: 12px;
+    left:15px;
+    z-index: 8;
     opacity: 0.2;
   }
 }
@@ -38,14 +45,7 @@ h5{
   }
 }
 
-#q{
-  &.form-control{
-    min-width: 703px;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
-  }
 
-}
 
 .btn-primary {
   color: $white;
@@ -60,4 +60,17 @@ h5{
       text-decoration: none;
     }
   }
+}
+
+.container-float{
+  margin-top: 30px;
+}
+.input-group > .form-control:not(:first-child), .input-group > .custom-select:not(:first-child) {
+  border-top-left-radius: .2rem;
+  border-bottom-left-radius: .2rem;
+}
+.input-group-text{
+  border-radius: .2rem;
+  background-color: transparent;
+
 }
