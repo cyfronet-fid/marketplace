@@ -19,8 +19,13 @@ class Order < ApplicationRecord
   validates :user, presence: true
   validates :status, presence: true
 
-  def new_change(new_status, message)
-    order_changes.create(status: new_status, message: message)
-    update_attributes(status: new_status)
+  def new_change(status: nil, message: nil, author: nil)
+    # don't create change when there is not status and message given
+    return unless status || message
+
+    status ||= self.status
+
+    order_changes.create(status: status, message: message, author: author)
+    update_attributes(status: status)
   end
 end

@@ -59,9 +59,9 @@ RSpec.feature "Service order" do
     scenario "I can see order change history" do
       order = create(:order, user: user, service: service)
 
-      order.new_change(:created, "Order created")
-      order.new_change(:registered, "Order registered")
-      order.new_change(:ready, "Order ready")
+      order.new_change(status: :created, message: "Order created")
+      order.new_change(status: :registered, message: "Order registered")
+      order.new_change(status: :ready, message: "Order ready")
 
       visit order_path(order)
 
