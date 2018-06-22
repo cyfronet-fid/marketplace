@@ -12,7 +12,7 @@ RSpec.describe Order do
   it { should have_many(:order_changes).dependent(:destroy) }
 
   describe "#new_change" do
-    it "it is not created when no message and status is given" do
+    it "change is not created when no message and status is given" do
       order = create(:order)
 
       expect { order.new_change }.to_not change { OrderChange.count }
@@ -48,6 +48,19 @@ RSpec.describe Order do
       order_change = order.order_changes.last
 
       expect(order_change.author).to eq(author)
+    end
+  end
+
+  describe "#active?" do
+    it "is true when processing is not done" do
+      expect(build(:order, status: :created)).to be_active
+      expect(build(:order, status: :registered)).to be_active
+      expect(build(:order, status: :in_progress)).to be_active
+    end
+
+    it "is false when processing is done" do
+      expect(build(:order, status: :ready)).to_not be_active
+      expect(build(:order, status: :rejected)).to_not be_active
     end
   end
 end

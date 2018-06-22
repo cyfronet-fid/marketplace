@@ -19,13 +19,22 @@ class Order < ApplicationRecord
   validates :user, presence: true
   validates :status, presence: true
 
+  def active?
+    !(ready? || rejected?)
+  end
+
   def new_change(status: nil, message: nil, author: nil)
     # don't create change when there is not status and message given
     return unless status || message
 
     status ||= self.status
 
-    order_changes.create(status: status, message: message, author: author)
-    update_attributes(status: status)
+    order_changes.create(status: status, message: message, author: author).tap do
+      update_attributes(status: status)
+    end
+  end
+
+  def to_s
+    "##{id}"
   end
 end
