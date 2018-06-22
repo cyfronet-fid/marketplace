@@ -8,6 +8,7 @@ class Service < ApplicationRecord
 
   has_many :service_categories, dependent: :destroy
   has_many :categories, through: :service_categories
+  has_many :orders
 
   validates :title, presence: true
   validates :description, presence: true
