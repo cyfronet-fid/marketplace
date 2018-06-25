@@ -1,13 +1,14 @@
-.row
-  .col-2
-  .col-8
-    %p
-      = form_tag services_path, method: :get, role: 'search', class: '' do
-        .input-group
-          %label.sr-only{for: "search"} Search
-          = text_field_tag :q, params[:q], class: "form-control", placeholder: "Search..."
+.container
+  .row
+    .col-2
+    .col-8
+      %p
+        = form_tag services_path, method: :get, role: 'search', class: '' do
+          .input-group
+            %label.sr-only{for: "search"} Search
+            = text_field_tag :q, params[:q], class: "form-control", placeholder: "What are you looking for?"
 
-          .input-group-append
-            %button.input-group-text
-              aaa
+            .input-group-append
+              %button.input-group-text
+                %i.fas.fa-search
 
