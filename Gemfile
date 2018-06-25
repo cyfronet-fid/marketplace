@@ -29,6 +29,10 @@ gem "omniauth"
 gem "omniauth_openid_connect"
 gem "pundit"
 
+# Markdown
+gem "github-markup"
+gem "redcarpet"
+
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
 
@@ -57,6 +61,7 @@ group :test do
   gem "factory_bot_rails"
   gem "shoulda-matchers"
   gem "capybara"
+  gem "database_cleaner"
 end
 
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]

@@ -20,6 +20,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Custom git commit message template (@mszostak)
 - Redirect user into `/` after checkin login failure (@mkasztelnik)
 - Service categories (@mkasztelnik)
+- Service order possibility (@mkasztelnik)
+- Configure `database_cleaner` for rspec (@mkasztelnik)
+- Service terms of use with markdown renderer (@mkasztelnik)
+- Send email to order owner when order is created or updated (@mkasztelnik)
 
 ### Changed
 
