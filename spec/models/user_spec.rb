@@ -8,6 +8,8 @@ RSpec.describe User do
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:uid) }
 
+  it { should have_many(:orders).dependent(:destroy) }
+
   context "#full_name" do
     it "is composed from first and last name" do
       user = build(:user, first_name: "John", last_name: "Rambo")

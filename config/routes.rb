@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :services, only: [:index, :show]
   resources :categories, only: :show
+  resources :orders, only: [:index, :show, :create]
 
   resource :profile, only: [:show]
 

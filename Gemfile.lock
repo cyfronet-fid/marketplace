@@ -69,6 +69,7 @@ GEM
     coderay (1.1.2)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
+    database_cleaner (1.7.0)
     devise (4.4.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -102,6 +103,7 @@ GEM
     faraday (0.15.2)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.23)
+    github-markup (2.0.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     gretel (3.0.9)
@@ -237,6 +239,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    redcarpet (3.4.0)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
@@ -352,11 +355,13 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   byebug
   capybara
+  database_cleaner
   devise
   elasticsearch-model
   elasticsearch-rails
   factory_bot_rails
   faker
+  github-markup
   gretel
   haml-rails
   listen (>= 3.0.5, < 3.2)
@@ -372,6 +377,7 @@ DEPENDENCIES
   puma (~> 3.11)
   pundit
   rails (~> 5.2.0)
+  redcarpet
   rspec-rails (~> 3.7)
   rubocop-rails
   sass-rails (~> 5.0)

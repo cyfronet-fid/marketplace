@@ -6,6 +6,10 @@ RSpec.describe Service do
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:description) }
 
+  it { should have_many(:service_categories).dependent(:destroy) }
+  it { should have_many(:categories) }
+  it { should have_many(:orders) }
+
   it "sets first category as default" do
     c1, c2 = create_list(:category, 2)
     service = create(:service, categories: [c1, c2])
