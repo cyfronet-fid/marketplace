@@ -1,12 +1,12 @@
 - breadcrumb :service, @service
+.container
+  %h1= @service.title
+  %p= @service.description
 
-%h1= @service.title
-%p= @service.description
+  %h2 Terms of use
+  = markdown(@service.terms_of_use)
 
-%h2 Terms of use
-= markdown(@service.terms_of_use)
-
-- if policy(Order.new).create?
-  = form_for(Order.new) do |f|
-    = f.hidden_field :service_id, value: @service.id
-    %button{class: "btn btn-success", type: "submit"} Order
+  - if policy(Order.new).create?
+    = form_for(Order.new) do |f|
+      = f.hidden_field :service_id, value: @service.id
+      %button{class: "btn btn-primary", type: "submit"} Order
