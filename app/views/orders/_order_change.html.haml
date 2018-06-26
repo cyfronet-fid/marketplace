@@ -1,3 +1,9 @@
-%dt= status_change(previous, current)
-%dd= current.message
+- if current.question?
+  .card.text-white.bg-info
+    .card-header= status_change(previous, current)
+    .card-body= current.message
+- else
+  .card
+    .card-header= status_change(previous, current)
+    .card-body= current.message
 

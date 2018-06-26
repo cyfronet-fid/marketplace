@@ -24,8 +24,8 @@ RSpec.describe OrderMailer, type: :mailer do
   describe "order change" do
     it "notifies about order status change" do
       order = create(:order)
-      order.new_change(:created, "Order created")
-      order.new_change(:registered, "Order registered")
+      order.new_change(status: :created, message: "Order created")
+      order.new_change(status: :registered, message: "Order registered")
 
       mail = described_class.changed(order).deliver_now
       encoded_body = mail.body.encoded
@@ -37,8 +37,8 @@ RSpec.describe OrderMailer, type: :mailer do
 
     it "notifies about new order message" do
       order = create(:order)
-      order.new_change(:created, "Order created")
-      order.new_change(:created, "New message")
+      order.new_change(status: :created, message: "Order created")
+      order.new_change(status: :created, message: "New message")
 
       mail = described_class.changed(order).deliver_now
       encoded_body = mail.body.encoded

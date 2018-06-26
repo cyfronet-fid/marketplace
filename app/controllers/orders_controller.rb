@@ -9,7 +9,10 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.joins(:user, :service).find(params[:id])
+
     authorize(@order)
+
+    @question = Order::Question.new(order: @order)
   end
 
   def create

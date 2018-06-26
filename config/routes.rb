@@ -10,7 +10,11 @@ Rails.application.routes.draw do
 
   resources :services, only: [:index, :show]
   resources :categories, only: :show
-  resources :orders, only: [:index, :show, :create]
+  resources :orders, only: [:index, :show, :create] do
+    scope module: :orders do
+      resources :questions, only: [:index, :create]
+    end
+  end
 
   resource :profile, only: [:show]
 
