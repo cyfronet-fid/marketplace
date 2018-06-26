@@ -11,6 +11,8 @@
     Current status:
     = @order.status
 
-= render "order_changes", order_changes: @order.order_changes.to_a
+= render "orders/order_changes",
+         order_changes: @order.order_changes.to_a,
+         order: @order
 
 

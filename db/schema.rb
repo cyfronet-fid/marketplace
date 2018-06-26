@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_22_072458) do
+ActiveRecord::Schema.define(version: 2018_06_22_083036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 2018_06_22_072458) do
     t.bigint "order_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "author_id"
+    t.index ["author_id"], name: "index_order_changes_on_author_id"
     t.index ["order_id"], name: "index_order_changes_on_order_id"
   end
 
@@ -82,4 +84,5 @@ ActiveRecord::Schema.define(version: 2018_06_22_072458) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "order_changes", "users", column: "author_id"
 end

@@ -2,7 +2,9 @@
 
 module OrdersHelper
   def status_change(previous, current)
-    if previous
+    if current.question?
+      "Order owner question"
+    elsif previous
       "Order changed from #{previous.status} to #{current.status}"
     else
       "Order #{current.status}"

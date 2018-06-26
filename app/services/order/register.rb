@@ -21,8 +21,8 @@ class Order::Register
     end
 
     def update_status!
-      @order.new_change(:registered,
-                        "Your order was registered in the order handling system")
+      @order.new_change(status: :registered,
+                        message: "Your order was registered in the order handling system")
       true
     end
 
