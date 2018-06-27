@@ -20,6 +20,7 @@ gem "bootsnap", ">= 1.1.0", require: false
 gem "ancestry"
 gem "gretel"
 gem "will_paginate", "~> 3.1.0"
+gem "will_paginate-bootstrap4"
 
 gem "elasticsearch-model"
 gem "elasticsearch-rails"
