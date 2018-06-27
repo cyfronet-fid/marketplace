@@ -9,7 +9,7 @@ class Order::Create
     @order.created!
 
     if @order.save
-      @order.new_change(:created, "Order created")
+      @order.new_change(status: :created, message: "Order created")
       OrderMailer.created(@order).deliver_later
       Order::RegisterJob.perform_later(@order)
     end
