@@ -18,5 +18,10 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:show]
 
+  if Rails.env.development?
+    get "playground/:file" => "playground#show",
+        constraints: { file: %r{[^/\.]+} }
+  end
+
   root "home#index"
 end

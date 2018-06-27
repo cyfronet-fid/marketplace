@@ -92,7 +92,7 @@ ENV variables:
 
 ## Commits
 
-running `bin/setuo` automatically installs githooks for code linting. But if you're using
+Running `bin/setuo` automatically installs githooks for code linting. But if you're using
 an IDE for repository management then you will probably experience problems with commiting
 code changes. This is related to the fact that some IDE's do not inherit user's `.bash_profile`
 or any other scripts which traditionally set environmental variables.
@@ -103,3 +103,15 @@ For Jetbrains IDE some solutions can be found (here)[https://emmanuelbernard.com
 
 For OSX solution might be calling `sudo launchctl config user path $PATH`
 For Linux systems modifying `PATH` in `/etc/environment` should do the job.
+
+## Designing UI without dedicated controller
+
+If there is no view yet implemented than still designing team can play around
+and create `haml`, `scss`, `js` for this view. For this purpose `playground`
+section is created. It is available **ONLY** in development mode. The URL is
+`/playground/:file`, where `:file` is the name of the view created in
+`app/views/playground` directory. For example `/playground/profile` URL will
+render `app/views/playground/profile.html.haml` file.
+
+Since this is only for development there is no security and template
+existence checks.
