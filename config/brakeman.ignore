@@ -3,23 +3,24 @@
     {
       "warning_type": "Dynamic Render Path",
       "warning_code": 15,
-      "fingerprint": "4761bcb11fa9b308fa37df55ff4efcc3f23305a4329a4bfdcf102d0b874e32e3",
+      "fingerprint": "a41971a03f7de3a63ba4b1d714fecd10bfe5f5c3013120baa8dd46139e8d994a",
       "check_name": "Render",
       "message": "Render path contains parameter value",
-      "file": "app/views/services/index.html.haml",
-      "line": 14,
+      "file": "app/controllers/playground_controller.rb",
+      "line": 9,
       "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => records.page(params[:page]), {})",
-      "render_path": [{"type":"controller","class":"ServicesController","method":"index","line":6,"file":"app/controllers/services_controller.rb"}],
+      "code": "render(action => params.require(:file), {})",
+      "render_path": null,
       "location": {
-        "type": "template",
-        "template": "services/index"
+        "type": "method",
+        "class": "PlaygroundController",
+        "method": "show"
       },
-      "user_input": "params[:page]",
-      "confidence": "Weak",
+      "user_input": "params.require(:file)",
+      "confidence": "High",
       "note": ""
     }
   ],
-  "updated": "2018-06-01 11:12:09 +0200",
+  "updated": "2018-06-27 14:03:04 +0200",
   "brakeman_version": "4.2.1"
 }
