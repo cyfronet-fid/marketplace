@@ -59,9 +59,9 @@ RSpec.feature "Service order" do
     scenario "I can see order change history" do
       order = create(:order, user: user, service: service)
 
-      order.new_change(:created, "Order created")
-      order.new_change(:registered, "Order registered")
-      order.new_change(:ready, "Order ready")
+      order.new_change(status: :created, message: "Order created")
+      order.new_change(status: :registered, message: "Order registered")
+      order.new_change(status: :ready, message: "Order ready")
 
       visit order_path(order)
 
@@ -74,6 +74,25 @@ RSpec.feature "Service order" do
 
       expect(page).to have_text("Order changed from registered to ready")
       expect(page).to have_text("Order registered")
+    end
+
+    scenario "I can ask question about my order" do
+      order = create(:order, user: user, service: service)
+
+      visit order_path(order)
+      fill_in "order_question_text", with: "This is my question"
+      click_button "Ask question"
+
+      expect(page).to have_text("This is my question")
+    end
+
+    scenario "question message is mandatory" do
+      order = create(:order, user: user, service: service)
+
+      visit order_path(order)
+      click_button "Ask question"
+
+      expect(page).to have_text("Question cannot be blank")
     end
   end
 

@@ -1,0 +1,9 @@
+- if policy(@question).create?
+  %hr/
+  %h4 Ask question about about your order
+
+  = form_for @question, url: order_questions_path(order) do |f|
+    - if @question.errors[:text].present?
+      .alert.alert-danger= @question.errors[:text]&.first
+    = f.text_area :text
+    %button{class: "btn btn-info", type: "submit"} Ask question
