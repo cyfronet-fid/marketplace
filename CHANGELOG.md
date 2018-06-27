@@ -26,6 +26,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Send email to order owner when order is created or updated (@mkasztelnik)
 - User can ask about processed order (@mkasztelnik)
 - Create first draft Ui layout (@kosmidma)
+- Bootstrap 4 style for will_paginate (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
