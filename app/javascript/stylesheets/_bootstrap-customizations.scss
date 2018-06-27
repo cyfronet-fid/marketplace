@@ -1,0 +1,104 @@
+body{
+  font-size: $font-size-sm;
+}
+hr{
+  border-color:$body-color;
+  opacity: 0.2;
+}
+ul{
+  list-style: none;
+  padding-left: 0;
+  line-height: 1.5rem;
+}
+a{
+  &:hover{
+    text-decoration: none;
+    color: $body-color;
+  }
+}
+.text-muted{
+  color: $body-color !important;
+}
+h5{
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: $font-size-xxs;
+  &:after {
+    content: "";
+    position: absolute;
+    top: 22px;
+    border-top: 1px solid $body-color;
+    width: 90%;
+    height: 12px;
+    left:15px;
+    z-index: 8;
+    opacity: 0.2;
+  }
+}
+button, a{
+  &:hover{
+    cursor: pointer;
+  }
+}
+.navbar{
+  &.bg-light {
+    background-color: $white !important;
+  }
+  &.navbar-expand-lg{
+    .navbar-nav{
+      .nav-link{
+        font-size: $font-size-xs;
+      }
+    }
+  }
+}
+.btn{
+  border-radius: 0;
+  font-size: $font-size-xs;
+  text-transform: uppercase;
+}
+.btn-primary {
+  color: $white;
+}
+.breadcrumbs{
+  font-size: $font-size-xxs;
+  a{
+    color: $body-color;
+    &:hover{
+      opacity: .6;
+      text-decoration: none;
+    }
+  }
+}
+.input-group > .form-control:not(:first-child), .input-group > .custom-select:not(:first-child) {
+  border-top-left-radius: .2rem;
+  border-bottom-left-radius: .2rem;
+}
+.input-group-text{
+  border-radius: .2rem;
+  background-color: transparent;
+}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  font-size: $font-size-xs;
+  font-weight: 400;
+  font-style: italic;
+  color: $gray-500 !important;
+}
+input::-moz-placeholder, textarea::-moz-placeholder { /* Firefox 19+ */
+  font-size: $font-size-xs;
+  font-weight: 400;
+  font-style: italic;
+  color: $gray-500 !important;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder  { /* IE 10+ */
+  font-size: $font-size-xs;
+  font-weight: 400;
+  font-style: italic;
+  color: $gray-500 !important;
+}
+input:-moz-placeholder, textarea:-moz-placeholder { /* Firefox 18- */
+  font-size: $font-size-xs;
+  font-weight: 400;
+  font-style: italic;
+  color: $gray-500 !important;
+}

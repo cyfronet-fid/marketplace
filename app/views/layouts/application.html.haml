@@ -2,9 +2,9 @@
 %html{lang: "en"}
   = render "layouts/head"
   %body
-    = render "layouts/navbar"
-    %main
-      .container-fluid
+    .container-fluid
+      = render "layouts/navbar"
+      %main
         = render "layouts/flash"
         = render "services/search"
         = render "layouts/breadcrumb"

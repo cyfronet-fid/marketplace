@@ -25,6 +25,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service terms of use with markdown renderer (@mkasztelnik)
 - Send email to order owner when order is created or updated (@mkasztelnik)
 - User can ask about processed order (@mkasztelnik)
+- Create first draft Ui layout (@kosmidma)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
