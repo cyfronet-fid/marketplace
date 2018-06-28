@@ -1,5 +1,6 @@
 body{
   font-size: $font-size-sm;
+  margin-bottom: 0px !important;
 }
 *:focus {
   outline: none !important;
@@ -21,6 +22,10 @@ a{
 }
 .text-muted{
   color: $body-color !important;
+}
+h3{
+  font-size: 1rem;
+  font-weight: 600;
 }
 h5{
   font-weight: 600;
@@ -79,9 +84,12 @@ header{
   border-radius: 0;
   font-size: $font-size-xs;
   text-transform: uppercase;
+  svg{
+    margin-right: 9px;
+  }
 }
 .btn-primary {
-  color: $white;
+  color: $white !important;
 }
 .breadcrumbs{
   font-size: $font-size-xxs;
@@ -107,6 +115,10 @@ header{
 .input-group > .form-control:not(:first-child), .input-group > .custom-select:not(:first-child) {
   border-top-left-radius: .2rem;
   border-bottom-left-radius: .2rem;
+}
+.form-control{
+  border-color: #c6c6c6;
+  border-radius: 0.2rem;
 }
 .input-group-text{
   border-radius: .2rem;
@@ -159,6 +171,7 @@ input:-moz-placeholder, textarea:-moz-placeholder { /* Firefox 18- */
   font-style: italic;
   color: $gray-500 !important;
 }
+
 .pagination{
   a{
     color:$body-color;
@@ -197,5 +210,68 @@ input:-moz-placeholder, textarea:-moz-placeholder { /* Firefox 18- */
   }
   svg{
     color: $primary
+  }
+}
+
+.nav-tabs{
+  background-color: $primary;
+  border: none;
+  .nav-link{
+    color: $white;
+    padding: 0.6rem 1rem;
+    font-weight: 600;
+    border-radius: 0;
+    &:hover{
+      border-color: transparent;
+      opacity: 0.7;
+    }
+    &.active{
+      border-color: $primary $primary $white;
+      padding: 0.8rem 1rem;
+      margin-top: -5px;
+      &:hover{
+        opacity: 1;
+      }
+    }
+  }
+}
+.tab-content{
+  border-top: 1px solid $primary;
+  ul {
+    list-style-position: outside;
+    list-style: disc;
+    color: $link-color;
+    li{
+      span{
+        color: $body-color;
+      }
+    }
+  }
+}
+.card{
+  border-color: $primary;
+  border-radius: 0px;
+  .card-header{
+    background-color: rgba(255,192,69,0.3);
+    border-bottom: none;
+  }
+}
+.steps-form-2 {
+  position: relative;
+  .steps-row-2:before {
+    top: 11px;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 100%;
+    z-index: 1;
+    height: 1px;
+    background-color: $primary;
+  }
+  a{
+    color: $primary !important;
+  }
+  .bg-white{
+    z-index:2;
   }
 }

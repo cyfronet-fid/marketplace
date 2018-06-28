@@ -3,10 +3,17 @@
   %h1= @service.title
   %p= @service.description
 
-  %h2 Terms of use
-  = markdown(@service.terms_of_use)
+.container
+  %ul#myTab.nav.nav-tabs.mt-4{role: "tablist"}
+    %li.nav-item
+      %a#home-tab.nav-link.text-uppercase.active{"aria-controls" => "home", "aria-selected" => "true", "data-toggle" => "tab", href: "#desc", role: "tab"} Description
+    %li.nav-item
+      %a#profile-tab.nav-link.text-uppercase{"aria-controls" => "profile", "aria-selected" => "false", "data-toggle" => "tab", href: "#order", role: "tab"} Order Specification
+    %li.nav-item
+      -# TODO - insert rating comment count into parenthesis - for now static (5) is left
+      %a#messages-tab.nav-link.text-uppercase{"aria-controls" => "messages", "aria-selected" => "false", "data-toggle" => "tab", href: "#opinions", role: "tab"} Opinions (5)
+.tab-content
+  = render "services/description"
+  = render "services/order"
+  = render "services/opinions"
 
-  - if policy(Order.new).create?
-    = form_for(Order.new) do |f|
-      = f.hidden_field :service_id, value: @service.id
-      %button{class: "btn btn-primary", type: "submit"} Order
