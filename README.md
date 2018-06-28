@@ -115,3 +115,12 @@ render `app/views/playground/profile.html.haml` file.
 
 Since this is only for development there is no security and template
 existence checks.
+
+## Database
+
+By default we are using pure rails database configuration in development and
+test enironemnts (sockets and database login the same as your system login).
+If this is not enough you can customize it by using environment variables:
+  * `MP_DATABASE_HOST` - PostgreSQL database host
+  * `MP_DATABASE_USERNAME` - PostgreSQL database username
+  * `MP_DATABASE_PASSWORD` - PostgreSQL database password
