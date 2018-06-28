@@ -62,6 +62,8 @@ ActiveRecord::Schema.define(version: 2018_07_11_132009) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "issue_id"
+    t.integer "issue_status", default: 2, null: false
     t.index ["service_id"], name: "index_orders_on_service_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end

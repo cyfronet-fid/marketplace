@@ -9,7 +9,15 @@ class Order < ApplicationRecord
     rejected: "rejected"
   }
 
+  ISSUE_STATUSES = {
+      jira_active: 0,
+      jira_deleted: 1,
+      jira_uninitialized: 2,
+      jira_errored: 3
+  }
+
   enum status: STATUSES
+  enum issue_status: ISSUE_STATUSES
 
   belongs_to :service
   belongs_to :user
