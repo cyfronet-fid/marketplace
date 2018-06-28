@@ -21,6 +21,7 @@ gem "ancestry"
 gem "gretel"
 gem "will_paginate", "~> 3.1.0"
 gem "will_paginate-bootstrap4"
+gem "simple_form"
 
 gem "elasticsearch-model"
 gem "elasticsearch-rails"
