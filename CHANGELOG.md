@@ -11,13 +11,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - Basic application structure and configuration (@mkasztelnik)
 - Service model, simple index and show pages integrated with elasticsearch (@mkasztelnik)
-- Initialization of elastic search indexes on application setup (@mszostak)
+- Initialization of elastic search indexes on application setup (@michal-szostak)
 - Sentry integration (@mkasztelnik)
 - Profile page with basic info and unauthenticated user redirection (@martaswiatkowska @jswk)
 - Pundit for user authorization (@mkasztelnik)
 - ENV variables to configure checkin URLs and root application URL (@mkasztelnik)
-- Custom git hooks for checking code syntax via RuboCop and commit message formatting (@mszostak)
-- Custom git commit message template (@mszostak)
+- Custom git hooks for checking code syntax via RuboCop and commit message formatting (@michal-szostak)
+- Custom git commit message template (@michal-szostak)
 - Redirect user into `/` after checkin login failure (@mkasztelnik)
 - Service categories (@mkasztelnik)
 - Service order possibility (@mkasztelnik)
@@ -30,7 +30,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Bootstrap 4 style for will_paginate (@mkasztelnik)
 - Possibility to configure development DB using ENV variables (@mkasztelnik)
 - Possibility to configure elasticsearch URL using ENV variable (@wziajka)
-- Bootstrap JS and font awesome regular (@mszostak)
+- Bootstrap JS and font awesome regular (@michal-szostak)
 - Service tagline (@martaswiatkowska)
 - Transfer tabs from playground to services(@kosmidma)
 - Add styling for services, improve global styles (@kosmidma)
@@ -39,6 +39,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Conditional software version placeholder in frontend (@bwilk)
 - Service owner can manage owned services (@mkasztelnik)
 - Add rating for Service (@kmarszalek)
+- Add JIRA integration (marketplace to jira) (@michal-szostak)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
