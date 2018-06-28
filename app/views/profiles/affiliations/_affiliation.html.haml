@@ -1,0 +1,20 @@
+#li
+  = link_to profile_affiliation_path(affiliation) do
+    #{affiliation.iid}: #{affiliation.organization}
+    -unless affiliation.department.blank?
+      #{affiliation.department} department
+    (#{affiliation.webpage}, email: #{affiliation.email},
+    #{affiliation.phone} telephone).
+    - unless affiliation.supervisor.blank?
+      #{affiliation.supervisor} supervisor
+
+  .float-right
+    .btn-group
+      = link_to "Edit",
+                edit_profile_affiliation_path(affiliation),
+                class: "btn btn-secondary"
+      = link_to "Delete",
+                profile_affiliation_path(affiliation),
+                method: :delete, data: { confirm: "Are you sure?" },
+                class: "btn btn-danger"
+

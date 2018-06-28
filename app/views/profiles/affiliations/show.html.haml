@@ -1,0 +1,13 @@
+= render("profiles/layout", crumb: { key: :affiliation, value: @affiliation }) do
+  %ul
+    %li Organization: #{@affiliation.organization}
+    %li Department: #{@affiliation.department}
+    %li Email used for verification: #{@affiliation.email}
+    %li Phone: #{@affiliation.phone}
+    %li Web page: #{@affiliation.webpage}
+    %li Supervisor: #{@affiliation.supervisor}
+    %li Supervisor profile: #{@affiliation.supervisor_profile}
+
+  .btn-group
+    = link_to "Edit", edit_profile_affiliation_path(@affiliation), class: "btn btn-success"
+    = link_to "All my affiliations", profile_affiliations_path, class: "btn btn-secondary"

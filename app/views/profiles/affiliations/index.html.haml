@@ -1,0 +1,11 @@
+= render("profiles/layout", crumb: { key: :affiliations }) do
+  %h1
+    Affiliations
+    .float-right
+      = link_to "New affiliation",
+                new_profile_affiliation_path,
+                class: 'btn btn-success'
+
+  %ul
+    = render @affiliations
+  = will_paginate @affiliations

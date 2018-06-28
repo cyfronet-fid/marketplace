@@ -1,0 +1,14 @@
+= simple_form_for [:profile, @affiliation] do |f|
+  = f.error_notification
+  = f.input :organization
+  = f.input :department
+  = f.input :email
+  = f.input :phone
+  = f.input :webpage
+  = f.input :supervisor
+  = f.input :supervisor_profile
+
+  .btn-group
+    = f.button :submit, class: 'btn btn-success'
+    - path = @affiliation.persisted? ? profile_affiliation_path(@affiliation) : profile_affiliations_path
+    = link_to "Cancel", path, class: "btn btn-secondary"

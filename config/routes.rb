@@ -16,7 +16,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :profile, only: [:show]
+  resource :profile, only: [:show] do
+    scope module: :profiles do
+      resources :affiliations
+    end
+  end
 
   if Rails.env.development?
     get "playground/:file" => "playground#show",
