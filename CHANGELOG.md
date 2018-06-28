@@ -28,6 +28,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Create first draft Ui layout (@kosmidma)
 - Playground for designing views (@mkasztelnik)
 - Bootstrap 4 style for will_paginate (@mkasztelnik)
+- Possibility to configure development DB using ENV variables (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
