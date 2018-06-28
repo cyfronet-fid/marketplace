@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: %i[checkin]
 
   has_many :orders, dependent: :destroy
+  has_many :affiliations, dependent: :destroy
 
   validates :first_name, presence: true
   validates :last_name, presence: true

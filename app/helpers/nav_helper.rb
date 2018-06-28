@@ -54,6 +54,11 @@ module NavHelper
     end
   end
 
+  def active_for_current(options = {})
+    clazz = options[:class] || ""
+    { class: "#{clazz} #{html_options(options)[:class]}".strip }
+  end
+
   def nav_tab(key, value, options = {}, &block)
     active_class = options.fetch(:active_class, "active")
     o = { class: params[key] == value ? " #{active_class}" : "" }

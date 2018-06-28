@@ -23,6 +23,9 @@ gem "will_paginate", "~> 3.1.0"
 gem "will_paginate-bootstrap4"
 gem "simple_form"
 
+# validation
+gem "valid_email2"
+
 gem "elasticsearch-model"
 gem "elasticsearch-rails"
 
