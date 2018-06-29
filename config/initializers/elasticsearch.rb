@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# config/initializers/elasticsearch.rb
-
 require "elasticsearch/model"
 
 if ENV["ELASTICSEARCH_URL"]
