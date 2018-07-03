@@ -2,14 +2,15 @@
   "name": "mp",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.8",
+    "@fortawesome/fontawesome-free-regular": "^5.0.13",
+    "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "@rails/webpacker": "3.5",
     "bootstrap": "^4.1.1",
+    "expose-loader": "^0.7.5",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.3",
     "stimulus": "^1.0.1",
-    "@fortawesome/fontawesome": "^1.1.8",
-    "@fortawesome/fontawesome-free-solid": "^5.0.13",
-    "expose-loader": "^0.7.5",
     "turbolinks": "^5.1.1"
   },
   "devDependencies": {
