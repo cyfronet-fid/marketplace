@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/cyfronet-fid/marketplace.svg?branch=master)](https://travis-ci.org/cyfronet-fid/marketplace)
+[![Build Status](https://travis-ci.com/cyfronet-fid/marketplace.svg?branch=master)](https://travis-ci.com/cyfronet-fid/marketplace)
 
 # README
 
