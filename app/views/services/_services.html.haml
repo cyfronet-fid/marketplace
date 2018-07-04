@@ -1,4 +1,22 @@
 %dl
   = render services
-= will_paginate services, class: 'asdf'
+//Static element from Andrzej's draft
+.d-flex
+  %nav.mr-auto.mt-3.mb-4
+    %ul.pagination
+      %li.page-item.active
+        %a.page-link
+          10
+      %li.page-item
+        %a.page-link
+          20
+      %li.page-item
+        %a.page-link
+          30
+      %li.page-item.disabled
+        %a.page-link.text-dark
+          Items on page
+
+  .mt-3.mb-4
+    = will_paginate services
 
