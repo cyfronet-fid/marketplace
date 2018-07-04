@@ -10,29 +10,26 @@
       %span.navbar-toggler-icon
 
     #navbarSupportedContent.collapse.navbar-collapse
-      %ul.navbar-nav.ml-auto
+      %ul.navbar-nav.ml-auto.pt-2
         = nav_link controller: :home do
-          = link_to "Getting Started", root_path, class: "nav-link px-3"
+          = link_to "Getting Started", root_path, class: "nav-link px-3 py-1"
         = nav_link controller: [:services, :categories] do
-          = link_to "Services", services_path, class: "nav-link px-3"
+          = link_to "Services", services_path, class: "nav-link px-3 py-1"
         %li.nav-item
-          = link_to "Data", root_path, class: "nav-link px-3"
+          = link_to "Data", root_path, class: "nav-link px-3 py-1"
         %li.nav-item
-          = link_to "Policies", root_path, class: "nav-link px-3"
+          = link_to "Policies", root_path, class: "nav-link px-3 py-1"
         %li.nav-item
-          = link_to "Partners", root_path, class: "nav-link px-3"
+          = link_to "Partners", root_path, class: "nav-link px-3 py-1"
         %li.nav-item
-          = link_to "Support", root_path, class: "nav-link px-3"
+          = link_to "Support", root_path, class: "nav-link px-3 py-1"
         - if user_signed_in?
           = nav_link controller: :orders do
-            = link_to "My Services", orders_path, class: "nav-link px-3"
+            = link_to "My Services", orders_path, class: "nav-link px-3 py-1"
           = nav_link controller: :profiles do
-            = link_to "My profile", profile_path, class: "nav-link px-3"
+            = link_to "My profile", profile_path, class: "nav-link px-3 py-1"
         %li.nav-item
           - if user_signed_in?
-            = link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link px-3"
+            = link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link px-3 py-1"
           - else
-            = link_to "Login/Sign-up", user_checkin_omniauth_authorize_path, class: "nav-link px-3"
-        %li.nav-item
-          = link_to root_path, class: "nav-link px-3" do
-            %i.fas.fa-shopping-cart
+            = link_to "Login/Sign-up", user_checkin_omniauth_authorize_path, class: "nav-link px-3 py-1"
