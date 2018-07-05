@@ -48,6 +48,6 @@ class Affiliation < ApplicationRecord
     end
 
     def email_domain_regexp
-      email.downcase.split("@").last.sub(".", "\.")
+      email.downcase.split("@").last.sub(".", "\.") unless email.blank?
     end
 end
