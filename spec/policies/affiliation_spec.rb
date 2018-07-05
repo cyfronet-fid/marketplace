@@ -13,7 +13,25 @@ RSpec.describe AffiliationPolicy do
     end
   end
 
-  permissions :show?, :edit?, :update?, :destroy? do
+  permissions :edit?, :update? do
+    context "not confirmed affiliation" do
+      it "grants access for affiliation user" do
+        expect(subject).to permit(user, build(:affiliation, user: user))
+      end
+
+      it "denies to see other user owners" do
+        expect(subject).to_not permit(user, build(:affiliation))
+      end
+    end
+
+    context "confirmed affiliation" do
+      it "denies even for affiliation owner" do
+        expect(subject).to_not permit(user, build(:affiliation, status: :active))
+      end
+    end
+  end
+
+  permissions :destroy? do
     it "grants access for affiliation user" do
       expect(subject).to permit(user, build(:affiliation, user: user))
     end

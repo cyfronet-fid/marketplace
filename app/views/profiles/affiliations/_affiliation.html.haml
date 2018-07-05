@@ -10,11 +10,13 @@
   .float-right
     = affiliation.status
     .btn-group
-      = link_to "Edit",
-                edit_profile_affiliation_path(affiliation),
-                class: "btn btn-secondary"
-      = link_to "Delete",
-                profile_affiliation_path(affiliation),
-                method: :delete, data: { confirm: "Are you sure?" },
-                class: "btn btn-danger"
+      - if policy(affiliation).edit?
+        = link_to "Edit",
+                  edit_profile_affiliation_path(affiliation),
+                  class: "btn btn-secondary"
+      - if policy(affiliation).destroy?
+        = link_to "Delete",
+                  profile_affiliation_path(affiliation),
+                  method: :delete, data: { confirm: "Are you sure?" },
+                  class: "btn btn-danger"
   .clearfix

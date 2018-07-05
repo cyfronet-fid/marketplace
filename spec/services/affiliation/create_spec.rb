@@ -11,7 +11,7 @@ RSpec.describe Affiliation::Create do
     expect(affiliation).to be_persisted
   end
 
-  it "generated affiliation token" do
+  it "generates affiliation token" do
     affiliation = described_class.new(build(:affiliation, user: user)).call
 
     expect(affiliation.token).to_not be_blank

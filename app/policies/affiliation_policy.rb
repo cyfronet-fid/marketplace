@@ -20,11 +20,11 @@ class AffiliationPolicy < ApplicationPolicy
   end
 
   def edit?
-    owner?
+    owner? && !confirmed?
   end
 
   def update?
-    owner?
+    owner? && !confirmed?
   end
 
   def destroy?
@@ -37,6 +37,10 @@ class AffiliationPolicy < ApplicationPolicy
   end
 
   private
+
+    def confirmed?
+      record.active?
+    end
 
     def owner?
       record.user == user

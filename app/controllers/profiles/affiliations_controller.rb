@@ -27,7 +27,7 @@ class Profiles::AffiliationsController < ApplicationController
   end
 
   def update
-    if @affiliation.update_attributes(permitted_attributes(@affiliation))
+    if Affiliation::Update.new(@affiliation, permitted_attributes(@affiliation)).call
       redirect_to profile_path,
                   notice: "Affiliation updated correctly"
     else
