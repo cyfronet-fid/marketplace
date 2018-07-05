@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:show] do
     scope module: :profiles do
-      resources :affiliations
+      resources :affiliations, only: [:new, :create, :edit, :update, :destroy]
     end
   end
   resources :affiliation_confirmations, only: :index

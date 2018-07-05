@@ -7,7 +7,7 @@ class AffiliationConfirmationsController < ApplicationController
     confirmator = Affiliation::Confirm.new(current_user, params[:at])
 
     if confirmator.call
-      redirect_to profile_affiliations_path,
+      redirect_to profile_path,
                   notice: "Affiliation confirmed sucessfully"
     else
       redirect_to root_path,
