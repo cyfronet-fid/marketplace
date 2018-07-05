@@ -8,6 +8,7 @@ class CreateAffiliations < ActiveRecord::Migration[5.2]
       t.string :phone
       t.string :webpage, null: false
       t.string :token, unique: true, index: true
+      t.string :status, null: false, default: "created"
       t.string :supervisor
       t.string :supervisor_profile
       t.belongs_to :user, null: false, index: true

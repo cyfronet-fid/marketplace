@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2018_06_28_101529) do
     t.string "phone"
     t.string "webpage", null: false
     t.string "token"
+    t.string "status", default: "created", null: false
     t.string "supervisor"
     t.string "supervisor_profile"
     t.bigint "user_id", null: false
