@@ -21,6 +21,10 @@ gem "ancestry"
 gem "gretel"
 gem "will_paginate", "~> 3.1.0"
 gem "will_paginate-bootstrap4"
+gem "simple_form"
+
+# validation
+gem "valid_email2"
 
 gem "elasticsearch-model"
 gem "elasticsearch-rails"
@@ -51,10 +55,7 @@ group :development do
   gem "listen", ">= 3.0.5", "< 3.2"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
-
-  gem "faker", require: false
-
-  gem "rubocop-rails"
+  gem "rubocop-rails", ">=1.5.0"
   gem "overcommit", require: false
 end
 
@@ -69,4 +70,5 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :production do
   gem "sentry-raven"
+  gem "faker", require: false
 end

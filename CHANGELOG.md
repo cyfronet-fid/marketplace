@@ -29,7 +29,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Playground for designing views (@mkasztelnik)
 - Bootstrap 4 style for will_paginate (@mkasztelnik)
 - Possibility to configure development DB using ENV variables (@mkasztelnik)
+- Possibility to configure elasticsearch URL using ENV variable (@wziajka)
 - Bootstrap JS and font awesome regular (@mszostak)
+- Service tagline (@martaswiatkowska)
+- Add styling for services, improve global styles (@kosmidma)
+- User affiliations (@mkasztelnik)
+- Service and categories database seed (@bwilk)
+- Conditional software version placeholder in frontend (@bwilk)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)

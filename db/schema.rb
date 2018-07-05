@@ -10,10 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_22_083036) do
-
+ActiveRecord::Schema.define(version: 2018_07_05_121340) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "affiliations", force: :cascade do |t|
+    t.integer "iid", null: false
+    t.string "organization", null: false
+    t.string "department"
+    t.string "email", null: false
+    t.string "phone"
+    t.string "webpage", null: false
+    t.string "token"
+    t.string "status", default: "created", null: false
+    t.string "supervisor"
+    t.string "supervisor_profile"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["iid"], name: "index_affiliations_on_iid"
+    t.index ["token"], name: "index_affiliations_on_token"
+    t.index ["user_id"], name: "index_affiliations_on_user_id"
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
@@ -63,6 +81,7 @@ ActiveRecord::Schema.define(version: 2018_06_22_083036) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "terms_of_use"
+    t.text "tagline", null: false
     t.index ["description"], name: "index_services_on_description"
     t.index ["title"], name: "index_services_on_title"
   end
