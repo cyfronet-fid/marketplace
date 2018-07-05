@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resources :affiliations
     end
   end
+  resources :affiliation_confirmations, only: :index
 
   if Rails.env.development?
     get "playground/:file" => "playground#show",

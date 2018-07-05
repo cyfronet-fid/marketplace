@@ -14,11 +14,12 @@ class Profiles::AffiliationsController < ApplicationController
   end
 
   def create
-    @affiliation = Affiliation.new(permitted_attributes(Affiliation).
-                                   merge(user: current_user))
-    authorize(@affiliation)
+    template = affiliation_template
+    authorize(template)
 
-    if @affiliation.save
+    @affiliation = Affiliation::Create.new(template).call
+
+    if @affiliation.persisted?
       redirect_to profile_affiliation_path(@affiliation),
                   notice: "New affiliation created sucessfully"
     else
@@ -45,6 +46,11 @@ class Profiles::AffiliationsController < ApplicationController
   end
 
   private
+
+    def affiliation_template
+      Affiliation.new(permitted_attributes(Affiliation).
+                      merge(user: current_user))
+    end
 
     def find_and_authorize
       @affiliation = Affiliation.find_by(iid: params[:id])

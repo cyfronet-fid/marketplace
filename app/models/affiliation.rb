@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 class Affiliation < ApplicationRecord
+  has_secure_token
+
+  enum status: {
+    created: "created",
+    active: "active"
+  }
+
   belongs_to :user
 
   validate :set_iid, on: :create
@@ -9,6 +16,15 @@ class Affiliation < ApplicationRecord
   validates :email, presence: true, "valid_email_2/email": true
   validates :webpage, presence: true
   validate :email_from_webpage_domain, if: :email
+
+  validates :status, presence: true
+  validates :token, uniqueness: true
+
+  def self.find_by_token(token)
+    token = nil if token&.strip.blank?
+
+    where.not(token: nil).find_by(token: token)
+  end
 
   def to_param
     iid.to_s

@@ -51,6 +51,23 @@ RSpec.feature "Affiliations" do
       expect(page).to have_content("My Supervisor")
     end
 
+    scenario "I can confirm new affiliation" do
+      create(:affiliation, user: user, token: "secret")
+
+      visit affiliation_confirmations_path(at: "secret")
+
+      expect(page).to have_content("confirmed")
+    end
+
+    scenario "I cannot confirm not owned affiliation" do
+      create(:affiliation, token: "secret")
+
+      visit affiliation_confirmations_path(at: "secret")
+
+      expect(page).to have_content("not belong to you")
+
+    end
+
     scenario "I can edit my affiliation" do
       affiliation = create(:affiliation, organization: "my org", user: user)
 
