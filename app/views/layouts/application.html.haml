@@ -2,11 +2,11 @@
 %html{lang: "en"}
   = render "layouts/head"
   %body
-    .container-fluid
+    %header.pt-2.pb-2
       = render "layouts/navbar"
-      %main
-        = render "layouts/flash"
-        = render "services/search"
-        = render "layouts/breadcrumb"
-        = yield
-    = render "layouts/footer"
+      = render "layouts/flash"
+      = render "services/search"
+    %main
+      = render "layouts/breadcrumb"
+      = yield
+  = render "layouts/footer"

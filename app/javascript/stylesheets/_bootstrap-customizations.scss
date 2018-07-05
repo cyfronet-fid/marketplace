@@ -40,14 +40,21 @@ button, a{
     cursor: pointer;
   }
 }
+header{
+  background: url(../../assets/images/header-bg.png);
+}
 .navbar{
   &.bg-light {
-    background-color: $white !important;
+    background-color: transparent !important;
   }
   &.navbar-expand-lg{
     .navbar-nav{
       .nav-link{
         font-size: $font-size-xs;
+      }
+      .active{
+        background-color: $white;
+        border-radius: 0.2rem;
       }
     }
   }
@@ -63,7 +70,6 @@ button, a{
 .breadcrumbs{
   font-size: $font-size-xxs;
   a{
-    color: $body-color;
     &:hover{
       opacity: .6;
       text-decoration: none;
@@ -101,4 +107,44 @@ input:-moz-placeholder, textarea:-moz-placeholder { /* Firefox 18- */
   font-weight: 400;
   font-style: italic;
   color: $gray-500 !important;
+}
+.pagination{
+  a{
+    color:$body-color;
+    &:hover{
+      color:$body-color;
+      opacity: 0.6;
+      background-color: transparent;
+    }
+  }
+  .page-item.active {
+    .page-link {
+      color: $body-color;
+      background-color: transparent;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      border: 1px solid #dee2e6;
+      border-bottom: 1px solid $body-color;
+      font-weight: 800;
+    }
+  }
+  .text-dark{
+    color: $body-color;
+  }
+}
+.media {
+  border-bottom: 1px solid $gray-300;
+  .form-check-input {
+    margin-top: 0.5rem;
+  }
+  .form-check-label {
+    font-size: $small-font-size
+  }
+  .form-group{
+    margin-bottom:0px;
+  }
+  svg{
+    color: $primary
+  }
 }
