@@ -2,6 +2,7 @@
 
 # README
 
+
 Market place is...
 
 ## Development environment
@@ -23,6 +24,16 @@ We will need:
     dependencies and setup databases (development and test).
   * After update run `/bin/update`. It will update dependencies, run db
     migrations and restart currently started application.
+
+### Running parametrized database seeds 
+While running `/bin/setup` rake will seed the database with important data. However seeds can 
+also be re-run with additional parameters allowing to specify e.g. number of services seeded
+to the database.
+ 
+Example use of the database seed:
+```
+rake db:seed services_size=100
+```
 
 ### Generating DB entries for development
 To simplify development `dev:prime` rake task is created. Right now it generates
@@ -88,6 +99,7 @@ ENV variables:
   * `ROOT_URL` (Optional) - root application URL (default
     `http://localhost:#{ENV["PORT"] || 3000}` (when foreman is used to start
     application 5000 ENV variable is set)
+  * `ELASTICSEARCH_URL` - elasticsearch url   
 
 
 ## Commits

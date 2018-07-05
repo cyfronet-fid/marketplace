@@ -8,6 +8,17 @@ crumb :profile do
   link "My profile", profile_path
 end
 
+crumb :affiliation do |affiliation|
+  link "Affiliation ##{affiliation.iid}", profile_affiliation_path(affiliation)
+  parent :profile
+end
+
+
+crumb :affiliation_new do
+  link "New Affiliation", new_profile_affiliation_path
+  parent :profile
+end
+
 crumb :services do
   link "Services", services_path
 end

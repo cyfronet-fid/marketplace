@@ -17,6 +17,7 @@ RSpec.feature "Service browsing" do
     expect(page.body).to have_content service.title
     expect(page.body).to have_content service.description
     expect(page.body).to have_content service.terms_of_use
+    expect(page.body).to have_content service.tagline
   end
 
   scenario "terms of use is rendered from markdown to html" do
