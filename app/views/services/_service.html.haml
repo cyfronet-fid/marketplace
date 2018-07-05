@@ -1,3 +1,31 @@
-%dt
-  %h2= link_to service.title, service
-%dd.mb-4= service.description
+//Static element from Andrzej's draft
+%ul.list-unstyled
+  %li.media.pb-4.mb-4
+    .media-body
+      %h2.font-weight-bold= link_to service.title, service
+      .mb-3= service.description
+      %p.small.float-left.mr-4
+        Provided by
+        %a{href: ""}
+          SHAPE
+      %p.small
+        Available for SME only within 1 day
+      .row
+        .col
+          %i.fas.fa-star
+          %i.fas.fa-star
+          %i.fas.fa-star
+          %i.fas.fa-star
+          %i.fas.fa-star-half-alt
+          %span.small.ml-1.font-weight-bold
+            (2.3/5)
+          %a{href: "", class: "small ml-3"}
+            5 opinions
+
+    .ml-5
+      %form.d-flex.justify-content-end
+        .form-group.form-check
+          %input{type: "checkbox", class: "form-check-input", id: ""}
+          %label{class: "form-check-label", for: ""}
+            to compare
+
