@@ -10,18 +10,12 @@ RSpec.feature "Affiliations" do
   context "as logged in user" do
     before { checkin_sign_in_as(user) }
 
-    scenario "I can see Affiliation link on my profile page" do
-      visit profile_path
-
-      expect(page).to have_content("Affiliations")
-    end
-
-    scenario "I can see all my (and only my) affiliations" do
+    scenario "I can see all my (and only my) affiliations on profile" do
       create(:affiliation, organization: "org1", user: user)
       create(:affiliation, organization: "org2", user: user)
       create(:affiliation, organization: "org3")
 
-      visit profile_affiliations_path
+      visit profile_path
 
       expect(page).to have_content("org1")
       expect(page).to have_content("org2")
@@ -29,7 +23,7 @@ RSpec.feature "Affiliations" do
     end
 
     scenario "I can create new affiliation" do
-      visit profile_affiliations_path
+      visit profile_path
       click_on "New affiliation"
 
       fill_in "Organization", with: "my org"

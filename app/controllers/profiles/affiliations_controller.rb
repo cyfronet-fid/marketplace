@@ -2,11 +2,7 @@
 
 class Profiles::AffiliationsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
-
-  def index
-    @affiliations = policy_scope(Affiliation).order(:iid).page(params[:page])
-  end
+  before_action :find_and_authorize, only: [:edit, :update, :destroy]
 
   def new
     @affiliation = Affiliation.new(user: current_user)
@@ -20,7 +16,7 @@ class Profiles::AffiliationsController < ApplicationController
     @affiliation = Affiliation::Create.new(template).call
 
     if @affiliation.persisted?
-      redirect_to profile_affiliation_path(@affiliation),
+      redirect_to profile_path,
                   notice: "New affiliation created sucessfully"
     else
       render :new, status: :bad_request
@@ -32,7 +28,7 @@ class Profiles::AffiliationsController < ApplicationController
 
   def update
     if @affiliation.update_attributes(permitted_attributes(@affiliation))
-      redirect_to profile_affiliation_path(@affiliation),
+      redirect_to profile_path,
                   notice: "Affiliation updated correctly"
     else
       render :edit, status: :bad_request
@@ -41,7 +37,7 @@ class Profiles::AffiliationsController < ApplicationController
 
   def destroy
     @affiliation.destroy
-    redirect_to profile_affiliations_path,
+    redirect_to profile_path,
                 notice: "Affiliation destroyed"
   end
 

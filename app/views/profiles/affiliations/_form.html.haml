@@ -10,5 +10,4 @@
 
   .btn-group
     = f.button :submit, class: 'btn btn-success'
-    - path = @affiliation.persisted? ? profile_affiliation_path(@affiliation) : profile_affiliations_path
-    = link_to "Cancel", path, class: "btn btn-secondary"
+    = link_to "Cancel", profile_path, class: "btn btn-secondary"

@@ -1,10 +1,10 @@
-= render("profiles/layout", crumb: { key: :profile }) do
-  %p
-    First name:
-    = current_user.first_name
-  %p
-    Last name:
-    = current_user.last_name
-  %p
-    Email:
-    = current_user.email
+.container
+  - breadcrumb :profile
+
+  %h1 Profile
+  = render "profile"
+
+  %hr/
+  = render "profiles/affiliations/index", affiliations: @affiliations
+
+
