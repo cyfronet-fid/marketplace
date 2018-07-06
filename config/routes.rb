@@ -23,6 +23,13 @@ Rails.application.routes.draw do
   end
   resources :affiliation_confirmations, only: :index
 
+  resource :profile, only: :show
+
+  resource :backoffice, only: :show
+  namespace :backoffice do
+    resources :services
+  end
+
   if Rails.env.development?
     get "playground/:file" => "playground#show",
         constraints: { file: %r{[^/\.]+} }

@@ -1,0 +1,16 @@
+.container
+  %h1= @service.title
+  %p= @service.description
+
+  %h2 Terms of use
+  = markdown(@service.terms_of_use)
+
+  - if policy([:backoffice, @service]).edit?
+    = link_to "Edit",
+              edit_backoffice_service_path(@service),
+              class: "btn btn-warning"
+  - if policy([:backoffice, @service]).destroy?
+    = link_to "Destroy",
+              backoffice_service_path(@service),
+              method: :delete, data: { confirm: "Are you sure?" },
+              class: "btn btn-danger"

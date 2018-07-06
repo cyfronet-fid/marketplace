@@ -10,6 +10,7 @@ RSpec.describe User do
 
   it { should have_many(:orders).dependent(:destroy) }
   it { should have_many(:affiliations).dependent(:destroy) }
+  it { should have_many(:owned_services).dependent(:nullify) }
 
   context "#full_name" do
     it "is composed from first and last name" do

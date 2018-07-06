@@ -3,17 +3,17 @@
     {
       "warning_type": "Dynamic Render Path",
       "warning_code": 15,
-      "fingerprint": "1bf0c36c209f956867d066f47507e58ebcbfe6248849e7471a18cc3bc2672cc3",
+      "fingerprint": "77ce5d3f4dc49b266bfc30250e63c42ce08d3ea00e6709efac8a0cd1d7e69a97",
       "check_name": "Render",
       "message": "Render path contains parameter value",
-      "file": "app/views/profiles/affiliations/index.html.haml",
-      "line": 10,
+      "file": "app/views/backoffice/services/index.html.haml",
+      "line": 11,
       "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => policy_scope(Affiliation).order(:iid).page(params[:page]), {})",
-      "render_path": [{"type":"controller","class":"Profiles::AffiliationsController","method":"index","line":9,"file":"app/controllers/profiles/affiliations_controller.rb"}],
+      "code": "render(action => policy_scope(Service).page(params[:page]), {})",
+      "render_path": [{"type":"controller","class":"Backoffice::ServicesController","method":"index","line":9,"file":"app/controllers/backoffice/services_controller.rb"}],
       "location": {
         "type": "template",
-        "template": "profiles/affiliations/index"
+        "template": "backoffice/services/index"
       },
       "user_input": "params[:page]",
       "confidence": "Weak",
@@ -40,6 +40,6 @@
       "note": ""
     }
   ],
-  "updated": "2018-06-29 20:32:09 +0200",
+  "updated": "2018-07-06 23:53:59 +0200",
   "brakeman_version": "4.3.1"
 }
