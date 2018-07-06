@@ -1,0 +1,22 @@
+#li
+  #{affiliation.iid}: #{affiliation.organization}
+  -unless affiliation.department.blank?
+    #{affiliation.department} department
+  (#{affiliation.webpage}, email: #{affiliation.email},
+  #{affiliation.phone} telephone).
+  - unless affiliation.supervisor.blank?
+    #{affiliation.supervisor} supervisor
+
+  .float-right
+    = affiliation.status
+    .btn-group
+      - if policy(affiliation).edit?
+        = link_to "Edit",
+                  edit_profile_affiliation_path(affiliation),
+                  class: "btn btn-secondary"
+      - if policy(affiliation).destroy?
+        = link_to "Delete",
+                  profile_affiliation_path(affiliation),
+                  method: :delete, data: { confirm: "Are you sure?" },
+                  class: "btn btn-danger"
+  .clearfix

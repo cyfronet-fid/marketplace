@@ -28,7 +28,7 @@ RSpec.describe Order::Create do
     expect(Order::RegisterJob).to have_been_enqueued.with(order)
   end
 
-  it "sent email to order owner" do
+  it "sends email to order owner" do
     expect { described_class.new(order_template).call }.
       to change { ActionMailer::Base.deliveries.count }.by(1)
   end

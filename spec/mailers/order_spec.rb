@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe OrderMailer, type: :mailer do
-  describe "order created" do
+  context "order created" do
     let(:order) { build(:order, id: 1) }
     let(:mail) { described_class.created(order).deliver_now }
 
@@ -21,7 +21,7 @@ RSpec.describe OrderMailer, type: :mailer do
     end
   end
 
-  describe "order change" do
+  context "order change" do
     it "notifies about order status change" do
       order = create(:order)
       order.new_change(status: :created, message: "Order created")
