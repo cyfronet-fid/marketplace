@@ -3,6 +3,25 @@
     {
       "warning_type": "Dynamic Render Path",
       "warning_code": 15,
+      "fingerprint": "1bf0c36c209f956867d066f47507e58ebcbfe6248849e7471a18cc3bc2672cc3",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/profiles/affiliations/index.html.haml",
+      "line": 10,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => policy_scope(Affiliation).order(:iid).page(params[:page]), {})",
+      "render_path": [{"type":"controller","class":"Profiles::AffiliationsController","method":"index","line":9,"file":"app/controllers/profiles/affiliations_controller.rb"}],
+      "location": {
+        "type": "template",
+        "template": "profiles/affiliations/index"
+      },
+      "user_input": "params[:page]",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
       "fingerprint": "a41971a03f7de3a63ba4b1d714fecd10bfe5f5c3013120baa8dd46139e8d994a",
       "check_name": "Render",
       "message": "Render path contains parameter value",
@@ -21,6 +40,6 @@
       "note": ""
     }
   ],
-  "updated": "2018-06-27 14:03:04 +0200",
-  "brakeman_version": "4.2.1"
+  "updated": "2018-06-29 20:32:09 +0200",
+  "brakeman_version": "4.3.1"
 }

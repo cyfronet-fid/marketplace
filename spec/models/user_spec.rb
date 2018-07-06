@@ -9,6 +9,7 @@ RSpec.describe User do
   it { should validate_presence_of(:uid) }
 
   it { should have_many(:orders).dependent(:destroy) }
+  it { should have_many(:affiliations).dependent(:destroy) }
 
   context "#full_name" do
     it "is composed from first and last name" do
