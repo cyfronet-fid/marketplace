@@ -6,13 +6,15 @@ if Rails.env.development?
   namespace :dev do
     desc "Sample data for local development environment"
     task :prime, [:services_size] => "db:setup" do |task, args|
+      users = User.all + [nil]
       services_size = args.fetch(:services_size, 100).to_i
       puts "Generating #{services_size} new services"
       services_size.times do
         Service.create(title: Faker::Lorem.sentence,
                        description: Faker::Lorem.paragraph,
                        terms_of_use: Faker::Lorem.paragraph,
-                       categories: [Category.all.sample])
+                       categories: [Category.all.sample],
+                       owner: users.sample)
       end
       puts "Done!"
     end
