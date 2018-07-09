@@ -25,6 +25,16 @@ We will need:
   * After update run `/bin/update`. It will update dependencies, run db
     migrations and restart currently started application.
 
+### Running parametrized database seeds 
+While running `/bin/setup` rake will seed the database with important data. However seeds can 
+also be re-run with additional parameters allowing to specify e.g. number of services seeded
+to the database.
+ 
+Example use of the database seed:
+```
+rake db:seed services_size=100
+```
+
 ### Generating DB entries for development
 To simplify development `dev:prime` rake task is created. Right now it generates
 services with random title and description (this generation is done using

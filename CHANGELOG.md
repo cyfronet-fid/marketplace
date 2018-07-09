@@ -32,6 +32,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Bootstrap JS and font awesome regular (@mszostak)
 - Add styling for services, improve global styles (@kosmidma)
 - User affiliations (@mkasztelnik)
+- Service and categories database seed
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
