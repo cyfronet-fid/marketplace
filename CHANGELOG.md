@@ -33,6 +33,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add styling for services, improve global styles (@kosmidma)
 - User affiliations (@mkasztelnik)
 - Service and categories database seed
+- Conditional software version placeholder in frontend
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
