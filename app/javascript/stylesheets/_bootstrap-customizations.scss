@@ -1,6 +1,9 @@
 body{
   font-size: $font-size-sm;
 }
+*:focus {
+  outline: none !important;
+}
 hr{
   border-color:$body-color;
   opacity: 0.2;
@@ -41,7 +44,20 @@ button, a{
   }
 }
 header{
-  background: url(../../assets/images/header-bg.png);
+  background-image:
+          -moz-linear-gradient(45deg, $gray-200 25%, transparent 25%),
+          -moz-linear-gradient(-45deg, $gray-200 25%, transparent 25%),
+          -moz-linear-gradient(45deg, transparent 75%, $gray-200 75%),
+          -moz-linear-gradient(-45deg, transparent 75%, $gray-200 75%);
+  background-image:
+          -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.25, $gray-200), color-stop(.25, transparent)),
+          -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.25, $gray-200), color-stop(.25, transparent)),
+          -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.75, transparent), color-stop(.75, $gray-200)),
+          -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.75, transparent), color-stop(.75, $gray-200));
+  -moz-background-size:6px 6px;
+  background-size:6px 6px;
+  -webkit-background-size:6px 6px;
+  background-position:0 0, 3px 0, 3px -3px, 0px 3px;
 }
 .navbar{
   &.bg-light {
@@ -76,6 +92,18 @@ header{
     }
   }
 }
+header{
+  .input-group{
+    &:focus{
+      box-shadow: 0 0 3px $primary;
+      border-radius: 0.2rem;
+    }
+    &:hover{
+      box-shadow: 0 0 3px $primary;
+    }
+  }
+}
+
 .input-group > .form-control:not(:first-child), .input-group > .custom-select:not(:first-child) {
   border-top-left-radius: .2rem;
   border-bottom-left-radius: .2rem;
@@ -83,6 +111,29 @@ header{
 .input-group-text{
   border-radius: .2rem;
   background-color: transparent;
+  outline:none;
+  &:hover{
+    outline: none;
+  }
+  &:focus{
+    outline: none;
+  }
+}
+.form-control{
+  outline: none !important;
+  border: 1px solid $gray-400;
+  &:hover{
+    outline: none !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 1px solid $gray-400;
+  }
+  &:focus{
+    outline: none!important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 1px solid $gray-400;
+  }
 }
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   font-size: $font-size-xs;
