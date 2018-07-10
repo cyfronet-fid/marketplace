@@ -8,7 +8,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-
 # Initial categories and services
 puts "Generating categories"
 all_categories = []
@@ -19,10 +18,4 @@ all_categories << Category.create_with(name: "Cloud", parent: computing).find_or
 all_categories << Category.create_with(name: "Data").find_or_create_by(name: "Data")
 
 services_size = ENV["services_size"].to_i || 0
-puts "Generating #{services_size} new services"
-services_size.times do
-  Service.create(title: Faker::Lorem.sentence,
-                 description: Faker::Lorem.paragraph,
-                 terms_of_use: Faker::Lorem.paragraph,
-                 categories: [Category.all.sample])
-end
+Rake::Task["dev:prime"].invoke(services_size)
