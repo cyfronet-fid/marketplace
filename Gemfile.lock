@@ -127,6 +127,7 @@ GEM
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     iniparse (1.4.4)
+    jaro_winkler (1.5.1-x86_64-darwin-17)
     json (2.1.0)
     json-jwt (1.9.4)
       activesupport
@@ -180,7 +181,7 @@ GEM
     parser (2.5.1.0)
       ast (~> 2.4.0)
     pg (1.0.0)
-    powerpack (0.1.1)
+    powerpack (0.1.2)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -260,14 +261,15 @@ GEM
       rspec-mocks (~> 3.7.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
-    rubocop (0.55.0)
+    rubocop (0.58.1)
+      jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
-      parser (>= 2.5)
+      parser (>= 2.5, != 2.5.1.1)
       powerpack (~> 0.1)
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
-    rubocop-rails (1.4.0)
+    rubocop-rails (1.5.0)
       railties (>= 3.0)
       rubocop (~> 0.53)
     ruby-progressbar (1.9.0)
@@ -321,7 +323,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.1.10)
       execjs (>= 0.3.0, < 3)
-    unicode-display_width (1.3.2)
+    unicode-display_width (1.4.0)
     valid_email2 (2.2.3)
       activemodel (>= 3.2)
       mail (~> 2.5)
@@ -387,7 +389,7 @@ DEPENDENCIES
   rails (~> 5.2.0)
   redcarpet
   rspec-rails (~> 3.7)
-  rubocop-rails
+  rubocop-rails (>= 1.5.0)
   sass-rails (~> 5.0)
   sentry-raven
   shoulda-matchers
