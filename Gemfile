@@ -55,10 +55,7 @@ group :development do
   gem "listen", ">= 3.0.5", "< 3.2"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
-
-  gem "faker", require: false
-
-  gem "rubocop-rails"
+  gem "rubocop-rails", ">=1.5.0"
   gem "overcommit", require: false
 end
 
@@ -73,5 +70,5 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :production do
   gem "sentry-raven"
-  gem "faker"
+  gem "faker", require: false
 end
