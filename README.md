@@ -99,6 +99,7 @@ ENV variables:
   * `ROOT_URL` (Optional) - root application URL (default
     `http://localhost:#{ENV["PORT"] || 3000}` (when foreman is used to start
     application 5000 ENV variable is set)
+  * `ELASTICSEARCH_URL` - elasticsearch url   
 
 
 ## Commits
