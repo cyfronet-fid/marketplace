@@ -1,0 +1,80 @@
+#order.tab-pane.pt-2.container{"aria-labelledby" => "profile-tab", role: "tabpanel"}
+  .row.pt-3
+    .col-7
+      %h3.mb-3
+        To proceed your request, please ﬁll next few additional informations
+      %form.mt-4
+        .row
+          .col
+            %label
+              Number of CPU cores
+            %input{type: "text", class: "form-control"}
+          .col
+            %label
+              Amount of RAM per CPU core
+            %input{type: "text", class: "form-control"}
+        .row.mt-4
+          .col
+            %label
+              Local disk
+            %select{class: "form-control"}
+              %option
+                10
+          .col
+            %label
+              Number of instances
+            %select{class: "form-control"}
+              %option
+                1
+        .row.mt-4
+          .col
+            %label
+              Access type
+            %select{class: "form-control"}
+              %option
+                Reserved
+          .col
+            %label
+              Number of public IP
+            %select{class: "form-control"}
+              %option
+                1
+        .row.mt-4
+          .col
+            %label
+              Start of service
+            .input-group.date
+              %input{class: "form-control"}
+              .input-group-append
+                %span.input-group-text
+                  %i.far.fa-calendar-alt
+          .col
+            %label
+              Number of days
+            %input{type: "text", class: "form-control"}
+    .col-1
+    .col-4
+      .card
+        .card-header.text-center.pt-3.pb-3
+          %button.btn.btn-secondary
+            %i.fas.fa-paper-plane
+            request access
+        .card-body.pt-4.pb-4.pl-5.pr-5
+          .steps-form-2.ml-5.mr-5
+            .steps-row-2.setup-panel-2.d-flex.justify-content-between
+              .bg-white.position-relative
+                %a{href: "#step-1", class: "ml-0"}
+                  %i.fas.fa-circle.fa-lg
+              .bg-white.position-relative
+                %a{href: "#step-2", class: "ml-0"}
+                  %i.fas.fa-dot-circle.fa-lg
+              .bg-white.position-relative
+                %a{href: "#step-3", class: "ml-0"}
+                  %i.far.fa-circle.fa-lg
+              .bg-white.position-relative
+                %a{href: "#step-4", class: "ml-0"}
+                  %i.far.fa-circle.fa-lg
+          .small.text-center.font-italic.ml-2.mr-2
+            %span.d-block.font-weight-bold.mt-3
+              NEXT STEP
+            Summary of your request, some additional information to ﬁll

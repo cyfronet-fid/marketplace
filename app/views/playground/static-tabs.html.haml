@@ -1,144 +1,119 @@
 .container
-  %h1 Component MetaData Infrastructure
+  %ul#myTab.nav.nav-tabs{:role => "tablist"}
+    %li.nav-item
+      %a#home-tab.nav-link.active{"aria-controls" => "home", "aria-selected" => "true", "data-toggle" => "tab", :href => "#desc", :role => "tab"} DESCRIPTION
+    %li.nav-item
+      %a#profile-tab.nav-link{"aria-controls" => "profile", "aria-selected" => "false", "data-toggle" => "tab", :href => "#order", :role => "tab"} ORDER SPECIFICATION
+    %li.nav-item
+      %a#messages-tab.nav-link{"aria-controls" => "messages", "aria-selected" => "false", "data-toggle" => "tab", :href => "#opinions", :role => "tab"} OPINIONS (5)
 
-.bg-tabs.mt-5
-  .container
-
-    %ul#myTab.nav.nav-tabs
-      %li.nav-item
-        %a{:class => "nav-link active", :id => "home-tab", :href => "#desc", :role => "tab"} DESCRIPTION
-      %li.nav-item
-        %a{:class => "nav-link", :id => "home-tab", :href => "#order", :role => "tab"} ORDER SPECIFICATION
-      %li.nav-item
-        %a{:class => "nav-link", :id => "home-tab", :href => "#opinions", :role => "tab"} OPINIONS (5)
-  #myTabContent.tab-content.pt-4
-    .container
-      #desc.tab-pane.fade.show.active
-        .row.pt-3
-          .col-8
-            %h3.mb-3 Run virtual machines on-demand with complete control over computing resources.
-            %p.mt-4 With Cloud Compute you can deploy and scale virtual machines on-demand. Cloud Compute offers guaranteed computational resources in a secure and isolated environment with standard API access, without the overhead of managing physical servers.
-            %p.mt-3 Cloud Compute offers the possibility to select preconﬁgured virtual appliances (e.g. CPU, memory, disk, operating system or software) from a catalogue replicated across all EGI cloud providers from a catalogue replicated across all EGI cloud providers.
-            %p.mt-5 Featured usecases
-            %ul.ml-4
-              %li.mt-2
-                %span
-                  How to predict social media trends? how Cloud Compute helps to test new ways to detect trends on social networks
-              %li.mt-2
-                %span
-                  The genetics of Salmonella infections: how Cloud Compute helped scientists to understand what happens during when a human cell meets Salmonella
-          .col-1
-          .col-3
-            %p
-              Featured details:
-            %ul.ml-4
-              %li
-                %a{:href => ""}Terms of use
-              %li
-                %a{:href => ""}SLA
-              %li
-                %a{:href => ""}Access policy
-      #order.tab-pane.fade
-
-      #opinions.tab-pane.fade
-
-.bg-tabs.mt-5
-  .container
-
-    %ul#myTab.nav.nav-tabs
-      %li.nav-item
-        %a{:class => "nav-link", :id => "home-tab", :href => "#desc", :role => "tab"} DESCRIPTION
-      %li.nav-item
-        %a{:class => "nav-link active", :id => "home-tab", :href => "#order", :role => "tab"} ORDER SPECIFICATION
-      %li.nav-item
-        %a{:class => "nav-link", :id => "home-tab", :href => "#opinions", :role => "tab"} OPINIONS (5)
-  #myTabContent.tab-content.pt-4
-    .container
-      #desc.tab-pane.fade
-
-      #order.tab-pane.fade.show.active
-        .row.pt-3
-          .col-7
-            %h3.mb-3
-              To proceed your request, please ﬁll next few additional informations
-            %form.mt-4
-              .row
-                .col
-                  %label
-                    Number of CPU cores
-                  %input{:type => "text", :class => "form-control"}
-                .col
-                  %label
-                    Amount of RAM per CPU core
-                  %input{:type => "text", :class => "form-control"}
-              .row.mt-4
-                .col
-                  %label
-                    Local disk
-                  %select{:class => "form-control"}
-                    %option
-                      10
-                .col
-                  %label
-                    Number of instances
-                  %select{:class => "form-control"}
-                    %option
-                      1
-              .row.mt-4
-                .col
-                  %label
-                    Access type
-                  %select{:class => "form-control"}
-                    %option
-                      Reserved
-                .col
-                  %label
-                    Number of public IP
-                  %select{:class => "form-control"}
-                    %option
-                      1
-              .row.mt-4
-                .col
-                  %label
-                    Start of service
-                  .input-group.date
-                    %input{:class => "form-control"}
-                    .input-group-append
-                      %span.input-group-text
-                        %i.fas.fa-calendar-alt
-                .col
-                  %label
-                    Number of days
-                  %input{:type => "text", :class => "form-control"}
-          .col-1
-          .col-4
-            .card
-              .card-header.text-center.pt-3.pb-3
-                %button.btn.btn-secondary
-                  %i.fas.fa-paper-plane
-                  request access
-              .card-body.pt-4.pb-4.pl-5.pr-5
-                .steps-form-2.ml-5.mr-5
-                  .steps-row-2.setup-panel-2.d-flex.justify-content-between
-                    .bg-white.position-relative
-                      %a{:href => "#step-1", :class => "ml-0"}
-                        %i.fas.fa-circle.fa-lg
-                    .bg-white.position-relative
-                      %a{:href => "#step-2", :class => "ml-0"}
-                        %i.fas.fa-dot-circle.fa-lg
-                    .bg-white.position-relative
-                      %a{:href => "#step-3", :class => "ml-0"}
-                        %i.far.fa-circle.fa-lg
-                    .bg-white.position-relative
-                      %a{:href => "#step-4", :class => "ml-0"}
-                        %i.far.fa-circle.fa-lg
-                .small.text-center.font-italic.ml-2.mr-2
-                  %span.d-block.font-weight-bold.mt-3
-                    NEXT STEP
-                  Summary of your request, some additional information to ﬁll
-
-      #opinions.tab-pane.fade
-
-
+/ Tab panes
+.tab-content
+  #desc.tab-pane.container.active{"aria-labelledby" => "home-tab", :role => "tabpanel"}
+    .row.pt-3
+      .col-8
+        %h3.mb-3 Run virtual machines on-demand with complete control over computing resources.
+        %p.mt-4 With Cloud Compute you can deploy and scale virtual machines on-demand. Cloud Compute offers guaranteed computational resources in a secure and isolated environment with standard API access, without the overhead of managing physical servers.
+        %p.mt-3 Cloud Compute offers the possibility to select preconﬁgured virtual appliances (e.g. CPU, memory, disk, operating system or software) from a catalogue replicated across all EGI cloud providers from a catalogue replicated across all EGI cloud providers.
+        %p.mt-5 Featured usecases
+        %ul.ml-4
+          %li.mt-2
+            %span
+              How to predict social media trends? how Cloud Compute helps to test new ways to detect trends on social networks
+          %li.mt-2
+            %span
+              The genetics of Salmonella infections: how Cloud Compute helped scientists to understand what happens during when a human cell meets Salmonella
+      .col-1
+      .col-3
+        %p
+          Featured details:
+        %ul.ml-4
+          %li
+            %a{:href => ""}Terms of use
+          %li
+            %a{:href => ""}SLA
+          %li
+            %a{:href => ""}Access policy
+  #order.tab-pane.container{"aria-labelledby" => "profile-tab", :role => "tabpanel"}
+    .row.pt-3
+      .col-7
+        %h3.mb-3
+          To proceed your request, please ﬁll next few additional informations
+        %form.mt-4
+          .row
+            .col
+              %label
+                Number of CPU cores
+              %input{:type => "text", :class => "form-control"}
+            .col
+              %label
+                Amount of RAM per CPU core
+              %input{:type => "text", :class => "form-control"}
+          .row.mt-4
+            .col
+              %label
+                Local disk
+              %select{:class => "form-control"}
+                %option
+                  10
+            .col
+              %label
+                Number of instances
+              %select{:class => "form-control"}
+                %option
+                  1
+          .row.mt-4
+            .col
+              %label
+                Access type
+              %select{:class => "form-control"}
+                %option
+                  Reserved
+            .col
+              %label
+                Number of public IP
+              %select{:class => "form-control"}
+                %option
+                  1
+          .row.mt-4
+            .col
+              %label
+                Start of service
+              .input-group.date
+                %input{:class => "form-control"}
+                .input-group-append
+                  %span.input-group-text
+                    %i.far.fa-calendar-alt
+            .col
+              %label
+                Number of days
+              %input{:type => "text", :class => "form-control"}
+      .col-1
+      .col-4
+        .card
+          .card-header.text-center.pt-3.pb-3
+            %button.btn.btn-secondary
+              %i.fas.fa-paper-plane
+              request access
+          .card-body.pt-4.pb-4.pl-5.pr-5
+            .steps-form-2.ml-5.mr-5
+              .steps-row-2.setup-panel-2.d-flex.justify-content-between
+                .bg-white.position-relative
+                  %a{:href => "#step-1", :class => "ml-0"}
+                    %i.fas.fa-circle.fa-lg
+                .bg-white.position-relative
+                  %a{:href => "#step-2", :class => "ml-0"}
+                    %i.fas.fa-dot-circle.fa-lg
+                .bg-white.position-relative
+                  %a{:href => "#step-3", :class => "ml-0"}
+                    %i.far.fa-circle.fa-lg
+                .bg-white.position-relative
+                  %a{:href => "#step-4", :class => "ml-0"}
+                    %i.far.fa-circle.fa-lg
+            .small.text-center.font-italic.ml-2.mr-2
+              %span.d-block.font-weight-bold.mt-3
+                NEXT STEP
+              Summary of your request, some additional information to ﬁll
+  #opinions.tab-pane.container{"aria-labelledby" => "messages-tab", :role => "tabpanel"}
 
 
