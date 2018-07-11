@@ -10,6 +10,10 @@ class Service < ApplicationRecord
   has_many :categories, through: :service_categories
   has_many :orders
 
+  belongs_to :owner,
+             class_name: "User",
+             optional: true
+
   validates :title, presence: true
   validates :description, presence: true
   validates :tagline, presence: true

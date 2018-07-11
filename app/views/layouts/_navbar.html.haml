@@ -28,6 +28,9 @@
             = link_to "My Services", orders_path, class: "nav-link px-3 py-1"
           = nav_link controller: :profiles do
             = link_to "My profile", profile_path, class: "nav-link px-3 py-1"
+        - if policy([:backoffice, :backoffice]).show?
+          %li.nav-item
+            = link_to "Backoffice", backoffice_path, class: "nav-link px-3 py-1"
         %li.nav-item
           - if user_signed_in?
             = link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link px-3 py-1"

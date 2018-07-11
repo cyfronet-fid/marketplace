@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_05_121340) do
+
+ActiveRecord::Schema.define(version: 2018_07_06_101250) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -82,7 +84,9 @@ ActiveRecord::Schema.define(version: 2018_07_05_121340) do
     t.datetime "updated_at", null: false
     t.text "terms_of_use"
     t.text "tagline", null: false
+    t.bigint "owner_id"
     t.index ["description"], name: "index_services_on_description"
+    t.index ["owner_id"], name: "index_services_on_owner_id"
     t.index ["title"], name: "index_services_on_title"
   end
 
@@ -100,8 +104,10 @@ ActiveRecord::Schema.define(version: 2018_07_05_121340) do
     t.string "uid", null: false
     t.string "first_name", null: false
     t.string "last_name", null: false
+    t.integer "roles_mask"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "order_changes", "users", column: "author_id"
+  add_foreign_key "services", "users", column: "owner_id"
 end

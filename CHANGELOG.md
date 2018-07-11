@@ -36,6 +36,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - User affiliations (@mkasztelnik)
 - Service and categories database seed (@bwilk)
 - Conditional software version placeholder in frontend (@bwilk)
+- Service owner can manage owned services (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)

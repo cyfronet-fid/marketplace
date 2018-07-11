@@ -1,0 +1,12 @@
+.container
+  %h1
+    Services
+    - if policy([:backoffice, Service]).new?
+      .float-right
+        = link_to "Create new service",
+                  new_backoffice_service_path,
+                  class: "btn btn-success"
+      .clearfix
+  %hr/
+  = render @services
+  = will_paginate @services
