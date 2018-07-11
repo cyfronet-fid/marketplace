@@ -32,6 +32,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Possibility to configure elasticsearch URL using ENV variable (@wziajka)
 - Bootstrap JS and font awesome regular (@mszostak)
 - Service tagline (@martaswiatkowska)
+- Transfer tabs from playground to services(@kosmidma)
 - Add styling for services, improve global styles (@kosmidma)
 - User affiliations (@mkasztelnik)
 - Service and categories database seed (@bwilk)
