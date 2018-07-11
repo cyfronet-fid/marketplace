@@ -102,7 +102,7 @@ RSpec.feature "Service order" do
 
       visit service_path(service)
 
-      expect(page).to_not have_text("Order")
+      expect(page).to_not have_selector(:link_or_button, "Order", exact: true)
     end
 
     scenario "I don't my services page" do
