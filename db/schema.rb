@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 2018_07_06_101250) do
 
   # These are extensions that must be enabled in order to support this database
@@ -82,6 +83,7 @@ ActiveRecord::Schema.define(version: 2018_07_06_101250) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "terms_of_use"
+    t.text "tagline", null: false
     t.bigint "owner_id"
     t.index ["description"], name: "index_services_on_description"
     t.index ["owner_id"], name: "index_services_on_owner_id"

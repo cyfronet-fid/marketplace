@@ -16,6 +16,7 @@ class Service < ApplicationRecord
 
   validates :title, presence: true
   validates :description, presence: true
+  validates :tagline, presence: true
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
 

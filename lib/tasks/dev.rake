@@ -13,8 +13,10 @@ if Rails.env.development?
         Service.create(title: Faker::Lorem.sentence,
                        description: Faker::Lorem.paragraph,
                        terms_of_use: Faker::Lorem.paragraph,
+                       tagline: Faker::Lorem.sentence,
                        categories: [Category.all.sample],
                        owner: users.sample)
+
       end
       puts "Done!"
     end
