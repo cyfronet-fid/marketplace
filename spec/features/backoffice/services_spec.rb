@@ -46,6 +46,7 @@ RSpec.feature "Services in backoffice" do
     fill_in "Title", with: "service title"
     fill_in "Description", with: "service description"
     fill_in "Terms of use", with: "service terms of use"
+    fill_in "Tagline", with: "service tagline"
 
     expect { click_on "Create Service" }.
       to change { user.owned_services.count }.by(1)
@@ -53,6 +54,7 @@ RSpec.feature "Services in backoffice" do
     expect(page).to have_content("service title")
     expect(page).to have_content("service description")
     expect(page).to have_content("service terms of use")
+    expect(page).to have_content("service tagline")
   end
 
   scenario "I can edit owned service" do
