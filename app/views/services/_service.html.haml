@@ -12,9 +12,13 @@
         Available for SME only within 1 day
       .row
         .col
-          =print_rating_stars(service.rating)
+          %i.fas.fa-star
+          %i.fas.fa-star
+          %i.fas.fa-star
+          %i.fas.fa-star
+          %i.fas.fa-star-half-alt
           %span.small.ml-1.font-weight-bold
-            (#{service.rating} /5)
+            (2.3/5)
           %a{href: "", class: "small ml-3"}
             5 opinions
 
