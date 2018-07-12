@@ -4,6 +4,13 @@
   %p
     %b=@service.tagline
   %p= @service.description
+  .row
+    .col
+      =print_rating_stars(@service.rating)
+      %span.small.ml-1.font-weight-bold
+        (#{@service.rating} /5)
+      %a{href: "", class: "small ml-3"}
+        5 opinions
 
 .container
   %ul#myTab.nav.nav-tabs.mt-4{role: "tablist"}
@@ -18,4 +25,3 @@
   = render "services/description"
   = render "services/order"
   = render "services/opinions"
-
