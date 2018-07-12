@@ -15,7 +15,8 @@ if Rails.env.development?
                        terms_of_use: Faker::Lorem.paragraph,
                        tagline: Faker::Lorem.sentence,
                        categories: [Category.all.sample],
-                       owner: users.sample)
+                       owner: users.sample,
+                       rating: Random.rand(5.0))
 
       end
       puts "Done!"
