@@ -3,10 +3,10 @@
   .float-right
     = link_to "New affiliation",
               new_profile_affiliation_path,
-              class: "btn btn-success"
+              class: "btn btn-primary"
 .clearfix
 
-%ul
+%ul.mt-5
   = render partial: "profiles/affiliations/affiliation",
                     collection: affiliations
 = will_paginate affiliations
