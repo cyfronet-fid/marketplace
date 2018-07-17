@@ -7,6 +7,12 @@
   %h2 Terms of use
   = markdown(@service.terms_of_use)
 
+  %h2 Service website
+  %p= @service.connected_url
+
+  %h2 Open access
+  %p= @service.open_access
+
   - if policy([:backoffice, @service]).edit?
     = link_to "Edit",
               edit_backoffice_service_path(@service),

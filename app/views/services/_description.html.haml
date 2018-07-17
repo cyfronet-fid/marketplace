@@ -7,8 +7,10 @@
       - if policy(Order.new).create?
         = form_for(Order.new) do |f|
           = f.hidden_field :service_id, value: service.id
-          %button{ class: "btn btn-primary", type: "submit" } Order
-
+          %button{ class: "btn btn-primary" }
+            = write_button_text
+          - if @service.open_access?
+            = link_to "Go to the service", service.connected_url, class: "btn btn-primary", target: "_blank"
 
       %h3.mb-3.mt-3 Run virtual machines on-demand with complete control over computing resources.
       %p.mt-4 With Cloud Compute you can deploy and scale virtual machines on-demand. Cloud Compute offers guaranteed
