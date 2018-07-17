@@ -32,7 +32,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:title, :description, :terms_of_use, :tagline]
+    [:title, :description, :terms_of_use, :tagline, :connected_url, :open_access]
   end
 
   private
