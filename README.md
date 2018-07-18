@@ -36,6 +36,9 @@ rake db:seed services_size=100
 ```
 
 ### Generating DB entries for development
+Actually, filling the database is done by parsing yaml: `db/data.yml`.
+Data come from actual official version of the marketplace.
+But if it's necessary, there is other option to fill the database:
 To simplify development `dev:prime` rake task is created. Right now it generates
 services with random title and description (this generation is done using
 `faker` gem). In the future this task will be extended with additional data.
