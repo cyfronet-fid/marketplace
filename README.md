@@ -70,6 +70,47 @@ or you can also use `systemctl`, it shouldn't matter which one you use.
  -[ElasticHQ](http://www.elastichq.org/gettingstarted.html) (plugin option is
  -quick and easy).
 
+## JIRA
+
+Marketplace is integrating with jira on a rather tight level. 
+For tests JIRA is stubbed, and for normal development it can be omitted,
+but in case there is a need for JIRA instance to exist it is recommeded
+to use jira instance provided by atlassian SDK.
+
+Here are instructions how to install atlassian SDK on *nix systems:
+https://developer.atlassian.com/server/framework/atlassian-sdk/install-the-atlassian-sdk-on-a-linux-or-mac-system/
+
+After installation you can start local JIRA instance by
+
+```
+atlas-run-standalone --product jira --server localhost
+```
+
+Afterwards JIRA can be accessed by the browser on http://localhost:2990/jira
+default username and password is: `admin/admin`.
+Make sure that environmental variables are set as follows:
+
+```
+MP_JIRA_PROJECT=MP 
+MP_JIRA_USERNAME=admin
+MP_JIRA_CONTEXT_PATH=/jira
+MP_JIRA_PASSWORD=admin
+MP_JIRA_URL=http://localhost:2990
+MP_JIRA_ISSUE_TYPE_ID=10000  #this might be different
+```
+
+Afterwards you should run rake task which will check JIRA connection and will detect potential problems
+
+```
+rails jira:check
+```
+
+If you run fresh jira instance you can also create project by running
+```
+rails jira:setup
+```
+
+
 ## Run
 
 To start web application in development mode (with auto refresh capability when
