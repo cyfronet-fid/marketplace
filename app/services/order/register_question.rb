@@ -1,18 +1,30 @@
 # frozen_string_literal: true
 
 class Order::RegisterQuestion
+  class JIRACommentCreateError < StandardError
+    def initialize(question, msg = nil)
+      @question = question
+      super(msg)
+    end
+  end
+
   def initialize(order, question)
     @order = order
     @question = question
   end
 
   def call
-    # TODO: Jira integration. This method should throw error on errors which
-    #       can be connected with temporary jira issue. Than registration
-    #       process will be retired by delayed job.
-    puts <<-MSQ
-      REGISTER: #{@order.user.full_name} asks question about #{@order}:
-        "#{@question}"
-    MSQ
+    issue = Jira::Client.new.Issue.find(@order.issue_id)
+
+    comment = issue.comments.build
+    if comment.save(body: @question)
+      # :TODO: maybe question / order change should be extended to
+      # contain jira comment id and status, for easier disaster recovery
+      # and tracking
+      true
+    else
+      # :TODO: set errors on @question
+      raise JIRACommentCreateError.new(@question)
+    end
   end
 end

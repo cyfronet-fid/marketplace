@@ -67,6 +67,7 @@ GEM
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.2)
+    colorize (0.8.1)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
     database_cleaner (1.7.0)
@@ -127,7 +128,11 @@ GEM
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     iniparse (1.4.4)
-    jaro_winkler (1.5.1-x86_64-darwin-17)
+    jaro_winkler (1.5.1)
+    jira-ruby (1.5.0)
+      activesupport
+      multipart-post
+      oauth (~> 0.5, >= 0.5.0)
     json (2.1.0)
     json-jwt (1.9.4)
       activesupport
@@ -155,6 +160,7 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
+    oauth (0.5.4)
     omniauth (1.8.1)
       hashie (>= 3.4.6, < 3.6.0)
       rack (>= 1.6.2, < 3)
@@ -366,6 +372,7 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   byebug
   capybara
+  colorize (>= 0.8.1)
   database_cleaner
   devise
   elasticsearch-model
@@ -375,6 +382,7 @@ DEPENDENCIES
   github-markup
   gretel
   haml-rails
+  jira-ruby
   listen (>= 3.0.5, < 3.2)
   omniauth
   omniauth_openid_connect

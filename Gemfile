@@ -16,6 +16,7 @@ gem "haml-rails"
 gem "turbolinks", "~> 5", require: false
 
 gem "bootsnap", ">= 1.1.0", require: false
+gem "colorize", ">= 0.8.1", require: false
 
 gem "ancestry"
 gem "gretel"
@@ -39,6 +40,9 @@ gem "role_model"
 # Markdown
 gem "github-markup"
 gem "redcarpet"
+
+# jira
+gem "jira-ruby"
 
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
