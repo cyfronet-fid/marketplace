@@ -70,6 +70,13 @@ PreCommit:
   BundleCheck:
     enabled: true
 
+  HamlLint:
+    enabled: true
+    exclude: ['lib/**/*.haml']
+
+  ScssLint:
+    enabled: true
+
   RuboCop:
     enabled: true
     command: ['bin/bundle', 'exec', 'rubocop']

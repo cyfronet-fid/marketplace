@@ -1,6 +1,6 @@
 #li
   #{affiliation.iid}: #{affiliation.organization}
-  -unless affiliation.department.blank?
+  - unless affiliation.department.blank?
     #{affiliation.department} department
   (#{affiliation.webpage}, email: #{affiliation.email},
   #{affiliation.phone} telephone).
