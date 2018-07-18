@@ -1,0 +1,34 @@
+scss_files: 'app/**/*.scss'
+
+exclude: 'app/assets/stylesheets/plugins/**'
+
+linters:
+  BorderZero:
+    enabled: false
+
+  ChainedClasses:
+    enabled: false
+
+  Comment:
+    enabled: false
+
+  PropertySortOrder:
+    enabled: false
+
+  ImportantRule:
+    enabled: false
+
+  NestingDepth:
+    enabled: false
+
+  SelectorDepth:
+    enabled: false
+
+  LeadingZero:
+    style: include_zero
+
+  VendorPrefix:
+    enabled: false
+
+  Indentation:
+    width: 2

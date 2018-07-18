@@ -1,4 +1,4 @@
-= simple_form_for [:backoffice, @service] do |f|
+= simple_form_for [:backoffice, service] do |f|
   = f.error_notification
   = f.input :title
   = f.input :description
@@ -6,7 +6,7 @@
   = f.input :tagline
 
   .btn-group
-    = f.button :submit, class: 'btn btn-success'
-    - path = @service.persisted? ? backoffice_service_path(@service) : backoffice_services_path
+    = f.button :submit, class: "btn btn-success"
+    - path = service.persisted? ? backoffice_service_path(service) : backoffice_services_path
     = link_to "Cancel", path, class: "btn btn-secondary"
 

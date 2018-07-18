@@ -1,4 +1,4 @@
-#order.tab-pane.pt-2.container{"aria-labelledby" => "profile-tab", role: "tabpanel"}
+#order.tab-pane.pt-2.container{ "aria-labelledby" => "profile-tab", role: "tabpanel" }
   .row.pt-3
     .col-7
       %h3.mb-3
@@ -8,35 +8,35 @@
           .col
             %label
               Number of CPU cores
-            %input{type: "text", class: "form-control"}
+            %input.form-control{ type: "text" }
           .col
             %label
               Amount of RAM per CPU core
-            %input{type: "text", class: "form-control"}
+            %input.form-control{ type: "text" }
         .row.mt-4
           .col
             %label
               Local disk
-            %select{class: "form-control"}
+            %select.form-control
               %option
                 10
           .col
             %label
               Number of instances
-            %select{class: "form-control"}
+            %select.form-control
               %option
                 1
         .row.mt-4
           .col
             %label
               Access type
-            %select{class: "form-control"}
+            %select.form-control
               %option
                 Reserved
           .col
             %label
               Number of public IP
-            %select{class: "form-control"}
+            %select.form-control
               %option
                 1
         .row.mt-4
@@ -44,14 +44,14 @@
             %label
               Start of service
             .input-group.date
-              %input{class: "form-control"}
+              %input.form-control
               .input-group-append
                 %span.input-group-text
                   %i.far.fa-calendar-alt
           .col
             %label
               Number of days
-            %input{type: "text", class: "form-control"}
+            %input.form-control{ type: "text" }
     .col-1
     .col-4
       .card
@@ -63,16 +63,16 @@
           .steps-form-2.ml-5.mr-5
             .steps-row-2.setup-panel-2.d-flex.justify-content-between
               .bg-white.position-relative
-                %a{href: "#step-1", class: "ml-0"}
+                %a.ml-0{ href: "#step-1" }
                   %i.fas.fa-circle.fa-lg
               .bg-white.position-relative
-                %a{href: "#step-2", class: "ml-0"}
+                %a.ml-0{ href: "#step-2" }
                   %i.fas.fa-dot-circle.fa-lg
               .bg-white.position-relative
-                %a{href: "#step-3", class: "ml-0"}
+                %a.ml-0{ href: "#step-3" }
                   %i.far.fa-circle.fa-lg
               .bg-white.position-relative
-                %a{href: "#step-4", class: "ml-0"}
+                %a.ml-0{ href: "#step-4" }
                   %i.far.fa-circle.fa-lg
           .small.text-center.font-italic.ml-2.mr-2
             %span.d-block.font-weight-bold.mt-3

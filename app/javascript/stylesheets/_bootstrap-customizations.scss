@@ -1,277 +1,324 @@
-body{
+@import 'variables';
+
+body {
   font-size: $font-size-sm;
-  margin-bottom: 0px !important;
+  margin-bottom: 0 !important;
 }
+
 *:focus {
   outline: none !important;
 }
-hr{
-  border-color:$body-color;
+
+hr {
+  border-color: $body-color;
   opacity: 0.2;
 }
-ul{
+
+ul {
   list-style: none;
   padding-left: 0;
   line-height: 1.5rem;
 }
-a{
-  &:hover{
+
+a {
+  &:hover {
     text-decoration: none;
     color: $body-color;
   }
 }
-.text-muted{
+
+.text-muted {
   color: $body-color !important;
 }
-h3{
+
+h3 {
   font-size: 1rem;
   font-weight: 600;
 }
-h5{
+
+h5 {
   font-weight: 600;
   text-transform: uppercase;
   font-size: $font-size-xxs;
-  &:after {
-    content: "";
+
+  &::after {
+    content: '';
     position: absolute;
     top: 22px;
     border-top: 1px solid $body-color;
     width: 90%;
     height: 12px;
-    left:15px;
+    left: 15px;
     z-index: 8;
     opacity: 0.2;
   }
 }
-button, a{
-  &:hover{
+
+//scss-lint:disable SingleLinePerSelector
+button, a {
+  &:hover {
     cursor: pointer;
   }
 }
-header{
+
+header {
+  // scss-lint:disable SpaceAfterPropertyColon
   background-image:
           -moz-linear-gradient(45deg, $gray-200 25%, transparent 25%),
           -moz-linear-gradient(-45deg, $gray-200 25%, transparent 25%),
           -moz-linear-gradient(45deg, transparent 75%, $gray-200 75%),
           -moz-linear-gradient(-45deg, transparent 75%, $gray-200 75%);
+
+  // scss-lint:disable SpaceAfterPropertyColon
   background-image:
-          -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.25, $gray-200), color-stop(.25, transparent)),
-          -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.25, $gray-200), color-stop(.25, transparent)),
-          -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.75, transparent), color-stop(.75, $gray-200)),
-          -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.75, transparent), color-stop(.75, $gray-200));
-  -moz-background-size:6px 6px;
-  background-size:6px 6px;
-  -webkit-background-size:6px 6px;
-  background-position:0 0, 3px 0, 3px -3px, 0px 3px;
+          -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, $gray-200), color-stop(0.25, transparent)),
+          -webkit-gradient(linear, 0 0, 100% 100%, color-stop(0.25, $gray-200), color-stop(0.25, transparent)),
+          -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.75, transparent), color-stop(0.75, $gray-200)),
+          -webkit-gradient(linear, 0 0, 100% 100%, color-stop(0.75, transparent), color-stop(0.75, $gray-200));
+  -moz-background-size: 6px 6px;
+  background-size: 6px 6px;
+  -webkit-background-size: 6px 6px;
+  background-position: 0 0, 3px 0, 3px -3px, 0 3px;
+
+  .input-group {
+    &:focus {
+      box-shadow: 0 0 3px $primary;
+      border-radius: 0.2rem;
+    }
+
+    &:hover {
+      box-shadow: 0 0 3px $primary;
+    }
+  }
 }
-.navbar{
+
+.navbar {
   &.bg-light {
     background-color: transparent !important;
   }
-  &.navbar-expand-lg{
-    .navbar-nav{
-      .nav-link{
+
+  &.navbar-expand-lg {
+    .navbar-nav {
+      .nav-link {
         font-size: $font-size-xs;
       }
-      .active{
+
+      .active {
         background-color: $white;
         border-radius: 0.2rem;
       }
     }
   }
 }
-.btn{
+
+.btn {
   border-radius: 0;
   font-size: $font-size-xs;
   text-transform: uppercase;
-  svg{
+
+  svg {
     margin-right: 9px;
   }
 }
+
 .btn-primary {
   color: $white !important;
 }
-.breadcrumbs{
+
+.breadcrumbs {
   font-size: $font-size-xxs;
-  a{
-    &:hover{
-      opacity: .6;
+
+  a {
+    &:hover {
+      opacity: 0.6;
       text-decoration: none;
     }
   }
 }
-header{
-  .input-group{
-    &:focus{
-      box-shadow: 0 0 3px $primary;
-      border-radius: 0.2rem;
-    }
-    &:hover{
-      box-shadow: 0 0 3px $primary;
-    }
-  }
+
+.input-group > .form-control:not(:first-child),
+.input-group > .custom-select:not(:first-child) {
+  border-top-left-radius: 0.2rem;
+  border-bottom-left-radius: 0.2rem;
 }
 
-.input-group > .form-control:not(:first-child), .input-group > .custom-select:not(:first-child) {
-  border-top-left-radius: .2rem;
-  border-bottom-left-radius: .2rem;
-}
-.form-control{
-  border-color: #c6c6c6;
+.form-control {
   border-radius: 0.2rem;
-}
-.input-group-text{
-  border-radius: .2rem;
-  background-color: transparent;
-  outline:none;
-  &:hover{
-    outline: none;
-  }
-  &:focus{
-    outline: none;
-  }
-}
-.form-control{
   outline: none !important;
   border: 1px solid $gray-400;
-  &:hover{
+
+  &:hover {
     outline: none !important;
     -webkit-box-shadow: none;
     box-shadow: none;
     border: 1px solid $gray-400;
   }
-  &:focus{
-    outline: none!important;
+
+  &:focus {
+    outline: none !important;
     -webkit-box-shadow: none;
     box-shadow: none;
     border: 1px solid $gray-400;
   }
 }
-input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  font-size: $font-size-xs;
-  font-weight: 400;
-  font-style: italic;
-  color: $gray-500 !important;
+
+.input-group-text {
+  border-radius: 0.2rem;
+  background-color: transparent;
+  outline: none;
+
+  &:hover {
+    outline: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
 }
-input::-moz-placeholder, textarea::-moz-placeholder { /* Firefox 19+ */
-  font-size: $font-size-xs;
-  font-weight: 400;
-  font-style: italic;
-  color: $gray-500 !important;
-}
-input:-ms-input-placeholder, textarea:-ms-input-placeholder  { /* IE 10+ */
-  font-size: $font-size-xs;
-  font-weight: 400;
-  font-style: italic;
-  color: $gray-500 !important;
-}
-input:-moz-placeholder, textarea:-moz-placeholder { /* Firefox 18- */
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   font-size: $font-size-xs;
   font-weight: 400;
   font-style: italic;
   color: $gray-500 !important;
 }
 
-.pagination{
-  a{
-    color:$body-color;
-    &:hover{
-      color:$body-color;
+input::-moz-placeholder,
+textarea::-moz-placeholder { /* Firefox 19+ */ /* Firefox 18- */
+  font-size: $font-size-xs;
+  font-weight: 400;
+  font-style: italic;
+  color: $gray-500 !important;
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder { /* IE 10+ */
+  font-size: $font-size-xs;
+  font-weight: 400;
+  font-style: italic;
+  color: $gray-500 !important;
+}
+
+.pagination {
+  a {
+    color: $body-color;
+
+    &:hover {
+      color: $body-color;
       opacity: 0.6;
       background-color: transparent;
     }
   }
+
   .page-item.active {
     .page-link {
       color: $body-color;
       background-color: transparent;
       box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      border: 1px solid #dee2e6;
+      border: 1px solid $pagination-link-color;
       border-bottom: 1px solid $body-color;
       font-weight: 800;
     }
   }
-  .text-dark{
+
+  .text-dark {
     color: $body-color;
   }
 }
+
 .media {
   border-bottom: 1px solid $gray-300;
+
   .form-check-input {
     margin-top: 0.5rem;
   }
+
   .form-check-label {
-    font-size: $small-font-size
+    font-size: $small-font-size;
   }
-  .form-group{
-    margin-bottom:0px;
+
+  .form-group {
+    margin-bottom: 0;
   }
-  svg{
-    color: $primary
+
+  svg {
+    color: $primary;
   }
 }
 
-.nav-tabs{
+.nav-tabs {
   background-color: $primary;
   border: none;
-  .nav-link{
+
+  .nav-link {
     color: $white;
     padding: 0.6rem 1rem;
     font-weight: 600;
     border-radius: 0;
-    &:hover{
+
+    &:hover {
       border-color: transparent;
       opacity: 0.7;
     }
-    &.active{
+
+    &.active {
       border-color: $primary $primary $white;
       padding: 0.8rem 1rem;
       margin-top: -5px;
-      &:hover{
+
+      &:hover {
         opacity: 1;
       }
     }
   }
 }
-.tab-content{
+
+.tab-content {
   border-top: 1px solid $primary;
+
   ul {
     list-style-position: outside;
     list-style: disc;
     color: $link-color;
-    li{
-      span{
+
+    li {
+      span {
         color: $body-color;
       }
     }
   }
 }
-.card{
+
+.card {
   border-color: $primary;
-  border-radius: 0px;
-  .card-header{
-    background-color: rgba(255,192,69,0.3);
+  border-radius: 0;
+
+  .card-header {
+    background-color: $card-header-bg;
     border-bottom: none;
   }
 }
+
 .steps-form-2 {
   position: relative;
-  .steps-row-2:before {
+
+  .steps-row-2::before {
     top: 11px;
     bottom: 0;
     position: absolute;
-    content: " ";
+    content: ' ';
     width: 100%;
     z-index: 1;
     height: 1px;
     background-color: $primary;
   }
-  a{
+
+  a {
     color: $primary !important;
   }
-  .bg-white{
-    z-index:2;
+
+  .bg-white {
+    z-index: 2;
   }
 }
