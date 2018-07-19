@@ -2,26 +2,38 @@
 .container
   %h1= @service.title
   %p
-    %b=@service.tagline
+    %b= @service.tagline
   %p= @service.description
   .row
     .col
-      =print_rating_stars(@service.rating)
+      = print_rating_stars(@service.rating)
       %span.small.ml-1.font-weight-bold
         (#{@service.rating} /5)
-      %a{href: "", class: "small ml-3"}
+      %a{ href: "", class: "small ml-3" }
         5 opinions
 
 .container
-  %ul#myTab.nav.nav-tabs.mt-4{role: "tablist"}
+  %ul#my-tab.nav.nav-tabs.mt-4{ role: "tablist" }
     %li.nav-item
-      %a#home-tab.nav-link.text-uppercase.active{"aria-controls" => "home", "aria-selected" => "true", "data-toggle" => "tab", href: "#desc", role: "tab"} Description
+      %a#home-tab.nav-link.text-uppercase.active{ "aria-controls" => "home",
+                                                  "aria-selected" => "true",
+                                                  "data-toggle" => "tab",
+                                                  href: "#desc",
+                                                  role: "tab" } Description
     %li.nav-item
-      %a#profile-tab.nav-link.text-uppercase{"aria-controls" => "profile", "aria-selected" => "false", "data-toggle" => "tab", href: "#order", role: "tab"} Order Specification
+      %a#profile-tab.nav-link.text-uppercase{ "aria-controls" => "profile",
+                                              "aria-selected" => "false",
+                                              "data-toggle" => "tab",
+                                              href: "#order",
+                                              role: "tab" } Order Specification
     %li.nav-item
       -# TODO - insert rating comment count into parenthesis - for now static (5) is left
-      %a#messages-tab.nav-link.text-uppercase{"aria-controls" => "messages", "aria-selected" => "false", "data-toggle" => "tab", href: "#opinions", role: "tab"} Opinions (5)
+      %a#messages-tab.nav-link.text-uppercase{ "aria-controls" => "messages",
+                                               "aria-selected" => "false",
+                                               "data-toggle" => "tab",
+                                               href: "#opinions",
+                                               role: "tab" } Opinions (5)
 .tab-content
-  = render "services/description"
+  = render "services/description", service: @service
   = render "services/order"
   = render "services/opinions"

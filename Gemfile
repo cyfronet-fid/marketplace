@@ -63,6 +63,8 @@ group :development do
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "rubocop-rails", ">=1.5.0"
   gem "overcommit", require: false
+  gem "haml_lint", require: false
+  gem "scss_lint", require: false
 end
 
 group :test do
