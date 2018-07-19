@@ -30,6 +30,12 @@ Rails.application.routes.draw do
     resources :services
   end
 
+  namespace :api do
+    namespace :webhooks do
+      post "/jira" => "jiras#create", as: :jira
+    end
+  end
+
   if Rails.env.development?
     get "playground/:file" => "playground#show",
         constraints: { file: %r{[^/\.]+} }

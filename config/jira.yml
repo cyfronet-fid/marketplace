@@ -1,11 +1,17 @@
 default: &default
   username: <%= ENV["MP_JIRA_USERNAME"] || Rails.application.credentials.jira[Rails.env.to_sym][:username] || "''" %>
   password: <%= ENV["MP_JIRA_PASSWORD"] || Rails.application.credentials.jira[Rails.env.to_sym][:password] || "''" %>
-  project:  <%= ENV["MP_JIRA_PROJECT"] ||  Rails.application.credentials.jira[Rails.env.to_sym][:project] %>
+  project:  <%= ENV["MP_JIRA_PROJECT"] || Rails.application.credentials.jira[Rails.env.to_sym][:project] %>
   issue_type_id: <%= ENV["MP_JIRA_ISSUE_TYPE_ID"] || Rails.application.credentials.jira[Rails.env.to_sym][:issue_type_id] %>
   url: <%= ENV["MP_JIRA_URL"] || Rails.application.credentials.jira[Rails.env.to_sym][:url] %>
   context_path: <%= "'" + (if ENV["MP_JIRA_CONTEXT_PATH"].nil? then (Rails.application.credentials.jira[Rails.env.to_sym][:context_path] || '/jira') else ENV["MP_JIRA_CONTEXT_PATH"] end) + "'" %>
+  webhook_secret: <%= "'" + (if ENV["MP_JIRA_WEBHOOK_SECRET"].nil? then (Rails.application.credentials.jira[Rails.env.to_sym][:webhook_secret] || '') else ENV["MP_JIRA_WEBHOOK_SECRET"] end) + "'" %>
   auth_type: basic
+  # workflow specific, id of issue states should be defined here
+  workflow:
+    todo: <%= ENV["MP_JIRA_WF_TODO"] || 1 %>
+    in_progress: <%= ENV["MP_JIRA_WF_IN_PROGRESS"] || 2 %>
+    done: <%= ENV["MP_JIRA_WF_DONE"] || 3 %>
 
 development:
   <<: *default
