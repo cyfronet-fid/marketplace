@@ -88,15 +88,20 @@ atlas-run-standalone --product jira --server localhost
 
 Afterwards JIRA can be accessed by the browser on http://localhost:2990/jira
 default username and password is: `admin/admin`.
-Make sure that environmental variables are set as follows:
+Make sure that environmental variables are set as follows (if you don't know some
+ids skip it for now, `rails jira:check` will give you sensible hints):
 
 ```
-MP_JIRA_PROJECT=MP 
-MP_JIRA_USERNAME=admin
-MP_JIRA_CONTEXT_PATH=/jira
-MP_JIRA_PASSWORD=admin
-MP_JIRA_URL=http://localhost:2990
-MP_JIRA_ISSUE_TYPE_ID=10000  #this might be different
+export MP_JIRA_PROJECT=MP 
+export MP_JIRA_USERNAME=admin
+export MP_JIRA_PASSWORD=admin
+export MP_JIRA_CONTEXT_PATH=/jira
+export MP_JIRA_URL=http://localhost:2990
+export MP_JIRA_ISSUE_TYPE_ID=10000  #this might be different
+export MP_JIRA_WF_TODO=10000  #this might be different
+export MP_JIRA_WF_IN_PROGRESS=10001  #this might be different
+export MP_JIRA_WF_IN_DONE=10002  #this might be different
+export MP_HOST="http://localhost:5000" # this is address of MP application
 ```
 
 Afterwards you should run rake task which will check JIRA connection and will detect potential problems
@@ -109,6 +114,25 @@ If you run fresh jira instance you can also create project by running
 ```
 rails jira:setup
 ```
+
+### Webhooks
+
+As of now webhooks must be created manually. You can do it in your administrator
+panel on your JIRA instance.
+
+Webhook url must be as follows `<MP HOSTNAME e.g. http://localhost:2990>/api/webhooks/jira`.
+JQL for querying should be: `project = <PROJECT_KEY>`
+All notifications for issues and comments should be enabled.
+
+If you create webhook, but are not sure whether options you have choosen are correct
+running
+```
+rails jira:check
+```
+will show you all problems with your webhook, including notifications you should have
+checked on. (**NOTICE:** don't forget to set you ENV variables correctly (see above),
+especially `MP_HOST` variable, without it rake task will not be able to identify which
+webhook is pointing to your application)
 
 
 ## Run

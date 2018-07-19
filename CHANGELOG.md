@@ -43,6 +43,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add open access services (#martaswiatkowska)
 - Add HAML validation to overcommit via `haml-lint` (@michal-szostak)
 - Add SCSS validation to overcommit via `scss-lint` (@michal-szostak)
+- Jira webhook integration (@michal-szostak)
 - Add footer at the bottom of the page (@kosmidma)
 - Add styling for user's profile (@kosmidma)
 - Add and styling static elements to sidebar (@kosmidma)
