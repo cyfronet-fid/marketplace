@@ -3,6 +3,10 @@
 body {
   font-size: $font-size-sm;
   margin-bottom: 0 !important;
+
+  > main {
+    padding-bottom: 100px;
+  }
 }
 
 *:focus {
@@ -321,4 +325,13 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   .bg-white {
     z-index: 2;
   }
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  background-color: $footer-bg-color;
 }
