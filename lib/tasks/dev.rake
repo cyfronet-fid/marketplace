@@ -16,7 +16,9 @@ if Rails.env.development?
                        tagline: Faker::Lorem.sentence,
                        categories: [Category.all.sample],
                        owner: users.sample,
-                       rating: Random.rand(5.0))
+                       open_access: Faker::Boolean.boolean,
+                       rating: Random.rand(5.0),
+                       connected_url: Faker::Internet.url)
 
       end
       puts "Done!"
