@@ -40,6 +40,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service owner can manage owned services (@mkasztelnik)
 - Add rating for Service (@kmarszalek)
 - Add JIRA integration (marketplace to jira) (@michal-szostak)
+- Add open access services (#martaswiatkowska)
 - Add HAML validation to overcommit via `haml-lint` (@michal-szostak)
 - Add SCSS validation to overcommit via `scss-lint` (@michal-szostak)
 

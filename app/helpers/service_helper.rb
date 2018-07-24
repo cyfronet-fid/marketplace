@@ -17,4 +17,8 @@ module ServiceHelper
     end
     result.html_safe
   end
+
+  def write_button_text
+    @service.open_access ? "Add to my services" : "Order"
+  end
 end

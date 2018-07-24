@@ -19,6 +19,13 @@ RSpec.feature "Service order" do
       expect(page).to have_text("Order")
     end
 
+    scenario "I see order open acces service button" do
+      @open_access_service = create(:open_access_service)
+      visit service_path(@open_access_service)
+
+      expect(page).to have_text("Add to my services")
+    end
+
     scenario "I can order service" do
       visit service_path(service)
 
@@ -29,6 +36,21 @@ RSpec.feature "Service order" do
       expect(order.service).to eq(service)
       expect(order.user).to eq(user)
       expect(order).to be_created
+    end
+
+    scenario "I can order open acces service" do
+      @open_access_service = create(:open_access_service)
+      @open_access_order = create(:order, service: @open_access_service, user: user)
+
+      visit service_path(@open_access_service)
+
+      expect { click_button "Add to my services" }.
+        to change { Order.count }.by(1)
+      order = Order.last
+
+      expect(@open_access_order.service).to eq(@open_access_service)
+      expect(@open_access_order.user).to eq(user)
+      expect(@open_access_order).to be_created
     end
 
     scenario "I can see my ordered services" do
