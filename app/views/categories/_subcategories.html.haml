@@ -1,4 +1,60 @@
 - unless subcategories.empty?
-  %h5.mb-3 Subcategories
+  %h5.mb-3.position-relative Subcategories
   %ul
     = render partial: "categories/subcategory", collection: subcategories
+  %h5.mb-3.position-relative Filters
+  %p.font-weight-bold Price
+  %form
+    .row
+      .col-md-5.offset-md-1
+        %input.form-control.form-control-sm{ type: "text", placeholder: "from" }
+      .col-md-5
+        %input.form-control.form-control-sm{ type: "text", placeholder: "to" }
+    .row
+      .col.offset-md-1
+        .form-check.mt-1
+          %input.form-check-input{ type: "checkbox" }
+          %label.form-check-label.small
+            free of charge
+  %p.font-weight-bold.mt-3 Provider location
+  %form
+    .row
+      .col-md-10.offset-md-1
+        .form-group
+          %select.form-control.form-control-sm
+            %option.disable{ disabled: "disabled", selected: "selected" }
+              select country
+            %option
+              Poland
+  %p.font-weight-bold.mt-2.mb-2 Availability
+  .row
+    .col.offset-md-1
+      .form-check.mt-1
+        %input.form-check-input{ type: "checkbox" }
+        %label.form-check-label.small
+          %a{ href: "" }
+            Now
+  .row
+    .col.offset-md-1
+      .form-check.mt-1
+        %input.form-check-input{ type: "checkbox" }
+        %label.form-check-label.small
+          %a{ href: "" }
+            1 day
+  .row
+    .col.offset-md-1
+      .form-check.mt-1
+        %input.form-check-input{ type: "checkbox" }
+        %label.form-check-label.small
+          %a{ href: "" }
+            2-3 days
+  .row
+    .col.offset-md-1
+      .form-check.mt-1
+        %input.form-check-input{ type: "checkbox" }
+        %label.form-check-label.small
+          %a{ href: "" }
+            4 days and more
+
+  %button.btn.btn-primary.mt-4.w-100
+    filter

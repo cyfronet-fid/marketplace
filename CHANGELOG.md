@@ -45,6 +45,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add SCSS validation to overcommit via `scss-lint` (@michal-szostak)
 - Add footer at the bottom of the page (@kosmidma)
 - Add styling for user's profile (@kosmidma)
+- Add and styling static elements to sidebar (@kosmidma)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
