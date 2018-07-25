@@ -1,22 +1,31 @@
-#li
-  #{affiliation.iid}: #{affiliation.organization}
-  - unless affiliation.department.blank?
-    #{affiliation.department} department
-  (#{affiliation.webpage}, email: #{affiliation.email},
-  #{affiliation.phone} telephone).
-  - unless affiliation.supervisor.blank?
-    #{affiliation.supervisor} supervisor
+%li.border.rounded.mt-3.p-3
+  .row.h-100
+    .col-md-7
+      .row
+        .col-md-1.my-auto
+          %i.fas.fa-angle-right.display-3
+        .col-md-11.my-auto
+          %p.display-4.mb-1
+            #{affiliation.organization}
+          - unless affiliation.department.blank?
+            #{affiliation.department} department
+          %span.d-none
+            (#{affiliation.webpage}, email: #{affiliation.email},
+            #{affiliation.phone} telephone).
+            - unless affiliation.supervisor.blank?
+              #{affiliation.supervisor} supervisor
 
-  .float-right
-    = affiliation.status
-    .btn-group
-      - if policy(affiliation).edit?
-        = link_to "Edit",
-                  edit_profile_affiliation_path(affiliation),
-                  class: "btn btn-secondary"
-      - if policy(affiliation).destroy?
-        = link_to "Delete",
-                  profile_affiliation_path(affiliation),
-                  method: :delete, data: { confirm: "Are you sure?" },
-                  class: "btn btn-danger"
-  .clearfix
+    .col-md-2.my-auto.text-center
+      %span.text-uppercase
+        = affiliation.status
+    .col-md-3.my-auto.text-right
+      .btn-group
+        - if policy(affiliation).edit?
+          = link_to "Edit",
+                    edit_profile_affiliation_path(affiliation),
+                    class: "btn btn-primary btn-sm"
+        - if policy(affiliation).destroy?
+          = link_to "Delete",
+                    profile_affiliation_path(affiliation),
+                    method: :delete, data: { confirm: "Are you sure?" },
+                    class: "btn btn-link btn-sm d-none"
