@@ -36,6 +36,21 @@ class ProjectItemsController < ApplicationController
     end
   end
 
+  def update
+    project_item = ProjectItem.find_by!(service_id: params[:id], user: current_user.id,
+                          status: :ready)
+
+    authorize(project_item)
+    ProjectItem::DeactivateJob.perform_later(project_item)
+
+    if project_item.valid?
+      redirect_to project_item_path()
+    else
+      redirect_to service_path(project_item.service),
+                  alert: "Unable to update project_item"
+    end
+  end
+
   private
 
     def project_item_template

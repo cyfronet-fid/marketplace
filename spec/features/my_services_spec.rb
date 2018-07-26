@@ -18,13 +18,6 @@ RSpec.feature "My Services" do
       expect(page).to have_text("Order")
     end
 
-    scenario "I see project_item open acces service button" do
-      @open_access_service = create(:open_access_service)
-      visit service_path(@open_access_service)
-
-      expect(page).to have_text("Add to my services")
-    end
-
     scenario "I can add project_item to cart" do
       visit service_path(service)
 
@@ -43,19 +36,6 @@ RSpec.feature "My Services" do
 
       expect(project_item.service_id).to eq(service.id)
       expect(page).to have_content(service.title)
-    end
-
-    scenario "I can project_item open acces service" do
-      @open_access_service = create(:open_access_service)
-
-      visit service_path(@open_access_service)
-
-      click_button "Add to my services"
-
-      expect(page).to have_current_path(new_project_item_path)
-      expect(page).to have_text(@open_access_service.title)
-      expect(page).to have_selector(:link_or_button,
-                                    "Order", exact: true)
     end
 
     scenario "I can see only my projects" do
@@ -102,11 +82,12 @@ RSpec.feature "My Services" do
 
       project_item.new_change(status: :created, message: "Service request created")
       project_item.new_change(status: :registered, message: "Service request registered")
-      project_item.new_change(status: :ready, message: "Service is ready")
+      project_item.new_change(status: :ready, message: "Service request ready")
+      project_item.new_change(status: :deactivated, message: "Service request deactivated")
 
       visit project_item_path(project_item)
 
-      expect(page).to have_text("Current status: ready")
+      expect(page).to have_text("Service request ready")
 
       expect(page).to have_text("Service request created")
 
@@ -114,7 +95,10 @@ RSpec.feature "My Services" do
       expect(page).to have_text("Service request registered")
 
       expect(page).to have_text("Status changed from registered to ready")
-      expect(page).to have_text("Service is ready")
+      expect(page).to have_text("Service request ready")
+
+      expect(page).to have_text("Status changed from ready to deactivated")
+      expect(page).to have_text("Service request deactivated")
     end
 
     scenario "I can ask question about my project_item" do
@@ -136,6 +120,35 @@ RSpec.feature "My Services" do
       click_button "Send message"
 
       expect(page).to have_text("Question cannot be blank")
+    end
+
+    context "when open_access service" do
+      let(:open_access_service) { create(:open_access_service) }
+
+      scenario "I can add open acces service to project" do
+        visit service_path(open_access_service)
+
+        click_button "Add to my services"
+
+        expect(page).to have_current_path(new_project_item_path)
+        expect(page).to have_text(open_access_service.title)
+        expect(page).to have_selector(:link_or_button,
+                                    "Order", exact: true)
+      end
+
+      scenario "I can deactivate  active service" do
+        project = create(:project, user: user)
+        create(:open_access_project_item,
+               service: open_access_service,
+               project: project,
+               status: :ready)
+
+        visit service_path(open_access_service)
+
+        expect(page).to_not have_text("Add to my services")
+        expect(page).to have_text("Stop using the service")
+        expect(page).to have_text("Go to the service")
+      end
     end
   end
 

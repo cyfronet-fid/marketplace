@@ -53,14 +53,15 @@ RSpec.describe ProjectItem do
 
   describe "#active?" do
     it "is true when processing is not done" do
-      expect(build(:project_item, status: :created)).to be_active
-      expect(build(:project_item, status: :registered)).to be_active
-      expect(build(:project_item, status: :in_progress)).to be_active
+      expect(build(:project_item, status: :created)).to be_draft
+      expect(build(:project_item, status: :registered)).to be_draft
+      expect(build(:project_item, status: :in_progress)).to be_draft
     end
 
     it "is false when processing is done" do
-      expect(build(:project_item, status: :ready)).to_not be_active
-      expect(build(:project_item, status: :rejected)).to_not be_active
+      expect(build(:project_item, status: :ready)).to_not be_draft
+      expect(build(:project_item, status: :rejected)).to_not be_draft
+      expect(build(:project_item, status: :deactivated)).to_not be_draft
     end
   end
 end

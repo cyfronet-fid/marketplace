@@ -61,4 +61,3 @@ function starsOnClick(node){
         });
     });
 }
-

@@ -9,6 +9,11 @@ class ProjectItemPolicy < ApplicationPolicy
     record.user == user
   end
 
+  def update?
+    record.user == user
+  end
+
+
   def new?
     user
   end

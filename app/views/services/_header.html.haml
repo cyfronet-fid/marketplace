@@ -16,7 +16,13 @@
   .col-4
     = form_for(ProjectItem.new, url: cart_path) do |f|
       = f.hidden_field :service_id, value: service.id
-      %button{ class: "btn btn-primary" }
-        = write_button_text
-      - if @service.open_access?
+      - unless controller.active?(service)
+        %button{ class: "btn btn-primary" }
+          = project_item_service_text
+      - else
+        = link_to "Stop using the service", project_item_path(service),
+          method: :put, class: "btn btn-primary"
+      - if service.open_access?
         = link_to "Go to the service", service.connected_url, class: "btn btn-primary", target: "_blank"
+
+

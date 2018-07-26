@@ -51,7 +51,7 @@ class ProjectItem::Ready
 
     def update_status!
       @project_item.new_change(status: :ready,
-                        message: "Your project_item is ready")
+                        message: "Service is ready")
     end
 
     def notify!

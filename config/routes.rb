@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :categories, only: :show
 
   resources :projects, only: :index
-  resources :project_items, only: [:show, :new, :create] do
+  resources :project_items, only: [:show, :new, :create, :update] do
     scope module: :project_items do
       resources :questions, only: [:index, :create]
       resources :service_opinions, only: [:new, :create]

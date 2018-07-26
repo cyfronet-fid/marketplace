@@ -33,7 +33,7 @@ class ProjectItemMailer < ApplicationMailer
   end
 
   def new_message(project_item)
-    mail(to: @user,
+    mail(to: @user.email,
          subject: "#{prefix(project_item)} new message",
          template_name: "new_message")
   end
@@ -41,7 +41,7 @@ class ProjectItemMailer < ApplicationMailer
   private
 
     def status_changed(project_item)
-      mail(to: @user,
+      mail(to: @user.email,
             subject: "#{prefix(project_item)} status changed",
             template_name: "changed")
     end

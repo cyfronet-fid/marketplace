@@ -6,7 +6,8 @@ class ProjectItem < ApplicationRecord
     registered: "registered",
     in_progress: "in_progress",
     ready: "ready",
-    rejected: "rejected"
+    rejected: "rejected",
+    deactivated: "deactivated"
   }
 
   ISSUE_STATUSES = {
@@ -30,8 +31,8 @@ class ProjectItem < ApplicationRecord
 
   delegate :user, to: :project
 
-  def active?
-    !(ready? || rejected?)
+  def draft?
+    !(ready? || rejected? || deactivated?)
   end
 
   def new_change(status: nil, message: nil, author: nil, iid: nil)

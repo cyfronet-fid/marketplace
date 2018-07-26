@@ -16,6 +16,10 @@ class CartsPolicy < ApplicationPolicy
     true
   end
 
+  def update?
+    record.user == user
+  end
+
   def permitted_attributes
     [:service_id]
   end
