@@ -13,7 +13,7 @@ module ServiceHelper
     end
     # empty stars
     for i in 0...5 - rating.ceil
-      result += content_tag(:i, "", class: "fas fa-star-o")
+      result += content_tag(:i, "", class: "far fa-star")
     end
     result.html_safe
   end
