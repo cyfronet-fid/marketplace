@@ -3,12 +3,57 @@
 
 .container
   .row
-    .col-md-3
+    .col-md-3.pr-5
       = render "categories/subcategories", subcategories: @subcategories
     .col-md-9
-      %h1.mb-0.font-weight-bold Services
-      %p.text-muted.mb-4
-        Service description. When category is selected than title and this
-        description shoud reflect it.
+      .row
+        .col-md-8
+          %h1.mb-0.font-weight-bold Services
+          %p.text-muted.mb-4
+            Service description. When category is selected than title and this
+            description should reflect it.
+        .col-md-3.offset-md-1.my-auto
+          %form
+            .row
+              .col-md-2
+                %label.small.mt-2
+                  Sort
+              .col-md-10
+                %select.form-control.form-control-sm
+                  %option
+                    by name A-Z
+                  %option
+                    by rate 1-5
+                  %option
+                    by rate 5-1
+
+      %ul.list-unstyled
+        %li.media.pb-4.mb-4.list-group-item-primary.position-relative
+          %span.badge.badge-primary.text-uppercase.p-2.rounded-0.clearfix.position-absolute
+            We recommended
+          .media-body.pl-3.pt-5
+            %h2.font-weight-bold
+              Nazwa
+            .mb-3
+              opis
+            %p.small.float-left.mr-4
+              Provided by
+              %a{ href: "" }
+                SHAPE
+            %p.small
+              Available for SME only within 1 day
+            .row
+              .col
+                %span.small.ml-1.font-weight-bold
+                  gwiazdki
+                %a{ href: "", class: "small ml-3" }
+                  5 opinions
+
+          .ml-5.pr-3.pt-5
+            %form.d-flex.justify-content-end
+              .form-group.form-check
+                %input.form-check-input{ type: "checkbox" }
+                %label.form-check-label.small{ for: "" }
+                  to compare
 
       = render "services", services: @services

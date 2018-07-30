@@ -57,7 +57,7 @@ h5 {
     position: absolute;
     top: 22px;
     border-top: 1px solid $body-color;
-    width: 90%;
+    width: 100%;
     height: 12px;
     left: 0;
     z-index: 8;
@@ -73,21 +73,7 @@ button, a {
 }
 
 header {
-  // scss-lint:disable SpaceAfterPropertyColon
-  background-image: -moz-linear-gradient(45deg, $gray-200 25%, transparent 25%),
-  -moz-linear-gradient(-45deg, $gray-200 25%, transparent 25%),
-  -moz-linear-gradient(45deg, transparent 75%, $gray-200 75%),
-  -moz-linear-gradient(-45deg, transparent 75%, $gray-200 75%);
-
-  // scss-lint:disable SpaceAfterPropertyColon
-  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, $gray-200), color-stop(0.25, transparent)),
-  -webkit-gradient(linear, 0 0, 100% 100%, color-stop(0.25, $gray-200), color-stop(0.25, transparent)),
-  -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.75, transparent), color-stop(0.75, $gray-200)),
-  -webkit-gradient(linear, 0 0, 100% 100%, color-stop(0.75, transparent), color-stop(0.75, $gray-200));
-  -moz-background-size: 6px 6px;
-  background-size: 6px 6px;
-  -webkit-background-size: 6px 6px;
-  background-position: 0 0, 3px 0, 3px -3px, 0 3px;
+  background: url('../../assets/images/header-bg.png') top left;
 
   .input-group {
     &:focus {
@@ -245,10 +231,6 @@ textarea:-ms-input-placeholder { /* IE 10+ */
     margin-top: 0.5rem;
   }
 
-  .form-check-label {
-    font-size: $small-font-size;
-  }
-
   .form-group {
     margin-bottom: 0;
   }
@@ -345,8 +327,8 @@ textarea:-ms-input-placeholder { /* IE 10+ */
 
 .profile-img {
   background: url('../../assets/images/profile-img.png') top left no-repeat;
-  width: 192px;
-  height: 192px;
+  width: 140px;
+  height: 150px;
 }
 
 .fa-star, .fa-star-half-alt, .fa-angle-right {
@@ -370,6 +352,45 @@ textarea:-ms-input-placeholder { /* IE 10+ */
 
 .list-group-item {
   padding-bottom: 0.72rem;
+}
+
+.list-group-item-primary {
+  border: 1px solid $primary;
+  background: $transparent;
+  color: $body-color;
+}
+
+.badge-primary {
+  color: $white;
+  position: relative;
+  top: -1px;
+}
+
+.accordion {
+
+  .card-header {
+    background: transparent;
+
+    h6 {
+      cursor: pointer;
+      padding-left: 40px;
+      min-height: 26px;
+      background-repeat: no-repeat;
+      background-position: 0 50%;
+
+      &[aria-expanded="false"] {
+        background-image: url('../../assets/images/angle-right.png');
+      }
+
+      &[aria-expanded="true"] {
+        background-image: url('../../assets/images/angle-down.png');
+      }
+    }
+  }
+
+  .card-block {
+    border-top: 1px solid $border-color;
+  }
 }
 
 
