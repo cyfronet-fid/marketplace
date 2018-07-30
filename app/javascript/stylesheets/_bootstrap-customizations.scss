@@ -1,7 +1,7 @@
 @import 'variables';
 
 body {
-  font-size: $font-size-sm;
+  font-size: $font-size-base;
   margin-bottom: 0 !important;
 
   > main {
@@ -74,18 +74,16 @@ button, a {
 
 header {
   // scss-lint:disable SpaceAfterPropertyColon
-  background-image:
-          -moz-linear-gradient(45deg, $gray-200 25%, transparent 25%),
-          -moz-linear-gradient(-45deg, $gray-200 25%, transparent 25%),
-          -moz-linear-gradient(45deg, transparent 75%, $gray-200 75%),
-          -moz-linear-gradient(-45deg, transparent 75%, $gray-200 75%);
+  background-image: -moz-linear-gradient(45deg, $gray-200 25%, transparent 25%),
+  -moz-linear-gradient(-45deg, $gray-200 25%, transparent 25%),
+  -moz-linear-gradient(45deg, transparent 75%, $gray-200 75%),
+  -moz-linear-gradient(-45deg, transparent 75%, $gray-200 75%);
 
   // scss-lint:disable SpaceAfterPropertyColon
-  background-image:
-          -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, $gray-200), color-stop(0.25, transparent)),
-          -webkit-gradient(linear, 0 0, 100% 100%, color-stop(0.25, $gray-200), color-stop(0.25, transparent)),
-          -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.75, transparent), color-stop(0.75, $gray-200)),
-          -webkit-gradient(linear, 0 0, 100% 100%, color-stop(0.75, transparent), color-stop(0.75, $gray-200));
+  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, $gray-200), color-stop(0.25, transparent)),
+  -webkit-gradient(linear, 0 0, 100% 100%, color-stop(0.25, $gray-200), color-stop(0.25, transparent)),
+  -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.75, transparent), color-stop(0.75, $gray-200)),
+  -webkit-gradient(linear, 0 0, 100% 100%, color-stop(0.75, transparent), color-stop(0.75, $gray-200));
   -moz-background-size: 6px 6px;
   background-size: 6px 6px;
   -webkit-background-size: 6px 6px;
@@ -197,7 +195,8 @@ textarea::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 }
 
 input::-moz-placeholder,
-textarea::-moz-placeholder { /* Firefox 19+ */ /* Firefox 18- */
+textarea::-moz-placeholder { /* Firefox 19+ */
+  /* Firefox 18- */
   font-size: $font-size-xs;
   font-weight: 400;
   font-style: italic;
@@ -368,3 +367,11 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   line-height: 60px;
   background-color: $footer-bg-color;
 }
+
+.list-group-item {
+  padding-bottom: 0.72rem;
+}
+
+
+
+

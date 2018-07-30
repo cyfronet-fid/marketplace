@@ -1,9 +1,15 @@
-%dt
-  Service:
-  = link_to order.service.title, order
-  Ordered for:
-  = order.user.full_name
-%dd
-  Status:
-  = order.status
+%li.list-group-item
+  .row
+    .col-md-7
+      = link_to order.service.title, order
+    .col-md-2
+      %span.small.text-uppercase
+        = order.status
+    .col-md-3.text-right
+      %span.small
+        last change: 3 minutes ago
+      %span.d-none
+        = order.user.full_name
+
+
 

@@ -46,6 +46,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add footer at the bottom of the page (@kosmidma)
 - Add styling for user's profile (@kosmidma)
 - Add and styling static elements to sidebar (@kosmidma)
+- AStyling My Services view (@kosmidma)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
