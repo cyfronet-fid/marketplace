@@ -24,7 +24,7 @@ RSpec.feature "Affiliations" do
 
     scenario "I can create new affiliation" do
       visit profile_path
-      click_on "New affiliation"
+      click_on "Add new affiliation"
 
       fill_in "Organization", with: "my org"
       fill_in "Department", with: "depart"
