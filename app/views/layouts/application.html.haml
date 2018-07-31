@@ -2,9 +2,9 @@
 %html{ lang: "en" }
   = render "layouts/head"
   %body
+    = render "layouts/flash"
     %header.pt-2.pb-2
       = render "layouts/navbar"
-      = render "layouts/flash"
       = render "services/search"
     %main
       = render "layouts/breadcrumb"

@@ -1,5 +1,5 @@
 - unless subcategories.empty?
-  %h5.mb-3.position-relative Subcategories
+  %h5.mb-3.position-relative Categories
   %ul
     = render partial: "categories/subcategory", collection: subcategories
   %h5.mb-3.position-relative Filters
@@ -13,8 +13,8 @@
     .row
       .col.offset-md-1
         .form-check.mt-1
-          %input.form-check-input{ type: "checkbox" }
-          %label.form-check-label.small
+          %input#charges.form-check-input{ type: "checkbox" }
+          %label.form-check-label.small{ for: "charges" }
             free of charge
   %p.font-weight-bold.mt-3 Provider location
   %form
@@ -28,33 +28,42 @@
               Poland
   %p.font-weight-bold.mt-2.mb-2 Availability
   .row
-    .col.offset-md-1
+    .col-md-8.offset-md-1
       .form-check.mt-1
-        %input.form-check-input{ type: "checkbox" }
-        %label.form-check-label.small
-          %a{ href: "" }
-            Now
+        %input#check-1.form-check-input{ type: "checkbox" }
+        %label.form-check-label.small{ for: "check-1" }
+          Now
+    .col-md-3.text-right
+      %span.small
+        4
   .row
-    .col.offset-md-1
+    .col-md-8.offset-md-1
       .form-check.mt-1
-        %input.form-check-input{ type: "checkbox" }
-        %label.form-check-label.small
-          %a{ href: "" }
-            1 day
+        %input#check-2.form-check-input{ type: "checkbox", disabled: "disabled" }
+        %label.form-check-label.small{ for: "check-2" }
+          1 day
+    .col-md-3.text-right
+      %span.small
+        0
   .row
-    .col.offset-md-1
+    .col-md-8.offset-md-1
       .form-check.mt-1
-        %input.form-check-input{ type: "checkbox" }
-        %label.form-check-label.small
-          %a{ href: "" }
-            2-3 days
+        %input#check-3.form-check-input{ type: "checkbox" }
+        %label.form-check-label.small{ for: "check-3" }
+          2-3 days
+    .col-md-3.text-right
+      %span.small
+        4
   .row
-    .col.offset-md-1
+    .col-md-8.offset-md-1
       .form-check.mt-1
-        %input.form-check-input{ type: "checkbox" }
-        %label.form-check-label.small
-          %a{ href: "" }
-            4 days and more
-
-  %button.btn.btn-primary.mt-4.w-100
-    filter
+        %input#check-4.form-check-input{ type: "checkbox" }
+        %label.form-check-label.small{ for: "check-4" }
+          4 days and more
+    .col-md-3.text-right
+      %span.small
+        4
+  .row
+    .col.pr-2
+      %button.btn.btn-primary.mt-4.w-100
+        filter
