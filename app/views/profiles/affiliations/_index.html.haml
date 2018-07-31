@@ -1,12 +1,12 @@
 %h2
   Affiliations
   .float-right
-    = link_to "New affiliation",
+    = link_to "Add new affiliation",
               new_profile_affiliation_path,
-              class: "btn btn-primary"
+              class: "btn btn-secondary"
 .clearfix
 
-%ul.mt-5
+#accordion.accordion.mt-5{ "aria-multiselectable" => "true", :role => "tablist" }
   = render partial: "profiles/affiliations/affiliation",
                     collection: affiliations
 = will_paginate affiliations
