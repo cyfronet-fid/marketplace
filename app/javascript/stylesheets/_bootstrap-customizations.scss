@@ -1,7 +1,7 @@
 @import 'variables';
 
 body {
-  font-size: $font-size-base;
+  font-size: $font-size-xs;
   margin-bottom: 0 !important;
 
   > main {
@@ -32,25 +32,33 @@ a {
 
 .text-muted {
   color: $body-color !important;
+  opacity: 0.9;
 }
 
 h1 {
-  font-size: 1.7rem;
+  font-size: $h1-font-size;
 }
 
 h2 {
-  font-size: 1.4rem;
+  font-size: $h2-font-size;
 }
 
 h3 {
-  font-size: 1rem;
+  font-size: $h3-font-size;
   font-weight: 600;
+}
+
+h4 {
+  font-size: $h4-font-size;
+  font-weight: 600;
+  border-bottom: 2px solid $primary;
+  padding-bottom: 0.9rem;
 }
 
 h5 {
   font-weight: 600;
   text-transform: uppercase;
-  font-size: $font-size-xxs;
+  font-size: $h5-font-size;
 
   &::after {
     content: '';
@@ -297,7 +305,7 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   position: relative;
 
   .steps-row-2::before {
-    top: 11px;
+    top: 12px;
     bottom: 0;
     position: absolute;
     content: ' ';
@@ -393,6 +401,45 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   }
 }
 
+.body-color {
+  color: $body-color;
+}
 
+.table thead th {
+  border-bottom: 2px solid $primary;
+  border-top: none;
+  text-transform: uppercase;
+}
+
+textarea {
+  resize: none;
+}
+
+.checker-background {
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url('../../assets/images/header-bg.png');
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    z-index: -1;
+  }
+
+  img {
+    min-width: 107px;
+    height: 71px;
+    border: 2px solid $border-color;
+    background: $white;
+  }
+}
+
+.small {
+  font-size: 90%;
+}
 
 

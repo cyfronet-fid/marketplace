@@ -4,13 +4,16 @@ $navbar-light-active-color:  #233c4c;
 $navbar-light-color: #233d4c;
 $font-family-sans-serif: Muli, Roboto, "Helvetica Neue", Arial, sans-serif;
 
-$font-size-xs:  0.8125rem;
+$font-size-xs: 0.875rem;
 $font-size-xxs: 0.75rem;
 
 $link-color: #3540b6;
-$h1-font-size: 1.5rem;
-$h2-font-size: 1.25rem;
-$h5-font-size: 1rem;
+$font-size-base: 1rem;
+$h1-font-size: $font-size-base * 1.7;
+$h2-font-size: $font-size-base * 1.4;
+$h3-font-size: $font-size-base * 1.2;
+$h4-font-size: $font-size-base * 0.875;
+$h5-font-size: $font-size-base * 0.75;
 $primary: #ffc045;
 $secondary: #2144b2;
 $body-color: #233d4c;
