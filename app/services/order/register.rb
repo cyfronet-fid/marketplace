@@ -24,8 +24,8 @@ class Order::Register
       client = Jira::Client.new
       issue = client.Issue.build
       if issue.save(fields: { summary: "Requested realization of #{@order.service.title}",
-                           project: { key: client.jira_project_key },
-                           issuetype: { id: client.jira_issue_type_id } })
+                              project: { key: client.jira_project_key },
+                              issuetype: { id: client.jira_issue_type_id } })
         @order.update_attributes(issue_id: issue.id, issue_status: :jira_active)
         @order.save
         true
