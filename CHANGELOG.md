@@ -50,6 +50,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Update service view (@kosmidma)
 - Styling My Services view (@kosmidma)
 - Styling Order Placement view (@kosmidma)
+- Add dotenv gem (@michal-szostak)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
