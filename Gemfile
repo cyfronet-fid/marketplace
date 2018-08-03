@@ -54,6 +54,8 @@ group :development, :test do
   gem "pry-rails"
   gem "pry-doc"
   gem "pry-nav"
+
+  gem "dotenv-rails"
 end
 
 group :development do

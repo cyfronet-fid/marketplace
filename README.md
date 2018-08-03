@@ -89,7 +89,8 @@ atlas-run-standalone --product jira --server localhost
 Afterwards JIRA can be accessed by the browser on http://localhost:2990/jira
 default username and password is: `admin/admin`.
 Make sure that environmental variables are set as follows (if you don't know some
-ids skip it for now, `rails jira:check` will give you sensible hints):
+ids skip it for now, `rails jira:check` will give you sensible hints, `.dotenv` gem should be active
+in the development environment, so you can store following variables in `.env` file in the root of the project):
 
 ```
 export MP_JIRA_PROJECT=MP 
@@ -201,3 +202,12 @@ If this is not enough you can customize it by using environment variables:
   * `MP_DATABASE_HOST` - PostgreSQL database host
   * `MP_DATABASE_USERNAME` - PostgreSQL database username
   * `MP_DATABASE_PASSWORD` - PostgreSQL database password
+
+## Environmental Variables
+
+This project can be further customized via numerous environmental variables.
+To make storing them a little easier `dotenv` gem has been employed.
+You can read documentation [here](https://github.com/bkeepers/dotenv).
+
+In shourt you can store your env variables in `.env` file in the root of the project.
+
