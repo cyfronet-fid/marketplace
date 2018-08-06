@@ -12,15 +12,18 @@
 require "yaml"
 puts "Generating categories from yaml"
 yaml_hash = YAML.load_file("db/data.yml")
+all_categories = []
 
 yaml_hash["categories"].each do |category, hash|
   parent = hash["parent"] && Category.find_by(name: hash["parent"])
-  Category.create!(name: hash["name"], description: hash["description"], parent: parent)
+  all_categories << Category.create!(name: hash["name"], description: hash["description"], parent: parent)
 end
 
 puts "Generating services from yaml"
+all_services = []
 yaml_hash["services"].each do |service, hash|
   current = Service.create(title: hash["title"], tagline: hash["tagline"], description: hash["description"])
+  all_services << current
   current.categories << Category.find_by(name: hash["parent"])
   current.set_first_category_as_main!
 
