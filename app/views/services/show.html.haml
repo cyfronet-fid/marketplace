@@ -6,6 +6,10 @@
   %p= @service.description
   .row
     .col
+      Provided by
+      = link_to @service.provider.name, @service.provider
+  .row
+    .col
       = print_rating_stars(@service.rating)
       %span.small.ml-1.font-weight-bold
         (#{@service.rating} /5)

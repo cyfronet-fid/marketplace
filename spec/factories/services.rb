@@ -7,6 +7,7 @@ FactoryBot.define do
     sequence(:terms_of_use) { |n| "service #{n} terms of use" }
     sequence(:tagline) { |n| "service #{n} tagline" }
     sequence(:open_access) { false }
+    provider
 
     factory :open_access_service do
       sequence(:connected_url) { "https://sample.url" }

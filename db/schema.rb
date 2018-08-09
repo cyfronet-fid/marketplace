@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_19_071704) do
+ActiveRecord::Schema.define(version: 2018_08_09_073237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,12 @@ ActiveRecord::Schema.define(version: 2018_07_19_071704) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "providers", force: :cascade do |t|
+    t.text "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "service_categories", force: :cascade do |t|
     t.bigint "service_id"
     t.bigint "category_id"
@@ -89,8 +95,10 @@ ActiveRecord::Schema.define(version: 2018_07_19_071704) do
     t.decimal "rating", precision: 2, scale: 1, default: "0.0", null: false
     t.text "connected_url"
     t.boolean "open_access", default: false
+    t.bigint "provider_id"
     t.index ["description"], name: "index_services_on_description"
     t.index ["owner_id"], name: "index_services_on_owner_id"
+    t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["title"], name: "index_services_on_title"
   end
 
@@ -113,5 +121,6 @@ ActiveRecord::Schema.define(version: 2018_07_19_071704) do
   end
 
   add_foreign_key "order_changes", "users", column: "author_id"
+  add_foreign_key "services", "providers"
   add_foreign_key "services", "users", column: "owner_id"
 end

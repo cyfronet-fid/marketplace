@@ -6,8 +6,10 @@ RSpec.describe Service do
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:description) }
   it { should validate_presence_of(:tagline) }
+  it { should validate_presence_of(:provider) }
 
   it { should belong_to(:owner) }
+  it { should belong_to(:provider) }
 
   it { should have_many(:service_categories).dependent(:destroy) }
   it { should have_many(:categories) }

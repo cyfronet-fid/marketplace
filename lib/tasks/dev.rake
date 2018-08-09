@@ -18,9 +18,11 @@ if Rails.env.development?
                        owner: users.sample,
                        open_access: Faker::Boolean.boolean,
                        rating: Random.rand(5.0),
-                       connected_url: Faker::Internet.url)
+                       connected_url: Faker::Internet.url,
+                       provider: Provider.all.sample)
 
       end
+
       puts "Done!"
     end
   end
