@@ -40,6 +40,7 @@ RSpec.feature "Services in backoffice" do
   end
 
   scenario "I can create new service" do
+    create(:provider)
     visit backoffice_services_path
     click_on "Create new service"
 
@@ -48,6 +49,8 @@ RSpec.feature "Services in backoffice" do
     fill_in "Terms of use", with: "service terms of use"
     fill_in "Tagline", with: "service tagline"
     fill_in "Service website", with: "https://sample.url"
+    select "provider 1", from: "service_provider_id"
+
     check "Open access"
 
     expect { click_on "Create Service" }.
