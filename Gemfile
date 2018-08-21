@@ -16,6 +16,7 @@ gem "haml-rails"
 gem "turbolinks", "~> 5", require: false
 
 gem "bootsnap", ">= 1.1.0", require: false
+gem "colorize", ">= 0.8.1", require: false
 
 gem "ancestry"
 gem "gretel"
@@ -40,6 +41,9 @@ gem "role_model"
 gem "github-markup"
 gem "redcarpet"
 
+# jira
+gem "jira-ruby"
+
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
 
@@ -50,6 +54,8 @@ group :development, :test do
   gem "pry-rails"
   gem "pry-doc"
   gem "pry-nav"
+
+  gem "dotenv-rails"
 end
 
 group :development do
@@ -59,6 +65,8 @@ group :development do
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "rubocop-rails", ">=1.5.0"
   gem "overcommit", require: false
+  gem "haml_lint", require: false
+  gem "scss_lint", require: false
 end
 
 group :test do

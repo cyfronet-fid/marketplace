@@ -1,0 +1,12 @@
+linters:
+  ViewLength:
+    enabled: true
+    max: 150
+
+  LineLength:
+    enabled: true
+    max: 120
+
+  ClassesBeforeIds:
+    enabled: true
+    EnforcedStyle: 'id'

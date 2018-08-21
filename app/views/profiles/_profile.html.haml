@@ -1,10 +1,10 @@
-%p
-  First name:
-  = current_user.first_name
-%p
-  Last name:
-  = current_user.last_name
-%p
-  Email:
-  = current_user.email
+.row.mt-5.h-100
+  %img.profile-img{ src: "http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" }
+  .ml-5.my-auto
+    %p.display-3.font-weight-light.align-top
+      = current_user.first_name
+      = current_user.last_name
+    %p.display-4.font-weight-light
+      = current_user.email
+  .col-2.text-right.my-auto
 

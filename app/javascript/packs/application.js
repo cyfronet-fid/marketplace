@@ -8,18 +8,17 @@
 // layout file, like app/views/layouts/application.html.erb
 
 import 'bootstrap/dist/js/bootstrap';
-import 'stylesheets/application'
+import 'stylesheets/application';
 
-import Turbolinks from 'turbolinks'
+import Turbolinks from 'turbolinks';
 Turbolinks.start();
 
-import fontawesome from '@fortawesome/fontawesome'
-import regular from '@fortawesome/fontawesome-free-regular'
-import solid from '@fortawesome/fontawesome-free-solid'
+import { library, dom } from '@fortawesome/fontawesome-svg-core';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
 // :TODO: for now import all fonts, so ux people can work without problems, optimize later
-fontawesome.library.add(solid);
-fontawesome.library.add(regular);
+library.add(fas, far);
 
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
@@ -29,8 +28,15 @@ const context = require.context("controllers", true, /.js$/);
 application.load(definitionsFromContext(context));
 
 document.addEventListener("turbolinks:before-render", function(event) {
-  FontAwesome.dom.i2svg({
+  dom.i2svg({
     node: event.data.newBody
   });
+});
+
+/**
+ * Apart from turbolinks we need to replace FA for the first page load
+ */
+document.addEventListener('DOMContentLoaded', function () {
+  dom.i2svg();
 });
 

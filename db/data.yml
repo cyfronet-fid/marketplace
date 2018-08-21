@@ -1,0 +1,328 @@
+categories:
+
+    Compute:
+        name: &computeParent Compute
+        description: General computing services including VM management, containers and job processing
+    Platforms:
+        name: &platformsParent Platforms
+        description: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis.
+    Thematic services:
+        name: &thematicServicesParent Thematic services
+        description: High-level services, often discipline-specific for research communities.
+    Identity:
+        name: &identityParent Identity & Security
+        description: Identity management, authorisation and other services to ensure trust.
+    Professional Services:
+        name: &professionalServicesParent Professional Services
+        description: Training, certification, consultancy and other non-technical services.
+
+services:
+
+    Cloud compute:
+        title: Cloud compute
+        parent: *computeParent
+        tagline: Run virtual machines on-demand with complete control over computing resources
+        description: "With Cloud Compute you can deploy and scale virtual machines on­demand. Cloud Compute offers guaranteed computational resources in a secure and isolated environment with standard API access, without the overhead of managing physical servers.
+
+                     Cloud Compute offers the possibility to select pre­configured virtual appliances (e.g. CPU, memory, disk, operating system or software) from a catalogue replicated across all EGI cloud providers.
+
+
+                     To access the service you need to:
+
+                         Request access selecting one of the service options below.
+                         Set the relevant parameters and add the service to the cart.
+                         Go to the cart and submit your order.
+                         You will receive an email summarising your order.
+                         You will be contacted by the EGI support team.
+
+
+                     Featured use cases:
+
+                         How to predict social media trends? how Cloud Compute helps to test new ways to detect trends on social networks
+                         The genetics of Salmonella infections: how Cloud Compute helped scientists to understand what happens during when a human cell meets Salmonella"
+    High-Throughput compute:
+        title: High-Throughput compute
+        parent: *computeParent
+        tagline: Execute thousands of computational tasks to analyse large datasets
+        description: "With High-Throughput Compute you can run computational jobs at scale on the EGI infrastructure. It allows you to analyse large datasets and execute thousands of parallel computing tasks.
+
+                     EGI offers more than 650,000 cores of installed capacity, supporting about 1.6 million computing jobs per day.
+
+
+                     To access the service you need to:
+
+                         Request access selecting one of the service options below.
+                         Set the relevant parameters and add the service to the cart.
+                         Go to the cart and submit your order.
+                         You will receive an email summarising your order.
+                         You will be contacted by the EGI support team.
+
+
+                     Featured use cases:
+
+                         What happens when molecules collide? How High-Throughput Compute helps researchers to simulate chemical reactions.
+                         Small settlements coalesce into larger cities: how the OpenMOLE platform and High-Throughput Compute helped to validate a long-held theory in geography"
+    Cloud container compute:
+        title: Cloud container compute
+        parent: *computeParent
+        tagline: Run Docker containers in a lightweight virtualised environment
+        description: "With Cloud Container Compute you can deploy and scale Docker containers on-demand. It offers guaranteed computational resources in a secure and isolated environment with standard API access, without the overhead of managing the operating system.
+
+                      The result is improved performance, ideal for development.
+
+                      To access the service you need to:
+
+                          Request access selecting one of the service options below.
+                          Set the relevant parameters and add the service to the cart.
+                          Go to the cart and submit your order.
+                          You will receive an email summarising your order.
+                          You will be contacted by the EGI support team."
+    Applications on Demand:
+        title: Applications on Demand
+        parent: *platformsParent
+        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+        description: "Features:
+
+                         User-friendly access to online applications that can be executed on parallel architectures (EGI Cloud and High-Throughput Compute)
+                         Application development and hosting frameworks where custom applications can be executed on EGI Cloud Compute and High-Throughput Compute services
+                         User support is available by an international network of consultants.
+
+                     Development frameworks:
+
+                         The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal) is a Liferay-based web portal. WS-PGRADE provides a 'job wizard' interface for the user. Through this wizard the user can define, with a few clicks, a computational job that WS-PGRADE will execute on cloud resources of the EGI Applications On Demand infrastructure. The job can be easily scaled up into a parameter study, executing the same simulation on many different input sets. WS-PGRADE takes care of instantiation of a Virtual Machine image for jobs, sending user input for the jobs, and retrieving the results of computations.
+                         The Elastic Cloud Computing Cluster (EC3) is a platform that allows creating elastic virtual clusters on top of Infrastructure as a Service (IaaS) providers. Through a 'job wizard' interface, the user can configure the cluster with a pre-defined set of applications that will be deployed in the clouds underpinning the EGI Applications On Demand infrastructure. The installation and the configuration of the cluster are performed by means of the execution of Ansible receipts. The cluster configured by EC3 is private: as soon as it is configured You will have root access to the environment, and can setup and configure the cluster installing additional libraries and software to their needs.
+                         The EGI VMOps dashboard,a framework allows users to perform Virtual Machine (VM) management operations on the EGI Federated Cloud. The graphical interfaces of the dashboard allows the user to choose VMs from the AppDB Catalogue, to define an execution topology for them, and then to instantiate them on infrastructure as a service clouds.
+
+                     Featured use cases:
+
+                         New viruses implicated in fatal snake disease  how the Chipster platform helped virologists to make sense of millions of virus genomes"
+
+    Component Metadata Infrastructure:
+        title: Component Metadata Infrastructure
+        parent: *thematicServicesParent
+        tagline: Services for Social Sciences and Humanities provided via the national CLARIN centres
+        description: "CLARIN-ERIC is a consortium of national service providers dedicated to Social Sicences and Humanities. The CLARIN Metadata Infrastructure offers several services through EOSC-hub:
+
+                          The Virtual Language Observatory
+                          The Virtual Collection Registry
+                          The Language Resource Switchboard
+
+                      How to access the services:
+                      The services are freely available online.
+
+                      Service provided by
+
+                      The majority of the CMI service components were developed at the CLARIN ERIC.
+
+                      CMI will rely on and connect to the following EOSC-hub services:
+
+                          INDIGO-DataCloud components, currently used by the DARIAH community), in the context of providing interoperable metadata for (digital) humanities between CLARIN and DARIAH.
+                          EGI Federated Cloud, e.g. through the hosting of services at the CESNET computing centre.
+                          EUDAT, by the integration with several services, such as B2SHARE, B2ACCESS and B2DROP."
+
+    DARIAH:
+        title: DARIAH
+        parent: *thematicServicesParent
+        tagline: The DARIAH Science Gateway is a platform that provides access to various digital applications and services for the Arts & Humanities researchers
+        description: "The DARIAH Science Gateway provides various web-based applications and services for the Digital Humanities researchers, institutes and communities.
+
+                      Features:
+                      The DARIAH Science Gateway offers easy access to the following applications:
+
+                          Simple Semantic Search Engine (SSE): Allows users to search in the e-Infrastructure Knowledge Base (Open Access Document Repositories and Data Repositories).
+                          Parallel Semantic Search Engine (PSSE): A parallelised version of SSE enabling simultaneously search across the e-Infrastructure Knowledge Base, Europeana, Cultura Italia, Isidore, OpenAgris, PubMed and DBpedia platforms.
+                          DBO@Cloud: A Cloud-based repository presenting 100+ years old collection of Bavarian dialects.
+                          Cloud Access service: Single-job applications and parameter-sweep applications can be run on the DARIAH VO clouds without porting efforts.
+                          Workflow Development service: Complex workflow applications can be developed and run on all the resources of the DARIAH VO.
+                          File transfer service: Enables transferring data from, to and between storage services providing HTTP, HTTPS, SFTP, GSIFTP, SRM, iRODS and S3 protocols."
+    Dynamic On Demand Analysis Service:
+        title: Dynamic On Demand Analysis Service
+        parent: *thematicServicesParent
+        tagline: Simplify the access and management of computing resources
+        description: "DODAS acts as cloud enabler designed for scientists seeking to easily exploit distributed and heterogeneous clouds to process data. Aiming to reduce the learning curve as well as the operational cost of managing community specific services running on distributed cloud, DODAS completely automates the process of provisioning, creating, managing and accessing a pool of heterogeneous computing and storage resources.
+
+                      DODAS provides:
+
+                          A comprehensive approach to opportunistic computing, with the possibility of orchestrate multiple centers (e.g. campus facilities, public or private clouds, to gather all available computing and storage resources).
+                          A simple solution for elastic computing site extensions, e.g. extension of allocated resources in order to absorb peaks of usage.
+                          An easy and controlled procedure to dynamically instantiate a spot ‘Data Analysis Facility’, for example a mission specific site. This is meant as the generation of an ephemeral WLCG-Tier as a Service to share computing and data resources with collaborators.
+                          The support to create HTCondor batch systems and BigData Platform on demand over multi-backend IaaS cloud resources.
+
+
+                      How to access the service
+
+                      To access the DODAS service, users are first required to register online.
+
+
+                      See the online manual:
+
+                      https://dodas.gitbook.io/dynamic-on-demand-analysis-service
+
+
+                      Service provided by
+
+                      The service is provided by the Italian National Institute of Nuclear Physics (INFN).
+
+                      The DODAS service builds on EOSC-hub services developed during the INDIGO-DataCloud project (Identity Access Management - IAM, Token Translation Service - TTS, PaaS Orchestration, TOSCA Templates)."
+    ENES Climate Analytics Service:
+        title: ENES Climate Analytics Service
+        parent: *thematicServicesParent
+        tagline: Analyze and process data from multiple communities with the Ophidia Big Data Analytics framework
+        description: "Users can define parallel processing workflows, executed remotely without needing to download data or provide own computing resources as these are provided by ECAS. Moreover, users can explore workflows others have created and shared, and apply these to their own data. ECAS enables users to write a workflow once and apply it to diverse data without having to customize it again.
+
+                      To access the service you need to:
+
+                      ECAS is open for use by users interested in working on Earth Sciences data. Available data sources may be different between CMCC and DKRZ.
+
+                      To use ECAS and to learn more about the different datasets available, please follow the instructions for registration and access at the two sites:
+
+                          CMCC
+                          DKRZ
+
+
+                      See the online manual:
+
+                          Ophidia
+                          More about Ophidia
+                          ENES
+                          IS-ENES
+                          ESGF"
+    LifeWatch ERIC Plants Identification App:
+        title: LifeWatch ERIC Plants Identification App
+        parent: *thematicServicesParent
+        tagline: Web service to classify plant pictures based on convolutional neural networks
+        description: "This web service connects to a deep neural network which has been trained with thousands of plant images from Europe. It can classify different types of plants, including flowers. The input to be sent to the web service is an image URL or a local image. The response is a JSON with the potential classification (the name of the potential specie), a percentage, link to google images and link to wikipedia.sets.
+
+
+                      How to access the services:
+                      The service is freely available online.
+                      The service is provided as a REST API and it uses JSON over HTTP as communication channel. Example:
+
+                      curl --data 'mode=url&url_list=https://public-media.smithsonianmag.com/filer/89/47/8947cd5c-ac01-4c0e-891a-505517cc0663/istock-540753808.jpg&url_list=https://cdn.pixabay.com/photo/2014/04/10/11/24/red-rose-320868_960_720.jpg' http://deep.ifca.es/plants/api
+
+
+                      See the online manual:
+
+                      https://github.com/IgnacioHeredia/plant_classification/blob/master/webpage/README.md#using-the-api
+
+
+                      Service provided by
+
+                      The Service is provided by LifeWatch ERIC."
+    OPENCoastS:
+        title: OPENCoastS
+        parent: *thematicServicesParent
+        tagline: On-demand operational coastal circulation forecast service
+        description: "OPENCoastS builds on-demand circulation forecast systems for user-selected sections of the North Atlantic coast and maintains them running operationally for the timeframe defined by the user. This daily service generates forecasts of water levels and 2D velocities over the spatial region of interest for periods of 48 hours, based on numerical simulations of the relevant physical processes. Forcing conditions at the boundaries and over the domain are defined by the user from global forecast databases. Automatic comparison with real-time in-situ sensor data can be provided for a number of user specified locations.
+
+                      It takes advantage of LNEC’s team long-term work on coastal modelling as model developers, integrated in several open source modelling communities (SCHISM, ELCIRC, SELFE, ADCIRC), and in its advanced competences  in developing forecast frameworks and operating forecasts deployments.
+
+
+                      Users and application potential
+
+                      OPENCoastS can contribute directly to the development of new research methodologies and workflows regarding water quality, biological, biochemical and coastal erosion studies.
+
+                      SMEs will benefit from these operational systems to feed their own higher-level service portfolios to respond to other societal needs, without the need to invest time and resources to deploy forecast systems from scratch.
+
+                      Port and coastal authorities –Through the use of this platform coastal managers have all the information required to fulfill their responsibilities (examples of uses include facilitating navigation, reducing port operation costs, reducing emergency planning and response of coastal hazards, and better exploring recreational uses of the coast).
+
+
+                      How to request a service
+
+                      To request use of the OPENCoastS, please fill in thee request form and register at https://opencoasts.ncg.ingrid.pt/. After analysis and validation of the request, you will be allowed to log in and start building your forecasts.
+
+
+                      Service provided by
+
+                      OPENCoastS is provided by the Portuguese National Civil Engineering Laboratory, and was jointly developed by LNEC and LIP.
+
+                      Currently, the service is deployed at a single computing site (NCG-INGRID-PT, part of INCD and the EGI Federation).
+
+                      Through EOSC-hub, OPENCoastS will be expanded to include a more diverse set of geographical data, and improved with integration of new features from the EGI, EUDAT and INDIGO-DataCloud service catalogues."
+    WeNMR Suite for Structural Biology:
+        title: WeNMR Suite for Structural Biology
+        parent: *thematicServicesParent
+        tagline: A suite of computational tools for structural biology
+        description: "The WeNMR suite of computational tools is composed of eight individual platforms:
+
+                          DISVIS to visualise and quantify the accessible interaction space in macromolecular complexes
+
+                          POWERFIT for rigid body fitting of atomic structures into cryo-EM density maps
+
+                          HADDOCK to model complexes of proteins and other biomolecules
+
+                          GROMACS to simulate the Newtonian equations of motion for systems with hundreds to millions of particles
+
+                          AMPS-NMR a web portal for Nuclear Magnetic Resonance (NMR) structures
+
+                          CS-ROSETTA to model the 3D structure of proteins
+
+                          FANTEN for multiple alignment of nucleic acid and protein sequences
+
+                          SPOTON to identify and classify interfacial residues as Hot-Spots (HS) in protein-protein complexes
+
+
+                      Service provided by
+
+                      The WeNMR tools are provided by the University of Utrecht, the University of Florence, and the Interuniversity consortium CIRMMP.
+
+
+                      How to access the service
+
+                      The WeNMR platforms are freely available online and can be accessed by researchers upon registration.
+
+                      The tools are powered by High-Throughput Compute capabilities provided by the EGI Federation and enhanced with software components developed by the INDIGO DataCloud project.
+
+                      During EOSC-hub, the WeNMR services will be integrated with EUDAT services and other components from the INDIGO catalogue."
+    Check-in:
+        title: Check-in
+        parent: *identityParent
+        tagline: The IdP Proxy provides AAI services for both service providers and users.
+        description: "For the user the feature is transparent: as soon as their IdP is integrated with the proxy, they are redirected by the service to their own IdP. Once integrated the IdP with the proxy, all the services using the IdP proxy will be available.
+
+                      The service providers will get all the AuthN/AuthZ information needed from the IdP Proxy (in form of attributes), without the need to deal with individual IdPs.
+
+                      Other components that can be attached to the IdP Proxy are credential translation services and attribute authorities."
+    Attribute management:
+        title: Attribute management
+        parent: *identityParent
+        tagline: ToFill
+        description: "EGI provides services to manage user membership, where users can register and ask to be part of a VO, and where the VO supervisor can approve or remove users from the VO. The service is a third party service that can be queried by service providers to decide on user authorization.
+
+                      Currently EGI has in production: VOMS an X.509 based service
+
+                      In the wake of extending AAI capabilities, EGI will provide similar capabilities also for other authentication technologies, like OpenID and SAML2, for example."
+    Training infrastructure:
+        title: Training infrastructure
+        parent: *professionalServicesParent
+        tagline: Dedicated computing and storage for training and education
+        description: "The Training Infrastructure is a cloud­based computing and storage resources for training events. It is useful to organise onsite tutorials or workshops and online training courses or as a platform for self­paced learning. \n
+
+                      Trainers can deploy custom virtual machine images on the Training Infrastructure as the training environment for the students. The virtual machines can be customised according to specific needs and the community can benefit from the easy deployment and easy reuse of course materials. <br/>
+
+                      The Training Infrastructure uses the same high­quality computing and storage environment that EGI provides to researchers.
+
+
+                      To request a training you need to:
+
+                          Choose the training courses that best fit with your needs below.
+                          Add the courses to the cart.
+                          Go to the cart and submit your order.
+                          You will receive an email summarising your order.
+                          You will be contacted by the EGI support team."
+    FitSM:
+        title: FitSM
+        parent: *professionalServicesParent
+        tagline: Learn how to manage IT services with a pragmatic and lightweight standard
+        description: "FitSM is a lightweight standards family aimed at facilitating service management in IT service provision, including federated scenarios. FitSM training aims at providing those involved in operating federated infrastructures with the professional skills they need in order to effectively manage their services.
+
+                      FitSM professional training is certified by TÜV SÜD, a global leader in standardisation and certification. The qualification programme offers three training levels: Foundation, Advanced and Expert.
+
+
+                      To request a training you need to:
+
+                          Choose the training courses that best fit with your needs below.
+                          Add the courses to the cart.
+                          Go to the cart and submit your order.
+                          You will receive an email summarising your order.
+                          You will be contacted by the EGI support team."
