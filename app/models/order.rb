@@ -9,11 +9,14 @@ class Order < ApplicationRecord
     rejected: "rejected"
   }
 
+  RATE_PERIOD = 5.days.ago
+
   enum status: STATUSES
 
   belongs_to :service
   belongs_to :user
   has_many :order_changes, dependent: :destroy
+  has_one :service_opinion
 
   validates :service, presence: true
   validates :user, presence: true

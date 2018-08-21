@@ -1,0 +1,14 @@
+= simple_form_for [:order, @service_opinion] do |f|
+  = f.error_notification
+  = f.hidden_field :rating, value: 0
+  %i.fas.fa-star-o#first-rating{onClick: 'changeClasses(1);'}
+  %i.fas.fa-star-o#second-rating{onClick: 'changeClasses(2);'}
+  %i.fas.fa-star-o#third-rating{onClick: 'changeClasses(3);'}
+  %i.fas.fa-star-o#fourth-rating{onClick: 'changeClasses(4);'}
+  %i.fas.fa-star-o#fifth-rating{onClick: 'changeClasses(5);'}
+
+  = f.input :opinion
+
+  .btn-group
+    = f.button :submit, class: 'btn btn-success'
+    -#= link_to "Cancel", order_path, class: "btn btn-secondary"

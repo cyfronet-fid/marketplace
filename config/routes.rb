@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :orders, only: [:index, :show, :create] do
     scope module: :orders do
       resources :questions, only: [:index, :create]
+      resources :service_opinions, only: [:new, :create]
     end
   end
 

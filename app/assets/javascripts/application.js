@@ -13,3 +13,42 @@
 //= require rails-ujs
 //= require activestorage
 //= require_tree .
+
+function changeClasses(number) {
+    document.getElementById("service_opinion_rating").value = number;
+    if (number == 1) {
+        $("#first-rating").attr("class", "fas fa-star");
+        $("#second-rating").attr("class", "fas fa-star-o");
+        $("#third-rating").attr("class", "fas fa-star-o");
+        $("#fourth-rating").attr("class", "fas fa-star-o");
+        $("#fifth-rating").attr("class", "fas fa-star-o");
+    }
+    if (number == 2) {
+        $("#first-rating").attr("class", "fas fa-star");
+        $("#second-rating").attr("class", "fas fa-star");
+        $("#third-rating").attr("class", "fas fa-star-o");
+        $("#fourth-rating").attr("class", "fas fa-star-o");
+        $("#fifth-rating").attr("class", "fas fa-star-o");
+    }
+    if (number == 3) {
+        $("#first-rating").attr("class", "fas fa-star");
+        $("#second-rating").attr("class", "fas fa-star");
+        $("#third-rating").attr("class", "fas fa-star");
+        $("#fourth-rating").attr("class", "fas fa-star-o");
+        $("#fifth-rating").attr("class", "fas fa-star-o");
+    }
+    if (number == 4) {
+        $("#first-rating").attr("class", "fas fa-star");
+        $("#second-rating").attr("class", "fas fa-star");
+        $("#third-rating").attr("class", "fas fa-star");
+        $("#fourth-rating").attr("class", "fas fa-star");
+        $("#fifth-rating").attr("class", "fas fa-star-o");
+    }
+    if (number == 5) {
+        $("#first-rating").attr("class", "fas fa-star");
+        $("#second-rating").attr("class", "fas fa-star");
+        $("#third-rating").attr("class", "fas fa-star");
+        $("#fourth-rating").attr("class", "fas fa-star");
+        $("#fifth-rating").attr("class", "fas fa-star");
+    }
+}
