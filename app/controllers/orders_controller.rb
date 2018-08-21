@@ -13,6 +13,7 @@ class OrdersController < ApplicationController
     authorize(@order)
 
     @question = Order::Question.new(order: @order)
+    @service_opinion = ServiceOpinion.new(order: @order)
   end
 
   def create

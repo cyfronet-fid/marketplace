@@ -10,5 +10,7 @@ class ServicesController < ApplicationController
 
   def show
     @service = Service.find(params[:id])
+    @service_opinions = ServiceOpinion.joins(:order).where(orders: { service: @service })
+    @service_opinions_size = @service_opinions.size
   end
 end

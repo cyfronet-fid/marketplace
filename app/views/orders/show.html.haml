@@ -10,6 +10,9 @@
   %li
     Current status:
     = @order.status
+  - if ( @order.created_at < Order::RATE_PERIOD )
+    %li
+      = link_to "Rate me!", new_order_service_opinion_path(@order), class: "btn btn-success"
 
 = render "orders/order_changes",
          order_changes: @order.order_changes.to_a,

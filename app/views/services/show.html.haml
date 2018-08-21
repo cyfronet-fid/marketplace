@@ -10,7 +10,7 @@
       %span.small.ml-1.font-weight-bold
         (#{@service.rating} /5)
       %a{href: "", class: "small ml-3"}
-        5 opinions
+        #{@service_opinions_size} opinions
 
 .container
   %ul#myTab.nav.nav-tabs.mt-4{role: "tablist"}
@@ -19,8 +19,7 @@
     %li.nav-item
       %a#profile-tab.nav-link.text-uppercase{"aria-controls" => "profile", "aria-selected" => "false", "data-toggle" => "tab", href: "#order", role: "tab"} Order Specification
     %li.nav-item
-      -# TODO - insert rating comment count into parenthesis - for now static (5) is left
-      %a#messages-tab.nav-link.text-uppercase{"aria-controls" => "messages", "aria-selected" => "false", "data-toggle" => "tab", href: "#opinions", role: "tab"} Opinions (5)
+      %a#opinions-tab.nav-link.text-uppercase{"aria-controls" => "opinions", "aria-selected" => "false", "data-toggle" => "tab", href: "#opinions", role: "tab"} Opinions (#{@service_opinions_size})
 .tab-content
   = render "services/description"
   = render "services/order"

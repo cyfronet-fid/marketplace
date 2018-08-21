@@ -9,6 +9,7 @@ class Service < ApplicationRecord
   has_many :service_categories, dependent: :destroy
   has_many :categories, through: :service_categories
   has_many :orders
+  has_many :service_opinions, through: :orders
 
   belongs_to :owner,
              class_name: "User",
@@ -17,6 +18,7 @@ class Service < ApplicationRecord
   validates :title, presence: true
   validates :description, presence: true
   validates :tagline, presence: true
+  validates :rating, presence: true
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
