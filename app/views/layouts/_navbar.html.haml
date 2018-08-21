@@ -1,15 +1,17 @@
 .container
   %nav.navbar.navbar-expand-lg.navbar-light.bg-light
-    = link_to root_path, class: 'navbar-brand' do
+    = link_to root_path, class: "navbar-brand" do
       %strong EOSC
       Portal
-    %button.navbar-toggler{"aria-controls" => "navbarSupportedContent",
-       "aria-expanded" => "false", "aria-label" => "Toggle navigation",
-       "data-target" => "#navbarSupportedContent",
-       "data-toggle" => "collapse", type: "button"}
+    %button.navbar-toggler{ "aria-controls" => "navbar-supported-content",
+                           "aria-expanded" => "false",
+                           "aria-label" => "Toggle navigation",
+                           "data-target" => "#navbar-supported-content",
+                           "data-toggle" => "collapse",
+                           type: "button" }
       %span.navbar-toggler-icon
 
-    #navbarSupportedContent.collapse.navbar-collapse
+    #navbar-supported-content.collapse.navbar-collapse
       %ul.navbar-nav.ml-auto.pt-2
         = nav_link controller: :home do
           = link_to "Getting Started", root_path, class: "nav-link px-3 py-1"

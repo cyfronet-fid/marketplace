@@ -36,6 +36,11 @@ rake db:seed services_size=100
 ```
 
 ### Generating DB entries for development
+Actually, filling the database is done by parsing yaml: `db/data.yml`.
+Data come from actual official version of the marketplace.
+If it is necessary, you can add new records by edit yaml, but very imporant is,
+when some records are parent for other they must be written above their children.
+But if it's necessary, there is other option to fill the database:
 To simplify development `dev:prime` rake task is created. Right now it generates
 services with random title and description (this generation is done using
 `faker` gem). In the future this task will be extended with additional data.
@@ -69,6 +74,72 @@ or you can also use `systemctl`, it shouldn't matter which one you use.
 -In order to inspect it you can use
  -[ElasticHQ](http://www.elastichq.org/gettingstarted.html) (plugin option is
  -quick and easy).
+
+## JIRA
+
+Marketplace is integrating with jira on a rather tight level. 
+For tests JIRA is stubbed, and for normal development it can be omitted,
+but in case there is a need for JIRA instance to exist it is recommeded
+to use jira instance provided by atlassian SDK.
+
+Here are instructions how to install atlassian SDK on *nix systems:
+https://developer.atlassian.com/server/framework/atlassian-sdk/install-the-atlassian-sdk-on-a-linux-or-mac-system/
+
+After installation you can start local JIRA instance by
+
+```
+atlas-run-standalone --product jira --server localhost
+```
+
+Afterwards JIRA can be accessed by the browser on http://localhost:2990/jira
+default username and password is: `admin/admin`.
+Make sure that environmental variables are set as follows (if you don't know some
+ids skip it for now, `rails jira:check` will give you sensible hints, `.dotenv` gem should be active
+in the development environment, so you can store following variables in `.env` file in the root of the project):
+
+```
+export MP_JIRA_PROJECT=MP 
+export MP_JIRA_USERNAME=admin
+export MP_JIRA_PASSWORD=admin
+export MP_JIRA_CONTEXT_PATH=/jira
+export MP_JIRA_URL=http://localhost:2990
+export MP_JIRA_ISSUE_TYPE_ID=10000  #this might be different
+export MP_JIRA_WF_TODO=10000  #this might be different
+export MP_JIRA_WF_IN_PROGRESS=10001  #this might be different
+export MP_JIRA_WF_IN_DONE=10002  #this might be different
+export MP_HOST="http://localhost:5000" # this is address of MP application
+```
+
+Afterwards you should run rake task which will check JIRA connection and will detect potential problems
+
+```
+rails jira:check
+```
+
+If you run fresh jira instance you can also create project by running
+```
+rails jira:setup
+```
+
+### Webhooks
+
+As of now webhooks must be created manually. You can do it in your administrator
+panel on your JIRA instance.
+
+Webhook url must be as follows `<MP HOSTNAME e.g. http://localhost:2990>/api/webhooks/jira`.
+JQL for querying should be: `project = <PROJECT_KEY>`
+All notifications for issues and comments should be enabled.
+
+If you create webhook, but are not sure whether options you have choosen are correct
+running
+```
+rails jira:check
+```
+will show you all problems with your webhook, including notifications you should have
+checked on. (**NOTICE:** don't forget to set you ENV variables correctly (see above),
+especially `MP_HOST` variable, without it rake task will not be able to identify which
+webhook is pointing to your application)
+
 
 ## Run
 
@@ -136,3 +207,12 @@ If this is not enough you can customize it by using environment variables:
   * `MP_DATABASE_HOST` - PostgreSQL database host
   * `MP_DATABASE_USERNAME` - PostgreSQL database username
   * `MP_DATABASE_PASSWORD` - PostgreSQL database password
+
+## Environmental Variables
+
+This project can be further customized via numerous environmental variables.
+To make storing them a little easier `dotenv` gem has been employed.
+You can read documentation [here](https://github.com/bkeepers/dotenv).
+
+In shourt you can store your env variables in `.env` file in the root of the project.
+

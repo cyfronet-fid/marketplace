@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_16_124933) do
+ActiveRecord::Schema.define(version: 2018_07_19_071704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,8 @@ ActiveRecord::Schema.define(version: 2018_07_16_124933) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "issue_id"
+    t.integer "issue_status", default: 2, null: false
     t.index ["service_id"], name: "index_orders_on_service_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
@@ -93,6 +95,8 @@ ActiveRecord::Schema.define(version: 2018_07_16_124933) do
     t.text "tagline", null: false
     t.bigint "owner_id"
     t.decimal "rating", precision: 2, scale: 1, default: "0.0", null: false
+    t.text "connected_url"
+    t.boolean "open_access", default: false
     t.index ["description"], name: "index_services_on_description"
     t.index ["owner_id"], name: "index_services_on_owner_id"
     t.index ["title"], name: "index_services_on_title"

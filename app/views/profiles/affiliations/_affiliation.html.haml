@@ -1,22 +1,54 @@
-#li
-  #{affiliation.iid}: #{affiliation.organization}
-  -unless affiliation.department.blank?
-    #{affiliation.department} department
-  (#{affiliation.webpage}, email: #{affiliation.email},
-  #{affiliation.phone} telephone).
-  - unless affiliation.supervisor.blank?
-    #{affiliation.supervisor} supervisor
+.card.border.rounded.mb-2
+  #heading-one.card-header{ role: "tab" }
+    .row
+      .col-md-6
+        %h6.mb-0{ "aria-controls" => "collapseOne", "aria-expanded" => "false", "data-parent" => "#accordion",
+        "data-toggle" => "collapse", :href => "#collapse-one" }
+          %p.display-4.mb-1
+          #{affiliation.organization}
+          %p.small.mb-0.mt-2
+            - unless affiliation.department.blank?
+              #{affiliation.department} department
+          %span.d-none
+            (email: #{affiliation.email},
+            #{affiliation.phone} telephone).
+      .col-md-2.my-auto.text-center
+        %span.text-uppercase
+          = affiliation.status
+      .col-md-2.my-auto.text-center
+        %span.small
+          last change: 28.02.2111
+      .col-md-2.my-auto.text-right
+        .btn-group
+          - if policy(affiliation).edit?
+            = link_to "Edit",
+                      edit_profile_affiliation_path(affiliation),
+                      class: "btn btn-primary btn-sm"
+          - if policy(affiliation).destroy?
+            = link_to "Delete",
+                      profile_affiliation_path(affiliation),
+                      method: :delete, data: { confirm: "Are you sure?" },
+                      class: "btn btn-link btn-sm d-none"
+  #collapse-one.collapse{ "aria-labelledby" => "heading-one", :role => "tabpanel" }
+    .card-block
+      .row.container.p-3
+        .col-md-3
+          %p.small.mb-0 Country:
+          England
+        .col-md-3
+          %p.small.mb-0 Supervisor name:
+          - unless affiliation.supervisor.blank?
+            #{affiliation.supervisor} supervisor
+        .col-md-3
+          %p.small.mb-0
+            Departmental web page:
+          %a{ href: "" }
+            #{affiliation.webpage}
+        .col-md-3
+          %p.small.mb-0
+            Supervisor profile:
+          %a{ href: "" }
+            jakiś link
 
-  .float-right
-    = affiliation.status
-    .btn-group
-      - if policy(affiliation).edit?
-        = link_to "Edit",
-                  edit_profile_affiliation_path(affiliation),
-                  class: "btn btn-secondary"
-      - if policy(affiliation).destroy?
-        = link_to "Delete",
-                  profile_affiliation_path(affiliation),
-                  method: :delete, data: { confirm: "Are you sure?" },
-                  class: "btn btn-danger"
-  .clearfix
+
+

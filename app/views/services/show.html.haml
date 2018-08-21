@@ -2,25 +2,37 @@
 .container
   %h1= @service.title
   %p
-    %b=@service.tagline
+    %b= @service.tagline
   %p= @service.description
   .row
     .col
-      =print_rating_stars(@service.rating)
+      = print_rating_stars(@service.rating)
       %span.small.ml-1.font-weight-bold
         (#{@service.rating} /5)
-      %a{href: "", class: "small ml-3"}
+      %a{ href: "", class: "small ml-3" }
         #{@service_opinions_size} opinions
 
 .container
-  %ul#myTab.nav.nav-tabs.mt-4{role: "tablist"}
+  %ul#my-tab.nav.nav-tabs.mt-4{ role: "tablist" }
     %li.nav-item
-      %a#home-tab.nav-link.text-uppercase.active{"aria-controls" => "home", "aria-selected" => "true", "data-toggle" => "tab", href: "#desc", role: "tab"} Description
+      %a#home-tab.nav-link.text-uppercase.active{ "aria-controls" => "home",
+                                                  "aria-selected" => "true",
+                                                  "data-toggle" => "tab",
+                                                  href: "#desc",
+                                                  role: "tab" } Description
     %li.nav-item
-      %a#profile-tab.nav-link.text-uppercase{"aria-controls" => "profile", "aria-selected" => "false", "data-toggle" => "tab", href: "#order", role: "tab"} Order Specification
+      %a#profile-tab.nav-link.text-uppercase{ "aria-controls" => "profile",
+                                              "aria-selected" => "false",
+                                              "data-toggle" => "tab",
+                                              href: "#order",
+                                              role: "tab" } Order Specification
     %li.nav-item
-      %a#opinions-tab.nav-link.text-uppercase{"aria-controls" => "opinions", "aria-selected" => "false", "data-toggle" => "tab", href: "#opinions", role: "tab"} Opinions (#{@service_opinions_size})
+      %a#opinions-tab.nav-link.text-uppercase{"aria-controls" => "opinions",
+                                              "aria-selected" => "false",
+                                              "data-toggle" => "tab",
+                                              href: "#opinions",
+                                              role: "tab"} Opinions (#{@service_opinions_size})
 .tab-content
-  = render "services/description"
+  = render "services/description", service: @service
   = render "services/order"
   = render "services/opinions"

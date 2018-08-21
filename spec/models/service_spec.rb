@@ -39,6 +39,18 @@ RSpec.describe Service do
     expect(service.main_category).to eq(main)
   end
 
+  context "if open access" do
+    before { allow(subject).to receive(:open_access?) { true } }
+
+    it { is_expected.to validate_presence_of(:connected_url) }
+  end
+
+  context "if not open access" do
+    before { allow(subject).to receive(:open_access?) { false } }
+
+    it { is_expected.to_not validate_presence_of(:connected_url) }
+  end
+
   it "has rating" do
     main, other = create_list(:category, 2)
     service = create(:service, categories: [main, other])
