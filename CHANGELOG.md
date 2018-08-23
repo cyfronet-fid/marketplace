@@ -53,7 +53,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add dotenv gem (@michal-szostak)
 - Change checkin service (@wziajka)
 - Add filling database with services, categories and relations between them in seeds.rb (@goreck888)
-- Testing pull request deployment 
+- Testing pull request deployment
+- Testing git hooks env 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
 
