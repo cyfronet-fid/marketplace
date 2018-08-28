@@ -14,6 +14,7 @@ class ServiceOpinionPolicy < ApplicationPolicy
   def show?
     owner?
   end
+
   def create?
     user
   end
@@ -21,7 +22,9 @@ class ServiceOpinionPolicy < ApplicationPolicy
   def permitted_attributes
     [:rating, :opinion]
   end
+
   private
+
     def owner?
       record.user == user
     end

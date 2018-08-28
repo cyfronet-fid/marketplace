@@ -2,6 +2,7 @@
 
 class Orders::ServiceOpinionsController < ApplicationController
   before_action :authenticate_user!
+  before_action :find_order, only: :create
 
   def new
     @order = Order.find(params[:order_id])
@@ -10,8 +11,6 @@ class Orders::ServiceOpinionsController < ApplicationController
   end
 
   def create
-    @order = Order.find(params[:order_id])
-    @service = @order.service
     template = service_opinion_template
     authorize(template)
 
@@ -25,6 +24,10 @@ class Orders::ServiceOpinionsController < ApplicationController
 
 
   private
+    def find_order
+      @order = Order.joins(:service).find(params[:order_id])
+    end
+
     def service_opinion_template
       ServiceOpinion.new(permitted_attributes(ServiceOpinion).merge(order: @order))
     end

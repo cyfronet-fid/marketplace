@@ -24,9 +24,9 @@
           %li
             %span.font-weight-bold Current status:
             = @order.status
-          - if ( @order.created_at < Order::RATE_PERIOD )
+          - if ratingable?
             %li
-              = link_to "Rate me!", new_order_service_opinion_path(@order), class: "btn btn-success"
+              = link_to "Rate this service!", new_order_service_opinion_path(@order), class: "btn btn-secondary"
 
         = render "orders/order_changes",
                  order_changes: @order.order_changes.to_a,
