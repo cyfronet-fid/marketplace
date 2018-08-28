@@ -8,14 +8,6 @@ class ServiceOpinion < ApplicationRecord
   private
 
     def update_service_rating
-      @orders = Order.where(service: order.service_id)
-
-      @service_opinions = ServiceOpinion.joins(:order).where(orders: { id: @orders })
-      @rating = 0
-      @service_opinions.each do |opinion|
-        @rating += opinion.rating
-      end
-
-      order.service.update_attribute(:rating, @rating.fdiv(@service_opinions.size))
+      ServiceOpinion::UpdateService.new(order).call
     end
 end

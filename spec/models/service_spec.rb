@@ -52,10 +52,7 @@ RSpec.describe Service do
   end
 
   it "has rating" do
-    main, other = create_list(:category, 2)
-    service = create(:service, categories: [main, other])
-
-    expect(service.rating).to eq(0.0)
+    expect(create(:service).rating).to eq(0.0)
   end
 
 end

@@ -16,15 +16,13 @@ class Order < ApplicationRecord
       jira_errored: 3
   }
 
-  RATE_PERIOD = 5.days.ago
-
   enum status: STATUSES
   enum issue_status: ISSUE_STATUSES
 
   belongs_to :service
   belongs_to :user
+  has_one :service_opinion, dependent: :restrict_with_error
   has_many :order_changes, dependent: :destroy
-  has_one :service_opinion
 
   validates :service, presence: true
   validates :user, presence: true
