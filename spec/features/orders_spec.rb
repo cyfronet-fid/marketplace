@@ -103,7 +103,7 @@ RSpec.feature "Service order" do
 
       visit order_path(order)
       fill_in "order_question_text", with: "This is my question"
-      click_button "Ask question"
+      click_button "Send message"
 
       expect(page).to have_text("This is my question")
     end
@@ -112,7 +112,7 @@ RSpec.feature "Service order" do
       order = create(:order, user: user, service: service)
 
       visit order_path(order)
-      click_button "Ask question"
+      click_button "Send message"
 
       expect(page).to have_text("Question cannot be blank")
     end

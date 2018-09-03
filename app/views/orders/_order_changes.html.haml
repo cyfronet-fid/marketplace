@@ -1,9 +1,9 @@
-%h3 Order history
-
-- if order_changes.count.positive?
-  = ([nil] + order_changes).each_cons(2) do |previous, current|
-    = render "orders/order_change", previous: previous, current: current
-- else
-  %p No order changes yet
+%h3.mb-4 Order history
+%ul.step-progress.pl-5.pb-4
+  - if order_changes.count.positive?
+    = ([nil] + order_changes).each_cons(2) do |previous, current|
+      = render "orders/order_change", previous: previous, current: current
+  - else
+    %p No order changes yet
 
 = render "orders/question", order: order, question: question
