@@ -3,10 +3,9 @@
 require "rails_helper"
 
 RSpec.feature "Service order" do
-
+  include OmniauthHelper
 
   context "as logged in user" do
-    include OmniauthHelper
 
     let(:user) { create(:user) }
     let(:service) { create(:service) }
@@ -26,31 +25,35 @@ RSpec.feature "Service order" do
       expect(page).to have_text("Add to my services")
     end
 
-    scenario "I can order service" do
+    scenario "I can add order to cart" do
       visit service_path(service)
 
-      expect { click_button "Order" }.
+      click_button "Order"
+
+      expect(page).to have_current_path(cart_path)
+      expect(page).to have_text(service.title)
+      expect(page).to have_selector(:link_or_button,
+                                    "Order", exact: true)
+
+      expect { click_on "Order" }.
         to change { Order.count }.by(1)
       order = Order.last
 
-      expect(order.service).to eq(service)
-      expect(order.user).to eq(user)
-      expect(order).to be_created
+      expect(order.service_id).to eq(service.id)
+      expect(page).to have_content(service.title)
     end
 
     scenario "I can order open acces service" do
       @open_access_service = create(:open_access_service)
-      @open_access_order = create(:order, service: @open_access_service, user: user)
 
       visit service_path(@open_access_service)
 
-      expect { click_button "Add to my services" }.
-        to change { Order.count }.by(1)
-      order = Order.last
+      click_button "Add to my services"
 
-      expect(@open_access_order.service).to eq(@open_access_service)
-      expect(@open_access_order.user).to eq(user)
-      expect(@open_access_order).to be_created
+      expect(page).to have_current_path(cart_path)
+      expect(page).to have_text(@open_access_service.title)
+      expect(page).to have_selector(:link_or_button,
+                                    "Order", exact: true)
     end
 
     scenario "I can see my ordered services" do
@@ -119,15 +122,41 @@ RSpec.feature "Service order" do
   end
 
   context "as anonymous user" do
-    scenario "I don't see order button" do
+
+    scenario "I nead to login to order" do
+      service = create(:service)
+      user = create(:user)
+
+      visit service_path(service)
+
+      expect(page).to have_selector(:link_or_button, "Order", exact: true)
+
+      click_on "Order"
+
+      checkin_sign_in_as(user)
+
+      expect(page).to have_current_path(cart_path)
+      expect(page).to have_text(service.title)
+    end
+
+    scenario "I can see order button" do
       service = create(:service)
 
       visit service_path(service)
 
-      expect(page).to_not have_selector(:link_or_button, "Order", exact: true)
+      expect(page).to have_selector(:link_or_button, "Order", exact: true)
     end
 
-    scenario "I don't my services page" do
+    scenario "I can see openaccess service order button" do
+      open_access_service =  create(:open_access_service)
+
+      visit service_path(open_access_service)
+
+      expect(page).to have_selector(:link_or_button, "Add to my services", exact: true)
+      expect(page).to have_selector(:link_or_button, "Go to the service", exact: true)
+    end
+
+    scenario "I don't see my services page" do
       visit root_path
 
       expect(page).to_not have_text("My services")
