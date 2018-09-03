@@ -44,6 +44,9 @@ gem "redcarpet"
 # jira
 gem "jira-ruby"
 
+# redis
+gem "redis-rails"
+
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
 
@@ -74,6 +77,7 @@ group :test do
   gem "shoulda-matchers"
   gem "capybara"
   gem "database_cleaner"
+  gem "rack_session_access"
 end
 
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]

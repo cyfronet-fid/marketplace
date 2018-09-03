@@ -17,7 +17,7 @@ We will need:
     Recommented way to manage nodejs versions is to use [asdf](https://github.com/asdf-vm/asdf)
     with [asdf-nodejs](https://github.com/asdf-vm/asdf-nodejs) plugin.
   * [postgresql](https://www.postgresql.org)
-
+  * redis (https://redis.io)
 ### Setup
 
   * First time run `/bin/setup`. It will install bundler, foreman,
