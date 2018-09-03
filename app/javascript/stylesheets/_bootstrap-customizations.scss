@@ -120,6 +120,11 @@ header {
   font-size: $font-size-xs;
   text-transform: uppercase;
 
+  &.btn-sm {
+    font-size: $font-size-xxs;
+    padding: 0.3rem 2rem;
+  }
+
   svg {
     margin-right: 9px;
   }
@@ -405,10 +410,19 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   color: $body-color;
 }
 
-.table thead th {
-  border-bottom: 2px solid $primary;
-  border-top: none;
-  text-transform: uppercase;
+.table {
+  thead {
+    th {
+      border-bottom: 2px solid $primary;
+      border-top: none;
+      text-transform: uppercase;
+      padding: 0.65rem;
+    }
+  }
+
+  td {
+    padding: 0.65rem;
+  }
 }
 
 textarea {
@@ -442,4 +456,76 @@ textarea {
   font-size: 90%;
 }
 
+.x-small {
+  font-size: 75%;
+}
+
+.step-progress {
+  position: relative;
+
+  &-item {
+    position: relative;
+    counter-increment: list;
+
+    &:not(:last-child) {
+      padding-bottom: 20px;
+    }
+
+    &::before {
+      display: inline-block;
+      content: '';
+      position: absolute;
+      top: 6px;
+      height: 100%;
+      width: 10px;
+    }
+
+    &::after {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      left: -7px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: $white;
+    }
+
+    &.current {
+      &::before {
+        border-left: 2px solid $primary;
+      }
+
+      &::after {
+        content: '';
+        padding-top: 1px;
+        width: 19px;
+        height: 18px;
+        top: 2px;
+        left: -9px;
+        font-size: 14px;
+        text-align: center;
+        border: 2px solid $primary;
+        background-color: $white;
+      }
+    }
+
+    &:last-child {
+
+      &::before {
+        display: none;
+      }
+    }
+  }
+
+  .time {
+    position: absolute;
+    left: -70px;
+    line-height: 1.4;
+    text-align: center;
+    padding-top: 4px;
+    width: 50px;
+  }
+}
 

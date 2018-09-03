@@ -1,9 +1,15 @@
-- if current.question?
-  .card.text-white.bg-info
-    .card-header= status_change(previous, current)
-    .card-body= current.message
-- else
-  .card
-    .card-header= status_change(previous, current)
-    .card-body= current.message
+%li.step-progress-item.current.ml-4
+  -# :TODO UX
+  %p.time.x-small.text-muted 15.10.18 10:00
+  - if current.question?
+    .ml-4
+      .x-small.text-uppercase.d-block= status_change(previous, current)
+      %p= current.message
+  - else
+    .ml-4
+      .x-small.text-uppercase.d-block= status_change(previous, current)
+      %p= current.message
+
+
+
 
