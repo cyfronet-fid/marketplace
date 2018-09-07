@@ -54,6 +54,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Change checkin service (@wziajka)
 - Add filling database with services, categories and relations between them in seeds.rb (@goreck888)
 - Styling Order Details view (@kosmidma)
+- Create ticket in JIRA by open service order with adequate status "Done" (@goreck888)
 - Styling Home view (@kosmidma)
 
 ### Changed
