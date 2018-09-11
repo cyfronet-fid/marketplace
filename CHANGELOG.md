@@ -55,6 +55,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add filling database with services, categories and relations between them in seeds.rb (@goreck888)
 - Styling Order Details view (@kosmidma)
 - Styling Home view (@kosmidma)
+- Corrections My Profile view (@kosmidma)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
