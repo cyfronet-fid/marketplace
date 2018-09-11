@@ -35,17 +35,24 @@ a {
   opacity: 0.9;
 }
 
+.font-weight-bold {
+  font-weight: 600 !important;
+}
+
 h1 {
   font-size: $h1-font-size;
+  font-family: $font-family-header;
 }
 
 h2 {
   font-size: $h2-font-size;
+  font-family: $font-family-header;
 }
 
 h3 {
   font-size: $h3-font-size;
   font-weight: 600;
+  font-family: $font-family-header;
 }
 
 h4 {
@@ -53,12 +60,14 @@ h4 {
   font-weight: 600;
   border-bottom: 2px solid $primary;
   padding-bottom: 0.9rem;
+  font-family: $font-family-header;
 }
 
 h5 {
   font-weight: 600;
   text-transform: uppercase;
   font-size: $h5-font-size;
+  font-family: $font-family-header;
 
   &::after {
     content: '';
