@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_19_071704) do
+ActiveRecord::Schema.define(version: 2018_09_05_073314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,15 @@ ActiveRecord::Schema.define(version: 2018_07_19_071704) do
     t.index ["service_id"], name: "index_service_categories_on_service_id"
   end
 
+  create_table "service_opinions", force: :cascade do |t|
+    t.integer "rating", null: false
+    t.text "opinion"
+    t.bigint "order_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_service_opinions_on_order_id"
+  end
+
   create_table "services", force: :cascade do |t|
     t.string "title", null: false
     t.text "description", null: false
@@ -89,6 +98,7 @@ ActiveRecord::Schema.define(version: 2018_07_19_071704) do
     t.decimal "rating", precision: 2, scale: 1, default: "0.0", null: false
     t.text "connected_url"
     t.boolean "open_access", default: false
+    t.integer "service_opinion_count", default: 0
     t.index ["description"], name: "index_services_on_description"
     t.index ["owner_id"], name: "index_services_on_owner_id"
     t.index ["title"], name: "index_services_on_title"

@@ -21,6 +21,7 @@ class Order < ApplicationRecord
 
   belongs_to :service
   belongs_to :user
+  has_one :service_opinion, dependent: :restrict_with_error
   has_many :order_changes, dependent: :destroy
 
   validates :service, presence: true
