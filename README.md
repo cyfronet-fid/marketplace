@@ -25,21 +25,11 @@ We will need:
   * After update run `/bin/update`. It will update dependencies, run db
     migrations and restart currently started application.
 
-### Running parametrized database seeds 
-While running `/bin/setup` rake will seed the database with important data. However seeds can 
-also be re-run with additional parameters allowing to specify e.g. number of services seeded
-to the database.
- 
-Example use of the database seed:
-```
-rake db:seed services_size=100
-```
-
 ### Generating DB entries for development
 Actually, filling the database is done by parsing yaml: `db/data.yml`.
 Data come from actual official version of the marketplace.
-If it is necessary, you can add new records by edit yaml, but very imporant is,
-when some records are parent for other they must be written above their children.
+If you want to update informations, or add new services/categories you can add new records by edit yaml, 
+but very imporant is, when some records are parent for other they must be written above their children.
 But if it's necessary, there is other option to fill the database:
 To simplify development `dev:prime` rake task is created. Right now it generates
 services with random title and description (this generation is done using

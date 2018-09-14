@@ -15,15 +15,12 @@ yaml_hash = YAML.load_file("db/data.yml")
 
 yaml_hash["categories"].each do |category, hash|
   parent = hash["parent"] && Category.find_by(name: hash["parent"])
-  Category.create!(name: hash["name"], description: hash["description"], parent: parent)
-end
-
-puts "Generating services from yaml"
-yaml_hash["services"].each do |service, hash|
-  current = Service.create(title: hash["title"], tagline: hash["tagline"], description: hash["description"])
-  current.categories << Category.find_by(name: hash["parent"])
-  current.set_first_category_as_main!
-
+  if parent.blank?
+    Category.create_with(name: hash["name"], description: hash["description"]).find_or_create_by(name: hash["name"])
+  else
+    Category.create_with(name: hash["name"], description: hash["description"], parent: parent).find_or_create_by(name: hash["name"])
+  end
+  puts "Generated category #{ hash["name"] }"
 end
 
 puts "Generating providers"
@@ -33,5 +30,12 @@ all_providers << Provider.create_with(name: "Provider 2").find_or_create_by(name
 all_providers << Provider.create_with(name: "Provider 3").find_or_create_by(name: "Provider 3")
 all_providers << Provider.create_with(name: "Provider 4").find_or_create_by(name: "Provider 4")
 
-services_size = ENV["services_size"].to_i || 0
-Rake::Task["dev:prime"].invoke(services_size)
+
+puts "Generating services from yaml"
+yaml_hash["services"].each do |service, hash|
+  current = Service.create_with(title: hash["title"], tagline: hash["tagline"], description: hash["description"], provider: Provider.all.sample).find_or_create_by(title: hash["title"])
+  current.categories << Category.find_by(name: hash["parent"])
+  current.set_first_category_as_main!
+  puts "Generated service #{ hash["title"] }"
+
+end
