@@ -34,7 +34,7 @@ class Order::Ready
       if issue.save(fields: { summary: "Add open service #{@order.service.title}",
                           project: { key: client.jira_project_key },
                           issuetype: { id: client.jira_issue_type_id } })
-        trs = issue.transitions.all.select { |tr| tr.name == "Done"}
+        trs = issue.transitions.all.select { |tr| tr.name == "Done" }
         if trs.length > 0
           transition = issue.transitions.build
           transition.save!("transition" => { "id" => trs.first.id })
