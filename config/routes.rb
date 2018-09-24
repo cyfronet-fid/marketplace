@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resource :configuration, only: [:show, :update]
       resource :summary, only: [:show, :create]
       resource :cancel, only: :destroy
+      resource :questions, only: [:create]
     end
   end
 

@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(version: 2018_10_22_113346) do
     t.boolean "open_access", default: false
     t.bigint "provider_id"
     t.integer "service_opinion_count", default: 0
+    t.text "contact_emails", default: [], array: true
     t.text "places", null: false
     t.text "languages", null: false
     t.text "dedicated_for", null: false

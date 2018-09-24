@@ -7,18 +7,66 @@ RSpec.feature "Service browsing" do
 
   let(:user) { create(:user) }
 
-  before { checkin_sign_in_as(user) }
+  context "as logged in user" do
 
-  scenario "allows to see details" do
-    service = create(:service)
+    before { checkin_sign_in_as(user) }
 
-    visit service_path(service)
+    scenario "allows to see details" do
+      service = create(:service)
 
-    expect(page.body).to have_content service.title
-    expect(page.body).to have_content service.description
-    expect(page.body).to have_content service.tagline
+      visit service_path(service)
+
+      expect(page.body).to have_content service.title
+      expect(page.body).to have_content service.description
+      expect(page.body).to have_content service.tagline
+    end
+
+    scenario "I see Ask Question" do
+      service = create(:service)
+
+      visit service_path(service)
+
+      expect(page).to have_content "Want to ask a question about this service?"
+
+    end
+
+    scenario "I can see question-modal if I click on link", js: true do
+      service = create(:service)
+
+      visit service_path(service)
+
+      find("#modal-show").click
+
+      expect(page).to have_css("div#question-modal.show")
+    end
+
+    scenario "I can sand message about service", js: true do
+      user1, user2 = create_list(:user, 2)
+      service = create(:service, contact_emails: [user1.email, user2.email])
+
+      visit service_path(service)
+
+      find("#modal-show").click
+
+      within("#question-modal") do
+        fill_in("service_question_text", with: "text")
+      end
+
+      expect { click_on "SEND" }.
+        to change { ActionMailer::Base.deliveries.count }.by(2)
+      expect(page).to have_content("Your message was successfully sended")
+    end
   end
 
+  context "as not logged in user" do
+    scenario "I need to login to asks service question" do
+      service = create(:service)
+
+      visit service_path(service)
+
+      expect(page).to have_content "If you want ask question about service please login!"
+    end
+  end
 end
 
 
