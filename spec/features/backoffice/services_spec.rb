@@ -39,8 +39,9 @@ RSpec.feature "Services in backoffice" do
     end
   end
 
-  scenario "I can create new service" do
+  scenario "I can create new service", js: true do
     provider = create(:provider)
+
     visit backoffice_services_path
     click_on "Create new service"
 
@@ -64,6 +65,9 @@ RSpec.feature "Services in backoffice" do
     select provider.name, from: "service_provider_id"
 
     check "Open access"
+    fill_in "service_contact_emails_0", with: "person1@test.ok"
+    page.find("#add-email-field").click
+    fill_in "service_contact_emails_1", with: "person2@test.ok"
 
     expect { click_on "Create Service" }.
       to change { user.owned_services.count }.by(1)
@@ -74,6 +78,8 @@ RSpec.feature "Services in backoffice" do
     expect(page).to have_content("service tagline")
     expect(page).to have_content("https://sample.url")
     expect(page).to have_content("true")
+    expect(page).to have_content("person1@test.ok")
+    expect(page).to have_content("person2@test.ok")
   end
 
   scenario "I can edit owned service" do

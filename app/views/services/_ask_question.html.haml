@@ -1,0 +1,8 @@
+- if current_user
+  %a{ id: "modal-show", "data-toggle": "modal", "data-target": "#question-modal" }
+    Want to ask a question about this service?
+- else
+  %p
+    If you want ask question about service please login!
+- if current_user
+  = render "services/question", service: service, question: question

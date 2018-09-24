@@ -38,7 +38,8 @@ class Backoffice::ServicePolicy < ApplicationPolicy
      :dedicated_for, :terms_of_use_url,
      :access_policies_url, :corporate_sla_url,
      :webpage_url, :manual_url, :helpdesk_url,
-     :tutorial_url, :restrictions, :phase]
+     :tutorial_url, :restrictions, :phase,
+     [contact_emails: []]]
   end
 
   private
