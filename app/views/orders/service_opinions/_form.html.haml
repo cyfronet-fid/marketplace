@@ -1,0 +1,20 @@
+= simple_form_for [:order, @service_opinion] do |f|
+  = f.error_notification
+  = f.hidden_field :rating, value: 0
+  %ul.list-inline{ data: { rating_stars: "service_opinion_rating" } }
+    %li.list-inline-item
+      %i.far.fa-star{ value: 1 }
+    %li.list-inline-item
+      %i.far.fa-star{ value: 2 }
+    %li.list-inline-item
+      %i.far.fa-star{ value: 3 }
+    %li.list-inline-item
+      %i.far.fa-star{ value: 4 }
+    %li.list-inline-item
+      %i.far.fa-star{ value: 5 }
+
+  = f.input :opinion
+
+  .btn-group
+    = f.button :submit, class: "btn btn-success"
+    -# = link_to "Cancel", order_path, class: "btn btn-secondary"

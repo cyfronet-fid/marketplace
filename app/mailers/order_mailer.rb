@@ -25,6 +25,13 @@ class OrderMailer < ApplicationMailer
     end
   end
 
+  def rate_service(order)
+    @order = order
+    @user = order.user
+
+    mail(to: @user.email, subject: "EOSC Portal - Rate your service", template_name: "rating_service")
+  end
+
   def new_message(order)
     mail(to: @user,
          subject: "#{prefix(order)} new message",

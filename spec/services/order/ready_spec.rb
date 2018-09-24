@@ -22,6 +22,8 @@ RSpec.describe Order::Ready do
     order.new_change(status: :ready, message: "Order is ready")
 
     expect { described_class.new(order).call }.
-      to change { ActionMailer::Base.deliveries.count }.by(1)
+      to change { ActionMailer::Base.deliveries.count }.by(2)
+    expect(ActionMailer::Base.deliveries[-2].subject).to start_with("[Order #")
+    expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
   end
 end
