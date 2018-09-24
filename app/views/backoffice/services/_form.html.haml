@@ -6,6 +6,7 @@
   = f.input :tagline
   = f.input :connected_url, label: "Service website"
   = f.input :open_access, as: :boolean
+  = f.association :provider
 
   .btn-group
     = f.button :submit, class: "btn btn-success"

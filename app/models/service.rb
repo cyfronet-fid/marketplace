@@ -14,11 +14,13 @@ class Service < ApplicationRecord
   belongs_to :owner,
              class_name: "User",
              optional: true
+  belongs_to :provider, optional: true
 
   validates :title, presence: true
   validates :description, presence: true
   validates :tagline, presence: true
   validates :connected_url, presence: true, url: true, if: :open_access?
+  validates :provider, presence: true
   validates :rating, presence: true
 
   after_save :set_first_category_as_main!, if: :main_category_missing?

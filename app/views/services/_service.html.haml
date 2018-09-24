@@ -6,8 +6,8 @@
       .mb-3= service.tagline
       %p.small.float-left.mr-4
         Provided by
-        %a{ href: "" }
-          SHAPE
+        = link_to service.provider.name, service.provider
+
       %p.small
         Available for SME only within 1 day
       .row
