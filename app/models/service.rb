@@ -6,9 +6,10 @@ class Service < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
+  has_many :orders, dependent: :restrict_with_error
   has_many :service_categories, dependent: :destroy
   has_many :categories, through: :service_categories
-  has_many :orders
+  has_many :service_opinions, through: :orders
 
   belongs_to :owner,
              class_name: "User",
@@ -20,6 +21,7 @@ class Service < ApplicationRecord
   validates :tagline, presence: true
   validates :connected_url, presence: true, url: true, if: :open_access?
   validates :provider, presence: true
+  validates :rating, presence: true
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
 

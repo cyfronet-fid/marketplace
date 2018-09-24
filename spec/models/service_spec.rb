@@ -7,6 +7,7 @@ RSpec.describe Service do
   it { should validate_presence_of(:description) }
   it { should validate_presence_of(:tagline) }
   it { should validate_presence_of(:provider) }
+  it { should validate_presence_of(:rating) }
 
   it { should belong_to(:owner) }
   it { should belong_to(:provider) }
@@ -51,4 +52,9 @@ RSpec.describe Service do
 
     it { is_expected.to_not validate_presence_of(:connected_url) }
   end
+
+  it "has rating" do
+    expect(create(:service).rating).to eq(0.0)
+  end
+
 end
