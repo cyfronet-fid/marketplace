@@ -48,4 +48,17 @@ RSpec.describe OrderMailer, type: :mailer do
       expect(encoded_body).to match(/#{order_url(order)}/)
     end
   end
+
+  context "Rating service" do
+    it "notifies about service rating possibility" do
+      order = create(:order)
+
+      mail = described_class.rate_service(order).deliver_now
+      encoded_body = mail.body.encoded
+
+      expect(mail.subject).to match(/EOSC Portal - Rate your service/)
+      expect(encoded_body).to match(/Rate your service/)
+      expect(encoded_body).to match(/#{order_url(order)}/)
+    end
+  end
 end

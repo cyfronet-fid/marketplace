@@ -1,0 +1,7 @@
+%ul.list-unstyled
+  %li.media.pb-4.mb-4
+    .media-body
+      %h3 Opinion
+      %span Created at: #{service_opinion.created_at}
+      Rating: #{service_opinion.rating} #{print_rating_stars(service_opinion.rating)}
+      %p= service_opinion.opinion

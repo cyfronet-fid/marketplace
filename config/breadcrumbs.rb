@@ -40,3 +40,8 @@ crumb :category do |category|
     parent :services
   end
 end
+
+crumb :provider do |provider|
+  link "#{provider.name}", provider_path(provider)
+  parent :services
+end

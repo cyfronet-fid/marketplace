@@ -26,5 +26,12 @@ yaml_hash["services"].each do |service, hash|
 
 end
 
+puts "Generating providers"
+all_providers = []
+all_providers << Provider.create_with(name: "Provider 1").find_or_create_by(name: "Provider 1")
+all_providers << Provider.create_with(name: "Provider 2").find_or_create_by(name: "Provider 2")
+all_providers << Provider.create_with(name: "Provider 3").find_or_create_by(name: "Provider 3")
+all_providers << Provider.create_with(name: "Provider 4").find_or_create_by(name: "Provider 4")
+
 services_size = ENV["services_size"].to_i || 0
 Rake::Task["dev:prime"].invoke(services_size)

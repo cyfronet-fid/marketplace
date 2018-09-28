@@ -54,8 +54,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Change checkin service (@wziajka)
 - Add filling database with services, categories and relations between them in seeds.rb (@goreck888)
 - Styling Order Details view (@kosmidma)
+- Added providers link (@martaswiatkowska)
 - Styling Home view (@kosmidma)
 - Corrections My Profile view (@kosmidma)
+- Service opinion form and active job that send email to user about rating service 5 days after order is ready (@kmarszalek)
+
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)

@@ -19,5 +19,6 @@ class Order::Ready
 
     def notify!
       OrderMailer.changed(@order).deliver_later
+      OrderMailer.rate_service(@order).deliver_later(wait_until: RATE_AFTER_PERIOD.from_now)
     end
 end

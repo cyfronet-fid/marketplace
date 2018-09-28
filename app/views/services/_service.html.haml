@@ -6,8 +6,8 @@
       .mb-3= service.tagline
       %p.small.float-left.mr-4
         Provided by
-        %a{ href: "" }
-          SHAPE
+        = link_to service.provider.name, service.provider
+
       %p.small
         Available for SME only within 1 day
       .row
@@ -16,7 +16,7 @@
           %span.small.ml-1.font-weight-bold
             (#{service.rating} /5)
           %a{ href: "", class: "small ml-3" }
-            5 opinions
+            #{service.service_opinion_count} opinions
 
     .ml-5
       %form.d-flex.justify-content-end

@@ -13,8 +13,11 @@ Rails.application.routes.draw do
   resources :orders, only: [:index, :show, :create] do
     scope module: :orders do
       resources :questions, only: [:index, :create]
+      resources :service_opinions, only: [:new, :create]
     end
   end
+
+  resources :providers, only: :show
 
   resource :profile, only: [:show] do
     scope module: :profiles do
