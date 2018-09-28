@@ -21,4 +21,8 @@ module ServiceHelper
   def write_button_text
     @service.open_access ? "Add to my services" : "Order"
   end
+
+  def get_providers_list
+    Provider.all
+  end
 end
