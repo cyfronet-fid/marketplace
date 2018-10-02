@@ -19,7 +19,19 @@ if Rails.env.development?
                        open_access: Faker::Boolean.boolean,
                        rating: Random.rand(5.0),
                        connected_url: Faker::Internet.url,
-                       provider: Provider.all.sample)
+                       provider: Provider.all.sample,
+                       places: Faker::Address.country,
+                       languages: Faker::Nation.language,
+                       dedicated_for: Faker::Lorem.sentence,
+                       terms_of_use_url: Faker::Internet.url,
+                       access_policies_url: Faker::Internet.url,
+                       corporate_sla_url: Faker::Internet.url,
+                       webpage_url: Faker::Internet.url,
+                       manual_url: Faker::Internet.url,
+                       helpdesk_url: Faker::Internet.url,
+                       tutorial_url: Faker::Internet.url,
+                       restrictions: Faker::Lorem.sentence,
+                       phase: Faker::Lorem.sentence)
 
       end
 

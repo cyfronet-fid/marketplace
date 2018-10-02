@@ -70,6 +70,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Fix and refactor seeds.rb to work properly (@goreck888)
 - Update services and category list in data.yml (@goreck888)
 - Update home view with static version (@kmarszalek)
+- Upgrade service detail view (@kmarszalek)
 
 ### Deprecated
 

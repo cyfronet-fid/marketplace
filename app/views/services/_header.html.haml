@@ -1,0 +1,23 @@
+.row
+  .col-8
+    %h1= service.title
+    %p
+      %b= service.tagline
+    %p= service.description
+    %p
+      Provided by
+      = link_to service.provider.name, service.provider
+    %p
+      = print_rating_stars(service.rating)
+      %span.small.ml-1.font-weight-bold
+        #{service.rating} /5)
+      %a{ href: "", class: "small ml-3" }
+        #{service.service_opinion_count} opinions
+  .col-4
+    - if policy(Order.new).create?
+      = form_for(Order.new) do |f|
+        = f.hidden_field :service_id, value: service.id
+        %button{ class: "btn btn-primary" }
+          = write_button_text
+        - if service.open_access?
+          = link_to "Go to the service", service.connected_url, class: "btn btn-primary", target: "_blank"
