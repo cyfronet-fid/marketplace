@@ -58,6 +58,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Styling Home view (@kosmidma)
 - Corrections My Profile view (@kosmidma)
 - Service opinion form and active job that send email to user about rating service 5 days after order is ready (@kmarszalek)
+- Sort services via selection of options in select box (@michal-szostak)
 
 
 ### Changed

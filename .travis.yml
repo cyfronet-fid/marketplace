@@ -9,6 +9,9 @@ cache:
     - node_modules
   yarn: true
 
+addons:
+  chrome: stable
+
 services:
   - elasticsearch
   - postgresql
