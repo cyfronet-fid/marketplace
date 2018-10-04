@@ -61,8 +61,7 @@ export function registerSubmitOnChange(node) {
         let value = $(this).val();
 
         let search = setSearchParams(window.location.search, {[id]: value});
-        // TODO: Someone might commemnt about how it would work with turbolinks...
-        window.location.search = search;
+        Turbolinks.visit(window.location.pathname + '?' + search);
     });
 }
 
