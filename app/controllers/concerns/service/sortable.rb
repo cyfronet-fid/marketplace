@@ -5,20 +5,16 @@ module Service::Sortable
 
   private
     def ordering
-      if params[:sort].blank?
-        return {}
+      {}.tap do |sort_options|
+        sort_key = params[:sort]
+        unless params[:sort].blank?
+          if sort_key[0] == "-"
+            sort_key = sort_key[1..-1]
+            sort_options[sort_key] = :desc
+          else
+            sort_options[sort_key] = :asc
+          end
+        end
       end
-
-      sort_key = params[:sort]
-      sort_options = {}
-
-      if sort_key[0] == "-"
-        sort_key = sort_key[1..-1]
-        sort_options[sort_key] = :desc
-      else
-        sort_options[sort_key] = :asc
-      end
-
-      sort_options
     end
 end
