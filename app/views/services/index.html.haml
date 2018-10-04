@@ -13,19 +13,17 @@
             Service description. When category is selected than title and this
             description should reflect it.
         .col-md-3.offset-md-1.my-auto
-          %form
+          = form_tag services_path, method: :get, role: "search", class: "" do
             .row
               .col-md-2
                 %label.small.mt-2
                   Sort
               .col-md-10
-                %select.form-control.form-control-sm
-                  %option
-                    by name A-Z
-                  %option
-                    by rate 1-5
-                  %option
-                    by rate 5-1
+                %select#sort.query-sort.form-control.form-control-sm{ "data-submit-on-change": "data-submit-on-change" }
+                  = options_for_select([["by name A-Z", "title"],
+                                        ["by name Z-A", "-title"],
+                                        ["by rate 1-5", "rating"],
+                                        ["by rate 5-1", "-rating"]], params[:sort])
 
       %ul.list-unstyled
         %li.media.pb-4.mb-4.list-group-item-primary.position-relative
