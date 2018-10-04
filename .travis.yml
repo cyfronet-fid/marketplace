@@ -17,10 +17,14 @@ services:
   - postgresql
 
 before_script:
+  # Due to google chrome bug, this is required for capybara e2e testing
+  # (http://quyetbui.info/chrome-headless-capybara-on-travis-ci/)
+  - export DISPLAY=:99.0 && sh -e /etc/init.d/xvfb start
   # https://docs.travis-ci.com/user/database-setup/#ElasticSearch
   - sleep 10
   - psql -c 'create database travis_ci_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
+
 
 install:
   - bundle install
