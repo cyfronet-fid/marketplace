@@ -8,6 +8,7 @@ class ServicesController < ApplicationController
   def index
     @services = paginate(records.order(ordering))
     @subcategories = @root_categories
+    @providers = Provider.all
   end
 
   def show

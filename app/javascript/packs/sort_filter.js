@@ -6,7 +6,7 @@ function searchToObj(search) {
     for (i = 0, len = _params.length; i < len; i++) {
         parts = _params[i].split('=');
         if (! parts[0]) {continue;}
-        obj[parts[0]] = parts[1] || true;
+        obj[parts[0]] = parts[1] || "";
     }
 
     return obj;
@@ -44,7 +44,7 @@ export function syncQueryForm(node) {
     let params = searchToObj(window.location.search);
     $(node || 'body').find("[data-sync-query-form]").each(function() {
         let _params = {...params};
-        $(this).find("input").each(function() {
+        $(this).find("input").add($(this).find("select")).each(function() {
             if($(this).attr('name') in _params)
                 delete _params[$(this).attr('name')]
         });
