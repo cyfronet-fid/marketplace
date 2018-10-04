@@ -56,6 +56,9 @@ group :development, :test do
   gem "pry-nav"
 
   gem "dotenv-rails"
+
+  gem "selenium-webdriver"
+  gem "webdrivers", "~> 3.0"
 end
 
 group :development do
