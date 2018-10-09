@@ -2,7 +2,10 @@ categories:
 
     Compute:
         name: &computeParent Compute
-        description: General computing services including VM management, containers and job processing
+        description: General computing services including VM management, containers and job processing.
+    Data & Storage:
+        name: &dataStorageParent Data & Storage
+        description: Storage and data management services.
     Platforms:
         name: &platformsParent Platforms
         description: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis.
@@ -77,6 +80,223 @@ services:
                           Go to the cart and submit your order.
                           You will receive an email summarising your order.
                           You will be contacted by the EGI support team."
+    B2DROP:
+        title: B2DROP
+        parent: *dataStorageParent
+        tagline: Secure and trusted data exchange service for researchers
+        description: "B2DROP is a secure and trusted data exchange service for researchers and scientists to keep their research data synchronized and up-to-date and to exchange with other researchers. B2DROP is an ideal solution to store and exchange data with colleagues and team members, synchronise multiple versions of data, ensure automatic desktop synchronisation of large files.
+
+                      For the individuals researchers who need to synchronise and exchange data with one or multiple users, B2DROP Service is a customer-facing solution to store and exchange data with colleagues and team members.
+
+                      ## Uses cases:
+
+                        - define with whom to exchange data, for how long and how
+                        - are offered up to 20GB of storage space for research data
+                        - access and manage permissions to files from any device and any location
+
+
+                      ## To access the service you need to:
+
+                        1.  The EUDAT public B2DROP service (https://b2drop.eudat.eu) is offered as a fairshare free-to-use service, users can register themselves via the B2DROP service. Users get a default quota of 20GB.
+                        2.  Requests for higher quotas or a dedicated instance can by selecting one of the service options below.
+                        3.  Set the relevant parameters and add the service to the cart.
+                        4.  Go to the cart and submit your order.
+                        5.  You will receive an email summarising your order.
+                        6.  You will be contacted by the EUDAT support team.
+
+                      ## Service provided by
+
+                      EUDAT and JSC."
+    B2FIND:
+        title: B2FIND
+        parent: *dataStorageParent
+        tagline: Metadata based data-discovery
+        description: "B2FIND is the EUDAT metadata service and provides a discovery portal which allows users to find data collections within an international and inter-disciplinary scope. It is based on a comprehensive metadata catalogue of research data collections stored in EUDAT data centres and other repositories. Harmonization of the metadata descriptions collected from heterogeneous sources enables not only the presentation in a consistent form but as well the faceted search across scientific domain boundaries.
+
+                      B2FIND is for communities and other providers of research data who need to publish and give visibility to their metadata and individual researchers who need to search data from everywhere, and see data in the context with an accross community approach.
+
+                      ## Features:
+
+                         - based on a comprehensive joint catalogue of EUDAT services and external metadata
+                         - metadata is mapped onto standardized facets
+                         - supports faceted, geospatial and temporal metadata searches
+                         - allows users to search and browse datasets via keyword searches
+                         - results displayed in user-friendly format and listed in order of relevance
+                         - access to the scientific data objects is given through references provided in the metadata
+                         - available for communities in the EUDAT registered domain of data
+
+                      ## Uses cases:
+
+                         - define with whom to exchange data, for how long and how
+                         - are offered up to 20GB of storage space for research data
+                         - access and manage permissions to files from any device and any location
+
+
+                      ## To access the service you need to:
+
+                         1. The EUDAT public B2FIND service  is offered as a fairshare free-to-use service, no registration is required to search through the B2FIND service.
+                         2. Request for metadata data harvesting of an existing data repository select the service option below.
+                         3. Provide URL to data repository
+                         4. Provide URL endpoint for harvesting, see B2FIND guidelines for harvesting
+                         5. Go to the cart and submit your order.
+                         6. You will receive an email summarising your order.
+                         7. You will be contacted by the EUDAT support team
+
+                      ## Service provided by
+
+                      EUDAT and Deutsches Klimarechenzentrum (DKRZ)"
+    B2HANDLE:
+        title: B2HANDLE
+        parent: *dataStorageParent
+        tagline: Secure and trusted data exchange service for researchers
+        description: "B2HANDLE is the distributed service for minting, storing, managing and accessing persistent identifiers (PIDs) and essential metadata (PID records) as well as managing PID namespaces. The implementation of the service relies on the DONA/Handle persistent identifier solution.
+
+                      B2HANDLE can be used by middleware applications, end-user tools and other service to reliably identify data objects over longer timespans and through changes in object location or ownership. The B2HANDLE service encompasses management of identifier namespaces (Handle prefixes), establishment of policies and business workflows, operation of Handle servers and technical services, and a user-friendly Python library for general interaction with Handle servers and EUDAT-specific extensions. B2HANDLE is mostly transparent to end-users, shielding them from the complexity of infrastructure details. In the background, B2HANDLE operates as a federation and based on policies that aim to ensure high availability of Handle resolution by cross-site mirroring of Handles. B2HANDLE supports a dedicated Handle record structure (a PID profile) for the safe data management within an infrastructure with a given topology. By relying on features of the PID profile, end-users can, for instance, ensure authenticity of objects with checksums and timestamps and account for replicated objects across multiple locations.
+
+                      ## Note:
+
+                      To mint PIDs a prefix is required.
+
+
+                      ## To access the service you need to:
+
+                         1. Requests access to PID service or namespace (Prefix) select one of service options below.
+                         2. Set the relevant parameters and add the service to the cart.
+                         3. Go to the cart and submit your order.
+                         4. You will receive an email summarising your order.
+                         5. You will be contacted by the EUDAT support team.
+
+                      ## Service provided by
+
+                      EUDAT and SURFsara, GRNET"
+    B2NOTE:
+        title: B2NOTE
+        parent: *dataStorageParent
+        tagline: Data annotation service to create annotations on research data
+        description: "B2Note allows to easily create, search and manage annotations. An annotation is a keyword or commentary attached to a dete object (data collection, file) that explains or classifies it. B2NOTE is a standalone service for annotating data content hosted within the EUDAT CDI.
+
+                      There exist 3 types of annotations in B2Note
+
+                         - the semantic tag, a keyword from an ontology (a semantic tag coming from identified ontology repositories - currently only Bioportal
+                         - the free-text keyword, to be created and used when a specific semantic term is not found
+                         - the comment, a more comprehensive annotation
+
+                      Perfect for service providers who want to extend the (web based) service with annotation functionality
+
+                      ## Relevant:
+
+                      User must register to create and maintain annotations, additional access registration can be applied on the service which enabled annotation functionality via B2NOTE. Service providers willing to enable annotation via B2NOTE on an existing service can request consultancy and support.
+
+                      ## To access the service you need to:
+
+                         1. The EUDAT public B2NOTE service (https://b2note.eudat.eu) is offered as a fairshare free-to-use service, no registration is required to search through the B2NOTE, registration is needed to store and manage annotations.
+                         2. Request for integraton within existing services select the service option below.
+                         3. Provide URL to service
+                         4. Go to the cart and submit your order.
+                         5. You will receive an email summarising your order.
+                         6. You will be contacted by the EUDAT support team
+
+                      ## Service provided by
+
+                      EUDAT and BSC"
+    B2SAFE:
+        title: B2SAFE
+        parent: *dataStorageParent
+        tagline: Distribute and store large volumes of data based on data policies
+        description: "B2SAFE is a robust, safe and highly available service which allows community and departmental repositories to implement data management policies on their research data across multiple administrative domains in a trustworthy manner. The service provides an abstraction layer of large scale, heterogeneous data storages and guards against data loss in long-term archiving It allows to optimize access for users (e.g. from different regions) and brings data closer to facilities for compute-intensive analysis.
+
+
+                      ## To access the service you need to:
+
+                         1. Request access selecting one of the service options below.
+                         2. Set the relevant parameters and add the service to the cart.
+                         3. Go to the cart and submit your order.
+                         4. You will receive an email summarising your order..
+                         5. You will be contacted by the EUDAT support team.
+
+                      ## Service provided by
+
+                      EUDAT and all generic CDI Level 1 providers"
+    B2SHARE:
+        title: B2SHARE
+        parent: *dataStorageParent
+        tagline: Store and publish research data
+        description: "B2SHARE is a user-friendly, reliable and trustworthy way for researchers, scientific communities and citizen scientists to store and publish small-scale research data from diverse contexts. B2SHARE is a solution that facilitates research data storage, guarantees long-term persistence of data and allows data, results or ideas to be shared worldwide.
+
+                         - The basic production service comprises the following features:
+                         - self-service registration for any scientists and researchers,
+                         - free upload and registration of stable research data,
+                         - data access policy is defined by the data owner,
+                         - metadata is openly accessible and harvestable,
+                         - customised metadata handling and customized user interfaces (e.g. for metadata acquisition),
+                         - data integrity is ensured by checksums which are calculated during data ingest,
+                         - the data is kept online, the storage usage base on the principle of fair share.
+
+                      Perfect for the individuals researchers who do not have adequate facilities for storing, preserving and sharing data, B2SHARE Service is a customer-facing service which provides a safe repository for scientific data and a easy way to share it in the research community.
+
+
+                      ## To access the service you need to:
+
+                         1. The EUDAT public B2SHARE service (https://b2share.eudat.eu) is offered as a fairshare free-to-use service, users can register themselves via the B2SHARE service.
+                         2. Requests for a specific community domain and metadata template or a dedicated instance can by selecting one of the service options below.
+                         3. Set the relevant parameters and add the service to the cart.
+                         4. Go to the cart and submit your order.
+                         5. You will receive an email summarising your order.
+                         6. You will be contacted by the EUDAT support team.
+
+                      ## Service provided by
+
+                      EUDAT and CSC"
+    B2STAGE:
+        title: B2STAGE
+        parent: *dataStorageParent
+        tagline: Transfer of data between data resources and external computational facilities
+        description: "B2STAGE is for communities who need to transfert large data collection from EUDAT CDI to HPC. B2STAGE service is a customer-facing service that allow high performance transfers in a reliable, fast, easy to use environment.
+
+                      The service allows users to:
+
+                         - transfer large data collections from EUDAT storage facilities to external HPC facilities for processing
+                         - ingest computation results onto the EUDAT infrastructure
+                         - access stored data sets through associated PIDs
+                         - in conjunction with B2SAFE, replicate community data sets, ingesting them onto EUDAT storage resources for long-term preservation.
+
+                      ## Service provided by
+
+                      EUDAT and all generic EUDAT CDI Level 1 providers."
+    EGI Archive storage:
+        title: EGI Archive storage
+        parent: *dataStorageParent
+        tagline: Back-up your data for the long term and future use in a secure environment.
+        description: "Archive Storage allows you to store large amounts of data in a secure environment freeing up your usual file storage resources. Access to the archive can be given at an individual, small group or large collaboration level.
+
+                      All the files in Archive Storage are easily located and retrieved to and from different types of platforms.
+
+                      The data on Archive Storage can be replicated across several storage sites, thanks to the adoption of interoperable open standards. More copies of your archives mean fewer opportunities for disaster.
+
+
+                      ## To access the service you need to:
+
+                         1. Request access selecting one of the service options below.
+                         2. Set the relevant parameters and add the service to the cart.
+                         3. Go to the cart and submit your order.
+                         4. You will receive an email summarising your order.
+                         5. You will be contacted by the EGI support team."
+    EGI Online storage:
+        title: EGI Online storage
+        parent: *dataStorageParent
+        tagline: Store, share and access your files and their metadata on a global scale.
+        description: "Online Storage allows you to store data in a reliable and high-­quality environment and share it across distributed teams. Your data can be accessed through different standard protocols and can be replicated across different providers to increase fault­-tolerance.
+
+                      Online Storage gives you complete control over the data you share and with whom.
+
+
+                      ## To access the service you need to:
+
+                         1. Request access selecting one of the service options below.
+                         2. Set the relevant parameters and add the service to the cart.
+                         3. Go to the cart and submit your order.
+                         4. You will receive an email summarising your order.
+                         5. You will be contacted by the EGI support team."
     Applications on Demand:
         title: Applications on Demand
         parent: *platformsParent
