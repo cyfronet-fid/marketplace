@@ -19,6 +19,7 @@ class Order::Ready
     @order = order
   end
 
+
   def call
     ready_in_jira! &&
     update_status! &&
