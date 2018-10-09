@@ -13,29 +13,26 @@ require "yaml"
 puts "Generating categories from yaml"
 yaml_hash = YAML.load_file("db/data.yml")
 
-yaml_hash["categories"].each do |category, hash|
-  parent = hash["parent"] && Category.find_by(name: hash["parent"])
-  if parent.blank?
-    Category.create_with(name: hash["name"], description: hash["description"]).find_or_create_by(name: hash["name"])
-  else
-    Category.create_with(name: hash["name"], description: hash["description"], parent: parent).find_or_create_by(name: hash["name"])
+yaml_hash["categories"].each do |_, hash|
+  Category.find_or_initialize_by(name: hash["name"]) do |category|
+    category.update!(description: hash["description"],
+                     parent: Category.find_by(name: hash["parent"]))
   end
   puts "Generated category #{ hash["name"] }"
 end
 
 puts "Generating providers"
-all_providers = []
-all_providers << Provider.create_with(name: "Provider 1").find_or_create_by(name: "Provider 1")
-all_providers << Provider.create_with(name: "Provider 2").find_or_create_by(name: "Provider 2")
-all_providers << Provider.create_with(name: "Provider 3").find_or_create_by(name: "Provider 3")
-all_providers << Provider.create_with(name: "Provider 4").find_or_create_by(name: "Provider 4")
+providers = (1..4).map { |i| Provider.find_or_create_by(name: "Provider #{i}") }
 
 
 puts "Generating services from yaml"
-yaml_hash["services"].each do |service, hash|
-  current = Service.create_with(title: hash["title"], tagline: hash["tagline"], description: hash["description"], provider: Provider.all.sample).find_or_create_by(title: hash["title"])
-  current.categories << Category.find_by(name: hash["parent"])
-  current.set_first_category_as_main!
-  puts "Generated service #{ hash["title"] }"
+yaml_hash["services"].each do |_, hash|
+  Service.find_or_initialize_by(title: hash["title"]) do |service|
+    service.update!(tagline: hash["tagline"],
+                    description: hash["description"],
+                    provider: providers.sample,
+                    categories: [Category.find_by(name: hash["parent"])])
 
+  end
+  puts "Generated service #{ hash["title"] }"
 end
