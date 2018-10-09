@@ -63,6 +63,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
+- Fix and refactor seeds.rb to work properly (@goreck888)
 
 ### Deprecated
 
