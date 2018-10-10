@@ -66,6 +66,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
 - Fix and refactor seeds.rb to work properly (@goreck888)
 - Update services and category list in data.yml (@goreck888)
+- Update home view with static version (@kmarszalek)
 
 ### Deprecated
 
