@@ -16,6 +16,8 @@ class OrdersController < ApplicationController
   end
 
   def create
+    delete_order_from_session
+
     authorize(order_template)
     order = Order::Create.new(order_template).call
 
@@ -32,5 +34,9 @@ class OrdersController < ApplicationController
     def order_template
       @new_order ||= Order.new(permitted_attributes(Order).
                                merge(user: current_user))
+    end
+
+    def delete_order_from_session
+      session.delete(:order_item)
     end
 end
