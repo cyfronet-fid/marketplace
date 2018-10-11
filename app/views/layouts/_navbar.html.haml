@@ -1,8 +1,20 @@
-.container
-  %nav.navbar.navbar-expand-lg.navbar-light.bg-light
+.bg-light.pt-1.pb-1
+  .container.text-right.pr-1
+    %ul.list-inline.mb-0
+      %li.list-inline-item.ml-2
+        %a Contact
+      %li.list-inline-item.ml-2
+        %a My services
+      %li.list-inline-item.ml-2
+        %a Profile
+      %li.list-inline-item.ml-2
+        %a Login
+      %li.list-inline-item.ml-2
+        %a Sign up
+.container.pl-0.pr-0
+  %nav.navbar.navbar-expand-lg.pl-0.pr-0
     = link_to root_path, class: "navbar-brand" do
-      %strong EOSC
-      Portal
+      %strong
     %button.navbar-toggler{ "aria-controls" => "navbar-supported-content",
                            "aria-expanded" => "false",
                            "aria-label" => "Toggle navigation",
@@ -11,30 +23,48 @@
                            type: "button" }
       %span.navbar-toggler-icon
 
+    -# #navbar-supported-content.collapse.navbar-collapse
+        %ul.navbar-nav.ml-auto.pt-2
+          = nav_link controller: :home do
+            = link_to "Getting Started", root_path, class: "nav-link px-3 py-1"
+          = nav_link controller: [:services, :categories] do
+            = link_to "Services", services_path, class: "nav-link px-3 py-1"
+          %li.nav-item
+            = link_to "Data", root_path, class: "nav-link px-3 py-1"
+          %li.nav-item
+            = link_to "Policies", root_path, class: "nav-link px-3 py-1"
+          %li.nav-item
+            = link_to "Partners", root_path, class: "nav-link px-3 py-1"
+          %li.nav-item
+            = link_to "Support", root_path, class: "nav-link px-3 py-1"
+          - if user_signed_in?
+            = nav_link controller: :orders do
+              = link_to "My Services", orders_path, class: "nav-link px-3 py-1"
+            = nav_link controller: :profiles do
+              = link_to "My profile", profile_path, class: "nav-link px-3 py-1"
+          - if policy([:backoffice, :backoffice]).show?
+            %li.nav-item
+              = link_to "Backoffice", backoffice_path, class: "nav-link px-3 py-1"
+          %li.nav-item
+            - if user_signed_in?
+              = link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link px-3 py-1"
+            - else
+              = link_to "Login/Sign-up", user_checkin_omniauth_authorize_path, class: "nav-link px-3 py-1"
+
     #navbar-supported-content.collapse.navbar-collapse
       %ul.navbar-nav.ml-auto.pt-2
-        = nav_link controller: :home do
-          = link_to "Getting Started", root_path, class: "nav-link px-3 py-1"
-        = nav_link controller: [:services, :categories] do
-          = link_to "Services", services_path, class: "nav-link px-3 py-1"
         %li.nav-item
-          = link_to "Data", root_path, class: "nav-link px-3 py-1"
+          %a.nav-link.px-3.py-1 About
         %li.nav-item
-          = link_to "Policies", root_path, class: "nav-link px-3 py-1"
+          %a.nav-link.px-3.py-1 Governance
         %li.nav-item
-          = link_to "Partners", root_path, class: "nav-link px-3 py-1"
+          %a.nav-link.px-3.py-1 Services & Resources
         %li.nav-item
-          = link_to "Support", root_path, class: "nav-link px-3 py-1"
-        - if user_signed_in?
-          = nav_link controller: :orders do
-            = link_to "My Services", orders_path, class: "nav-link px-3 py-1"
-          = nav_link controller: :profiles do
-            = link_to "My profile", profile_path, class: "nav-link px-3 py-1"
-        - if policy([:backoffice, :backoffice]).show?
-          %li.nav-item
-            = link_to "Backoffice", backoffice_path, class: "nav-link px-3 py-1"
+          %a.nav-link.px-3.py-1 Policy
         %li.nav-item
-          - if user_signed_in?
-            = link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link px-3 py-1"
-          - else
-            = link_to "Login/Sign-up", user_checkin_omniauth_authorize_path, class: "nav-link px-3 py-1"
+          %a.nav-link.px-3.py-1 EOSC in Practice
+        %li.nav-item
+          %a.nav-link.px-3.py-1 Media
+        %li.nav-item
+          %a.nav-link.pl-3.py-1.pr-1 For providers
+

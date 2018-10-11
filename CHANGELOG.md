@@ -63,6 +63,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Store Jira internal id in order change (@mkasztelnik)
 - Create new order change when Jira comment is posted (@mkasztelnik)
 - Show number of services in category (@mkasztelnik)
+- New header & footer look (@kosmidma)
 
 
 ### Changed
