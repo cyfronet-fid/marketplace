@@ -28,7 +28,7 @@ We will need:
 ### Generating DB entries for development
 Actually, filling the database is done by parsing yaml: `db/data.yml`.
 Data come from actual official version of the marketplace.
-If you want to update informations, or add new services/categories you can add new records by edit yaml, 
+If you want to update informations, or add new services/categories you can add new records by edit yaml,
 but very imporant is, when some records are parent for other they must be written above their children.
 But if it's necessary, there is other option to fill the database:
 To simplify development `dev:prime` rake task is created. Right now it generates
@@ -67,12 +67,12 @@ or you can also use `systemctl`, it shouldn't matter which one you use.
 
 ## JIRA
 
-Marketplace is integrating with jira on a rather tight level. 
+Marketplace is integrating with jira on a rather tight level.
 For tests JIRA is stubbed, and for normal development it can be omitted,
 but in case there is a need for JIRA instance to exist it is recommeded
 to use jira instance provided by atlassian SDK.
 
-Here are instructions how to install atlassian SDK on *nix systems:
+Here are instructions how to install atlassian SDK on \*nix systems:
 https://developer.atlassian.com/server/framework/atlassian-sdk/install-the-atlassian-sdk-on-a-linux-or-mac-system/
 
 After installation you can start local JIRA instance by
@@ -88,7 +88,7 @@ ids skip it for now, `rails jira:check` will give you sensible hints, `.dotenv` 
 in the development environment, so you can store following variables in `.env` file in the root of the project):
 
 ```
-export MP_JIRA_PROJECT=MP 
+export MP_JIRA_PROJECT=MP
 export MP_JIRA_USERNAME=admin
 export MP_JIRA_PASSWORD=admin
 export MP_JIRA_CONTEXT_PATH=/jira
@@ -160,7 +160,7 @@ ENV variables:
   * `ROOT_URL` (Optional) - root application URL (default
     `http://localhost:#{ENV["PORT"] || 3000}` (when foreman is used to start
     application 5000 ENV variable is set)
-  * `ELASTICSEARCH_URL` - elasticsearch url   
+  * `ELASTICSEARCH_URL` - elasticsearch url
 
 
 ## Commits
