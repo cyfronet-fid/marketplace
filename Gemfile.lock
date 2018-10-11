@@ -214,7 +214,7 @@ GEM
       pry (>= 0.10.4)
     public_suffix (3.0.2)
     puma (3.11.4)
-    pundit (2.0.0.beta1)
+    pundit (2.0.0)
       activesupport (>= 3.0.0)
     rack (2.0.5)
     rack-oauth2 (1.9.2)
@@ -418,7 +418,7 @@ DEPENDENCIES
   pry-nav
   pry-rails
   puma (~> 3.11)
-  pundit (= 2.0.0.beta1)
+  pundit (= 2.0.0)
   rails (~> 5.2.0)
   redcarpet
   role_model
