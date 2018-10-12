@@ -8,23 +8,21 @@ class Order::RegisterQuestion
     end
   end
 
-  def initialize(order, question)
-    @order = order
+  delegate :order, :message, to: :@question
+  attr_reader :question
+
+  def initialize(question)
     @question = question
   end
 
   def call
-    issue = Jira::Client.new.Issue.find(@order.issue_id)
+    issue = Jira::Client.new.Issue.find(order.issue_id)
 
     comment = issue.comments.build
-    if comment.save(body: @question)
-      # :TODO: maybe question / order change should be extended to
-      # contain jira comment id and status, for easier disaster recovery
-      # and tracking
-      true
+    if comment.save(body: message)
+      question.update(iid: comment.id)
     else
-      # :TODO: set errors on @question
-      raise JIRACommentCreateError.new(@question)
+      raise JIRACommentCreateError.new(question)
     end
   end
 end

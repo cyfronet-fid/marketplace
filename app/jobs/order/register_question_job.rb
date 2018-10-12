@@ -16,7 +16,7 @@ class Order::RegisterQuestionJob < ApplicationJob
 
   def perform(question)
     if question.question?
-      Order::RegisterQuestion.new(question.order, question.message).call
+      Order::RegisterQuestion.new(question).call
     end
   end
 end
