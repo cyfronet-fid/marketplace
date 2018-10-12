@@ -10,9 +10,7 @@ RSpec.describe "JIRA Webhook API", type: :request do
 
   describe "POST /api/webhooks/jira" do
     describe "wrong secret" do
-      before {
-        post api_webhooks_jira_path
-      }
+      before { post api_webhooks_jira_path }
 
       it "returns error message" do
         expect(json).to eq("message" => "Secret does not match")
@@ -30,7 +28,7 @@ RSpec.describe "JIRA Webhook API", type: :request do
       before {
         order = create(:order, issue_id: issue_id)
         data = create(:jira_webhook_response, issue_id: issue_id, issue_status: 6)
-        post(api_webhooks_jira_url + "?secret=secret", params: data)
+        post(api_webhooks_jira_url + "?secret=secret&issue_id=5", params: data)
       }
 
       it "returns status code 200" do

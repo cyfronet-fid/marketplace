@@ -14,12 +14,15 @@ class Api::Webhooks::JirasController < ActionController::API
   end
 
   def create
-    order = Order.find_by(issue_id: params["issue"]["id"])
+    order = Order.where.not(issue_id: nil).
+            find_by(issue_id: params["issue_id"])
 
     if order
       case params["webhookEvent"]
       when "jira:issue_updated"
         Jira::IssueUpdated.new(order, params["changelog"]).call
+      when "comment_created"
+        Jira::CommentCreated.new(order, params["comment"]).call
       else
         logger.warn("Webhook event not supported: #{params["webhookEvent"]}")
       end
@@ -30,11 +33,11 @@ class Api::Webhooks::JirasController < ActionController::API
 
   private
 
-    def jira_client
-      @jira_client ||= Jira::Client.new
-    end
-
     def valid_jira_request?
       params.fetch("secret", "") == jira_client.webhook_secret
+    end
+
+    def jira_client
+      @jira_client ||= Jira::Client.new
     end
 end

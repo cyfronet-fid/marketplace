@@ -3,7 +3,7 @@
 class Jira::IssueUpdated
   def initialize(order, changelog)
     @order = order
-    @changelog = changelog
+    @changelog = changelog || {}
     @jira_client = Jira::Client.new
   end
 
