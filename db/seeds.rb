@@ -31,6 +31,18 @@ yaml_hash["services"].each do |_, hash|
     service.update!(tagline: hash["tagline"],
                     description: hash["description"],
                     provider: providers.sample,
+                    webpage_url: hash["webpage_url"],
+                    manual_url: hash["manual_url"],
+                    helpdesk_url: hash["helpdesk_url"],
+                    tutorial_url: hash["tutorial_url"],
+                    terms_of_use_url: hash["terms_of_use_url"],
+                    corporate_sla_url: hash["corporate_sla_url"],
+                    access_policies_url: hash["access_policies_url"],
+                    places: hash["places"],
+                    languages: hash["languages"],
+                    dedicated_for: hash["dedicated_for"],
+                    restrictions: hash["restrictions"],
+                    phase: hash["phase"],
                     categories: [Category.find_by(name: hash["parent"])])
 
   end

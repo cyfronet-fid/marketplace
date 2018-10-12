@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2018_10_15_070246) do
     t.string "ancestry"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "services_count", default: 0
     t.index ["ancestry"], name: "index_categories_on_ancestry"
     t.index ["description"], name: "index_categories_on_description"
     t.index ["name"], name: "index_categories_on_name"

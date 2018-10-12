@@ -14,10 +14,9 @@
       %a{ href: "", class: "small ml-3" }
         #{service.service_opinion_count} opinions
   .col-4
-    - if policy(Order.new).create?
-      = form_for(Order.new) do |f|
-        = f.hidden_field :service_id, value: service.id
-        %button{ class: "btn btn-primary" }
-          = write_button_text
-        - if service.open_access?
-          = link_to "Go to the service", service.connected_url, class: "btn btn-primary", target: "_blank"
+    = form_for(Order.new, url: cart_path) do |f|
+      = f.hidden_field :service_id, value: service.id
+      %button{ class: "btn btn-primary" }
+        = write_button_text
+      - if @service.open_access?
+        = link_to "Go to the service", service.connected_url, class: "btn btn-primary", target: "_blank"
