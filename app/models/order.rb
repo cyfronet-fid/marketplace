@@ -32,13 +32,13 @@ class Order < ApplicationRecord
     !(ready? || rejected?)
   end
 
-  def new_change(status: nil, message: nil, author: nil)
+  def new_change(status: nil, message: nil, author: nil, iid: nil)
     # don't create change when there is not status and message given
     return unless status || message
 
     status ||= self.status
 
-    order_changes.create(status: status, message: message, author: author).tap do
+    order_changes.create(status: status, message: message, author: author, iid: iid).tap do
       update_attributes(status: status)
     end
   end
