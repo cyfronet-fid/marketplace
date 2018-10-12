@@ -3,12 +3,20 @@
 module OrdersHelper
   def status_change(previous, current)
     if current.question?
-      "Order owner question"
+      "Your question to service provider"
     elsif previous
-      "Order changed from #{previous.status} to #{current.status}"
+      if answer?(previous, current)
+        "Service provider message"
+      else
+        "Order changed from #{previous.status} to #{current.status}"
+      end
     else
       "Order #{current.status}"
     end
+  end
+
+  def answer?(previous, current)
+    previous.status == current.status
   end
 
   def ratingable?
