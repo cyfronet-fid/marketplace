@@ -1,6 +1,8 @@
 .bg-light.pt-1.pb-1
   .container.text-right.pr-1
     %ul.list-inline.mb-0
+      = nav_link controller: :home, html_options: { class: "list-inline-item ml-2" } do
+        = link_to "Getting started", root_path
       - if user_signed_in?
         = nav_link controller: :orders, html_options: { class: "list-inline-item ml-2" } do
           = link_to "My Services", orders_path
