@@ -2,8 +2,6 @@
 
 # README
 
-test
-
 Market place is...
 
 ## Development environment

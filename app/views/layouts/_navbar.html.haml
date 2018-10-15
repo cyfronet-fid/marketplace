@@ -1,6 +1,6 @@
 .bg-light.pt-1.pb-1
   .container.text-right.pr-1
-    %ul.list-inline.mb-0
+    %ul.list-inline.mb-0.font-weight-light
       = nav_link controller: :home, html_options: { class: "list-inline-item ml-2" } do
         = link_to "Getting started", root_path
       - if user_signed_in?
@@ -18,7 +18,7 @@
           = link_to "Login/Sign-up", user_checkin_omniauth_authorize_path
 .container.pl-0.pr-0
   %nav.navbar.navbar-expand-lg.pl-0.pr-0
-    = link_to root_path, class: "navbar-brand" do
+    = link_to root_path, class: "navbar-brand mr-3" do
       %strong
     %button.navbar-toggler{ "aria-controls" => "navbar-supported-content",
                            "aria-expanded" => "false",
@@ -26,22 +26,22 @@
                            "data-target" => "#navbar-supported-content",
                            "data-toggle" => "collapse",
                            type: "button" }
-      %span.navbar-toggler-icon
+      %i.fas.fa-bars
 
     #navbar-supported-content.collapse.navbar-collapse
-      %ul.navbar-nav.ml-auto.pt-2
-        %li.nav-item
-          %a.nav-link.px-3.py-1 About
-        %li.nav-item
-          %a.nav-link.px-3.py-1 Governance
-        %li.nav-item
-          %a.nav-link.px-3.py-1 Services & Resources
-        %li.nav-item
-          %a.nav-link.px-3.py-1 Policy
-        %li.nav-item
-          %a.nav-link.px-3.py-1 EOSC in Practice
-        %li.nav-item
-          %a.nav-link.px-3.py-1 Media
-        %li.nav-item
-          %a.nav-link.pl-3.py-1.pr-1 For providers
+      %ul.navbar-nav.ml-auto.pt-2.d-flex.flex-wrap
+        %li.nav-item.ml-1
+          %a.nav-link.px-2.py-1 About
+        %li.nav-item.ml-1
+          %a.nav-link.px-2.py-1 Governance
+        %li.nav-item.ml-1
+          %a.nav-link.px-2.py-1 Services & Resources
+        %li.nav-item.ml-1
+          %a.nav-link.px-2.py-1 Policy
+        %li.nav-item.ml-1
+          %a.nav-link.px-2.py-1 EOSC in Practice
+        %li.nav-item.ml-1
+          %a.nav-link.px-2.py-1 Media
+        %li.nav-item.ml-1
+          %a.nav-link.pl-2.py-1.pr-1{ href: "http://eoscportal.trust-itservices.com/for-providers" } For providers
 

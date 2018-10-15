@@ -1,4 +1,8 @@
 header {
+  a,
+  svg {
+    color: $nav-color;
+  }
 
   .input-group {
     &:focus {
@@ -21,6 +25,7 @@ header {
     .navbar-nav {
       .nav-link {
         font-size: $font-size-navbar;
+        font-family: $font-weight-300;
       }
 
       .active {
@@ -32,7 +37,7 @@ header {
 }
 
 .navbar-brand {
-  width: 225px;
+  width: 245px;
   height: 100px;
-  background: url('../../assets/images/eosc-logo-color.svg') top center no-repeat;
+  background: url('../../assets/images/eosc-logo-color.png') top center no-repeat;
 }

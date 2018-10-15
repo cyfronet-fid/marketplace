@@ -6,7 +6,7 @@
       .col-md-7.my-auto.text-right
         %span.copy-text
           Copyright 2018 - All right reserved
-        %a.ml-4.text-uppercase{ href: "" }
+        %a.ml-4.text-uppercase{ href: "http://eoscportal.trust-itservices.com/privacy-policy-summary" }
           privacy policy
     %hr.mb-4
     .row
@@ -15,76 +15,78 @@
           %li
             %h5 About
           %li.mb-1
-            %a{ href: "" } EOSC
+            %a{ href: "http://eoscportal.trust-itservices.com/about/eosc" } EOSC
           %li.mb-1
-            %a{ href: "" } EOSC Projects
+            %a{ href: "http://eoscportal.trust-itservices.com/about/eosc-doers" } EOSC Doers
           %li.mb-1
-            %a{ href: "" } EOSC Members
+            %a{ href: "http://eoscportal.trust-itservices.com/about/eosc-projects" } EOSC Projects
           %li.mb-1
-            %a{ href: "" } Funding Opportunities
+            %a{ href: "http://eoscportal.trust-itservices.com/about/funding-opportunities" } Funding Opportunities
           %li.mb-1
-            %a{ href: "" } FAQs
+            %a{ href: "http://eoscportal.trust-itservices.com/about/faqs" } FAQs
           %li.mb-1
-            %a{ href: "" } Contact us
+            %a{ href: "http://eoscportal.trust-itservices.com/contact-us" } Contact us
       .col-md-2
         %ul
           %li
             %h5 Governance
           %li.mb-1
-            %a{ href: "" } EOSC Governance
+            %a{ href: "http://eoscportal.trust-itservices.com/governance" } EOSC Governance
           %li.mb-1
-            %a{ href: "" } Rules of participation
+            %a{ href: "http://eoscportal.trust-itservices.com/governance/rules-participation" } Rules of participation
           %li.mb-1
-            %a{ href: "" } Best Practices
+            %a{ href: "http://eoscportal.trust-itservices.com/governance/best-practices" } Best Practices
       .col-md-2
         %ul
           %li
             %h5 Eosc resources
           %li.mb-1
-            %a{ href: "" } Compute
+            = link_to "Getting started", root_path
           %li.mb-1
-            %a{ href: "" } Data Management and Storage
+            = link_to "All Services", orders_path
           %li.mb-1
-            %a{ href: "" } Research Data
+            = link_to "Compute"
           %li.mb-1
-            %a{ href: "" } Platforms
+            = link_to "Data and storage"
           %li.mb-1
-            %a{ href: "" } Thematic services
+            = link_to "Applications on demand"
           %li.mb-1
-            %a{ href: "" } Identity & Security
+            = link_to "Thematic services"
           %li.mb-1
-            %a{ href: "" } Professional Services
+            = link_to "Identity and security"
+          %li.mb-1
+            = link_to "Professional Services"
       .col-md-2
         %ul
           %li
             %h5 Policy
           %li.mb-1
-            %a{ href: "" } EC Documents
+            %a{ href: "http://eoscportal.trust-itservices.com/policy/ec-documents" } EC Documents
           %li.mb-1
-            %a{ href: "" } Europe
+            %a{ href: "http://eoscportal.trust-itservices.com/policy/europe" } Europe
           %li.mb-1
-            %a{ href: "" } Member States
+            %a{ href: "http://eoscportal.trust-itservices.com/policy/eu-member-states" } Member States
       .col-md-2
         %ul
           %li
             %h5 EOSC IN PRACTICE
           %li.mb-1
-            %a{ href: "" } Use Cases
+            %a{ href: "http://eoscportal.trust-itservices.com/eosc-in-practice/use-cases" } Use Cases
           %li.mb-1
-            %a{ href: "" } Open Call
+            %a{ href: "http://eoscportal.trust-itservices.com/eosc-in-practice/open-call" } Open Call
       .col-md-2
         %ul
           %li
             %h5 Media
           %li.mb-1
-            %a{ href: "" } News
+            %a{ href: "http://eoscportal.trust-itservices.com/media/news" } News
           %li.mb-1
-            %a{ href: "" } Forthcoming events
+            %a{ href: "http://eoscportal.trust-itservices.com/media/events" } Forthcoming events
           %li.mb-1
-            %a{ href: "" } Past Events
+            %a{ href: "http://eoscportal.trust-itservices.com/media/past-events" } Past Events
     .row.mt-4
       .col-md-6
-        %a.social-logo.twitter-logo.d-inline-block.mr-2{ href: "" }
+        %a.social-logo.twitter-logo.d-inline-block.mr-2{ href: "https://twitter.com/eoscpilot" }
         %a.social-logo.yt-logo.d-inline-block{ href: "" }
 
 .ue-informations.p-4
@@ -93,3 +95,7 @@
       The EOSC portal is been jointly developed and maintained by the EOSC-hub,
       eInfraCentral and OpoenAIRE-Advance projects funded by the Euopean
     %p.mb-1 Union’s Horizon 2020 research and innovation programme with contribution of the European Commission
+
+    %p.mt-2 2018 EOSC Portal
+    - if (ENV["MP_VERSION"])
+      %p "- version: #{ENV["MP_VERSION"]}"
