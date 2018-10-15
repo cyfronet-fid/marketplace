@@ -72,7 +72,7 @@ For tests JIRA is stubbed, and for normal development it can be omitted,
 but in case there is a need for JIRA instance to exist it is recommeded
 to use jira instance provided by atlassian SDK.
 
-Here are instructions how to install atlassian SDK on *nix systems:
+Here are instructions how to install atlassian SDK on \*nix systems:
 https://developer.atlassian.com/server/framework/atlassian-sdk/install-the-atlassian-sdk-on-a-linux-or-mac-system/
 
 After installation you can start local JIRA instance by
