@@ -2,7 +2,7 @@
 
 class ServiceCategory < ApplicationRecord
   belongs_to :service
-  belongs_to :category
+  belongs_to :category, counter_cache: :services_count
 
   validates :service, presence: true
   validates :category, presence: true

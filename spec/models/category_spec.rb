@@ -21,4 +21,10 @@ RSpec.describe Category do
 
     expect(service.main_category).to eq(other)
   end
+
+  it "has services counter" do
+    category = create(:category, services: create_list(:service, 2))
+
+    expect(category.services_count).to eq(2)
+  end
 end
