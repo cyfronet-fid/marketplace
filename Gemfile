@@ -33,8 +33,7 @@ gem "elasticsearch-rails"
 gem "devise"
 gem "omniauth"
 gem "omniauth_openid_connect"
-# Need to use beta because of https://github.com/varvet/pundit/pull/529
-gem "pundit", "2.0.0.beta1"
+gem "pundit", "2.0.0"
 gem "role_model"
 
 # Markdown
