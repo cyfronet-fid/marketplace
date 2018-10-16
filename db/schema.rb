@@ -108,6 +108,18 @@ ActiveRecord::Schema.define(version: 2018_10_15_070246) do
     t.boolean "open_access", default: false
     t.bigint "provider_id"
     t.integer "service_opinion_count", default: 0
+    t.text "places", null: false
+    t.text "languages", null: false
+    t.text "dedicated_for", null: false
+    t.text "terms_of_use_url", null: false
+    t.text "access_policies_url", null: false
+    t.text "corporate_sla_url", null: false
+    t.text "webpage_url", null: false
+    t.text "manual_url", null: false
+    t.text "helpdesk_url", null: false
+    t.text "tutorial_url", null: false
+    t.text "restrictions", null: false
+    t.text "phase", null: false
     t.index ["description"], name: "index_services_on_description"
     t.index ["owner_id"], name: "index_services_on_owner_id"
     t.index ["provider_id"], name: "index_services_on_provider_id"

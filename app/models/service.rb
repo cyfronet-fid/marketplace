@@ -22,6 +22,18 @@ class Service < ApplicationRecord
   validates :connected_url, presence: true, url: true, if: :open_access?
   validates :provider, presence: true
   validates :rating, presence: true
+  validates :places, presence: true
+  validates :languages, presence: true
+  validates :dedicated_for, presence: true
+  validates :terms_of_use_url, presence: true, url: true
+  validates :access_policies_url, presence: true, url: true
+  validates :corporate_sla_url, presence: true, url: true
+  validates :webpage_url, presence: true, url: true
+  validates :manual_url, presence: true, url: true
+  validates :helpdesk_url, presence: true, url: true
+  validates :tutorial_url, presence: true, url: true
+  validates :restrictions, presence: true
+  validates :phase, presence: true
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
