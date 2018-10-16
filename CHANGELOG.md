@@ -65,7 +65,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Show number of services in category (@mkasztelnik)
 - Possibility to define checkin identifier and secret using env variables (@mkasztelnik)
 - Add breadcrumbs to order index and show (@mkasztelnik)
-
+- Tabs to My profile view (@kmarszalek)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
