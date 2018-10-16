@@ -15,6 +15,11 @@ class OrdersController < ApplicationController
     @question = Order::Question.new(order: @order)
   end
 
+  def new
+    @order = Order.new(service: selected_service)
+    authorize(@order)
+  end
+
   def create
     delete_order_from_session
 
@@ -38,5 +43,10 @@ class OrdersController < ApplicationController
 
     def delete_order_from_session
       session.delete(:order_item)
+    end
+
+    def selected_service
+      @selected_service ||=
+        Service.find_by(id: session[:order_item]["service_id"])
     end
 end

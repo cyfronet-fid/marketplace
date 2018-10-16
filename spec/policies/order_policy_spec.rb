@@ -7,7 +7,7 @@ RSpec.describe OrderPolicy do
 
   subject { described_class }
 
-  permissions :index?, :create? do
+  permissions :index?, :create?, :new? do
     it "grants access for logged in user" do
       expect(subject).to permit(user)
     end
