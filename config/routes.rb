@@ -8,11 +8,11 @@ Rails.application.routes.draw do
     delete "users/logout", to: "devise/sessions#destroy", as: :destroy_user_session
   end
 
-  resource :cart, only: [:show, :create]
+  resource :cart, only: :create
 
   resources :services, only: [:index, :show]
   resources :categories, only: :show
-  resources :orders, only: [:index, :show, :create] do
+  resources :orders, only: [:index, :show, :new, :create] do
     scope module: :orders do
       resources :questions, only: [:index, :create]
       resources :service_opinions, only: [:new, :create]
