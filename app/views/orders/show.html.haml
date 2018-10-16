@@ -1,13 +1,10 @@
-.container.mt-4.mb-4
-  Breadcrumb
+- breadcrumb :order, @order
+
 .container
   .row.h-100
     .col-md-9
       %h1
-        My ordered service
-      %a{ href: "" }
-        %i.fas.fa-angle-left.mr-2
-        back to my services list
+        Ordered service (#{@order.service.title})
     .col-md-3.my-auto
       %p.text-uppercase.text-primary.text-right.font-weight-bold
         pending

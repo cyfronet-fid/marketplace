@@ -64,6 +64,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Create new order change when Jira comment is posted (@mkasztelnik)
 - Show number of services in category (@mkasztelnik)
 - Possibility to define checkin identifier and secret using env variables (@mkasztelnik)
+- Add breadcrumbs to order index and show (@mkasztelnik)
 
 
 ### Changed
