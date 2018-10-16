@@ -1,0 +1,10 @@
+.container
+  .row
+    - if @order.service
+      = form_for(@order) do |f|
+        %p= @order.service.title
+        = f.hidden_field :service_id
+        %button{ class: "btn btn-primary" }
+          Order
+    - else
+      %p= "Service is not selected!"

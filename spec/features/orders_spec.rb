@@ -30,7 +30,7 @@ RSpec.feature "Service order" do
 
       click_button "Order"
 
-      expect(page).to have_current_path(cart_path)
+      expect(page).to have_current_path(new_order_path)
       expect(page).to have_text(service.title)
       expect(page).to have_selector(:link_or_button,
                                     "Order", exact: true)
@@ -50,7 +50,7 @@ RSpec.feature "Service order" do
 
       click_button "Add to my services"
 
-      expect(page).to have_current_path(cart_path)
+      expect(page).to have_current_path(new_order_path)
       expect(page).to have_text(@open_access_service.title)
       expect(page).to have_selector(:link_or_button,
                                     "Order", exact: true)
@@ -135,7 +135,7 @@ RSpec.feature "Service order" do
 
       checkin_sign_in_as(user)
 
-      expect(page).to have_current_path(cart_path)
+      expect(page).to have_current_path(new_order_path)
       expect(page).to have_text(service.title)
     end
 
