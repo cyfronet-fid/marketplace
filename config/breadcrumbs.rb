@@ -45,3 +45,13 @@ crumb :provider do |provider|
   link "#{provider.name}", provider_path(provider)
   parent :services
 end
+
+crumb :orders do
+  link "My services", orders_path
+  parent :root
+end
+
+crumb :order do |order|
+  link "Ordered service (#{order.service.title})", order_path(order)
+  parent :orders
+end
