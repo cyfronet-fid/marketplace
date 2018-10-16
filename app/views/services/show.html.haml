@@ -1,20 +1,6 @@
 - breadcrumb :service, @service
 .container
-  %h1= @service.title
-  %p
-    %b= @service.tagline
-  %p= @service.description
-  .row
-    .col
-      Provided by
-      = link_to @service.provider.name, @service.provider
-  .row
-    .col
-      = print_rating_stars(@service.rating)
-      %span.small.ml-1.font-weight-bold
-        (#{@service.rating} /5)
-      %a{ href: "", class: "small ml-3" }
-        #{@service.service_opinion_count} opinions
+  = render "services/header", service: @service
 
 .container
   %ul#my-tab.nav.nav-tabs.mt-4{ role: "tablist" }
@@ -23,20 +9,17 @@
                                                   "aria-selected" => "true",
                                                   "data-toggle" => "tab",
                                                   href: "#desc",
-                                                  role: "tab" } Description
-    %li.nav-item
-      %a#profile-tab.nav-link.text-uppercase{ "aria-controls" => "profile",
-                                              "aria-selected" => "false",
-                                              "data-toggle" => "tab",
-                                              href: "#order",
-                                              role: "tab" } Order Specification
+                                                  role: "tab" } About
     %li.nav-item
       %a#opinions-tab.nav-link.text-uppercase{ "aria-controls" => "opinions",
                                               "aria-selected" => "false",
                                               "data-toggle" => "tab",
                                               href: "#opinions",
                                               role: "tab" } Opinions (#{@service.service_opinion_count})
+
 .tab-content
-  = render "services/description", service: @service
-  = render "services/order"
+  = render "services/about", service: @service
   = render "services/opinions", service_opinions: @service_opinions
+
+.container
+  %h3 Customers who ordered this service also viewed
