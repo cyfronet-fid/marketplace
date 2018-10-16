@@ -270,8 +270,8 @@ Devise.setup do |config|
                     port: nil,
                     scheme: "https",
                     host: checkin_host,
-                    identifier: Rails.application.credentials.checkin[:identifier],
-                    secret: Rails.application.credentials.checkin[:secret],
+                    identifier: ENV["CHECKIN_IDENTIFIER"] || Rails.application.credentials.checkin[:identifier],
+                    secret: ENV["CHECKIN_SECRET"] || Rails.application.credentials.checkin[:secret],
                     redirect_uri: ENV["REDIRECT_URI"] ||
                                   "#{root_url}/users/auth/checkin/callback",
                     authorization_endpoint: "/oidc/authorize",
