@@ -158,6 +158,10 @@ ENV variables:
 
   * `PORT` (Optional) - http server port (default 5000)
   * `CHECKIN_HOST` (Optional) - checkin IDP host (default `aai-dev.egi.eu`)
+  * `CHECKIN_IDENTIFIER` (Optional) - checkin IDP identifier (default taken from
+    encrypted properties)
+  * `CHECKIN_SECRET` (Optional) - checkin IDP secret (default taken from
+    encrypted properties)
   * `ROOT_URL` (Optional) - root application URL (default
     `http://localhost:#{ENV["PORT"] || 3000}` (when foreman is used to start
     application 5000 ENV variable is set)
