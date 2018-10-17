@@ -25,6 +25,6 @@ class Jira::CommentCreated
     end
 
     def unique?
-      !@project_item.order_changes.find_by(iid: id)
+      !@project_item.project_item_changes.find_by(iid: id)
     end
 end

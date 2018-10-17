@@ -18,8 +18,8 @@ RSpec.describe ProjectItem::Question::Create do
 
     it "creates new project_item change" do
       expect { described_class.new(question).call }.
-        to change { project_item.order_changes.count }.by(1)
-      last_history_entry = project_item.order_changes.last
+        to change { project_item.project_item_changes.count }.by(1)
+      last_history_entry = project_item.project_item_changes.last
 
       expect(last_history_entry.message).to eq("Question text")
       expect(last_history_entry.author).to eq(project_item_owner)
@@ -27,7 +27,7 @@ RSpec.describe ProjectItem::Question::Create do
 
     it "triggers question registration" do
       described_class.new(question).call
-      last_history_entry = project_item.order_changes.last
+      last_history_entry = project_item.project_item_changes.last
 
       expect(ProjectItem::RegisterQuestionJob).
         to have_been_enqueued.with(last_history_entry)
@@ -46,7 +46,7 @@ RSpec.describe ProjectItem::Question::Create do
 
     it "does not create new project_item change" do
       expect { described_class.new(question).call }.
-        to_not change { project_item.order_changes.count }
+        to_not change { project_item.project_item_changes.count }
     end
 
     it "does not triggers question registration" do

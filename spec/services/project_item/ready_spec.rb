@@ -29,7 +29,7 @@ RSpec.describe ProjectItem::Ready do
   it "creates new project_item change" do
     described_class.new(project_item).call
 
-    expect(project_item.order_changes.last).to be_ready
+    expect(project_item.project_item_changes.last).to be_ready
   end
 
   it "changes project_item status into ready on success" do

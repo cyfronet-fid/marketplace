@@ -8,10 +8,10 @@ module ProjectItemsHelper
       if answer?(previous, current)
         "Service provider message"
       else
-        "ProjectItem changed from #{previous.status} to #{current.status}"
+        "Status changed from #{previous.status} to #{current.status}"
       end
     else
-      "ProjectItem #{current.status}"
+      "Service request #{current.status}"
     end
   end
 
@@ -24,7 +24,7 @@ module ProjectItemsHelper
   end
 
   def project_item_ready?(project_item)
-    order_change = project_item.order_changes.where(status: :ready).pluck(:created_at)
-    order_change.empty? ? false : (order_change.first < RATE_PERIOD)
+    project_item_change = project_item.project_item_changes.where(status: :ready).pluck(:created_at)
+    project_item_change.empty? ? false : (project_item_change.first < RATE_PERIOD)
   end
 end

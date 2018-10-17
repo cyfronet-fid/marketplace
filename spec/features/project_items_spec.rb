@@ -15,7 +15,7 @@ RSpec.feature "Service project_item" do
     scenario "I see project_item service button" do
       visit service_path(service)
 
-      expect(page).to have_text("ProjectItem")
+      expect(page).to have_text("Order")
     end
 
     scenario "I see project_item open acces service button" do
@@ -28,14 +28,14 @@ RSpec.feature "Service project_item" do
     scenario "I can add project_item to cart" do
       visit service_path(service)
 
-      click_button "ProjectItem"
+      click_button "Order"
 
       expect(page).to have_current_path(new_project_item_path)
       expect(page).to have_text(service.title)
       expect(page).to have_selector(:link_or_button,
-                                    "ProjectItem", exact: true)
+                                    "Order", exact: true)
 
-      expect { click_on "ProjectItem" }.
+      expect { click_on "Order" }.
         to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
 
@@ -53,7 +53,7 @@ RSpec.feature "Service project_item" do
       expect(page).to have_current_path(new_project_item_path)
       expect(page).to have_text(@open_access_service.title)
       expect(page).to have_selector(:link_or_button,
-                                    "ProjectItem", exact: true)
+                                    "Order", exact: true)
     end
 
     scenario "I can see my project_itemed services" do
@@ -84,21 +84,21 @@ RSpec.feature "Service project_item" do
     scenario "I can see project_item change history" do
       project_item = create(:project_item, user: user, service: service)
 
-      project_item.new_change(status: :created, message: "ProjectItem created")
-      project_item.new_change(status: :registered, message: "ProjectItem registered")
-      project_item.new_change(status: :ready, message: "ProjectItem ready")
+      project_item.new_change(status: :created, message: "Service request created")
+      project_item.new_change(status: :registered, message: "Service request registered")
+      project_item.new_change(status: :ready, message: "Service is ready")
 
       visit project_item_path(project_item)
 
       expect(page).to have_text("Current status: ready")
 
-      expect(page).to have_text("ProjectItem created")
+      expect(page).to have_text("Service request created")
 
-      expect(page).to have_text("ProjectItem changed from created to registered")
-      expect(page).to have_text("ProjectItem registered")
+      expect(page).to have_text("Status changed from created to registered")
+      expect(page).to have_text("Service request registered")
 
-      expect(page).to have_text("ProjectItem changed from registered to ready")
-      expect(page).to have_text("ProjectItem registered")
+      expect(page).to have_text("Status changed from registered to ready")
+      expect(page).to have_text("Service is ready")
     end
 
     scenario "I can ask question about my project_item" do
@@ -129,9 +129,9 @@ RSpec.feature "Service project_item" do
 
       visit service_path(service)
 
-      expect(page).to have_selector(:link_or_button, "ProjectItem", exact: true)
+      expect(page).to have_selector(:link_or_button, "Order", exact: true)
 
-      click_on "ProjectItem"
+      click_on "Order"
 
       checkin_sign_in_as(user)
 
@@ -144,7 +144,7 @@ RSpec.feature "Service project_item" do
 
       visit service_path(service)
 
-      expect(page).to have_selector(:link_or_button, "ProjectItem", exact: true)
+      expect(page).to have_selector(:link_or_button, "Order", exact: true)
     end
 
     scenario "I can see openaccess service project_item button" do

@@ -12,9 +12,9 @@ RSpec.feature "Cart" do
 
   scenario "I can create ProjectItem service" do
     visit service_path(service)
-    click_on "ProjectItem"
+    click_on "Order"
 
-    expect { click_on "ProjectItem" }.
+    expect { click_on "Order" }.
       to change { ProjectItem.count }.by(1)
     project_item = ProjectItem.last
 

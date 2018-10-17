@@ -1,6 +1,6 @@
-class CreateOrderChanges < ActiveRecord::Migration[5.2]
+class CreateProjectItemChanges < ActiveRecord::Migration[5.2]
   def change
-    create_table :order_changes do |t|
+    create_table :project_item_changes do |t|
       t.string :status
       t.text :message
       t.belongs_to :project_item, null: false, index: true

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class OrderChange < ApplicationRecord
+class ProjectItemChange < ApplicationRecord
   enum status: ProjectItem::STATUSES
 
   belongs_to :project_item

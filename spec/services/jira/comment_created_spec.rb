@@ -7,12 +7,12 @@ RSpec.describe Jira::CommentCreated do
 
   it "creates new project_item change" do
     expect { described_class.new(project_item, comment(message: "msg", id: 123)).call }.
-      to change { project_item.order_changes.count }.by(1)
+      to change { project_item.project_item_changes.count }.by(1)
   end
 
   it "sets message and comment id" do
     described_class.new(project_item, comment(message: "msg", id: "123")).call
-    last_change = project_item.order_changes.last
+    last_change = project_item.project_item_changes.last
 
     expect(last_change.message).to eq("msg")
     expect(last_change.iid).to eq(123)
@@ -22,7 +22,7 @@ RSpec.describe Jira::CommentCreated do
     described_class.new(project_item, comment(message: "msg", id: "123")).call
 
     expect(project_item).to be_registered
-    expect(project_item.order_changes.last).to be_registered
+    expect(project_item.project_item_changes.last).to be_registered
   end
 
   it "does not duplicate project_item changes" do
@@ -32,7 +32,7 @@ RSpec.describe Jira::CommentCreated do
 
     expect do
       described_class.new(project_item, comment(message: "question", id: "321")).call
-    end.to_not change { project_item.order_changes.count }
+    end.to_not change { project_item.project_item_changes.count }
   end
 
   def comment(message:, id:, author: "non@existing.pl")

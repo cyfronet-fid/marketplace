@@ -18,8 +18,8 @@ RSpec.describe ProjectItem::Create do
   it "creates first project_item change" do
     project_item = described_class.new(project_item_template).call
 
-    expect(project_item.order_changes.count).to eq(1)
-    expect(project_item.order_changes.first).to be_created
+    expect(project_item.project_item_changes.count).to eq(1)
+    expect(project_item.project_item_changes.first).to be_created
   end
 
   it "triggers register project_item in external system" do

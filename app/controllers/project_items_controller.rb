@@ -47,6 +47,6 @@ class ProjectItemsController < ApplicationController
 
     def selected_service
       @selected_service ||=
-        Service.find_by(id: session[:project_item_item]["service_id"])
+        Service.find_by(id: session[:project_item]["service_id"])
     end
 end

@@ -40,7 +40,7 @@ RSpec.describe "JIRA Webhook API", type: :request do
       end
 
       it "should change project_item status" do
-        expect(project_item.order_changes.last).to_not eq(nil)
+        expect(project_item.project_item_changes.last).to_not eq(nil)
       end
     end
   end

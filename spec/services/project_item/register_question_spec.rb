@@ -8,7 +8,7 @@ RSpec.describe ProjectItem::RegisterQuestion do
   let(:user) { create(:user) }
   let(:service) { create(:service) }
   let(:project_item) { create(:project_item, user: user, service: service, issue_id: 1) }
-  let(:question) { create(:order_change, project_item: project_item, message: "Question message") }
+  let(:question) { create(:project_item_change, project_item: project_item, message: "Question message") }
   let(:comment) { double("Comment", id: 123) }
 
   # Stub JIRA client
