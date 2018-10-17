@@ -26,8 +26,8 @@
         %li.nav-item
           = link_to "Support", root_path, class: "nav-link px-3 py-1"
         - if user_signed_in?
-          = nav_link controller: :orders do
-            = link_to "My Services", orders_path, class: "nav-link px-3 py-1"
+          = nav_link controller: :project_items do
+            = link_to "My Services", project_items_path, class: "nav-link px-3 py-1"
           = nav_link controller: :profiles do
             = link_to "My profile", profile_path, class: "nav-link px-3 py-1"
         - if policy([:backoffice, :backoffice]).show?

@@ -2,7 +2,7 @@
 
 class CartsController < ApplicationController
   def create
-    session[:order_item] = params[:order]
-    redirect_to new_order_path
+    session[:project_item_item] = params[:project_item]
+    redirect_to new_project_item_path
   end
 end

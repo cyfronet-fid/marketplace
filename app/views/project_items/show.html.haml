@@ -1,0 +1,86 @@
+- breadcrumb :project_item, @project_item
+
+.container
+  .row.h-100
+    .col-md-9
+      %h1
+        ProjectItemed service (#{@project_item.service.title})
+    .col-md-3.my-auto
+      %p.text-uppercase.text-primary.text-right.font-weight-bold
+        pending
+  %hr.mb-4
+    .row
+      .col-md-6
+        %ul
+          %li
+            %span.font-weight-bold Service:
+            = @project_item.service.title
+          %li
+            %span.font-weight-bold For:
+            = @project_item.user.full_name
+          %li
+            %span.font-weight-bold Current status:
+            = @project_item.status
+          - if ratingable?
+            %li
+              = link_to "Rate this service!",
+                new_project_item_service_opinion_path(@project_item),
+                class: "btn btn-secondary"
+
+        = render "project_items/order_changes",
+                 order_changes: @project_item.order_changes.to_a,
+                 project_item: @project_item,
+                 question: @question
+      .col-md-1.col-sm-12
+      .col-md-5
+        %h3.mb-3
+          Details
+        %ul
+          %li
+            %span.font-weight-bold
+              ProjectItem-date:
+            14.12.2019
+          %li
+            %span.font-weight-bold
+              Provider:
+            OneMikro
+        %table.table.mb-5
+          %thead
+            %tr
+              %th.pl-0{ scope: "col", colspan: "2" } Parameters
+          %tbody
+            %tr
+              %td.pl-0 Number of CPU cores
+              %td
+                %span.font-weight-bold 1
+            %tr
+              %td.pl-0 Amount of RAM per CPU core
+              %td
+                %span.font-weight-bold 2 GB
+            %tr
+              %td.pl-0 Local Disk
+              %td
+                %span.font-weight-bold 10 GB
+            %tr
+              %td.pl-0 Number of VM instances
+              %td
+                %span.font-weight-bold 1
+            %tr
+              %td.pl-0 Access type
+              %td
+                %span.font-weight-bold Reserved
+            %tr
+              %td.pl-0 Number of public IP
+              %td
+                %span.font-weight-bold 1
+            %tr
+              %td.pl-0 Start of service
+              %td
+                %span.font-weight-bold 10.06.2018
+            %tr
+              %td.pl-0 Number of days
+              %td
+                %span.font-weight-bold 24
+
+
+

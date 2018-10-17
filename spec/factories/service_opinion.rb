@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :service_opinion do
     sequence(:opinion) { |n| "service #{n} opinion" }
-    order
+    project_item
   end
 end

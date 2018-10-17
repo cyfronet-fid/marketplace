@@ -3,7 +3,7 @@ class CreateOrderChanges < ActiveRecord::Migration[5.2]
     create_table :order_changes do |t|
       t.string :status
       t.text :message
-      t.belongs_to :order, null: false, index: true
+      t.belongs_to :project_item, null: false, index: true
 
       t.timestamps
     end

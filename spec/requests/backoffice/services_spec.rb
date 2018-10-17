@@ -8,7 +8,7 @@ RSpec.describe "Backoffice service" do
 
     before { login_as(user) }
 
-    it "I can delete owned service when there is no orders yet" do
+    it "I can delete owned service when there is no project_items yet" do
       service = create(:service, owner: user)
 
       expect { delete backoffice_service_path(service) }.

@@ -3,14 +3,14 @@
 require "rails_helper"
 
 RSpec.describe OrderChange, type: :model do
-  it { should belong_to(:order) }
+  it { should belong_to(:project_item) }
   it { should belong_to(:author) }
 
   describe "#question?" do
-    it "is true when order change is created by order owner" do
+    it "is true when project_item change is created by project_item owner" do
       owner = create(:user)
-      order = create(:order, user: owner)
-      order_change = create(:order_change, order: order, author: owner,
+      project_item = create(:project_item, user: owner)
+      order_change = create(:order_change, project_item: project_item, author: owner,
                             message: "some question")
 
       expect(order_change).to be_question
@@ -22,10 +22,10 @@ RSpec.describe OrderChange, type: :model do
       expect(order_change).to_not be_question
     end
 
-    it "is false when change author is not order owner" do
+    it "is false when change author is not project_item owner" do
       owner = create(:user)
-      order = create(:order, user: owner)
-      order_change = create(:order_change, order: order, author: create(:user),
+      project_item = create(:project_item, user: owner)
+      order_change = create(:order_change, project_item: project_item, author: create(:user),
                             message: "some question")
 
       expect(order_change).to_not be_question
