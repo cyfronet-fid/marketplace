@@ -10,7 +10,7 @@ class Jira::IssueUpdated
   def call
     @changelog.fetch("items", []).each do |change|
       status = nil
-      message = "ProjectItem status changed"
+      message = "Status changed"
 
       if change["field"] == "status"
         case change["to"].to_i
@@ -20,7 +20,7 @@ class Jira::IssueUpdated
           status = :in_progress
         when @jira_client.wf_done_id
           status = :ready
-          message = "ProjectItemed service is ready to be used"
+          message = "Service is ready to be used"
         else
           Rails.logger.warn("Unknown issue status (#{change["to"]}")
         end

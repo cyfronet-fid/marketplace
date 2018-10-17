@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2018_10_15_070246) do
     t.index ["name"], name: "index_categories_on_name"
   end
 
-  create_table "order_changes", force: :cascade do |t|
+  create_table "project_item_changes", force: :cascade do |t|
     t.string "status"
     t.text "message"
     t.bigint "project_item_id", null: false
@@ -54,8 +54,8 @@ ActiveRecord::Schema.define(version: 2018_10_15_070246) do
     t.datetime "updated_at", null: false
     t.bigint "author_id"
     t.integer "iid"
-    t.index ["author_id"], name: "index_order_changes_on_author_id"
-    t.index ["project_item_id"], name: "index_order_changes_on_project_item_id"
+    t.index ["author_id"], name: "index_project_item_changes_on_author_id"
+    t.index ["project_item_id"], name: "index_project_item_changes_on_project_item_id"
   end
 
   create_table "project_items", force: :cascade do |t|
@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(version: 2018_10_15_070246) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "order_changes", "users", column: "author_id"
+  add_foreign_key "project_item_changes", "users", column: "author_id"
   add_foreign_key "services", "providers"
   add_foreign_key "services", "users", column: "owner_id"
 end

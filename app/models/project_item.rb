@@ -22,7 +22,7 @@ class ProjectItem < ApplicationRecord
   belongs_to :service
   belongs_to :user
   has_one :service_opinion, dependent: :restrict_with_error
-  has_many :order_changes, dependent: :destroy
+  has_many :project_item_changes, dependent: :destroy
 
   validates :service, presence: true
   validates :user, presence: true
@@ -38,7 +38,7 @@ class ProjectItem < ApplicationRecord
 
     status ||= self.status
 
-    order_changes.create(status: status, message: message, author: author, iid: iid).tap do
+    project_item_changes.create(status: status, message: message, author: author, iid: iid).tap do
       update_attributes(status: status)
     end
   end

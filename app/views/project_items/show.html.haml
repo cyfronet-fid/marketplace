@@ -4,7 +4,7 @@
   .row.h-100
     .col-md-9
       %h1
-        ProjectItemed service (#{@project_item.service.title})
+        Project item (#{@project_item.service.title})
     .col-md-3.my-auto
       %p.text-uppercase.text-primary.text-right.font-weight-bold
         pending
@@ -27,8 +27,8 @@
                 new_project_item_service_opinion_path(@project_item),
                 class: "btn btn-secondary"
 
-        = render "project_items/order_changes",
-                 order_changes: @project_item.order_changes.to_a,
+        = render "project_items/project_item_changes",
+                 project_item_changes: @project_item.project_item_changes.to_a,
                  project_item: @project_item,
                  question: @question
       .col-md-1.col-sm-12
@@ -38,7 +38,7 @@
         %ul
           %li
             %span.font-weight-bold
-              ProjectItem-date:
+              order-date:
             14.12.2019
           %li
             %span.font-weight-bold

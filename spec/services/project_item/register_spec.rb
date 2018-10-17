@@ -28,12 +28,12 @@ RSpec.describe ProjectItem::Register do
     })
 
     described_class.new(project_item).call
-    expect(project_item.order_changes.last).to be_registered
+    expect(project_item.project_item_changes.last).to be_registered
   end
 
   it "creates new project_item change" do
     described_class.new(project_item).call
-    expect(project_item.order_changes.last).to be_registered
+    expect(project_item.project_item_changes.last).to be_registered
   end
 
   it "changes project_item status into registered on success" do

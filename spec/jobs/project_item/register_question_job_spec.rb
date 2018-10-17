@@ -8,7 +8,7 @@ RSpec.describe ProjectItem::RegisterQuestionJob do
   let(:register_service) { instance_double(ProjectItem::RegisterQuestion) }
 
   def make_question(author)
-    create(:order_change,
+    create(:project_item_change,
            message: "question msg",
            project_item: project_item,
            author: author)

@@ -9,35 +9,35 @@ RSpec.describe ProjectItem do
 
   it { should belong_to(:user) }
   it { should belong_to(:service) }
-  it { should have_many(:order_changes).dependent(:destroy) }
+  it { should have_many(:project_item_changes).dependent(:destroy) }
 
   describe "#new_change" do
     it "change is not created when no message and status is given" do
       project_item = create(:project_item)
 
-      expect { project_item.new_change }.to_not change { OrderChange.count }
+      expect { project_item.new_change }.to_not change { ProjectItemChange.count }
     end
 
     it "change project_item status" do
       project_item = create(:project_item, status: :created)
 
       project_item.new_change(status: :registered, message: "ProjectItem registered")
-      order_change = project_item.order_changes.last
+      project_item_change = project_item.project_item_changes.last
 
       expect(project_item).to be_registered
-      expect(order_change).to be_registered
-      expect(order_change.message).to eq("ProjectItem registered")
+      expect(project_item_change).to be_registered
+      expect(project_item_change.message).to eq("ProjectItem registered")
     end
 
     it "does not change status when only message is given" do
       project_item = create(:project_item, status: :created)
 
       project_item.new_change(message: "some update")
-      order_change = project_item.order_changes.last
+      project_item_change = project_item.project_item_changes.last
 
       expect(project_item).to be_created
-      expect(order_change).to be_created
-      expect(order_change.message).to eq("some update")
+      expect(project_item_change).to be_created
+      expect(project_item_change.message).to eq("some update")
     end
 
     it "set change author" do
@@ -45,9 +45,9 @@ RSpec.describe ProjectItem do
       author = create(:user)
 
       project_item.new_change(message: "update", author: author)
-      order_change = project_item.order_changes.last
+      project_item_change = project_item.project_item_changes.last
 
-      expect(order_change.author).to eq(author)
+      expect(project_item_change.author).to eq(author)
     end
   end
 
