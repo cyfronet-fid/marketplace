@@ -6,10 +6,10 @@ class Service < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
-  has_many :orders, dependent: :restrict_with_error
+  has_many :project_items, dependent: :restrict_with_error
   has_many :service_categories, dependent: :destroy
   has_many :categories, through: :service_categories
-  has_many :service_opinions, through: :orders
+  has_many :service_opinions, through: :project_items
 
   belongs_to :owner,
              class_name: "User",

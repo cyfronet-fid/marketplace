@@ -10,17 +10,17 @@ RSpec.feature "Cart" do
 
   before { checkin_sign_in_as(user) }
 
-  scenario "I can create Order service" do
+  scenario "I can create ProjectItem service" do
     visit service_path(service)
-    click_on "Order"
+    click_on "ProjectItem"
 
-    expect { click_on "Order" }.
-      to change { Order.count }.by(1)
-    order = Order.last
+    expect { click_on "ProjectItem" }.
+      to change { ProjectItem.count }.by(1)
+    project_item = ProjectItem.last
 
-    expect(order.service).to eq(service)
-    expect(order.user).to eq(user)
-    expect(order).to be_created
+    expect(project_item.service).to eq(service)
+    expect(project_item.user).to eq(user)
+    expect(project_item).to be_created
     expect(page).to_not have_content("Cart is empty")
   end
 end

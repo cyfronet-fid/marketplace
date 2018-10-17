@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class OrderChange < ApplicationRecord
-  enum status: Order::STATUSES
+  enum status: ProjectItem::STATUSES
 
-  belongs_to :order
+  belongs_to :project_item
   belongs_to :author,
              class_name: "User",
              optional: true
@@ -12,6 +12,6 @@ class OrderChange < ApplicationRecord
   validates :message, presence: true, unless: :status
 
   def question?
-    author == order.user
+    author == project_item.user
   end
 end

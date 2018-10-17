@@ -73,6 +73,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Update services and category list in data.yml (@goreck888)
 - Update home view with static version (@kmarszalek)
 - Upgrade service detail view (@kmarszalek)
+- Rename `Order` into `ProjectItem` (@mkasztelnik)
 
 ### Deprecated
 

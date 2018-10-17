@@ -1,0 +1,9 @@
+%h3.mb-4 ProjectItem history
+%ul.step-progress.pl-5.pb-4
+  - if order_changes.count.positive?
+    = ([nil] + order_changes).each_cons(2) do |previous, current|
+      = render "project_items/order_change", previous: previous, current: current
+  - else
+    %p No project_item changes yet
+
+= render "project_items/question", project_item: project_item, question: question

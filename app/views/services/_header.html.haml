@@ -14,7 +14,7 @@
       %a{ href: "", class: "small ml-3" }
         #{service.service_opinion_count} opinions
   .col-4
-    = form_for(Order.new, url: cart_path) do |f|
+    = form_for(ProjectItem.new, url: cart_path) do |f|
       = f.hidden_field :service_id, value: service.id
       %button{ class: "btn btn-primary" }
         = write_button_text
