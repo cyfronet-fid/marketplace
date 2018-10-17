@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :project_item do
-    status :created
+  factory :project do
+    sequence(:name) { |n| "project #{n}" }
     user
-    service
-    project
   end
 end

@@ -20,10 +20,10 @@ class ProjectItemPolicy < ApplicationPolicy
   end
 
   def create?
-    user
+    user && record.project&.user == user
   end
 
   def permitted_attributes
-    [:service_id]
+    [:service_id, :project_id]
   end
 end

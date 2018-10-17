@@ -7,9 +7,17 @@ RSpec.describe ProjectItemPolicy do
 
   subject { described_class }
 
-  permissions :index?, :create?, :new? do
+  permissions :index?, :new? do
     it "grants access for logged in user" do
       expect(subject).to permit(user)
+    end
+  end
+
+  permissions :create? do
+    it "grants access to create item in owned project" do
+      expect(subject).
+        to permit(user, build(:project_item,
+                              project: build(:project, user: user)))
     end
   end
 
