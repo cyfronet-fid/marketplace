@@ -21,6 +21,7 @@ class ProjectItem < ApplicationRecord
 
   belongs_to :service
   belongs_to :user
+  belongs_to :project
   has_one :service_opinion, dependent: :restrict_with_error
   has_many :project_item_changes, dependent: :destroy
 

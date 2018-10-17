@@ -35,8 +35,10 @@ RSpec.feature "Service project_item" do
       expect(page).to have_selector(:link_or_button,
                                     "Order", exact: true)
 
-      expect { click_on "Order" }.
-        to change { ProjectItem.count }.by(1)
+      expect do
+        select "Services"
+        click_on "Order"
+      end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
 
       expect(project_item.service_id).to eq(service.id)

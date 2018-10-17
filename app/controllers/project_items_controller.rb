@@ -16,6 +16,7 @@ class ProjectItemsController < ApplicationController
   end
 
   def new
+    @projects = current_user.projects
     @project_item = ProjectItem.new(service: selected_service)
     authorize(@project_item)
   end
@@ -30,7 +31,7 @@ class ProjectItemsController < ApplicationController
       redirect_to project_item_path(project_item)
     else
       redirect_to service_path(project_item.service),
-                  alert: "Unable to create project_item"
+                  alert: "Unable to create service request"
     end
   end
 

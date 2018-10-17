@@ -14,8 +14,10 @@ RSpec.feature "Cart" do
     visit service_path(service)
     click_on "Order"
 
-    expect { click_on "Order" }.
-      to change { ProjectItem.count }.by(1)
+    expect do
+      select "Services"
+      click_on "Order"
+    end.to change { ProjectItem.count }.by(1)
     project_item = ProjectItem.last
 
     expect(project_item.service).to eq(service)

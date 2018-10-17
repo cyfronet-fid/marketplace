@@ -1,9 +1,10 @@
 .container
   .row
     - if @project_item.service
-      = form_for(@project_item) do |f|
+      = simple_form_for(@project_item) do |f|
         %p= @project_item.service.title
         = f.hidden_field :service_id
+        = f.association :project, collection: @projects
         %button{ class: "btn btn-primary" }
           Order
     - else

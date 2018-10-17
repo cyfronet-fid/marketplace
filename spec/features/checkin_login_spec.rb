@@ -12,4 +12,12 @@ RSpec.feature "Checkin authentication" do
 
     expect(page.body).to have_content "Successfully authenticated"
   end
+
+  scenario "creates default project" do
+    user = create(:user)
+
+    checkin_sign_in_as(user)
+
+    expect(user.projects.find_by(name: "Services")).to_not be_nil
+  end
 end
