@@ -20,13 +20,13 @@ class ProjectItem < ApplicationRecord
   enum issue_status: ISSUE_STATUSES
 
   belongs_to :service
-  belongs_to :user
   belongs_to :project
   has_one :service_opinion, dependent: :restrict_with_error
   has_many :project_item_changes, dependent: :destroy
 
   validates :service, presence: true
   validates :user, presence: true
+  validates :project, presence: true
   validates :status, presence: true
 
   def active?

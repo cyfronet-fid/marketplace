@@ -3,10 +3,6 @@
 class ProjectItemsController < ApplicationController
   before_action :authenticate_user!
 
-  def index
-    @project_items = policy_scope(ProjectItem)
-  end
-
   def show
     @project_item = ProjectItem.joins(:user, :service).find(params[:id])
 
@@ -16,7 +12,7 @@ class ProjectItemsController < ApplicationController
   end
 
   def new
-    @projects = current_user.projects
+    @projects = policy_scope(Project)
     @project_item = ProjectItem.new(service: selected_service)
     authorize(@project_item)
   end
@@ -24,14 +20,18 @@ class ProjectItemsController < ApplicationController
   def create
     delete_project_item_from_session
 
-    authorize(project_item_template)
-    project_item = ProjectItem::Create.new(project_item_template).call
+    if project_item_template.project
+      authorize(project_item_template)
+      project_item = ProjectItem::Create.new(project_item_template).call
 
-    if project_item.persisted?
-      redirect_to project_item_path(project_item)
+      if project_item.persisted?
+        redirect_to project_item_path(project_item)
+      else
+        create_error(project_item)
+      end
     else
-      redirect_to service_path(project_item.service),
-                  alert: "Unable to create service request"
+      project_item_template.valid?
+      create_error(project_item_template)
     end
   end
 
@@ -49,5 +49,12 @@ class ProjectItemsController < ApplicationController
     def selected_service
       @selected_service ||=
         Service.find_by(id: session[:project_item]["service_id"])
+    end
+
+    def create_error(project_item)
+      @project_item = project_item
+      @projects = policy_scope(Project)
+
+      render :new, status: :bad_request
     end
 end

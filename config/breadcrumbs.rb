@@ -46,12 +46,12 @@ crumb :provider do |provider|
   parent :services
 end
 
-crumb :project_items do
-  link "My services", project_items_path
-  parent :root
-end
-
 crumb :project_item do |project_item|
   link "Service (#{project_item.service.title})", project_item_path(project_item)
-  parent :project_items
+  parent :projects
+end
+
+crumb :projects do
+  link "My services", projects_path
+  parent :root
 end
