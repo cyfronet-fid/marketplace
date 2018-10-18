@@ -4,7 +4,8 @@ require "rails_helper"
 
 RSpec.describe ProjectItem::Question::Create do
   let(:project_item_owner) { create(:user) }
-  let(:project_item) { create(:project_item, user: project_item_owner) }
+  let(:project) { create(:project, user: project_item_owner) }
+  let(:project_item) { create(:project_item, project: project) }
 
   context "valid question" do
     let(:question) do

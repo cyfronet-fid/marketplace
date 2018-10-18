@@ -71,7 +71,7 @@ RSpec.feature "My Services" do
 
     scenario "I can see my projects services" do
       project = create(:project, user: user)
-      create(:project_item, user: user, project: project, service: service)
+      create(:project_item, project: project, service: service)
 
       visit projects_path
 
@@ -79,7 +79,8 @@ RSpec.feature "My Services" do
     end
 
     scenario "I can see project_item details" do
-      project_item = create(:project_item, user: user, service: service)
+      project = create(:project, user: user)
+      project_item = create(:project_item, project: project, service: service)
 
       visit project_item_path(project_item)
 
@@ -96,7 +97,8 @@ RSpec.feature "My Services" do
     end
 
     scenario "I can see project_item change history" do
-      project_item = create(:project_item, user: user, service: service)
+      project = create(:project, user: user)
+      project_item = create(:project_item, project: project, service: service)
 
       project_item.new_change(status: :created, message: "Service request created")
       project_item.new_change(status: :registered, message: "Service request registered")
@@ -116,7 +118,8 @@ RSpec.feature "My Services" do
     end
 
     scenario "I can ask question about my project_item" do
-      project_item = create(:project_item, user: user, service: service)
+      project = create(:project, user: user)
+      project_item = create(:project_item, project: project, service: service)
 
       visit project_item_path(project_item)
       fill_in "project_item_question_text", with: "This is my question"
@@ -126,7 +129,8 @@ RSpec.feature "My Services" do
     end
 
     scenario "question message is mandatory" do
-      project_item = create(:project_item, user: user, service: service)
+      project = create(:project, user: user)
+      project_item = create(:project_item, project: project, service: service)
 
       visit project_item_path(project_item)
       click_button "Send message"

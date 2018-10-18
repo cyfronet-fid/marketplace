@@ -4,7 +4,8 @@ class ProjectItemsController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    @project_item = ProjectItem.joins(:user, :service).find(params[:id])
+    @project_item = ProjectItem.joins(:service, project: :user).
+                    find(params[:id])
 
     authorize(@project_item)
 
@@ -38,8 +39,7 @@ class ProjectItemsController < ApplicationController
   private
 
     def project_item_template
-      @new_project_item ||= ProjectItem.new(permitted_attributes(ProjectItem).
-                               merge(user: current_user))
+      @new_project_item ||= ProjectItem.new(permitted_attributes(ProjectItem))
     end
 
     def delete_project_item_from_session

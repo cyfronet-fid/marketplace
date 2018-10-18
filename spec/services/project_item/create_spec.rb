@@ -4,8 +4,9 @@ require "rails_helper"
 
 RSpec.describe ProjectItem::Create do
   let(:user) { create(:user) }
+  let(:project) { create(:project, user: user) }
   let(:service) { create(:service) }
-  let(:project_item_template) { build(:project_item, user: user, service: service) }
+  let(:project_item_template) { build(:project_item, project: project, service: service) }
 
   it "creates project_item and set initial project_item change" do
     project_item = described_class.new(project_item_template).call
