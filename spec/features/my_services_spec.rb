@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Service project_item" do
+RSpec.feature "My Services" do
   include OmniauthHelper
 
   context "as logged in user" do
@@ -58,10 +58,22 @@ RSpec.feature "Service project_item" do
                                     "Order", exact: true)
     end
 
-    scenario "I can see my project_itemed services" do
-      create(:project_item, user: user, service: service)
+    scenario "I can see only my projects" do
+      p1, p2 = create_list(:project, 2, user: user)
+      not_owned = create(:project)
 
-      visit project_items_path
+      visit projects_path
+
+      expect(page).to have_text(p1.name)
+      expect(page).to have_text(p2.name)
+      expect(page).to_not have_text(not_owned.name)
+    end
+
+    scenario "I can see my projects services" do
+      project = create(:project, user: user)
+      create(:project_item, user: user, project: project, service: service)
+
+      visit projects_path
 
       expect(page).to have_text(service.title)
     end
