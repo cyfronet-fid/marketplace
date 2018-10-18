@@ -8,7 +8,6 @@ class User < ApplicationRecord
   roles :service_owner
 
   has_many :projects, dependent: :destroy
-  has_many :project_items, dependent: :destroy
   has_many :affiliations, dependent: :destroy
   has_many :owned_services,
            class_name: "Service",

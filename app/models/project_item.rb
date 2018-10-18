@@ -25,9 +25,10 @@ class ProjectItem < ApplicationRecord
   has_many :project_item_changes, dependent: :destroy
 
   validates :service, presence: true
-  validates :user, presence: true
   validates :project, presence: true
   validates :status, presence: true
+
+  delegate :user, to: :project
 
   def active?
     !(ready? || rejected?)

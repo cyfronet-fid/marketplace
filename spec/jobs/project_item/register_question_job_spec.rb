@@ -4,7 +4,8 @@ require "rails_helper"
 
 RSpec.describe ProjectItem::RegisterQuestionJob do
   let(:project_item_owner) { create(:user) }
-  let(:project_item) { create(:project_item, user: project_item_owner) }
+  let(:project) { create(:project, user: project_item_owner) }
+  let(:project_item) { create(:project_item, project: project) }
   let(:register_service) { instance_double(ProjectItem::RegisterQuestion) }
 
   def make_question(author)

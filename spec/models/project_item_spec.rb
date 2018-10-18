@@ -4,11 +4,9 @@ require "rails_helper"
 
 RSpec.describe ProjectItem do
   it { should validate_presence_of(:service) }
-  it { should validate_presence_of(:user) }
   it { should validate_presence_of(:project) }
   it { should validate_presence_of(:status) }
 
-  it { should belong_to(:user) }
   it { should belong_to(:project) }
   it { should belong_to(:service) }
   it { should have_many(:project_item_changes).dependent(:destroy) }

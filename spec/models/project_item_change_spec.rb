@@ -9,7 +9,8 @@ RSpec.describe ProjectItemChange, type: :model do
   describe "#question?" do
     it "is true when project_item change is created by project_item owner" do
       owner = create(:user)
-      project_item = create(:project_item, user: owner)
+      project = create(:project, user: owner)
+      project_item = create(:project_item, project: project)
       project_item_change = create(:project_item_change, project_item: project_item, author: owner,
                             message: "some question")
 
@@ -24,9 +25,12 @@ RSpec.describe ProjectItemChange, type: :model do
 
     it "is false when change author is not project_item owner" do
       owner = create(:user)
-      project_item = create(:project_item, user: owner)
-      project_item_change = create(:project_item_change, project_item: project_item, author: create(:user),
-                            message: "some question")
+      project = create(:project, user: owner)
+      project_item = create(:project_item, project: project)
+      project_item_change = create(:project_item_change,
+                                   project_item: project_item,
+                                   author: create(:user),
+                                   message: "some question")
 
       expect(project_item_change).to_not be_question
     end

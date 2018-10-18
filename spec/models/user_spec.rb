@@ -9,7 +9,6 @@ RSpec.describe User do
   it { should validate_presence_of(:uid) }
 
   it { should have_many(:projects).dependent(:destroy) }
-  it { should have_many(:project_items).dependent(:destroy) }
   it { should have_many(:affiliations).dependent(:destroy) }
   it { should have_many(:owned_services).dependent(:nullify) }
 
