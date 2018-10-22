@@ -10,7 +10,16 @@ Rails.application.routes.draw do
 
   resource :cart, only: :create
 
-  resources :services, only: [:index, :show]
+  resources :services, only: [:index, :show] do
+    scope module: :services do
+      resources :offers, only: :index
+      resource :offers, only: :update
+      resource :configuration, only: [:show, :update]
+      resource :summary, only: [:show, :create]
+      resource :cancel, only: :destroy
+    end
+  end
+
   resources :categories, only: :show
 
   resources :projects, only: :index
