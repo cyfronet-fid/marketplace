@@ -23,10 +23,10 @@ RSpec.describe "JIRA Webhook API", type: :request do
 
     describe "Correct secret with data" do
       issue_id = 5
-      order = nil
+      project_item = nil
 
       before {
-        order = create(:order, issue_id: issue_id)
+        project_item = create(:project_item, issue_id: issue_id)
         data = create(:jira_webhook_response, issue_id: issue_id, issue_status: 6)
         post(api_webhooks_jira_url + "?secret=secret&issue_id=5", params: data)
       }
@@ -39,8 +39,8 @@ RSpec.describe "JIRA Webhook API", type: :request do
         expect(json).to eq("message" => "Updated")
       end
 
-      it "should change order status" do
-        expect(order.order_changes.last).to_not eq(nil)
+      it "should change project_item status" do
+        expect(project_item.project_item_changes.last).to_not eq(nil)
       end
     end
   end

@@ -14,6 +14,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       if @user.persisted?
         sign_in_and_redirect @user, event: :authentication
         set_flash_message(:notice, :success, kind: "Checkin") if is_navigational_format?
+        User::PostLogin.new(@user).call
       else
         flash[:alert] = "Cannot register user #{@user.errors.inspect}"
         session["devise.checkin_data"] = auth

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class Jira::CommentCreated
-  def initialize(order, comment)
-    @order = order
+  def initialize(project_item, comment)
+    @project_item = project_item
     @comment = comment
   end
 
   def call
-    @order.new_change(message: body, author: author, iid: id) if body && unique?
+    @project_item.new_change(message: body, author: author, iid: id) if body && unique?
   end
 
   private
@@ -25,6 +25,6 @@ class Jira::CommentCreated
     end
 
     def unique?
-      !@order.order_changes.find_by(iid: id)
+      !@project_item.project_item_changes.find_by(iid: id)
     end
 end

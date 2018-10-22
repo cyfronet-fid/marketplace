@@ -4,7 +4,7 @@ class Category < ApplicationRecord
   has_ancestry
 
   # This callback need to be defined byfore dependent: :destroy
-  # relation, because in this case order matter. This callback need to be
+  # relation, because in this case project_item matter. This callback need to be
   # invoked before destroying related service categories to find affected
   # services.
   before_destroy :store_affected_services
