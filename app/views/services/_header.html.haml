@@ -14,9 +14,7 @@
       %a{ href: "", class: "small ml-3" }
         #{service.service_opinion_count} opinions
   .col-4
-    = form_for(ProjectItem.new, url: cart_path) do |f|
-      = f.hidden_field :service_id, value: service.id
-      %button{ class: "btn btn-primary" }
-        = write_button_text
-      - if @service.open_access?
-        = link_to "Go to the service", service.connected_url, class: "btn btn-primary", target: "_blank"
+    = link_to service_offers_path(@service), class: "btn btn-primary" do
+      = write_button_text
+    - if @service.open_access?
+      = link_to "Go to the service", service.connected_url, class: "btn btn-primary", target: "_blank"

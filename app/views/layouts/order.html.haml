@@ -1,0 +1,20 @@
+!!!
+%html{ lang: "en" }
+  = render "layouts/head"
+  %body
+    = render "layouts/flash"
+    %header
+      .float-left
+        Logo
+      .float-right
+        = link_to "Cancel order and quit", service_cancel_path(@service), method: :delete
+        %button.btn.btn-primary{ form: "order-form", type: "submit" }
+          Next
+      .clearfix
+    %main
+      .alert.alert-info
+        This is a layout stub for orders. It can be found in
+        %code layouts/order.html.haml
+      = yield
+  = render "layouts/footer"
+
