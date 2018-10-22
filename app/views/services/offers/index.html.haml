@@ -17,6 +17,6 @@
 
 = form_for ProjectItem.new, url: service_offers_path(@service), method: :put,
   html: { id: "order-form", role: "form"  } do |f|
-  -# Empty block
+  = f.select :offer_id, @offers.map(&:iid), include_blank: true
 
 
