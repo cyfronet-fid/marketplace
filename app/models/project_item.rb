@@ -29,6 +29,8 @@ class ProjectItem < ApplicationRecord
   validates :status, presence: true
 
   delegate :user, to: :project
+  delegate :service, to: :offer
+
 
   def active?
     !(ready? || rejected?)
