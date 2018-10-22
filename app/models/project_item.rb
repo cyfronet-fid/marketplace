@@ -19,12 +19,12 @@ class ProjectItem < ApplicationRecord
   enum status: STATUSES
   enum issue_status: ISSUE_STATUSES
 
-  belongs_to :service
+  belongs_to :offer
   belongs_to :project
   has_one :service_opinion, dependent: :restrict_with_error
   has_many :project_item_changes, dependent: :destroy
 
-  validates :service, presence: true
+  validates :offer, presence: true
   validates :project, presence: true
   validates :status, presence: true
 

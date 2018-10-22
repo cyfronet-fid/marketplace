@@ -11,6 +11,7 @@ class ServicesController < ApplicationController
 
   def show
     @service = Service.find(params[:id])
-    @service_opinions = ServiceOpinion.joins(:project_item).where(project_items: { service: @service })
+    @service_opinions = ServiceOpinion.joins(project_item: :offer).
+                        where(offers: { service_id: @service })
   end
 end
