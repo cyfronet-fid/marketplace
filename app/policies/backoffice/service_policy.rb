@@ -28,7 +28,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   end
 
   def destroy?
-    owner? && record.orders.count.zero?
+    owner? && record.project_items.count.zero?
   end
 
   def permitted_attributes

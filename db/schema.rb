@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_15_070246) do
+ActiveRecord::Schema.define(version: 2018_10_18_085610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,28 +46,35 @@ ActiveRecord::Schema.define(version: 2018_10_15_070246) do
     t.index ["name"], name: "index_categories_on_name"
   end
 
-  create_table "order_changes", force: :cascade do |t|
+  create_table "project_item_changes", force: :cascade do |t|
     t.string "status"
     t.text "message"
-    t.bigint "order_id", null: false
+    t.bigint "project_item_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "author_id"
     t.integer "iid"
-    t.index ["author_id"], name: "index_order_changes_on_author_id"
-    t.index ["order_id"], name: "index_order_changes_on_order_id"
+    t.index ["author_id"], name: "index_project_item_changes_on_author_id"
+    t.index ["project_item_id"], name: "index_project_item_changes_on_project_item_id"
   end
 
-  create_table "orders", force: :cascade do |t|
+  create_table "project_items", force: :cascade do |t|
     t.string "status", null: false
     t.bigint "service_id", null: false
-    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "issue_id"
     t.integer "issue_status", default: 2, null: false
-    t.index ["service_id"], name: "index_orders_on_service_id"
-    t.index ["user_id"], name: "index_orders_on_user_id"
+    t.bigint "project_id"
+    t.index ["project_id"], name: "index_project_items_on_project_id"
+    t.index ["service_id"], name: "index_project_items_on_service_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "user_id", null: false
+    t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "providers", force: :cascade do |t|
@@ -89,10 +96,10 @@ ActiveRecord::Schema.define(version: 2018_10_15_070246) do
   create_table "service_opinions", force: :cascade do |t|
     t.integer "rating", null: false
     t.text "opinion"
-    t.bigint "order_id", null: false
+    t.bigint "project_item_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["order_id"], name: "index_service_opinions_on_order_id"
+    t.index ["project_item_id"], name: "index_service_opinions_on_project_item_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -144,7 +151,8 @@ ActiveRecord::Schema.define(version: 2018_10_15_070246) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "order_changes", "users", column: "author_id"
+  add_foreign_key "project_item_changes", "users", column: "author_id"
+  add_foreign_key "project_items", "projects"
   add_foreign_key "services", "providers"
   add_foreign_key "services", "users", column: "owner_id"
 end

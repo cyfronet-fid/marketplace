@@ -1,0 +1,4 @@
+%h3= project.name
+%ul.list-group.mt-5
+  = render(project.project_items) || render("empty_project")
+

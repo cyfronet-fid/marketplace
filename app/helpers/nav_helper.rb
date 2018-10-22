@@ -20,7 +20,7 @@ module NavHelper
   # block   - An optional block that will become the contents of the returned
   #           `li` element.
   #
-  # When both :controller and :action are specified, BOTH must match in order
+  # When both :controller and :action are specified, BOTH must match in project_item
   # to be marked as active. When only one is given, either can match.
   #
   # Examples

@@ -33,9 +33,9 @@ RSpec.describe Backoffice::ServicePolicy do
       expect(subject).to_not permit(user, build(:service))
     end
 
-    it "denies when service has orders attached" do
+    it "denies when service has project_items attached" do
       service = create(:service, owner: user)
-      create(:order, service: service)
+      create(:project_item, service: service)
 
       expect(subject).to_not permit(user, build(:service))
     end

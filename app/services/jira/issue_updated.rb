@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Jira::IssueUpdated
-  def initialize(order, changelog)
-    @order = order
+  def initialize(project_item, changelog)
+    @project_item = project_item
     @changelog = changelog || {}
     @jira_client = Jira::Client.new
   end
@@ -10,7 +10,7 @@ class Jira::IssueUpdated
   def call
     @changelog.fetch("items", []).each do |change|
       status = nil
-      message = "Order status changed"
+      message = "Status changed"
 
       if change["field"] == "status"
         case change["to"].to_i
@@ -20,14 +20,14 @@ class Jira::IssueUpdated
           status = :in_progress
         when @jira_client.wf_done_id
           status = :ready
-          message = "Ordered service is ready to be used"
+          message = "Service is ready to be used"
         else
           Rails.logger.warn("Unknown issue status (#{change["to"]}")
         end
 
         if status
-          @order.new_change(status: status, message: message)
-          OrderMailer.changed(@order).deliver_later
+          @project_item.new_change(status: status, message: message)
+          ProjectItemMailer.changed(@project_item).deliver_later
         end
       end
     end
