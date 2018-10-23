@@ -5,10 +5,7 @@ require "rails_helper"
 RSpec.describe ProjectItem::RegisterQuestion do
   include JiraHelper
 
-  let(:user) { create(:user) }
-  let(:project) { create(:project, user: user) }
-  let(:service) { create(:service) }
-  let(:project_item) { create(:project_item, project: project, service: service, issue_id: 1) }
+  let(:project_item) { create(:project_item, issue_id: 1) }
   let(:question) { create(:project_item_change, project_item: project_item, message: "Question message") }
   let(:comment) { double("Comment", id: 123) }
 

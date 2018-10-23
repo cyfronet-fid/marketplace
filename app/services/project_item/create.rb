@@ -7,19 +7,28 @@ class ProjectItem::Create
 
   def call
     @project_item.created!
-    @service = Service.find_by(id: @project_item.service_id)
 
     if @project_item.save
-      @project_item.new_change(status: :created, message: "ProjectItem created")
+      @project_item.new_change(status: :created,
+                               message: "Service request created")
+
       ProjectItemMailer.created(@project_item).deliver_later
 
-      if !@service.open_access
-        ProjectItem::RegisterJob.perform_later(@project_item)
-      else
+      if open_access?
         ProjectItem::ReadyJob.perform_later(@project_item)
+      else
+        ProjectItem::RegisterJob.perform_later(@project_item)
       end
     end
 
     @project_item
   end
+
+  private
+
+    def open_access?
+      Service.joins(:offers).
+        find_by(offers: { id: @project_item.offer_id })&.
+        open_access
+    end
 end

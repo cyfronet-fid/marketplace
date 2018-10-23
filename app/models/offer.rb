@@ -18,6 +18,10 @@ class Offer < ApplicationRecord
   private
 
     def set_iid
-      self.iid = service.offers.maximum(:iid).to_i + 1 if iid.blank?
+      self.iid = offers_count + 1 if iid.blank?
+    end
+
+    def offers_count
+      service && service.offers.maximum(:iid).to_i || 0
     end
 end
