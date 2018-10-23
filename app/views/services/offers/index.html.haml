@@ -20,3 +20,7 @@
   = f.select :offer_id, @offers.map(&:iid), include_blank: true
 
 
+= content_for :buttons do
+  = link_to "Cancel order and quit", service_cancel_path(@service), method: :delete
+  %button.btn.btn-primary{ form: "order-form", type: "submit" }
+    Next

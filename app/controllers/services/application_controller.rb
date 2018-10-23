@@ -6,6 +6,19 @@ class Services::ApplicationController < ApplicationController
 
   layout "order"
 
+  protected
+
+    def session_key
+      @service.id.to_s
+    end
+
+    def ensure_in_session!
+      unless session[session_key]
+        redirect_to service_path(@service),
+                    alert: "Service request template not found"
+      end
+    end
+
   private
 
     def load_and_authenticate_service!

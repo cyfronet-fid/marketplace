@@ -7,9 +7,7 @@
       .float-left
         Logo
       .float-right
-        = link_to "Cancel order and quit", service_cancel_path(@service), method: :delete
-        %button.btn.btn-primary{ form: "order-form", type: "submit" }
-          Next
+        = yield :buttons
       .clearfix
     %main
       .alert.alert-info

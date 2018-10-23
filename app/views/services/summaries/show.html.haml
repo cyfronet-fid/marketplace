@@ -1,4 +1,11 @@
 Summary
 
-= form_for ProjectItem.new, url: service_summary_path(@service), html: { id: "order-form"  } do |f|
-  -# Empty block
+%ul
+  %li Offer: #{@project_item.offer.title}
+  %li Project: #{@project_item.project.name}
+
+= link_to "Edit your service request", service_configuration_path(@service)
+
+= content_for :buttons do
+  = link_to "Cancel order and quit", service_cancel_path(@service), method: :delete
+  = link_to "Order", service_summary_path(@service), method: :post, class: "btn btn-primary"
