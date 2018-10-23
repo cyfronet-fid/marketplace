@@ -1,9 +1,15 @@
 Configuration
 
-= form_for ProjectItem.new, url: service_configuration_path(@service),
+= simple_form_for @project_item, url: service_configuration_path(@service),
   method: :put, html: { id: "order-form"  } do |f|
-  -# Empty block
+  = f.association :project, collection: @projects
 
 %p
   Selected offer:
-  = @offer.title
+  = @project_item.offer.title
+
+
+= content_for :buttons do
+  = link_to "Cancel order and quit", service_cancel_path(@service), method: :delete
+  %button.btn.btn-primary{ form: "order-form", type: "submit" }
+    Next

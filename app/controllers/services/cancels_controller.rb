@@ -2,7 +2,7 @@
 
 class Services::CancelsController < Services::ApplicationController
   def destroy
-    # TODO clear order data stored in session
+    session.delete(session_key)
     redirect_to service_path(@service)
   end
 end

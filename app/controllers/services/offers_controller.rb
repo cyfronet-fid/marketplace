@@ -7,7 +7,7 @@ class Services::OffersController < Services::ApplicationController
 
   def update
     if offer
-      session[@service.id.to_s] = { "offer_iid" => offer.iid }
+      session[session_key] = { "offer_id" => offer.id }
       redirect_to service_configuration_path(@service)
     else
       @offers = @service.offers
