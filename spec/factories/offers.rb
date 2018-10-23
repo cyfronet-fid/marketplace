@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :offer do
-    sequence(:title) { |n| "offer #{n}" }
+    sequence(:name) { |n| "offer #{n}" }
     sequence(:description) { |n| "offer #{n} description" }
     service
   end

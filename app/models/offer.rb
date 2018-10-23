@@ -6,7 +6,7 @@ class Offer < ApplicationRecord
   has_many :project_items, dependent: :restrict_with_error
 
   validate :set_iid, on: :create
-  validates :title, presence: true
+  validates :name, presence: true
   validates :description, presence: true
   validates :service, presence: true
   validates :iid, presence: true, numericality: true

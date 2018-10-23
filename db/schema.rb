@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2018_10_22_113346) do
   end
 
   create_table "offers", force: :cascade do |t|
-    t.string "title"
+    t.string "name"
     t.text "description"
     t.integer "iid", null: false
     t.bigint "service_id"
