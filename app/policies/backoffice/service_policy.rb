@@ -28,7 +28,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   end
 
   def destroy?
-    owner? && record.project_items.count.zero?
+    owner? && project_items.count.zero?
   end
 
   def permitted_attributes
@@ -45,5 +45,9 @@ class Backoffice::ServicePolicy < ApplicationPolicy
 
     def owner?
       record.owner == user
+    end
+
+    def project_items
+      ProjectItem.joins(:offer).where(offers: { service_id: record })
     end
 end
