@@ -45,8 +45,8 @@ yaml_hash["services"].each do |_, hash|
                     phase: hash["phase"],
                     categories: [Category.find_by(name: hash["parent"])])
 
-    service.offers.create!(title: "Offer 1", description: "This is offer 1")
-    service.offers.create!(title: "Offer 2", description: "This is offer 2")
+    service.offers.create!(name: "Offer 1", description: "This is offer 1")
+    service.offers.create!(name: "Offer 2", description: "This is offer 2")
   end
   puts "Generated service #{ hash["title"] }"
 end
