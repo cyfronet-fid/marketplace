@@ -14,7 +14,7 @@ class Services::SummariesController < Services::ApplicationController
     @project_item = ProjectItem::Create.new(project_item_template).call
 
     if @project_item.persisted?
-      render :confirmation, layout: "ordered"
+      render :confirmation
     else
       redirect_to service_configuration_path(@service),
                   alert: "Service request configuration invalid"
