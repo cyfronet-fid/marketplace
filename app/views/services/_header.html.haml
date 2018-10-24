@@ -18,3 +18,5 @@
       = write_button_text
     - if @service.open_access?
       = link_to "Go to the service", service.connected_url, class: "btn btn-primary", target: "_blank"
+
+    = render "services/ask_question", service: service, question: question

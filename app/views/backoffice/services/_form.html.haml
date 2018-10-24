@@ -19,9 +19,31 @@
   = f.input :phase
   = f.input :open_access, as: :boolean
   = f.association :provider
+  = f.input :contact_emails, as: :array, multiple: true
+  %a#add-email-field Add additional email
+  .invalid-feedback{ styles: "display:block" }
 
   .btn-group
     = f.button :submit, class: "btn btn-success"
     - path = service.persisted? ? backoffice_service_path(service) : backoffice_services_path
     = link_to "Cancel", path, class: "btn btn-secondary"
 
+:javascript
+  $(document).ready(function() {
+    $("#add-email-field").click(function(event){
+      event.preventDefault();
+      var lastEmailField = document.createElement("input");
+      var parent = document.getElementsByClassName("service_contact_emails");
+
+      lastEmailField.type = "email";
+      lastEmailField.name = "service[contact_emails][]";
+      lastEmailField.id = "service_contact_emails_"+(parent[0].children.length - 1)
+
+      parent[0].appendChild(lastEmailField);
+      });
+
+      $(".simple_form").submit(function (event){
+        $(this).find(':input[type=email]').filter(function() { return !this.value; }).remove()
+        return true;
+      });
+  });
