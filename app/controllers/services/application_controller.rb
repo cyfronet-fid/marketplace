@@ -14,7 +14,7 @@ class Services::ApplicationController < ApplicationController
 
     def ensure_in_session!
       unless session[session_key]
-        redirect_to service_path(@service),
+        redirect_to service_offers_path(@service),
                     alert: "Service request template not found"
       end
     end
