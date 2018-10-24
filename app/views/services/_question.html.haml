@@ -1,0 +1,35 @@
+#question-modal.modal{ tabindex: "-1", role: "dialog",
+                            "aria-hidden": true }
+  .modal-dialog{ role: "document" }
+    .modal-content
+      .modal-header
+        .modal-title
+          %h3
+            Ask provider
+        %button.close{ type: "button", "data-dismiss": "modal", "aria-label": "Close" }
+          %span{ "aria-hidden": true }
+            &times;
+      .modal-body
+        = form_for question, url: service_questions_path(service) do |f|
+          .form-group
+            %label.col-form-label{ for: "message-text" }
+              Our question to provider about #{service.title}
+            = f.hidden_field :author, value: current_user.id
+            = f.text_area :text, size: "53x10"
+            %label
+              We will send an information to this provider. You will receive answer to your mail
+              #{current_user.email}
+      .modal-footer
+        %button#submit-button.btn.btn-primary
+          SEND
+
+:javascript
+  $(document).ready(function() {
+    $('#submit-button').on('click', function() {
+      $('#new_service_question').submit();
+    });
+
+    $('#new_service_question').on('submit', function() {
+      $('#question-modal').modal('hide');
+    });
+  });
