@@ -2,13 +2,13 @@
 
 class Services::SummariesController < Services::ApplicationController
   before_action :ensure_in_session!
+  before_action :ensure_valid!
 
   def show
-    @project_item = ProjectItem.new(session[session_key])
+    @project_item = project_item_template
   end
 
   def create
-    project_item_template = ProjectItem.new(session[session_key])
     authorize(project_item_template)
 
     @project_item = ProjectItem::Create.new(project_item_template).call
@@ -20,4 +20,17 @@ class Services::SummariesController < Services::ApplicationController
                   alert: "Service request configuration invalid"
     end
   end
+
+  private
+
+    def ensure_valid!
+      unless project_item_template.valid?
+        redirect_to service_configuration_path(@service),
+                    alert: "Please configure your service request"
+      end
+    end
+
+    def project_item_template
+      ProjectItem.new(session[session_key])
+    end
 end
