@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe ProjectItem::Register do
-  let(:project_item) { create(:project_item, service: create(:service)) }
+  let(:project_item) { create(:project_item, offer: create(:offer)) }
   let(:issue) { double("Issue", id: 1) }
 
 

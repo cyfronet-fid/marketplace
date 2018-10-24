@@ -1,0 +1,18 @@
+!!!
+%html{ lang: "en" }
+  = render "layouts/head"
+  %body
+    = render "layouts/flash"
+    %header
+      .float-left
+        Logo
+      .float-right
+        = yield :buttons
+      .clearfix
+    %main
+      .alert.alert-info
+        This is a layout stub for orders. It can be found in
+        %code layouts/order.html.haml
+      = yield
+  = render "layouts/footer"
+

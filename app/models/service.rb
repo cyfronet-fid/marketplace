@@ -6,7 +6,7 @@ class Service < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
-  has_many :project_items, dependent: :restrict_with_error
+  has_many :offers, dependent: :restrict_with_error
   has_many :service_categories, dependent: :destroy
   has_many :categories, through: :service_categories
   has_many :service_opinions, through: :project_items

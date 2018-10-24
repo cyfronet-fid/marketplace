@@ -3,12 +3,12 @@
 require "rails_helper"
 
 RSpec.describe ProjectItem do
-  it { should validate_presence_of(:service) }
+  it { should validate_presence_of(:offer) }
   it { should validate_presence_of(:project) }
   it { should validate_presence_of(:status) }
 
   it { should belong_to(:project) }
-  it { should belong_to(:service) }
+  it { should belong_to(:offer) }
   it { should have_many(:project_item_changes).dependent(:destroy) }
 
   describe "#new_change" do
