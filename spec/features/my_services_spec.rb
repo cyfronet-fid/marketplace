@@ -9,54 +9,10 @@ RSpec.feature "My Services" do
 
     let(:user) { create(:user) }
     let(:service) { create(:service) }
+    let(:offer) { create(:offer, service: service) }
 
     before { checkin_sign_in_as(user) }
 
-    scenario "I see project_item service button" do
-      visit service_path(service)
-
-      expect(page).to have_text("Order")
-    end
-
-    scenario "I see project_item open acces service button" do
-      @open_access_service = create(:open_access_service)
-      visit service_path(@open_access_service)
-
-      expect(page).to have_text("Add to my services")
-    end
-
-    scenario "I can add project_item to cart" do
-      visit service_path(service)
-
-      click_button "Order"
-
-      expect(page).to have_current_path(new_project_item_path)
-      expect(page).to have_text(service.title)
-      expect(page).to have_selector(:link_or_button,
-                                    "Order", exact: true)
-
-      expect do
-        select "Services"
-        click_on "Order"
-      end.to change { ProjectItem.count }.by(1)
-      project_item = ProjectItem.last
-
-      expect(project_item.service_id).to eq(service.id)
-      expect(page).to have_content(service.title)
-    end
-
-    scenario "I can project_item open acces service" do
-      @open_access_service = create(:open_access_service)
-
-      visit service_path(@open_access_service)
-
-      click_button "Add to my services"
-
-      expect(page).to have_current_path(new_project_item_path)
-      expect(page).to have_text(@open_access_service.title)
-      expect(page).to have_selector(:link_or_button,
-                                    "Order", exact: true)
-    end
 
     scenario "I can see only my projects" do
       p1, p2 = create_list(:project, 2, user: user)
@@ -71,7 +27,7 @@ RSpec.feature "My Services" do
 
     scenario "I can see my projects services" do
       project = create(:project, user: user)
-      create(:project_item, project: project, service: service)
+      create(:project_item, project: project, offer: offer)
 
       visit projects_path
 
@@ -80,7 +36,7 @@ RSpec.feature "My Services" do
 
     scenario "I can see project_item details" do
       project = create(:project, user: user)
-      project_item = create(:project_item, project: project, service: service)
+      project_item = create(:project_item, project: project, offer: offer)
 
       visit project_item_path(project_item)
 
@@ -88,7 +44,7 @@ RSpec.feature "My Services" do
     end
 
     scenario "I cannot se other users project_items" do
-      other_user_project_item = create(:project_item, service: service)
+      other_user_project_item = create(:project_item, offer: offer)
 
       visit project_item_path(other_user_project_item)
 
@@ -98,7 +54,7 @@ RSpec.feature "My Services" do
 
     scenario "I can see project_item change history" do
       project = create(:project, user: user)
-      project_item = create(:project_item, project: project, service: service)
+      project_item = create(:project_item, project: project, offer: offer)
 
       project_item.new_change(status: :created, message: "Service request created")
       project_item.new_change(status: :registered, message: "Service request registered")
@@ -119,7 +75,7 @@ RSpec.feature "My Services" do
 
     scenario "I can ask question about my project_item" do
       project = create(:project, user: user)
-      project_item = create(:project_item, project: project, service: service)
+      project_item = create(:project_item, project: project, offer: offer)
 
       visit project_item_path(project_item)
       fill_in "project_item_question_text", with: "This is my question"
@@ -130,7 +86,7 @@ RSpec.feature "My Services" do
 
     scenario "question message is mandatory" do
       project = create(:project, user: user)
-      project_item = create(:project_item, project: project, service: service)
+      project_item = create(:project_item, project: project, offer: offer)
 
       visit project_item_path(project_item)
       click_button "Send message"
@@ -140,40 +96,6 @@ RSpec.feature "My Services" do
   end
 
   context "as anonymous user" do
-
-    scenario "I nead to login to project_item" do
-      service = create(:service)
-      user = create(:user)
-
-      visit service_path(service)
-
-      expect(page).to have_selector(:link_or_button, "Order", exact: true)
-
-      click_on "Order"
-
-      checkin_sign_in_as(user)
-
-      expect(page).to have_current_path(new_project_item_path)
-      expect(page).to have_text(service.title)
-    end
-
-    scenario "I can see project_item button" do
-      service = create(:service)
-
-      visit service_path(service)
-
-      expect(page).to have_selector(:link_or_button, "Order", exact: true)
-    end
-
-    scenario "I can see openaccess service project_item button" do
-      open_access_service =  create(:open_access_service)
-
-      visit service_path(open_access_service)
-
-      expect(page).to have_selector(:link_or_button, "Add to my services", exact: true)
-      expect(page).to have_selector(:link_or_button, "Go to the service", exact: true)
-    end
-
     scenario "I don't see my services page" do
       visit root_path
 

@@ -14,7 +14,7 @@ RSpec.describe ServiceOpinion::UpdateService do
     expect(service.rating).to eq(0)
     expect(service.service_opinion_count).to eq(0)
 
-    project_item = create(:project_item, service: service)
+    project_item = create(:project_item, offer: create(:offer, service: service))
     create(:service_opinion, project_item: project_item, rating: "3")
 
     expect(service.rating).to eq(3)

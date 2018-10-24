@@ -35,7 +35,7 @@ RSpec.describe Backoffice::ServicePolicy do
 
     it "denies when service has project_items attached" do
       service = create(:service, owner: user)
-      create(:project_item, service: service)
+      create(:project_item, offer: create(:offer, service: service))
 
       expect(subject).to_not permit(user, build(:service))
     end

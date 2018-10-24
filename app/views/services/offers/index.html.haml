@@ -1,0 +1,26 @@
+%h1
+  = @service.title
+%p.summary= @service.tagline
+
+%ul.nav
+  %li.nav-item
+    = link_to "Offer selection", service_offers_path(@service)
+  %li.nav-item
+    = link_to "Service configuration", root_path
+  %li.nav-item
+    = link_to "Summary", root_path
+
+%h2 Service configuration
+%p
+  This service is available in various options.
+  Please select one from the list bellow.
+
+= form_for ProjectItem.new, url: service_offers_path(@service), method: :put,
+  html: { id: "order-form", role: "form"  } do |f|
+  = f.select :offer_id, @offers.map(&:iid), include_blank: true
+
+
+= content_for :buttons do
+  = link_to "Cancel order and quit", service_cancel_path(@service), method: :delete
+  %button.btn.btn-primary{ form: "order-form", type: "submit" }
+    Next

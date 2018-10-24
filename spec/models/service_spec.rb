@@ -26,8 +26,8 @@ RSpec.describe Service do
   it { should belong_to(:provider) }
 
   it { should have_many(:service_categories).dependent(:destroy) }
+  it { should have_many(:offers).dependent(:restrict_with_error) }
   it { should have_many(:categories) }
-  it { should have_many(:project_items) }
 
   it "sets first category as default" do
     c1, c2 = create_list(:category, 2)
