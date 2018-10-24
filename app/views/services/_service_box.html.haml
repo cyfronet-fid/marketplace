@@ -1,0 +1,5 @@
+%li
+  %h3= link_to service.title, service_path(service)
+  %p= service.tagline
+  %p Provided by: #{service.provider.name}
+  %p Dedicated for #{service.dedicated_for}

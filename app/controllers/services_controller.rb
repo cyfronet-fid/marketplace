@@ -13,5 +13,6 @@ class ServicesController < ApplicationController
     @service = Service.find(params[:id])
     @service_opinions = ServiceOpinion.joins(project_item: :offer).
                         where(offers: { service_id: @service })
+    @related_services = @service.related_services.includes(:provider)
   end
 end
