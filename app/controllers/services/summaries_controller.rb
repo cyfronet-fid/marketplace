@@ -14,6 +14,7 @@ class Services::SummariesController < Services::ApplicationController
     @project_item = ProjectItem::Create.new(project_item_template).call
 
     if @project_item.persisted?
+      @related_services = @service.related_services.includes(:provider)
       render :confirmation, layout: "ordered"
     else
       redirect_to service_configuration_path(@service),
