@@ -14,6 +14,7 @@ class Services::SummariesController < Services::ApplicationController
     @project_item = ProjectItem::Create.new(project_item_template).call
 
     if @project_item.persisted?
+      session.delete(session_key)
       render :confirmation, layout: "ordered"
     else
       redirect_to service_configuration_path(@service),
