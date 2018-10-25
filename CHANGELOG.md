@@ -69,6 +69,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - 3 steps ordering (@mkasztelnik)
 - New header & footer look (@kosmidma)
 - Show 10, 20 or 30 services per page (@mkasztelnik)
+- Go to order configuration step directly when there is only one offer (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
