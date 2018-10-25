@@ -114,6 +114,16 @@ ActiveRecord::Schema.define(version: 2018_10_25_095520) do
     t.index ["project_item_id"], name: "index_service_opinions_on_project_item_id"
   end
 
+  create_table "service_relationships", force: :cascade do |t|
+    t.bigint "source_id", null: false
+    t.bigint "target_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_id", "target_id"], name: "index_service_relationships_on_source_id_and_target_id", unique: true
+    t.index ["source_id"], name: "index_service_relationships_on_source_id"
+    t.index ["target_id"], name: "index_service_relationships_on_target_id"
+  end
+
   create_table "services", force: :cascade do |t|
     t.string "title", null: false
     t.text "description", null: false
@@ -168,6 +178,8 @@ ActiveRecord::Schema.define(version: 2018_10_25_095520) do
   add_foreign_key "project_item_changes", "users", column: "author_id"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
+  add_foreign_key "service_relationships", "services", column: "source_id"
+  add_foreign_key "service_relationships", "services", column: "target_id"
   add_foreign_key "services", "providers"
   add_foreign_key "services", "users", column: "owner_id"
 end
