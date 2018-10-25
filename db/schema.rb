@@ -127,7 +127,6 @@ ActiveRecord::Schema.define(version: 2018_10_22_113346) do
     t.boolean "open_access", default: false
     t.bigint "provider_id"
     t.integer "service_opinion_count", default: 0
-    t.text "contact_emails", default: [], array: true
     t.text "places", null: false
     t.text "languages", null: false
     t.text "dedicated_for", null: false
@@ -140,6 +139,7 @@ ActiveRecord::Schema.define(version: 2018_10_22_113346) do
     t.text "tutorial_url", null: false
     t.text "restrictions", null: false
     t.text "phase", null: false
+    t.text "contact_emails", default: [], array: true
     t.index ["description"], name: "index_services_on_description"
     t.index ["owner_id"], name: "index_services_on_owner_id"
     t.index ["provider_id"], name: "index_services_on_provider_id"

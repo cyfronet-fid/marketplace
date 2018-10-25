@@ -1,6 +1,101 @@
-%footer.footer.mt-5
+%footer.footer.mt-5.pt-3.pb-3
   .container
-    %span.text-muted 2018 EOSC Portal
-    - if (ENV["MP_VERSION"])
-      %span.text-muted "- version: #{ENV["MP_VERSION"]}"
+    .row.h-100
+      .col-md-5
+        %a.eosc-logo-mono.d-block
+      .col-md-7.my-auto.text-right
+        %span.copy-text
+          Copyright 2018 - All right reserved
+        %a.ml-4.text-uppercase{ href: "http://eoscportal.trust-itservices.com/privacy-policy-summary" }
+          privacy policy
+    %hr.mb-4
+    .row
+      .col-md-2
+        %ul
+          %li
+            %h5 About
+          %li.mb-1
+            %a{ href: "http://eoscportal.trust-itservices.com/about/eosc" } EOSC
+          %li.mb-1
+            %a{ href: "http://eoscportal.trust-itservices.com/about/eosc-doers" } EOSC Doers
+          %li.mb-1
+            %a{ href: "http://eoscportal.trust-itservices.com/about/eosc-projects" } EOSC Projects
+          %li.mb-1
+            %a{ href: "http://eoscportal.trust-itservices.com/about/funding-opportunities" } Funding Opportunities
+          %li.mb-1
+            %a{ href: "http://eoscportal.trust-itservices.com/about/faqs" } FAQs
+          %li.mb-1
+            %a{ href: "http://eoscportal.trust-itservices.com/contact-us" } Contact us
+      .col-md-2
+        %ul
+          %li
+            %h5 Governance
+          %li.mb-1
+            %a{ href: "http://eoscportal.trust-itservices.com/governance" } EOSC Governance
+          %li.mb-1
+            %a{ href: "http://eoscportal.trust-itservices.com/governance/rules-participation" } Rules of participation
+          %li.mb-1
+            %a{ href: "http://eoscportal.trust-itservices.com/governance/best-practices" } Best Practices
+      .col-md-2
+        %ul
+          %li
+            %h5 Eosc resources
+          %li.mb-1
+            = link_to "Getting started", root_path
+          %li.mb-1
+            = link_to "All Services", services_path
+          %li.mb-1
+            = link_to "Compute"
+          %li.mb-1
+            = link_to "Data and storage"
+          %li.mb-1
+            = link_to "Applications on demand"
+          %li.mb-1
+            = link_to "Thematic services"
+          %li.mb-1
+            = link_to "Identity and security"
+          %li.mb-1
+            = link_to "Professional Services"
+      .col-md-2
+        %ul
+          %li
+            %h5 Policy
+          %li.mb-1
+            %a{ href: "http://eoscportal.trust-itservices.com/policy/ec-documents" } EC Documents
+          %li.mb-1
+            %a{ href: "http://eoscportal.trust-itservices.com/policy/europe" } Europe
+          %li.mb-1
+            %a{ href: "http://eoscportal.trust-itservices.com/policy/eu-member-states" } Member States
+      .col-md-2
+        %ul
+          %li
+            %h5 EOSC IN PRACTICE
+          %li.mb-1
+            %a{ href: "http://eoscportal.trust-itservices.com/eosc-in-practice/use-cases" } Use Cases
+          %li.mb-1
+            %a{ href: "http://eoscportal.trust-itservices.com/eosc-in-practice/open-call" } Open Call
+      .col-md-2
+        %ul
+          %li
+            %h5 Media
+          %li.mb-1
+            %a{ href: "http://eoscportal.trust-itservices.com/media/news" } News
+          %li.mb-1
+            %a{ href: "http://eoscportal.trust-itservices.com/media/events" } Forthcoming events
+          %li.mb-1
+            %a{ href: "http://eoscportal.trust-itservices.com/media/past-events" } Past Events
+    .row.mt-4
+      .col-md-6
+        %a.social-logo.twitter-logo.d-inline-block.mr-2{ href: "https://twitter.com/eoscpilot" }
+        %a.social-logo.yt-logo.d-inline-block{ href: "" }
 
+.ue-informations.p-4
+  .container
+    %p.mb-1
+      The EOSC portal is been jointly developed and maintained by the EOSC-hub,
+      eInfraCentral and OpoenAIRE-Advance projects funded by the Euopean
+    %p.mb-1 Union’s Horizon 2020 research and innovation programme with contribution of the European Commission
+
+    %p.mt-2 2018 EOSC Portal
+    - if (ENV["MP_VERSION"])
+      %p "- version: #{ENV["MP_VERSION"]}"

@@ -10,7 +10,7 @@ RSpec.feature "Profile page" do
 
     checkin_sign_in_as(user)
 
-    click_link("My profile")
+    click_link("Profile")
 
     expect(page.body).to have_text(user.first_name)
     expect(page.body).to have_text(user.last_name)
@@ -20,6 +20,6 @@ RSpec.feature "Profile page" do
   scenario "link isn't visible to unauthenticated user" do
     visit root_path
 
-    expect(page.body).to have_no_selector("nav", text: "My profile")
+    expect(page.body).to have_no_selector("nav", text: "Profile")
   end
 end

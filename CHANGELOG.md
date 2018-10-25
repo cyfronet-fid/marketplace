@@ -67,6 +67,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add breadcrumbs to order index and show (@mkasztelnik)
 - Tabs to My profile view (@kmarszalek)
 - 3 steps ordering (@mkasztelnik)
+- New header & footer look (@kosmidma)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)

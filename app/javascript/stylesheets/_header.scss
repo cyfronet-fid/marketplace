@@ -1,0 +1,43 @@
+header {
+  a,
+  svg {
+    color: $nav-color;
+  }
+
+  .input-group {
+    &:focus {
+      box-shadow: 0 0 3px $primary;
+      border-radius: 0.2rem;
+    }
+
+    &:hover {
+      box-shadow: 0 0 3px $primary;
+    }
+  }
+}
+
+.navbar {
+  &.bg-light {
+    background-color: transparent !important;
+  }
+
+  &.navbar-expand-lg {
+    .navbar-nav {
+      .nav-link {
+        font-size: $font-size-navbar;
+        font-family: $font-weight-300;
+      }
+
+      .active {
+        background-color: $white;
+        border-radius: 0.2rem;
+      }
+    }
+  }
+}
+
+.navbar-brand {
+  width: 245px;
+  height: 100px;
+  background: url('../../assets/images/eosc-logo-color.png') top center no-repeat;
+}

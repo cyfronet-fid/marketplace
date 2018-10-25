@@ -2,27 +2,41 @@
 
 $navbar-light-active-color:  #233c4c;
 $navbar-light-color: #233d4c;
-$font-family-sans-serif: "Open Sans", Roboto, "Helvetica Neue", Arial, sans-serif;
-$font-family-header: Lato, Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-family-sans-serif: 'ubunturegular', Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-family-header: 'tekoregular', Roboto, "Helvetica Neue", Arial, sans-serif;
+
+
 
 $font-size-xs: 0.875rem;
 $font-size-xxs: 0.75rem;
+$font-size-navbar: 1.063rem;
+
+$font-weight-200: 'ubuntu_lightregular';
+$font-weight-300: 'ubunturegular';
+$font-weight-400: 'ubuntu_mediumregular';
+$font-weight-600: 'ubuntubold';
+
 
 $link-color: #3540b6;
 $font-size-base: 1rem;
-$h1-font-size: $font-size-base * 1.7;
-$h2-font-size: $font-size-base * 1.4;
+$h1-font-size: $font-size-base * 3;
+$h2-font-size: $font-size-base * 2.5;
 $h3-font-size: $font-size-base * 1.2;
 $h4-font-size: $font-size-base * 0.875;
 $h5-font-size: $font-size-base * 0.75;
 $primary: #ffc045;
 $secondary: #2144b2;
 $body-color: #233d4c;
+$nav-color: #555;
 
 // MP Variables
-$footer-color: #f5f5f5;
+$footer-color: #fff;
+$footer-header-color: #a6aeb1;
 $card-header-bg: rgba(255, 192, 69, 0.3);
 $pagination-link-color: #dee2e6;
 $border-color: #dee2e6;
-$footer-bg-color: #f5f5f5;
+$footer-bg-color: #52636a;
+$ue-information-color: #839295;
 $transparent: transparent;
+
+
