@@ -3,7 +3,9 @@ Configuration
 = simple_form_for @project_item, url: service_configuration_path(@service),
   method: :put, html: { id: "order-form"  } do |f|
   = f.association :project, collection: @projects
-
+  = f.input :customer_typology, collection: ProjectItem.customer_typologies.keys
+  = f.input :access_reason
+  = f.input :additional_information
 %p
   Selected offer:
   = @project_item.offer.name
