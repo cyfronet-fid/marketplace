@@ -3,9 +3,10 @@
 class ServicesController < ApplicationController
   include Service::Searchable
   include Service::Sortable
+  include Paginable
 
   def index
-    @services = records.order(ordering).page(params[:page])
+    @services = paginate(records.order(ordering))
     @subcategories = Category.roots
   end
 
