@@ -10,7 +10,6 @@ RSpec.feature "Service ordering" do
 
     let(:user) { create(:user) }
     let(:service) { create(:service) }
-    let(:offer) { create(:offer, service: service) }
 
     before { checkin_sign_in_as(user) }
 
@@ -28,8 +27,8 @@ RSpec.feature "Service ordering" do
     end
 
     scenario "I can order service" do
-      # force offer creation
-      offer
+      offer, _seconds_offer = create_list(:offer, 2, service: service)
+
       visit service_path(service)
 
       click_on "Order"
@@ -74,6 +73,16 @@ RSpec.feature "Service ordering" do
       expect(page).to have_content(service.title)
     end
 
+    scenario "Skip offers selection when only one offer" do
+      create(:offer, service: service)
+
+      visit service_path(service)
+
+      click_on "Order"
+
+      expect(page).to have_current_path(service_configuration_path(service))
+    end
+
     scenario "I'm redirected into service offers when offer is not chosen" do
       visit service_configuration_path(service)
 
@@ -81,13 +90,10 @@ RSpec.feature "Service ordering" do
     end
 
     scenario "I'm redirected into service configuration when order is not valid" do
-      # Force offer creation
-      offer
-      visit service_offers_path(service)
+      create(:offer, service: service)
+      visit service_path(service)
 
-      # Select offer
-      select offer.iid
-      click_on "Next"
+      click_on "Order"
 
       # Go directly to summary page
       visit service_summary_path(service)

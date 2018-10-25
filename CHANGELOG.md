@@ -68,6 +68,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Tabs to My profile view (@kmarszalek)
 - 3 steps ordering (@mkasztelnik)
 - New header & footer look (@kosmidma)
+- Go to order configuration step directly when there is only one offer (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
