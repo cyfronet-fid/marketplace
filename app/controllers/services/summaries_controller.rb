@@ -15,7 +15,7 @@ class Services::SummariesController < Services::ApplicationController
 
     if @project_item.persisted?
       session.delete(session_key)
-      render :confirmation, layout: "ordered"
+      render :confirmation
     else
       redirect_to service_configuration_path(@service),
                   alert: "Service request configuration invalid"
