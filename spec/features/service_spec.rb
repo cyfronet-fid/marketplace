@@ -115,4 +115,12 @@ RSpec.feature "Service filtering and sorting" do
     expect(page.body.index("DDDD Something 3")).to be < page.body.index("DDDD Something 2")
     expect(page.body.index("DDDD Something 2")).to be < page.body.index("DDDD Something 1")
   end
+
+  scenario "limit number of services per page" do
+    create_list(:service, 2)
+
+    visit services_path(per_page: "1")
+
+    expect(page).to have_selector("dl > ul", count: 1)
+  end
 end
