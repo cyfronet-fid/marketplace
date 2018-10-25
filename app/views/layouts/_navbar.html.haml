@@ -1,40 +1,46 @@
-.container
-  %nav.navbar.navbar-expand-lg.navbar-light.bg-light
-    = link_to root_path, class: "navbar-brand" do
-      %strong EOSC
-      Portal
+.bg-light.pt-1.pb-1
+  .container.text-right.pr-1
+    %ul.list-inline.mb-0.font-weight-light
+      = nav_link controller: :home, html_options: { class: "list-inline-item ml-2" } do
+        = link_to "Getting started", root_path
+      - if user_signed_in?
+        = nav_link controller: :orders, html_options: { class: "list-inline-item ml-2" } do
+          = link_to "My Services", projects_path
+        = nav_link controller: :profiles, html_options: { class: "list-inline-item ml-2" } do
+          = link_to "Profile", profile_path
+        - if policy([:backoffice, :backoffice]).show?
+          %li.list-inline-item.ml-2
+            = link_to "Backoffice", backoffice_path
+        %li.list-inline-item.ml-2
+          = link_to "Logout", destroy_user_session_path, method: :delete
+      - else
+        %li.list-inline-item.ml-2
+          = link_to "Login/Sign-up", user_checkin_omniauth_authorize_path
+.container.pl-0.pr-0
+  %nav.navbar.navbar-expand-lg.pl-0.pr-0
+    = link_to root_path, class: "navbar-brand mr-3" do
+      %strong
     %button.navbar-toggler{ "aria-controls" => "navbar-supported-content",
                            "aria-expanded" => "false",
                            "aria-label" => "Toggle navigation",
                            "data-target" => "#navbar-supported-content",
                            "data-toggle" => "collapse",
                            type: "button" }
-      %span.navbar-toggler-icon
+      %i.fas.fa-bars
 
     #navbar-supported-content.collapse.navbar-collapse
-      %ul.navbar-nav.ml-auto.pt-2
-        = nav_link controller: :home do
-          = link_to "Getting Started", root_path, class: "nav-link px-3 py-1"
-        = nav_link controller: [:services, :categories] do
-          = link_to "Services", services_path, class: "nav-link px-3 py-1"
-        %li.nav-item
-          = link_to "Data", root_path, class: "nav-link px-3 py-1"
-        %li.nav-item
-          = link_to "Policies", root_path, class: "nav-link px-3 py-1"
-        %li.nav-item
-          = link_to "Partners", root_path, class: "nav-link px-3 py-1"
-        %li.nav-item
-          = link_to "Support", root_path, class: "nav-link px-3 py-1"
-        - if user_signed_in?
-          = nav_link controller: [:projects, :project_items] do
-            = link_to "My Services", projects_path, class: "nav-link px-3 py-1"
-          = nav_link controller: :profiles do
-            = link_to "My profile", profile_path, class: "nav-link px-3 py-1"
-        - if policy([:backoffice, :backoffice]).show?
-          %li.nav-item
-            = link_to "Backoffice", backoffice_path, class: "nav-link px-3 py-1"
-        %li.nav-item
-          - if user_signed_in?
-            = link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link px-3 py-1"
-          - else
-            = link_to "Login/Sign-up", user_checkin_omniauth_authorize_path, class: "nav-link px-3 py-1"
+      %ul.navbar-nav.ml-auto.pt-2.d-flex.flex-wrap
+        %li.nav-item.ml-1
+          %a.nav-link.px-2.py-1 About
+        %li.nav-item.ml-1
+          %a.nav-link.px-2.py-1 Governance
+        %li.nav-item.ml-1
+          %a.nav-link.px-2.py-1 Services & Resources
+        %li.nav-item.ml-1
+          %a.nav-link.px-2.py-1 Policy
+        %li.nav-item.ml-1
+          %a.nav-link.px-2.py-1 EOSC in Practice
+        %li.nav-item.ml-1
+          %a.nav-link.px-2.py-1 Media
+        %li.nav-item.ml-1
+          %a.nav-link.pl-2.py-1.pr-1{ href: "http://eoscportal.trust-itservices.com/for-providers" } For providers
