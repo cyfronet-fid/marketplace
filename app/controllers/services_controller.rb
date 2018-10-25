@@ -15,5 +15,6 @@ class ServicesController < ApplicationController
     @service_opinions = ServiceOpinion.joins(project_item: :offer).
                         where(offers: { service_id: @service })
     @question = Service::Question.new(service: @service)
+    @related_services = @service.related_services.includes(:provider)
   end
 end

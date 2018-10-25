@@ -58,6 +58,24 @@ RSpec.feature "Service browsing" do
     end
   end
 
+  scenario "shows related services" do
+    service, related = create_list(:service, 2)
+    ServiceRelationship.create!(source: service, target: related)
+
+    visit service_path(service)
+
+    expect(page.body).to have_content "Services you can use with this service"
+    expect(page.body).to have_content related.title
+  end
+
+  scenario "does not show related services section when no related services" do
+    service = create(:service)
+
+    visit service_path(service)
+
+    expect(page.body).to_not have_content "Services you can use with this service"
+  end
+
   context "as not logged in user" do
     scenario "I need to login to asks service question" do
       service = create(:service)
