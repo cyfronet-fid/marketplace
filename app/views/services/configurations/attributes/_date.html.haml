@@ -1,0 +1,4 @@
+=field.input :id,
+  label: attr.label,
+  input_html: { value: "#{attr.value}", name: "#{field.object_name}[#{attr.id}]" },
+  as: :date_time_picker

@@ -27,10 +27,10 @@ class ProjectItem < ApplicationRecord
   validates :offer, presence: true
   validates :project, presence: true
   validates :status, presence: true
+  validates_associated :property_values
 
   delegate :user, to: :project
   delegate :service, to: :offer
-
 
   def active?
     !(ready? || rejected?)
@@ -50,4 +50,32 @@ class ProjectItem < ApplicationRecord
   def to_s
     "##{id}"
   end
+
+  attribute :property_values
+
+  def property_values
+    if !@property_values
+      @property_values = offer.attributes.dup
+    end
+    @property_values
+  end
+
+  def property_values=(property_values)
+    if property_values.is_a?(Array)
+      @property_values = property_values
+    elsif property_values.is_a?(Hash)
+      props= []
+      property_values.each{ |id, value|
+        attr = offer.attributes.find { |attr|
+          id == attr.id
+        }.dup
+        attr.value_from_param(value)
+        props << attr
+      }
+      @property_values = props
+    end
+    self.write_attribute(:property_values, @property_values)
+    @property_values
+  end
+
 end

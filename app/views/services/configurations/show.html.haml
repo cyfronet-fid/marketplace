@@ -4,10 +4,11 @@ Configuration
   method: :put, html: { id: "order-form"  } do |f|
   = f.association :project, collection: @projects
 
+  = render "services/configurations/attributes", project_item: @project_item, form: f
+
 %p
   Selected offer:
   = @project_item.offer.name
-
 
 = content_for :buttons do
   = link_to "Cancel order and quit", service_cancel_path(@service), method: :delete
