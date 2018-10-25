@@ -14,8 +14,9 @@
       %a{ href: "", class: "small ml-3" }
         #{service.service_opinion_count} opinions
   .col-4
-    = link_to service_offers_path(@service), class: "btn btn-primary" do
-      = write_button_text
+    - if policy(@service).order?
+      = link_to service_offers_path(@service), class: "btn btn-primary" do
+        = order_button_text
     - if @service.open_access?
       = link_to "Go to the service", service.connected_url, class: "btn btn-primary", target: "_blank"
 

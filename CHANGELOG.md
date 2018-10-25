@@ -70,8 +70,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - New header & footer look (@kosmidma)
 - Show 10, 20 or 30 services per page (@mkasztelnik)
 - Go to order configuration step directly when there is only one offer (@mkasztelnik)
-- Autoselect default project to open access service order and go directly to
-  summary page (@mkasztelnik)
+- Autoselect default project to open access service order and go directly to summary page (@mkasztelnik)
+- Cannot order service when there is not offers (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)

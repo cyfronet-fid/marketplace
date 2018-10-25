@@ -23,6 +23,6 @@ class Services::ApplicationController < ApplicationController
 
     def load_and_authenticate_service!
       @service = Service.find(params[:service_id])
-      authorize(@service, :show?)
+      authorize(@service, :order?)
     end
 end

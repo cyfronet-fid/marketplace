@@ -14,14 +14,18 @@ RSpec.feature "Service ordering" do
     before { checkin_sign_in_as(user) }
 
     scenario "I see project_item service button" do
+      create(:offer, service: service)
+
       visit service_path(service)
 
       expect(page).to have_text("Order")
     end
 
     scenario "I see order open acces service button" do
-      @open_access_service = create(:open_access_service)
-      visit service_path(@open_access_service)
+      open_access_service = create(:open_access_service)
+      create(:offer, service: open_access_service)
+
+      visit service_path(open_access_service)
 
       expect(page).to have_text("Add to my services")
     end
@@ -84,6 +88,8 @@ RSpec.feature "Service ordering" do
     end
 
     scenario "I'm redirected into service offers when offer is not chosen" do
+      create_list(:offer, 2, service: service)
+
       visit service_configuration_path(service)
 
       expect(page).to have_current_path(service_offers_path(service))
@@ -91,6 +97,7 @@ RSpec.feature "Service ordering" do
 
     scenario "I'm redirected into service configuration when order is not valid" do
       create(:offer, service: service)
+
       visit service_path(service)
 
       click_on "Order"
@@ -123,11 +130,20 @@ RSpec.feature "Service ordering" do
       expect(project_item.offer).to eq(offer)
       expect(project_item.project).to eq(default_project)
     end
+
+    scenario "I cannot order service without offers" do
+      service = create(:service)
+
+      visit service_path(service)
+
+      expect(page).to_not have_text("Order")
+    end
   end
 
   context "as anonymous user" do
     scenario "I nead to login to order service" do
       service = create(:service)
+      create_list(:offer, 2, service: service)
       user = create(:user)
 
       visit service_path(service)
@@ -144,6 +160,7 @@ RSpec.feature "Service ordering" do
 
     scenario "I can see order button" do
       service = create(:service)
+      create(:offer, service: service)
 
       visit service_path(service)
 
@@ -152,6 +169,7 @@ RSpec.feature "Service ordering" do
 
     scenario "I can see openaccess service order button" do
       open_access_service =  create(:open_access_service)
+      create(:offer, service: open_access_service)
 
       visit service_path(open_access_service)
 
