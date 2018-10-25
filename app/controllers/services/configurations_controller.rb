@@ -14,7 +14,6 @@ class Services::ConfigurationsController < Services::ApplicationController
 
   def update
     @project_item = ProjectItem.new(configuration_params)
-
     if @project_item.valid?
       session[session_key] = @project_item.attributes
       redirect_to service_summary_path(@service)
@@ -26,9 +25,10 @@ class Services::ConfigurationsController < Services::ApplicationController
 
   private
     def configuration_params
+      template = ProjectItem.new(session[session_key])
       session[session_key].
-        merge(permitted_attributes(ProjectItem)).
-        merge(status: :created)
+          merge(permitted_attributes(template)).
+          merge(status: :created)
     end
 
     def default_project

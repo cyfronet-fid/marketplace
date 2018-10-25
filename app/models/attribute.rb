@@ -1,0 +1,152 @@
+class Attribute
+
+  extend ActiveModel::Naming
+  include ActiveModel::Validations
+
+  attr_accessor :id, :label, :description, :type, :value_type, :unit, :config, :value
+
+  validate do
+    if (!value_valid?)
+      errors.add(:id, "Invalid attribute value")
+    end
+  end
+
+  def parameter?
+    !config.nil?
+  end
+
+  def property?
+    !value.nil?
+  end
+
+  def config_valid?
+    JSON::Validator.validate(config_schema, config)
+  end
+
+  def value_valid?
+    JSON::Validator.validate(value_schema, value)
+  end
+
+  def validate_config!
+    JSON::Validator.validate!(config_schema, config)
+  end
+
+  def validate_value!
+    JSON::Validator.validate!(value_schema, value)
+  end
+
+  def validate_value_type!
+    JSON::Validator.validate!(value_type_schema, @value_type)
+  end
+
+  def type
+    self.class::TYPE
+  end
+
+  def to_json
+    json = {}
+    json["id"] = id
+    json["label"] = label
+    json["description"] = description
+    json["type"] = type
+    json["value_type"] = value_type
+    json["unit"] = unit if !unit.nil?
+    json["value"] = value if !value.nil?
+    json["config"] = config if !config.nil?
+    json
+  end
+
+  def value_from_param(param)
+    if !param.blank?
+      case @value_type
+      when "integer"
+        @value = Integer(param)
+      else
+        @value = param
+      end
+    end
+  end
+
+  def value_type_schema
+    # overload to reflect support for other types for attribute
+    {
+        "type": "string",
+        "enum": ["string", "integer"]
+    }
+  end
+
+  def value_schema
+    # overload this method to create other schemas for values
+    {
+        "type": @value_type
+    }
+  end
+
+  def config_schema
+    # you need to overload this to create attribute types
+    # by default attribute is property without any configuration
+    {
+        "type": "null"
+    }
+  end
+
+  def self.from_json(json)
+    JSON::Validator.validate!(ATTRIBUTE_SCHEMA, json)
+    case json["type"]
+    when "input"
+      attr = Attribute::Input.new
+    when "select"
+      attr = Attribute::Select.new
+    when "multiselect"
+      attr = Attribute::Multiselect.new
+    when "range"
+      attr = Attribute::Range.new
+    when "date"
+      attr = Attribute::Date.new
+    when "range-property"
+      attr = Attribute::RangeProperty.new
+    else
+      attr = Attribute.new
+    end
+    attr.id = json["id"]
+    attr.label = json["label"]
+    attr.description = json["description"]
+    attr.value_type = json["value_type"]
+    attr.unit = json["unit"]
+    attr.config = json["config"]
+    attr.value = json["value"] if !json["value"].blank?
+    attr.validate_value_type!
+    attr
+  end
+
+  protected
+
+  ATTRIBUTE_SCHEMA = {
+      "type": "object",
+      "required": ["id", "label", "type", "value_type"],
+      "properties": {
+          "id": {
+              "type": "string"
+          },
+          "label": {
+              "type": "string"
+          },
+          "description": {
+              "type": "string"
+          },
+          "type": {
+              "type": "string",
+              "enum": ["attribute", "input", "range-property", "select", "multiselect", "range", "date"]
+          },
+          # maybe value type support should be validated per attribute type
+          "value_type": {
+              "type": "string",
+          },
+          "value": {},
+          "config": {}
+      }
+  }
+
+  TYPE = "attribute"
+
+end

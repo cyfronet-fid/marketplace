@@ -1,0 +1,9 @@
+- if attr.value_type == "integer"
+  = field.input :id,
+    input_html: { value: "#{field.object.value}", name: "#{field.object_name}[#{attr.id}]"},
+    label: attr.label,
+    as: :integer
+- else
+  = field.input :id,
+    input_html: { value: "#{field.object.value}", name: "#{field.object_name}[#{attr.id}]"},
+    label: attr.label

@@ -4,6 +4,21 @@ Summary
   %li Offer: #{@project_item.offer.name}
   %li Project: #{@project_item.project.name}
 
+  %table.table.mb-5
+    %thead
+      %tr
+        %th.pl-0{ scope: "col", colspan: "2" } Parameters
+    %tbody
+      -@project_item.property_values.each do |attr|
+        %tr
+          %td.pl-0
+            =attr.label
+          %td
+            -begin
+              =render "services/summaries/attributes/#{attr.type}", attr: attr
+            - rescue => e
+              =render "services/summaries/attributes/default", attr: attr
+
 = link_to "Edit your service request", service_configuration_path(@service)
 
 = content_for :buttons do

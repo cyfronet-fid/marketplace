@@ -16,6 +16,7 @@ Turbolinks.start();
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import 'bootstrap-datepicker';
 
 // :TODO: for now import all fonts, so ux people can work without problems, optimize later
 library.add(fas, far);
@@ -30,22 +31,24 @@ const context = require.context("controllers", true, /.js$/);
 application.load(definitionsFromContext(context));
 
 document.addEventListener("turbolinks:before-render", function(event) {
-  dom.i2svg({
-    node: event.data.newBody
-  });
-  starsOnClick(event.data.newBody);
-  initSortingAndFiltering(event.data.newBody);
-  dom.watch();
+    dom.i2svg({
+        node: event.data.newBody
+    });
+    starsOnClick(event.data.newBody);
+    initSortingAndFiltering(event.data.newBody);
+    // $(event.data.newBody).find('.datepicker').datepicker();
+    dom.watch();
 });
 
 /**
  * Apart from turbolinks we need to replace FA for the first page load
  */
 document.addEventListener('DOMContentLoaded', function () {
-  dom.i2svg();
-  starsOnClick();
-  initSortingAndFiltering();
-  dom.watch();
+    dom.i2svg();
+    starsOnClick();
+    initSortingAndFiltering();
+    // $('.datepicker').datepicker();
+    dom.watch();
 });
 
 function starsOnClick(node){
