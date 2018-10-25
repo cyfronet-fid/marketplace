@@ -103,15 +103,25 @@ RSpec.feature "Service ordering" do
 
     scenario "I can order open acces service" do
       open_access_service = create(:open_access_service)
+      offer = create(:offer, service: open_access_service)
+      default_project = user.projects.find_by(name: "Services")
 
       visit service_path(open_access_service)
 
       click_on "Add to my services"
 
-      expect(page).to have_current_path(service_offers_path(open_access_service))
-      expect(page).to have_text(open_access_service.title)
+      # Go directly to summary page
+      expect(page).to have_current_path(service_summary_path(open_access_service))
       expect(page).to have_selector(:link_or_button,
-                                    "Next", exact: true)
+                                    "Order", exact: true)
+
+      expect do
+        click_on "Order"
+      end.to change { ProjectItem.count }.by(1)
+      project_item = ProjectItem.last
+
+      expect(project_item.offer).to eq(offer)
+      expect(project_item.project).to eq(default_project)
     end
   end
 
