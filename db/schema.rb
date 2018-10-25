@@ -78,6 +78,9 @@ ActiveRecord::Schema.define(version: 2018_10_25_095520) do
     t.integer "issue_status", default: 2, null: false
     t.bigint "project_id"
     t.bigint "offer_id"
+    t.string "customer_typology"
+    t.text "access_reason"
+    t.text "additional_information"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
   end

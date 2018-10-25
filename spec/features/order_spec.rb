@@ -52,12 +52,19 @@ RSpec.feature "Service ordering" do
                                     "Next", exact: true)
 
       select "Services"
+      select "Single user", from: "Customer typology"
+      fill_in "Access reason", with: "To pass test"
+      fill_in "Additional information", with: "Additional information test"
+
       click_on "Next"
 
       # Step 3
       expect(page).to have_current_path(service_summary_path(service))
       expect(page).to have_selector(:link_or_button,
                                     "Order", exact: true)
+      expect(page).to have_text("Single user")
+      expect(page).to have_text("To pass test")
+      expect(page).to have_text("Additional information test")
 
       expect do
         click_on "Order"
