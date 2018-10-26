@@ -134,7 +134,7 @@ class Jira::Checker
     webhook = nil
     # noinspection RubyDeadCode
     self.client.Webhook.all.each do |wh|
-      if wh.attrs["url"] == (host + api_webhooks_jira_path)
+      if wh.attrs["url"] == (host + api_webhooks_jira_path + "?issue_id=${issue.id}")
         unless wh.enabled
           raise CheckerWarning.new("Webhook \"#{wh.name}\" is not enabled")
         end
