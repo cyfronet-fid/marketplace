@@ -13,6 +13,9 @@
   %h2 Open access
   %p= @service.open_access
 
+  %h2 Activate message
+  %p= @service.activate_message
+
   %h2 Contact emails
   - @service.contact_emails.each do |email|
     %p= email

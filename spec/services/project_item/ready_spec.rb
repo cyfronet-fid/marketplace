@@ -38,6 +38,17 @@ RSpec.describe ProjectItem::Ready do
     expect(project_item).to be_ready
   end
 
+  it "uses activate message when project item status is changed to ready" do
+    service = create(:open_access_service, activate_message: "Welcome!!!")
+    offer = create(:offer, service: service)
+    project_item = create(:project_item, offer: offer)
+
+    described_class.new(project_item).call
+    last_change = project_item.project_item_changes.last
+
+    expect(last_change.message).to eq("Welcome!!!")
+  end
+
   it "creates new jira issue and do the transition" do
     jira_client = Jira::Client.new
 
