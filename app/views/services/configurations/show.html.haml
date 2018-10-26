@@ -1,4 +1,11 @@
-Configuration
+= render "layouts/order_nav", service: @service, step: 2
+
+%h2 Configuration
+%p
+  We need more information about your request.
+  Fill form below as much as possible.
+  It will help us to proceed you request quicker.
+
 
 = simple_form_for @project_item, url: service_configuration_path(@service),
   method: :put, html: { id: "order-form"  } do |f|
@@ -8,8 +15,9 @@ Configuration
   Selected offer:
   = @project_item.offer.name
 
-
-= content_for :buttons do
+= content_for :cancel_button do
   = link_to "Cancel order and quit", service_cancel_path(@service), method: :delete
+
+= content_for :next_button do
   %button.btn.btn-primary{ form: "order-form", type: "submit" }
     Next
