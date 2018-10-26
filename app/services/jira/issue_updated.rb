@@ -20,7 +20,7 @@ class Jira::IssueUpdated
           status = :in_progress
         when @jira_client.wf_done_id
           status = :ready
-          message = "Service is ready to be used"
+          message = service.activate_message || "Service is ready to be used"
         else
           Rails.logger.warn("Unknown issue status (#{change["to"]}")
         end
@@ -32,4 +32,11 @@ class Jira::IssueUpdated
       end
     end
   end
+
+  private
+
+    def service
+      @service ||= Service.joins(offers: :project_items).
+                   find_by(offers: { project_items: @project_item })
+    end
 end
