@@ -27,10 +27,15 @@ providers = (1..4).map { |i| Provider.find_or_create_by(name: "Provider #{i}") }
 
 puts "Generating services from yaml"
 yaml_hash["services"].each do |_, hash|
+  categories = Category.where(name: hash["parents"])
   Service.find_or_initialize_by(title: hash["title"]) do |service|
+
     service.update!(tagline: hash["tagline"],
                     description: hash["description"],
                     provider: providers.sample,
+                    area: hash["area"],
+                    open_access: hash["open_access"],
+                    connected_url: hash["connected_url"],
                     webpage_url: hash["webpage_url"],
                     manual_url: hash["manual_url"],
                     helpdesk_url: hash["helpdesk_url"],
@@ -40,10 +45,11 @@ yaml_hash["services"].each do |_, hash|
                     access_policies_url: hash["access_policies_url"],
                     places: hash["places"],
                     languages: hash["languages"],
-                    dedicated_for: hash["dedicated_for"],
+                    # dedicated_for: hash["dedicated_for"],
                     restrictions: hash["restrictions"],
                     phase: hash["phase"],
-                    categories: [Category.find_by(name: hash["parent"])])
+                    dedicated_for: "user",
+                    categories: categories)
 
     service.offers.create!(name: "Offer 1", description: "This is offer 1")
     service.offers.create!(name: "Offer 2", description: "This is offer 2")
