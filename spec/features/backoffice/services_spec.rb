@@ -62,6 +62,7 @@ RSpec.feature "Services in backoffice" do
     fill_in "Tutorial url", with: "https://sample.url"
     fill_in "Restrictions", with: "Reaserch affiliation needed"
     fill_in "Phase", with: "Production"
+    fill_in "Activate message", with: "Welcome!!!"
     select provider.name, from: "service_provider_id"
 
     check "Open access"
@@ -80,6 +81,7 @@ RSpec.feature "Services in backoffice" do
     expect(page).to have_content("true")
     expect(page).to have_content("person1@test.ok")
     expect(page).to have_content("person2@test.ok")
+    expect(page).to have_content("Welcome!!!")
   end
 
   scenario "I can edit owned service" do

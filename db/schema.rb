@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_25_095520) do
+ActiveRecord::Schema.define(version: 2018_10_26_063221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,6 +151,7 @@ ActiveRecord::Schema.define(version: 2018_10_25_095520) do
     t.text "restrictions", null: false
     t.text "phase", null: false
     t.integer "offers_count", default: 0
+    t.text "activate_message"
     t.index ["description"], name: "index_services_on_description"
     t.index ["owner_id"], name: "index_services_on_owner_id"
     t.index ["provider_id"], name: "index_services_on_provider_id"
