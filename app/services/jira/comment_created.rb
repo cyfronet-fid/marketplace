@@ -7,7 +7,9 @@ class Jira::CommentCreated
   end
 
   def call
-    @project_item.new_change(message: body, author: author, iid: id) if body && unique?
+    return if body.blank? || reject?
+
+    @project_item.new_change(message: body, author: author, iid: id)
   end
 
   private
@@ -24,7 +26,11 @@ class Jira::CommentCreated
       User.find_by(email: @comment["emailAddress"])
     end
 
-    def unique?
-      !@project_item.project_item_changes.find_by(iid: id)
+    def reject?
+      @comment["author"]["name"] == jira_username
+    end
+
+    def jira_username
+      Jira::Client.new.options[:username]
     end
 end
