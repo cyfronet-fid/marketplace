@@ -24,6 +24,9 @@
   %h2 Contact emails
   - @service.contact_emails.each do |email|
     %p= email
+  %h2 Areas
+  - @service.areas.each do |area|
+    %p= area.name
 
   - if policy([:backoffice, @service]).edit?
     = link_to "Edit",

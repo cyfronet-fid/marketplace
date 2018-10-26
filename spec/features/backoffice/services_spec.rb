@@ -41,7 +41,7 @@ RSpec.feature "Services in backoffice" do
 
   scenario "I can create new service", js: true do
     provider = create(:provider)
-
+    area = create(:area)
     visit backoffice_services_path
     click_on "Create new service"
 
@@ -63,6 +63,7 @@ RSpec.feature "Services in backoffice" do
     fill_in "Restrictions", with: "Reaserch affiliation needed"
     fill_in "Phase", with: "Production"
     fill_in "Activate message", with: "Welcome!!!"
+    select area.name, from: "Areas"
     select provider.name, from: "service_provider_id"
 
     check "Open access"
