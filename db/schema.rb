@@ -55,6 +55,10 @@ ActiveRecord::Schema.define(version: 2018_11_02_122138) do
     t.index ["user_id"], name: "index_affiliations_on_user_id"
   end
 
+  create_table "areas", force: :cascade do |t|
+    t.text "name", null: false
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
     t.string "description"
@@ -119,6 +123,15 @@ ActiveRecord::Schema.define(version: 2018_11_02_122138) do
     t.text "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "service_areas", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "area_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["area_id"], name: "index_service_areas_on_area_id"
+    t.index ["service_id"], name: "index_service_areas_on_service_id"
   end
 
   create_table "service_categories", force: :cascade do |t|

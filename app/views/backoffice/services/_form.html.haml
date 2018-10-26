@@ -21,7 +21,10 @@
   = f.input :activate_message
   = f.input :logo
   = f.association :provider
-  = f.input :contact_emails, as: :array, multiple: true
+  = f.input :contact_emails, multiple: true, as: :array
+  = f.association :areas, include_blank: false,
+            input_html: { multiple: true }, include_hidden: false
+
   %a#add-email-field Add additional email
   .invalid-feedback{ styles: "display:block" }
 

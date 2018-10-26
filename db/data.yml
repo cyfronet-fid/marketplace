@@ -23,82 +23,116 @@ categories:
         description: Training, certification, consultancy and other non-technical services.
 
 providers:
-  EGI Federated Cloud sites:
-    name: &egifcs "EGI Federated Cloud sites"
-  EGI Federation:
-    name: &egi "EGI Federation"
-  EUDAT:
-    name: &eudat "EUDAT"
-  JSC:
-    name: &jsc "JSC"
-  Deutsches Klimarechenzentrum (DKRZ):
-    name: &dkrz "Deutsches Klimarechenzentrum (DKRZ)"
-  GRNET:
-    name: &grnet "GRNET"
-  SURFsara:
-    name: &surfsara "SURFsara"
-  BSC:
-    name: &bsc "BSC"
-  all generic CDI Level 1 providers:
-    name: &all "all generic CDI Level 1 providers"
-  CSC:
-    name: &csc "CSC"
-  CLARIN ERIC:
-    name: &clarin "CLARIN ERIC"
-  Euro-Mediterranean Center on Climate Change (CMCC):
-    name: &ccmc "Euro-Mediterranean Center on Climate Change (CMCC)"
-  RASDAMAN:
-    name: &rasdaman "RASDAMAN"
-  EODC:
-    name: &eodc "EODC"
-  Sinergise:
-    name: &sinergise "Sinergise"
-  ASTRON:
-    name: &astron "ASTRON, the Netherlands Institute for Radio Astronomy."
-  RUG:
-    name: &rug "RUG"
-  FZJ:
-    name: &fzj "FZJ"
-  PSNC:
-    name: &psnc "PSNC"
-  RECAS-BARI:
-    name: &recas "RECAS-BARI"
-  CYFRONET-LCG2:
-    name: &cyfro "CYFRONET-LCG2"
-  BEgrid-ULV-VUB:
-    name: &begrid "BEgrid-ULV-VUB"
-  CESGA:
-    name: &cesga "CESGA"
-  Ruder Boškovic Institute:
-    name: &rbi "Ruder Boškovic Institute"
-  INFN:
-    name: &infn "Italian National Institute of Nuclear Physics (INFN)"
-  INFN-CATANIA-STACK:
-    name: &ics "INFN-CATANIA-STACK"
-  INFN-Catania:
-    name: &infnc "INFN-Catania"
-  INFN-Bari:
-    name: &infnb "INFN-Bari"
-  D4Science:
-    name: &d4science "D4Science.org infrastructure"
-  LifeWatch ERIC:
-    name: &lifewatch "LifeWatch ERIC"
-  PNCEL:
-    name: &pncel "Portuguese National Civil Engineering Laboratory"
-  University of Utrecht:
-    name: &uou "University of Utrecht"
-  University of Florence:
-    name: &uof "University of Florence"
-  CIRMMP:
-    name: &cirmmp "Interuniversity consortium CIRMMP"
-  CESNET:
-    name: &cesnet "CESNET"
-  not specified:
-    name: &not "not specified yet"
 
+    EGI Federated Cloud sites:
+        name: &egifcs "EGI Federated Cloud sites"
+    EGI Federation:
+        name: &egi "EGI Federation"
+    EUDAT:
+        name: &eudat "EUDAT"
+    JSC:
+        name: &jsc "JSC"
+    Deutsches Klimarechenzentrum (DKRZ):
+        name: &dkrz "Deutsches Klimarechenzentrum (DKRZ)"
+    GRNET:
+        name: &grnet "GRNET"
+    SURFsara:
+        name: &surfsara "SURFsara"
+    BSC:
+        name: &bsc "BSC"
+    All generic CDI Level 1 providers:
+        name: &all "all generic CDI Level 1 providers"
+    CSC:
+        name: &csc "CSC"
+    CLARIN ERIC:
+        name: &clarin "CLARIN ERIC"
+    Euro-Mediterranean Center on Climate Change (CMCC):
+        name: &ccmc "Euro-Mediterranean Center on Climate Change (CMCC)"
+    RASDAMAN:
+        name: &rasdaman "RASDAMAN"
+    EODC:
+        name: &eodc "EODC"
+    Sinergise:
+        name: &sinergise "Sinergise"
+    ASTRON:
+        name: &astron "ASTRON, the Netherlands Institute for Radio Astronomy."
+    RUG:
+        name: &rug "RUG"
+    FZJ:
+        name: &fzj "FZJ"
+    PSNC:
+        name: &psnc "PSNC"
+    RECAS-BARI:
+        name: &recas "RECAS-BARI"
+    CYFRONET-LCG2:
+        name: &cyfro "CYFRONET-LCG2"
+    BEgrid-ULV-VUB:
+        name: &begrid "BEgrid-ULV-VUB"
+    CESGA:
+        name: &cesga "CESGA"
+    Ruder Boškovic Institute:
+        name: &rbi "Ruder Boškovic Institute"
+    INFN:
+        name: &infn "Italian National Institute of Nuclear Physics (INFN)"
+    INFN-CATANIA-STACK:
+        name: &ics "INFN-CATANIA-STACK"
+    INFN-Catania:
+        name: &infnc "INFN-Catania"
+    INFN-Bari:
+        name: &infnb "INFN-Bari"
+    D4Science:
+        name: &d4science "D4Science.org infrastructure"
+    LifeWatch ERIC:
+        name: &lifewatch "LifeWatch ERIC"
+    PNCEL:
+        name: &pncel "Portuguese National Civil Engineering Laboratory"
+    University of Utrecht:
+        name: &uou "University of Utrecht"
+    University of Florence:
+        name: &uof "University of Florence"
+    CIRMMP:
+        name: &cirmmp "Interuniversity consortium CIRMMP"
+    CESNET:
+        name: &cesnet "CESNET"
+    Not specified:
+      name: &not "not specified yet"
 
+area:
 
-
+    FormalSciences:
+        name: &fcArea "Formal Sciences"
+    LlifeBiology:
+        name: &lbArea "Life Sciences / Biology"
+    Healthcare:
+        name: "Applied Sciences / Engineering / Healthcare"
+    PhilosophyHistory:
+        name: "Philosophy / History"
+    Interdisciplinary:
+        name: &interdisciplinary "Interdisciplinary"
+    EarthScience:
+        name: &earthScience "Earth Science"
+    ArtsAndHumanities:
+        name: &artsAndHumanities "Arts & Humanities"
+    Mathematics:
+        name: &mathematics "Mathematics"
+    LiveScience:
+        name: &lifeSciences "Life sciences"
+    ApplicationFrameworks:
+        name: &applicationFrameworks "Application and data analysis framework"
+    DataAnalysis:
+        name: &dataAnalysis Data analysis
+    Humanities:
+        name: &humanities Humanities
+    HighEnergyPhysics:
+        name: &highEnergyPhysics High-Energy Physics
+    PhysicalScienceAerosol:
+        name: &physicalScienceAerosol Physical science (aerosol physics)
+    ClimateScience:
+        name: &climateScience Climate science
+    EnvironmentalScience:
+        name: &environmentalScience Environmental science
+    BiologicalSciences:
+        name: &biologicalSciences Biological Sciences
 services:
 
     Cloud compute:
@@ -113,7 +147,7 @@ services:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         corporate_sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-        places: &europe Europe 
+        places: &europe Europe
         languages: &english English
         dedicated_for: ["Researchers", "Research organisations"]
         area: &interdisciplinary Interdisciplinary
@@ -841,7 +875,7 @@ services:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
-        area: &applicationFrameworks Application and data analysis frameworks
+        area: *applicationFrameworks
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis

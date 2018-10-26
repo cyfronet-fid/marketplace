@@ -10,7 +10,7 @@ if Rails.env.development?
       services_size = args.fetch(:services_size, 100).to_i
       puts "Generating #{services_size} new services"
       services_size.times do
-        Service.create(title: Faker::Lorem.sentence,
+        service = Service.create(title: Faker::Lorem.sentence,
                        description: Faker::Lorem.paragraph,
                        terms_of_use: Faker::Lorem.paragraph,
                        tagline: Faker::Lorem.sentence,
@@ -31,11 +31,13 @@ if Rails.env.development?
                        helpdesk_url: Faker::Internet.url,
                        tutorial_url: Faker::Internet.url,
                        restrictions: Faker::Lorem.sentence,
-                       phase: Faker::Lorem.sentence)
+                       phase: Faker::Lorem.sentence,
+                       areas: [Area.all.sample])
 
       end
 
       puts "Done!"
+
     end
   end
 end

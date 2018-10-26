@@ -12,6 +12,9 @@ class Service < ApplicationRecord
   has_many :service_categories, dependent: :destroy
   has_many :categories, through: :service_categories
   has_many :service_opinions, through: :project_items
+  has_many :service_areas, dependent: :destroy
+  has_many :areas, through: :service_areas
+  accepts_nested_attributes_for :areas
 
   has_many :source_relationships,
            class_name: "ServiceRelationship",
@@ -31,6 +34,7 @@ class Service < ApplicationRecord
              class_name: "User",
              optional: true
   belongs_to :provider, optional: true
+  belongs_to :area, optional: true
 
   validates :title, presence: true
   validates :description, presence: true
@@ -51,6 +55,7 @@ class Service < ApplicationRecord
   validates :restrictions, presence: true
   validates :phase, presence: true
   validates :logo, blob: { content_type: :image }
+  validates :areas, presence: true
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
