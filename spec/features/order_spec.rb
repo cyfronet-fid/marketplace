@@ -44,7 +44,7 @@ RSpec.feature "Service ordering" do
                                     "Next", exact: true)
 
       select offer.iid
-      click_on "Next"
+      click_on "Next", match: :first
 
       # Step 2
       expect(page).to have_current_path(service_configuration_path(service))
@@ -52,7 +52,7 @@ RSpec.feature "Service ordering" do
                                     "Next", exact: true)
 
       select "Services"
-      click_on "Next"
+      click_on "Next", match: :first
 
       # Step 3
       expect(page).to have_current_path(service_summary_path(service))
@@ -60,7 +60,7 @@ RSpec.feature "Service ordering" do
                                     "Order", exact: true)
 
       expect do
-        click_on "Order"
+        click_on "Order", match: :first
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
       expect(project_item.offer_id).to eq(offer.id)
@@ -123,7 +123,7 @@ RSpec.feature "Service ordering" do
                                     "Order", exact: true)
 
       expect do
-        click_on "Order"
+        click_on "Order", match: :first
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
 
