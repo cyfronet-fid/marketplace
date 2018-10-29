@@ -1,4 +1,10 @@
-Summary
+= render "layouts/order_nav", service: @service, step: 3
+
+%h2 Summary
+%p
+  Please read carefully summary of your order.
+  You can change anything now if you need.
+  After clicking order buttong your request will be send to service provider.
 
 %ul
   %li Offer: #{@project_item.offer.name}
@@ -6,6 +12,8 @@ Summary
 
 = link_to "Edit your service request", service_configuration_path(@service)
 
-= content_for :buttons do
+= content_for :cancel_button do
   = link_to "Cancel order and quit", service_cancel_path(@service), method: :delete
+
+= content_for :next_button do
   = link_to "Order", service_summary_path(@service), method: :post, class: "btn btn-primary"

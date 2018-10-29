@@ -74,6 +74,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Cannot order service when there is not offers (@mkasztelnik)
 - Related services (@mkasztelnik)
 - Service activate message (@mkasztelnik)
+- Order steps layout (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
