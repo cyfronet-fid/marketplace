@@ -11,6 +11,9 @@
         - if policy([:backoffice, :backoffice]).show?
           %li.list-inline-item.ml-2
             = link_to "Backoffice", backoffice_path
+        - if policy([:admin, :admin]).show?
+          %li.list-inline-item.ml-2
+            = link_to "Admin", admin_path
         %li.list-inline-item.ml-2
           = link_to "Logout", destroy_user_session_path, method: :delete
       - else
