@@ -2,7 +2,7 @@
 
 class Services::OffersController < Services::ApplicationController
   def index
-    @offers = @service.offers
+    init_offer_selection!
 
     if @service.offers_count == 1
       select_offer(@offers.first)
@@ -15,7 +15,7 @@ class Services::OffersController < Services::ApplicationController
       select_offer(offer)
       redirect_to service_configuration_path(@service)
     else
-      @offers = @service.offers
+      init_offer_selection!
       flash.now[:alert] = "Please select one of the offer"
       render :index
     end
@@ -24,7 +24,8 @@ class Services::OffersController < Services::ApplicationController
   private
 
     def select_offer(offer)
-      session[session_key] = { "offer_id" => offer.id }
+      session[session_key] ||= {}
+      session[session_key]["offer_id"] = offer.id
     end
 
     def offer
@@ -33,5 +34,10 @@ class Services::OffersController < Services::ApplicationController
 
     def offer_params
       params.require(:project_item).permit(:offer_id)
+    end
+
+    def init_offer_selection!
+      @offers = @service.offers
+      @project_item = ProjectItem.new(session[session_key])
     end
 end
