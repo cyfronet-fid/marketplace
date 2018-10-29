@@ -43,8 +43,8 @@ gem "redcarpet"
 # jira
 gem "jira-ruby"
 
-# redis
 gem "redis-rails"
+gem "sidekiq"
 
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
