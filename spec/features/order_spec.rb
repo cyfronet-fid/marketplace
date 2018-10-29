@@ -43,7 +43,7 @@ RSpec.feature "Service ordering" do
       expect(page).to have_selector(:link_or_button,
                                     "Next", exact: true)
 
-      select offer.name
+      choose "project_item_offer_id_#{offer.iid}"
       click_on "Next", match: :first
 
       # Step 2
