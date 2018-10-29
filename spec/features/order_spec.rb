@@ -32,6 +32,7 @@ RSpec.feature "Service ordering" do
 
     scenario "I can order service" do
       offer, _seconds_offer = create_list(:offer, 2, service: service)
+      affiliation = create(:affiliation, status: :active, user: user)
 
       visit service_path(service)
 
@@ -52,6 +53,7 @@ RSpec.feature "Service ordering" do
                                     "Next", exact: true)
 
       select "Services"
+      select affiliation.organization
       select "Single user", from: "Customer typology"
       fill_in "Access reason", with: "To pass test"
       fill_in "Additional information", with: "Additional information test"

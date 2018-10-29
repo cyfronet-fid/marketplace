@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_26_063221) do
+ActiveRecord::Schema.define(version: 2018_10_29_181312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,8 @@ ActiveRecord::Schema.define(version: 2018_10_26_063221) do
     t.string "customer_typology"
     t.text "access_reason"
     t.text "additional_information"
+    t.bigint "affiliation_id"
+    t.index ["affiliation_id"], name: "index_project_items_on_affiliation_id"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
   end
@@ -180,6 +182,7 @@ ActiveRecord::Schema.define(version: 2018_10_26_063221) do
   end
 
   add_foreign_key "project_item_changes", "users", column: "author_id"
+  add_foreign_key "project_items", "affiliations"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
   add_foreign_key "service_relationships", "services", column: "source_id"

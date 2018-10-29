@@ -3,10 +3,12 @@
 FactoryBot.define do
   factory :project_item do
     status :created
-    offer
-    project
     customer_typology { ProjectItem.customer_typologies.keys.sample }
     access_reason { |n| "Reason #{n}" }
     additional_information { |n| "Additional information #{n}" }
+
+    offer
+    project
+    affiliation
   end
 end

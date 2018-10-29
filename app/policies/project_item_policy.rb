@@ -18,7 +18,7 @@ class ProjectItemPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:service_id, :project_id, :customer_typology,
+    [:service_id, :project_id, :affiliation_id, :customer_typology,
      :access_reason, :additional_information]
   end
 end
