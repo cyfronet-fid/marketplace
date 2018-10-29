@@ -5,9 +5,10 @@
   This service is available in various options.
   Please select one from the list bellow.
 
-= form_for ProjectItem.new, url: service_offers_path(@service), method: :put,
+= simple_form_for @project_item, url: service_offers_path(@service), method: :put,
   html: { id: "order-form", role: "form"  } do |f|
-  = f.select :offer_id, @offers.map(&:iid), include_blank: true
+  = f.association :offer, collection: @offers, value_method: :iid,
+    selected: @project_item.offer
 
 
 = content_for :cancel_button do
