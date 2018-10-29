@@ -101,6 +101,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Upgrade service detail view (@kmarszalek)
 - Rename `Order` to `ProjectItem` (@mkasztelnik)
 - Rename `OrderChange` to `ProjectItemChange` (@mkasztelnik)
+- Split backend for Service details view (@kmarszalek)
 
 ### Deprecated
 

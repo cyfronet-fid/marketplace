@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       resource :summary, only: [:show, :create]
       resource :cancel, only: :destroy
       resource :questions, only: [:create]
+      resources :opinions, only: :index
     end
   end
 
