@@ -27,11 +27,13 @@ class ProjectItem < ApplicationRecord
   enum customer_typologies: CUSTOMER_TYPOLOGIES
 
   belongs_to :offer
+  belongs_to :affiliation, required: false
   belongs_to :project
   has_one :service_opinion, dependent: :restrict_with_error
   has_many :project_item_changes, dependent: :destroy
 
   validates :offer, presence: true
+  validates :affiliation, presence: true, unless: :open_access?
   validates :project, presence: true
   validates :status, presence: true
   validates :customer_typology, presence: true, unless: :open_access?
