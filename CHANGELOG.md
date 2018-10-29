@@ -77,6 +77,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Order steps layout (@mkasztelnik)
 - Sidekiq for delayed jobs (@mkasztelnik)
 - Admin administration panel stub with sidekiq monitoring and MP version (@mkasztelnik)
+- Use bootstrap cards to show service offers (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
