@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_30_074128) do
+ActiveRecord::Schema.define(version: 2018_11_02_122138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -164,7 +164,7 @@ ActiveRecord::Schema.define(version: 2018_10_30_074128) do
     t.text "contact_emails", default: [], array: true
     t.text "places", null: false
     t.text "languages", null: false
-    t.text "dedicated_for", null: false
+    t.text "dedicated_for", null: false, array: true
     t.text "terms_of_use_url", null: false
     t.text "access_policies_url", null: false
     t.text "corporate_sla_url", null: false

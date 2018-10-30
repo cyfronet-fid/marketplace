@@ -40,7 +40,6 @@ class Service < ApplicationRecord
   validates :rating, presence: true
   validates :places, presence: true
   validates :languages, presence: true
-  # validates :area, presence: true
   validates :dedicated_for, presence: true
   validates :terms_of_use_url, presence: true, url: true
   validates :access_policies_url, presence: true, url: true

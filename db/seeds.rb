@@ -21,18 +21,21 @@ yaml_hash["categories"].each do |_, hash|
   puts "Generated category #{ hash["name"] }"
 end
 
-puts "Generating providers"
-providers = (1..4).map { |i| Provider.find_or_create_by(name: "Provider #{i}") }
-
+puts "Generating providers form yaml"
+yaml_hash["providers"].each do |_, hash|
+  Provider.find_or_create_by(name: hash["name"])
+end
 
 puts "Generating services from yaml"
 yaml_hash["services"].each do |_, hash|
   categories = Category.where(name: hash["parents"])
+  providers = Provider.where(name: hash["providers"])
+
   Service.find_or_initialize_by(title: hash["title"]) do |service|
 
     service.update!(tagline: hash["tagline"],
                     description: hash["description"],
-                    provider: providers.sample,
+                    provider: providers[0],
                     # area: hash["area"], #It will be uncommented when scientific field will be created
                     open_access: hash["open_access"],
                     connected_url: hash["connected_url"],
