@@ -19,4 +19,14 @@ RSpec.describe User do
       expect(user.full_name).to eq "John Rambo"
     end
   end
+
+  context "#active_affiliations" do
+    it "returns only affiliation with active status" do
+      user = create(:user)
+      active_affiliation = create(:affiliation, status: :active, user: user)
+      _created__affiliation = create(:affiliation, status: :created, user: user)
+
+      expect(user.active_affiliations).to contain_exactly(active_affiliation)
+    end
+  end
 end
