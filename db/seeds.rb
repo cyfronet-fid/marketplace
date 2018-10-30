@@ -33,7 +33,7 @@ yaml_hash["services"].each do |_, hash|
     service.update!(tagline: hash["tagline"],
                     description: hash["description"],
                     provider: providers.sample,
-                    # area: hash["area"], #It will be uncommented when
+                    # area: hash["area"], #It will be uncommented when scientific field will be created
                     open_access: hash["open_access"],
                     connected_url: hash["connected_url"],
                     webpage_url: hash["webpage_url"],
