@@ -11,6 +11,20 @@ class Service < ApplicationRecord
   has_many :categories, through: :service_categories
   has_many :service_opinions, through: :project_items
 
+  has_many :source_relationships,
+           class_name: "ServiceRelationship",
+           foreign_key: "target_id",
+           dependent: :destroy,
+           inverse_of: :target
+  has_many :target_relationships,
+           class_name: "ServiceRelationship",
+           foreign_key: "source_id",
+           dependent: :destroy,
+           inverse_of: :source
+  has_many :related_services,
+           through: :target_relationships,
+           source: :target
+
   belongs_to :owner,
              class_name: "User",
              optional: true

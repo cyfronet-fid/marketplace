@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ProjectItem::RegisterJob < ApplicationJob
-  queue_as :project_items
+  queue_as :orders
 
   rescue_from(ProjectItem::Register::JIRAIssueCreateError) do |exception|
     # TODO: we need to define what to do when question registration in e.g.

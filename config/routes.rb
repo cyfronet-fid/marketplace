@@ -56,5 +56,15 @@ Rails.application.routes.draw do
         constraints: { file: %r{[^/\.]+} }
   end
 
+  resource :admin, only: :show
+  namespace :admin do
+    resources :jobs, only: :index
+  end
+  # Sidekiq monitoring
+  authenticate :user, ->(u) { u.admin? } do
+    require "sidekiq/web"
+    mount Sidekiq::Web => "/admin/sidekiq"
+  end
+
   root "home#index"
 end

@@ -70,4 +70,12 @@ RSpec.describe Service do
     expect(create(:service).rating).to eq(0.0)
   end
 
+  it "has related services" do
+    s1, s2, s3 = create_list(:service, 3)
+
+    ServiceRelationship.create(source: s1, target: s2)
+    ServiceRelationship.create(source: s1, target: s3)
+
+    expect(s1.related_services).to contain_exactly(s2, s3)
+  end
 end

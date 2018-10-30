@@ -58,6 +58,24 @@ RSpec.feature "Service browsing" do
     end
   end
 
+  scenario "shows related services" do
+    service, related = create_list(:service, 2)
+    ServiceRelationship.create!(source: service, target: related)
+
+    visit service_path(service)
+
+    expect(page.body).to have_content "Services you can use with this service"
+    expect(page.body).to have_content related.title
+  end
+
+  scenario "does not show related services section when no related services" do
+    service = create(:service)
+
+    visit service_path(service)
+
+    expect(page.body).to_not have_content "Services you can use with this service"
+  end
+
   context "as not logged in user" do
     scenario "I need to login to asks service question" do
       service = create(:service)
@@ -114,5 +132,13 @@ RSpec.feature "Service filtering and sorting" do
 
     expect(page.body.index("DDDD Something 3")).to be < page.body.index("DDDD Something 2")
     expect(page.body.index("DDDD Something 2")).to be < page.body.index("DDDD Something 1")
+  end
+
+  scenario "limit number of services per page" do
+    create_list(:service, 2)
+
+    visit services_path(per_page: "1")
+
+    expect(page).to have_selector("dl > ul", count: 1)
   end
 end

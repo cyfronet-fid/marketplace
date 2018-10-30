@@ -1,0 +1,24 @@
+.container
+  %nav.navbar.navbar-expand-lg.navbar-light.bg-light
+    = link_to admin_path, class: "navbar-brand" do
+      %strong EOSC
+      Administration panel
+    %button.navbar-toggler{ "aria-controls" => "navbar-supported-content",
+                            "aria-expanded" => "false", "aria-label" => "Toggle navigation",
+                            "data-target" => "#navbar-supported-content",
+                            "data-toggle" => "collapse",
+                             type: "button" }
+      %span.navbar-toggler-icon
+
+    #navbar-supported-content.collapse.navbar-collapse
+      %ul.navbar-nav.ml-auto.pt-2
+        = nav_link controller: :admins do
+          = link_to "Getting Started", admin_path, class: "nav-link px-3 py-1"
+        = nav_link controller: :jobs do
+          = link_to "Delayed jobs", admin_jobs_path, class: "nav-link px-3 py-1"
+        = nav_link controller: :home do
+          = link_to "EOSC Portal", root_path, class: "nav-link px-3 py-1"
+        %li.nav-item
+          = link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link px-3 py-1"
+
+

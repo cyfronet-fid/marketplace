@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_22_113346) do
+ActiveRecord::Schema.define(version: 2018_10_26_063221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,6 +114,16 @@ ActiveRecord::Schema.define(version: 2018_10_22_113346) do
     t.index ["project_item_id"], name: "index_service_opinions_on_project_item_id"
   end
 
+  create_table "service_relationships", force: :cascade do |t|
+    t.bigint "source_id", null: false
+    t.bigint "target_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_id", "target_id"], name: "index_service_relationships_on_source_id_and_target_id", unique: true
+    t.index ["source_id"], name: "index_service_relationships_on_source_id"
+    t.index ["target_id"], name: "index_service_relationships_on_target_id"
+  end
+
   create_table "services", force: :cascade do |t|
     t.string "title", null: false
     t.text "description", null: false
@@ -127,6 +137,7 @@ ActiveRecord::Schema.define(version: 2018_10_22_113346) do
     t.boolean "open_access", default: false
     t.bigint "provider_id"
     t.integer "service_opinion_count", default: 0
+    t.text "contact_emails", default: [], array: true
     t.text "places", null: false
     t.text "languages", null: false
     t.text "dedicated_for", null: false
@@ -139,7 +150,8 @@ ActiveRecord::Schema.define(version: 2018_10_22_113346) do
     t.text "tutorial_url", null: false
     t.text "restrictions", null: false
     t.text "phase", null: false
-    t.text "contact_emails", default: [], array: true
+    t.integer "offers_count", default: 0
+    t.text "activate_message"
     t.index ["description"], name: "index_services_on_description"
     t.index ["owner_id"], name: "index_services_on_owner_id"
     t.index ["provider_id"], name: "index_services_on_provider_id"
@@ -167,6 +179,8 @@ ActiveRecord::Schema.define(version: 2018_10_22_113346) do
   add_foreign_key "project_item_changes", "users", column: "author_id"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
+  add_foreign_key "service_relationships", "services", column: "source_id"
+  add_foreign_key "service_relationships", "services", column: "target_id"
   add_foreign_key "services", "providers"
   add_foreign_key "services", "users", column: "owner_id"
 end
