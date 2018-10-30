@@ -32,8 +32,9 @@ class ProjectItem::Ready
       issue = client.Issue.build
 
       if issue.save(fields: { summary: "Add open service #{@project_item.service.title}",
-                          project: { key: client.jira_project_key },
-                          issuetype: { id: client.jira_issue_type_id } })
+                    project: { key: client.jira_project_key },
+                    issuetype: { id: client.jira_issue_type_id } })
+
         trs = issue.transitions.all.select { |tr| tr.name == "Done" }
         if trs.length > 0
           transition = issue.transitions.build
@@ -51,11 +52,20 @@ class ProjectItem::Ready
 
     def update_status!
       @project_item.new_change(status: :ready,
-                        message: "Your project_item is ready")
+                               message: activate_message)
+    end
+
+    def activate_message
+      service.activate_message || "Your service request is ready"
     end
 
     def notify!
       ProjectItemMailer.changed(@project_item).deliver_later
       ProjectItemMailer.rate_service(@project_item).deliver_later(wait_until: RATE_AFTER_PERIOD.from_now)
+    end
+
+    def service
+      @service ||= Service.joins(offers: :project_items).
+                   find_by(offers: { project_items: @project_item })
     end
 end

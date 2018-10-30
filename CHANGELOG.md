@@ -68,6 +68,17 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Tabs to My profile view (@kmarszalek)
 - 3 steps ordering (@mkasztelnik)
 - New header & footer look (@kosmidma)
+- Show 10, 20 or 30 services per page (@mkasztelnik)
+- Go to order configuration step directly when there is only one offer (@mkasztelnik)
+- Autoselect default project to open access service order and go directly to summary page (@mkasztelnik)
+- Cannot order service when there is not offers (@mkasztelnik)
+- Related services (@mkasztelnik)
+- Service activate message (@mkasztelnik)
+- Order steps layout (@mkasztelnik)
+- Sidekiq for delayed jobs (@mkasztelnik)
+- Admin administration panel stub with sidekiq monitoring and MP version (@mkasztelnik)
+- Render root categories in page footer (@mkasztelnik)
+- Use bootstrap cards to show service offers (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)

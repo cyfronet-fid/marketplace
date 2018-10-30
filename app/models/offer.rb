@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class Offer < ApplicationRecord
-  belongs_to :service
+  belongs_to :service,
+             counter_cache: true
 
-  has_many :project_items, dependent: :restrict_with_error
+  has_many :project_items,
+           dependent: :restrict_with_error
 
   validate :set_iid, on: :create
   validates :name, presence: true

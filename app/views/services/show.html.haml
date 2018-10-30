@@ -18,8 +18,8 @@
                                               role: "tab" } Opinions (#{@service.service_opinion_count})
 
 .tab-content
-  = render "services/about", service: @service
+  = render "services/about", service: @service, offers: @offers
   = render "services/opinions", service_opinions: @service_opinions
 
 .container
-  %h3 Customers who project_itemed this service also viewed
+  = render "services/related", related_services: @related_services

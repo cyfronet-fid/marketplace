@@ -33,5 +33,7 @@ module Mp
     config.generators.system_tests = nil
 
     config.autoload_paths << Rails.root.join("lib")
+
+    config.redis_url = ENV["REDIS_URL"] || "redis://localhost:6379/0"
   end
 end
