@@ -1,0 +1,9 @@
+- if (ENV["MP_VERSION"])
+  .alert.alert-info.text-center
+    Marketplace version:
+    %code= ENV["MP_VERSION"]
+- else
+  .alert.alert-warning.text-center
+    Marketplace version not defined in
+    %code MP_VERSION
+    environment variable

@@ -57,4 +57,13 @@ RSpec.feature "Service categories" do
     expect(page.body).to have_content s3.title
     expect(page.body).to_not have_content other_service.title
   end
+
+  scenario "limit number of services per page" do
+    category = create(:category)
+    create_list(:service, 2, categories: [category])
+
+    visit category_path(category, per_page: "1")
+
+    expect(page).to have_selector("dl > ul", count: 1)
+  end
 end

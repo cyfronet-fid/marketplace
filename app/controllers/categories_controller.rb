@@ -2,17 +2,21 @@
 
 class CategoriesController < ApplicationController
   include Service::Searchable
+  include Paginable
 
   before_action :category
 
   def show
-    @services = records.joins(:service_categories).
-      where(service_categories: { category_id: category_and_descendant_ids }).
-      page(params[:page])
+    @services = paginate(category_services)
     @subcategories = category.children
   end
 
   private
+
+    def category_services
+      records.joins(:service_categories).
+        where(service_categories: { category_id: category_and_descendant_ids })
+    end
 
     def category_and_descendant_ids
       [category] + category.descendant_ids
