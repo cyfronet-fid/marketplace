@@ -6,6 +6,8 @@ class Service < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
+  has_one_attached :logo
+
   has_many :offers, dependent: :restrict_with_error
   has_many :service_categories, dependent: :destroy
   has_many :categories, through: :service_categories
@@ -48,6 +50,7 @@ class Service < ApplicationRecord
   validates :tutorial_url, presence: true, url: true
   validates :restrictions, presence: true
   validates :phase, presence: true
+  validates :logo, blob: { content_type: :image }
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
 

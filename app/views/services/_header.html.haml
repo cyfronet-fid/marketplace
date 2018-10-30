@@ -1,23 +1,34 @@
-.row
-  .col-8
-    %h1= service.title
-    %p
-      %b= service.tagline
-    %p= service.description
-    %p
-      Provided by
-      = link_to service.provider.name, service.provider
-    %p
-      = print_rating_stars(service.rating)
-      %span.small.ml-1.font-weight-bold
-        #{service.rating} /5)
-      %a{ href: "", class: "small ml-3" }
-        #{service.service_opinion_count} opinions
-  .col-4
-    - if policy(@service).order?
-      = link_to service_offers_path(@service), class: "btn btn-primary" do
-        = order_button_text
-    - if @service.open_access?
-      = link_to "Go to the service", service.connected_url, class: "btn btn-primary", target: "_blank"
+.media.border-0
+  - if service.logo.attached?
+    = image_tag service.logo.variant(resize: "200x200"), class: "align-self-center mr-4"
+  .media-body
+    .row
+      .col-9
+        %h1= service.title
+        %p= service.tagline
+        .row
+          .col
+            %code TODO
+            Available for SME only within 1 day
+          .col
+            Provided by
+            = link_to service.provider.name, service.provider
+          .col
+            %code TODO
+            Area
+            %strong Biology
+        .row
+          .col
+            = print_rating_stars(service.rating)
+            %span.small.ml-1.font-weight-bold
+              (#{service.rating} /5)
+            %a{ href: "", class: "small ml-3" }
+              #{service.service_opinion_count} opinions
+      .col-3.text-center
+        - if policy(service).order?
+          = link_to service_offers_path(service), class: "btn btn-primary" do
+            = order_button_text
+        - if service.open_access?
+          = link_to "Go to the service", service.connected_url, class: "btn btn-primary", target: "_blank"
 
-    = render "services/ask_question", service: service, question: question
+        = render "services/ask_question", service: service, question: question

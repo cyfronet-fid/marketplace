@@ -1,23 +1,7 @@
 #desc.tab-pane.container.pt-2.active{ "aria-labelledby" => "home-tab", role: "tabpanel" }
   .row.pt-3
     .col-8
-      %h3.mb-3.mt-3 Run virtual machines on-demand with complete control over computing resources.
-      %p.mt-4 With Cloud Compute you can deploy and scale virtual machines on-demand. Cloud Compute offers guaranteed
-      computational resources in a secure and isolated environment with standard API access, without the overhead
-      of managing physical servers.
-      %p.mt-3 Cloud Compute offers the possibility to select preconﬁgured virtual appliances (e.g. CPU, memory, disk,
-      operating system or software) from a catalogue replicated across all EGI cloud providers from a catalogue
-      replicated across all EGI cloud providers.
-      %p.mt-5 Featured usecases
-      %ul.ml-4
-        %li.mt-2
-          %span
-            How to predict social media trends? how Cloud Compute helps to test new ways to detect trends on social
-            networks
-        %li.mt-2
-          %span
-            The genetics of Salmonella infections: how Cloud Compute helped scientists to understand what happens
-            during when a human cell meets Salmonella
+      = markdown(service.description)
       = render "services/offers", offers: offers
     .col-4
       %h3 Places and languages
