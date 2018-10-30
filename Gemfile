@@ -24,6 +24,9 @@ gem "will_paginate", "~> 3.1.0"
 gem "will_paginate-bootstrap4"
 gem "simple_form"
 
+gem "activestorage-validator"
+gem "image_processing", "~> 1.2"
+
 # validation
 gem "valid_email2"
 

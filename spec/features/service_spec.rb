@@ -108,7 +108,7 @@ RSpec.feature "Service filtering and sorting" do
     expect(page.body.index("DDDD Something 1")).to be < page.body.index("DDDD Something 2")
     expect(page.body.index("DDDD Something 2")).to be < page.body.index("DDDD Something 3")
 
-    expect(page).to have_selector("dl > ul", count: 3)
+    expect(page).to have_selector(".media", count: 3)
   end
 
   scenario "clicking filter button in side bar will preserve existing query params", js: true do
@@ -119,7 +119,7 @@ RSpec.feature "Service filtering and sorting" do
     expect(page.body.index("DDDD Something 1")).to be < page.body.index("DDDD Something 2")
     expect(page.body.index("DDDD Something 2")).to be < page.body.index("DDDD Something 3")
 
-    expect(page).to have_selector("dl > ul", count: 3)
+    expect(page).to have_selector(".media", count: 3)
   end
 
   scenario "selecting sorting will set query param and preserve existing ones", js: true do
@@ -139,6 +139,6 @@ RSpec.feature "Service filtering and sorting" do
 
     visit services_path(per_page: "1")
 
-    expect(page).to have_selector("dl > ul", count: 1)
+    expect(page).to have_selector(".media", count: 1)
   end
 end
