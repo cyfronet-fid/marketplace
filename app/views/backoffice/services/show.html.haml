@@ -1,8 +1,13 @@
 .container
   %h1= @service.title
-  %p
-    %b= @service.tagline
-  %p= @service.description
+  .row
+    .col-3
+      - if @service.logo.attached?
+        = image_tag @service.logo.variant(resize: "200x200")
+    .col-9
+      %p
+        %b= @service.tagline
+      %p= @service.description
 
   %h2 Terms of use
   = markdown(@service.terms_of_use)

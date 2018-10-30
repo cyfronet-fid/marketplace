@@ -1,4 +1,4 @@
 web: bundle exec rails s
 # watcher: ./bin/webpack-watcher
 webpacker: ./bin/webpack-dev-server
-jobs: bundle exec sidekiq -q orders -q mailers
+jobs: bundle exec sidekiq -q orders -q mailers -q default
