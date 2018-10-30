@@ -44,18 +44,8 @@
             = link_to "Getting started", root_path
           %li.mb-1
             = link_to "All Services", services_path
-          %li.mb-1
-            = link_to "Compute"
-          %li.mb-1
-            = link_to "Data and storage"
-          %li.mb-1
-            = link_to "Applications on demand"
-          %li.mb-1
-            = link_to "Thematic services"
-          %li.mb-1
-            = link_to "Identity and security"
-          %li.mb-1
-            = link_to "Professional Services"
+          = render partial: "layouts/footer/root_category",
+            collection: root_categories, as: :root_category
       .col-md-2
         %ul
           %li
@@ -97,5 +87,3 @@
     %p.mb-1 Union’s Horizon 2020 research and innovation programme with contribution of the European Commission
 
     %p.mt-2 2018 EOSC Portal
-    - if (ENV["MP_VERSION"])
-      %p "- version: #{ENV["MP_VERSION"]}"

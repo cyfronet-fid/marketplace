@@ -10,26 +10,29 @@ RSpec.feature "Service ordering" do
 
     let(:user) { create(:user) }
     let(:service) { create(:service) }
-    let(:offer) { create(:offer, service: service) }
 
     before { checkin_sign_in_as(user) }
 
     scenario "I see project_item service button" do
+      create(:offer, service: service)
+
       visit service_path(service)
 
       expect(page).to have_text("Order")
     end
 
     scenario "I see order open acces service button" do
-      @open_access_service = create(:open_access_service)
-      visit service_path(@open_access_service)
+      open_access_service = create(:open_access_service)
+      create(:offer, service: open_access_service)
+
+      visit service_path(open_access_service)
 
       expect(page).to have_text("Add to my services")
     end
 
     scenario "I can order service" do
-      # force offer creation
-      offer
+      offer, _seconds_offer = create_list(:offer, 2, service: service)
+
       visit service_path(service)
 
       click_on "Order"
@@ -40,8 +43,8 @@ RSpec.feature "Service ordering" do
       expect(page).to have_selector(:link_or_button,
                                     "Next", exact: true)
 
-      select offer.iid
-      click_on "Next"
+      choose "project_item_offer_id_#{offer.iid}"
+      click_on "Next", match: :first
 
       # Step 2
       expect(page).to have_current_path(service_configuration_path(service))
@@ -49,7 +52,7 @@ RSpec.feature "Service ordering" do
                                     "Next", exact: true)
 
       select "Services"
-      click_on "Next"
+      click_on "Next", match: :first
 
       # Step 3
       expect(page).to have_current_path(service_summary_path(service))
@@ -57,7 +60,7 @@ RSpec.feature "Service ordering" do
                                     "Order", exact: true)
 
       expect do
-        click_on "Order"
+        click_on "Order", match: :first
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
       expect(project_item.offer_id).to eq(offer.id)
@@ -74,20 +77,30 @@ RSpec.feature "Service ordering" do
       expect(page).to have_content(service.title)
     end
 
+    scenario "Skip offers selection when only one offer" do
+      create(:offer, service: service)
+
+      visit service_path(service)
+
+      click_on "Order"
+
+      expect(page).to have_current_path(service_configuration_path(service))
+    end
+
     scenario "I'm redirected into service offers when offer is not chosen" do
+      create_list(:offer, 2, service: service)
+
       visit service_configuration_path(service)
 
       expect(page).to have_current_path(service_offers_path(service))
     end
 
     scenario "I'm redirected into service configuration when order is not valid" do
-      # Force offer creation
-      offer
-      visit service_offers_path(service)
+      create(:offer, service: service)
 
-      # Select offer
-      select offer.iid
-      click_on "Next"
+      visit service_path(service)
+
+      click_on "Order"
 
       # Go directly to summary page
       visit service_summary_path(service)
@@ -97,21 +110,40 @@ RSpec.feature "Service ordering" do
 
     scenario "I can order open acces service" do
       open_access_service = create(:open_access_service)
+      offer = create(:offer, service: open_access_service)
+      default_project = user.projects.find_by(name: "Services")
 
       visit service_path(open_access_service)
 
       click_on "Add to my services"
 
-      expect(page).to have_current_path(service_offers_path(open_access_service))
-      expect(page).to have_text(open_access_service.title)
+      # Go directly to summary page
+      expect(page).to have_current_path(service_summary_path(open_access_service))
       expect(page).to have_selector(:link_or_button,
-                                    "Next", exact: true)
+                                    "Order", exact: true)
+
+      expect do
+        click_on "Order", match: :first
+      end.to change { ProjectItem.count }.by(1)
+      project_item = ProjectItem.last
+
+      expect(project_item.offer).to eq(offer)
+      expect(project_item.project).to eq(default_project)
+    end
+
+    scenario "I cannot order service without offers" do
+      service = create(:service)
+
+      visit service_path(service)
+
+      expect(page).to_not have_text("Order")
     end
   end
 
   context "as anonymous user" do
     scenario "I nead to login to order service" do
       service = create(:service)
+      create_list(:offer, 2, service: service)
       user = create(:user)
 
       visit service_path(service)
@@ -128,6 +160,7 @@ RSpec.feature "Service ordering" do
 
     scenario "I can see order button" do
       service = create(:service)
+      create(:offer, service: service)
 
       visit service_path(service)
 
@@ -136,6 +169,7 @@ RSpec.feature "Service ordering" do
 
     scenario "I can see openaccess service order button" do
       open_access_service =  create(:open_access_service)
+      create(:offer, service: open_access_service)
 
       visit service_path(open_access_service)
 

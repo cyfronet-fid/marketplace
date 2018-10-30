@@ -23,6 +23,18 @@ RSpec.describe Jira::IssueUpdated do
     expect(last_change.message).to include "ready to be used"
   end
 
+  it "uses service activate message when service become ready" do
+    service = create(:service, activate_message: "Welcome!!!")
+    offer = create(:offer, service: service)
+    project_item = create(:project_item, offer: offer)
+
+    described_class.new(project_item, changelog(to: jira_client.wf_done_id)).call
+    last_change = project_item.project_item_changes.last
+
+    expect(last_change).to be_ready
+    expect(last_change.message).to eq("Welcome!!!")
+  end
+
   def changelog(to:)
     { "items" => [
       { "field" => "status", "to" => to }
