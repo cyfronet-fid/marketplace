@@ -9,6 +9,11 @@
 %ul
   %li Offer: #{@project_item.offer.name}
   %li Project: #{@project_item.project.name}
+  %li Customer Typology: #{@project_item.customer_typology}
+  %li Reason to request access to the #{@service.title}:
+  %p= @project_item.access_reason
+  %li Additional informations:
+  %p= @project_item.additional_information
 
 = link_to "Edit your service request", service_configuration_path(@service)
 

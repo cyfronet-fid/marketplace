@@ -3,9 +3,14 @@
 require "rails_helper"
 
 RSpec.describe ProjectItem do
+  subject { create(:project_item) }
+
   it { should validate_presence_of(:offer) }
   it { should validate_presence_of(:project) }
   it { should validate_presence_of(:status) }
+  it { should validate_presence_of(:customer_typology) }
+  it { should validate_presence_of(:access_reason) }
+  it { should validate_presence_of(:additional_information) }
 
   it { should belong_to(:project) }
   it { should belong_to(:offer) }
