@@ -10,12 +10,12 @@
           = yield :cancel_button
           = yield :next_button
       = render "layouts/flash"
-    %main.container
+    %main.container.order-container
       %h1
         = @service.title
       %p.summary= @service.tagline
       = yield
-      %hr
+      %hr.bottom-hr
       .navbar.justify-content-end
         = yield :next_button
 
