@@ -132,7 +132,6 @@ ActiveRecord::Schema.define(version: 2018_10_22_113346) do
     t.text "dedicated_for", null: false
     t.text "terms_of_use_url", null: false
     t.text "access_policies_url", null: false
-    t.text "area", null: false
     t.text "corporate_sla_url", null: false
     t.text "webpage_url", null: false
     t.text "manual_url", null: false
