@@ -522,7 +522,7 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
-        area: &artsAndHumanities Arts&Humanities
+        area: &artsAndHumanities Arts & Humanities
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Store, share and access your files and their metadata on a global scale.
@@ -543,7 +543,7 @@ services:
         access_policies_url: https://www.google.com/
         places: *europe
         languages: *english
-        area: [*earthScience, Seismology]
+        area: *earthScience
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Store, share and access your files and their metadata on a global scale.
@@ -593,7 +593,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: &mathematics Mathematics
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -612,7 +612,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: &lifeSciences Life sciences
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -630,7 +630,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *lifeSciences
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -648,7 +648,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *earthScience
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -666,7 +666,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *lifeSciences
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -684,7 +684,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: &applicationFrameworks Application and data analysis frameworks
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -702,7 +702,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *applicationFrameworks
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -720,7 +720,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *applicationFrameworks
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -738,7 +738,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *applicationFrameworks
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -756,7 +756,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *applicationFrameworks
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -774,7 +774,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: &dataAnalysis Data analysis
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -792,7 +792,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: &humanities Humanities
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -810,7 +810,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *lifeSciences
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -828,7 +828,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *lifeSciences
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -846,11 +846,30 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *lifeSciences
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: "AutoDock Vina is an open-source software for doing molecular docking."
+    Notebook:
+        title: Notebook
+        parents: *applicationsParent
+        open_access: false
+        webpage_url: https://www.google.com
+        manual_url: https://www.google.com
+        helpdesk_url: https://www.google.com
+        tutorial_url: https://www.google.com
+        terms_of_use_url: https://www.google.com
+        corporate_sla_url: https://www.google.com
+        access_policies_url: https://www.google.com
+        dedicated_for: Research organisations, Industry/SMEs, National User Support Teams (NGI USTs) as well as the long tail of users. Individual researchers, research collaborations, innovators from any discipline
+        places: *europe
+        languages: *english
+        area: *lifeSciences
+        restrictions: EmptyNow
+        phase: EmptyNow
+        tagline: notFilled
+        description: notFilled
     Component Metadata Infrastructure:
         title: Component Metadata Infrastructure
         parents: *thematicServicesParent
@@ -900,7 +919,7 @@ services:
         access_policies_url: https://www.dariah.eu/privacy-notice/
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *artsAndHumanities
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: The DARIAH Science Gateway is a platform that provides access to various digital applications and services for the Arts & Humanities researchers
@@ -928,7 +947,7 @@ services:
         access_policies_url: https://www.google.com/
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: &highEnergyPhysics High-Energy Physics
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Simplify the access and management of computing resources
@@ -970,7 +989,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: &physicalScienceAerosol Physical science (aerosol physics)
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -1024,7 +1043,7 @@ services:
         access_policies_url: https://www.google.com/
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: &environmentalScience Environmental science
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: Web service to classify plant pictures based on convolutional neural networks
@@ -1046,6 +1065,96 @@ services:
                       Service provided by
 
                       The Service is provided by LifeWatch ERIC."
+    Copernicus Data and other EO Pillar data:
+        title: Copernicus Data and other EO Pillar data
+        parents: *researchDataParent
+        open_access: false
+        webpage_url: https://www.google.com/
+        manual_url: https://www.google.com/
+        helpdesk_url: https://www.google.com/
+        tutorial_url: https://www.google.com/
+        terms_of_use_url: https://www.google.com/
+        corporate_sla_url: https://www.google.com/
+        access_policies_url: https://www.google.com/
+        places: *europe
+        languages: *english
+        area: *interdisciplinary
+        restrictions: EmptyNow
+        phase: EmptyNow
+        tagline: NotFilled
+        description: "notFilled"
+    ELIXIR Core Data Resources:
+        title: ELIXIR Core Data Resources
+        parents: *researchDataParent
+        open_access: false
+        webpage_url: https://www.google.com/
+        manual_url: https://www.google.com/
+        helpdesk_url: https://www.google.com/
+        tutorial_url: https://www.google.com/
+        terms_of_use_url: https://www.google.com/
+        corporate_sla_url: https://www.google.com/
+        access_policies_url: https://www.google.com/
+        places: *europe
+        languages: *english
+        area: *interdisciplinary
+        restrictions: EmptyNow
+        phase: EmptyNow
+        tagline: NotFilled
+        description: "notFilled"
+    EISCAT:
+        title: EISCAT
+        parents: *researchDataParent
+        open_access: false
+        webpage_url: https://www.google.com/
+        manual_url: https://www.google.com/
+        helpdesk_url: https://www.google.com/
+        tutorial_url: https://www.google.com/
+        terms_of_use_url: https://www.google.com/
+        corporate_sla_url: https://www.google.com/
+        access_policies_url: https://www.google.com/
+        places: *europe
+        languages: *english
+        area: *interdisciplinary
+        restrictions: EmptyNow
+        phase: EmptyNow
+        tagline: NotFilled
+        description: "notFilled"
+    LOFAR:
+        title: LOFAR
+        parents: *researchDataParent
+        open_access: false
+        webpage_url: https://www.google.com/
+        manual_url: https://www.google.com/
+        helpdesk_url: https://www.google.com/
+        tutorial_url: https://www.google.com/
+        terms_of_use_url: https://www.google.com/
+        corporate_sla_url: https://www.google.com/
+        access_policies_url: https://www.google.com/
+        places: *europe
+        languages: *english
+        area: *interdisciplinary
+        restrictions: EmptyNow
+        phase: EmptyNow
+        tagline: NotFilled
+        description: "notFilled"
+    GEO Discover and Access Broker:
+        title: GEO Discover and Access Broker
+        parents: *researchDataParent
+        open_access: false
+        webpage_url: https://www.google.com/
+        manual_url: https://www.google.com/
+        helpdesk_url: https://www.google.com/
+        tutorial_url: https://www.google.com/
+        terms_of_use_url: https://www.google.com/
+        corporate_sla_url: https://www.google.com/
+        access_policies_url: https://www.google.com/
+        places: *europe
+        languages: *english
+        area: *interdisciplinary
+        restrictions: EmptyNow
+        phase: EmptyNow
+        tagline: NotFilled
+        description: "notFilled"
     OPENCoastS:
         title: OPENCoastS Portal
         parents: *thematicServicesParent
@@ -1059,7 +1168,7 @@ services:
         access_policies_url: https://www.google.com/
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *environmentalScience
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: On-demand operational coastal circulation forecast service
@@ -1151,7 +1260,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: &biologicalSciences Biological Sciences
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: A suite of computational tools for structural biology
@@ -1173,7 +1282,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *biologicalSciences
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: A suite of computational tools for structural biology
@@ -1194,7 +1303,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *biologicalSciences
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: A suite of computational tools for structural biology
@@ -1214,7 +1323,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *biologicalSciences
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: A suite of computational tools for structural biology
@@ -1235,7 +1344,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *biologicalSciences
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: A suite of computational tools for structural biology
@@ -1256,7 +1365,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *biologicalSciences
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: A suite of computational tools for structural biology
@@ -1277,7 +1386,7 @@ services:
         access_policies_url: https://www.google.com
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        area: *biologicalSciences
         restrictions: EmptyNow
         phase: EmptyNow
         tagline: A suite of computational tools for structural biology
