@@ -10,6 +10,8 @@ class Affiliation < ApplicationRecord
 
   belongs_to :user
 
+  has_many :project_items, dependent: :restrict_with_error
+
   validate :set_iid, on: :create
   validates :iid, presence: true, numericality: true
   validates :organization, presence: true

@@ -80,6 +80,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Render root categories in page footer (@mkasztelnik)
 - Use bootstrap cards to show service offers (@mkasztelnik)
 - Add service logo (@mkasztelnik)
+- Select affiliation on service order configuration page (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
