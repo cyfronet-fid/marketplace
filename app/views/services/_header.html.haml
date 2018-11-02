@@ -8,8 +8,7 @@
         %p= service.tagline
         .row
           .col
-            %code TODO
-            Available for SME only within 1 day
+            = service.dedicated_for
           .col
             Provided by
             = link_to service.provider.name, service.provider

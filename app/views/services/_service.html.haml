@@ -11,7 +11,6 @@
         Area
         %strong Biology
       .col
-        %code TODO
-        Available for SME only within 1 day
+        = service.dedicated_for
   - if service.logo.attached?
     = image_tag service.logo.variant(resize: "150x150"), class: "align-self-center mx-2"

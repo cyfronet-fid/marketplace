@@ -79,6 +79,27 @@ ActiveRecord::Schema.define(version: 2018_10_30_074128) do
     t.index ["service_id"], name: "index_offers_on_service_id"
   end
 
+  create_table "order_changes", force: :cascade do |t|
+    t.string "status"
+    t.text "message"
+    t.bigint "order_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "author_id"
+    t.index ["author_id"], name: "index_order_changes_on_author_id"
+    t.index ["order_id"], name: "index_order_changes_on_order_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.string "status", null: false
+    t.bigint "service_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service_id"], name: "index_orders_on_service_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
   create_table "project_item_changes", force: :cascade do |t|
     t.string "status"
     t.text "message"

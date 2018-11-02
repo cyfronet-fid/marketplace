@@ -92,6 +92,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Upgrade service detail view (@kmarszalek)
 - Rename `Order` to `ProjectItem` (@mkasztelnik)
 - Rename `OrderChange` to `ProjectItemChange` (@mkasztelnik)
+- In service view (list and detail) instead of "Available for SME..." show the dedicated_for field (@jswk)
 
 ### Deprecated
 
