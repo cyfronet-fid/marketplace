@@ -1,0 +1,48 @@
+.container
+  %h1.mb-5.mt-5.text-center Explore products
+
+.container
+  %ul#my-tab.nav.nav-tabs.home-tabs.mt-4.d-flex.justify-content-center{ role: "tablist" }
+    - categories.each_with_index do |category, index|
+      %li.nav-item
+        %a.nav-link.text-uppercase{ "aria-controls" => "category#{ category.id } ",
+                                   "aria-selected" => "true",
+                                   "data-toggle" => "tab",
+                                   class: "#{ 'active' if index == 0 } ",
+                                   href: "#category-preview-#{ category.id } ",
+                                   role: "tab" }= category.name
+    %li.nav-item
+      %a.nav-link.text-uppercase{ "aria-controls" => "category-preview-others",
+                                 "aria-selected" => "false",
+                                 "data-toggle" => "tab",
+                                 href: "#category-preview-others",
+                                 role: "tab" } Others
+  .tab-content
+    - categories.each_with_index do |category, index|
+      .tab-pane.container.pt-2{ id: "category-preview-#{category.id}",
+                                class: "#{ 'active' if index == 0 }",
+                                "aria-labelledby": "category-preview-#{category.id}",
+                                role: "tabpanel" }
+        .row.pt-3
+          - sample_services[index].each do |service|
+            .col-md-3.text-center.home-cat.home-cat-cloud
+              %h3.text-secondary.mb-0
+                %a{ href: url_for(service) }
+                  = service.title
+              %p
+                = service.tagline
+        = link_to("see more services", category, class: "float-right")
+        .clearfix
+    .tab-pane.container.pt-2{ id: "category-preview-others",
+                              "aria-labelledby": "category-preview-others",
+                              role: "tabpanel" }
+      .row.pt-3
+        - other_services.each do |service|
+          .col-md-3.text-center.home-cat.home-cat-cloud
+            %h3.text-secondary.mb-0
+              %a{ href: url_for(service) }
+                = service.title
+            %p
+              = service.tagline
+      = link_to("see more services", services_path, class: "float-right")
+      .clearfix
