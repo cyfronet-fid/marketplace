@@ -34,5 +34,60 @@ header {
       }
     }
   }
+
+  .dropdown-toggle::after {
+    display: none;
+  }
+
+  .nav-link {
+    position: relative;
+
+    &::before {
+      display: block;
+      width: 100%;
+      height: 20px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border: none;
+      content: '';
+    }
+  }
+
+  .dropdown-menu {
+    display: block;
+    visibility: hidden;
+    border: none;
+    margin-top: 0;
+    transform: translate(0, 20px);
+    opacity: 0;
+    transition: opacity 0.5s ease 0s, transform 0.5s ease 0s;
+  }
+
+  .dropdown:hover {
+    .dropdown-menu {
+      display: block;
+      visibility: visible;
+      transform: translate(0, 0);
+      opacity: 1;
+      transition: opacity 0.5s ease 0s, transform 0.5s ease 0s;
+    }
+
+    .nav-link::before {
+      border-bottom: 4px solid $primary;
+      transition: all 0.4s ease 0s;
+    }
+  }
+
+  .dropdown-item {
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+    &:hover {
+      border-bottom: 4px solid $primary;
+      background-color: transparent;
+      padding-bottom: 4px;
+    }
+  }
 }
 
