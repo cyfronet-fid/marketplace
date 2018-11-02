@@ -1,0 +1,14 @@
+.container
+  %h1.mb-5.mt-5.text-center Explore products
+
+.container
+  %ul#my-tab.nav.nav-tabs.home-tabs.mt-4.d-flex.justify-content-center{ role: "tablist" }
+    = render partial: "category", collection: categories
+    %li.nav-item
+      %a#others-tab.nav-link.text-uppercase{ "aria-controls" => "others",
+                                               "aria-selected" => "false",
+                                               "data-toggle" => "tab",
+                                               href: "#others",
+                                               role: "tab" } Others
+  .tab-content
+    = render "home/home-services", collection: services

@@ -1,137 +1,101 @@
+= render "home/products", categories: @categories, services: @services
 .container
-  %h1.mb-5.mt-5.text-center Explore products
-
-.container
-  %ul#my-tab.nav.nav-tabs.home-tabs.mt-4.d-flex.justify-content-center{ role: "tablist" }
-    %li.nav-item
-      %a#home-tab.nav-link.text-uppercase.active{ "aria-controls" => "home",
-                                                  "aria-selected" => "true",
-                                                  "data-toggle" => "tab",
-                                                  href: "#compute",
-                                                  role: "tab" } Compute
-    %li.nav-item
-      %a#profile-tab.nav-link.text-uppercase{ "aria-controls" => "profile",
-                                              "aria-selected" => "false",
-                                              "data-toggle" => "tab",
-                                              href: "#sorage",
-                                              role: "tab" } Storage
-    %li.nav-item
-      %a#messages-tab.nav-link.text-uppercase{ "aria-controls" => "messages",
-                                               "aria-selected" => "false",
-                                               "data-toggle" => "tab",
-                                               href: "#data",
-                                               role: "tab" } Data
-    %li.nav-item
-      %a#application-tab.nav-link.text-uppercase{ "aria-controls" => "profile",
-                                              "aria-selected" => "false",
-                                              "data-toggle" => "tab",
-                                              href: "#applications",
-                                              role: "tab" } Applications
-    %li.nav-item
-      %a#others-tab.nav-link.text-uppercase{ "aria-controls" => "messages",
-                                               "aria-selected" => "false",
-                                               "data-toggle" => "tab",
-                                               href: "#others",
-                                               role: "tab" } Others
-  .tab-content
-    = render "playground/home-categories"
-
-    %hr.mt-4.mb-4
-    %h2.mb-5.mt-5.text-center Research areas
-    .checker-background.p-4.position-relative.area-bg
-      .row
-        .col-md-1
-        .col-md-2.mt-4
-          %a.area.border.bg-white.d-flex.align-items-center.justify-content-center.position-relative.rounded{ href: "" }
-            %h3
-              Medicine
-            %span.more-link.position-absolute{ href: "" }
-              %i.fas.fa-angle-right
-        .col-md-2.mt-4
-          %a.area.border.bg-white.d-flex.align-items-center.justify-content-center.position-relative.rounded{ href: "" }
-            %h3
-              Physics
-            %span.more-link.position-absolute{ href: "" }
-              %i.fas.fa-angle-right
-        .col-md-2.mt-4
-          %a.area.border.bg-white.d-flex.align-items-center.justify-content-center.position-relative.rounded{ href: "" }
-            %h3
-              Biology
-            %span.more-link.position-absolute{ href: "" }
-              %i.fas.fa-angle-right
-        .col-md-2.mt-4
-          %a.area.border.bg-white.d-flex.align-items-center.justify-content-center.position-relative.rounded{ href: "" }
-            %h3
-              Chemistry
-            %span.more-link.position-absolute{ href: "" }
-              %i.fas.fa-angle-right
-        .col-md-2.mt-4
-          %a.area.border.bg-white.d-flex.align-items-center.justify-content-center.position-relative.rounded{ href: "" }
-            %h3
-              Molecular
-            %span.more-link.position-absolute{ href: "" }
-              %i.fas.fa-angle-right
-        .col-md-1
-      .row.d-flex.justify-content-center
-        %button.btn.btn-primary.text-capitalize
-          Check all 145 areas
+  %hr.mt-4.mb-4
+  %h1.mb-5.mt-5.text-center Research areas
+  .checker-background.p-4.position-relative.area-bg
     .row
-      .col-md-6
-        %h3 Recent user activities
-        .row
-          .col-md-6.d-flex.align-items-center
-            .avatar.float-left.mr-3
-            .mt-3.mb-3
-              %p.text-muted.font-italic.small.mb-0 5 min ago John has already bought
-              %a{ href: "" } Storage in Euronet
-          .col-md-6.d-flex.align-items-center
-            .avatar.float-left.mr-3
-            .mt-3.mb-3
-              %p.text-muted.font-italic.small.mb-0 5 min ago John has already bought
-              %a{ href: "" } Storage in Euronet
-        .row
-          .col-md-6.d-flex.align-items-center
-            .avatar.float-left.mr-3
-            .mt-3.mb-3
-              %p.text-muted.font-italic.small.mb-0 5 min ago John has already bought
-              %a{ href: "" } Storage in Euronet
-          .col-md-6.d-flex.align-items-center
-            .avatar.float-left.mr-3
-            .mt-3.mb-3
-              %p.text-muted.font-italic.small.mb-0 5 min ago John has already bought
-              %a{ href: "" } Storage in Euronet
-      .col-md-6
-        %h3 Provider and partners
-        .row
-          .col-md-6.d-flex.align-items-center
-            %img.provider-img.float-left.mr-3{ src: "" }
-            .mt-3.mb-3
-              %a{ href: "" } PACE
-              %ul.text-muted.small.list-inline.grey-list-inline.mb-0
-                %li.list-inline-item.position-relative storage
-                %li.list-inline-item.position-relative cloud
-                %li.list-inline-item.position-relative pcu
+      .col-md-1
+      .col-md-2.mt-4
+        %a.area.border.bg-white.d-flex.align-items-center.justify-content-center.position-relative.rounded{ href: "" }
+          %h3
+            Medicine
+          %span.more-link.position-absolute{ href: "" }
+            %i.fas.fa-angle-right
+      .col-md-2.mt-4
+        %a.area.border.bg-white.d-flex.align-items-center.justify-content-center.position-relative.rounded{ href: "" }
+          %h3
+            Physics
+          %span.more-link.position-absolute{ href: "" }
+            %i.fas.fa-angle-right
+      .col-md-2.mt-4
+        %a.area.border.bg-white.d-flex.align-items-center.justify-content-center.position-relative.rounded{ href: "" }
+          %h3
+            Biology
+          %span.more-link.position-absolute{ href: "" }
+            %i.fas.fa-angle-right
+      .col-md-2.mt-4
+        %a.area.border.bg-white.d-flex.align-items-center.justify-content-center.position-relative.rounded{ href: "" }
+          %h3
+            Chemistry
+          %span.more-link.position-absolute{ href: "" }
+            %i.fas.fa-angle-right
+      .col-md-2.mt-4
+        %a.area.border.bg-white.d-flex.align-items-center.justify-content-center.position-relative.rounded{ href: "" }
+          %h3
+            Molecular
+          %span.more-link.position-absolute{ href: "" }
+            %i.fas.fa-angle-right
+      .col-md-1
+    .row.d-flex.justify-content-center
+      %button.btn.btn-primary.text-capitalize
+        Check all 145 areas
+  .row
+    .col-md-6
+      %h3 Recent user activities
+      .row
+        .col-md-6.d-flex.align-items-center
+          .avatar.float-left.mr-3
+          .mt-3.mb-3
+            %p.text-muted.font-italic.small.mb-0 5 min ago John has already bought
+            %a{ href: "" } Storage in Euronet
+        .col-md-6.d-flex.align-items-center
+          .avatar.float-left.mr-3
+          .mt-3.mb-3
+            %p.text-muted.font-italic.small.mb-0 5 min ago John has already bought
+            %a{ href: "" } Storage in Euronet
+      .row
+        .col-md-6.d-flex.align-items-center
+          .avatar.float-left.mr-3
+          .mt-3.mb-3
+            %p.text-muted.font-italic.small.mb-0 5 min ago John has already bought
+            %a{ href: "" } Storage in Euronet
+        .col-md-6.d-flex.align-items-center
+          .avatar.float-left.mr-3
+          .mt-3.mb-3
+            %p.text-muted.font-italic.small.mb-0 5 min ago John has already bought
+            %a{ href: "" } Storage in Euronet
+    .col-md-6
+      %h3 Provider and partners
+      .row
+        .col-md-6.d-flex.align-items-center
+          %img.provider-img.float-left.mr-3{ src: "" }
+          .mt-3.mb-3
+            %a{ href: "" } PACE
+            %ul.text-muted.small.list-inline.grey-list-inline.mb-0
+              %li.list-inline-item.position-relative storage
+              %li.list-inline-item.position-relative cloud
+              %li.list-inline-item.position-relative pcu
 
-          .col-md-6.d-flex.align-items-center
-            %img.provider-img.float-left.mr-3{ src: "" }
-            .mt-3.mb-3
-              %a{ href: "" } PACE
-              %ul.text-muted.small.list-inline.grey-list-inline.mb-0
-                %li.list-inline-item.position-relative storage
-                %li.list-inline-item.position-relative cloud
-                %li.list-inline-item.position-relative pcu
-        .row
-          .col-md-6.d-flex.align-items-center
-            %img.provider-img.float-left.mr-3{ src: "" }
-            .mt-3.mb-3
-              %a{ href: "" } PACE
-              %ul.text-muted.small.list-inline.grey-list-inline.mb-0
-                %li.list-inline-item.position-relative storage
-                %li.list-inline-item.position-relative cloud
-                %li.list-inline-item.position-relative pcu
-          .col-md-6.d-flex.align-items-center
-            .mt-3.mb-3
-              %a.display-5.d-inline-block.mb-2{ href: "" } 48 more providers
-              %button.btn.btn-primary.btn-sm Check all
+        .col-md-6.d-flex.align-items-center
+          %img.provider-img.float-left.mr-3{ src: "" }
+          .mt-3.mb-3
+            %a{ href: "" } PACE
+            %ul.text-muted.small.list-inline.grey-list-inline.mb-0
+              %li.list-inline-item.position-relative storage
+              %li.list-inline-item.position-relative cloud
+              %li.list-inline-item.position-relative pcu
+      .row
+        .col-md-6.d-flex.align-items-center
+          %img.provider-img.float-left.mr-3{ src: "" }
+          .mt-3.mb-3
+            %a{ href: "" } PACE
+            %ul.text-muted.small.list-inline.grey-list-inline.mb-0
+              %li.list-inline-item.position-relative storage
+              %li.list-inline-item.position-relative cloud
+              %li.list-inline-item.position-relative pcu
+        .col-md-6.d-flex.align-items-center
+          .mt-3.mb-3
+            %a.display-5.d-inline-block.mb-2{ href: "" } 48 more providers
+            %button.btn.btn-primary.btn-sm Check all
 
 
