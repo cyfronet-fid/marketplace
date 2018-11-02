@@ -81,6 +81,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Use bootstrap cards to show service offers (@mkasztelnik)
 - Add service logo (@mkasztelnik)
 - Select affiliation on service order configuration page (@mkasztelnik)
+- Styling of the 3rd step of the ordering process (@jswk)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
@@ -97,5 +98,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Remove default devise session routes, only logout remain (@mkasztelnik)
 
 ### Fixed
+- Correctly expand affiliation accordions in profile (@jswk)
 
 ### Security
