@@ -82,6 +82,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add service logo (@mkasztelnik)
 - Select affiliation on service order configuration page (@mkasztelnik)
 - Styling of the 3rd step of the ordering process (@jswk)
+- Add main navbar content and style it as in EOSC Portal (@jswk)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
