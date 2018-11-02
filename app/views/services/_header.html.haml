@@ -8,8 +8,8 @@
         %p= service.tagline
         .row
           .col
-            %code TODO
-            Available for SME only within 1 day
+            Dedicated for
+            = service.dedicated_for.map { |x| x }.join(", ")
           .col
             Provided by
             = link_to service.provider.name, service.provider
