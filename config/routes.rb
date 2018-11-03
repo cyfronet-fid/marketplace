@@ -20,7 +20,6 @@ Rails.application.routes.draw do
   end
 
   resources :categories, only: :show
-  resources :areas, only: :show
 
   resources :projects, only: :index
   resources :project_items, only: :show do

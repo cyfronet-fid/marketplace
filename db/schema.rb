@@ -55,10 +55,6 @@ ActiveRecord::Schema.define(version: 2018_11_02_122138) do
     t.index ["user_id"], name: "index_affiliations_on_user_id"
   end
 
-  create_table "areas", force: :cascade do |t|
-    t.text "name", null: false
-  end
-
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
     t.string "description"
@@ -125,13 +121,8 @@ ActiveRecord::Schema.define(version: 2018_11_02_122138) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "service_areas", force: :cascade do |t|
-    t.bigint "service_id"
-    t.bigint "area_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["area_id"], name: "index_service_areas_on_area_id"
-    t.index ["service_id"], name: "index_service_areas_on_service_id"
+  create_table "research_areas", force: :cascade do |t|
+    t.text "name", null: false
   end
 
   create_table "service_categories", force: :cascade do |t|
@@ -161,6 +152,16 @@ ActiveRecord::Schema.define(version: 2018_11_02_122138) do
     t.index ["source_id", "target_id"], name: "index_service_relationships_on_source_id_and_target_id", unique: true
     t.index ["source_id"], name: "index_service_relationships_on_source_id"
     t.index ["target_id"], name: "index_service_relationships_on_target_id"
+  end
+
+  create_table "service_research_areas", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "research_area_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["research_area_id"], name: "index_service_research_areas_on_research_area_id"
+    t.index ["service_id", "research_area_id"], name: "index_service_research_areas_on_service_id_and_research_area_id", unique: true
+    t.index ["service_id"], name: "index_service_research_areas_on_service_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -221,6 +222,8 @@ ActiveRecord::Schema.define(version: 2018_11_02_122138) do
   add_foreign_key "project_items", "projects"
   add_foreign_key "service_relationships", "services", column: "source_id"
   add_foreign_key "service_relationships", "services", column: "target_id"
+  add_foreign_key "service_research_areas", "research_areas"
+  add_foreign_key "service_research_areas", "services"
   add_foreign_key "services", "providers"
   add_foreign_key "services", "users", column: "owner_id"
 end

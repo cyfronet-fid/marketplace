@@ -25,7 +25,7 @@
   - @service.contact_emails.each do |email|
     %p= email
   %h2 Areas
-  - @service.areas.each do |area|
+  - @service.research_areas.each do |area|
     %p= area.name
 
   - if policy([:backoffice, @service]).edit?

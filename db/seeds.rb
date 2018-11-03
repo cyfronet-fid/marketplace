@@ -26,23 +26,24 @@ yaml_hash["providers"].each do |_, hash|
   Provider.find_or_create_by(name: hash["name"])
 end
 
+areas = []
 yaml_hash["area"].each do |_, hash|
-  Area.find_or_create_by(name: hash["name"])
-  puts "Generated  areas #{ hash["name"] }"
+  ResearchArea.find_or_create_by(name: hash["name"])
+  puts "#{ hash["name"] } area generated"
 end
 
 puts "Generating services from yaml"
 yaml_hash["services"].each do |_, hash|
   categories = Category.where(name: hash["parents"])
   providers = Provider.where(name: hash["providers"])
-  area = Area.where(name: hash["area"])
+  area = ResearchArea.where(name: hash["area"])
 
   Service.find_or_initialize_by(title: hash["title"]) do |service|
 
     service.update!(tagline: hash["tagline"],
                     description: hash["description"],
                     provider: providers[0],
-                    areas: area,
+                    research_areas: area,
                     open_access: hash["open_access"],
                     connected_url: hash["connected_url"],
                     webpage_url: hash["webpage_url"],

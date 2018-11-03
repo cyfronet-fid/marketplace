@@ -2,6 +2,6 @@
 
 require "rails_helper"
 
-RSpec.describe Area, type: :model do
+RSpec.describe ResearchArea, type: :model do
   it { should validate_presence_of(:name) }
 end

@@ -28,6 +28,14 @@
                                 ["★★★★+", "4"],
                                 ["★★★★★", "5"]], params[:rating])
 
+  %p.font-weight-bold.mt-3 Research Area
+  .row
+    .col-md-10.offset-md-1
+      .form-group
+        %select#research-area.form-control.form-control-sm{ name: "research_area" }
+          %option{ value: "", selected: "selected" }
+            Any
+          = options_for_select(research_areas.map { |area| [area.name, area.id] }, params[:research_area])
   .row
     .col.pr-2
       %button#filter-submit.btn.btn-primary.mt-4.w-100{ type: "submit" }
