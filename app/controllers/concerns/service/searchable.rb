@@ -28,13 +28,21 @@ module Service::Searchable
       end
       services.where(provider: search_value)
     end
+
+    def filter_research_area(services, search_value)
+      if search_value.empty?
+        return services
+      end
+      services.joins(:service_research_areas).
+              where(service_research_areas: { research_area_id: search_value })
+    end
   end
 
   include FieldFilterable
 
 
   # Add here new fields from filter form (:q is handled separately, as it requires calling of elasticsearch)
-  @@searchable_fields = [:location, :provider, :rating]
+  @@searchable_fields = [:location, :provider, :rating, :research_area]
 
   private
     def query_present?

@@ -55,8 +55,3 @@ crumb :projects do
   link "My services", projects_path
   parent :root
 end
-
-crumb :area do |area|
-  link "#{area.name}", area_path(area)
-  parent :services
-end

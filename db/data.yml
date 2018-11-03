@@ -99,14 +99,6 @@ providers:
 
 area:
 
-    FormalSciences:
-        name: &fcArea "Formal Sciences"
-    LlifeBiology:
-        name: &lbArea "Life Sciences / Biology"
-    Healthcare:
-        name: "Applied Sciences / Engineering / Healthcare"
-    PhilosophyHistory:
-        name: "Philosophy / History"
     Interdisciplinary:
         name: &interdisciplinary "Interdisciplinary"
     EarthScience:
@@ -120,19 +112,19 @@ area:
     ApplicationFrameworks:
         name: &applicationFrameworks "Application and data analysis framework"
     DataAnalysis:
-        name: &dataAnalysis Data analysis
+        name: &dataAnalysis "Data analysis"
     Humanities:
-        name: &humanities Humanities
+        name: &humanities "Humanities"
     HighEnergyPhysics:
-        name: &highEnergyPhysics High-Energy Physics
+        name: &highEnergyPhysics "High-Energy Physics"
     PhysicalScienceAerosol:
-        name: &physicalScienceAerosol Physical science (aerosol physics)
+        name: &physicalScienceAerosol "Physical science (aerosol physics)"
     ClimateScience:
-        name: &climateScience Climate science
+        name: &climateScience "Climate science"
     EnvironmentalScience:
-        name: &environmentalScience Environmental science
+        name: &environmentalScience "Environmental science"
     BiologicalSciences:
-        name: &biologicalSciences Biological Sciences
+        name: &biologicalSciences "Biological Sciences"
 services:
 
     Cloud compute:

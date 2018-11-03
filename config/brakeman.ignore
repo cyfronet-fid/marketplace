@@ -3,14 +3,14 @@
     {
       "warning_type": "Mass Assignment",
       "warning_code": 70,
-      "fingerprint": "40225c7aba2c8b84b8f2ce9bd3bbb6e26edc65e1c85d715b00727db98258f5fd",
+      "fingerprint": "594749ab9e2747f8efd8d221a333f94751a1f3a572ac1a30af8c26fab1a7511f",
       "check_name": "MassAssignment",
       "message": "Parameters should be whitelisted for mass assignment",
       "file": "app/views/services/_services.html.haml",
-      "line": 13,
+      "line": 11,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.permit!",
-      "render_path": [{"type":"controller","class":"AreasController","method":"show","line":11,"file":"app/controllers/areas_controller.rb"},{"type":"template","name":"areas/show","line":7,"file":"app/views/areas/show.html.haml"}],
+      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":12,"file":"app/controllers/categories_controller.rb"},{"type":"template","name":"categories/show","line":9,"file":"app/views/categories/show.html.haml"}],
       "location": {
         "type": "template",
         "template": "services/_services"
@@ -39,25 +39,6 @@
       "note": ""
     },
     {
-      "warning_type": "Mass Assignment",
-      "warning_code": 70,
-      "fingerprint": "915061f3ad82c1f03f78d0c5527dbfdf135b652a6c5de3802ec8a8bb5d2946a0",
-      "check_name": "MassAssignment",
-      "message": "Parameters should be whitelisted for mass assignment",
-      "file": "app/views/services/_services.html.haml",
-      "line": 9,
-      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
-      "code": "params.permit!",
-      "render_path": [{"type":"controller","class":"AreasController","method":"show","line":11,"file":"app/controllers/areas_controller.rb"},{"type":"template","name":"areas/show","line":7,"file":"app/views/areas/show.html.haml"}],
-      "location": {
-        "type": "template",
-        "template": "services/_services"
-      },
-      "user_input": null,
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
       "warning_type": "Dynamic Render Path",
       "warning_code": 15,
       "fingerprint": "a41971a03f7de3a63ba4b1d714fecd10bfe5f5c3013120baa8dd46139e8d994a",
@@ -80,14 +61,33 @@
     {
       "warning_type": "Mass Assignment",
       "warning_code": 70,
-      "fingerprint": "db5354c98736635ea827b77ad1879bcf4a2064c6f5e6c74faee19b5df0d30dfc",
+      "fingerprint": "acd7e7a3f315d8b18f5cacf696a8b2feb9392a12c964e88565ff510c8bbe421e",
       "check_name": "MassAssignment",
       "message": "Parameters should be whitelisted for mass assignment",
       "file": "app/views/services/_services.html.haml",
-      "line": 11,
+      "line": 13,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.permit!",
-      "render_path": [{"type":"controller","class":"AreasController","method":"show","line":11,"file":"app/controllers/areas_controller.rb"},{"type":"template","name":"areas/show","line":7,"file":"app/views/areas/show.html.haml"}],
+      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":12,"file":"app/controllers/categories_controller.rb"},{"type":"template","name":"categories/show","line":9,"file":"app/views/categories/show.html.haml"}],
+      "location": {
+        "type": "template",
+        "template": "services/_services"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "bb6cdc7709cb7df03208d094e5b35e02e2ce614bfbf68ec4bd258ea5d482624a",
+      "check_name": "MassAssignment",
+      "message": "Parameters should be whitelisted for mass assignment",
+      "file": "app/views/services/_services.html.haml",
+      "line": 9,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.permit!",
+      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":12,"file":"app/controllers/categories_controller.rb"},{"type":"template","name":"categories/show","line":9,"file":"app/views/categories/show.html.haml"}],
       "location": {
         "type": "template",
         "template": "services/_services"
@@ -97,6 +97,6 @@
       "note": ""
     }
   ],
-  "updated": "2018-11-02 21:26:05 +0100",
+  "updated": "2018-11-03 23:26:45 +0100",
   "brakeman_version": "4.3.1"
 }

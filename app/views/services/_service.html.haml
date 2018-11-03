@@ -7,11 +7,7 @@
         Provided by
         = link_to service.provider.name, service.provider
       .col
-        Area
-        - service.areas.each do |area|
-          = link_to area.name, area
-          - if area != service.areas.last
-            ,
+        = render "services/research_area", service: service
       .col
         Dedicated for
         = service.dedicated_for.map { |x| x }.join(", ")
