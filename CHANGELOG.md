@@ -100,5 +100,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Correctly expand affiliation accordions in profile (@jswk)
+- Insert a line-break after button(s) in service header right panel (@jswk)
 
 ### Security
