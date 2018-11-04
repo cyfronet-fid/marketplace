@@ -52,7 +52,7 @@ RSpec.feature "Services in backoffice" do
     fill_in "Service website", with: "https://sample.url"
     fill_in "Places", with: "Europe"
     fill_in "Languages", with: "English"
-    fill_in "Dedicated for", with: ["single researcher"]
+    fill_in "service_dedicated_for_0", with: "single researcher"
     fill_in "Terms of use url", with: "https://sample.url"
     fill_in "Access policies url", with: "https://sample.url"
     fill_in "Corporate sla url", with: "https://sample.url"
