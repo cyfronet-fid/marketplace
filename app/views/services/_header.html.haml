@@ -26,9 +26,9 @@
               #{service.service_opinion_count} opinions
       .col-3.text-center
         - if policy(service).order?
-          = link_to service_offers_path(service), class: "btn btn-primary" do
+          = link_to service_offers_path(service), class: "btn btn-primary d-block mb-2" do
             = order_button_text
         - if service.open_access?
-          = link_to "Go to the service", service.connected_url, class: "btn btn-primary", target: "_blank"
+          = link_to "Go to the service", service.connected_url, class: "btn btn-primary d-block mb-2", target: "_blank"
 
         = render "services/ask_question", service: service, question: question
