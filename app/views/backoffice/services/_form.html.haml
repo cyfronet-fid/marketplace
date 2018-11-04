@@ -7,7 +7,7 @@
   = f.input :connected_url, label: "Service website"
   = f.input :places
   = f.input :languages
-  = f.input :dedicated_for
+  = f.input :dedicated_for, as: :array, multiple: true
   = f.input :terms_of_use_url
   = f.input :access_policies_url
   = f.input :corporate_sla_url

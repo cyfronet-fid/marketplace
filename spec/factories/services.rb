@@ -23,7 +23,7 @@ FactoryBot.define do
 
     sequence(:places) { |n| "service #{n} place" }
     sequence(:languages) { |n| "service #{n} lanuage" }
-    sequence(:dedicated_for) { |n| "service #{n} dedicated for" }
+    sequence(:dedicated_for) { |n| ["service #{n} dedicated for"] }
     sequence(:restrictions) { |n| "service #{n} restrictions" }
     sequence(:phase) { |n| "service #{n} phase" }
   end

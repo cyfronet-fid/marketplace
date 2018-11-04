@@ -14,9 +14,10 @@
             = service.languages
       %h3 Dedicated for
       %ul
-        %li
-          %span
-            = service.dedicated_for
+        - service.dedicated_for.each do |dedication|
+          %li
+            %span
+              = dedication
       %h3 Support
       %ul
         %li
