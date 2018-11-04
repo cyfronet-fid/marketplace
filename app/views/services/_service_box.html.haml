@@ -9,4 +9,4 @@
         %p= service.tagline
         .row
           .col Provided by: #{service.provider.name}
-          .col Dedicated for #{service.dedicated_for}
+          .col Dedicated for #{service.dedicated_for.map { |x| x }.join(", ")}
