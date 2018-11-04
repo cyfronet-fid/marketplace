@@ -22,7 +22,7 @@ if Rails.env.development?
                        provider: Provider.all.sample,
                        places: Faker::Address.country,
                        languages: Faker::Nation.language,
-                       dedicated_for: Faker::Lorem.sentence,
+                       dedicated_for: [Faker::Lorem.sentence],
                        terms_of_use_url: Faker::Internet.url,
                        access_policies_url: Faker::Internet.url,
                        corporate_sla_url: Faker::Internet.url,
