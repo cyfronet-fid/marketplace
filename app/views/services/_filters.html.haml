@@ -16,6 +16,20 @@
             Any
           = options_for_select(providers.map { |provider| [provider.name, provider.id] }, params[:provider])
 
+  %p.font-weight-bold.mt-3 Dedicated for
+  .row
+    .col-md-10.offset-md-1
+      .form-group
+        %select#dedicated-for.form-control.form-control-sm{ name: "dedicated_for" }
+          %option{ value: "", selected: "selected" }
+            Any
+          = options_for_select([["Researchers", "Researchers"],
+                                ["VO", "VO"],
+                                ["Providers", "Providers"],
+                                ["Research organisations", "Research organisations"],
+                                ["Business", "Business"],
+                                ["Other", "Other"]], params[:dedicated_for])
+
   %p.font-weight-bold.mt-3 Rating
   .row
     .col-md-10.offset-md-1

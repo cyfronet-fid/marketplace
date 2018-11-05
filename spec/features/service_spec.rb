@@ -91,7 +91,7 @@ end
 RSpec.feature "Service filtering and sorting" do
   before(:each) do
     area = create(:research_area, name: "area 1")
-    service = create(:service, title: "AAAA Service", rating: 5.0)
+    service = create(:service, title: "AAAA Service", rating: 5.0, dedicated_for: ["VO"])
     service.research_areas << area
     create(:service, title: "BBBB Service", rating: 3.0)
     create(:service, title: "CCCC Service", rating: 4.0)
@@ -163,6 +163,14 @@ RSpec.feature "Service filtering and sorting" do
   scenario "searching vis research_area" do
     visit services_path
     select ResearchArea.first.name, from: "research_area"
+    click_on(id: "filter-submit")
+
+    expect(page).to have_selector(".media", count: 1)
+  end
+
+  scenario "searching via dedicated_for", js: true do
+    visit services_path
+    select "VO", from: "dedicated-for"
     click_on(id: "filter-submit")
 
     expect(page).to have_selector(".media", count: 1)
