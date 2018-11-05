@@ -38,7 +38,6 @@ class ProjectItem < ApplicationRecord
   validates :status, presence: true
   validates :customer_typology, presence: true, unless: :open_access?
   validates :access_reason, presence: true, unless: :open_access?
-  validates :additional_information, presence: true, unless: :open_access?
 
   delegate :user, to: :project
   delegate :service, to: :offer
