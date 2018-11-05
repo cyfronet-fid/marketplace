@@ -26,7 +26,7 @@
     %button.navbar-toggler{ "aria-controls" => "main-navbar",
                            "aria-expanded" => "false",
                            "aria-label" => "Toggle navigation",
-                           "data-target" => "#navbar-supported-content",
+                           "data-target" => "#main-navbar",
                            "data-toggle" => "collapse",
                            type: "button" }
       %i.fas.fa-bars
@@ -34,8 +34,11 @@
     #main-navbar.collapse.navbar-collapse
       %ul.navbar-nav.ml-auto.pt-2.d-flex.flex-wrap
         %li.nav-item.ml-1.dropdown
-          %a.nav-link.px-2.py-1.dropdown-toggle About
-          .dropdown-menu
+          %a.nav-link.px-2.py-1.dropdown-toggle{ "data-toggle": "dropdown", "aria-expanded": "false" }
+            %i.fas.fa-chevron-down.d-lg-none.mr-2
+            %i.fas.fa-chevron-up.d-lg-none.mr-2
+            About
+          .dropdown-menu.ml-4.ml-lg-0
             %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/about/eosc" } EOSC
             %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/about/eosc-projects" } EOSC Projects
             %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/about/eosc-members" } EOSC Members
@@ -44,31 +47,45 @@
             %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/about/faqs" } FAQs
             %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/contact-us" } Contact us
         %li.nav-item.ml-1.dropdown
-          %a.nav-link.px-2.py-1.dropdown-toggle Governance
-          .dropdown-menu
+          %a.nav-link.px-2.py-1.dropdown-toggle{ "data-toggle": "dropdown", "aria-expanded": "false" }
+            %i.fas.fa-chevron-down.d-lg-none.mr-2
+            %i.fas.fa-chevron-up.d-lg-none.mr-2
+            Governance
+          .dropdown-menu.ml-4.ml-lg-0
             %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/governance" } EOSC Governance
             %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/governance/rules-participation" }
               Rules of participation
             %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/governance/best-practices" } Best Practices
         %li.nav-item.ml-1.dropdown
-          %a.nav-link.px-2.py-1.dropdown-toggle{ href: url_for(services_path) } Services & Resources
-          .dropdown-menu
+          %a.nav-link.px-2.py-1.dropdown-toggle{ href: url_for(services_path), "aria-expanded": "true" }
+            %i.fas.fa-chevron-up.d-lg-none.mr-2
+            Services & Resources
+          .dropdown-services.dropdown-menu.ml-4.ml-lg-0
             - @root_categories.each do |root_category|
               = link_to root_category.name, root_category, class: "dropdown-item"
         %li.nav-item.ml-1.dropdown
-          %a.nav-link.px-2.py-1.dropdown-toggle Policy
-          .dropdown-menu
+          %a.nav-link.px-2.py-1.dropdown-toggle{ "data-toggle": "dropdown", "aria-expanded": "false" }
+            %i.fas.fa-chevron-down.d-lg-none.mr-2
+            %i.fas.fa-chevron-up.d-lg-none.mr-2
+            Policy
+          .dropdown-menu.ml-4.ml-lg-0
             %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/policy/ec-documents" } EC Documents
             %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/policy/europe" } Europe
             %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/policy/eu-member-states" } Member States
         %li.nav-item.ml-1.dropdown
-          %a.nav-link.px-2.py-1.dropdown-toggle EOSC in Practice
-          .dropdown-menu
+          %a.nav-link.px-2.py-1.dropdown-toggle{ "data-toggle": "dropdown", "aria-expanded": "false" }
+            %i.fas.fa-chevron-down.d-lg-none.mr-2
+            %i.fas.fa-chevron-up.d-lg-none.mr-2
+            EOSC in Practice
+          .dropdown-menu.ml-4.ml-lg-0
             %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/eosc-in-practice/use-cases" } Use Cases
             %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/eosc-in-practice/open-call" } Open Call
         %li.nav-item.ml-1.dropdown
-          %a.nav-link.px-2.py-1.dropdown-toggle Media
-          .dropdown-menu
+          %a.nav-link.px-2.py-1.dropdown-toggle{ "data-toggle": "dropdown", "aria-expanded": "false" }
+            %i.fas.fa-chevron-down.d-lg-none.mr-2
+            %i.fas.fa-chevron-up.d-lg-none.mr-2
+            Media
+          .dropdown-menu.ml-4.ml-lg-0
             %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/media/news" } News
             %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/media/events" } Forthcoming Events
             %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/media/past-events" } Past Events
