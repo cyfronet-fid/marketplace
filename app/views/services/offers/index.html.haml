@@ -12,14 +12,6 @@
     = render partial: "services/offers/offer",
       collection: @offers, as: :offer, locals: { f: f }
 
-.btn-group.btn-group-toggle{ data: { toggle: "buttons" } }
-  %label.btn.btn-secondary{ active: true }
-    %input{ type: "radio", name: "options", id: "option1", autocomplete: "off", checked: true } Active
-  %label.btn.btn-secondary
-    %input{ type: "radio", name: "options", id: "option2", autocomplete: "off" } Radio
-  %label.btn.btn-secondary
-    %input{ type: "radio", name: "options", id: "option3", autocomplete: "off" } Radio
-
 = content_for :cancel_button do
   = link_to "Cancel order and quit", service_cancel_path(@service), method: :delete
 
