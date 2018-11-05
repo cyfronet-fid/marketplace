@@ -58,3 +58,17 @@ yaml_hash["services"].each do |_, hash|
   end
   puts "Generated service #{ hash["title"] }"
 end
+
+puts "Generating service relations from yaml"
+puts "Remove all relations and crating new defined"
+ServiceRelationship.delete_all
+yaml_hash["relations"].each do |_, hash|
+  source = Service.find_by(title: hash["source"])
+  target = Service.find_by(title: hash["target"])
+  ServiceRelationship.create!(source: source, target: target)
+  if hash["both"]
+    ServiceRelationship.create!(source: target, target: source)
+    puts "Geneated relation from #{target.title} to #{source.title}"
+  end
+  puts "Geneated relation from #{source.title} to #{target.title}"
+end
