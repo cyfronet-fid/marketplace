@@ -7,7 +7,7 @@ categories:
         name: &dataStorageParent "Data & Storage"
         description: Storage and data management services.
     Applications on Demand:
-        name: &applicationsParent "Applications on Demand"
+        name: &applicationsParent "Applications"
         description: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis.
     Thematic services:
         name: &thematicServicesParent "Thematic services"
@@ -102,7 +102,7 @@ providers:
 services:
 
     Cloud compute:
-        title: EGI Cloud compute
+        title: &egiCloud EGI Cloud compute
         parents: *computeParent
         providers: [*egifcs]
         open_access: false
@@ -222,7 +222,7 @@ services:
             4. You will receive an email summarising your order.
             5. You will be contacted by the EGI support team.
     B2DROP:
-        title: B2DROP
+        title: &b2drop B2DROP
         parents: *dataStorageParent
         providers: [*eudat, *jsc]
         open_access: false
@@ -264,7 +264,7 @@ services:
 
           EUDAT and JSC.
     B2FIND:
-        title: B2FIND
+        title: &b2find B2FIND
         parents: [*dataStorageParent, *researchDataParent]
         providers: [*eudat, *dkrz]
         open_access: false
@@ -321,7 +321,7 @@ services:
           [1]: https://b2find.eudat.eu/
           [2]: http://b2find.eudat.eu/guidelines/harvesting.html
     B2HANDLE:
-        title: B2HANDLE
+        title: &b2handle B2HANDLE
         parents: *dataStorageParent
         providers: [*eudat, *surfsara, *grnet]
         open_access: false
@@ -361,7 +361,7 @@ services:
 
           EUDAT and SURFsara, GRNET
     B2NOTE:
-        title: B2NOTE
+        title: &b2note B2NOTE
         parents: *dataStorageParent
         providers: [*eudat, *bsc]
         open_access: false
@@ -407,7 +407,7 @@ services:
 
           EUDAT and BSC
     B2SAFE:
-        title: B2SAFE
+        title: &b2safe B2SAFE
         parents: *dataStorageParent
         providers: [*eudat, *all]
         open_access: false
@@ -441,7 +441,7 @@ services:
 
           EUDAT and all generic CDI Level 1 providers
     B2SHARE:
-        title: B2SHARE
+        title: &b2share B2SHARE
         parents: *dataStorageParent
         providers: [*eudat, *csc]
         open_access: false
@@ -487,7 +487,7 @@ services:
 
           EUDAT and CSC
     B2STAGE:
-        title: B2STAGE
+        title: &b2stage B2STAGE
         parents: *dataStorageParent
         providers: [*eudat, *all]
         open_access: false
@@ -647,7 +647,7 @@ services:
           which can be accessed through various data viewers.
           Data from individual floats are also available from a certain region or time.
     Clarin:
-        title: Clarin
+        title: &clarinService Clarin
         parents: *researchDataParent
         providers: [*clarin]
         open_access: false
@@ -1038,7 +1038,7 @@ services:
         description: |
           AutoDock Vina is an open-source software for doing molecular docking.
     Notebook:
-        title: Notebook
+        title: &notebook Notebook
         parents: *applicationsParent
         providers: [*not]
         open_access: false
@@ -1187,8 +1187,8 @@ services:
 
           [1]: https://dodas-iam.cloud.cnaf.infn.it/register
     D4 Science Particle Formation:
-        title: Particle Formation
-        parents: *applicationsParent
+        title: &d4scienceService Particle Formation
+        parents: [*thematicServicesParent, *applicationsParent]
         providers: [*d4science]
         open_access: false
         webpage_url: https://services.d4science.org/group/particleformation
@@ -1494,8 +1494,8 @@ services:
 #
 #                      During EOSC-hub, the WeNMR services will be integrated with EUDAT services and other components from the INDIGO catalogue."
     HADDOCK:
-        title: HADDOCK
-        parents: *applicationsParent
+        title: &haddock HADDOCK
+        parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
         open_access: true
         connected_url: https://enmrdevel.science.uu.nl/auth/register/haddock
@@ -1519,8 +1519,8 @@ services:
           The portal offers a number of interfaces, depending on the amount of information and restraints that researchers wish to place on their models.
           HADDOCK is prepared to deal with several classes of problems, including protein-protein, protein-nucleic acids and protein-ligand complexes."
     PowerFit:
-        title: PowerFit
-        parents: *applicationsParent
+        title: &powerFit PowerFit
+        parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
         open_access: true
         connected_url: https://enmrdevel.science.uu.nl/auth/register/powerfit
@@ -1543,8 +1543,8 @@ services:
           PowerFit is a software designed to fit atomic structures into cryo-EM density maps,
           using an exhaustive 6-dimensional cross-correlation search."
     DisVis:
-        title: DisVis
-        parents: *applicationsParent
+        title: &disVis DisVis
+        parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
         open_access: true
         connected_url: https://enmrdevel.science.uu.nl/auth/register/disvis
@@ -1568,8 +1568,8 @@ services:
           DisVis is a software designed to visualize and quantify the accessible interaction space defined by
           distance restraints between biomolecules.
     CS-ROSETA:
-        title: CS-ROSETA
-        parents: *applicationsParent
+        title: &roseta CS-ROSETA
+        parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
         open_access: true
         connected_url: https://enmrdevel.science.uu.nl/auth/register/cs_rosetta3
@@ -1592,8 +1592,8 @@ services:
           The CS-ROSETTA3 web portal allows structural biologists to model the 3D structure of proteins using only
           the 13CA, 13CB, 13C’, 15N, 1HA and 1HN NMR chemical shifts as input.
     AMBER:
-        title: AMBER
-        parents: *applicationsParent
+        title: &amber AMBER
+        parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
         open_access: true
         connected_url: https://enmrdevel.science.uu.nl/
@@ -1617,8 +1617,8 @@ services:
           of programs that allow users to perform molecular dynamics (MD) simulations on biological systems
           and to store different calculations.
     FANTEN:
-        title: FANTEN
-        parents: *applicationsParent
+        title: &fanten FANTEN
+        parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
         open_access: true
         connected_url: https://enmrdevel.science.uu.nl/
@@ -1641,8 +1641,8 @@ services:
           FANTEN is a user-friendly web tool for the determination of anisotropy tensors.
           It is freely available through the WeNMR gateway.
     SpotOn:
-        title: SpotOn
-        parents: *applicationsParent
+        title: &spotOn SpotOn
+        parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
         open_access: true
         connected_url: http://www.bonvinlab.org/software/haddock2.2/
@@ -1797,3 +1797,145 @@ services:
           3. Go to the cart and submit your order.
           4. You will receive an email summarising your order.
           5. You will be contacted by the EGI support team."
+
+relations:
+  HaddockToPowerFit:
+    both: true
+    source: *haddock
+    target: *powerFit
+  HaddockToDisVis:
+    both: true
+    source: *haddock
+    target: *disVis
+  HaddockToRoseta:
+    both: true
+    source: *haddock
+    target: *roseta
+  HaddockToAmber:
+    both: true
+    source: *haddock
+    target: *amber
+  HaddockToFanten:
+    both: true
+    source: *haddock
+    target: *fanten
+  HaddockToSpotOn:
+    both: true
+    source: *haddock
+    target: *spotOn
+  PowerFitToDisVis:
+    both: true
+    source: *powerFit
+    target: *disVis
+  PowerFitToRoseta:
+    both: true
+    source: *powerFit
+    target: *roseta
+  PowerFitToAmber:
+    both: true
+    source: *powerFit
+    target: *amber
+  PowerFitToFanten:
+    both: true
+    source: *powerFit
+    target: *fanten
+  PowerFitToSpotOn:
+    both: true
+    source: *powerFit
+    target: *spotOn
+  DisVisToRoseta:
+    both: true
+    source: *disVis
+    target: *roseta
+  DisVisToAmber:
+    both: true
+    source: *disVis
+    target: *amber
+  DisVisToFanten:
+    both: true
+    source: *disVis
+    target: *fanten
+  DisVisToSpotOn:
+    both: true
+    source: *disVis
+    target: *spotOn
+  RosetaToAmber:
+    both: true
+    source: *roseta
+    target: *amber
+  RosetaToFanten:
+    both: true
+    source: *roseta
+    target: *fanten
+  RosetaToSpotOn:
+    both: true
+    source: *roseta
+    target: *spotOn
+  AmberToFanten:
+    both: true
+    source: *amber
+    target: *fanten
+  AmberToSpotOn:
+    both: true
+    source: *amber
+    target: *spotOn
+  FantenToSpotOn:
+    both: true
+    source: *fanten
+    target: *spotOn
+#  egiToGeossPortal:
+#    both: true
+#    source: *egiCloud
+#    target: *
+#  egiToGeossDab:
+#    both: true
+#    source: *egiCloud
+#    target: *
+#  geossPortalToDab:
+#    both: true
+#    source: *
+#    target: *
+#  notebookToDesyCloud:
+#    both: true
+#    source: *notebook
+#    target: *
+#  notebookToXFEL:
+#    both: true
+#    source: *notebook
+#    target: *
+#  notebookToFaas:
+#    both: true
+#    source: *notebook
+#    target: *
+#  desyCloudToXFEL:
+#    both: true
+#    source: *
+#    target: *
+#  desyCloudToFaas:
+#    both: true
+#    source: *
+#    target: *
+#  XFELToFaas:
+#    both: true
+#    source: *
+#    target: *
+  notebookToD4Science:
+    both: true
+    source: *notebook
+    target: *spotOn
+  egiToD4Science:
+    both: true
+    source: *egiCloud
+    target: *d4scienceService
+  clarinToB2Find:
+    both: true
+    source: *clarinService
+    target: *b2find
+  clarinToB2Share:
+    both: true
+    source: *clarinService
+    target: *b2share
+  b2findToB2Share:
+    both: true
+    source: *b2find
+    target: *b2share
