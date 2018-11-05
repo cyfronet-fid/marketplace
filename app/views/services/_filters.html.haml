@@ -1,64 +1,35 @@
 %h5.mb-3.position-relative Filters
-%p.font-weight-bold Price
-.row
-  .col-md-5.offset-md-1
-    %input.form-control.form-control-sm{ type: "text", placeholder: "from" }
-  .col-md-5
-    %input.form-control.form-control-sm{ type: "text", placeholder: "to" }
-.row
-  .col.offset-md-1
-    .form-check.mt-1
-      %input#charges.form-check-input{ type: "checkbox" }
-      %label.form-check-label.small{ for: "charges" }
-        free of charge
-%p.font-weight-bold.mt-3 Provider location
-.row
-  .col-md-10.offset-md-1
-    .form-group
-      %select.form-control.form-control-sm
-        %option.disable{ disabled: "disabled", selected: "selected" }
-          select country
-        %option
-          Poland
-%p.font-weight-bold.mt-2.mb-2 Availability
-.row
-  .col-md-8.offset-md-1
-    .form-check.mt-1
-      %input#check-1.form-check-input{ type: "checkbox" }
-      %label.form-check-label.small{ for: "check-1" }
-        Now
-  .col-md-3.text-right
-    %span.small
-      4
-.row
-  .col-md-8.offset-md-1
-    .form-check.mt-1
-      %input#check-2.form-check-input{ type: "checkbox", disabled: "disabled" }
-      %label.form-check-label.small{ for: "check-2" }
-        1 day
-  .col-md-3.text-right
-    %span.small
-      0
-.row
-  .col-md-8.offset-md-1
-    .form-check.mt-1
-      %input#check-3.form-check-input{ type: "checkbox" }
-      %label.form-check-label.small{ for: "check-3" }
-        2-3 days
-  .col-md-3.text-right
-    %span.small
-      4
-.row
-  .col-md-8.offset-md-1
-    .form-check.mt-1
-      %input#check-4.form-check-input{ type: "checkbox" }
-      %label.form-check-label.small{ for: "check-4" }
-        4 days and more
-  .col-md-3.text-right
-    %span.small
-      4
-.row
-  .col.pr-2
-    %button#filter-submit.btn.btn-primary.mt-4.w-100{ type: "submit" }
-      filter
+= form_tag "", method: :get, role: "search", class: "", "data-sync-query-form": "data-sync-query-form" do
+  %p.font-weight-bold.mt-3 Provider location
+  .row
+    .col-md-10.offset-md-1
+      .form-group
+        %select#location.form-control.form-control-sm{ name: "location" }
+          = options_for_select([["Any", ""], ["EU", "EU"]], params[:location])
+
+  %p.font-weight-bold.mt-3 Provider
+  .row
+    .col-md-10.offset-md-1
+      .form-group
+        %select#provider.form-control.form-control-sm{ name: "provider" }
+          %option{ value: "", selected: "selected" }
+            Any
+          = options_for_select(providers.map { |provider| [provider.name, provider.id] }, params[:provider])
+
+  %p.font-weight-bold.mt-3 Rating
+  .row
+    .col-md-10.offset-md-1
+      .form-group
+        %select#rating.form-control.form-control-sm{ name: "rating" }
+          = options_for_select([["Any", ""],
+                                ["★+", "1"],
+                                ["★★+", "2"],
+                                ["★★★+", "3"],
+                                ["★★★★+", "4"],
+                                ["★★★★★", "5"]], params[:rating])
+
+  .row
+    .col.pr-2
+      %button#filter-submit.btn.btn-primary.mt-4.w-100{ type: "submit" }
+        filter
 

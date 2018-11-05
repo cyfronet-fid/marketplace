@@ -141,4 +141,24 @@ RSpec.feature "Service filtering and sorting" do
 
     expect(page).to have_selector(".media", count: 1)
   end
+
+  scenario "searching via provider", js: true do
+    visit services_path
+    select Provider.first.name, from: "provider"
+    click_on(id: "filter-submit")
+
+    expect(page).to have_selector(".media", count: 1)
+  end
+
+  scenario "searching via rating", js: true do
+    visit services_path
+    select "★★★★★", from: "rating"
+    click_on(id: "filter-submit")
+
+    expect(page).to have_selector(".media", count: 1)
+  end
+
+  scenario "searching via location", js: true do
+    `pending "add test after implementing location to filtering #{__FILE__}"`
+  end
 end
