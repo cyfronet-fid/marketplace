@@ -44,10 +44,8 @@ class Profiles::AffiliationsController < ApplicationController
   private
 
     def affiliation_template
-      # TODO: set status active as mail delivery when deployed didn't work,
-      # but obviously, status shouldn't be set to active here
       Affiliation.new(permitted_attributes(Affiliation).
-                      merge(user: current_user, status: :active))
+                      merge(user: current_user))
     end
 
     def find_and_authorize
