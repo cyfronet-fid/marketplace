@@ -15,6 +15,10 @@ module Service::Searchable
       services
     end
 
+    def filter_dedicated_for(services, search_value)
+      services.where(dedicated_for: [search_value])
+    end
+
     def filter_rating(services, search_value)
       services.where("rating >= ?", search_value)
     end
@@ -33,7 +37,7 @@ module Service::Searchable
 
 
   # Add here new fields from filter form (:q is handled separately, as it requires calling of elasticsearch)
-  @@searchable_fields = [:location, :provider, :rating, :research_area]
+  @@searchable_fields = [:location, :provider, :rating, :research_area, :dedicated_for]
 
   private
     def query_present?
