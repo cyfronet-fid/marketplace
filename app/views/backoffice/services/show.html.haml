@@ -28,6 +28,10 @@
   - @service.research_areas.each do |area|
     %p= area.name
 
+  %h2 Providers
+  - @service.providers.each do |provider|
+    %p= provider.name
+
   - if policy([:backoffice, @service]).edit?
     = link_to "Edit",
               edit_backoffice_service_path(@service),

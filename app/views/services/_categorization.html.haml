@@ -5,12 +5,13 @@
   dedicated_for_links = service.dedicated_for.
                         map { |df| link_to(df, services_path(dedicated_for: df)) }
 
-  provider = service.provider
+  providers = service.providers.
+              map { |p| link_to(p.name, services_path(providers: p)) }
 
 .row
   .col
     Provided by
-    = link_to provider.name, services_path(provider: provider.to_param)
+    = safe_join(providers, ", ")
   .col
     Area
     = safe_join(area_links, ", ")
