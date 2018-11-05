@@ -6,26 +6,22 @@ header {
 
   .input-group {
     &:focus {
-      box-shadow: 0 0 3px $primary;
+      box-shadow: 0 0 3px $secondary;
       border-radius: 0.2rem;
     }
 
     &:hover {
-      box-shadow: 0 0 3px $primary;
+      box-shadow: 0 0 3px $secondary;
     }
   }
 }
 
 .navbar {
-  &.bg-light {
-    background-color: transparent !important;
-  }
-
   &.navbar-expand-lg {
     .navbar-nav {
       .nav-link {
         font-size: $font-size-navbar;
-        font-family: $font-weight-300;
+        font-weight: $font-weight-normal;
       }
 
       .active {
@@ -74,7 +70,7 @@ header {
     }
 
     .nav-link::before {
-      border-bottom: 4px solid $primary;
+      border-bottom: 4px solid $secondary;
       transition: all 0.4s ease 0s;
     }
   }
@@ -84,7 +80,7 @@ header {
     padding-bottom: 8px;
 
     &:hover {
-      border-bottom: 4px solid $primary;
+      border-bottom: 4px solid $secondary;
       background-color: transparent;
       padding-bottom: 4px;
     }
