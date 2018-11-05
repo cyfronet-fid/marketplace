@@ -23,9 +23,10 @@ module Service::Searchable
       services.where("rating >= ?", search_value)
     end
 
-    def filter_provider(services, search_value)
-      services.where(provider: search_value)
-    end
+    def filter_providers(services, search_value)
+      services.joins(:service_providers).
+              where(service_providers: { provider_id: search_value })
+     end
 
     def filter_research_area(services, search_value)
       services.joins(:service_research_areas).
@@ -36,7 +37,7 @@ module Service::Searchable
   include FieldFilterable
 
   # Add here new fields from filter form (:q is handled separately, as it requires calling of elasticsearch)
-  @@searchable_fields = [:location, :provider, :rating, :research_area, :dedicated_for]
+  @@searchable_fields = [:location, :providers, :rating, :research_area, :dedicated_for]
 
 private
 

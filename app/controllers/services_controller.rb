@@ -16,7 +16,7 @@ class ServicesController < ApplicationController
 
   def show
     @service = Service.
-               includes(:offers, related_services: :provider).
+               includes(:offers, related_services: :providers).
                find(params[:id])
 
     @offers = @service.offers

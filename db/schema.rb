@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_02_122138) do
+ActiveRecord::Schema.define(version: 2018_11_05_150915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,6 +144,16 @@ ActiveRecord::Schema.define(version: 2018_11_02_122138) do
     t.index ["project_item_id"], name: "index_service_opinions_on_project_item_id"
   end
 
+  create_table "service_providers", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "provider_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider_id"], name: "index_service_providers_on_provider_id"
+    t.index ["service_id", "provider_id"], name: "index_service_providers_on_service_id_and_provider_id", unique: true
+    t.index ["service_id"], name: "index_service_providers_on_service_id"
+  end
+
   create_table "service_relationships", force: :cascade do |t|
     t.bigint "source_id", null: false
     t.bigint "target_id", null: false
@@ -220,6 +230,8 @@ ActiveRecord::Schema.define(version: 2018_11_02_122138) do
   add_foreign_key "project_items", "affiliations"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
+  add_foreign_key "service_providers", "providers"
+  add_foreign_key "service_providers", "services"
   add_foreign_key "service_relationships", "services", column: "source_id"
   add_foreign_key "service_relationships", "services", column: "target_id"
   add_foreign_key "service_research_areas", "research_areas"

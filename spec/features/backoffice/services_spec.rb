@@ -64,7 +64,7 @@ RSpec.feature "Services in backoffice" do
     fill_in "Phase", with: "Production"
     fill_in "Activate message", with: "Welcome!!!"
     select research_area.name, from: "Research areas"
-    select provider.name, from: "service_provider_id"
+    select provider.name, from: "Providers"
 
     check "Open access"
     fill_in "service_contact_emails_0", with: "person1@test.ok"

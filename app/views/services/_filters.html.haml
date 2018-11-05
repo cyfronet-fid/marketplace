@@ -7,14 +7,14 @@
         %select#location.form-control.form-control-sm{ name: "location" }
           = options_for_select([["Any", ""], ["EU", "EU"]], params[:location])
 
-  %p.font-weight-bold.mt-3 Provider
+  %p.font-weight-bold.mt-3 Providers
   .row
     .col-md-10.offset-md-1
       .form-group
-        %select#provider.form-control.form-control-sm{ name: "provider" }
+        %select#providers.form-control.form-control-sm{ name: "providers" }
           %option{ value: "", selected: "selected" }
             Any
-          = options_for_select(providers.map { |provider| [provider.name, provider.id] }, params[:provider])
+          = options_for_select(providers.map { |provider| [provider.name, provider.id] }, params[:providers])
 
   %p.font-weight-bold.mt-3 Dedicated for
   .row
