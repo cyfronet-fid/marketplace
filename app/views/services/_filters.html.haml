@@ -16,17 +16,21 @@
             Any
           = options_for_select(providers.map { |provider| [provider.name, provider.id] }, params[:provider])
 
+  %p.font-weight-bold.mt-3 Dedicated for
+  .row
+    .col-md-10.offset-md-1
+      .form-group
+        %select#dedicated-for.form-control.form-control-sm{ name: "dedicated_for" }
+          %option{ value: "", selected: "selected" }
+            Any
+          = options_for_select(dedicated_for_options, params[:dedicated_for])
+
   %p.font-weight-bold.mt-3 Rating
   .row
     .col-md-10.offset-md-1
       .form-group
         %select#rating.form-control.form-control-sm{ name: "rating" }
-          = options_for_select([["Any", ""],
-                                ["★+", "1"],
-                                ["★★+", "2"],
-                                ["★★★+", "3"],
-                                ["★★★★+", "4"],
-                                ["★★★★★", "5"]], params[:rating])
+          = options_for_select(rating_options, params[:rating])
 
   %p.font-weight-bold.mt-3 Research Area
   .row

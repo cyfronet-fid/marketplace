@@ -15,6 +15,10 @@ module Service::Searchable
       services
     end
 
+    def filter_dedicated_for(services, search_value)
+      services.where(dedicated_for: [search_value])
+    end
+
     def filter_rating(services, search_value)
       services.where("rating >= ?", search_value)
     end
@@ -31,44 +35,62 @@ module Service::Searchable
 
   include FieldFilterable
 
-
   # Add here new fields from filter form (:q is handled separately, as it requires calling of elasticsearch)
-  @@searchable_fields = [:location, :provider, :rating, :research_area]
+  @@searchable_fields = [:location, :provider, :rating, :research_area, :dedicated_for]
 
-  private
-    def query_present?
-      params[:q].present?
+private
+
+  def dedicated_for_options
+    [["Researchers", "Researchers"],
+     ["VO", "VO"],
+     ["Providers", "Providers"],
+     ["Research organisations", "Research organisations"],
+     ["Business", "Business"],
+     ["Other", "Other"]]
+  end
+
+  def rating_options
+    [["Any", ""],
+     ["★+", "1"],
+     ["★★+", "2"],
+     ["★★★+", "3"],
+     ["★★★★+", "4"],
+     ["★★★★★", "5"]]
+  end
+
+  def query_present?
+    params[:q].present?
+  end
+
+  def filters_present?
+    @@searchable_fields.any? { |field| params[field] }
+  end
+
+  def records
+    results = scope
+
+    if filters_present?
+      results = services_filtered_by_fields
     end
 
-    def filters_present?
-      @@searchable_fields.any? { |field| params[field] }
-    end
+    query_present? ? results.where(id: search_ids) : results
+  end
 
-    def records
-      results = scope
+  def filter_by_field(elements, field)
+    self.send("filter_#{field}".to_s, elements, params[field])
+  end
 
-      if filters_present?
-        results = services_filtered_by_fields
-      end
-
-      query_present? ? results.where(id: search_ids) : results
-    end
-
-    def filter_by_field(elements, field)
-      self.send("filter_#{field}".to_s, elements, params[field])
-    end
-
-    def services_filtered_by_fields
-      @@searchable_fields.
+  def services_filtered_by_fields
+    @@searchable_fields.
         select { |field| params[field].present? }.
-        inject(scope) { |filtered, field| filter_by_field(filtered, field) }
-    end
+        inject(scope) { |filtered_services, field| filter_by_field(filtered_services, field) }
+  end
 
-    def search_ids
-      scope.search(params[:q]).records.ids
-    end
+  def search_ids
+    scope.search(params[:q]).records.ids
+  end
 
-    def scope
-      Service.all
-    end
+  def scope
+    Service.all
+  end
 end
