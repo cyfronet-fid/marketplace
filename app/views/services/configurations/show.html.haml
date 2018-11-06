@@ -9,14 +9,15 @@
 
 = simple_form_for @project_item, url: service_configuration_path(@service),
   method: :put, html: { id: "order-form"  } do |f|
-  = f.association :project do
+  = f.input :project do
     .input-group
       = f.input_field :project_id, collection: @projects, class: "form-control"
       .input-group-append
         = link_to "Add new project", new_project_path,
           class: "btn btn-primary ml-3", remote: true
 
-  = f.association :affiliation, collection: @affiliations, label_method: :organization
+  = f.association :affiliation,
+    collection: @affiliations, label_method: :organization
   = f.input :customer_typology, collection: @customer_topologies
   = f.input :access_reason
   = f.input :additional_information
