@@ -1,5 +1,5 @@
 Area
 - service.research_areas.each do |area|
-  = link_to area.name, services_path(research_area_id: area.id)
+  = link_to area.name, services_path(research_area: area.id)
   - if area != service.research_areas.last
     ,

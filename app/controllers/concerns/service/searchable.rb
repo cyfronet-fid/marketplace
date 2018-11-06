@@ -16,23 +16,14 @@ module Service::Searchable
     end
 
     def filter_rating(services, search_value)
-      if search_value.empty?
-        return services
-      end
       services.where("rating >= ?", search_value)
     end
 
     def filter_provider(services, search_value)
-      if search_value.empty?
-        return services
-      end
       services.where(provider: search_value)
     end
 
     def filter_research_area(services, search_value)
-      if search_value.empty?
-        return services
-      end
       services.joins(:service_research_areas).
               where(service_research_areas: { research_area_id: search_value })
     end
@@ -68,9 +59,9 @@ module Service::Searchable
     end
 
     def services_filtered_by_fields
-      filtered_services = scope
-      @@searchable_fields.each { |field| filtered_services = filter_by_field(filtered_services, field) }
-      filtered_services
+      @@searchable_fields.
+        select { |field| params[field].present? }.
+        inject(scope) { |filtered, field| filter_by_field(filtered, field) }
     end
 
     def search_ids
