@@ -87,6 +87,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add known services relations in db/data.yml(@goreck888)
 - Add filtering option to services (@michal-szostak)
 - Optional additional information on configuration step (@martaswiatkowska)
+- Add sidekiq yaml configuration file (@wziajka)
+- Add smtp configuration (@wziajka)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)

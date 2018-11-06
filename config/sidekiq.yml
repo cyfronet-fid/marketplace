@@ -1,0 +1,12 @@
+:concurrency: 5
+:pidfile: tmp/sidekiq.pid
+
+production:
+  :concurrency: 5
+staging:
+  :concurrency: 5
+
+:queues:
+  - orders
+  - mailers
+  - default
