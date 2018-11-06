@@ -7,7 +7,7 @@
       "check_name": "MassAssignment",
       "message": "Parameters should be whitelisted for mass assignment",
       "file": "app/views/services/_services.html.haml",
-      "line": 12,
+      "line": 11,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.permit!",
       "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":12,"file":"app/controllers/categories_controller.rb"},{"type":"template","name":"categories/show","line":9,"file":"app/views/categories/show.html.haml"}],
@@ -65,7 +65,7 @@
       "check_name": "MassAssignment",
       "message": "Parameters should be whitelisted for mass assignment",
       "file": "app/views/services/_services.html.haml",
-      "line": 14,
+      "line": 13,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.permit!",
       "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":12,"file":"app/controllers/categories_controller.rb"},{"type":"template","name":"categories/show","line":9,"file":"app/views/categories/show.html.haml"}],
@@ -84,7 +84,7 @@
       "check_name": "MassAssignment",
       "message": "Parameters should be whitelisted for mass assignment",
       "file": "app/views/services/_services.html.haml",
-      "line": 10,
+      "line": 9,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.permit!",
       "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":12,"file":"app/controllers/categories_controller.rb"},{"type":"template","name":"categories/show","line":9,"file":"app/views/categories/show.html.haml"}],
@@ -97,6 +97,6 @@
       "note": ""
     }
   ],
-  "updated": "2018-10-25 09:33:06 +0200",
-  "brakeman_version": "4.2.1"
+  "updated": "2018-11-03 23:26:45 +0100",
+  "brakeman_version": "4.3.1"
 }

@@ -9,6 +9,7 @@ class ServicesController < ApplicationController
     @services = paginate(records.order(ordering))
     @subcategories = @root_categories
     @providers = Provider.all
+    @research_areas = ResearchArea.all
   end
 
   def show

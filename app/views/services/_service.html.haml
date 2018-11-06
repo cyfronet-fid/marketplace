@@ -7,9 +7,7 @@
         Provided by
         = link_to service.provider.name, service.provider
       .col
-        %code TODO
-        Area
-        %strong Biology
+        = render "services/research_area", service: service
       .col
         Dedicated for
         = service.dedicated_for.map { |x| x }.join(", ")
