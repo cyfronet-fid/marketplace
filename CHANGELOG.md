@@ -83,10 +83,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Select affiliation on service order configuration page (@mkasztelnik)
 - Styling of the 3rd step of the ordering process (@jswk)
 - Add main navbar content and style it as in EOSC Portal (@jswk)
-- Add real providers and missing entries in services in data.yml(@goreck888) 
+- Add real providers and missing entries in services in data.yml(@goreck888)
 - Add known services relations in db/data.yml(@goreck888)
 - Add filtering option to services (@michal-szostak)
 - Optional additional information on configuration step (@martaswiatkowska)
+- Create new project on order configuration page (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
