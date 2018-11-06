@@ -5,7 +5,10 @@
   .row
     .col-md-3.pr-5
       = render "categories/subcategories", subcategories: @subcategories
-      = render "filters", providers: @providers, research_areas: @research_areas
+      = render "filters", providers: @providers,
+                          research_areas: @research_areas,
+                          dedicated_for_options: @dedicated_for_options,
+                          rating_options: @rating_options
     .col-md-9
       .row
         .col-md-8
