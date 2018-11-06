@@ -1,0 +1,13 @@
+#ajax-modal.modal{ tabindex: "-1", role: "dialog", aria: { hidden: "true" } }
+  .modal-dialog{ role: "document" }
+    .modal-content
+      .modal-header
+        %h3#ajax-modal-title.modal-title
+        %button.close{ type: "button", data: { dismiss: "modal" }, aria: { label: "Close" } }
+          %span{ aria: { hidden: "true" } } &times;
+
+      #ajax-modal-body.modal-body
+
+      .modal-footer
+        %button.btn.btn-secondary{ type: "button", data: { dismiss: "modal" } } Close
+        %button#ajax-modal-action-btn.btn.btn-primary{ type: "button", type: "submit", form: "modal-form" } New
