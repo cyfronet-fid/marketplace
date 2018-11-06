@@ -9,6 +9,8 @@ class ServicesController < ApplicationController
     @services = paginate(records.order(ordering))
     @subcategories = @root_categories
     @providers = Provider.all
+    @dedicated_for_options = dedicated_for_options
+    @rating_options = rating_options
     @research_areas = ResearchArea.all
   end
 
