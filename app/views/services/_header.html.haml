@@ -14,9 +14,7 @@
             Provided by
             = link_to service.provider.name, service.provider
           .col
-            %code TODO
-            Area
-            %strong Biology
+            = render "services/research_area", service: service
         .row
           .col
             = print_rating_stars(service.rating)

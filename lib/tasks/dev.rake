@@ -8,6 +8,7 @@ if Rails.env.development?
     task :prime, [:services_size] => "db:setup" do |task, args|
       users = User.all + [nil]
       services_size = args.fetch(:services_size, 100).to_i
+      areas = ResearchArea.all
       puts "Generating #{services_size} new services"
       services_size.times do
         Service.create(title: Faker::Lorem.sentence,
@@ -31,11 +32,13 @@ if Rails.env.development?
                        helpdesk_url: Faker::Internet.url,
                        tutorial_url: Faker::Internet.url,
                        restrictions: Faker::Lorem.sentence,
-                       phase: Faker::Lorem.sentence)
+                       phase: Faker::Lorem.sentence,
+                       research_areas: [areas.sample])
 
       end
 
       puts "Done!"
+
     end
   end
 end
