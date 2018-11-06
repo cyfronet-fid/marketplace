@@ -91,6 +91,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Extend filtering for "dedicated for" field (@michal-szostak)
 - Add sidekiq yaml configuration file (@wziajka)
 - Add smtp configuration (@wziajka)
+- Create new project on order configuration page (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)

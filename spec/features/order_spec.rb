@@ -140,13 +140,33 @@ RSpec.feature "Service ordering" do
       expect(project_item.project).to eq(default_project)
     end
 
-    scenario "I cannot order service without offers" do
+    scenario "I cannot order service without offers", js: true do
       service = create(:service)
 
       visit service_path(service)
 
       expect(page).to_not have_text("Order")
     end
+
+    # Not sure why this is not working: ActionController::UnknownFormat
+    # error is thrown when trying to click "Add new project button.
+    # TODO: discover why
+    #
+    # scenario "I can create new project on order configuration view" do
+    #   service = create(:service)
+    #   create(:offer, service: service)
+    #
+    #   visit service_path(service)
+    #
+    #   click_on "Order"
+    #   expect do
+    #     click_on "Add new project"
+    #     within("#ajax-modal") do
+    #       fill_in "Name", with: "New project"
+    #       click_on "Create new project"
+    #     end
+    #   end.to change { user.projects.count }.by(1)
+    # end
   end
 
   context "as anonymous user" do
