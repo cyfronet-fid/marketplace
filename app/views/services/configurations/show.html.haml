@@ -17,7 +17,8 @@
           class: "btn btn-primary ml-3", remote: true
 
   = f.association :affiliation,
-    collection: @affiliations, label_method: :organization
+    collection: @affiliations, label_method: :organization,
+    hint: "Click #{link_to "here", new_profile_affiliation_path} to create new affilition".html_safe
   = f.input :customer_typology, collection: @customer_topologies
   = f.input :access_reason
   = f.input :additional_information
