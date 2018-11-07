@@ -8,5 +8,5 @@
         %h3= link_to service.title, service
         %p= service.tagline
         .row
-          .col Provided by: #{service.provider.name}
+          .col Provided by: #{service.providers.map { |p| p.name }.join(", ")}
           .col Dedicated for #{service.dedicated_for.map { |x| x }.join(", ")}

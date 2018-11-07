@@ -42,8 +42,8 @@ yaml_hash["services"].each do |_, hash|
 
     service.update!(tagline: hash["tagline"],
                     description: hash["description"],
-                    provider: providers[0],
                     research_areas: area,
+                    providers: [providers[0]],
                     open_access: hash["open_access"],
                     connected_url: hash["connected_url"],
                     webpage_url: hash["webpage_url"],

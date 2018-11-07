@@ -20,7 +20,7 @@ if Rails.env.development?
                        open_access: Faker::Boolean.boolean,
                        rating: Random.rand(5.0),
                        connected_url: Faker::Internet.url,
-                       provider: Provider.all.sample,
+                       providers: Provider.all.sample(2),
                        places: Faker::Address.country,
                        languages: Faker::Nation.language,
                        dedicated_for: [Faker::Lorem.sentence],

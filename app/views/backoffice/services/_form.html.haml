@@ -20,7 +20,7 @@
   = f.input :open_access, as: :boolean
   = f.input :activate_message
   = f.input :logo
-  = f.association :provider
+  = f.association :providers, multiple: true
   = f.input :contact_emails, multiple: true, as: :array
   = f.association :research_areas, input_html: { multiple: true }, include_hidden: false
 
