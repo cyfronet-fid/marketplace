@@ -14,6 +14,8 @@ class Service < ApplicationRecord
   has_many :service_opinions, through: :project_items
   has_many :service_research_areas, dependent: :destroy
   has_many :research_areas, through: :service_research_areas
+  has_many :service_providers, dependent: :destroy
+  has_many :providers, through: :service_providers
 
   has_many :source_relationships,
            class_name: "ServiceRelationship",
@@ -28,17 +30,14 @@ class Service < ApplicationRecord
   has_many :related_services,
            through: :target_relationships,
            source: :target
-
   belongs_to :owner,
              class_name: "User",
              optional: true
-  belongs_to :provider, optional: true
 
   validates :title, presence: true
   validates :description, presence: true
   validates :tagline, presence: true
   validates :connected_url, presence: true, url: true, if: :open_access?
-  validates :provider, presence: true
   validates :rating, presence: true
   validates :places, presence: true
   validates :languages, presence: true
@@ -54,6 +53,7 @@ class Service < ApplicationRecord
   validates :phase, presence: true
   validates :logo, blob: { content_type: :image }
   validates :research_areas, presence: true
+  validates :providers, presence: true
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
