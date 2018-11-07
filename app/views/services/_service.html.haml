@@ -2,14 +2,6 @@
   .media-body
     %h2= link_to service.title, service
     %p.mb-3= service.tagline
-    .row
-      .col
-        Provided by
-        = link_to service.provider.name, service.provider
-      .col
-        = render "services/research_area", service: service
-      .col
-        Dedicated for
-        = service.dedicated_for.map { |x| x }.join(", ")
+    = render "services/categorization", service: service
   - if service.logo.attached?
     = image_tag service.logo.variant(resize: "150x150"), class: "align-self-center mx-2"
