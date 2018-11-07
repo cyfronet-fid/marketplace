@@ -102,6 +102,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Rename `Order` to `ProjectItem` (@mkasztelnik)
 - Rename `OrderChange` to `ProjectItemChange` (@mkasztelnik)
 - Split backend for Service details view (@kmarszalek)
+- Bootstrap improvements towards compliance with the guidelines (@jswk)
 
 ### Deprecated
 

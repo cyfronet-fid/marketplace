@@ -8,7 +8,8 @@
           = image_tag "eosc-logo-color.png"
         .text-right.flex-grow-1
           = yield :cancel_button
-          = yield :next_button
+          .ml-3.d-inline
+            = yield :next_button
       = render "layouts/flash"
     %main.container.order-container
       %h1
