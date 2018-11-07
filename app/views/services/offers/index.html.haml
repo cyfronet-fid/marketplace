@@ -1,26 +1,20 @@
-%h1
-  = @service.title
-%p.summary= @service.tagline
-
-%ul.nav
-  %li.nav-item
-    = link_to "Offer selection", service_offers_path(@service)
-  %li.nav-item
-    = link_to "Service configuration", root_path
-  %li.nav-item
-    = link_to "Summary", root_path
+= render "layouts/order_nav", service: @service, step: 1
 
 %h2 Service configuration
 %p
   This service is available in various options.
   Please select one from the list bellow.
 
-= form_for ProjectItem.new, url: service_offers_path(@service), method: :put,
-  html: { id: "order-form", role: "form"  } do |f|
-  = f.select :offer_id, @offers.map(&:iid), include_blank: true
+= simple_form_for @project_item, url: service_offers_path(@service), method: :put,
+  html: { id: "order-form", role: "form", class: "btn-group btn-group-toogle", data: { toogle: "buttons" } } do |f|
 
+  .card-columns
+    = render partial: "services/offers/offer",
+      collection: @offers, as: :offer, locals: { f: f }
 
-= content_for :buttons do
+= content_for :cancel_button do
   = link_to "Cancel order and quit", service_cancel_path(@service), method: :delete
+
+= content_for :next_button do
   %button.btn.btn-primary{ form: "order-form", type: "submit" }
     Next

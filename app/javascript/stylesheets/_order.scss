@@ -1,0 +1,98 @@
+.order-nav {
+  font-weight: bold;
+  border: 1px solid $border-color;
+  border-radius: 100px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  $color-1: #1c353d;
+  $color-2: #f7f7f7;
+
+  a {
+    color: $color-1;
+
+    &.disabled {
+      background: $color-2;
+    }
+
+    &.active {
+      color: $white;
+      background: $color-1;
+    }
+  }
+}
+
+.order-container {
+  h3 {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+
+    a {
+      margin-left: 10px;
+      font-weight: normal;
+    }
+  }
+
+  h4 {
+    border: none;
+  }
+
+  h5::after {
+    content: none;
+  }
+
+  .offer-description {
+    border-color: $border-color;
+
+    h4 {
+      font-weight: bold;
+      font-size: 17px;
+      padding-bottom: 0;
+    }
+
+    .card-text {
+      margin-bottom: 20px;
+    }
+
+    td {
+      border-top: none;
+      border-bottom: 1px solid $border-color;
+    }
+
+    tr:first-child td {
+      border-top: 2px solid lighten($primary, 10%);
+    }
+  }
+
+  .additional-information {
+    h4 {
+      text-transform: uppercase;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding: 0;
+    }
+
+    dl {
+      padding-left: 15px;
+      border-left: 3px solid lighten($border-color, 5%);
+    }
+
+    dt {
+      margin-top: 15px;
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .bottom-hr {
+    background-color: lighten($border-color, 5%);
+    border: 0 none;
+    color: lighten($border-color, 5%);
+    height: 5px;
+  }
+}

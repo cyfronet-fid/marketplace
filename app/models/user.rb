@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: %i[checkin]
 
   include RoleModel
-  roles :service_owner
+  roles :admin, :service_owner
 
   has_many :projects, dependent: :destroy
   has_many :affiliations, dependent: :destroy
@@ -21,5 +21,9 @@ class User < ApplicationRecord
 
   def full_name
     "#{first_name} #{last_name}"
+  end
+
+  def active_affiliations
+    affiliations.where(status: :active)
   end
 end

@@ -14,6 +14,8 @@ RSpec.describe Affiliation do
 
   it { should belong_to(:user) }
 
+  it { should have_many(:project_items).dependent(:restrict_with_error) }
+
   it "is valid when email is from webpage domain" do
     affiliation = build(:affiliation,
                         email: "jonhdoe@uni.edu",

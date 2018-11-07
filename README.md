@@ -165,7 +165,11 @@ ENV variables:
     `http://localhost:#{ENV["PORT"] || 3000}` (when foreman is used to start
     application 5000 ENV variable is set)
   * `ELASTICSEARCH_URL` - elasticsearch url
-
+  * `STORAGE_DIR` - active storage local dir (default set to
+    `RAILS_ROOT/storage`)
+  * `SMTP_ADDRESS` - smtp mail server address
+  * `SMTP_USERNAME` - smtp user name or email address
+  * `SMTP_PASSWORD` - smtp password  
 
 ## Commits
 

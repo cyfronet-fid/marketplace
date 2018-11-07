@@ -15,6 +15,7 @@ class Services::SummariesController < Services::ApplicationController
 
     if @project_item.persisted?
       session.delete(session_key)
+      @related_services = @service.related_services.includes(:providers)
       render :confirmation
     else
       redirect_to service_configuration_path(@service),

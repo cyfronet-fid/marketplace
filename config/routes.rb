@@ -16,20 +16,19 @@ Rails.application.routes.draw do
       resource :summary, only: [:show, :create]
       resource :cancel, only: :destroy
       resource :questions, only: [:create]
+      resources :opinions, only: :index
     end
   end
 
   resources :categories, only: :show
 
-  resources :projects, only: :index
+  resources :projects, only: [:index, :new, :create]
   resources :project_items, only: :show do
     scope module: :project_items do
       resources :questions, only: [:index, :create]
       resources :service_opinions, only: [:new, :create]
     end
   end
-
-  resources :providers, only: :show
 
   resource :profile, only: [:show] do
     scope module: :profiles do
@@ -54,6 +53,16 @@ Rails.application.routes.draw do
   if Rails.env.development?
     get "playground/:file" => "playground#show",
         constraints: { file: %r{[^/\.]+} }
+  end
+
+  resource :admin, only: :show
+  namespace :admin do
+    resources :jobs, only: :index
+  end
+  # Sidekiq monitoring
+  authenticate :user, ->(u) { u.admin? } do
+    require "sidekiq/web"
+    mount Sidekiq::Web => "/admin/sidekiq"
   end
 
   root "home#index"

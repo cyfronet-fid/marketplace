@@ -4,7 +4,7 @@ class Services::ConfigurationsController < Services::ApplicationController
   before_action :ensure_in_session!
 
   def show
-    @projects = current_user.projects
+    setup_show_variables!
     @project_item = ProjectItem.new(session[session_key])
 
     if new_open_access_service?
@@ -18,7 +18,7 @@ class Services::ConfigurationsController < Services::ApplicationController
       session[session_key] = @project_item.attributes
       redirect_to service_summary_path(@service)
     else
-      @projects = current_user.projects
+      setup_show_variables!
       render :show
     end
   end
@@ -47,5 +47,11 @@ class Services::ConfigurationsController < Services::ApplicationController
         session[session_key] = @project_item.attributes
         redirect_to service_summary_path(@service)
       end
+    end
+
+    def setup_show_variables!
+      @projects = current_user.projects
+      @affiliations = current_user.active_affiliations
+      @customer_topologies = ProjectItem.customer_typologies.keys
     end
 end

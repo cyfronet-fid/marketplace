@@ -58,6 +58,24 @@ RSpec.feature "Service browsing" do
     end
   end
 
+  scenario "shows related services" do
+    service, related = create_list(:service, 2)
+    ServiceRelationship.create!(source: service, target: related)
+
+    visit service_path(service)
+
+    expect(page.body).to have_content "Services you can use with this service"
+    expect(page.body).to have_content related.title
+  end
+
+  scenario "does not show related services section when no related services" do
+    service = create(:service)
+
+    visit service_path(service)
+
+    expect(page.body).to_not have_content "Services you can use with this service"
+  end
+
   context "as not logged in user" do
     scenario "I need to login to asks service question" do
       service = create(:service)
@@ -72,7 +90,11 @@ end
 
 RSpec.feature "Service filtering and sorting" do
   before(:each) do
-    create(:service, title: "AAAA Service", rating: 5.0)
+    area = create(:research_area, name: "area 1")
+    provider = create(:provider, name: "first provider")
+    service = create(:service, title: "AAAA Service", rating: 5.0, dedicated_for: ["VO"])
+    service.research_areas << area
+    service.providers << provider
     create(:service, title: "BBBB Service", rating: 3.0)
     create(:service, title: "CCCC Service", rating: 4.0)
     create(:service, title: "DDDD Something 1", rating: 4.1)
@@ -90,7 +112,7 @@ RSpec.feature "Service filtering and sorting" do
     expect(page.body.index("DDDD Something 1")).to be < page.body.index("DDDD Something 2")
     expect(page.body.index("DDDD Something 2")).to be < page.body.index("DDDD Something 3")
 
-    expect(page).to have_selector("dl > ul", count: 3)
+    expect(page).to have_selector(".media", count: 3)
   end
 
   scenario "clicking filter button in side bar will preserve existing query params", js: true do
@@ -101,7 +123,7 @@ RSpec.feature "Service filtering and sorting" do
     expect(page.body.index("DDDD Something 1")).to be < page.body.index("DDDD Something 2")
     expect(page.body.index("DDDD Something 2")).to be < page.body.index("DDDD Something 3")
 
-    expect(page).to have_selector("dl > ul", count: 3)
+    expect(page).to have_selector(".media", count: 3)
   end
 
   scenario "selecting sorting will set query param and preserve existing ones", js: true do
@@ -121,6 +143,42 @@ RSpec.feature "Service filtering and sorting" do
 
     visit services_path(per_page: "1")
 
-    expect(page).to have_selector("dl > ul", count: 1)
+    expect(page).to have_selector(".media", count: 1)
+  end
+
+  scenario "searching via providers", js: true do
+    visit services_path
+    select "first provider", from: "providers"
+    click_on(id: "filter-submit")
+
+    expect(page).to have_selector(".media", count: 1)
+  end
+
+  scenario "searching via rating", js: true do
+    visit services_path
+    select "★★★★★", from: "rating"
+    click_on(id: "filter-submit")
+
+    expect(page).to have_selector(".media", count: 1)
+  end
+
+  scenario "searching vis research_area" do
+    visit services_path
+    select ResearchArea.first.name, from: "research_area"
+    click_on(id: "filter-submit")
+
+    expect(page).to have_selector(".media", count: 1)
+  end
+
+  scenario "searching via dedicated_for", js: true do
+    visit services_path
+    select "VO", from: "dedicated-for"
+    click_on(id: "filter-submit")
+
+    expect(page).to have_selector(".media", count: 1)
+  end
+
+  scenario "searching via location", js: true do
+    `pending "add test after implementing location to filtering #{__FILE__}"`
   end
 end

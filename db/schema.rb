@@ -15,6 +15,27 @@ ActiveRecord::Schema.define(version: 2018_11_06_151032) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
   create_table "affiliations", force: :cascade do |t|
     t.integer "iid", null: false
     t.string "organization", null: false
@@ -79,7 +100,12 @@ ActiveRecord::Schema.define(version: 2018_11_06_151032) do
     t.integer "issue_status", default: 2, null: false
     t.bigint "project_id"
     t.bigint "offer_id"
+    t.string "customer_typology"
+    t.text "access_reason"
+    t.text "additional_information"
+    t.bigint "affiliation_id"
     t.jsonb "properties"
+    t.index ["affiliation_id"], name: "index_project_items_on_affiliation_id"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
   end
@@ -95,6 +121,10 @@ ActiveRecord::Schema.define(version: 2018_11_06_151032) do
     t.text "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "research_areas", force: :cascade do |t|
+    t.text "name", null: false
   end
 
   create_table "service_categories", force: :cascade do |t|
@@ -116,6 +146,36 @@ ActiveRecord::Schema.define(version: 2018_11_06_151032) do
     t.index ["project_item_id"], name: "index_service_opinions_on_project_item_id"
   end
 
+  create_table "service_providers", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "provider_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider_id"], name: "index_service_providers_on_provider_id"
+    t.index ["service_id", "provider_id"], name: "index_service_providers_on_service_id_and_provider_id", unique: true
+    t.index ["service_id"], name: "index_service_providers_on_service_id"
+  end
+
+  create_table "service_relationships", force: :cascade do |t|
+    t.bigint "source_id", null: false
+    t.bigint "target_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_id", "target_id"], name: "index_service_relationships_on_source_id_and_target_id", unique: true
+    t.index ["source_id"], name: "index_service_relationships_on_source_id"
+    t.index ["target_id"], name: "index_service_relationships_on_target_id"
+  end
+
+  create_table "service_research_areas", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "research_area_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["research_area_id"], name: "index_service_research_areas_on_research_area_id"
+    t.index ["service_id", "research_area_id"], name: "index_service_research_areas_on_service_id_and_research_area_id", unique: true
+    t.index ["service_id"], name: "index_service_research_areas_on_service_id"
+  end
+
   create_table "services", force: :cascade do |t|
     t.string "title", null: false
     t.text "description", null: false
@@ -132,7 +192,7 @@ ActiveRecord::Schema.define(version: 2018_11_06_151032) do
     t.text "contact_emails", default: [], array: true
     t.text "places", null: false
     t.text "languages", null: false
-    t.text "dedicated_for", null: false
+    t.text "dedicated_for", null: false, array: true
     t.text "terms_of_use_url", null: false
     t.text "access_policies_url", null: false
     t.text "corporate_sla_url", null: false
@@ -143,6 +203,7 @@ ActiveRecord::Schema.define(version: 2018_11_06_151032) do
     t.text "restrictions", null: false
     t.text "phase", null: false
     t.integer "offers_count", default: 0
+    t.text "activate_message"
     t.index ["description"], name: "index_services_on_description"
     t.index ["owner_id"], name: "index_services_on_owner_id"
     t.index ["provider_id"], name: "index_services_on_provider_id"
@@ -168,8 +229,15 @@ ActiveRecord::Schema.define(version: 2018_11_06_151032) do
   end
 
   add_foreign_key "project_item_changes", "users", column: "author_id"
+  add_foreign_key "project_items", "affiliations"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
+  add_foreign_key "service_providers", "providers"
+  add_foreign_key "service_providers", "services"
+  add_foreign_key "service_relationships", "services", column: "source_id"
+  add_foreign_key "service_relationships", "services", column: "target_id"
+  add_foreign_key "service_research_areas", "research_areas"
+  add_foreign_key "service_research_areas", "services"
   add_foreign_key "services", "providers"
   add_foreign_key "services", "users", column: "owner_id"
 end

@@ -6,4 +6,8 @@ class ProjectPolicy < ApplicationPolicy
       scope.where(user: user)
     end
   end
+
+  def permitted_attributes
+    [:name]
+  end
 end

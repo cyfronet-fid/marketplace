@@ -1,13 +1,70 @@
-Summary
+= render "layouts/order_nav", service: @service, step: 3
 
-%ul
-  %li Offer: #{@project_item.offer.name}
-  %li Project: #{@project_item.project.name}
+%h2 Summary
+%p.mb-5
+  Please carefully read the summary of your order.
+  You can change anything now if you need.
+  After clicking the order button your request will be sent to service provider.
 
-  = render "project_items/attributes", property_values: @project_item.property_values
+%h3
+  Technical configuration
+  = link_to "Change", service_offers_path(@service)
 
-= link_to "Edit your service request", service_configuration_path(@service)
+.card.offer-description.mb-5
+  .card-body
+    %h4.card-title= @project_item.offer.name
+    .card-text= @project_item.offer.description
 
-= content_for :buttons do
+    %p
+      = render "project_items/attributes", property_values: @project_item.property_values
+
+.additional-information.mb-5
+  %h3
+    Additional information
+    = link_to "Change", service_configuration_path(@service)
+
+  %h4 My projects
+  %dl
+    %dt Project name
+    %dd= @project_item.project.name
+
+  %h4 Usage
+  %dl
+    %dt Customer typology
+    %dd= @project_item.customer_typology
+
+    %dt Reason to request access to #{@service.title}
+    %dd= @project_item.access_reason
+
+    %dt Additional information
+    %dd= @project_item.additional_information
+
+  - if @project_item.affiliation
+    %h4 Affiliation
+    %dl
+      %dt Organization
+      %dd= @project_item.affiliation.organization
+
+      %dt Department
+      %dd= @project_item.affiliation.department.presence || "No department set"
+
+      %dt Email
+      %dd= @project_item.affiliation.email
+
+      %dt Phone
+      %dd= @project_item.affiliation.phone.presence || "No phone set"
+
+      %dt Webpage
+      %dd= @project_item.affiliation.webpage
+
+      %dt Supervisor
+      %dd= @project_item.affiliation.supervisor.presence || "No supervisor set"
+
+      %dt Supervisor profile
+      %dd= @project_item.affiliation.supervisor_profile.presence || "No supervisor profile set"
+
+= content_for :cancel_button do
   = link_to "Cancel order and quit", service_cancel_path(@service), method: :delete
+
+= content_for :next_button do
   = link_to "Order", service_summary_path(@service), method: :post, class: "btn btn-primary"

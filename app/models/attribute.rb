@@ -5,10 +5,16 @@ class Attribute
 
   attr_accessor :id, :label, :description, :type, :value_type, :unit, :config, :value
 
-  validate do
+  validate :value_validity
+
+  def value_validity
     if (!value_valid?)
+      # this needs to be like that - simple form is based on the f.input :id
       errors.add(:id, "Invalid attribute value")
     end
+    # TODO add more speciffic errors under type speciffic fieds eg. :min, :max, and handle them in views
+    # examples
+    # errors.add(:min, "Minimum value not met")
   end
 
   def parameter?

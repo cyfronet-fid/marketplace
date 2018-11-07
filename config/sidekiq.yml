@@ -1,0 +1,14 @@
+:verbose: false
+:concurrency: 5
+:pidfile: tmp/sidekiq.pid
+:logfile: log/sidekiq.log
+
+production:
+  :concurrency: 5
+staging:
+  :concurrency: 5
+
+:queues:
+  - orders
+  - mailers
+  - default

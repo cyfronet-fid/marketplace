@@ -6,7 +6,7 @@ RSpec.describe Service do
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:description) }
   it { should validate_presence_of(:tagline) }
-  it { should validate_presence_of(:provider) }
+  it { should validate_presence_of(:providers) }
   it { should validate_presence_of(:rating) }
 
   it { should validate_presence_of(:places) }
@@ -23,11 +23,12 @@ RSpec.describe Service do
   it { should validate_presence_of(:phase) }
 
   it { should belong_to(:owner) }
-  it { should belong_to(:provider) }
 
+  it { should have_many(:providers) }
   it { should have_many(:service_categories).dependent(:destroy) }
   it { should have_many(:offers).dependent(:restrict_with_error) }
   it { should have_many(:categories) }
+  it { should have_many(:service_research_areas).dependent(:destroy) }
 
   it "sets first category as default" do
     c1, c2 = create_list(:category, 2)
@@ -70,4 +71,12 @@ RSpec.describe Service do
     expect(create(:service).rating).to eq(0.0)
   end
 
+  it "has related services" do
+    s1, s2, s3 = create_list(:service, 3)
+
+    ServiceRelationship.create(source: s1, target: s2)
+    ServiceRelationship.create(source: s1, target: s3)
+
+    expect(s1.related_services).to contain_exactly(s2, s3)
+  end
 end

@@ -1,0 +1,7 @@
+- breadcrumb :service, @service
+.container
+  = render "services/header", service: @service, question: @question
+  = render "services/tabs", service: @service
+
+.tab-content
+  = render "services/opinions", service_opinions: @service_opinions
