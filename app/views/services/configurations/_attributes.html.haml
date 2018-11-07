@@ -1,11 +1,11 @@
 %h1
-  Hello attributes
+  Service attributes
 %p
   - project_item.property_values.each do |attr|
     = form.simple_fields_for :property_values, attr do |field|
       .attribute
-        -begin
+        - begin
           = render "services/configurations/attributes/#{attr.type}", attr: attr, field: field
         - rescue => e
           = e.message
-        =field.hint attr.description
+        = field.hint attr.description

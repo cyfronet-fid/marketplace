@@ -32,6 +32,8 @@ class ProjectItem < ApplicationRecord
   delegate :user, to: :project
   delegate :service, to: :offer
 
+  before_save :map_properties
+
   def active?
     !(ready? || rejected?)
   end
@@ -51,11 +53,19 @@ class ProjectItem < ApplicationRecord
     "##{id}"
   end
 
+  def map_properties
+    self.properties = property_values.map(&:to_json)
+  end
+
   attribute :property_values
 
   def property_values
     if !@property_values
-      @property_values = offer.attributes.dup
+      if properties.nil?
+        @property_values = offer.attributes.dup
+      else
+        @property_values = properties.map { |prop| Attribute.from_json(prop) }
+      end
     end
     @property_values
   end
@@ -64,8 +74,8 @@ class ProjectItem < ApplicationRecord
     if property_values.is_a?(Array)
       @property_values = property_values
     elsif property_values.is_a?(Hash)
-      props= []
-      property_values.each{ |id, value|
+      props = []
+      property_values.each { |id, value|
         attr = offer.attributes.find { |attr|
           id == attr.id
         }.dup
@@ -77,5 +87,4 @@ class ProjectItem < ApplicationRecord
     self.write_attribute(:property_values, @property_values)
     @property_values
   end
-
 end
