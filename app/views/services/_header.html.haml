@@ -6,15 +6,7 @@
       .col-9
         %h1= service.title
         %p= service.tagline
-        .row
-          .col
-            Dedicated for
-            = service.dedicated_for.map { |x| x }.join(", ")
-          .col
-            Provided by
-            = link_to service.provider.name, service.provider
-          .col
-            = render "services/research_area", service: service
+        = render "services/categorization", service: service
         .row
           .col
             = print_rating_stars(service.rating)

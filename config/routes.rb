@@ -29,8 +29,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :providers, only: :show
-
   resource :profile, only: [:show] do
     scope module: :profiles do
       resources :affiliations, only: [:new, :create, :edit, :update, :destroy]
