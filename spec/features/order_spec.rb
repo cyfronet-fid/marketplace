@@ -77,9 +77,9 @@ RSpec.feature "Service ordering" do
       # Summary
       expect(page).to have_current_path(service_summary_path(service))
       expect(page).to have_selector(:link_or_button,
-                                    "Go to your service request", exact: true)
+                                    "Go to requested service", exact: true)
 
-      click_on "Go to your service request"
+      click_on "Go to requested service"
 
       # Project item page
       expect(page).to have_current_path(project_item_path(project_item))
