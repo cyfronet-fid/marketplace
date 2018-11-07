@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_25_095520) do
+ActiveRecord::Schema.define(version: 2018_11_06_151032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 2018_10_25_095520) do
     t.bigint "service_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "parameters"
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
     t.index ["service_id"], name: "index_offers_on_service_id"
@@ -78,6 +79,7 @@ ActiveRecord::Schema.define(version: 2018_10_25_095520) do
     t.integer "issue_status", default: 2, null: false
     t.bigint "project_id"
     t.bigint "offer_id"
+    t.jsonb "properties"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
   end

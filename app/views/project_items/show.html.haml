@@ -44,43 +44,4 @@
             %span.font-weight-bold
               Provider:
             OneMikro
-        %table.table.mb-5
-          %thead
-            %tr
-              %th.pl-0{ scope: "col", colspan: "2" } Parameters
-          %tbody
-            %tr
-              %td.pl-0 Number of CPU cores
-              %td
-                %span.font-weight-bold 1
-            %tr
-              %td.pl-0 Amount of RAM per CPU core
-              %td
-                %span.font-weight-bold 2 GB
-            %tr
-              %td.pl-0 Local Disk
-              %td
-                %span.font-weight-bold 10 GB
-            %tr
-              %td.pl-0 Number of VM instances
-              %td
-                %span.font-weight-bold 1
-            %tr
-              %td.pl-0 Access type
-              %td
-                %span.font-weight-bold Reserved
-            %tr
-              %td.pl-0 Number of public IP
-              %td
-                %span.font-weight-bold 1
-            %tr
-              %td.pl-0 Start of service
-              %td
-                %span.font-weight-bold 10.06.2018
-            %tr
-              %td.pl-0 Number of days
-              %td
-                %span.font-weight-bold 24
-
-
-
+        = render "project_items/attributes", property_values: @project_item.property_values

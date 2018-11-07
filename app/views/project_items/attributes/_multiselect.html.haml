@@ -1,0 +1,4 @@
+%span.font-weight-bold
+  = raw (attr.value.map do |value|
+    - "#{value} #{attr.unit}"
+  - end.join(", "))
