@@ -41,11 +41,6 @@ crumb :category do |category|
   end
 end
 
-crumb :provider do |provider|
-  link "#{provider.name}", provider_path(provider)
-  parent :services
-end
-
 crumb :project_item do |project_item|
   link "Service (#{project_item.service.title})", project_item_path(project_item)
   parent :projects
