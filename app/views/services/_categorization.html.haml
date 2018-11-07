@@ -1,0 +1,21 @@
+:ruby
+  area_links = service.research_areas.
+               map { |ra| link_to(ra.name, services_path(research_area: ra.to_param)) }
+
+  dedicated_for_links = service.dedicated_for.
+                        map { |df| link_to(df, services_path(dedicated_for: df)) }
+
+  providers = service.providers.
+              map { |p| link_to(p.name, services_path(providers: p)) }
+
+.row
+  .col
+    Provided by
+    = safe_join(providers, ", ")
+  .col
+    Area
+    = safe_join(area_links, ", ")
+  .col
+    Dedicated for
+    = safe_join(dedicated_for_links, ", ")
+

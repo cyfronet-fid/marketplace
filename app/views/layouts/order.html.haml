@@ -2,17 +2,23 @@
 %html{ lang: "en" }
   = render "layouts/head"
   %body
-    = render "layouts/flash"
-    %header
-      .float-left
-        Logo
-      .float-right
-        = yield :buttons
-      .clearfix
-    %main
-      .alert.alert-info
-        This is a layout stub for orders. It can be found in
-        %code layouts/order.html.haml
+    %header.container
+      %nav.navbar.navbar-expand-lg
+        = link_to root_path, class: "navbar-brand mr-3" do
+          = image_tag "eosc-logo-color.png"
+        .text-right.flex-grow-1
+          = yield :cancel_button
+          = yield :next_button
+      = render "layouts/flash"
+    %main.container.order-container
+      %h1
+        = @service.title
+      %p.summary= @service.tagline
       = yield
-  = render "layouts/footer"
+      %hr.bottom-hr
+      .navbar.justify-content-end
+        = yield :next_button
+
+  = render "layouts/footer", root_categories: @root_categories
+  = render "layouts/modal"
 

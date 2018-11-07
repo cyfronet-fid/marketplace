@@ -1,0 +1,7 @@
+- if related_services.count.positive?
+  %h3 Services you can use with this service
+
+  .card-columns
+    = render partial: "services/service_box",
+            collection: related_services,
+            as: :service

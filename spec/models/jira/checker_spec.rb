@@ -117,10 +117,10 @@ describe Jira::Checker do
 
       def initialize(project_key, events = [])
         @filters = {
-            "issue-related-events-section" => "project = #{project_key} "
+          "issue-related-events-section" => "project = #{project_key} "
         }
         @attrs = {
-            "url" => ("http://localhost:2990" + api_webhooks_jira_path)
+          "url" => ("http://localhost:2990" + api_webhooks_jira_path + "?issue_id=${issue.id}")
         }
         @events = events
         @enabled = true

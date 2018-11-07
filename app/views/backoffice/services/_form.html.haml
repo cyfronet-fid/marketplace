@@ -7,7 +7,7 @@
   = f.input :connected_url, label: "Service website"
   = f.input :places
   = f.input :languages
-  = f.input :dedicated_for
+  = f.input :dedicated_for, as: :array, multiple: true
   = f.input :terms_of_use_url
   = f.input :access_policies_url
   = f.input :corporate_sla_url
@@ -18,8 +18,12 @@
   = f.input :restrictions
   = f.input :phase
   = f.input :open_access, as: :boolean
-  = f.association :provider
-  = f.input :contact_emails, as: :array, multiple: true
+  = f.input :activate_message
+  = f.input :logo
+  = f.association :providers, multiple: true
+  = f.input :contact_emails, multiple: true, as: :array
+  = f.association :research_areas, input_html: { multiple: true }, include_hidden: false
+
   %a#add-email-field Add additional email
   .invalid-feedback{ styles: "display:block" }
 

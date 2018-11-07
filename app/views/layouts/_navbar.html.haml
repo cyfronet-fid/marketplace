@@ -11,6 +11,9 @@
         - if policy([:backoffice, :backoffice]).show?
           %li.list-inline-item.ml-2
             = link_to "Backoffice", backoffice_path
+        - if policy([:admin, :admin]).show?
+          %li.list-inline-item.ml-2
+            = link_to "Admin", admin_path
         %li.list-inline-item.ml-2
           = link_to "Logout", destroy_user_session_path, method: :delete
       - else
@@ -19,8 +22,8 @@
 .container.pl-0.pr-0
   %nav.navbar.navbar-expand-lg.pl-0.pr-0
     = link_to root_path, class: "navbar-brand mr-3" do
-      %strong
-    %button.navbar-toggler{ "aria-controls" => "navbar-supported-content",
+      = image_tag "eosc-logo-color.png"
+    %button.navbar-toggler{ "aria-controls" => "main-navbar",
                            "aria-expanded" => "false",
                            "aria-label" => "Toggle navigation",
                            "data-target" => "#navbar-supported-content",
@@ -28,19 +31,46 @@
                            type: "button" }
       %i.fas.fa-bars
 
-    #navbar-supported-content.collapse.navbar-collapse
+    #main-navbar.collapse.navbar-collapse
       %ul.navbar-nav.ml-auto.pt-2.d-flex.flex-wrap
+        %li.nav-item.ml-1.dropdown
+          %a.nav-link.px-2.py-1.dropdown-toggle About
+          .dropdown-menu
+            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/about/eosc" } EOSC
+            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/about/eosc-projects" } EOSC Projects
+            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/about/eosc-members" } EOSC Members
+            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/about/funding-opportunities" }
+              Funding Opportunities
+            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/about/faqs" } FAQs
+            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/contact-us" } Contact us
+        %li.nav-item.ml-1.dropdown
+          %a.nav-link.px-2.py-1.dropdown-toggle Governance
+          .dropdown-menu
+            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/governance" } EOSC Governance
+            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/governance/rules-participation" }
+              Rules of participation
+            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/governance/best-practices" } Best Practices
+        %li.nav-item.ml-1.dropdown
+          %a.nav-link.px-2.py-1.dropdown-toggle{ href: url_for(services_path) } Services & Resources
+          .dropdown-menu
+            - @root_categories.each do |root_category|
+              = link_to root_category.name, root_category, class: "dropdown-item"
+        %li.nav-item.ml-1.dropdown
+          %a.nav-link.px-2.py-1.dropdown-toggle Policy
+          .dropdown-menu
+            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/policy/ec-documents" } EC Documents
+            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/policy/europe" } Europe
+            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/policy/eu-member-states" } Member States
+        %li.nav-item.ml-1.dropdown
+          %a.nav-link.px-2.py-1.dropdown-toggle EOSC in Practice
+          .dropdown-menu
+            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/eosc-in-practice/use-cases" } Use Cases
+            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/eosc-in-practice/open-call" } Open Call
+        %li.nav-item.ml-1.dropdown
+          %a.nav-link.px-2.py-1.dropdown-toggle Media
+          .dropdown-menu
+            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/media/news" } News
+            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/media/events" } Forthcoming Events
+            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/media/past-events" } Past Events
         %li.nav-item.ml-1
-          %a.nav-link.px-2.py-1 About
-        %li.nav-item.ml-1
-          %a.nav-link.px-2.py-1 Governance
-        %li.nav-item.ml-1
-          %a.nav-link.px-2.py-1 Services & Resources
-        %li.nav-item.ml-1
-          %a.nav-link.px-2.py-1 Policy
-        %li.nav-item.ml-1
-          %a.nav-link.px-2.py-1 EOSC in Practice
-        %li.nav-item.ml-1
-          %a.nav-link.px-2.py-1 Media
-        %li.nav-item.ml-1
-          %a.nav-link.pl-2.py-1.pr-1{ href: "http://eoscportal.trust-itservices.com/for-providers" } For providers
+          %a.nav-link.pl-2.py-1.pr-1{ href: "https://eoscportal.trust-itservices.com/for-providers" } For providers

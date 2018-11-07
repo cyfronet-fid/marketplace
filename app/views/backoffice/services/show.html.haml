@@ -1,8 +1,13 @@
 .container
   %h1= @service.title
-  %p
-    %b= @service.tagline
-  %p= @service.description
+  .row
+    .col-3
+      - if @service.logo.attached?
+        = image_tag @service.logo.variant(resize: "200x200")
+    .col-9
+      %p
+        %b= @service.tagline
+      %p= @service.description
 
   %h2 Terms of use
   = markdown(@service.terms_of_use)
@@ -13,9 +18,19 @@
   %h2 Open access
   %p= @service.open_access
 
+  %h2 Activate message
+  %p= @service.activate_message
+
   %h2 Contact emails
   - @service.contact_emails.each do |email|
     %p= email
+  %h2 Areas
+  - @service.research_areas.each do |area|
+    %p= area.name
+
+  %h2 Providers
+  - @service.providers.each do |provider|
+    %p= provider.name
 
   - if policy([:backoffice, @service]).edit?
     = link_to "Edit",

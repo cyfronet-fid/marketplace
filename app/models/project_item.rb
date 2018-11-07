@@ -9,6 +9,12 @@ class ProjectItem < ApplicationRecord
     rejected: "rejected"
   }
 
+  CUSTOMER_TYPOLOGIES = {
+    "Single user": 0,
+    "Representing a research community/project": 1,
+    "Representing a private company": 2
+  }
+
   ISSUE_STATUSES = {
       jira_active: 0,
       jira_deleted: 1,
@@ -18,21 +24,31 @@ class ProjectItem < ApplicationRecord
 
   enum status: STATUSES
   enum issue_status: ISSUE_STATUSES
+  enum customer_typologies: CUSTOMER_TYPOLOGIES
 
   belongs_to :offer
+  belongs_to :affiliation, required: false
   belongs_to :project
   has_one :service_opinion, dependent: :restrict_with_error
   has_many :project_item_changes, dependent: :destroy
 
   validates :offer, presence: true
+  validates :affiliation, presence: true, unless: :open_access?
   validates :project, presence: true
   validates :status, presence: true
+  validates :customer_typology, presence: true, unless: :open_access?
+  validates :access_reason, presence: true, unless: :open_access?
   validates_associated :property_values
 
   delegate :user, to: :project
   delegate :service, to: :offer
 
   before_save :map_properties
+
+  def open_access?
+    offer&.service&.open_access
+  end
+
 
   def active?
     !(ready? || rejected?)

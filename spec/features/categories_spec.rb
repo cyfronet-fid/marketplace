@@ -64,6 +64,6 @@ RSpec.feature "Service categories" do
 
     visit category_path(category, per_page: "1")
 
-    expect(page).to have_selector("dl > ul", count: 1)
+    expect(page).to have_selector(".media", count: 1)
   end
 end

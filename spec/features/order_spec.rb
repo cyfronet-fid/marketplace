@@ -14,20 +14,25 @@ RSpec.feature "Service ordering" do
     before { checkin_sign_in_as(user) }
 
     scenario "I see project_item service button" do
+      create(:offer, service: service)
+
       visit service_path(service)
 
       expect(page).to have_text("Order")
     end
 
     scenario "I see order open acces service button" do
-      @open_access_service = create(:open_access_service)
-      visit service_path(@open_access_service)
+      open_access_service = create(:open_access_service)
+      create(:offer, service: open_access_service)
+
+      visit service_path(open_access_service)
 
       expect(page).to have_text("Add to my services")
     end
 
     scenario "I can order service" do
       offer, _seconds_offer = create_list(:offer, 2, service: service)
+      affiliation = create(:affiliation, status: :active, user: user)
 
       visit service_path(service)
 
@@ -39,8 +44,8 @@ RSpec.feature "Service ordering" do
       expect(page).to have_selector(:link_or_button,
                                     "Next", exact: true)
 
-      select offer.iid
-      click_on "Next"
+      choose "project_item_offer_id_#{offer.iid}"
+      click_on "Next", match: :first
 
       # Step 2
       expect(page).to have_current_path(service_configuration_path(service))
@@ -48,15 +53,23 @@ RSpec.feature "Service ordering" do
                                     "Next", exact: true)
 
       select "Services"
-      click_on "Next"
+      select affiliation.organization
+      select "Single user", from: "Customer typology"
+      fill_in "Access reason", with: "To pass test"
+      fill_in "Additional information", with: "Additional information test"
+
+      click_on "Next", match: :first
 
       # Step 3
       expect(page).to have_current_path(service_summary_path(service))
       expect(page).to have_selector(:link_or_button,
                                     "Order", exact: true)
+      expect(page).to have_text("Single user")
+      expect(page).to have_text("To pass test")
+      expect(page).to have_text("Additional information test")
 
       expect do
-        click_on "Order"
+        click_on "Order", match: :first
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
       expect(project_item.offer_id).to eq(offer.id)
@@ -84,6 +97,8 @@ RSpec.feature "Service ordering" do
     end
 
     scenario "I'm redirected into service offers when offer is not chosen" do
+      create_list(:offer, 2, service: service)
+
       visit service_configuration_path(service)
 
       expect(page).to have_current_path(service_offers_path(service))
@@ -91,6 +106,7 @@ RSpec.feature "Service ordering" do
 
     scenario "I'm redirected into service configuration when order is not valid" do
       create(:offer, service: service)
+
       visit service_path(service)
 
       click_on "Order"
@@ -116,18 +132,47 @@ RSpec.feature "Service ordering" do
                                     "Order", exact: true)
 
       expect do
-        click_on "Order"
+        click_on "Order", match: :first
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
 
       expect(project_item.offer).to eq(offer)
       expect(project_item.project).to eq(default_project)
     end
+
+    scenario "I cannot order service without offers", js: true do
+      service = create(:service)
+
+      visit service_path(service)
+
+      expect(page).to_not have_text("Order")
+    end
+
+    # Not sure why this is not working: ActionController::UnknownFormat
+    # error is thrown when trying to click "Add new project button.
+    # TODO: discover why
+    #
+    # scenario "I can create new project on order configuration view" do
+    #   service = create(:service)
+    #   create(:offer, service: service)
+    #
+    #   visit service_path(service)
+    #
+    #   click_on "Order"
+    #   expect do
+    #     click_on "Add new project"
+    #     within("#ajax-modal") do
+    #       fill_in "Name", with: "New project"
+    #       click_on "Create new project"
+    #     end
+    #   end.to change { user.projects.count }.by(1)
+    # end
   end
 
   context "as anonymous user" do
     scenario "I nead to login to order service" do
       service = create(:service)
+      create_list(:offer, 2, service: service)
       user = create(:user)
 
       visit service_path(service)
@@ -144,6 +189,7 @@ RSpec.feature "Service ordering" do
 
     scenario "I can see order button" do
       service = create(:service)
+      create(:offer, service: service)
 
       visit service_path(service)
 
@@ -152,6 +198,7 @@ RSpec.feature "Service ordering" do
 
     scenario "I can see openaccess service order button" do
       open_access_service =  create(:open_access_service)
+      create(:offer, service: open_access_service)
 
       visit service_path(open_access_service)
 

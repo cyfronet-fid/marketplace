@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ProjectItem::RegisterQuestionJob < ApplicationJob
-  queue_as :project_items
+  queue_as :orders
 
   rescue_from(ProjectItem::RegisterQuestion::JIRACommentCreateError) do |exception|
     # TODO: we need to define what to do when question registration in e.g.

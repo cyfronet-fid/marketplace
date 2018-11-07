@@ -2,6 +2,7 @@
 
 class CategoriesController < ApplicationController
   include Service::Searchable
+  include Service::Sortable
   include Paginable
 
   before_action :category

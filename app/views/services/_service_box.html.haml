@@ -1,0 +1,12 @@
+.card
+  .card-body
+    .media.border-0
+      - if service.logo.attached?
+        = image_tag service.logo.variant(resize: "100x100"),
+          class: "align-self-center mr-4"
+      .media-body
+        %h3= link_to service.title, service
+        %p= service.tagline
+        .row
+          .col Provided by: #{service.providers.map { |p| p.name }.join(", ")}
+          .col Dedicated for #{service.dedicated_for.map { |x| x }.join(", ")}
