@@ -27,6 +27,9 @@ gem "simple_form"
 gem "activestorage-validator"
 gem "image_processing", "~> 1.2"
 
+# turbo-charged counter caches
+gem "counter_culture", "~> 2.0"
+
 # validation
 gem "valid_email2"
 gem "json-schema"

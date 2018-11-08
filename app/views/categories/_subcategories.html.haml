@@ -1,5 +1,5 @@
 = form_tag "", method: :get, role: "search", class: "", "data-sync-query-form": "data-sync-query-form" do
   - unless subcategories.empty?
-    %h5.mb-3.position-relative Categories
+    %h5.text-uppercase.underline-light.mb-2.pb-2 Categories
     %ul
       = render partial: "categories/subcategory", collection: subcategories

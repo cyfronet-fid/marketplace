@@ -1,6 +1,5 @@
 %li.step-progress-item.current.ml-4
-  -# :TODO UX
-  %p.time.x-small.text-muted 15.10.18 10:00
+  %p.time.x-small.text-muted= l current.created_at
   .ml-4
     .x-small.text-uppercase.d-block= status_change(previous, current)
     %p= markdown(current.message)

@@ -92,6 +92,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add sidekiq yaml configuration file (@wziajka)
 - Add smtp configuration (@wziajka)
 - Create new project on order configuration page (@mkasztelnik)
+- Show alert for logged in user when there is not active affiliation (@mkasztelnik)
+- Style ordered service view and remove mocked data (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
@@ -102,6 +104,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Rename `Order` to `ProjectItem` (@mkasztelnik)
 - Rename `OrderChange` to `ProjectItemChange` (@mkasztelnik)
 - Split backend for Service details view (@kmarszalek)
+- Bootstrap improvements towards compliance with the guidelines (@jswk)
 
 ### Deprecated
 

@@ -1,5 +1,10 @@
 - if alert
-  .alert.alert-danger.mb-0.rounded-0{ role: "alert" }= alert
+  .alert.alert-danger.mb-0.text-center{ role: "alert" }= alert
 - elsif notice
-  .alert.alert-success.mb-0.rounded-0{ role: "alert" }= notice
+  .alert.alert-success.mb-0.text-center{ role: "alert" }= notice
 
+- if user_signed_in? && !current_user.active_affiliation?
+  .alert.alert-warning.mb-0.text-center{ role: "alert" }
+    You don't have active affiliation. It is required to order
+    a service. You can create and activate new affiliation
+    #{link_to "here", new_profile_affiliation_path}.

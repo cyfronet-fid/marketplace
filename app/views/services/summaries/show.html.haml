@@ -14,9 +14,9 @@
   .card-body
     %h4.card-title= @project_item.offer.name
     .card-text= @project_item.offer.description
+      
+    = render "project_items/attributes", property_values: @project_item.property_values
 
-    %p
-      = render "project_items/attributes", property_values: @project_item.property_values
 
 .additional-information.mb-5
   %h3
@@ -62,6 +62,7 @@
 
       %dt Supervisor profile
       %dd= @project_item.affiliation.supervisor_profile.presence || "No supervisor profile set"
+
 
 = content_for :cancel_button do
   = link_to "Cancel order and quit", service_cancel_path(@service), method: :delete
