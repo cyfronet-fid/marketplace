@@ -1,86 +1,39 @@
 - breadcrumb :project_item, @project_item
 
 .container
-  .row.h-100
+  .row
     .col-md-9
       %h1
         Project item (#{@project_item.service.title})
     .col-md-3.my-auto
-      %p.text-uppercase.text-primary.text-right.font-weight-bold
-        pending
+      %p.text-uppercase.text-right.font-weight-bold.text-secondary.my-auto
+        = @project_item.status
   %hr.mb-4
-    .row
-      .col-md-6
-        %ul
-          %li
-            %span.font-weight-bold Service:
-            = @project_item.service.title
-          %li
-            %span.font-weight-bold For:
-            = @project_item.user.full_name
-          %li
-            %span.font-weight-bold Current status:
-            = @project_item.status
-          - if ratingable?
-            %li
-              = link_to "Rate this service!",
-                new_project_item_service_opinion_path(@project_item),
-                class: "btn btn-secondary"
+  .row.justify-content-between
+    .col-md-6
+      = render "project_items/project_item_changes",
+                project_item_changes: @project_item.project_item_changes.to_a,
+                project_item: @project_item,
+                question: @question
+    .col-md-5
+      %h3.mb-3
+        Details
+      %ul
+        %li
+          %strong Order date:
+          = l @project_item.created_at
+        %li
+          %strong Providers:
+          :ruby
+            providers = @project_item.service.providers.
+                        map { |p| link_to(p.name, services_path(providers: p)) }
+          = safe_join(providers, ", ")
+        - if ratingable?
+          %li.mt-3
+            = link_to "Rate this service!",
+              new_project_item_service_opinion_path(@project_item),
+              class: "btn btn-secondary"
 
-        = render "project_items/project_item_changes",
-                 project_item_changes: @project_item.project_item_changes.to_a,
-                 project_item: @project_item,
-                 question: @question
-      .col-md-1.col-sm-12
-      .col-md-5
-        %h3.mb-3
-          Details
-        %ul
-          %li
-            %span.font-weight-bold
-              order-date:
-            14.12.2019
-          %li
-            %span.font-weight-bold
-              Provider:
-            OneMikro
-        %table.table.mb-5
-          %thead
-            %tr
-              %th.pl-0{ scope: "col", colspan: "2" } Parameters
-          %tbody
-            %tr
-              %td.pl-0 Number of CPU cores
-              %td
-                %span.font-weight-bold 1
-            %tr
-              %td.pl-0 Amount of RAM per CPU core
-              %td
-                %span.font-weight-bold 2 GB
-            %tr
-              %td.pl-0 Local Disk
-              %td
-                %span.font-weight-bold 10 GB
-            %tr
-              %td.pl-0 Number of VM instances
-              %td
-                %span.font-weight-bold 1
-            %tr
-              %td.pl-0 Access type
-              %td
-                %span.font-weight-bold Reserved
-            %tr
-              %td.pl-0 Number of public IP
-              %td
-                %span.font-weight-bold 1
-            %tr
-              %td.pl-0 Start of service
-              %td
-                %span.font-weight-bold 10.06.2018
-            %tr
-              %td.pl-0 Number of days
-              %td
-                %span.font-weight-bold 24
-
+      = render "project_items/parameters", project_item: @project_item
 
 
