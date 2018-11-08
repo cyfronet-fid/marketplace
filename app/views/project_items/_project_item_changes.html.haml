@@ -1,4 +1,4 @@
-%h3.mb-4 Service request history
+%h3.mb-4 Order history
 %ul.step-progress.pl-5.pb-4
   - if project_item_changes.count.positive?
     = ([nil] + project_item_changes).each_cons(2) do |previous, current|
