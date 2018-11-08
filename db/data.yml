@@ -178,150 +178,154 @@ services:
 
           [2]: https://www.egi.eu/use-cases/research-stories/the-genetics-of-salmonella-infections/
 
-        offers: &cloudComputeOffers
-        - name: General purpose
-          description: some description
-#          parameters:
-#            - id: "id1"
-#              label: "Number of CPU Cores"
-#              description: "Select number of cores you want"
-#              type: "select"
-#              value_type: "integer"
-#              config:
-#                mode: "buttons"
-#                values: [1, 2, 4, 8]
-#              - id: "id2"
-#                label: "Amount of RAM per CPU core"
-#                description:  "Select amount of RAM per core"
-#                type:  "select"
-#                value_type:  "integer"
-#                unit: "GB"
-#                config:
-#                  mode:  "buttons"
-#                  values:  [1, 2, 4]
-#              - id:  "id3"
-#                label:  "Local disk"
-#                description:  "Amount of local disk space"
-#                type:  "select"
-#                value_type:  "integer"
-#                unit: "GB"
-#                config:
-#                  mode:  "buttons"
-#                  values:  [10, 20, 40]
-#          - name: Compute-intensive
-#            description: some description of offer
-#            parameters:
-#              - id:  "id1"
-#                label:  "Number of CPU Cores"
-#                description:  "Select number of cores you want"
-#                type:  "select"
-#                value_type:  "integer"
-#                config:
-#                  mode:  "buttons"
-#                  values:  [8, 12, 16, 20, 24, 28, 32, 64]
-#              - id:  "id2"
-#                label:  "Amount of RAM per CPU core"
-#                description:  "Select amount of RAM per core"
-#                type:  "select"
-#                value_type:  "integer"
-#                unit: "GB"
-#                config:
-#                  mode:  "buttons"
-#                  values:  [2, 4, 8]
-#              - id:  "id3"
-#                label:  "Local disk"
-#                description:  "Amount of local disk space"
-#                type:  "select"
-#                value_type:  "integer"
-#                unit: "GB"
-#                config:
-#                  mode:  "buttons"
-#                  values:  [10, 20, 40]
-#              - id:  "id4"
-#                label:  "I add this field to show how it looks like, it's a string field"
-#                description:  "Amount of local disk space"
-#                type:  "input"
-#                value_type:  "string"
-#              - id:  "id5"
-#                label:  "I add this field to show how it looks like, it's a integer field"
-#                description:  "Amount of local disk space"
-#                type:  "input"
-#                value_type:  "integer"
-#              - id:  "id6"
-#                label: "I add this field to show how it looks like, it's a multiselect field"
-#                description:  "Amount of local disk space"
-#                type:  "multiselect"
-#                value_type:  "integer"
-#                unit: "GB"
-#                config:
-#                  values:  [10, 20, 40]
-#                  minItems: 1
-#          - name: High-memory
-#            description: High memory instance
-#            parameters:
-#              - id:  "id1"
-#                label:  "Number of CPU Cores"
-#                description:  "Select number of cores you want"
-#                type:  "select"
-#                value_type:  "integer"
-#                config:
-#                  mode:  "buttons"
-#                  values:  [2, 4, 8, 12, 16]
-#              - id:  "id2"
-#                label:  "Amount of RAM per CPU core"
-#                description:  "Select amount of RAM per core"
-#                type:  "select"
-#                value_type:  "integer"
-#                unit: "GB"
-#                config:
-#                  mode:  "buttons"
-#                  values:  [16, 32, 48, 64, 80, 96, 112, 120]
-#              - id:  "id3"
-#                label:  "Local disk"
-#                description:  "Amount of local disk space"
-#                type:  "select"
-#                value_type:  "integer"
-#                unit: "GB"
-#                config:
-#                  mode:  "buttons"
-#                  values:  [10, 20, 40]
-#          - name: GPU
-#            description: GPU Instance
-#            parameters:
-#              - id:  "id1"
-#                label:  "Number of GPU cores"
-#                description:  "Select number of GPU cores you want"
-#                type:  "select"
-#                value_type:  "integer"
-#                config:
-#                  mode:  "buttons"
-#                  values:  [1, 2]
-#              - id:  "id2"
-#                label:  "Number of CPU Cores"
-#                description:  "Select number of CPU cores you want"
-#                type:  "select"
-#                value_type:  "integer"
-#                config:
-#                  mode:  "buttons"
-#                  values:  [8]
-#              - id:  "id3"
-#                label:  "Amount of RAM"
-#                description:  "Select amount of RAM per core"
-#                type:  "select"
-#                value_type:  "integer"
-#                unit: "GB"
-#                config:
-#                  mode:  "buttons"
-#                  values:  [24, 50]
-#              - id:  "id4"
-#                label:  "Local disk"
-#                description:  "Amount of local disk space"
-#                type:  "select"
-#                value_type:  "integer"
-#                unit: "GB"
-#                config:
-#                  mode:  "buttons"
-#                  values:  [280]
+        offers:
+          1:
+            name: General purpose
+            description: some description
+            parameters:
+              - id: "id1"
+                label: "Number of CPU Cores"
+                description: "Select number of cores you want"
+                type: "select"
+                value_type: "integer"
+                config:
+                  mode: "buttons"
+                  values: [1, 2, 4, 8]
+              - id: "id2"
+                label: "Amount of RAM per CPU core"
+                description:  "Select amount of RAM per core"
+                type:  "select"
+                value_type:  "integer"
+                unit: "GB"
+                config:
+                  mode:  "buttons"
+                  values:  [1, 2, 4]
+              - id:  "id3"
+                label:  "Local disk"
+                description:  "Amount of local disk space"
+                type:  "select"
+                value_type:  "integer"
+                unit: "GB"
+                config:
+                  mode:  "buttons"
+                  values:  [10, 20, 40]
+          2:
+            name: Compute-intensive
+            description: some description of the offer
+            parameters:
+              - id:  "id1"
+                label:  "Number of CPU Cores"
+                description:  "Select number of cores you want"
+                type:  "select"
+                value_type:  "integer"
+                config:
+                  mode:  "buttons"
+                  values:  [8, 12, 16, 20, 24, 28, 32, 64]
+              - id:  "id2"
+                label:  "Amount of RAM per CPU core"
+                description:  "Select amount of RAM per core"
+                type:  "select"
+                value_type:  "integer"
+                unit: "GB"
+                config:
+                  mode:  "buttons"
+                  values:  [2, 4, 8]
+              - id:  "id3"
+                label:  "Local disk"
+                description:  "Amount of local disk space"
+                type:  "select"
+                value_type:  "integer"
+                unit: "GB"
+                config:
+                  mode:  "buttons"
+                  values:  [10, 20, 40]
+              - id:  "id4"
+                label:  "I add this field to show how it looks like, it's a string field"
+                description:  "Amount of local disk space"
+                type:  "input"
+                value_type:  "string"
+              - id:  "id5"
+                label:  "I add this field to show how it looks like, it's a integer field"
+                description:  "Amount of local disk space"
+                type:  "input"
+                value_type:  "integer"
+              - id:  "id6"
+                label: "I add this field to show how it looks like, it's a multiselect field"
+                description:  "Amount of local disk space"
+                type:  "multiselect"
+                value_type:  "integer"
+                unit: "GB"
+                config:
+                  values:  [10, 20, 40]
+                  minItems: 1
+          3:
+            name: High-memory
+            description: High memory instance
+            parameters:
+              - id:  "id1"
+                label:  "Number of CPU Cores"
+                description:  "Select number of cores you want"
+                type:  "select"
+                value_type:  "integer"
+                config:
+                  mode:  "buttons"
+                  values:  [2, 4, 8, 12, 16]
+              - id:  "id2"
+                label:  "Amount of RAM per CPU core"
+                description:  "Select amount of RAM per core"
+                type:  "select"
+                value_type:  "integer"
+                unit: "GB"
+                config:
+                  mode:  "buttons"
+                  values:  [16, 32, 48, 64, 80, 96, 112, 120]
+              - id:  "id3"
+                label:  "Local disk"
+                description:  "Amount of local disk space"
+                type:  "select"
+                value_type:  "integer"
+                unit: "GB"
+                config:
+                  mode:  "buttons"
+                  values:  [10, 20, 40]
+          4:
+            name: GPU
+            description: GPU Instance
+            parameters:
+              - id:  "id1"
+                label:  "Number of GPU cores"
+                description:  "Select number of GPU cores you want"
+                type:  "select"
+                value_type:  "integer"
+                config:
+                  mode:  "buttons"
+                  values:  [1, 2]
+              - id:  "id2"
+                label:  "Number of CPU Cores"
+                description:  "Select number of CPU cores you want"
+                type:  "select"
+                value_type:  "integer"
+                config:
+                  mode:  "buttons"
+                  values:  [8]
+              - id:  "id3"
+                label:  "Amount of RAM"
+                description:  "Select amount of RAM per core"
+                type:  "select"
+                value_type:  "integer"
+                unit: "GB"
+                config:
+                  mode:  "buttons"
+                  values:  [24, 50]
+              - id:  "id4"
+                label:  "Local disk"
+                description:  "Amount of local disk space"
+                type:  "select"
+                value_type:  "integer"
+                unit: "GB"
+                config:
+                  mode:  "buttons"
+                  values:  [280]
     High-Throughput compute:
         title: EGI High-Throughput compute
         parents: *computeParent
@@ -362,68 +366,57 @@ services:
           [1]: https://www.egi.eu/use-cases/research-stories/what-happens-when-molecules-collide/
 
           [2]: https://www.egi.eu/use-cases/research-stories/cities/
-#        offers:
-#          1:
-#            name: Base
-#            description: *notSpecified
-#            parameters: |
-#              [{
-#                id:  "Number of CPU cores",
-#                label:  "How many kids you have",
-#                description:  "Description 4",
-#                type:  "input",
-#                value_type:  "integer"
-#                "config" => {
-#                              "values" => [1-32]
-#              }
-#              },
-#              {
-#                id:  "id2",
-#                label:  "Amount of RAM per CPU core",
-#                description:  "Description 4",
-#                "unit" => "GB"
-#                type:  "input",
-#                value_type:  "integer"
-#                "config" => {
-#                              "values" => [4-8]
-#              }
-#              },
-#              ]
-#          2:
-#            name: MPI
-#            description: *notSpecified
-#            parameters: |
-#              [{
-#                 id:  "id1",
-#                 label:  "Number of CPU cores",
-#                 description:  "Cores",
-#                 type:  "input",
-#                 value_type:  "integer"
-#                 "config" => {
-#                               "values" => [1-32]
-#              }
-#               },
-#               {
-#                 id:  "id2",
-#                 label:  "Amount of RAM per CPU core",
-#                 description:  "RAM",
-#                 "unit" => "GB"
-#                 type:  "input",
-#                 value_type:  "integer"
-#                 "config" => {
-#                               "values" => [4-8]
-#               }
-#               },
-#               {
-#                 id:  "id3",
-#                 label:  "Parallelism (Threads)",
-#                 description:  "Threads",
-#                 type:  "input",
-#                 value_type:  "integer"
-#                 "config" => {
-#                               "values" => [8-24]
-#               }
-#               }]
+        offers:
+          1:
+            name: Base
+            description: *notSpecified
+            parameters:
+              - id:  "id1"
+                label:  "Number of CPU cores"
+                description:  "Choose number of cores between 1 and 32"
+                type:  "input"
+                value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximumm: 32
+              - id:  "id2"
+                label:  "Amount of RAM per CPU core"
+                description:  "Choose number from 4 to 8"
+                unit: "GB"
+                type:  "input"
+                value_type:  "integer"
+                config:
+                  minimum: 4
+                  maximum: 8
+          2:
+            name: MPI
+            description: *notSpecified
+            parameters:
+            - id:  "id1"
+              label:  "Number of CPU cores"
+              description:  "Cores"
+              type:  "input"
+              value_type:  "integer"
+              config:
+                minimum: 1
+                maximumm: 32
+            - id:  "id2"
+              label:  "Amount of RAM per CPU core"
+              description:  "RAM"
+              unit: "GB"
+              type:  "input"
+              value_type:  "integer"
+              config:
+                minimum: 4
+                maximum: 8
+            - id:  "id3"
+              label:  "Parallelism (Threads)"
+              description:  "Threads"
+              type:  "input"
+              value_type:  "integer"
+              config:
+                minimum: 8
+                maximum: 24
     Cloud container compute:
         title: EGI Cloud container compute BETA
         parents: *computeParent
@@ -1236,66 +1229,54 @@ services:
             name: "Offer"
             description: "This service has only 1 offer"
             parameters:
-#              [{
-#                  id:  "id1",
-#                  label:  "Number of CPU hours",
-#                  description:  "Select number of cores you want",
-#                  type:  "select",
-#                  "unit" => "h",
-#                  value_type:  "integer",
-#                  config: 
-#                               mode:  "buttons",
-#                               values:  [1000]}
-#                },
-#                {
-#                  id:  "id2",
-#                  label:  "Total amount of RAM per CPU core",
-#                  description:  "Select RAM per core",
-#                  "unit" => "GB",
-#                  type:  "select",
-#                  value_type:  "integer",
-#                  config: 
-#                               mode:  "buttons",
-#                               values:  [4]}
-#                },
-#                {
-#                  id:  "id3",
-#                  label:  "Storage capacity",
-#                  description:  "Select storage",
-#                  "unit" => "GB",
-#                  type:  "select",
-#                  value_type:  "integer",
-#                  config: 
-#                               mode:  "buttons",
-#                               values:  [100]}
-#                },
-#                {
-#                  id:  "id4",
-#                  label:  "Access type",
-#                  description:  "Select access type",
-#                  type:  "select",
-#                  value_type:  "string",
-#                  config: 
-#                               mode:  "buttons",
-#                               values:  ["opportunistic"]}
-#                },
-#                {
-#                  id:  "id5",
-#                  label:  "Start of service",
-#                  description:  "When do you want access the service",
-#                  type:  "input",
-#                  "value" => "date",
-#                  value_type:  "string"
-#                },
-#                {
-#                  id:  "id6",
-#                  label:  "Number days",
-#                  description:  "How long do you want to have access?",
-#                  type:  "input",
-#                  value_type:  "integer",
-#                  config: 
-#                               values:  [1-730]}
-#                }]
+            - id:  "id1"
+              label:  "Number of CPU hours"
+              description:  "Select number of cores you want"
+              type:  "select"
+              unit: "h"
+              value_type:  "integer"
+              config:
+                mode:  "buttons"
+                values:  [1000]
+            - id:  "id2"
+              label:  "Total amount of RAM per CPU core"
+              description:  "Select RAM per core"
+              unit: "GB"
+              type:  "select"
+              value_type:  "integer"
+              config:
+                mode:  "buttons"
+                values:  [4]
+            - id:  "id3"
+              label:  "Storage capacity"
+              description:  "Select storage"
+              unit: "GB"
+              type:  "select"
+              value_type:  "integer"
+              config:
+                mode:  "buttons"
+                values:  [100]
+            - id:  "id4"
+              label:  "Access type"
+              description:  "Select access type"
+              type:  "select"
+              value_type:  "string"
+              config:
+                mode:  "buttons"
+                values:  ["opportunistic"]
+            - id:  "id5"
+              label:  "Start of service"
+              description:  "When do you want access the service"
+              type:  "date"
+              value_type:  "string"
+            - id:  "id6"
+              label:  "Number days"
+              description:  "How long do you want to have access?"
+              type:  "input"
+              value_type:  "integer"
+              config:
+                minimum: 1
+                maximum: 730
     ClustalW2:
         title: ClustalW2
         parents: *applicationsParent
@@ -1502,7 +1483,7 @@ services:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
-        area: &physicalScienceAerosol Physical science (aerosol physics)
+        area: *physicalScienceAerosol
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: D4 Science Service (need to be filled)
