@@ -34,11 +34,25 @@ RSpec.describe Attribute do
 
   it 'does anything', focus: true do
     attr = Attribute.from_json({
-                                   "id"=> "id1",
-                                   "label"=> "Attribute 1",
+                                   "id"=> "id7",
+                                   "label"=> "Attribute non changable",
                                    "type"=> "attribute",
+                                   "unit"=> "GB",
                                    "value_type"=> "string",
-                                   "value"=> "b",
+                                   "value"=> "Value",
+                               })
+    expect(attr.value_valid?).to be true
+    puts attr.to_json
+  end
+
+  it 'checks number string assigned to string', focus: true do
+    attr = Attribute.from_json({
+                                   "id"=> "id7",
+                                   "label"=> "Attribute non changable",
+                                   "type"=> "attribute",
+                                   "unit"=> "GB",
+                                   "value_type"=> "string",
+                                   "value"=> "17",
                                })
     expect(attr.value_valid?).to be true
     puts attr.to_json
