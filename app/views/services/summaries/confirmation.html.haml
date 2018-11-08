@@ -1,5 +1,16 @@
-Huray, you ordered this service!!!
+- breadcrumb :congratulations, @project_item
 
-= link_to "Go to your service request", project_item_path(@project_item)
+.container
+  %h1 Congratulations!
+  Your request has been sent. Stay come and wait for information from provider.
+  You can check request status on #{link_to "My services", projects_path} or back
+  to #{link_to "start page", root_path}.
 
-= render "services/related", related_services: @related_services
+  .mt-4.mb-4
+    = link_to "Go to requested service", project_item_path(@project_item),
+      class: "btn btn-primary mr-3"
+    = link_to "Get access to other services", services_path,
+      class: "btn btn-secondary"
+
+  %hr.mb-4
+  = render "services/related", related_services: @related_services
