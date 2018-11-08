@@ -37,12 +37,8 @@ RSpec.feature "Affiliations" do
       expect { click_on "Create Affiliation" }.
         to change { user.affiliations.count }.by(1)
 
-      expect(page).to have_content("my org")
-      expect(page).to have_content("depart")
+      expect(page).to have_content("New affiliation - last step")
       expect(page).to have_content("johndoe@uni.edu")
-      expect(page).to have_content("12345678")
-      expect(page).to have_content("http://my.uni.edu")
-      expect(page).to have_content("My Supervisor")
     end
 
     scenario "I can confirm new affiliation" do
