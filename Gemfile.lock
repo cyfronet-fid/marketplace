@@ -47,6 +47,9 @@ GEM
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     aes_key_wrap (1.0.1)
+    after_commit_action (1.1.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
     ancestry (3.0.2)
       activerecord (>= 3.2.0)
     arel (9.0.0)
@@ -72,6 +75,10 @@ GEM
     colorize (0.8.1)
     concurrent-ruby (1.0.5)
     connection_pool (2.2.2)
+    counter_culture (2.1.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      after_commit_action (~> 1.0)
     crass (1.0.4)
     database_cleaner (1.7.0)
     devise (4.4.3)
@@ -431,6 +438,7 @@ DEPENDENCIES
   byebug
   capybara
   colorize (>= 0.8.1)
+  counter_culture (~> 2.0)
   database_cleaner
   devise
   dotenv-rails

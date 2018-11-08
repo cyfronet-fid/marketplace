@@ -26,4 +26,8 @@ class User < ApplicationRecord
   def active_affiliations
     affiliations.where(status: :active)
   end
+
+  def active_affiliation?
+    active_affiliations_count.positive?
+  end
 end
