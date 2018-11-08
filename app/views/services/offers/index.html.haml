@@ -10,7 +10,7 @@
 
   .card-columns
     = render partial: "services/offers/offer",
-      collection: @offers, as: :offer, locals: { f: f }
+      collection: @offers, as: :offer, locals: { f: f, project_item: @project_item }
 
 = content_for :cancel_button do
   = link_to "Cancel order and quit", service_cancel_path(@service), method: :delete
