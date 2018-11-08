@@ -50,3 +50,8 @@ crumb :projects do
   link "My services", projects_path
   parent :root
 end
+
+crumb :congratulations do |project_item|
+  link "Congratulations", project_item_path(project_item)
+  parent :root
+end

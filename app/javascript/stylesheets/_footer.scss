@@ -13,7 +13,7 @@ body {
 .footer {
   width: 100%;
   background-color: $footer-bg-color;
-  font-family: $font-weight-200;
+  font-weight: $font-weight-light;
 
   .eosc-logo-mono {
     background: url('../../assets/images/eosc-logo-mono.png') top center no-repeat;
@@ -27,20 +27,14 @@ body {
 
   h5 {
     color: $footer-header-color;
-    text-transform: uppercase;
-    border: none;
-
-    &::after {
-      border: none;
-    }
   }
 
   a {
     color: $footer-color;
-    font-size: $font-size-xxs;
+    font-size: $font-size-footer;
 
     &:hover {
-      color: $primary;
+      color: $secondary;
     }
   }
 
@@ -66,8 +60,8 @@ body {
   }
 }
 
-.ue-informations {
+.eu-information {
   font-size: 14px;
   line-height: 1.2rem;
-  color: $ue-information-color;
+  color: $eu-information-color;
 }

@@ -63,7 +63,7 @@
     }
 
     tr:first-child td {
-      border-top: 2px solid lighten($primary, 10%);
+      border-top: 2px solid lighten($secondary, 10%);
     }
   }
 
@@ -94,5 +94,17 @@
     border: 0 none;
     color: lighten($border-color, 5%);
     height: 5px;
+  }
+
+  .sc-head {
+    border-bottom: 1px solid $border-color;
+    border-top: none;
+    text-transform: uppercase;
+    padding: 0;
+    margin-bottom: 20px;
+    margin-top: 25px
+  }
+  .sc-section {
+
   }
 }
