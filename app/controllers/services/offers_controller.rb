@@ -33,7 +33,7 @@ class Services::OffersController < Services::ApplicationController
     end
 
     def offer_params
-      params.require(:project_item).permit(:offer_id)
+      params.fetch(:project_item, {}).permit(:offer_id)
     end
 
     def init_offer_selection!
