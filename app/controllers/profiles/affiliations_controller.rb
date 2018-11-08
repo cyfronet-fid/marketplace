@@ -16,8 +16,7 @@ class Profiles::AffiliationsController < ApplicationController
     @affiliation = Affiliation::Create.new(template).call
 
     if @affiliation.persisted?
-      redirect_to profile_path,
-                  notice: "New affiliation created sucessfully"
+      render "consent"
     else
       render :new, status: :bad_request
     end

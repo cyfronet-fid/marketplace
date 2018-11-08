@@ -102,6 +102,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - filter by status on my serices view (@martaswiatkowska)
 - Simple form checks validation if conditions (@mkasztelnik)
 - Clickable next order nav step (@mkasztelnik)
+- Affiliation last step - consent (@martaswiatkowska)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
