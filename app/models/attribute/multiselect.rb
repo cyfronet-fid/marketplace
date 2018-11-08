@@ -28,7 +28,7 @@ class Attribute::Multiselect < Attribute::Select
         "items": {
             "type": @value_type,
         },
-        "minItems": config["minItems"],
+        "minItems": config["minItems"] || 0,
         "maxItems": config["maxItems"] || config["values"].size,
     }
   end

@@ -20,9 +20,10 @@
         .input-group-append
           = link_to "Add new project", new_project_path,
             class: "btn btn-primary", remote: true
-  .sc-section
-    %h4.sc-head Technical parameters
-    = render "services/configurations/attributes", project_item: @project_item, form: f
+  - unless @project_item.property_values.blank?
+    .sc-section
+      %h4.sc-head Technical parameters
+      = render "services/configurations/attributes", project_item: @project_item, form: f
   .sc-section
     %h4.sc-head Information about usage
     = f.association :affiliation,

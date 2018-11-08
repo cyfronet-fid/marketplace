@@ -8,7 +8,7 @@ class Attribute
   validate :value_validity
 
   def value_validity
-    if (!value_valid?)
+    unless value_valid?
       # this needs to be like that - simple form is based on the f.input :id
       errors.add(:id, "Invalid attribute value")
     end
@@ -53,12 +53,12 @@ class Attribute
     json = {}
     json["id"] = id
     json["label"] = label
-    json["description"] = description
     json["type"] = type
     json["value_type"] = value_type
-    json["unit"] = unit if !unit.nil?
-    json["value"] = value if !value.nil?
-    json["config"] = config if !config.nil?
+    json["unit"] = unit unless unit.nil?
+    json["value"] = value unless value.nil?
+    json["config"] = config unless config.nil?
+    json["description"] = description unless description
     json
   end
 
@@ -67,6 +67,8 @@ class Attribute
       case @value_type
       when "integer"
         @value = Integer(param)
+      when "string"
+        @value = String(param)
       else
         @value = param
       end
@@ -116,11 +118,11 @@ class Attribute
     end
     attr.id = json["id"]
     attr.label = json["label"]
-    attr.description = json["description"]
     attr.value_type = json["value_type"]
     attr.unit = json["unit"]
     attr.config = json["config"]
-    attr.value = json["value"] if !json["value"].blank?
+    attr.description = json["description"] unless json["description"].blank?
+    attr.value = json["value"] unless json["value"].blank?
     attr.validate_value_type!
     attr
   end
