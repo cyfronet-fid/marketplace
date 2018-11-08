@@ -63,7 +63,7 @@ RSpec.feature "My Services" do
 
       visit project_item_path(project_item)
 
-      expect(page).to have_text("Current status: ready")
+      expect(page).to have_text("ready")
 
       expect(page).to have_text("Service request created")
 

@@ -1,9 +1,9 @@
 - if policy(question).create?
   %hr
-  %p.font-weight-bold Message to customer service about your project_item
+  %p.font-weight-bold Message to customer service about your order
 
   = form_for question, url: project_item_questions_path(project_item) do |f|
     - if question.errors[:text].present?
       .alert.alert-danger= question.errors[:text]&.first
     = f.text_area :text, class: "form-control", rows: "10"
-    %button.btn.btn-primary.btn-sm.mt-4{ type: "submit" } Send message
+    %button.btn.btn-secondary.btn-sm.mt-4{ type: "submit" } Send message
