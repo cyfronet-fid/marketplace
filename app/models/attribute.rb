@@ -1,5 +1,6 @@
-class Attribute
+# frozen_string_literal: true
 
+class Attribute
   extend ActiveModel::Naming
   include ActiveModel::Validations
 
@@ -129,32 +130,31 @@ class Attribute
 
   protected
 
-  ATTRIBUTE_SCHEMA = {
+    ATTRIBUTE_SCHEMA = {
       "type": "object",
       "required": ["id", "label", "type", "value_type"],
       "properties": {
-          "id": {
-              "type": "string"
-          },
-          "label": {
-              "type": "string"
-          },
-          "description": {
-              "type": "string"
-          },
-          "type": {
-              "type": "string",
-              "enum": ["attribute", "input", "range-property", "select", "multiselect", "range", "date"]
-          },
-          # maybe value type support should be validated per attribute type
-          "value_type": {
-              "type": "string",
-          },
-          "value": {},
-          "config": {}
+        "id": {
+            "type": "string"
+        },
+        "label": {
+            "type": "string"
+        },
+        "description": {
+            "type": "string"
+        },
+        "type": {
+            "type": "string",
+            "enum": ["attribute", "input", "range-property", "select", "multiselect", "range", "date"]
+        },
+        # maybe value type support should be validated per attribute type
+        "value_type": {
+            "type": "string",
+        },
+        "value": {},
+        "config": {}
       }
-  }
+    }
 
-  TYPE = "attribute"
-
+    TYPE = "attribute"
 end

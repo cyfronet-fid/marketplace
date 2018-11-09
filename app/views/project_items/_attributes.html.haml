@@ -3,17 +3,17 @@
     %tr
       %th.pl-0{ scope: "col", colspan: "2" } Technical parameters
   %tbody
-    -if property_values.size>0
-      -property_values.each do |attr|
+    - if property_values.size > 0
+      - property_values.each do |attr|
         %tr
           %td.pl-0
-            =attr.label
+            = attr.label
           %td
-            -begin
-              =render "project_items/attributes/#{attr.type}", attr: attr
+            - begin
+              = render "project_items/attributes/#{attr.type}", attr: attr
             - rescue => e
-              =render "project_items/attributes/default", attr: attr
-    -else
+              = render "project_items/attributes/default", attr: attr
+    - else
       %tr
         %td.pl-0
           No parameters

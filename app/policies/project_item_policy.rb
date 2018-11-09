@@ -19,8 +19,8 @@ class ProjectItemPolicy < ApplicationPolicy
 
   def permitted_attributes
     attributes = record.offer.attributes.map { |a|
-        (a.value_schema[:type] == "array"|| a.type=="select" ? {a.id => []} : a.id)
-        # TODO handle other attribute value types
+      (a.value_schema[:type] == "array" || a.type == "select" ? { a.id => [] } : a.id)
+      # TODO handle other attribute value types
     }
     [:service_id, :project_id, :affiliation_id, :customer_typology,
      :access_reason, :additional_information, property_values: attributes]

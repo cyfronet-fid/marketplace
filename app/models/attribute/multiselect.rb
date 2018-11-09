@@ -1,10 +1,10 @@
+# frozen_string_literal: true
 
 require "json-schema"
 
 class Attribute::Multiselect < Attribute::Select
-
   def value_valid?
-    JSON::Validator.validate(value_schema, value) && value.all? {|v| config["values"].include?(v)}
+    JSON::Validator.validate(value_schema, value) && value.all? { |v| config["values"].include?(v) }
   end
 
   def config_schema
@@ -45,6 +45,5 @@ class Attribute::Multiselect < Attribute::Select
 
   protected
 
-  TYPE = 'multiselect'
-
+    TYPE = "multiselect"
 end
