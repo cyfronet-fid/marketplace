@@ -110,6 +110,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Split backend for Service details view (@kmarszalek)
 - Bootstrap improvements towards compliance with the guidelines (@jswk)
 - Improve styling of affiliation list in profile and project list (@jswk)
+- Deny to destroy an affiliation which is associated with a project item (@jswk)
 
 ### Deprecated
 
