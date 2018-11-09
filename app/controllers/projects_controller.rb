@@ -4,7 +4,9 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @projects = policy_scope(Project).order(:name).includes(:project_items)
+    @projects = policy_scope(Project).order(:name).eager_load(:project_items)
+    @projects = @projects.where("project_items.status = ?",
+                                params[:status]) if filterable?(params[:status])
   end
 
   def new
@@ -32,6 +34,9 @@ class ProjectsController < ApplicationController
   end
 
   private
+    def filterable?(param)
+      (param.present? && ProjectItem.statuses.has_key?(param))
+    end
 
     def render_modal_form
       render "layouts/show_modal",

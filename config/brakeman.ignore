@@ -1,6 +1,25 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "0aab5394581d33c77243c3186cdc35e902aef31f5e13cc4a78c39a83e6ac896c",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/projects/index.html.haml",
+      "line": 12,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => policy_scope(Project).order(:name).eager_load(:project_items).where(\"project_items.status = ?\", params[:status]), {})",
+      "render_path": [{"type":"controller","class":"ProjectsController","method":"index","line":9,"file":"app/controllers/projects_controller.rb"}],
+      "location": {
+        "type": "template",
+        "template": "projects/index"
+      },
+      "user_input": "params[:status]",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
       "warning_type": "Mass Assignment",
       "warning_code": 70,
       "fingerprint": "016ab96ecc285e9f51d9ac9153864edcdbc407acad7f2c62fbed34bfeb7cea2c",
