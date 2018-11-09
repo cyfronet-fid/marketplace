@@ -1,12 +1,4 @@
 %ul.nav.nav-fill.order-nav
-  %li.nav-item
-    = link_to "Offer selection", service_offers_path(service),
-      class: "nav-link #{"active" if step == 1}"
-  %li.nav-item
-    = link_to_if step > 1, "Service configuration", service_configuration_path(service),
-      class: "nav-link #{"active" if step == 2}" do
-      .nav-link.disabled Service configuration
-  %li.nav-item
-    = link_to_if step > 2,  "Summary", service_summary_path(service),
-      class: "nav-link #{"active" if step == 3}" do
-      .nav-link.disabled Summary
+  = order_nav_link("Offer selection", service_offers_path(service), 1, step)
+  = order_nav_link("Service configuration", service_configuration_path(service), 2, step)
+  = order_nav_link("Summary", service_summary_path(service), 3, step)

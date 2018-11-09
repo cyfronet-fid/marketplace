@@ -100,6 +100,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Show validation error when project is not selected for ordered service (@mkasztelnik)
 - filter by status on my serices view (@martaswiatkowska)
 - Simple form checks validation if conditions (@mkasztelnik)
+- Clickable next order nav step (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
