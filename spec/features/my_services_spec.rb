@@ -94,6 +94,19 @@ RSpec.feature "My Services" do
 
       expect(page).to have_text("Question cannot be blank")
     end
+
+    scenario "I can filter services by status", js: true do
+      project1, project2 = create_list(:project, 2, user: user)
+      project_item = create(:project_item, project: project1, offer: offer)
+
+      visit projects_path
+
+      select "created", from: "status"
+
+      expect(page).to have_text(project1.name)
+      expect(page).to have_text(project_item.service.title)
+      expect(page).not_to have_text(project2.name)
+    end
   end
 
   context "as anonymous user" do
