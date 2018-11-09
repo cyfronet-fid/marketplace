@@ -28,7 +28,7 @@ class AffiliationPolicy < ApplicationPolicy
   end
 
   def destroy?
-    owner?
+    owner? && !has_project_item?
   end
 
   def permitted_attributes
@@ -44,5 +44,9 @@ class AffiliationPolicy < ApplicationPolicy
 
     def owner?
       record.user == user
+    end
+
+    def has_project_item?
+      record.project_items.count.positive?
     end
 end

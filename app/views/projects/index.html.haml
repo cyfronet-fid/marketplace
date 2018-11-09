@@ -1,20 +1,16 @@
 - breadcrumb :projects
 
 .container
-  .row
-    .col-md-8
-      %h1.mb-0 My Services
-    .col-md-3.offset-md-1.my-auto
-      %form
-        .row
-          .col-md-12
-            %select.form-control.form-control-sm
-              %option
-                All
-              %option
-                option 1
-              %option
-                option 2
-  %ul.list-group.mt-5
-    = render @projects
+  .d-flex.mb-5
+    %h1.mr-auto.my-auto My Services
+    %form.my-auto
+      %select.form-control.form-control-sm.custom-select
+        %option
+          All
+        %option
+          option 1
+        %option
+          option 2
+
+  = render @projects
 

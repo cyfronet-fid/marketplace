@@ -1,14 +1,9 @@
-#affiliations.tab-pane.container.pt-2.active{ "aria-labelledby" => "affiliations-tab", role: "tabpanel" }
-  .container
-    %h2.mt-4.font-weight-bold
-      Affiliations
-      .float-right
-        = link_to "Add new affiliation",
-                  new_profile_affiliation_path,
-                  class: "btn btn-secondary btn-sm"
-    .clearfix
-
-    #accordion.accordion.mt-4{ "aria-multiselectable" => "true", :role => "tablist" }
-      = render partial: "profiles/affiliations/affiliation",
-                        collection: affiliations
-    = will_paginate affiliations
+#affiliations.tab-pane.container.active{ "aria-labelledby" => "affiliations-tab", role: "tabpanel" }
+  #accordion-affiliations.accordion.mb-4{ "aria-multiselectable" => "true", :role => "tablist" }
+    = render partial: "profiles/affiliations/affiliation",
+                      collection: affiliations
+  = will_paginate affiliations
+  = link_to "Add new affiliation",
+            new_profile_affiliation_path,
+            class: "btn btn-primary float-right"
+  .clearfix
