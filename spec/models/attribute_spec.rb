@@ -66,7 +66,6 @@ RSpec.describe Attribute do
                                "type" => "date",
                                "value_type" => "string",
                                "value" => "10/23/2018")
-    puts attr.to_json
     expect(attr.value_valid?).to be true
   end
 
