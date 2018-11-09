@@ -2,7 +2,12 @@
 
 class ServiceCategory < ApplicationRecord
   belongs_to :service
-  belongs_to :category, counter_cache: :services_count
+  belongs_to :category
+  counter_culture :category,
+                  column_name: "services_count",
+                  foreign_key_values: ->(category_id) do
+                    [category_id, *Category.find(category_id).ancestor_ids]
+                  end
 
   validates :service, presence: true
   validates :category, presence: true

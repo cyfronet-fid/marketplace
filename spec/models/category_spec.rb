@@ -23,8 +23,12 @@ RSpec.describe Category do
   end
 
   it "has services counter" do
-    category = create(:category, services: create_list(:service, 2))
+    category = create(:category, services: create_list(:service, 1))
+    subcategory = create(:category, parent: category, services: create_list(:service, 1))
+    subsubcategory = create(:category, parent: subcategory, services: create_list(:service, 1))
 
-    expect(category.services_count).to eq(2)
+    expect(subsubcategory.reload.services_count).to eq(1)
+    expect(subcategory.reload.services_count).to eq(2)
+    expect(category.reload.services_count).to eq(3)
   end
 end
