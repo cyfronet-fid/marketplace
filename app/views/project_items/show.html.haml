@@ -12,7 +12,7 @@
   .row.justify-content-between
     .col-md-6
       = render "project_items/project_item_changes",
-                project_item_changes: @project_item.project_item_changes.to_a,
+                project_item_changes: @project_item.project_item_changes.order("updated_at DESC").to_a,
                 project_item: @project_item,
                 question: @question
     .col-md-5

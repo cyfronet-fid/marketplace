@@ -119,6 +119,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Deny to destroy an affiliation which is associated with a project item (@jswk)
 - Styling of filters (@michal-szostak)
 - Styling of ordering steps (@jarekzet, @michal-szostak)
+- On project item view show order history in reversed order (@martaswiatkowska)
 
 ### Deprecated
 
