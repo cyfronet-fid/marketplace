@@ -1,0 +1,20 @@
+- case attr.config["mode"]
+- when "buttons"
+  = field.input :id,
+    collection: attr.config["values"].map { |e| ["#{e} #{attr.unit}", e] },
+    checked: "#{attr.value}",
+    input_html: { name: "#{field.object_name}[#{attr.id}][]" },
+    label: attr.label,
+    error: attr.errors.messages[:id].join(" "),
+    hint: attr.description,
+    as: :radio_buttons
+- else
+  = field.input :id,
+    as: :select,
+    collection: attr.config["values"].map { |e| ["#{e} #{attr.unit}", e] },
+    selected: "#{attr.value}",
+    input_html: { name: "#{field.object_name}[#{attr.id}][]" },
+    prompt: "",
+    label: attr.label,
+    error: attr.errors.messages[:id].join(" "),
+    hint: attr.description

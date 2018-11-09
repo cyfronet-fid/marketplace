@@ -2,9 +2,6 @@
   .card-body
     %h4.card-title= offer.name
     %p.card-text= offer.description
-    %hr
-    %p.card-text
-      .alert.alert-info Placeholder for offer properties
   .card-footer
     %label.btn.btn-secondary
       = f.radio_button :offer_id, offer.iid, checked: project_item.offer == offer
