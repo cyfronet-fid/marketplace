@@ -1,16 +1,18 @@
 = render "layouts/order/nav", service: @service, step: 2
 
-%h2 Configuration
-%p
+%h2.mb-4.font-weight-normal Configuration
+%p.mb-4
   We need more information about your request.
   Fill form below as much as possible.
   It will help us to proceed you request quicker.
 
-
+%h5.mb-3.font-weight-bold.configuration-title.text-uppercase My projects
+%p.mb-4
+  You can organize your services in projects. Add this service to specific project, create new one or leave it empty.
 = simple_form_for @project_item, url: service_configuration_path(@service),
   method: :put, html: { id: "order-form"  } do |f|
   = f.input :project do
-    .input-group
+    .input-group.col-6.pl-0
       = f.input_field :project_id, collection: @projects,
         class: "form-control custom-select #{"is-invalid" unless @project_item.errors[:project].empty?}"
       .input-group-append

@@ -259,12 +259,25 @@ textarea:-ms-input-placeholder { /* IE 10+ */
 }
 
 .card {
-  border-color: $secondary;
+  border-color: $info;
   border-radius: 0;
 
   .card-header {
     background-color: $card-header-bg;
     border-bottom: none;
+  }
+
+  .card-button {
+    margin-bottom: -28px;
+
+    label:hover {
+      background: $secondary;
+      color: $white;
+    }
+
+    input {
+      display: none;
+    }
   }
 }
 
@@ -572,4 +585,21 @@ textarea {
 
 .modal-body textarea {
   resize: both;
+}
+
+.card-title {
+  padding: 0;
+  font-size: 1.3em;
+}
+
+.parameters-title {
+  padding: 0 0 7px;
+  border-bottom: 1px solid $secondary;
+  font-size: 1.05em;
+}
+
+.configuration-title {
+  padding: 0 0 7px;
+  border-bottom: 1px solid $palette-gray-30;
+  font-size: 1.05em;
 }

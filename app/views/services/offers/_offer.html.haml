@@ -1,11 +1,11 @@
-.card
+.card.col-md-6
   .card-body
     %h4.card-title= offer.name
-    %p.card-text= offer.description
-    %hr
+    %p.card-text.mb-4= offer.description
+    %h5.text-uppercase.parameters-title= "Technical parameters"
     %p.card-text
       .alert.alert-info Placeholder for offer properties
-  .card-footer
-    %label.btn.btn-secondary
+  .card-button.text-center
+    %label.btn.btn-light.border.border-secondary.font-weight-bold
       = f.radio_button :offer_id, offer.iid, checked: project_item.offer == offer
       Select
