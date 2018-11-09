@@ -95,7 +95,6 @@ class ProjectItem < ApplicationRecord
         attr = offer.attributes.find { |attr|
           id == attr.id
         }.dup
-        puts attr
         attr.value_from_param(value)
         props << attr
       }

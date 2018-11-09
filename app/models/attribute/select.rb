@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require "json-schema"
 
 class Attribute::Select < Attribute
-
   def value_valid?
     JSON::Validator.validate(value_schema, value) && config["values"].include?(value)
   end
@@ -24,7 +25,7 @@ class Attribute::Select < Attribute
 
   def value_from_param(param)
     param = param.reject(&:blank?)
-    if (param.length>0)
+    if (param.length > 0)
       case @value_type
       when "integer"
         @value = Integer(param.first)
@@ -35,7 +36,5 @@ class Attribute::Select < Attribute
   end
 
   protected
-
-  TYPE = 'select'
-
+    TYPE = "select"
 end

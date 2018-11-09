@@ -1,8 +1,8 @@
+# frozen_string_literal: true
+
 require "json-schema"
 
 class Attribute::Date < Attribute
-
-
   def value_type_schema
     {
         "type": "string",
@@ -24,6 +24,5 @@ class Attribute::Date < Attribute
 
   protected
 
-  TYPE = 'date'
-
+    TYPE = "date"
 end

@@ -36,7 +36,6 @@ document.addEventListener("turbolinks:before-render", function(event) {
     });
     starsOnClick(event.data.newBody);
     initSortingAndFiltering(event.data.newBody);
-    // $(event.data.newBody).find('.datepicker').datepicker();
     dom.watch();
 });
 
@@ -47,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
     dom.i2svg();
     starsOnClick();
     initSortingAndFiltering();
-    // $('.datepicker').datepicker();
     dom.watch();
 });
 

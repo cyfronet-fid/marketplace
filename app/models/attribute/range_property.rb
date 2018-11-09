@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require "json-schema"
 
 class Attribute::RangeProperty < Attribute
-
   def value_schema
     {
         "type": "object",
@@ -23,6 +24,5 @@ class Attribute::RangeProperty < Attribute
 
   protected
 
-  TYPE = 'range-property'
-
+    TYPE = "range-property"
 end
