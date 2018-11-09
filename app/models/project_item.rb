@@ -46,7 +46,7 @@ class ProjectItem < ApplicationRecord
   before_save :map_properties
 
   def open_access?
-    offer&.service&.open_access
+    @is_open_access ||= offer&.service&.open_access
   end
 
 
