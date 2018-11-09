@@ -199,22 +199,6 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   }
 }
 
-.media {
-  border-bottom: 1px solid $gray-300;
-
-  .form-check-input {
-    margin-top: 0.5rem;
-  }
-
-  .form-group {
-    margin-bottom: 0;
-  }
-
-  svg {
-    color: $secondary;
-  }
-}
-
 .nav-tabs {
   background-color: $secondary;
   border: none;
@@ -305,19 +289,6 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   .bg-white {
     z-index: 2;
   }
-}
-
-.display-3 {
-  font-size: 2.25rem;
-  line-height: 0.8;
-}
-
-.display-4 {
-  font-size: 1.25rem;
-}
-
-.display-5 {
-  font-size: 1.1rem;
 }
 
 .profile-img {

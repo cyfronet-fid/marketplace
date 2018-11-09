@@ -69,6 +69,7 @@ RSpec.feature "Service ordering" do
       expect(page).to have_text("Additional information test")
 
       expect do
+        check "Accept terms and conditions"
         click_on "Order", match: :first
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
@@ -132,6 +133,7 @@ RSpec.feature "Service ordering" do
                                     "Order", exact: true)
 
       expect do
+        check "Accept terms and conditions"
         click_on "Order", match: :first
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
