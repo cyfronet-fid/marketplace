@@ -4,13 +4,9 @@
   .d-flex.mb-5
     %h1.mr-auto.my-auto My Services
     %form.my-auto
-      %select.form-control.form-control-sm.custom-select
-        %option
-          All
-        %option
-          option 1
-        %option
-          option 2
+      %select#status.form-control.form-control-sm.custom-select{ "data-submit-on-change": "data-submit-on-change" }
+        %option{ value: "", selected: "selected" }
+          all
+        = options_for_select(ProjectItem.statuses, params[:status])
 
   = render @projects
-

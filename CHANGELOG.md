@@ -98,6 +98,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add new relic rpm (@mkasztelnik)
 - Category hierarchical services count (@mkasztelnik)
 - Show validation error when project is not selected for ordered service (@mkasztelnik)
+- filter by status on my serices view (@martaswiatkowska)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
