@@ -94,6 +94,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Create new project on order configuration page (@mkasztelnik)
 - Show alert for logged in user when there is not active affiliation (@mkasztelnik)
 - Style ordered service view and remove mocked data (@mkasztelnik)
+- User need to accept terms and conditions to order service (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
