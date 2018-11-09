@@ -43,7 +43,7 @@ class ProjectItem < ApplicationRecord
   delegate :service, to: :offer
 
   def open_access?
-    offer&.service&.open_access
+    @is_open_access ||= offer&.service&.open_access
   end
 
   def active?
