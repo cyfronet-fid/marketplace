@@ -97,6 +97,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - User need to accept terms and conditions to order service (@mkasztelnik)
 - Add new relic rpm (@mkasztelnik)
 - Category hierarchical services count (@mkasztelnik)
+- Simple form checks validation if conditions (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
