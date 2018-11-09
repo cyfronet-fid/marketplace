@@ -11,7 +11,8 @@
   method: :put, html: { id: "order-form"  } do |f|
   = f.input :project do
     .input-group
-      = f.input_field :project_id, collection: @projects, class: "form-control custom-select"
+      = f.input_field :project_id, collection: @projects,
+        class: "form-control custom-select #{"is-invalid" unless @project_item.errors[:project].empty?}"
       .input-group-append
         = link_to "Add new project", new_project_path,
           class: "btn btn-primary", remote: true
