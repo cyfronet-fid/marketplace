@@ -1,14 +1,14 @@
 = render "layouts/order/nav", service: @service, step: 1
 
-%h2 Service configuration
-%p
+%h2.mb-4.font-weight-normal Service configuration
+%p.mb-4
   This service is available in various options.
   Please select one from the list bellow.
 
 = simple_form_for @project_item, url: service_offers_path(@service), method: :put,
-  html: { id: "order-form", role: "form", class: "btn-group btn-group-toogle", data: { toogle: "buttons" } } do |f|
+  html: { id: "order-form", role: "form", class: "btn-group-toogle", data: { toogle: "buttons" } } do |f|
 
-  .card-columns
+  .card-deck.row
     = render partial: "services/offers/offer",
       collection: @offers, as: :offer, locals: { f: f, project_item: @project_item }
 
