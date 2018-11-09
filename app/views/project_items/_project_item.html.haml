@@ -1,15 +1,13 @@
 %li.list-group-item
   .row
-    .col-md-7
+    .col-md.font-weight-bold
       = link_to project_item.service.title, project_item
     .col-md-2
-      %span.small.text-uppercase
+      %span.text-uppercase
         = project_item.status
-    .col-md-3.text-left
-      %span.small
-        last change: #{time_ago_in_words(project_item.updated_at)}
-      %span.d-none
-        = project_item.user.full_name
+    .col-md.text-md-right
+      %span
+        last change: #{time_ago_in_words(project_item.updated_at)} ago
 
 
 
