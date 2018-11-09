@@ -11,7 +11,9 @@ en:
     error_notification:
       default_message: "Please review the problems below:"
     # Examples
-    # labels:
+    labels:
+      defaults:
+        terms_and_conditions: Accept terms and conditions
     #   defaults:
     #     password: 'Password'
     #   user:
@@ -19,8 +21,12 @@ en:
     #       email: 'E-mail to sign in.'
     #     edit:
     #       email: 'E-mail.'
-    # hints:
-    #   defaults:
+    hints:
+      defaults:
+        terms_and_conditions: |
+          You are about to order an EOSC Service. Please accept
+          <a href="http://eoscportal.trust-itservices.com/governance/rules-participation">EOSC Terms and Conditions</a> to preceed.
+
     #     username: 'User name to sign in.'
     #     password: 'No special characters, please.'
     # include_blanks:
