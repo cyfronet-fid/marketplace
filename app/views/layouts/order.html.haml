@@ -7,7 +7,9 @@
         = link_to root_path, class: "navbar-brand mr-3" do
           = image_tag "eosc-logo-color.png"
         .text-right.flex-grow-1
-          = yield :cancel_button
+          = link_to "Cancel order and quit",
+            service_cancel_path(@service),
+            method: :delete
           .ml-3.d-inline
             = yield :next_button
       = render "layouts/flash"
@@ -17,8 +19,11 @@
       %p.summary= @service.tagline
       = yield
       %hr.bottom-hr
-      .navbar.justify-content-end
-        = yield :next_button
+      .navbar
+        .text-left.flex-grow-1
+          = yield :back_link
+        .ml-3.d-inline
+          = yield :next_button
 
   = render "layouts/footer", root_categories: @root_categories
   = render "layouts/modal"
