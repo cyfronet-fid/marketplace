@@ -45,7 +45,7 @@ class Affiliation < ApplicationRecord
 
     def email_from_webpage_domain
       unless email_in_webpage_domain?
-        errors.add(:email, "Email does not belong to webpage domain")
+        errors.add(:email, "does not belong to webpage domain")
       end
     end
 
