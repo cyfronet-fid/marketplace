@@ -43,8 +43,4 @@
         .col-md-3
           %p.small.mb-0
             Departmental web page:
-          %a{ href: affiliation.webpage }
-            #{affiliation.webpage}
-
-
-
+          = link_to(affiliation.webpage, affiliation.webpage)
