@@ -46,4 +46,24 @@ RSpec.describe Affiliation do
     expect(Affiliation.find_by_token("")).to be_nil
     expect(Affiliation.find_by_token("  ")).to be_nil
   end
+
+  it "before_save adding protocol to webpage and supervisor_profile" do
+    affiliation = create(:affiliation,
+                        email: "jonhdoe@uni.edu",
+                        webpage: "my.uni.edu",
+                        supervisor_profile: "my.uni.supervisor.edu")
+
+    expect(affiliation).to be_valid
+    expect(affiliation.webpage).to eq("http://my.uni.edu")
+    expect(affiliation.supervisor_profile).to eq("http://my.uni.supervisor.edu")
+
+    affiliation2 = create(:affiliation,
+                         email: "jonhdoe@uni.edu",
+                         webpage: "https://my.uni.edu",
+                         supervisor_profile: nil)
+
+    expect(affiliation2).to be_valid
+    expect(affiliation2.webpage).to eq("https://my.uni.edu")
+    expect(affiliation2.supervisor_profile).to eq(nil)
+  end
 end
