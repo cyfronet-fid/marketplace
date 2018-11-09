@@ -27,6 +27,8 @@ class Affiliation < ApplicationRecord
   validates :status, presence: true
   validates :token, uniqueness: true
 
+  before_save :guarantee_urls_protocol
+
   def self.find_by_token(token)
     token = nil if token&.strip.blank?
 
@@ -56,5 +58,14 @@ class Affiliation < ApplicationRecord
 
     def email_domain_regexp
       email.downcase.split("@").last.sub(".", "\.") unless email.blank?
+    end
+
+    def guarantee_urls_protocol
+      self.webpage = ensure_full_path(self.webpage)
+      self.supervisor_profile = ensure_full_path(self.supervisor_profile)
+    end
+
+    def ensure_full_path(url)
+      (url.blank? || url.start_with?("http" || "https")) ? url : "http://#{url}"
     end
 end
