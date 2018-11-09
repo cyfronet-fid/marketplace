@@ -2,8 +2,9 @@
 
 .container
   .row
-    .col-3
+    .col-md-3
       = render "subcategories", subcategories: @subcategories
-    .col-9
+    .col-md-9
       %h2= @category.name
-      = render "services/services", services: @services
+      = render @services
+  = render "services/paginate", services: @services

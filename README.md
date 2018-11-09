@@ -150,6 +150,12 @@ dedicated env variable `SENTRY_DSN` with details how to connect to sentry
 server. Sentry environment can also be configured using `SENTRY_ENVIRONMENT`
 env variable (default set to `production`).
 
+## New relic integration
+
+Newrelic rpm gem is added into `production` dependencies. The only thing you
+need to do to turn newrelic on production is to get `newrelic.yml` and put it
+into rails root directory.
+
 ## ENV variables
 
 We are using ENV variables to customize application. You can set the following
@@ -169,7 +175,7 @@ ENV variables:
     `RAILS_ROOT/storage`)
   * `SMTP_ADDRESS` - smtp mail server address
   * `SMTP_USERNAME` - smtp user name or email address
-  * `SMTP_PASSWORD` - smtp password  
+  * `SMTP_PASSWORD` - smtp password
 
 ## Commits
 

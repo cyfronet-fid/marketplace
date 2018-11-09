@@ -94,4 +94,5 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 group :production do
   gem "sentry-raven"
   gem "faker", require: false
+  gem "newrelic_rpm"
 end
