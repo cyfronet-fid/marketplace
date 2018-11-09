@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 2018_11_07_143358) do
     t.bigint "service_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "parameters"
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
     t.index ["service_id"], name: "index_offers_on_service_id"
@@ -103,6 +104,7 @@ ActiveRecord::Schema.define(version: 2018_11_07_143358) do
     t.text "access_reason"
     t.text "additional_information"
     t.bigint "affiliation_id"
+    t.jsonb "properties"
     t.index ["affiliation_id"], name: "index_project_items_on_affiliation_id"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"

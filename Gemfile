@@ -32,6 +32,7 @@ gem "counter_culture", "~> 2.0"
 
 # validation
 gem "valid_email2"
+gem "json-schema"
 
 gem "elasticsearch-model"
 gem "elasticsearch-rails"

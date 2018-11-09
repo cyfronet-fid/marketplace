@@ -17,6 +17,10 @@ class Offer < ApplicationRecord
     iid.to_s
   end
 
+  def attributes
+    (parameters || []).map { |param| Attribute.from_json(param) }
+  end
+
   private
 
     def set_iid

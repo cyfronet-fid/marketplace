@@ -17,16 +17,7 @@
   .card-body
     %h4.card-title= @project_item.offer.name
     .card-text= @project_item.offer.description
-
-    %h5.text-uppercase Technical parameters
-    %table.table
-      %tbody
-        %tr
-          %td TODO: name of an attribute
-          %td TODO: value of an attribute
-        %tr
-          %td TODO: more attributes
-          %td TODO: more values
+    = render "project_items/attributes", property_values: @project_item.property_values
 
 
 .additional-information.mb-5

@@ -95,4 +95,14 @@
     color: lighten($border-color, 5%);
     height: 5px;
   }
+
+  .sc-head {
+    border-bottom: 1px solid $border-color;
+    border-top: none;
+    text-transform: uppercase;
+    padding: 0;
+    margin-bottom: 20px;
+    margin-top: 25px;
+  }
+
 }
