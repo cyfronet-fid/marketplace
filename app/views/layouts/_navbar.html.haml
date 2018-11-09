@@ -61,6 +61,23 @@
             %i.fas.fa-chevron-up.d-lg-none.mr-2
             Services & Resources
           .dropdown-services.dropdown-menu.ml-4.ml-lg-0
+            %small.text-uppercase.font-weight-bold.pl-2 Portal
+            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/sharing-discovery" }
+              Sharing & Discovery
+            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/processing-analysis" }
+              Processing & Analysis
+            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/data-management" }
+              Data Management
+            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/compute" } Compute
+            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/storage" } Storage
+            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/networking" } Networking
+            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/training" } Training
+            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/security-operations" }
+              Security & Operations
+            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/thematic-services" }
+              Thematic Services
+
+            %small.text-uppercase.font-weight-bold.pl-2 Marketplace
             - @root_categories.each do |root_category|
               = link_to root_category.name, root_category, class: "dropdown-item"
         %li.nav-item.ml-1.dropdown
