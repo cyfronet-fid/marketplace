@@ -36,8 +36,14 @@ RSpec.describe AffiliationPolicy do
       expect(subject).to permit(user, build(:affiliation, user: user))
     end
 
-    it "denies to see other user owners" do
+    it "denies to destroy a not owned affiliation" do
       expect(subject).to_not permit(user, build(:affiliation))
+    end
+
+    it "denies to destroy an owned affiliation which has any project item" do
+      affiliation = create(:affiliation, user: user)
+      create(:project_item, affiliation: affiliation)
+      expect(subject).to_not permit(user, affiliation)
     end
   end
 

@@ -59,7 +59,7 @@ class Attribute
     json["unit"] = unit unless unit.nil?
     json["value"] = value unless value.nil?
     json["config"] = config unless config.nil?
-    json["description"] = description unless description
+    json["description"] = description unless description.nil?
     json
   end
 
@@ -122,7 +122,7 @@ class Attribute
     attr.value_type = json["value_type"]
     attr.unit = json["unit"]
     attr.config = json["config"]
-    attr.description = json["description"] unless json["description"].blank?
+    attr.description = json["description"]
     attr.value = json["value"] unless json["value"].blank?
     attr.validate_value_type!
     attr
