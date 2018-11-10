@@ -20,6 +20,7 @@ $h2-font-size: $font-size-base * 1.375;
 $h3-font-size: $font-size-base * 1.125;
 $h4-font-size: $font-size-base * 0.875;
 $h5-font-size: $font-size-base * 0.75;
+$h6-font-size: $font-size-base * 0.75;
 
 $display1-size: 2.25rem; // display3
 $display2-size: 1.25rem; // display4
@@ -54,6 +55,7 @@ $info: $palette-gray-30;
 $error: $palette-salmon;
 $body-color: #233d4c;
 $nav-color: #555;
+$text-muted: #a2aab1;
 
 $theme-colors: ("error": $error);
 
@@ -90,3 +92,5 @@ $border-color: #dee2e6;
 $footer-bg-color: #52636a;
 $eu-information-color: #839295;
 $transparent: transparent;
+
+
