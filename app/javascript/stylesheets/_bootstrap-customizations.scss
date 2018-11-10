@@ -224,7 +224,6 @@ textarea:-ms-input-placeholder { /* IE 10+ */
     padding: 0.6rem 1rem;
     font-weight: $font-weight-bold;
     border-radius: 0;
-    border: none;
 
     &:hover {
       border-color: transparent;
@@ -232,7 +231,7 @@ textarea:-ms-input-placeholder { /* IE 10+ */
     }
 
     &.active {
-      border-color: $palette-gray-30 $palette-gray-30 $white;
+      border-color: $palette-solid-5 $palette-solid-5 $white;
       padding: 0.8rem 1rem;
       margin-top: -5px;
 
