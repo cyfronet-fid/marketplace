@@ -1,0 +1,19 @@
+%table.table.mb-5
+  %thead
+    %tr
+      %th.pl-0{ scope: "col", colspan: "2" } Technical parameters
+  %tbody
+    - if property_values.size > 0
+      - property_values.each do |attr|
+        %tr
+          %td.pl-0
+            = attr.label
+          %td
+            - begin
+              = render "project_items/attributes/#{attr.type}", attr: attr
+            - rescue => e
+              = render "project_items/attributes/default", attr: attr
+    - else
+      %tr
+        %td.pl-0
+          No parameters

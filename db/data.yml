@@ -84,6 +84,12 @@ providers:
         name: &d4science "D4Science.org infrastructure"
     LifeWatch ERIC:
         name: &lifewatch "LifeWatch ERIC"
+    Terradue:
+        name: &terradue "Terradue Sri"
+    MEEO:
+        name: &meeo "MEEO"
+    CloudFerro:
+        name: &cloudFerro CloudFerro
     PNCEL:
         name: &pncel "Portuguese National Civil Engineering Laboratory"
     University of Utrecht:
@@ -94,8 +100,10 @@ providers:
         name: &cirmmp "Interuniversity consortium CIRMMP"
     CESNET:
         name: &cesnet "CESNET"
+    EIDA:
+        name: &eida "EIDA"
     Not specified:
-      name: &not "not specified yet"
+        name: &not "not specified yet"
 
 area:
 
@@ -119,6 +127,8 @@ area:
         name: &highEnergyPhysics "High-Energy Physics"
     PhysicalScienceAerosol:
         name: &physicalScienceAerosol "Physical science (aerosol physics)"
+    PhysicalScienceEarth:
+        name: &physicalScienceEarth "Physical science (earth science)"
     ClimateScience:
         name: &climateScience "Climate science"
     EnvironmentalScience:
@@ -131,6 +141,7 @@ services:
         title: &egiCloud EGI Cloud compute
         parents: *computeParent
         providers: [*egifcs]
+        logo: cloud-compute.png
         open_access: false
         webpage_url: https://www.egi.eu/services/cloud-compute/
         manual_url: https://wiki.egi.eu/wiki/Federated_Cloud_user_support
@@ -142,7 +153,7 @@ services:
         places: &europe Europe
         languages: &english English
         dedicated_for: ["Researchers", "Research organisations"]
-        area: &interdisciplinary Interdisciplinary
+        area: *interdisciplinary
         restrictions: &notSpecified not specified yet
         phase: *notSpecified
         tagline: Run virtual machines on-demand with complete control over computing resources
@@ -180,6 +191,7 @@ services:
         title: EGI High-Throughput compute
         parents: *computeParent
         providers: [*egifcs]
+        logo: high-throughput-compute.png
         open_access: false
         webpage_url: https://www.egi.eu/services/high-throughput-compute/
         manual_url: https://wiki.egi.eu/wiki/Federated_Cloud_user_support
@@ -220,6 +232,7 @@ services:
         title: EGI Cloud container compute BETA
         parents: *computeParent
         providers: [*egi]
+        logo: cloud-container-compute.png
         open_access: false
         webpage_url: https://www.egi.eu/services/cloud-compute/
         manual_url: https://wiki.egi.eu/wiki/Federated_Cloud_user_support
@@ -251,6 +264,7 @@ services:
         title: &b2drop B2DROP
         parents: *dataStorageParent
         providers: [*eudat, *jsc]
+        logo: b2drop.png
         open_access: false
         webpage_url: https://b2drop.eudat.eu
         manual_url: https://eudat.eu/services/userdoc/b2drop
@@ -293,6 +307,7 @@ services:
         title: &b2find B2FIND
         parents: [*dataStorageParent, *researchDataParent]
         providers: [*eudat, *dkrz]
+        logo: b2find.png
         open_access: false
         webpage_url: http://b2find.eudat.eu/
         manual_url: http://eudat.eu/services/userdoc/b2find
@@ -350,6 +365,7 @@ services:
         title: &b2handle B2HANDLE
         parents: *dataStorageParent
         providers: [*eudat, *surfsara, *grnet]
+        logo: b2handle.png
         open_access: false
         webpage_url: https://www.eudat.eu/services/b2handle
         manual_url: https://eudat.eu/services/userdoc/b2handle
@@ -390,6 +406,7 @@ services:
         title: &b2note B2NOTE
         parents: *dataStorageParent
         providers: [*eudat, *bsc]
+        logo: b2note.png
         open_access: false
         webpage_url: https://www.eudat.eu/catalogue/B2NOTE
         manual_url: https://www.google.com/
@@ -436,6 +453,7 @@ services:
         title: &b2safe B2SAFE
         parents: *dataStorageParent
         providers: [*eudat, *all]
+        logo: b2safe.png
         open_access: false
         webpage_url: https://www.eudat.eu/services/b2safe
         manual_url: https://eudat.eu/services/userdoc/configure-b2safe
@@ -470,6 +488,7 @@ services:
         title: &b2share B2SHARE
         parents: *dataStorageParent
         providers: [*eudat, *csc]
+        logo: b2share.png
         open_access: false
         webpage_url: https://www.eudat.eu/services/b2share
         manual_url: https://eudat.eu/services/userdoc/b2share
@@ -486,7 +505,10 @@ services:
         phase: *notSpecified
         tagline: Store and publish research data
         description: |
-          B2SHARE is a user-friendly, reliable and trustworthy way for researchers, scientific communities and citizen scientists to store and publish small-scale research data from diverse contexts. B2SHARE is a solution that facilitates research data storage, guarantees long-term persistence of data and allows data, results or ideas to be shared worldwide.
+          B2SHARE is a user-friendly, reliable and trustworthy way for researchers,
+          scientific communities and citizen scientists to store and publish small-scale
+          research data from diverse contexts. B2SHARE is a solution that facilitates research data storage,
+          guarantees long-term persistence of data and allows data, results or ideas to be shared worldwide.
 
              - The basic production service comprises the following features:
              - self-service registration for any scientists and researchers,
@@ -497,7 +519,9 @@ services:
              - data integrity is ensured by checksums which are calculated during data ingest,
              - the data is kept online, the storage usage base on the principle of fair share.
 
-          Perfect for the individuals researchers who do not have adequate facilities for storing, preserving and sharing data, B2SHARE Service is a customer-facing service which provides a safe repository for scientific data and a easy way to share it in the research community.
+          Perfect for the individuals researchers who do not have adequate facilities for storing,
+          preserving and sharing data, B2SHARE Service is a customer-facing service which provides
+          a safe repository for scientific data and a easy way to share it in the research community.
 
 
           ### To access the service you need to:
@@ -516,6 +540,7 @@ services:
         title: &b2stage B2STAGE
         parents: *dataStorageParent
         providers: [*eudat, *all]
+        logo: b2stage.png
         open_access: false
         webpage_url: https://www.eudat.eu/services/b2stage
         manual_url: https://eudat.eu/services/userdoc/b2stage
@@ -532,14 +557,17 @@ services:
         phase: *notSpecified
         tagline: Transfer of data between data resources and external computational facilities
         description: |
-          B2STAGE is for communities who need to transfert large data collection from EUDAT CDI to HPC. B2STAGE service is a customer-facing service that allow high performance transfers in a reliable, fast, easy to use environment.
+          B2STAGE is for communities who need to transfert large data collection from EUDAT CDI to HPC.
+          B2STAGE service is a customer-facing service that allow high performance transfers
+          in a reliable, fast, easy to use environment.
 
           The service allows users to:
 
              - transfer large data collections from EUDAT storage facilities to external HPC facilities for processing
              - ingest computation results onto the EUDAT infrastructure
              - access stored data sets through associated PIDs
-             - in conjunction with B2SAFE, replicate community data sets, ingesting them onto EUDAT storage resources for long-term preservation.
+             - in conjunction with B2SAFE, replicate community data sets, ingesting them onto
+             EUDAT storage resources for long-term preservation.
 
           ### Service provided by
 
@@ -548,6 +576,7 @@ services:
         title: EGI Archive storage
         parents: *dataStorageParent
         providers: [*egi]
+        logo: archive-storage.png
         open_access: false
         webpage_url: https://www.egi.eu/services/archive-storage/
         manual_url: https://wiki.egi.eu/wiki/Online_Storage
@@ -564,11 +593,15 @@ services:
         phase: *notSpecified
         tagline: Back-up your data for the long term and future use in a secure environment.
         description: |
-          Archive Storage allows you to store large amounts of data in a secure environment freeing up your usual file storage resources. Access to the archive can be given at an individual, small group or large collaboration level.
+          Archive Storage allows you to store large amounts of data in a secure environment freeing up
+          your usual file storage resources. Access to the archive can be given at an individual,
+          small group or large collaboration level.
 
           All the files in Archive Storage are easily located and retrieved to and from different types of platforms.
 
-          The data on Archive Storage can be replicated across several storage sites, thanks to the adoption of interoperable open standards. More copies of your archives mean fewer opportunities for disaster.
+          The data on Archive Storage can be replicated across several storage sites,
+          thanks to the adoption of interoperable open standards.
+          More copies of your archives mean fewer opportunities for disaster.
 
 
           ### To access the service you need to:
@@ -582,6 +615,7 @@ services:
         title: EGI Block storage
         parents: *dataStorageParent
         providers: [*egi]
+        logo: archive-storage.png
         open_access: false
         webpage_url: https://www.egi.eu/services/online-storage/
         manual_url: https://wiki.egi.eu/wiki/Online_Storage
@@ -608,6 +642,7 @@ services:
         title: EGI Block storage
         parents: *dataStorageParent
         providers: [*egi]
+        logo: archive-storage.png
         open_access: false
         webpage_url: https://www.egi.eu/services/online-storage/
         manual_url: https://wiki.egi.eu/wiki/Online_Storage
@@ -624,12 +659,15 @@ services:
         phase: *notSpecified
         tagline: Store, share and access your files and their metadata on a global scale.
         description: |
-          Object storage manages data as objects. Each object includes the data itself, a variable amount of metadata, and a globally unique identifier.
-          Cloud object storage allows relatively inexpensive, scalable and self-healing retention of massive amounts of unstructured data.
+          Object storage manages data as objects. Each object includes the data itself,
+          a variable amount of metadata, and a globally unique identifier.
+          Cloud object storage allows relatively inexpensive, scalable
+          and self-healing retention of massive amounts of unstructured data.
     EGI File storage:
         title: EGI Block storage
         parents: *dataStorageParent
         providers: [*egi]
+        logo: archive-storage.png
         open_access: false
         webpage_url: https://www.egi.eu/services/online-storage/
         manual_url: https://wiki.egi.eu/wiki/Online_Storage
@@ -646,12 +684,15 @@ services:
         phase: *notSpecified
         tagline: Store, share and access your files and their metadata on a global scale.
         description: |
-          Highly scalable storage system accessible from anywhere allowing to easily share data through different standard interfaces.
-          It assigns global identifiers to files and allows to organise your data using a flexible hierarchical structure.
+          Highly scalable storage system accessible from anywhere allowing to
+          easily share data through different standard interfaces.
+          It assigns global identifiers to files and allows to
+          organise your data using a flexible hierarchical structure.
     Argo:
         title: Argo
         parents: *researchDataParent
         providers: [*not] #TODO: not specified
+        logo: argo-data.png
         open_access: false
         webpage_url: http://www.euro-argo.eu/Activities/Data-Management
         manual_url: http://www.argo.ucsd.edu/Argo_date_guide.html
@@ -676,6 +717,7 @@ services:
         title: &clarinService Clarin
         parents: *researchDataParent
         providers: [*clarin]
+        logo: component-metadata-infrastructure.png
         open_access: false
         webpage_url: https://clarin.eu/
         manual_url: https://vlo.clarin.eu/help
@@ -687,7 +729,7 @@ services:
         places: *europe
         languages: *english
         dedicated_for: ["Reaserchers"] #TODO: but not specified
-        area: &artsAndHumanities Arts & Humanities
+        area: *artsAndHumanities
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Store, share and access your files and their metadata on a global scale.
@@ -696,25 +738,31 @@ services:
           Global Data Assembly Centers (GDACS) and there are various data products too
           which can be accessed through various data viewers.
           Data from individual floats are also available from a certain region or time."
-#    EIDA Data Archive:
-#        title: EIDA Data Archive
-#        parents: *researchDataParent
-#        open_access: false
-#        webpage_url: https://www.orfeus-eu.org/data/eida/
-#        manual_url: https://www.google.com/
-#        helpdesk_url: https://www.google.com/
-#        tutorial_url: https://www.google.com/
-#        terms_of_use_url: https://www.google.com/
-#        corporate_sla_url: https://www.google.com/
-#        access_policies_url: https://www.google.com/
-#        places: *europe
-#        languages: *english
-#        area: *earthScience
-#        restrictions: *notSpecified
-#        phase: *notSpecified
-#        tagline: Store, share and access your files and their metadata on a global scale.
-#        description: "ORFEUS provides access to high quality seismic waveforms and station metadata from EIDA and strong motion products.
-#        Access to waveform and station metadata is possible through modern APIs and interfaces, such as the Rapid Raw Strong Motion system."
+    EIDA Data Archive:
+        title: EIDA Data Archive
+        parents: *researchDataParent
+        providers: *eida
+        logo: orfeus-european-integrated-data-archive-eida.png
+        open_access: false
+        webpage_url: https://www.orfeus-eu.org/data/eida/
+        manual_url: https://www.google.com/
+        helpdesk_url: https://www.google.com/
+        tutorial_url: https://www.google.com/
+        terms_of_use_url: https://www.google.com/
+        corporate_sla_url: https://www.google.com/
+        access_policies_url: https://www.google.com/
+        dedicated_for: ["Reaserchers"] #TODO: but not specified
+        places: *europe
+        languages: *english
+        area: *earthScience
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: Store, share and access your files and their metadata on a global scale.
+        description: |
+          ORFEUS provides access to high quality seismic waveforms and station metadata
+          from EIDA and strong motion products.
+          Access to waveform and station metadata is possible through modern APIs and interfaces,
+          such as the Rapid Raw Strong Motion system."
 #    Applications on Demand:
 #        title: Applications on Demand
 #        parents: *applicationsParent
@@ -750,6 +798,7 @@ services:
         title: GNU Octave
         parents: *applicationsParent
         providers: [*ics, *recas, *cyfro, *begrid, *cesga]
+        logo: gnu-octave.png
         open_access: false
         webpage_url: https://www.gnu.org/software/octave/
         manual_url: https://octave.org/doc/interpreter/
@@ -761,7 +810,7 @@ services:
         places: *europe
         languages: *english
         dedicated_for: ["Researchers", "Research organisations"]
-        area: &mathematics Mathematics
+        area: *mathematics
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -772,27 +821,7 @@ services:
         title: Galaxy
         parents: *applicationsParent
         providers: [*cesga, *recas, *ics]
-        open_access: false
-        webpage_url: https://www.google.com
-        manual_url: https://www.google.com
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
-        places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
-        languages: *english
-        area: &lifeSciences Life sciences
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        description: |
-          Galaxy is an open, web-based platform for data-intensive biomedical research.
-    NAMD:
-        title: NAMD
-        parents: *applicationsParent
-        providers: [*cesga, *recas, *ics]
+        logo: galaxy.png
         open_access: false
         webpage_url: https://www.google.com
         manual_url: https://www.google.com
@@ -809,11 +838,35 @@ services:
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
-          NAMD is a parallel molecular dynamics code designed for high-performance simulation of large bio-molecular systems.
+          Galaxy is an open, web-based platform for data-intensive biomedical research.
+    NAMD:
+        title: NAMD
+        parents: *applicationsParent
+        providers: [*cesga, *recas, *ics]
+        logo: namd.png
+        open_access: false
+        webpage_url: https://www.google.com
+        manual_url: https://www.google.com
+        helpdesk_url: https://www.google.com
+        tutorial_url: https://www.google.com
+        terms_of_use_url: https://www.google.com
+        corporate_sla_url: https://www.google.com
+        access_policies_url: https://www.google.com
+        places: *europe
+        dedicated_for: ["Researchers", "Research organisations"]
+        languages: *english
+        area: *lifeSciences
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+        description: |
+          NAMD is a parallel molecular dynamics code designed for high-performance simulation
+          of large bio-molecular systems.
     Apache Tomcat:
         title: Apache Tomcat
         parents: *applicationsParent
         providers: [*cesga, *recas, *ics]
+        logo: apache-tomcat.png
         open_access: false
         webpage_url: https://www.google.com
         manual_url: https://www.google.com
@@ -830,11 +883,13 @@ services:
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
-          Apache Tomcat is an open source implementation of the Java Servlet, JavaServer Pages, Java Expression Language and Java WebSocket technologies.
+          Apache Tomcat is an open source implementation of the Java Servlet, JavaServer Pages,
+          Java Expression Language and Java WebSocket technologies.
     Gnuplot:
         title: Gnuplot
         parents: *applicationsParent
         providers: [*cesga, *recas, *ics]
+        logo: gnuplot.png
         open_access: false
         webpage_url: http://gnuplot.sourceforge.net
         manual_url: http://gnuplot.sourceforge.net/documentation.html
@@ -856,6 +911,7 @@ services:
         title: Docker
         parents: *applicationsParent
         providers: [*cesga, *recas, *ics]
+        logo: docker.png
         open_access: false
         webpage_url: https://www.docker.com/
         manual_url: https://www.google.com
@@ -877,6 +933,7 @@ services:
         title: Hadoop
         parents: *applicationsParent
         providers: [*cesga, *recas, *ics]
+        logo: hadoop.png
         open_access: false
         webpage_url: http://hadoop.apache.org/
         manual_url: http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
@@ -898,6 +955,7 @@ services:
         title: Marathon
         parents: *applicationsParent
         providers: [*cesga, *recas, *ics]
+        logo: marathon.png
         open_access: false
         webpage_url: https://mesosphere.github.io/marathon/
         manual_url: https://www.google.com
@@ -919,6 +977,7 @@ services:
         title: Chronos
         open_access: false
         providers: [*cesga, *recas, *ics]
+        logo: chronos.png
         parents: *applicationsParent
         webpage_url: https://github.com/mesos/chronos
         manual_url: https://mesos.github.io/chronos/
@@ -940,6 +999,7 @@ services:
         title: Jupyter
         open_access: false
         providers: [*cesga, *recas, *ics]
+        logo: jupyter.png
         parents: *applicationsParent
         webpage_url: https://notebooks.egi.eu/hub/login
         manual_url: https://www.google.com
@@ -956,11 +1016,13 @@ services:
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
-          Jupyter is an open-source web application that allows you to create and share documents with live code, equations, visualisations and explanatory text.
+          Jupyter is an open-source web application that allows you to create and share documents with live code,
+          equations, visualisations and explanatory text.
     The R project for statistical computing:
         title: The R project for statistical computing
         parents: *applicationsParent
         providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
+        logo: the-r-project-for-statistical-computing.png
         open_access: false
         webpage_url: https://www.r-project.org
         manual_url: https://cran.r-project.org/manuals.html
@@ -977,11 +1039,13 @@ services:
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
-          The R Project for Statistical Computing (v3.2.2) is a language and environment for statistical computing and graphics.
+          The R Project for Statistical Computing (v3.2.2)
+          is a language and environment for statistical computing and graphics.
     The Semantic Search Engine (SSE):
         title: The Semantic Search Engine (SSE)
         parents: *applicationsParent
         providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
+        logo: the-semantic-search-engine-sse.png
         open_access: false
         webpage_url: https://www.google.com
         manual_url: https://www.google.com
@@ -998,11 +1062,13 @@ services:
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
-          The Semantic Search Engine (SSE) is an application conceived to demonstrate the potential of information coupled with semantic web technologies to address the issues of data discovery and correlation.
+          The Semantic Search Engine (SSE) is an application conceived to demonstrate the potential of information
+          coupled with semantic web technologies to address the issues of data discovery and correlation.
     Chipster:
         title: Chipster
         parents: *applicationsParent
         providers: [*egifcs]
+        logo: chipster.png
         open_access: false
         webpage_url: https://chipster.csc.fi
         manual_url: https://chipster.csc.fi/manual/
@@ -1020,11 +1086,14 @@ services:
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
           Chispter is a user-friendly analysis software for high-throughput data.
-          It contains over 300 analysis tools for next generation sequencing (NGS), microarray, proteomics and sequence data. Users can save and share automatic analysis workflows, and visualize data interactively using a built-in genome browser and many other visualizations.
+          It contains over 300 analysis tools for next generation sequencing (NGS), microarray,
+          proteomics and sequence data. Users can save and share automatic analysis workflows,
+          and visualize data interactively using a built-in genome browser and many other visualizations.
     ClustalW2:
         title: ClustalW2
         parents: *applicationsParent
         providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
+        logo: clustalw2.png
         open_access: false
         webpage_url: http://www.clustal.org/clustal2/
         manual_url: http://www.clustal.org/clustal2/#Documentation
@@ -1046,6 +1115,7 @@ services:
         title: AutoDock Vina
         parents: *applicationsParent
         providers: [*cesga, *recas, *ics]
+        logo: autodock-vina.png
         open_access: false
         webpage_url: https://www.google.com
         manual_url: https://www.google.com
@@ -1090,8 +1160,12 @@ services:
 
           ### The service is proposed in two options:
 
-            1. For individual users EGI hosts and offers a JupyterHub within the Applications On Demand Service. Users (after lightweight approval) can login, write and play notebooks using storage and compute capacity from the access.egi.eu VO.
-            2. For user communities EGI offers consultancy and technology to setup a community-specific JupyterHub on top of community VO (together with EGI-enbled compute and storage resources), and with community-specific storage/data.
+            1. For individual users EGI hosts and offers a JupyterHub within the Applications On Demand Service.
+            Users (after lightweight approval) can login, write and play notebooks
+            using storage and compute capacity from the access.egi.eu VO.
+            2. For user communities EGI offers consultancy and technology
+            to setup a community-specific JupyterHub on top of community VO
+            (together with EGI-enbled compute and storage resources), and with community-specific storage/data.
 
 #    Component Metadata Infrastructure:
 #        title: Component Metadata Infrastructure
@@ -1137,6 +1211,7 @@ services:
         title: DARIAH Science Gateway
         parents: *thematicServicesParent
         providers: [*rbi]
+        logo: dariah.png
         open_access: false
         webpage_url: https://dariah-gateway.lpds.sztaki.hu/
         manual_url: https://dariah-gateway.lpds.sztaki.hu/help2
@@ -1159,16 +1234,23 @@ services:
 
           The DARIAH Science Gateway offers easy access to the following applications:
 
-            - Simple Semantic Search Engine (SSE): Allows users to search in the e-Infrastructure Knowledge Base (Open Access Document Repositories and Data Repositories).
-            - Parallel Semantic Search Engine (PSSE): A parallelised version of SSE enabling simultaneously search across the e-Infrastructure Knowledge Base, Europeana, Cultura Italia, Isidore, OpenAgris, PubMed and DBpedia platforms.
+            - Simple Semantic Search Engine (SSE): Allows users to search in the
+            e-Infrastructure Knowledge Base (Open Access Document Repositories and Data Repositories).
+            - Parallel Semantic Search Engine (PSSE): A parallelised version of SSE enabling simultaneously
+            search across the e-Infrastructure Knowledge Base, Europeana, Cultura Italia, Isidore, OpenAgris,
+            PubMed and DBpedia platforms.
             - DBO@Cloud: A Cloud-based repository presenting 100+ years old collection of Bavarian dialects.
-            - Cloud Access service: Single-job applications and parameter-sweep applications can be run on the DARIAH VO clouds without porting efforts.
-            - Workflow Development service: Complex workflow applications can be developed and run on all the resources of the DARIAH VO.
-            - File transfer service: Enables transferring data from, to and between storage services providing HTTP, HTTPS, SFTP, GSIFTP, SRM, iRODS and S3 protocols.
+            - Cloud Access service: Single-job applications and parameter-sweep applications can be run on
+            the DARIAH VO clouds without porting efforts.
+            - Workflow Development service: Complex workflow applications can be developed and run
+            on all the resources of the DARIAH VO.
+            - File transfer service: Enables transferring data from, to and between storage services providing HTTP,
+            HTTPS, SFTP, GSIFTP, SRM, iRODS and S3 protocols.
     Dynamic On Demand Analysis Service:
         title: Dynamic On Demand Analysis Service (DODAS Portal)
         parents: *thematicServicesParent
         providers: [*infn]
+        logo: dynamic-on-demand-analysis-service.png
         open_access: false
         webpage_url: https://dodas-iam.cloud.cnaf.infn.it/login
         manual_url: https://dodas-ts.github.io/dodas-doc/
@@ -1189,10 +1271,16 @@ services:
 
           ### DODAS provides:
 
-            - A comprehensive approach to opportunistic computing, with the possibility of orchestrate multiple centers (e.g. campus facilities, public or private clouds, to gather all available computing and storage resources).
-            - A simple solution for elastic computing site extensions, e.g. extension of allocated resources in order to absorb peaks of usage.
-            - An easy and controlled procedure to dynamically instantiate a spot ‘Data Analysis Facility’, for example a mission specific site. This is meant as the generation of an ephemeral WLCG-Tier as a Service to share computing and data resources with collaborators.
-            - The support to create HTCondor batch systems and BigData Platform on demand over multi-backend IaaS cloud resources.
+            - A comprehensive approach to opportunistic computing, with the possibility of
+            orchestrate multiple centers (e.g. campus facilities, public or private clouds,
+            to gather all available computing and storage resources).
+            - A simple solution for elastic computing site extensions, e.g. extension
+            of allocated resources in order to absorb peaks of usage.
+            - An easy and controlled procedure to dynamically instantiate a spot ‘Data Analysis Facility’,
+            for example a mission specific site. This is meant as the generation of an ephemeral WLCG-Tier
+            as a Service to share computing and data resources with collaborators.
+            - The support to create HTCondor batch systems and BigData Platform
+            on demand over multi-backend IaaS cloud resources.
 
 
           ### How to access the service
@@ -1209,13 +1297,15 @@ services:
 
           The service is provided by the Italian National Institute of Nuclear Physics (INFN).
 
-          The DODAS service builds on EOSC-hub services developed during the INDIGO-DataCloud project (Identity Access Management - IAM, Token Translation Service - TTS, PaaS Orchestration, TOSCA Templates).
+          The DODAS service builds on EOSC-hub services developed during the INDIGO-DataCloud project
+          (Identity Access Management - IAM, Token Translation Service - TTS, PaaS Orchestration, TOSCA Templates).
 
           [1]: https://dodas-iam.cloud.cnaf.infn.it/register
     D4 Science Particle Formation:
         title: &d4scienceService Particle Formation
         parents: [*thematicServicesParent, *applicationsParent]
         providers: [*d4science]
+        logo: d4science-gateway.png
         open_access: false
         webpage_url: https://services.d4science.org/group/particleformation
         manual_url: https://services.d4science.org/group/particleformation
@@ -1227,7 +1317,7 @@ services:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
-        area: &physicalScienceAerosol Physical science (aerosol physics)
+        area: *physicalScienceEarth
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: D4 Science Service (need to be filled)
@@ -1239,6 +1329,7 @@ services:
     ENES Climate Analytics Service:
         title: ENES Climate Analytics Service
         parents: [*thematicServicesParent, *researchDataParent]
+        logo: enes-climate-analytics-service.png
         providers: [*ccmc, *dkrz]
         open_access: false
         webpage_url: https://portal.enes.org/data/data-metadata-service/processing/ecas
@@ -1251,18 +1342,23 @@ services:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
-        area: &climateScience Climate science
+        area: *climateScience
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Analyze and process data from multiple communities with the Ophidia Big Data Analytics framework
         description: |
-          Users can define parallel processing workflows, executed remotely without needing to download data or provide own computing resources as these are provided by ECAS. Moreover, users can explore workflows others have created and shared, and apply these to their own data. ECAS enables users to write a workflow once and apply it to diverse data without having to customize it again.
+          Users can define parallel processing workflows, executed remotely without needing
+          to download data or provide own computing resources as these are provided by ECAS.
+          Moreover, users can explore workflows others have created and shared, and apply these to their own data.
+          ECAS enables users to write a workflow once and apply it to diverse data without having to customize it again.
 
           ### To access the service you need to:
 
-          ECAS is open for use by users interested in working on Earth Sciences data. Available data sources may be different between CMCC and DKRZ.
+          ECAS is open for use by users interested in working on Earth Sciences data.
+          Available data sources may be different between CMCC and DKRZ.
 
-          To use ECAS and to learn more about the different datasets available, please follow the instructions for registration and access at the two sites:
+          To use ECAS and to learn more about the different datasets available,
+          please follow the instructions for registration and access at the two sites:
 
             - [CMCC][1]
             - [DKRZ][2]
@@ -1287,6 +1383,7 @@ services:
         title: LifeWatch ERIC Plants Identification App
         parents: *thematicServicesParent
         providers: [*not]
+        logo: lifewatch-eric-plants-identification-app.png
         open_access: false
         webpage_url: https://www.lifewatch.eu/
         manual_url: https://github.com/IgnacioHeredia/plant_classification/blob/master/webpage/README.md#using-the-api%20
@@ -1298,12 +1395,16 @@ services:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
-        area: &environmentalScience Environmental science
+        area: *environmentalScience
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Web service to classify plant pictures based on convolutional neural networks
         description: |
-          This web service connects to a deep neural network which has been trained with thousands of plant images from Europe. It can classify different types of plants, including flowers. The input to be sent to the web service is an image URL or a local image. The response is a JSON with the potential classification (the name of the potential specie), a percentage, link to google images and link to wikipedia.sets.
+          This web service connects to a deep neural network which has been trained with thousands
+          of plant images from Europe. It can classify different types of plants, including flowers.
+          The input to be sent to the web service is an image URL or a local image.
+          The response is a JSON with the potential classification (the name of the potential specie),
+          a percentage, link to google images and link to wikipedia.sets.
 
           ### How to access the services:
 
@@ -1418,7 +1519,7 @@ services:
         places: *europe
         dedicated_for: ["Researchers"] #TODO: but not specified
         languages: *english
-        area: *interdisciplinary
+        area: *earthScience
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
@@ -1427,6 +1528,7 @@ services:
         title: OPENCoastS Portal
         parents: *thematicServicesParent
         providers: [*pncel]
+        logo: opencoasts.png
         open_access: false
         webpage_url: https://opencoasts.ncg.ingrid.pt/
         manual_url: https://opencoasts.ncg.ingrid.pt/static/OPENCoastS_manual.pdf
@@ -1443,31 +1545,50 @@ services:
         phase: *notSpecified
         tagline: On-demand operational coastal circulation forecast service
         description: |
-          OPENCoastS builds on-demand circulation forecast systems for user-selected sections of the North Atlantic coast and maintains them running operationally for the timeframe defined by the user. This daily service generates forecasts of water levels and 2D velocities over the spatial region of interest for periods of 48 hours, based on numerical simulations of the relevant physical processes. Forcing conditions at the boundaries and over the domain are defined by the user from global forecast databases. Automatic comparison with real-time in-situ sensor data can be provided for a number of user specified locations.
+          OPENCoastS builds on-demand circulation forecast systems for user-selected sections
+          of the North Atlantic coast and maintains them running operationally for the timeframe defined by the user.
+          This daily service generates forecasts of water levels and 2D velocities over the spatial region
+          of interest for periods of 48 hours, based on numerical simulations of the relevant physical processes.
+          Forcing conditions at the boundaries and over the domain are defined by the user
+          from global forecast databases. Automatic comparison with real-time in-situ sensor data can be provided
+          for a number of user specified locations.
 
-          It takes advantage of LNEC’s team long-term work on coastal modelling as model developers, integrated in several open source modelling communities (SCHISM, ELCIRC, SELFE, ADCIRC), and in its advanced competences  in developing forecast frameworks and operating forecasts deployments.
+          It takes advantage of LNEC’s team long-term work on coastal modelling as model developers,
+          integrated in several open source modelling communities (SCHISM, ELCIRC, SELFE, ADCIRC),
+          and in its advanced competences  in developing forecast frameworks and operating forecasts deployments.
 
           ### Users and application potential
 
-          OPENCoastS can contribute directly to the development of new research methodologies and workflows regarding water quality, biological, biochemical and coastal erosion studies.
+          OPENCoastS can contribute directly to the development of new research methodologies
+          and workflows regarding water quality, biological, biochemical and coastal erosion studies.
 
-          SMEs will benefit from these operational systems to feed their own higher-level service portfolios to respond to other societal needs, without the need to invest time and resources to deploy forecast systems from scratch.
+          SMEs will benefit from these operational systems to feed their own higher-level service portfolios
+          to respond to other societal needs, without the need
+          to invest time and resources to deploy forecast systems from scratch.
 
-          Port and coastal authorities –Through the use of this platform coastal managers have all the information required to fulfill their responsibilities (examples of uses include facilitating navigation, reducing port operation costs, reducing emergency planning and response of coastal hazards, and better exploring recreational uses of the coast).
+          Port and coastal authorities –Through the use of this platform coastal managers have all the information
+          required to fulfill their responsibilities (examples of uses include facilitating navigation,
+          reducing port operation costs, reducing emergency planning and response of coastal hazards,
+          and better exploring recreational uses of the coast).
 
 
           ### How to request a service
 
-          To request use of the OPENCoastS, please fill in thee request form and register at https://opencoasts.ncg.ingrid.pt/. After analysis and validation of the request, you will be allowed to log in and start building your forecasts.
+          To request use of the OPENCoastS, please fill in thee request form and register at
+          https://opencoasts.ncg.ingrid.pt/. After analysis and validation of the request,
+          you will be allowed to log in and start building your forecasts.
 
 
           Service provided by
 
-          OPENCoastS is provided by the Portuguese National Civil Engineering Laboratory, and was jointly developed by LNEC and LIP.
+          OPENCoastS is provided by the Portuguese National Civil Engineering Laboratory,
+          and was jointly developed by LNEC and LIP.
 
-          Currently, the service is deployed at a single computing site (NCG-INGRID-PT, part of [INCD][1] and the [EGI Federation][2]).
+          Currently, the service is deployed at a single computing site (NCG-INGRID-PT,
+          part of [INCD][1] and the [EGI Federation][2]).
 
-          Through EOSC-hub, OPENCoastS will be expanded to include a more diverse set of geographical data, and improved with integration of new features from the EGI, EUDAT and INDIGO-DataCloud service catalogues.
+          Through EOSC-hub, OPENCoastS will be expanded to include a more diverse set of geographical data,
+          and improved with integration of new features from the EGI, EUDAT and INDIGO-DataCloud service catalogues.
 
           [1]: http://www.incd.pt/
           [2]: https://www.egi.eu/federation/
@@ -1523,6 +1644,7 @@ services:
         title: &haddock HADDOCK
         parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
+        logo: haddock.png
         open_access: true
         connected_url: https://enmrdevel.science.uu.nl/auth/register/haddock
         webpage_url: https://enmrdevel.science.uu.nl/auth/register/haddock
@@ -1541,13 +1663,17 @@ services:
         tagline: A suite of computational tools for structural biology
         description: |
           Integrative modeling of biomolecular complexes with the user-friendly, EGI HTC-enabled HADDOCK portal.
-          HADDOCK is a web portal that offers computational tools for structural biologists to model the structure of complexes of proteins and other biomolecules via a user-friendly interface.
-          The portal offers a number of interfaces, depending on the amount of information and restraints that researchers wish to place on their models.
-          HADDOCK is prepared to deal with several classes of problems, including protein-protein, protein-nucleic acids and protein-ligand complexes."
+          HADDOCK is a web portal that offers computational tools for structural biologists to model the structure
+          of complexes of proteins and other biomolecules via a user-friendly interface.
+          The portal offers a number of interfaces, depending on the amount of information and restraints
+          that researchers wish to place on their models.
+          HADDOCK is prepared to deal with several classes of problems, including protein-protein,
+          protein-nucleic acids and protein-ligand complexes."
     PowerFit:
         title: &powerFit PowerFit
         parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
+        logo: powerfit.png
         open_access: true
         connected_url: https://enmrdevel.science.uu.nl/auth/register/powerfit
         webpage_url: https://enmrdevel.science.uu.nl/auth/register/powerfit
@@ -1572,6 +1698,7 @@ services:
         title: &disVis DisVis
         parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
+        logo: disvis.png
         open_access: true
         connected_url: https://enmrdevel.science.uu.nl/auth/register/disvis
         webpage_url: https://enmrdevel.science.uu.nl/auth/register/disvis
@@ -1597,6 +1724,7 @@ services:
         title: &roseta CS-ROSETA
         parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
+        logo: cs-rosetta.png
         open_access: true
         connected_url: https://enmrdevel.science.uu.nl/auth/register/cs_rosetta3
         webpage_url: https://enmrdevel.science.uu.nl/auth/register/cs_rosetta3
@@ -1621,6 +1749,7 @@ services:
         title: &amber AMBER
         parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
+        logo: amber.png
         open_access: true
         connected_url: https://enmrdevel.science.uu.nl/
         webpage_url: https://enmrdevel.science.uu.nl/
@@ -1646,6 +1775,7 @@ services:
         title: &fanten FANTEN
         parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
+        logo: fanten.png
         open_access: true
         connected_url: https://enmrdevel.science.uu.nl/
         webpage_url: https://enmrdevel.science.uu.nl/
@@ -1670,6 +1800,7 @@ services:
         title: &spotOn SpotOn
         parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
+        logo: spoton.png
         open_access: true
         connected_url: http://www.bonvinlab.org/software/haddock2.2/
         webpage_url: http://www.bonvinlab.org/software/haddock2.2/
@@ -1690,6 +1821,286 @@ services:
           SpotOn: determination of Hot-Spots at protein-protein interfaces.
           SpotOn is a robust algorithm developed to identify and classify the interfacial residues as Hot-Spots (HS)
           and Null-Spots (NS) with a final accuracy of 0.95 and a sensitivity of 0.95 on an independent test set.
+    GEP - HRCM:
+        title: &gepHRCM GEP - High-Resolution Change Monitoring for the Alpine Region
+        parents: [*thematicServicesParent, *researchDataParent]
+        providers: [*terradue]
+        open_access: false
+        webpage_url: https://geohazards-tep.eo.esa.int
+        manual_url: https://terradue.github.io/doc-tep-geohazards/
+        helpdesk_url: https://www.google.com
+        tutorial_url: https://www.google.com
+        terms_of_use_url: https://www.google.com
+        corporate_sla_url: https://www.google.com
+        access_policies_url: https://www.google.com
+        places: *europe
+        dedicated_for: ["Researchers", "Research organisations"]
+        languages: *english
+        area: *earthScience
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: *notSpecified
+        description: |
+          This service provides an interferometric product at 50m resolution and 25m pixel spacing systematically
+          for every 6-day Sentinel-1 SLC pair over the Alpine Region.
+          It allows rapid response to earthquakes occurring within the processing mask by automatic generation
+          of co-seismic interferograms that are published in a dedicated GeoBrowser
+          and made available for visualization and download.
+    GEP - EO:
+        title: &gepEO GEP - EO Services for Earthquake Response and Landslides Analysis
+        parents: [*thematicServicesParent, *researchDataParent]
+        providers: [*terradue]
+        open_access: false
+        webpage_url: https://geohazards-tep.eo.esa.int
+        manual_url: https://terradue.github.io/doc-tep-geohazards/
+        helpdesk_url: https://www.google.com
+        tutorial_url: https://www.google.com
+        terms_of_use_url: https://www.google.com
+        corporate_sla_url: https://www.google.com
+        access_policies_url: https://www.google.com
+        places: *europe
+        dedicated_for: ["Researchers", "Research organisations"]
+        languages: *english
+        area: *earthScience
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: *notSpecified
+        description: |
+          This is a Thematic Application of the Geohazards Thematic Exploitation Platform providing access to a set
+          of on-demand terrain motion services supporting interferogram generation, co-seismic displacement mapping,
+          landslide rapid mapping and landslide displacement field monitoring with Sentinel-1 and Sentinel-2 data.
+    EODC JupyterHub for global Copernicus data:
+        title: &eodcJH EODC JupyterHub for global Copernicus data
+        parents: [*thematicServicesParent, *researchDataParent]
+        providers: [*eodc]
+        open_access: false
+        webpage_url: https://jupyterhub.eodc.eu
+        manual_url: https://github.com/jupyterhub/jupyterhub
+        helpdesk_url: https://www.google.com
+        tutorial_url: https://www.google.com
+        terms_of_use_url: https://www.google.com
+        corporate_sla_url: https://www.google.com
+        access_policies_url: https://www.google.com
+        places: *europe
+        dedicated_for: ["Researchers", "Research organisations"]
+        languages: *english
+        area: *earthScience
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: *notSpecified
+        description: |
+          EODC JupyterHub provides access to the global EODC Copernicus Data Archive.
+          Eliminate the barrier to get access to and to start to develop algorithms in view of remote sensing data.
+          Full access to EODC Copernicus satellite data archive.
+          No need to setup a VM to access data archive.Simple python dev. environment.
+    EODC Data Catalogue Service:
+        title: &eodcDCS EODC Data Catalogue Service
+        parents: [*thematicServicesParent, *researchDataParent]
+        providers: [*eodc]
+        open_access: false
+        webpage_url: https://csw.eodc.eu
+        manual_url: https://csw.eodc.eu
+        helpdesk_url: https://www.google.com
+        tutorial_url: https://www.google.com
+        terms_of_use_url: https://www.google.com
+        corporate_sla_url: https://www.google.com
+        access_policies_url: https://www.google.com
+        places: *europe
+        dedicated_for: ["Researchers", "Research organisations"]
+        languages: *english
+        area: *earthScience
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: Catalog Service for the Web (CSW)
+        description: |
+          Catalog Service for the Web (CSW)
+    Sentiel hub:
+        title: &sentinelHub Sentiel hub
+        parents: [*thematicServicesParent, *researchDataParent]
+        providers: [*sinergise]
+        open_access: false
+        webpage_url: http://sentinel-hub.com/
+        manual_url: https://www.sentinel-hub.com/develop/documentation
+        helpdesk_url: https://www.google.com
+        tutorial_url: https://www.google.com
+        terms_of_use_url: https://www.google.com
+        corporate_sla_url: https://www.google.com
+        access_policies_url: https://www.google.com
+        places: *europe
+        dedicated_for: ["Researchers", "Research organisations"]
+        languages: *english
+        area: *earthScience
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: *notSpecified
+        description: |
+          Sentinel Hub is a multi- spectral and multi-temporal big data satellite imagery service,
+          capable of fully automated archiving, real-time processing and distribution
+          of remote sensing data and related EO products.
+          Users can use OGC compliant and proprietary APIs to retrieve satellite data over their AOI
+          and specific time range from full archives in a matter of seconds.
+          Sentinel Hub received Copernicus Masters Award 2016.
+    MEA Platform:
+        title: &meaPlatform MEA Platform (Data access and exploitation service)
+        parents: [*thematicServicesParent, *researchDataParent]
+        providers: [*meeo]
+        open_access: false
+        webpage_url: https://eodataservice.org
+        manual_url: https://www.youtube.com/channel/UCqy-bd6CpXMOlRqfHmBqlZw
+        helpdesk_url: https://www.google.com
+        tutorial_url: https://www.google.com
+        terms_of_use_url: https://www.google.com
+        corporate_sla_url: https://www.google.com
+        access_policies_url: https://www.google.com
+        places: *europe
+        dedicated_for: ["Researchers", "Research organisations"]
+        languages: *english
+        area: *earthScience
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: *notSpecified
+        description: |
+          MEA platform implements the concept of Digital Earth making global environmental geospatial data Findable,
+          Accessible, Interoperable and Reusable (FAIR). MEA platform provides an effective subsetting functionality
+          that accesses the data only when requested and serves to the client
+          only the data amount that is really needed.
+          MEA platform exposes OGC-standardised discovery (openSearch) and access (WCS 2.0) interfaces.
+    Rasdaman EO Datacube:
+        title: &rasdamanDatacube Rasdaman EO Datacube
+        parents: [*thematicServicesParent, *researchDataParent]
+        providers: [*rasdaman]
+        logo: rasdaman-eo-datacube.png
+        open_access: false
+        webpage_url: http://eoschub.rasdaman.com:8080/rasdaman/ows
+        manual_url: http://doc.rasdaman.org/05_geo-services-guide.html#ogc-web-services
+        helpdesk_url: https://www.google.com
+        tutorial_url: https://www.google.com
+        terms_of_use_url: https://www.google.com
+        corporate_sla_url: https://www.google.com
+        access_policies_url: https://www.google.com
+        places: *europe
+        dedicated_for: ["Researchers", "Research organisations"]
+        languages: *english
+        area: *earthScience
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: *notSpecified
+        description: |
+          Rasdaman is a datacube engine providing analysis-ready EO data by abstracting
+          millions of satellite images into few spatio-temporal cubes.
+          Visualize via WMS, extract via WCS or perform server-side analytics via WCPS
+          on any subset of Sentinel or Landsat data in real time, in your favorite client.
+    Cloud Ferro Data Collections Catalog:
+        title: &cfdcs Cloud Ferro Data Collections Catalog
+        parents: [*thematicServicesParent, *researchDataParent]
+        providers: [*cloudFerro]
+        logo: &cfLogo cloud-ferro.png
+        open_access: false
+        webpage_url: https://discovery.creodias.eu/dataset
+        manual_url: https://creodias.eu/data-related-services
+        helpdesk_url: https://www.google.com
+        tutorial_url: https://www.google.com
+        terms_of_use_url: https://www.google.com
+        corporate_sla_url: https://www.google.com
+        access_policies_url: https://www.google.com
+        places: *europe
+        dedicated_for: ["Researchers", "Research organisations"]
+        languages: *english
+        area: *earthScience
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: *notSpecified
+        description: |
+          The Catalogue is be based on CKAN open source software which is widely used for open data publications like
+          e.g. European Data Portal, data.org.uk or danepubliczne.gov.pl. CKAN provides user friendly web interface
+          for all activities associated with data publication and subscription.
+          It is capable of advanced data management.
+          All datasets are organized and described with metadata, which allows it to be easily discoverable,
+          with the use of search phrases and customizable filters (e.g.: tags, categories, data formats).
+          It is possible to publish one dataset in different data formats, not only as downloadable files but also
+          as links to web service, web API or links to external WWW resources. Datasets can be stored in CKAN,
+          along with version history and dataset statistics, which allows to monitor the interest in datasets.
+          CKAN also provides functionalities for collaboration, community participation and providing feedback,
+          such as comments, ratings and sharing.
+          CKAN is highly customizable in both terms of Look&Feel and functionalities.
+          CKAN provides very rich RESTful JSON API, which allows other applications to discover and access the datasets.
+          It can be integrated easily with Semantic Web technologies such as RDF data model and SPARQL.
+    CloudFerro Infrastructure:
+        title: &cfi CloudFerro Infrastructure
+        parents: [*thematicServicesParent, *researchDataParent]
+        providers: [*cloudFerro]
+        logo: *cfLogo
+        open_access: false
+        webpage_url: https://creodias.eu
+        manual_url: https://creodias.eu/faq
+        helpdesk_url: https://www.google.com
+        tutorial_url: https://www.google.com
+        terms_of_use_url: https://www.google.com
+        corporate_sla_url: https://www.google.com
+        access_policies_url: https://www.google.com
+        places: *europe
+        dedicated_for: ["Researchers", "Research organisations"]
+        languages: *english
+        area: *earthScience
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: *notSpecified
+        description: |
+          CREODIAS processing covers full set of virtual resources available in the solution:
+          VM – Virtual Machines (or virtual computing servers) with several operating systems available
+          (both free like CentOS, Ubuntu, Debian, Scientific Linux,
+          and commercial like RedHat, SUSE, Microsoft Windows Server),
+          virtual storage volumes that can be easily mounted to the VMs together with object storage solution,
+          virtual networks, virtual appliances like firewalls (FWaaS) and VPN concentrators (VPNaaS),
+          physical servers (baremetal) that can be integrated to the virtual world,
+          Single Server VMs – full physical server with a single VM and very fast passthrough NVMe storage –
+          a combination of advantages of a dedicated server and a cloud VM
+          (high capacity, storage speed, no noisy neighbor problem).
+    Cloudferro Data related Services - EO Finder:
+        title: &cfdrsEOF Cloudferro Data related Services - EO Finder
+        parents: [*thematicServicesParent, *researchDataParent]
+        providers: [*cloudFerro]
+        logo: *cfLogo
+        open_access: false
+        webpage_url: https://finder.creodias.eu/www
+        manual_url: https://creodias.eu/eo-data-finder-api-manual
+        helpdesk_url: https://www.google.com
+        tutorial_url: https://www.google.com
+        terms_of_use_url: https://www.google.com
+        corporate_sla_url: https://www.google.com
+        access_policies_url: https://www.google.com
+        places: *europe
+        dedicated_for: ["Researchers", "Research organisations"]
+        languages: *english
+        area: *earthScience
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: *notSpecified
+        description: *notSpecified
+    Cloudferro Data related Services - EO browser:
+        title: &cfdrsEOB Cloudferro Data related Services - EO browser
+        parents: [*thematicServicesParent, *researchDataParent]
+        logo: cloud-ferro-eo-browser.png
+        providers: [*cloudFerro]
+        open_access: false
+        webpage_url: https://browser.creodias.eu
+        manual_url: https://creodias.eu/using-the-eo-browser
+        helpdesk_url: https://www.google.com
+        tutorial_url: https://www.google.com
+        terms_of_use_url: https://www.google.com
+        corporate_sla_url: https://www.google.com
+        access_policies_url: https://www.google.com
+        places: *europe
+        dedicated_for: ["Researchers", "Research organisations"]
+        languages: *english
+        area: *earthScience
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: *notSpecified
+        description: |
+          CreoDias EO browser allows browsing wide archive of Earth Observation products, created by ESA’s Sentinel 1,
+          Sentinel 2, Sentinel 3, ESA’s archives of Landsat 5, Landsat 7, Landsat 8 and Envisat.
+          It provides ability to visualize and download chosen products in .png and .jpg formats.
     Check-in:
         title: Check-in
         parents: *identityParent
@@ -1752,6 +2163,7 @@ services:
         title: Training infrastructure
         parents: *professionalServicesParent
         providers: [*egifcs]
+        logo: training-infrastructure.png
         open_access: false
         webpage_url: https://www.egi.eu/services/training-infrastructure/
         manual_url: https://wiki.egi.eu/wiki/Training_infrastructure
@@ -1791,6 +2203,7 @@ services:
         title: FitSM
         parents: *professionalServicesParent
         providers: [*egi]
+        logo: fitsm.png
         open_access: false
         webpage_url: https://www.egi.eu/services/fitsm-training/
         manual_url: https://www.egi.eu/services/fitsm-training/
@@ -1909,6 +2322,26 @@ relations:
     both: true
     source: *fanten
     target: *spotOn
+  notebookToD4Science:
+    both: true
+    source: *notebook
+    target: *spotOn
+  egiToD4Science:
+    both: true
+    source: *egiCloud
+    target: *d4scienceService
+  clarinToB2Find:
+    both: true
+    source: *clarinService
+    target: *b2find
+  clarinToB2Share:
+    both: true
+    source: *clarinService
+    target: *b2share
+  b2findToB2Share:
+    both: true
+    source: *b2find
+    target: *b2share
 #  egiToGeossPortal:
 #    both: true
 #    source: *egiCloud
@@ -1945,23 +2378,4 @@ relations:
 #    both: true
 #    source: *
 #    target: *
-  notebookToD4Science:
-    both: true
-    source: *notebook
-    target: *spotOn
-  egiToD4Science:
-    both: true
-    source: *egiCloud
-    target: *d4scienceService
-  clarinToB2Find:
-    both: true
-    source: *clarinService
-    target: *b2find
-  clarinToB2Share:
-    both: true
-    source: *clarinService
-    target: *b2share
-  b2findToB2Share:
-    both: true
-    source: *b2find
-    target: *b2share
+
