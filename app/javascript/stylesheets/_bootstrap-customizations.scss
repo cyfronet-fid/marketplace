@@ -20,7 +20,6 @@ hr {
 
 ul {
   list-style: none;
-  padding-left: 0;
   line-height: 1.5rem;
 }
 
@@ -52,6 +51,11 @@ h4 {
   border-bottom: 2px solid $secondary;
   padding-bottom: 0.9rem;
 }
+
+.font-weight-bolder {
+  font-weight: $font-weight-bolder;
+}
+
 
 button,
 a {
@@ -263,7 +267,6 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   ul {
     list-style-position: outside;
     list-style: disc;
-    color: $link-color;
 
     li {
       span {
@@ -273,15 +276,6 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   }
 }
 
-.card {
-  border-color: $secondary;
-  border-radius: 0;
-
-  .card-header {
-    background-color: $card-header-bg;
-    border-bottom: none;
-  }
-}
 
 .steps-form-2 {
   position: relative;
@@ -618,6 +612,52 @@ textarea {
   color: $palette-solid-80;
 }
 
+
+/* -----------------------
+Service detail
+-------------------------*/
+.desc {
+
+  h5 {
+    text-transform: uppercase;
+  }
+
+  .list-group {
+    margin-bottom: 1.4rem;
+    border: 1px solid $palette-solid-10;
+    padding: 0.5rem;
+  }
+
+  .list-group-item {
+    border: none;
+    margin: 0.2rem;
+    padding: 0.2rem 0.95rem;
+    list-style-type: circle;
+  }
+}
+
+
+/* -----------------------
+Card style
+-------------------------*/
+.card {
+
+  .card-footer {
+    background: transparent;
+    padding: 0.45rem 0 0;
+    margin: 1.25rem 1.25rem 0.45rem;
+
+    span,
+    strong {
+      display: block;
+    }
+
+  }
+
+
+
+
+}
 
 
 @media only screen and (max-width: 768px) {
