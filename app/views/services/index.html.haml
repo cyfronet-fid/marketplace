@@ -29,4 +29,5 @@
                                         ["by rate 1-5", "rating"],
                                         ["by rate 5-1", "-rating"]], params[:sort])
 
-      = render "services", services: @services
+      = render @services
+  = render "paginate", services: @services

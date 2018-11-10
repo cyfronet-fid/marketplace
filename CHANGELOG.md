@@ -94,9 +94,14 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Create new project on order configuration page (@mkasztelnik)
 - Show alert for logged in user when there is not active affiliation (@mkasztelnik)
 - Style ordered service view and remove mocked data (@mkasztelnik)
+- Add logos to the services (@goreck888)
 - User need to accept terms and conditions to order service (@mkasztelnik)
 - Add new relic rpm (@mkasztelnik)
 - Category hierarchical services count (@mkasztelnik)
+- Show validation error when project is not selected for ordered service (@mkasztelnik)
+- filter by status on my serices view (@martaswiatkowska)
+- Simple form checks validation if conditions (@mkasztelnik)
+- Clickable next order nav step (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
@@ -109,6 +114,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Split backend for Service details view (@kmarszalek)
 - Bootstrap improvements towards compliance with the guidelines (@jswk)
 - Improve styling of affiliation list in profile and project list (@jswk)
+- Deny to destroy an affiliation which is associated with a project item (@jswk)
 
 ### Deprecated
 

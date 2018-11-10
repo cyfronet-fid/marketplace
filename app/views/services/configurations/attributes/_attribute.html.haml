@@ -1,0 +1,6 @@
+= field.input :id,
+  label: attr.label,
+  readonly: true,
+  input_html: { value: "#{attr.value}", name: "#{field.object_name}[#{attr.id}]" },
+  error: attr.errors.messages[:id].join(" "),
+  hint: attr.description

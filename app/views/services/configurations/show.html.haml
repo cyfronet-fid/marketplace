@@ -9,19 +9,30 @@
 
 = simple_form_for @project_item, url: service_configuration_path(@service),
   method: :put, html: { id: "order-form"  } do |f|
-  = f.input :project do
-    .input-group
-      = f.input_field :project_id, collection: @projects, class: "form-control custom-select"
-      .input-group-append
-        = link_to "Add new project", new_project_path,
-          class: "btn btn-primary", remote: true
-
-  = f.association :affiliation,
-    collection: @affiliations, label_method: :organization,
-    hint: "Click #{link_to "here", new_profile_affiliation_path} to create new affilition".html_safe
-  = f.input :customer_typology, collection: @customer_topologies
-  = f.input :access_reason
-  = f.input :additional_information
+  .sc-section
+    %h4.text-uppercase.sc-head My projects
+    %p
+      You can organize your services in projects.
+      Add this service to an existing project or create a new one.
+    = f.input :project do
+      .input-group
+        = f.input_field :project_id, collection: @projects,
+          class: "form-control custom-select #{"is-invalid" unless @project_item.errors[:project].empty?}"
+        .input-group-append
+          = link_to "Add new project", new_project_path,
+            class: "btn btn-primary", remote: true
+  - unless @project_item.property_values.blank?
+    .sc-section
+      %h4.sc-head Technical parameters
+      = render "services/configurations/attributes", project_item: @project_item, form: f
+  .sc-section
+    %h4.sc-head Information about usage
+    = f.association :affiliation,
+      collection: @affiliations, label_method: :organization,
+      hint: "Click #{link_to "here", new_profile_affiliation_path} to create new affilition".html_safe
+    = f.input :customer_typology, collection: @customer_topologies
+    = f.input :access_reason
+    = f.input :additional_information
 %p
   Selected offer:
   = @project_item.offer.name
