@@ -2,10 +2,11 @@
   - breadcrumb :profile
 
   %h1.font-weight-bold Profile
-  = render "profiles/profile"
 
-.container
-  %ul#my-tab.nav.nav-tabs.mt-4{ role: "tablist" }
+  .row.h-100.justify-content-center.bg-gray-5.pt-4.pb-4
+    = render "profiles/profile"
+
+  %ul#my-tab.nav.nav-tabs.row.pl-3{ role: "tablist" }
     %li.nav-item
       %a#affiliations-tab.nav-link.text-uppercase.active{ "aria-controls" => "affiliations",
                                                   "aria-selected" => "true",
@@ -19,6 +20,6 @@
                                               href: "#newsletter",
                                               role: "tab" } Newsletter
 
-.tab-content.pt-4
-  = render "profiles/affiliations/index", affiliations: @affiliations
-  = render "profiles/newsletter"
+  .tab-content.pt-4
+    = render "profiles/affiliations/index", affiliations: @affiliations
+    = render "profiles/newsletter"
