@@ -28,10 +28,19 @@ $display3-size: 1.1rem; // display5
 $display1-weight: $font-weight-light;
 
 $palette-gray-100: #1c313a;
+$palette-gray-5: rgba($palette-gray-100, 0.05);
 $palette-gray-10: rgba($palette-gray-100, 0.1);
 $palette-gray-30: rgba($palette-gray-100, 0.3);
 $palette-gray-50: rgba($palette-gray-100, 0.5);
 $palette-gray-80: rgba($palette-gray-100, 0.8);
+
+$palette-solid-5: #f3f4f5;
+$palette-solid-10: #e8eaeb;
+$palette-solid-30: #bac1c3;
+$palette-solid-50: #8d989c;
+$palette-solid-80: #495a61;
+$palette-solid-100: #1c313a;
+
 $palette-blue: #0c2bd5;
 $palette-yellow: #ffcd00;
 $palette-orange: #ffa900;
