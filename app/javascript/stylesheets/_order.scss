@@ -61,10 +61,6 @@
       border-top: none;
       border-bottom: 1px solid $border-color;
     }
-
-    tr:first-child td {
-      border-top: 2px solid lighten($secondary, 10%);
-    }
   }
 
   .additional-information {
@@ -78,6 +74,10 @@
     dl {
       padding-left: 15px;
       border-left: 3px solid lighten($border-color, 5%);
+
+      dd {
+        color: $palette-gray-70;
+      }
     }
 
     dt {

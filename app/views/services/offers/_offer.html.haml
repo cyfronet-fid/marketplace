@@ -2,10 +2,17 @@
   .card-body
     %h4.card-title= offer.name
     %p.card-text.mb-4= offer.description
-    %h5.text-uppercase.parameters-title= "Technical parameters"
-    %p.card-text
-      .alert.alert-info Placeholder for offer properties
+    %h5.text-uppercase.parameters-title.mb-0= "Technical parameters"
+    %table.table.table-hover
+      %tbody
+        %tr
+          %td TODO: name of an attribute
+          %td TODO: value of an attribute
+        %tr
+          %td TODO: more attributes
+          %td TODO: more values
+
   .card-button.text-center
-    %label.btn.btn-light.border.border-secondary.font-weight-bold
+    %label
       = f.radio_button :offer_id, offer.iid, checked: project_item.offer == offer
-      Select
+      %span.btn.btn-light.border.border-secondary.font-weight-bold Select

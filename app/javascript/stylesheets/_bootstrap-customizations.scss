@@ -270,11 +270,6 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   .card-button {
     margin-bottom: -28px;
 
-    label:hover {
-      background: $secondary;
-      color: $white;
-    }
-
     input {
       display: none;
     }
@@ -594,7 +589,7 @@ textarea {
 
 .parameters-title {
   padding: 0 0 7px;
-  border-bottom: 1px solid $secondary;
+  border-bottom: 2px solid $secondary;
   font-size: 1.05em;
 }
 
@@ -602,4 +597,41 @@ textarea {
   padding: 0 0 7px;
   border-bottom: 1px solid $palette-gray-30;
   font-size: 1.05em;
+}
+
+.card-button label input:checked ~ span,
+.card-button label span:hover {
+  background: $secondary;
+  color: $white;
+}
+
+.order-container .form-group select,
+.order-container .form-group select {
+  width: 33%;
+}
+
+.order-container textarea {
+  width: 70%;
+}
+
+.order-container table {
+  margin-bottom: 0;
+}
+
+.order-container .form-check .form-check-input {
+  margin-top: 0.2rem;
+  margin-right: 0.5rem;
+}
+
+.order-container .form-check .form-check-label,
+.order-container .form-check .form-text {
+  padding-left: 10px;
+}
+
+.card-body table tr:first-child td {
+  border-top: none;
+}
+
+.card-body table td {
+  padding-left: 0;
 }
