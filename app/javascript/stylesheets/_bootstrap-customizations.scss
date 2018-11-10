@@ -199,15 +199,32 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   }
 }
 
+.media {
+  border-bottom: 1px solid $gray-300;
+
+  .form-check-input {
+    margin-top: 0.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 0;
+  }
+
+  svg {
+    color: $secondary;
+  }
+}
+
 .nav-tabs {
-  background-color: $secondary;
+  background-color: $palette-gray-5;
   border: none;
 
   .nav-link {
-    color: $white;
+    color: $palette-gray-100;
     padding: 0.6rem 1rem;
     font-weight: $font-weight-bold;
     border-radius: 0;
+    border: none;
 
     &:hover {
       border-color: transparent;
@@ -215,7 +232,7 @@ textarea:-ms-input-placeholder { /* IE 10+ */
     }
 
     &.active {
-      border-color: $secondary $secondary $white;
+      border-color: $palette-gray-30 $palette-gray-30 $white;
       padding: 0.8rem 1rem;
       margin-top: -5px;
 
@@ -229,7 +246,7 @@ textarea:-ms-input-placeholder { /* IE 10+ */
     background: transparent;
 
     .nav-link {
-      color: $body-color;
+      color: $palette-gray-50;
       padding-left: 2rem;
       padding-right: 2rem;
       border-top-left-radius: 0.2rem;
@@ -243,7 +260,6 @@ textarea:-ms-input-placeholder { /* IE 10+ */
 }
 
 .tab-content {
-  border-top: 1px solid $secondary;
 
   ul {
     list-style-position: outside;
@@ -562,6 +578,48 @@ textarea {
   border: 2px solid $gray-300;
   background: $white;
 }
+
+.bg-gray-5 {
+  background-color: $palette-gray-5;
+}
+
+.bg-gray-10 {
+  background-color: $palette-gray-10;
+}
+
+.bg-gray-30 {
+  background-color: $palette-gray-30;
+}
+
+.bg-gray-50 {
+  background-color: $palette-gray-50;
+}
+
+.bg-gray-80 {
+  background-color: $palette-gray-80;
+}
+
+.text-color-solid-5 {
+  color: $palette-solid-5;
+}
+
+.text-color-solid-10 {
+  color: $palette-solid-10;
+}
+
+.text-color-solid-30 {
+  color: $palette-solid-30;
+}
+
+.text-color-solid-50 {
+  color: $palette-solid-50;
+}
+
+.text-color-solid-80 {
+  color: $palette-solid-80;
+}
+
+
 
 @media only screen and (max-width: 768px) {
 
