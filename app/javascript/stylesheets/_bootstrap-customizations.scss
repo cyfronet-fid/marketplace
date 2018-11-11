@@ -652,10 +652,14 @@ Card style
 -------------------------*/
 .card {
 
+  .card-body {
+    padding: 0.8rem 1rem;
+  }
+
   .card-footer {
     background: transparent;
     padding: 0.45rem 0 0;
-    margin: 1.25rem 1.25rem 0.45rem;
+    margin: 0  1.25rem 0.45rem;
 
     span,
     strong {

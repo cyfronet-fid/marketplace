@@ -1,11 +1,12 @@
 .card.bg-gray-5.border-0
   .card-body
-
     %h3.card-title= link_to service.title, service
-    - if service.logo.attached?
-      = image_tag service.logo.variant(resize: "100x100"),
-        class: "align-self-center mr-4 float-left"
-    %p.card-text.float-left= service.tagline
+    %p.card-text
+      - if service.logo.attached?
+        = image_tag service.logo.variant(resize: "100x67"),
+          class: "align-self-center mr-4 float-left"
+      = service.tagline
+    .clearfix
   .card-footer.no-gutters.row
     .col.x-small
       %span
