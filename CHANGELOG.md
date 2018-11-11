@@ -118,6 +118,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Improve styling of affiliation list in profile and project list (@jswk)
 - Deny to destroy an affiliation which is associated with a project item (@jswk)
 - Styling of filters (@michal-szostak)
+- Styling of ordering steps (@jarekzet, @michal-szostak)
 
 ### Deprecated
 
