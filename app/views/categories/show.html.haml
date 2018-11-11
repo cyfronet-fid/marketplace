@@ -5,6 +5,22 @@
     .col-md-3
       = render "subcategories", subcategories: @subcategories
     .col-md-9
-      %h2= @category.name
+      .row
+        .col-md-8
+          %h1.mb-0.font-weight-bold= @category.name
+          %p.text-muted.mb-4= @category.description
+        .col-md-3.offset-md-1.my-auto
+          = form_tag services_path, method: :get, role: "search", class: "" do
+            .row
+              .col-md-2
+                %label.small.mt-2
+                  Sort
+              .col-md-10
+                %select#sort.query-sort.form-control.form-control-sm{ "data-submit-on-change": "data-submit-on-change" }
+                  = options_for_select([["by name A-Z", "title"],
+                                        ["by name Z-A", "-title"],
+                                        ["by rate 1-5", "rating"],
+                                        ["by rate 5-1", "-rating"]], params[:sort])
+
       = render @services
   = render "services/paginate", services: @services

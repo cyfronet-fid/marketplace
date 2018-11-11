@@ -8,7 +8,7 @@ class CategoriesController < ApplicationController
   before_action :category
 
   def show
-    @services = paginate(category_services)
+    @services = paginate(category_services.order(ordering))
     @subcategories = category.children
   end
 
