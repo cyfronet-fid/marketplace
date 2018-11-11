@@ -16,7 +16,7 @@ module Service::Searchable
     end
 
     def filter_dedicated_for(services, search_value)
-      services.where(dedicated_for: [search_value])
+      services.where("ARRAY[?] && dedicated_for", search_value)
     end
 
     def filter_rating(services, search_value)
@@ -24,9 +24,9 @@ module Service::Searchable
     end
 
     def filter_providers(services, search_value)
-      services.joins(:service_providers).
-              where(service_providers: { provider_id: search_value })
-     end
+      services.joins(:service_providers).group("services.id")
+          .where("service_providers.provider_id IN (?)", search_value)
+    end
 
     def filter_research_area(services, search_value)
       services.joins(:service_research_areas).
@@ -47,7 +47,20 @@ private
      ["Providers", "Providers"],
      ["Research organisations", "Research organisations"],
      ["Business", "Business"],
-     ["Other", "Other"]]
+     ["Other", "Other"]].map do |field|
+      [field[0], field[1], Service.where("? = ANY(dedicated_for)", field[1]).count]
+    end .select do |element|
+      element[2] != 0
+    end
+  end
+
+  def provider_options
+    Provider.select("providers.name, providers.id, COUNT(service_providers.service_id) as service_count")
+    .joins(:service_providers)
+    .group("providers.id")
+    .order(:name).map do |provider|
+      [provider.name, provider.id, provider.service_count]
+    end
   end
 
   def rating_options

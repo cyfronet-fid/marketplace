@@ -103,6 +103,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Simple form checks validation if conditions (@mkasztelnik)
 - Clickable next order nav step (@mkasztelnik)
 - Affiliation last step - consent (@martaswiatkowska)
+- Multicheckbox widget to filters (providers & dedicated for) (@michal-szostak)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
@@ -116,6 +117,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Bootstrap improvements towards compliance with the guidelines (@jswk)
 - Improve styling of affiliation list in profile and project list (@jswk)
 - Deny to destroy an affiliation which is associated with a project item (@jswk)
+- Styling of filters (@michal-szostak)
 
 ### Deprecated
 

@@ -1,47 +1,40 @@
 %h5.text-uppercase.underline-light.mb-2.pb-2 Filters
 = form_tag "", method: :get, role: "search", class: "", "data-sync-query-form": "data-sync-query-form" do
-  %p.font-weight-bold.mt-3 Provider location
+  %h6 Provider location
   .row
-    .col-md-10.offset-md-1
+    .col-md-12
       .form-group
         %select#location.form-control.form-control-sm{ name: "location" }
           = options_for_select([["Any", ""], ["EU", "EU"]], params[:location])
 
-  %p.font-weight-bold.mt-3 Providers
+  %h6 Providers
   .row
-    .col-md-10.offset-md-1
+    .col-md-11.offset-md-1
       .form-group
-        %select#providers.form-control.form-control-sm{ name: "providers" }
-          %option{ value: "", selected: "selected" }
-            Any
-          = options_for_select(providers.map { |provider| [provider.name, provider.id] }, params[:providers])
+        = multi_checkbox :providers, params[:providers], provider_options
 
-  %p.font-weight-bold.mt-3 Dedicated for
+  %h6 Dedicated for
   .row
-    .col-md-10.offset-md-1
+    .col-md-11.offset-md-1
       .form-group
-        %select#dedicated-for.form-control.form-control-sm{ name: "dedicated_for" }
-          %option{ value: "", selected: "selected" }
-            Any
-          = options_for_select(dedicated_for_options, params[:dedicated_for])
-
-  %p.font-weight-bold.mt-3 Rating
+        = multi_checkbox :dedicated_for, params[:dedicated_for], dedicated_for_options
+  %h6 Rating
   .row
-    .col-md-10.offset-md-1
+    .col-md-12
       .form-group
         %select#rating.form-control.form-control-sm{ name: "rating" }
           = options_for_select(rating_options, params[:rating])
 
-  %p.font-weight-bold.mt-3 Research Area
+  %h6 Research Area
   .row
-    .col-md-10.offset-md-1
+    .col-md-12
       .form-group
         %select#research-area.form-control.form-control-sm{ name: "research_area" }
           %option{ value: "", selected: "selected" }
             Any
           = options_for_select(research_areas.map { |area| [area.name, area.id] }, params[:research_area])
   .row
-    .col.pr-2
+    .col-md-12
       %button#filter-submit.btn.btn-primary.mt-4.w-100{ type: "submit" }
         Filter
 
