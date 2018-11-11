@@ -12,8 +12,11 @@ class CategoriesController < ApplicationController
     @subcategories = category.children
   end
 
-  private
+  def set_search_submit_path
+    @search_submit_path = category_path
+  end
 
+  private
     def category_services
       records.joins(:service_categories).
         where(service_categories: { category_id: category_and_descendant_ids })
