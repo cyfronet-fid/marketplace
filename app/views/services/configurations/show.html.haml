@@ -1,40 +1,36 @@
 = render "layouts/order/nav", service: @service, step: 2
 
-%h2 Configuration
-%p
+%h2.mb-4.font-weight-normal Configuration
+%p.mb-4
   We need more information about your request.
   Fill form below as much as possible.
   It will help us to proceed you request quicker.
 
-
+%h5.mb-3.font-weight-bold.configuration-title.text-uppercase My projects
+%p.mb-4
+  You can organize your services in projects. Add this service to specific project, create new one or leave it empty.
 = simple_form_for @project_item, url: service_configuration_path(@service),
   method: :put, html: { id: "order-form"  } do |f|
-  .sc-section
-    %h4.text-uppercase.sc-head My projects
-    %p
-      You can organize your services in projects.
-      Add this service to an existing project or create a new one.
-    = f.input :project do
-      .input-group
-        = f.input_field :project_id, collection: @projects,
-          class: "form-control custom-select #{"is-invalid" unless @project_item.errors[:project].empty?}"
-        .input-group-append
-          = link_to "Add new project", new_project_path,
-            class: "btn btn-primary", remote: true
+  = f.input :project do
+    .input-group.col-6.pl-0
+      = f.input_field :project_id, collection: @projects,
+        class: "form-control custom-select #{"is-invalid" unless @project_item.errors[:project].empty?}"
+      .input-group-append
+        = link_to "Add new project", new_project_path,
+          class: "btn btn-primary", remote: true
+
   - unless @project_item.property_values.blank?
-    .sc-section
-      %h4.sc-head Technical parameters
-      = render "services/configurations/attributes", project_item: @project_item, form: f
-  .sc-section
-    %h4.sc-head Information about usage
-    = f.association :affiliation,
-      collection: @affiliations, label_method: :organization,
-      hint: "Click #{link_to "here", new_profile_affiliation_path} to create new affilition".html_safe
-    = f.input :customer_typology, collection: @customer_topologies
-    = f.input :access_reason
-    = f.input :additional_information
+    %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Technical parameters
+    = render "services/configurations/attributes", project_item: @project_item, form: f
+
+  = f.association :affiliation,
+    collection: @affiliations, label_method: :organization,
+    hint: "Click #{link_to "here", new_profile_affiliation_path} to create new affilition".html_safe
+  = f.input :customer_typology, collection: @customer_topologies
+  = f.input :access_reason
+  = f.input :additional_information
 %p
-  Selected offer:
+  %strong Selected offer:
   = @project_item.offer.name
 
 = content_for :next_button do

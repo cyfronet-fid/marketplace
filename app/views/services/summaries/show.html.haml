@@ -1,7 +1,7 @@
 = render "layouts/order/nav", service: @service, step: 3
 
-%h2 Summary
-%p
+%h2.mb-4.font-weight-normal Summary
+%p.mb-4
   Please carefully read the summary of your order.
   You can change anything now if you need.
   After clicking the order button your request will be sent to service provider.
@@ -10,27 +10,27 @@
   = simple_form_for @confirmation, url: service_summary_path(@service), html: { id: "order-form"  } do |f|
     = f.input :terms_and_conditions, as: :boolean
 
-%h3
+%h3.mt-5
   Technical configuration
 
 .card.offer-description.mb-5
-  .card-body
+  .card-body.p-4
     %h4.card-title= @project_item.offer.name
     .card-text= @project_item.offer.description
     = render "project_items/attributes", property_values: @project_item.property_values
 
 
-.additional-information.mb-5
-  %h3
+.additional-information.mb-4
+  %h3.mb-4
     Additional information
 
   %h4 My projects
-  %dl
+  %dl.mb-4
     %dt Project name
     %dd= @project_item.project.name
 
   %h4 Usage
-  %dl
+  %dl.mb-4
     %dt Customer typology
     %dd= @project_item.customer_typology
 
@@ -42,7 +42,7 @@
 
   - if @project_item.affiliation
     %h4 Affiliation
-    %dl
+    %dl.mb-4
       %dt Organization
       %dd= @project_item.affiliation.organization
 
