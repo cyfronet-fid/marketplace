@@ -617,10 +617,21 @@ textarea {
 /* -----------------------
 Service detail
 -------------------------*/
+
+.related-container {
+  border-top: 10px solid $palette-gray-5;
+}
+
 .desc {
 
-  h5 {
-    text-transform: uppercase;
+  main {
+    border-right: 5px solid $palette-gray-5;
+  }
+
+  sidebar {
+    h5 {
+      text-transform: uppercase;
+    }
   }
 
 
