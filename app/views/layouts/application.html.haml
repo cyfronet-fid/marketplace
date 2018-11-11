@@ -5,7 +5,7 @@
     = render "layouts/flash"
     %header.pb-2
       = render "layouts/navbar"
-      = render "services/search"
+      = render "services/search", search_submit_path: @search_submit_path
     %main
       = render "layouts/breadcrumb"
       = yield
