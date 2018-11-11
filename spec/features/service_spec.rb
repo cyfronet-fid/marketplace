@@ -95,8 +95,8 @@ RSpec.feature "Service filtering and sorting" do
     service = create(:service, title: "AAAA Service", rating: 5.0, dedicated_for: ["VO"])
     service.research_areas << area
     service.providers << provider
-    create(:service, title: "BBBB Service", rating: 3.0)
-    create(:service, title: "CCCC Service", rating: 4.0)
+    create(:service, title: "BBBB Service", rating: 3.0, dedicated_for: ["Providers"])
+    create(:service, title: "CCCC Service", rating: 4.0, dedicated_for: ["Researchers"])
     create(:service, title: "DDDD Something 1", rating: 4.1)
     create(:service, title: "DDDD Something 2", rating: 4.0)
     create(:service, title: "DDDD Something 3", rating: 3.9)
@@ -146,12 +146,63 @@ RSpec.feature "Service filtering and sorting" do
     expect(page).to have_selector(".media", count: 1)
   end
 
+
+  scenario "multiselect toggle", js: true do
+    visit services_path
+
+    expect(page).to have_selector("input[name='providers[]']:not([style*=\"display: none\"])", count: 5)
+    click_on("Show 2 more")
+    expect(page).to have_selector("input[name='providers[]']:not([style*=\"display: none\"])", count: 7)
+    click_on("Show less")
+    expect(page).to have_selector("input[name='providers[]']:not([style*=\"display: none\"])", count: 5)
+  end
+
+  scenario "multiselect shows checked element regardless of toggle state", js: true do
+    visit services_path
+
+    expect(page).to have_selector("input[name='providers[]']", count: 5)
+    click_on("Show 2 more")
+    expect(page).to have_selector("input[name='providers[]']", count: 7)
+    find(:css, "input[name='providers[]'][value='#{Provider.order(:name).last.id}']").set(true)
+    click_on(id: "filter-submit")
+    expect(page).to have_selector("input[name='providers[]']", count: 6)
+  end
+
+  scenario "multiselect does not show toggle button if everything is shown", js: true do
+    visit services_path
+
+    expect(page).to have_selector("input[name='providers[]']", count: 5)
+    click_on("Show 2 more")
+    find(:css, "input[name='providers[]'][value='#{Provider.joins(:services)
+                                                      .order(:name)
+                                                      .group("providers.id")
+                                                      .order(:name)[-1].id}']").set(true)
+    find(:css, "input[name='providers[]'][value='#{Provider.joins(:services)
+                                                      .order(:name)
+                                                      .group("providers.id")
+                                                      .order(:name)[-2].id}']").set(true)
+    click_on(id: "filter-submit")
+
+    expect(page).to_not have_selector("#providers > a")
+  end
+
+  scenario "toggle button changes number of providers to show", js: true do
+    visit services_path
+    click_on("Show 2 more")
+    find(:css, "input[name='providers[]'][value='#{Provider.order(:name).last.id}']").set(true)
+    click_on(id: "filter-submit")
+
+    find("#providers > a", text: "Show 1 more")
+  end
+
   scenario "searching via providers", js: true do
     visit services_path
-    select "first provider", from: "providers"
+    find(:css, "input[name='providers[]'][value='#{Provider.order(:name).first.id}']").set(true)
     click_on(id: "filter-submit")
 
     expect(page).to have_selector(".media", count: 1)
+    expect(page).to have_selector("input[name='providers[]']" +
+                                      "[value='#{Provider.order(:name).first.id}'][checked='checked']")
   end
 
   scenario "searching via rating", js: true do
@@ -172,10 +223,11 @@ RSpec.feature "Service filtering and sorting" do
 
   scenario "searching via dedicated_for", js: true do
     visit services_path
-    select "VO", from: "dedicated-for"
+    find(:css, "input[name='dedicated_for[]'][value='VO']").set(true)
     click_on(id: "filter-submit")
 
     expect(page).to have_selector(".media", count: 1)
+    expect(page).to have_selector("input[name='dedicated_for[]'][value='VO'][checked='checked']")
   end
 
   scenario "searching via location", js: true do
