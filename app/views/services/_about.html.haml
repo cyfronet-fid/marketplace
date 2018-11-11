@@ -1,11 +1,11 @@
 #desc.tab-pane.container.pt-2.active.desc{ "aria-labelledby" => "home-tab", role: "tabpanel" }
   .row.pt-3.justify-content-between
-    .col-8
-      %main
-        = markdown(service.description)
-        = render "services/offers", offers: offers
+    %main.col-9.pr-5
 
-    .col-3
+      = markdown(service.description)
+      = render "services/offers", offers: offers
+
+    %sidebar.col-3
       %h5 Places and languages
       %ul.list-group
         %li.list-group-item
