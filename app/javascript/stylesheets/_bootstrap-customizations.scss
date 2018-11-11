@@ -31,11 +31,6 @@ a {
   }
 }
 
-.text-muted {
-  color: $body-color !important;
-  opacity: 0.9;
-}
-
 h1 {
   font-weight: $font-weight-light;
 }
@@ -685,3 +680,14 @@ Card style
 .modal-body textarea {
   resize: both;
 }
+
+//scss-lint:disable QualifyingElement
+// This is a little hack, to make checkboxes vertically centered
+label[data-multicheckbox].small {
+  margin-bottom: 1px;
+
+  > input[type="checkbox"] {
+    margin-top: 3px;
+  }
+}
+//scss-lint:enable QualifyingElement
