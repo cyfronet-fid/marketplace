@@ -665,12 +665,18 @@ Card style
     strong {
       display: block;
     }
-
   }
+}
 
 
-
-
+/* -----------------------
+Filters
+-------------------------*/
+.filters {
+  label {
+    width: 85%;
+    word-wrap: break-word;
+  }
 }
 
 
