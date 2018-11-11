@@ -272,23 +272,7 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   }
 }
 
-.card {
-  border-color: $info;
-  border-radius: 0;
 
-  .card-header {
-    background-color: $card-header-bg;
-    border-bottom: none;
-  }
-
-  .card-button {
-    margin-bottom: -28px;
-
-    input {
-      display: none;
-    }
-  }
-}
 
 .steps-form-2 {
   position: relative;
@@ -667,7 +651,25 @@ Service detail
 /* -----------------------
 Card style
 -------------------------*/
+
 .card {
+
+  border-color: $info;
+  border-radius: 0;
+
+  .card-header {
+    background-color: $card-header-bg;
+    border-bottom: none;
+  }
+
+  .card-button {
+    margin-bottom: -28px;
+
+    input {
+      display: none;
+    }
+  }
+
 
   .card-body {
     padding: 0.8rem 1rem;
