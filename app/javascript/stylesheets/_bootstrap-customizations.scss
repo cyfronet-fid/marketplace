@@ -21,6 +21,7 @@ hr {
 ul {
   list-style: none;
   line-height: 1.5rem;
+  padding-left: 0;
 }
 
 a {
@@ -622,17 +623,20 @@ Service detail
     text-transform: uppercase;
   }
 
+
   .list-group {
     margin-bottom: 1.4rem;
     border: 1px solid $palette-solid-10;
     padding: 0.5rem;
+    list-style-type: circle;
   }
 
   .list-group-item {
     border: none;
     margin: 0.2rem;
     padding: 0.2rem 0.95rem;
-    list-style-type: circle;
+    color: $secondary;
+    display: inline-block;
   }
 }
 
