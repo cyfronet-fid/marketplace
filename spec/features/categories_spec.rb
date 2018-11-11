@@ -27,6 +27,8 @@ RSpec.feature "Service categories" do
 
     visit category_path(root)
 
+    expect(page.body).to have_content root.name
+
     expect(page.body).to have_content sub_category1.name
     expect(page.body).to have_content sub_category2.name
     expect(page.body).to_not have_content sub_sub_category.name

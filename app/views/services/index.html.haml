@@ -4,7 +4,9 @@
 .container
   .row
     .col-md-3.pr-5
-      = render "categories/subcategories", subcategories: @subcategories
+      = render "categories/subcategories", categories: @subcategories,
+                                           current_category_id: nil,
+                                           subcategories: nil
       = render "filters", provider_options: @provider_options,
                           research_areas: @research_areas,
                           dedicated_for_options: @dedicated_for_options,
