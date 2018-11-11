@@ -3,7 +3,13 @@
 .container
   .row
     .col-md-3
-      = render "subcategories", subcategories: @subcategories
+      = render "subcategories", current_category_id: @category.id,
+                                categories: @siblings,
+                                subcategories: @subcategories
+      = render "services/filters", provider_options: @provider_options,
+                                   research_areas: @research_areas,
+                                   dedicated_for_options: @dedicated_for_options,
+                                   rating_options: @rating_options
     .col-md-9
       .row
         .col-md-8

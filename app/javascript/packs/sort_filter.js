@@ -45,12 +45,13 @@ export function syncQueryForm(node) {
     $(node || 'body').find("[data-sync-query-form]").each(function() {
         let _params = {...params};
         $(this).find("input").add($(this).find("select")).each(function() {
-            if($(this).attr('name') in _params)
-                delete _params[$(this).attr('name')]
+            let encodedName = encodeURI($(this).attr('name'));
+            if(encodedName in _params)
+                delete _params[encodedName];
         });
 
         for(let key in _params) {
-            $(this).append($(`<input type="hidden" id="${key}" name="${key}" value="${_params[key]}" />`));
+            $(this).append($(`<input type="hidden" id="${decodeURI(key)}" name="${decodeURI(key)}" value="${_params[key]}" />`));
         }
     });
 }

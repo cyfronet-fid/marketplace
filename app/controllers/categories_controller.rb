@@ -9,7 +9,12 @@ class CategoriesController < ApplicationController
 
   def show
     @services = paginate(category_services.order(ordering))
-    @subcategories = category.children
+    @siblings = category.ancestry.nil? ? @root_categories : category.ancestry.children.order(:name)
+    @subcategories = category.children.order(:name)
+    @provider_options = provider_options
+    @dedicated_for_options = dedicated_for_options
+    @rating_options = rating_options
+    @research_areas = ResearchArea.all
   end
 
   def set_search_submit_path
