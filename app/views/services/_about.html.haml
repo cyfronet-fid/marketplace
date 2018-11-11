@@ -1,55 +1,62 @@
-#desc.tab-pane.container.pt-2.active{ "aria-labelledby" => "home-tab", role: "tabpanel" }
-  .row.pt-3
-    .col-8
+#desc.tab-pane.container.pt-2.active.desc{ "aria-labelledby" => "home-tab", role: "tabpanel" }
+  .row.pt-3.justify-content-between
+    %main.col-9.pr-5
+
       = markdown(service.description)
       = render "services/offers", offers: offers
-    .col-4
-      %h3 Places and languages
-      %ul
-        %li
+
+    %sidebar.col-3
+      %h5 Places and languages
+      %ul.list-group
+        %li.list-group-item
           %span
             = service.places
-        %li
+        %li.list-group-item
           %span
             = service.languages
-      %h3 Dedicated for
-      %ul
+
+      %h5 Dedicated for
+      %ul.list-group
         - service.dedicated_for.each do |dedication|
-          %li
+          %li.list-group-item
             %span
               = dedication
-      %h3 Support
-      %ul
-        %li
+
+      %h5 Support
+      %ul.list-group
+        %li.list-group-item
           %span
             = link_to("Webpage", service.webpage_url)
-        %li
+        %li.list-group-item
           %span
             = link_to("Manual", service.manual_url)
-        %li
+        %li.list-group-item
           %span
             = link_to("Helpdesk", service.helpdesk_url)
-        %li
+        %li.list-group-item
           %span
             = link_to("Tutorial", service.tutorial_url)
-      %h3 Some header
-      %ul
-        %li
+
+      %h5 Some header
+      %ul.list-group
+        %li.list-group-item
           %span
             = link_to("Corporate SLA", service.corporate_sla_url)
-        %li
+        %li.list-group-item
           %span
             = link_to("Terms of use", service.terms_of_use_url)
-        %li
+        %li.list-group-item
           %span
             = link_to("Access policies", service.access_policies_url)
-      %h3 Service restrictions
-      %ul
-        %li
+
+      %h5 Service restrictions
+      %ul.list-group
+        %li.list-group-item
           %span
             = service.restrictions
-      %h3 Service phase
-      %ul
-        %li
+
+      %h5 Service phase
+      %ul.list-group
+        %li.list-group-item
           %span
             = service.phase

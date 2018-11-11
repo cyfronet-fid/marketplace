@@ -20,8 +20,8 @@ hr {
 
 ul {
   list-style: none;
-  padding-left: 0;
   line-height: 1.5rem;
+  padding-left: 0;
 }
 
 a {
@@ -47,6 +47,11 @@ h4 {
   border-bottom: 2px solid $secondary;
   padding-bottom: 0.9rem;
 }
+
+.font-weight-bolder {
+  font-weight: $font-weight-bolder;
+}
+
 
 button,
 a {
@@ -219,7 +224,6 @@ textarea:-ms-input-placeholder { /* IE 10+ */
     padding: 0.6rem 1rem;
     font-weight: $font-weight-bold;
     border-radius: 0;
-    border: none;
 
     &:hover {
       border-color: transparent;
@@ -227,7 +231,7 @@ textarea:-ms-input-placeholder { /* IE 10+ */
     }
 
     &.active {
-      border-color: $palette-gray-30 $palette-gray-30 $white;
+      border-color: $palette-solid-5 $palette-solid-5 $white;
       padding: 0.8rem 1rem;
       margin-top: -5px;
 
@@ -259,7 +263,6 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   ul {
     list-style-position: outside;
     list-style: disc;
-    color: $link-color;
 
     li {
       span {
@@ -269,23 +272,7 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   }
 }
 
-.card {
-  border-color: $info;
-  border-radius: 0;
 
-  .card-header {
-    background-color: $card-header-bg;
-    border-bottom: none;
-  }
-
-  .card-button {
-    margin-bottom: -28px;
-
-    input {
-      display: none;
-    }
-  }
-}
 
 .steps-form-2 {
   position: relative;
@@ -622,6 +609,94 @@ textarea {
   color: $palette-solid-80;
 }
 
+
+/* -----------------------
+Service detail
+-------------------------*/
+
+.related-container {
+  border-top: 10px solid $palette-gray-5;
+}
+
+.desc {
+
+  main {
+    border-right: 5px solid $palette-gray-5;
+  }
+
+  sidebar {
+    h5 {
+      text-transform: uppercase;
+    }
+  }
+
+
+  .list-group {
+    margin-bottom: 1.4rem;
+    border: 1px solid $palette-solid-10;
+    padding: 0.5rem;
+    list-style-type: circle;
+  }
+
+  .list-group-item {
+    border: none;
+    margin: 0.2rem;
+    padding: 0.2rem 0.95rem;
+    color: $secondary;
+    display: inline-block;
+  }
+}
+
+
+/* -----------------------
+Card style
+-------------------------*/
+
+.card {
+
+  border-color: $info;
+  border-radius: 0;
+
+  .card-header {
+    background-color: $card-header-bg;
+    border-bottom: none;
+  }
+
+  .card-button {
+    margin-bottom: -28px;
+
+    input {
+      display: none;
+    }
+  }
+
+
+  .card-body {
+    padding: 0.8rem 1rem;
+  }
+
+  .card-footer {
+    background: transparent;
+    padding: 0.45rem 0 0;
+    margin: 0  1.25rem 0.45rem;
+
+    span,
+    strong {
+      display: block;
+    }
+  }
+}
+
+
+/* -----------------------
+Filters
+-------------------------*/
+.filters {
+  label {
+    width: 85%;
+    word-wrap: break-word;
+  }
+}
 
 
 @media only screen and (max-width: 768px) {
