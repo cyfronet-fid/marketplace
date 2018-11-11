@@ -1,10 +1,10 @@
 .media.border-0
   - if service.logo.attached?
-    = image_tag service.logo.variant(resize: "200x200"), class: "align-self-center mr-4"
+    = image_tag service.logo.variant(resize: "180x120"), class: "align-self-center mr-4"
   .media-body
     .row
       .col-9
-        %h1= service.title
+        %h2.font-weight-bolder= service.title
         %p= service.tagline
         = render "services/categorization", service: service
         .row

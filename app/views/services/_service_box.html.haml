@@ -1,12 +1,22 @@
-.card
+.card.bg-gray-5.border-0
   .card-body
-    .media.border-0
+    %h3.card-title= link_to service.title, service
+    %p.card-text
       - if service.logo.attached?
-        = image_tag service.logo.variant(resize: "100x100"),
-          class: "align-self-center mr-4"
-      .media-body
-        %h3= link_to service.title, service
-        %p= service.tagline
-        .row
-          .col Provided by: #{service.providers.map { |p| p.name }.join(", ")}
-          .col Dedicated for #{service.dedicated_for.map { |x| x }.join(", ")}
+        = image_tag service.logo.variant(resize: "100x67"),
+          class: "align-self-center mr-4 float-left"
+      = service.tagline
+    .clearfix
+  .card-footer.no-gutters.row
+    .col.x-small
+      %span
+        Provided by:
+      %strong
+        #{service.providers.map { |p| p.name }.join(", ")}
+    .col.x-small.no-gutters
+      %span.text-right
+        Dedicated for
+      %strong.text-right
+        #{service.dedicated_for.map { |x| x }.join(", ")}
+
+
