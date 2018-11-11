@@ -78,7 +78,7 @@
               Thematic Services
 
             %small.text-uppercase.font-weight-bold.pl-2 Marketplace
-            = link_to "All Services", services_path,class: "dropdown-item"
+            = link_to "All Services", services_path, class: "dropdown-item"
             - @root_categories.each do |root_category|
               = link_to root_category.name, root_category, class: "dropdown-item"
         %li.nav-item.ml-1.dropdown
