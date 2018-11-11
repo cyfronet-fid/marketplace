@@ -14,12 +14,12 @@
             = yield :next_button
       = render "layouts/flash"
     %main.container.order-container
-      %h1
+      %h1.text-uppercase.font-weight-bold.mt-4
         = @service.title
       %p.summary= @service.tagline
       = yield
-      %hr.bottom-hr
-      .navbar
+      %hr.bottom-hr.mt-5.mb-4
+      .navbar.pr-0.pl-0
         .text-left.flex-grow-1
           = yield :back_link
         .ml-3.d-inline
