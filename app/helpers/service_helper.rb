@@ -5,15 +5,15 @@ module ServiceHelper
     result = ""
     # full stars
     for i in 0...rating.floor
-      result += content_tag(:i, "", class: "fas fa-star")
+      result += content_tag(:i, "", class: "fas fa-star fa-lg")
     end
     # half stars
     if rating % 1 != 0
-      result += content_tag(:i, "", class: "fas fa-star-half-alt")
+      result += content_tag(:i, "", class: "fas fa-star-half-alt fa-lg")
     end
     # empty stars
     for i in 0...5 - rating.ceil
-      result += content_tag(:i, "", class: "far fa-star")
+      result += content_tag(:i, "", class: "far fa-star fa-lg")
     end
     result.html_safe
   end
