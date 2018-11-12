@@ -12,9 +12,6 @@
     = render partial: "services/offers/offer",
       collection: @offers, as: :offer, locals: { f: f, project_item: @project_item }
 
-= content_for :cancel_button do
-  = link_to "Cancel order and quit", service_cancel_path(@service), method: :delete, class: "text-uppercase"
-
 = content_for :next_button do
   %button.btn.btn-primary{ form: "order-form", type: "submit" }
     Next
