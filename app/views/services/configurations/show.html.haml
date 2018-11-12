@@ -1,16 +1,32 @@
 = render "layouts/order/nav", service: @service, step: 2
 
-%h2.mb-4.font-weight-normal Configuration
+%h2.mb-4.font-weight-normal Service configuration
 %p.mb-4
   We need more information about your request.
   Fill form below as much as possible.
   It will help us to proceed you request quicker.
 
-%h5.mb-3.font-weight-bold.configuration-title.text-uppercase My projects
-%p.mb-4
-  You can organize your services in projects. Add this service to specific project, create new one or leave it empty.
 = simple_form_for @project_item, url: service_configuration_path(@service),
   method: :put, html: { id: "order-form"  } do |f|
+
+  - unless @project_item.property_values.blank?
+    %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Technical parameters
+    = render "services/configurations/attributes", project_item: @project_item, form: f
+
+  %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Usage
+  = f.input :customer_typology, collection: @customer_topologies
+  = f.input :access_reason
+  = f.input :additional_information
+
+  %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Affiliation
+  = f.association :affiliation,
+    collection: @affiliations, label_method: :organization,
+    hint: "Click #{link_to "here", new_profile_affiliation_path} to create new affilition".html_safe
+
+
+  %h5.mb-3.font-weight-bold.configuration-title.text-uppercase My projects
+  %p.mb-4
+    You can organize your services in projects. Add this service to specific project, create new one or leave it empty.
   = f.input :project do
     .input-group.col-6.pl-0
       = f.input_field :project_id, collection: @projects,
@@ -19,16 +35,7 @@
         = link_to "Add new project", new_project_path,
           class: "btn btn-primary", remote: true
 
-  - unless @project_item.property_values.blank?
-    %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Technical parameters
-    = render "services/configurations/attributes", project_item: @project_item, form: f
 
-  = f.association :affiliation,
-    collection: @affiliations, label_method: :organization,
-    hint: "Click #{link_to "here", new_profile_affiliation_path} to create new affilition".html_safe
-  = f.input :customer_typology, collection: @customer_topologies
-  = f.input :access_reason
-  = f.input :additional_information
 %p
   %strong Selected offer:
   = @project_item.offer.name
