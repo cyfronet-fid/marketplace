@@ -102,6 +102,8 @@ providers:
         name: &cesnet "CESNET"
     EIDA:
         name: &eida "EIDA"
+    ESA:
+        name: &esa "European Space Agency (ESA)"
     Not specified:
         name: &not "not specified yet"
 
@@ -186,7 +188,234 @@ services:
 
           [1]: https://www.egi.eu/use-cases/research-stories/how-to-predict-social-media-trends/
 
+
           [2]: https://www.egi.eu/use-cases/research-stories/the-genetics-of-salmonella-infections/
+
+        offers: &cloudComputeOffers
+          1:
+            name: General purpose
+            description: |
+              Base preformance instance type. Features:
+              Accessible in opportunistic or reserved ways, CPU cores could be overcommitted.
+              Ideal for: Web services, Micro-services, Development environtments,
+              Building server, Small database, Test environments.
+            parameters:
+              - id: "id1"
+                label: "Number of CPU Cores"
+                description: "Select number of cores you want"
+                type: "select"
+                value_type: "integer"
+                config:
+                  mode: "buttons"
+                  values: [1, 2, 4, 8]
+              - id: "id2"
+                label: "Amount of RAM per CPU core"
+                description:  "Select amount of RAM per core"
+                type:  "select"
+                value_type:  "integer"
+                unit: "GB"
+                config:
+                  mode:  "buttons"
+                  values:  [1, 2, 4]
+              - id:  "id3"
+                label:  "Local disk"
+                description:  "Amount of local disk space"
+                type:  "select"
+                value_type:  "integer"
+                unit: "GB"
+                config:
+                  mode:  "buttons"
+                  values:  [10, 20, 40]
+              - id:  "id4"
+                label:  "Number of VM instances"
+                description:  "Type number of VM instances from 1-50"
+                type:  "input"
+                value_type:  "integer"
+              - id: "id5"
+                label: "Access type"
+                description:  "Choose access type"
+                type:  "select"
+                value_type:  "string"
+                config:
+                  mode:  "buttons"
+                  values:  ["opportunistic", "reserved"]
+              - id:  "id6"
+                label:  "Start of service"
+                description:  "Please choose start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id7"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+          2:
+            name: Compute-intensive
+            description: |
+              Optimised instance for computing tasks. Feattures: High perfromance CPU cores,
+              Until 64 CPU cores, Real CPU cors (non-overcommitted), Low latency network, Reserved instances.
+              Ideal for: Batch computing, High-perfromance applications and web services,
+              Distributed analysis. Video encoding.
+            parameters:
+              - id:  "id1"
+                label:  "Number of CPU Cores"
+                description:  "Select number of cores you want"
+                type:  "select"
+                value_type:  "integer"
+                config:
+                  mode:  "buttons"
+                  values:  [8, 12, 16, 20, 24, 28, 32, 64]
+              - id:  "id2"
+                label:  "Amount of RAM per CPU core"
+                description:  "Select amount of RAM per core"
+                type:  "select"
+                value_type:  "integer"
+                unit: "GB"
+                config:
+                  mode:  "buttons"
+                  values:  [2, 4, 8]
+              - id:  "id3"
+                label:  "Local disk"
+                description:  "Amount of local disk space"
+                type:  "select"
+                value_type:  "integer"
+                unit: "GB"
+                config:
+                  mode:  "buttons"
+                  values:  [10, 20, 40]
+              - id:  "id4"
+                label:  "Number of VM instances"
+                description:  "Type number of VM instances from 1-50"
+                type:  "input"
+                value_type:  "integer"
+              - id: "id5"
+                label: "Access type"
+                description:  "Access type for this offer is constant"
+                type:  "attribute"
+                value_type:  "string"
+                value: "reserved"
+              - id:  "id6"
+                label:  "Start of service"
+                description:  "Please choose start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id7"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+          3:
+            name: High-memory
+            description: |
+              Optimised instances for tasks that require more memory relative to virtual CPUs.
+              Features: High amout od RAM per CPU core, Up to 240 GB of  RAm in total, Reserved instances.
+              Ideal for: Running in-memory database, Running in-memory stores (e.g. redis, memcached),
+              In-memory big data processing engines (e.g. Apache Spark)
+            parameters:
+              - id:  "id1"
+                label:  "Number of CPU Cores"
+                description:  "Select number of cores you want"
+                type:  "select"
+                value_type:  "integer"
+                config:
+                  mode:  "buttons"
+                  values:  [2, 4, 8, 12, 16]
+              - id:  "id2"
+                label:  "Amount of RAM per CPU core"
+                description:  "Select amount of RAM per core"
+                type:  "select"
+                value_type:  "integer"
+                unit: "GB"
+                config:
+                  mode:  "buttons"
+                  values:  [16, 32, 48, 64, 80, 96, 112, 120]
+              - id:  "id3"
+                label:  "Local disk"
+                description:  "Amount of local disk space"
+                type:  "select"
+                value_type:  "integer"
+                unit: "GB"
+                config:
+                  mode:  "buttons"
+                  values:  [10, 20, 40]
+              - id:  "id4"
+                label:  "Number of VM instances"
+                description:  "Type number of VM instances from 1-50"
+                type:  "input"
+                value_type:  "integer"
+              - id: "id5"
+                label: "Access type"
+                description:  "Access type for this offer is constant"
+                type:  "attribute"
+                value_type:  "string"
+                value: "reserved"
+              - id:  "id6"
+                label:  "Start of service"
+                description:  "Please choose start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id7"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+          4:
+            name: GPU
+            description: |
+              GPU-enabled instances. Features: 1 or 2 GPU cores, 9 CPU cores for each GPU core, large memory.
+              Ideal for: Graphics and general purpose GPu compute applications.
+            parameters:
+              - id:  "id1"
+                label:  "Number of GPU cores"
+                description:  "Select number of GPU cores you want"
+                type:  "select"
+                value_type:  "integer"
+                config:
+                  mode:  "buttons"
+                  values:  [1, 2]
+              - id:  "id2"
+                label:  "Number of CPU Cores"
+                description:  "For GPU instance number of CPU cores is constant"
+                type:  "attribute"
+                value_type:  "integer"
+                value: 8
+              - id:  "id3"
+                label:  "Amount of RAM"
+                description:  "Select amount of RAM per core"
+                type:  "select"
+                value_type:  "integer"
+                unit: "GB"
+                config:
+                  mode:  "buttons"
+                  values:  [24, 50]
+              - id:  "id4"
+                label:  "Local disk"
+                description:  "Amount of local disk space is constant"
+                type:  "attribute"
+                value_type:  "integer"
+                value: 280
+                unit: "GB"
+              - id:  "id5"
+                label:  "Number of VM instances"
+                description:  "Type number of VM instances from 1-50"
+                type:  "input"
+                value_type:  "integer"
+              - id: "id6"
+                label: "Access type"
+                description:  "Access type for this offer is constant"
+                type:  "attribute"
+                value_type:  "string"
+                value: "reserved"
+              - id:  "id7"
+                label:  "Start of service"
+                description:  "Please choose start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id8"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
     High-Throughput compute:
         title: EGI High-Throughput compute
         parents: *computeParent
@@ -228,6 +457,124 @@ services:
           [1]: https://www.egi.eu/use-cases/research-stories/what-happens-when-molecules-collide/
 
           [2]: https://www.egi.eu/use-cases/research-stories/cities/
+        offers:
+          1:
+            name: Base
+            description: |
+              It allows the execution of large numbers of independent or loosely coupled computing tasks.
+              Limited parallel and multi-thread computing can be supported as well.
+            parameters:
+              - id:  "id1"
+                label:  "Number of CPU hours"
+                description:  "Choose number of hours"
+                type:  "input"
+                value_type:  "integer"
+                unit: "h"
+                config:
+                  minimum: 1
+                  maximumm: 10000000
+              - id:  "id2"
+                label:  "Guaranteed number of CPU cores"
+                description:  "Choose number of cores between 1 and 32"
+                type:  "input"
+                value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximumm: 32
+              - id:  "id3"
+                label:  "Amount of RAM per CPU core"
+                description:  "Choose amount of RAM"
+                unit: "GB"
+                type:  "select"
+                value_type:  "integer"
+                config:
+                  mode:  "buttons"
+                  values: [4, 8]
+              - id: "id4"
+                label: "Access type"
+                description:  "Choose access type"
+                type:  "select"
+                value_type:  "string"
+                config:
+                  mode:  "buttons"
+                  values:  ["opportunistic", "reserved"]
+              - id:  "id5"
+                label:  "Other technical requirements"
+                description:  "Type other requirements"
+                type:  "input"
+                value_type:  "string"
+              - id:  "id6"
+                label:  "Start of service"
+                description:  "Please choose start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id7"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+          2:
+            name: MPI
+            description: |
+              It allows parallel computing, with support of MPI protocol and libraries.
+            parameters:
+              - id:  "id1"
+                label:  "Number of CPU hours"
+                description:  "Choose number of hours"
+                type:  "input"
+                value_type:  "integer"
+                unit: "h"
+                config:
+                  minimum: 1
+                  maximumm: 10000000
+              - id:  "id2"
+                label:  "Guaranteed number of CPU cores"
+                description:  "Choose number of cores between 1 and 32"
+                type:  "input"
+                value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximumm: 32
+              - id:  "id3"
+                label:  "Amount of RAM per CPU core"
+                description:  "Choose amount of RAM"
+                unit: "GB"
+                type:  "select"
+                value_type:  "integer"
+                config:
+                  mode:  "buttons"
+                  values: [4, 8]
+              - id:  "id4"
+                label:  "Parallelism (Threads)"
+                description:  "Choose number of threads from 8 to 24"
+                type:  "input"
+                value_type:  "integer"
+                config:
+                  minimum: 8
+                  maximum: 24
+              - id: "id5"
+                label: "Access type"
+                description:  "Choose access type"
+                type:  "select"
+                value_type:  "string"
+                config:
+                  mode:  "buttons"
+                  values:  ["opportunistic", "reserved"]
+              - id:  "id6"
+                label:  "Other technical requirements"
+                description:  "Type other requirements"
+                type:  "input"
+                value_type:  "string"
+              - id:  "id7"
+                label:  "Start of service"
+                description:  "Please choose start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id8"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
     Cloud container compute:
         title: EGI Cloud container compute BETA
         parents: *computeParent
@@ -260,6 +607,7 @@ services:
             3. Go to the cart and submit your order.
             4. You will receive an email summarising your order.
             5. You will be contacted by the EGI support team.
+        offers: *cloudComputeOffers
     B2DROP:
         title: &b2drop B2DROP
         parents: *dataStorageParent
@@ -303,6 +651,94 @@ services:
           ### Service provided by
 
           EUDAT and JSC.
+        offers:
+          1:
+            name: B2DROP For Reaserchers
+            description: |
+              B2DROP is a secure and trusted data exchange service for researchers and scientists to keep their
+              research data synchronized and up-to-date and to exchange with other researchers.
+              B2DROP is an ideal solution to store and exchange data with colleagues and team members,
+              synchronise multiple versions of data, ensure automatic desktop synchronisation of large files.
+              Features: Public service, Self registering, Quota 20GB, Web access, Sharing files with local users,
+              Sharing files across other B2DROP and ownCloud/Nextcloud instances, Desktop synchronisation,
+              Support for WebDAV mounts, Publish data to B2SHARE.
+              Ideal for: Researchers seeking a central place to dtorage and ahre research data.
+            parameters:
+              - id:  "id1"
+                label:  "Start of service"
+                description:  "Please choose start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id2"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+          2:
+            name: B2DROP For Data Managers
+            description: |
+              The public B2DROP service has a per user quota limit of 20GB. Communities, organisations
+              or PI's which have a need for higher quota’s, higher storage capacity, specific requirements
+              and/or (Nextcloud) applications enabled can submit support request. Depending on the requirements
+              and/or requested storage capacity the B2DROP service is offered as a paid service.
+              Features: Public service, Self registering, Higher quota's as default, Web access,
+              Sharing files with local users, Sharing files across other B2DROP and ownCloud/Nextcloud instances,
+              Desktop synchronisation, Support for WebDAV mounts, Publish data to B2SHARE.
+              Ideal for: Data managers with higher quota, storage and/or any specific requirements.
+            parameters: &b2dropParameters
+              - id:  "id1"
+                label:  "Requested storage capacity"
+                description:  "Please choose storage capacity"
+                type:  "select"
+                value_type:  "integer"
+                unit: "TB"
+                config:
+                  mode:  "buttons"
+                  values:  [0.5, 1, 5, 10]
+              - id:  "id2"
+                label:  "Requested quota per user"
+                description:  "Choose quota per user"
+                type:  "select"
+                value_type:  "integer"
+                unit: "GB"
+                config:
+                  mode:  "buttons"
+                  values:  [100, 200, 500]
+              - id:  "id3"
+                label:  "Access type"
+                description:  "Choose number of days"
+                type:  "select"
+                value_type:  "string"
+                config:
+                  mode:  "buttons"
+                  values:  ["opportunistic", "reserved"]
+              - id:  "id4"
+                label:  "Start of service"
+                description:  "Please choose start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id5"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+              - id:  "id6"
+                label: "Special requirements"
+                description:  "Write about special requirements"
+                type:  "input"
+                value_type:  "string"
+          3:
+            name: B2DROP For Communities And Organisations
+            description: |
+              The public B2DROP service is provided on a fair-share basis.
+              Communities and/or organisations with specific requirements which can not be support via
+              the public fair-share service or or need higher level of security or access control can request
+              consultancy in setting up and deploying a local B2DROP instance or can request
+              a B2DROP instance which is hosted at one of the EUDAT partners.
+              Features: dedicated B2DROP instace, Requirements are negotiable.
+              Ideal for: Community/organisational data managers.
+            parameters: *b2dropParameters
+
     B2FIND:
         title: &b2find B2FIND
         parents: [*dataStorageParent, *researchDataParent]
@@ -324,9 +760,16 @@ services:
         phase: *notSpecified
         tagline: Metadata based data-discovery
         description: |
-          B2FIND is the EUDAT metadata service and provides a discovery portal which allows users to find data collections within an international and inter-disciplinary scope. It is based on a comprehensive metadata catalogue of research data collections stored in EUDAT data centres and other repositories. Harmonization of the metadata descriptions collected from heterogeneous sources enables not only the presentation in a consistent form but as well the faceted search across scientific domain boundaries.
+          B2FIND is the EUDAT metadata service and provides a discovery portal which allows users
+          to find data collections within an international and inter-disciplinary scope.
+          It is based on a comprehensive metadata catalogue of research data collections stored
+          in EUDAT data centres and other repositories. Harmonization of the metadata descriptions collected
+          from heterogeneous sources enables not only the presentation in a consistent form but as well
+          the faceted search across scientific domain boundaries.
 
-          B2FIND is for communities and other providers of research data who need to publish and give visibility to their metadata and individual researchers who need to search data from everywhere, and see data in the context with an accross community approach.
+          B2FIND is for communities and other providers of research data who need to publish and give visibility
+          to their metadata and individual researchers who need to search data from everywhere,
+          and see data in the context with an accross community approach.
 
           ### Features:
 
@@ -347,7 +790,8 @@ services:
 
           ### To access the service you need to:
 
-             1. The EUDAT public B2FIND [service][1]  is offered as a fairshare free-to-use service, no registration is required to search through the B2FIND service.
+             1. The EUDAT public B2FIND [service][1]  is offered as a fairshare free-to-use service,
+             no registration is required to search through the B2FIND service.
              2. Request for metadata data harvesting of an existing data repository select the service option below.
              3. Provide URL to data repository
              4. Provide URL endpoint for harvesting, see B2FIND [guidelines][2] for harvesting
@@ -361,6 +805,67 @@ services:
 
           [1]: https://b2find.eudat.eu/
           [2]: http://b2find.eudat.eu/guidelines/harvesting.html
+        offers:
+          1:
+            name: B2FIND For Reaserchers
+            description: |
+              B2FIND is a discovery service based on metadata steadily harvested from research data collections
+              from EUDAT data centres and other community repositories. The service offers faceted browsing
+              and it allows in particular to discover data that is stored through the B2SAFE and B2SHARE services.
+              Features: Public service supporting cross disciplinary research, No registration required.
+              Ideal for: Researchers seeking interesting datasets.
+
+          2:
+            name: B2FIND For Data Providers
+            description: |
+              To enlarge the discovery of existing datasets, data repository owners can make their research
+              data collections stored in existing data repositories harvestable and discoverable
+              via public B2FIND service. To ease the process of harvesting data repository owners can assess the
+              B2FIND guidelines for data providers.
+              Features: Comprehensive joint catalogue of EUDAT services and external metadata,
+              Metadata is mapped onto standardized facets, Supports faceted, geospatial and temporal metadata searches,
+              Allows suse to search and browse datasets via keyword searches,
+              user-friendly format and listed in order of relevance,
+              Access to the scintific data objects is given through references provided in the metadata.
+              Ideal for: Data providers.
+            parameters:
+              - id:  "id1"
+                label:  "Data repository name"
+                description:  "Type data repository name"
+                type:  "input"
+                value_type:  "string"
+              - id:  "id2"
+                label:  "Harvesting method"
+                description:  "Choose harvesting method"
+                type:  "select"
+                value_type:  "string"
+                config:
+                  mode:  "buttons"
+                  values:  ["OAI-PMH", "JSON-API", "CSW 2.0", "Other"]
+              - id:  "id3"
+                label:  "Harvesting endpoint"
+                description:  "Type harvesting endpoint"
+                type:  "input"
+                value_type:  "string"
+              - id:  "id4"
+                label:  "Reference to md schema"
+                description:  "Reference to md schema"
+                type:  "input"
+                value_type:  "string"
+          3:
+            name: B2FIND For Communities And Organisations
+            description: |
+              A way to deploy a local instance use the B2FIND technology.
+              Community data managers can adapt this local instance to support community specific facets.
+              The community and/or organisation local B2FIND instances can again be made harvestable
+              by the public B2FIND service. To explore the feasibility of B2FIND as data discovery service,
+              community data managers can assess the B2FIND training module on Github.
+              Features: Comprehensive joint catalogue of EUDAT services and external metadata,
+              Metadata in mapped onto standardized facetes, Supports faceted search,
+              facets can be adapted to domain specific facets, Geospatial and temporal meatdata searches,
+              Allows users to search and browse datasets via keyword searches, user-friendly format and listed
+              in order of relevance, Access to the scientifc data objects in given through references provided
+              in the metadata, Local B2FIND instace. Ideal for: Community/organisational data managers.
     B2HANDLE:
         title: &b2handle B2HANDLE
         parents: *dataStorageParent
@@ -402,6 +907,85 @@ services:
           ### Service provided by
 
           EUDAT and SURFsara, GRNET
+        offers:
+          1:
+            name: B2HANDLE For Reaserchers
+            description: |
+              B2HANDLE is the distributed service for minting, storing, managing and accessing persistent
+              identifiers (PIDs) and essential metadata (PID records) as well as managing PID namespaces.
+              PID are used to create persistent reference which can be used to identify and access data collections
+              and objects over long periods of time. PIDs are normally automatically minted at and
+              within data management and data repository systems.
+              Features: Unique and persistent reference which are globally resolvable,
+              Network of service providers for high available PIDs and PID services,
+              Sustainability framework to sustain PIDs over long periods of time.
+              Ideal for: Data Providers
+            parameters:
+              - id:  "id1"
+                label:  "Access type"
+                description:  "Access type is constant"
+                type:  "attribute"
+                value_type:  "string"
+                value: "reserved"
+              - id:  "id2"
+                label:  "Start of service"
+                description:  "Choose start of the service"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id3"
+                label:  "Number of days"
+                description:  "Type number of days"
+                type:  "input"
+                value_type:  "integer"
+                value: 365
+          2:
+            name: B2HANDLE For Data Managers, Communities and/or Organisations
+            description: |
+              B2HANDLE is the distributed service for minting, storing, managing and accessing persistent
+              identifiers (PIDs) and essential metadata (PID records) as well as managing PID namespaces.
+              The implementation of the service relies on the DONA/Handle persistent identifier solution.
+              Features: Unique and persistent reference which are globally resolvable,
+              Network of service providers for high PIDs and PID services, Sustainability framework to sustain PIDs
+              over long periods of time, Unified technical interface for access, registration and modification
+              of PIDs and PID records, Operational management of PID namespaces (prefixes) transparent
+              to user communities, including replication. Local reverse-lookups to retrive Handles base
+              on target location or other fields, Client0side application support through a Python library.
+              Compatible with common standards and practices (e.g. RDA).
+              Ideal for: Data Providers
+            parameters:
+              - id:  "id1"
+                label:  "Access type"
+                description:  "Access type is constant"
+                type:  "attribute"
+                value_type:  "string"
+                value: "reserved"
+              - id:  "id2"
+                label:  "Prefix"
+                description:  "Prefix"
+                type:  "select"
+                value_type:  "string"
+                config:
+                  mode: "buttons"
+                  values: ["yes", "no"]
+              - id:  "id3"
+                label:  "Prefered service provider"
+                description:  "Choose preferred service provider"
+                type:  "select"
+                value_type:  "string"
+                config:
+                  mode: "buttons"
+                  values: ["SURFsara", "GRNET"]
+              - id:  "id4"
+                label:  "Start of service"
+                description:  "Choose start of the service"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id5"
+                label:  "Number of days"
+                description:  "Type number of days"
+                type:  "input"
+                value_type:  "integer"
+                value: 365
     B2NOTE:
         title: &b2note B2NOTE
         parents: *dataStorageParent
@@ -449,6 +1033,45 @@ services:
           ### Service provided by
 
           EUDAT and BSC
+        offers:
+          1:
+            name: B2NOTE
+            description: |
+              B2NOTE is a service that allows you to easily and intuitively create annotations on research data
+              hosted in the EUDAT Collaborative Data Infrastructure. These annotations are created and stored
+              in a computer-readable format (using the W3C Web Annotation model) and therefore are searchable
+              (which is not the case for hand-written counter-parts). The search results can be visualized
+              in the User Interface and refined before being exported either as JSON-LD for reuse
+              with your analysis workflow/script/software. B2NOTE also allows users to export all the annotations
+              about a file as JSON-LD for your own purpose. This first release of B2NOTE is
+              a crowdsourcing annotation service meaning that all annotations will be publicly available.
+              To preserve the anonymity of the user, you should register and create an annotator pseudonym.
+            parameters:
+              - id:  "id1"
+                label:  "Access type"
+                description:  "Access type is constant"
+                type:  "select"
+                value_type:  "string"
+                config:
+                  mode: "buttons"
+                  values: ["opportunistic", "reserved"]
+              - id:  "id2"
+                label:  "Amount of data"
+                description:  "Prefix"
+                type:  "input"
+                value_type:  "integer"
+                unit: "TB"
+              - id:  "id3"
+                label:  "Start of service"
+                description:  "Choose start of the service"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id4"
+                label:  "Number of days"
+                description:  "Type number of days"
+                type:  "input"
+                value_type:  "integer"
+                value: 365
     B2SAFE:
         title: &b2safe B2SAFE
         parents: *dataStorageParent
@@ -470,7 +1093,12 @@ services:
         phase: *notSpecified
         tagline: Distribute and store large volumes of data based on data policies
         description: |
-          B2SAFE is a robust, safe and highly available service which allows community and departmental repositories to implement data management policies on their research data across multiple administrative domains in a trustworthy manner. The service provides an abstraction layer of large scale, heterogeneous data storages and guards against data loss in long-term archiving It allows to optimize access for users (e.g. from different regions) and brings data closer to facilities for compute-intensive analysis.
+          B2SAFE is a robust, safe and highly available service which allows community
+          and departmental repositories to implement data management policies on their research data across
+          multiple administrative domains in a trustworthy manner. The service provides an abstraction layer
+          of large scale, heterogeneous data storages and guards against data loss in long-term archiving.
+          It allows to optimize access for users (e.g. from different regions) and brings data closer to facilities
+          for compute-intensive analysis.
 
 
           ### To access the service you need to:
@@ -484,6 +1112,19 @@ services:
           ### Service provided by
 
           EUDAT and all generic CDI Level 1 providers
+        offers:
+          1:
+            name: B2SAFE
+            description: |
+              For the communities who need to guard against data loss; a customer facing service that allows
+              data replication and policy-driven data management using different storage services provided
+              by geographicallydistributed centres in the EUDAT CDI. Features: based on the execution of auditable
+              data policy rules and the use of persistent identifiers (PIDs), respects the rights of the data owners
+              to define teh access rights for their data and to decide how and when it is made publicly referenceable,
+              able to aggregate data from different disciplines into a storage system of thrustworthy and capable data
+              service providers, support for DSPACE repository packages and a lightweight HTTP-based solution,
+              integration between B2ACCSS and B2SAFE to provide federated authentication
+              (expected in the next stable release).
     B2SHARE:
         title: &b2share B2SHARE
         parents: *dataStorageParent
@@ -536,6 +1177,82 @@ services:
           ### Service provided by
 
           EUDAT and CSC
+        offers:
+          1:
+            name: B2SHARE For Reaserchers
+            description: |
+              B2SHARE is a user-friendly, reliable and trustworthy way for researchers, scientific communities
+              and citizen scientists to store and publish small-scale research data from diverse contexts.
+              Features: Public service supporting cross disciplinary research,
+              Self-service registration for any scientists and researchers,
+              Free upload and registration of stable research data, Data access policy is defined by the data owner,
+              Community metadata schema's available, Metadata in openly accessible and harvestable (e.g. OAI-PMH),
+              metadata is made discoverable via B2FIND, Direct uploads from B2DROP, Data integrity is ensured
+              by checksums which are calculated during data ingest, The data is kept online,
+              the storage usage base on the principle of fair share.
+              Ideal for: Researchers who what to publish datasets.
+            parameters:
+              - id:  "id1"
+                label:  "Start of service"
+                description:  "Please choose the start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id2"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+                value: 365
+          2:
+            name: B2SHARE For Data Providers
+            description: |
+              To enlarge the discovery of existing datasets, data repository owners can make their research
+              data collections stored in existing data repositories harvestable and discoverable
+              via public B2FIND service. To ease the process of harvesting data repository owners can assess
+              the B2FIND guidelines for data providers. Features: Comprehensive joint catalogue
+              of EUDAT services and external metadata, Metadata is mapped onto standardized facets,
+              Supports faceted, geospatial and temporal metadata searches,  Allows users to search
+              and browse datasets via keyword searches, User-friendly format and listed in order of relevance,
+              Access to the scientific data objects is given through references provided in the metadata.
+              Ideal for: Data providers.
+            parameters:
+              - id:  "id1"
+                label:  "Data repository name"
+                description:  "Please choose storage capacity"
+                type:  "input"
+                value_type:  "string"
+              - id:  "id2"
+                label:  "Harvesting method"
+                description:  "Choose harvesting method"
+                type:  "select"
+                value_type:  "string"
+                config:
+                  mode:  "buttons"
+                  values:  ["OAI-PMH", "JSON-API", "CSW 2.0", "Other"]
+              - id:  "id3"
+                label:  "Harvesting endpoint"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "string"
+              - id:  "id4"
+                label:  "Reference to md schema"
+                description:  "Reference to md schema"
+                type:  "input"
+                value_type:  "string"
+          3:
+            name: B2SHARE For Communities And Organisations
+            description: |
+              A way to deploy a local instance use the B2FIND technology.
+              Community data managers can adapt this local instance to support community specific facets.
+              The community and/or organisation local B2FIND instances can again be made harvestable
+              by the public B2FIND service. To explore the feasibility of B2FIND as data discovery service,
+              community data managers can assess the B2FIND training module on Github.
+              Features: Comprehensive joint catalogue of EUDAT services and external metadata,
+              Metadata in mapped onto standardized facetes, Supports faceted search, facets can be adapted
+              to domain specific facets, Geospatial and temporal meatdata searches, Allows users to search
+              and browse datasets via keyword searches, user-friendly format and listed in order of relevance,
+              Access to the scientifc data objects in given through references provided in the metadata,
+              Local B2FIND instace. Ideal for: Community/organisational data managers.
     B2STAGE:
         title: &b2stage B2STAGE
         parents: *dataStorageParent
@@ -572,6 +1289,32 @@ services:
           ### Service provided by
 
           EUDAT and all generic EUDAT CDI Level 1 providers.
+        offers:
+          1:
+            name: B2STAGE
+            description: |
+              B2STAGE is a reliable, efficient, light-weight and easy-to-use service to transfer research data sets
+              between EUDAT storage resources and high-performance computing (HPC) workspaces.
+            parameters:
+              - id:  "id1"
+                label:  "Tool"
+                description:  "Choose the tool"
+                type:  "select"
+                value_type:  "string"
+                config:
+                  mode: "buttons"
+                  values: ["FTS3", "globus online"]
+              - id:  "id2"
+                label:  "Start of service"
+                description:  "Please choose the start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id3"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+                value: 365
     EGI Archive storage:
         title: EGI Archive storage
         parents: *dataStorageParent
@@ -611,6 +1354,34 @@ services:
              3. Go to the cart and submit your order.
              4. You will receive an email summarising your order.
              5. You will be contacted by the EGI support team.
+        offers:
+          1:
+            name: EGI Archive storage
+            description: |
+              Archive Storage allows you to store large amounts of data in a secure environment freeing up
+              your usual online storage resources.The data on the Archive Storage can be replicated
+              across several storage sites, thanks to the adoption of interoperable open standards.
+              The service is optimised for infrequent access.
+              Main characteristics: Store data for long-term retention,
+              Store large amount of data, Free up your online storage.
+            parameters:
+              - id:  "id1"
+                label:  "Amount of data"
+                description:  "Type amount of data"
+                type:  "input"
+                unit: "TB"
+                value_type:  "integer"
+              - id:  "id2"
+                label:  "Start of service"
+                description:  "Please choose the start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id3"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+                value: 365
     EGI Block storage:
         title: EGI Block storage
         parents: *dataStorageParent
@@ -638,8 +1409,50 @@ services:
           Once you mount and format your drive, you can use it just like a regular hard drive attached to your server.
           Or you can detach your block storage volume from one server and attach it to another.
           Or you can delete your server, keeping your data intact and ready for the next time you need it.
+        offers:
+          1:
+            name: EGI Block storage
+            description: |
+              Block Storage is a block-level storage solution that allows you to expand the storage capacity
+              of your instances in the EGI Federated Cloud. This means you can increase your storage
+              without increasing the size or capacity of your instance or by provisioning new ones.
+              Once you mount and format your drive, you can use it just like a regular hard drive
+              attached to your server. Or you can detach your block storage volume from one server
+              and attach it to another. Or you can delete your server, keeping your data intact
+              and ready for the next time you need it.
+            parameters:
+              - id:  "id1"
+                label:  "Storage capacity"
+                description:  "Type amount of data"
+                type:  "input"
+                unit: "GB"
+                value_type:  "integer"
+              - id:  "id2"
+                label:  "Access type"
+                description:  "Choose acces type"
+                type:  "select"
+                value_type:  "string"
+                config:
+                  mode: "buttons"
+                  values: ["opportunistic", "reserved"]
+              - id:  "id3"
+                label:  "Special requirements"
+                description:  "Type special requirements"
+                type:  "input"
+                value_type:  "string"
+              - id:  "id4"
+                label:  "Start of service"
+                description:  "Please choose the start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id5"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+                value: 365
     EGI Object storage:
-        title: EGI Block storage
+        title: EGI Object storage
         parents: *dataStorageParent
         providers: [*egi]
         logo: archive-storage.png
@@ -663,8 +1476,58 @@ services:
           a variable amount of metadata, and a globally unique identifier.
           Cloud object storage allows relatively inexpensive, scalable
           and self-healing retention of massive amounts of unstructured data.
+        offers:
+          1:
+            name: EGI Object storage
+            description: |
+              Block Storage is a block-level storage solution that allows you to expand the storage capacity
+              of your instances in the EGI Federated Cloud. This means you can increase your storage without
+              increasing the size or capacity of your instance or by provisioning new ones.
+              Once you mount and format your drive, you can use it just like
+              a regular hard drive attached to your server.
+              Or you can detach your block storage volume from one server and attach it to another.
+              Or you can delete your server, keeping your data intact and ready for the next time you need it.
+            parameters:
+              - id:  "id1"
+                label:  "Storage capacity"
+                description:  "Type amount of data"
+                type:  "input"
+                unit: "GB"
+                value_type:  "integer"
+              - id:  "id2"
+                label:  "Interfaces"
+                description:  "Choose interfaces"
+                type:  "multiselect"
+                value_type:  "string"
+                config:
+                  minItems: 1
+                  values: ["CDMI", "POSIX", "SWIFT", "Others"]
+              - id:  "id3"
+                label:  "Access type"
+                description:  "Choose acces type"
+                type:  "select"
+                value_type:  "string"
+                config:
+                  mode: "buttons"
+                  values: ["opportunistic", "reserved"]
+              - id:  "id4"
+                label:  "Special requirements"
+                description:  "Type special requirements"
+                type:  "input"
+                value_type:  "string"
+              - id:  "id4"
+                label:  "Start of service"
+                description:  "Please choose the start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id5"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+                value: 365
     EGI File storage:
-        title: EGI Block storage
+        title: EGI File storage
         parents: *dataStorageParent
         providers: [*egi]
         logo: archive-storage.png
@@ -688,6 +1551,53 @@ services:
           easily share data through different standard interfaces.
           It assigns global identifiers to files and allows to
           organise your data using a flexible hierarchical structure.
+        offers:
+          1:
+            name: EGI File storage
+            description: |
+              Highly scalable storage system accessible from anywhere allowing
+              to easily share data through different standard interfaces.
+              It assigns global identifiers to files and allows to organise your data
+              using a flexible hierarchical structure.
+            parameters:
+              - id:  "id1"
+                label:  "Storage capacity"
+                description:  "Type amount of data"
+                type:  "input"
+                unit: "GB"
+                value_type:  "integer"
+              - id:  "id2"
+                label:  "Technology"
+                description:  "Choose technology"
+                type:  "multiselect"
+                value_type:  "string"
+                config:
+                  minItems: 1
+                  values: ["DPM", "DCache", "Storm",  "Others"]
+              - id:  "id3"
+                label:  "Access type"
+                description:  "Choose acces type"
+                type:  "select"
+                value_type:  "string"
+                config:
+                  mode: "buttons"
+                  values: ["opportunistic", "reserved"]
+              - id:  "id4"
+                label:  "Special requirements"
+                description:  "Type special requirements"
+                type:  "input"
+                value_type:  "string"
+              - id:  "id4"
+                label:  "Start of service"
+                description:  "Please choose the start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id5"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+                value: 365
     Argo:
         title: Argo
         parents: *researchDataParent
@@ -704,7 +1614,7 @@ services:
         places: *europe
         dedicated_for: ["Reaserchers"] #TODO: but not specified
         languages: *english
-        area: &earthScience Earth Science
+        area: *earthScience
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Store, share and access your files and their metadata on a global scale.
@@ -713,6 +1623,33 @@ services:
           two Global Data Assembly Centers (GDACS) and there are various data products too
           which can be accessed through various data viewers.
           Data from individual floats are also available from a certain region or time.
+    GEOSS Portal:
+        title: GEOSS Web Portal
+        parents: *researchDataParent
+        providers: [*esa]
+        logo: geoss-portal.png
+        open_access: false
+        webpage_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
+        manual_url: https://google.com
+        helpdesk_url: https://google.com
+        tutorial_url: https://google.com
+        terms_of_use_url: http://geosspublish.uat.esaportal.eu/community/guest/terms-conditions
+        corporate_sla_url: https://google.com
+        access_policies_url: https://google.com
+        places: *europe
+        dedicated_for: ["Reaserchers"] #TODO: but not specified
+        languages: *english
+        area: *earthScience
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: Access to resources from the Global Earth Observation System of Systems
+        description: |
+          The GEOSS (Global Earth Observation System of Systems) Web Portal is the main entry point
+          for discovering and accessing GEOSS data. GEOSS Platform interconnects more than 170 data systems globally,
+          providing discoverability of more than 400M datasets.
+          This version of the GEOSS Web Portal is connected also to the ECOPotential Virtual Laboratory,
+          allowing users to execute available models utilizing GEOSS data as inputs.
+
     Clarin:
         title: &clarinService Clarin
         parents: *researchDataParent
@@ -737,7 +1674,39 @@ services:
           The data are available as downloadable netCDF files from Argo's two
           Global Data Assembly Centers (GDACS) and there are various data products too
           which can be accessed through various data viewers.
-          Data from individual floats are also available from a certain region or time."
+          Data from individual floats are also available from a certain region or time.
+        offers:
+          1:
+            name: VLO
+            description: |
+              A facet browser for fast navigation and searching in large amounts of metadata.
+              This portal enables the discovery of language data and tools, provided by over 40 CLARIN centres,
+              other language resource providers and Europeana.
+
+
+              The VLO also provides access to the Virtual Collection Registry metadata and can be used
+              as a starting point to process language data with the Language Resource Switchboard.
+          2:
+            name: LRS
+            description: |
+              A web application that suggests language analysis tools for specific data sets.
+          3:
+            name: VCR
+            description: |
+              A service that allows researchers to create their own citable digital bookmarks.
+
+
+              A virtual collection is a coherent set of links to digital objects (e.g. annotated text, video)
+              that can be easily created, accessed and cited. The links can originate from different archives,
+              hence the term virtual.
+
+
+              CLARIN provides a registry where scholars can create and publish their virtual collections.
+              It provides persistent identifiers and federated login.
+
+
+              The collection metadata is openly available and accessible via the Virtual Language Observatory.
+              The referenced digital objects can also be processed with the Language Resource Switchboard.
     EIDA Data Archive:
         title: EIDA Data Archive
         parents: *researchDataParent
@@ -1085,10 +2054,62 @@ services:
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
-          Chispter is a user-friendly analysis software for high-throughput data.
-          It contains over 300 analysis tools for next generation sequencing (NGS), microarray,
-          proteomics and sequence data. Users can save and share automatic analysis workflows,
-          and visualize data interactively using a built-in genome browser and many other visualizations.
+          Chipster is a user-friendly analysis software for high-throughput data.
+          It contains over 300 analysis tools for next generation sequencing (NGS), microarray, proteomics and sequence data.
+          Users can save and share automatic analysis workflows, and visualize data interactively using a built-in genome browser and many other visualizations.
+        offers:
+          1:
+            name: "Offer"
+            description: "This service has only 1 offer"
+            parameters:
+            - id:  "id1"
+              label:  "Number of CPU hours"
+              description:  "Select number of cores you want"
+              type:  "select"
+              unit: "h"
+              value_type:  "integer"
+              config:
+                mode:  "buttons"
+                values:  [1000]
+            - id:  "id2"
+              label:  "Total amount of RAM per CPU core"
+              description:  "Select RAM per core"
+              unit: "GB"
+              type:  "select"
+              value_type:  "integer"
+              config:
+                mode:  "buttons"
+                values:  [4]
+            - id:  "id3"
+              label:  "Storage capacity"
+              description:  "Select storage"
+              unit: "GB"
+              type:  "select"
+              value_type:  "integer"
+              config:
+                mode:  "buttons"
+                values:  [100]
+            - id:  "id4"
+              label:  "Access type"
+              description:  "Select access type"
+              type:  "select"
+              value_type:  "string"
+              config:
+                mode:  "buttons"
+                values:  ["opportunistic"]
+            - id:  "id5"
+              label:  "Start of service"
+              description:  "When do you want access the service"
+              type:  "date"
+              value_type:  "string"
+            - id:  "id6"
+              label:  "Number days"
+              description:  "How long do you want to have access?"
+              type:  "input"
+              value_type:  "integer"
+              config:
+                minimum: 1
+                maximum: 730
     ClustalW2:
         title: ClustalW2
         parents: *applicationsParent
@@ -1246,6 +2267,26 @@ services:
             on all the resources of the DARIAH VO.
             - File transfer service: Enables transferring data from, to and between storage services providing HTTP,
             HTTPS, SFTP, GSIFTP, SRM, iRODS and S3 protocols.
+        offers:
+          1:
+            name: DARIAH
+            description: |
+              The DARIAH Science Gateway is a platform that provides access to various digital applications
+              and services for the Arts & Humanities researchers.
+              The DARIAH Science Gateway provides various web-based applications and services
+              for the Digital Humanities researchers, institutes and communities.
+            parameters:
+              - id:  "id1"
+                label:  "Start of service"
+                description:  "Please choose the start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id2"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+                value: 365
     Dynamic On Demand Analysis Service:
         title: Dynamic On Demand Analysis Service (DODAS Portal)
         parents: *thematicServicesParent
@@ -1301,15 +2342,35 @@ services:
           (Identity Access Management - IAM, Token Translation Service - TTS, PaaS Orchestration, TOSCA Templates).
 
           [1]: https://dodas-iam.cloud.cnaf.infn.it/register
+        offers:
+          1:
+            name: DODAS Portal
+            description: |
+              The Dynamic On Demand Analysis Service (DODAS) allows to instantiate on-demand container-based clusters.
+              Both HTCondor batch systems, and platforms for Big Data analysis based for example on Spark or Hadoop,
+              can be deployed on any cloud-based infrastructures with almost zero effort.
+            parameters:
+              - id:  "id1"
+                label:  "Start of service"
+                description:  "Please choose the start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id2"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+                value: 365
     D4 Science Particle Formation:
         title: &d4scienceService Particle Formation
         parents: [*thematicServicesParent, *applicationsParent]
         providers: [*d4science]
         logo: d4science-gateway.png
-        open_access: false
+        open_access: true
+        connected_url: https://services.d4science.org/group/particleformation/
         webpage_url: https://services.d4science.org/group/particleformation
-        manual_url: https://services.d4science.org/group/particleformation
-        helpdesk_url: https://www.google.com
+        manual_url: https://services.d4science.org/group/particleformation/
+        helpdesk_url: https://github.com/markusstocker/pynpf-d4science
         tutorial_url: https://www.google.com
         terms_of_use_url: https://www.google.com
         corporate_sla_url: https://www.google.com
@@ -1320,12 +2381,13 @@ services:
         area: *physicalScienceEarth
         restrictions: *notSpecified
         phase: *notSpecified
-        tagline: D4 Science Service (need to be filled)
+        tagline: D4 Science Service
         description: |
-          Supports researchers in the aerosol community in detecting and describing new particle formation events.
-          This service is a web-based collaborative working environment conceived to support aerosol
-          community researchers willing to detect, describe and publish information on new particle formation events
-          occurred on specific days at the Hyytiaelae, Finland place.
+          The VRE supports new particle formation event analysis on interoperable e-Infrastructures.
+          It provides access to Jupyter notebooks to classify events and process information about them.
+          It integrates the SMEAR Research Infrastructure (provider of primary data) and uses EGI
+          and D4Science services to support primary data interpretation and the cataloging of data derived in analysis.
+          Access to the VRE requires a D4Science account.
     ENES Climate Analytics Service:
         title: ENES Climate Analytics Service
         parents: [*thematicServicesParent, *researchDataParent]
@@ -1379,6 +2441,24 @@ services:
           [5]: https://verc.enes.org/
           [6]: https://is.enes.org/
           [7]: http://esgf.llnl.gov/
+        offers:
+          1:
+            name: ECAS
+            description: |
+              The ENES Climate Analytics Service (ECAS) enables scientific end-users to perform data analysis
+              experiments on large volumes of research data from multiple disciplines.
+            parameters:
+              - id:  "id1"
+                label:  "Start of service"
+                description:  "Please choose the start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id2"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+                value: 365
     LifeWatch ERIC Plants Identification App:
         title: LifeWatch ERIC Plants Identification App
         parents: *thematicServicesParent
@@ -1424,6 +2504,23 @@ services:
           ### Service provided by
 
           The Service is provided by LifeWatch ERIC.
+        offers:
+          1:
+            name: ERIC
+            description: |
+              Web service for online plant search.
+            parameters:
+              - id:  "id1"
+                label:  "Start of service"
+                description:  "Please choose the start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id2"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+                value: 365
     Copernicus Data and other EO Pillar data:
         title: Copernicus Data and other EO Pillar data
         parents: *researchDataParent
@@ -1592,6 +2689,28 @@ services:
 
           [1]: http://www.incd.pt/
           [2]: https://www.egi.eu/federation/
+        offers:
+          1:
+            name: OPENCoastS Portal
+            description: |
+              The OPENCoastS service assembles on-demand circulation forecast systems for selected areas
+              in the Atlantic coast and keeps them running operationally for a period defined by the user.
+              This service generates daily forecasts of water levels and vertically averaged velocities
+              over the region of interest for 48 hours.
+              The system is useful in anticipating natural disasters and accidents in the coast,
+              for example floods and chemical spills and can help in search and rescue operations.
+            parameters:
+              - id:  "id1"
+                label:  "Start of service"
+                description:  "Please choose the start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id2"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+                value: 365
 
 #    WeNMR Suite for Structural Biology:
 #        title: WeNMR Suite for Structural Biology
