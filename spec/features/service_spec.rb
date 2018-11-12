@@ -75,6 +75,15 @@ RSpec.feature "Service browsing" do
 
     expect(page.body).to_not have_content "Suggested compatible services"
   end
+  context "service has no offers" do
+    scenario "service offers section are not displayed" do
+      service = create(:service)
+
+      visit service_path(service)
+
+      expect(page.body).not_to have_content("Service offers")
+    end
+  end
 
   context "as not logged in user" do
     scenario "I need to login to asks service question" do
