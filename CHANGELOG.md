@@ -104,6 +104,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Clickable next order nav step (@mkasztelnik)
 - Affiliation last step - consent (@martaswiatkowska)
 - Multicheckbox widget to filters (providers & dedicated for) (@michal-szostak)
+- Add offers to the services (@goreck888)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
