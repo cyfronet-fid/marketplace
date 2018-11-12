@@ -3,7 +3,8 @@
     %main.col-9.pr-5
 
       = markdown(service.description)
-      = render "services/offers", offers: offers
+      - if policy(service).order?
+        = render "services/offers", offers: offers
 
     %sidebar.col-3
       %h5 Places and languages
