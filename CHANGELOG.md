@@ -125,6 +125,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Remove description under "Services" header in services, add category description in categories (@michal-szostak)
 - Reorder form parts in order/configuration (@michal-szostak)
 - On project item view show order history in reversed order (@martaswiatkowska)
+- Hide service offers on service about page if no offers are available (@michal-szostak)
 - Rename "Some Header" in services' about page to "Documents" (@michal-szostak)
 - Hide TODO Technical Parameters from service offer selection (@michal-szostak)
 
