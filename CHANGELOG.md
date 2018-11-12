@@ -104,6 +104,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Clickable next order nav step (@mkasztelnik)
 - Affiliation last step - consent (@martaswiatkowska)
 - Multicheckbox widget to filters (providers & dedicated for) (@michal-szostak)
+- Category tree in sidebar (@michal-szostak)
+- Global filters to category view (@michal-szostak)
 - Add offers to the services (@goreck888)
 
 ### Changed
@@ -120,7 +122,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Deny to destroy an affiliation which is associated with a project item (@jswk)
 - Styling of filters (@michal-szostak)
 - Styling of ordering steps (@jarekzet, @michal-szostak)
+- Remove description under "Services" header in services, add category description in categories (@michal-szostak)
+- Reorder form parts in order/configuration (@michal-szostak)
 - On project item view show order history in reversed order (@martaswiatkowska)
+- Hide service offers on service about page if no offers are available (@michal-szostak)
+- Rename "Some Header" in services' about page to "Documents" (@michal-szostak)
+- Hide TODO Technical Parameters from service offer selection (@michal-szostak)
 
 ### Deprecated
 
@@ -130,5 +137,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Correctly expand affiliation accordions in profile (@jswk)
 - Insert a line-break after button(s) in service header right panel (@jswk)
+- Search by text from any view (@michal-szostak)
 
 ### Security
