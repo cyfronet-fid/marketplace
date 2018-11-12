@@ -2303,8 +2303,8 @@ services:
         languages: *english
         area: *lifeSciences
         restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: *notSpecified
+        phase: Beta
+        tagline: Create interactive documents with live code, visualisations and narrative text powered by the Jupyter technology
         description: |
           The service provides a browser-based tool for interactive analysis of data using EGI storage
           and compute infrastructures based on the JupyterHub technology. The notebooks can combine text,
@@ -2319,7 +2319,70 @@ services:
             2. For user communities EGI offers consultancy and technology
             to setup a community-specific JupyterHub on top of community VO
             (together with EGI-enbled compute and storage resources), and with community-specific storage/data.
-
+        offers:
+          1:
+            name: "AoD/Catch-all"
+            description: Run your own notebooks with persistent storage on EGI Cloud resources.
+            parameters:
+            - id:  "id1"
+              label:  "Amount of RAM"
+              description:  "Please choose amount of RAM"
+              type:  "select"
+              unit: "GB"
+              value_type:  "integer"
+              config:
+                mode: "buttons"
+                values: [0.5, 1]
+            - id:  "id2"
+              label:  "Number of cores"
+              description:  "Choose number of cores"
+              type:  "select"
+              value_type:  "integer"
+              config:
+                mode: "buttons"
+                values: [1, 2, 4]
+            - id:  "id3"
+              label:  "Persistent storage"
+              unit: "GB"
+              description:  "Choose amount of storage"
+              type:  "select"
+              value_type:  "integer"
+              config:
+                mode: "buttons"
+                values: [1, 10, 20]
+          2:
+            name: Community Notebook
+            description: |
+              Community specific deployment to provide notebooks for all the users of a community.
+              Allows further customisation to meet the community needs (e.g. shared storage)
+            parameters:
+            - id:  "idq"
+              label:  "Number of users"
+              description:  "Please type number of users"
+              type:  "input"
+              value_type:  "integer"
+              config:
+                minimum: 1
+            - id:  "id2"
+              label:  "Amount of RAM"
+              description:  "Please choose amount of RAM"
+              type:  "input"
+              unit: "GB"
+              value_type:  "integer"
+            - id:  "id3"
+              label:  "Number of cores per user"
+              description:  "Choose number of cores"
+              type:  "select"
+              value_type:  "integer"
+              config:
+                mode: "button"
+                values: [1, 2, 4]
+            - id:  "id4"
+              label:  "Storage per user"
+              unit: "GB"
+              description:  "Choose amount of storage"
+              type:  "input"
+              value_type:  "integer"
 #    Component Metadata Infrastructure:
 #        title: Component Metadata Infrastructure
 #        parents: *thematicServicesParent
@@ -2440,7 +2503,11 @@ services:
         phase: *notSpecified
         tagline: Simplify the access and management of computing resources
         description: |
-          DODAS acts as cloud enabler designed for scientists seeking to easily exploit distributed and heterogeneous clouds to process data. Aiming to reduce the learning curve as well as the operational cost of managing community specific services running on distributed cloud, DODAS completely automates the process of provisioning, creating, managing and accessing a pool of heterogeneous computing and storage resources.
+          DODAS acts as cloud enabler designed for scientists seeking to easily exploit distributed
+          and heterogeneous clouds to process data. Aiming to reduce the learning curve as well as
+          the operational cost of managing community specific services running on distributed cloud,
+          DODAS completely automates the process of provisioning, creating, managing and accessing
+          a pool of heterogeneous computing and storage resources.
 
           ### DODAS provides:
 
@@ -2594,7 +2661,7 @@ services:
     LifeWatch ERIC Plants Identification App:
         title: LifeWatch ERIC Plants Identification App
         parents: *thematicServicesParent
-        providers: [*not]
+        providers: [*lifewatch]
         logo: lifewatch-eric-plants-identification-app.png
         open_access: false
         webpage_url: https://www.lifewatch.eu/
@@ -2893,58 +2960,66 @@ services:
 #                      During EOSC-hub, the WeNMR services will be integrated with EUDAT services and other components from the INDIGO catalogue."
     HADDOCK:
         title: &haddock HADDOCK
-        parents: [*thematicServicesParent, *applicationsParent]
+        parents: [*thematicServicesParent]
         providers: [*uou, *uof, *cirmmp]
         logo: haddock.png
         open_access: true
-        connected_url: https://enmrdevel.science.uu.nl/auth/register/haddock
+        connected_url: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
         webpage_url: https://enmrdevel.science.uu.nl/auth/register/haddock
         manual_url: http://www.bonvinlab.org/software/haddock2.2/manual/
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        helpdesk_url: http://ask.bioexcel.eu/c/haddock
+        tutorial_url: https://www.wenmr.eu/tutorials/#haddock
+        terms_of_use_url: https://wenmr.science.uu.nl/conditions
+        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        dedicated_for: ["Researchers"]
         languages: *english
-        area: &biologicalSciences Biological Sciences
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: A suite of computational tools for structural biology
+        area: *biologicalSciences
+        restrictions: "Registration required, Limited to non-profit users"
+        phase: Production (min. TRL 8)
+        tagline: Integrative modeling of biomolecular complexes with the user-friendly, EGI HTC-enabled HADDOCK portal
         description: |
-          Integrative modeling of biomolecular complexes with the user-friendly, EGI HTC-enabled HADDOCK portal.
           HADDOCK is a web portal that offers computational tools for structural biologists to model the structure
-          of complexes of proteins and other biomolecules via a user-friendly interface.
-          The portal offers a number of interfaces, depending on the amount of information and restraints
-          that researchers wish to place on their models.
-          HADDOCK is prepared to deal with several classes of problems, including protein-protein,
-          protein-nucleic acids and protein-ligand complexes."
+          of complexes of proteins and other biomolecules via a user-friendly interface. The portal offers a number
+          of interfaces, depending on the amount of information and restraints that researchers wish
+          to place on their models.
+          HADDOCK is prepared to deal with several classes of problems,
+          including protein-protein, protein-nucleic acids and protein-ligand complexes.
+        offers: &wenMRService
+          1:
+            name: WeNMR Suite for Structural Biology
+            description: |
+              WeNMR is a Virtual Research Community supported by EGI.
+              WeNMR aims at bringing together complementary research teams in the structural biology
+              and life science area into a virtual research community at a worldwide level and provide them
+              with a platform integrating and streamlining the computational approaches
+              necessary for data analysis and modelling.
     PowerFit:
         title: &powerFit PowerFit
-        parents: [*thematicServicesParent, *applicationsParent]
+        parents: [*thematicServicesParent]
         providers: [*uou, *uof, *cirmmp]
         logo: powerfit.png
         open_access: true
-        connected_url: https://enmrdevel.science.uu.nl/auth/register/powerfit
+        connected_url: http://haddock.science.uu.nl/enmr/services/POWERFIT
         webpage_url: https://enmrdevel.science.uu.nl/auth/register/powerfit
-        manual_url: http://milou.science.uu.nl/cgi/services/POWERFIT/powerfit/help
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        manual_url: http://haddock.science.uu.nl/cgi/enmr/services/POWERFIT/powerfit/help
+        helpdesk_url: http://ask.bioexcel.eu/c/powerfit
+        tutorial_url: https://www.wenmr.eu/tutorials/#powerfit
+        terms_of_use_url: https://wenmr.science.uu.nl/conditions
+        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        dedicated_for: ["Researchers"]
         languages: *english
         area: *biologicalSciences
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: A suite of computational tools for structural biology
+        restrictions: "Registration required, Limited to non-profit users"
+        phase: "Production (min. TRL 8)"
+        tagline: The PowerFit server allows you to fit your 3D structures in any map!
         description: |
-          The PowerFit server allows you to fit your 3D structures in any map!
           PowerFit is a software designed to fit atomic structures into cryo-EM density maps,
-          using an exhaustive 6-dimensional cross-correlation search."
+          using an exhaustive 6-dimensional cross-correlation search.
+        offers: *wenMRService
     DisVis:
         title: &disVis DisVis
         parents: [*thematicServicesParent, *applicationsParent]
@@ -2952,126 +3027,129 @@ services:
         logo: disvis.png
         open_access: true
         connected_url: https://enmrdevel.science.uu.nl/auth/register/disvis
-        webpage_url: https://enmrdevel.science.uu.nl/auth/register/disvis
-        manual_url: http://milou.science.uu.nl/cgi/services/DISVIS/disvis/help
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        webpage_url: http://haddock.science.uu.nl/enmr/services/DISVIS
+        manual_url: http://haddock.science.uu.nl/cgi/enmr/services/DISVIS/disvis/help
+        helpdesk_url: http://ask.bioexcel.eu/c/disvis
+        tutorial_url: https://www.wenmr.eu/tutorials/#disvis
+        terms_of_use_url: https://wenmr.science.uu.nl/conditions
+        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
         area: *biologicalSciences
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: A suite of computational tools for structural biology
+        restrictions: "Registration required, Limited to non-profit users"
+        phase: "Production (min. TRL 8)"
+        tagline: |
+          Visualizes and quantify the information content of distance
+          restraints between macromolecular complexes with DisVis
         description: |
-          Visualizes and quantify the information content of distance restraints between macromolecular complexes
-          with DisVis.
-          DisVis is a software designed to visualize and quantify the accessible interaction space defined by
-          distance restraints between biomolecules.
+          DisVis is a software designed to visualize and quantify the accessible interaction space
+          defined by distance restraints between biomolecules.
+        offers: *wenMRService
     CS-ROSETA:
         title: &roseta CS-ROSETA
-        parents: [*thematicServicesParent, *applicationsParent]
+        parents: [*thematicServicesParent]
         providers: [*uou, *uof, *cirmmp]
         logo: cs-rosetta.png
         open_access: true
         connected_url: https://enmrdevel.science.uu.nl/auth/register/cs_rosetta3
-        webpage_url: https://enmrdevel.science.uu.nl/auth/register/cs_rosetta3
+        webpage_url: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
         manual_url: http://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/csr-tutorial.html
         helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        tutorial_url: https://www.wenmr.eu/tutorials/
+        terms_of_use_url: https://wenmr.science.uu.nl/conditions
+        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        dedicated_for: ["Researchers"]
         languages: *english
         area: *biologicalSciences
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: A suite of computational tools for structural biology
+        restrictions: "Registration required, Limited to non-profit users"
+        phase: "Production (min. TRL 8)"
+        tagline: NMR protein structure prediction using the EGI HTC-enabled CS-ROSETTA portal
         description: |
-          NMR protein structure prediction using the EGI HTC-enabled CS-ROSETTA portal.
-          The CS-ROSETTA3 web portal allows structural biologists to model the 3D structure of proteins using only
-          the 13CA, 13CB, 13C’, 15N, 1HA and 1HN NMR chemical shifts as input.
+          The CS-ROSETTA3 web portal allows structural biologists to model the 3D structure of proteins
+          using only the 13CA, 13CB, 13C’, 15N, 1HA and 1HN NMR chemical shifts as input.
+        offers: *wenMRService
     AMBER:
         title: &amber AMBER
         parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
         logo: amber.png
         open_access: true
-        connected_url: https://enmrdevel.science.uu.nl/
-        webpage_url: https://enmrdevel.science.uu.nl/
+        connected_url: http://py-enmr.cerm.unifi.it/access/index
+        webpage_url: http://py-enmr.cerm.unifi.it/access/index
         manual_url: https://www.wenmr.eu/tutorials
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        helpdesk_url: http://py-enmr.cerm.unifi.it/feedback/index?type=amps-nmr
+        tutorial_url: https://www.wenmr.eu/tutorials/
+        terms_of_use_url: https://wenmr.science.uu.nl/conditions
+        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
         area: *biologicalSciences
-        restrictions: *notSpecified
-        phase: *notSpecified
+        restrictions: "Registration required, Limited to non-profit users"
+        phase: "Production (min. TRL 8)"
         tagline: A suite of computational tools for structural biology
         description: |
           Simple and user-friendly NMR-based refinement of the 3D structures of biological macromolecules
           thought the AMPS-NMR portal. Amber (Assisted Model Building with Energy Refinement) is a suite
           of programs that allow users to perform molecular dynamics (MD) simulations on biological systems
           and to store different calculations.
+        offers: *wenMRService
     FANTEN:
         title: &fanten FANTEN
         parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
         logo: fanten.png
         open_access: true
-        connected_url: https://enmrdevel.science.uu.nl/
+        connected_url: http://abs.cerm.unifi.it:8080
         webpage_url: https://enmrdevel.science.uu.nl/
         manual_url: http://abs.cerm.unifi.it:8080/manual/FANTEN_manual.pdf
         helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        tutorial_url: https://www.wenmr.eu/tutorials/
+        terms_of_use_url: https://wenmr.science.uu.nl/conditions
+        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        dedicated_for: ["Researchers"]
         languages: *english
         area: *biologicalSciences
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: A suite of computational tools for structural biology
+        restrictions: "Registration required, Limited to non-profit users"
+        phase: "Production (min. TRL 8)"
+        tagline: FANTEN for the analysis of magnetic anisotropy-induced NMR data
         description: |
-          FANTEN for the analysis of magnetic anisotropy-induced NMR data.
-          FANTEN is a user-friendly web tool for the determination of anisotropy tensors.
-          It is freely available through the WeNMR gateway.
+          FANTEN is a user-friendly web tool for the
+          determination of anisotropy tensors. It is freely available through the WeNMR gateway.
+        offers: *wenMRService
     SpotOn:
         title: &spotOn SpotOn
-        parents: [*thematicServicesParent, *applicationsParent]
+        parents: [*thematicServicesParent]
         providers: [*uou, *uof, *cirmmp]
         logo: spoton.png
         open_access: true
-        connected_url: http://www.bonvinlab.org/software/haddock2.2/
+        connected_url: https://haddock.science.uu.nl/enmr/services/SPOTON
         webpage_url: http://www.bonvinlab.org/software/haddock2.2/
-        manual_url: http://www.bonvinlab.org/software/haddock2.2/manual/
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        manual_url: https://haddock.science.uu.nl/cgi/enmr/services/SPOTON/spoton/help
+        helpdesk_url: http://ask.bioexcel.eu/c/spoton
+        tutorial_url: https://www.wenmr.eu/tutorials/#spoton
+        terms_of_use_url: https://wenmr.science.uu.nl/conditions
+        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        dedicated_for: ["Researchers"]
         languages: *english
-        area: *biologicalSciences
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: A suite of computational tools for structural biology
+        area: [*biologicalSciences, *lifeSciences]
+        restrictions: "Registration required, Limited to non-profit users"
+        phase: "Production (min. TRL 8)"
+        tagline: "SpotOn: determination of Hot-Spots at protein-protein interfaces"
         description: |
-          SpotOn: determination of Hot-Spots at protein-protein interfaces.
-          SpotOn is a robust algorithm developed to identify and classify the interfacial residues as Hot-Spots (HS)
-          and Null-Spots (NS) with a final accuracy of 0.95 and a sensitivity of 0.95 on an independent test set.
+          SpotOn is a robust algorithm developed to identify and classify the interfacial residues
+          as Hot-Spots (HS) and Null-Spots (NS) with a final accuracy of 0.95
+          and a sensitivity of 0.95 on an independent test set.
+        offers: *wenMRService
     GEP - HRCM:
         title: &gepHRCM GEP - High-Resolution Change Monitoring for the Alpine Region
         parents: [*thematicServicesParent, *researchDataParent]
@@ -3123,7 +3201,7 @@ services:
     EODC JupyterHub for global Copernicus data:
         title: &eodcJH EODC JupyterHub for global Copernicus data
         parents: [*thematicServicesParent, *researchDataParent]
-        providers: [*eodc]
+        providers: [*terradue]
         open_access: false
         webpage_url: https://jupyterhub.eodc.eu
         manual_url: https://github.com/jupyterhub/jupyterhub
@@ -3176,7 +3254,7 @@ services:
     EODC Data Catalogue Service:
         title: &eodcDCS EODC Data Catalogue Service
         parents: [*thematicServicesParent, *researchDataParent]
-        providers: [*eodc]
+        providers: [*terradue]
         open_access: false
         webpage_url: https://csw.eodc.eu
         manual_url: https://csw.eodc.eu
@@ -3223,7 +3301,7 @@ services:
     Sentiel hub:
         title: &sentinelHub Sentiel hub
         parents: [*thematicServicesParent, *researchDataParent]
-        providers: [*sinergise]
+        providers: [*terradue]
         open_access: false
         webpage_url: http://sentinel-hub.com/
         manual_url: https://www.sentinel-hub.com/develop/documentation
@@ -3249,7 +3327,7 @@ services:
     MEA Platform:
         title: &meaPlatform MEA Platform (Data access and exploitation service)
         parents: [*thematicServicesParent, *researchDataParent]
-        providers: [*meeo]
+        providers: [*terradue]
         open_access: false
         webpage_url: https://eodataservice.org
         manual_url: https://www.youtube.com/channel/UCqy-bd6CpXMOlRqfHmBqlZw
@@ -3274,7 +3352,7 @@ services:
     Rasdaman EO Datacube:
         title: &rasdamanDatacube Rasdaman EO Datacube
         parents: [*thematicServicesParent, *researchDataParent]
-        providers: [*rasdaman]
+        providers: [*terradue]
         logo: rasdaman-eo-datacube.png
         open_access: false
         webpage_url: http://eoschub.rasdaman.com:8080/rasdaman/ows
@@ -3325,7 +3403,7 @@ services:
     Cloud Ferro Data Collections Catalog:
         title: &cfdcs Cloud Ferro Data Collections Catalog
         parents: [*thematicServicesParent, *researchDataParent]
-        providers: [*cloudFerro]
+        providers: [*terradue]
         logo: &cfLogo cloud-ferro.png
         open_access: false
         webpage_url: https://discovery.creodias.eu/dataset
@@ -3360,7 +3438,7 @@ services:
     CloudFerro Infrastructure:
         title: &cfi CloudFerro Infrastructure
         parents: [*thematicServicesParent, *researchDataParent]
-        providers: [*cloudFerro]
+        providers: [*terradue]
         logo: *cfLogo
         open_access: false
         webpage_url: https://creodias.eu
@@ -3391,7 +3469,7 @@ services:
     Cloudferro Data related Services - EO Finder:
         title: &cfdrsEOF Cloudferro Data related Services - EO Finder
         parents: [*thematicServicesParent, *researchDataParent]
-        providers: [*cloudFerro]
+        providers: [*terradue]
         logo: *cfLogo
         open_access: false
         webpage_url: https://finder.creodias.eu/www
@@ -3413,7 +3491,7 @@ services:
         title: &cfdrsEOB Cloudferro Data related Services - EO browser
         parents: [*thematicServicesParent, *researchDataParent]
         logo: cloud-ferro-eo-browser.png
-        providers: [*cloudFerro]
+        providers: [*terradue]
         open_access: false
         webpage_url: https://browser.creodias.eu
         manual_url: https://creodias.eu/using-the-eo-browser
