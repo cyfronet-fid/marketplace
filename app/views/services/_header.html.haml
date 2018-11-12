@@ -12,7 +12,7 @@
             = print_rating_stars(service.rating)
             %span.ml-1.font-weight-bold
               (#{service.rating} /5)
-            = link_to "#{service.service_opinion_count} opinions", service_opinions_path(service), class: "ml-3"
+            = link_to "#{service.service_opinion_count} reviews", service_opinions_path(service), class: "ml-3"
       .col-3.text-center
         - if policy(service).order?
           = link_to service_offers_path(service), class: "btn btn-primary d-block mb-2" do

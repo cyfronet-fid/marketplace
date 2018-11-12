@@ -3,5 +3,5 @@
     = link_to "About", service_path(service),
       class: "nav-link text-uppercase #{"active" if controller.controller_name == 'services'}", role: "tab"
   %li.nav-item
-    = link_to "Opinions (#{service.service_opinion_count})", service_opinions_path(service),
+    = link_to "Reviews (#{service.service_opinion_count})", service_opinions_path(service),
      class: "nav-link text-uppercase #{"active" if controller.controller_name == 'opinions'}", role: "tab"
