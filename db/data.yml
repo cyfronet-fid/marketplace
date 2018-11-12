@@ -231,6 +231,9 @@ services:
                 description:  "Type number of VM instances from 1-50"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 50
               - id: "id5"
                 label: "Access type"
                 description:  "Choose access type"
@@ -249,6 +252,9 @@ services:
                 description:  "Choose number of days"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 730
           2:
             name: Compute-intensive
             description: |
@@ -288,6 +294,9 @@ services:
                 description:  "Type number of VM instances from 1-50"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 50
               - id: "id5"
                 label: "Access type"
                 description:  "Access type for this offer is constant"
@@ -304,6 +313,9 @@ services:
                 description:  "Choose number of days"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 730
           3:
             name: High-memory
             description: |
@@ -343,6 +355,9 @@ services:
                 description:  "Type number of VM instances from 1-50"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 50
               - id: "id5"
                 label: "Access type"
                 description:  "Access type for this offer is constant"
@@ -359,6 +374,9 @@ services:
                 description:  "Choose number of days"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 730
           4:
             name: GPU
             description: |
@@ -400,6 +418,9 @@ services:
                 description:  "Type number of VM instances from 1-50"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 50
               - id: "id6"
                 label: "Access type"
                 description:  "Access type for this offer is constant"
@@ -416,6 +437,9 @@ services:
                 description:  "Choose number of days"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 730
     High-Throughput compute:
         title: EGI High-Throughput compute
         parents: *computeParent
@@ -513,6 +537,9 @@ services:
                 description:  "Choose number of days"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 730
           2:
             name: MPI
             description: |
@@ -575,6 +602,9 @@ services:
                 description:  "Choose number of days"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 730
     Cloud container compute:
         title: EGI Cloud container compute BETA
         parents: *computeParent
@@ -814,7 +844,6 @@ services:
               and it allows in particular to discover data that is stored through the B2SAFE and B2SHARE services.
               Features: Public service supporting cross disciplinary research, No registration required.
               Ideal for: Researchers seeking interesting datasets.
-
           2:
             name: B2FIND For Data Providers
             description: |
@@ -1785,7 +1814,58 @@ services:
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
           GNU Octave is a high-level interpreted language, primarily intended for numerical computations.
-          It provides capabilities for the numerical solution of linear and nonlinear problems, and for performing other numerical experiments.
+          It provides capabilities for the numerical solution of linear and nonlinear problems,
+          and for performing other numerical experiments.
+        offers:
+          1:
+            name: GNU Octave
+            description: |
+              GNU Octave is a high-level interpreted language, primarily intended for numerical computations.
+              It provides capabilities for the numerical solution of linear and nonlinear problems,
+              and for performing other numerical experiments.
+            parameters: &appParameters
+            - id: "id1"
+              label: "Number of CPU cores"
+              description:  "Number of cores for this offer is constant"
+              type:  "attribute"
+              value_type:  "integer"
+              value: 20
+            - id: "id2"
+              label: "Total amount of RAM"
+              description:  "Amount of RAM for this offer is constant"
+              type:  "attribute"
+              unit: "GB"
+              value_type:  "integer"
+              value: 4
+            - id: "id3"
+              label: "Storage capacity"
+              description:  "Storage capacity for this offer is constant"
+              type:  "attribute"
+              unit: "GB"
+              value_type:  "integer"
+              value: 100
+            - id: "id4"
+              label: "Access type"
+              description:  "Access type for this offer is constant"
+              type:  "attribute"
+              value_type:  "string"
+              value: "opportunistic"
+            - id: "id5"
+              label: "Start of service"
+              description:  "Choose service start date"
+              type:  "date"
+              value_type:  "string"
+            - id: "id6"
+              label: "Number of days"
+              description:  "Choose service start date"
+              type:  "input"
+              value_type:  "integer"
+              value: 365
+              config:
+                minimum: 1
+                maximum: 730
+
+
     Galaxy:
         title: Galaxy
         parents: *applicationsParent
@@ -1808,6 +1888,11 @@ services:
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
           Galaxy is an open, web-based platform for data-intensive biomedical research.
+        offers:
+          1:
+            name: Galaxy
+            description: Galaxy is an open, web-based platform for data-intensive biomedical research.
+            parameters: *appParameters
     NAMD:
         title: NAMD
         parents: *applicationsParent
@@ -1831,6 +1916,13 @@ services:
         description: |
           NAMD is a parallel molecular dynamics code designed for high-performance simulation
           of large bio-molecular systems.
+        offers:
+          1:
+            name: NAMD
+            description: |
+              NAMD is a parallel molecular dynamics code designed for high-performance simulation
+              of large bio-molecular systems.
+            parameters: *appParameters
     Apache Tomcat:
         title: Apache Tomcat
         parents: *applicationsParent
@@ -1850,10 +1942,19 @@ services:
         area: *earthScience
         restrictions: *notSpecified
         phase: *notSpecified
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+        tagline: |
+          Applications on Demand gives you access to online applications and application-development
+          and hosting frameworks to support compute-intensive data analysis
         description: |
           Apache Tomcat is an open source implementation of the Java Servlet, JavaServer Pages,
           Java Expression Language and Java WebSocket technologies.
+        offers:
+          1:
+            name: Apache Tomcat
+            description: |
+              Apache Tomcat is an open source implementation of the Java Servlet, JavaServer Pages,
+              Java Expression Language and Java WebSocket technologies.
+            parameters: *appParameters
     Gnuplot:
         title: Gnuplot
         parents: *applicationsParent
@@ -1875,7 +1976,15 @@ services:
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
-          Gnuplot is a portable command-line driven graphing utility for Linux, OS/2, MS Windows, OSX, VMS, and other platforms.
+          Gnuplot is a portable command-line driven graphing utility for Linux,
+          OS/2, MS Windows, OSX, VMS, and other platforms.
+        offers:
+          1:
+            name: Gnuplot
+            description: |
+              Gnuplot is a portable command-line driven graphing utility for Linux,
+              OS/2, MS Windows, OSX, VMS, and other platforms.
+            parameters: *appParameters
     Docker:
         title: Docker
         parents: *applicationsParent
@@ -1898,6 +2007,13 @@ services:
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
           Docker is an open-source project that automates the deployment of Linux applications inside software containers.
+        offers:
+          1:
+            name: Docker
+            description: |
+              Docker is an open-source project that automates the deployment
+              of Linux applications inside software containers.
+            parameters: *appParameters
     Hadoop:
         title: Hadoop
         parents: *applicationsParent
@@ -1919,7 +2035,15 @@ services:
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
-          Hadoop is a framework that allows for the distributed processing of large data sets across clusters of computers using simple programming models.
+          Hadoop is a framework that allows for the distributed processing
+          of large data sets across clusters of computers using simple programming models.
+        offers:
+          1:
+            name: Hadoop
+            description: |
+              Hadoop is a framework that allows for the distributed processing
+              of large data sets across clusters of computers using simple programming models.
+            parameters: *appParameters
     Marathon:
         title: Marathon
         parents: *applicationsParent
@@ -1941,7 +2065,15 @@ services:
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
-          Marathon a production-grade container orchestration platform for Mesosphere's Data Center/Operating System (DC/OS) and Apache Mesos.
+          Marathon a production-grade container orchestration platform
+          for Mesosphere's Data Center/Operating System (DC/OS) and Apache Mesos.
+        offers:
+          1:
+            name: Marathon
+            description: |
+              Marathon a production-grade container orchestration platform
+              for Mesosphere's Data Center/Operating System (DC/OS) and Apache Mesos.
+            parameters: *appParameters
     Chronos:
         title: Chronos
         open_access: false
@@ -1963,7 +2095,15 @@ services:
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
-          Chronos is a distributed and fault-tolerant scheduler that runs on top of Apache Mesos that can be used for job orchestration.
+          Chronos is a distributed and fault-tolerant scheduler that runs on top
+          of Apache Mesos that can be used for job orchestration.
+        offers:
+          1:
+            name: Chronos
+            description: |
+              Chronos is a distributed and fault-tolerant scheduler that runs on top
+              of Apache Mesos that can be used for job orchestration.
+            parameters: *appParameters
     Jupyter:
         title: Jupyter
         open_access: false
@@ -1987,6 +2127,13 @@ services:
         description: |
           Jupyter is an open-source web application that allows you to create and share documents with live code,
           equations, visualisations and explanatory text.
+        offers:
+          1:
+            name: Jupyter
+            description: |
+              Jupyter is an open-source web application that allows you to create and share documents with live code,
+              equations, visualisations and explanatory text.
+            parameters: *appParameters
     The R project for statistical computing:
         title: The R project for statistical computing
         parents: *applicationsParent
@@ -2010,6 +2157,13 @@ services:
         description: |
           The R Project for Statistical Computing (v3.2.2)
           is a language and environment for statistical computing and graphics.
+        offers:
+          1:
+            name: The R project for statistical computing
+            description: |
+              The R Project for Statistical Computing (v3.2.2)
+              is a language and environment for statistical computing and graphics.
+            parameters: *appParameters
     The Semantic Search Engine (SSE):
         title: The Semantic Search Engine (SSE)
         parents: *applicationsParent
@@ -2033,6 +2187,13 @@ services:
         description: |
           The Semantic Search Engine (SSE) is an application conceived to demonstrate the potential of information
           coupled with semantic web technologies to address the issues of data discovery and correlation.
+        offers:
+          1:
+            name: The Semantic Search Engine (SSE)
+            description: |
+              The Semantic Search Engine (SSE) is an application conceived to demonstrate the potential of information
+              coupled with semantic web technologies to address the issues of data discovery and correlation.
+            parameters: *appParameters
     Chipster:
         title: Chipster
         parents: *applicationsParent
@@ -2055,61 +2216,20 @@ services:
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
           Chipster is a user-friendly analysis software for high-throughput data.
-          It contains over 300 analysis tools for next generation sequencing (NGS), microarray, proteomics and sequence data.
-          Users can save and share automatic analysis workflows, and visualize data interactively using a built-in genome browser and many other visualizations.
+          It contains over 300 analysis tools for next generation sequencing (NGS),
+          microarray, proteomics and sequence data.
+          Users can save and share automatic analysis workflows, and visualize data interactively using
+          a built-in genome browser and many other visualizations.
         offers:
           1:
-            name: "Offer"
-            description: "This service has only 1 offer"
-            parameters:
-            - id:  "id1"
-              label:  "Number of CPU hours"
-              description:  "Select number of cores you want"
-              type:  "select"
-              unit: "h"
-              value_type:  "integer"
-              config:
-                mode:  "buttons"
-                values:  [1000]
-            - id:  "id2"
-              label:  "Total amount of RAM per CPU core"
-              description:  "Select RAM per core"
-              unit: "GB"
-              type:  "select"
-              value_type:  "integer"
-              config:
-                mode:  "buttons"
-                values:  [4]
-            - id:  "id3"
-              label:  "Storage capacity"
-              description:  "Select storage"
-              unit: "GB"
-              type:  "select"
-              value_type:  "integer"
-              config:
-                mode:  "buttons"
-                values:  [100]
-            - id:  "id4"
-              label:  "Access type"
-              description:  "Select access type"
-              type:  "select"
-              value_type:  "string"
-              config:
-                mode:  "buttons"
-                values:  ["opportunistic"]
-            - id:  "id5"
-              label:  "Start of service"
-              description:  "When do you want access the service"
-              type:  "date"
-              value_type:  "string"
-            - id:  "id6"
-              label:  "Number days"
-              description:  "How long do you want to have access?"
-              type:  "input"
-              value_type:  "integer"
-              config:
-                minimum: 1
-                maximum: 730
+            name: Chipster
+            description: |
+              Chipster is a user-friendly analysis software for high-throughput data.
+              It contains over 300 analysis tools for next generation sequencing (NGS),
+              microarray, proteomics and sequence data.
+              Users can save and share automatic analysis workflows, and visualize data interactively using
+              a built-in genome browser and many other visualizations.
+            parameters: *appParameters
     ClustalW2:
         title: ClustalW2
         parents: *applicationsParent
@@ -2132,6 +2252,11 @@ services:
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
           ClustalW2 is a multiple sequence alignment tool for the alignment of DNA or protein sequences.
+        offers:
+          1:
+            name: ClustalW2
+            description: ClustalW2 is a multiple sequence alignment tool for the alignment of DNA or protein sequences.
+            parameters: *appParameters
     AutoDock Vina:
         title: AutoDock Vina
         parents: *applicationsParent
@@ -2151,9 +2276,16 @@ services:
         area: *lifeSciences
         restrictions: *notSpecified
         phase: *notSpecified
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+        tagline: |
+          Applications on Demand gives you access to online applications and application-development
+          and hosting frameworks to support compute-intensive data analysis
         description: |
           AutoDock Vina is an open-source software for doing molecular docking.
+        offers:
+          1:
+            name: AutoDock Vina
+            description: AutoDock Vina is an open-source software for doing molecular docking.
+            parameters: *appParameters
     Notebook:
         title: &notebook Notebook
         parents: *applicationsParent
@@ -3012,6 +3144,35 @@ services:
           Eliminate the barrier to get access to and to start to develop algorithms in view of remote sensing data.
           Full access to EODC Copernicus satellite data archive.
           No need to setup a VM to access data archive.Simple python dev. environment.
+        offers:
+          1:
+            name: JupyterHub
+            description: |
+              EODC JupyterHub provides access to the global EODC Copernicus Data Archive.
+              Eliminate the barrier to get access to and to start to develop algorithms in view of remote sensing data.
+              Full access to EODC Copernicus satellite data archive.
+              No need to setup a VM to access data archive.Simple python dev. environment.
+            parameters:
+              - id:  "id1"
+                label:  "First name"
+                description:  "Type your first name"
+                type:  "input"
+                value_type:  "string"
+              - id:  "id2"
+                label:  "Last name"
+                description:  "Type your last name"
+                type:  "input"
+                value_type:  "string"
+              - id:  "id3"
+                label:  "E-mail"
+                description:  "Type your e-mail"
+                type:  "input"
+                value_type:  "string"
+              - id:  "id4"
+                label:  "Institution"
+                description:  "Type institution name"
+                type:  "input"
+                value_type:  "string"
     EODC Data Catalogue Service:
         title: &eodcDCS EODC Data Catalogue Service
         parents: [*thematicServicesParent, *researchDataParent]
@@ -3033,6 +3194,32 @@ services:
         tagline: Catalog Service for the Web (CSW)
         description: |
           Catalog Service for the Web (CSW)
+        offers:
+          1:
+            name: EODC Data Catalogue Service
+            description: |
+              Catalog Service for the Web (CSW)
+            parameters:
+            - id:  "id1"
+              label:  "First name"
+              description:  "Type your first name"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id2"
+              label:  "Last name"
+              description:  "Type your last name"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id3"
+              label:  "E-mail"
+              description:  "Type your e-mail"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id4"
+              label:  "Institution"
+              description:  "Type institution name"
+              type:  "input"
+              value_type:  "string"
     Sentiel hub:
         title: &sentinelHub Sentiel hub
         parents: [*thematicServicesParent, *researchDataParent]
@@ -3109,6 +3296,32 @@ services:
           millions of satellite images into few spatio-temporal cubes.
           Visualize via WMS, extract via WCS or perform server-side analytics via WCPS
           on any subset of Sentinel or Landsat data in real time, in your favorite client.
+        offers:
+          1:
+            name: Rasdaman EO Datacube
+            description: |
+              Catalog Service for the Web (CSW)
+            parameters:
+            - id:  "id1"
+              label:  "First name"
+              description:  "Type your first name"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id2"
+              label:  "Last name"
+              description:  "Type your last name"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id3"
+              label:  "E-mail"
+              description:  "Type your e-mail"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id4"
+              label:  "Institution"
+              description:  "Type institution name"
+              type:  "input"
+              value_type:  "string"
     Cloud Ferro Data Collections Catalog:
         title: &cfdcs Cloud Ferro Data Collections Catalog
         parents: [*thematicServicesParent, *researchDataParent]
@@ -3318,6 +3531,77 @@ services:
             3. Go to the cart and submit your order.
             4. You will receive an email summarising your order.
             5. You will be contacted by the EGI support team.
+        offers:
+          1:
+            name: Training Infrastructure
+            description: |
+              The Training Infrastructure offers cloud compute and online storage for training activities.
+              It is useful to organise onsite tutorials or workshops
+              and online training courses or as a platform for self­-paced learning.
+              For example, with the Training Infrastructure trainers can create
+              and deploy any custom virtual machine images for the students.
+            parameters:
+            - id:  "id1"
+              label:  "Location"
+              description:  "Type your location"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id2"
+              label:  "Aim of the training event"
+              description:  "Type aim of the training event"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id3"
+              label:  "Number of concurrent trainees"
+              description:  "Type number of concurrent trainees"
+              type:  "input"
+              value_type:  "integer"
+              config:
+                minimum: 1
+            - id:  "id4"
+              label:  "Number of cores"
+              description:  "Type number of cores"
+              type:  "select"
+              value_type:  "integer"
+              config:
+                values: [1, 2, 3, 4, 5, 6, 7, 8]
+            - id:  "id5"
+              label:  "Amount od RAM"
+              description:  "Type amount of RAM"
+              type:  "input"
+              unit: "GB"
+              value_type:  "integer"
+              config:
+                minimum: 1
+            - id:  "id6"
+              label:  "Online storage size"
+              description:  "Type online storage size"
+              type:  "input"
+              unit: "GB"
+              value_type:  "integer"
+              config:
+                minimum: 1
+            - id:  "id7"
+              label:  "Special requirements"
+              description:  "Type special requirements"
+              type:  "input"
+              value_type:  "string"
+              config:
+                minimum: 1
+            - id:  "id8"
+              label:  "Start of service"
+              description:  "Please choose start date"
+              type:  "date"
+              value_type:  "string"
+            - id:  "id9"
+              label:  "Number of days"
+              description:  "Type number of days"
+              type:  "input"
+              value_type:  "integer"
+              config:
+                minimum: 1
+                maximum: 730
+
     FitSM:
         title: FitSM
         parents: *professionalServicesParent
@@ -3355,6 +3639,60 @@ services:
           3. Go to the cart and submit your order.
           4. You will receive an email summarising your order.
           5. You will be contacted by the EGI support team."
+        offers:
+          1:
+            name: FitSM Foundation Level
+            description: |
+              Target audience: All individuals involved in the provisioning of (federated) IT services,
+              Candidates who wish to progress to advance level of the qualification and certification scheme
+            parameters: &fitSMParameters
+            - id:  "id1"
+              label:  "Location"
+              description:  "Type your location"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id2"
+              label:  "Start of service"
+              description:  "Please choose start date"
+              type:  "date"
+              value_type:  "string"
+            - id:  "id3"
+              label:  "Number of students"
+              description:  "Type number of students"
+              type:  "input"
+              value_type:  "integer"
+              config:
+                minimum: 1
+          2:
+            name: Advanced Level in Service Planning and Delivery
+            description: |
+              Target audience: Individuals aiming to fulfil a coordinating role
+              in the ITSM processes related to the planning and delivery of IT services,
+              Candidates who wish to progress to expert level of the qualification and certification scheme.
+            parameters: *fitSMParameters
+          3:
+            name: Advanced Level in Service Operation and Control
+            description: |
+              Target audience: Individuals aiming to fulfil a coordinating role
+              in the ITSM processes related to the operation and control of IT services,
+              Candidates who wish to progress to expert level of the qualification and certification scheme.
+            parameters: *fitSMParameters
+          4:
+            name: Expert Level
+            description: |
+              Target audience: Individuals aiming to fulfil the role of internal or external consultant
+              or auditor in the topic area of IT service management (ITSM).
+            parameters: *fitSMParameters
+          5:
+            name: Consultancy
+            description: |
+              Advise on how to manage IT services with a pragmatic and lightweight standard.
+            parameters:
+              - id:  "id1"
+                label:  "Description of the consultancy"
+                description:  "Type description of the consultancy"
+                type:  "input"
+                value_type:  "string"
 
 relations:
   HaddockToPowerFit:
