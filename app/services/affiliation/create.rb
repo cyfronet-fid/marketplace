@@ -6,7 +6,7 @@ class Affiliation::Create
   end
 
   def call
-    @affiliation.regenerate_token
+    @affiliation.token = Affiliation.generate_unique_secure_token
     if @affiliation.save
       AffiliationMailer.verification(@affiliation).deliver_later
     end
