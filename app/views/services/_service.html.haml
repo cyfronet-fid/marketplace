@@ -1,6 +1,6 @@
-.media.border-bottom.pb-3.mb-3
+.media.border-bottom.pb-4.mb-4
   .media-body
-    %h2= link_to service.title, service
+    %h2.font-weight-bolder= link_to service.title, service
     %p.mb-3= service.tagline
     = render "services/categorization", service: service
   - if service.logo.attached?
