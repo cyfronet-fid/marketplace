@@ -5,14 +5,14 @@
     .row
       .col-9
         %h2.font-weight-bolder= service.title
-        %p= service.tagline
+        %p.mb-1= service.tagline
         = render "services/categorization", service: service
-        .row
+        .row.mt-2
           .col
             = print_rating_stars(service.rating)
-            %span.small.ml-1.font-weight-bold
+            %span.ml-1.font-weight-bold
               (#{service.rating} /5)
-            = link_to "#{service.service_opinion_count} opinions", service_opinions_path(service), class: "small ml-3"
+            = link_to "#{service.service_opinion_count} opinions", service_opinions_path(service), class: "ml-3"
       .col-3.text-center
         - if policy(service).order?
           = link_to service_offers_path(service), class: "btn btn-primary d-block mb-2" do

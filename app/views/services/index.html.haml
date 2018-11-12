@@ -12,9 +12,9 @@
                           dedicated_for_options: @dedicated_for_options,
                           rating_options: @rating_options
     .col-md-9
-      .row
+      %header.row.mb-4
         .col-md-8
-          %h1.mb-3.font-weight-bold Services
+          %h1 Services
         .col-md-3.offset-md-1.my-auto
           = form_tag services_path, method: :get, role: "search", class: "" do
             .row

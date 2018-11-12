@@ -1,8 +1,5 @@
 header {
-  a,
-  svg {
-    color: $nav-color;
-  }
+
 
   .input-group {
     &:focus {
@@ -22,6 +19,7 @@ header {
       .nav-link {
         font-size: $font-size-navbar;
         font-weight: $font-weight-normal;
+        color: $nav-color;
       }
 
       .active {
