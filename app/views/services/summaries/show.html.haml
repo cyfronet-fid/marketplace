@@ -10,7 +10,7 @@
   = simple_form_for @confirmation, url: service_summary_path(@service), html: { id: "order-form"  } do |f|
     = f.input :terms_and_conditions, as: :boolean
 
-%h3.mt-5
+%h3.mt-4
   Technical configuration
 
 .card.offer-description.mb-5
@@ -24,12 +24,7 @@
   %h3.mb-4
     Additional information
 
-  %h4 My projects
-  %dl.mb-4
-    %dt Project name
-    %dd= @project_item.project.name
-
-  %h4 Usage
+  %h3 Usage
   %dl.mb-4
     %dt Customer typology
     %dd= @project_item.customer_typology
@@ -63,6 +58,11 @@
 
       %dt Supervisor profile
       %dd= @project_item.affiliation.supervisor_profile.presence || "No supervisor profile set"
+
+  %h4 My projects
+  %dl.mb-4
+    %dt Project name
+    %dd= @project_item.project.name
 
 
 = content_for :next_button do

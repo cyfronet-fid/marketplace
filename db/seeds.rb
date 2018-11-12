@@ -64,8 +64,9 @@ yaml_hash["services"].each do |_, hash|
     service.logo.attached? && service.logo.purge_later
     hash["logo"] && service.logo.attach(io: File.open("db/logos/#{main_category}/#{hash["logo"]}"), filename: hash["logo"])
 
-    service.offers.create!(name: "Offer 1", description: "This is offer 1")
-    service.offers.create!(name: "Offer 2", description: "This is offer 2")
+    hash["offers"] && hash["offers"].each do |_, hash|
+      service.offers.create!(name: hash["name"], description: hash["description"], parameters: hash["parameters"])
+    end
   end
   puts "Generated service #{ hash["title"] }"
 end

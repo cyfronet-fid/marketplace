@@ -25,7 +25,6 @@ class Affiliation < ApplicationRecord
   validate :email_from_webpage_domain, if: :email
 
   validates :status, presence: true
-  validates :token, uniqueness: true
 
   before_save :guarantee_urls_protocol
 
