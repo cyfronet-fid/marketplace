@@ -6,6 +6,7 @@ class Affiliation::Create
   end
 
   def call
+    @affiliation.regenerate_token
     if @affiliation.save
       AffiliationMailer.verification(@affiliation).deliver_later
     end
