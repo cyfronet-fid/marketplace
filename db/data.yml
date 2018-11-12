@@ -62,6 +62,8 @@ providers:
         name: &fzj "FZJ"
     PSNC:
         name: &psnc "PSNC"
+    SmartSMEAR:
+        name: &smartSmear "SmartSMEAR"
     RECAS-BARI:
         name: &recas "RECAS-BARI"
     CYFRONET-LCG2:
@@ -231,6 +233,9 @@ services:
                 description:  "Type number of VM instances from 1-50"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 50
               - id: "id5"
                 label: "Access type"
                 description:  "Choose access type"
@@ -249,6 +254,9 @@ services:
                 description:  "Choose number of days"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 730
           2:
             name: Compute-intensive
             description: |
@@ -288,6 +296,9 @@ services:
                 description:  "Type number of VM instances from 1-50"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 50
               - id: "id5"
                 label: "Access type"
                 description:  "Access type for this offer is constant"
@@ -304,6 +315,9 @@ services:
                 description:  "Choose number of days"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 730
           3:
             name: High-memory
             description: |
@@ -343,6 +357,9 @@ services:
                 description:  "Type number of VM instances from 1-50"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 50
               - id: "id5"
                 label: "Access type"
                 description:  "Access type for this offer is constant"
@@ -359,6 +376,9 @@ services:
                 description:  "Choose number of days"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 730
           4:
             name: GPU
             description: |
@@ -400,6 +420,9 @@ services:
                 description:  "Type number of VM instances from 1-50"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 50
               - id: "id6"
                 label: "Access type"
                 description:  "Access type for this offer is constant"
@@ -416,6 +439,9 @@ services:
                 description:  "Choose number of days"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 730
     High-Throughput compute:
         title: EGI High-Throughput compute
         parents: *computeParent
@@ -513,6 +539,9 @@ services:
                 description:  "Choose number of days"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 730
           2:
             name: MPI
             description: |
@@ -575,6 +604,9 @@ services:
                 description:  "Choose number of days"
                 type:  "input"
                 value_type:  "integer"
+                config:
+                  minimum: 1
+                  maximum: 730
     Cloud container compute:
         title: EGI Cloud container compute BETA
         parents: *computeParent
@@ -814,7 +846,6 @@ services:
               and it allows in particular to discover data that is stored through the B2SAFE and B2SHARE services.
               Features: Public service supporting cross disciplinary research, No registration required.
               Ideal for: Researchers seeking interesting datasets.
-
           2:
             name: B2FIND For Data Providers
             description: |
@@ -1624,11 +1655,12 @@ services:
           which can be accessed through various data viewers.
           Data from individual floats are also available from a certain region or time.
     GEOSS Portal:
-        title: GEOSS Web Portal
+        title: &geossPortal GEOSS Web Portal
         parents: *researchDataParent
         providers: [*esa]
         logo: geoss-portal.png
-        open_access: false
+        open_access: true
+        connected_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
         webpage_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
         manual_url: https://google.com
         helpdesk_url: https://google.com
@@ -1649,7 +1681,36 @@ services:
           providing discoverability of more than 400M datasets.
           This version of the GEOSS Web Portal is connected also to the ECOPotential Virtual Laboratory,
           allowing users to execute available models utilizing GEOSS data as inputs.
-
+        offers:
+          1:
+            name: GEOSS Portal
+            description: *notSpecified
+    GEOSS DAB:
+        title: &geossDab GEOSS DAB
+        parents: *researchDataParent
+        providers: [*esa]
+        logo: geoss-portal.png
+        open_access: true
+        connected_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
+        webpage_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
+        manual_url: https://google.com
+        helpdesk_url: https://google.com
+        tutorial_url: https://google.com
+        terms_of_use_url: http://geosspublish.uat.esaportal.eu/community/guest/terms-conditions
+        corporate_sla_url: https://google.com
+        access_policies_url: https://google.com
+        places: *europe
+        dedicated_for: ["Reaserchers"] #TODO: but not specified
+        languages: *english
+        area: *earthScience
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: *notSpecified
+        description: *notSpecified
+        offers:
+          1:
+            name: GEOSS DAB
+            description: *notSpecified
     Clarin:
         title: &clarinService Clarin
         parents: *researchDataParent
@@ -1785,7 +1846,58 @@ services:
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
           GNU Octave is a high-level interpreted language, primarily intended for numerical computations.
-          It provides capabilities for the numerical solution of linear and nonlinear problems, and for performing other numerical experiments.
+          It provides capabilities for the numerical solution of linear and nonlinear problems,
+          and for performing other numerical experiments.
+        offers:
+          1:
+            name: GNU Octave
+            description: |
+              GNU Octave is a high-level interpreted language, primarily intended for numerical computations.
+              It provides capabilities for the numerical solution of linear and nonlinear problems,
+              and for performing other numerical experiments.
+            parameters: &appParameters
+            - id: "id1"
+              label: "Number of CPU cores"
+              description:  "Number of cores for this offer is constant"
+              type:  "attribute"
+              value_type:  "integer"
+              value: 20
+            - id: "id2"
+              label: "Total amount of RAM"
+              description:  "Amount of RAM for this offer is constant"
+              type:  "attribute"
+              unit: "GB"
+              value_type:  "integer"
+              value: 4
+            - id: "id3"
+              label: "Storage capacity"
+              description:  "Storage capacity for this offer is constant"
+              type:  "attribute"
+              unit: "GB"
+              value_type:  "integer"
+              value: 100
+            - id: "id4"
+              label: "Access type"
+              description:  "Access type for this offer is constant"
+              type:  "attribute"
+              value_type:  "string"
+              value: "opportunistic"
+            - id: "id5"
+              label: "Start of service"
+              description:  "Choose service start date"
+              type:  "date"
+              value_type:  "string"
+            - id: "id6"
+              label: "Number of days"
+              description:  "Choose service start date"
+              type:  "input"
+              value_type:  "integer"
+              value: 365
+              config:
+                minimum: 1
+                maximum: 730
+
+
     Galaxy:
         title: Galaxy
         parents: *applicationsParent
@@ -1808,6 +1920,11 @@ services:
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
           Galaxy is an open, web-based platform for data-intensive biomedical research.
+        offers:
+          1:
+            name: Galaxy
+            description: Galaxy is an open, web-based platform for data-intensive biomedical research.
+            parameters: *appParameters
     NAMD:
         title: NAMD
         parents: *applicationsParent
@@ -1831,6 +1948,13 @@ services:
         description: |
           NAMD is a parallel molecular dynamics code designed for high-performance simulation
           of large bio-molecular systems.
+        offers:
+          1:
+            name: NAMD
+            description: |
+              NAMD is a parallel molecular dynamics code designed for high-performance simulation
+              of large bio-molecular systems.
+            parameters: *appParameters
     Apache Tomcat:
         title: Apache Tomcat
         parents: *applicationsParent
@@ -1850,10 +1974,19 @@ services:
         area: *earthScience
         restrictions: *notSpecified
         phase: *notSpecified
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+        tagline: |
+          Applications on Demand gives you access to online applications and application-development
+          and hosting frameworks to support compute-intensive data analysis
         description: |
           Apache Tomcat is an open source implementation of the Java Servlet, JavaServer Pages,
           Java Expression Language and Java WebSocket technologies.
+        offers:
+          1:
+            name: Apache Tomcat
+            description: |
+              Apache Tomcat is an open source implementation of the Java Servlet, JavaServer Pages,
+              Java Expression Language and Java WebSocket technologies.
+            parameters: *appParameters
     Gnuplot:
         title: Gnuplot
         parents: *applicationsParent
@@ -1875,7 +2008,15 @@ services:
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
-          Gnuplot is a portable command-line driven graphing utility for Linux, OS/2, MS Windows, OSX, VMS, and other platforms.
+          Gnuplot is a portable command-line driven graphing utility for Linux,
+          OS/2, MS Windows, OSX, VMS, and other platforms.
+        offers:
+          1:
+            name: Gnuplot
+            description: |
+              Gnuplot is a portable command-line driven graphing utility for Linux,
+              OS/2, MS Windows, OSX, VMS, and other platforms.
+            parameters: *appParameters
     Docker:
         title: Docker
         parents: *applicationsParent
@@ -1898,6 +2039,13 @@ services:
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
           Docker is an open-source project that automates the deployment of Linux applications inside software containers.
+        offers:
+          1:
+            name: Docker
+            description: |
+              Docker is an open-source project that automates the deployment
+              of Linux applications inside software containers.
+            parameters: *appParameters
     Hadoop:
         title: Hadoop
         parents: *applicationsParent
@@ -1919,7 +2067,15 @@ services:
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
-          Hadoop is a framework that allows for the distributed processing of large data sets across clusters of computers using simple programming models.
+          Hadoop is a framework that allows for the distributed processing
+          of large data sets across clusters of computers using simple programming models.
+        offers:
+          1:
+            name: Hadoop
+            description: |
+              Hadoop is a framework that allows for the distributed processing
+              of large data sets across clusters of computers using simple programming models.
+            parameters: *appParameters
     Marathon:
         title: Marathon
         parents: *applicationsParent
@@ -1941,7 +2097,15 @@ services:
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
-          Marathon a production-grade container orchestration platform for Mesosphere's Data Center/Operating System (DC/OS) and Apache Mesos.
+          Marathon a production-grade container orchestration platform
+          for Mesosphere's Data Center/Operating System (DC/OS) and Apache Mesos.
+        offers:
+          1:
+            name: Marathon
+            description: |
+              Marathon a production-grade container orchestration platform
+              for Mesosphere's Data Center/Operating System (DC/OS) and Apache Mesos.
+            parameters: *appParameters
     Chronos:
         title: Chronos
         open_access: false
@@ -1963,7 +2127,15 @@ services:
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
-          Chronos is a distributed and fault-tolerant scheduler that runs on top of Apache Mesos that can be used for job orchestration.
+          Chronos is a distributed and fault-tolerant scheduler that runs on top
+          of Apache Mesos that can be used for job orchestration.
+        offers:
+          1:
+            name: Chronos
+            description: |
+              Chronos is a distributed and fault-tolerant scheduler that runs on top
+              of Apache Mesos that can be used for job orchestration.
+            parameters: *appParameters
     Jupyter:
         title: Jupyter
         open_access: false
@@ -1987,6 +2159,13 @@ services:
         description: |
           Jupyter is an open-source web application that allows you to create and share documents with live code,
           equations, visualisations and explanatory text.
+        offers:
+          1:
+            name: Jupyter
+            description: |
+              Jupyter is an open-source web application that allows you to create and share documents with live code,
+              equations, visualisations and explanatory text.
+            parameters: *appParameters
     The R project for statistical computing:
         title: The R project for statistical computing
         parents: *applicationsParent
@@ -2010,6 +2189,13 @@ services:
         description: |
           The R Project for Statistical Computing (v3.2.2)
           is a language and environment for statistical computing and graphics.
+        offers:
+          1:
+            name: The R project for statistical computing
+            description: |
+              The R Project for Statistical Computing (v3.2.2)
+              is a language and environment for statistical computing and graphics.
+            parameters: *appParameters
     The Semantic Search Engine (SSE):
         title: The Semantic Search Engine (SSE)
         parents: *applicationsParent
@@ -2033,6 +2219,13 @@ services:
         description: |
           The Semantic Search Engine (SSE) is an application conceived to demonstrate the potential of information
           coupled with semantic web technologies to address the issues of data discovery and correlation.
+        offers:
+          1:
+            name: The Semantic Search Engine (SSE)
+            description: |
+              The Semantic Search Engine (SSE) is an application conceived to demonstrate the potential of information
+              coupled with semantic web technologies to address the issues of data discovery and correlation.
+            parameters: *appParameters
     Chipster:
         title: Chipster
         parents: *applicationsParent
@@ -2055,61 +2248,20 @@ services:
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
           Chipster is a user-friendly analysis software for high-throughput data.
-          It contains over 300 analysis tools for next generation sequencing (NGS), microarray, proteomics and sequence data.
-          Users can save and share automatic analysis workflows, and visualize data interactively using a built-in genome browser and many other visualizations.
+          It contains over 300 analysis tools for next generation sequencing (NGS),
+          microarray, proteomics and sequence data.
+          Users can save and share automatic analysis workflows, and visualize data interactively using
+          a built-in genome browser and many other visualizations.
         offers:
           1:
-            name: "Offer"
-            description: "This service has only 1 offer"
-            parameters:
-            - id:  "id1"
-              label:  "Number of CPU hours"
-              description:  "Select number of cores you want"
-              type:  "select"
-              unit: "h"
-              value_type:  "integer"
-              config:
-                mode:  "buttons"
-                values:  [1000]
-            - id:  "id2"
-              label:  "Total amount of RAM per CPU core"
-              description:  "Select RAM per core"
-              unit: "GB"
-              type:  "select"
-              value_type:  "integer"
-              config:
-                mode:  "buttons"
-                values:  [4]
-            - id:  "id3"
-              label:  "Storage capacity"
-              description:  "Select storage"
-              unit: "GB"
-              type:  "select"
-              value_type:  "integer"
-              config:
-                mode:  "buttons"
-                values:  [100]
-            - id:  "id4"
-              label:  "Access type"
-              description:  "Select access type"
-              type:  "select"
-              value_type:  "string"
-              config:
-                mode:  "buttons"
-                values:  ["opportunistic"]
-            - id:  "id5"
-              label:  "Start of service"
-              description:  "When do you want access the service"
-              type:  "date"
-              value_type:  "string"
-            - id:  "id6"
-              label:  "Number days"
-              description:  "How long do you want to have access?"
-              type:  "input"
-              value_type:  "integer"
-              config:
-                minimum: 1
-                maximum: 730
+            name: Chipster
+            description: |
+              Chipster is a user-friendly analysis software for high-throughput data.
+              It contains over 300 analysis tools for next generation sequencing (NGS),
+              microarray, proteomics and sequence data.
+              Users can save and share automatic analysis workflows, and visualize data interactively using
+              a built-in genome browser and many other visualizations.
+            parameters: *appParameters
     ClustalW2:
         title: ClustalW2
         parents: *applicationsParent
@@ -2132,6 +2284,11 @@ services:
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
         description: |
           ClustalW2 is a multiple sequence alignment tool for the alignment of DNA or protein sequences.
+        offers:
+          1:
+            name: ClustalW2
+            description: ClustalW2 is a multiple sequence alignment tool for the alignment of DNA or protein sequences.
+            parameters: *appParameters
     AutoDock Vina:
         title: AutoDock Vina
         parents: *applicationsParent
@@ -2151,9 +2308,16 @@ services:
         area: *lifeSciences
         restrictions: *notSpecified
         phase: *notSpecified
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+        tagline: |
+          Applications on Demand gives you access to online applications and application-development
+          and hosting frameworks to support compute-intensive data analysis
         description: |
           AutoDock Vina is an open-source software for doing molecular docking.
+        offers:
+          1:
+            name: AutoDock Vina
+            description: AutoDock Vina is an open-source software for doing molecular docking.
+            parameters: *appParameters
     Notebook:
         title: &notebook Notebook
         parents: *applicationsParent
@@ -2171,8 +2335,8 @@ services:
         languages: *english
         area: *lifeSciences
         restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: *notSpecified
+        phase: Beta
+        tagline: Create interactive documents with live code, visualisations and narrative text powered by the Jupyter technology
         description: |
           The service provides a browser-based tool for interactive analysis of data using EGI storage
           and compute infrastructures based on the JupyterHub technology. The notebooks can combine text,
@@ -2187,7 +2351,70 @@ services:
             2. For user communities EGI offers consultancy and technology
             to setup a community-specific JupyterHub on top of community VO
             (together with EGI-enbled compute and storage resources), and with community-specific storage/data.
-
+        offers:
+          1:
+            name: "AoD/Catch-all"
+            description: Run your own notebooks with persistent storage on EGI Cloud resources.
+            parameters:
+            - id:  "id1"
+              label:  "Amount of RAM"
+              description:  "Please choose amount of RAM"
+              type:  "select"
+              unit: "GB"
+              value_type:  "integer"
+              config:
+                mode: "buttons"
+                values: [0.5, 1]
+            - id:  "id2"
+              label:  "Number of cores"
+              description:  "Choose number of cores"
+              type:  "select"
+              value_type:  "integer"
+              config:
+                mode: "buttons"
+                values: [1, 2, 4]
+            - id:  "id3"
+              label:  "Persistent storage"
+              unit: "GB"
+              description:  "Choose amount of storage"
+              type:  "select"
+              value_type:  "integer"
+              config:
+                mode: "buttons"
+                values: [1, 10, 20]
+          2:
+            name: Community Notebook
+            description: |
+              Community specific deployment to provide notebooks for all the users of a community.
+              Allows further customisation to meet the community needs (e.g. shared storage)
+            parameters:
+            - id:  "idq"
+              label:  "Number of users"
+              description:  "Please type number of users"
+              type:  "input"
+              value_type:  "integer"
+              config:
+                minimum: 1
+            - id:  "id2"
+              label:  "Amount of RAM"
+              description:  "Please choose amount of RAM"
+              type:  "input"
+              unit: "GB"
+              value_type:  "integer"
+            - id:  "id3"
+              label:  "Number of cores per user"
+              description:  "Choose number of cores"
+              type:  "select"
+              value_type:  "integer"
+              config:
+                mode: "button"
+                values: [1, 2, 4]
+            - id:  "id4"
+              label:  "Storage per user"
+              unit: "GB"
+              description:  "Choose amount of storage"
+              type:  "input"
+              value_type:  "integer"
 #    Component Metadata Infrastructure:
 #        title: Component Metadata Infrastructure
 #        parents: *thematicServicesParent
@@ -2308,7 +2535,11 @@ services:
         phase: *notSpecified
         tagline: Simplify the access and management of computing resources
         description: |
-          DODAS acts as cloud enabler designed for scientists seeking to easily exploit distributed and heterogeneous clouds to process data. Aiming to reduce the learning curve as well as the operational cost of managing community specific services running on distributed cloud, DODAS completely automates the process of provisioning, creating, managing and accessing a pool of heterogeneous computing and storage resources.
+          DODAS acts as cloud enabler designed for scientists seeking to easily exploit distributed
+          and heterogeneous clouds to process data. Aiming to reduce the learning curve as well as
+          the operational cost of managing community specific services running on distributed cloud,
+          DODAS completely automates the process of provisioning, creating, managing and accessing
+          a pool of heterogeneous computing and storage resources.
 
           ### DODAS provides:
 
@@ -2363,24 +2594,24 @@ services:
                 value: 365
     D4 Science Particle Formation:
         title: &d4scienceService Particle Formation
-        parents: [*thematicServicesParent, *applicationsParent]
-        providers: [*d4science]
-        logo: d4science-gateway.png
+        parents: [*applicationsParent, *thematicServicesParent]
+        providers: [*d4science, *egi, *smartSmear]
+        logo: vre.png
         open_access: true
         connected_url: https://services.d4science.org/group/particleformation/
         webpage_url: https://services.d4science.org/group/particleformation
-        manual_url: https://services.d4science.org/group/particleformation/
+        manual_url: https://github.com/markusstocker/pynpf-d4science
         helpdesk_url: https://github.com/markusstocker/pynpf-d4science
-        tutorial_url: https://www.google.com
+        tutorial_url: https://youtu.be/ra9W7b5DbgI
         terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
+        corporate_sla_url: https://documents.egi.eu/document/2875
         access_policies_url: https://www.google.com
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
         area: *physicalScienceEarth
         restrictions: *notSpecified
-        phase: *notSpecified
+        phase: Beta (min. TRL 7)
         tagline: D4 Science Service
         description: |
           The VRE supports new particle formation event analysis on interoperable e-Infrastructures.
@@ -2388,6 +2619,10 @@ services:
           It integrates the SMEAR Research Infrastructure (provider of primary data) and uses EGI
           and D4Science services to support primary data interpretation and the cataloging of data derived in analysis.
           Access to the VRE requires a D4Science account.
+        offers:
+          1:
+            name: New Particle Formation Event Analysis
+            description: *notSpecified
     ENES Climate Analytics Service:
         title: ENES Climate Analytics Service
         parents: [*thematicServicesParent, *researchDataParent]
@@ -2462,7 +2697,7 @@ services:
     LifeWatch ERIC Plants Identification App:
         title: LifeWatch ERIC Plants Identification App
         parents: *thematicServicesParent
-        providers: [*not]
+        providers: [*lifewatch]
         logo: lifewatch-eric-plants-identification-app.png
         open_access: false
         webpage_url: https://www.lifewatch.eu/
@@ -2761,58 +2996,66 @@ services:
 #                      During EOSC-hub, the WeNMR services will be integrated with EUDAT services and other components from the INDIGO catalogue."
     HADDOCK:
         title: &haddock HADDOCK
-        parents: [*thematicServicesParent, *applicationsParent]
+        parents: [*thematicServicesParent]
         providers: [*uou, *uof, *cirmmp]
         logo: haddock.png
         open_access: true
-        connected_url: https://enmrdevel.science.uu.nl/auth/register/haddock
+        connected_url: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
         webpage_url: https://enmrdevel.science.uu.nl/auth/register/haddock
         manual_url: http://www.bonvinlab.org/software/haddock2.2/manual/
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        helpdesk_url: http://ask.bioexcel.eu/c/haddock
+        tutorial_url: https://www.wenmr.eu/tutorials/#haddock
+        terms_of_use_url: https://wenmr.science.uu.nl/conditions
+        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        dedicated_for: ["Researchers"]
         languages: *english
-        area: &biologicalSciences Biological Sciences
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: A suite of computational tools for structural biology
+        area: *biologicalSciences
+        restrictions: "Registration required, Limited to non-profit users"
+        phase: Production (min. TRL 8)
+        tagline: Integrative modeling of biomolecular complexes with the user-friendly, EGI HTC-enabled HADDOCK portal
         description: |
-          Integrative modeling of biomolecular complexes with the user-friendly, EGI HTC-enabled HADDOCK portal.
           HADDOCK is a web portal that offers computational tools for structural biologists to model the structure
-          of complexes of proteins and other biomolecules via a user-friendly interface.
-          The portal offers a number of interfaces, depending on the amount of information and restraints
-          that researchers wish to place on their models.
-          HADDOCK is prepared to deal with several classes of problems, including protein-protein,
-          protein-nucleic acids and protein-ligand complexes."
+          of complexes of proteins and other biomolecules via a user-friendly interface. The portal offers a number
+          of interfaces, depending on the amount of information and restraints that researchers wish
+          to place on their models.
+          HADDOCK is prepared to deal with several classes of problems,
+          including protein-protein, protein-nucleic acids and protein-ligand complexes.
+        offers: &wenMRService
+          1:
+            name: WeNMR Suite for Structural Biology
+            description: |
+              WeNMR is a Virtual Research Community supported by EGI.
+              WeNMR aims at bringing together complementary research teams in the structural biology
+              and life science area into a virtual research community at a worldwide level and provide them
+              with a platform integrating and streamlining the computational approaches
+              necessary for data analysis and modelling.
     PowerFit:
         title: &powerFit PowerFit
-        parents: [*thematicServicesParent, *applicationsParent]
+        parents: [*thematicServicesParent]
         providers: [*uou, *uof, *cirmmp]
         logo: powerfit.png
         open_access: true
-        connected_url: https://enmrdevel.science.uu.nl/auth/register/powerfit
+        connected_url: http://haddock.science.uu.nl/enmr/services/POWERFIT
         webpage_url: https://enmrdevel.science.uu.nl/auth/register/powerfit
-        manual_url: http://milou.science.uu.nl/cgi/services/POWERFIT/powerfit/help
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        manual_url: http://haddock.science.uu.nl/cgi/enmr/services/POWERFIT/powerfit/help
+        helpdesk_url: http://ask.bioexcel.eu/c/powerfit
+        tutorial_url: https://www.wenmr.eu/tutorials/#powerfit
+        terms_of_use_url: https://wenmr.science.uu.nl/conditions
+        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        dedicated_for: ["Researchers"]
         languages: *english
         area: *biologicalSciences
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: A suite of computational tools for structural biology
+        restrictions: "Registration required, Limited to non-profit users"
+        phase: "Production (min. TRL 8)"
+        tagline: The PowerFit server allows you to fit your 3D structures in any map!
         description: |
-          The PowerFit server allows you to fit your 3D structures in any map!
           PowerFit is a software designed to fit atomic structures into cryo-EM density maps,
-          using an exhaustive 6-dimensional cross-correlation search."
+          using an exhaustive 6-dimensional cross-correlation search.
+        offers: *wenMRService
     DisVis:
         title: &disVis DisVis
         parents: [*thematicServicesParent, *applicationsParent]
@@ -2820,126 +3063,129 @@ services:
         logo: disvis.png
         open_access: true
         connected_url: https://enmrdevel.science.uu.nl/auth/register/disvis
-        webpage_url: https://enmrdevel.science.uu.nl/auth/register/disvis
-        manual_url: http://milou.science.uu.nl/cgi/services/DISVIS/disvis/help
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        webpage_url: http://haddock.science.uu.nl/enmr/services/DISVIS
+        manual_url: http://haddock.science.uu.nl/cgi/enmr/services/DISVIS/disvis/help
+        helpdesk_url: http://ask.bioexcel.eu/c/disvis
+        tutorial_url: https://www.wenmr.eu/tutorials/#disvis
+        terms_of_use_url: https://wenmr.science.uu.nl/conditions
+        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
         area: *biologicalSciences
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: A suite of computational tools for structural biology
+        restrictions: "Registration required, Limited to non-profit users"
+        phase: "Production (min. TRL 8)"
+        tagline: |
+          Visualizes and quantify the information content of distance
+          restraints between macromolecular complexes with DisVis
         description: |
-          Visualizes and quantify the information content of distance restraints between macromolecular complexes
-          with DisVis.
-          DisVis is a software designed to visualize and quantify the accessible interaction space defined by
-          distance restraints between biomolecules.
+          DisVis is a software designed to visualize and quantify the accessible interaction space
+          defined by distance restraints between biomolecules.
+        offers: *wenMRService
     CS-ROSETA:
         title: &roseta CS-ROSETA
-        parents: [*thematicServicesParent, *applicationsParent]
+        parents: [*thematicServicesParent]
         providers: [*uou, *uof, *cirmmp]
         logo: cs-rosetta.png
         open_access: true
         connected_url: https://enmrdevel.science.uu.nl/auth/register/cs_rosetta3
-        webpage_url: https://enmrdevel.science.uu.nl/auth/register/cs_rosetta3
+        webpage_url: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
         manual_url: http://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/csr-tutorial.html
         helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        tutorial_url: https://www.wenmr.eu/tutorials/
+        terms_of_use_url: https://wenmr.science.uu.nl/conditions
+        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        dedicated_for: ["Researchers"]
         languages: *english
         area: *biologicalSciences
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: A suite of computational tools for structural biology
+        restrictions: "Registration required, Limited to non-profit users"
+        phase: "Production (min. TRL 8)"
+        tagline: NMR protein structure prediction using the EGI HTC-enabled CS-ROSETTA portal
         description: |
-          NMR protein structure prediction using the EGI HTC-enabled CS-ROSETTA portal.
-          The CS-ROSETTA3 web portal allows structural biologists to model the 3D structure of proteins using only
-          the 13CA, 13CB, 13C’, 15N, 1HA and 1HN NMR chemical shifts as input.
+          The CS-ROSETTA3 web portal allows structural biologists to model the 3D structure of proteins
+          using only the 13CA, 13CB, 13C’, 15N, 1HA and 1HN NMR chemical shifts as input.
+        offers: *wenMRService
     AMBER:
         title: &amber AMBER
         parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
         logo: amber.png
         open_access: true
-        connected_url: https://enmrdevel.science.uu.nl/
-        webpage_url: https://enmrdevel.science.uu.nl/
+        connected_url: http://py-enmr.cerm.unifi.it/access/index
+        webpage_url: http://py-enmr.cerm.unifi.it/access/index
         manual_url: https://www.wenmr.eu/tutorials
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        helpdesk_url: http://py-enmr.cerm.unifi.it/feedback/index?type=amps-nmr
+        tutorial_url: https://www.wenmr.eu/tutorials/
+        terms_of_use_url: https://wenmr.science.uu.nl/conditions
+        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
         area: *biologicalSciences
-        restrictions: *notSpecified
-        phase: *notSpecified
+        restrictions: "Registration required, Limited to non-profit users"
+        phase: "Production (min. TRL 8)"
         tagline: A suite of computational tools for structural biology
         description: |
           Simple and user-friendly NMR-based refinement of the 3D structures of biological macromolecules
           thought the AMPS-NMR portal. Amber (Assisted Model Building with Energy Refinement) is a suite
           of programs that allow users to perform molecular dynamics (MD) simulations on biological systems
           and to store different calculations.
+        offers: *wenMRService
     FANTEN:
         title: &fanten FANTEN
         parents: [*thematicServicesParent, *applicationsParent]
         providers: [*uou, *uof, *cirmmp]
         logo: fanten.png
         open_access: true
-        connected_url: https://enmrdevel.science.uu.nl/
+        connected_url: http://abs.cerm.unifi.it:8080
         webpage_url: https://enmrdevel.science.uu.nl/
         manual_url: http://abs.cerm.unifi.it:8080/manual/FANTEN_manual.pdf
         helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        tutorial_url: https://www.wenmr.eu/tutorials/
+        terms_of_use_url: https://wenmr.science.uu.nl/conditions
+        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        dedicated_for: ["Researchers"]
         languages: *english
         area: *biologicalSciences
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: A suite of computational tools for structural biology
+        restrictions: "Registration required, Limited to non-profit users"
+        phase: "Production (min. TRL 8)"
+        tagline: FANTEN for the analysis of magnetic anisotropy-induced NMR data
         description: |
-          FANTEN for the analysis of magnetic anisotropy-induced NMR data.
-          FANTEN is a user-friendly web tool for the determination of anisotropy tensors.
-          It is freely available through the WeNMR gateway.
+          FANTEN is a user-friendly web tool for the
+          determination of anisotropy tensors. It is freely available through the WeNMR gateway.
+        offers: *wenMRService
     SpotOn:
         title: &spotOn SpotOn
-        parents: [*thematicServicesParent, *applicationsParent]
+        parents: [*thematicServicesParent]
         providers: [*uou, *uof, *cirmmp]
         logo: spoton.png
         open_access: true
-        connected_url: http://www.bonvinlab.org/software/haddock2.2/
+        connected_url: https://haddock.science.uu.nl/enmr/services/SPOTON
         webpage_url: http://www.bonvinlab.org/software/haddock2.2/
-        manual_url: http://www.bonvinlab.org/software/haddock2.2/manual/
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        manual_url: https://haddock.science.uu.nl/cgi/enmr/services/SPOTON/spoton/help
+        helpdesk_url: http://ask.bioexcel.eu/c/spoton
+        tutorial_url: https://www.wenmr.eu/tutorials/#spoton
+        terms_of_use_url: https://wenmr.science.uu.nl/conditions
+        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        dedicated_for: ["Researchers"]
         languages: *english
-        area: *biologicalSciences
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: A suite of computational tools for structural biology
+        area: [*biologicalSciences, *lifeSciences]
+        restrictions: "Registration required, Limited to non-profit users"
+        phase: "Production (min. TRL 8)"
+        tagline: "SpotOn: determination of Hot-Spots at protein-protein interfaces"
         description: |
-          SpotOn: determination of Hot-Spots at protein-protein interfaces.
-          SpotOn is a robust algorithm developed to identify and classify the interfacial residues as Hot-Spots (HS)
-          and Null-Spots (NS) with a final accuracy of 0.95 and a sensitivity of 0.95 on an independent test set.
+          SpotOn is a robust algorithm developed to identify and classify the interfacial residues
+          as Hot-Spots (HS) and Null-Spots (NS) with a final accuracy of 0.95
+          and a sensitivity of 0.95 on an independent test set.
+        offers: *wenMRService
     GEP - HRCM:
         title: &gepHRCM GEP - High-Resolution Change Monitoring for the Alpine Region
         parents: [*thematicServicesParent, *researchDataParent]
@@ -2991,7 +3237,7 @@ services:
     EODC JupyterHub for global Copernicus data:
         title: &eodcJH EODC JupyterHub for global Copernicus data
         parents: [*thematicServicesParent, *researchDataParent]
-        providers: [*eodc]
+        providers: [*terradue]
         open_access: false
         webpage_url: https://jupyterhub.eodc.eu
         manual_url: https://github.com/jupyterhub/jupyterhub
@@ -3012,10 +3258,39 @@ services:
           Eliminate the barrier to get access to and to start to develop algorithms in view of remote sensing data.
           Full access to EODC Copernicus satellite data archive.
           No need to setup a VM to access data archive.Simple python dev. environment.
+        offers:
+          1:
+            name: JupyterHub
+            description: |
+              EODC JupyterHub provides access to the global EODC Copernicus Data Archive.
+              Eliminate the barrier to get access to and to start to develop algorithms in view of remote sensing data.
+              Full access to EODC Copernicus satellite data archive.
+              No need to setup a VM to access data archive.Simple python dev. environment.
+            parameters:
+              - id:  "id1"
+                label:  "First name"
+                description:  "Type your first name"
+                type:  "input"
+                value_type:  "string"
+              - id:  "id2"
+                label:  "Last name"
+                description:  "Type your last name"
+                type:  "input"
+                value_type:  "string"
+              - id:  "id3"
+                label:  "E-mail"
+                description:  "Type your e-mail"
+                type:  "input"
+                value_type:  "string"
+              - id:  "id4"
+                label:  "Institution"
+                description:  "Type institution name"
+                type:  "input"
+                value_type:  "string"
     EODC Data Catalogue Service:
         title: &eodcDCS EODC Data Catalogue Service
         parents: [*thematicServicesParent, *researchDataParent]
-        providers: [*eodc]
+        providers: [*terradue]
         open_access: false
         webpage_url: https://csw.eodc.eu
         manual_url: https://csw.eodc.eu
@@ -3033,10 +3308,36 @@ services:
         tagline: Catalog Service for the Web (CSW)
         description: |
           Catalog Service for the Web (CSW)
+        offers:
+          1:
+            name: EODC Data Catalogue Service
+            description: |
+              Catalog Service for the Web (CSW)
+            parameters:
+            - id:  "id1"
+              label:  "First name"
+              description:  "Type your first name"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id2"
+              label:  "Last name"
+              description:  "Type your last name"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id3"
+              label:  "E-mail"
+              description:  "Type your e-mail"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id4"
+              label:  "Institution"
+              description:  "Type institution name"
+              type:  "input"
+              value_type:  "string"
     Sentiel hub:
         title: &sentinelHub Sentiel hub
         parents: [*thematicServicesParent, *researchDataParent]
-        providers: [*sinergise]
+        providers: [*terradue]
         open_access: false
         webpage_url: http://sentinel-hub.com/
         manual_url: https://www.sentinel-hub.com/develop/documentation
@@ -3062,7 +3363,7 @@ services:
     MEA Platform:
         title: &meaPlatform MEA Platform (Data access and exploitation service)
         parents: [*thematicServicesParent, *researchDataParent]
-        providers: [*meeo]
+        providers: [*terradue]
         open_access: false
         webpage_url: https://eodataservice.org
         manual_url: https://www.youtube.com/channel/UCqy-bd6CpXMOlRqfHmBqlZw
@@ -3087,7 +3388,7 @@ services:
     Rasdaman EO Datacube:
         title: &rasdamanDatacube Rasdaman EO Datacube
         parents: [*thematicServicesParent, *researchDataParent]
-        providers: [*rasdaman]
+        providers: [*terradue]
         logo: rasdaman-eo-datacube.png
         open_access: false
         webpage_url: http://eoschub.rasdaman.com:8080/rasdaman/ows
@@ -3109,10 +3410,36 @@ services:
           millions of satellite images into few spatio-temporal cubes.
           Visualize via WMS, extract via WCS or perform server-side analytics via WCPS
           on any subset of Sentinel or Landsat data in real time, in your favorite client.
+        offers:
+          1:
+            name: Rasdaman EO Datacube
+            description: |
+              Catalog Service for the Web (CSW)
+            parameters:
+            - id:  "id1"
+              label:  "First name"
+              description:  "Type your first name"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id2"
+              label:  "Last name"
+              description:  "Type your last name"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id3"
+              label:  "E-mail"
+              description:  "Type your e-mail"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id4"
+              label:  "Institution"
+              description:  "Type institution name"
+              type:  "input"
+              value_type:  "string"
     Cloud Ferro Data Collections Catalog:
         title: &cfdcs Cloud Ferro Data Collections Catalog
         parents: [*thematicServicesParent, *researchDataParent]
-        providers: [*cloudFerro]
+        providers: [*terradue]
         logo: &cfLogo cloud-ferro.png
         open_access: false
         webpage_url: https://discovery.creodias.eu/dataset
@@ -3147,7 +3474,7 @@ services:
     CloudFerro Infrastructure:
         title: &cfi CloudFerro Infrastructure
         parents: [*thematicServicesParent, *researchDataParent]
-        providers: [*cloudFerro]
+        providers: [*terradue]
         logo: *cfLogo
         open_access: false
         webpage_url: https://creodias.eu
@@ -3178,7 +3505,7 @@ services:
     Cloudferro Data related Services - EO Finder:
         title: &cfdrsEOF Cloudferro Data related Services - EO Finder
         parents: [*thematicServicesParent, *researchDataParent]
-        providers: [*cloudFerro]
+        providers: [*terradue]
         logo: *cfLogo
         open_access: false
         webpage_url: https://finder.creodias.eu/www
@@ -3200,7 +3527,7 @@ services:
         title: &cfdrsEOB Cloudferro Data related Services - EO browser
         parents: [*thematicServicesParent, *researchDataParent]
         logo: cloud-ferro-eo-browser.png
-        providers: [*cloudFerro]
+        providers: [*terradue]
         open_access: false
         webpage_url: https://browser.creodias.eu
         manual_url: https://creodias.eu/using-the-eo-browser
@@ -3318,6 +3645,77 @@ services:
             3. Go to the cart and submit your order.
             4. You will receive an email summarising your order.
             5. You will be contacted by the EGI support team.
+        offers:
+          1:
+            name: Training Infrastructure
+            description: |
+              The Training Infrastructure offers cloud compute and online storage for training activities.
+              It is useful to organise onsite tutorials or workshops
+              and online training courses or as a platform for self­-paced learning.
+              For example, with the Training Infrastructure trainers can create
+              and deploy any custom virtual machine images for the students.
+            parameters:
+            - id:  "id1"
+              label:  "Location"
+              description:  "Type your location"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id2"
+              label:  "Aim of the training event"
+              description:  "Type aim of the training event"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id3"
+              label:  "Number of concurrent trainees"
+              description:  "Type number of concurrent trainees"
+              type:  "input"
+              value_type:  "integer"
+              config:
+                minimum: 1
+            - id:  "id4"
+              label:  "Number of cores"
+              description:  "Type number of cores"
+              type:  "select"
+              value_type:  "integer"
+              config:
+                values: [1, 2, 3, 4, 5, 6, 7, 8]
+            - id:  "id5"
+              label:  "Amount od RAM"
+              description:  "Type amount of RAM"
+              type:  "input"
+              unit: "GB"
+              value_type:  "integer"
+              config:
+                minimum: 1
+            - id:  "id6"
+              label:  "Online storage size"
+              description:  "Type online storage size"
+              type:  "input"
+              unit: "GB"
+              value_type:  "integer"
+              config:
+                minimum: 1
+            - id:  "id7"
+              label:  "Special requirements"
+              description:  "Type special requirements"
+              type:  "input"
+              value_type:  "string"
+              config:
+                minimum: 1
+            - id:  "id8"
+              label:  "Start of service"
+              description:  "Please choose start date"
+              type:  "date"
+              value_type:  "string"
+            - id:  "id9"
+              label:  "Number of days"
+              description:  "Type number of days"
+              type:  "input"
+              value_type:  "integer"
+              config:
+                minimum: 1
+                maximum: 730
+
     FitSM:
         title: FitSM
         parents: *professionalServicesParent
@@ -3355,6 +3753,60 @@ services:
           3. Go to the cart and submit your order.
           4. You will receive an email summarising your order.
           5. You will be contacted by the EGI support team."
+        offers:
+          1:
+            name: FitSM Foundation Level
+            description: |
+              Target audience: All individuals involved in the provisioning of (federated) IT services,
+              Candidates who wish to progress to advance level of the qualification and certification scheme
+            parameters: &fitSMParameters
+            - id:  "id1"
+              label:  "Location"
+              description:  "Type your location"
+              type:  "input"
+              value_type:  "string"
+            - id:  "id2"
+              label:  "Start of service"
+              description:  "Please choose start date"
+              type:  "date"
+              value_type:  "string"
+            - id:  "id3"
+              label:  "Number of students"
+              description:  "Type number of students"
+              type:  "input"
+              value_type:  "integer"
+              config:
+                minimum: 1
+          2:
+            name: Advanced Level in Service Planning and Delivery
+            description: |
+              Target audience: Individuals aiming to fulfil a coordinating role
+              in the ITSM processes related to the planning and delivery of IT services,
+              Candidates who wish to progress to expert level of the qualification and certification scheme.
+            parameters: *fitSMParameters
+          3:
+            name: Advanced Level in Service Operation and Control
+            description: |
+              Target audience: Individuals aiming to fulfil a coordinating role
+              in the ITSM processes related to the operation and control of IT services,
+              Candidates who wish to progress to expert level of the qualification and certification scheme.
+            parameters: *fitSMParameters
+          4:
+            name: Expert Level
+            description: |
+              Target audience: Individuals aiming to fulfil the role of internal or external consultant
+              or auditor in the topic area of IT service management (ITSM).
+            parameters: *fitSMParameters
+          5:
+            name: Consultancy
+            description: |
+              Advise on how to manage IT services with a pragmatic and lightweight standard.
+            parameters:
+              - id:  "id1"
+                label:  "Description of the consultancy"
+                description:  "Type description of the consultancy"
+                type:  "input"
+                value_type:  "string"
 
 relations:
   HaddockToPowerFit:
@@ -3461,18 +3913,18 @@ relations:
     both: true
     source: *b2find
     target: *b2share
-#  egiToGeossPortal:
-#    both: true
-#    source: *egiCloud
-#    target: *
-#  egiToGeossDab:
-#    both: true
-#    source: *egiCloud
-#    target: *
-#  geossPortalToDab:
-#    both: true
-#    source: *
-#    target: *
+  egiToGeossPortal:
+    both: true
+    source: *egiCloud
+    target: *geossPortal
+  egiToGeossDab:
+    both: true
+    source: *egiCloud
+    target: *geossDab
+  geossPortalToDab:
+    both: true
+    source: *geossDab
+    target: *geossPortal
 #  notebookToDesyCloud:
 #    both: true
 #    source: *notebook
