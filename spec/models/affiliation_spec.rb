@@ -25,6 +25,7 @@ RSpec.describe Affiliation do
   end
 
   it "is invalid when email is from different domain than webpage" do
+    pending "a more lenient implementation of domain checking is implemented (see issue #370)"
     affiliation = build(:affiliation,
                         email: "jonhdoe@uni.edu",
                         webpage: "http://my.duni.edu")
