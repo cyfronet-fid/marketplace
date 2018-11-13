@@ -64,7 +64,7 @@ RSpec.feature "Service browsing" do
 
     visit service_path(service)
 
-    expect(page.body).to have_content "Services you can use with this service"
+    expect(page.body).to have_content "Suggested compatible services"
     expect(page.body).to have_content related.title
   end
 
@@ -73,7 +73,7 @@ RSpec.feature "Service browsing" do
 
     visit service_path(service)
 
-    expect(page.body).to_not have_content "Services you can use with this service"
+    expect(page.body).to_not have_content "Suggested compatible services"
   end
   context "service has no offers" do
     scenario "service offers section are not displayed" do
