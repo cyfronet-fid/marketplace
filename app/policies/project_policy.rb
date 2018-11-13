@@ -8,6 +8,6 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name]
+    [:name, :reason_for_access, :customer_typology]
   end
 end
