@@ -107,7 +107,7 @@ providers:
     MEEO:
         name: &meeo "MEEO"
     CloudFerro:
-        name: &cloudFerro CloudFerro
+        name: &cloudFerro "CloudFerro"
     PNCEL:
         name: &pncel "Portuguese National Civil Engineering Laboratory"
     University of Utrecht:
