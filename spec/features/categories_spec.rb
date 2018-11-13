@@ -34,12 +34,14 @@ RSpec.feature "Service categories" do
     expect(page.body).to_not have_content sub_sub_category.name
   end
 
-  scenario "subcategories section is not show when no subcategories" do
-    category = create(:category)
+  scenario "when in category siblings categories are shown" do
+    root = create(:category)
+    sub1, sub2 = create_list(:category, 2, parent: root)
 
-    visit category_path(category)
+    visit category_path(sub1)
 
-    expect(page.body).to_not have_content "Subcategories"
+    expect(body).to have_content sub1.name
+    expect(body).to have_content sub2.name
   end
 
   scenario "shows services from category and subcategories" do

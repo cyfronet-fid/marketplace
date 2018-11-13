@@ -9,7 +9,7 @@ class CategoriesController < ApplicationController
 
   def show
     @services = paginate(category_services.order(ordering))
-    @siblings = category.ancestry.nil? ? @root_categories : category.ancestry.children.order(:name)
+    @siblings = siblings
     @subcategories = category.children.order(:name)
     @provider_options = provider_options
     @dedicated_for_options = dedicated_for_options
@@ -33,5 +33,9 @@ class CategoriesController < ApplicationController
 
     def category
       @category ||= Category.find(params[:id])
+    end
+
+    def siblings
+      category.ancestry.nil? ? @root_categories : category.parent.children.order(:name)
     end
 end
