@@ -26,7 +26,6 @@ class Services::ConfigurationsController < Services::ApplicationController
   private
     def configuration_params
       template = ProjectItem.new(session[session_key])
-      puts permitted_attributes(template)
       session[session_key].
           merge(permitted_attributes(template)).
           merge(status: :created)
