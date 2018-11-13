@@ -125,6 +125,6 @@ private
   end
 
   def scope
-    policy_scope(Service)
+    policy_scope(Service).with_attached_logo
   end
 end
