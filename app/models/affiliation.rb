@@ -22,7 +22,9 @@ class Affiliation < ApplicationRecord
   validates :organization, presence: true
   validates :email, presence: true, "valid_email_2/email": true
   validates :webpage, presence: true
-  validate :email_from_webpage_domain, if: :email
+
+  # commented out to disable strict domain validation for now (see #370)
+  # validate :email_from_webpage_domain, if: :email
 
   validates :status, presence: true
 
@@ -44,16 +46,16 @@ class Affiliation < ApplicationRecord
       self.iid = user.affiliations.maximum(:iid).to_i + 1 if iid.blank?
     end
 
-    def email_from_webpage_domain
-      unless email_in_webpage_domain?
-        errors.add(:email, "does not belong to webpage domain")
-      end
-    end
+    # def email_from_webpage_domain
+    #   unless email_in_webpage_domain?
+    #     errors.add(:email, "does not belong to webpage domain")
+    #   end
+    # end
 
-    def email_in_webpage_domain?
-      /((\A|.+\.)|(https?:\/\/|https?:\/\/.+\.))#{email_domain_regexp}\z/.
-        match?(webpage)
-    end
+    # def email_in_webpage_domain?
+    #   /((\A|.+\.)|(https?:\/\/|https?:\/\/.+\.))#{email_domain_regexp}\z/.
+    #     match?(webpage)
+    # end
 
     def email_domain_regexp
       email.downcase.split("@").last.sub(".", "\.") unless email.blank?
