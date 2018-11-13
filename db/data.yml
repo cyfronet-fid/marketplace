@@ -62,6 +62,8 @@ providers:
         name: &fzj "FZJ"
     PSNC:
         name: &psnc "PSNC"
+    SmartSMEAR:
+        name: &smartSmear "SmartSMEAR"
     RECAS-BARI:
         name: &recas "RECAS-BARI"
     CYFRONET-LCG2:
@@ -1653,11 +1655,12 @@ services:
           which can be accessed through various data viewers.
           Data from individual floats are also available from a certain region or time.
     GEOSS Portal:
-        title: GEOSS Web Portal
+        title: &geossPortal GEOSS Web Portal
         parents: *researchDataParent
         providers: [*esa]
         logo: geoss-portal.png
-        open_access: false
+        open_access: true
+        connected_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
         webpage_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
         manual_url: https://google.com
         helpdesk_url: https://google.com
@@ -1678,7 +1681,36 @@ services:
           providing discoverability of more than 400M datasets.
           This version of the GEOSS Web Portal is connected also to the ECOPotential Virtual Laboratory,
           allowing users to execute available models utilizing GEOSS data as inputs.
-
+        offers:
+          1:
+            name: GEOSS Portal
+            description: *notSpecified
+    GEOSS DAB:
+        title: &geossDab GEOSS DAB
+        parents: *researchDataParent
+        providers: [*esa]
+        logo: geoss-portal.png
+        open_access: true
+        connected_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
+        webpage_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
+        manual_url: https://google.com
+        helpdesk_url: https://google.com
+        tutorial_url: https://google.com
+        terms_of_use_url: http://geosspublish.uat.esaportal.eu/community/guest/terms-conditions
+        corporate_sla_url: https://google.com
+        access_policies_url: https://google.com
+        places: *europe
+        dedicated_for: ["Reaserchers"] #TODO: but not specified
+        languages: *english
+        area: *earthScience
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: *notSpecified
+        description: *notSpecified
+        offers:
+          1:
+            name: GEOSS DAB
+            description: *notSpecified
     Clarin:
         title: &clarinService Clarin
         parents: *researchDataParent
@@ -2562,24 +2594,24 @@ services:
                 value: 365
     D4 Science Particle Formation:
         title: &d4scienceService Particle Formation
-        parents: [*thematicServicesParent, *applicationsParent]
-        providers: [*d4science]
-        logo: d4science-gateway.png
+        parents: [*applicationsParent, *thematicServicesParent]
+        providers: [*d4science, *egi, *smartSmear]
+        logo: vre.png
         open_access: true
         connected_url: https://services.d4science.org/group/particleformation/
         webpage_url: https://services.d4science.org/group/particleformation
-        manual_url: https://services.d4science.org/group/particleformation/
+        manual_url: https://github.com/markusstocker/pynpf-d4science
         helpdesk_url: https://github.com/markusstocker/pynpf-d4science
-        tutorial_url: https://www.google.com
+        tutorial_url: https://youtu.be/ra9W7b5DbgI
         terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
+        corporate_sla_url: https://documents.egi.eu/document/2875
         access_policies_url: https://www.google.com
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
         area: *physicalScienceEarth
         restrictions: *notSpecified
-        phase: *notSpecified
+        phase: Beta (min. TRL 7)
         tagline: D4 Science Service
         description: |
           The VRE supports new particle formation event analysis on interoperable e-Infrastructures.
@@ -2587,6 +2619,10 @@ services:
           It integrates the SMEAR Research Infrastructure (provider of primary data) and uses EGI
           and D4Science services to support primary data interpretation and the cataloging of data derived in analysis.
           Access to the VRE requires a D4Science account.
+        offers:
+          1:
+            name: New Particle Formation Event Analysis
+            description: *notSpecified
     ENES Climate Analytics Service:
         title: ENES Climate Analytics Service
         parents: [*thematicServicesParent, *researchDataParent]
@@ -3877,18 +3913,18 @@ relations:
     both: true
     source: *b2find
     target: *b2share
-#  egiToGeossPortal:
-#    both: true
-#    source: *egiCloud
-#    target: *
-#  egiToGeossDab:
-#    both: true
-#    source: *egiCloud
-#    target: *
-#  geossPortalToDab:
-#    both: true
-#    source: *
-#    target: *
+  egiToGeossPortal:
+    both: true
+    source: *egiCloud
+    target: *geossPortal
+  egiToGeossDab:
+    both: true
+    source: *egiCloud
+    target: *geossDab
+  geossPortalToDab:
+    both: true
+    source: *geossDab
+    target: *geossPortal
 #  notebookToDesyCloud:
 #    both: true
 #    source: *notebook
