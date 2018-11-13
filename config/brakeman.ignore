@@ -22,33 +22,14 @@
     {
       "warning_type": "Mass Assignment",
       "warning_code": 70,
-      "fingerprint": "016ab96ecc285e9f51d9ac9153864edcdbc407acad7f2c62fbed34bfeb7cea2c",
+      "fingerprint": "70e7b861d074bffcc48c1852503c02b1d81412d166341e23e4306071c465ddc8",
       "check_name": "MassAssignment",
       "message": "Parameters should be whitelisted for mass assignment",
       "file": "app/views/services/_paginate.haml",
-      "line": 11,
+      "line": 14,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.permit!",
-      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":13,"file":"app/controllers/categories_controller.rb"},{"type":"template","name":"categories/show","line":10,"file":"app/views/categories/show.html.haml"}],
-      "location": {
-        "type": "template",
-        "template": "services/_paginate"
-      },
-      "user_input": null,
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
-      "warning_type": "Mass Assignment",
-      "warning_code": 70,
-      "fingerprint": "7673f06edff582534645180fe11abf619ed092cbfb17667f99e342e1af56f6ba",
-      "check_name": "MassAssignment",
-      "message": "Parameters should be whitelisted for mass assignment",
-      "file": "app/views/services/_paginate.haml",
-      "line": 9,
-      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
-      "code": "params.permit!",
-      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":13,"file":"app/controllers/categories_controller.rb"},{"type":"template","name":"categories/show","line":10,"file":"app/views/categories/show.html.haml"}],
+      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":18,"file":"app/controllers/categories_controller.rb"},{"type":"template","name":"categories/show","line":2,"file":"app/views/categories/show.html.haml"},{"type":"template","name":"services/_index","line":29,"file":"app/views/services/_index.html.haml"}],
       "location": {
         "type": "template",
         "template": "services/_paginate"
@@ -74,25 +55,6 @@
       },
       "user_input": "params[:page]",
       "confidence": "Weak",
-      "note": ""
-    },
-    {
-      "warning_type": "Mass Assignment",
-      "warning_code": 70,
-      "fingerprint": "8711034133b09937ae3f479b8e224924f5c475c692a71febfb125c80850af374",
-      "check_name": "MassAssignment",
-      "message": "Parameters should be whitelisted for mass assignment",
-      "file": "app/views/services/_paginate.haml",
-      "line": 14,
-      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
-      "code": "params.permit!",
-      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":13,"file":"app/controllers/categories_controller.rb"},{"type":"template","name":"categories/show","line":10,"file":"app/views/categories/show.html.haml"}],
-      "location": {
-        "type": "template",
-        "template": "services/_paginate"
-      },
-      "user_input": null,
-      "confidence": "Medium",
       "note": ""
     },
     {
@@ -133,8 +95,46 @@
       "user_input": "(Unresolved Model).new.webpage",
       "confidence": "Weak",
       "note": ""
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "df67224e8f04c8de98b6fb0f2df04ed86e92a1dda97ac0d20b950f4a0235b7ea",
+      "check_name": "MassAssignment",
+      "message": "Parameters should be whitelisted for mass assignment",
+      "file": "app/views/services/_paginate.haml",
+      "line": 11,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.permit!",
+      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":18,"file":"app/controllers/categories_controller.rb"},{"type":"template","name":"categories/show","line":2,"file":"app/views/categories/show.html.haml"},{"type":"template","name":"services/_index","line":29,"file":"app/views/services/_index.html.haml"}],
+      "location": {
+        "type": "template",
+        "template": "services/_paginate"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "edd3a91ae1d2fcca0d1ce636654ab9b8c56b766e2ebdf47f01d189a47847ef66",
+      "check_name": "MassAssignment",
+      "message": "Parameters should be whitelisted for mass assignment",
+      "file": "app/views/services/_paginate.haml",
+      "line": 9,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.permit!",
+      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":18,"file":"app/controllers/categories_controller.rb"},{"type":"template","name":"categories/show","line":2,"file":"app/views/categories/show.html.haml"},{"type":"template","name":"services/_index","line":29,"file":"app/views/services/_index.html.haml"}],
+      "location": {
+        "type": "template",
+        "template": "services/_paginate"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "note": ""
     }
   ],
-  "updated": "2018-11-09 15:01:42 +0100",
+  "updated": "2018-11-14 09:44:47 +0100",
   "brakeman_version": "4.3.1"
 }
