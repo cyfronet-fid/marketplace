@@ -1,7 +1,8 @@
 let projectSelect = $("#project_item_project_id");
 
-projectSelect.append(
-  $("<option></option>", { value: "<%= @project.id %>" }).text("<%= @project.name %>"));
+
+projectSelect.append("<%= j options_for_select([[@project.name, @project.id]]) %>");
+
 projectSelect.val("<%= @project.id %>");
 projectSelect.focus();
 
