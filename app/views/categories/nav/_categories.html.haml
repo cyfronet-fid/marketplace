@@ -1,0 +1,8 @@
+%h5.text-uppercase.underline-light.mb-2.pb-2 Categories
+%ul
+  - categories.each do |category|
+    = render "categories/nav/category", category: category, current: current
+    - if current == category && !subcategories.empty?
+      %ul.ml-3
+        = render partial: "categories/nav/category",
+          collection: subcategories, as: :category
