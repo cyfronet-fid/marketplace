@@ -3,7 +3,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def checkin
     auth = request.env["omniauth.auth"]
-    # puts "auth #{auth.inspect}"
 
     if auth.uid.blank?
       flash[:alert] = "Cannot extract user uid from checkin response"
