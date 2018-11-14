@@ -6,7 +6,7 @@
                         map { |df| link_to(df, services_path(dedicated_for: df)) }
 
   providers = service.providers.
-              map { |p| link_to(p.name, services_path(providers: p)) }
+    map { |p| link_to(p.name, services_path("providers[]": p)) }
 
 .row
   .col.x-small
