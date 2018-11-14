@@ -459,7 +459,7 @@ services:
                   minimum: 1
                   maximum: 730
     High-Throughput compute:
-        title: EGI High-Throughput compute
+        title: &egiHTC EGI High-Throughput compute
         parents: *computeParent
         providers: [*egifcs]
         logo: high-throughput-compute.png
@@ -2473,7 +2473,7 @@ services:
 #            - EUDAT, by the integration with several services, such as B2SHARE, B2ACCESS and B2DROP.
 
     DARIAH:
-        title: DARIAH Science Gateway
+        title: &dariah DARIAH Science Gateway
         parents: *processingAndAnalysisParent
         providers: [*rbi]
         logo: dariah.png
@@ -2641,7 +2641,7 @@ services:
             name: New Particle Formation Event Analysis
             description: *notSpecified
     ENES Climate Analytics Service:
-        title: ENES Climate Analytics Service
+        title: &enes ENES Climate Analytics Service
         parents: *processingAndAnalysisParent
         logo: enes-climate-analytics-service.png
         providers: [*ccmc, *dkrz]
@@ -2712,7 +2712,7 @@ services:
                 value_type:  "integer"
                 value: 365
     LifeWatch ERIC Plants Identification App:
-        title: LifeWatch ERIC Plants Identification App
+        title: &lifewatchERICPlants LifeWatch ERIC Plants Identification App
         parents: *processingAndAnalysisParent
         providers: [*lifewatch]
         logo: lifewatch-eric-plants-identification-app.png
@@ -2834,7 +2834,7 @@ services:
         tagline: *notSpecified
         description: *notSpecified
     OPENCoastS:
-        title: OPENCoastS Portal
+        title: &openCoastS OPENCoastS Portal
         parents: *processingAndAnalysisParent
         providers: [*pncel]
         logo: opencoasts.png
@@ -3061,7 +3061,7 @@ services:
           defined by distance restraints between biomolecules.
         offers: *wenMRService
     CS-ROSETA:
-        title: &roseta CS-ROSETA
+        title: &csRoseta CS-ROSETA
         parents: *processingAndAnalysisParent
         providers: [*uou, *uof, *cirmmp]
         logo: cs-rosetta.png
@@ -3414,7 +3414,7 @@ services:
               type:  "input"
               value_type:  "string"
     CloudFerro Data Collections Catalog:
-        title: &cfdcs CloudFerro Data Collections Catalog
+        title: &cfdcc CloudFerro Data Collections Catalog
         parents: *sharingAndDicoveryParent
         providers: [*terradue]
         logo: &cfLogo cloud-ferro.png
@@ -3525,7 +3525,7 @@ services:
           Sentinel 2, Sentinel 3, ESA’s archives of Landsat 5, Landsat 7, Landsat 8 and Envisat.
           It provides ability to visualize and download chosen products in .png and .jpg formats.
     Check-in:
-        title: EGI Check-in
+        title: &checkIn EGI Check-in
         parents: *securityAndOperationsParent
         providers: [*egi]
         open_access: false
@@ -3784,6 +3784,170 @@ services:
                 description:  "Type description of the consultancy"
                 type:  "input"
                 value_type:  "string"
+    Alien and Invasive Species:
+      title: &alien Alien and Invasive Species
+      parents: *processingAndAnalysisParent
+      providers: [*d4science]
+#      logo: training-infrastructure. TODO: logo
+      open_access: false
+      webpage_url: https://services.d4science.org/web/alienandinvasivespecies
+      manual_url: https://google.com
+      helpdesk_url: https://google.com
+      tutorial_url: https://google.com
+      terms_of_use_url: https://google.com
+      corporate_sla_url: https://google.com
+      access_policies_url: https://google.com
+      places: *europe
+      dedicated_for: ["VO", "Research organisations"]
+      languages: *english
+      area: *interdisciplinary
+      restrictions: *notSpecified
+      phase: *notSpecified
+      tagline: *notSpecified
+      description: *notSpecified
+      offers:
+        1:
+          name: *notSpecified
+          description: *notSpecified
+    Cloud (Desy):
+      title: &desyCloud Cloud (Desy)
+      parents: *computeParent
+      providers: [*not]
+#      logo: training-infrastructure. TODO: logo
+      open_access: false
+      webpage_url: https://google.com
+      manual_url: https://google.com
+      helpdesk_url: https://google.com
+      tutorial_url: https://google.com
+      terms_of_use_url: https://google.com
+      corporate_sla_url: https://google.com
+      access_policies_url: https://google.com
+      places: *europe
+      dedicated_for: ["VO", "Research organisations"]
+      languages: *english
+      area: *interdisciplinary
+      restrictions: *notSpecified
+      phase: *notSpecified
+      tagline: *notSpecified
+      description: *notSpecified
+      offers:
+        1:
+          name: *notSpecified
+          description: *notSpecified
+    XFEL Data:
+      title: &xfel XFEL Data
+      parents: *sharingAndDicoveryParent
+      providers: [*not]
+#      logo: training-infrastructure. TODO: logo
+      open_access: false
+      webpage_url: https://google.com
+      manual_url: https://google.com
+      helpdesk_url: https://google.com
+      tutorial_url: https://google.com
+      terms_of_use_url: https://google.com
+      corporate_sla_url: https://google.com
+      access_policies_url: https://google.com
+      places: *europe
+      dedicated_for: ["VO", "Research organisations"]
+      languages: *english
+      area: *interdisciplinary
+      restrictions: *notSpecified
+      phase: *notSpecified
+      tagline: *notSpecified
+      description: *notSpecified
+      offers:
+        1:
+          name: *notSpecified
+          description: *notSpecified
+    Faas:
+      title: &faas Faas
+      parents: *sharingAndDicoveryParent
+      providers: [*not]
+#      logo: training-infrastructure. TODO: logo
+      open_access: false
+      webpage_url: https://google.com
+      manual_url: https://google.com
+      helpdesk_url: https://google.com
+      tutorial_url: https://google.com
+      terms_of_use_url: https://google.com
+      corporate_sla_url: https://google.com
+      access_policies_url: https://google.com
+      places: *europe
+      dedicated_for: ["VO", "Research organisations"]
+      languages: *english
+      area: *interdisciplinary
+      restrictions: *notSpecified
+      phase: *notSpecified
+      tagline: *notSpecified
+      description: *notSpecified
+      offers:
+        1:
+          name: *notSpecified
+          description: *notSpecified
+    OpenAIRE:
+      title: &openAIRE OpenAIRE
+      parents: *sharingAndDicoveryParent
+      providers: [*not]
+#      logo: training-infrastructure. TODO: logo
+      open_access: false
+      webpage_url: https://google.com
+      manual_url: https://google.com
+      helpdesk_url: https://google.com
+      tutorial_url: https://google.com
+      terms_of_use_url: https://google.com
+      corporate_sla_url: https://google.com
+      access_policies_url: https://google.com
+      places: *europe
+      dedicated_for: ["VO", "Research organisations"]
+      languages: *english
+      area: *interdisciplinary
+      restrictions: *notSpecified
+      phase: *notSpecified
+      tagline: *notSpecified
+      description: *notSpecified
+      offers:
+        1:
+          name: *notSpecified
+          description: *notSpecified
+    PROMINENCE:
+      title: &prominence PROMINENCE
+      parents: *computeParent
+      providers: [*egifcs]
+#      logo: training-infrastructure. TODO: logo
+      open_access: false
+      webpage_url: https://host-130-246-215-158.nubes.stfc.ac.uk/prominence/v1
+      manual_url: https://google.com
+      helpdesk_url: https://google.com
+      tutorial_url: https://google.com
+      terms_of_use_url: https://google.com
+      corporate_sla_url: https://google.com
+      access_policies_url: https://google.com
+      places: *europe
+      dedicated_for: ["VO", "Research organisations"]
+      languages: *english
+      area: *interdisciplinary
+      restrictions: *notSpecified
+      phase: TRL 6
+      tagline: Enabling HTC & HPC applications opportunistically across private, academic and public clouds
+      description: |
+        PROMINENCE is a platform which allows users to exploit idle cloud resources for running scientific workloads
+        with a simple batch system style interface. Key features include:
+          - Jobs can be submitted from anywhere using any OS and any language.
+          - All jobs are run in containers to ensure they will can run reliably anywhere and are reproducible.
+          - Multi-node OpenMPI jobs can be run in addition to HTC jobs.
+          - On-premises resources can be utilised with the ability to burst onto external clouds
+            at times of peak demand.
+          - Goes beyond bursting onto a single external cloud with hierarchical cloud bursting.
+            For example, burst onto national research clouds, to EGI FedCloud and finally to public clouds.
+          - All infrastructure provisioning is handled completely automatically and is totally transparent to the user.
+          - Clouds are selected automatically based on job requirements and preferences,
+            and any failures are handled automatically.
+          - Output data can be accessed from cloud-based object storage.
+      offers:
+        1:
+          name: *notSpecified
+          description: *notSpecified
+
 
 relations:
   HaddockToPowerFit:
@@ -3797,7 +3961,7 @@ relations:
   HaddockToRoseta:
     both: true
     source: *haddock
-    target: *roseta
+    target: *csRoseta
   HaddockToAmber:
     both: true
     source: *haddock
@@ -3817,7 +3981,7 @@ relations:
   PowerFitToRoseta:
     both: true
     source: *powerFit
-    target: *roseta
+    target: *csRoseta
   PowerFitToAmber:
     both: true
     source: *powerFit
@@ -3833,7 +3997,7 @@ relations:
   DisVisToRoseta:
     both: true
     source: *disVis
-    target: *roseta
+    target: *csRoseta
   DisVisToAmber:
     both: true
     source: *disVis
@@ -3846,17 +4010,17 @@ relations:
     both: true
     source: *disVis
     target: *spotOn
-  RosetaToAmber:
+  csRosetaToAmber:
     both: true
-    source: *roseta
+    source: *csRoseta
     target: *amber
-  RosetaToFanten:
+  csRosetaToFanten:
     both: true
-    source: *roseta
+    source: *csRoseta
     target: *fanten
-  RosetaToSpotOn:
+  csRosetaToSpotOn:
     both: true
-    source: *roseta
+    source: *csRoseta
     target: *spotOn
   AmberToFanten:
     both: true
@@ -3879,13 +4043,17 @@ relations:
     source: *egiCloud
     target: *d4scienceService
   clarinToB2Find:
-    both: true
+    both: false
     source: *clarinService
     target: *b2find
   clarinToB2Share:
-    both: true
+    both: false
     source: *clarinService
     target: *b2share
+  clarinToEGICompute:
+    both: false
+    source: *clarinService
+    target: *egiCloud
   b2findToB2Share:
     both: true
     source: *b2find
@@ -3902,6 +4070,212 @@ relations:
     both: true
     source: *geossDab
     target: *geossPortal
+  cloudFerroEOFTocloudFerroDCC:
+    both: false
+    source: *cfdrsEOF
+    target: *cfdcc
+  enesTob2find:
+    both: true
+    source: *enes
+    target: *b2find
+  enesTob2handle:
+    both: true
+    source: *enes
+    target: *b2handle
+  dariahToEgiCloud:
+    both: false
+    source: *dariah
+    target: *egiCloud
+  dariahToCheckIn:
+    both: false
+    source: *dariah
+    target: *checkIn
+  openCoastsToEgiCloud:
+    both: false
+    source: *openCoastS
+    target: *egiCloud
+  gepHRCMToegiCloud:
+    both: true
+    source: *gepHRCM
+    target: *egiCloud
+  gepEOToegiVloud:
+    both: false
+    source: *gepEO
+    target: *egiCloud
+  eodcJHToEodcDCS:
+    both: false
+    source: *eodcJH
+    target: *eodcDCS
+  amberToEgiCloud:
+    both: false
+    source: *amber
+    target: *egiCloud
+  amberToEgiHTC:
+    both: false
+    source: *amber
+    target: *egiHTC
+  amberToCheckIn:
+    both: false
+    source: *amber
+    target: *checkIn
+#  amberToEgiWM:
+#    both: false
+#    source: *amber
+#    target: *egiWM
+  csRosetaToEgiCloud:
+    both: false
+    source: *csRoseta
+    target: *egiCloud
+  csRosetaToEgiHTC:
+    both: false
+    source: *csRoseta
+    target: *egiHTC
+  csRosetaToCheckIn:
+    both: false
+    source: *csRoseta
+    target: *checkIn
+#  csRosetaToEgiWM:
+#    both: false
+#    source: *csRoseta
+#    target: *egiWM
+  disVisToEgiCloud:
+    both: false
+    source: *disVis
+    target: *egiCloud
+  disVisToEgiHTC:
+    both: false
+    source: *disVis
+    target: *egiHTC
+  disVisToCheckIn:
+    both: false
+    source: *disVis
+    target: *checkIn
+#  disVisToEgiWM:
+#    both: false
+#    source: *disVis
+#    target: *egiWM
+  fantenToEgiCloud:
+    both: false
+    source: *fanten
+    target: *egiCloud
+  fantenToEgiHTC:
+    both: false
+    source: *fanten
+    target: *egiHTC
+  fantenToCheckIn:
+    both: false
+    source: *fanten
+    target: *checkIn
+#  fantenToEgiWM:
+#    both: false
+#    source: *fanten
+#    target: *egiWM
+  haddockToEgiCloud:
+    both: false
+    source: *haddock
+    target: *egiCloud
+  haddockToEgiHTC:
+    both: false
+    source: *haddock
+    target: *egiHTC
+  haddockToCheckIn:
+    both: false
+    source: *haddock
+    target: *checkIn
+#  haddockToEgiWM:
+#    both: false
+#    source: *haddock
+#    target: *egiWM
+  powerFitToEgiCloud:
+    both: false
+    source: *powerFit
+    target: *egiCloud
+  powerFitToEgiHTC:
+    both: false
+    source: *powerFit
+    target: *egiHTC
+  powerFitToCheckIn:
+    both: false
+    source: *powerFit
+    target: *checkIn
+#  powerFitToEgiWM:
+#    both: false
+#    source: *powerFit
+#    target: *egiWM
+  spotOnToEgiCloud:
+    both: false
+    source: *spotOn
+    target: *egiCloud
+  spotOnToEgiHTC:
+    both: false
+    source: *spotOn
+    target: *egiHTC
+  spotOnToCheckIn:
+    both: false
+    source: *spotOn
+    target: *checkIn
+  particleFormationToEgiNotebook:
+    both: true
+    source: *d4scienceService
+    target: *notebook
+  xfelToEgiNotebook:
+    both: true
+    source: *xfel
+    target: *notebook
+  faasToEgiNotebook:
+    both: true
+    source: *faas
+    target: *notebook
+  desyCloudToEgiNotebook:
+    both: true
+    source: *desyCloud
+    target: *notebook
+  desyCloudToXfel:
+    both: true
+    source: *desyCloud
+    target: *xfel
+  desyCloudToFaas:
+    both: true
+    source: *desyCloud
+    target: *faas
+  xfelCloudToFaas:
+    both: true
+    source: *xfel
+    target: *faas
+  particleFormationToAlien:
+    both: true
+    source: *d4scienceService
+    target: *alien
+  egiCloudToProminence:
+    both: true
+    source: *egiCloud
+    target: *prominence
+  egiCLoudToAlien:
+    both: true
+    source: *egiCloud
+    target: *alien
+  egiToOpenAire:
+    both: true
+    source: *egiCloud
+    target: *openAIRE
+  alienToOpenAire:
+    both: true
+    source: *alien
+    target: *openAIRE
+  lifewatchERICPlantsToEgiCloud:
+    both: true
+    source: *lifewatchERICPlants
+    target: *egiCloud
+  egiCloudToCheckIn:
+    both: false
+    source: *egiCloud
+    target: *checkIn
+
+#  spotOnToEgiWM:
+#    both: false
+#    source: *spotOn
+#    target: *egiWM
+
 #  notebookToDesyCloud:
 #    both: true
 #    source: *haddock
@@ -3909,7 +4283,7 @@ relations:
 #  HaddockToRoseta:
 #    both: true
 #    source: *haddock
-#    target: *roseta
+#    target: *csRoseta
 #  HaddockToAmber:
 #    both: true
 #    source: *haddock
@@ -3929,7 +4303,7 @@ relations:
 #  PowerFitToRoseta:
 #    both: true
 #    source: *powerFit
-#    target: *roseta
+#    target: *csRoseta
 #  PowerFitToAmber:
 #    both: true
 #    source: *powerFit
@@ -3945,7 +4319,7 @@ relations:
 #  DisVisToRoseta:
 #    both: true
 #    source: *disVis
-#    target: *roseta
+#    target: *csRoseta
 #  DisVisToAmber:
 #    both: true
 #    source: *disVis
@@ -3960,15 +4334,15 @@ relations:
 #    target: *spotOn
 #  RosetaToAmber:
 #    both: true
-#    source: *roseta
+#    source: *csRoseta
 #    target: *amber
 #  RosetaToFanten:
 #    both: true
-#    source: *roseta
+#    source: *csRoseta
 #    target: *fanten
 #  RosetaToSpotOn:
 #    both: true
-#    source: *roseta
+#    source: *csRoseta
 #    target: *spotOn
 #  AmberToFanten:
 #    both: true
@@ -3990,14 +4364,6 @@ relations:
 #    both: true
 #    source: *egiCloud
 #    target: *d4scienceService
-#  clarinToB2Find:
-#    both: true
-#    source: *clarinService
-#    target: *b2find
-#  clarinToB2Share:
-#    both: true
-#    source: *clarinService
-#    target: *b2share
 #  b2findToB2Share:
 #    both: true
 #    source: *b2find
