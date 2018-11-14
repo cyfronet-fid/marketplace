@@ -10,9 +10,9 @@ class ProjectItem < ApplicationRecord
   }
 
   CUSTOMER_TYPOLOGIES = {
-    "Single user": 0,
-    "Representing a research community/project": 1,
-    "Representing a private company": 2
+    "Single user": "single_user",
+    "Representing a research community/project": "research",
+    "Representing a private company": "private_company"
   }
 
   ISSUE_STATUSES = {
@@ -24,7 +24,7 @@ class ProjectItem < ApplicationRecord
 
   enum status: STATUSES
   enum issue_status: ISSUE_STATUSES
-  enum customer_typologies: CUSTOMER_TYPOLOGIES
+  enum customer_typology: CUSTOMER_TYPOLOGIES
 
   belongs_to :offer
   belongs_to :affiliation, required: false

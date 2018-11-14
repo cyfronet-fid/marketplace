@@ -5,6 +5,7 @@
 
   projectSelect.val("<%= @project.id %>");
   projectSelect.focus();
+  document.getElementById("project_item_project_id").dispatchEvent(new Event("change"));
 
   $("#ajax-modal").modal("hide");
 }

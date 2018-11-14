@@ -7,6 +7,10 @@ class ProjectPolicy < ApplicationPolicy
     end
   end
 
+  def show?
+    record.user == user
+  end
+
   def permitted_attributes
     [:name, :reason_for_access, :customer_typology]
   end

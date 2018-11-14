@@ -7,15 +7,17 @@
   It will help us to proceed you request quicker.
 
 = simple_form_for @project_item, url: service_configuration_path(@service),
-  method: :put, html: { id: "order-form"  } do |f|
+  method: :put, html: { id: "order-form", "data-controller" => "projectitem" } do |f|
 
   - unless @project_item.property_values.blank?
     %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Technical parameters
     = render "services/configurations/attributes", project_item: @project_item, form: f
 
   %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Usage
-  = f.input :customer_typology, collection: @customer_topologies
-  = f.input :access_reason
+  = f.input :customer_typology,
+    collection: @customer_topologies,
+    input_html: { "data-target" => "projectitem.customer" }
+  = f.input :access_reason, input_html: { "data-target" => "projectitem.reason" }
   = f.input :additional_information
 
   %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Affiliation
@@ -30,7 +32,8 @@
   = f.input :project do
     .input-group.col-6.pl-0
       = f.input_field :project_id, collection: @projects,
-        class: "form-control custom-select #{"is-invalid" unless @project_item.errors[:project].empty?}"
+        class: "form-control custom-select #{"is-invalid" unless @project_item.errors[:project].empty?}",
+        "data-action" => "change->projectitem#projectChanged"
       .input-group-append
         = link_to "Add new project", new_project_path,
           class: "btn btn-primary", remote: true
