@@ -1,0 +1,29 @@
+.container
+  .row
+    .col-md-3
+      = render "categories/nav/categories", current: category,
+                                            categories: categories,
+                                            subcategories: subcategories
+      = render "services/filters", provider_options: provider_options,
+                                   research_areas: research_areas,
+                                   dedicated_for_options: dedicated_for_options,
+                                   rating_options: rating_options
+    .col-md-9
+      %header.row.mb-4
+        .col-md-8
+          = yield
+        .col-md-3.offset-md-1.my-auto
+          = form_tag services_path, method: :get, role: "search" do
+            .row
+              .col-md-2
+                %label.small.mt-2
+                  Sort
+              .col-md-10
+                %select#sort.query-sort.form-control.form-control-sm{ "data-submit-on-change": "data-submit-on-change" }
+                  = options_for_select([["by name A-Z", "title"],
+                                        ["by name Z-A", "-title"],
+                                        ["by rate 1-5", "rating"],
+                                        ["by rate 5-1", "-rating"]], params[:sort])
+
+      = render services
+  = render "services/paginate", services: services
