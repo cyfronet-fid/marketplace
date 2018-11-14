@@ -23,6 +23,7 @@ gem "gretel"
 gem "will_paginate", "~> 3.1.0"
 gem "will_paginate-bootstrap4"
 gem "simple_form"
+gem "friendly_id", "~> 5.2.0"
 
 gem "activestorage-validator"
 gem "image_processing", "~> 1.2"
