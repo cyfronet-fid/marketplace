@@ -62,7 +62,7 @@ yaml_hash["services"].each do |_, hash|
 
     main_category = service.main_category.name
     service.logo.attached? && service.logo.purge_later
-    hash["logo"] && service.logo.attach(io: File.open("db/logos/#{main_category}/#{hash["logo"]}"), filename: hash["logo"])
+    hash["logo"] && service.logo.attach(io: File.open("db/logos/#{hash["logo"]}"), filename: hash["logo"])
 
     hash["offers"] && hash["offers"].each do |_, hash|
       service.offers.create!(name: hash["name"], description: hash["description"], parameters: hash["parameters"])
@@ -74,7 +74,7 @@ end
 puts "Generating service relations from yaml"
 puts "Remove all relations and crating new defined"
 ServiceRelationship.delete_all
-yaml_hash["relations"].each do |_, hash|
+yaml_hash["relations"] && yaml_hash["relations"].each do |_, hash|
   source = Service.find_by(title: hash["source"])
   target = Service.find_by(title: hash["target"])
   ServiceRelationship.create!(source: source, target: target)

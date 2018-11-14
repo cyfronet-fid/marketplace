@@ -1,26 +1,42 @@
 categories:
 
+    Sharing & Discovery:
+        name: &sharingAndDicoveryParent "Sharing & Discover"
+        description: Services to search and discover data, publications, tools and other resources useful for your research
+    Processing & Analysis:
+        name: &processingAndAnalysisParent "Processing & Analysis"
+        description: Software, platforms, tools, analytics and end-user applications offered-as-a-service or deployed-on-demand also specialised by discipline or research domain
     Compute:
         name: &computeParent "Compute"
-        description: General computing services including VM management, containers and job processing.
-    Data & Storage:
-        name: &dataStorageParent "Data & Storage"
-        description: Storage and data management services.
-    Applications on Demand:
-        name: &applicationsParent "Applications"
-        description: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis.
-    Thematic services:
-        name: &thematicServicesParent "Thematic services"
-        description: High-level services, often discipline-specific for research communities.
-    Research Data:
-        name: &researchDataParent "Research Data"
-        description:
-    Identity:
-        name: &identityParent "Identity & Security"
-        description: Identity management, authorisation and other services to ensure trust.
-    Professional Services:
-        name: &professionalServicesParent "Professional Services"
-        description: Training, certification, consultancy and other non-technical services.
+        description: Services to access virtual machines, containers and job processing to support your general computing needs
+    Storage:
+        name: &storageParent "Storage"
+        description: Service to use storage for your data
+    Data management:
+        name: &dataManagementParent "Data management"
+        description: Service to manage your data
+    Networking:
+        name: &networkingParent "Networking"
+        description: Ultra-fast connectivity and ubiquitous access to [the] eInfrastructures' resources and services [you need]
+    Training & Support:
+        name: &trainingAndSupportParent "Training & Support"
+        description: Grow your research knowledge and skills with specialised trainings or seek dedicated professional support for a wide range of scientific disciplines and research activities
+    Security & Operations:
+        name: &securityAndOperationsParent "Security & Operations"
+        description: Services to integrate identity management, authorisation and other security services to comply with policies and regulations or access services to support the operations of your infrastructures and services
+#    Data discovery & access:
+#        name: Data discovery & access
+#        parent: *sharingAndDicoveryParent
+#    Applications repository:
+#        name: Applications repository
+#        parent: *sharingAndDicoveryParent
+#    Analytics:
+#        name: &analyticsParent Analytics
+#        parent: *processingAndAnalysisParent
+#    Science gateway:
+#        name: &scienceGateway Science gateway
+#        parent: *processingAndAnalysisParent
+
 
 providers:
 
@@ -642,7 +658,7 @@ services:
         offers: *cloudComputeOffers
     B2DROP:
         title: &b2drop B2DROP
-        parents: *dataStorageParent
+        parents: *dataManagementParent
         providers: [*eudat, *jsc]
         logo: b2drop.png
         open_access: false
@@ -773,7 +789,7 @@ services:
 
     B2FIND:
         title: &b2find B2FIND
-        parents: [*dataStorageParent, *researchDataParent]
+        parents: [*dataManagementParent]
         providers: [*eudat, *dkrz]
         logo: b2find.png
         open_access: false
@@ -899,7 +915,7 @@ services:
               in the metadata, Local B2FIND instace. Ideal for: Community/organisational data managers.
     B2HANDLE:
         title: &b2handle B2HANDLE
-        parents: *dataStorageParent
+        parents: *dataManagementParent
         providers: [*eudat, *surfsara, *grnet]
         logo: b2handle.png
         open_access: false
@@ -1019,7 +1035,7 @@ services:
                 value: 365
     B2NOTE:
         title: &b2note B2NOTE
-        parents: *dataStorageParent
+        parents: *dataManagementParent
         providers: [*eudat, *bsc]
         logo: b2note.png
         open_access: false
@@ -1105,7 +1121,7 @@ services:
                 value: 365
     B2SAFE:
         title: &b2safe B2SAFE
-        parents: *dataStorageParent
+        parents: *dataManagementParent
         providers: [*eudat, *all]
         logo: b2safe.png
         open_access: false
@@ -1158,7 +1174,7 @@ services:
               (expected in the next stable release).
     B2SHARE:
         title: &b2share B2SHARE
-        parents: *dataStorageParent
+        parents: *dataManagementParent
         providers: [*eudat, *csc]
         logo: b2share.png
         open_access: false
@@ -1286,7 +1302,7 @@ services:
               Local B2FIND instace. Ideal for: Community/organisational data managers.
     B2STAGE:
         title: &b2stage B2STAGE
-        parents: *dataStorageParent
+        parents: *dataManagementParent
         providers: [*eudat, *all]
         logo: b2stage.png
         open_access: false
@@ -1348,7 +1364,7 @@ services:
                 value: 365
     EGI Archive storage:
         title: EGI Archive storage
-        parents: *dataStorageParent
+        parents: *storageParent
         providers: [*egi]
         logo: archive-storage.png
         open_access: false
@@ -1415,7 +1431,7 @@ services:
                 value: 365
     EGI Block storage:
         title: EGI Block storage
-        parents: *dataStorageParent
+        parents: *storageParent
         providers: [*egi]
         logo: archive-storage.png
         open_access: false
@@ -1484,7 +1500,7 @@ services:
                 value: 365
     EGI Object storage:
         title: EGI Object storage
-        parents: *dataStorageParent
+        parents: *storageParent
         providers: [*egi]
         logo: archive-storage.png
         open_access: false
@@ -1559,7 +1575,7 @@ services:
                 value: 365
     EGI File storage:
         title: EGI File storage
-        parents: *dataStorageParent
+        parents: *storageParent
         providers: [*egi]
         logo: archive-storage.png
         open_access: false
@@ -1631,7 +1647,7 @@ services:
                 value: 365
     Argo:
         title: Argo
-        parents: *researchDataParent
+        parents: *sharingAndDicoveryParent
         providers: [*not] #TODO: not specified
         logo: argo-data.png
         open_access: false
@@ -1656,7 +1672,7 @@ services:
           Data from individual floats are also available from a certain region or time.
     GEOSS Portal:
         title: &geossPortal GEOSS Web Portal
-        parents: *researchDataParent
+        parents: *sharingAndDicoveryParent
         providers: [*esa]
         logo: geoss-portal.png
         open_access: true
@@ -1687,7 +1703,7 @@ services:
             description: *notSpecified
     GEOSS DAB:
         title: &geossDab GEOSS DAB
-        parents: *researchDataParent
+        parents: *sharingAndDicoveryParent
         providers: [*esa]
         logo: geoss-portal.png
         open_access: true
@@ -1713,7 +1729,7 @@ services:
             description: *notSpecified
     Clarin:
         title: &clarinService Clarin
-        parents: *researchDataParent
+        parents: *sharingAndDicoveryParent
         providers: [*clarin]
         logo: component-metadata-infrastructure.png
         open_access: false
@@ -1770,7 +1786,7 @@ services:
               The referenced digital objects can also be processed with the Language Resource Switchboard.
     EIDA Data Archive:
         title: EIDA Data Archive
-        parents: *researchDataParent
+        parents: *sharingAndDicoveryParent
         providers: *eida
         logo: orfeus-european-integrated-data-archive-eida.png
         open_access: false
@@ -1787,7 +1803,7 @@ services:
         area: *earthScience
         restrictions: *notSpecified
         phase: *notSpecified
-        tagline: Store, share and access your files and their metadata on a global scale.
+        tagline: *notSpecified
         description: |
           ORFEUS provides access to high quality seismic waveforms and station metadata
           from EIDA and strong motion products.
@@ -1805,6 +1821,7 @@ services:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        places: *europe
 #        languages: *english
+#        dedicated_for: ["Researchers", "Research organisations"]
 #        area: *interdisciplinary
 #        restrictions: *notSpecified
 #        phase: *notSpecified
@@ -1826,7 +1843,7 @@ services:
 #                         New viruses implicated in fatal snake disease  how the Chipster platform helped virologists to make sense of millions of virus genomes"
     GNU Octave:
         title: GNU Octave
-        parents: *applicationsParent
+        parents: *processingAndAnalysisParent
         providers: [*ics, *recas, *cyfro, *begrid, *cesga]
         logo: gnu-octave.png
         open_access: false
@@ -1900,7 +1917,7 @@ services:
 
     Galaxy:
         title: Galaxy
-        parents: *applicationsParent
+        parents: *processingAndAnalysisParent
         providers: [*cesga, *recas, *ics]
         logo: galaxy.png
         open_access: false
@@ -1927,7 +1944,7 @@ services:
             parameters: *appParameters
     NAMD:
         title: NAMD
-        parents: *applicationsParent
+        parents: *processingAndAnalysisParent
         providers: [*cesga, *recas, *ics]
         logo: namd.png
         open_access: false
@@ -1957,7 +1974,7 @@ services:
             parameters: *appParameters
     Apache Tomcat:
         title: Apache Tomcat
-        parents: *applicationsParent
+        parents: *networkingParent
         providers: [*cesga, *recas, *ics]
         logo: apache-tomcat.png
         open_access: false
@@ -1989,7 +2006,7 @@ services:
             parameters: *appParameters
     Gnuplot:
         title: Gnuplot
-        parents: *applicationsParent
+        parents: *processingAndAnalysisParent
         providers: [*cesga, *recas, *ics]
         logo: gnuplot.png
         open_access: false
@@ -2019,7 +2036,7 @@ services:
             parameters: *appParameters
     Docker:
         title: Docker
-        parents: *applicationsParent
+        parents: *networkingParent
         providers: [*cesga, *recas, *ics]
         logo: docker.png
         open_access: false
@@ -2048,7 +2065,7 @@ services:
             parameters: *appParameters
     Hadoop:
         title: Hadoop
-        parents: *applicationsParent
+        parents: *processingAndAnalysisParent
         providers: [*cesga, *recas, *ics]
         logo: hadoop.png
         open_access: false
@@ -2078,7 +2095,7 @@ services:
             parameters: *appParameters
     Marathon:
         title: Marathon
-        parents: *applicationsParent
+        parents: *dataManagementParent
         providers: [*cesga, *recas, *ics]
         logo: marathon.png
         open_access: false
@@ -2111,7 +2128,7 @@ services:
         open_access: false
         providers: [*cesga, *recas, *ics]
         logo: chronos.png
-        parents: *applicationsParent
+        parents: *processingAndAnalysisParent
         webpage_url: https://github.com/mesos/chronos
         manual_url: https://mesos.github.io/chronos/
         helpdesk_url: https://www.google.com
@@ -2141,7 +2158,7 @@ services:
         open_access: false
         providers: [*cesga, *recas, *ics]
         logo: jupyter.png
-        parents: *applicationsParent
+        parents: *dataManagementParent
         webpage_url: https://notebooks.egi.eu/hub/login
         manual_url: https://www.google.com
         helpdesk_url: https://www.google.com
@@ -2168,7 +2185,7 @@ services:
             parameters: *appParameters
     The R project for statistical computing:
         title: The R project for statistical computing
-        parents: *applicationsParent
+        parents: *processingAndAnalysisParent
         providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
         logo: the-r-project-for-statistical-computing.png
         open_access: false
@@ -2182,7 +2199,7 @@ services:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
-        area: &dataAnalysis Data analysis
+        area: *dataAnalysis
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2198,7 +2215,7 @@ services:
             parameters: *appParameters
     The Semantic Search Engine (SSE):
         title: The Semantic Search Engine (SSE)
-        parents: *applicationsParent
+        parents: *dataManagementParent
         providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
         logo: the-semantic-search-engine-sse.png
         open_access: false
@@ -2212,7 +2229,7 @@ services:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
-        area: &humanities Humanities
+        area: *humanities
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2228,7 +2245,7 @@ services:
             parameters: *appParameters
     Chipster:
         title: Chipster
-        parents: *applicationsParent
+        parents: *processingAndAnalysisParent
         providers: [*egifcs]
         logo: chipster.png
         open_access: false
@@ -2264,7 +2281,7 @@ services:
             parameters: *appParameters
     ClustalW2:
         title: ClustalW2
-        parents: *applicationsParent
+        parents: *processingAndAnalysisParent
         providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
         logo: clustalw2.png
         open_access: false
@@ -2291,7 +2308,7 @@ services:
             parameters: *appParameters
     AutoDock Vina:
         title: AutoDock Vina
-        parents: *applicationsParent
+        parents: *processingAndAnalysisParent
         providers: [*cesga, *recas, *ics]
         logo: autodock-vina.png
         open_access: false
@@ -2318,44 +2335,44 @@ services:
             name: AutoDock Vina
             description: AutoDock Vina is an open-source software for doing molecular docking.
             parameters: *appParameters
-    Notebook:
-        title: &notebook Notebook
-        parents: *applicationsParent
-        providers: [*not]
-        open_access: false
-        webpage_url: https://www.google.com
-        manual_url: https://www.google.com
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
-        dedicated_for: ["Researchers", "Research organisations"]
-        places: *europe
-        languages: *english
-        area: *lifeSciences
-        restrictions: *notSpecified
-        phase: Beta
-        tagline: Create interactive documents with live code, visualisations and narrative text powered by the Jupyter technology
-        description: |
-          The service provides a browser-based tool for interactive analysis of data using EGI storage
-          and compute infrastructures based on the JupyterHub technology. The notebooks can combine text,
-          mathematics, computations and their rich media output using Jupyter technology, and can scale
-          to multiple servers and multiple users (hub) with the EGI cloud service.
+    EGI Notebooks:
+      title: &notebook Notebook
+      parents: *processingAndAnalysisParent
+      providers: [*not]
+      open_access: false
+      webpage_url: https://www.google.com
+      manual_url: https://www.google.com
+      helpdesk_url: https://www.google.com
+      tutorial_url: https://www.google.com
+      terms_of_use_url: https://www.google.com
+      corporate_sla_url: https://www.google.com
+      access_policies_url: https://www.google.com
+      dedicated_for: ["Researchers", "Research organisations"]
+      places: *europe
+      languages: *english
+      area: *lifeSciences
+      restrictions: *notSpecified
+      phase: Beta
+      tagline: Create interactive documents with live code, visualisations and narrative text powered by the Jupyter technology
+      description: |
+        The service provides a browser-based tool for interactive analysis of data using EGI storage
+        and compute infrastructures based on the JupyterHub technology. The notebooks can combine text,
+        mathematics, computations and their rich media output using Jupyter technology, and can scale
+        to multiple servers and multiple users (hub) with the EGI cloud service.
 
-          ### The service is proposed in two options:
+        ### The service is proposed in two options:
 
-            1. For individual users EGI hosts and offers a JupyterHub within the Applications On Demand Service.
-            Users (after lightweight approval) can login, write and play notebooks
-            using storage and compute capacity from the access.egi.eu VO.
-            2. For user communities EGI offers consultancy and technology
-            to setup a community-specific JupyterHub on top of community VO
-            (together with EGI-enbled compute and storage resources), and with community-specific storage/data.
-        offers:
-          1:
-            name: "AoD/Catch-all"
-            description: Run your own notebooks with persistent storage on EGI Cloud resources.
-            parameters:
+          1. For individual users EGI hosts and offers a JupyterHub within the Applications On Demand Service.
+          Users (after lightweight approval) can login, write and play notebooks
+          using storage and compute capacity from the access.egi.eu VO.
+          2. For user communities EGI offers consultancy and technology
+          to setup a community-specific JupyterHub on top of community VO
+          (together with EGI-enbled compute and storage resources), and with community-specific storage/data.
+      offers:
+        1:
+          name: "AoD/Catch-all"
+          description: Run your own notebooks with persistent storage on EGI Cloud resources.
+          parameters:
             - id:  "id1"
               label:  "Amount of RAM"
               description:  "Please choose amount of RAM"
@@ -2382,12 +2399,12 @@ services:
               config:
                 mode: "buttons"
                 values: [1, 10, 20]
-          2:
-            name: Community Notebook
-            description: |
-              Community specific deployment to provide notebooks for all the users of a community.
-              Allows further customisation to meet the community needs (e.g. shared storage)
-            parameters:
+        2:
+          name: Community Notebook
+          description: |
+            Community specific deployment to provide notebooks for all the users of a community.
+            Allows further customisation to meet the community needs (e.g. shared storage)
+          parameters:
             - id:  "idq"
               label:  "Number of users"
               description:  "Please type number of users"
@@ -2457,7 +2474,7 @@ services:
 
     DARIAH:
         title: DARIAH Science Gateway
-        parents: *thematicServicesParent
+        parents: *processingAndAnalysisParent
         providers: [*rbi]
         logo: dariah.png
         open_access: false
@@ -2516,7 +2533,7 @@ services:
                 value: 365
     Dynamic On Demand Analysis Service:
         title: Dynamic On Demand Analysis Service (DODAS Portal)
-        parents: *thematicServicesParent
+        parents: *processingAndAnalysisParent
         providers: [*infn]
         logo: dynamic-on-demand-analysis-service.png
         open_access: false
@@ -2594,7 +2611,7 @@ services:
                 value: 365
     D4 Science Particle Formation:
         title: &d4scienceService Particle Formation
-        parents: [*applicationsParent, *thematicServicesParent]
+        parents: *processingAndAnalysisParent
         providers: [*d4science, *egi, *smartSmear]
         logo: vre.png
         open_access: true
@@ -2625,7 +2642,7 @@ services:
             description: *notSpecified
     ENES Climate Analytics Service:
         title: ENES Climate Analytics Service
-        parents: [*thematicServicesParent, *researchDataParent]
+        parents: *processingAndAnalysisParent
         logo: enes-climate-analytics-service.png
         providers: [*ccmc, *dkrz]
         open_access: false
@@ -2696,7 +2713,7 @@ services:
                 value: 365
     LifeWatch ERIC Plants Identification App:
         title: LifeWatch ERIC Plants Identification App
-        parents: *thematicServicesParent
+        parents: *processingAndAnalysisParent
         providers: [*lifewatch]
         logo: lifewatch-eric-plants-identification-app.png
         open_access: false
@@ -2756,29 +2773,9 @@ services:
                 type:  "input"
                 value_type:  "integer"
                 value: 365
-    Copernicus Data and other EO Pillar data:
-        title: Copernicus Data and other EO Pillar data
-        parents: *researchDataParent
-        providers: [*rasdaman, *eodc, *sinergise]
-        open_access: false
-        webpage_url: https://www.google.com/
-        manual_url: https://www.google.com/
-        helpdesk_url: https://www.google.com/
-        tutorial_url: https://www.google.com/
-        terms_of_use_url: https://www.google.com/
-        corporate_sla_url: https://www.google.com/
-        access_policies_url: https://www.google.com/
-        places: *europe
-        dedicated_for: ["Researchers"] #TODO: but not specified
-        languages: *english
-        area: *interdisciplinary
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: *notSpecified
-        description: *notSpecified
     ELIXIR Core Data Resources:
         title: ELIXIR Core Data Resources
-        parents: *researchDataParent
+        parents: *sharingAndDicoveryParent
         providers: [*not]
         open_access: false
         webpage_url: https://www.google.com/
@@ -2798,7 +2795,7 @@ services:
         description: *notSpecified
     EISCAT:
         title: EISCAT
-        parents: *researchDataParent
+        parents: *sharingAndDicoveryParent
         providers: [*not]
         open_access: false
         webpage_url: https://www.google.com/
@@ -2818,7 +2815,7 @@ services:
         description: *notSpecified
     LOFAR:
         title: LOFAR
-        parents: *researchDataParent
+        parents: *sharingAndDicoveryParent
         providers: [*astron, *rug, *surfsara, *fzj, *psnc]
         open_access: false
         webpage_url: https://www.google.com/
@@ -2836,29 +2833,9 @@ services:
         phase: *notSpecified
         tagline: *notSpecified
         description: *notSpecified
-    GEO Discover and Access Broker:
-        title: GEO Discover and Access Broker
-        parents: *researchDataParent
-        providers: [*not]
-        open_access: false
-        webpage_url: https://www.google.com/
-        manual_url: https://www.google.com/
-        helpdesk_url: https://www.google.com/
-        tutorial_url: https://www.google.com/
-        terms_of_use_url: https://www.google.com/
-        corporate_sla_url: https://www.google.com/
-        access_policies_url: https://www.google.com/
-        places: *europe
-        dedicated_for: ["Researchers"] #TODO: but not specified
-        languages: *english
-        area: *earthScience
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: *notSpecified
-        description: *notSpecified
     OPENCoastS:
         title: OPENCoastS Portal
-        parents: *thematicServicesParent
+        parents: *processingAndAnalysisParent
         providers: [*pncel]
         logo: opencoasts.png
         open_access: false
@@ -2996,7 +2973,7 @@ services:
 #                      During EOSC-hub, the WeNMR services will be integrated with EUDAT services and other components from the INDIGO catalogue."
     HADDOCK:
         title: &haddock HADDOCK
-        parents: [*thematicServicesParent]
+        parents: *processingAndAnalysisParent
         providers: [*uou, *uof, *cirmmp]
         logo: haddock.png
         open_access: true
@@ -3033,7 +3010,7 @@ services:
               necessary for data analysis and modelling.
     PowerFit:
         title: &powerFit PowerFit
-        parents: [*thematicServicesParent]
+        parents: *processingAndAnalysisParent
         providers: [*uou, *uof, *cirmmp]
         logo: powerfit.png
         open_access: true
@@ -3058,7 +3035,7 @@ services:
         offers: *wenMRService
     DisVis:
         title: &disVis DisVis
-        parents: [*thematicServicesParent, *applicationsParent]
+        parents: *processingAndAnalysisParent
         providers: [*uou, *uof, *cirmmp]
         logo: disvis.png
         open_access: true
@@ -3085,7 +3062,7 @@ services:
         offers: *wenMRService
     CS-ROSETA:
         title: &roseta CS-ROSETA
-        parents: [*thematicServicesParent]
+        parents: *processingAndAnalysisParent
         providers: [*uou, *uof, *cirmmp]
         logo: cs-rosetta.png
         open_access: true
@@ -3110,7 +3087,7 @@ services:
         offers: *wenMRService
     AMBER:
         title: &amber AMBER
-        parents: [*thematicServicesParent, *applicationsParent]
+        parents: *processingAndAnalysisParent
         providers: [*uou, *uof, *cirmmp]
         logo: amber.png
         open_access: true
@@ -3137,7 +3114,7 @@ services:
         offers: *wenMRService
     FANTEN:
         title: &fanten FANTEN
-        parents: [*thematicServicesParent, *applicationsParent]
+        parents: *processingAndAnalysisParent
         providers: [*uou, *uof, *cirmmp]
         logo: fanten.png
         open_access: true
@@ -3162,7 +3139,7 @@ services:
         offers: *wenMRService
     SpotOn:
         title: &spotOn SpotOn
-        parents: [*thematicServicesParent]
+        parents: *processingAndAnalysisParent
         providers: [*uou, *uof, *cirmmp]
         logo: spoton.png
         open_access: true
@@ -3188,7 +3165,7 @@ services:
         offers: *wenMRService
     GEP - HRCM:
         title: &gepHRCM GEP - High-Resolution Change Monitoring for the Alpine Region
-        parents: [*thematicServicesParent, *researchDataParent]
+        parents: *processingAndAnalysisParent
         providers: [*terradue]
         open_access: false
         webpage_url: https://geohazards-tep.eo.esa.int
@@ -3213,7 +3190,7 @@ services:
           and made available for visualization and download.
     GEP - EO:
         title: &gepEO GEP - EO Services for Earthquake Response and Landslides Analysis
-        parents: [*thematicServicesParent, *researchDataParent]
+        parents: *processingAndAnalysisParent
         providers: [*terradue]
         open_access: false
         webpage_url: https://geohazards-tep.eo.esa.int
@@ -3236,7 +3213,7 @@ services:
           landslide rapid mapping and landslide displacement field monitoring with Sentinel-1 and Sentinel-2 data.
     EODC JupyterHub for global Copernicus data:
         title: &eodcJH EODC JupyterHub for global Copernicus data
-        parents: [*thematicServicesParent, *researchDataParent]
+        parents: *processingAndAnalysisParent
         providers: [*terradue]
         open_access: false
         webpage_url: https://jupyterhub.eodc.eu
@@ -3289,7 +3266,7 @@ services:
                 value_type:  "string"
     EODC Data Catalogue Service:
         title: &eodcDCS EODC Data Catalogue Service
-        parents: [*thematicServicesParent, *researchDataParent]
+        parents: *sharingAndDicoveryParent
         providers: [*terradue]
         open_access: false
         webpage_url: https://csw.eodc.eu
@@ -3336,7 +3313,7 @@ services:
               value_type:  "string"
     Sentiel hub:
         title: &sentinelHub Sentiel hub
-        parents: [*thematicServicesParent, *researchDataParent]
+        parents: *sharingAndDicoveryParent
         providers: [*terradue]
         open_access: false
         webpage_url: http://sentinel-hub.com/
@@ -3362,7 +3339,7 @@ services:
           Sentinel Hub received Copernicus Masters Award 2016.
     MEA Platform:
         title: &meaPlatform MEA Platform (Data access and exploitation service)
-        parents: [*thematicServicesParent, *researchDataParent]
+        parents: *sharingAndDicoveryParent
         providers: [*terradue]
         open_access: false
         webpage_url: https://eodataservice.org
@@ -3387,7 +3364,7 @@ services:
           MEA platform exposes OGC-standardised discovery (openSearch) and access (WCS 2.0) interfaces.
     Rasdaman EO Datacube:
         title: &rasdamanDatacube Rasdaman EO Datacube
-        parents: [*thematicServicesParent, *researchDataParent]
+        parents: *processingAndAnalysisParent
         providers: [*terradue]
         logo: rasdaman-eo-datacube.png
         open_access: false
@@ -3436,9 +3413,9 @@ services:
               description:  "Type institution name"
               type:  "input"
               value_type:  "string"
-    Cloud Ferro Data Collections Catalog:
-        title: &cfdcs Cloud Ferro Data Collections Catalog
-        parents: [*thematicServicesParent, *researchDataParent]
+    CloudFerro Data Collections Catalog:
+        title: &cfdcs CloudFerro Data Collections Catalog
+        parents: *sharingAndDicoveryParent
         providers: [*terradue]
         logo: &cfLogo cloud-ferro.png
         open_access: false
@@ -3473,7 +3450,7 @@ services:
           It can be integrated easily with Semantic Web technologies such as RDF data model and SPARQL.
     CloudFerro Infrastructure:
         title: &cfi CloudFerro Infrastructure
-        parents: [*thematicServicesParent, *researchDataParent]
+        parents: *processingAndAnalysisParent
         providers: [*terradue]
         logo: *cfLogo
         open_access: false
@@ -3504,7 +3481,7 @@ services:
           (high capacity, storage speed, no noisy neighbor problem).
     Cloudferro Data related Services - EO Finder:
         title: &cfdrsEOF Cloudferro Data related Services - EO Finder
-        parents: [*thematicServicesParent, *researchDataParent]
+        parents: *sharingAndDicoveryParent
         providers: [*terradue]
         logo: *cfLogo
         open_access: false
@@ -3525,7 +3502,7 @@ services:
         description: *notSpecified
     Cloudferro Data related Services - EO browser:
         title: &cfdrsEOB Cloudferro Data related Services - EO browser
-        parents: [*thematicServicesParent, *researchDataParent]
+        parents: *processingAndAnalysisParent
         logo: cloud-ferro-eo-browser.png
         providers: [*terradue]
         open_access: false
@@ -3548,9 +3525,9 @@ services:
           Sentinel 2, Sentinel 3, ESA’s archives of Landsat 5, Landsat 7, Landsat 8 and Envisat.
           It provides ability to visualize and download chosen products in .png and .jpg formats.
     Check-in:
-        title: Check-in
-        parents: *identityParent
-        providers: [*grnet]
+        title: EGI Check-in
+        parents: *securityAndOperationsParent
+        providers: [*egi]
         open_access: false
         webpage_url: https://www.egi.eu/internal-services/check-in/
         manual_url: https://www.google.com/
@@ -3578,7 +3555,7 @@ services:
           and attribute authorities.
     Attribute management:
         title: Attribute management
-        parents: *identityParent
+        parents: *securityAndOperationsParent
         providers: [*grnet, *cesnet]
         open_access: false
         webpage_url: https://www.egi.eu/internal-services/attribute-management/
@@ -3607,7 +3584,7 @@ services:
           for other authentication technologies, like OpenID and SAML2, for example.
     Training infrastructure:
         title: Training infrastructure
-        parents: *professionalServicesParent
+        parents: *trainingAndSupportParent
         providers: [*egifcs]
         logo: training-infrastructure.png
         open_access: false
@@ -3718,7 +3695,7 @@ services:
 
     FitSM:
         title: FitSM
-        parents: *professionalServicesParent
+        parents: *trainingAndSupportParent
         providers: [*egi]
         logo: fitsm.png
         open_access: false
@@ -3927,26 +3904,138 @@ relations:
     target: *geossPortal
 #  notebookToDesyCloud:
 #    both: true
-#    source: *notebook
-#    target: *
-#  notebookToXFEL:
+#    source: *haddock
+#    target: *disVis
+#  HaddockToRoseta:
+#    both: true
+#    source: *haddock
+#    target: *roseta
+#  HaddockToAmber:
+#    both: true
+#    source: *haddock
+#    target: *amber
+#  HaddockToFanten:
+#    both: true
+#    source: *haddock
+#    target: *fanten
+#  HaddockToSpotOn:
+#    both: true
+#    source: *haddock
+#    target: *spotOn
+#  PowerFitToDisVis:
+#    both: true
+#    source: *powerFit
+#    target: *disVis
+#  PowerFitToRoseta:
+#    both: true
+#    source: *powerFit
+#    target: *roseta
+#  PowerFitToAmber:
+#    both: true
+#    source: *powerFit
+#    target: *amber
+#  PowerFitToFanten:
+#    both: true
+#    source: *powerFit
+#    target: *fanten
+#  PowerFitToSpotOn:
+#    both: true
+#    source: *powerFit
+#    target: *spotOn
+#  DisVisToRoseta:
+#    both: true
+#    source: *disVis
+#    target: *roseta
+#  DisVisToAmber:
+#    both: true
+#    source: *disVis
+#    target: *amber
+#  DisVisToFanten:
+#    both: true
+#    source: *disVis
+#    target: *fanten
+#  DisVisToSpotOn:
+#    both: true
+#    source: *disVis
+#    target: *spotOn
+#  RosetaToAmber:
+#    both: true
+#    source: *roseta
+#    target: *amber
+#  RosetaToFanten:
+#    both: true
+#    source: *roseta
+#    target: *fanten
+#  RosetaToSpotOn:
+#    both: true
+#    source: *roseta
+#    target: *spotOn
+#  AmberToFanten:
+#    both: true
+#    source: *amber
+#    target: *fanten
+#  AmberToSpotOn:
+#    both: true
+#    source: *amber
+#    target: *spotOn
+#  FantenToSpotOn:
+#    both: true
+#    source: *fanten
+#    target: *spotOn
+#  notebookToD4Science:
 #    both: true
 #    source: *notebook
-#    target: *
-#  notebookToFaas:
+#    target: *spotOn
+#  egiToD4Science:
 #    both: true
-#    source: *notebook
-#    target: *
-#  desyCloudToXFEL:
+#    source: *egiCloud
+#    target: *d4scienceService
+#  clarinToB2Find:
 #    both: true
-#    source: *
-#    target: *
-#  desyCloudToFaas:
+#    source: *clarinService
+#    target: *b2find
+#  clarinToB2Share:
 #    both: true
-#    source: *
-#    target: *
-#  XFELToFaas:
+#    source: *clarinService
+#    target: *b2share
+#  b2findToB2Share:
 #    both: true
-#    source: *
-#    target: *
-
+#    source: *b2find
+#    target: *b2share
+#  egiToGeossPortal:
+#    both: true
+#    source: *egiCloud
+#    target: *geossPortal
+#  egiToGeossDab:
+#    both: true
+#    source: *egiCloud
+#    target: *geossDab
+#  geossPortalToDab:
+#    both: true
+#    source: *geossDab
+#    target: *geossPortal
+##  notebookToDesyCloud:
+##    both: true
+##    source: *notebook
+##    target: *
+##  notebookToXFEL:
+##    both: true
+##    source: *notebook
+##    target: *
+##  notebookToFaas:
+##    both: true
+##    source: *notebook
+##    target: *
+##  desyCloudToXFEL:
+##    both: true
+##    source: *
+##    target: *
+##  desyCloudToFaas:
+##    both: true
+##    source: *
+##    target: *
+##  XFELToFaas:
+##    both: true
+##    source: *
+##    target: *
+#
