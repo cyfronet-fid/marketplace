@@ -39,18 +39,13 @@ class Service < ApplicationRecord
   validates :tagline, presence: true
   validates :connected_url, presence: true, url: true, if: :open_access?
   validates :rating, presence: true
-  validates :places, presence: true
-  validates :languages, presence: true
-  validates :dedicated_for, presence: true
-  validates :terms_of_use_url, presence: true, url: true
-  validates :access_policies_url, presence: true, url: true
-  validates :corporate_sla_url, presence: true, url: true
-  validates :webpage_url, presence: true, url: true
-  validates :manual_url, presence: true, url: true
-  validates :helpdesk_url, presence: true, url: true
-  validates :tutorial_url, presence: true, url: true
-  validates :restrictions, presence: true
-  validates :phase, presence: true
+  validates :terms_of_use_url, url: true, if: :terms_of_use_url?
+  validates :access_policies_url, url: true, if: :access_policies_url?
+  validates :corporate_sla_url, url: true, if: :corporate_sla_url?
+  validates :webpage_url, url: true, if: :webpage_url?
+  validates :manual_url, url: true, if: :manual_url?
+  validates :helpdesk_url, url: true, if: :helpdesk_url?
+  validates :tutorial_url, url: true, if: :tutorial_url?
   validates :logo, blob: { content_type: :image }
   validates :research_areas, presence: true
   validates :providers, presence: true

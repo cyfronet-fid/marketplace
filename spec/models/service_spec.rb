@@ -9,19 +9,6 @@ RSpec.describe Service do
   it { should validate_presence_of(:providers) }
   it { should validate_presence_of(:rating) }
 
-  it { should validate_presence_of(:places) }
-  it { should validate_presence_of(:languages) }
-  it { should validate_presence_of(:dedicated_for) }
-  it { should validate_presence_of(:terms_of_use_url) }
-  it { should validate_presence_of(:access_policies_url) }
-  it { should validate_presence_of(:corporate_sla_url) }
-  it { should validate_presence_of(:webpage_url) }
-  it { should validate_presence_of(:manual_url) }
-  it { should validate_presence_of(:helpdesk_url) }
-  it { should validate_presence_of(:tutorial_url) }
-  it { should validate_presence_of(:restrictions) }
-  it { should validate_presence_of(:phase) }
-
   it { should belong_to(:owner) }
 
   it { should have_many(:providers) }

@@ -16,7 +16,7 @@ module Service::Searchable
     end
 
     def filter_dedicated_for(services, search_value)
-      services.where("ARRAY[?] && dedicated_for", search_value)
+      services.where("ARRAY[?]::varchar[] && dedicated_for", search_value)
     end
 
     def filter_rating(services, search_value)

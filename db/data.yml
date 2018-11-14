@@ -3530,12 +3530,12 @@ services:
         providers: [*egi]
         open_access: false
         webpage_url: https://www.egi.eu/internal-services/check-in/
-        manual_url: https://www.google.com/
-        helpdesk_url: https://www.google.com/
-        tutorial_url: https://www.google.com/
-        terms_of_use_url: https://www.google.com/
-        corporate_sla_url: https://www.google.com/
-        access_policies_url: https://www.google.com/
+        manual_url:
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Research organisations"]
         languages: *english
