@@ -60,7 +60,6 @@ yaml_hash["services"].each do |_, hash|
                     phase: hash["phase"],
                     categories: categories)
 
-    main_category = service.main_category.name
     service.logo.attached? && service.logo.purge_later
     hash["logo"] && service.logo.attach(io: File.open("db/logos/#{hash["logo"]}"), filename: hash["logo"])
 
