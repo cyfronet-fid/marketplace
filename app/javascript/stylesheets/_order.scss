@@ -7,17 +7,59 @@
   $color-1: #1c353d;
   $color-2: #f7f7f7;
 
-  a {
-    color: $color-1;
+  li {
+    a {
+      color: $color-1;
+      padding: 0.5rem 0.5rem 0.5rem 1.1rem;
+      position: relative;
 
-    &.disabled {
-      background: $color-2;
+      &.active {
+        color: $white;
+        background: $color-1;
+      }
+
+      &.active::after {
+        position: absolute;
+        top: 0;
+        height: 40px;
+        width: 40px;
+        background: $color-1 !important;
+        content: ' ';
+        right: -13px;
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+      }
     }
 
-    &.active {
-      color: $white;
-      background: $color-1;
+    .disabled {
+      background: $palette-gray-5;
+      color: $palette-gray-30;
     }
+  }
+
+  li:nth-child(2) a::after {
+    position: absolute;
+    top: 0;
+    height: 40px;
+    width: 40px;
+    background: $white;
+    content: ' ';
+    right: -13px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+
+  li:nth-child(2) .active::before,
+  li:nth-child(3) .active::before {
+    position: absolute;
+    top: 0;
+    height: 40px;
+    width: 40px;
+    background: $white;
+    content: ' ';
+    left: -28px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
   }
 }
 
