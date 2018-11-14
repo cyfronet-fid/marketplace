@@ -128,6 +128,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Hide service offers on service about page if no offers are available (@michal-szostak)
 - Rename "Some Header" in services' about page to "Documents" (@michal-szostak)
 - Hide TODO Technical Parameters from service offer selection (@michal-szostak)
+- Fields on Service entry to not be required (@kmarszalek)
 
 ### Deprecated
 

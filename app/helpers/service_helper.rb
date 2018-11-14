@@ -25,4 +25,8 @@ module ServiceHelper
   def get_providers_list
     Provider.all
   end
+
+  def any_present?(record, *fields)
+    fields.map { |f| record.send(f) }.any? { |v| v.present? }
+  end
 end
