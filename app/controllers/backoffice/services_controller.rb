@@ -55,7 +55,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     end
 
     def find_and_authorize
-      @service = Service.find(params[:id])
+      @service = Service.friendly.find(params[:id])
       authorize(@service)
     end
 end

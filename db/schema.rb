@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_07_143358) do
+ActiveRecord::Schema.define(version: 2018_11_14_224431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,9 +62,22 @@ ActiveRecord::Schema.define(version: 2018_11_07_143358) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "services_count", default: 0
+    t.string "slug"
     t.index ["ancestry"], name: "index_categories_on_ancestry"
     t.index ["description"], name: "index_categories_on_description"
     t.index ["name"], name: "index_categories_on_name"
+  end
+
+  create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
   create_table "offers", force: :cascade do |t|
@@ -78,29 +91,6 @@ ActiveRecord::Schema.define(version: 2018_11_07_143358) do
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
     t.index ["service_id"], name: "index_offers_on_service_id"
-  end
-
-  create_table "order_changes", force: :cascade do |t|
-    t.string "status"
-    t.text "message"
-    t.bigint "order_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "author_id"
-    t.index ["author_id"], name: "index_order_changes_on_author_id"
-    t.index ["order_id"], name: "index_order_changes_on_order_id"
-  end
-
-  create_table "orders", force: :cascade do |t|
-    t.string "status", null: false
-    t.bigint "service_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "issue_id"
-    t.integer "issue_status", default: 2, null: false
-    t.index ["service_id"], name: "index_orders_on_service_id"
-    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "project_item_changes", force: :cascade do |t|
@@ -227,6 +217,7 @@ ActiveRecord::Schema.define(version: 2018_11_07_143358) do
     t.text "phase", null: false
     t.integer "offers_count", default: 0
     t.text "activate_message"
+    t.string "slug"
     t.index ["description"], name: "index_services_on_description"
     t.index ["owner_id"], name: "index_services_on_owner_id"
     t.index ["provider_id"], name: "index_services_on_provider_id"

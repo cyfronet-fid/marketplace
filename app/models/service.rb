@@ -6,7 +6,11 @@ class Service < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
+  extend FriendlyId
+  friendly_id :title, use: :slugged
+
   has_one_attached :logo
+
 
   has_many :offers, dependent: :restrict_with_error
   has_many :service_categories, dependent: :destroy

@@ -2,7 +2,7 @@
 
 class Services::QuestionsController < ApplicationController
   def create
-    @service = Service.find(params[:service_id])
+    @service = Service.friendly.find(params[:service_id])
     @service.contact_emails.each  do |email|
       ServiceMailer.new_question(email, params[:service_question], @service).deliver_now
     end
