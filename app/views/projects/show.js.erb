@@ -1,8 +1,10 @@
-let projectSelect = $("#project_item_project_id");
+{
+  let projectSelect = $("#project_item_project_id");
 
-projectSelect.append(
-  $("<option></option>", { value: "<%= @project.id %>" }).text("<%= @project.name %>"));
-projectSelect.val("<%= @project.id %>");
-projectSelect.focus();
+  projectSelect.append("<%= j options_for_select([[@project.name, @project.id]]) %>");
 
-$("#ajax-modal").modal("hide");
+  projectSelect.val("<%= @project.id %>");
+  projectSelect.focus();
+
+  $("#ajax-modal").modal("hide");
+}
