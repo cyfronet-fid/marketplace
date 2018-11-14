@@ -9,6 +9,21 @@ class ProjectsController < ApplicationController
                                 params[:status]) if filterable?(params[:status])
   end
 
+  def show
+    @project = Project.find(params[:id])
+    authorize(@project)
+
+    respond_to do |format|
+      format.json do
+        render status: :ok, json: {
+          name: @project.name,
+          reason_for_access: @project.reason_for_access,
+          customer_typology: Project.customer_typologies[@project.customer_typology]
+        }
+      end
+    end
+  end
+
   def new
     respond_to do |format|
       format.js do
