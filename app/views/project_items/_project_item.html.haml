@@ -5,6 +5,12 @@
     .col-md-2
       %span.text-uppercase
         = project_item.status
+    .col-md-3
+
+      - if project_item.status == ProjectItem.statuses[:ready]
+        %span
+          = link_to "Access the service", project_item.service.webpage_url,
+            class: "btn btn-primary"
     .col-md.text-md-right
       %span
         last change: #{time_ago_in_words(project_item.updated_at)} ago
