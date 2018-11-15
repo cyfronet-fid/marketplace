@@ -17,10 +17,6 @@ class CategoriesController < ApplicationController
     @research_areas = ResearchArea.all
   end
 
-  def set_search_submit_path
-    @search_submit_path = category_path
-  end
-
   private
     def category_services
       records.joins(:service_categories).
