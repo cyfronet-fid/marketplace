@@ -2,15 +2,13 @@ import {Controller} from 'stimulus'
 
 export default class extends Controller {
     static targets = ['categorySelect', 'form'];
-    SERVICES_URL = "/services";
-    CATEGORIES_URL = "/categories";
-
-    initialize() {
-    }
 
     connect() {
+        this.SERVICES_URL = this.data.get("servicesPath");
+        this.CATEGORIES_URL = this.data.get("categoriesPath");
+
         this.categorySelectTarget.value = "";
-        let match = window.location.pathname.match(new RegExp(`^${this.CATEGORIES_URL}/(\\d+$)`));
+        let match = window.location.pathname.match(new RegExp(`^${this.CATEGORIES_URL}/([^/]+$)`));
         if(match !== null)
             this.categorySelectTarget.value = match[1];
 

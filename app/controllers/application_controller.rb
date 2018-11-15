@@ -7,17 +7,13 @@ class ApplicationController < ActionController::Base
   include Sentryable
   include Pundit
 
-  before_action :load_root_categories!, :set_search_submit_path
+  before_action :load_root_categories!
 
   protect_from_forgery
 
   rescue_from Pundit::NotAuthorizedError do |exception|
     redirect_back fallback_location: root_path,
                   alert: "You are not authorized to see this page"
-  end
-
-  def set_search_submit_path
-    @search_submit_path = services_path
   end
 
   private

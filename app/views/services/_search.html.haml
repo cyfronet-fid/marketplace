@@ -3,8 +3,9 @@
     .col-2
     .col-8
       %p
-        = form_tag "#{search_submit_path}", method: :get, role: "search", class: "", "data-target": "search.form",
-          "data-controller": "search", "data-sync-query-form": "data-sync-query-form" do
+        = form_tag "#{services_path}", method: :get, role: "search", class: "", "data-target": "search.form",
+          "data-controller": "search", "data-sync-query-form": "data-sync-query-form",
+          "data-search-services-path": services_path, "data-search-categories-path": "/categories" do
 
           .input-group
             %label.sr-only{ for: "search" } Search
@@ -13,7 +14,7 @@
                                                              "data-target": "search.categorySelect" }
               %option{ value: "", selected: "selected" }
                 All
-              = options_for_select categories.map { |category| [category.name, category.id] }, params[:category]
+              = options_for_select categories.map { |category| [category.name, category.slug] }, params[:category]
             .input-group-append
               %button#query-submit.input-group-text.bg-white
                 %i.fas.fa-search
