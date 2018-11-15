@@ -7,7 +7,7 @@ export default class extends Controller {
   }
 
   projectChanged(event) {
-    fetch("/projects/" + event.target.value, { dataType: "json" })
+    fetch(this.data.get("url") + "/" + event.target.value, { dataType: "json" })
       .then(response => {
         if (response.ok) {
           return response.json();

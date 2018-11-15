@@ -6,8 +6,8 @@
   Fill form below as much as possible.
   It will help us to proceed you request quicker.
 
-= simple_form_for @project_item, url: service_configuration_path(@service),
-  method: :put, html: { id: "order-form", "data-controller" => "project-item" } do |f|
+= simple_form_for @project_item, url: service_configuration_path(@service), method: :put,
+  html: { id: "order-form", "data-controller" => "project-item", "data-project-item-url" => projects_path } do |f|
 
   - unless @project_item.property_values.blank?
     %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Technical parameters
