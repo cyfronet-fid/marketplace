@@ -1,0 +1,10 @@
+- if ENV["GOOGLE_ANALYTICS"]
+  %script{ src: "https://www.googletagmanager.com/gtag/js?id=#{ENV["GOOGLE_ANALYTICS"]}", async: true }
+  :javascript
+    document.addEventListener("turbolinks:load", function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', '#{ENV["GOOGLE_ANALYTICS"]}');
+    });
