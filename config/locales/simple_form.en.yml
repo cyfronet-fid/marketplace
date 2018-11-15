@@ -24,10 +24,6 @@ en:
     #     edit:
     #       email: 'E-mail.'
     hints:
-      defaults:
-        terms_and_conditions: |
-          You are about to order an EOSC Service. Please accept
-          <a href="http://eoscportal.trust-itservices.com/governance/rules-participation">EOSC Terms and Conditions</a> to preceed.
       question:
         text: |
           We will send and information service provider.
