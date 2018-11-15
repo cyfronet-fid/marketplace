@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.feature "Home" do
   include OmniauthHelper
 
-  scenario "should searching should go to /services with correct query" do
+  scenario "searching should go to /services with correct query" do
     visit "/"
 
     fill_in "q", with: "Something"
