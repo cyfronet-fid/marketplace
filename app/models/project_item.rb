@@ -10,9 +10,9 @@ class ProjectItem < ApplicationRecord
   }
 
   CUSTOMER_TYPOLOGIES = {
-    "Single user": "single_user",
-    "Representing a research community/project": "research",
-    "Representing a private company": "private_company"
+    single_user: "single_user",
+    research: "research",
+    private_company: "private_company"
   }
 
   ISSUE_STATUSES = {

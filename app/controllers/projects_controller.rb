@@ -18,7 +18,7 @@ class ProjectsController < ApplicationController
         render status: :ok, json: {
           name: @project.name,
           reason_for_access: @project.reason_for_access,
-          customer_typology: Project.customer_typologies[@project.customer_typology]
+          customer_typology: @project.customer_typology
         }
       end
     end
