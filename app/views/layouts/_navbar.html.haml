@@ -37,76 +37,11 @@
           %a.nav-link.px-2.py-1.dropdown-toggle{ "data-toggle": "dropdown", "aria-expanded": "false" }
             %i.fas.fa-chevron-down.d-lg-none.mr-2
             %i.fas.fa-chevron-up.d-lg-none.mr-2
-            About
+            My EOSC Marketplace
           .dropdown-menu.ml-4.ml-lg-0.shadow-sm
-            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/about/eosc" } EOSC
-            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/about/eosc-projects" } EOSC Projects
-            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/about/eosc-members" } EOSC Members
-            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/about/funding-opportunities" }
-              Funding Opportunities
-            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/about/faqs" } FAQs
-            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/contact-us" } Contact us
-        %li.nav-item.ml-1.dropdown
-          %a.nav-link.px-2.py-1.dropdown-toggle{ "data-toggle": "dropdown", "aria-expanded": "false" }
-            %i.fas.fa-chevron-down.d-lg-none.mr-2
-            %i.fas.fa-chevron-up.d-lg-none.mr-2
-            Governance
-          .dropdown-menu.ml-4.ml-lg-0.shadow-sm
-            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/governance" } EOSC Governance
-            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/governance/rules-participation" }
-              Rules of participation
-            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/governance/best-practices" } Best Practices
-        %li.nav-item.ml-1.dropdown
-          %a.nav-link.px-2.py-1.dropdown-toggle{ href: url_for(services_path), "aria-expanded": "true" }
-            %i.fas.fa-chevron-up.d-lg-none.mr-2
-            Services & Resources
-          .dropdown-services.dropdown-menu.ml-4.ml-lg-0.shadow-sm
-            %small.text-uppercase.font-weight-bold.pl-2 Portal
-            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/sharing-discovery" }
-              Sharing & Discovery
-            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/processing-analysis" }
-              Processing & Analysis
-            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/data-management" }
-              Data Management
-            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/compute" } Compute
-            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/storage" } Storage
-            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/networking" } Networking
-            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/training" }
-              Training & Support
-            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/security-operations" }
-              Security & Operations
-            %a.dropdown-item{ href: "http://eoscportal.trust-itservices.com/services-resources/thematic-services" }
-              Thematic Services
-
-            %small.text-uppercase.font-weight-bold.pl-2 Marketplace
-            = link_to "All Services", services_path, class: "dropdown-item"
-            - @root_categories.each do |root_category|
-              = link_to root_category.name, root_category, class: "dropdown-item"
-        %li.nav-item.ml-1.dropdown
-          %a.nav-link.px-2.py-1.dropdown-toggle{ "data-toggle": "dropdown", "aria-expanded": "false" }
-            %i.fas.fa-chevron-down.d-lg-none.mr-2
-            %i.fas.fa-chevron-up.d-lg-none.mr-2
-            Policy
-          .dropdown-menu.ml-4.ml-lg-0.shadow-sm
-            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/policy/ec-documents" } EC Documents
-            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/policy/europe" } Europe
-            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/policy/eu-member-states" } Member States
-        %li.nav-item.ml-1.dropdown
-          %a.nav-link.px-2.py-1.dropdown-toggle{ "data-toggle": "dropdown", "aria-expanded": "false" }
-            %i.fas.fa-chevron-down.d-lg-none.mr-2
-            %i.fas.fa-chevron-up.d-lg-none.mr-2
-            EOSC in Practice
-          .dropdown-menu.ml-4.ml-lg-0.shadow-sm
-            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/eosc-in-practice/use-cases" } Use Cases
-            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/eosc-in-practice/open-call" } Open Call
-        %li.nav-item.ml-1.dropdown
-          %a.nav-link.px-2.py-1.dropdown-toggle{ "data-toggle": "dropdown", "aria-expanded": "false" }
-            %i.fas.fa-chevron-down.d-lg-none.mr-2
-            %i.fas.fa-chevron-up.d-lg-none.mr-2
-            Media
-          .dropdown-menu.ml-4.ml-lg-0.shadow-sm
-            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/media/news" } News
-            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/media/events" } Forthcoming Events
-            %a.dropdown-item{ href: "https://eoscportal.trust-itservices.com/media/past-events" } Past Events
-        %li.nav-item.ml-1
-          %a.nav-link.pl-2.py-1.pr-1{ href: "https://eoscportal.trust-itservices.com/for-providers" } For providers
+            %a.dropdown-item{ href: "/projects" } My services
+            %a.dropdown-item{ href: "/profile" } Profile
+            - if user_signed_in?
+              = link_to "Logout", destroy_user_session_path, method: :delete, class: "login-link"
+            - else
+              = link_to "Login/Sign-up", user_checkin_omniauth_authorize_path, class: "login-link"
