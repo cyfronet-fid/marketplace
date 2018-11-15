@@ -176,6 +176,8 @@ ENV variables:
   * `SMTP_ADDRESS` - smtp mail server address
   * `SMTP_USERNAME` - smtp user name or email address
   * `SMTP_PASSWORD` - smtp password
+  * `GOOGLE_ANALYTICS` - google analytics key for GMT (if present than analytics
+    script is added into head section)
 
 ## Commits
 
