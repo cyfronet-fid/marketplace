@@ -20,6 +20,9 @@
         Details
       %ul
         %li
+          %strong Link to service:
+          = link_to @project_item.service.title, @project_item.service
+        %li
           %strong Order date:
           = l @project_item.created_at
         %li
