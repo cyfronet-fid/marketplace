@@ -107,6 +107,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Category tree in sidebar (@michal-szostak)
 - Global filters to category view (@michal-szostak)
 - Add offers to the services (@goreck888)
+- Fill order fields using predefined project fields (@mkasztelnik, @martaswiatkowska)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
