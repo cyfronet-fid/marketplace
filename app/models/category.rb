@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class Category < ApplicationRecord
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+
+
   has_ancestry
 
   # This callback need to be defined byfore dependent: :destroy
