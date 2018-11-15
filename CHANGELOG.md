@@ -109,6 +109,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add offers to the services (@goreck888)
 - Google analytics integration (@mkasztelnik)
 - Friendly urls for categories and services (@mkasztelnik)
+- Category select box to text searchbar (@michal-szostak)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
