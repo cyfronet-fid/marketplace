@@ -35,3 +35,9 @@ en:
     # prompts:
     #   defaults:
     #     age: 'Select your age'
+    options:
+      defaults:
+        customer_typology:
+          single_user: "Single user"
+          research: "Representing a research community/project"
+          private_company: "Representing a private company"
