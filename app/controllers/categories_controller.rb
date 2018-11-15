@@ -32,7 +32,7 @@ class CategoriesController < ApplicationController
     end
 
     def category
-      @category ||= Category.find(params[:id])
+      @category ||= Category.friendly.find(params[:id])
     end
 
     def siblings

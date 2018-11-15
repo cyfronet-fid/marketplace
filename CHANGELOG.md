@@ -108,6 +108,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Global filters to category view (@michal-szostak)
 - Add offers to the services (@goreck888)
 - Google analytics integration (@mkasztelnik)
+- Friendly urls for categories and services (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
