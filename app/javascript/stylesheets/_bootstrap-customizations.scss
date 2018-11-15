@@ -764,6 +764,15 @@ Filters
   padding-left: 0;
 }
 
+.top-row a {
+  color: $palette-gray-80;
+  padding-bottom: 4px;
+
+  .active {
+    border-bottom: 2px solid $palette-yellow;
+  }
+}
+
 //scss-lint:disable QualifyingElement
 // This is a little hack, to make checkboxes vertically centered
 label[data-multicheckbox].small {

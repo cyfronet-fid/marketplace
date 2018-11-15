@@ -1,27 +1,13 @@
 .bg-light.pt-1.pb-1
-  .container.text-right.pr-1
+  .container.text-right.pr-1.top-row
     %ul.list-inline.mb-0.font-weight-light
-      = nav_link controller: :home, html_options: { class: "list-inline-item ml-2" } do
-        = link_to "Getting started", root_path
-      - if user_signed_in?
-        = nav_link controller: :orders, html_options: { class: "list-inline-item ml-2" } do
-          = link_to "My Services", projects_path
-        = nav_link controller: :profiles, html_options: { class: "list-inline-item ml-2" } do
-          = link_to "Profile", profile_path
-        - if policy([:backoffice, :backoffice]).show?
-          %li.list-inline-item.ml-2
-            = link_to "Backoffice", backoffice_path
-        - if policy([:admin, :admin]).show?
-          %li.list-inline-item.ml-2
-            = link_to "Admin", admin_path
-        %li.list-inline-item.ml-2
-          = link_to "Logout", destroy_user_session_path, method: :delete
-      - else
-        %li.list-inline-item.ml-2
-          = link_to "Login/Sign-up", user_checkin_omniauth_authorize_path
+      %li.list-inline-item.ml-2
+        %a{ href: "https://eoscportal.trust-itservices.com/" } EOSC Portal
+      %li.list-inline-item.ml-2
+        %a.active{ href: "/" } EOSC Marketplace
 .container.pl-0.pr-0
   %nav.navbar.navbar-expand-lg.pl-0.pr-0
-    = link_to root_path, class: "navbar-brand mr-3" do
+    = link_to root_path, class: "navbar-brand col-3 pl-0" do
       = image_tag "eosc-logo-color.png"
     %button.navbar-toggler{ "aria-controls" => "main-navbar",
                            "aria-expanded" => "false",
@@ -31,17 +17,22 @@
                            type: "button" }
       %i.fas.fa-bars
 
-    #main-navbar.collapse.navbar-collapse
+    = render "services/search"
+
+    #main-navbar.collapse.navbar-collapse.col-3.pl-0
       %ul.navbar-nav.ml-auto.pt-2.d-flex.flex-wrap
         %li.nav-item.ml-1.dropdown
           %a.nav-link.px-2.py-1.dropdown-toggle{ "data-toggle": "dropdown", "aria-expanded": "false" }
             %i.fas.fa-chevron-down.d-lg-none.mr-2
             %i.fas.fa-chevron-up.d-lg-none.mr-2
             My EOSC Marketplace
-          .dropdown-menu.ml-4.ml-lg-0.shadow-sm
+          .dropdown-menu.ml-4.ml-lg-0.shadow
             %a.dropdown-item{ href: "/projects" } My services
             %a.dropdown-item{ href: "/profile" } Profile
+
             - if user_signed_in?
-              = link_to "Logout", destroy_user_session_path, method: :delete, class: "login-link"
+              .login-link.dropdown-item
+                = link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-primary d-block mb-2"
             - else
-              = link_to "Login/Sign-up", user_checkin_omniauth_authorize_path, class: "login-link"
+              .login-link.dropdown-item
+                = link_to "Login/Sign-up", user_checkin_omniauth_authorize_path, class: "btn btn-primary d-block mb-2"
