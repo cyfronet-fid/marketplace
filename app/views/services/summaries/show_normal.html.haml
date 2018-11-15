@@ -7,9 +7,9 @@
   You can change anything now if you need.
   After clicking the order button your request will be sent to service provider.
 
-
   = simple_form_for @confirmation, url: service_summary_path(@service), html: { id: "order-form"  } do |f|
-    = f.input :terms_and_conditions, as: :boolean
+    - if @service.terms_of_use_url.present?
+      = f.input :terms_and_conditions, as: :boolean, hint: get_terms_and_condition_hint_text(@service).html_safe
 
 = render "services/summaries/technical_configuration",
          service: @service, project_item: @project_item
