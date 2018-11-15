@@ -36,9 +36,6 @@ module Service::Searchable
 
   include FieldFilterable
 
-  # Add here new fields from filter form (:q is handled separately, as it requires calling of elasticsearch)
-  @@searchable_fields = [:location, :providers, :rating, :research_area, :dedicated_for]
-
 private
 
   def dedicated_for_options
@@ -72,32 +69,29 @@ private
      ["★★★★★", "5"]]
   end
 
-  def query_present?
-    params[:q].present?
-  end
-
-  def filters_present?
-    @@searchable_fields.any? { |field| params[field] }
-  end
-
   def records
-    results = scope
+    searchable_fields.
+      select { |field| params[field].present? }.
+      inject(search_scope) { |filtered_services, field| filter_by_field(filtered_services, field) }
+  end
 
-    if filters_present?
-      results = services_filtered_by_fields
-    end
-
-    query_present? ? results.where(id: search_ids) : results
+  def searchable_fields
+    FieldFilterable.public_instance_methods.
+      map(&:to_s).
+      select { |m| m.start_with?("filter_") }.
+      map { |m| m.delete_prefix("filter_") }
   end
 
   def filter_by_field(elements, field)
-    self.send("filter_#{field}".to_s, elements, params[field])
+    self.send("filter_#{field}", elements, params[field])
   end
 
-  def services_filtered_by_fields
-    @@searchable_fields.
-        select { |field| params[field].present? }.
-        inject(scope) { |filtered_services, field| filter_by_field(filtered_services, field) }
+  def search_scope
+    query_present? ? scope.where(id: search_ids) : scope
+  end
+
+  def query_present?
+    params[:q].present?
   end
 
   def search_ids
@@ -105,6 +99,6 @@ private
   end
 
   def scope
-    Service.all
+    policy_scope(Service)
   end
 end
