@@ -29,6 +29,6 @@ class ProjectItem::Create
     def open_access?
       Service.joins(:offers).
         find_by(offers: { id: @project_item.offer_id })&.
-        open_access
+        open_access?
     end
 end

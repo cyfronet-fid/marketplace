@@ -7,7 +7,7 @@
         = link_to root_path, class: "navbar-brand mr-3" do
           = image_tag "eosc-logo-color.png"
         .text-right.flex-grow-1
-          = link_to "Cancel order and quit",
+          = link_to t("service.#{@service.service_type}.order.cancel"),
             service_cancel_path(@service),
             method: :delete, class: "text-uppercase"
           .ml-3.d-inline

@@ -11,6 +11,12 @@ class Service < ApplicationRecord
 
   has_one_attached :logo
 
+  enum service_type: {
+    normal: "normal",
+    open_access: "open_access",
+    catalog: "catalog"
+  }
+
 
   has_many :offers, dependent: :restrict_with_error
   has_many :service_categories, dependent: :destroy

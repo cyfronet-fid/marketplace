@@ -3,6 +3,7 @@
 %h2.mb-4.font-weight-normal Summary
 %p.mb-4
   Please carefully read the summary of your order.
+  %br
   You can change anything now if you need.
   After clicking the order button your request will be sent to service provider.
 
@@ -10,15 +11,8 @@
   = simple_form_for @confirmation, url: service_summary_path(@service), html: { id: "order-form"  } do |f|
     = f.input :terms_and_conditions, as: :boolean
 
-%h3.mt-4
-  Technical configuration
-
-.card.offer-description.mb-5
-  .card-body.p-4
-    %h4.card-title= @project_item.offer.name
-    .card-text= @project_item.offer.description
-    = render "project_items/attributes", property_values: @project_item.property_values
-
+= render "services/summaries/technical_configuration",
+         service: @service, project_item: @project_item
 
 .additional-information.mb-4
   %h3.mb-4
@@ -67,7 +61,7 @@
 
 = content_for :next_button do
   %button.btn.btn-primary{ form: "order-form", type: "submit" }
-    Order
+    = t "service.normal.order.title"
 
 = content_for :back_link do
   = link_to "Back to previous step - configuration",

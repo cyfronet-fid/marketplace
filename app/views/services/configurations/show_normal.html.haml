@@ -1,6 +1,6 @@
 = render "layouts/order/nav", service: @service, step: 2
 
-%h2.mb-4.font-weight-normal Service configuration
+%h2.mb-4.font-weight-normal= t "service.normal.order.configuration"
 %p.mb-4
   We need more information about your request.
   Fill form below as much as possible.
@@ -37,18 +37,12 @@
     collection: @affiliations, label_method: :organization,
     hint: "Click #{link_to "here", new_profile_affiliation_path} to create new affilition".html_safe
 
-
-
-
-%p
-  %strong Selected offer:
-  = @project_item.offer.name
-
 = content_for :next_button do
   %button.btn.btn-primary{ form: "order-form", type: "submit" }
     Next
 
-= content_for :back_link do
-  = link_to "Back to previous step - service offers",
-            service_offers_path(@service),
-            class: "text-uppercase"
+- if policy(@service).offers_show?
+  = content_for :back_link do
+    = link_to "Back to previous step - service offers",
+              service_offers_path(@service),
+              class: "text-uppercase"
