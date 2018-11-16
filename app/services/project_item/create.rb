@@ -12,11 +12,10 @@ class ProjectItem::Create
       @project_item.new_change(status: :created,
                                message: "Service request created")
 
-      ProjectItemMailer.created(@project_item).deliver_later
-
       if open_access?
         ProjectItem::ReadyJob.perform_later(@project_item)
       else
+        ProjectItemMailer.created(@project_item).deliver_later
         ProjectItem::RegisterJob.perform_later(@project_item)
       end
     end
