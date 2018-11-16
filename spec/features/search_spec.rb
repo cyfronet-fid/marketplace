@@ -10,16 +10,16 @@ RSpec.feature "Service searching in top bar", js: true do
 
   before { category = create(:category) }
 
-  scenario "search with 'All' selected should submit to /services" do
+  scenario "search with 'Allservices' selected should submit to /services" do
     visit root_path
-    select "All", from: "category-select"
+    select "All services", from: "category-select"
     click_on(id: "query-submit")
 
     url = URI.parse(page.current_path)
 
     expect(url.path).to eq(services_path)
 
-    expect(page).to have_select("category-select", selected: "All")
+    expect(page).to have_select("category-select", selected: "All services")
   end
 
   scenario "search with any category selected should submit to /categories" do
