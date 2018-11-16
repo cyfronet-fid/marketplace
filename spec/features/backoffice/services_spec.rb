@@ -66,7 +66,7 @@ RSpec.feature "Services in backoffice" do
     select research_area.name, from: "Research areas"
     select provider.name, from: "Providers"
 
-    check "Open access"
+    select "open_access", from: "Service type"
     fill_in "service_contact_emails_0", with: "person1@test.ok"
     page.find("#add-email-field").click
     fill_in "service_contact_emails_1", with: "person2@test.ok"
@@ -79,7 +79,7 @@ RSpec.feature "Services in backoffice" do
     expect(page).to have_content("service terms of use")
     expect(page).to have_content("service tagline")
     expect(page).to have_content("https://sample.url")
-    expect(page).to have_content("true")
+    expect(page).to have_content("open_access")
     expect(page).to have_content("person1@test.ok")
     expect(page).to have_content("person2@test.ok")
     expect(page).to have_content("Welcome!!!")
