@@ -4,7 +4,7 @@
 
       = markdown(service.description)
       - if policy(service).order? && !offers.empty?
-        = render "services/offers", offers: offers
+        = render "services/offers", offers: offers, service: service
 
     %sidebar.col-3
       - if any_present?(service, :places, :languages)
