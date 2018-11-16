@@ -14,4 +14,8 @@ class ServicePolicy < ApplicationPolicy
   def order?
     record.offers_count.positive?
   end
+
+  def offers_show?
+    record.offers_count > 1
+  end
 end

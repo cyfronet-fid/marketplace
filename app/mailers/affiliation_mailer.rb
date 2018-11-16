@@ -5,6 +5,6 @@ class AffiliationMailer < ApplicationMailer
     @affiliation = affiliation
     @user = affiliation.user
 
-    mail(to: @user.email, subject: "Affiliation confirmation required")
+    mail(to: @affiliation.email, subject: "Affiliation confirmation required")
   end
 end

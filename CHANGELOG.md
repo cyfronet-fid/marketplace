@@ -110,6 +110,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Google analytics integration (@mkasztelnik)
 - Friendly urls for categories and services (@mkasztelnik)
 - Category select box to text searchbar (@michal-szostak)
+- Fill order fields using predefined project fields (@mkasztelnik, @martaswiatkowska)
+- Show offers sections only when there is more than 1 offer (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)

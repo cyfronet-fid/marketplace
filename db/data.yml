@@ -25,10 +25,10 @@ categories:
         name: &securityAndOperationsParent "Security & Operations"
         description: Services to integrate identity management, authorisation and other security services to comply with policies and regulations or access services to support the operations of your infrastructures and services
 #    Data discovery & access:
-#        name: Data discovery & access
+#        name: &dataDiscoveryAndAccess Data discovery & access
 #        parent: *sharingAndDicoveryParent
 #    Applications repository:
-#        name: Applications repository
+#        name: &appRepository Applications repository
 #        parent: *sharingAndDicoveryParent
 #    Analytics:
 #        name: &analyticsParent Analytics
@@ -1697,10 +1697,10 @@ services:
           providing discoverability of more than 400M datasets.
           This version of the GEOSS Web Portal is connected also to the ECOPotential Virtual Laboratory,
           allowing users to execute available models utilizing GEOSS data as inputs.
-        offers:
-          1:
-            name: GEOSS Portal
-            description: *notSpecified
+#        offers:
+#          1:
+#            name: GEOSS Portal
+#            description: *notSpecified
     GEOSS DAB:
         title: &geossDab GEOSS DAB
         parents: *sharingAndDicoveryParent
@@ -1727,8 +1727,8 @@ services:
           1:
             name: GEOSS DAB
             description: *notSpecified
-    Clarin:
-        title: &clarinService Clarin
+    VLO:
+        title: &vloService Virtual Language Observatory
         parents: *sharingAndDicoveryParent
         providers: [*clarin]
         logo: component-metadata-infrastructure.png
@@ -1768,6 +1768,128 @@ services:
             description: |
               A web application that suggests language analysis tools for specific data sets.
           3:
+            name: VCR
+            description: |
+              A service that allows researchers to create their own citable digital bookmarks.
+
+
+              A virtual collection is a coherent set of links to digital objects (e.g. annotated text, video)
+              that can be easily created, accessed and cited. The links can originate from different archives,
+              hence the term virtual.
+
+
+              CLARIN provides a registry where scholars can create and publish their virtual collections.
+              It provides persistent identifiers and federated login.
+
+
+              The collection metadata is openly available and accessible via the Virtual Language Observatory.
+              The referenced digital objects can also be processed with the Language Resource Switchboard.
+    VLO:
+        title: &vloService Virtual Language Observatory
+        parents: *sharingAndDicoveryParent
+        providers: [*clarin]
+        logo: component-metadata-infrastructure.png
+        open_access: false
+        webpage_url: https://clarin.eu/
+        manual_url: https://vlo.clarin.eu/help
+        helpdesk_url: https://www.egi.eu/more-information/
+        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
+        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
+        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
+        places: *europe
+        languages: *english
+        dedicated_for: ["Reaserchers"] #TODO: but not specified
+        area: *artsAndHumanities
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: A facet browser for fast navigation and searching in huge amounts of metadata.
+        description: |
+          A facet browser for fast navigation and searching in large amounts of metadata.
+          This portal enables the discovery of language data and tools, provided by over 40 CLARIN centres,
+          other language resource providers and Europeana.
+
+
+          The VLO also provides access to the Virtual Collection Registry metadata and can be used
+          as a starting point to process language data with the Language Resource Switchboard.
+        offers:
+          1:
+            name: VLO
+            description: |
+              A facet browser for fast navigation and searching in large amounts of metadata.
+              This portal enables the discovery of language data and tools, provided by over 40 CLARIN centres,
+              other language resource providers and Europeana.
+
+
+              The VLO also provides access to the Virtual Collection Registry metadata and can be used
+              as a starting point to process language data with the Language Resource Switchboard.
+    LRS:
+        title: &lrsService Virtual Collection Registry
+        parents: *sharingAndDicoveryParent
+        providers: [*clarin]
+        logo: component-metadata-infrastructure.png
+        open_access: false
+        webpage_url: https://clarin.eu/
+        manual_url: https://vlo.clarin.eu/help
+        helpdesk_url: https://www.egi.eu/more-information/
+        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
+        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
+        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
+        places: *europe
+        languages: *english
+        dedicated_for: ["Reaserchers"] #TODO: but not specified
+        area: *artsAndHumanities
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: A web application that suggests language analysis tools for specific data sets.
+        description: |
+          The data are available as downloadable netCDF files from Argo's two
+          Global Data Assembly Centers (GDACS) and there are various data products too
+          which can be accessed through various data viewers.
+          Data from individual floats are also available from a certain region or time.
+        offers:
+          1:
+            name: LRS
+            description: |
+              A web application that suggests language analysis tools for specific data sets.
+    VCR:
+        title: &vcrService Virtual Collection Registry
+        parents: *sharingAndDicoveryParent
+        providers: [*clarin]
+        logo: component-metadata-infrastructure.png
+        open_access: false
+        webpage_url: https://clarin.eu/
+        manual_url: https://vlo.clarin.eu/help
+        helpdesk_url: https://www.egi.eu/more-information/
+        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
+        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
+        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
+        places: *europe
+        languages: *english
+        dedicated_for: ["Reaserchers"] #TODO: but not specified
+        area: *artsAndHumanities
+        restrictions: *notSpecified
+        phase: *notSpecified
+        tagline: A service that allows researchers to create their own citable digital bookmarks.
+        description: |
+          A service that allows researchers to create their own citable digital bookmarks.
+
+
+          A virtual collection is a coherent set of links to digital objects (e.g. annotated text, video)
+          that can be easily created, accessed and cited. The links can originate from different archives,
+          hence the term virtual.
+
+
+          CLARIN provides a registry where scholars can create and publish their virtual collections.
+          It provides persistent identifiers and federated login.
+
+
+          The collection metadata is openly available and accessible via the Virtual Language Observatory.
+          The referenced digital objects can also be processed with the Language Resource Switchboard.
+        offers:
+          1:
             name: VCR
             description: |
               A service that allows researchers to create their own citable digital bookmarks.
@@ -2336,7 +2458,7 @@ services:
             description: AutoDock Vina is an open-source software for doing molecular docking.
             parameters: *appParameters
     EGI Notebooks:
-      title: &notebook Notebook
+      title: &notebook EGI Notebook
       parents: *processingAndAnalysisParent
       providers: [*not]
       open_access: false
@@ -2610,7 +2732,7 @@ services:
                 value_type:  "integer"
                 value: 365
     D4 Science Particle Formation:
-        title: &d4scienceService Particle Formation
+        title: &d4scienceService New Particle Formation Event Analysis
         parents: *processingAndAnalysisParent
         providers: [*d4science, *egi, *smartSmear]
         logo: vre.png
@@ -2629,7 +2751,7 @@ services:
         area: *physicalScienceEarth
         restrictions: *notSpecified
         phase: Beta (min. TRL 7)
-        tagline: D4 Science Service
+        tagline: D4Science Service
         description: |
           The VRE supports new particle formation event analysis on interoperable e-Infrastructures.
           It provides access to Jupyter notebooks to classify events and process information about them.
@@ -3060,8 +3182,8 @@ services:
           DisVis is a software designed to visualize and quantify the accessible interaction space
           defined by distance restraints between biomolecules.
         offers: *wenMRService
-    CS-ROSETA:
-        title: &csRoseta CS-ROSETA
+    CS-ROSETTA:
+        title: &csRoseta CS-ROSETTA
         parents: *processingAndAnalysisParent
         providers: [*uou, *uof, *cirmmp]
         logo: cs-rosetta.png
@@ -3069,7 +3191,6 @@ services:
         connected_url: https://enmrdevel.science.uu.nl/auth/register/cs_rosetta3
         webpage_url: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
         manual_url: http://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/csr-tutorial.html
-        helpdesk_url: https://www.google.com
         tutorial_url: https://www.wenmr.eu/tutorials/
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
@@ -3096,16 +3217,16 @@ services:
         manual_url: https://www.wenmr.eu/tutorials
         helpdesk_url: http://py-enmr.cerm.unifi.it/feedback/index?type=amps-nmr
         tutorial_url: https://www.wenmr.eu/tutorials/
-        terms_of_use_url: https://wenmr.science.uu.nl/conditions
+        terms_of_use_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
-        access_policies_url: https://wenmr.science.uu.nl/conditions
+        access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
         area: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
         phase: "Production (min. TRL 8)"
-        tagline: A suite of computational tools for structural biology
+        tagline: Web portal for Nuclear Magnetic Resonance (NMR) structure refinement
         description: |
           Simple and user-friendly NMR-based refinement of the 3D structures of biological macromolecules
           thought the AMPS-NMR portal. Amber (Assisted Model Building with Energy Refinement) is a suite
@@ -3119,7 +3240,7 @@ services:
         logo: fanten.png
         open_access: true
         connected_url: http://abs.cerm.unifi.it:8080
-        webpage_url: https://enmrdevel.science.uu.nl/
+        webpage_url: http://abs.cerm.unifi.it:8080
         manual_url: http://abs.cerm.unifi.it:8080/manual/FANTEN_manual.pdf
         helpdesk_url: https://www.google.com
         tutorial_url: https://www.wenmr.eu/tutorials/
@@ -3785,30 +3906,50 @@ services:
                 type:  "input"
                 value_type:  "string"
     Alien and Invasive Species:
-      title: &alien Alien and Invasive Species
+      title: &alien Alien and Invasive Species Virtual Research Environment
       parents: *processingAndAnalysisParent
       providers: [*d4science]
-#      logo: training-infrastructure. TODO: logo
-      open_access: false
+      logo: alien.png
+      open_access: true
+      connected_url: https://services.d4science.org/web/alienandinvasivespecies
       webpage_url: https://services.d4science.org/web/alienandinvasivespecies
-      manual_url: https://google.com
-      helpdesk_url: https://google.com
-      tutorial_url: https://google.com
-      terms_of_use_url: https://google.com
-      corporate_sla_url: https://google.com
-      access_policies_url: https://google.com
+      manual_url: https://services.d4science.org/web/alienandinvasivespecies
+      helpdesk_url: https://support.d4science.org/
+      tutorial_url: https://dev.d4science.org/
+      terms_of_use_url:  https://services.d4science.org/terms-of-use
+      corporate_sla_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies#Service_Level_Agreement
+      access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
       places: *europe
-      dedicated_for: ["VO", "Research organisations"]
+      dedicated_for: ["VO"]
+      restrictions: No restrictions
       languages: *english
       area: *interdisciplinary
-      restrictions: *notSpecified
-      phase: *notSpecified
-      tagline: *notSpecified
-      description: *notSpecified
+      phase: Production (min. TRL 8)
+      tagline: |
+        A web-based, collaborative working environment enacting to predict the spread of an invasive species
+        (possibly alien) in a new environment
+      description: |
+        Alien and Invasive Species Virtual Research Environment (VRE) is a web-based, comprehensive,
+        collaborative working environment supporting decision makers and scientists in predicting the spread
+        of an invasive species (possibly alien) in a new environment. The VRE hosts examples of suitable habitat maps
+        produced for today and 2050 in new areas for more than 11,000 species and provides models and workflows
+        to combine environmental data with species observations in their habitats to predict their future spread.
+
+        ### Features:
+          - A service providing state-of-the art Data Analytics algorithms suitable for alien
+            and invasive species spread prediction;
+          - A service for seamless discovery and access to species occurrence data and taxa names
+            from several providers providers (eg. BrazilianFlora, OBIS, WoRMS, GBIF, ITIS, CatalogueOfLife);
+          - A complete spatial data infrastructure for discovering, accessing and publishing
+            spatial datasets according to OGC standards;
+          - A catalogue service for discovering, accessing and publishing any research object
+            (multi-part objects with actionable parts) and promoting its re-use;
+          - A social networking service supporting communication among VRE members by sharing and commenting posts;
+
       offers:
         1:
-          name: *notSpecified
-          description: *notSpecified
+          name: General access
+          description: "a"
     Cloud (Desy):
       title: &desyCloud Cloud (Desy)
       parents: *computeParent
@@ -4044,15 +4185,15 @@ relations:
     target: *d4scienceService
   clarinToB2Find:
     both: false
-    source: *clarinService
+    source: *vloService
     target: *b2find
   clarinToB2Share:
     both: false
-    source: *clarinService
+    source: *vloService
     target: *b2share
   clarinToEGICompute:
     both: false
-    source: *clarinService
+    source: *vloService
     target: *egiCloud
   b2findToB2Share:
     both: true
