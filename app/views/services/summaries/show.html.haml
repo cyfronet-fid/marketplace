@@ -67,7 +67,7 @@
 
 = content_for :next_button do
   %button.btn.btn-primary{ form: "order-form", type: "submit" }
-    Order
+    = t "service.#{@service.service_type}.order"
 
 = content_for :back_link do
   = link_to "Back to previous step - configuration",
