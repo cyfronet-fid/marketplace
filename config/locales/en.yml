@@ -38,8 +38,10 @@ en:
     normal:
       order:
         title: Order
+        cancel: Cancel order and quit
         configuration: Service configuration
     open_access:
       order:
         title: Add to my services
+        cancel: Quit
         configuration: Add to a project
