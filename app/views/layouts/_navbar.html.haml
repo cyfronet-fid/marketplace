@@ -7,17 +7,18 @@
         %a.active{ href: "/" } EOSC Marketplace
 .container.pl-0.pr-0
   %nav.navbar.navbar-expand-lg.pl-0.pr-0
-    = link_to root_path, class: "navbar-brand col-3 pl-0" do
+    = link_to root_path, class: "navbar-brand col-12 col-lg-3 pl-0" do
       = image_tag "eosc-logo-color.png"
-    %button.navbar-toggler{ "aria-controls" => "main-navbar",
+
+    //= render "services/search", search_submit_path: @search_submit_path, categories: @siblings || @root_categories
+
+    %button.navbar-toggler.col-2{ "aria-controls" => "main-navbar",
                            "aria-expanded" => "false",
                            "aria-label" => "Toggle navigation",
                            "data-target" => "#main-navbar",
                            "data-toggle" => "collapse",
                            type: "button" }
       %i.fas.fa-bars
-
-    = render "services/search"
 
     #main-navbar.collapse.navbar-collapse.col-3.pl-0
       %ul.navbar-nav.ml-auto.pt-2.d-flex.flex-wrap
