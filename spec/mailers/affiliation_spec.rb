@@ -9,7 +9,7 @@ RSpec.describe AffiliationMailer, type: :mailer do
 
     it "sends verification email to affilication owner" do
       expect { mail }.to change { ActionMailer::Base.deliveries.count }.by(1)
-      expect(mail.to).to contain_exactly(affiliation.user.email)
+      expect(mail.to).to contain_exactly(affiliation.email)
     end
 
     it "contains verification link" do
