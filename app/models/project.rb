@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class Project < ApplicationRecord
-  belongs_to :user
+  enum customer_typology: ProjectItem::CUSTOMER_TYPOLOGIES
 
+  belongs_to :user
   has_many :project_items, dependent: :destroy
+
 
   validates :name,
             presence: true,
