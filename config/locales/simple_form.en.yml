@@ -14,6 +14,8 @@ en:
     labels:
       defaults:
         terms_and_conditions: Accept terms and conditions
+      question:
+        text: Your question to provider about %{title}
     #   defaults:
     #     password: 'Password'
     #   user:
@@ -26,6 +28,10 @@ en:
         terms_and_conditions: |
           You are about to order an EOSC Service. Please accept
           <a href="http://eoscportal.trust-itservices.com/governance/rules-participation">EOSC Terms and Conditions</a> to preceed.
+      question:
+        text: |
+          We will send and information service provider.
+          You will receive answer to %{email} email.
 
     #     username: 'User name to sign in.'
     #     password: 'No special characters, please.'

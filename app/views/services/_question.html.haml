@@ -10,15 +10,11 @@
           %span{ "aria-hidden": true }
             &times;
       .modal-body
-        = form_for question, url: service_questions_path(service) do |f|
-          .form-group
-            %label.col-form-label{ for: "message-text" }
-              Our question to provider about #{service.title}
-            = f.hidden_field :author, value: current_user.id
-            = f.text_area :text, size: "53x10"
-            %label
-              We will send an information to this provider. You will receive answer to your mail
-              #{current_user.email}
+        = simple_form_for question, url: service_questions_path(service) do |f|
+          = f.hidden_field :author, value: current_user.id
+          = f.input :text, as: :text, input_html: { rows: 10 },
+            label: t("simple_form.labels.question.text", title: service.title),
+            hint: t("simple_form.hints.question.text", email: current_user.email)
       .modal-footer
         %button#submit-button.btn.btn-primary
           SEND
