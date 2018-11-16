@@ -130,11 +130,11 @@ RSpec.feature "Service ordering" do
       # Go directly to summary page
       expect(page).to have_current_path(service_summary_path(open_access_service))
       expect(page).to have_selector(:link_or_button,
-                                    "Order", exact: true)
+                                    "Add to my services", exact: true)
 
       expect do
         check "Accept terms and conditions"
-        click_on "Order", match: :first
+        click_on "Add to my services", match: :first
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
 
