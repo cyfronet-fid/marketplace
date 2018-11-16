@@ -1,3 +1,21 @@
+platforms:
+
+    EGI:
+        name: &egi "EGI"
+    EUDAT:
+        name: &eudat "EUDAT"
+    WENMR:
+        name: &wenmr "WENMR"
+    CLARIN:
+        name: &clarin "CLARIN"
+    D4Science:
+        name: &d4science "D4Science"
+    EOPillar:
+        name: &eopillar "EOPillar"
+    EC3:
+        name: &ec3 "EC3"
+
+
 categories:
 
     Sharing & Discovery:

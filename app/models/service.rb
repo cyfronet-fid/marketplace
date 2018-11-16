@@ -26,6 +26,10 @@ class Service < ApplicationRecord
   has_many :research_areas, through: :service_research_areas
   has_many :service_providers, dependent: :destroy
   has_many :providers, through: :service_providers
+  has_many :service_related_platforms, dependent: :destroy
+
+  has_many :platforms, through: :service_related_platforms
+
 
   has_many :source_relationships,
            class_name: "ServiceRelationship",
@@ -59,6 +63,7 @@ class Service < ApplicationRecord
   validates :logo, blob: { content_type: :image }
   validates :research_areas, presence: true
   validates :providers, presence: true
+  validates :platforms, presence: true
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
