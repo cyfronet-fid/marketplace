@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_16_101816) do
+ActiveRecord::Schema.define(version: 2018_11_16_085809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,12 @@ ActiveRecord::Schema.define(version: 2018_11_16_101816) do
     t.index ["service_id"], name: "index_offers_on_service_id"
   end
 
+  create_table "platforms", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "project_item_changes", force: :cascade do |t|
     t.string "status"
     t.text "message"
@@ -169,6 +175,14 @@ ActiveRecord::Schema.define(version: 2018_11_16_101816) do
     t.index ["provider_id"], name: "index_service_providers_on_provider_id"
     t.index ["service_id", "provider_id"], name: "index_service_providers_on_service_id_and_provider_id", unique: true
     t.index ["service_id"], name: "index_service_providers_on_service_id"
+  end
+
+  create_table "service_related_platforms", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "platform_id"
+    t.index ["platform_id"], name: "index_service_related_platforms_on_platform_id"
+    t.index ["service_id", "platform_id"], name: "index_service_related_platforms_on_service_id_and_platform_id", unique: true
+    t.index ["service_id"], name: "index_service_related_platforms_on_service_id"
   end
 
   create_table "service_relationships", force: :cascade do |t|
@@ -251,6 +265,8 @@ ActiveRecord::Schema.define(version: 2018_11_16_101816) do
   add_foreign_key "project_items", "projects"
   add_foreign_key "service_providers", "providers"
   add_foreign_key "service_providers", "services"
+  add_foreign_key "service_related_platforms", "platforms"
+  add_foreign_key "service_related_platforms", "services"
   add_foreign_key "service_relationships", "services", column: "source_id"
   add_foreign_key "service_relationships", "services", column: "target_id"
   add_foreign_key "service_research_areas", "research_areas"

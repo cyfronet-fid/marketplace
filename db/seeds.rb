@@ -31,6 +31,12 @@ yaml_hash["area"].each do |_, hash|
   puts "#{ hash["name"] } area generated"
 end
 
+
+yaml_hash["platforms"].each do |_, hash|
+  Platform.find_or_create_by(name: hash["name"])
+  puts "#{ hash["name"] } platforms generated"
+end
+
 puts "Generating services from yaml"
 yaml_hash["services"].each do |_, hash|
   categories = Category.where(name: hash["parents"])
@@ -63,7 +69,8 @@ yaml_hash["services"].each do |_, hash|
                     dedicated_for: hash["dedicated_for"],
                     restrictions: hash["restrictions"],
                     phase: hash["phase"],
-                    categories: categories)
+                    categories: categories,
+                    platforms: [Platform.all.sample])
 
     service.logo.attached? && service.logo.purge_later
     hash["logo"] && service.logo.attach(io: File.open("db/logos/#{hash["logo"]}"), filename: hash["logo"])
