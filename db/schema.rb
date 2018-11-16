@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_14_224431) do
+ActiveRecord::Schema.define(version: 2018_11_16_101816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -201,7 +201,6 @@ ActiveRecord::Schema.define(version: 2018_11_14_224431) do
     t.bigint "owner_id"
     t.decimal "rating", precision: 2, scale: 1, default: "0.0", null: false
     t.text "connected_url"
-    t.boolean "open_access", default: false
     t.bigint "provider_id"
     t.integer "service_opinion_count", default: 0
     t.text "contact_emails", default: [], array: true
@@ -220,6 +219,7 @@ ActiveRecord::Schema.define(version: 2018_11_14_224431) do
     t.integer "offers_count", default: 0
     t.text "activate_message"
     t.string "slug"
+    t.string "service_type"
     t.index ["description"], name: "index_services_on_description"
     t.index ["owner_id"], name: "index_services_on_owner_id"
     t.index ["provider_id"], name: "index_services_on_provider_id"

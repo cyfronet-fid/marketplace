@@ -12,7 +12,7 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def order?
-    record.offers_count.positive?
+    record.offers_count.positive? && !record.catalog?
   end
 
   def offers_show?

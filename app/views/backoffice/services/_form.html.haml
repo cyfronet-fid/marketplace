@@ -17,7 +17,7 @@
   = f.input :tutorial_url
   = f.input :restrictions
   = f.input :phase
-  = f.input :open_access, as: :boolean
+  = f.input :service_type, collection: Service.service_types.keys.map(&:to_sym)
   = f.input :activate_message
   = f.input :logo
   = f.association :providers, multiple: true

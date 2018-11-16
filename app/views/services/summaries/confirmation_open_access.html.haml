@@ -1,0 +1,15 @@
+- breadcrumb :congratulations, @project_item
+
+.container
+  %h1 Congratulations!
+  #{@project_item.service.title} has been added to #{@project_item.project.name}
+  project. Now you can access it from #{link_to "My services", projects_path} list.
+
+  .mt-4.mb-4
+    = link_to "Go to My services", projects_path,
+      class: "btn btn-primary mr-3"
+    = link_to "Get access to other services", services_path,
+      class: "btn btn-secondary"
+
+  %hr.mb-4
+  = render "services/related", related_services: @related_services
