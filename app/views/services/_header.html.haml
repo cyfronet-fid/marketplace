@@ -15,7 +15,7 @@
             = link_to "#{service.service_opinion_count} reviews", service_opinions_path(service), class: "ml-3"
       .col-3.text-center
         - if policy(service).order?
-          = link_to t("service.#{service.service_type}.order"),
+          = link_to t("service.#{service.service_type}.order.title"),
                     service_offers_path(service),
                     class: "btn btn-primary d-block mb-2"
         - if service.open_access?
