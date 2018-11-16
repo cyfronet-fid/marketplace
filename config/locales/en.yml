@@ -36,6 +36,10 @@ en:
 
   service:
     normal:
-      order: Order
+      order:
+        title: Order
+        configuration: Service configuration
     open_access:
-      order: Add to my services
+      order:
+        title: Add to my services
+        configuration: Add to a project

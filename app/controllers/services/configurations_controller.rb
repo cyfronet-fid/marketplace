@@ -6,10 +6,7 @@ class Services::ConfigurationsController < Services::ApplicationController
   def show
     setup_show_variables!
     @project_item = ProjectItem.new(session[session_key])
-
-    if new_open_access_service?
-      set_default_project_and_to_summary!
-    end
+    render "show_#{@service.service_type}"
   end
 
   def update
@@ -19,7 +16,7 @@ class Services::ConfigurationsController < Services::ApplicationController
       redirect_to service_summary_path(@service)
     else
       setup_show_variables!
-      render :show
+      render "show_#{@service.service_type}"
     end
   end
 
@@ -29,24 +26,6 @@ class Services::ConfigurationsController < Services::ApplicationController
       session[session_key].
           merge(permitted_attributes(template)).
           merge(status: :created)
-    end
-
-    def default_project
-      current_user.projects.find_by(name: "Services")
-    end
-
-    def new_open_access_service?
-      @service.open_access? && @project_item.project.blank?
-    end
-
-    def set_default_project_and_to_summary!
-      @project_item.project = default_project
-      @project_item.status = :created
-
-      if @project_item.valid?
-        session[session_key] = @project_item.attributes
-        redirect_to service_summary_path(@service)
-      end
     end
 
     def setup_show_variables!

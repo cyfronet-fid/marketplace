@@ -127,7 +127,13 @@ RSpec.feature "Service ordering" do
 
       click_on "Add to my services"
 
-      # Go directly to summary page
+      # Project selection
+      expect(page).to have_current_path(service_configuration_path(open_access_service))
+      select "Services"
+      click_on "Next", match: :first
+
+
+      # Summary page
       expect(page).to have_current_path(service_summary_path(open_access_service))
       expect(page).to have_selector(:link_or_button,
                                     "Add to my services", exact: true)
