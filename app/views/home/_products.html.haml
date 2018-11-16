@@ -1,57 +1,74 @@
 .container.home-intro
   .row
     .col-12.col-lg-3.pl-0.left-column
-      .left-menu
+      .left-menu.pl-4.pr-4.pt-2.pb-2
         %ul
           %li.all-link
-            %a{ href: "#" } All services
+            = link_to "All Services", services_path
           %li
             %a{ href: "#" } Compute
           %li
             %a{ href: "#" } Data management
+          %li
+            %a{ href: "#" } Networking
+          %li
+            %a{ href: "#" } Processing & Analysis
+          %li
+            %a{ href: "#" } Security & Operations
+          %li
+            %a{ href: "#" } Sharing & Discover
+          %li
+            %a{ href: "#" } Storage
+          %li
+            %a{ href: "#" } Training & Support
+      %h5.mt-5.text-uppercase Recently added
+      %ul.added-list
+        %li
+          %a{ href: "#" } EIDA Data Archive
+          %span 3 min ago
+        %li
+          %a{ href: "#" } EGI Object Storage
+          %span 55 min ago
+        %li
+          %a{ href: "#" } EIDA Data Archive
+          %span 55 min ago
+        %li
+          %a{ href: "#" } Chronos
+          %span 55 min ago
 
-    .col-12.col-lg-9.pl-0.right-column
-      %ul#my-tab.nav.nav-tabs.home-tabs.mt-4.d-flex.justify-content-center{ role: "tablist" }
-        - categories.each_with_index do |category, index|
-          %li.nav-item
-            %a.nav-link.text-uppercase{ "aria-controls" => "category#{ category.id } ",
-                                       "aria-selected" => "true",
-                                       "data-toggle" => "tab",
-                                       class: "#{ 'active' if index == 0 } ",
-                                       href: "#category-preview-#{ category.id } ",
-                                       role: "tab" }= category.name
-        %li.nav-item
-          %a.nav-link.text-uppercase{ "aria-controls" => "category-preview-others",
-                                     "aria-selected" => "false",
-                                     "data-toggle" => "tab",
-                                     href: "#category-preview-others",
-                                     role: "tab" } Others
-      .tab-content
-        - categories.each_with_index do |category, index|
-          .tab-pane.container.pt-2{ id: "category-preview-#{category.id}",
-                                    class: "#{ 'active' if index == 0 }",
-                                    "aria-labelledby": "category-preview-#{category.id}",
-                                    role: "tabpanel" }
-            .row.pt-3
-              - sample_services[index].each do |service|
-                .col-md-3.text-center.home-cat.home-cat-cloud
-                  %h3.text-secondary.mb-0
-                    %a{ href: url_for(service) }
-                      = service.title
-                  %p
-                    = service.tagline
-            = link_to("see more services", category, class: "float-right")
-            .clearfix
-        .tab-pane.container.pt-2{ id: "category-preview-others",
-                                  "aria-labelledby": "category-preview-others",
-                                  role: "tabpanel" }
-          .row.pt-3
-            - other_services.each do |service|
-              .col-md-3.text-center.home-cat.home-cat-cloud
-                %h3.text-secondary.mb-0
-                  %a{ href: url_for(service) }
-                    = service.title
-                %p
-                  = service.tagline
-          = link_to("see more services", services_path, class: "float-right")
-          .clearfix
+    .col-12.col-lg-9.right-column.pl-5
+      %p.subtitle.mt-4 In EOSC Marketplace you can
+      %p.title supply your research
+      %p.title.text-right with the services it needs
+      %ul.feature-list.mt-5
+        %li
+          %i.fas.fa-arrow-right
+          %strong Free of charge
+          service offers for researchers
+        %li
+          %i.fas.fa-arrow-right
+          Unified order management with
+          %strong dozen of providers
+        %li
+          %i.fas.fa-arrow-right
+          Compatible services linking into ready-to-use environments
+
+      .numbers.mt-5.row
+        .col-4.text-center.pt-4
+          .box
+            .icon
+              %i.far.fa-building
+            .num 24
+            .sub-num providers
+        .col-4.text-center.pt-4
+          .box
+            .icon
+              %i.fas.fa-cogs
+            .num 178
+            .sub-num services
+        .col-4.text-center.pt-4
+          .box
+            .icon
+              %i.fas.fa-globe
+            .num 32
+            .sub-num countries
