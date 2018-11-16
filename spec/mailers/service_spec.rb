@@ -7,8 +7,8 @@ RSpec.describe ServiceMailer, type: :mailer do
     let(:recipient) { create(:user) }
     let(:author) { create(:user) }
     let(:service) { build(:service) }
-    let(:mail) { described_class.new_question(recipient.email,
-                                              { "author": author.id, "text": "text message" },
+    let(:mail) { described_class.new_question(recipient.email, author,
+                                              { "text": "text message" },
                                               service).deliver_now }
 
     it "sends verification email to service representative" do
