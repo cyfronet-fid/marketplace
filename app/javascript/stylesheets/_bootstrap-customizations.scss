@@ -768,10 +768,11 @@ Filters
   color: $palette-gray-80;
   padding-bottom: 4px;
 
-  .active {
+  &.active {
     border-bottom: 2px solid $palette-yellow;
   }
 }
+
 
 //scss-lint:disable QualifyingElement
 // This is a little hack, to make checkboxes vertically centered
