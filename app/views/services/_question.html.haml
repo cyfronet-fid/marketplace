@@ -11,7 +11,6 @@
             &times;
       .modal-body
         = simple_form_for question, url: service_questions_path(service) do |f|
-          = f.hidden_field :author, value: current_user.id
           = f.input :text, as: :text, input_html: { rows: 10 },
             label: t("simple_form.labels.question.text", title: service.title),
             hint: t("simple_form.hints.question.text", email: current_user.email)
