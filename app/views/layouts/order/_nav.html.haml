@@ -1,5 +1,5 @@
 %ul.nav.nav-fill.order-nav
-  - if service.offers_count > 1
+  - if policy(service).offers_show?
     = order_nav_link("Offer selection", service_offers_path(service), 1, step)
   = order_nav_link("Service configuration", service_configuration_path(service), 2, step)
   = order_nav_link("Summary", service_summary_path(service), 3, step)
