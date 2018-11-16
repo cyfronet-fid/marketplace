@@ -218,18 +218,18 @@ ActiveRecord::Schema.define(version: 2018_11_16_101816) do
     t.bigint "provider_id"
     t.integer "service_opinion_count", default: 0
     t.text "contact_emails", default: [], array: true
-    t.text "places", null: false
-    t.text "languages", null: false
-    t.text "dedicated_for", null: false, array: true
-    t.text "terms_of_use_url", null: false
-    t.text "access_policies_url", null: false
-    t.text "corporate_sla_url", null: false
-    t.text "webpage_url", null: false
-    t.text "manual_url", null: false
-    t.text "helpdesk_url", null: false
-    t.text "tutorial_url", null: false
-    t.text "restrictions", null: false
-    t.text "phase", null: false
+    t.string "places"
+    t.string "languages"
+    t.string "dedicated_for", array: true
+    t.string "terms_of_use_url"
+    t.string "access_policies_url"
+    t.string "corporate_sla_url"
+    t.string "webpage_url"
+    t.string "manual_url"
+    t.string "helpdesk_url"
+    t.string "tutorial_url"
+    t.string "restrictions"
+    t.string "phase"
     t.integer "offers_count", default: 0
     t.text "activate_message"
     t.string "slug"
