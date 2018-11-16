@@ -1,4 +1,5 @@
 = simple_form_for @project, remote: true,
   html: { role: "form", id: "modal-form" } do |f|
   = f.input :name
-
+  = f.input :reason_for_access
+  = f.input :customer_typology, collection: Project.customer_typologies.keys.map(&:to_sym)

@@ -126,6 +126,8 @@ ActiveRecord::Schema.define(version: 2018_11_14_224431) do
   create_table "projects", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "user_id", null: false
+    t.text "reason_for_access"
+    t.string "customer_typology"
     t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
