@@ -33,3 +33,9 @@ en:
   time:
     formats:
       default: "%e.%m.%Y %k:%M"
+
+  service:
+    normal:
+      order: Order
+    open_access:
+      order: Add to my services

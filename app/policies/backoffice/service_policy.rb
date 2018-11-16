@@ -33,7 +33,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
 
   def permitted_attributes
     [:title, :description, :terms_of_use,
-     :tagline, :connected_url, :open_access,
+     :tagline, :connected_url, :service_type,
      [provider_ids: []], :places, :languages,
      [dedicated_for: []], :terms_of_use_url,
      :access_policies_url, :corporate_sla_url,

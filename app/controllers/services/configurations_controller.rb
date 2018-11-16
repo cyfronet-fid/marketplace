@@ -36,7 +36,7 @@ class Services::ConfigurationsController < Services::ApplicationController
     end
 
     def new_open_access_service?
-      @service.open_access && @project_item.project.blank?
+      @service.open_access? && @project_item.project.blank?
     end
 
     def set_default_project_and_to_summary!
