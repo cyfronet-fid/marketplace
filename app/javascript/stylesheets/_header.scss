@@ -112,3 +112,9 @@ header {
     padding: 10px 20px 3px;
   }
 }
+
+.search-box .form-control,
+.search-box select,
+.search-box button {
+  border: 1px solid $palette-solid-50;
+}
