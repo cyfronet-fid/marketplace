@@ -15,6 +15,7 @@ class CategoriesController < ApplicationController
     @dedicated_for_options = dedicated_for_options
     @rating_options = rating_options
     @research_areas = ResearchArea.all
+    @related_platform_options = related_platform_options
   end
 
   private

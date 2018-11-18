@@ -19,13 +19,13 @@
               %span
                 = service.languages
 
-      - if any_present?(service, :dedicated_for)
-        %h5 Dedicated for
+      - if any_present?(service, :platforms)
+        %h5 Related Infrastructures and Platforms
         %ul.list-group
-          - service.dedicated_for.each do |dedication|
+          - service.platforms.each do |platform|
             %li.list-group-item
               %span
-                = dedication
+                = platform.name
 
       - if any_present?(service, :webpage_url, :helpdesk_url, :manual_url, :tutorial_url)
         %h5 Support
