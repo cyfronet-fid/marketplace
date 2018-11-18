@@ -114,6 +114,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Show offers sections only when there is more than 1 offer (@mkasztelnik)
 - Dedicated ordering process for open access services (@mkasztelnik)
 - Email signature and layout (@mkasztelnik, @abacz)
+- Related Infrastructures and Platforms to filter section of services list (@martaswiatkowska)
+- Related Infrastructures and Platforms to service details view (@kmarszalek)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)

@@ -99,13 +99,13 @@ end
 
 RSpec.feature "Service filtering and sorting" do
   before(:each) do
-    platform1 = create(:platform, name: "platform 1")
+    platform = create(:platform, name: "platform 1")
     area = create(:research_area, name: "area 1")
     provider = create(:provider, name: "first provider")
     service = create(:service, title: "AAAA Service", rating: 5.0, dedicated_for: ["VO"])
     service.research_areas << area
     service.providers << provider
-    create(:service, title: "BBBB Service", rating: 3.0, dedicated_for: ["Providers"], platforms: [platform1])
+    create(:service, title: "BBBB Service", rating: 3.0, dedicated_for: ["Providers"], platforms: [platform])
     create(:service, title: "CCCC Service", rating: 4.0, dedicated_for: ["Researchers"])
     create(:service, title: "DDDD Something 1", rating: 4.1)
     create(:service, title: "DDDD Something 2", rating: 4.0)

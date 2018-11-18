@@ -75,9 +75,7 @@ private
   end
 
   def related_platform_options
-    Platform.all.map do |platform|
-      [platform.name, platform.id]
-    end
+    Platform.pluck(:name, :id)
   end
 
   def records

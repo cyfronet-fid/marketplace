@@ -42,6 +42,7 @@ yaml_hash["services"].each do |_, hash|
   categories = Category.where(name: hash["parents"])
   providers = Provider.where(name: hash["providers"])
   area = ResearchArea.where(name: hash["area"])
+  platforms = Platform.where(name: hash["platforms"])
 
   Service.find_or_initialize_by(title: hash["title"]) do |service|
 
@@ -70,7 +71,7 @@ yaml_hash["services"].each do |_, hash|
                     restrictions: hash["restrictions"],
                     phase: hash["phase"],
                     categories: categories,
-                    platforms: [Platform.all.sample])
+                    platforms: platforms)
 
     service.logo.attached? && service.logo.purge_later
     hash["logo"] && service.logo.attach(io: File.open("db/logos/#{hash["logo"]}"), filename: hash["logo"])
