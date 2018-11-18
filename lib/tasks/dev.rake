@@ -9,6 +9,7 @@ if Rails.env.development?
       users = User.all + [nil]
       services_size = args.fetch(:services_size, 100).to_i
       areas = ResearchArea.all
+      platforms = Platform.all
       puts "Generating #{services_size} new services"
       services_size.times do
         Service.create(title: Faker::Lorem.sentence,
@@ -17,7 +18,6 @@ if Rails.env.development?
                        tagline: Faker::Lorem.sentence,
                        categories: [Category.all.sample],
                        owner: users.sample,
-                       open_access: Faker::Boolean.boolean,
                        rating: Random.rand(5.0),
                        connected_url: Faker::Internet.url,
                        providers: Provider.all.sample(2),
@@ -33,7 +33,8 @@ if Rails.env.development?
                        tutorial_url: Faker::Internet.url,
                        restrictions: Faker::Lorem.sentence,
                        phase: Faker::Lorem.sentence,
-                       research_areas: [areas.sample])
+                       research_areas: [areas.sample],
+                       platforms: [platforms.sample])
 
       end
 

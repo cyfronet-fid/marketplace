@@ -10,6 +10,11 @@ module Service::Searchable
   module FieldFilterable
     extend ActiveSupport::Concern
 
+    def filter_related_platforms(services, search_value)
+      services.joins(:service_related_platforms).group("services.id").
+        where("service_related_platforms.platform_id IN (?)", search_value)
+    end
+
     def filter_location(services, search_value)
       # TODO filter by parameter
       services
@@ -67,6 +72,10 @@ private
      ["★★★+", "3"],
      ["★★★★+", "4"],
      ["★★★★★", "5"]]
+  end
+
+  def related_platform_options
+    Platform.pluck(:name, :id)
   end
 
   def records
