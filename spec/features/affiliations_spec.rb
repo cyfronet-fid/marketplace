@@ -68,5 +68,19 @@ RSpec.feature "Affiliations" do
 
       expect(affiliation.organization).to eq("new org")
     end
+
+    scenario "I cannot remove an affiliation with a project item" do
+      affiliation = create(:affiliation, user: user)
+
+      visit profile_path
+
+      affiliation.status = :active
+      affiliation.save
+      create(:project_item, affiliation: affiliation)
+
+      click_on "Delete"
+
+      expect(page).to have_content("You cannot remove an affiliation which has a project item")
+    end
   end
 end
