@@ -155,6 +155,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Insert a line-break after button(s) in service header right panel (@jswk)
 - Search by text from any view (@michal-szostak)
 - Search does not preserve `page` query param (@michal-szostak)
-- Multicheckbox does not take into account selected category when calculating available services
+- Multicheckbox does not take into account selected category when calculating available services (@michal-szostak) 
+- Change default sort order for services to name ascending (@michal-szostak)
 
 ### Security
