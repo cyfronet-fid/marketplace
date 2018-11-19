@@ -12,7 +12,7 @@ module Service::Searchable
 
     def filter_related_platforms(services, search_value)
       services.joins(:service_related_platforms).group("services.id").
-        where("service_related_platforms.platform_id IN (?)", search_value)
+          where("service_related_platforms.platform_id IN (?)", search_value)
     end
 
     def filter_location(services, search_value)
@@ -35,7 +35,7 @@ module Service::Searchable
 
     def filter_research_area(services, search_value)
       services.joins(:service_research_areas).
-              where(service_research_areas: { research_area_id: search_value })
+          where(service_research_areas: { research_area_id: search_value })
     end
   end
 
@@ -43,29 +43,38 @@ module Service::Searchable
 
 private
 
-  def dedicated_for_options
+  def dedicated_for_options(category = nil)
     [["Researchers", "Researchers"],
      ["VO", "VO"],
      ["Providers", "Providers"],
      ["Research organisations", "Research organisations"],
      ["Business", "Business"],
      ["Other", "Other"]].map do |field|
-      [field[0], field[1], Service.where("? = ANY(dedicated_for)", field[1]).count]
-    end .select do |element|
+      query = Service.joins(:categories).where("? = ANY(dedicated_for)", field[1])
+
+      unless category.nil?
+        query = query.where("categories.id = ?", category.id)
+      end
+      [field[0], field[1], query.count]
+    end.select do |element|
       element[2] != 0
     end
   end
 
-  def provider_options
-    Provider.select("providers.name, providers.id, COUNT(service_providers.service_id) as service_count")
-    .joins(:service_providers)
-    .group("providers.id")
-    .order(:name).map do |provider|
-      [provider.name, provider.id, provider.service_count]
+  def provider_options(category = nil)
+    query = Provider.select("providers.name, providers.id, COUNT(service_providers.service_id) as service_count")
+                .joins(:categories)
+
+    unless category.nil?
+      query = query.where("categories.id = ?", category.id)
     end
+
+    query.group("providers.id")
+        .order(:name)
+        .map { |provider| [provider.name, provider.id, provider.service_count] }
   end
 
-  def rating_options
+  def rating_options(category = nil)
     [["Any", ""],
      ["★+", "1"],
      ["★★+", "2"],
@@ -74,21 +83,29 @@ private
      ["★★★★★", "5"]]
   end
 
-  def related_platform_options
-    Platform.pluck(:name, :id)
+  def related_platform_options(category = nil)
+    query = Platform.select("platforms.name, platforms.id, COUNT(services.id) as service_count")
+        .joins(:categories)
+    unless category.nil?
+      query = query.where("categories.id = ?", category.id)
+    end
+
+    query.group("platforms.id")
+         .order(:name)
+         .map { |provider| [provider.name, provider.id, provider.service_count] }
   end
 
   def records
     searchable_fields.
-      select { |field| params[field].present? }.
-      inject(search_scope) { |filtered_services, field| filter_by_field(filtered_services, field) }
+        select { |field| params[field].present? }.
+        inject(search_scope) { |filtered_services, field| filter_by_field(filtered_services, field) }
   end
 
   def searchable_fields
     FieldFilterable.public_instance_methods.
-      map(&:to_s).
-      select { |m| m.start_with?("filter_") }.
-      map { |m| m.delete_prefix("filter_") }
+        map(&:to_s).
+        select { |m| m.start_with?("filter_") }.
+        map { |m| m.delete_prefix("filter_") }
   end
 
   def filter_by_field(elements, field)
