@@ -1,6 +1,6 @@
 %table.offer-params.table.table-hover
   %tbody
-    - filter_technical_parameters(parameters.map { |parameter| parameter.to_json }).each do |parameter|
+    - filter_technical_parameters(parameters.map(&:to_json)).each do |parameter|
       %tr
         %td= parameter["label"]
         %td.text-right.text-nowrap= parse_offer_parameter_value(parameter)
