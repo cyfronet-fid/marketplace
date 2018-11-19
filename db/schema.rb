@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_14_224431) do
+ActiveRecord::Schema.define(version: 2018_11_16_101816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,12 @@ ActiveRecord::Schema.define(version: 2018_11_14_224431) do
     t.index ["service_id"], name: "index_offers_on_service_id"
   end
 
+  create_table "platforms", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "project_item_changes", force: :cascade do |t|
     t.string "status"
     t.text "message"
@@ -171,6 +177,14 @@ ActiveRecord::Schema.define(version: 2018_11_14_224431) do
     t.index ["service_id"], name: "index_service_providers_on_service_id"
   end
 
+  create_table "service_related_platforms", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "platform_id"
+    t.index ["platform_id"], name: "index_service_related_platforms_on_platform_id"
+    t.index ["service_id", "platform_id"], name: "index_service_related_platforms_on_service_id_and_platform_id", unique: true
+    t.index ["service_id"], name: "index_service_related_platforms_on_service_id"
+  end
+
   create_table "service_relationships", force: :cascade do |t|
     t.bigint "source_id", null: false
     t.bigint "target_id", null: false
@@ -201,25 +215,25 @@ ActiveRecord::Schema.define(version: 2018_11_14_224431) do
     t.bigint "owner_id"
     t.decimal "rating", precision: 2, scale: 1, default: "0.0", null: false
     t.text "connected_url"
-    t.boolean "open_access", default: false
     t.bigint "provider_id"
     t.integer "service_opinion_count", default: 0
     t.text "contact_emails", default: [], array: true
-    t.text "places", null: false
-    t.text "languages", null: false
-    t.text "dedicated_for", null: false, array: true
-    t.text "terms_of_use_url", null: false
-    t.text "access_policies_url", null: false
-    t.text "corporate_sla_url", null: false
-    t.text "webpage_url", null: false
-    t.text "manual_url", null: false
-    t.text "helpdesk_url", null: false
-    t.text "tutorial_url", null: false
-    t.text "restrictions", null: false
-    t.text "phase", null: false
+    t.string "places"
+    t.string "languages"
+    t.string "dedicated_for", array: true
+    t.string "terms_of_use_url"
+    t.string "access_policies_url"
+    t.string "corporate_sla_url"
+    t.string "webpage_url"
+    t.string "manual_url"
+    t.string "helpdesk_url"
+    t.string "tutorial_url"
+    t.string "restrictions"
+    t.string "phase"
     t.integer "offers_count", default: 0
     t.text "activate_message"
     t.string "slug"
+    t.string "service_type"
     t.index ["description"], name: "index_services_on_description"
     t.index ["owner_id"], name: "index_services_on_owner_id"
     t.index ["provider_id"], name: "index_services_on_provider_id"
@@ -251,6 +265,8 @@ ActiveRecord::Schema.define(version: 2018_11_14_224431) do
   add_foreign_key "project_items", "projects"
   add_foreign_key "service_providers", "providers"
   add_foreign_key "service_providers", "services"
+  add_foreign_key "service_related_platforms", "platforms"
+  add_foreign_key "service_related_platforms", "services"
   add_foreign_key "service_relationships", "services", column: "source_id"
   add_foreign_key "service_relationships", "services", column: "target_id"
   add_foreign_key "service_research_areas", "research_areas"
