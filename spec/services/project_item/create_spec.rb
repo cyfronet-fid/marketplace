@@ -30,8 +30,19 @@ RSpec.describe ProjectItem::Create do
     expect(ProjectItem::RegisterJob).to have_been_enqueued.with(project_item)
   end
 
-  it "sends email to project_item owner" do
-    expect { described_class.new(project_item_template).call }.
-      to change { ActionMailer::Base.deliveries.count }.by(1)
+  context "Open access service ordered" do
+    let(:service) { create(:open_access_service) }
+
+    it "sends email to project_item owner" do
+      expect { described_class.new(project_item_template).call }.
+        to_not change { ActionMailer::Base.deliveries.count }
+    end
+  end
+
+  context "Normal service ordered" do
+    it "sends email to project_item owner" do
+      expect { described_class.new(project_item_template).call }.
+        to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
   end
 end

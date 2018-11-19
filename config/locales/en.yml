@@ -33,3 +33,20 @@ en:
   time:
     formats:
       default: "%e.%m.%Y %k:%M"
+
+  service:
+    normal:
+      order:
+        title: Order
+        cancel: Cancel order and quit
+        configuration: Service configuration
+    open_access:
+      order:
+        title: Add to my services
+        cancel: Quit
+        configuration: Add to a project
+  project:
+    select:
+      description: |
+        You can organize your services in projects.
+        Add this service to specific project or create a new one.

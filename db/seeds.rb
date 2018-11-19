@@ -26,10 +26,15 @@ yaml_hash["providers"].each do |_, hash|
   Provider.find_or_create_by(name: hash["name"])
 end
 
-areas = []
 yaml_hash["area"].each do |_, hash|
   ResearchArea.find_or_create_by(name: hash["name"])
   puts "#{ hash["name"] } area generated"
+end
+
+
+yaml_hash["platforms"].each do |_, hash|
+  Platform.find_or_create_by(name: hash["name"])
+  puts "#{ hash["name"] } platforms generated"
 end
 
 puts "Generating services from yaml"
@@ -37,14 +42,21 @@ yaml_hash["services"].each do |_, hash|
   categories = Category.where(name: hash["parents"])
   providers = Provider.where(name: hash["providers"])
   area = ResearchArea.where(name: hash["area"])
+  platforms = Platform.where(name: hash["platforms"])
 
   Service.find_or_initialize_by(title: hash["title"]) do |service|
+
+    service_type = if hash["offers"].blank?
+      :catalog
+    else
+      hash["open_access"] ? "open_access" : "normal"
+    end
 
     service.update!(tagline: hash["tagline"],
                     description: hash["description"],
                     research_areas: area,
                     providers: providers,
-                    open_access: hash["open_access"],
+                    service_type: service_type,
                     connected_url: hash["connected_url"],
                     webpage_url: hash["webpage_url"],
                     manual_url: hash["manual_url"],
@@ -58,13 +70,14 @@ yaml_hash["services"].each do |_, hash|
                     dedicated_for: hash["dedicated_for"],
                     restrictions: hash["restrictions"],
                     phase: hash["phase"],
-                    categories: categories)
+                    categories: categories,
+                    platforms: platforms)
 
     service.logo.attached? && service.logo.purge_later
     hash["logo"] && service.logo.attach(io: File.open("db/logos/#{hash["logo"]}"), filename: hash["logo"])
 
-    hash["offers"] && hash["offers"].each do |_, hash|
-      service.offers.create!(name: hash["name"], description: hash["description"], parameters: hash["parameters"])
+    hash["offers"] && hash["offers"].each do |_, h|
+      service.offers.create!(name: h["name"], description: h["description"], parameters: h["parameters"])
     end
   end
   puts "Generated service #{ hash["title"] }"

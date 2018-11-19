@@ -12,11 +12,10 @@ class ProjectItem::Create
       @project_item.new_change(status: :created,
                                message: "Service request created")
 
-      ProjectItemMailer.created(@project_item).deliver_later
-
       if open_access?
         ProjectItem::ReadyJob.perform_later(@project_item)
       else
+        ProjectItemMailer.created(@project_item).deliver_later
         ProjectItem::RegisterJob.perform_later(@project_item)
       end
     end
@@ -29,6 +28,6 @@ class ProjectItem::Create
     def open_access?
       Service.joins(:offers).
         find_by(offers: { id: @project_item.offer_id })&.
-        open_access
+        open_access?
     end
 end

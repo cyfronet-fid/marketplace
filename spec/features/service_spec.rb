@@ -85,6 +85,61 @@ RSpec.feature "Service browsing" do
     end
   end
 
+  scenario "show technical parameters in service view" do
+    offer = create(:offer, parameters: [{ "id": "id1",
+                                          "type": "select",
+                                          "label": "Number of CPU Cores",
+                                          "config": { "mode": "buttons", "values": [1, 2, 4, 8] },
+                                          "value_type": "integer",
+                                          "description": "Select number of cores you want" },
+                                        { "id": "id2",
+                                          "type": "select",
+                                          "unit": "GB",
+                                          "label": "Amount of RAM per CPU core",
+                                          "config": { "mode": "buttons", "values": [1, 2, 4] },
+                                          "value_type": "integer",
+                                          "description": "Select amount of RAM per core" },
+                                        { "id": "id3",
+                                          "type": "select",
+                                          "unit": "GB",
+                                          "label": "Local disk",
+                                          "config": { "mode": "buttons", "values": [10, 20, 40] },
+                                          "value_type": "integer",
+                                          "description": "Amount of local disk space" },
+                                        { "id": "id4",
+                                          "type": "input",
+                                          "label": "Number of VM instances",
+                                          "config": { "maximum": 50, "minimum": 1 },
+                                          "value_type": "integer",
+                                          "description": "Type number of VM instances from 1-50" },
+                                        { "id": "id5",
+                                          "type": "select",
+                                          "label": "Access type",
+                                          "config": { "mode": "buttons", "values": ["opportunistic", "reserved"] },
+                                          "value_type": "string",
+                                          "description": "Choose access type" },
+                                        { "id": "id6",
+                                          "type": "date",
+                                          "label": "Start of service",
+                                          "value_type": "string",
+                                          "description": "Please choose start date" }])
+
+    checkin_sign_in_as(user)
+    puts offer.name
+    puts service_path(offer.service)
+    visit service_path(offer.service)
+    expect(page.body).to have_content("Number of CPU Cores")
+    expect(page.body).to have_content("1 - 8")
+    expect(page.body).to have_content("Amount of RAM per CPU core")
+    expect(page.body).to have_content("1 - 4 GB")
+    expect(page.body).to have_content("Local disk")
+    expect(page.body).to have_content("10 - 40 GB")
+    expect(page.body).to have_content("Number of VM instances")
+    expect(page.body).to have_content("10 - 40 GB")
+    expect(page.body).to_not have_content("Access type")
+    expect(page.body).to_not have_content("Start of service")
+  end
+
   context "as not logged in user" do
     scenario "I need to login to asks service question" do
       service = create(:service)
@@ -99,12 +154,13 @@ end
 
 RSpec.feature "Service filtering and sorting" do
   before(:each) do
+    platform = create(:platform, name: "platform 1")
     area = create(:research_area, name: "area 1")
     provider = create(:provider, name: "first provider")
     service = create(:service, title: "AAAA Service", rating: 5.0, dedicated_for: ["VO"])
     service.research_areas << area
     service.providers << provider
-    create(:service, title: "BBBB Service", rating: 3.0, dedicated_for: ["Providers"])
+    create(:service, title: "BBBB Service", rating: 3.0, dedicated_for: ["Providers"], platforms: [platform])
     create(:service, title: "CCCC Service", rating: 4.0, dedicated_for: ["Researchers"])
     create(:service, title: "DDDD Something 1", rating: 4.1)
     create(:service, title: "DDDD Something 2", rating: 4.0)
@@ -238,6 +294,25 @@ RSpec.feature "Service filtering and sorting" do
     expect(page).to have_selector(".media", count: 1)
     expect(page).to have_selector("input[name='dedicated_for[]'][value='VO'][checked='checked']")
   end
+
+  scenario "searching via platforms", js: true do
+    visit services_path
+    find(:css, "input[name='related_platforms[]'][value='#{Platform.order(:name).first.id}']").set(true)
+    click_on(id: "filter-submit")
+
+    expect(page).to have_selector(".media", count: 1)
+  end
+
+  scenario "page query param should be reset after filtering", js: true do
+    create_list(:service, 40)
+    visit services_path(page: 3)
+    find(:css, "input[name='related_platforms[]'][value='#{Platform.order(:name).first.id}']").set(true)
+    click_on(id: "filter-submit")
+
+    expect(page.current_path).to_not have_content("page=")
+    expect(page).to have_selector(".media", count: 1)
+  end
+
 
   scenario "searching via location", js: true do
     `pending "add test after implementing location to filtering #{__FILE__}"`

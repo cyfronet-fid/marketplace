@@ -6,11 +6,11 @@ FactoryBot.define do
     sequence(:description) { |n| "service #{n} description" }
     sequence(:terms_of_use) { |n| "service #{n} terms of use" }
     sequence(:tagline) { |n| "service #{n} tagline" }
-    sequence(:open_access) { false }
+    sequence(:service_type) { :normal }
 
     factory :open_access_service do
       sequence(:connected_url) { "https://sample.url" }
-      sequence(:open_access) { true }
+      sequence(:service_type) { :open_access }
     end
     sequence(:webpage_url) { "https://wabpage.url"  }
     sequence(:manual_url) { "https://manual.url"  }
@@ -27,5 +27,6 @@ FactoryBot.define do
     sequence(:phase) { |n| "service #{n} phase" }
     sequence(:research_areas) { |n| [create(:research_area)] }
     sequence(:providers) { |n| [create(:provider)] }
+    sequence(:platforms) { |n| [create(:platform)] }
   end
 end

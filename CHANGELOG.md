@@ -112,6 +112,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Category select box to text searchbar (@michal-szostak)
 - Fill order fields using predefined project fields (@mkasztelnik, @martaswiatkowska)
 - Show offers sections only when there is more than 1 offer (@mkasztelnik)
+- Dedicated ordering process for open access services (@mkasztelnik)
+- Email signature and layout (@mkasztelnik, @abacz)
+- Related Infrastructures and Platforms to filter section of services list (@martaswiatkowska)
+- Related Infrastructures and Platforms to service details view (@kmarszalek)
+- Technical parameters display in service offers (@michal-szostak)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
@@ -145,5 +150,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Correctly expand affiliation accordions in profile (@jswk)
 - Insert a line-break after button(s) in service header right panel (@jswk)
 - Search by text from any view (@michal-szostak)
+- Search does not preserve `page` query param (@michal-szostak)
 
 ### Security

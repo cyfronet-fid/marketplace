@@ -7,6 +7,7 @@ class Services::SummariesController < Services::ApplicationController
   def show
     @project_item = project_item_template
     @confirmation = Confirmation.new
+    render "show_#{@service.service_type}"
   end
 
   def create
@@ -19,14 +20,14 @@ class Services::SummariesController < Services::ApplicationController
       if @project_item.persisted?
         session.delete(session_key)
         @related_services = @service.related_services.includes(:providers)
-        render :confirmation, layout: "application"
+        render "confirmation_#{@service.service_type}", layout: "application"
       else
         redirect_to service_configuration_path(@service),
                     alert: "Service request configuration invalid"
       end
     else
       @project_item = project_item_template
-      render :show
+      render "show_#{@service.service_type}"
     end
   end
 

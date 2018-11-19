@@ -17,12 +17,13 @@
   = f.input :tutorial_url
   = f.input :restrictions
   = f.input :phase
-  = f.input :open_access, as: :boolean
+  = f.input :service_type, collection: Service.service_types.keys.map(&:to_sym)
   = f.input :activate_message
   = f.input :logo
   = f.association :providers, multiple: true
   = f.input :contact_emails, multiple: true, as: :array
   = f.association :research_areas, input_html: { multiple: true }, include_hidden: false
+  = f.association :platforms, multiple: true
 
   %a#add-email-field Add additional email
   .invalid-feedback{ styles: "display:block" }
