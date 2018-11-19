@@ -1,19 +1,45 @@
 platforms:
 
     EGI:
-        name: &egi "EGI"
+        name: &egiPlatform "EGI"
     EUDAT:
-        name: &eudat "EUDAT"
+        name: &eudatPlatform "EUDAT"
     WENMR:
-        name: &wenmr "WENMR"
+        name: &wenmr "WeNMR Suite"
     CLARIN:
-        name: &clarin "CLARIN"
+        name: &clarinPlatform "CLARIN"
     D4Science:
-        name: &d4science "D4Science"
+        name: &d4sciencePlatform "D4Science"
     EOPillar:
-        name: &eopillar "EOPillar"
+        name: &eopillar "EO Pillar"
     EC3:
-        name: &ec3 "EC3"
+        name: &ec3 "EC3 Portal"
+    INSTRUCT:
+        name: &instruct "INSTRUCT-ERIC"
+    BIOEXCEL:
+        name: &bioexcel "BIOEXCEL"
+    ECOPOTENTIAL:
+        name: &ecopotential "ECOPOTENTIAL Virtual Laboratory"
+    GEOSS:
+        name: &geossPlatform "Global Earth Observation system of Systems (GEOSS)"
+    Europeana:
+        name: &europeana "Europeana"
+    AoDP:
+        name: &aodp "Applications on Demand Platform"
+    ENES:
+        name: &enesPlatform "IS-ENES"
+    ELIXIR:
+        name: &elixirPlatform "ELIXIR"
+    GBIF:
+        name: &gbif "GBIF"
+    OBIS:
+        name: &obis "OBIS"
+    SeaDataCloud:
+        name: &seaDataCloud "SeaDataCloud"
+    gCube:
+        name: &gCube "gCube System"
+
+
 
 
 categories:
@@ -72,6 +98,12 @@ providers:
         name: &grnet "GRNET"
     SURFsara:
         name: &surfsara "SURFsara"
+    CSBG:
+        name: &csbg "Computational Structural Biology group"
+    CERM:
+        name: &cerm "Magnetic Resonance Center of the University of Florenc - CERM"
+    Bijvoet:
+        name: &bijvoet "Bijvoet Center"
     BSC:
         name: &bsc "BSC"
     All generic CDI Level 1 providers:
@@ -173,6 +205,9 @@ area:
         name: &environmentalScience "Environmental science"
     BiologicalSciences:
         name: &biologicalSciences "Biological Sciences"
+    Security:
+        name: &security "Security"
+
 services:
 
     Cloud compute:
@@ -195,7 +230,7 @@ services:
         restrictions: &notSpecified not specified yet
         phase: *notSpecified
         tagline: Run virtual machines on-demand with complete control over computing resources
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           With Cloud Compute you can deploy and scale virtual machines
           on­demand. Cloud Compute offers guaranteed computational resources in
@@ -497,7 +532,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Execute thousands of computational tasks to analyse large datasets
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           With High-Throughput Compute you can run computational jobs at scale on the EGI infrastructure. It allows you to analyse large datasets and execute thousands of parallel computing tasks.
 
@@ -663,7 +698,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Run Docker containers in a lightweight virtualised environment
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           With Cloud Container Compute you can deploy and scale Docker containers on-demand. It offers guaranteed computational resources in a secure and isolated environment with standard API access, without the overhead of managing the operating system.
 
@@ -679,7 +714,7 @@ services:
         offers: *cloudComputeOffers
     B2DROP:
         title: &b2drop B2DROP
-        parents: *dataManagementParent
+        parents: [*storageParent, *sharingAndDicoveryParent]
         providers: [*eudat, *jsc]
         logo: b2drop.png
         open_access: false
@@ -688,7 +723,7 @@ services:
         helpdesk_url: https://www.eudat.eu/support-request?service=B2DROP
         tutorial_url: https://eudat.eu/services/userdoc/b2drop
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -697,7 +732,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Secure and trusted data exchange service for researchers
-        platforms: [*eopillar, *ec3]
+        platforms: [*eudatPlatform]
         description: |
           B2DROP is a secure and trusted data exchange service for researchers and scientists to keep their research data synchronized and up-to-date and to exchange with other researchers. B2DROP is an ideal solution to store and exchange data with colleagues and team members, synchronise multiple versions of data, ensure automatic desktop synchronisation of large files.
 
@@ -811,7 +846,7 @@ services:
 
     B2FIND:
         title: &b2find B2FIND
-        parents: [*dataManagementParent]
+        parents: [*sharingAndDicoveryParent, *dataManagementParent]
         providers: [*eudat, *dkrz]
         logo: b2find.png
         open_access: false
@@ -829,7 +864,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Metadata based data-discovery
-        platforms: [*eopillar, *ec3]
+        platforms: [*eudatPlatform]
         description: |
           B2FIND is the EUDAT metadata service and provides a discovery portal which allows users
           to find data collections within an international and inter-disciplinary scope.
@@ -932,13 +967,13 @@ services:
               community data managers can assess the B2FIND training module on Github.
               Features: Comprehensive joint catalogue of EUDAT services and external metadata,
               Metadata in mapped onto standardized facetes, Supports faceted search,
-              facets can be adapted to domain specific facets, Geospatial and temporal meatdata searches,
+              facets can be adapted to domain specific facets, Geospatial and temporal metadata searches,
               Allows users to search and browse datasets via keyword searches, user-friendly format and listed
               in order of relevance, Access to the scientifc data objects in given through references provided
               in the metadata, Local B2FIND instace. Ideal for: Community/organisational data managers.
     B2HANDLE:
         title: &b2handle B2HANDLE
-        parents: *dataManagementParent
+        parents: [*dataManagementParent, *sharingAndDicoveryParent]
         providers: [*eudat, *surfsara, *grnet]
         logo: b2handle.png
         open_access: false
@@ -947,7 +982,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://eudat.eu/services/userdoc/b2handle
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -956,7 +991,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Secure and trusted data exchange service for researchers
-        platforms: [*eopillar, *ec3]
+        platforms: [*eudatPlatform]
         description: |
           B2HANDLE is the distributed service for minting, storing, managing and accessing persistent identifiers (PIDs) and essential metadata (PID records) as well as managing PID namespaces. The implementation of the service relies on the DONA/Handle persistent identifier solution.
 
@@ -1059,16 +1094,16 @@ services:
                 value: 365
     B2NOTE:
         title: &b2note B2NOTE
-        parents: *dataManagementParent
+        parents: [*sharingAndDicoveryParent, *dataManagementParent]
         providers: [*eudat, *bsc]
         logo: b2note.png
         open_access: false
         webpage_url: https://www.eudat.eu/catalogue/B2NOTE
-        manual_url: https://www.google.com/
+        manual_url: 
         helpdesk_url: https://www.eudat.eu/contact-support-request?service=B2NOTE
-        tutorial_url: https://www.google.com/
+        tutorial_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1077,7 +1112,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Data annotation service to create annotations on research data
-        platforms: [*eopillar, *ec3]
+        platforms: [*eudatPlatform]
         description: |
           B2Note allows to easily create, search and manage annotations. An annotation is a keyword or commentary attached to a dete object (data collection, file) that explains or classifies it. B2NOTE is a standalone service for annotating data content hosted within the EUDAT CDI.
 
@@ -1146,16 +1181,16 @@ services:
                 value: 365
     B2SAFE:
         title: &b2safe B2SAFE
-        parents: *dataManagementParent
+        parents: [*dataManagementParent, *storageParent]
         providers: [*eudat, *all]
         logo: b2safe.png
         open_access: false
         webpage_url: https://www.eudat.eu/services/b2safe
         manual_url: https://eudat.eu/services/userdoc/configure-b2safe
         helpdesk_url: https://eudat.eu/contact-support-request
-        tutorial_url: https://www.google.com
+        tutorial_url: 
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1164,7 +1199,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Distribute and store large volumes of data based on data policies
-        platforms: [*eopillar, *ec3]
+        platforms: [*eudatPlatform]
         description: |
           B2SAFE is a robust, safe and highly available service which allows community
           and departmental repositories to implement data management policies on their research data across
@@ -1200,16 +1235,16 @@ services:
               (expected in the next stable release).
     B2SHARE:
         title: &b2share B2SHARE
-        parents: *dataManagementParent
+        parents: [*sharingAndDicoveryParent, *dataManagementParent]
         providers: [*eudat, *csc]
         logo: b2share.png
         open_access: false
         webpage_url: https://www.eudat.eu/services/b2share
         manual_url: https://eudat.eu/services/userdoc/b2share
         helpdesk_url: https://eudat.eu/contact-support-request
-        tutorial_url: https://www.google.com
+        tutorial_url: 
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1218,7 +1253,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Store and publish research data
-        platforms: [*eopillar, *ec3]
+        platforms: [*eudatPlatform]
         description: |
           B2SHARE is a user-friendly, reliable and trustworthy way for researchers,
           scientific communities and citizen scientists to store and publish small-scale
@@ -1323,22 +1358,22 @@ services:
               community data managers can assess the B2FIND training module on Github.
               Features: Comprehensive joint catalogue of EUDAT services and external metadata,
               Metadata in mapped onto standardized facetes, Supports faceted search, facets can be adapted
-              to domain specific facets, Geospatial and temporal meatdata searches, Allows users to search
+              to domain specific facets, Geospatial and temporal metadata searches, Allows users to search
               and browse datasets via keyword searches, user-friendly format and listed in order of relevance,
               Access to the scientifc data objects in given through references provided in the metadata,
               Local B2FIND instace. Ideal for: Community/organisational data managers.
     B2STAGE:
         title: &b2stage B2STAGE
-        parents: *dataManagementParent
+        parents: *storageParent
         providers: [*eudat, *all]
         logo: b2stage.png
         open_access: false
         webpage_url: https://www.eudat.eu/services/b2stage
         manual_url: https://eudat.eu/services/userdoc/b2stage
         helpdesk_url: https://eudat.eu/contact-support-request
-        tutorial_url: https://www.google.com
+        tutorial_url: 
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1347,7 +1382,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Transfer of data between data resources and external computational facilities
-        platforms: [*eopillar, *ec3]
+        platforms: [*eudatPlatform]
         description: |
           B2STAGE is for communities who need to transfert large data collection from EUDAT CDI to HPC.
           B2STAGE service is a customer-facing service that allow high performance transfers
@@ -1401,7 +1436,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://wiki.egi.eu/wiki/Online_Storage
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1410,7 +1445,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Back-up your data for the long term and future use in a secure environment.
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           Archive Storage allows you to store large amounts of data in a secure environment freeing up
           your usual file storage resources. Access to the archive can be given at an individual,
@@ -1458,8 +1493,8 @@ services:
                 type:  "input"
                 value_type:  "integer"
                 value: 365
-    EGI Block storage:
-        title: EGI Block storage
+    EGI Online Storage:
+        title: &egiOnlineStorage EGI Online Storage
         parents: *storageParent
         providers: [*egi]
         logo: archive-storage.png
@@ -1469,7 +1504,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://wiki.egi.eu/wiki/Online_Storage
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
@@ -1478,14 +1513,24 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Store, share and access your files and their metadata on a global scale.
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
-          Block Storage is a block-level storage solution that allows you to expand the storage capacity
-          of your instances in the EGI Federated Cloud. This means you can increase your storage without increasing
-          the size or capacity of your instance or by provisioning new ones.
-          Once you mount and format your drive, you can use it just like a regular hard drive attached to your server.
-          Or you can detach your block storage volume from one server and attach it to another.
-          Or you can delete your server, keeping your data intact and ready for the next time you need it.
+          Store, share and access your files and their metadata on a global scale.
+
+          Online Storage allows you to store data in a reliable and high-­quality environment and share it
+          across distributed teams. Your data can be accessed through different standard protocols and can be
+          replicated across different providers to increase fault­-tolerance.
+
+          Online Storage gives you complete control over the data you share and with whom.
+
+
+          ### To access the service you need to:
+
+            1. Request access selecting one of the service options below.
+            2. Set the relevant parameters and add the service to the cart.
+            3. Go to the cart and submit your order.
+            4. You will receive an email summarising your order.
+            5. You will be contacted by the EGI support team.
         offers:
           1:
             name: EGI Block storage
@@ -1528,43 +1573,13 @@ services:
                 type:  "input"
                 value_type:  "integer"
                 value: 365
-    EGI Object storage:
-        title: EGI Object storage
-        parents: *storageParent
-        providers: [*egi]
-        logo: archive-storage.png
-        open_access: false
-        webpage_url: https://www.egi.eu/services/online-storage/
-        manual_url: https://wiki.egi.eu/wiki/Online_Storage
-        helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://wiki.egi.eu/wiki/Online_Storage
-        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
-        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-        places: *europe
-        languages: *english
-        dedicated_for: ["Researchers", "Research organisations"]
-        area: *interdisciplinary
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: Store, share and access your files and their metadata on a global scale.
-        platforms: [*eopillar, *ec3]
-        description: |
-          Object storage manages data as objects. Each object includes the data itself,
-          a variable amount of metadata, and a globally unique identifier.
-          Cloud object storage allows relatively inexpensive, scalable
-          and self-healing retention of massive amounts of unstructured data.
-        offers:
-          1:
+          2:
             name: EGI Object storage
             description: |
-              Block Storage is a block-level storage solution that allows you to expand the storage capacity
-              of your instances in the EGI Federated Cloud. This means you can increase your storage without
-              increasing the size or capacity of your instance or by provisioning new ones.
-              Once you mount and format your drive, you can use it just like
-              a regular hard drive attached to your server.
-              Or you can detach your block storage volume from one server and attach it to another.
-              Or you can delete your server, keeping your data intact and ready for the next time you need it.
+              Object storage manages data as objects. Each object includes the data itself,
+              a variable amount of metadata, and a globally unique identifier.
+              Cloud object storage allows relatively inexpensive, scalable
+              and self-healing retention of massive amounts of unstructured data.
             parameters:
               - id:  "id1"
                 label:  "Storage capacity"
@@ -1604,34 +1619,7 @@ services:
                 type:  "input"
                 value_type:  "integer"
                 value: 365
-    EGI File storage:
-        title: EGI File storage
-        parents: *storageParent
-        providers: [*egi]
-        logo: archive-storage.png
-        open_access: false
-        webpage_url: https://www.egi.eu/services/online-storage/
-        manual_url: https://wiki.egi.eu/wiki/Online_Storage
-        helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://wiki.egi.eu/wiki/Online_Storage
-        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
-        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-        places: *europe
-        languages: *english
-        dedicated_for: ["Researchers", "Research organisations"]
-        area: *interdisciplinary
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: Store, share and access your files and their metadata on a global scale.
-        platforms: [*eopillar, *ec3]
-        description: |
-          Highly scalable storage system accessible from anywhere allowing to
-          easily share data through different standard interfaces.
-          It assigns global identifiers to files and allows to
-          organise your data using a flexible hierarchical structure.
-        offers:
-          1:
+          3:
             name: EGI File storage
             description: |
               Highly scalable storage system accessible from anywhere allowing
@@ -1688,7 +1676,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         dedicated_for: ["Reaserchers"] #TODO: but not specified
@@ -1697,7 +1685,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Store, share and access your files and their metadata on a global scale.
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           The data are available as downloadable netCDF files from Argo's
           two Global Data Assembly Centers (GDACS) and there are various data products too
@@ -1711,12 +1699,12 @@ services:
         open_access: true
         connected_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
         webpage_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
-        manual_url: https://google.com
-        helpdesk_url: https://google.com
-        tutorial_url: https://google.com
+        manual_url: 
+        helpdesk_url: 
+        tutorial_url: 
         terms_of_use_url: http://geosspublish.uat.esaportal.eu/community/guest/terms-conditions
-        corporate_sla_url: https://google.com
-        access_policies_url: https://google.com
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Reaserchers"] #TODO: but not specified
         languages: *english
@@ -1724,7 +1712,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Access to resources from the Global Earth Observation System of Systems
-        platforms: [*eopillar, *ec3]
+        platforms: [*ecopotential, *geossPlatform]
         description: |
           The GEOSS (Global Earth Observation System of Systems) Web Portal is the main entry point
           for discovering and accessing GEOSS data. GEOSS Platform interconnects more than 170 data systems globally,
@@ -1735,20 +1723,20 @@ services:
 #          1:
 #            name: GEOSS Portal
 #            description: *notSpecified
-    GEOSS DAB:
-        title: &geossDab GEOSS DAB
+    GEO DAB:
+        title: &geossDab GEO DAB
         parents: *sharingAndDicoveryParent
         providers: [*esa]
         logo: geoss-portal.png
         open_access: true
         connected_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
         webpage_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
-        manual_url: https://google.com
-        helpdesk_url: https://google.com
-        tutorial_url: https://google.com
+        manual_url: 
+        helpdesk_url: 
+        tutorial_url: 
         terms_of_use_url: http://geosspublish.uat.esaportal.eu/community/guest/terms-conditions
-        corporate_sla_url: https://google.com
-        access_policies_url: https://google.com
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Reaserchers"] #TODO: but not specified
         languages: *english
@@ -1756,7 +1744,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*ecopotential, *geossPlatform]
         description: *notSpecified
         offers:
           1:
@@ -1773,65 +1761,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
-        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-        places: *europe
-        languages: *english
-        dedicated_for: ["Reaserchers"] #TODO: but not specified
-        area: *artsAndHumanities
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: Store, share and access your files and their metadata on a global scale.
-        platforms: [*eopillar, *ec3]
-        description: |
-          The data are available as downloadable netCDF files from Argo's two
-          Global Data Assembly Centers (GDACS) and there are various data products too
-          which can be accessed through various data viewers.
-          Data from individual floats are also available from a certain region or time.
-        offers:
-          1:
-            name: VLO
-            description: |
-              A facet browser for fast navigation and searching in large amounts of metadata.
-              This portal enables the discovery of language data and tools, provided by over 40 CLARIN centres,
-              other language resource providers and Europeana.
-
-
-              The VLO also provides access to the Virtual Collection Registry metadata and can be used
-              as a starting point to process language data with the Language Resource Switchboard.
-          2:
-            name: LRS
-            description: |
-              A web application that suggests language analysis tools for specific data sets.
-          3:
-            name: VCR
-            description: |
-              A service that allows researchers to create their own citable digital bookmarks.
-
-
-              A virtual collection is a coherent set of links to digital objects (e.g. annotated text, video)
-              that can be easily created, accessed and cited. The links can originate from different archives,
-              hence the term virtual.
-
-
-              CLARIN provides a registry where scholars can create and publish their virtual collections.
-              It provides persistent identifiers and federated login.
-
-
-              The collection metadata is openly available and accessible via the Virtual Language Observatory.
-              The referenced digital objects can also be processed with the Language Resource Switchboard.
-    VLO:
-        title: &vloService Virtual Language Observatory
-        parents: *sharingAndDicoveryParent
-        providers: [*clarin]
-        logo: component-metadata-infrastructure.png
-        open_access: false
-        webpage_url: https://clarin.eu/
-        manual_url: https://vlo.clarin.eu/help
-        helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
-        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
@@ -1840,7 +1770,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: A facet browser for fast navigation and searching in huge amounts of metadata.
-        platforms: [*eopillar, *ec3]
+        platforms: [*clarinPlatform, *eudatPlatform, *europeana]
         description: |
           A facet browser for fast navigation and searching in large amounts of metadata.
           This portal enables the discovery of language data and tools, provided by over 40 CLARIN centres,
@@ -1861,7 +1791,7 @@ services:
               The VLO also provides access to the Virtual Collection Registry metadata and can be used
               as a starting point to process language data with the Language Resource Switchboard.
     LRS:
-        title: &lrsService Virtual Collection Registry
+        title: &lrsService Language Resource Switchboard
         parents: *sharingAndDicoveryParent
         providers: [*clarin]
         logo: component-metadata-infrastructure.png
@@ -1871,7 +1801,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
@@ -1880,7 +1810,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: A web application that suggests language analysis tools for specific data sets.
-        platforms: [*eopillar, *ec3]
+        platforms: [*clarinPlatform, *eudatPlatform, *europeana]
         description: |
           The data are available as downloadable netCDF files from Argo's two
           Global Data Assembly Centers (GDACS) and there are various data products too
@@ -1902,7 +1832,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
@@ -1911,7 +1841,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: A service that allows researchers to create their own citable digital bookmarks.
-        platforms: [*eopillar, *ec3]
+        platforms: [*clarinPlatform, *eudatPlatform, *europeana]
         description: |
           A service that allows researchers to create their own citable digital bookmarks.
 
@@ -1952,12 +1882,12 @@ services:
         logo: orfeus-european-integrated-data-archive-eida.png
         open_access: false
         webpage_url: https://www.orfeus-eu.org/data/eida/
-        manual_url: https://www.google.com/
-        helpdesk_url: https://www.google.com/
-        tutorial_url: https://www.google.com/
-        terms_of_use_url: https://www.google.com/
-        corporate_sla_url: https://www.google.com/
-        access_policies_url: https://www.google.com/
+        manual_url: 
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         dedicated_for: ["Reaserchers"] #TODO: but not specified
         places: *europe
         languages: *english
@@ -1979,7 +1909,7 @@ services:
 #        helpdesk_url: https://www.egi.eu/more-information/
 #        tutorial_url: https://wiki.egi.eu/wiki/HowToAccessTheEGIMarketPlace
 #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-#        corporate_sla_url: https://www.eosc-hub.eu/order-service
+#        corporate_sla_url:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        places: *europe
 #        languages: *english
@@ -2003,38 +1933,139 @@ services:
 #                     Featured use cases:
 #
 #                         New viruses implicated in fatal snake disease  how the Chipster platform helped virologists to make sense of millions of virus genomes"
-    GNU Octave:
-        title: GNU Octave
+#    GNU Octave:
+#        title: GNU Octave
+#        parents: *processingAndAnalysisParent
+#        providers: [*ics, *recas, *cyfro, *begrid, *cesga]
+#        logo: gnu-octave.png
+#        open_access: false
+#        webpage_url: https://www.gnu.org/software/octave/
+#        manual_url: https://octave.org/doc/interpreter/
+#        helpdesk_url: 
+#        tutorial_url: 
+#        terms_of_use_url: 
+#        corporate_sla_url: 
+#        access_policies_url: 
+#        places: *europe
+#        languages: *english
+#        dedicated_for: ["Researchers", "Research organisations"]
+#        area: *mathematics
+#        restrictions: *notSpecified
+#        phase: *notSpecified
+#        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+#        platforms: [*eopillar, *ec3]
+#        description: |
+#          GNU Octave is a high-level interpreted language, primarily intended for numerical computations.
+#          It provides capabilities for the numerical solution of linear and nonlinear problems,
+#          and for performing other numerical experiments.
+#        offers:
+#          1:
+#            name: GNU Octave
+#            description: |
+#              GNU Octave is a high-level interpreted language, primarily intended for numerical computations.
+#              It provides capabilities for the numerical solution of linear and nonlinear problems,
+#              and for performing other numerical experiments.
+#            parameters: &appParameters
+#            - id: "id1"
+#              label: "Number of CPU cores"
+#              description:  "Number of cores for this offer is constant"
+#              type:  "attribute"
+#              value_type:  "integer"
+#              value: 20
+#            - id: "id2"
+#              label: "Total amount of RAM"
+#              description:  "Amount of RAM for this offer is constant"
+#              type:  "attribute"
+#              unit: "GB"
+#              value_type:  "integer"
+#              value: 4
+#            - id: "id3"
+#              label: "Storage capacity"
+#              description:  "Storage capacity for this offer is constant"
+#              type:  "attribute"
+#              unit: "GB"
+#              value_type:  "integer"
+#              value: 100
+#            - id: "id4"
+#              label: "Access type"
+#              description:  "Access type for this offer is constant"
+#              type:  "attribute"
+#              value_type:  "string"
+#              value: "opportunistic"
+#            - id: "id5"
+#              label: "Start of service"
+#              description:  "Choose service start date"
+#              type:  "date"
+#              value_type:  "string"
+#            - id: "id6"
+#              label: "Number of days"
+#              description:  "Choose service start date"
+#              type:  "input"
+#              value_type:  "integer"
+#              value: 365
+#              config:
+#                minimum: 1
+#                maximum: 730
+#
+#
+#    Galaxy:
+#        title: Galaxy
+#        parents: *processingAndAnalysisParent
+#        providers: [*cesga, *recas, *ics]
+#        logo: galaxy.png
+#        open_access: false
+#        webpage_url: 
+#        manual_url: 
+#        helpdesk_url: 
+#        tutorial_url: 
+#        terms_of_use_url: 
+#        corporate_sla_url: 
+#        access_policies_url: 
+#        places: *europe
+#        dedicated_for: ["Researchers", "Research organisations"]
+#        languages: *english
+#        area: *lifeSciences
+#        restrictions: *notSpecified
+#        phase: *notSpecified
+#        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+#        platforms: [*eopillar, *ec3]
+#        description: |
+#          Galaxy is an open, web-based platform for data-intensive biomedical research.
+#        offers:
+#          1:
+#            name: Galaxy
+#            description: Galaxy is an open, web-based platform for data-intensive biomedical research.
+#            parameters: *appParameters
+    NAMD:
+        title: NAMD
         parents: *processingAndAnalysisParent
-        providers: [*ics, *recas, *cyfro, *begrid, *cesga]
-        logo: gnu-octave.png
+        providers: [*cesga, *recas, *ics]
+        logo: namd.png
         open_access: false
-        webpage_url: https://www.gnu.org/software/octave/
-        manual_url: https://octave.org/doc/interpreter/
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        webpage_url: 
+        manual_url: 
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
-        languages: *english
         dedicated_for: ["Researchers", "Research organisations"]
-        area: *mathematics
+        languages: *english
+        area: *lifeSciences
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform, *ec3, *aodp]
         description: |
-          GNU Octave is a high-level interpreted language, primarily intended for numerical computations.
-          It provides capabilities for the numerical solution of linear and nonlinear problems,
-          and for performing other numerical experiments.
+          NAMD is a parallel molecular dynamics code designed for high-performance simulation
+          of large bio-molecular systems.
         offers:
           1:
-            name: GNU Octave
+            name: NAMD
             description: |
-              GNU Octave is a high-level interpreted language, primarily intended for numerical computations.
-              It provides capabilities for the numerical solution of linear and nonlinear problems,
-              and for performing other numerical experiments.
+              NAMD is a parallel molecular dynamics code designed for high-performance simulation
+              of large bio-molecular systems.
             parameters: &appParameters
             - id: "id1"
               label: "Number of CPU cores"
@@ -2076,100 +2107,39 @@ services:
               config:
                 minimum: 1
                 maximum: 730
-
-
-    Galaxy:
-        title: Galaxy
-        parents: *processingAndAnalysisParent
-        providers: [*cesga, *recas, *ics]
-        logo: galaxy.png
-        open_access: false
-        webpage_url: https://www.google.com
-        manual_url: https://www.google.com
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
-        places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
-        languages: *english
-        area: *lifeSciences
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
-        description: |
-          Galaxy is an open, web-based platform for data-intensive biomedical research.
-        offers:
-          1:
-            name: Galaxy
-            description: Galaxy is an open, web-based platform for data-intensive biomedical research.
-            parameters: *appParameters
-    NAMD:
-        title: NAMD
-        parents: *processingAndAnalysisParent
-        providers: [*cesga, *recas, *ics]
-        logo: namd.png
-        open_access: false
-        webpage_url: https://www.google.com
-        manual_url: https://www.google.com
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
-        places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
-        languages: *english
-        area: *lifeSciences
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
-        description: |
-          NAMD is a parallel molecular dynamics code designed for high-performance simulation
-          of large bio-molecular systems.
-        offers:
-          1:
-            name: NAMD
-            description: |
-              NAMD is a parallel molecular dynamics code designed for high-performance simulation
-              of large bio-molecular systems.
-            parameters: *appParameters
-    Apache Tomcat:
-        title: Apache Tomcat
-        parents: *networkingParent
-        providers: [*cesga, *recas, *ics]
-        logo: apache-tomcat.png
-        open_access: false
-        webpage_url: https://www.google.com
-        manual_url: https://www.google.com
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
-        places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
-        languages: *english
-        area: *earthScience
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: |
-          Applications on Demand gives you access to online applications and application-development
-          and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
-        description: |
-          Apache Tomcat is an open source implementation of the Java Servlet, JavaServer Pages,
-          Java Expression Language and Java WebSocket technologies.
-        offers:
-          1:
-            name: Apache Tomcat
-            description: |
-              Apache Tomcat is an open source implementation of the Java Servlet, JavaServer Pages,
-              Java Expression Language and Java WebSocket technologies.
-            parameters: *appParameters
+#    Apache Tomcat:
+#        title: Apache Tomcat
+#        parents: *networkingParent
+#        providers: [*cesga, *recas, *ics]
+#        logo: apache-tomcat.png
+#        open_access: false
+#        webpage_url: 
+#        manual_url: 
+#        helpdesk_url: 
+#        tutorial_url: 
+#        terms_of_use_url: 
+#        corporate_sla_url: 
+#        access_policies_url: 
+#        places: *europe
+#        dedicated_for: ["Researchers", "Research organisations"]
+#        languages: *english
+#        area: *earthScience
+#        restrictions: *notSpecified
+#        phase: *notSpecified
+#        tagline: |
+#          Applications on Demand gives you access to online applications and application-development
+#          and hosting frameworks to support compute-intensive data analysis
+#        platforms: [*eopillar, *ec3]
+#        description: |
+#          Apache Tomcat is an open source implementation of the Java Servlet, JavaServer Pages,
+#          Java Expression Language and Java WebSocket technologies.
+#        offers:
+#          1:
+#            name: Apache Tomcat
+#            description: |
+#              Apache Tomcat is an open source implementation of the Java Servlet, JavaServer Pages,
+#              Java Expression Language and Java WebSocket technologies.
+#            parameters: *appParameters
     Gnuplot:
         title: Gnuplot
         parents: *processingAndAnalysisParent
@@ -2178,11 +2148,11 @@ services:
         open_access: false
         webpage_url: http://gnuplot.sourceforge.net
         manual_url: http://gnuplot.sourceforge.net/documentation.html
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -2190,7 +2160,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform, *ec3, *aodp]
         description: |
           Gnuplot is a portable command-line driven graphing utility for Linux,
           OS/2, MS Windows, OSX, VMS, and other platforms.
@@ -2201,36 +2171,36 @@ services:
               Gnuplot is a portable command-line driven graphing utility for Linux,
               OS/2, MS Windows, OSX, VMS, and other platforms.
             parameters: *appParameters
-    Docker:
-        title: Docker
-        parents: *networkingParent
-        providers: [*cesga, *recas, *ics]
-        logo: docker.png
-        open_access: false
-        webpage_url: https://www.docker.com/
-        manual_url: https://www.google.com
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
-        places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
-        languages: *english
-        area: *applicationFrameworks
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
-        description: |
-          Docker is an open-source project that automates the deployment of Linux applications inside software containers.
-        offers:
-          1:
-            name: Docker
-            description: |
-              Docker is an open-source project that automates the deployment
-              of Linux applications inside software containers.
-            parameters: *appParameters
+#    Docker:
+#        title: Docker
+#        parents: *networkingParent
+#        providers: [*cesga, *recas, *ics]
+#        logo: docker.png
+#        open_access: false
+#        webpage_url: https://www.docker.com/
+#        manual_url: 
+#        helpdesk_url: 
+#        tutorial_url: 
+#        terms_of_use_url: 
+#        corporate_sla_url: 
+#        access_policies_url: 
+#        places: *europe
+#        dedicated_for: ["Researchers", "Research organisations"]
+#        languages: *english
+#        area: *applicationFrameworks
+#        restrictions: *notSpecified
+#        phase: *notSpecified
+#        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+#        platforms: [*eopillar, *ec3]
+#        description: |
+#          Docker is an open-source project that automates the deployment of Linux applications inside software containers.
+#        offers:
+#          1:
+#            name: Docker
+#            description: |
+#              Docker is an open-source project that automates the deployment
+#              of Linux applications inside software containers.
+#            parameters: *appParameters
     Hadoop:
         title: Hadoop
         parents: *processingAndAnalysisParent
@@ -2239,11 +2209,11 @@ services:
         open_access: false
         webpage_url: http://hadoop.apache.org/
         manual_url: http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -2251,7 +2221,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform, *ec3, *aodp]
         description: |
           Hadoop is a framework that allows for the distributed processing
           of large data sets across clusters of computers using simple programming models.
@@ -2269,12 +2239,12 @@ services:
         logo: marathon.png
         open_access: false
         webpage_url: https://mesosphere.github.io/marathon/
-        manual_url: https://www.google.com
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        manual_url: 
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -2282,7 +2252,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform, *ec3, *aodp]
         description: |
           Marathon a production-grade container orchestration platform
           for Mesosphere's Data Center/Operating System (DC/OS) and Apache Mesos.
@@ -2293,37 +2263,37 @@ services:
               Marathon a production-grade container orchestration platform
               for Mesosphere's Data Center/Operating System (DC/OS) and Apache Mesos.
             parameters: *appParameters
-    Chronos:
-        title: Chronos
-        open_access: false
-        providers: [*cesga, *recas, *ics]
-        logo: chronos.png
-        parents: *processingAndAnalysisParent
-        webpage_url: https://github.com/mesos/chronos
-        manual_url: https://mesos.github.io/chronos/
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
-        places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
-        languages: *english
-        area: *applicationFrameworks
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
-        description: |
-          Chronos is a distributed and fault-tolerant scheduler that runs on top
-          of Apache Mesos that can be used for job orchestration.
-        offers:
-          1:
-            name: Chronos
-            description: |
-              Chronos is a distributed and fault-tolerant scheduler that runs on top
-              of Apache Mesos that can be used for job orchestration.
-            parameters: *appParameters
+#    Chronos:
+#        title: Chronos
+#        open_access: false
+#        providers: [*cesga, *recas, *ics]
+#        logo: chronos.png
+#        parents: *processingAndAnalysisParent
+#        webpage_url: https://github.com/mesos/chronos
+#        manual_url: https://mesos.github.io/chronos/
+#        helpdesk_url: 
+#        tutorial_url: 
+#        terms_of_use_url: 
+#        corporate_sla_url: 
+#        access_policies_url: 
+#        places: *europe
+#        dedicated_for: ["Researchers", "Research organisations"]
+#        languages: *english
+#        area: *applicationFrameworks
+#        restrictions: *notSpecified
+#        phase: *notSpecified
+#        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+#        platforms: [*eopillar, *ec3]
+#        description: |
+#          Chronos is a distributed and fault-tolerant scheduler that runs on top
+#          of Apache Mesos that can be used for job orchestration.
+#        offers:
+#          1:
+#            name: Chronos
+#            description: |
+#              Chronos is a distributed and fault-tolerant scheduler that runs on top
+#              of Apache Mesos that can be used for job orchestration.
+#            parameters: *appParameters
     Jupyter:
         title: Jupyter
         open_access: false
@@ -2331,12 +2301,12 @@ services:
         logo: jupyter.png
         parents: *dataManagementParent
         webpage_url: https://notebooks.egi.eu/hub/login
-        manual_url: https://www.google.com
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        manual_url: 
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -2344,7 +2314,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform, *ec3, *aodp]
         description: |
           Jupyter is an open-source web application that allows you to create and share documents with live code,
           equations, visualisations and explanatory text.
@@ -2355,50 +2325,50 @@ services:
               Jupyter is an open-source web application that allows you to create and share documents with live code,
               equations, visualisations and explanatory text.
             parameters: *appParameters
-    The R project for statistical computing:
-        title: The R project for statistical computing
-        parents: *processingAndAnalysisParent
-        providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
-        logo: the-r-project-for-statistical-computing.png
-        open_access: false
-        webpage_url: https://www.r-project.org
-        manual_url: https://cran.r-project.org/manuals.html
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
-        places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
-        languages: *english
-        area: *dataAnalysis
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
-        description: |
-          The R Project for Statistical Computing (v3.2.2)
-          is a language and environment for statistical computing and graphics.
-        offers:
-          1:
-            name: The R project for statistical computing
-            description: |
-              The R Project for Statistical Computing (v3.2.2)
-              is a language and environment for statistical computing and graphics.
-            parameters: *appParameters
+#    The R project for statistical computing:
+#        title: The R project for statistical computing
+#        parents: *processingAndAnalysisParent
+#        providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
+#        logo: the-r-project-for-statistical-computing.png
+#        open_access: false
+#        webpage_url: https://www.r-project.org
+#        manual_url: https://cran.r-project.org/manuals.html
+#        helpdesk_url: 
+#        tutorial_url: 
+#        terms_of_use_url: 
+#        corporate_sla_url: 
+#        access_policies_url: 
+#        places: *europe
+#        dedicated_for: ["Researchers", "Research organisations"]
+#        languages: *english
+#        area: *dataAnalysis
+#        restrictions: *notSpecified
+#        phase: *notSpecified
+#        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+#        platforms: [*eopillar, *ec3]
+#        description: |
+#          The R Project for Statistical Computing (v3.2.2)
+#          is a language and environment for statistical computing and graphics.
+#        offers:
+#          1:
+#            name: The R project for statistical computing
+#            description: |
+#              The R Project for Statistical Computing (v3.2.2)
+#              is a language and environment for statistical computing and graphics.
+#            parameters: *appParameters
     The Semantic Search Engine (SSE):
         title: The Semantic Search Engine (SSE)
         parents: *dataManagementParent
         providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
         logo: the-semantic-search-engine-sse.png
         open_access: false
-        webpage_url: https://www.google.com
-        manual_url: https://www.google.com
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        webpage_url: 
+        manual_url: 
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -2406,7 +2376,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform, *ec3, *aodp]
         description: |
           The Semantic Search Engine (SSE) is an application conceived to demonstrate the potential of information
           coupled with semantic web technologies to address the issues of data discovery and correlation.
@@ -2425,11 +2395,11 @@ services:
         open_access: false
         webpage_url: https://chipster.csc.fi
         manual_url: https://chipster.csc.fi/manual/
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -2437,7 +2407,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform, *ec3, *aodp]
         description: |
           Chipster is a user-friendly analysis software for high-throughput data.
           It contains over 300 analysis tools for next generation sequencing (NGS),
@@ -2454,76 +2424,76 @@ services:
               Users can save and share automatic analysis workflows, and visualize data interactively using
               a built-in genome browser and many other visualizations.
             parameters: *appParameters
-    ClustalW2:
-        title: ClustalW2
-        parents: *processingAndAnalysisParent
-        providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
-        logo: clustalw2.png
-        open_access: false
-        webpage_url: http://www.clustal.org/clustal2/
-        manual_url: http://www.clustal.org/clustal2/#Documentation
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
-        places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
-        languages: *english
-        area: *lifeSciences
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
-        description: |
-          ClustalW2 is a multiple sequence alignment tool for the alignment of DNA or protein sequences.
-        offers:
-          1:
-            name: ClustalW2
-            description: ClustalW2 is a multiple sequence alignment tool for the alignment of DNA or protein sequences.
-            parameters: *appParameters
-    AutoDock Vina:
-        title: AutoDock Vina
-        parents: *processingAndAnalysisParent
-        providers: [*cesga, *recas, *ics]
-        logo: autodock-vina.png
-        open_access: false
-        webpage_url: https://www.google.com
-        manual_url: https://www.google.com
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
-        places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
-        languages: *english
-        area: *lifeSciences
-        restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: |
-          Applications on Demand gives you access to online applications and application-development
-          and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
-        description: |
-          AutoDock Vina is an open-source software for doing molecular docking.
-        offers:
-          1:
-            name: AutoDock Vina
-            description: AutoDock Vina is an open-source software for doing molecular docking.
-            parameters: *appParameters
+#    ClustalW2:
+#        title: ClustalW2
+#        parents: *processingAndAnalysisParent
+#        providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
+#        logo: clustalw2.png
+#        open_access: false
+#        webpage_url: http://www.clustal.org/clustal2/
+#        manual_url: http://www.clustal.org/clustal2/#Documentation
+#        helpdesk_url: 
+#        tutorial_url: 
+#        terms_of_use_url: 
+#        corporate_sla_url: 
+#        access_policies_url: 
+#        places: *europe
+#        dedicated_for: ["Researchers", "Research organisations"]
+#        languages: *english
+#        area: *lifeSciences
+#        restrictions: *notSpecified
+#        phase: *notSpecified
+#        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+#        platforms: [*eopillar, *ec3]
+#        description: |
+#          ClustalW2 is a multiple sequence alignment tool for the alignment of DNA or protein sequences.
+#        offers:
+#          1:
+#            name: ClustalW2
+#            description: ClustalW2 is a multiple sequence alignment tool for the alignment of DNA or protein sequences.
+#            parameters: *appParameters
+#    AutoDock Vina:
+#        title: AutoDock Vina
+#        parents: *processingAndAnalysisParent
+#        providers: [*cesga, *recas, *ics]
+#        logo: autodock-vina.png
+#        open_access: false
+#        webpage_url: 
+#        manual_url: 
+#        helpdesk_url: 
+#        tutorial_url: 
+#        terms_of_use_url: 
+#        corporate_sla_url: 
+#        access_policies_url: 
+#        places: *europe
+#        dedicated_for: ["Researchers", "Research organisations"]
+#        languages: *english
+#        area: *lifeSciences
+#        restrictions: *notSpecified
+#        phase: *notSpecified
+#        tagline: |
+#          Applications on Demand gives you access to online applications and application-development
+#          and hosting frameworks to support compute-intensive data analysis
+#        platforms: [*eopillar, *ec3]
+#        description: |
+#          AutoDock Vina is an open-source software for doing molecular docking.
+#        offers:
+#          1:
+#            name: AutoDock Vina
+#            description: AutoDock Vina is an open-source software for doing molecular docking.
+#            parameters: *appParameters
     EGI Notebooks:
       title: &notebook EGI Notebook
       parents: *processingAndAnalysisParent
       providers: [*not]
       open_access: false
-      webpage_url: https://www.google.com
-      manual_url: https://www.google.com
-      helpdesk_url: https://www.google.com
-      tutorial_url: https://www.google.com
-      terms_of_use_url: https://www.google.com
-      corporate_sla_url: https://www.google.com
-      access_policies_url: https://www.google.com
+      webpage_url: 
+      manual_url: 
+      helpdesk_url: 
+      tutorial_url: 
+      terms_of_use_url: 
+      corporate_sla_url: 
+      access_policies_url: 
       dedicated_for: ["Researchers", "Research organisations"]
       places: *europe
       languages: *english
@@ -2531,7 +2501,7 @@ services:
       restrictions: *notSpecified
       phase: Beta
       tagline: Create interactive documents with live code, visualisations and narrative text powered by the Jupyter technology
-      platforms: [*eopillar, *ec3]
+      platforms: [*egiPlatform]
       description: |
         The service provides a browser-based tool for interactive analysis of data using EGI storage
         and compute infrastructures based on the JupyterHub technology. The notebooks can combine text,
@@ -2620,7 +2590,7 @@ services:
 #        helpdesk_url: https://www.clarin.eu/content/support
 #        tutorial_url: https://www.eosc-hub.eu/training-material/component-metadata-infrastructure-services
 #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-#        corporate_sla_url: https://www.eosc-hub.eu/order-service
+#        corporate_sla_url:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        places: *europe
 #        dedicated_for: ["Researchers"] #TODO: but not specified
@@ -2660,8 +2630,8 @@ services:
         manual_url: https://dariah-gateway.lpds.sztaki.hu/help2
         helpdesk_url: https://www.dariah.eu/contact
         tutorial_url: https://www.dariah.eu/tools-services/dariah-training/
-        terms_of_use_url: https://www.google.com/
-        corporate_sla_url: https://www.google.com/
+        terms_of_use_url:
+        corporate_sla_url:
         access_policies_url: https://www.dariah.eu/privacy-notice/
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
@@ -2718,11 +2688,11 @@ services:
         open_access: false
         webpage_url: https://dodas-iam.cloud.cnaf.infn.it/login
         manual_url: https://dodas-ts.github.io/dodas-doc/
-        helpdesk_url: https://www.google.com/
-        tutorial_url: https://www.google.com/
-        terms_of_use_url: https://www.google.com/
-        corporate_sla_url: https://www.google.com/
-        access_policies_url: https://www.google.com/
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -2800,9 +2770,9 @@ services:
         manual_url: https://github.com/markusstocker/pynpf-d4science
         helpdesk_url: https://github.com/markusstocker/pynpf-d4science
         tutorial_url: https://youtu.be/ra9W7b5DbgI
-        terms_of_use_url: https://www.google.com
+        terms_of_use_url: 
         corporate_sla_url: https://documents.egi.eu/document/2875
-        access_policies_url: https://www.google.com
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -2810,7 +2780,7 @@ services:
         restrictions: *notSpecified
         phase: Beta (min. TRL 7)
         tagline: D4Science Service
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform, *d4sciencePlatform]
         description: |
           The VRE supports new particle formation event analysis on interoperable e-Infrastructures.
           It provides access to Jupyter notebooks to classify events and process information about them.
@@ -2828,12 +2798,12 @@ services:
         providers: [*ccmc, *dkrz]
         open_access: false
         webpage_url: https://portal.enes.org/data/data-metadata-service/processing/ecas
-        manual_url: https://www.google.com/
+        manual_url:
         helpdesk_url: https://portal.enes.org/contact
-        tutorial_url: https://www.google.com/
-        terms_of_use_url: https://www.google.com/
-        corporate_sla_url: https://www.google.com/
-        access_policies_url: https://www.google.com/
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -2841,7 +2811,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Analyze and process data from multiple communities with the Ophidia Big Data Analytics framework
-        platforms: [*eopillar, *ec3]
+        platforms: [*enesPlatform]
         description: |
           Users can define parallel processing workflows, executed remotely without needing
           to download data or provide own computing resources as these are provided by ECAS.
@@ -2901,11 +2871,11 @@ services:
         open_access: false
         webpage_url: https://www.lifewatch.eu/
         manual_url: https://github.com/IgnacioHeredia/plant_classification/blob/master/webpage/README.md#using-the-api%20
-        helpdesk_url: https://www.google.com/
-        tutorial_url: https://www.google.com/
-        terms_of_use_url: https://www.google.com/
-        corporate_sla_url: https://www.google.com/
-        access_policies_url: https://www.google.com/
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -2961,13 +2931,13 @@ services:
         parents: *sharingAndDicoveryParent
         providers: [*not]
         open_access: false
-        webpage_url: https://www.google.com/
-        manual_url: https://www.google.com/
-        helpdesk_url: https://www.google.com/
-        tutorial_url: https://www.google.com/
-        terms_of_use_url: https://www.google.com/
-        corporate_sla_url: https://www.google.com/
-        access_policies_url: https://www.google.com/
+        webpage_url:
+        manual_url:
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers"] #TODO: but not specified
         languages: *english
@@ -2975,20 +2945,20 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*elixirPlatform]
         description: *notSpecified
     EISCAT:
         title: EISCAT
         parents: *sharingAndDicoveryParent
         providers: [*not]
         open_access: false
-        webpage_url: https://www.google.com/
-        manual_url: https://www.google.com/
-        helpdesk_url: https://www.google.com/
-        tutorial_url: https://www.google.com/
-        terms_of_use_url: https://www.google.com/
-        corporate_sla_url: https://www.google.com/
-        access_policies_url: https://www.google.com/
+        webpage_url:
+        manual_url:
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers"] #TODO: but not specified
         languages: *english
@@ -3003,13 +2973,13 @@ services:
         parents: *sharingAndDicoveryParent
         providers: [*astron, *rug, *surfsara, *fzj, *psnc]
         open_access: false
-        webpage_url: https://www.google.com/
-        manual_url: https://www.google.com/
-        helpdesk_url: https://www.google.com/
-        tutorial_url: https://www.google.com/
-        terms_of_use_url: https://www.google.com/
-        corporate_sla_url: https://www.google.com/
-        access_policies_url: https://www.google.com/
+        webpage_url:
+        manual_url:
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers"] #TODO: but not specified
         languages: *english
@@ -3027,11 +2997,11 @@ services:
         open_access: false
         webpage_url: https://opencoasts.ncg.ingrid.pt/
         manual_url: https://opencoasts.ncg.ingrid.pt/static/OPENCoastS_manual.pdf
-        helpdesk_url: https://www.google.com/
+        helpdesk_url:
         tutorial_url: https://www.eosc-hub.eu/training-material/opencoasts-service
-        terms_of_use_url: https://www.google.com/
-        corporate_sla_url: https://www.google.com/
-        access_policies_url: https://www.google.com/
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3118,9 +3088,9 @@ services:
 #        manual_url: https://www.wenmr.eu/tutorials/
 #        helpdesk_url: https://www.wenmr.eu/support/
 #        tutorial_url: https://www.wenmr.eu/tutorials/
-#        terms_of_use_url: https://www.google.com/
-#        corporate_sla_url: https://www.google.com/
-#        access_policies_url: https://www.google.com/
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
 #        places: *europe
 #        languages: *english
 #        area: *interdisciplinary
@@ -3161,11 +3131,11 @@ services:
     HADDOCK:
         title: &haddock HADDOCK
         parents: *processingAndAnalysisParent
-        providers: [*uou, *uof, *cirmmp]
+        providers: [*csbg, *bijvoet, *uou]
         logo: haddock.png
         open_access: true
         connected_url: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
-        webpage_url: https://enmrdevel.science.uu.nl/auth/register/haddock
+        webpage_url: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
         manual_url: http://www.bonvinlab.org/software/haddock2.2/manual/
         helpdesk_url: http://ask.bioexcel.eu/c/haddock
         tutorial_url: https://www.wenmr.eu/tutorials/#haddock
@@ -3179,7 +3149,7 @@ services:
         restrictions: "Registration required, Limited to non-profit users"
         phase: Production (min. TRL 8)
         tagline: Integrative modeling of biomolecular complexes with the user-friendly, EGI HTC-enabled HADDOCK portal
-        platforms: [*eopillar, *ec3]
+        platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
         description: |
           HADDOCK is a web portal that offers computational tools for structural biologists to model the structure
           of complexes of proteins and other biomolecules via a user-friendly interface. The portal offers a number
@@ -3199,11 +3169,11 @@ services:
     PowerFit:
         title: &powerFit PowerFit
         parents: *processingAndAnalysisParent
-        providers: [*uou, *uof, *cirmmp]
+        providers: [*csbg, *bijvoet, *uou]
         logo: powerfit.png
         open_access: true
         connected_url: http://haddock.science.uu.nl/enmr/services/POWERFIT
-        webpage_url: https://enmrdevel.science.uu.nl/auth/register/powerfit
+        webpage_url: http://haddock.science.uu.nl/enmr/services/POWERFIT
         manual_url: http://haddock.science.uu.nl/cgi/enmr/services/POWERFIT/powerfit/help
         helpdesk_url: http://ask.bioexcel.eu/c/powerfit
         tutorial_url: https://www.wenmr.eu/tutorials/#powerfit
@@ -3217,7 +3187,7 @@ services:
         restrictions: "Registration required, Limited to non-profit users"
         phase: "Production (min. TRL 8)"
         tagline: The PowerFit server allows you to fit your 3D structures in any map!
-        platforms: [*eopillar, *ec3]
+        platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
         description: |
           PowerFit is a software designed to fit atomic structures into cryo-EM density maps,
           using an exhaustive 6-dimensional cross-correlation search.
@@ -3225,10 +3195,10 @@ services:
     DisVis:
         title: &disVis DisVis
         parents: *processingAndAnalysisParent
-        providers: [*uou, *uof, *cirmmp]
+        providers: [*csbg, *bijvoet, *uou]
         logo: disvis.png
         open_access: true
-        connected_url: https://enmrdevel.science.uu.nl/auth/register/disvis
+        connected_url: http://haddock.science.uu.nl/enmr/services/DISVIS
         webpage_url: http://haddock.science.uu.nl/enmr/services/DISVIS
         manual_url: http://haddock.science.uu.nl/cgi/enmr/services/DISVIS/disvis/help
         helpdesk_url: http://ask.bioexcel.eu/c/disvis
@@ -3237,7 +3207,7 @@ services:
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        dedicated_for: ["Researchers"]
         languages: *english
         area: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
@@ -3245,7 +3215,7 @@ services:
         tagline: |
           Visualizes and quantify the information content of distance
           restraints between macromolecular complexes with DisVis
-        platforms: [*eopillar, *ec3]
+        platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
         description: |
           DisVis is a software designed to visualize and quantify the accessible interaction space
           defined by distance restraints between biomolecules.
@@ -3253,12 +3223,13 @@ services:
     CS-ROSETTA:
         title: &csRoseta CS-ROSETTA
         parents: *processingAndAnalysisParent
-        providers: [*uou, *uof, *cirmmp]
+        providers: [*csbg, *bijvoet, *uou]
         logo: cs-rosetta.png
         open_access: true
-        connected_url: https://enmrdevel.science.uu.nl/auth/register/cs_rosetta3
+        connected_url: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
         webpage_url: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
-        manual_url: http://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/csr-tutorial.html
+        manual_url: https://www.wenmr.eu/tutorials/#cs-rosetta
+        helpdesk_url:
         tutorial_url: https://www.wenmr.eu/tutorials/
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
@@ -3270,19 +3241,20 @@ services:
         restrictions: "Registration required, Limited to non-profit users"
         phase: "Production (min. TRL 8)"
         tagline: NMR protein structure prediction using the EGI HTC-enabled CS-ROSETTA portal
-        platforms: [*eopillar, *ec3]
+        platforms: [*wenmr, *egiPlatform, *instruct]
         description: |
           The CS-ROSETTA3 web portal allows structural biologists to model the 3D structure of proteins
           using only the 13CA, 13CB, 13C’, 15N, 1HA and 1HN NMR chemical shifts as input.
+
         offers: *wenMRService
     AMBER:
         title: &amber AMBER
         parents: *processingAndAnalysisParent
-        providers: [*uou, *uof, *cirmmp]
+        providers: [*cerm, *cirmmp]
         logo: amber.png
         open_access: true
         connected_url: http://py-enmr.cerm.unifi.it/access/index
-        webpage_url: http://py-enmr.cerm.unifi.it/access/index
+        webpage_url: http://py-enmr.cerm.unifi.it/feedback/index?type=amps-nmr
         manual_url: https://www.wenmr.eu/tutorials
         helpdesk_url: http://py-enmr.cerm.unifi.it/feedback/index?type=amps-nmr
         tutorial_url: https://www.wenmr.eu/tutorials/
@@ -3290,53 +3262,59 @@ services:
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        dedicated_for: ["Researchers"]
         languages: *english
         area: *biologicalSciences
-        restrictions: "Registration required, Limited to non-profit users"
+        restrictions: "Limited to non-profit users, For-profit users can use the service if they a license agreement with the University of California for the AMBER toolkit"
         phase: "Production (min. TRL 8)"
         tagline: Web portal for Nuclear Magnetic Resonance (NMR) structure refinement
-        platforms: [*eopillar, *ec3]
+        platforms: [*wenmr, *egiPlatform, *instruct]
         description: |
           Simple and user-friendly NMR-based refinement of the 3D structures of biological macromolecules
           thought the AMPS-NMR portal. Amber (Assisted Model Building with Energy Refinement) is a suite
           of programs that allow users to perform molecular dynamics (MD) simulations on biological systems
           and to store different calculations.
+
+          The portal was developed with the help of the WestLife and INDIGO-DataCloud projects
+          and supported by the MoBrain Competence Centre, under the EGI-Engage project.
         offers: *wenMRService
     FANTEN:
         title: &fanten FANTEN
         parents: *processingAndAnalysisParent
-        providers: [*uou, *uof, *cirmmp]
+        providers: [*cerm, *cirmmp]
         logo: fanten.png
         open_access: true
         connected_url: http://abs.cerm.unifi.it:8080
         webpage_url: http://abs.cerm.unifi.it:8080
         manual_url: http://abs.cerm.unifi.it:8080/manual/FANTEN_manual.pdf
-        helpdesk_url: https://www.google.com
+        helpdesk_url: 
         tutorial_url: https://www.wenmr.eu/tutorials/
-        terms_of_use_url: https://wenmr.science.uu.nl/conditions
+        terms_of_use_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
-        access_policies_url: https://wenmr.science.uu.nl/conditions
+        access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         places: *europe
         dedicated_for: ["Researchers"]
         languages: *english
         area: *biologicalSciences
-        restrictions: "Registration required, Limited to non-profit users"
+        restrictions: "Limited to non-profit users"
         phase: "Production (min. TRL 8)"
         tagline: FANTEN for the analysis of magnetic anisotropy-induced NMR data
-        platforms: [*eopillar, *ec3]
+        platforms: [*wenmr, *egiPlatform, *instruct]
         description: |
           FANTEN is a user-friendly web tool for the
           determination of anisotropy tensors. It is freely available through the WeNMR gateway.
+
+          The portal was developed with the help of the WestLife and INDIGO-DataCloud projects
+          and supported by the MoBrain Competence Centre, under the EGI-Engage project.
         offers: *wenMRService
     SpotOn:
         title: &spotOn SpotOn
         parents: *processingAndAnalysisParent
-        providers: [*uou, *uof, *cirmmp]
+        providers: [*csbg, *bijvoet, *uou]
         logo: spoton.png
         open_access: true
         connected_url: https://haddock.science.uu.nl/enmr/services/SPOTON
-        webpage_url: http://www.bonvinlab.org/software/haddock2.2/
+        webpage_url: https://haddock.science.uu.nl/enmr/services/SPOTON
         manual_url: https://haddock.science.uu.nl/cgi/enmr/services/SPOTON/spoton/help
         helpdesk_url: http://ask.bioexcel.eu/c/spoton
         tutorial_url: https://www.wenmr.eu/tutorials/#spoton
@@ -3350,7 +3328,7 @@ services:
         restrictions: "Registration required, Limited to non-profit users"
         phase: "Production (min. TRL 8)"
         tagline: "SpotOn: determination of Hot-Spots at protein-protein interfaces"
-        platforms: [*eopillar, *ec3]
+        platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
         description: |
           SpotOn is a robust algorithm developed to identify and classify the interfacial residues
           as Hot-Spots (HS) and Null-Spots (NS) with a final accuracy of 0.95
@@ -3363,11 +3341,11 @@ services:
         open_access: false
         webpage_url: https://geohazards-tep.eo.esa.int
         manual_url: https://terradue.github.io/doc-tep-geohazards/
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3375,7 +3353,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           This service provides an interferometric product at 50m resolution and 25m pixel spacing systematically
           for every 6-day Sentinel-1 SLC pair over the Alpine Region.
@@ -3389,11 +3367,11 @@ services:
         open_access: false
         webpage_url: https://geohazards-tep.eo.esa.int
         manual_url: https://terradue.github.io/doc-tep-geohazards/
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3401,7 +3379,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           This is a Thematic Application of the Geohazards Thematic Exploitation Platform providing access to a set
           of on-demand terrain motion services supporting interferogram generation, co-seismic displacement mapping,
@@ -3413,11 +3391,11 @@ services:
         open_access: false
         webpage_url: https://jupyterhub.eodc.eu
         manual_url: https://github.com/jupyterhub/jupyterhub
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3425,7 +3403,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           EODC JupyterHub provides access to the global EODC Copernicus Data Archive.
           Eliminate the barrier to get access to and to start to develop algorithms in view of remote sensing data.
@@ -3465,13 +3443,13 @@ services:
         parents: *sharingAndDicoveryParent
         providers: [*terradue]
         open_access: false
-        webpage_url: https://csw.eodc.eu
-        manual_url: https://csw.eodc.eu
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        webpage_url: https://eomex.eodc.eu/
+        manual_url:
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3479,7 +3457,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Catalog Service for the Web (CSW)
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           Catalog Service for the Web (CSW)
         offers:
@@ -3509,17 +3487,17 @@ services:
               type:  "input"
               value_type:  "string"
     Sentiel hub:
-        title: &sentinelHub Sentiel hub
+        title: &sentinelHub Sentinel Hub
         parents: *sharingAndDicoveryParent
-        providers: [*terradue]
+        providers: [*sinergise]
         open_access: false
         webpage_url: http://sentinel-hub.com/
         manual_url: https://www.sentinel-hub.com/develop/documentation
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3527,7 +3505,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           Sentinel Hub is a multi- spectral and multi-temporal big data satellite imagery service,
           capable of fully automated archiving, real-time processing and distribution
@@ -3538,15 +3516,15 @@ services:
     MEA Platform:
         title: &meaPlatform MEA Platform (Data access and exploitation service)
         parents: *sharingAndDicoveryParent
-        providers: [*terradue]
+        providers: [*meeo]
         open_access: false
         webpage_url: https://eodataservice.org
         manual_url: https://www.youtube.com/channel/UCqy-bd6CpXMOlRqfHmBqlZw
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3554,7 +3532,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           MEA platform implements the concept of Digital Earth making global environmental geospatial data Findable,
           Accessible, Interoperable and Reusable (FAIR). MEA platform provides an effective subsetting functionality
@@ -3569,11 +3547,11 @@ services:
         open_access: false
         webpage_url: http://eoschub.rasdaman.com:8080/rasdaman/ows
         manual_url: http://doc.rasdaman.org/05_geo-services-guide.html#ogc-web-services
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3581,7 +3559,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           Rasdaman is a datacube engine providing analysis-ready EO data by abstracting
           millions of satellite images into few spatio-temporal cubes.
@@ -3616,16 +3594,16 @@ services:
     CloudFerro Data Collections Catalog:
         title: &cfdcc CloudFerro Data Collections Catalog
         parents: *sharingAndDicoveryParent
-        providers: [*terradue]
+        providers: [*cloudFerro]
         logo: &cfLogo cloud-ferro.png
         open_access: false
         webpage_url: https://discovery.creodias.eu/dataset
         manual_url: https://creodias.eu/data-related-services
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3633,7 +3611,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           The Catalogue is be based on CKAN open source software which is widely used for open data publications like
           e.g. European Data Portal, data.org.uk or danepubliczne.gov.pl. CKAN provides user friendly web interface
@@ -3652,16 +3630,16 @@ services:
     CloudFerro Infrastructure:
         title: &cfi CloudFerro Infrastructure
         parents: *processingAndAnalysisParent
-        providers: [*terradue]
+        providers: [*cloudFerro]
         logo: *cfLogo
         open_access: false
         webpage_url: https://creodias.eu
         manual_url: https://creodias.eu/faq
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3669,7 +3647,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           CREODIAS processing covers full set of virtual resources available in the solution:
           VM – Virtual Machines (or virtual computing servers) with several operating systems available
@@ -3684,16 +3662,16 @@ services:
     Cloudferro Data related Services - EO Finder:
         title: &cfdrsEOF Cloudferro Data related Services - EO Finder
         parents: *sharingAndDicoveryParent
-        providers: [*terradue]
+        providers: [*cloudFerro]
         logo: *cfLogo
         open_access: false
         webpage_url: https://finder.creodias.eu/www
         manual_url: https://creodias.eu/eo-data-finder-api-manual
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3701,7 +3679,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: *notSpecified
     Cloudferro Data related Services - EO browser:
         title: &cfdrsEOB Cloudferro Data related Services - EO browser
@@ -3711,11 +3689,11 @@ services:
         open_access: false
         webpage_url: https://browser.creodias.eu
         manual_url: https://creodias.eu/using-the-eo-browser
-        helpdesk_url: https://www.google.com
-        tutorial_url: https://www.google.com
-        terms_of_use_url: https://www.google.com
-        corporate_sla_url: https://www.google.com
-        access_policies_url: https://www.google.com
+        helpdesk_url: 
+        tutorial_url: 
+        terms_of_use_url: 
+        corporate_sla_url: 
+        access_policies_url: 
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3723,7 +3701,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           CreoDias EO browser allows browsing wide archive of Earth Observation products, created by ESA’s Sentinel 1,
           Sentinel 2, Sentinel 3, ESA’s archives of Landsat 5, Landsat 7, Landsat 8 and Envisat.
@@ -3733,7 +3711,7 @@ services:
         parents: *securityAndOperationsParent
         providers: [*egi]
         open_access: false
-        webpage_url: https://www.egi.eu/internal-services/check-in/
+        webpage_url: https://www.egi.eu/services/check-in/
         manual_url:
         helpdesk_url:
         tutorial_url:
@@ -3743,30 +3721,54 @@ services:
         places: *europe
         dedicated_for: ["Research organisations"]
         languages: *english
-        area: *interdisciplinary
+        area: *security
         restrictions: *notSpecified
-        phase: *notSpecified
-        tagline: The IdP Proxy provides AAI services for both service providers and users.
-        platforms: [*eopillar, *ec3]
+        phase: Beta
+        tagline: Handle transparent Single Sign-On from multiple heterogeneous identity providers
+        platforms: [*egiPlatform]
         description: |
-          For the user the feature is transparents: as soon as their IdP is integrated with the proxy,
-          they are redirected by the service to their own IdP. Once integrated the IdP with the proxy,
-          all the services using the IdP proxy will be available.
-
+          Check-in is a proxy service that operates as a central hub to connect federated Identity Providers (IdPs)
+          with service providers. Check-in allows users to select their preferred IdP so that they can access and use
+          services in a uniform and easy way. For the user the feature is transparent:
+          as soon as their IdP is integrated with the proxy, they are redirected by the service to their own IdP.
+          Once integrated the IdP with the proxy, all the services using the IdP proxy will be available.
           The service providers will get all the AuthN/AuthZ information needed from the IdP Proxy
           (in form of attributes), without the need to deal with individual IdPs.
-
           Other components that can be attached to the IdP Proxy are credential translation services
           and attribute authorities.
+
+          ### Main characteristics:
+
+            - Enables multiple federated authentication sources using
+            different technologies
+            - Increased productivity and security
+            - Federated in eduGAIN as a service provider, publishingREFEDS RnSandSirtficompliance
+            - User registration portal to allow accounts-linkingo
+            - Combines user attributes originating from various authoritative sources
+            (IdPs and attribute provider services) and delivers them to the connected service providers
+            in a transparent way.
+
+          ### Features:
+
+          - Enables federated access to services:
+              *Support for IdPs: SAML2.0, OIDC
+              * Support for SPs: SAML2.0, OIDC
+          - Connection with the CILogon TTS
+          - Enables multiple federated authentication sources using different technologies
+          - Direct integration with the communities AAI services
+          - User registration portal to allow accounts-linkingProvisioning to SPs of an EGI User UID
+
+
+          Brochure: https://www.egi.eu/wp-content/uploads/2017/09/Check-in.pdf
     Attribute management:
         title: Attribute management
         parents: *securityAndOperationsParent
         providers: [*grnet, *cesnet]
         open_access: false
         webpage_url: https://www.egi.eu/internal-services/attribute-management/
-        manual_url: https://www.google.com/
-        helpdesk_url: https://www.google.com/
-        tutorial_url: https://www.google.com/
+        manual_url:
+        helpdesk_url:
+        tutorial_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         corporate_sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
@@ -3777,7 +3779,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: ToFill
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           EGI provides services to manage user membership, where users can register and ask to be part of a VO,
           and where the VO supervisor can approve or remove users from the VO.
@@ -3802,13 +3804,13 @@ services:
         corporate_sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
-        dedicated_for: ["VO", "Research organisations"]
+        dedicated_for: ["Research groups", "Research organisations"]
         languages: *english
         area: *interdisciplinary
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Dedicated computing and storage for training and education
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           The Training Infrastructure is a cloud­based computing and storage resources for training events.
           It is useful to organise onsite tutorials or workshops and online training courses or as a platform
@@ -3920,7 +3922,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Learn how to manage IT services with a pragmatic and lightweight standard
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           FitSM is a lightweight standards family aimed at facilitating service management in IT service provision,
           including federated scenarios. FitSM training aims at providing those involved in operating
@@ -4007,7 +4009,7 @@ services:
       corporate_sla_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies#Service_Level_Agreement
       access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
       places: *europe
-      dedicated_for: ["VO"]
+      dedicated_for: ["Research groups"]
       restrictions: No restrictions
       languages: *english
       area: *interdisciplinary
@@ -4015,7 +4017,7 @@ services:
       tagline: |
         A web-based, collaborative working environment enacting to predict the spread of an invasive species
         (possibly alien) in a new environment
-      platforms: [*eopillar, *ec3]
+      platforms: [*egiPlatform, *gbif, *obis, *d4sciencePlatform, *gCube, *seaDataCloud]
       description: |
         Alien and Invasive Species Virtual Research Environment (VRE) is a web-based, comprehensive,
         collaborative working environment supporting decision makers and scientists in predicting the spread
@@ -4044,15 +4046,15 @@ services:
       providers: [*not]
 #      logo: training-infrastructure. TODO: logo
       open_access: false
-      webpage_url: https://google.com
-      manual_url: https://google.com
-      helpdesk_url: https://google.com
-      tutorial_url: https://google.com
-      terms_of_use_url: https://google.com
-      corporate_sla_url: https://google.com
-      access_policies_url: https://google.com
+      webpage_url: 
+      manual_url: 
+      helpdesk_url: 
+      tutorial_url: 
+      terms_of_use_url: 
+      corporate_sla_url: 
+      access_policies_url: 
       places: *europe
-      dedicated_for: ["VO", "Research organisations"]
+      dedicated_for: ["Research groups", "Research organisations"]
       languages: *english
       area: *interdisciplinary
       restrictions: *notSpecified
@@ -4070,15 +4072,15 @@ services:
       providers: [*not]
 #      logo: training-infrastructure. TODO: logo
       open_access: false
-      webpage_url: https://google.com
-      manual_url: https://google.com
-      helpdesk_url: https://google.com
-      tutorial_url: https://google.com
-      terms_of_use_url: https://google.com
-      corporate_sla_url: https://google.com
-      access_policies_url: https://google.com
+      webpage_url: 
+      manual_url: 
+      helpdesk_url: 
+      tutorial_url: 
+      terms_of_use_url: 
+      corporate_sla_url: 
+      access_policies_url: 
       places: *europe
-      dedicated_for: ["VO", "Research organisations"]
+      dedicated_for: ["Research groups", "Research organisations"]
       languages: *english
       area: *interdisciplinary
       restrictions: *notSpecified
@@ -4096,15 +4098,15 @@ services:
       providers: [*not]
 #      logo: training-infrastructure. TODO: logo
       open_access: false
-      webpage_url: https://google.com
-      manual_url: https://google.com
-      helpdesk_url: https://google.com
-      tutorial_url: https://google.com
-      terms_of_use_url: https://google.com
-      corporate_sla_url: https://google.com
-      access_policies_url: https://google.com
+      webpage_url: 
+      manual_url: 
+      helpdesk_url: 
+      tutorial_url: 
+      terms_of_use_url: 
+      corporate_sla_url: 
+      access_policies_url: 
       places: *europe
-      dedicated_for: ["VO", "Research organisations"]
+      dedicated_for: ["Research groups", "Research organisations"]
       languages: *english
       area: *interdisciplinary
       restrictions: *notSpecified
@@ -4122,15 +4124,15 @@ services:
       providers: [*not]
 #      logo: training-infrastructure. TODO: logo
       open_access: false
-      webpage_url: https://google.com
-      manual_url: https://google.com
-      helpdesk_url: https://google.com
-      tutorial_url: https://google.com
-      terms_of_use_url: https://google.com
-      corporate_sla_url: https://google.com
-      access_policies_url: https://google.com
+      webpage_url: 
+      manual_url: 
+      helpdesk_url: 
+      tutorial_url: 
+      terms_of_use_url: 
+      corporate_sla_url: 
+      access_policies_url: 
       places: *europe
-      dedicated_for: ["VO", "Research organisations"]
+      dedicated_for: ["Research groups", "Research organisations"]
       languages: *english
       area: *interdisciplinary
       restrictions: *notSpecified
@@ -4148,15 +4150,15 @@ services:
       providers: [*egifcs]
 #      logo: training-infrastructure. TODO: logo
       open_access: false
-      webpage_url: https://host-130-246-215-158.nubes.stfc.ac.uk/prominence/v1
-      manual_url: https://google.com
-      helpdesk_url: https://google.com
-      tutorial_url: https://google.com
-      terms_of_use_url: https://google.com
-      corporate_sla_url: https://google.com
-      access_policies_url: https://google.com
+      webpage_url: https://alahiff.github.io/prominence/
+      manual_url: 
+      helpdesk_url: 
+      tutorial_url: 
+      terms_of_use_url: 
+      corporate_sla_url: 
+      access_policies_url: 
       places: *europe
-      dedicated_for: ["VO", "Research organisations"]
+      dedicated_for: ["Research groups", "Research organisations"]
       languages: *english
       area: *interdisciplinary
       restrictions: *notSpecified
@@ -4166,6 +4168,7 @@ services:
       description: |
         PROMINENCE is a platform which allows users to exploit idle cloud resources for running scientific workloads
         with a simple batch system style interface. Key features include:
+
           - Jobs can be submitted from anywhere using any OS and any language.
           - All jobs are run in containers to ensure they will can run reliably anywhere and are reproducible.
           - Multi-node OpenMPI jobs can be run in addition to HTC jobs.
@@ -4276,18 +4279,54 @@ relations:
     both: true
     source: *egiCloud
     target: *d4scienceService
-  clarinToB2Find:
+  vloToB2Find:
     both: false
     source: *vloService
     target: *b2find
-  clarinToB2Share:
+  vloToB2Share:
     both: false
     source: *vloService
     target: *b2share
-  clarinToEGICompute:
+  vloToEGICompute:
     both: false
     source: *vloService
     target: *egiCloud
+  lrsToB2Find:
+    both: false
+    source: *lrsService
+    target: *b2find
+  lrsToB2Share:
+    both: false
+    source: *lrsService
+    target: *b2share
+  lrsToEGICompute:
+    both: false
+    source: *lrsService
+    target: *egiCloud
+  vcrToB2Find:
+    both: false
+    source: *vcrService
+    target: *b2find
+  vcrToB2Share:
+    both: false
+    source: *vcrService
+    target: *b2share
+  vcrToEGICompute:
+    both: false
+    source: *vcrService
+    target: *egiCloud
+  vloToVcr:
+    both: true
+    source: *vloService
+    target: *vcrService
+  VloToLrs:
+    both: true
+    source: *vloService
+    target: *lrsService 
+  vcrToLrs:
+    both: true
+    source: *vcrService
+    target: *lrsService
   b2findToB2Share:
     both: true
     source: *b2find
@@ -4504,6 +4543,19 @@ relations:
     both: false
     source: *egiCloud
     target: *checkIn
+#  haddockToB2drop:
+#    both: true
+#    source: *haddock
+#    target: *b2drop
+#  powerFitToB2drop:
+#    both: true
+#    source: *powerFit
+#    target: *b2drop
+#  disVisToB2drop:
+#    both: true
+#    source: *disVis
+#    target: *b2drop
+
 
 #  spotOnToEgiWM:
 #    both: false
