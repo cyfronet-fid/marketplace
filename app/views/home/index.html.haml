@@ -6,96 +6,43 @@
     .carousel-inner
       .carousel-item.active
         .card-deck
-          .card
-            %img.card-img-top{ src: "assets/service-pic.png" }
-            .card-body
-              %a.card-title EGI Colud Compute1
-            .card-footer
-              %p
-                %small Provided by:
-                %a EGI Federated Cloud
-              %p
-                %small Dedicated for:
-                %a Researchers
-          .card
-            %img.card-img-top{ src: "assets/service-pic.png" }
-            .card-body
-              %a.card-title EGI Colud Compute1
-            .card-footer
-              %p
-                %small Provided by:
-                %a EGI Federated Cloud
-              %p
-                %small Dedicated for:
-                %a Researchers
-          .card
-            %img.card-img-top{ src: "assets/service-pic.png" }
-            .card-body
-              %a.card-title EGI Colud Compute1
-            .card-footer
-              %p
-                %small Provided by:
-                %a EGI Federated Cloud
-              %p
-                %small Dedicated for:
-                %a Researchers
-          .card
-            %img.card-img-top{ src: "assets/service-pic.png" }
-            .card-body
-              %a.card-title EGI Colud Compute1
-            .card-footer
-              %p
-                %small Provided by:
-                %a EGI Federated Cloud
-              %p
-                %small Dedicated for:
-                %a Researchers
-      .carousel-item
-        .card-deck
-          .card
-            %img.card-img-top{ src: "assets/service-pic.png" }
-            .card-body
-              %a.card-title EGI Colud Compute1
-            .card-footer
-              %p
-                %small Provided by:
-                %a EGI Federated Cloud
-              %p
-                %small Dedicated for:
-                %a Researchers
-          .card
-            %img.card-img-top{ src: "assets/service-pic.png" }
-            .card-body
-              %a.card-title EGI Colud Compute1
-            .card-footer
-              %p
-                %small Provided by:
-                %a EGI Federated Cloud
-              %p
-                %small Dedicated for:
-                %a Researchers
-          .card
-            %img.card-img-top{ src: "assets/service-pic.png" }
-            .card-body
-              %a.card-title EGI Colud Compute1
-            .card-footer
-              %p
-                %small Provided by:
-                %a EGI Federated Cloud
-              %p
-                %small Dedicated for:
-                %a Researchers
-          .card
-            %img.card-img-top{ src: "assets/service-pic.png" }
-            .card-body
-              %a.card-title EGI Colud Compute1
-            .card-footer
-              %p
-                %small Provided by:
-                %a EGI Federated Cloud
-              %p
-                %small Dedicated for:
-                %a Researchers
+          - @other_services[0..3].each do |other_service|
+            .card
+              .card-img-top
+                - if other_service.logo.attached?
+                  = image_tag other_service.logo.variant(resize: "180x120")
+                - else
+                  = image_tag "eosc-img.png"
+              .card-body
+                .card-title
+                  = link_to other_service.title, other_service
+              .card-footer
+                %p
+                  %small Provided by:
+                  %a EGI Federated Cloud
+                %p
+                  %small Dedicated for:
+                  %a Researchers
+      - if @other_services.count > 4
+        .carousel-item
+          .card-deck
+            - @other_services[4..7].each do |other_service|
+              .card
+                .card-img-top
+                  - if other_service.logo.attached?
+                    = image_tag other_service.logo.variant(resize: "180x120")
+                  - else
+                    = image_tag "eosc-img.png"
+                .card-body
+                  .card-title
+                    = link_to other_service.title, other_service
+                .card-footer
+                  %p
+                    %small Provided by:
+                    %a EGI Federated Cloud
+                  %p
+                    %small Dedicated for:
+                    %a Researchers
 
     %ol.carousel-indicators
       %li.active{ "data-target" => "#home-carousel", "data-slide-to" => "0" }
