@@ -38,6 +38,9 @@ platforms:
         name: &seaDataCloud "SeaDataCloud"
     gCube:
         name: &gCube "gCube System"
+    EOSC PAN:
+        name: &eoscPan "EOSC PAN"
+
 
 
 
@@ -172,6 +175,8 @@ providers:
         name: &eida "EIDA"
     ESA:
         name: &esa "European Space Agency (ESA)"
+    DESY:
+        name: &desyProvider "Deutsches Elektronen-Synchrotron DESY"
     Not specified:
         name: &not "not specified yet"
 
@@ -1099,7 +1104,7 @@ services:
         logo: b2note.png
         open_access: false
         webpage_url: https://www.eudat.eu/catalogue/B2NOTE
-        manual_url: 
+        manual_url:
         helpdesk_url: https://www.eudat.eu/contact-support-request?service=B2NOTE
         tutorial_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
@@ -1188,7 +1193,7 @@ services:
         webpage_url: https://www.eudat.eu/services/b2safe
         manual_url: https://eudat.eu/services/userdoc/configure-b2safe
         helpdesk_url: https://eudat.eu/contact-support-request
-        tutorial_url: 
+        tutorial_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         corporate_sla_url:
         access_policies_url: https://eudat.eu/policy
@@ -1242,7 +1247,7 @@ services:
         webpage_url: https://www.eudat.eu/services/b2share
         manual_url: https://eudat.eu/services/userdoc/b2share
         helpdesk_url: https://eudat.eu/contact-support-request
-        tutorial_url: 
+        tutorial_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         corporate_sla_url:
         access_policies_url: https://eudat.eu/policy
@@ -1371,7 +1376,7 @@ services:
         webpage_url: https://www.eudat.eu/services/b2stage
         manual_url: https://eudat.eu/services/userdoc/b2stage
         helpdesk_url: https://eudat.eu/contact-support-request
-        tutorial_url: 
+        tutorial_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         corporate_sla_url:
         access_policies_url: https://eudat.eu/policy
@@ -1699,12 +1704,12 @@ services:
         open_access: true
         connected_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
         webpage_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
-        manual_url: 
-        helpdesk_url: 
-        tutorial_url: 
+        manual_url:
+        helpdesk_url:
+        tutorial_url:
         terms_of_use_url: http://geosspublish.uat.esaportal.eu/community/guest/terms-conditions
-        corporate_sla_url: 
-        access_policies_url: 
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Reaserchers"] #TODO: but not specified
         languages: *english
@@ -1731,12 +1736,12 @@ services:
         open_access: true
         connected_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
         webpage_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
-        manual_url: 
-        helpdesk_url: 
-        tutorial_url: 
+        manual_url:
+        helpdesk_url:
+        tutorial_url:
         terms_of_use_url: http://geosspublish.uat.esaportal.eu/community/guest/terms-conditions
-        corporate_sla_url: 
-        access_policies_url: 
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Reaserchers"] #TODO: but not specified
         languages: *english
@@ -1882,12 +1887,12 @@ services:
         logo: orfeus-european-integrated-data-archive-eida.png
         open_access: false
         webpage_url: https://www.orfeus-eu.org/data/eida/
-        manual_url: 
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        manual_url:
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         dedicated_for: ["Reaserchers"] #TODO: but not specified
         places: *europe
         languages: *english
@@ -1941,11 +1946,11 @@ services:
 #        open_access: false
 #        webpage_url: https://www.gnu.org/software/octave/
 #        manual_url: https://octave.org/doc/interpreter/
-#        helpdesk_url: 
-#        tutorial_url: 
-#        terms_of_use_url: 
-#        corporate_sla_url: 
-#        access_policies_url: 
+#        helpdesk_url:
+#        tutorial_url:
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
 #        places: *europe
 #        languages: *english
 #        dedicated_for: ["Researchers", "Research organisations"]
@@ -2014,13 +2019,13 @@ services:
 #        providers: [*cesga, *recas, *ics]
 #        logo: galaxy.png
 #        open_access: false
-#        webpage_url: 
-#        manual_url: 
-#        helpdesk_url: 
-#        tutorial_url: 
-#        terms_of_use_url: 
-#        corporate_sla_url: 
-#        access_policies_url: 
+#        webpage_url:
+#        manual_url:
+#        helpdesk_url:
+#        tutorial_url:
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
 #        places: *europe
 #        dedicated_for: ["Researchers", "Research organisations"]
 #        languages: *english
@@ -2042,13 +2047,13 @@ services:
         providers: [*cesga, *recas, *ics]
         logo: namd.png
         open_access: false
-        webpage_url: 
-        manual_url: 
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        webpage_url:
+        manual_url:
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -2113,13 +2118,13 @@ services:
 #        providers: [*cesga, *recas, *ics]
 #        logo: apache-tomcat.png
 #        open_access: false
-#        webpage_url: 
-#        manual_url: 
-#        helpdesk_url: 
-#        tutorial_url: 
-#        terms_of_use_url: 
-#        corporate_sla_url: 
-#        access_policies_url: 
+#        webpage_url:
+#        manual_url:
+#        helpdesk_url:
+#        tutorial_url:
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
 #        places: *europe
 #        dedicated_for: ["Researchers", "Research organisations"]
 #        languages: *english
@@ -2148,11 +2153,11 @@ services:
         open_access: false
         webpage_url: http://gnuplot.sourceforge.net
         manual_url: http://gnuplot.sourceforge.net/documentation.html
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -2178,12 +2183,12 @@ services:
 #        logo: docker.png
 #        open_access: false
 #        webpage_url: https://www.docker.com/
-#        manual_url: 
-#        helpdesk_url: 
-#        tutorial_url: 
-#        terms_of_use_url: 
-#        corporate_sla_url: 
-#        access_policies_url: 
+#        manual_url:
+#        helpdesk_url:
+#        tutorial_url:
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
 #        places: *europe
 #        dedicated_for: ["Researchers", "Research organisations"]
 #        languages: *english
@@ -2209,11 +2214,11 @@ services:
         open_access: false
         webpage_url: http://hadoop.apache.org/
         manual_url: http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -2239,12 +2244,12 @@ services:
         logo: marathon.png
         open_access: false
         webpage_url: https://mesosphere.github.io/marathon/
-        manual_url: 
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        manual_url:
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -2271,11 +2276,11 @@ services:
 #        parents: *processingAndAnalysisParent
 #        webpage_url: https://github.com/mesos/chronos
 #        manual_url: https://mesos.github.io/chronos/
-#        helpdesk_url: 
-#        tutorial_url: 
-#        terms_of_use_url: 
-#        corporate_sla_url: 
-#        access_policies_url: 
+#        helpdesk_url:
+#        tutorial_url:
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
 #        places: *europe
 #        dedicated_for: ["Researchers", "Research organisations"]
 #        languages: *english
@@ -2301,12 +2306,12 @@ services:
         logo: jupyter.png
         parents: *dataManagementParent
         webpage_url: https://notebooks.egi.eu/hub/login
-        manual_url: 
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        manual_url:
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -2333,11 +2338,11 @@ services:
 #        open_access: false
 #        webpage_url: https://www.r-project.org
 #        manual_url: https://cran.r-project.org/manuals.html
-#        helpdesk_url: 
-#        tutorial_url: 
-#        terms_of_use_url: 
-#        corporate_sla_url: 
-#        access_policies_url: 
+#        helpdesk_url:
+#        tutorial_url:
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
 #        places: *europe
 #        dedicated_for: ["Researchers", "Research organisations"]
 #        languages: *english
@@ -2362,13 +2367,13 @@ services:
         providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
         logo: the-semantic-search-engine-sse.png
         open_access: false
-        webpage_url: 
-        manual_url: 
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        webpage_url:
+        manual_url:
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -2395,11 +2400,11 @@ services:
         open_access: false
         webpage_url: https://chipster.csc.fi
         manual_url: https://chipster.csc.fi/manual/
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -2432,11 +2437,11 @@ services:
 #        open_access: false
 #        webpage_url: http://www.clustal.org/clustal2/
 #        manual_url: http://www.clustal.org/clustal2/#Documentation
-#        helpdesk_url: 
-#        tutorial_url: 
-#        terms_of_use_url: 
-#        corporate_sla_url: 
-#        access_policies_url: 
+#        helpdesk_url:
+#        tutorial_url:
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
 #        places: *europe
 #        dedicated_for: ["Researchers", "Research organisations"]
 #        languages: *english
@@ -2458,13 +2463,13 @@ services:
 #        providers: [*cesga, *recas, *ics]
 #        logo: autodock-vina.png
 #        open_access: false
-#        webpage_url: 
-#        manual_url: 
-#        helpdesk_url: 
-#        tutorial_url: 
-#        terms_of_use_url: 
-#        corporate_sla_url: 
-#        access_policies_url: 
+#        webpage_url:
+#        manual_url:
+#        helpdesk_url:
+#        tutorial_url:
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
 #        places: *europe
 #        dedicated_for: ["Researchers", "Research organisations"]
 #        languages: *english
@@ -2487,13 +2492,13 @@ services:
       parents: *processingAndAnalysisParent
       providers: [*not]
       open_access: false
-      webpage_url: 
-      manual_url: 
-      helpdesk_url: 
-      tutorial_url: 
-      terms_of_use_url: 
-      corporate_sla_url: 
-      access_policies_url: 
+      webpage_url:
+      manual_url:
+      helpdesk_url:
+      tutorial_url:
+      terms_of_use_url:
+      corporate_sla_url:
+      access_policies_url:
       dedicated_for: ["Researchers", "Research organisations"]
       places: *europe
       languages: *english
@@ -2770,9 +2775,9 @@ services:
         manual_url: https://github.com/markusstocker/pynpf-d4science
         helpdesk_url: https://github.com/markusstocker/pynpf-d4science
         tutorial_url: https://youtu.be/ra9W7b5DbgI
-        terms_of_use_url: 
+        terms_of_use_url:
         corporate_sla_url: https://documents.egi.eu/document/2875
-        access_policies_url: 
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3287,7 +3292,7 @@ services:
         connected_url: http://abs.cerm.unifi.it:8080
         webpage_url: http://abs.cerm.unifi.it:8080
         manual_url: http://abs.cerm.unifi.it:8080/manual/FANTEN_manual.pdf
-        helpdesk_url: 
+        helpdesk_url:
         tutorial_url: https://www.wenmr.eu/tutorials/
         terms_of_use_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
@@ -3341,11 +3346,11 @@ services:
         open_access: false
         webpage_url: https://geohazards-tep.eo.esa.int
         manual_url: https://terradue.github.io/doc-tep-geohazards/
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3367,11 +3372,11 @@ services:
         open_access: false
         webpage_url: https://geohazards-tep.eo.esa.int
         manual_url: https://terradue.github.io/doc-tep-geohazards/
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3391,11 +3396,11 @@ services:
         open_access: false
         webpage_url: https://jupyterhub.eodc.eu
         manual_url: https://github.com/jupyterhub/jupyterhub
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3449,7 +3454,7 @@ services:
         tutorial_url:
         terms_of_use_url:
         corporate_sla_url:
-        access_policies_url: 
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3493,11 +3498,11 @@ services:
         open_access: false
         webpage_url: http://sentinel-hub.com/
         manual_url: https://www.sentinel-hub.com/develop/documentation
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3520,11 +3525,11 @@ services:
         open_access: false
         webpage_url: https://eodataservice.org
         manual_url: https://www.youtube.com/channel/UCqy-bd6CpXMOlRqfHmBqlZw
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3547,11 +3552,11 @@ services:
         open_access: false
         webpage_url: http://eoschub.rasdaman.com:8080/rasdaman/ows
         manual_url: http://doc.rasdaman.org/05_geo-services-guide.html#ogc-web-services
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3599,11 +3604,11 @@ services:
         open_access: false
         webpage_url: https://discovery.creodias.eu/dataset
         manual_url: https://creodias.eu/data-related-services
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3635,11 +3640,11 @@ services:
         open_access: false
         webpage_url: https://creodias.eu
         manual_url: https://creodias.eu/faq
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3667,11 +3672,11 @@ services:
         open_access: false
         webpage_url: https://finder.creodias.eu/www
         manual_url: https://creodias.eu/eo-data-finder-api-manual
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -3689,11 +3694,11 @@ services:
         open_access: false
         webpage_url: https://browser.creodias.eu
         manual_url: https://creodias.eu/using-the-eo-browser
-        helpdesk_url: 
-        tutorial_url: 
-        terms_of_use_url: 
-        corporate_sla_url: 
-        access_policies_url: 
+        helpdesk_url:
+        tutorial_url:
+        terms_of_use_url:
+        corporate_sla_url:
+        access_policies_url:
         places: *europe
         dedicated_for: ["Researchers", "Research organisations"]
         languages: *english
@@ -4046,13 +4051,13 @@ services:
       providers: [*not]
 #      logo: training-infrastructure. TODO: logo
       open_access: false
-      webpage_url: 
-      manual_url: 
-      helpdesk_url: 
-      tutorial_url: 
-      terms_of_use_url: 
-      corporate_sla_url: 
-      access_policies_url: 
+      webpage_url:
+      manual_url:
+      helpdesk_url:
+      tutorial_url:
+      terms_of_use_url:
+      corporate_sla_url:
+      access_policies_url:
       places: *europe
       dedicated_for: ["Research groups", "Research organisations"]
       languages: *english
@@ -4072,13 +4077,13 @@ services:
       providers: [*not]
 #      logo: training-infrastructure. TODO: logo
       open_access: false
-      webpage_url: 
-      manual_url: 
-      helpdesk_url: 
-      tutorial_url: 
-      terms_of_use_url: 
-      corporate_sla_url: 
-      access_policies_url: 
+      webpage_url:
+      manual_url:
+      helpdesk_url:
+      tutorial_url:
+      terms_of_use_url:
+      corporate_sla_url:
+      access_policies_url:
       places: *europe
       dedicated_for: ["Research groups", "Research organisations"]
       languages: *english
@@ -4098,13 +4103,13 @@ services:
       providers: [*not]
 #      logo: training-infrastructure. TODO: logo
       open_access: false
-      webpage_url: 
-      manual_url: 
-      helpdesk_url: 
-      tutorial_url: 
-      terms_of_use_url: 
-      corporate_sla_url: 
-      access_policies_url: 
+      webpage_url:
+      manual_url:
+      helpdesk_url:
+      tutorial_url:
+      terms_of_use_url:
+      corporate_sla_url:
+      access_policies_url:
       places: *europe
       dedicated_for: ["Research groups", "Research organisations"]
       languages: *english
@@ -4124,13 +4129,13 @@ services:
       providers: [*not]
 #      logo: training-infrastructure. TODO: logo
       open_access: false
-      webpage_url: 
-      manual_url: 
-      helpdesk_url: 
-      tutorial_url: 
-      terms_of_use_url: 
-      corporate_sla_url: 
-      access_policies_url: 
+      webpage_url:
+      manual_url:
+      helpdesk_url:
+      tutorial_url:
+      terms_of_use_url:
+      corporate_sla_url:
+      access_policies_url:
       places: *europe
       dedicated_for: ["Research groups", "Research organisations"]
       languages: *english
@@ -4151,12 +4156,12 @@ services:
 #      logo: training-infrastructure. TODO: logo
       open_access: false
       webpage_url: https://alahiff.github.io/prominence/
-      manual_url: 
-      helpdesk_url: 
-      tutorial_url: 
-      terms_of_use_url: 
-      corporate_sla_url: 
-      access_policies_url: 
+      manual_url:
+      helpdesk_url:
+      tutorial_url:
+      terms_of_use_url:
+      corporate_sla_url:
+      access_policies_url:
       places: *europe
       dedicated_for: ["Research groups", "Research organisations"]
       languages: *english
@@ -4184,6 +4189,146 @@ services:
         1:
           name: *notSpecified
           description: *notSpecified
+    PAN data:
+      title: &panData PAN data
+      parents: *storageParent
+      providers: [*desyProvider]
+      logo: panData.png
+      open_access: false
+      webpage_url: https://dcache-xdc.desy.de
+      manual_url: https://eosc-pan-git.desy.de/support
+      helpdesk_url: https://eosc-pan-git.desy.de/support
+      tutorial_url: https://eosc-pan-git.desy.de
+      terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      corporate_sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+      access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      places: *europe
+      dedicated_for: ["Researchers"]
+      languages: *english
+      area: *interdisciplinary
+      restrictions: |
+        Access to the platform is granted based on motivation / proposal,
+        In the pilot phase, usage is only supported for  photon and neutron science use-cases
+      phase: Beta (min. TRL 7)
+      tagline: dCache backend storage for the EOSC PAN Science Demonstrator
+      platforms: [*eoscPan]
+      description: |
+        Data backend storage service for EOSC PAN notebooks and cloud functions for EOSC PAN FaaS.
+        Streams for storage events via kafka and Server Sent Events.
+        Delegation of read/write access with Macaroons.
+      offers:
+        1:
+          name: PAN Demo
+          description: |
+            Bind gitlab repositories to Jupyter Notebooks and use functions as a service
+            on photon and neutron research data.
+            The demo version of this service will be restricted to read access to data, notebooks,
+            gitlab repos and the ability to invoke functions. Please contact eosc-pan-info@desy.de
+            in case of special requests for write access to backend storage, cloud functions from
+            new gitlab repositories, events streaming from the dCache backend.
+    Pan faas:
+      title: &panFaas PAN faas
+      parents: *storageParent
+      providers: [*desyProvider]
+      logo: panFaas.png
+      open_access: false
+      webpage_url: https://eosc-pan-faas.desy.de
+      manual_url: https://eosc-pan-git.desy.de/support
+      helpdesk_url: https://eosc-pan-git.desy.de/support
+      tutorial_url: https://eosc-pan-git.desy.de
+      terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      corporate_sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+      access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      places: *europe
+      dedicated_for: ["Researchers"]
+      languages: *english
+      area: *interdisciplinary
+      restrictions: *notSpecified
+      phase: Beta (min. TRL 7)
+      tagline: OpenWhisk, cloud functions for the EOSC PAN Science Demonstrator
+      platforms: [*eoscPan]
+      description: |
+        Compute backend service for EOSC PAN notebooks and EOSC PAN data.
+        Continuous integration and deployments of docker containers as cloud functions on the DESY Compute Cloud.
+      offers:
+        1:
+          name: PAN Demo
+          description: |
+            Bind gitlab repositories to Jupyter Notebooks and use functions as a service
+            on photon and neutron research data.
+            The demo version of this service will be restricted to read access to data, notebooks,
+            gitlab repos and the ability to invoke functions. Please contact eosc-pan-info@desy.de
+            in case of special requests for write access to backend storage, cloud functions from
+            new gitlab repositories, events streaming from the dCache backend.
+    PAN notebook:
+      title: &panNotebook PAN notebook
+      parents: *computeParent
+      providers: [*desyProvider]
+      logo: panFaas.png
+      open_access: false
+      webpage_url: https://eosc-pan-jhub.desy.de
+      manual_url: https://eosc-pan-git.desy.de/support
+      helpdesk_url: https://eosc-pan-git.desy.de/support
+      tutorial_url: https://eosc-pan-git.desy.de
+      terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      corporate_sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+      access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      places: *europe
+      dedicated_for: ["Researchers"]
+      languages: *english
+      area: *interdisciplinary
+      restrictions: *notSpecified
+      phase: Beta (min. TRL 7)
+      tagline: JupyterHub for the EOSC PAN Science Demonstrator
+      platforms: [*eoscPan]
+      description: |
+        Spawn Jupyter Servers in the DESY Compute Cloud and run notebooks which can make use
+        of the EOSC PaN FaaS Service and connect to EOSC PaN Data Service.
+      offers:
+        1:
+          name: PAN Demo
+          description: |
+            Bind gitlab repositories to Jupyter Notebooks and use functions as a service
+            on photon and neutron research data.
+            The demo version of this service will be restricted to read access to data, notebooks,
+            gitlab repos and the ability to invoke functions. Please contact eosc-pan-info@desy.de
+            in case of special requests for write access to backend storage, cloud functions from
+            new gitlab repositories, events streaming from the dCache backend.
+    PAN gitlab:
+      title: &panGitlab PAN gitlab
+      parents: *computeParent
+      providers: [*desyProvider]
+      logo: panFaas.png
+      open_access: false
+      webpage_url: https://eosc-pan-git.desy.de
+      manual_url: https://eosc-pan-git.desy.de/support
+      helpdesk_url: https://eosc-pan-git.desy.de/support
+      tutorial_url: https://eosc-pan-git.desy.de
+      terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      corporate_sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+      access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      places: *europe
+      dedicated_for: ["Researchers"]
+      languages: *english
+      area: *interdisciplinary
+      restrictions: *notSpecified
+      phase: Beta (min. TRL 7)
+      tagline: GitLab for the EOSC PAN Science Demonstrator
+      platforms: [*eoscPan]
+      description: |
+        Repository service for EOSC PAN notebooks and cloud functions for EOSC PAN FaaS. Gitlab runners
+        for continuous integration in the DESY Compute Cloud,
+        building and publishing docker containers in the project registry.
+      offers:
+        1:
+          name: PAN Demo
+          description: |
+            Bind gitlab repositories to Jupyter Notebooks and use functions as a service
+            on photon and neutron research data.
+            The demo version of this service will be restricted to read access to data, notebooks,
+            gitlab repos and the ability to invoke functions. Please contact eosc-pan-info@desy.de
+            in case of special requests for write access to backend storage, cloud functions from
+            new gitlab repositories, events streaming from the dCache backend.
 
 
 relations:
@@ -4322,7 +4467,7 @@ relations:
   VloToLrs:
     both: true
     source: *vloService
-    target: *lrsService 
+    target: *lrsService
   vcrToLrs:
     both: true
     source: *vcrService
