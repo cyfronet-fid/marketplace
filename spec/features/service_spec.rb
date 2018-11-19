@@ -313,6 +313,11 @@ RSpec.feature "Service filtering and sorting" do
     expect(page).to have_selector(".media", count: 1)
   end
 
+  scenario "should have 'All' link in categories with all services count" do
+    visit services_path
+
+    expect(page).to have_css("#all-services-link > span", text: Service.all.count)
+  end
 
   scenario "searching via location", js: true do
     `pending "add test after implementing location to filtering #{__FILE__}"`
