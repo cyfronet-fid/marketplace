@@ -2,13 +2,13 @@ function searchToObj(search) {
     let obj = {}, i, parts, len, key, value;
 
     let _params = search.substr(1).split('&');
-
     for (i = 0, len = _params.length; i < len; i++) {
         parts = _params[i].split('=');
         if (! parts[0]) {continue;}
+        // page parameter should not be retained
+        if (parts[0] === 'page') {continue;}
         obj[parts[0]] = parts[1] || "";
     }
-
     return obj;
 }
 
