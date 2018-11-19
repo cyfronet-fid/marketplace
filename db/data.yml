@@ -1,19 +1,45 @@
 platforms:
 
     EGI:
-        name: &egi "EGI"
+        name: &egiPlatform "EGI"
     EUDAT:
-        name: &eudat "EUDAT"
+        name: &eudatPlatform "EUDAT"
     WENMR:
-        name: &wenmr "WeNMR"
+        name: &wenmr "WeNMR Suite"
     CLARIN:
-        name: &clarin "CLARIN"
+        name: &clarinPlatform "CLARIN"
     D4Science:
-        name: &d4science "D4Science"
+        name: &d4sciencePlatform "D4Science"
     EOPillar:
-        name: &eopillar "EOPillar"
+        name: &eopillar "EO Pillar"
     EC3:
-        name: &ec3 "EC3"
+        name: &ec3 "EC3 Portal"
+    INSTRUCT:
+        name: &instruct "INSTRUCT-ERIC"
+    BIOEXCEL:
+        name: &bioexcel "BIOEXCEL"
+    ECOPOTENTIAL:
+        name: &ecopotential "ECOPOTENTIAL Virtual Laboratory"
+    GEOSS:
+        name: &geossPlatform "Global Earth Observation system of Systems (GEOSS)"
+    Europeana:
+        name: &europeana "Europeana"
+    AoDP:
+        name: &aodp "Applications on Demand Platform"
+    ENES:
+        name: &enesPlatform "IS-ENES"
+    ELIXIR:
+        name: &elixirPlatform "ELIXIR"
+    GBIF:
+        name: &gbif "GBIF"
+    OBIS:
+        name: &obis "OBIS"
+    SeaDataCloud:
+        name: &seaDataCloud "SeaDataCloud"
+    gCube:
+        name: &gCube "gCube System"
+
+
 
 
 categories:
@@ -72,6 +98,12 @@ providers:
         name: &grnet "GRNET"
     SURFsara:
         name: &surfsara "SURFsara"
+    CSBG:
+        name: &csbg "Computational Structural Biology group"
+    CERM:
+        name: &cerm "Magnetic Resonance Center of the University of Florenc - CERM"
+    Bijvoet:
+        name: &bijvoet "Bijvoet Center"
     BSC:
         name: &bsc "BSC"
     All generic CDI Level 1 providers:
@@ -198,7 +230,7 @@ services:
         restrictions: &notSpecified not specified yet
         phase: *notSpecified
         tagline: Run virtual machines on-demand with complete control over computing resources
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           With Cloud Compute you can deploy and scale virtual machines
           on­demand. Cloud Compute offers guaranteed computational resources in
@@ -500,7 +532,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Execute thousands of computational tasks to analyse large datasets
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           With High-Throughput Compute you can run computational jobs at scale on the EGI infrastructure. It allows you to analyse large datasets and execute thousands of parallel computing tasks.
 
@@ -666,7 +698,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Run Docker containers in a lightweight virtualised environment
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           With Cloud Container Compute you can deploy and scale Docker containers on-demand. It offers guaranteed computational resources in a secure and isolated environment with standard API access, without the overhead of managing the operating system.
 
@@ -700,7 +732,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Secure and trusted data exchange service for researchers
-        platforms: [*eopillar, *ec3]
+        platforms: [*eudatPlatform]
         description: |
           B2DROP is a secure and trusted data exchange service for researchers and scientists to keep their research data synchronized and up-to-date and to exchange with other researchers. B2DROP is an ideal solution to store and exchange data with colleagues and team members, synchronise multiple versions of data, ensure automatic desktop synchronisation of large files.
 
@@ -832,7 +864,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Metadata based data-discovery
-        platforms: [*eopillar, *ec3]
+        platforms: [*eudatPlatform]
         description: |
           B2FIND is the EUDAT metadata service and provides a discovery portal which allows users
           to find data collections within an international and inter-disciplinary scope.
@@ -959,7 +991,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Secure and trusted data exchange service for researchers
-        platforms: [*eopillar, *ec3]
+        platforms: [*eudatPlatform]
         description: |
           B2HANDLE is the distributed service for minting, storing, managing and accessing persistent identifiers (PIDs) and essential metadata (PID records) as well as managing PID namespaces. The implementation of the service relies on the DONA/Handle persistent identifier solution.
 
@@ -1080,7 +1112,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Data annotation service to create annotations on research data
-        platforms: [*eopillar, *ec3]
+        platforms: [*eudatPlatform]
         description: |
           B2Note allows to easily create, search and manage annotations. An annotation is a keyword or commentary attached to a dete object (data collection, file) that explains or classifies it. B2NOTE is a standalone service for annotating data content hosted within the EUDAT CDI.
 
@@ -1167,7 +1199,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Distribute and store large volumes of data based on data policies
-        platforms: [*eopillar, *ec3]
+        platforms: [*eudatPlatform]
         description: |
           B2SAFE is a robust, safe and highly available service which allows community
           and departmental repositories to implement data management policies on their research data across
@@ -1221,7 +1253,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Store and publish research data
-        platforms: [*eopillar, *ec3]
+        platforms: [*eudatPlatform]
         description: |
           B2SHARE is a user-friendly, reliable and trustworthy way for researchers,
           scientific communities and citizen scientists to store and publish small-scale
@@ -1350,7 +1382,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Transfer of data between data resources and external computational facilities
-        platforms: [*eopillar, *ec3]
+        platforms: [*eudatPlatform]
         description: |
           B2STAGE is for communities who need to transfert large data collection from EUDAT CDI to HPC.
           B2STAGE service is a customer-facing service that allow high performance transfers
@@ -1413,7 +1445,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Back-up your data for the long term and future use in a secure environment.
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           Archive Storage allows you to store large amounts of data in a secure environment freeing up
           your usual file storage resources. Access to the archive can be given at an individual,
@@ -1481,7 +1513,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Store, share and access your files and their metadata on a global scale.
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           Store, share and access your files and their metadata on a global scale.
 
@@ -1653,7 +1685,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Store, share and access your files and their metadata on a global scale.
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           The data are available as downloadable netCDF files from Argo's
           two Global Data Assembly Centers (GDACS) and there are various data products too
@@ -1680,7 +1712,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Access to resources from the Global Earth Observation System of Systems
-        platforms: [*eopillar, *ec3]
+        platforms: [*ecopotential, *geossPlatform]
         description: |
           The GEOSS (Global Earth Observation System of Systems) Web Portal is the main entry point
           for discovering and accessing GEOSS data. GEOSS Platform interconnects more than 170 data systems globally,
@@ -1712,7 +1744,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*ecopotential, *geossPlatform]
         description: *notSpecified
         offers:
           1:
@@ -1738,7 +1770,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: A facet browser for fast navigation and searching in huge amounts of metadata.
-        platforms: [*eopillar, *ec3]
+        platforms: [*clarinPlatform, *eudatPlatform, *europeana]
         description: |
           A facet browser for fast navigation and searching in large amounts of metadata.
           This portal enables the discovery of language data and tools, provided by over 40 CLARIN centres,
@@ -1778,7 +1810,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: A web application that suggests language analysis tools for specific data sets.
-        platforms: [*eopillar, *ec3]
+        platforms: [*clarinPlatform, *eudatPlatform, *europeana]
         description: |
           The data are available as downloadable netCDF files from Argo's two
           Global Data Assembly Centers (GDACS) and there are various data products too
@@ -1809,7 +1841,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: A service that allows researchers to create their own citable digital bookmarks.
-        platforms: [*eopillar, *ec3]
+        platforms: [*clarinPlatform, *eudatPlatform, *europeana]
         description: |
           A service that allows researchers to create their own citable digital bookmarks.
 
@@ -2024,7 +2056,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform, *ec3, *aodp]
         description: |
           NAMD is a parallel molecular dynamics code designed for high-performance simulation
           of large bio-molecular systems.
@@ -2128,7 +2160,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform, *ec3, *aodp]
         description: |
           Gnuplot is a portable command-line driven graphing utility for Linux,
           OS/2, MS Windows, OSX, VMS, and other platforms.
@@ -2189,7 +2221,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform, *ec3, *aodp]
         description: |
           Hadoop is a framework that allows for the distributed processing
           of large data sets across clusters of computers using simple programming models.
@@ -2220,7 +2252,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform, *ec3, *aodp]
         description: |
           Marathon a production-grade container orchestration platform
           for Mesosphere's Data Center/Operating System (DC/OS) and Apache Mesos.
@@ -2282,7 +2314,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform, *ec3, *aodp]
         description: |
           Jupyter is an open-source web application that allows you to create and share documents with live code,
           equations, visualisations and explanatory text.
@@ -2344,7 +2376,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform, *ec3, *aodp]
         description: |
           The Semantic Search Engine (SSE) is an application conceived to demonstrate the potential of information
           coupled with semantic web technologies to address the issues of data discovery and correlation.
@@ -2375,7 +2407,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform, *ec3, *aodp]
         description: |
           Chipster is a user-friendly analysis software for high-throughput data.
           It contains over 300 analysis tools for next generation sequencing (NGS),
@@ -2469,7 +2501,7 @@ services:
       restrictions: *notSpecified
       phase: Beta
       tagline: Create interactive documents with live code, visualisations and narrative text powered by the Jupyter technology
-      platforms: [*eopillar, *ec3]
+      platforms: [*egiPlatform]
       description: |
         The service provides a browser-based tool for interactive analysis of data using EGI storage
         and compute infrastructures based on the JupyterHub technology. The notebooks can combine text,
@@ -2748,7 +2780,7 @@ services:
         restrictions: *notSpecified
         phase: Beta (min. TRL 7)
         tagline: D4Science Service
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform, *d4sciencePlatform]
         description: |
           The VRE supports new particle formation event analysis on interoperable e-Infrastructures.
           It provides access to Jupyter notebooks to classify events and process information about them.
@@ -2779,7 +2811,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Analyze and process data from multiple communities with the Ophidia Big Data Analytics framework
-        platforms: [*eopillar, *ec3]
+        platforms: [*enesPlatform]
         description: |
           Users can define parallel processing workflows, executed remotely without needing
           to download data or provide own computing resources as these are provided by ECAS.
@@ -2913,7 +2945,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*elixirPlatform]
         description: *notSpecified
     EISCAT:
         title: EISCAT
@@ -3099,11 +3131,11 @@ services:
     HADDOCK:
         title: &haddock HADDOCK
         parents: *processingAndAnalysisParent
-        providers: [*uou, *uof, *cirmmp]
+        providers: [*csbg, *bijvoet, *uou]
         logo: haddock.png
         open_access: true
         connected_url: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
-        webpage_url: https://enmrdevel.science.uu.nl/auth/register/haddock
+        webpage_url: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
         manual_url: http://www.bonvinlab.org/software/haddock2.2/manual/
         helpdesk_url: http://ask.bioexcel.eu/c/haddock
         tutorial_url: https://www.wenmr.eu/tutorials/#haddock
@@ -3117,7 +3149,7 @@ services:
         restrictions: "Registration required, Limited to non-profit users"
         phase: Production (min. TRL 8)
         tagline: Integrative modeling of biomolecular complexes with the user-friendly, EGI HTC-enabled HADDOCK portal
-        platforms: [*eopillar, *ec3]
+        platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
         description: |
           HADDOCK is a web portal that offers computational tools for structural biologists to model the structure
           of complexes of proteins and other biomolecules via a user-friendly interface. The portal offers a number
@@ -3137,11 +3169,11 @@ services:
     PowerFit:
         title: &powerFit PowerFit
         parents: *processingAndAnalysisParent
-        providers: [*uou, *uof, *cirmmp]
+        providers: [*csbg, *bijvoet, *uou]
         logo: powerfit.png
         open_access: true
         connected_url: http://haddock.science.uu.nl/enmr/services/POWERFIT
-        webpage_url: https://enmrdevel.science.uu.nl/auth/register/powerfit
+        webpage_url: http://haddock.science.uu.nl/enmr/services/POWERFIT
         manual_url: http://haddock.science.uu.nl/cgi/enmr/services/POWERFIT/powerfit/help
         helpdesk_url: http://ask.bioexcel.eu/c/powerfit
         tutorial_url: https://www.wenmr.eu/tutorials/#powerfit
@@ -3155,7 +3187,7 @@ services:
         restrictions: "Registration required, Limited to non-profit users"
         phase: "Production (min. TRL 8)"
         tagline: The PowerFit server allows you to fit your 3D structures in any map!
-        platforms: [*eopillar, *ec3]
+        platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
         description: |
           PowerFit is a software designed to fit atomic structures into cryo-EM density maps,
           using an exhaustive 6-dimensional cross-correlation search.
@@ -3163,10 +3195,10 @@ services:
     DisVis:
         title: &disVis DisVis
         parents: *processingAndAnalysisParent
-        providers: [*uou, *uof, *cirmmp]
+        providers: [*csbg, *bijvoet, *uou]
         logo: disvis.png
         open_access: true
-        connected_url: https://enmrdevel.science.uu.nl/auth/register/disvis
+        connected_url: http://haddock.science.uu.nl/enmr/services/DISVIS
         webpage_url: http://haddock.science.uu.nl/enmr/services/DISVIS
         manual_url: http://haddock.science.uu.nl/cgi/enmr/services/DISVIS/disvis/help
         helpdesk_url: http://ask.bioexcel.eu/c/disvis
@@ -3175,7 +3207,7 @@ services:
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        dedicated_for: ["Researchers"]
         languages: *english
         area: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
@@ -3183,7 +3215,7 @@ services:
         tagline: |
           Visualizes and quantify the information content of distance
           restraints between macromolecular complexes with DisVis
-        platforms: [*eopillar, *ec3]
+        platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
         description: |
           DisVis is a software designed to visualize and quantify the accessible interaction space
           defined by distance restraints between biomolecules.
@@ -3191,12 +3223,13 @@ services:
     CS-ROSETTA:
         title: &csRoseta CS-ROSETTA
         parents: *processingAndAnalysisParent
-        providers: [*uou, *uof, *cirmmp]
+        providers: [*csbg, *bijvoet, *uou]
         logo: cs-rosetta.png
         open_access: true
         connected_url: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
         webpage_url: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
-        manual_url: http://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/csr-tutorial.html
+        manual_url: https://www.wenmr.eu/tutorials/#cs-rosetta
+        helpdesk_url:
         tutorial_url: https://www.wenmr.eu/tutorials/
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
@@ -3208,24 +3241,20 @@ services:
         restrictions: "Registration required, Limited to non-profit users"
         phase: "Production (min. TRL 8)"
         tagline: NMR protein structure prediction using the EGI HTC-enabled CS-ROSETTA portal
-        platforms: [*eopillar, *ec3]
+        platforms: [*wenmr, *egiPlatform, *instruct]
         description: |
           The CS-ROSETTA3 web portal allows structural biologists to model the 3D structure of proteins
           using only the 13CA, 13CB, 13C’, 15N, 1HA and 1HN NMR chemical shifts as input.
 
-          The CS-ROSETTA3 web portal is a service provided by the [Computational Structural Biology group][1],
-          Bijvoet Center, Utrecht University.
-
-          [1]: http://www.bonvinlab.org/
         offers: *wenMRService
     AMBER:
         title: &amber AMBER
         parents: *processingAndAnalysisParent
-        providers: [*uou, *uof, *cirmmp]
+        providers: [*cerm, *cirmmp]
         logo: amber.png
         open_access: true
         connected_url: http://py-enmr.cerm.unifi.it/access/index
-        webpage_url: http://py-enmr.cerm.unifi.it/access/index
+        webpage_url: http://py-enmr.cerm.unifi.it/feedback/index?type=amps-nmr
         manual_url: https://www.wenmr.eu/tutorials
         helpdesk_url: http://py-enmr.cerm.unifi.it/feedback/index?type=amps-nmr
         tutorial_url: https://www.wenmr.eu/tutorials/
@@ -3233,23 +3262,26 @@ services:
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        dedicated_for: ["Researchers"]
         languages: *english
         area: *biologicalSciences
-        restrictions: "Registration required, Limited to non-profit users"
+        restrictions: "Limited to non-profit users, For-profit users can use the service if they a license agreement with the University of California for the AMBER toolkit"
         phase: "Production (min. TRL 8)"
         tagline: Web portal for Nuclear Magnetic Resonance (NMR) structure refinement
-        platforms: [*eopillar, *ec3]
+        platforms: [*wenmr, *egiPlatform, *instruct]
         description: |
           Simple and user-friendly NMR-based refinement of the 3D structures of biological macromolecules
           thought the AMPS-NMR portal. Amber (Assisted Model Building with Energy Refinement) is a suite
           of programs that allow users to perform molecular dynamics (MD) simulations on biological systems
           and to store different calculations.
+
+          The portal was developed with the help of the WestLife and INDIGO-DataCloud projects
+          and supported by the MoBrain Competence Centre, under the EGI-Engage project.
         offers: *wenMRService
     FANTEN:
         title: &fanten FANTEN
         parents: *processingAndAnalysisParent
-        providers: [*uou, *uof, *cirmmp]
+        providers: [*cerm, *cirmmp]
         logo: fanten.png
         open_access: true
         connected_url: http://abs.cerm.unifi.it:8080
@@ -3257,29 +3289,32 @@ services:
         manual_url: http://abs.cerm.unifi.it:8080/manual/FANTEN_manual.pdf
         helpdesk_url: 
         tutorial_url: https://www.wenmr.eu/tutorials/
-        terms_of_use_url: https://wenmr.science.uu.nl/conditions
+        terms_of_use_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
-        access_policies_url: https://wenmr.science.uu.nl/conditions
+        access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         places: *europe
         dedicated_for: ["Researchers"]
         languages: *english
         area: *biologicalSciences
-        restrictions: "Registration required, Limited to non-profit users"
+        restrictions: "Limited to non-profit users"
         phase: "Production (min. TRL 8)"
         tagline: FANTEN for the analysis of magnetic anisotropy-induced NMR data
-        platforms: [*eopillar, *ec3]
+        platforms: [*wenmr, *egiPlatform, *instruct]
         description: |
           FANTEN is a user-friendly web tool for the
           determination of anisotropy tensors. It is freely available through the WeNMR gateway.
+
+          The portal was developed with the help of the WestLife and INDIGO-DataCloud projects
+          and supported by the MoBrain Competence Centre, under the EGI-Engage project.
         offers: *wenMRService
     SpotOn:
         title: &spotOn SpotOn
         parents: *processingAndAnalysisParent
-        providers: [*uou, *uof, *cirmmp]
+        providers: [*csbg, *bijvoet, *uou]
         logo: spoton.png
         open_access: true
         connected_url: https://haddock.science.uu.nl/enmr/services/SPOTON
-        webpage_url: http://www.bonvinlab.org/software/haddock2.2/
+        webpage_url: https://haddock.science.uu.nl/enmr/services/SPOTON
         manual_url: https://haddock.science.uu.nl/cgi/enmr/services/SPOTON/spoton/help
         helpdesk_url: http://ask.bioexcel.eu/c/spoton
         tutorial_url: https://www.wenmr.eu/tutorials/#spoton
@@ -3293,7 +3328,7 @@ services:
         restrictions: "Registration required, Limited to non-profit users"
         phase: "Production (min. TRL 8)"
         tagline: "SpotOn: determination of Hot-Spots at protein-protein interfaces"
-        platforms: [*eopillar, *ec3]
+        platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
         description: |
           SpotOn is a robust algorithm developed to identify and classify the interfacial residues
           as Hot-Spots (HS) and Null-Spots (NS) with a final accuracy of 0.95
@@ -3318,7 +3353,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           This service provides an interferometric product at 50m resolution and 25m pixel spacing systematically
           for every 6-day Sentinel-1 SLC pair over the Alpine Region.
@@ -3344,7 +3379,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           This is a Thematic Application of the Geohazards Thematic Exploitation Platform providing access to a set
           of on-demand terrain motion services supporting interferogram generation, co-seismic displacement mapping,
@@ -3368,7 +3403,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           EODC JupyterHub provides access to the global EODC Copernicus Data Archive.
           Eliminate the barrier to get access to and to start to develop algorithms in view of remote sensing data.
@@ -3422,7 +3457,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Catalog Service for the Web (CSW)
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           Catalog Service for the Web (CSW)
         offers:
@@ -3470,7 +3505,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           Sentinel Hub is a multi- spectral and multi-temporal big data satellite imagery service,
           capable of fully automated archiving, real-time processing and distribution
@@ -3497,7 +3532,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           MEA platform implements the concept of Digital Earth making global environmental geospatial data Findable,
           Accessible, Interoperable and Reusable (FAIR). MEA platform provides an effective subsetting functionality
@@ -3524,7 +3559,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           Rasdaman is a datacube engine providing analysis-ready EO data by abstracting
           millions of satellite images into few spatio-temporal cubes.
@@ -3576,7 +3611,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           The Catalogue is be based on CKAN open source software which is widely used for open data publications like
           e.g. European Data Portal, data.org.uk or danepubliczne.gov.pl. CKAN provides user friendly web interface
@@ -3612,7 +3647,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           CREODIAS processing covers full set of virtual resources available in the solution:
           VM – Virtual Machines (or virtual computing servers) with several operating systems available
@@ -3644,7 +3679,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: *notSpecified
     Cloudferro Data related Services - EO browser:
         title: &cfdrsEOB Cloudferro Data related Services - EO browser
@@ -3666,7 +3701,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        platforms: [*eopillar]
         description: |
           CreoDias EO browser allows browsing wide archive of Earth Observation products, created by ESA’s Sentinel 1,
           Sentinel 2, Sentinel 3, ESA’s archives of Landsat 5, Landsat 7, Landsat 8 and Envisat.
@@ -3690,7 +3725,7 @@ services:
         restrictions: *notSpecified
         phase: Beta
         tagline: Handle transparent Single Sign-On from multiple heterogeneous identity providers
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           Check-in is a proxy service that operates as a central hub to connect federated Identity Providers (IdPs)
           with service providers. Check-in allows users to select their preferred IdP so that they can access and use
@@ -3744,7 +3779,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: ToFill
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           EGI provides services to manage user membership, where users can register and ask to be part of a VO,
           and where the VO supervisor can approve or remove users from the VO.
@@ -3775,7 +3810,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Dedicated computing and storage for training and education
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           The Training Infrastructure is a cloud­based computing and storage resources for training events.
           It is useful to organise onsite tutorials or workshops and online training courses or as a platform
@@ -3887,7 +3922,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Learn how to manage IT services with a pragmatic and lightweight standard
-        platforms: [*eopillar, *ec3]
+        platforms: [*egiPlatform]
         description: |
           FitSM is a lightweight standards family aimed at facilitating service management in IT service provision,
           including federated scenarios. FitSM training aims at providing those involved in operating
@@ -3982,7 +4017,7 @@ services:
       tagline: |
         A web-based, collaborative working environment enacting to predict the spread of an invasive species
         (possibly alien) in a new environment
-      platforms: [*eopillar, *ec3]
+      platforms: [*egiPlatform, *gbif, *obis, *d4sciencePlatform, *gCube, *seaDataCloud]
       description: |
         Alien and Invasive Species Virtual Research Environment (VRE) is a web-based, comprehensive,
         collaborative working environment supporting decision makers and scientists in predicting the spread
@@ -4508,6 +4543,19 @@ relations:
     both: false
     source: *egiCloud
     target: *checkIn
+#  haddockToB2drop:
+#    both: true
+#    source: *haddock
+#    target: *b2drop
+#  powerFitToB2drop:
+#    both: true
+#    source: *powerFit
+#    target: *b2drop
+#  disVisToB2drop:
+#    both: true
+#    source: *disVis
+#    target: *b2drop
+
 
 #  spotOnToEgiWM:
 #    both: false
