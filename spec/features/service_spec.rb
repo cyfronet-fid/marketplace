@@ -178,9 +178,6 @@ RSpec.feature "Service filtering and sorting" do
     create(:service, title: "DDDD Something 2", rating: 4.0, platforms: [platform_2], categories: [category_1])
     create(:service, title: "DDDD Something 3", rating: 3.9, platforms: [platform_2], categories: [category_1])
 
-    puts Service.joins(:categories).where("? = ANY(dedicated_for)", "Providers").to_sql
-    puts Service.joins(:categories).where("? = ANY(dedicated_for)", "Providers")
-
     sleep(1)
   end
 
