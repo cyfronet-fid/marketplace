@@ -502,7 +502,6 @@ textarea {
 .area-bg {
   height: 100px;
   margin-top: 100px;
-  margin-bottom: 80px;
 
   .area {
     height: 110px;
@@ -670,7 +669,6 @@ Card style
     }
   }
 
-
   .card-body {
     padding: 0.8rem 1rem;
   }
@@ -679,6 +677,21 @@ Card style
     background: transparent;
     padding: 0.45rem 0 0;
     margin: 0  1.25rem 0.45rem;
+    border-top: 2px solid $palette-solid-30;
+    padding-top: 0.9rem;
+
+    p {
+      margin: 0 0 7px;
+      font-size: 12px;
+    }
+
+    small {
+      font-size: 12px;
+    }
+
+    a {
+      color: $palette-blue;
+    }
 
     span,
     strong {
@@ -852,6 +865,11 @@ Filters
   }
 }
 
+.numbers {
+  background: url('../../assets/images/main-bg-dots.png') no-repeat;
+  background-position: -20px 90px;
+}
+
 .box {
   text-align: center;
 
@@ -875,6 +893,49 @@ Filters
     color: $palette-solid-100;
   }
 }
+
+.home-carousel .card-title {
+  text-align: center;
+  width: 100%;
+  float: left;
+  font-weight: bold;
+  color: $palette-blue;
+}
+
+
+
+@media (min-width: 768px) {
+
+  .carousel-indicators {
+    bottom: auto;
+    top: 280px;
+  }
+
+  .carousel-indicators {
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+  }
+
+  .carousel-indicators li,
+  .carousel-indicators .active {
+    width: 15px;
+    border: 1px solid $palette-blue;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    height: 15px;
+  }
+
+  .carousel-indicators .active {
+    background: $palette-blue;
+  }
+}
+
+
 //scss-lint:disable QualifyingElement
 // This is a little hack, to make checkboxes vertically centered
 label[data-multicheckbox].small {
