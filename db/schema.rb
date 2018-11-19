@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_16_101816) do
+ActiveRecord::Schema.define(version: 2018_11_19_100216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,6 +146,8 @@ ActiveRecord::Schema.define(version: 2018_11_16_101816) do
 
   create_table "research_areas", force: :cascade do |t|
     t.text "name", null: false
+    t.string "ancestry"
+    t.integer "ancestry_depth", default: 0
   end
 
   create_table "service_categories", force: :cascade do |t|
