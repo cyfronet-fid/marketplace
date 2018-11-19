@@ -213,5 +213,13 @@ RSpec.feature "Service ordering" do
       expect(page).to have_selector(:link_or_button, "Add to my services", exact: true)
       expect(page).to have_selector(:link_or_button, "Go to the service", exact: true)
     end
+
+    scenario "I can see catalog service button" do
+      catalog = create(:service, service_type: :catalog)
+
+      visit service_path(catalog)
+
+      expect(page).to have_selector(:link_or_button, "Go to the service", exact: true)
+    end
   end
 end

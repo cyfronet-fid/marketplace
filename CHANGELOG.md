@@ -118,6 +118,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Related Infrastructures and Platforms to service details view (@kmarszalek)
 - Technical parameters display in service offers (@michal-szostak)
 - Add "All Services" link with services count above categories navigation in sidebar (@michal-szostak)
+- Show "Go to the service" for catalog service (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
