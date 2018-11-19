@@ -5,35 +5,22 @@
         %ul
           %li.all-link
             = link_to "All Services", services_path
-          %li
-            %a{ href: "#" } Compute
-          %li
-            %a{ href: "#" } Data management
-          %li
-            %a{ href: "#" } Networking
-          %li
-            %a{ href: "#" } Processing & Analysis
-          %li
-            %a{ href: "#" } Security & Operations
-          %li
-            %a{ href: "#" } Sharing & Discover
-          %li
-            %a{ href: "#" } Storage
-          %li
-            %a{ href: "#" } Training & Support
+          - @root_categories.each do |root_category|
+            %li
+              = link_to root_category.name, root_category
       %h5.mt-5.text-uppercase Recently added
       %ul.added-list
         %li
-          %a{ href: "#" } EIDA Data Archive
+          EIDA Data Archive
           %span 3 min ago
         %li
-          %a{ href: "#" } EGI Object Storage
+          EGI Object Storage
           %span 55 min ago
         %li
-          %a{ href: "#" } EIDA Data Archive
+          EIDA Data Archive
           %span 55 min ago
         %li
-          %a{ href: "#" } Chronos
+          Chronos
           %span 55 min ago
 
     .col-12.col-lg-9.right-column.pl-5
