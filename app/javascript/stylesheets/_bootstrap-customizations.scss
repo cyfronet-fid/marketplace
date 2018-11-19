@@ -502,7 +502,6 @@ textarea {
 .area-bg {
   height: 100px;
   margin-top: 100px;
-  margin-bottom: 80px;
 
   .area {
     height: 110px;
@@ -670,6 +669,9 @@ Card style
     }
   }
 
+  .card-img-top {
+    text-align: center;
+  }
 
   .card-body {
     padding: 0.8rem 1rem;
@@ -679,6 +681,21 @@ Card style
     background: transparent;
     padding: 0.45rem 0 0;
     margin: 0  1.25rem 0.45rem;
+    border-top: 2px solid $palette-solid-30;
+    padding-top: 0.9rem;
+
+    p {
+      margin: 0 0 7px;
+      font-size: 12px;
+    }
+
+    small {
+      font-size: 12px;
+    }
+
+    a {
+      color: $palette-blue;
+    }
 
     span,
     strong {
@@ -770,6 +787,155 @@ Filters
 
   &.active {
     border-bottom: 2px solid $palette-yellow;
+  }
+}
+
+.left-menu {
+  background-image: linear-gradient(-135deg, $btn-primary-gradient-start 0%, $btn-primary-gradient-end 100%);
+
+  li {
+    margin: 13px 0;
+    list-style: none;
+
+    a {
+      color: $white;
+      font-size: 17px;
+
+      &:hover {
+        color: $palette-yellow;
+      }
+    }
+  }
+}
+
+.all-link {
+  border-bottom: 1px solid $footer-color;
+  margin-bottom: 0;
+  padding-bottom: 10px;
+
+  a {
+    text-transform: uppercase;
+  }
+}
+
+.added-list {
+
+  li {
+    margin: 7px 0;
+
+    a {
+      color: $palette-blue;
+      font-weight: bold;
+      font-size: 15px;
+
+      &:hover {
+        color: $palette-yellow;
+      }
+    }
+
+    span {
+      font-style: italic;
+      padding-left: 5px;
+    }
+  }
+}
+
+.subtitle {
+  font-size: 26px;
+  line-height: 50px;
+  font-weight: 300;
+  margin-bottom: 10px;
+  color: $palette-solid-100;
+}
+
+.title {
+  font-size: 52px;
+  line-height: 0.8;
+  font-weight: bold;
+  color: $palette-yellow;
+}
+
+.feature-list {
+  li {
+    font-size: 26px;
+    line-height: 1.05;
+    margin: 17px 0;
+
+    svg {
+      color: $palette-yellow;
+      font-size: 17px;
+      margin-right: 7px;
+    }
+  }
+}
+
+.numbers {
+  background: url('../../assets/images/main-bg-dots.png') no-repeat;
+  background-position: -20px 90px;
+}
+
+.box {
+  text-align: center;
+
+  .icon svg {
+    font-size: 35px;
+    color: $palette-solid-50;
+  }
+
+  .num {
+    font-size: 65px;
+    font-weight: bold;
+    line-height: 1;
+    margin-top: 10px;
+    color: $palette-solid-100;
+  }
+
+  .sub-num {
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1;
+    color: $palette-solid-100;
+  }
+}
+
+.home-carousel .card-title {
+  text-align: center;
+  width: 100%;
+  float: left;
+  font-weight: bold;
+  color: $palette-blue;
+}
+
+
+
+@media (min-width: 768px) {
+
+  .carousel-indicators {
+    bottom: auto;
+    top: 303px;
+  }
+
+  .carousel-indicators {
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+  }
+
+  .carousel-indicators li,
+  .carousel-indicators .active {
+    width: 15px;
+    border: 1px solid $palette-blue;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    height: 15px;
+  }
+
+  .carousel-indicators .active {
+    background: $palette-blue;
   }
 }
 
