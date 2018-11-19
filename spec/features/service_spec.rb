@@ -125,8 +125,6 @@ RSpec.feature "Service browsing" do
                                           "description": "Please choose start date" }])
 
     checkin_sign_in_as(user)
-    puts offer.name
-    puts service_path(offer.service)
     visit service_path(offer.service)
     expect(page.body).to have_content("Number of CPU Cores")
     expect(page.body).to have_content("1 - 8")
@@ -153,18 +151,36 @@ end
 
 
 RSpec.feature "Service filtering and sorting" do
+  let!(:platform) { create(:platform) }
+
   before(:each) do
-    platform = create(:platform, name: "platform 1")
+    platform_2 = create(:platform)
     area = create(:research_area, name: "area 1")
     provider = create(:provider, name: "first provider")
-    service = create(:service, title: "AAAA Service", rating: 5.0, dedicated_for: ["VO"])
-    service.research_areas << area
+
+    category_1 = create(:category)
+
+    service = create(:service,
+                     title: "AAAA Service",
+                     rating: 5.0,
+                     dedicated_for: ["VO"],
+                     platforms: [platform],
+                     categories: [category_1])
+
     service.providers << provider
-    create(:service, title: "BBBB Service", rating: 3.0, dedicated_for: ["Providers"], platforms: [platform])
-    create(:service, title: "CCCC Service", rating: 4.0, dedicated_for: ["Researchers"])
-    create(:service, title: "DDDD Something 1", rating: 4.1)
-    create(:service, title: "DDDD Something 2", rating: 4.0)
-    create(:service, title: "DDDD Something 3", rating: 3.9)
+    service.research_areas << area
+
+    create(:service, title: "BBBB Service", rating: 3.0, dedicated_for: ["Providers"], platforms: [platform_2],
+           categories: [category_1])
+    create(:service, title: "CCCC Service", rating: 4.0, dedicated_for: ["Researchers"], platforms: [platform_2],
+           categories: [category_1])
+    create(:service, title: "DDDD Something 1", rating: 4.1, platforms: [platform_2], categories: [category_1])
+    create(:service, title: "DDDD Something 2", rating: 4.0, platforms: [platform_2], categories: [category_1])
+    create(:service, title: "DDDD Something 3", rating: 3.9, platforms: [platform_2], categories: [category_1])
+
+    puts Service.joins(:categories).where("? = ANY(dedicated_for)", "Providers").to_sql
+    puts Service.joins(:categories).where("? = ANY(dedicated_for)", "Providers")
+
     sleep(1)
   end
 
@@ -297,7 +313,7 @@ RSpec.feature "Service filtering and sorting" do
 
   scenario "searching via platforms", js: true do
     visit services_path
-    find(:css, "input[name='related_platforms[]'][value='#{Platform.order(:name).first.id}']").set(true)
+    find(:css, "input[name='related_platforms[]'][value='#{platform.id}']").set(true)
     click_on(id: "filter-submit")
 
     expect(page).to have_selector(".media", count: 1)
@@ -306,7 +322,7 @@ RSpec.feature "Service filtering and sorting" do
   scenario "page query param should be reset after filtering", js: true do
     create_list(:service, 40)
     visit services_path(page: 3)
-    find(:css, "input[name='related_platforms[]'][value='#{Platform.order(:name).first.id}']").set(true)
+    find(:css, "input[name='related_platforms[]'][value='#{platform.id}']").set(true)
     click_on(id: "filter-submit")
 
     expect(page.current_path).to_not have_content("page=")
