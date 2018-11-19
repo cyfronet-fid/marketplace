@@ -723,7 +723,7 @@ services:
         helpdesk_url: https://www.eudat.eu/support-request?service=B2DROP
         tutorial_url: https://eudat.eu/services/userdoc/b2drop
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -982,7 +982,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://eudat.eu/services/userdoc/b2handle
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1103,7 +1103,7 @@ services:
         helpdesk_url: https://www.eudat.eu/contact-support-request?service=B2NOTE
         tutorial_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1190,7 +1190,7 @@ services:
         helpdesk_url: https://eudat.eu/contact-support-request
         tutorial_url: 
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1244,7 +1244,7 @@ services:
         helpdesk_url: https://eudat.eu/contact-support-request
         tutorial_url: 
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1373,7 +1373,7 @@ services:
         helpdesk_url: https://eudat.eu/contact-support-request
         tutorial_url: 
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1436,7 +1436,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://wiki.egi.eu/wiki/Online_Storage
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1504,7 +1504,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://wiki.egi.eu/wiki/Online_Storage
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
@@ -1676,7 +1676,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         dedicated_for: ["Reaserchers"] #TODO: but not specified
@@ -1761,7 +1761,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
@@ -1801,7 +1801,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
@@ -1832,7 +1832,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
@@ -1909,7 +1909,7 @@ services:
 #        helpdesk_url: https://www.egi.eu/more-information/
 #        tutorial_url: https://wiki.egi.eu/wiki/HowToAccessTheEGIMarketPlace
 #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-#        corporate_sla_url: https://www.eosc-hub.eu/order-service
+#        corporate_sla_url:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        places: *europe
 #        languages: *english
@@ -2590,7 +2590,7 @@ services:
 #        helpdesk_url: https://www.clarin.eu/content/support
 #        tutorial_url: https://www.eosc-hub.eu/training-material/component-metadata-infrastructure-services
 #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-#        corporate_sla_url: https://www.eosc-hub.eu/order-service
+#        corporate_sla_url:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        places: *europe
 #        dedicated_for: ["Researchers"] #TODO: but not specified
