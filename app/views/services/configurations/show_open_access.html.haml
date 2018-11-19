@@ -1,9 +1,7 @@
 = render "layouts/order/nav", service: @service, step: 2
 
 %h2.mb-4.font-weight-normal= t "service.open_access.order.configuration"
-%p.mb-4
-  You can organize your services in projects.
-  Add this service to specific project, create new one or leave it empty.
+%p.mb-4= t("project.select.description")
 
 = simple_form_for @project_item, url: service_configuration_path(@service),
   method: :put, html: { id: "order-form" } do |f|
