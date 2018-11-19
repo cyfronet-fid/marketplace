@@ -1,0 +1,6 @@
+en:
+  pundit:
+    default: "You are not authorized to see this page"
+    affiliation_policy:
+      "edit?": "You cannot edit an affiliation which has been activated"
+      "destroy?": "You cannot remove an affiliation which has a project item"
