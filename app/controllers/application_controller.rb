@@ -13,12 +13,17 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError do |exception|
     redirect_back fallback_location: root_path,
-                  alert: "You are not authorized to see this page"
+                  alert: not_authorized_message(exception)
   end
 
   private
 
     def load_root_categories!
       @root_categories = Category.roots.order(:name)
+    end
+
+    def not_authorized_message(exception)
+      policy_name = exception.policy.class.to_s.underscore
+      I18n.t "#{policy_name}.#{exception.query}", scope: :pundit, default: :default
     end
 end
