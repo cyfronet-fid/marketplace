@@ -10,7 +10,7 @@ RSpec.feature "Profile page" do
 
     checkin_sign_in_as(user)
 
-    click_link("Profile")
+    click_link("Profile", match: :first)
 
     expect(page.body).to have_text(user.first_name)
     expect(page.body).to have_text(user.last_name)
