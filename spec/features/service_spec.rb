@@ -294,11 +294,22 @@ RSpec.feature "Service filtering and sorting" do
     expect(page).to have_selector(".media", count: 1)
     expect(page).to have_selector("input[name='dedicated_for[]'][value='VO'][checked='checked']")
   end
+
   scenario "searching via platforms", js: true do
     visit services_path
     find(:css, "input[name='related_platforms[]'][value='#{Platform.order(:name).first.id}']").set(true)
     click_on(id: "filter-submit")
 
+    expect(page).to have_selector(".media", count: 1)
+  end
+
+  scenario "page query param should be reset after filtering", js: true do
+    create_list(:service, 40)
+    visit services_path(page: 3)
+    find(:css, "input[name='related_platforms[]'][value='#{Platform.order(:name).first.id}']").set(true)
+    click_on(id: "filter-submit")
+
+    expect(page.current_path).to_not have_content("page=")
     expect(page).to have_selector(".media", count: 1)
   end
 

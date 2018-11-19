@@ -150,5 +150,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Correctly expand affiliation accordions in profile (@jswk)
 - Insert a line-break after button(s) in service header right panel (@jswk)
 - Search by text from any view (@michal-szostak)
+- Search does not preserve `page` query param (@michal-szostak)
 
 ### Security
