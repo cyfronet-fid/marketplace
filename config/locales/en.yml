@@ -45,3 +45,8 @@ en:
         title: Add to my services
         cancel: Quit
         configuration: Add to a project
+  project:
+    select:
+      description: |
+        You can organize your services in projects.
+        Add this service to specific project or create a new one.
