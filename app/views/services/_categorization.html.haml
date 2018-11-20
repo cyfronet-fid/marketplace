@@ -2,19 +2,14 @@
   area_links = service.research_areas.
                map { |ra| link_to(ra.name, services_path(research_area: ra.to_param)) }
 
-  dedicated_for_links = service.dedicated_for.
-              map { |df| link_to(df, services_path("dedicated_for[]": df)) }
-
-  providers = service.providers.
-              map { |p| link_to(p.name, services_path("providers[]": p)) }
 .row
   .col.x-small
     %span
       Provided by
-    %strong.mr-4= safe_join(providers, ", ")
+    %strong.mr-4= safe_join(providers(service), ", ")
     %span
       Research area:
     %strong.mr-4= safe_join(area_links, ", ")
     %span
       Dedicated for
-    %strong.mr-4= safe_join(dedicated_for_links, ", ")
+    %strong.mr-4= safe_join(dedicated_for_links(service), ", ")

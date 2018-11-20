@@ -1,48 +1,49 @@
-= render "home/products", categories: @categories, sample_services: @sample_services,
-                          other_services: @other_services
+= render "home/products", providers_number: @providers_number,
+                          services_number: @services_number,
+                          countries_number: @countries_number
 .container
   %h2.mb-3.mt-4 Popular services
   #home-carousel.carousel.slide.home-carousel
     .carousel-inner
       .carousel-item.active
         .card-deck
-          - @other_services[0..3].each do |other_service|
+          - @services[0..3].each do |service|
             .card
               .card-img-top
-                - if other_service.logo.attached?
-                  = image_tag other_service.logo.variant(resize: "180x120")
+                - if service.logo.attached?
+                  = image_tag service.logo.variant(resize: "180x120")
                 - else
                   = image_tag "eosc-img.png"
               .card-body
                 .card-title
-                  = link_to other_service.title, other_service
+                  = link_to service.title, service
               .card-footer
                 %p
                   %small Provided by:
-                  %a EGI Federated Cloud
+                  = safe_join(providers(service), ", ")
                 %p
                   %small Dedicated for:
-                  %a Researchers
-      - if @other_services.count > 4
+                  = safe_join(dedicated_for_links(service), ", ")
+      - if @services.count > 4
         .carousel-item
           .card-deck
-            - @other_services[4..7].each do |other_service|
+            - @services[4..7].each do |service|
               .card
                 .card-img-top
-                  - if other_service.logo.attached?
-                    = image_tag other_service.logo.variant(resize: "180x120")
+                  - if service.logo.attached?
+                    = image_tag service.logo.variant(resize: "180x120")
                   - else
                     = image_tag "eosc-img.png"
                 .card-body
                   .card-title
-                    = link_to other_service.title, other_service
+                    = link_to service.title, service
                 .card-footer
                   %p
                     %small Provided by:
-                    %a EGI Federated Cloud
+                    = safe_join(providers(service), ", ")
                   %p
                     %small Dedicated for:
-                    %a Researchers
+                    = safe_join(dedicated_for_links(service), ", ")
 
     %ol.carousel-indicators
       %li.active{ "data-target" => "#home-carousel", "data-slide-to" => "0" }
@@ -50,6 +51,6 @@
 
 
   .row.d-flex.justify-content-center.mt-5
-    %a.btn.btn-primary.mt-4 Browse all services
+    = link_to "Browse all services", services_path, class: "btn btn-primary mt-4"
 
 
