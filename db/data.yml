@@ -14,6 +14,8 @@ platforms:
         name: &eopillar "EOPillar"
     EC3:
         name: &ec3 "EC3"
+    EOSC PAN:
+        name: &eoscPan "EOSC PAN"
 
 
 categories:
@@ -140,6 +142,8 @@ providers:
         name: &eida "EIDA"
     ESA:
         name: &esa "European Space Agency (ESA)"
+    DESY:
+        name: &desyProvider "Deutsches Elektronen-Synchrotron DESY"
     Not specified:
         name: &not "not specified yet"
 
@@ -4149,6 +4153,146 @@ services:
         1:
           name: *notSpecified
           description: *notSpecified
+    PAN data:
+      title: &panData PAN data
+      parents: *storageParent
+      providers: [*desyProvider]
+      logo: panData.png
+      open_access: false
+      webpage_url: https://dcache-xdc.desy.de
+      manual_url: https://eosc-pan-git.desy.de/support
+      helpdesk_url: https://eosc-pan-git.desy.de/support
+      tutorial_url: https://eosc-pan-git.desy.de
+      terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      corporate_sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+      access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      places: *europe
+      dedicated_for: ["Researchers"]
+      languages: *english
+      area: *interdisciplinary
+      restrictions: |
+        Access to the platform is granted based on motivation / proposal,
+        In the pilot phase, usage is only supported for  photon and neutron science use-cases
+      phase: Beta (min. TRL 7)
+      tagline: dCache backend storage for the EOSC PAN Science Demonstrator
+      platforms: [*eoscPan]
+      description: |
+        Data backend storage service for EOSC PAN notebooks and cloud functions for EOSC PAN FaaS.
+        Streams for storage events via kafka and Server Sent Events.
+        Delegation of read/write access with Macaroons.
+      offers:
+        1:
+          name: PAN Demo
+          description: |
+            Bind gitlab repositories to Jupyter Notebooks and use functions as a service
+            on photon and neutron research data.
+            The demo version of this service will be restricted to read access to data, notebooks,
+            gitlab repos and the ability to invoke functions. Please contact eosc-pan-info@desy.de
+            in case of special requests for write access to backend storage, cloud functions from
+            new gitlab repositories, events streaming from the dCache backend.
+    Pan faas:
+      title: &panFaas PAN faas
+      parents: *storageParent
+      providers: [*desyProvider]
+      logo: panFaas.png
+      open_access: false
+      webpage_url: https://eosc-pan-faas.desy.de
+      manual_url: https://eosc-pan-git.desy.de/support
+      helpdesk_url: https://eosc-pan-git.desy.de/support
+      tutorial_url: https://eosc-pan-git.desy.de
+      terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      corporate_sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+      access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      places: *europe
+      dedicated_for: ["Researchers"]
+      languages: *english
+      area: *interdisciplinary
+      restrictions: *notSpecified
+      phase: Beta (min. TRL 7)
+      tagline: OpenWhisk, cloud functions for the EOSC PAN Science Demonstrator
+      platforms: [*eoscPan]
+      description: |
+        Compute backend service for EOSC PAN notebooks and EOSC PAN data.
+        Continuous integration and deployments of docker containers as cloud functions on the DESY Compute Cloud.
+      offers:
+        1:
+          name: PAN Demo
+          description: |
+            Bind gitlab repositories to Jupyter Notebooks and use functions as a service
+            on photon and neutron research data.
+            The demo version of this service will be restricted to read access to data, notebooks,
+            gitlab repos and the ability to invoke functions. Please contact eosc-pan-info@desy.de
+            in case of special requests for write access to backend storage, cloud functions from
+            new gitlab repositories, events streaming from the dCache backend.
+    PAN notebook:
+      title: &panNotebook PAN notebook
+      parents: *computeParent
+      providers: [*desyProvider]
+      logo: panFaas.png
+      open_access: false
+      webpage_url: https://eosc-pan-jhub.desy.de
+      manual_url: https://eosc-pan-git.desy.de/support
+      helpdesk_url: https://eosc-pan-git.desy.de/support
+      tutorial_url: https://eosc-pan-git.desy.de
+      terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      corporate_sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+      access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      places: *europe
+      dedicated_for: ["Researchers"]
+      languages: *english
+      area: *interdisciplinary
+      restrictions: *notSpecified
+      phase: Beta (min. TRL 7)
+      tagline: JupyterHub for the EOSC PAN Science Demonstrator
+      platforms: [*eoscPan]
+      description: |
+        Spawn Jupyter Servers in the DESY Compute Cloud and run notebooks which can make use
+        of the EOSC PaN FaaS Service and connect to EOSC PaN Data Service.
+      offers:
+        1:
+          name: PAN Demo
+          description: |
+            Bind gitlab repositories to Jupyter Notebooks and use functions as a service
+            on photon and neutron research data.
+            The demo version of this service will be restricted to read access to data, notebooks,
+            gitlab repos and the ability to invoke functions. Please contact eosc-pan-info@desy.de
+            in case of special requests for write access to backend storage, cloud functions from
+            new gitlab repositories, events streaming from the dCache backend.
+    PAN gitlab:
+      title: &panGitlab PAN gitlab
+      parents: *computeParent
+      providers: [*desyProvider]
+      logo: panFaas.png
+      open_access: false
+      webpage_url: https://eosc-pan-git.desy.de
+      manual_url: https://eosc-pan-git.desy.de/support
+      helpdesk_url: https://eosc-pan-git.desy.de/support
+      tutorial_url: https://eosc-pan-git.desy.de
+      terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      corporate_sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+      access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      places: *europe
+      dedicated_for: ["Researchers"]
+      languages: *english
+      area: *interdisciplinary
+      restrictions: *notSpecified
+      phase: Beta (min. TRL 7)
+      tagline: GitLab for the EOSC PAN Science Demonstrator
+      platforms: [*eoscPan]
+      description: |
+        Repository service for EOSC PAN notebooks and cloud functions for EOSC PAN FaaS. Gitlab runners
+        for continuous integration in the DESY Compute Cloud,
+        building and publishing docker containers in the project registry.
+      offers:
+        1:
+          name: PAN Demo
+          description: |
+            Bind gitlab repositories to Jupyter Notebooks and use functions as a service
+            on photon and neutron research data.
+            The demo version of this service will be restricted to read access to data, notebooks,
+            gitlab repos and the ability to invoke functions. Please contact eosc-pan-info@desy.de
+            in case of special requests for write access to backend storage, cloud functions from
+            new gitlab repositories, events streaming from the dCache backend.
 
 
 relations:
