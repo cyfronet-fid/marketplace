@@ -855,7 +855,7 @@ services:
         helpdesk_url: http://www.egi.eu/more-information/
         tutorial_url: http://eudat.eu/services/userdoc/b2find
         terms_of_use_url: http://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: http://www.eosc-hub.eu/order-service
+        corporate_sla_url:
         access_policies_url: http://eudat.eu/policy
         places: *europe
         languages: *english
