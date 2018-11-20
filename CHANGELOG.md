@@ -145,6 +145,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Link to webpage on project_item view (#martaswiatkowska)
 - Url of terms and condition hint are taken from service.term_of_use_url (@martaswiatkowska)
 - Platforms are not mandatory (@martaswiatkowska)
+- Base URL for footer link updated to `https://eosc-portal.eu` (@mkasztelnik)
 
 ### Deprecated
 
