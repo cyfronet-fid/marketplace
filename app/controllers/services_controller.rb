@@ -17,7 +17,6 @@ class ServicesController < ApplicationController
 
   def show
     @service = Service.
-               joins(:platforms).
                includes(:offers, related_services: :providers).
                friendly.find(params[:id])
 
