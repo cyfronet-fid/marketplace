@@ -27,6 +27,5 @@ FactoryBot.define do
     sequence(:phase) { |n| "service #{n} phase" }
     sequence(:research_areas) { |n| [create(:research_area)] }
     sequence(:providers) { |n| [create(:provider)] }
-    sequence(:platforms) { |n| [create(:platform)] }
   end
 end

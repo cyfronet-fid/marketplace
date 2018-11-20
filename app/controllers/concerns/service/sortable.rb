@@ -14,6 +14,8 @@ module Service::Sortable
           else
             sort_options[sort_key] = :asc
           end
+        else
+          sort_options[:title] = :asc
         end
       end
     end

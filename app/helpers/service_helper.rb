@@ -25,4 +25,17 @@ module ServiceHelper
   def any_present?(record, *fields)
     fields.map { |f| record.send(f) }.any? { |v| v.present? }
   end
+
+  def get_terms_and_condition_hint_text(service)
+    "You are about to order an #{service.title}. Please accept " \
+      "#{link_to service.title, service.terms_of_use_url} to preceed.".html_safe
+  end
+
+  def dedicated_for_links(service)
+    service.dedicated_for.map { |target| link_to(target, services_path(dedicated_for: target)) }
+  end
+
+  def providers(service)
+    service.providers.map { |target| link_to(target.name, services_path(providers: target)) }
+  end
 end

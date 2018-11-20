@@ -1,25 +1,21 @@
 # frozen_string_literal: true
 
 class Affiliation::Confirm
-  attr_reader :error
-
-  def initialize(user, token)
-    @token = token
+  def initialize(user, affiliation)
     @user = user
+    @affiliation = affiliation
   end
 
   def call
-    @error = nil
-    affiliation = Affiliation.find_by_token(@token)
-
-    if !affiliation
+    if !@affiliation
       @error = "Affiliation cannot be found"
-      false
-    elsif affiliation.user != @user
+      :not_found
+    elsif @affiliation.user != @user
       @error = "Affiliation does not belong to you"
-      false
+      :not_owned
     else
-      affiliation.update_attributes(status: :active, token: nil)
+      @affiliation.update_attributes(status: :active, token: nil)
+      :ok
     end
   end
 end
