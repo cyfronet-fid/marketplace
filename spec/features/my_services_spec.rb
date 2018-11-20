@@ -101,7 +101,7 @@ RSpec.feature "My Services" do
 
       visit projects_path
 
-      select "created", from: "status"
+      select "Created", from: "status"
 
       expect(page).to have_text(project1.name)
       expect(page).to have_text(project_item.service.title)

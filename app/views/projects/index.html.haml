@@ -6,7 +6,10 @@
     %form.my-auto
       %select#status.form-control.form-control-sm.custom-select{ "data-submit-on-change": "data-submit-on-change" }
         %option{ value: "", selected: "selected" }
-          all
-        = options_for_select(ProjectItem.statuses, params[:status])
+          All
+        :ruby
+          status_options = ProjectItem.statuses.values.
+                           map { |s| [t("simple_form.options.project_item.status.#{s}"), s] }
+        = options_for_select(status_options, params[:status])
 
   = render @projects
