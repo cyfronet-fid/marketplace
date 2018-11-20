@@ -26,8 +26,9 @@
     %dt Reason to request access to #{@service.title}
     %dd= @project_item.access_reason
 
-    %dt Additional information
-    %dd= @project_item.additional_information
+    - if @project_item.additional_information.present?
+      %dt Additional information
+      %dd= @project_item.additional_information
 
   - if @project_item.affiliation
     %h4 Affiliation
@@ -35,23 +36,27 @@
       %dt Organization
       %dd= @project_item.affiliation.organization
 
-      %dt Department
-      %dd= @project_item.affiliation.department.presence || "No department set"
+      - if @project_item.affiliation.department.present?
+        %dt Department
+        %dd= @project_item.affiliation.department
 
       %dt Email
       %dd= @project_item.affiliation.email
 
-      %dt Phone
-      %dd= @project_item.affiliation.phone.presence || "No phone set"
+      - if @project_item.affiliation.phone.present?
+        %dt Phone
+        %dd= @project_item.affiliation.phone
 
       %dt Webpage
       %dd= @project_item.affiliation.webpage
 
-      %dt Supervisor
-      %dd= @project_item.affiliation.supervisor.presence || "No supervisor set"
+      - if @project_item.affiliation.supervisor.present?
+        %dt Supervisor
+        %dd= @project_item.affiliation.supervisor
 
-      %dt Supervisor profile
-      %dd= @project_item.affiliation.supervisor_profile.presence || "No supervisor profile set"
+      - if @project_item.affiliation.supervisor_profile.present?
+        %dt Supervisor profile
+        %dd= @project_item.affiliation.supervisor_profile
 
   %h4 My projects
   %dl.mb-4
