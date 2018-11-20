@@ -39,10 +39,7 @@ platforms:
     gCube:
         name: &gCube "gCube System"
     EOSC PAN:
-        name: &eoscPan "EOSC PAN"
-
-
-
+        name: &eoscPan "EOSC PaN"
 
 
 categories:
@@ -101,12 +98,8 @@ providers:
         name: &grnet "GRNET"
     SURFsara:
         name: &surfsara "SURFsara"
-    CSBG:
-        name: &csbg "Computational Structural Biology group"
     CERM:
-        name: &cerm "Magnetic Resonance Center of the University of Florenc - CERM"
-    Bijvoet:
-        name: &bijvoet "Bijvoet Center"
+        name: &cerm "Magnetic Resonance Center of the University of Florence - CERM"
     BSC:
         name: &bsc "BSC"
     All generic CDI Level 1 providers:
@@ -164,9 +157,9 @@ providers:
     PNCEL:
         name: &pncel "Portuguese National Civil Engineering Laboratory"
     University of Utrecht:
-        name: &uou "University of Utrecht"
-    University of Florence:
-        name: &uof "University of Florence"
+        name: &uou "Bijvoet Center, Utrecht University"
+#    University of Florence:
+#        name: &uof "University of Florence"
     CIRMMP:
         name: &cirmmp "Interuniversity consortium CIRMMP"
     CESNET:
@@ -1900,7 +1893,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        # platforms: [*eopillar, *ec3]
         description: |
           ORFEUS provides access to high quality seismic waveforms and station metadata
           from EIDA and strong motion products.
@@ -1958,7 +1951,7 @@ services:
 #        restrictions: *notSpecified
 #        phase: *notSpecified
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-#        platforms: [*eopillar, *ec3]
+#        # platforms: [*eopillar, *ec3]
 #        description: |
 #          GNU Octave is a high-level interpreted language, primarily intended for numerical computations.
 #          It provides capabilities for the numerical solution of linear and nonlinear problems,
@@ -2033,7 +2026,7 @@ services:
 #        restrictions: *notSpecified
 #        phase: *notSpecified
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-#        platforms: [*eopillar, *ec3]
+#        # platforms: [*eopillar, *ec3]
 #        description: |
 #          Galaxy is an open, web-based platform for data-intensive biomedical research.
 #        offers:
@@ -2134,7 +2127,7 @@ services:
 #        tagline: |
 #          Applications on Demand gives you access to online applications and application-development
 #          and hosting frameworks to support compute-intensive data analysis
-#        platforms: [*eopillar, *ec3]
+#        # platforms: [*eopillar, *ec3]
 #        description: |
 #          Apache Tomcat is an open source implementation of the Java Servlet, JavaServer Pages,
 #          Java Expression Language and Java WebSocket technologies.
@@ -2196,7 +2189,7 @@ services:
 #        restrictions: *notSpecified
 #        phase: *notSpecified
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-#        platforms: [*eopillar, *ec3]
+#        # platforms: [*eopillar, *ec3]
 #        description: |
 #          Docker is an open-source project that automates the deployment of Linux applications inside software containers.
 #        offers:
@@ -2288,7 +2281,7 @@ services:
 #        restrictions: *notSpecified
 #        phase: *notSpecified
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-#        platforms: [*eopillar, *ec3]
+#        # platforms: [*eopillar, *ec3]
 #        description: |
 #          Chronos is a distributed and fault-tolerant scheduler that runs on top
 #          of Apache Mesos that can be used for job orchestration.
@@ -2350,7 +2343,7 @@ services:
 #        restrictions: *notSpecified
 #        phase: *notSpecified
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-#        platforms: [*eopillar, *ec3]
+#        # platforms: [*eopillar, *ec3]
 #        description: |
 #          The R Project for Statistical Computing (v3.2.2)
 #          is a language and environment for statistical computing and graphics.
@@ -2449,7 +2442,7 @@ services:
 #        restrictions: *notSpecified
 #        phase: *notSpecified
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-#        platforms: [*eopillar, *ec3]
+#        # platforms: [*eopillar, *ec3]
 #        description: |
 #          ClustalW2 is a multiple sequence alignment tool for the alignment of DNA or protein sequences.
 #        offers:
@@ -2479,7 +2472,7 @@ services:
 #        tagline: |
 #          Applications on Demand gives you access to online applications and application-development
 #          and hosting frameworks to support compute-intensive data analysis
-#        platforms: [*eopillar, *ec3]
+#        # platforms: [*eopillar, *ec3]
 #        description: |
 #          AutoDock Vina is an open-source software for doing molecular docking.
 #        offers:
@@ -2488,9 +2481,9 @@ services:
 #            description: AutoDock Vina is an open-source software for doing molecular docking.
 #            parameters: *appParameters
     EGI Notebooks:
-      title: &notebook EGI Notebook
+      title: &notebook EGI Notebooks
       parents: *processingAndAnalysisParent
-      providers: [*not]
+      providers: [*egi]
       open_access: false
       webpage_url:
       manual_url:
@@ -2645,7 +2638,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: The DARIAH Science Gateway is a platform that provides access to various digital applications and services for the Arts & Humanities researchers
-        platforms: [*eopillar, *ec3]
+        # platforms: [*eopillar, *ec3]
         description: |
           The DARIAH Science Gateway provides various web-based applications and services for the Digital Humanities researchers, institutes and communities.
 
@@ -2705,7 +2698,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Simplify the access and management of computing resources
-        platforms: [*eopillar, *ec3]
+        # platforms: [*eopillar, *ec3]
         description: |
           DODAS acts as cloud enabler designed for scientists seeking to easily exploit distributed
           and heterogeneous clouds to process data. Aiming to reduce the learning curve as well as
@@ -2888,7 +2881,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: Web service to classify plant pictures based on convolutional neural networks
-        platforms: [*eopillar, *ec3]
+        # platforms: [*eopillar, *ec3]
         description: |
           This web service connects to a deep neural network which has been trained with thousands
           of plant images from Europe. It can classify different types of plants, including flowers.
@@ -2971,7 +2964,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        # platforms: [*eopillar, *ec3]
         description: *notSpecified
     LOFAR:
         title: LOFAR
@@ -2992,7 +2985,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: *notSpecified
-        platforms: [*eopillar, *ec3]
+        # platforms: [*eopillar, *ec3]
         description: *notSpecified
     OPENCoastS:
         title: &openCoastS OPENCoastS Portal
@@ -3014,7 +3007,7 @@ services:
         restrictions: *notSpecified
         phase: *notSpecified
         tagline: On-demand operational coastal circulation forecast service
-        platforms: [*eopillar, *ec3]
+        # platforms: [*eopillar, *ec3]
         description: |
           OPENCoastS builds on-demand circulation forecast systems for user-selected sections
           of the North Atlantic coast and maintains them running operationally for the timeframe defined by the user.
@@ -3136,7 +3129,7 @@ services:
     HADDOCK:
         title: &haddock HADDOCK
         parents: *processingAndAnalysisParent
-        providers: [*csbg, *bijvoet, *uou]
+        providers: [*uou]
         logo: haddock.png
         open_access: true
         connected_url: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
@@ -3174,7 +3167,7 @@ services:
     PowerFit:
         title: &powerFit PowerFit
         parents: *processingAndAnalysisParent
-        providers: [*csbg, *bijvoet, *uou]
+        providers: [*uou]
         logo: powerfit.png
         open_access: true
         connected_url: http://haddock.science.uu.nl/enmr/services/POWERFIT
@@ -3200,7 +3193,7 @@ services:
     DisVis:
         title: &disVis DisVis
         parents: *processingAndAnalysisParent
-        providers: [*csbg, *bijvoet, *uou]
+        providers: [*uou]
         logo: disvis.png
         open_access: true
         connected_url: http://haddock.science.uu.nl/enmr/services/DISVIS
@@ -3228,7 +3221,7 @@ services:
     CS-ROSETTA:
         title: &csRoseta CS-ROSETTA
         parents: *processingAndAnalysisParent
-        providers: [*csbg, *bijvoet, *uou]
+        providers: [*uou]
         logo: cs-rosetta.png
         open_access: true
         connected_url: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
@@ -3315,8 +3308,8 @@ services:
     SpotOn:
         title: &spotOn SpotOn
         parents: *processingAndAnalysisParent
-        providers: [*csbg, *bijvoet, *uou]
-        logo: spoton.png
+        providers: [*uou]
+        logo: SpotOn-logo.png
         open_access: true
         connected_url: https://haddock.science.uu.nl/enmr/services/SPOTON
         webpage_url: https://haddock.science.uu.nl/enmr/services/SPOTON
@@ -3392,7 +3385,7 @@ services:
     EODC JupyterHub for global Copernicus data:
         title: &eodcJH EODC JupyterHub for global Copernicus data
         parents: *processingAndAnalysisParent
-        providers: [*terradue]
+        providers: [*eodc]
         open_access: false
         webpage_url: https://jupyterhub.eodc.eu
         manual_url: https://github.com/jupyterhub/jupyterhub
@@ -3446,7 +3439,7 @@ services:
     EODC Data Catalogue Service:
         title: &eodcDCS EODC Data Catalogue Service
         parents: *sharingAndDicoveryParent
-        providers: [*terradue]
+        providers: [*eodc]
         open_access: false
         webpage_url: https://eomex.eodc.eu/
         manual_url:
@@ -3739,6 +3732,7 @@ services:
           Once integrated the IdP with the proxy, all the services using the IdP proxy will be available.
           The service providers will get all the AuthN/AuthZ information needed from the IdP Proxy
           (in form of attributes), without the need to deal with individual IdPs.
+
           Other components that can be attached to the IdP Proxy are credential translation services
           and attribute authorities.
 
@@ -4065,7 +4059,7 @@ services:
       restrictions: *notSpecified
       phase: *notSpecified
       tagline: *notSpecified
-      platforms: [*eopillar, *ec3]
+      # platforms: [*eopillar, *ec3]
       description: *notSpecified
       offers:
         1:
@@ -4091,7 +4085,7 @@ services:
       restrictions: *notSpecified
       phase: *notSpecified
       tagline: *notSpecified
-      platforms: [*eopillar, *ec3]
+      # platforms: [*eopillar, *ec3]
       description: *notSpecified
       offers:
         1:
@@ -4117,7 +4111,7 @@ services:
       restrictions: *notSpecified
       phase: *notSpecified
       tagline: *notSpecified
-      platforms: [*eopillar, *ec3]
+      # platforms: [*eopillar, *ec3]
       description: *notSpecified
       offers:
         1:
@@ -4143,7 +4137,7 @@ services:
       restrictions: *notSpecified
       phase: *notSpecified
       tagline: *notSpecified
-      platforms: [*eopillar, *ec3]
+      # platforms: [*eopillar, *ec3]
       description: *notSpecified
       offers:
         1:
@@ -4169,7 +4163,7 @@ services:
       restrictions: *notSpecified
       phase: TRL 6
       tagline: Enabling HTC & HPC applications opportunistically across private, academic and public clouds
-      platforms: [*eopillar, *ec3]
+      # platforms: [*eopillar, *ec3]
       description: |
         PROMINENCE is a platform which allows users to exploit idle cloud resources for running scientific workloads
         with a simple batch system style interface. Key features include:
@@ -4688,6 +4682,31 @@ relations:
     both: false
     source: *egiCloud
     target: *checkIn
+  panDataToPanFaas:
+      both: true
+      source: *panData
+      target: *panFaas
+  panDataToPanGitlab:
+      both: true
+      source: *panData
+      target: *panGitlab
+  panDataToPanNotebook:
+      both: true
+      source: *panData
+      target: *panNotebook
+  panFaasToPanNotebook:
+      both: true
+      source: *panFaas
+      target: *panNotebook
+  panFaasToPanGitlab:
+      both: true
+      source: *panFaas
+      target: *panGitlab
+  panNotebookToPanGitlab:
+      both: true
+      source: *panNotebook
+      target: *panGitlab
+
 #  haddockToB2drop:
 #    both: true
 #    source: *haddock
