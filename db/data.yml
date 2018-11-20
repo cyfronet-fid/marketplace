@@ -61,7 +61,7 @@ categories:
         description: Service to manage your data
     Networking:
         name: &networkingParent "Networking"
-        description: Ultra-fast connectivity and ubiquitous access to [the] eInfrastructures' resources and services [you need]
+        description: Ultra-fast connectivity and ubiquitous access to the eInfrastructures' resources and services you need
     Training & Support:
         name: &trainingAndSupportParent "Training & Support"
         description: Grow your research knowledge and skills with specialised trainings or seek dedicated professional support for a wide range of scientific disciplines and research activities
