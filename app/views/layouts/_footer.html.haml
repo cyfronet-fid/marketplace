@@ -40,11 +40,23 @@
       .col-md-2
         %ul
           %li
-            %h5.text-uppercase Eosc resources
+            %h5.text-uppercase Services & Resources
           %li.mb-1
-            = link_to "All Services", services_path
-          = render partial: "layouts/footer/root_category",
-            collection: root_categories, as: :root_category
+            %a{ href: "#{portal_base}/services-resources/sharing-discovery" } Sharing & Discovery
+          %li.mb-1
+            %a{ href: "#{portal_base}/services-resources/processing-analysis" } Processing & Analysis
+          %li.mb-1
+            %a{ href: "#{portal_base}/services-resources/data-management" } Data Management
+          %li.mb-1
+            %a{ href: "#{portal_base}/services-resources/compute" } Compute
+          %li.mb-1
+            %a{ href: "#{portal_base}/services-resources/storage" } Storage
+          %li.mb-1
+            %a{ href: "#{portal_base}/services-resources/networking" } Networking
+          %li.mb-1
+            %a{ href: "#{portal_base}/services-resources/training" } Training & Support
+          %li.mb-1
+            %a{ href: "#{portal_base}/services-resources/security-operations" } Security & Operations
       .col-md-2
         %ul
           %li
