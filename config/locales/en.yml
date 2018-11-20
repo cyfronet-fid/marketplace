@@ -50,3 +50,8 @@ en:
       description: |
         You can organize your services in projects.
         Add this service to specific project or create a new one.
+
+  affiliation_confirmations:
+    index:
+      not_found: "Affiliation for the given token cannot be found."
+      not_owned: "Affiliation does not belong to you."

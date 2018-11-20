@@ -8,20 +8,12 @@
           - @root_categories.each do |root_category|
             %li
               = link_to root_category.name, root_category
-      %h5.mt-5.text-uppercase Recently added
-      %ul.added-list
-        %li
-          EIDA Data Archive
-          %span 3 min ago
-        %li
-          EGI Object Storage
-          %span 55 min ago
-        %li
-          EIDA Data Archive
-          %span 55 min ago
-        %li
-          Chronos
-          %span 55 min ago
+      %h5.mt-5.text-uppercase For providers
+      %p
+        Contribute to develop EOSC into a rich environment with a wide range of services and resources for researches.
+      %p
+        %strong
+          = link_to "Become a provider", "https://eosc-portal.eu/for-providers"
 
     .col-12.col-lg-9.right-column.pl-5
       %p.subtitle.mt-4 In EOSC Marketplace you can
@@ -35,7 +27,7 @@
         %li
           %i.fas.fa-arrow-right
           Unified order management with
-          %strong dozen of providers
+          %strong dozens of providers
         %li
           %i.fas.fa-arrow-right
           Compatible services linking into ready-to-use environments
@@ -45,17 +37,20 @@
           .box
             .icon
               %i.far.fa-building
-            .num 35
+            .num
+              = providers_number
             .sub-num providers
         .col-6.text-center.pt-4
           .box
             .icon
               %i.fas.fa-cogs
-            .num 73
+            .num
+              = services_number
             .sub-num services
         .col-3.text-center.pt-4
           .box
             .icon
               %i.fas.fa-globe
-            .num 32
+            .num
+              = countries_number
             .sub-num countries

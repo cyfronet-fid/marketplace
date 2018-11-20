@@ -118,6 +118,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Related Infrastructures and Platforms to service details view (@kmarszalek)
 - Technical parameters display in service offers (@michal-szostak)
 - Add "All Services" link with services count above categories navigation in sidebar (@michal-szostak)
+- Show "Go to the service" for catalog service (@mkasztelnik)
+- Show affiliation info for project item (@jswk)
+- Add a landing page for when affiliation is activated (@jswk)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
@@ -141,6 +144,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Hide TODO Technical Parameters from service offer selection (@michal-szostak)
 - Fields on Service entry to not be required (@kmarszalek)
 - Link to webpage on project_item view (#martaswiatkowska)
+- Url of terms and condition hint are taken from service.term_of_use_url (@martaswiatkowska)
+- Platforms are not mandatory (@martaswiatkowska)
+- Base URL for footer link updated to `https://eosc-portal.eu` (@mkasztelnik)
+- Favicon (@michal-szostak)
 
 ### Deprecated
 
@@ -152,6 +159,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Insert a line-break after button(s) in service header right panel (@jswk)
 - Search by text from any view (@michal-szostak)
 - Search does not preserve `page` query param (@michal-szostak)
-- Multicheckbox does not take into account selected category when calculating available services
+- Multicheckbox does not take into account selected category when calculating available services (@michal-szostak) 
+- Change default sort order for services to name ascending (@michal-szostak)
 
 ### Security

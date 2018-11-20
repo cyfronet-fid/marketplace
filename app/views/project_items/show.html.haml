@@ -20,7 +20,7 @@
         Details
       %ul
         %li
-          %strong Link to service:
+          %strong Ordered service:
           = link_to @project_item.service.title, @project_item.service
         %li
           %strong Order date:
@@ -36,6 +36,35 @@
             = link_to "Rate this service!",
               new_project_item_service_opinion_path(@project_item),
               class: "btn btn-secondary"
+
+      - if @project_item.affiliation.present?
+        %h3.mb-3 Connected affiliation
+        %ul
+          %li
+            %strong Organization:
+            = @project_item.affiliation.organization
+          - if @project_item.affiliation.department.present?
+            %li
+              %strong Department:
+              = @project_item.affiliation.department
+          %li
+            %strong Email:
+            = @project_item.affiliation.email
+          - if @project_item.affiliation.phone.present?
+            %li
+              %strong Phone:
+              = @project_item.affiliation.phone
+          %li
+            %strong Webpage:
+            = @project_item.affiliation.webpage
+          - if @project_item.affiliation.supervisor.present?
+            %li
+              %strong Supervisor:
+              = @project_item.affiliation.supervisor
+          - if @project_item.affiliation.supervisor_profile.present?
+            %li
+              %strong Supervisor profile:
+              = @project_item.affiliation.supervisor_profile
 
       = render "project_items/attributes", property_values: @project_item.property_values
 
