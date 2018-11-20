@@ -163,7 +163,7 @@ RSpec.feature "Service filtering and sorting" do
     service = create(:service,
                      title: "AAAA Service",
                      rating: 5.0,
-                     dedicated_for: ["VO"],
+                     dedicated_for: ["Research groups"],
                      platforms: [platform],
                      categories: [category_1])
 
@@ -301,11 +301,11 @@ RSpec.feature "Service filtering and sorting" do
 
   scenario "searching via dedicated_for", js: true do
     visit services_path
-    find(:css, "input[name='dedicated_for[]'][value='VO']").set(true)
+    find(:css, "input[name='dedicated_for[]'][value='Research groups']").set(true)
     click_on(id: "filter-submit")
 
     expect(page).to have_selector(".media", count: 1)
-    expect(page).to have_selector("input[name='dedicated_for[]'][value='VO'][checked='checked']")
+    expect(page).to have_selector("input[name='dedicated_for[]'][value='Research groups'][checked='checked']")
   end
 
   scenario "searching via platforms", js: true do

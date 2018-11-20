@@ -45,7 +45,7 @@ private
 
   def dedicated_for_options(category = nil)
     [["Researchers", "Researchers"],
-     ["VO", "VO"],
+     ["Research groups", "Research groups"],
      ["Providers", "Providers"],
      ["Research organisations", "Research organisations"],
      ["Business", "Business"],
