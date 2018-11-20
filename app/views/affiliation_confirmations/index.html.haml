@@ -1,0 +1,17 @@
+.container
+  - if @result == :ok
+    %h1 Affiliation successfully activated
+    %p
+      You have successfully activated your
+      %strong= @affiliation.organization
+      affiliation.
+      You can view it in your profile or go to the service list to ask for
+      access to EOSC services.
+  - else
+    %h1 Cannot activate affiliation
+    %p= t ".#{@result}"
+
+  = link_to profile_path, class: "btn btn-primary mb-2 mr-2" do
+    Take me to my profile
+  = link_to services_path, class: "btn btn-primary mb-2" do
+    Go to services list
