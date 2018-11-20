@@ -11,7 +11,9 @@ class Services::SummariesController < Services::ApplicationController
   end
 
   def create
-    @confirmation = Confirmation.new(confirmation_params)
+    @confirmation = Confirmation.new(confirmation_params.
+                                       merge(required: @service.terms_of_use_url))
+
     if @confirmation.valid?
       authorize(project_item_template)
 
@@ -45,6 +47,10 @@ class Services::SummariesController < Services::ApplicationController
     end
 
     def confirmation_params
-      params.fetch(:confirmation).permit(:terms_and_conditions)
+      if @service.terms_of_use_url.present?
+        params.fetch(:confirmation).permit(:terms_and_conditions)
+      else
+        {}
+      end
     end
 end

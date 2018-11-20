@@ -142,6 +142,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Hide TODO Technical Parameters from service offer selection (@michal-szostak)
 - Fields on Service entry to not be required (@kmarszalek)
 - Link to webpage on project_item view (#martaswiatkowska)
+- Url of terms and condition hint are taken from service.term_of_use_url (@martaswiatkowska)
 
 ### Deprecated
 
