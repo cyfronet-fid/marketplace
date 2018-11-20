@@ -4113,36 +4113,36 @@ services:
           name: General access
           description: "a"
 
-    OpenAIRE:
-      title: &openAIRE OpenAIRE
-      parents: *sharingAndDicoveryParent
-      providers: [*not]
-#      logo: training-infrastructure. TODO: logo
-      open_access: false
-      webpage_url:
-      manual_url:
-      helpdesk_url:
-      tutorial_url:
-      terms_of_use_url:
-      corporate_sla_url:
-      access_policies_url:
-      places: *europe
-      dedicated_for: ["Research groups", "Research organisations"]
-      languages: *english
-      area: *interdisciplinary
-      #restrictions: *notSpecified
-      phase: "Production (min. TRL 8)"
-      tagline: *notSpecified
-      # platforms: [*eopillar, *ec3]
-      description: *notSpecified
-      offers:
-        1:
-          name: *notSpecified
-          description: *notSpecified
+#    OpenAIRE:
+#      title: &openAIRE OpenAIRE
+#      parents: *sharingAndDicoveryParent
+#      providers: [*not]
+##      logo: training-infrastructure. TODO: logo
+#      open_access: false
+#      webpage_url:
+#      manual_url:
+#      helpdesk_url:
+#      tutorial_url:
+#      terms_of_use_url:
+#      corporate_sla_url:
+#      access_policies_url:
+#      places: *europe
+#      dedicated_for: ["Research groups", "Research organisations"]
+#      languages: *english
+#      area: *interdisciplinary
+#      #restrictions: *notSpecified
+#      phase: "Production (min. TRL 8)"
+#      tagline: *notSpecified
+#      # platforms: [*eopillar, *ec3]
+#      description: *notSpecified
+#      offers:
+#        1:
+#          name: *notSpecified
+#          description: *notSpecified
     PROMINENCE:
       title: &prominence PROMINENCE
       parents: *computeParent
-      providers: [*egi]
+      providers: [*egi] #TODO: change
 #      logo: training-infrastructure. TODO: logo
       open_access: false
       webpage_url: https://alahiff.github.io/prominence/
@@ -4661,14 +4661,14 @@ relations:
     both: true
     source: *egiCloud
     target: *alien
-  egiToOpenAire:
-    both: true
-    source: *egiCloud
-    target: *openAIRE
-  alienToOpenAire:
-    both: true
-    source: *alien
-    target: *openAIRE
+#  egiToOpenAire:
+#    both: true
+#    source: *egiCloud
+#    target: *openAIRE
+#  alienToOpenAire:
+#    both: true
+#    source: *alien
+#    target: *openAIRE
   lifewatchERICPlantsToEgiCloud:
     both: true
     source: *lifewatchERICPlants
