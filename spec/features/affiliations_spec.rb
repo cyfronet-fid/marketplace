@@ -46,7 +46,7 @@ RSpec.feature "Affiliations" do
 
       visit affiliation_confirmations_path(at: "secret")
 
-      expect(page).to have_content("confirmed")
+      expect(page).to have_content("Affiliation successfully activated")
     end
 
     scenario "I cannot confirm not owned affiliation" do
