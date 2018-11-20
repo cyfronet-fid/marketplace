@@ -1,12 +1,13 @@
 %footer.footer.pt-3.pb-3
+  - portal_base = "https://eosc-portal.eu"
   .container
     .row.h-100
       .col-md-5
-        %a.eosc-logo-mono.d-block
+        %a.eosc-logo-mono.d-block{ href: portal_base }
       .col-md-7.my-auto.text-right
         %span.copy-text
           Copyright 2018 - All right reserved
-        %a.ml-4.text-uppercase{ href: "http://eoscportal.trust-itservices.com/privacy-policy-summary" }
+        %a.ml-4.text-uppercase{ href: "#{portal_base}/privacy-policy-summary" }
           privacy policy
     %hr.mb-4
     .row
@@ -15,27 +16,27 @@
           %li
             %h5.text-uppercase About
           %li.mb-1
-            %a{ href: "http://eoscportal.trust-itservices.com/about/eosc" } EOSC
+            %a{ href: "#{portal_base}/about/eosc" } EOSC
           %li.mb-1
-            %a{ href: "http://eoscportal.trust-itservices.com/about/eosc-doers" } EOSC Doers
+            %a{ href: "#{portal_base}/about/eosc-doers" } EOSC Doers
           %li.mb-1
-            %a{ href: "http://eoscportal.trust-itservices.com/about/eosc-projects" } EOSC Projects
+            %a{ href: "#{portal_base}/about/eosc-projects" } EOSC Projects
           %li.mb-1
-            %a{ href: "http://eoscportal.trust-itservices.com/about/funding-opportunities" } Funding Opportunities
+            %a{ href: "#{portal_base}/about/funding-opportunities" } Funding Opportunities
           %li.mb-1
-            %a{ href: "http://eoscportal.trust-itservices.com/about/faqs" } FAQs
+            %a{ href: "#{portal_base}/about/faqs" } FAQs
           %li.mb-1
-            %a{ href: "http://eoscportal.trust-itservices.com/contact-us" } Contact us
+            %a{ href: "#{portal_base}/contact-us" } Contact us
       .col-md-2
         %ul
           %li
             %h5.text-uppercase Governance
           %li.mb-1
-            %a{ href: "http://eoscportal.trust-itservices.com/governance" } EOSC Governance
+            %a{ href: "#{portal_base}/governance" } EOSC Governance
           %li.mb-1
-            %a{ href: "http://eoscportal.trust-itservices.com/governance/rules-participation" } Rules of participation
+            %a{ href: "#{portal_base}/governance/rules-participation" } Rules of participation
           %li.mb-1
-            %a{ href: "http://eoscportal.trust-itservices.com/governance/best-practices" } Best Practices
+            %a{ href: "#{portal_base}/governance/best-practices" } Best Practices
       .col-md-2
         %ul
           %li
@@ -49,29 +50,29 @@
           %li
             %h5.text-uppercase Policy
           %li.mb-1
-            %a{ href: "http://eoscportal.trust-itservices.com/policy/ec-documents" } EC Documents
+            %a{ href: "#{portal_base}/policy/ec-documents" } EC Documents
           %li.mb-1
-            %a{ href: "http://eoscportal.trust-itservices.com/policy/europe" } Europe
+            %a{ href: "#{portal_base}/policy/europe" } Europe
           %li.mb-1
-            %a{ href: "http://eoscportal.trust-itservices.com/policy/eu-member-states" } Member States
+            %a{ href: "#{portal_base}/policy/eu-member-states" } Member States
       .col-md-2
         %ul
           %li
             %h5.text-uppercase EOSC IN PRACTICE
           %li.mb-1
-            %a{ href: "http://eoscportal.trust-itservices.com/eosc-in-practice/use-cases" } Use Cases
+            %a{ href: "#{portal_base}/eosc-in-practice/use-cases" } Use Cases
           %li.mb-1
-            %a{ href: "http://eoscportal.trust-itservices.com/eosc-in-practice/open-call" } Open Call
+            %a{ href: "#{portal_base}/eosc-in-practice/open-call" } Open Call
       .col-md-2
         %ul
           %li
             %h5.text-uppercase Media
           %li.mb-1
-            %a{ href: "http://eoscportal.trust-itservices.com/media/news" } News
+            %a{ href: "#{portal_base}/media/news" } News
           %li.mb-1
-            %a{ href: "http://eoscportal.trust-itservices.com/media/events" } Forthcoming events
+            %a{ href: "#{portal_base}/media/events" } Forthcoming events
           %li.mb-1
-            %a{ href: "http://eoscportal.trust-itservices.com/media/past-events" } Past Events
+            %a{ href: "#{portal_base}/media/past-events" } Past Events
     .row.mt-4
       .col-md-6
         %a.social-logo.twitter-logo.d-inline-block.mr-2{ href: "https://twitter.com/EoscPortal" }
