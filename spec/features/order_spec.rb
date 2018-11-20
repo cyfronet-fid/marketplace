@@ -87,6 +87,38 @@ RSpec.feature "Service ordering" do
       expect(page).to have_content(service.title)
     end
 
+    scenario "I can order service without terms and contitions" do
+      service = create(:service, terms_of_use_url: "")
+      offer, _seconds_offer = create_list(:offer, 2, service: service)
+      affiliation = create(:affiliation, status: :active, user: user)
+
+      visit service_path(service)
+
+      click_on "Order"
+
+      # Step 1
+
+      choose "project_item_offer_id_#{offer.iid}"
+      click_on "Next", match: :first
+
+      # Step 2
+
+      select "Services"
+      select affiliation.organization
+      select "Single user", from: "Customer typology"
+      fill_in "Access reason", with: "To pass test"
+      fill_in "Additional information", with: "Additional information test"
+
+      click_on "Next", match: :first
+
+      # Step 3
+      expect(page).not_to have_text("Accept terms and conditions")
+
+      expect do
+        click_on "Order", match: :first
+      end.to change { ProjectItem.count }.by(1)
+    end
+
     scenario "Skip offers selection when only one offer" do
       create(:offer, service: service)
 
@@ -211,6 +243,14 @@ RSpec.feature "Service ordering" do
       visit service_path(open_access_service)
 
       expect(page).to have_selector(:link_or_button, "Add to my services", exact: true)
+      expect(page).to have_selector(:link_or_button, "Go to the service", exact: true)
+    end
+
+    scenario "I can see catalog service button" do
+      catalog = create(:service, service_type: :catalog)
+
+      visit service_path(catalog)
+
       expect(page).to have_selector(:link_or_button, "Go to the service", exact: true)
     end
   end

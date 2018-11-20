@@ -25,4 +25,9 @@ module ServiceHelper
   def any_present?(record, *fields)
     fields.map { |f| record.send(f) }.any? { |v| v.present? }
   end
+
+  def get_terms_and_condition_hint_text(service)
+    "You are about to order an #{service.title}. Please accept " \
+      "#{link_to service.title, service.terms_of_use_url} to preceed.".html_safe
+  end
 end
