@@ -121,6 +121,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Show "Go to the service" for catalog service (@mkasztelnik)
 - Show affiliation info for project item (@jswk)
 - Add a landing page for when affiliation is activated (@jswk)
+- Favicon (@michal-szostak)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
@@ -147,7 +148,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Url of terms and condition hint are taken from service.term_of_use_url (@martaswiatkowska)
 - Platforms are not mandatory (@martaswiatkowska)
 - Base URL for footer link updated to `https://eosc-portal.eu` (@mkasztelnik)
-- Favicon (@michal-szostak)
+- Changed VO to Research groups in filters UI (@michal-szostak)
 
 ### Deprecated
 
