@@ -336,3 +336,17 @@ RSpec.feature "Service filtering and sorting" do
     `pending "add test after implementing location to filtering #{__FILE__}"`
   end
 end
+
+
+RSpec.feature "Service view" do
+  scenario "should by default sort services by name, ascending" do
+    create(:service, title: "Service c")
+    create(:service, title: "Service b")
+    create(:service, title: "Service a")
+
+    visit services_path
+
+    expect(page.body.index("Service a")).to be < page.body.index("Service b")
+    expect(page.body.index("Service b")).to be < page.body.index("Service c")
+  end
+end
