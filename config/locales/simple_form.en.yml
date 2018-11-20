@@ -47,3 +47,10 @@ en:
           single_user: "Single user"
           research: "Representing a research community/project"
           private_company: "Representing a private company"
+      project_item:
+        status:
+          created: Created
+          registered: Open
+          in_progress: In progress
+          ready: Active
+          rejected: Rejected
