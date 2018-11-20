@@ -45,7 +45,12 @@ module Service::Searchable
     def filter_tag(services, tags)
       services.tagged_with(tags)
     end
+
+    def filters_on?
+      searchable_fields.any? { |f| params[f].present? }
+    end
   end
+
 
   include FieldFilterable
 
