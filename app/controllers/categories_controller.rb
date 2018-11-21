@@ -12,7 +12,7 @@ class CategoriesController < ApplicationController
     @siblings = siblings
     @subcategories = category.children.order(:name)
     @provider_options = provider_options(category)
-    @dedicated_for_options = dedicated_for_options(category)
+    @target_groups_options = target_groups_options(category)
     @rating_options = rating_options(category)
     @research_areas = research_areas
     @tag_options = tag_options

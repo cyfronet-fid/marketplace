@@ -9,7 +9,7 @@ class ServicesController < ApplicationController
     @services = paginate(records.order(ordering))
 
     @provider_options = provider_options
-    @dedicated_for_options = dedicated_for_options
+    @target_groups_options = target_groups_options
     @rating_options = rating_options
     @research_areas = research_areas
     @related_platform_options = related_platform_options

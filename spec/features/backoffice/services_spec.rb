@@ -55,7 +55,7 @@ RSpec.feature "Services in backoffice" do
     fill_in "Service website", with: "https://sample.url"
     fill_in "Places", with: "Europe"
     fill_in "Languages", with: "English"
-    select target_group.name, from: "Dedicated for"
+    select target_group.name, from: "Dedicated For"
     fill_in "Terms of use url", with: "https://sample.url"
     fill_in "Access policies url", with: "https://sample.url"
     fill_in "Corporate sla url", with: "https://sample.url"

@@ -20,8 +20,9 @@ module Service::Searchable
       services
     end
 
-    def filter_dedicated_for(services, search_value)
-      services.where("ARRAY[?]::varchar[] && dedicated_for", search_value)
+    def filter_target_groups(services, search_value)
+      services.joins(:service_target_groups).
+          where("service_target_groups.target_group_id IN (?)", search_value)
     end
 
     def filter_rating(services, search_value)
@@ -75,31 +76,22 @@ private
     "#{indentation}#{ERB::Util.html_escape(name)}".html_safe
   end
 
-  def dedicated_for_options(category = nil)
-    [["Researchers", "Researchers"],
-     ["Research groups", "Research groups"],
-     ["Providers", "Providers"],
-     ["Research organisations", "Research organisations"],
-     ["Business", "Business"],
-     ["Other", "Other"]].map do |field|
-      query = Service.joins(:categories).where("? = ANY(dedicated_for)", field[1])
+  def target_groups_options(category = nil)
+    query = TargetGroup.select("target_groups.name, target_groups.id, count(service_target_groups.service_id) as service_count")
+                .joins(:categories)
 
-      unless category.nil?
-        query = query.where("categories.id = ?", category.id)
-      end
-      [field[0], field[1], query.count]
-    end.select do |element|
-      element[2] != 0
-    end
+    query = query.where("categories.id = ?", category.id) unless category.nil?
+
+    query.group("target_groups.id")
+        .order(:name)
+        .map { |target_group| [target_group.name, target_group.id, target_group.service_count] }
   end
 
   def provider_options(category = nil)
-    query = Provider.select("providers.name, providers.id, COUNT(service_providers.service_id) as service_count")
+    query = Provider.select("providers.name, providers.id, count(service_providers.service_id) as service_count")
                 .joins(:categories)
 
-    unless category.nil?
-      query = query.where("categories.id = ?", category.id)
-    end
+    query = query.where("categories.id = ?", category.id) unless category.nil?
 
     query.group("providers.id")
         .order(:name)

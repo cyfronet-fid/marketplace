@@ -238,16 +238,22 @@ area:
     SocialSciences:
         name: &socialSciences "Social Sciences"
     Philosophy:
-        name: &philosophy "Philosophy / History
-"
+        name: &philosophy "Philosophy / History"
+
 
 
 target_groups:
 
     Researchers:
-        name: "Researchers"
+        name: &researchers "Researchers"
     Research organisations:
-        name: "Research organisations"
+        name: &research_organisations "Research organisations"
+    Business:
+        name: &business "Business"
+    Research group:
+        name: &research_groups "Research group"
+    Providers:
+        name: &providers "Providers"
 
 
 
@@ -268,7 +274,7 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: &europe Europe
         languages: &english English
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         area: *interdisciplinary
         restrictions: &notSpecified not yet specified
         phase: "Production (min. TRL 8)"
@@ -570,7 +576,7 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         area: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
@@ -736,7 +742,7 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         area: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: Beta (min. TRL 7)
@@ -770,7 +776,7 @@ services:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         area: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
@@ -902,7 +908,7 @@ services:
         access_policies_url: http://eudat.eu/policy
         places: *europe
         languages: *english
-        dedicated_for: ["Researchers", "Providers", "Research organisations"]
+        target_groups: [*researchers, *providers, *research_organisations]
         area: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
@@ -1029,7 +1035,7 @@ services:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         area: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
@@ -1150,7 +1156,7 @@ services:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         area: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
@@ -1237,7 +1243,7 @@ services:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         area: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
@@ -1291,7 +1297,7 @@ services:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
-        dedicated_for: ["Researchers", "Providers", "Research organisations"]
+        target_groups: [*researchers, *providers, *research_organisations]
         area: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
@@ -1421,7 +1427,7 @@ services:
         places: *europe
         languages: *english
         area: *interdisciplinary
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
         tagline: Transfer of data between data resources and external computational facilities
@@ -1484,7 +1490,7 @@ services:
         places: *europe
         languages: *english
         area: *interdisciplinary
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
         tagline: AAI platform for federated authentication to EUDAT services
@@ -1526,7 +1532,7 @@ services:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         area: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
@@ -1594,7 +1600,7 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         area: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
@@ -1792,7 +1798,7 @@ services:
         corporate_sla_url:
         access_policies_url:
         places: *europe
-        dedicated_for: ["Researchers"] #TODO: but not specified
+        target_groups: [*researchers] #TODO: but not specified
         languages: *english
         area: *earthScience
 #        #restrictions: *notSpecified
@@ -1824,7 +1830,7 @@ services:
         corporate_sla_url:
         access_policies_url:
         places: *europe
-        dedicated_for: ["Researchers", "Research groups", "Research organisations"]
+        target_groups: [*researchers, *research_groups, *research_organisations]
         languages: *english
         area: [*earthScience, *lifeSciences, *interdisciplinary]
         restrictions:
@@ -1865,8 +1871,8 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
-        dedicated_for: ["Researchers"]
         area: [*socialSciences, *humanities]
+        target_groups: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
         tagline: A facet browser for fast navigation and searching in huge amounts of metadata.
@@ -1908,8 +1914,8 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
-        dedicated_for: ["Researchers"] #TODO: but not specified
         area: [*socialSciences, *humanities]
+        target_groups: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
         tagline: A web application that suggests language analysis tools for specific data sets.
@@ -1969,7 +1975,7 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
-        dedicated_for: ["Researchers"] #TODO: but not specified
+        target_groups: [*researchers] #TODO: but not specified
         area: *artsAndHumanities
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
@@ -2024,7 +2030,7 @@ services:
 #        terms_of_use_url:
 #        corporate_sla_url:
 #        access_policies_url:
-#        dedicated_for: ["Researchers"] #TODO: but not specified
+#        target_groups: ["Reaserchers"] #TODO: but not specified
 #        places: *europe
 #        languages: *english
 #        area: *earthScience
@@ -2049,7 +2055,7 @@ services:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        places: *europe
 #        languages: *english
-#        dedicated_for: ["Researchers", "Research organisations"]
+#        target_groups: ["Researchers", "Research organisations"]
 #        area: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: "Production (min. TRL 8)"
@@ -2084,7 +2090,7 @@ services:
 #        access_policies_url:
 #        places: *europe
 #        languages: *english
-#        dedicated_for: ["Researchers", "Research organisations"]
+#        target_groups: ["Researchers", "Research organisations"]
 #        area: *mathematics
 #        #restrictions: *notSpecified
 #        phase: "Production (min. TRL 8)"
@@ -2158,7 +2164,7 @@ services:
 #        corporate_sla_url:
 #        access_policies_url:
 #        places: *europe
-#        dedicated_for: ["Researchers", "Research organisations"]
+#        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
 #        area: *lifeSciences
 #        #restrictions: *notSpecified
@@ -2186,7 +2192,7 @@ services:
 #        corporate_sla_url:
 #        access_policies_url:
 #        places: *europe
-#        dedicated_for: ["Researchers", "Research organisations"]
+#        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
 #        area: *lifeSciences
 ##        #restrictions: *notSpecified
@@ -2257,7 +2263,7 @@ services:
 #        corporate_sla_url:
 #        access_policies_url:
 #        places: *europe
-#        dedicated_for: ["Researchers", "Research organisations"]
+#        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
 #        area: *earthScience
 #        #restrictions: *notSpecified
@@ -2290,7 +2296,7 @@ services:
 #        corporate_sla_url:
 #        access_policies_url:
 #        places: *europe
-#        dedicated_for: ["Researchers", "Research organisations"]
+#        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
 #        area: *lifeSciences
 ##        #restrictions: *notSpecified
@@ -2321,7 +2327,7 @@ services:
 #        corporate_sla_url:
 #        access_policies_url:
 #        places: *europe
-#        dedicated_for: ["Researchers", "Research organisations"]
+#        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
 #        area: *applicationFrameworks
 #        #restrictions: *notSpecified
@@ -2351,7 +2357,7 @@ services:
 #        corporate_sla_url:
 #        access_policies_url:
 #        places: *europe
-#        dedicated_for: ["Researchers", "Research organisations"]
+#        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
 #        area: *applicationFrameworks
 ##        #restrictions: *notSpecified
@@ -2382,7 +2388,7 @@ services:
 #        corporate_sla_url:
 #        access_policies_url:
 #        places: *europe
-#        dedicated_for: ["Researchers", "Research organisations"]
+#        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
 #        area: *applicationFrameworks
 ##        #restrictions: *notSpecified
@@ -2413,7 +2419,7 @@ services:
 #        corporate_sla_url:
 #        access_policies_url:
 #        places: *europe
-#        dedicated_for: ["Researchers", "Research organisations"]
+#        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
 #        area: *applicationFrameworks
 #        #restrictions: *notSpecified
@@ -2446,7 +2452,7 @@ services:
 #        corporate_sla_url:
 #        access_policies_url:
 #        places: *europe
-#        dedicated_for: ["Researchers", "Research organisations"]
+#        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
 #        area: *dataAnalysis
 #        #restrictions: *notSpecified
@@ -2477,7 +2483,7 @@ services:
 #        corporate_sla_url:
 #        access_policies_url:
 #        places: *europe
-#        dedicated_for: ["Researchers", "Research organisations"]
+#        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
 #        area: *humanities
 #        #restrictions: *notSpecified
@@ -2509,7 +2515,7 @@ services:
         corporate_sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations", "Business"]
+        target_groups: [*researchers, *research_organisations, *business]
         languages: *english
         area: *lifeSciences
         restrictions: "Research affiliation needed"
@@ -2542,7 +2548,6 @@ services:
               a built-in genome browser and many other visualizations.
 
 
-
 #    ClustalW2:
 #        title: ClustalW2
 #        parents: *processingAndAnalysisParent
@@ -2557,7 +2562,7 @@ services:
 #        corporate_sla_url:
 #        access_policies_url:
 #        places: *europe
-#        dedicated_for: ["Researchers", "Research organisations"]
+#        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
 #        area: *lifeSciences
 #        #restrictions: *notSpecified
@@ -2585,7 +2590,7 @@ services:
 #        corporate_sla_url:
 #        access_policies_url:
 #        places: *europe
-#        dedicated_for: ["Researchers", "Research organisations"]
+#        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
 #        area: *lifeSciences
 #        #restrictions: *notSpecified
@@ -2613,7 +2618,7 @@ services:
       terms_of_use_url:
       corporate_sla_url:
       access_policies_url:
-      dedicated_for: ["Researchers", "Research organisations"]
+      target_groups: [*researchers, *research_organisations]
       places: *europe
       languages: *english
       area: *lifeSciences
@@ -2712,7 +2717,7 @@ services:
 #        corporate_sla_url:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        places: *europe
-#        dedicated_for: ["Researchers"] #TODO: but not specified
+#        target_groups: ["Researchers"] #TODO: but not specified
 #        languages: *english
 #        area: *interdisciplinary
 #        #restrictions: *notSpecified
@@ -2753,7 +2758,7 @@ services:
         corporate_sla_url:
         access_policies_url: https://www.dariah.eu/privacy-notice/
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         languages: *english
         area: *artsAndHumanities
         #restrictions: *notSpecified
@@ -2813,7 +2818,7 @@ services:
         corporate_sla_url:
         access_policies_url:
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         languages: *english
         area: &highEnergyPhysics High-Energy Physics
         #restrictions: *notSpecified
@@ -2893,7 +2898,7 @@ services:
         corporate_sla_url: https://documents.egi.eu/document/2875
         access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         languages: *english
         area: *physicalScienceEarth
         #restrictions: *notSpecified
@@ -2924,7 +2929,7 @@ services:
         corporate_sla_url:
         access_policies_url:
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         languages: *english
         area: *climateScience
         #restrictions: *notSpecified
@@ -2996,7 +3001,7 @@ services:
         corporate_sla_url:
         access_policies_url:
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         languages: *english
         area: *environmentalScience
         #restrictions: *notSpecified
@@ -3058,7 +3063,7 @@ services:
 #        corporate_sla_url:
 #        access_policies_url:
 #        places: *europe
-#        dedicated_for: ["Researchers"] #TODO: but not specified
+#        target_groups: ["Researchers"] #TODO: but not specified
 #        languages: *english
 #        area: *interdisciplinary
 #        #restrictions: *notSpecified
@@ -3079,7 +3084,7 @@ services:
 #        corporate_sla_url:
 #        access_policies_url:
 #        places: *europe
-#        dedicated_for: ["Researchers"] #TODO: but not specified
+#        target_groups: ["Researchers"] #TODO: but not specified
 #        languages: *english
 #        area: *interdisciplinary
 #        #restrictions: *notSpecified
@@ -3100,7 +3105,7 @@ services:
 #        corporate_sla_url:
 #        access_policies_url:
 #        places: *europe
-#        dedicated_for: ["Researchers"] #TODO: but not specified
+#        target_groups: ["Researchers"] #TODO: but not specified
 #        languages: *english
 #        area: *interdisciplinary
 #        #restrictions: *notSpecified
@@ -3122,7 +3127,7 @@ services:
         corporate_sla_url:
         access_policies_url:
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         languages: *english
         area: *environmentalScience
         #restrictions: *notSpecified
@@ -3262,7 +3267,7 @@ services:
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
-        dedicated_for: ["Researchers"]
+        target_groups: [*researchers]
         languages: *english
         area: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
@@ -3300,7 +3305,7 @@ services:
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
-        dedicated_for: ["Researchers"]
+        target_groups: [*researchers]
         languages: *english
         area: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
@@ -3326,7 +3331,7 @@ services:
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
-        dedicated_for: ["Researchers"]
+        target_groups: [*researchers]
         languages: *english
         area: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
@@ -3354,7 +3359,7 @@ services:
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
-        dedicated_for: ["Researchers"]
+        target_groups: [*researchers]
         languages: *english
         area: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
@@ -3381,7 +3386,7 @@ services:
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         places: *europe
-        dedicated_for: ["Researchers"]
+        target_groups: [*researchers]
         languages: *english
         area: *biologicalSciences
         restrictions: "Limited to non-profit users, For-profit users can use the service if they a license agreement with the University of California for the AMBER toolkit"
@@ -3412,7 +3417,7 @@ services:
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         places: *europe
-        dedicated_for: ["Researchers"]
+        target_groups: [*researchers]
         languages: *english
         area: *biologicalSciences
         restrictions: "Limited to non-profit users"
@@ -3441,7 +3446,7 @@ services:
         corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
-        dedicated_for: ["Researchers"]
+        target_groups: [*researchers]
         languages: *english
         area: [*biologicalSciences, *lifeSciences]
         restrictions: "Registration required, Limited to non-profit users"
@@ -3469,7 +3474,7 @@ services:
         corporate_sla_url:
         access_policies_url:
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations", "Business"]
+        target_groups: [*researchers, *research_organisations, *business]
         languages: *english
         area: [*earthScience, *appliedScience, *interdisciplinary]
         restrictions: " Research affiliation needed, user account registration needed."
@@ -3502,7 +3507,7 @@ services:
         corporate_sla_url:
         access_policies_url:
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations", "Business"]
+        target_groups: [*researchers, *research_organisations, *business]
         languages: *english
         area: [*earthScience, *appliedScience, *interdisciplinary]
         restrictions: " Research affiliation needed, user account registration needed."
@@ -3534,7 +3539,7 @@ services:
         corporate_sla_url:
         access_policies_url:
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations", "Research groups"]
+        target_groups: [*researchers, *research_organisations, *research_groups]
         languages: *english
         area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
         restrictions: "Research affiliation needed"
@@ -3591,7 +3596,7 @@ services:
         corporate_sla_url:
         access_policies_url:
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations", "Research groups", "Providers"]
+        target_groups: [*researchers, *research_organisations, *research_groups, *providers]
         languages: *english
         area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
         #restrictions: *notSpecified
@@ -3627,7 +3632,7 @@ services:
         corporate_sla_url:
         access_policies_url:
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         languages: *english
         area: *earthScience
         #restrictions: *notSpecified
@@ -3654,7 +3659,7 @@ services:
         corporate_sla_url:
         access_policies_url:
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         languages: *english
         area: *earthScience
         #restrictions: *notSpecified
@@ -3681,7 +3686,7 @@ services:
         corporate_sla_url:
         access_policies_url:
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
+        target_groups: [*researchers, *research_organisations]
         languages: *english
         area: *earthScience
         #restrictions: *notSpecified
@@ -3735,7 +3740,7 @@ services:
         corporate_sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations", "Research groups", "Providers", "Business"]
+        target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
         languages: *english
         area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
@@ -3778,7 +3783,7 @@ services:
         corporate_sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations", "Research groups", "Providers", "Business"]
+        target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
         languages: *english
         area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
@@ -3817,7 +3822,7 @@ services:
         corporate_sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations", "Research groups", "Providers", "Business"]
+        target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
         languages: *english
         area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
@@ -3848,7 +3853,7 @@ services:
         corporate_sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
         places: *europe
-        dedicated_for: ["Researchers", "Research organisations", "Research groups", "Providers", "Business"]
+        target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
         languages: *english
         area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
@@ -3887,7 +3892,7 @@ services:
         corporate_sla_url:
         access_policies_url:
         places: *europe
-        dedicated_for: ["Research organisations"]
+        target_groups: [*research_organisations]
         languages: *english
         area: *security
         #restrictions: *notSpecified
@@ -3942,7 +3947,7 @@ services:
 #        corporate_sla_url: https://documents.egi.eu/document/2733
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        places: *europe
-#        dedicated_for: ["Research organisations"]
+#        target_groups: ["Research organisations"]
 #        languages: *english
 #        area: *interdisciplinary
 #        #restrictions: *notSpecified
@@ -3973,7 +3978,7 @@ services:
         corporate_sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
-        dedicated_for: ["Research groups", "Research organisations"]
+        target_groups: [*research_groups, *research_organisations]
         languages: *english
         area: *interdisciplinary
         #restrictions: *notSpecified
@@ -4085,7 +4090,7 @@ services:
         corporate_sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
-        dedicated_for: ["Research organisations"]
+        target_groups: [*research_organisations]
         languages: *english
         area: *interdisciplinary
         #restrictions: *notSpecified
@@ -4178,7 +4183,7 @@ services:
       corporate_sla_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies#Service_Level_Agreement
       access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
       places: *europe
-      dedicated_for: ["Research groups"]
+      target_groups: [*research_groups]
       restrictions: No restrictions
       languages: *english
       area: *interdisciplinary
@@ -4224,7 +4229,7 @@ services:
 #      corporate_sla_url:
 #      access_policies_url:
 #      places: *europe
-#      dedicated_for: ["Research groups", "Research organisations"]
+#      target_groups: ["Research groups", "Research organisations"]
 #      languages: *english
 #      area: *interdisciplinary
 #      #restrictions: *notSpecified
@@ -4250,7 +4255,7 @@ services:
       corporate_sla_url:
       access_policies_url:
       places: *europe
-      dedicated_for: ["Research groups", "Research organisations"]
+      target_groups: [*research_groups, *research_organisations]
       languages: *english
       area: *interdisciplinary
       #restrictions: *notSpecified
@@ -4290,7 +4295,7 @@ services:
       corporate_sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       places: *europe
-      dedicated_for: ["Researchers"]
+      target_groups: [*researchers]
       languages: *english
       area: *interdisciplinary
       restrictions: |
@@ -4327,7 +4332,7 @@ services:
       corporate_sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       places: *europe
-      dedicated_for: ["Researchers"]
+      target_groups: [*researchers]
       languages: *english
       area: *interdisciplinary
       #restrictions: *notSpecified
@@ -4361,7 +4366,7 @@ services:
       corporate_sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       places: *europe
-      dedicated_for: ["Researchers"]
+      target_groups: [*researchers]
       languages: *english
       area: *interdisciplinary
       #restrictions: *notSpecified
@@ -4395,7 +4400,7 @@ services:
       corporate_sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       places: *europe
-      dedicated_for: ["Researchers"]
+      target_groups: [*researchers]
       languages: *english
       area: *interdisciplinary
       #restrictions: *notSpecified
@@ -4430,7 +4435,7 @@ services:
       corporate_sla_url: https://documents.egi.eu/document/2733
       access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
       places: *europe
-      dedicated_for: ["Researchers", "Research organisations", "Business"]
+      target_groups: [*researchers, *research_organisations, *business]
       languages: *english
       area: *interdisciplinary
       #restrictions: *notSpecified
@@ -4475,7 +4480,7 @@ services:
       corporate_sla_url: https://research.csc.fi/documents/48467/0/ePouta+SLA/cbac49af-f069-4a8b-9636-e519b1ee331d
       access_policies_url: https://research.csc.fi/pricing-of-computing-services
       places: *europe
-      dedicated_for: ["Researchers", "Research organisations", "Research groups", "Providers"]
+      target_groups: [*researchers, *research_organisations, *research_groups, *providers]
       languages: *english
       area: [*interdisciplinary, *lifeSciences, *socialSciences, *artsAndHumanities, *appliedScience, *philosophy]
       #restrictions: *notSpecified
@@ -4507,7 +4512,7 @@ services:
       corporate_sla_url:
       access_policies_url:
       places: *europe
-      dedicated_for: ["Researchers"]
+      target_groups: [*researchers]
       languages: *english
       area: *interdisciplinary
       #restrictions: *notSpecified
@@ -4540,7 +4545,7 @@ services:
       corporate_sla_url: https://documents.egi.eu/document/2733
       access_policies_url:  https://documents.egi.eu/public/ShowDocument?docid=2635
       places: *europe
-      dedicated_for: ["Researchers", "Research organisations", "Business"]
+      target_groups: [*researchers, *research_organisations, *business]
       languages: *english
       area: *interdisciplinary
       restrictions: Research affiliation needed
