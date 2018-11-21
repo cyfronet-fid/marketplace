@@ -11,7 +11,8 @@
     %h1 Cannot activate affiliation
     %p= t ".#{@result}"
 
-  = link_to profile_path, class: "btn btn-primary mb-2 mr-2" do
-    Take me to my profile
-  = link_to services_path, class: "btn btn-primary mb-2" do
-    Go to services list
+  .my-4
+    = link_to "Take me to my profile", profile_path,
+      class: "btn btn-primary mr-3"
+    = link_to "Go to services list", services_path,
+      class: "btn btn-secondary"

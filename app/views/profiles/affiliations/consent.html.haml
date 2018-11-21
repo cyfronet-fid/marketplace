@@ -5,7 +5,8 @@
     Please click on the link given in the email in order to activate
     your affiliation and be able to use it when requesting access to EOSC services.
 
-  = link_to profile_path, class: "btn btn-primary" do
-    I understand. Take me to My profile
-  = link_to services_path, class: "btn btn-primary" do
-    Go to services list
+  .my-4
+    = link_to "I understand. Take me to My profile", profile_path,
+      class: "btn btn-primary mr-3"
+    = link_to "Go to services list", services_path,
+      class: "btn btn-secondary"
