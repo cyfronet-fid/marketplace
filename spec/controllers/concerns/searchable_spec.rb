@@ -18,7 +18,7 @@ RSpec.describe SearchableFakeController do
   end
   let!(:service_2) do  create(:service,
                               providers: [provider_2],
-                              dedicated_for: ["VO"],
+                              dedicated_for: ["Research groups"],
                               platforms: [platform_2])
   end
   let!(:category_1) { create(:category, services: [service_1, service_2]) }
@@ -41,7 +41,7 @@ RSpec.describe SearchableFakeController do
   context "dedicated_for_options" do
     it "should count services depending on the category" do
       expect(controller.send(:dedicated_for_options, category_2).size).to eq(1)
-      expect(controller.send(:dedicated_for_options, category_2).first).to eq(["VO", "VO", 1])
+      expect(controller.send(:dedicated_for_options, category_2).first).to eq(["Research groups", "Research groups", 1])
     end
 
     it "should count all services if no category is specified" do
