@@ -1906,32 +1906,32 @@ services:
 
               The collection metadata is openly available and accessible via the Virtual Language Observatory.
               The referenced digital objects can also be processed with the Language Resource Switchboard.
-    EIDA Data Archive:
-        title: EIDA Data Archive
-        parents: *sharingAndDicoveryParent
-        providers: *eida
-        logo: orfeus-european-integrated-data-archive-eida.png
-        open_access: false
-        webpage_url: https://www.orfeus-eu.org/data/eida/
-        manual_url:
-        helpdesk_url:
-        tutorial_url:
-        terms_of_use_url:
-        corporate_sla_url:
-        access_policies_url:
-        dedicated_for: ["Reaserchers"] #TODO: but not specified
-        places: *europe
-        languages: *english
-        area: *earthScience
-#        #restrictions: *notSpecified
-        phase: "Production (min. TRL 8)"
-        tagline: *notSpecified
-        # platforms: [*eopillar, *ec3]
-        description: |
-          ORFEUS provides access to high quality seismic waveforms and station metadata
-          from EIDA and strong motion products.
-          Access to waveform and station metadata is possible through modern APIs and interfaces,
-          such as the Rapid Raw Strong Motion system."
+#    EIDA Data Archive:
+#        title: EIDA Data Archive
+#        parents: *sharingAndDicoveryParent
+#        providers: *eida
+#        logo: orfeus-european-integrated-data-archive-eida.png
+#        open_access: false
+#        webpage_url: https://www.orfeus-eu.org/data/eida/
+#        manual_url:
+#        helpdesk_url:
+#        tutorial_url:
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
+#        dedicated_for: ["Reaserchers"] #TODO: but not specified
+#        places: *europe
+#        languages: *english
+#        area: *earthScience
+##        #restrictions: *notSpecified
+#        phase: "Production (min. TRL 8)"
+#        tagline: *notSpecified
+#        # platforms: [*eopillar, *ec3]
+#        description: |
+#          ORFEUS provides access to high quality seismic waveforms and station metadata
+#          from EIDA and strong motion products.
+#          Access to waveform and station metadata is possible through modern APIs and interfaces,
+#          such as the Rapid Raw Strong Motion system."
 #    Applications on Demand:
 #        title: Applications on Demand
 #        parents: *applicationsParent
@@ -2067,77 +2067,77 @@ services:
 #            name: Galaxy
 #            description: Galaxy is an open, web-based platform for data-intensive biomedical research.
 #            parameters: *appParameters
-    NAMD:
-        title: NAMD
-        parents: *processingAndAnalysisParent
-        providers: [*cesga, *recas, *ics]
-        logo: namd.png
-        open_access: false
-        webpage_url:
-        manual_url:
-        helpdesk_url:
-        tutorial_url:
-        terms_of_use_url:
-        corporate_sla_url:
-        access_policies_url:
-        places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
-        languages: *english
-        area: *lifeSciences
-#        #restrictions: *notSpecified
-        phase: "Production (min. TRL 8)"
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*egiPlatform, *ec3, *aodp]
-        description: |
-          NAMD is a parallel molecular dynamics code designed for high-performance simulation
-          of large bio-molecular systems.
-        offers:
-          1:
-            name: NAMD
-            description: |
-              NAMD is a parallel molecular dynamics code designed for high-performance simulation
-              of large bio-molecular systems.
-            parameters: &appParameters
-            - id: "id1"
-              label: "Number of CPU cores"
-              description:  "Number of cores for this offer is constant"
-              type:  "attribute"
-              value_type:  "integer"
-              value: 20
-            - id: "id2"
-              label: "Total amount of RAM"
-              description:  "Amount of RAM for this offer is constant"
-              type:  "attribute"
-              unit: "GB"
-              value_type:  "integer"
-              value: 4
-            - id: "id3"
-              label: "Storage capacity"
-              description:  "Storage capacity for this offer is constant"
-              type:  "attribute"
-              unit: "GB"
-              value_type:  "integer"
-              value: 100
-            - id: "id4"
-              label: "Access type"
-              description:  "Access type for this offer is constant"
-              type:  "attribute"
-              value_type:  "string"
-              value: "opportunistic"
-            - id: "id5"
-              label: "Start of service"
-              description:  "Choose service start date"
-              type:  "date"
-              value_type:  "string"
-            - id: "id6"
-              label: "Number of days"
-              description:  "Choose service start date"
-              type:  "input"
-              value_type:  "integer"
-              value: 365
-              config:
-                minimum: 1
-                maximum: 730
+#    NAMD:
+#        title: NAMD
+#        parents: *processingAndAnalysisParent
+#        providers: [*cesga, *recas, *ics]
+#        logo: namd.png
+#        open_access: false
+#        webpage_url:
+#        manual_url:
+#        helpdesk_url:
+#        tutorial_url:
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
+#        places: *europe
+#        dedicated_for: ["Researchers", "Research organisations"]
+#        languages: *english
+#        area: *lifeSciences
+##        #restrictions: *notSpecified
+#        phase: "Production (min. TRL 8)"
+#        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+#        platforms: [*egiPlatform, *ec3, *aodp]
+#        description: |
+#          NAMD is a parallel molecular dynamics code designed for high-performance simulation
+#          of large bio-molecular systems.
+#        offers:
+#          1:
+#            name: NAMD
+#            description: |
+#              NAMD is a parallel molecular dynamics code designed for high-performance simulation
+#              of large bio-molecular systems.
+#            parameters: &appParameters
+#            - id: "id1"
+#              label: "Number of CPU cores"
+#              description:  "Number of cores for this offer is constant"
+#              type:  "attribute"
+#              value_type:  "integer"
+#              value: 20
+#            - id: "id2"
+#              label: "Total amount of RAM"
+#              description:  "Amount of RAM for this offer is constant"
+#              type:  "attribute"
+#              unit: "GB"
+#              value_type:  "integer"
+#              value: 4
+#            - id: "id3"
+#              label: "Storage capacity"
+#              description:  "Storage capacity for this offer is constant"
+#              type:  "attribute"
+#              unit: "GB"
+#              value_type:  "integer"
+#              value: 100
+#            - id: "id4"
+#              label: "Access type"
+#              description:  "Access type for this offer is constant"
+#              type:  "attribute"
+#              value_type:  "string"
+#              value: "opportunistic"
+#            - id: "id5"
+#              label: "Start of service"
+#              description:  "Choose service start date"
+#              type:  "date"
+#              value_type:  "string"
+#            - id: "id6"
+#              label: "Number of days"
+#              description:  "Choose service start date"
+#              type:  "input"
+#              value_type:  "integer"
+#              value: 365
+#              config:
+#                minimum: 1
+#                maximum: 730
 #    Apache Tomcat:
 #        title: Apache Tomcat
 #        parents: *networkingParent
@@ -2171,37 +2171,37 @@ services:
 #              Apache Tomcat is an open source implementation of the Java Servlet, JavaServer Pages,
 #              Java Expression Language and Java WebSocket technologies.
 #            parameters: *appParameters
-    Gnuplot:
-        title: Gnuplot
-        parents: *processingAndAnalysisParent
-        providers: [*cesga, *recas, *ics]
-        logo: gnuplot.png
-        open_access: false
-        webpage_url: http://gnuplot.sourceforge.net
-        manual_url: http://gnuplot.sourceforge.net/documentation.html
-        helpdesk_url:
-        tutorial_url:
-        terms_of_use_url:
-        corporate_sla_url:
-        access_policies_url:
-        places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
-        languages: *english
-        area: *lifeSciences
-#        #restrictions: *notSpecified
-        phase: "Production (min. TRL 8)"
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*egiPlatform, *ec3, *aodp]
-        description: |
-          Gnuplot is a portable command-line driven graphing utility for Linux,
-          OS/2, MS Windows, OSX, VMS, and other platforms.
-        offers:
-          1:
-            name: Gnuplot
-            description: |
-              Gnuplot is a portable command-line driven graphing utility for Linux,
-              OS/2, MS Windows, OSX, VMS, and other platforms.
-            parameters: *appParameters
+#    Gnuplot:
+#        title: Gnuplot
+#        parents: *processingAndAnalysisParent
+#        providers: [*cesga, *recas, *ics]
+#        logo: gnuplot.png
+#        open_access: false
+#        webpage_url: http://gnuplot.sourceforge.net
+#        manual_url: http://gnuplot.sourceforge.net/documentation.html
+#        helpdesk_url:
+#        tutorial_url:
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
+#        places: *europe
+#        dedicated_for: ["Researchers", "Research organisations"]
+#        languages: *english
+#        area: *lifeSciences
+##        #restrictions: *notSpecified
+#        phase: "Production (min. TRL 8)"
+#        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+#        platforms: [*egiPlatform, *ec3, *aodp]
+#        description: |
+#          Gnuplot is a portable command-line driven graphing utility for Linux,
+#          OS/2, MS Windows, OSX, VMS, and other platforms.
+#        offers:
+#          1:
+#            name: Gnuplot
+#            description: |
+#              Gnuplot is a portable command-line driven graphing utility for Linux,
+#              OS/2, MS Windows, OSX, VMS, and other platforms.
+#            parameters: *appParameters
 #    Docker:
 #        title: Docker
 #        parents: *networkingParent
@@ -2232,68 +2232,68 @@ services:
 #              Docker is an open-source project that automates the deployment
 #              of Linux applications inside software containers.
 #            parameters: *appParameters
-    Hadoop:
-        title: Hadoop
-        parents: *processingAndAnalysisParent
-        providers: [*cesga, *recas, *ics]
-        logo: hadoop.png
-        open_access: false
-        webpage_url: http://hadoop.apache.org/
-        manual_url: http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
-        helpdesk_url:
-        tutorial_url:
-        terms_of_use_url:
-        corporate_sla_url:
-        access_policies_url:
-        places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
-        languages: *english
-        area: *applicationFrameworks
-#        #restrictions: *notSpecified
-        phase: "Production (min. TRL 8)"
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*egiPlatform, *ec3, *aodp]
-        description: |
-          Hadoop is a framework that allows for the distributed processing
-          of large data sets across clusters of computers using simple programming models.
-        offers:
-          1:
-            name: Hadoop
-            description: |
-              Hadoop is a framework that allows for the distributed processing
-              of large data sets across clusters of computers using simple programming models.
-            parameters: *appParameters
-    Marathon:
-        title: Marathon
-        parents: *dataManagementParent
-        providers: [*cesga, *recas, *ics]
-        logo: marathon.png
-        open_access: false
-        webpage_url: https://mesosphere.github.io/marathon/
-        manual_url:
-        helpdesk_url:
-        tutorial_url:
-        terms_of_use_url:
-        corporate_sla_url:
-        access_policies_url:
-        places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
-        languages: *english
-        area: *applicationFrameworks
-#        #restrictions: *notSpecified
-        phase: "Production (min. TRL 8)"
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*egiPlatform, *ec3, *aodp]
-        description: |
-          Marathon a production-grade container orchestration platform
-          for Mesosphere's Data Center/Operating System (DC/OS) and Apache Mesos.
-        offers:
-          1:
-            name: Marathon
-            description: |
-              Marathon a production-grade container orchestration platform
-              for Mesosphere's Data Center/Operating System (DC/OS) and Apache Mesos.
-            parameters: *appParameters
+#    Hadoop:
+#        title: Hadoop
+#        parents: *processingAndAnalysisParent
+#        providers: [*cesga, *recas, *ics]
+#        logo: hadoop.png
+#        open_access: false
+#        webpage_url: http://hadoop.apache.org/
+#        manual_url: http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
+#        helpdesk_url:
+#        tutorial_url:
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
+#        places: *europe
+#        dedicated_for: ["Researchers", "Research organisations"]
+#        languages: *english
+#        area: *applicationFrameworks
+##        #restrictions: *notSpecified
+#        phase: "Production (min. TRL 8)"
+#        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+#        platforms: [*egiPlatform, *ec3, *aodp]
+#        description: |
+#          Hadoop is a framework that allows for the distributed processing
+#          of large data sets across clusters of computers using simple programming models.
+#        offers:
+#          1:
+#            name: Hadoop
+#            description: |
+#              Hadoop is a framework that allows for the distributed processing
+#              of large data sets across clusters of computers using simple programming models.
+#            parameters: *appParameters
+#    Marathon:
+#        title: Marathon
+#        parents: *dataManagementParent
+#        providers: [*cesga, *recas, *ics]
+#        logo: marathon.png
+#        open_access: false
+#        webpage_url: https://mesosphere.github.io/marathon/
+#        manual_url:
+#        helpdesk_url:
+#        tutorial_url:
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
+#        places: *europe
+#        dedicated_for: ["Researchers", "Research organisations"]
+#        languages: *english
+#        area: *applicationFrameworks
+##        #restrictions: *notSpecified
+#        phase: "Production (min. TRL 8)"
+#        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+#        platforms: [*egiPlatform, *ec3, *aodp]
+#        description: |
+#          Marathon a production-grade container orchestration platform
+#          for Mesosphere's Data Center/Operating System (DC/OS) and Apache Mesos.
+#        offers:
+#          1:
+#            name: Marathon
+#            description: |
+#              Marathon a production-grade container orchestration platform
+#              for Mesosphere's Data Center/Operating System (DC/OS) and Apache Mesos.
+#            parameters: *appParameters
 #    Chronos:
 #        title: Chronos
 #        open_access: false
@@ -2325,37 +2325,8 @@ services:
 #              Chronos is a distributed and fault-tolerant scheduler that runs on top
 #              of Apache Mesos that can be used for job orchestration.
 #            parameters: *appParameters
-    Jupyter:
-        title: Jupyter
-        open_access: false
-        providers: [*cesga, *recas, *ics]
-        logo: jupyter.png
-        parents: *dataManagementParent
-        webpage_url: https://notebooks.egi.eu/hub/login
-        manual_url:
-        helpdesk_url:
-        tutorial_url:
-        terms_of_use_url:
-        corporate_sla_url:
-        access_policies_url:
-        places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
-        languages: *english
-        area: *applicationFrameworks
-        # #restrictions: *notSpecified
-        phase: "Production (min. TRL 8)"
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*egiPlatform, *ec3, *aodp]
-        description: |
-          Jupyter is an open-source web application that allows you to create and share documents with live code,
-          equations, visualisations and explanatory text.
-        offers:
-          1:
-            name: Jupyter
-            description: |
-              Jupyter is an open-source web application that allows you to create and share documents with live code,
-              equations, visualisations and explanatory text.
-            parameters: *appParameters
+
+
 #    The R project for statistical computing:
 #        title: The R project for statistical computing
 #        parents: *processingAndAnalysisParent
@@ -2387,74 +2358,74 @@ services:
 #              The R Project for Statistical Computing (v3.2.2)
 #              is a language and environment for statistical computing and graphics.
 #            parameters: *appParameters
-    The Semantic Search Engine (SSE):
-        title: The Semantic Search Engine (SSE)
-        parents: *dataManagementParent
-        providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
-        logo: the-semantic-search-engine-sse.png
-        open_access: false
-        webpage_url:
-        manual_url:
-        helpdesk_url:
-        tutorial_url:
-        terms_of_use_url:
-        corporate_sla_url:
-        access_policies_url:
-        places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
-        languages: *english
-        area: *humanities
-        #restrictions: *notSpecified
-        phase: "Production (min. TRL 8)"
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*egiPlatform, *ec3, *aodp]
-        description: |
-          The Semantic Search Engine (SSE) is an application conceived to demonstrate the potential of information
-          coupled with semantic web technologies to address the issues of data discovery and correlation.
-        offers:
-          1:
-            name: The Semantic Search Engine (SSE)
-            description: |
-              The Semantic Search Engine (SSE) is an application conceived to demonstrate the potential of information
-              coupled with semantic web technologies to address the issues of data discovery and correlation.
-            parameters: *appParameters
-    Chipster:
-        title: Chipster
-        parents: *processingAndAnalysisParent
-        providers: [*egi]
-        logo: chipster.png
-        open_access: false
-        webpage_url: https://chipster.csc.fi
-        manual_url: https://chipster.csc.fi/manual/
-        helpdesk_url:
-        tutorial_url:
-        terms_of_use_url:
-        corporate_sla_url:
-        access_policies_url:
-        places: *europe
-        dedicated_for: ["Researchers", "Research organisations"]
-        languages: *english
-        area: *lifeSciences
-        #restrictions: *notSpecified
-        phase: "Production (min. TRL 8)"
-        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-        platforms: [*egiPlatform, *ec3, *aodp]
-        description: |
-          Chipster is a user-friendly analysis software for high-throughput data.
-          It contains over 300 analysis tools for next generation sequencing (NGS),
-          microarray, proteomics and sequence data.
-          Users can save and share automatic analysis workflows, and visualize data interactively using
-          a built-in genome browser and many other visualizations.
-        offers:
-          1:
-            name: Chipster
-            description: |
-              Chipster is a user-friendly analysis software for high-throughput data.
-              It contains over 300 analysis tools for next generation sequencing (NGS),
-              microarray, proteomics and sequence data.
-              Users can save and share automatic analysis workflows, and visualize data interactively using
-              a built-in genome browser and many other visualizations.
-            parameters: *appParameters
+#    The Semantic Search Engine (SSE):
+#        title: The Semantic Search Engine (SSE)
+#        parents: *dataManagementParent
+#        providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
+#        logo: the-semantic-search-engine-sse.png
+#        open_access: false
+#        webpage_url:
+#        manual_url:
+#        helpdesk_url:
+#        tutorial_url:
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
+#        places: *europe
+#        dedicated_for: ["Researchers", "Research organisations"]
+#        languages: *english
+#        area: *humanities
+#        #restrictions: *notSpecified
+#        phase: "Production (min. TRL 8)"
+#        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+#        platforms: [*egiPlatform, *ec3, *aodp]
+#        description: |
+#          The Semantic Search Engine (SSE) is an application conceived to demonstrate the potential of information
+#          coupled with semantic web technologies to address the issues of data discovery and correlation.
+#        offers:
+#          1:
+#            name: The Semantic Search Engine (SSE)
+#            description: |
+#              The Semantic Search Engine (SSE) is an application conceived to demonstrate the potential of information
+#              coupled with semantic web technologies to address the issues of data discovery and correlation.
+#            parameters: *appParameters
+#    Chipster:
+#        title: Chipster
+#        parents: *processingAndAnalysisParent
+#        providers: [*egi]
+#        logo: chipster.png
+#        open_access: false
+#        webpage_url: https://chipster.csc.fi
+#        manual_url: https://chipster.csc.fi/manual/
+#        helpdesk_url:
+#        tutorial_url:
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
+#        places: *europe
+#        dedicated_for: ["Researchers", "Research organisations"]
+#        languages: *english
+#        area: *lifeSciences
+#        #restrictions: *notSpecified
+#        phase: "Production (min. TRL 8)"
+#        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
+#        platforms: [*egiPlatform, *ec3, *aodp]
+#        description: |
+#          Chipster is a user-friendly analysis software for high-throughput data.
+#          It contains over 300 analysis tools for next generation sequencing (NGS),
+#          microarray, proteomics and sequence data.
+#          Users can save and share automatic analysis workflows, and visualize data interactively using
+#          a built-in genome browser and many other visualizations.
+#        offers:
+#          1:
+#            name: Chipster
+#            description: |
+#              Chipster is a user-friendly analysis software for high-throughput data.
+#              It contains over 300 analysis tools for next generation sequencing (NGS),
+#              microarray, proteomics and sequence data.
+#              Users can save and share automatic analysis workflows, and visualize data interactively using
+#              a built-in genome browser and many other visualizations.
+#            parameters: *appParameters
 #    ClustalW2:
 #        title: ClustalW2
 #        parents: *processingAndAnalysisParent
@@ -2978,48 +2949,48 @@ services:
 #        tagline: *notSpecified
 #        platforms: [*elixirPlatform]
 #        description: *notSpecified
-    EISCAT:
-        title: EISCAT
-        parents: *sharingAndDicoveryParent
-        providers: [*not]
-        open_access: false
-        webpage_url:
-        manual_url:
-        helpdesk_url:
-        tutorial_url:
-        terms_of_use_url:
-        corporate_sla_url:
-        access_policies_url:
-        places: *europe
-        dedicated_for: ["Researchers"] #TODO: but not specified
-        languages: *english
-        area: *interdisciplinary
-        #restrictions: *notSpecified
-        phase: "Production (min. TRL 8)"
-        tagline: *notSpecified
-        # platforms: [*eopillar, *ec3]
-        description: *notSpecified
-    LOFAR:
-        title: LOFAR
-        parents: *sharingAndDicoveryParent
-        providers: [*astron, *rug, *surfsara, *fzj, *psnc]
-        open_access: false
-        webpage_url:
-        manual_url:
-        helpdesk_url:
-        tutorial_url:
-        terms_of_use_url:
-        corporate_sla_url:
-        access_policies_url:
-        places: *europe
-        dedicated_for: ["Researchers"] #TODO: but not specified
-        languages: *english
-        area: *interdisciplinary
-        #restrictions: *notSpecified
-        phase: "Production (min. TRL 8)"
-        tagline: *notSpecified
-        # platforms: [*eopillar, *ec3]
-        description: *notSpecified
+#    EISCAT:
+#        title: EISCAT
+#        parents: *sharingAndDicoveryParent
+#        providers: [*not]
+#        open_access: false
+#        webpage_url:
+#        manual_url:
+#        helpdesk_url:
+#        tutorial_url:
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
+#        places: *europe
+#        dedicated_for: ["Researchers"] #TODO: but not specified
+#        languages: *english
+#        area: *interdisciplinary
+#        #restrictions: *notSpecified
+#        phase: "Production (min. TRL 8)"
+#        tagline: *notSpecified
+#        # platforms: [*eopillar, *ec3]
+#        description: *notSpecified
+#    LOFAR:
+#        title: LOFAR
+#        parents: *sharingAndDicoveryParent
+#        providers: [*astron, *rug, *surfsara, *fzj, *psnc]
+#        open_access: false
+#        webpage_url:
+#        manual_url:
+#        helpdesk_url:
+#        tutorial_url:
+#        terms_of_use_url:
+#        corporate_sla_url:
+#        access_policies_url:
+#        places: *europe
+#        dedicated_for: ["Researchers"] #TODO: but not specified
+#        languages: *english
+#        area: *interdisciplinary
+#        #restrictions: *notSpecified
+#        phase: "Production (min. TRL 8)"
+#        tagline: *notSpecified
+#        # platforms: [*eopillar, *ec3]
+#        description: *notSpecified
     OPENCoastS:
         title: &openCoastS OPENCoastS Portal
         parents: *processingAndAnalysisParent
@@ -4142,7 +4113,7 @@ services:
     PROMINENCE:
       title: &prominence PROMINENCE
       parents: *computeParent
-      providers: [*egi] #TODO: change
+      providers: [*egi] #TODO: change to United Kingdom Atomic Energy Authority (or UKAEA)
 #      logo: training-infrastructure. TODO: logo
       open_access: false
       webpage_url: https://alahiff.github.io/prominence/
