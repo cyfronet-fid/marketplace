@@ -32,11 +32,11 @@ module ServiceHelper
   end
 
   def dedicated_for_links(service)
-    service.dedicated_for.map { |target| link_to(target, services_path(dedicated_for: target)) }
+    service.target_groups.map { |target| link_to(target.name, services_path(target_groups: target)) }
   end
 
   def dedicated_for_text(service)
-    service.dedicated_for.map { |target| target }
+    service.target_groups.map { |target| target.name }
   end
 
   def providers(service)

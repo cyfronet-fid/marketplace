@@ -11,14 +11,15 @@ RSpec.describe SearchableFakeController do
   let!(:platform_2) { create(:platform) }
   let!(:provider_1) { create(:provider) }
   let!(:provider_2) { create(:provider) }
+  let!(:target_group) { create(:target_group) }
   let!(:service_1) do  create(:service,
                               providers: [provider_1],
-                              dedicated_for: ["Researchers"],
+                              target_groups: [target_group],
                               platforms: [platform_1])
   end
   let!(:service_2) do  create(:service,
                               providers: [provider_2],
-                              dedicated_for: ["Research groups"],
+                              target_groups: [target_group],
                               platforms: [platform_2])
   end
   let!(:category_1) { create(:category, services: [service_1, service_2]) }
@@ -38,15 +39,15 @@ RSpec.describe SearchableFakeController do
 
   end
 
-  context "dedicated_for_options" do
+  context "target_groups_options" do
     it "should count services depending on the category" do
-      expect(controller.send(:dedicated_for_options, category_2).size).to eq(1)
-      expect(controller.send(:dedicated_for_options, category_2).first).to eq(["Research groups", "Research groups", 1])
+      expect(controller.send(:target_groups_options, category_2).size).to eq(1)
+      expect(controller.send(:target_groups_options, category_2).first).to eq([target_group.name, target_group.id, 1])
     end
 
     it "should count all services if no category is specified" do
-      expect(controller.send(:dedicated_for_options).size).to eq(2)
-      expect(controller.send(:dedicated_for_options)).to include(["Researchers", "Researchers", 1])
+      expect(controller.send(:target_groups_options).size).to eq(1)
+      expect(controller.send(:target_groups_options)).to include([target_group.name, target_group.id, 3])
     end
   end
 

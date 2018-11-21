@@ -52,6 +52,7 @@ yaml_hash["services"].each do |_, hash|
   providers = Provider.where(name: hash["providers"])
   area = ResearchArea.where(name: hash["area"])
   platforms = Platform.where(name: hash["platforms"])
+  target_groups = TargetGroup.where(name: hash["target_groups"])
 
   Service.find_or_initialize_by(title: hash["title"]) do |service|
 
@@ -76,7 +77,7 @@ yaml_hash["services"].each do |_, hash|
                     access_policies_url: hash["access_policies_url"],
                     places: hash["places"],
                     languages: hash["languages"],
-                    dedicated_for: hash["dedicated_for"],
+                    target_groups: target_groups,
                     restrictions: hash["restrictions"],
                     phase: hash["phase"],
                     categories: categories,

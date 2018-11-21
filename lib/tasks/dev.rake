@@ -10,6 +10,7 @@ if Rails.env.development?
       services_size = args.fetch(:services_size, 100).to_i
       areas = ResearchArea.all
       platforms = Platform.all
+      target_groups = TargetGroup.all
       puts "Generating #{services_size} new services"
       services_size.times do
         Service.create(title: Faker::Lorem.sentence,
@@ -23,7 +24,7 @@ if Rails.env.development?
                        providers: Provider.all.sample(2),
                        places: Faker::Address.country,
                        languages: Faker::Nation.language,
-                       dedicated_for: [Faker::Lorem.sentence],
+                       target_groups: [target_groups.sample],
                        terms_of_use_url: Faker::Internet.url,
                        access_policies_url: Faker::Internet.url,
                        corporate_sla_url: Faker::Internet.url,
