@@ -259,6 +259,14 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   }
 }
 
+#main-navbar {
+  a {
+    svg {
+      padding-right: 3px;
+    }
+  }
+}
+
 .tab-content {
 
   ul {

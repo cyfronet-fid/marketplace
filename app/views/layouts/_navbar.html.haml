@@ -30,7 +30,9 @@
       %ul.navbar-nav.ml-auto.pt-2.d-flex.flex-wrap.d-sm-none.d-xs.none.d-md-none.d-lg-block
         - if !user_signed_in?
           %li.nav-item.ml-1
-            = link_to "Login", user_checkin_omniauth_authorize_path, class: "nav-link d-block mb-2"
+            = link_to user_checkin_omniauth_authorize_path, class: "nav-link d-block mb-2" do
+              %i.fas.fa-lock
+              Login
         - else
           %li.nav-item.ml-1.dropdown
             %a.nav-link.px-2.py-1.dropdown-toggle{ "data-toggle": "dropdown", "aria-expanded": "false" }
