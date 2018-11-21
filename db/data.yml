@@ -94,7 +94,6 @@ categories:
 
 providers:
 
-
     EGI Federation:
         name: &egi "EGI Federation"
     EUDAT:
@@ -181,6 +180,12 @@ providers:
         name: &desyProvider "Deutsches Elektronen-Synchrotron DESY"
     CNR-IIA:
         name: &cnr "Institute of Atmospheric Pollution - National Research Council of Italy (CNR-IIA)"
+    GryCAP-I3M-UPV:
+        name: &grycap "GryCAP-I3M-UPV"
+    MTA SZTAKI Laboratory of Parallel and Distributed Systems:
+        name: &mtaSztaki MTA SZTAKI Laboratory of Parallel and Distributed Systems
+    University of Oslo (UiO):
+        name: &uioProider University of Oslo (UiO)
     Not specified:
         name: &not "not specified yet"
 
@@ -1445,6 +1450,69 @@ services:
                 type:  "input"
                 value_type:  "integer"
                 value: 365
+    B2ACCESS:
+        title: &b2access B2ACCESS
+        parents: *storageParent
+        providers: [*eudat, *all]
+        logo: b2access.png
+        open_access: false
+        webpage_url: https://b2access.eudat.eu
+        manual_url: https://eudat.eu/services/userdoc/b2stage
+        helpdesk_url: https://eudat.eu/contact-support-request
+        tutorial_url:
+        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
+        corporate_sla_url: http://hdl.handle.net/11304/e43b2e3f-83c5-4e3f-b8b7-18d38d37a6cd
+        access_policies_url: https://eudat.eu/policy
+        places: *europe
+        languages: *english
+        area: *interdisciplinary
+        dedicated_for: ["Researchers", "Research organisations"]
+#        #restrictions: *notSpecified
+        phase: "Production (min. TRL 8)"
+        tagline: AAI platform for federated authentication to EUDAT services
+        platforms: [*eudatPlatform, *ec3, *wenmr]
+        description: |
+          The B2ACCESS AAI proxy service is arbitrating access to registered Service Providers via different protocols.
+          Integrated Service Providers consume Attribute assertions from the B2ACCESS service when the End User
+          accesses them. B2ACCESS allows EUDAT users to authenticate themselves using a variety of other Identity
+          Providers or credentials.
+
+          ### The features of B2ACCESS:
+
+            - supports several methods of authentication via the users' primary identity providers (OpenID, SAML, x.509)
+            - can be used as primary identity provider, if necessary
+            - can be integrated with any service of the CDI service provider federation
+            - is integrated with EduGain and supports identities from theoretically hundreds of Universities
+              and Research institutions worldwide.
+            - provides unique and persistent EUDAT-wide meaningful identifiers.
+
+        offers:
+          1:
+            name: B2STAGE
+            description: |
+              B2STAGE is a reliable, efficient, light-weight and easy-to-use service to transfer research data sets
+              between EUDAT storage resources and high-performance computing (HPC) workspaces.
+            parameters:
+              - id:  "id1"
+                label:  "Tool"
+                description:  "Choose the tool"
+                type:  "select"
+                value_type:  "string"
+                config:
+                  mode: "buttons"
+                  values: ["FTS3", "globus online"]
+              - id:  "id2"
+                label:  "Start of service"
+                description:  "Please choose the start date"
+                type:  "date"
+                value_type:  "string"
+              - id:  "id3"
+                label:  "Number of days"
+                description:  "Choose number of days"
+                type:  "input"
+                value_type:  "integer"
+                value: 365
+
     EGI Archive storage:
         title: EGI Archive storage
         parents: *storageParent
@@ -4189,7 +4257,7 @@ services:
           name: *notSpecified
           description: *notSpecified
     PAN data:
-      title: &panData PAN data
+      title: &panData PaN data
       parents: *storageParent
       providers: [*desyProvider]
       logo: panData.png
@@ -4226,7 +4294,7 @@ services:
             in case of special requests for write access to backend storage, cloud functions from
             new gitlab repositories, events streaming from the dCache backend.
     Pan faas:
-      title: &panFaas PAN faas
+      title: &panFaas PaN faas
       parents: *storageParent
       providers: [*desyProvider]
       logo: panFaas.png
@@ -4260,7 +4328,7 @@ services:
             in case of special requests for write access to backend storage, cloud functions from
             new gitlab repositories, events streaming from the dCache backend.
     PAN notebook:
-      title: &panNotebook PAN notebook
+      title: &panNotebook PaN notebook
       parents: *computeParent
       providers: [*desyProvider]
       logo: panFaas.png
@@ -4328,6 +4396,139 @@ services:
             gitlab repos and the ability to invoke functions. Please contact eosc-pan-info@desy.de
             in case of special requests for write access to backend storage, cloud functions from
             new gitlab repositories, events streaming from the dCache backend.
+    WS-PGRADE:
+      title: &wsPgrade WS-PGRADE
+      parents: *processingAndAnalysisParent
+      providers: [*mtaSztaki]
+      #logo: wspgrade.png #TODO: nologo
+      open_access: false
+      webpage_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard
+      manual_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/help
+      helpdesk_url: https://wiki.egi.eu/wiki/GGUS:WS-PGRADE/gUSE_FAQ
+      tutorial_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/help
+      terms_of_use_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/terms-of-use
+      corporate_sla_url: https://documents.egi.eu/document/2733
+      access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
+      places: *europe
+      dedicated_for: ["Researchers"]
+      languages: *english
+      area: *interdisciplinary
+      #restrictions: *notSpecified
+      phase: Production (min. TRL 8)
+      tagline: Setup and run parameter studies in the cloud with a few clicks.
+      platforms: [*egiPlatform]
+      description: |
+        The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal)
+        is the Liferay-based web portal (WS-PGRADE web application) of gUSE high level middleware system.
+        This WS-PGRADE deployment is operated within the EGI ‘Applications on Demand’ service and provides
+        an easy to use 'Job Wizard' environment for users. Through the Job Wizard one can define with
+        a few clicks computational jobs that WS-PGRADE will execute on Infrastructure as a Service
+        clouds pre-configured by EGI. WS-PGRADE takes care of all aspects of job management in the cloud,
+        including instantiation of Virtual Machine images and retrieval of outputs. Jobs can be single processor
+        applications or 'parameter study' type applications where each instance
+        of the job takes different input parameters.
+
+        ### Features:
+
+          - Federated authentication through the EGI Applications on Demand service.
+          - Graphical interfaces for job definition, job execution, inspection of results.
+          - Web based access.
+          - Interoperability with most widely used IaaS cloud technologies
+          - Job wizard interface to streamline analytical steps.
+          - Use of ‘per-user subproxies’ from EGI to access X.509-protected resources on the users’ behalf.
+    CSC ePouta:
+      title: &cscEpouta CSC ePouta
+      parents: *processingAndAnalysisParent
+      providers: [*csc]
+      #logo: epouta.png #TODO: nologo
+      open_access: false
+      webpage_url: https://research.csc.fi/epouta
+      manual_url: https://research.csc.fi/pouta-user-guide
+      helpdesk_url:
+      tutorial_url:
+      terms_of_use_url: https://research.csc.fi/pouta-user-policy
+      corporate_sla_url: https://research.csc.fi/documents/48467/0/ePouta+SLA/cbac49af-f069-4a8b-9636-e519b1ee331d
+      access_policies_url: https://research.csc.fi/pricing-of-computing-services
+      places: *europe
+      dedicated_for: ["Researchers"]
+      languages: *english
+      area: *interdisciplinary
+      #restrictions: *notSpecified
+      phase: Production (TRL 8)
+      tagline: Secure and cost-effective cloud computing for processing sensitive data
+      platforms: [*eoscPan]
+      description: |
+        This service provides a infrastructure as a-service for running analysis on sensitive data.
+        The ePouta Virtual Private Cloud service allows customers to provision virtual machines and
+        storage resources directly to their own internal networks. It provides an easy to use admin web interface and
+        a programmable API for managing virtual machines, networks and storage. CSC ePouta meets elevated information
+        security level regulations and is targeted for sensitive data processing
+    TDS:
+      title: &tds TDS
+      parents: [*processingAndAnalysisParent, *storageParent]
+      providers: [*uioProider]
+      #logo: panFaas.png TODO: nologo
+      open_access: false
+      webpage_url: https://www.uio.no/english/services/it/research/sensitive-data/
+      manual_url:
+      helpdesk_url: https://www.uio.no/english/services/it/research/sensitive-data/
+      tutorial_url:
+      terms_of_use_url:
+      corporate_sla_url:
+      access_policies_url:
+      places: *europe
+      dedicated_for: ["Researchers"]
+      languages: *english
+      area: *interdisciplinary
+      #restrictions: *notSpecified
+      phase: Production (TRL 8)
+      tagline: Services for sensitive dataf
+      platforms: [*eoscPan]
+      description: |
+        Repository service for EOSC PAN notebooks and cloud functions for EOSC PAN FaaS. Gitlab runners
+        for continuous integration in the DESY Compute Cloud,
+        building and publishing docker containers in the project registry.
+    Elastic Cloud Compute Cluster (EC3):
+      title: &ec3Service Elastic Cloud Compute Cluster (EC3)
+      parents: *processingAndAnalysisParent
+      providers: [*grycap]
+      logo: ec3.png
+      open_access: false
+      webpage_url: https://servproject.i3m.upv.es/ec3-ltos/index.php
+      manual_url: https://ec3.readthedocs.io/en/devel/
+      helpdesk_url: https://wiki.egi.eu/wiki/GGUS:EC3_FAQ
+      tutorial_url: https://github.com/grycap/ec3
+      terms_of_use_url: https://servproject.i3m.upv.es/ec3-ltos/terms.html
+      corporate_sla_url: https://documents.egi.eu/document/2733
+      access_policies_url:  https://documents.egi.eu/public/ShowDocument?docid=2635
+      places: *europe
+      dedicated_for: ["Researchers"]
+      languages: *english
+      area: *interdisciplinary
+      restrictions: Research affiliation needed
+      phase: Production (min. TRL 8)
+      tagline: Deploy a virtual cluster on top of IaaS infrastructures with a few clicks.
+      platforms: [*eoscPan]
+      description: |
+        The Elastic Cloud Computing Cluster (EC3) is a platform that allows creating elastic virtual clusters
+        on top of Infrastructure as a Service (IaaS) providers, either public (such as Amazon Web Services,
+        Google Cloud or Microsoft Azure) or on-premises (such as OpenNebula and OpenStack).
+        Through a 'job wizard' interface, the user can configure the virtual cluster with a predefined set
+        of applications that will be deployed in the clouds underpinning the EGI Applications On Demand infrastructure.
+        The installation and the configuration of the cluster are performed by means of the execution
+        of Ansible receipts. The cluster configured by EC3 is private: as soon as it is configured
+        the user will have root access to the environment, and can setup and configure the cluster
+        installing additional libraries and software to their needs.
+
+        ### Features:
+
+          - Federated authentication through the EGI Applications on Demand service.
+          - Web based access.
+          - Interoperability with most widely used IaaS cloud technologies
+          - Wizard interface to streamline the configuration and the deployment of the virtual cluster on top of Infrastructure as a Service (IaaS) providers.
+          - Several Ansible receipts are available to deploy applications and tools in the cluster nodes.
+          - Nodes of the clusters will be self-managed by CLUES. Working nodes will be undeployed when they are idle.
+          - Use of ‘per-user subproxies’ from EGI to access X.509-protected resources on the users’ behalf.
 
 
 relations:
