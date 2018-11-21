@@ -8,7 +8,9 @@ module JiraHelper
                          webhook_secret: "secret",
                          wf_todo_id: 5,
                          wf_in_progress_id: 6,
-                         wf_done_id: 7)
+                         wf_done_id: 7,
+                         wf_rejected_id: 8,
+                         wf_waiting_for_response_id: 9)
     jira_class_stub = class_double(Jira::Client).
                       as_stubbed_const(transfer_nested_constants: true)
     allow(jira_class_stub).to receive(:new).and_return(jira_client)
