@@ -4,8 +4,7 @@ body {
   font-size: $font-size-sm;
   margin-bottom: 0 !important;
   font-weight: $font-weight-normal;
-  background: url('../../assets/images/main-bg.png') no-repeat;
-  background-position: calc(50% + 700px) 450px;
+
 
   > main {
     padding-bottom: 50px;
@@ -656,7 +655,7 @@ Card style
 .card {
 
   border-color: $info;
-  border-radius: 0;
+  border-radius: 2px;
 
   .card-header {
     border-bottom: none;
@@ -682,7 +681,7 @@ Card style
     background: transparent;
     padding: 0.45rem 0 0;
     margin: 0  1.25rem 0.45rem;
-    border-top: 2px solid $palette-solid-30;
+    border-top: 1px solid $palette-solid-30;
     padding-top: 0.9rem;
 
     p {
@@ -793,6 +792,7 @@ Filters
 
 .left-menu {
   background-image: linear-gradient(-135deg, $btn-primary-gradient-start 0%, $btn-primary-gradient-end 100%);
+  border-radius: 2px;
 
   li {
     margin: 13px 0;
@@ -870,9 +870,23 @@ Filters
   }
 }
 
+
+.main {
+  background: url('../../assets/images/main-bg.png') no-repeat;
+  background-position: calc(50% + 700px) 450px;
+}
 .numbers {
   background: url('../../assets/images/main-bg-dots.png') no-repeat;
-  background-position: -20px 90px;
+  background-position: center 100px;
+
+  a {
+    color: $palette-gray-100;
+
+    &:hover, &:active {
+      color: $palette-gray-100;
+    }
+  }
+
 }
 
 .box {
@@ -899,12 +913,31 @@ Filters
   }
 }
 
-.home-carousel .card-title {
-  text-align: center;
-  width: 100%;
-  float: left;
-  font-weight: bold;
-  color: $palette-blue;
+.home-carousel  {
+
+  .card-img-top {
+    height: 120px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding: 5px;
+  }
+
+  .card-body {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding: 0.7rem 1rem;
+  }
+
+  .card-title {
+    text-align: center;
+    width: 100%;
+    float: left;
+    font-weight: bold;
+    line-height: 1.4rem;
+
+  }
 }
 
 

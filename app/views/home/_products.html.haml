@@ -38,19 +38,22 @@
             .icon
               %i.far.fa-building
             .num
-              = providers_number
-            .sub-num providers
+              = link_to providers_number, services_path
+            .sub-num
+              = link_to "providers", services_path
         .col-6.text-center.pt-4
           .box
             .icon
               %i.fas.fa-cogs
             .num
-              = services_number
-            .sub-num services
+              = link_to services_number, services_path
+            .sub-num
+              = link_to "services", services_path
         .col-3.text-center.pt-4
           .box
             .icon
               %i.fas.fa-globe
             .num
-              = countries_number
-            .sub-num countries
+              = link_to countries_number, services_path
+            .sub-num
+              = link_to "countries", services_path
