@@ -333,6 +333,22 @@ RSpec.feature "Service filtering and sorting" do
     expect(page).to have_css("#all-services-link > span", text: Service.all.count)
   end
 
+  scenario "delete all filters" do
+    visit services_path
+
+    # set filters
+    find(:css, "input[name='dedicated_for[]'][value='Research groups']").set(true)
+    select "★★★★★", from: "rating"
+
+    click_on(id: "filter-submit")
+
+    expect(page).to have_selector(".media", count: 1)
+
+    # click clear filters
+    click_on("Clear all filters")
+
+    expect(page).to have_css(".media", count: 6)
+  end
   scenario "searching via location", js: true do
     `pending "add test after implementing location to filtering #{__FILE__}"`
   end
