@@ -41,6 +41,10 @@ module Service::Searchable
             where(service_research_areas: { research_area_id: ids })
       end
     end
+
+    def filter_tag(services, tags)
+      services.tagged_with(tags)
+    end
   end
 
   include FieldFilterable
@@ -116,6 +120,12 @@ private
     query.group("platforms.id")
          .order(:name)
          .map { |provider| [provider.name, provider.id, provider.service_count] }
+  end
+
+  def tag_options
+    ActsAsTaggableOn::Tag.all.
+      map { |t| [t.name, t.name] }.
+      sort { |x, y| x[0] <=> y[0] }
   end
 
   def records

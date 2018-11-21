@@ -75,6 +75,7 @@ yaml_hash["services"].each do |_, hash|
                     restrictions: hash["restrictions"],
                     phase: hash["phase"],
                     categories: categories,
+                    tag_list: hash["tags"],
                     platforms: platforms)
 
     service.logo.attached? && service.logo.purge_later

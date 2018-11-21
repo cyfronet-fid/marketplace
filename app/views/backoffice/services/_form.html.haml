@@ -24,6 +24,7 @@
   = f.input :contact_emails, multiple: true, as: :array
   = f.association :research_areas, input_html: { multiple: true }, include_hidden: false
   = f.association :platforms, multiple: true
+  = f.input :tag_list
 
   %a#add-email-field Add additional email
   .invalid-feedback{ styles: "display:block" }

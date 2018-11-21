@@ -9,6 +9,8 @@ class Service < ApplicationRecord
   extend FriendlyId
   friendly_id :title, use: :slugged
 
+  acts_as_taggable
+
   has_one_attached :logo
 
   enum service_type: {
