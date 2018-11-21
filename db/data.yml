@@ -188,6 +188,9 @@ area:
 
     Interdisciplinary:
         name: &interdisciplinary "Interdisciplinary"
+    # sub:
+    #     name: &ra_test "Just for tests - should be removed by Rox"
+    #     parent: *interdisciplinary
     EarthScience:
         name: &earthScience "Earth Science"
     ArtsAndHumanities:

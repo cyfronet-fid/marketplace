@@ -34,14 +34,37 @@ module Service::Searchable
     end
 
     def filter_research_area(services, search_value)
-      services.joins(:service_research_areas).
-          where(service_research_areas: { research_area_id: search_value })
+      research_area = ResearchArea.find_by(id: search_value)
+      if research_area
+        ids = [research_area.id] + research_area.descendant_ids
+        services.joins(:service_research_areas).
+            where(service_research_areas: { research_area_id: ids })
+      end
     end
   end
 
   include FieldFilterable
 
 private
+
+  def research_areas
+    research_areas_tree(ResearchArea.all, ResearchArea.new, 0)
+  end
+
+  def research_areas_tree(research_areas, parent, level)
+    research_areas.
+      select { |ra| ra.ancestry_depth == level && ra.child_of?(parent) }.
+      map do |ra|
+        [[indented_name(ra.name, level), ra.id],
+         *research_areas_tree(research_areas, ra, level + 1)]
+      end.
+      flatten(1)
+  end
+
+  def indented_name(name, level)
+    indentation = "&nbsp;&nbsp;" * level
+    "#{indentation}#{ERB::Util.html_escape(name)}".html_safe
+  end
 
   def dedicated_for_options(category = nil)
     [["Researchers", "Researchers"],
