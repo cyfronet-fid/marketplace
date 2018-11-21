@@ -123,6 +123,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add a landing page for when affiliation is activated (@jswk)
 - Favicon (@michal-szostak)
 - Research area hierarchy (@mkasztelnik)
+- Redirect user from `/affiliations` to `/profile` (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
@@ -150,6 +151,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Platforms are not mandatory (@martaswiatkowska)
 - Base URL for footer link updated to `https://eosc-portal.eu` (@mkasztelnik)
 - Changed VO to Research groups in filters UI (@michal-szostak)
+- Unify confirmation views - order, new affiliation, affiliation confirmations (@mkasztelnik)
 
 ### Deprecated
 
