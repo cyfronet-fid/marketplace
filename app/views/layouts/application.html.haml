@@ -2,8 +2,7 @@
 %html{ lang: "en" }
   = render "layouts/head"
 
-  %body{ class: ( "main" if current_page?('/') ) }
-
+  %body{ class: ("main" if current_page?("/")) }
     = render "layouts/flash"
     %header.pb-2
       = render "layouts/navbar",
