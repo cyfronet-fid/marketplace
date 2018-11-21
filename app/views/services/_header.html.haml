@@ -3,7 +3,7 @@
     = image_tag service.logo.variant(resize: "180x120"), class: "align-self-center mr-4"
   .media-body
     .row
-      .col-9
+      .col-7.col-lg-9
         %h2.font-weight-bolder= service.title
         %p.mb-1= service.tagline
         = render "services/categorization", service: service
@@ -13,7 +13,7 @@
             %span.ml-1.font-weight-bold
               (#{service.rating} /5)
             = link_to "#{service.service_opinion_count} reviews", service_opinions_path(service), class: "ml-3"
-      .col-3.text-center
+      .col-5.col-lg-3.text-center
         - if policy(service).order?
           = link_to t("service.#{service.service_type}.order.title"),
                     service_offers_path(service),
