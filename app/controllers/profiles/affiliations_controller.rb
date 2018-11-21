@@ -4,6 +4,10 @@ class Profiles::AffiliationsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_and_authorize, only: [:edit, :update, :destroy]
 
+  def index
+    redirect_to profile_path
+  end
+
   def new
     @affiliation = Affiliation.new(user: current_user)
     authorize(@affiliation)
