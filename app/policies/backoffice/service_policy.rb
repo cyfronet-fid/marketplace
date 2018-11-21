@@ -41,7 +41,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
      :tutorial_url, :restrictions, :phase,
      :activate_message, :logo,
      [contact_emails: []], [research_area_ids: []],
-     [platform_ids: []]]
+     [platform_ids: []], :tag_list]
   end
 
   private

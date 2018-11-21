@@ -15,6 +15,7 @@ class CategoriesController < ApplicationController
     @dedicated_for_options = dedicated_for_options(category)
     @rating_options = rating_options(category)
     @research_areas = research_areas
+    @tag_options = tag_options
     @related_platform_options = related_platform_options(category)
   end
 
