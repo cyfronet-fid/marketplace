@@ -35,5 +35,6 @@ module Mp
     config.autoload_paths << Rails.root.join("lib")
 
     config.redis_url = ENV["REDIS_URL"] || "redis://localhost:6379/0"
+    config.portal_base_url = ENV["PORTAL_BASE_URL"] || "https://eosc-portal.eu"
   end
 end

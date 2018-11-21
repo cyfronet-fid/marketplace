@@ -178,6 +178,8 @@ ENV variables:
   * `SMTP_PASSWORD` - smtp password
   * `GOOGLE_ANALYTICS` - google analytics key for GMT (if present than analytics
     script is added into head section)
+  * `PORTAL_BASE_URL` - portal base URL used to generate footer and other static
+    links to EOSC portal
 
 ## Commits
 
