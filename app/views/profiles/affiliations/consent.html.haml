@@ -1,12 +1,12 @@
 .container
   %h1 New affiliation - last step
-  %p
+  %p.mb-4
     We've sent you a confirmation link to #{@affiliation.email}.
     Please click on the link given in the email in order to activate
     your affiliation and be able to use it when requesting access to EOSC services.
 
-  .my-4
+  .mb-4
     = link_to "I understand. Take me to My profile", profile_path,
       class: "btn btn-primary mb-3 mr-3"
     = link_to "Go to services list", services_path,
-      class: "btn btn-secondary"
+      class: "btn btn-secondary mb-3 mr-3"

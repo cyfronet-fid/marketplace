@@ -2,15 +2,16 @@
 
 .container
   %h1 Congratulations!
-  Your request has been sent. Stay come and wait for information from provider.
-  You can check request status on #{link_to "My services", projects_path} or back
-  to #{link_to "start page", root_path}.
+  %p.mb-4
+    Your request has been sent. Stay calm and wait for information from provider.
+    You can check request status on #{link_to "My services", projects_path} or back
+    to #{link_to "start page", root_path}.
 
-  .mt-4.mb-4
+  .mb-4
     = link_to "Go to requested service", project_item_path(@project_item),
       class: "btn btn-primary mb-3 mr-3"
     = link_to "Get access to other services", services_path,
-      class: "btn btn-secondary"
+      class: "btn btn-secondary mb-3 mr-3"
 
   %hr.mb-4
   = render "services/related", related_services: @related_services
