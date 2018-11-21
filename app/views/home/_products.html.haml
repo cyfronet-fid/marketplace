@@ -8,12 +8,13 @@
           - @root_categories.each do |root_category|
             %li
               = link_to root_category.name, root_category
-      %h5.mt-5.text-uppercase For providers
-      %p
-        Contribute to develop EOSC into a rich environment with a wide range of services and resources for researches.
-      %p
-        %strong
-          = link_to "Become a provider", "#{Mp::Application.config.portal_base_url}/for-providers"
+      .card.for-providers.mt-4.mb-1
+        .card-body
+          %h5.card-title For providers
+          %p.card-text
+            Contribute to develop EOSC into a rich environment with a wide range of services and resources for researches.
+          %strong
+            = link_to "Become a provider", "#{Mp::Application.config.portal_base_url}/for-providers", class: "card-link"
 
     .col-12.col-lg-9.right-column.pl-5
       %p.subtitle.mt-4 In EOSC Marketplace you can
