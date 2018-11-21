@@ -88,8 +88,16 @@
       .col-md
         %ul
           %li.mb-1
-            %h5
-              %a{ href: "#{portal_base}/for-providers" } For providers
+            %h5 MARKETPLACE
+          %li.mb-1
+            = link_to "All Services", services_path
+          - @root_categories.each do |root_category|
+            %li.mb-1
+              = link_to root_category.name, root_category
+          %li.mb-1
+            %a{ href: "#{portal_base}/for-providers" } For providers
+
+
     .row.mt-4
       .col-md-6
         %a.social-logo.twitter-logo.d-inline-block.mr-2{ href: "https://twitter.com/EoscPortal" }

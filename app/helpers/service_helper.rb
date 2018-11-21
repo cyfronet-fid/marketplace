@@ -35,7 +35,15 @@ module ServiceHelper
     service.dedicated_for.map { |target| link_to(target, services_path(dedicated_for: target)) }
   end
 
+  def dedicated_for_text(service)
+    service.dedicated_for.map { |target| target }
+  end
+
   def providers(service)
     service.providers.map { |target| link_to(target.name, services_path(providers: target)) }
+  end
+
+  def providers_text(service)
+    service.providers.map { |target| target.name }
   end
 end
