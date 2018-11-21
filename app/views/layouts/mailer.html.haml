@@ -12,7 +12,6 @@
         font-family: Ubuntu, Verdana, sans-serif;
         color: #1C313A;
         font-weight: normal;
-        padding-left: 10px;
       }
 
       .header {
@@ -20,19 +19,22 @@
       }
 
       h3 {
-        font-size: 22px;
-        padding: 0 15px 30px 0;
+        font-size: 20px;
+        padding: 0 15px 10px 0;
+        margin: 30px 0 15px 0;
+        font-weight: normal;
       }
 
       p {
         font-size: 16px;
         padding: 0 15px 15px 0;
+        line-height: 24px;
       }
 
       .footer {
         font-size: 14px;
         border-top: 1px solid #D2D6D8;
-        padding-top: 20px;
+        padding-top: 30px;
       }
   %body
 
@@ -46,5 +48,5 @@
         %td{ colspan: 2 }
           = yield
       %tr
-        %td.footer
+        %td.footer{ colspan: 2 }
           EOSC Portal Marketplace Team
