@@ -207,6 +207,16 @@ ActiveRecord::Schema.define(version: 2018_11_21_094061) do
     t.index ["service_id"], name: "index_service_research_areas_on_service_id"
   end
 
+  create_table "service_target_groups", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "target_group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service_id", "target_group_id"], name: "index_service_target_groups_on_service_id_and_target_group_id", unique: true
+    t.index ["service_id"], name: "index_service_target_groups_on_service_id"
+    t.index ["target_group_id"], name: "index_service_target_groups_on_target_group_id"
+  end
+
   create_table "services", force: :cascade do |t|
     t.string "title", null: false
     t.text "description", null: false
@@ -267,6 +277,12 @@ ActiveRecord::Schema.define(version: 2018_11_21_094061) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
+  create_table "target_groups", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -298,6 +314,8 @@ ActiveRecord::Schema.define(version: 2018_11_21_094061) do
   add_foreign_key "service_relationships", "services", column: "target_id"
   add_foreign_key "service_research_areas", "research_areas"
   add_foreign_key "service_research_areas", "services"
+  add_foreign_key "service_target_groups", "services"
+  add_foreign_key "service_target_groups", "target_groups"
   add_foreign_key "services", "providers"
   add_foreign_key "services", "users", column: "owner_id"
 end

@@ -43,6 +43,7 @@ RSpec.feature "Services in backoffice" do
     provider = create(:provider)
     research_area = create(:research_area)
     platform = create(:platform)
+    target_group = create(:target_group)
 
     visit backoffice_services_path
     click_on "Create new service"
@@ -54,7 +55,7 @@ RSpec.feature "Services in backoffice" do
     fill_in "Service website", with: "https://sample.url"
     fill_in "Places", with: "Europe"
     fill_in "Languages", with: "English"
-    fill_in "service_dedicated_for_0", with: "single researcher"
+    select target_group.name, from: "Dedicated for"
     fill_in "Terms of use url", with: "https://sample.url"
     fill_in "Access policies url", with: "https://sample.url"
     fill_in "Corporate sla url", with: "https://sample.url"
@@ -86,6 +87,7 @@ RSpec.feature "Services in backoffice" do
     expect(page).to have_content("person2@test.ok")
     expect(page).to have_content("Welcome!!!")
     expect(page).to have_content(research_area.name)
+    expect(page).to have_content(target_group.name)
   end
 
   scenario "I can edit owned service" do

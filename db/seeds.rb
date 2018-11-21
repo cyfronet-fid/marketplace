@@ -41,6 +41,11 @@ yaml_hash["platforms"].each do |_, hash|
   puts "#{ hash["name"] } platforms generated"
 end
 
+yaml_hash["target_groups"].each do |_, hash|
+  TargetGroup.find_or_create_by(name: hash["name"])
+  puts "Created #{ hash["name"] } target group"
+end
+
 puts "Generating services from yaml"
 yaml_hash["services"].each do |_, hash|
   categories = Category.where(name: hash["parents"])

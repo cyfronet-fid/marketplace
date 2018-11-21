@@ -29,9 +29,9 @@ class Service < ApplicationRecord
   has_many :service_providers, dependent: :destroy
   has_many :providers, through: :service_providers
   has_many :service_related_platforms, dependent: :destroy
-
   has_many :platforms, through: :service_related_platforms
-
+  has_many :service_target_groups, dependent: :destroy
+  has_many :target_groups, through: :service_target_groups
 
   has_many :source_relationships,
            class_name: "ServiceRelationship",
