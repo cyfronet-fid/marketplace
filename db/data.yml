@@ -241,6 +241,16 @@ area:
         name: &philosophy "Philosophy / History
 "
 
+
+target_groups:
+
+    Researchers:
+        name: "Researchers"
+    Research organisations:
+        name: "Research organisations"
+
+
+
 services:
 
     Cloud compute:
