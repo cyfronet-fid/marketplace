@@ -27,7 +27,11 @@ yaml_hash["providers"].each do |_, hash|
 end
 
 yaml_hash["area"].each do |_, hash|
-  ResearchArea.find_or_create_by(name: hash["name"])
+  # !!! Warning: parent need to be defined before child in yaml !!!
+  parent = ResearchArea.find_by(name: hash["parent"])
+  ResearchArea.find_or_initialize_by(name: hash["name"]) do |ra|
+    ra.update!(parent: parent)
+  end
   puts "#{ hash["name"] } area generated"
 end
 
