@@ -185,6 +185,8 @@ ENV variables:
     script is added into head section)
   * `PORTAL_BASE_URL` - portal base URL used to generate footer and other static
     links to EOSC portal
+  * `ASSET_HOST` and `ASSET_PROTOCOL` - assets mailer config is mandatory 
+    (e.g. ASSET_HOST = marketplace.eosc-portal.eu/ and ASSET_PROTOCOL = https )
 
 ## Commits
 
