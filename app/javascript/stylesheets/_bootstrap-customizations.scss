@@ -259,7 +259,7 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   }
 }
 
-#main-navbar {
+.main-nav {
   a {
     svg {
       padding-right: 3px;
@@ -718,7 +718,7 @@ Card style
 
 .for-providers {
   border: none;
-  background: url(../../assets/images/bg-lines-small.png) no-repeat right center $palette-lightblue;
+  background: url('../../assets/images/bg-lines-small.png') no-repeat right center $palette-lightblue;
   border-radius: $radius-common;
 
 
@@ -912,6 +912,7 @@ Filters
   background: url('../../assets/images/main-bg.png') no-repeat;
   background-position: calc(50% + 700px) 450px;
 }
+
 .numbers {
   background: url('../../assets/images/main-bg-dots.png') no-repeat;
   background-position: center 100px;
@@ -919,7 +920,8 @@ Filters
   a {
     color: $palette-gray-100;
 
-    &:hover, &:active {
+    &:hover,
+    &:active {
       color: $palette-gray-100;
     }
   }
@@ -950,7 +952,7 @@ Filters
   }
 }
 
-.home-carousel  {
+.home-carousel {
 
   .card-img-top {
     height: 120px;
