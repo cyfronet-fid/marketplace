@@ -25,7 +25,7 @@ platforms:
     Europeana:
         name: &europeana "Europeana"
     AoDP:
-        name: &aodp "Applications on Demand Platform"
+        name: &aodp "EGI Applications on Demand"
     ENES:
         name: &enesPlatform "IS-ENES"
     ELIXIR:
@@ -50,6 +50,11 @@ platforms:
         name: &openGC "Open Geospatial Consortium"
     Copernicus:
         name: &copernicus "Copernicus"
+    EOSCHub:
+        name: &eoscHub "EOSC-hub project"
+    NIRD:
+        name: &nird "National Infrastructure for Research Data (NIRD)"
+
 
 
 categories:
@@ -232,6 +237,9 @@ area:
         name: &physicalSciences "Physical Sciences"
     SocialSciences:
         name: &socialSciences "Social Sciences"
+    Philosophy:
+        name: &philosophy "Philosophy / History
+"
 
 services:
 
@@ -1470,7 +1478,7 @@ services:
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
         tagline: AAI platform for federated authentication to EUDAT services
-        platforms: [*eudatPlatform, *ec3, *wenmr]
+        platforms: [*eudatPlatform]
         description: |
           The B2ACCESS AAI proxy service is arbitrating access to registered Service Providers via different protocols.
           Integrated Service Providers consume Attribute assertions from the B2ACCESS service when the End User
@@ -1488,30 +1496,10 @@ services:
 
         offers:
           1:
-            name: B2STAGE
+            name: b2accessDemo
             description: |
-              B2STAGE is a reliable, efficient, light-weight and easy-to-use service to transfer research data sets
-              between EUDAT storage resources and high-performance computing (HPC) workspaces.
-            parameters:
-              - id:  "id1"
-                label:  "Tool"
-                description:  "Choose the tool"
-                type:  "select"
-                value_type:  "string"
-                config:
-                  mode: "buttons"
-                  values: ["FTS3", "globus online"]
-              - id:  "id2"
-                label:  "Start of service"
-                description:  "Please choose the start date"
-                type:  "date"
-                value_type:  "string"
-              - id:  "id3"
-                label:  "Number of days"
-                description:  "Choose number of days"
-                type:  "input"
-                value_type:  "integer"
-                value: 365
+              Demo
+
 
     EGI Archive storage:
         title: EGI Archive storage
@@ -2069,7 +2057,7 @@ services:
 #
 #                     Featured use cases:
 #
-#                         New viruses implicated in fatal snake disease  how the Chipster platform helped virologists to make sense of millions of virus genomes"
+#                         New viruses implicated in fatal snake disease  how the  platform helped virologists to make sense of millions of virus genomes"
 #    GNU Octave:
 #        title: GNU Octave
 #        parents: *processingAndAnalysisParent
@@ -2495,43 +2483,55 @@ services:
 #              The Semantic Search Engine (SSE) is an application conceived to demonstrate the potential of information
 #              coupled with semantic web technologies to address the issues of data discovery and correlation.
 #            parameters: *appParameters
-#    Chipster:
-#        title: Chipster
-#        parents: *processingAndAnalysisParent
-#        providers: [*egi]
-#        logo: chipster.png
-#        open_access: false
-#        webpage_url: https://chipster.csc.fi
-#        manual_url: https://chipster.csc.fi/manual/
-#        helpdesk_url:
-#        tutorial_url:
-#        terms_of_use_url:
-#        corporate_sla_url:
-#        access_policies_url:
-#        places: *europe
-#        dedicated_for: ["Researchers", "Research organisations"]
-#        languages: *english
-#        area: *lifeSciences
-#        #restrictions: *notSpecified
-#        phase: "Production (min. TRL 8)"
-#        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-#        platforms: [*egiPlatform, *ec3, *aodp]
-#        description: |
-#          Chipster is a user-friendly analysis software for high-throughput data.
-#          It contains over 300 analysis tools for next generation sequencing (NGS),
-#          microarray, proteomics and sequence data.
-#          Users can save and share automatic analysis workflows, and visualize data interactively using
-#          a built-in genome browser and many other visualizations.
-#        offers:
-#          1:
-#            name: Chipster
-#            description: |
-#              Chipster is a user-friendly analysis software for high-throughput data.
-#              It contains over 300 analysis tools for next generation sequencing (NGS),
-#              microarray, proteomics and sequence data.
-#              Users can save and share automatic analysis workflows, and visualize data interactively using
-#              a built-in genome browser and many other visualizations.
-#            parameters: *appParameters
+    Chipster:
+        title: &chipster Chipster
+        parents: *processingAndAnalysisParent
+        providers: [*infn, *csc]
+        logo: chipster.png
+        open_access: false
+        webpage_url: https://csgf.egi.eu/
+        manual_url: https://csgf.egi.eu/documents/620030/0/csg_manual_for_ltos.pdf/be218ad7-8a0d-42b7-b932-4b7667524c09
+        helpdesk_url:
+        tutorial_url:
+        #contact: applications-platform-info@mailman.egi.eu
+        terms_of_use_url: https://csgf.egi.eu/terms-of-use
+        corporate_sla_url: https://documents.egi.eu/document/2733
+        access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
+        places: *europe
+        dedicated_for: ["Researchers", "Research organisations", "Business"]
+        languages: *english
+        area: *lifeSciences
+        restrictions: "Research affiliation needed"
+        phase: "Production (min. TRL 8)"
+        tagline: NGS and microarray analysis in the cloud.
+        platforms: [*eoscHub, *aodp]
+        description: |
+          Chipster is a user-friendly analysis software for high-throughput data.
+          It contains over 300 analysis tools for next generation sequencing (NGS),
+          microarray, proteomics and sequence data.
+          Users can save and share automatic analysis workflows, and visualize data interactively using
+          a built-in genome browser and many other visualizations.
+
+          ### Features:
+
+
+            - Federated authentication through the EGI Applications on Demand service.
+
+            - Web based access.
+
+            - Execution of analysis tools from the Chipster toolbox.
+        offers:
+          1:
+            name: Chipster
+            description: |
+              Chipster is a user-friendly analysis software for high-throughput data.
+              It contains over 300 analysis tools for next generation sequencing (NGS),
+              microarray, proteomics and sequence data.
+              Users can save and share automatic analysis workflows, and visualize data interactively using
+              a built-in genome browser and many other visualizations.
+
+
+
 #    ClustalW2:
 #        title: ClustalW2
 #        parents: *processingAndAnalysisParent
@@ -3744,7 +3744,7 @@ services:
                     cloudferro
     CloudFerro Infrastructure:
         title: &cfi CloudFerro Infrastructure
-        parents: [*computeParent, *storageParent, *networkingParent, *processingAndAnalysisParent]
+        parents: [*computeParent, *storageParent, *processingAndAnalysisParent]
         providers: [*cloudFerro]
         logo: *cfLogo
         open_access: true
@@ -4220,7 +4220,7 @@ services:
       title: &prominence PROMINENCE
       parents: *computeParent
       providers: [*egi] #TODO: change to United Kingdom Atomic Energy Authority (or UKAEA)
-#      logo: training-infrastructure. TODO: logo
+      logo: prominence-logo.png
       open_access: false
       webpage_url: https://alahiff.github.io/prominence/
       manual_url:
@@ -4295,7 +4295,7 @@ services:
             new gitlab repositories, events streaming from the dCache backend.
     Pan faas:
       title: &panFaas PaN faas
-      parents: *storageParent
+      parents: *computeParent
       providers: [*desyProvider]
       logo: panFaas.png
       open_access: false
@@ -4400,7 +4400,7 @@ services:
       title: &wsPgrade WS-PGRADE
       parents: *processingAndAnalysisParent
       providers: [*mtaSztaki]
-      #logo: wspgrade.png #TODO: nologo
+      logo: wspgrade.png
       open_access: false
       webpage_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard
       manual_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/help
@@ -4410,13 +4410,13 @@ services:
       corporate_sla_url: https://documents.egi.eu/document/2733
       access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
       places: *europe
-      dedicated_for: ["Researchers"]
+      dedicated_for: ["Researchers", "Research organisations", "Business"]
       languages: *english
       area: *interdisciplinary
       #restrictions: *notSpecified
       phase: Production (min. TRL 8)
       tagline: Setup and run parameter studies in the cloud with a few clicks.
-      platforms: [*egiPlatform]
+      platforms: [*eoscHub, *aodp]
       description: |
         The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal)
         is the Liferay-based web portal (WS-PGRADE web application) of gUSE high level middleware system.
@@ -4436,11 +4436,16 @@ services:
           - Interoperability with most widely used IaaS cloud technologies
           - Job wizard interface to streamline analytical steps.
           - Use of ‘per-user subproxies’ from EGI to access X.509-protected resources on the users’ behalf.
+      offers:
+          1:
+            name: WS Demo
+            description: |
+              demo
     CSC ePouta:
       title: &cscEpouta CSC ePouta
-      parents: *processingAndAnalysisParent
+      parents: [*processingAndAnalysisParent, *computeParent]
       providers: [*csc]
-      #logo: epouta.png #TODO: nologo
+      logo: ePouta-logo.jpg
       open_access: false
       webpage_url: https://research.csc.fi/epouta
       manual_url: https://research.csc.fi/pouta-user-guide
@@ -4450,19 +4455,24 @@ services:
       corporate_sla_url: https://research.csc.fi/documents/48467/0/ePouta+SLA/cbac49af-f069-4a8b-9636-e519b1ee331d
       access_policies_url: https://research.csc.fi/pricing-of-computing-services
       places: *europe
-      dedicated_for: ["Researchers"]
+      dedicated_for: ["Researchers", "Research organisations", "Research groups", "Providers"]
       languages: *english
-      area: *interdisciplinary
+      area: [*interdisciplinary, *lifeSciences, *socialSciences, *artsAndHumanities, *appliedScience, *philosophy]
       #restrictions: *notSpecified
       phase: Production (TRL 8)
       tagline: Secure and cost-effective cloud computing for processing sensitive data
-      platforms: [*eoscPan]
+      platforms: [*eudatPlatform, *elixirPlatform]
       description: |
         This service provides a infrastructure as a-service for running analysis on sensitive data.
         The ePouta Virtual Private Cloud service allows customers to provision virtual machines and
         storage resources directly to their own internal networks. It provides an easy to use admin web interface and
         a programmable API for managing virtual machines, networks and storage. CSC ePouta meets elevated information
         security level regulations and is targeted for sensitive data processing
+      offers:
+          1:
+            name: CSC Demo
+            description: |
+              demo
     TDS:
       title: &tds TDS
       parents: [*processingAndAnalysisParent, *storageParent]
@@ -4482,12 +4492,20 @@ services:
       area: *interdisciplinary
       #restrictions: *notSpecified
       phase: Production (TRL 8)
-      tagline: Services for sensitive dataf
-      platforms: [*eoscPan]
+      tagline: Services for sensitive data
+      platforms: [*eudatPlatform, *nird]
       description: |
-        Repository service for EOSC PAN notebooks and cloud functions for EOSC PAN FaaS. Gitlab runners
-        for continuous integration in the DESY Compute Cloud,
-        building and publishing docker containers in the project registry.
+        This service provides researchers with a desktop with secure storage and software
+        to run your collection and analysis of sensitive data. The system is built on the idea
+        that having a robust firewall around a system that provides a full separation of projects, is the best policy.
+        A two-step authentication is needed to gain access to the system. Inside the system,
+        every project has its own VLAN and its own virtual file system.
+        This means that projects cannot find any information about any other project on the system.
+      offers:
+          1:
+            name: TDS Demo
+            description: |
+              demo
     Elastic Cloud Compute Cluster (EC3):
       title: &ec3Service Elastic Cloud Compute Cluster (EC3)
       parents: *processingAndAnalysisParent
@@ -4502,13 +4520,13 @@ services:
       corporate_sla_url: https://documents.egi.eu/document/2733
       access_policies_url:  https://documents.egi.eu/public/ShowDocument?docid=2635
       places: *europe
-      dedicated_for: ["Researchers"]
+      dedicated_for: ["Researchers", "Research organisations", "Business"]
       languages: *english
       area: *interdisciplinary
       restrictions: Research affiliation needed
       phase: Production (min. TRL 8)
       tagline: Deploy a virtual cluster on top of IaaS infrastructures with a few clicks.
-      platforms: [*eoscPan]
+      platforms: [*eoscHub, *aodp]
       description: |
         The Elastic Cloud Computing Cluster (EC3) is a platform that allows creating elastic virtual clusters
         on top of Infrastructure as a Service (IaaS) providers, either public (such as Amazon Web Services,
@@ -4529,6 +4547,11 @@ services:
           - Several Ansible receipts are available to deploy applications and tools in the cluster nodes.
           - Nodes of the clusters will be self-managed by CLUES. Working nodes will be undeployed when they are idle.
           - Use of ‘per-user subproxies’ from EGI to access X.509-protected resources on the users’ behalf.
+      offers:
+          1:
+              name: EC3 Demo
+              description: |
+                  demo
 
 
 relations:
@@ -4911,6 +4934,24 @@ relations:
       both: true
       source: *panNotebook
       target: *panGitlab
+  chipsterToCheckin:
+      both: false
+      source: *chipster
+      target: *checkIn
+  WSPtoCheckIn:
+      both: false
+      source: *wsPgrade
+      target: *checkIn
+  ePoutaToTDS:
+      both: true
+      source: *cscEpouta
+      target: *tds
+  EC3ToTDS:
+      both: true
+      source: *ec3Service
+      target: *tds
+
+
 
 #  haddockToB2drop:
 #    both: true
