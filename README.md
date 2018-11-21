@@ -176,6 +176,7 @@ ENV variables:
   * `SMTP_ADDRESS` - smtp mail server address
   * `SMTP_USERNAME` - smtp user name or email address
   * `SMTP_PASSWORD` - smtp password
+  * `FROM_EMAIL` - from email (if not set `from@example.com` will be used)
   * `GOOGLE_ANALYTICS` - google analytics key for GMT (if present than analytics
     script is added into head section)
   * `PORTAL_BASE_URL` - portal base URL used to generate footer and other static
