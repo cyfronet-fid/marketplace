@@ -28,6 +28,9 @@ en:
         text: |
           We will send and information service provider.
           You will receive answer to %{email} email.
+      service:
+        tag_list: |
+          Use "," to separate tags
 
     #     username: 'User name to sign in.'
     #     password: 'No special characters, please.'

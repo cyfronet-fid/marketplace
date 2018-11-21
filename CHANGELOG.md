@@ -124,6 +124,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Favicon (@michal-szostak)
 - Research area hierarchy (@mkasztelnik)
 - Redirect user from `/affiliations` to `/profile` (@mkasztelnik)
+- Service tags (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
