@@ -13,7 +13,6 @@ RSpec.feature "Service filtering" do
 
       visit services_path
 
-      puts body
       expect(body).to have_text(root.name)
       # https://github.com/teamcapybara/capybara/issues/1440#issuecomment-62335948
       expect(body).to have_text("\u00a0\u00a0#{sub.name}")
