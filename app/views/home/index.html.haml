@@ -3,7 +3,7 @@
                           countries_number: @countries_number
 .container
   %h2.mb-3.mt-4 Popular services
-  #home-carousel.carousel.slide.home-carousel
+  #home-carousel.carousel.slide.home-carousel{"data-ride" => "carousel"}
     .carousel-inner
       .carousel-item.active
         .card-deck
@@ -44,6 +44,7 @@
                   %p
                     %small Dedicated for:
                     = safe_join(dedicated_for_text(service), ", ").truncate(21)
+
 
     %ol.carousel-indicators
       %li.active{ "data-target" => "#home-carousel", "data-slide-to" => "0" }
