@@ -1788,7 +1788,7 @@ services:
         title: &vloService Virtual Language Observatory
         parents: *sharingAndDicoveryParent
         providers: [*clarin]
-        logo: component-metadata-infrastructure.png
+        logo: vlo-logo.png #component-metadata-infrastructure.png
         open_access: false
         webpage_url: https://clarin.eu/
         manual_url: https://vlo.clarin.eu/help
@@ -1822,13 +1822,15 @@ services:
               other language resource providers and Europeana.
 
 
-              The VLO also provides access to the Virtual Collection Registry metadata and can be used
-              as a starting point to process language data with the Language Resource Switchboard.
+              The VLO also provides access to the Virtual Collection Registry metadata
+              and can be used as a starting point to process language data with the Language Resource Switchboard.
+
+
     LRS:
         title: &lrsService Language Resource Switchboard
         parents: *sharingAndDicoveryParent
         providers: [*clarin]
-        logo: component-metadata-infrastructure.png
+        logo: lrs-logo.png #component-metadata-infrastructure.png
         open_access: false
         webpage_url: https://clarin.eu/
         manual_url: https://vlo.clarin.eu/help
@@ -1846,10 +1848,40 @@ services:
         tagline: A web application that suggests language analysis tools for specific data sets.
         platforms: [*clarinPlatform, *eudatPlatform, *europeana]
         description: |
-          The data are available as downloadable netCDF files from Argo's two
-          Global Data Assembly Centers (GDACS) and there are various data products too
-          which can be accessed through various data viewers.
-          Data from individual floats are also available from a certain region or time.
+          A web application that suggests language analysis tools for specific
+          data sets, enabling the following tasks:
+
+            **Sentence level analysis**:
+
+            - Constituency Parsing
+            - Dependency Parsing
+            - Shallow Parsing
+
+            **Word level analysis**:
+
+            - Lemmatization
+            - Morphological Analysis
+            - Named Entity Recognition
+            - Part-Of-Speech Tagging
+
+            **Semantic analysis**:
+
+            - Coreference Resolution
+            - Sentiment Analysis
+            - Text Summarization
+
+            **Digital Humanities analysis**:
+
+            - Distant Reading
+            - Named Entity Linking
+            - Stylometry
+            - Topic modelling
+
+          The Language Resource Switchboard will automatically provide a list
+          of available tools, based on the language and format of the input.
+          The Switchboard can also be invoked from the Virtual Language Observatory
+          and B2DROP (see Suggested compatible services below).
+
         offers:
           1:
             name: LRS
@@ -1859,7 +1891,7 @@ services:
         title: &vcrService Virtual Collection Registry
         parents: *sharingAndDicoveryParent
         providers: [*clarin]
-        logo: component-metadata-infrastructure.png
+        logo: vcr-logo.png #component-metadata-infrastructure.png
         open_access: false
         webpage_url: https://clarin.eu/
         manual_url: https://vlo.clarin.eu/help
@@ -1885,12 +1917,15 @@ services:
           hence the term virtual.
 
 
-          CLARIN provides a registry where scholars can create and publish their virtual collections.
-          It provides persistent identifiers and federated login.
+          CLARIN provides a [registry][1] where scholars can create and publish their virtual collections.
+          It provides [persistent identifiers and federated login][2].
 
 
           The collection metadata is openly available and accessible via the Virtual Language Observatory.
           The referenced digital objects can also be processed with the Language Resource Switchboard.
+
+          [1]: https://www.clarin.eu/vcr
+          [2]: https://www.clarin.eu/content/federated-identity
         offers:
           1:
             name: VCR
@@ -2765,13 +2800,13 @@ services:
                 value_type:  "integer"
                 value: 365
     D4 Science Particle Formation:
-        title: &d4scienceService Particle Formation Virtual Research Environment
+        title: &d4scienceService New Particle Formation Event Analysis
         parents: *processingAndAnalysisParent
         providers: [*d4science, *egi, *smartSmear]
         logo: vre.png
         open_access: true
-        connected_url: https://services.d4science.org/group/particleformation/
-        webpage_url: https://services.d4science.org/group/particleformation
+        connected_url: https://services.d4science.org/web/particleformation/
+        webpage_url: https://services.d4science.org/web/particleformation/
         manual_url: https://github.com/markusstocker/pynpf-d4science
         helpdesk_url: https://github.com/markusstocker/pynpf-d4science
         tutorial_url: https://youtu.be/ra9W7b5DbgI
