@@ -4,6 +4,8 @@ body {
   font-size: $font-size-sm;
   margin-bottom: 0 !important;
   font-weight: $font-weight-normal;
+  background: url('../../assets/images/main-bg.png') no-repeat;
+  background-position: calc(50% + 700px) 450px;
 
   > main {
     padding-bottom: 50px;
@@ -657,7 +659,6 @@ Card style
   border-radius: 0;
 
   .card-header {
-    background-color: $card-header-bg;
     border-bottom: none;
   }
 
