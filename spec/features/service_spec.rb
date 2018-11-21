@@ -12,13 +12,14 @@ RSpec.feature "Service browsing" do
     before { checkin_sign_in_as(user) }
 
     scenario "allows to see details" do
-      service = create(:service)
+      service = create(:service, tag_list: ["my-tag"])
 
       visit service_path(service)
 
-      expect(page.body).to have_content service.title
-      expect(page.body).to have_content service.description
-      expect(page.body).to have_content service.tagline
+      expect(body).to have_content service.title
+      expect(body).to have_content service.description
+      expect(body).to have_content service.tagline
+      expect(body).to have_content "my-tag"
     end
 
     scenario "I see Ask Question" do

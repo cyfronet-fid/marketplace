@@ -39,4 +39,19 @@ RSpec.feature "Service filtering" do
       expect(page).to have_selector(".media", count: 1)
     end
   end
+
+  it "shows services with tag" do
+    create(:service, tag_list: ["a"])
+    create(:service, tag_list: ["a", "b"])
+    create(:service, tag_list: ["c"])
+
+    visit services_path(tag: "a")
+    expect(page).to have_selector(".media", count: 2)
+
+    visit services_path(tag: ["a", "b"])
+    expect(page).to have_selector(".media", count: 1)
+
+    visit services_path(tag: ["a", "b", "c"])
+    expect(page).to have_selector(".media", count: 0)
+  end
 end

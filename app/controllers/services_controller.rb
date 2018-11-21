@@ -13,6 +13,7 @@ class ServicesController < ApplicationController
     @rating_options = rating_options
     @research_areas = research_areas
     @related_platform_options = related_platform_options
+    @tag_options = tag_options
   end
 
   def show

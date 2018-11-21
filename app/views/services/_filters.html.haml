@@ -40,6 +40,12 @@
           %option{ value: "", selected: "selected" }
             Any
           = options_for_select(research_areas, params[:research_area])
+  - if tag_options.present?
+    %h6 Tag
+    .row
+      .col-md-11.offset-md-1
+        .form-group
+          = multi_checkbox :tag, params[:tag], tag_options
   .row
     .col-md-12
       %button#filter-submit.btn.btn-primary.mt-4.w-100{ type: "submit" }

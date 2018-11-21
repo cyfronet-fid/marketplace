@@ -1,0 +1,5 @@
+- if service.tag_list.present?
+  .container
+    Tags:
+    - service.tag_list.sort.each do |tag|
+      = link_to tag, services_path(tag: tag), class: "badge badge-light"
