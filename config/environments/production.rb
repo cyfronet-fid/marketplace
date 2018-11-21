@@ -99,6 +99,7 @@ Rails.application.configure do
   # Mailer settings
   config.action_mailer.default_url_options = { host: ENV["ROOT_URL"] }
   config.action_mailer.delivery_method = :smtp
+  config.action_controller.asset_host = { host: ENV["ROOT_URL"] }
 
   # SMTP settings
   config.action_mailer.smtp_settings = {
