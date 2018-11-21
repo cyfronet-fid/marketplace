@@ -3,7 +3,7 @@
                           countries_number: @countries_number
 .container
   %h2.mb-3.mt-4 Popular services
-  #home-carousel.carousel.slide.home-carousel
+  #home-carousel.carousel.slide.home-carousel{ "data-ride" => "carousel" }
     .carousel-inner
       .carousel-item.active
         .card-deck
@@ -11,19 +11,19 @@
             .card
               .card-img-top
                 - if service.logo.attached?
-                  = image_tag service.logo.variant(resize: "180x120")
+                  = image_tag service.logo.variant(resize: "170x112")
                 - else
                   = image_tag "eosc-img.png"
               .card-body
                 .card-title
-                  = link_to service.title, service
+                  = link_to service.title.truncate(35), service
               .card-footer
                 %p
                   %small Provided by:
-                  = safe_join(providers(service), ", ")
+                  = safe_join(providers_text(service), ", ").truncate(22)
                 %p
                   %small Dedicated for:
-                  = safe_join(dedicated_for_links(service), ", ")
+                  = safe_join(dedicated_for_text(service), ", ").truncate(21)
       - if @services.count > 4
         .carousel-item
           .card-deck
@@ -31,19 +31,20 @@
               .card
                 .card-img-top
                   - if service.logo.attached?
-                    = image_tag service.logo.variant(resize: "180x120")
+                    = image_tag service.logo.variant(resize: "170x112")
                   - else
                     = image_tag "eosc-img.png"
                 .card-body
                   .card-title
-                    = link_to service.title, service
+                    = link_to service.title.truncate(35), service
                 .card-footer
                   %p
                     %small Provided by:
-                    = safe_join(providers(service), ", ")
+                    = safe_join(providers_text(service), ", ").truncate(22)
                   %p
                     %small Dedicated for:
-                    = safe_join(dedicated_for_links(service), ", ")
+                    = safe_join(dedicated_for_text(service), ", ").truncate(21)
+
 
     %ol.carousel-indicators
       %li.active{ "data-target" => "#home-carousel", "data-slide-to" => "0" }
