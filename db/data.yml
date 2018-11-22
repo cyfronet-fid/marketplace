@@ -4335,7 +4335,7 @@ services:
       providers: [*desyProvider]
       logo: panFaas.png
       open_access: false
-      webpage_url: https://eosc-pan-faas.desy.de
+      webpage_url: https://eosc-pan-git.desy.de/pan/support/
       manual_url: https://eosc-pan-git.desy.de/support
       helpdesk_url: https://eosc-pan-git.desy.de/support
       tutorial_url: https://eosc-pan-git.desy.de
