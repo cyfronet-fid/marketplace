@@ -157,6 +157,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Base URL for footer link updated to `https://eosc-portal.eu` (@mkasztelnik)
 - Changed VO to Research groups in filters UI (@michal-szostak)
 - Unify confirmation views - order, new affiliation, affiliation confirmations (@mkasztelnik)
+- Improve wording of service, affiliation and project item mails (@jswk)
 
 ### Deprecated
 
