@@ -96,6 +96,8 @@ export MP_JIRA_ISSUE_TYPE_ID=10000  #this might be different
 export MP_JIRA_WF_TODO=10000  #this might be different
 export MP_JIRA_WF_IN_PROGRESS=10001  #this might be different
 export MP_JIRA_WF_DONE=10002  #this might be different
+export MP_JIRA_WF_WAITING_FOR_RESPONSE=10003  #this might be different
+export MP_JIRA_WF_REJECTED=10004  #this might be different
 export MP_HOST="http://localhost:5000" # this is address of MP application
 ```
 
@@ -116,7 +118,9 @@ As of now webhooks must be created manually. You can do it in your administrator
 panel on your JIRA instance.
 
 Webhook url must be as follows
-`<MP HOSTNAME e.g. http://localhost:5000>/api/webhooks/jira?issue_id=${issue.id}`.
+`<MP HOSTNAME e.g. http://localhost:5000>/api/webhooks/jira?issue_id=${issue.id}&secret=<app_secret>`.
+`app_secret` should be the same as the one defined in `jira.yml` - `webhook_secret` or in `MP_JIRA_WEBHOOK_SECRET`
+environmental variable.
 JQL for querying should be: `project = <PROJECT_KEY>`
 All notifications for issues and comments should be enabled.
 
