@@ -24,9 +24,14 @@
   %h2 Contact emails
   - @service.contact_emails.each do |email|
     %p= email
+
   %h2 Areas
   - @service.research_areas.each do |area|
     %p= area.name
+
+  %h2 Dedicated For
+  - @service.target_groups.each do |group|
+    %p= group.name
 
   %h2 Providers
   - @service.providers.each do |provider|
