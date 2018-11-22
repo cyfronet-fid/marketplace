@@ -1,5 +1,6 @@
 Dear #{@user.full_name},
 \
-You just created new affiliation. To use it during service ordering process. It need
-to be confirmed by clicking on this #{affiliation_confirmations_url(at: @affiliation.token)} link.
+You created a new affiliation to be used when ordering a service.
+You need to confirm it by clicking this
+#{affiliation_confirmations_url(at: @affiliation.token)} link.
 
