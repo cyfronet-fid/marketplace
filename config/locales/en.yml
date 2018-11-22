@@ -49,7 +49,7 @@ en:
     select:
       description: |
         You can organize your services in projects.
-        Add this service to specific project or create a new one.
+        Add this service to a specific project or create a new one.
 
   affiliation_confirmations:
     index:
