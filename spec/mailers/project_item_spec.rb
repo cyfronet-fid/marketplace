@@ -44,7 +44,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       encoded_body = mail.body.encoded
 
       expect(mail.subject).to match(/new message/)
-      expect(encoded_body).to match(/New message was added/)
+      expect(encoded_body).to match(/A new message was added/)
       expect(encoded_body).to match(/#{project_item_url(project_item)}/)
     end
   end
