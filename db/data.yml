@@ -260,7 +260,7 @@ services:
         languages: &english English
         dedicated_for: ["Researchers", "Research organisations"]
         area: *interdisciplinary
-        restrictions: &notSpecified not specified yet
+        restrictions: &notSpecified not yet specified
         phase: "Production (min. TRL 8)"
         tagline: Run virtual machines on-demand with complete control over computing resources
         platforms: [*egiPlatform]
@@ -791,7 +791,7 @@ services:
           EUDAT and JSC.
         offers:
           1:
-            name: B2DROP For Reaserchers
+            name: B2DROP For Researchers
             description: |
               B2DROP is a secure and trusted data exchange service for researchers and scientists to keep their
               research data synchronized and up-to-date and to exchange with other researchers.
@@ -946,7 +946,7 @@ services:
           [2]: http://b2find.eudat.eu/guidelines/harvesting.html
         offers:
           1:
-            name: B2FIND For Reaserchers
+            name: B2FIND For Researchers
             description: |
               B2FIND is a discovery service based on metadata steadily harvested from research data collections
               from EUDAT data centres and other community repositories. The service offers faceted browsing
@@ -1048,7 +1048,7 @@ services:
           EUDAT and SURFsara, GRNET
         offers:
           1:
-            name: B2HANDLE For Reaserchers
+            name: B2HANDLE For Researchers
             description: |
               B2HANDLE is the distributed service for minting, storing, managing and accessing persistent
               identifiers (PIDs) and essential metadata (PID records) as well as managing PID namespaces.
@@ -1321,7 +1321,7 @@ services:
           EUDAT and CSC
         offers:
           1:
-            name: B2SHARE For Reaserchers
+            name: B2SHARE For Researchers
             description: |
               B2SHARE is a user-friendly, reliable and trustworthy way for researchers, scientific communities
               and citizen scientists to store and publish small-scale research data from diverse contexts.
@@ -1460,7 +1460,7 @@ services:
                 value: 365
     B2ACCESS:
         title: &b2access B2ACCESS
-        parents: *storageParent
+        parents: *securityAndOperationsParent
         providers: [*eudat, *all]
         logo: b2access.png
         open_access: false
@@ -1755,7 +1755,7 @@ services:
 #        corporate_sla_url:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        places: *europe
-#        dedicated_for: ["Reaserchers"] #TODO: but not specified
+#        dedicated_for: ["Researchers"] #TODO: but not specified
 #        languages: *english
 #        area: *earthScience
 ##        #restrictions: *notSpecified
@@ -1782,7 +1782,7 @@ services:
         corporate_sla_url:
         access_policies_url:
         places: *europe
-        dedicated_for: ["Reaserchers"] #TODO: but not specified
+        dedicated_for: ["Researchers"] #TODO: but not specified
         languages: *english
         area: *earthScience
 #        #restrictions: *notSpecified
@@ -1814,7 +1814,7 @@ services:
         corporate_sla_url:
         access_policies_url:
         places: *europe
-        dedicated_for: ["Reaserchers", "Research groups", "Research organisations"]
+        dedicated_for: ["Researchers", "Research groups", "Research organisations"]
         languages: *english
         area: [*earthScience, *lifeSciences, *interdisciplinary]
         restrictions:
@@ -1846,7 +1846,7 @@ services:
         providers: [*clarin]
         logo: vlo-logo.png #component-metadata-infrastructure.png
         open_access: false
-        webpage_url: https://clarin.eu/
+        webpage_url: https://vlo.clarin.eu
         manual_url: https://vlo.clarin.eu/help
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
@@ -1855,8 +1855,8 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
-        dedicated_for: ["Reaserchers"] #TODO: but not specified
-        area: *artsAndHumanities
+        dedicated_for: ["Researchers"]
+        area: [*socialSciences, *humanities]
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
         tagline: A facet browser for fast navigation and searching in huge amounts of metadata.
@@ -1887,8 +1887,9 @@ services:
         parents: *sharingAndDicoveryParent
         providers: [*clarin]
         logo: lrs-logo.png #component-metadata-infrastructure.png
-        open_access: false
-        webpage_url: https://clarin.eu/
+        open_access: true
+        connected_url: http://switchboard.clarin.eu/
+        webpage_url: http://switchboard.clarin.eu/ #https://clarin.eu/
         manual_url: https://vlo.clarin.eu/help
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
@@ -1897,8 +1898,8 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
-        dedicated_for: ["Reaserchers"] #TODO: but not specified
-        area: *artsAndHumanities
+        dedicated_for: ["Researchers"] #TODO: but not specified
+        area: [*socialSciences, *humanities]
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
         tagline: A web application that suggests language analysis tools for specific data sets.
@@ -1949,7 +1950,7 @@ services:
         providers: [*clarin]
         logo: vcr-logo.png #component-metadata-infrastructure.png
         open_access: false
-        webpage_url: https://clarin.eu/
+        webpage_url: https://www.clarin.eu/content/virtual-collections
         manual_url: https://vlo.clarin.eu/help
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
@@ -1958,7 +1959,7 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
-        dedicated_for: ["Reaserchers"] #TODO: but not specified
+        dedicated_for: ["Researchers"] #TODO: but not specified
         area: *artsAndHumanities
 #        #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
@@ -2013,7 +2014,7 @@ services:
 #        terms_of_use_url:
 #        corporate_sla_url:
 #        access_policies_url:
-#        dedicated_for: ["Reaserchers"] #TODO: but not specified
+#        dedicated_for: ["Researchers"] #TODO: but not specified
 #        places: *europe
 #        languages: *english
 #        area: *earthScience
@@ -3588,7 +3589,16 @@ services:
         tagline: "Catalog Service for the Web (CSW), OGC compliant catalogue service to expose metadata of geospatial records hosted at EODC"
         platforms: [*openGC]
         description: |
-          Catalog Service for the Web (CSW)
+            The EODC Data Catalogue service allows querying the Copernicus Sentinel satellite data hosted at EODC.
+            The service is available through a  simple Web GUI, eomEX+, as well as an API. The back-end of eomEX+
+            is the EODC pycsw server, an implementation of an OGC CSW server. As a consequence,
+            the eomEX+ API is accompanied by an expert level  API provided by the EODC CSW server, located at [link][1].
+
+            Further details can be found [here][2].
+
+
+            [1]: https://csw.eodc.eu
+            [2]: https://eomex.eodc.eu/manual
         offers:
           1:
             name: EODC Data Catalogue Service
@@ -3612,7 +3622,7 @@ services:
         area: *earthScience
         #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
-        tagline: *notSpecified
+        tagline: Big data satellite imagery service
         platforms: [*eopillar]
         description: |
           Sentinel Hub is a multi- spectral and multi-temporal big data satellite imagery service,
@@ -3639,7 +3649,7 @@ services:
         area: *earthScience
         #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
-        tagline: *notSpecified
+        tagline: Cross-domain application supporting various application fields
         platforms: [*eopillar]
         description: |
           MEA platform implements the concept of Digital Earth making global environmental geospatial data Findable,
@@ -3666,7 +3676,7 @@ services:
         area: *earthScience
         #restrictions: *notSpecified
         phase: "Production (min. TRL 8)"
-        tagline: *notSpecified
+        tagline: Service providing analysis-ready EO data
         platforms: [*eopillar]
         description: |
           Rasdaman is a datacube engine providing analysis-ready EO data by abstracting
@@ -4663,6 +4673,10 @@ relations:
     both: false
     source: *lrsService
     target: *b2find
+  lrsToB2Drop:
+    both: false
+    source: *lrsService
+    target: *b2drop
   lrsToB2Share:
     both: false
     source: *lrsService
