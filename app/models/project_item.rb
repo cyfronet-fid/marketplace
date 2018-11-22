@@ -5,6 +5,7 @@ class ProjectItem < ApplicationRecord
     created: "created",
     registered: "registered",
     in_progress: "in_progress",
+    waiting_for_response: "waiting_for_response",
     ready: "ready",
     rejected: "rejected"
   }

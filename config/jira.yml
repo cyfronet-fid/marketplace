@@ -11,7 +11,9 @@ default: &default
   workflow:
     todo: <%= ENV["MP_JIRA_WF_TODO"] || 1 %>
     in_progress: <%= ENV["MP_JIRA_WF_IN_PROGRESS"] || 2 %>
-    done: <%= ENV["MP_JIRA_WF_DONE"] || 3 %>
+    waiting_for_response: <%= ENV["MP_JIRA_WF_WAITING_FOR_RESPONSE"] || 3 %>
+    done: <%= ENV["MP_JIRA_WF_DONE"] || 4 %>
+    rejected: <%= ENV["MP_JIRA_WF_REJECTED"] || 5 %>
 
 development:
   <<: *default

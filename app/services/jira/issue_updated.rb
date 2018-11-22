@@ -14,6 +14,10 @@ class Jira::IssueUpdated
 
       if change["field"] == "status"
         case change["to"].to_i
+        when @jira_client.wf_rejected_id
+          status = :rejected
+        when @jira_client.wf_waiting_for_response_id
+          status = :waiting_for_response
         when @jira_client.wf_todo_id
           status = :registered
         when @jira_client.wf_in_progress_id
