@@ -9,9 +9,16 @@ RSpec.describe ProjectItem::Ready do
 
 
   before(:each) {
-    jira_client = double("Jira::Client", jira_project_key: "MP", jira_issue_type_id: 5)
-    transition_start = double("Transition", id: "1", name: "Start Progress")
-    transition_done = double("Transition", id: "2", name: "Done")
+    wf_done_id = 6
+    wf_in_progress_id = 7
+
+    jira_client = double("Jira::Client", jira_project_key: "MP", jira_issue_type_id: 5,
+                         wf_in_progress_id: wf_in_progress_id,
+                         wf_done_id: wf_done_id)
+    transition_start = double("Transition", id: "1", name: "____Start Progress____",
+                              to: double(id: wf_in_progress_id.to_s))
+    transition_done = double("Transition", id: "2", name: "____Done____",
+                             to: double(id: wf_done_id.to_s))
     jira_class_stub = class_double(Jira::Client).
         as_stubbed_const(transfer_nested_constants: true)
 
