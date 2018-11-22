@@ -172,5 +172,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Search does not preserve `page` query param (@michal-szostak)
 - Multicheckbox does not take into account selected category when calculating available services (@michal-szostak)
 - Change default sort order for services to name ascending (@michal-szostak)
+- Open access services transition to "Done" state (@michal-szostak)
 
 ### Security
