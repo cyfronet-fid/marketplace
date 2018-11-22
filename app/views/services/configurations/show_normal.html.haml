@@ -3,8 +3,8 @@
 %h2.mb-4.font-weight-normal= t "service.normal.order.configuration"
 %p.mb-4
   We need more information about your request.
-  Fill form below as much as possible.
-  It will help us to proceed you request quicker.
+  We will be able to process your request quicker
+  if the form is filled with as much detail as possible.
 
 = simple_form_for @project_item, url: service_configuration_path(@service), method: :put,
   html: { id: "order-form", "data-controller" => "project-item", "data-project-item-url" => projects_path } do |f|
@@ -34,7 +34,7 @@
   %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Affiliation
   = f.association :affiliation,
     collection: @affiliations, label_method: :organization,
-    hint: "Click #{link_to "here", new_profile_affiliation_path} to create new affilition".html_safe
+    hint: "Click #{link_to "here", new_profile_affiliation_path} to create a new affilition".html_safe
 
 = content_for :next_button do
   %button.btn.btn-primary{ form: "order-form", type: "submit" }

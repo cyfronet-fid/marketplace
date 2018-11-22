@@ -14,7 +14,7 @@ RSpec.feature "Affiliations" do
     it "shows alert when no active affiliation" do
       visit root_path
 
-      expect(page).to have_content("You don't have active affiliation")
+      expect(page).to have_content("An affiliation is required to order a service")
     end
 
     it "does not shows alert when has active affiliation" do
@@ -22,7 +22,7 @@ RSpec.feature "Affiliations" do
 
       visit root_path
 
-      expect(page).to_not have_content("You don't have active affiliation")
+      expect(page).to_not have_content("An affiliation is required to order a service")
     end
   end
 
@@ -30,7 +30,7 @@ RSpec.feature "Affiliations" do
     it "does not shows active affiliation alert" do
       visit root_path
 
-      expect(page).to_not have_content("You don't have active affiliation")
+      expect(page).to_not have_content("An affiliation is required to order a service")
     end
   end
 end
