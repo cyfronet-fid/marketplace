@@ -63,12 +63,33 @@ module Jira
       end
     end
 
+    def show_suggested_fields_mapping(mismatched_fields)
+      fields = @checker.client.Field.all.select { |_f| _f.custom }
+
+      puts "SUGGESTED MAPPINGS"
+      mismatched_fields.each do |field_name|
+        suggested_field_description = if (f = fields.find { |_f| _f.name == field_name.to_s })
+          "#{f.id.yellow} (export MP_JIRA_FIELD_#{f.name.gsub(/[- ]/, "_")}='#{f.id}')"
+        else
+          "NO MATCH FOUND".red
+        end
+
+        puts "  - #{field_name}: #{suggested_field_description}"
+      end
+
+      puts "AVAILABLE CUSTOM FIELDS"
+      fields.each do |field|
+        puts "  - #{field.name} [id: #{field.id}]"
+      end
+    end
+
     def initialize(checker = Jira::Checker.new, env = ENV)
       @checker = checker
       @env = env
     end
 
     def check
+      puts "Checking JIRA instance on #{@checker.client.jira_config["url"]}"
       print "Checking connection..."
       @checker.check_connection { |e| self.error_and_abort!(e) } && self.ok!
 
@@ -102,6 +123,15 @@ module Jira
         print "  - #{key} [id: #{id}]..."
         show_issue_states = true unless @checker.check_workflow(id) { |e| self.error_and_abort!(e, 2) } && self.ok!
       end
+
+      print "Checking custom fields mappings..."
+      @checker.check_custom_fields do |e|
+        self.error_and_abort!(e)
+
+        if e.instance_of?(Jira::Checker::CheckerCompositeError)
+          self.show_suggested_fields_mapping(e.statuses.keys)
+        end
+      end && self.ok!
 
       # in case of mismatched issue states, print all available
       self.show_available_issue_states if show_issue_states

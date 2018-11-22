@@ -12,7 +12,9 @@ RSpec.describe ProjectItem::Ready do
     wf_done_id = 6
     wf_in_progress_id = 7
 
-    jira_client = double("Jira::Client", jira_project_key: "MP", jira_issue_type_id: 5,
+    jira_client = double("Jira::Client",
+                         jira_project_key: "MP",
+                         jira_issue_type_id: 5,
                          wf_in_progress_id: wf_in_progress_id,
                          wf_done_id: wf_done_id)
     transition_start = double("Transition", id: "1", name: "____Start Progress____",
@@ -26,6 +28,7 @@ RSpec.describe ProjectItem::Ready do
     allow(jira_class_stub).to receive(:new).and_return(jira_client)
     allow(issue).to receive(:save).and_return(issue)
     allow(issue).to receive_message_chain(:transitions, :find) { issue }
+    allow(jira_client).to receive(:create_service_issue).and_return(issue)
     allow(jira_client).to receive_message_chain(:Issue, :find) { issue }
     allow(jira_client).to receive_message_chain(:Issue, :build) { issue }
     allow(issue).to receive_message_chain(:transitions, :all) { [transition_start, transition_done] }
@@ -59,11 +62,7 @@ RSpec.describe ProjectItem::Ready do
   it "creates new jira issue and do the transition" do
     jira_client = Jira::Client.new
 
-    expect(issue).to receive(:save).with(fields: {
-        summary: "Add open service #{project_item.service.title}",
-        project: { key: jira_client.jira_project_key },
-        issuetype: { id: jira_client.jira_issue_type_id }
-    })
+    expect(jira_client).to receive(:create_service_issue).with(project_item).and_return(issue)
 
     expect(transition).to receive(:save!).with("transition" => { "id" => "2" })
 

@@ -13,19 +13,14 @@ RSpec.describe ProjectItem::Register do
         as_stubbed_const(transfer_nested_constants: true)
 
     allow(jira_class_stub).to receive(:new).and_return(jira_client)
-    allow(issue).to receive(:save).and_return(issue)
     allow(jira_client).to receive_message_chain(:Issue, :find) { issue }
-    allow(jira_client).to receive_message_chain(:Issue, :build) { issue }
+    allow(jira_client).to receive(:create_service_issue).and_return(issue)
   }
 
   it "creates new jira issue" do
     jira_client = Jira::Client.new
 
-    expect(issue).to receive(:save).with(fields: {
-        summary: "Requested realization of #{project_item.service.title}",
-        project: { key: jira_client.jira_project_key },
-        issuetype: { id: jira_client.jira_issue_type_id }
-    })
+    expect(jira_client).to receive(:create_service_issue).with(project_item)
 
     described_class.new(project_item).call
     expect(project_item.project_item_changes.last).to be_registered
