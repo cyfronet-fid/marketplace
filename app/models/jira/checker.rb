@@ -44,6 +44,7 @@ class Jira::Checker
   block_error_handling :check_add_comment!
   block_error_handling :check_delete_issue!
   block_error_handling :check_workflow!
+  block_error_handling :check_workflow_transitions!
   block_error_handling :check_webhook!
 
   def check_connection!
@@ -126,6 +127,16 @@ class Jira::Checker
         raise CheckerError.new("STATUS WITH ID: #{id} DOES NOT EXIST IN JIRA")
       else
         raise e
+      end
+    end
+  end
+
+  def check_workflow_transitions!(issue)
+    begin
+      trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_done_id }
+      if trs.length == 0
+        raise CheckerError.new("Could not transition from 'TODO' to 'DONE' state, " +
+                                   "this will affect open access services ")
       end
     end
   end
