@@ -35,7 +35,7 @@ class ProjectItem::Ready
                     project: { key: client.jira_project_key },
                     issuetype: { id: client.jira_issue_type_id } })
 
-        trs = issue.transitions.all.select { |tr| tr.name == "Done" }
+        trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_done_id }
         if trs.length > 0
           transition = issue.transitions.build
           transition.save!("transition" => { "id" => trs.first.id })

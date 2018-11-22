@@ -84,6 +84,9 @@ module Jira
       issue = @checker.client.Issue.build
       @checker.check_create_issue(issue) { |e| self.error_and_abort!(e, 2) } && self.ok!
 
+      print "  - check workflow transitions..."
+      @checker.check_workflow_transitions(issue) { |e| self.error_and_abort!(e, 2) } && self.ok!
+
       print "  - update issue..."
       @checker.check_update_issue(issue) { |e| self.error_and_abort!(e, 2) } && self.ok!
 
