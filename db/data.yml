@@ -1883,8 +1883,13 @@ services:
           other language resource providers and Europeana.
 
 
-          The VLO also provides access to the Virtual Collection Registry metadata and can be used
-          as a starting point to process language data with the Language Resource Switchboard.
+          The [VLO][1] also provides access to the [Virtual Collection Registry][2] metadata and can be used
+          as a starting point to process language data with the [Language Resource Switchboard][3].
+
+          [1]: vlo.clarin.eu
+          [2]: https://www.clarin.eu/content/virtual-collections
+          [3]: switchboard.clarin.eu
+
         offers:
           1:
             name: VLO
@@ -1950,10 +1955,13 @@ services:
             - Stylometry
             - Topic modelling
 
-          The Language Resource Switchboard will automatically provide a list
+          The [Language Resource Switchboard][1] will automatically provide a list
           of available tools, based on the language and format of the input.
-          The Switchboard can also be invoked from the Virtual Language Observatory
+          The Switchboard can also be invoked from the [Virtual Language Observatory][2]
           and B2DROP (see Suggested compatible services below).
+
+          [1]: switchboard.clarin.eu
+          [2]: vlo.clarin.eu
 
         offers:
           1:
@@ -1994,11 +2002,14 @@ services:
           It provides [persistent identifiers and federated login][2].
 
 
-          The collection metadata is openly available and accessible via the Virtual Language Observatory.
-          The referenced digital objects can also be processed with the Language Resource Switchboard.
+          The collection metadata is openly available and accessible via the [Virtual Language Observatory][3].
+          The referenced digital objects can also be processed with the [Language Resource Switchboard][4].
 
           [1]: https://www.clarin.eu/vcr
           [2]: https://www.clarin.eu/content/federated-identity
+          [3]: vlo.clarin.eu
+          [4]: switchboard.clarin.eu
+
         offers:
           1:
             name: VCR
