@@ -126,6 +126,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Redirect user from `/affiliations` to `/profile` (@mkasztelnik)
 - Service tags (@mkasztelnik)
 - Customizable from email (@mkasztelnik)
+- Flash fade out after 5 seconds (@mkasztelnik)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
