@@ -1886,9 +1886,9 @@ services:
           The [VLO][1] also provides access to the [Virtual Collection Registry][2] metadata and can be used
           as a starting point to process language data with the [Language Resource Switchboard][3].
 
-          [1]: vlo.clarin.eu
+          [1]: https://vlo.clarin.eu
           [2]: https://www.clarin.eu/content/virtual-collections
-          [3]: switchboard.clarin.eu
+          [3]: https://switchboard.clarin.eu/
 
         offers:
           1:
@@ -1909,8 +1909,8 @@ services:
         providers: [*clarin]
         logo: lrs-logo.png #component-metadata-infrastructure.png
         open_access: true
-        connected_url: http://switchboard.clarin.eu/
-        webpage_url: http://switchboard.clarin.eu/ #https://clarin.eu/
+        connected_url: https://switchboard.clarin.eu/
+        webpage_url: https://switchboard.clarin.eu/ #https://clarin.eu/
         manual_url: https://vlo.clarin.eu/help
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
@@ -1960,8 +1960,8 @@ services:
           The Switchboard can also be invoked from the [Virtual Language Observatory][2]
           and B2DROP (see Suggested compatible services below).
 
-          [1]: switchboard.clarin.eu
-          [2]: vlo.clarin.eu
+          [1]: https://switchboard.clarin.eu
+          [2]: https://vlo.clarin.eu
 
         offers:
           1:
@@ -2007,8 +2007,8 @@ services:
 
           [1]: https://www.clarin.eu/vcr
           [2]: https://www.clarin.eu/content/federated-identity
-          [3]: vlo.clarin.eu
-          [4]: switchboard.clarin.eu
+          [3]: https://vlo.clarin.eu
+          [4]: https://switchboard.clarin.eu
 
         offers:
           1:
