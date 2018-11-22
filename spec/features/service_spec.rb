@@ -153,27 +153,27 @@ end
 
 RSpec.feature "Service filtering and sorting" do
   let!(:platform) { create(:platform) }
+  let!(:target_group) { create(:target_group) }
 
   before(:each) do
     platform_2 = create(:platform)
     area = create(:research_area, name: "area 1")
     provider = create(:provider, name: "first provider")
-
     category_1 = create(:category)
 
     service = create(:service,
                      title: "AAAA Service",
                      rating: 5.0,
-                     dedicated_for: ["Research groups"],
+                     target_groups: [target_group],
                      platforms: [platform],
                      categories: [category_1])
 
     service.providers << provider
     service.research_areas << area
 
-    create(:service, title: "BBBB Service", rating: 3.0, dedicated_for: ["Providers"], platforms: [platform_2],
+    create(:service, title: "BBBB Service", rating: 3.0, target_groups: [target_group], platforms: [platform_2],
            categories: [category_1])
-    create(:service, title: "CCCC Service", rating: 4.0, dedicated_for: ["Researchers"], platforms: [platform_2],
+    create(:service, title: "CCCC Service", rating: 4.0, target_groups: [target_group], platforms: [platform_2],
            categories: [category_1])
     create(:service, title: "DDDD Something 1", rating: 4.1, platforms: [platform_2], categories: [category_1])
     create(:service, title: "DDDD Something 2", rating: 4.0, platforms: [platform_2], categories: [category_1])
@@ -300,13 +300,13 @@ RSpec.feature "Service filtering and sorting" do
     expect(page).to have_selector(".media", count: 1)
   end
 
-  scenario "searching via dedicated_for", js: true do
+  scenario "searching via target_groups", js: true do
     visit services_path
-    find(:css, "input[name='dedicated_for[]'][value='Research groups']").set(true)
+    find(:css, "input[name='target_groups[]'][value='#{target_group.id}']").set(true)
     click_on(id: "filter-submit")
 
-    expect(page).to have_selector(".media", count: 1)
-    expect(page).to have_selector("input[name='dedicated_for[]'][value='Research groups'][checked='checked']")
+    expect(page).to have_selector(".media", count: 3)
+    expect(page).to have_selector("input[name='target_groups[]'][value='#{target_group.id}'][checked='checked']")
   end
 
   scenario "searching via platforms", js: true do
@@ -337,7 +337,7 @@ RSpec.feature "Service filtering and sorting" do
     visit services_path
 
     # set filters
-    find(:css, "input[name='dedicated_for[]'][value='Research groups']").set(true)
+    find(:css, "input[name='target_groups[]'][value='#{target_group.id}']").set(true)
     select "★★★★★", from: "rating"
 
     click_on(id: "filter-submit")
@@ -349,6 +349,7 @@ RSpec.feature "Service filtering and sorting" do
 
     expect(page).to have_css(".media", count: 6)
   end
+
   scenario "searching via location", js: true do
     `pending "add test after implementing location to filtering #{__FILE__}"`
   end
