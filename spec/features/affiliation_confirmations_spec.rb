@@ -13,12 +13,12 @@ RSpec.feature "Affiliation confirmation page" do
 
     visit root_path
 
-    expect(page).to have_content("You don't have active affiliation")
+    expect(page).to have_content("An affiliation is required to order a service")
 
     visit affiliation_confirmations_path(at: "secret")
 
     affiliation.reload
     expect(affiliation).to be_active
-    expect(page).not_to have_content("You don't have active affiliation")
+    expect(page).not_to have_content("An affiliation is required to order a service")
   end
 end
