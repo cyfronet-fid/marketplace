@@ -145,7 +145,7 @@ RSpec.feature "Service browsing" do
 
       visit service_path(service)
 
-      expect(page).to have_content "If you want to ask a question about this service please login."
+      expect(page).to have_content "If you want to ask a question about this service please login"
     end
   end
 end
