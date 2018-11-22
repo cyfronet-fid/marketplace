@@ -17,4 +17,4 @@
       %span.text-right
         For:
       %strong.text-right
-        #{service.target_groups.map { |x| x }.join(", ")}
+        #{service.target_groups.map { |x| x.name }.join(", ")}
