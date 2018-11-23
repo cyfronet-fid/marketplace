@@ -1,26 +1,28 @@
 .card.border.rounded.mb-2.pb-2.pt-2
-  .card-header.d-flex{ role: "tab", id: "accordion-header-affiliation-#{affiliation.id}" }
-    %h6.my-auto.mr-auto{ "data-toggle": "collapse", href: "#accordion-collapse-affiliation-#{affiliation.id}",
-     "aria-expanded": "false" }
-      %p.display-2.font-weight-bold.my-auto
-        #{affiliation.organization}
-      - unless affiliation.department.blank?
-        %p.small.mb-0.mt-2
-          #{affiliation.department} department
-    %span.text-uppercase.my-auto.ml-3
-      = affiliation.status
-    %span.small.my-auto.ml-3
-      last change: #{affiliation.updated_at.strftime("%d.%m.%Y")}
-    .btn-group.my-auto.ml-3
-      - if policy(affiliation).edit?
-        = link_to "Edit",
-                  edit_profile_affiliation_path(affiliation),
-                  class: "btn btn-secondary btn-sm"
-      - if policy(affiliation).destroy?
-        = link_to "Delete",
-                  profile_affiliation_path(affiliation),
-                  method: :delete, data: { confirm: "Are you sure?" },
-                  class: "btn btn-error btn-sm"
+  .card-header.row{ role: "tab", id: "accordion-header-affiliation-#{affiliation.id}" }
+    .col-12.col-md-8.d-flex.pl-0.pr-0
+      %h6.my-auto.mr-auto{ "data-toggle": "collapse", href: "#accordion-collapse-affiliation-#{affiliation.id}",
+       "aria-expanded": "false" }
+        %p.display-2.font-weight-bold.my-auto
+          #{affiliation.organization}
+        - unless affiliation.department.blank?
+          %p.small.mb-0.mt-0.mt-md-2
+            #{affiliation.department} department
+      %span.text-uppercase.my-auto.ml-3
+        = affiliation.status
+      %span.small.my-auto.ml-3
+        last change: #{affiliation.updated_at.strftime("%d.%m.%Y")}
+    .col-12.col-md-4.mt-4.mt-md-0
+      .btn-group.my-auto.ml-3.float-right
+        - if policy(affiliation).edit?
+          = link_to "Edit",
+                    edit_profile_affiliation_path(affiliation),
+                    class: "btn btn-secondary btn-sm"
+        - if policy(affiliation).destroy?
+          = link_to "Delete",
+                    profile_affiliation_path(affiliation),
+                    method: :delete, data: { confirm: "Are you sure?" },
+                    class: "btn btn-error btn-sm"
   .collapse{ "data-parent": "#accordion-affiliations",
              role: "tabpanel",
              id: "accordion-collapse-affiliation-#{affiliation.id}" }
