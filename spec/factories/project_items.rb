@@ -6,6 +6,7 @@ FactoryBot.define do
     customer_typology { ProjectItem.customer_typologies.keys.sample }
     access_reason { |n| "Reason #{n}" }
     additional_information { |n| "Additional information #{n}" }
+    properties []
 
     offer
     project

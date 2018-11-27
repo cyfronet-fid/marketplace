@@ -116,23 +116,26 @@ describe Jira::ConsoleChecker do
     expect(checker).to receive(:check_workflow).exactly(5).and_return(true)
     expect(checker).to receive(:check_issue_type).and_return(true)
     expect(checker).to receive(:check_workflow_transitions).and_return(true)
+    expect(checker).to receive(:check_custom_fields).and_return(true)
 
-    expect { con_checker.check }.to output("Checking connection..." + " OK".green + "\n" +
-                                               "Checking issue type presence..." + " OK".green + "\n" +
-                                               "Checking project existence..." + " OK".green + "\n" +
-                                               "Trying to manipulate issue...\n" +
-                                               "  - create issue..." + " OK".green + "\n" +
-                                               "  - check workflow transitions..." + " OK".green + "\n" +
-                                               "  - update issue..." + " OK".green + "\n" +
-                                               "  - add comment to issue..." + " OK".green + "\n" +
-                                               "  - delete issue..." + " OK".green + "\n" +
-                                               "Checking workflow...\n" +
-                                               "  - todo [id: 1]..." + " OK".green + "\n" +
-                                               "  - in_progress [id: 2]..." + " OK".green + "\n" +
-                                               "  - waiting_for_response [id: 4]..." + " OK".green + "\n" +
-                                               "  - done [id: 3]..." + " OK".green + "\n" +
-                                               "  - rejected [id: 5]..." + " OK".green + "\n" +
-                                               "WARNING: Webhook won't be check, set MP_HOST env variable if you want to check it".yellow + "\n"
+    expect { con_checker.check }.to output("Checking JIRA instance on http://localhost:2990\n" +
+                                           "Checking connection..." + " OK".green + "\n" +
+                                           "Checking issue type presence..." + " OK".green + "\n" +
+                                           "Checking project existence..." + " OK".green + "\n" +
+                                           "Trying to manipulate issue...\n" +
+                                           "  - create issue..." + " OK".green + "\n" +
+                                           "  - check workflow transitions..." + " OK".green + "\n" +
+                                           "  - update issue..." + " OK".green + "\n" +
+                                           "  - add comment to issue..." + " OK".green + "\n" +
+                                           "  - delete issue..." + " OK".green + "\n" +
+                                           "Checking workflow...\n" +
+                                           "  - todo [id: 1]..." + " OK".green + "\n" +
+                                           "  - in_progress [id: 2]..." + " OK".green + "\n" +
+                                           "  - waiting_for_response [id: 4]..." + " OK".green + "\n" +
+                                           "  - done [id: 3]..." + " OK".green + "\n" +
+                                           "  - rejected [id: 5]..." + " OK".green + "\n" +
+                                           "Checking custom fields mappings..." + " OK".green + "\n" +
+                                           "WARNING: Webhook won't be check, set MP_HOST env variable if you want to check it".yellow + "\n"
                                     ).to_stdout
   end
 
@@ -157,8 +160,9 @@ describe Jira::ConsoleChecker do
     expect(checker).to receive(:check_add_comment) { |&block| block.call(error); next false }
     expect(checker).to receive(:check_delete_issue) { |&block| block.call(error); next false }
     expect(checker).to receive(:check_workflow).exactly(5) { |&block| block.call(error); next false }
+    expect(checker).to receive(:check_custom_fields) { |&block| block.call(error); next false }
 
-    expect(con_checker).to receive(:error_and_abort!).exactly(13).with(error, any_args)
+    expect(con_checker).to receive(:error_and_abort!).exactly(14).with(error, any_args)
     con_checker.check
 
     $stdout = original_stdout
