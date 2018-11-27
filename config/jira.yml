@@ -24,7 +24,7 @@ default: &default
     CI-EOSC-UniqueID: <%= "'" + (ENV["MP_JIRA_FIELD_CI_EOSC_UniqueID"] || "") + "'" %>
     CI-Institution: <%= "'" + (ENV["MP_JIRA_FIELD_CI_Institution"] || "") + "'" %>
     CI-Department: <%= "'" + (ENV["MP_JIRA_FIELD_CI_Department"] || "") + "'" %>
-    CI-DepartamentalWebPage: <%= "'" + (ENV["MP_JIRA_FIELD_CI_DepartamentalWebPage"] || "") + "'" %>
+    CI-DepartmentalWebPage: <%= "'" + (ENV["MP_JIRA_FIELD_CI_DepartmentalWebPage"] || "") + "'" %>
     CI-SupervisorName: <%= "'" + (ENV["MP_JIRA_FIELD_CI_SupervisorName"] || "") + "'" %>
     CI-SupervisorProfile: <%= "'" + (ENV["MP_JIRA_FIELD_CI_SupervisorProfile"] || "") + "'" %>
     CP-CustomerTypology: <%= "'" + (ENV["MP_JIRA_FIELD_CP_CustomerTypology"] || "") + "'" %>
@@ -57,7 +57,7 @@ test:
     CI-EOSC-UniqueID: "CI-EOSC-UniqueID-1"
     CI-Institution: "CI-Institution-1"
     CI-Department: "CI-Department-1"
-    CI-DepartamentalWebPage: "CI-DepartamentalWebPage-1"
+    CI-DepartmentalWebPage: "CI-DepartmentalWebPage-1"
     CI-SupervisorName: "CI-SupervisorName-1"
     CI-SupervisorProfile: "CI-SupervisorProfile-1"
     CP-CustomerTypology: "CP-CustomerTypology-1"
