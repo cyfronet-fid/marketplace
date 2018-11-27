@@ -22,10 +22,9 @@ class ProjectItem::Register
 
     def register_in_jira!
       client = Jira::Client.new
-      issue = client.Issue.build
-      if issue.save(fields: { summary: "Requested realization of #{@project_item.service.title}",
-                              project: { key: client.jira_project_key },
-                              issuetype: { id: client.jira_issue_type_id } })
+      @project_item.save
+
+      if (issue = client.create_service_issue(@project_item))
         @project_item.update_attributes(issue_id: issue.id, issue_status: :jira_active)
         @project_item.save
         true
@@ -43,5 +42,9 @@ class ProjectItem::Register
 
     def notify!
       ProjectItemMailer.changed(@project_item).deliver_later
+    end
+
+    def encode_properties(property_values)
+      property_values.map { |property| "#{property.label}=#{property.value}" }.join("&")
     end
 end

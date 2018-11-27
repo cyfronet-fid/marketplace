@@ -33,7 +33,11 @@ end
 
 describe Jira::Checker do
   let(:checker) {
-    jira_client = double("Jira::Client", jira_project_key: "MP", jira_issue_type_id: 1, jira_config: { username: "user", url: "http://localhost/jira" })
+    jira_client = double("Jira::Client", jira_project_key: "MP",
+                         jira_issue_type_id: 1,
+                         jira_config: { username: "user", url: "http://localhost/jira" },
+                         custom_fields: { "CI-Name": "customfield_10000",
+                                          "CI-Surname": "customfield_10001" })
     Jira::Checker.new(jira_client)
   }
 
@@ -107,6 +111,24 @@ describe Jira::Checker do
     it "should throw error if status is not found" do
       expect(checker.client).to receive_message_chain("Status.find").and_raise(JIRA::HTTPError.new(create(:response, code: "404")))
       expect { checker.check_workflow! id }.to raise_error(Jira::Checker::CheckerError, "STATUS WITH ID: #{id} DOES NOT EXIST IN JIRA")
+    end
+  end
+
+  describe "check_custom_fields!" do
+    it "should not raise error if all custom fields are matched" do
+      expect(checker.client).to receive_message_chain("Field.all").and_return([double("Field",
+                                                                                      id: "customfield_10000",
+                                                                                      name: "CI-Name"),
+                                                                               double("Field",
+                                                                                      id: "customfield_10001",
+                                                                                      name: "CI-Surname")])
+      checker.check_custom_fields!
+    end
+    it "should raise error if any custom field is not mapped" do
+      expect(checker.client).to receive_message_chain("Field.all").and_return([double("Field",
+                                                                                      id: "customfield_10000",
+                                                                                      name: "CI-Name")])
+      expect { checker.check_custom_fields! }.to raise_error(Jira::Checker::CheckerCompositeError, "CUSTOM FIELD mapping have some problems")
     end
   end
 

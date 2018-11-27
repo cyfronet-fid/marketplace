@@ -46,6 +46,7 @@ class Jira::Checker
   block_error_handling :check_workflow!
   block_error_handling :check_workflow_transitions!
   block_error_handling :check_webhook!
+  block_error_handling :check_custom_fields!
 
   def check_connection!
     begin
@@ -141,10 +142,23 @@ class Jira::Checker
     end
   end
 
+  def check_custom_fields!
+    fields = client.Field.all
+
+    statuses = self.client.custom_fields.map do |field_name, field_id|
+      [field_name, fields.any? { |f| f.id == field_id && f.name.to_sym == field_name }]
+    end .to_h
+
+    if statuses.any? { |k, v| !v  }
+      raise CheckerCompositeError.new("CUSTOM FIELD mapping have some problems",
+                                      statuses)
+    end
+  end
+
   def check_webhook!(host)
     webhook = nil
     # noinspection RubyDeadCode
-    self.client.Webhook.all.each do |wh|
+    client.Webhook.all.each do |wh|
       if wh.attrs["url"] == (host + api_webhooks_jira_path + "?issue_id=${issue.id}")
         unless wh.enabled
           raise CheckerWarning.new("Webhook \"#{wh.name}\" is not enabled")

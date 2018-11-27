@@ -29,12 +29,7 @@ class ProjectItem::Ready
   private
     def ready_in_jira!
       client = Jira::Client.new
-      issue = client.Issue.build
-
-      if issue.save(fields: { summary: "Add open service #{@project_item.service.title}",
-                    project: { key: client.jira_project_key },
-                    issuetype: { id: client.jira_issue_type_id } })
-
+      if (issue = client.create_service_issue(@project_item))
         trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_done_id }
         if trs.length > 0
           transition = issue.transitions.build

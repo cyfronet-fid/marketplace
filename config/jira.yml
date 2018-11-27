@@ -15,11 +15,54 @@ default: &default
     done: <%= ENV["MP_JIRA_WF_DONE"] || 4 %>
     rejected: <%= ENV["MP_JIRA_WF_REJECTED"] || 5 %>
 
+  custom_fields:
+    "Order reference": <%= "'" + (ENV["MP_JIRA_FIELD_Order_reference"] || "") + "'" %>
+    CI-Name: <%= "'" + (ENV["MP_JIRA_FIELD_CI_Name"] || "") + "'" %>
+    CI-Surname: <%= "'" + (ENV["MP_JIRA_FIELD_CI_Surname"] || "") + "'" %>
+    CI-Email: <%= "'" + (ENV["MP_JIRA_FIELD_CI_Email"] || "") + "'" %>
+    CI-DisplayName: <%= "'" + (ENV["MP_JIRA_FIELD_CI_DisplayName"] || "") + "'" %>
+    CI-EOSC-UniqueID: <%= "'" + (ENV["MP_JIRA_FIELD_CI_EOSC_UniqueID"] || "") + "'" %>
+    CI-Institution: <%= "'" + (ENV["MP_JIRA_FIELD_CI_Institution"] || "") + "'" %>
+    CI-Department: <%= "'" + (ENV["MP_JIRA_FIELD_CI_Department"] || "") + "'" %>
+    CI-DepartamentalWebPage: <%= "'" + (ENV["MP_JIRA_FIELD_CI_DepartamentalWebPage"] || "") + "'" %>
+    CI-SupervisorName: <%= "'" + (ENV["MP_JIRA_FIELD_CI_SupervisorName"] || "") + "'" %>
+    CI-SupervisorProfile: <%= "'" + (ENV["MP_JIRA_FIELD_CI_SupervisorProfile"] || "") + "'" %>
+    CP-CustomerTypology: <%= "'" + (ENV["MP_JIRA_FIELD_CP_CustomerTypology"] || "") + "'" %>
+    CP-ReasonForAccess: <%= "'" + (ENV["MP_JIRA_FIELD_CP_ReasonForAccess"] || "") + "'" %>
+    SO-1: <%= "'" + (ENV["MP_JIRA_FIELD_SO_1"] || "") + "'" %>
+
 development:
   <<: *default
 
 test:
   <<: *default
+  issue_type_id: 10000
+  project: "MP"
+  url: "http://localhost:2990"
+  context_path: "/jira"
+  webhook_secret: "1234"
+  workflow:
+    todo: 1
+    in_progress: 2
+    waiting_for_response: 3
+    done: 4
+    rejected: 5
+
+  custom_fields:
+    "Order reference": "Order reference-1"
+    CI-Name: "CI-Name-1"
+    CI-Surname: "CI-Surname-1"
+    CI-Email: "CI-Email-1"
+    CI-DisplayName: "CI-DisplayName-1"
+    CI-EOSC-UniqueID: "CI-EOSC-UniqueID-1"
+    CI-Institution: "CI-Institution-1"
+    CI-Department: "CI-Department-1"
+    CI-DepartamentalWebPage: "CI-DepartamentalWebPage-1"
+    CI-SupervisorName: "CI-SupervisorName-1"
+    CI-SupervisorProfile: "CI-SupervisorProfile-1"
+    CP-CustomerTypology: "CP-CustomerTypology-1"
+    CP-ReasonForAccess: "CP-ReasonForAccess-1"
+    SO-1: "SO-1-1"
 
 production:
   <<: *default
