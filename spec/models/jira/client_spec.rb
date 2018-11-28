@@ -73,7 +73,7 @@ describe Jira::Client do
                        "CI-EOSC-UniqueID-1" => "uid1",
                        "CI-Institution-1" => "organization 1",
                        "CI-Department-1" => "department 1",
-                       "CI-DepartamentalWebPage-1" => "http://organization.com",
+                       "CI-DepartmentalWebPage-1" => "http://organization.com",
                        "CI-SupervisorName-1" => "Jim Supervisor",
                        "CI-SupervisorProfile-1" => "http://jim.supervisor.edu",
                        "CP-CustomerTypology-1" => "single_user",

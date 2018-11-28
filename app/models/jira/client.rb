@@ -44,7 +44,7 @@ class Jira::Client < JIRA::Client
       "CI-EOSC-UniqueID": fields_config["CI-EOSC-UniqueID"],
       "CI-Institution": fields_config["CI-Institution"],
       "CI-Department": fields_config["CI-Department"],
-      "CI-DepartamentalWebPage": fields_config["CI-DepartamentalWebPage"],
+      "CI-DepartmentalWebPage": fields_config["CI-DepartmentalWebPage"],
       "CI-SupervisorName": fields_config["CI-SupervisorName"],
       "CI-SupervisorProfile": fields_config["CI-SupervisorProfile"],
       "CP-CustomerTypology": fields_config["CP-CustomerTypology"],
@@ -107,7 +107,7 @@ private
       project_item.affiliation&.organization || ""
     when "CI-Department"
       project_item.affiliation&.department || ""
-    when "CI-DepartamentalWebPage"
+    when "CI-DepartmentalWebPage"
       project_item.affiliation&.webpage || ""
     when "CI-SupervisorName"
       project_item.affiliation&.supervisor || ""
