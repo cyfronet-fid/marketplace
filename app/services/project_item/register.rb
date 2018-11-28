@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 class ProjectItem::Register
-  class JIRAIssueCreateError < StandardError
-    def initialize(project_item, msg = "")
-      super(msg)
-      @project_item = project_item
-    end
-  end
-
   def initialize(project_item)
     @project_item = project_item
   end
@@ -24,13 +17,14 @@ class ProjectItem::Register
       client = Jira::Client.new
       @project_item.save
 
-      if (issue = client.create_service_issue(@project_item))
+      begin
+        issue = client.create_service_issue(@project_item)
         @project_item.update_attributes(issue_id: issue.id, issue_status: :jira_active)
         @project_item.save
         true
-      else
-        @project_item.jira_errored!
-        raise JIRAIssueCreateError.new(@project_item)
+        rescue Jira::Client::JIRAIssueCreateError => e
+          @project_item.jira_errored!
+          raise e
       end
     end
 

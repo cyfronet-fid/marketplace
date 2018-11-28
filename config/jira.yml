@@ -31,6 +31,12 @@ default: &default
     CP-ReasonForAccess: <%= "'" + (ENV["MP_JIRA_FIELD_CP_ReasonForAccess"] || "") + "'" %>
     SO-1: <%= "'" + (ENV["MP_JIRA_FIELD_SO_1"] || "") + "'" %>
 
+    select_values:
+      CP-CustomerTypology:
+        single_user: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_single_user"] || "") + "'" %>
+        research: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_research"] || "") + "'" %>
+        private_company: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_private_company"] || "") + "'" %>
+
 development:
   <<: *default
 
@@ -63,6 +69,12 @@ test:
     CP-CustomerTypology: "CP-CustomerTypology-1"
     CP-ReasonForAccess: "CP-ReasonForAccess-1"
     SO-1: "SO-1-1"
+
+    select_values:
+      CP-CustomerTypology:
+        single_user: '20000'
+        research: '20001'
+        private_company: '20002'
 
 production:
   <<: *default
