@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 class ProjectItem::Ready
-  class JIRAIssueCreateError < StandardError
-    def initialize(project_item, msg = "")
-      super(msg)
-      @project_item = project_item
-    end
-  end
-
   class JIRATransitionSaveError < StandardError
     def initialize(project_item, msg = "")
       super(msg)
@@ -29,19 +22,20 @@ class ProjectItem::Ready
   private
     def ready_in_jira!
       client = Jira::Client.new
-      if (issue = client.create_service_issue(@project_item))
+      begin
+        issue = client.create_service_issue(@project_item)
         trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_done_id }
         if trs.length > 0
           transition = issue.transitions.build
           transition.save!("transition" => { "id" => trs.first.id })
           @project_item.update_attributes(issue_id: issue.id, issue_status: :jira_active)
         else
+          @project_item.jira_errored!
           raise JIRATransitionSaveError.new(@project_item)
         end
-
-      else
+      rescue Jira::Client::JIRAIssueCreateError => e
         @project_item.jira_errored!
-        raise JIRAIssueCreateError.new(@project_item)
+        raise e
       end
     end
 

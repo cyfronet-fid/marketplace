@@ -76,7 +76,7 @@ describe Jira::Client do
                        "CI-DepartmentalWebPage-1" => "http://organization.com",
                        "CI-SupervisorName-1" => "Jim Supervisor",
                        "CI-SupervisorProfile-1" => "http://jim.supervisor.edu",
-                       "CP-CustomerTypology-1" => "single_user",
+                       "CP-CustomerTypology-1" => { "id" => "20000" },
                        "CP-ReasonForAccess-1" => "some reason",
                        "SO-1-1" => "cat1/s1/Data repository name=aaaaaa&" +
                                    "Harvesting method=OAI-PMH&" +
