@@ -175,5 +175,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Change default sort order for services to name ascending (@michal-szostak)
 - Open access services transition to "Done" state (@michal-szostak)
 - Affiliations UI on small screens (@jarekzet)
+- Support for Select type custom fields in JIRA (`CP-CustomerTypology`) (@michal-szostak)
 
 ### Security
