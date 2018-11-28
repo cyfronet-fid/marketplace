@@ -2,26 +2,26 @@
 
 require "rails_helper"
 
-RSpec.describe ProjectItem::RegisterJob do
+RSpec.describe ProjectItem::ReadyJob do
   let(:project_item_owner) { create(:user) }
   let(:project) { create(:project, user: project_item_owner) }
-  let(:register_service) { instance_double(ProjectItem::Register) }
+  let(:ready_service) { instance_double(ProjectItem::Ready) }
   let(:project_item) {
     project_item = create(:project_item, project: project)
-    expect(ProjectItem::Register).to receive(:new).
-        with(project_item).and_return(register_service)
+    allow(ProjectItem::Ready).to receive(:new).
+        with(project_item).and_return(ready_service)
     next project_item
   }
 
-  it "triggers registration process for project_item" do
-    expect(register_service).to receive(:call)
+  it "triggers ready process for project_item" do
+    expect(ready_service).to receive(:call)
     described_class.perform_now(project_item)
   end
 
-  it "should recast exceptions cast by ProjectItem::Register" do
+  it "should recast exceptions cast by ProjectItem::Ready" do
     error = Jira::Client::JIRAIssueCreateError.new(project_item)
 
-    expect(register_service).
+    expect(ready_service).
         to receive(:call).
             and_raise(error)
 

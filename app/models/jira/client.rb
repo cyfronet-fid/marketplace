@@ -3,6 +3,13 @@
 class Jira::Client < JIRA::Client
   include Rails.application.routes.url_helpers
 
+  class JIRAIssueCreateError < StandardError
+    def initialize(project_item, msg = "")
+      super(msg)
+      @project_item = project_item
+    end
+  end
+
   attr_reader :jira_config
   attr_reader :jira_project_key
   attr_reader :jira_issue_type_id
@@ -72,7 +79,11 @@ class Jira::Client < JIRA::Client
       fields[field_id.to_s] = generate_custom_field_value(field_name.to_s, project_item)
     end
 
-    issue.save(fields: fields) ? issue : nil
+    if issue.save(fields: fields)
+      issue
+    else
+      raise JIRAIssueCreateError.new(project_item, issue.errors)
+    end
   end
 
   def mp_issue_type
@@ -114,7 +125,7 @@ private
     when "CI-SupervisorProfile"
       project_item.affiliation&.supervisor_profile || ""
     when "CP-CustomerTypology"
-      project_item.customer_typology
+      { "id" => @jira_config["custom_fields"]["select_values"]["CP-CustomerTypology"][project_item.customer_typology] }
     when "CP-ReasonForAccess"
       project_item.access_reason
     when "SO-1"
