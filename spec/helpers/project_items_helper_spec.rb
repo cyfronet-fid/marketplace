@@ -32,7 +32,7 @@ RSpec.describe ProjectItemsHelper, type: :helper do
     it "is true when project_item is ready and updated_at before RATE_PERIOD and no service_opinion" do
       @project_item = create(:project_item, status: :created)
       @project_item.new_change(status: :registered, message: "ProjectItem registered")
-      travel_to(6.days.ago)
+      travel_to((RATE_AFTER_PERIOD + 1.day).ago)
       @project_item.new_change(status: :ready, message: "ProjectItem ready")
       travel_back
       expect(ratingable?).to eq(true)
