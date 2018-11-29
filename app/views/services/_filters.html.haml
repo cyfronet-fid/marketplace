@@ -17,10 +17,9 @@
           = options_for_select([["Any", ""], ["EU", "EU"]], params[:location])
 
   %h6 Providers
-  .row
-    .col-md-11.offset-md-1
-      .form-group
-        = multi_checkbox :providers, params[:providers], provider_options
+  .col-md-11
+    .form-group
+      = multi_checkbox :providers, params[:providers], provider_options
 
   %h6 Related Infrastructures and platforms
   .row
