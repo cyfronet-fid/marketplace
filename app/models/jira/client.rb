@@ -76,7 +76,10 @@ class Jira::Client < JIRA::Client
     }
 
     @custom_fields.reject { |k, v| v.empty? }.each do |field_name, field_id|
-      fields[field_id.to_s] = generate_custom_field_value(field_name.to_s, project_item)
+      value = generate_custom_field_value(field_name.to_s, project_item)
+      unless value.nil?
+        fields[field_id.to_s] = value
+      end
     end
 
     if issue.save(fields: fields)
@@ -109,23 +112,27 @@ private
     when "CI-Surname"
       project_item.project.user.last_name
     when "CI-Email"
-      project_item.affiliation&.email || ""
+      project_item.affiliation&.email || nil
     when "CI-DisplayName"
       "#{project_item.project.user.first_name} #{project_item.project.user.last_name}"
     when "CI-EOSC-UniqueID"
       project_item.project.user.uid
     when "CI-Institution"
-      project_item.affiliation&.organization || ""
+      project_item.affiliation&.organization || nil
     when "CI-Department"
-      project_item.affiliation&.department || ""
+      project_item.affiliation&.department || nil
     when "CI-DepartmentalWebPage"
-      project_item.affiliation&.webpage || ""
+      project_item.affiliation&.webpage || nil
     when "CI-SupervisorName"
-      project_item.affiliation&.supervisor || ""
+      project_item.affiliation&.supervisor || nil
     when "CI-SupervisorProfile"
-      project_item.affiliation&.supervisor_profile || ""
+      project_item.affiliation&.supervisor_profile || nil
     when "CP-CustomerTypology"
-      { "id" => @jira_config["custom_fields"]["select_values"]["CP-CustomerTypology"][project_item.customer_typology] }
+      if project_item.customer_typology
+        { "id" => @jira_config["custom_fields"]["select_values"]["CP-CustomerTypology"][project_item.customer_typology] }
+      else
+        nil
+      end
     when "CP-ReasonForAccess"
       project_item.access_reason
     when "SO-1"
@@ -133,7 +140,7 @@ private
       "#{project_item.service.title}/" +
       "#{encode_properties(project_item.properties)}"
     else
-      ""
+      nil
     end
   end
 end

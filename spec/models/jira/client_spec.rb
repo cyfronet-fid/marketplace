@@ -88,4 +88,39 @@ describe Jira::Client do
 
     expect(client.create_service_issue(project_item)).to be(issue)
   end
+
+  it "create_service open access issue should save issue with correct fields" do
+    allow(ENV).to receive(:[]).and_call_original
+    allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
+
+    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2", affiliations: [])
+    project_item = create(:project_item,
+                          customer_typology: nil,
+                          access_reason: nil,
+                          additional_information: nil,
+                          affiliation: nil,
+                          offer: create(:offer, service: create(:service,
+                                                                title: "s1",
+                                                                service_type: "open_access",
+                                                                connected_url:  "http://service.org/access",
+                                                                categories: [create(:category, name: "cat1")])),
+                          project: create(:project, user: user))
+
+    expected_fields = { summary: "Service order, John Doe, s1",
+                        project: { key: "MP" },
+                        issuetype: { id: 10000 },
+                        "Order reference-1" => Rails.application.routes.url_helpers.project_item_url(id: project_item.id,
+                                                                                                     host: "https://mp.edu"),
+                        "CI-Name-1" => "John",
+                        "CI-Surname-1" => "Doe",
+                        "CI-DisplayName-1" => "John Doe",
+                        "CI-EOSC-UniqueID-1" => "uid2",
+                        "SO-1-1" => "cat1/s1/" }
+
+    issue = double(:Issue)
+    expect(issue).to receive("save").with(fields: expected_fields).and_return(true)
+    expect(client).to receive_message_chain("Issue.build").and_return(issue)
+
+    expect(client.create_service_issue(project_item)).to be(issue)
+  end
 end
