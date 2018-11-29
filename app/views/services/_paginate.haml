@@ -1,6 +1,6 @@
 .row
-  .col-md-9.offset-md-3.d-flex
-    .p-2.flex-grow-1
+  .col-md-9.offset-md-3.row
+    .col-12.col-sm-6
       - if services.total_entries > 10
         %nav
           %ul.pagination
@@ -16,5 +16,5 @@
               %a.page-link.text-dark
                 Items on page
 
-    .p-2
+    .col-12.col-sm-6.pagination-right
       = will_paginate services, inner_window: 1, outer_window: 0
