@@ -77,10 +77,13 @@ private
   end
 
   def target_groups_options(category = nil)
-    query = TargetGroup.select("target_groups.name, target_groups.id, count(service_target_groups.service_id) as service_count")
-                .joins(:categories)
+    query = TargetGroup.select("target_groups.name, target_groups.id, count(services.id) as service_count")
 
-    query = query.where("categories.id = ?", category.id) unless category.nil?
+    if category.nil?
+      query = query.joins(:services)
+    else
+      query = query.joins(:categories).where("categories.id = ?", category.id)
+    end
 
     query.group("target_groups.id")
         .order(:name)
@@ -89,9 +92,12 @@ private
 
   def provider_options(category = nil)
     query = Provider.select("providers.name, providers.id, count(service_providers.service_id) as service_count")
-                .joins(:categories)
 
-    query = query.where("categories.id = ?", category.id) unless category.nil?
+    if category.nil?
+      query = query.joins(:services)
+    else
+      query = query.joins(:categories).where("categories.id = ?", category.id)
+    end
 
     query.group("providers.id")
         .order(:name)
@@ -109,9 +115,11 @@ private
 
   def related_platform_options(category = nil)
     query = Platform.select("platforms.name, platforms.id, COUNT(services.id) as service_count")
-        .joins(:categories)
-    unless category.nil?
-      query = query.where("categories.id = ?", category.id)
+
+    if category.nil?
+      query = query.joins(:services)
+    else
+      query = query.joins(:categories).where("categories.id = ?", category.id)
     end
 
     query.group("platforms.id")
