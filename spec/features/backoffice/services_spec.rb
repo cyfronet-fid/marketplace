@@ -40,6 +40,7 @@ RSpec.feature "Services in backoffice" do
   end
 
   scenario "I can create new service", js: true do
+    category = create(:category)
     provider = create(:provider)
     research_area = create(:research_area)
     platform = create(:platform)
@@ -73,7 +74,7 @@ RSpec.feature "Services in backoffice" do
     fill_in "service_contact_emails_0", with: "person1@test.ok"
     page.find("#add-email-field").click
     fill_in "service_contact_emails_1", with: "person2@test.ok"
-
+    select category.name, from: "Categories"
     expect { click_on "Create Service" }.
       to change { user.owned_services.count }.by(1)
 
@@ -88,6 +89,7 @@ RSpec.feature "Services in backoffice" do
     expect(page).to have_content("Welcome!!!")
     expect(page).to have_content(research_area.name)
     expect(page).to have_content(target_group.name)
+    expect(page).to have_content(category.name)
   end
 
   scenario "I can edit owned service" do
