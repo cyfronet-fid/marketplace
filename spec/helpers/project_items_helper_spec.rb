@@ -24,7 +24,7 @@ RSpec.describe ProjectItemsHelper, type: :helper do
     it "is false when project_item is ready and updated_at before RATE_PERIOD but there is service_opinion" do
       @project_item = create(:project_item, status: :created)
       @project_item.new_change(status: :ready, message: "ProjectItem ready")
-      @project_item.project_item_changes.find_by(status: :ready).created_at = RATE_PERIOD - 1.day
+      @project_item.project_item_changes.find_by(status: :ready).created_at = RATE_AFTER_PERIOD.ago - 1.day
       create(:service_opinion, rating: "3", project_item: @project_item)
       expect(ratingable?).to eq(false)
     end
