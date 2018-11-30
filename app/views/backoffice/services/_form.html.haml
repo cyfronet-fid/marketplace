@@ -28,6 +28,7 @@
   = f.association :research_areas, input_html: { multiple: true }, include_hidden: false
   = f.association :platforms, multiple: true
   = f.input :tag_list
+  = f.association :categories, multiple: true
 
   %a#add-email-field Add additional email
   .invalid-feedback{ styles: "display:block" }
