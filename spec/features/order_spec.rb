@@ -119,6 +119,35 @@ RSpec.feature "Service ordering" do
       end.to change { ProjectItem.count }.by(1)
     end
 
+    scenario "I cannot order open_access service twice in one project" do
+      open_access_service = create(:open_access_service)
+      offer = create(:offer, service: open_access_service)
+      default_project = user.projects.find_by(name: "Services")
+
+      visit service_path(open_access_service)
+
+      click_on "Add to my services"
+
+      # Project selection
+      select "Services", from: "project_item_project_id"
+      click_on "Next", match: :first
+
+      expect do
+        check "Accept terms and conditions"
+        click_on "Add to my services", match: :first
+      end.to change { ProjectItem.count }.by(1)
+
+      visit service_path(open_access_service)
+
+      click_on "Add to my services"
+
+      select "Services", from: "project_item_project_id"
+      click_on "Next", match: :first
+
+      expect(page).to have_current_path(service_configuration_path(open_access_service))
+      expect(page).to have_text("You cannot add open access service #{open_access_service.title} to project Services twice")
+    end
+
     scenario "Skip offers selection when only one offer" do
       create(:offer, service: service)
 

@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/thethanghn/custom-err-msg.git
+  revision: b913309360995472507ea444c6f1a80315b99d28
+  specs:
+    custom_error_message (1.2.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -447,6 +453,7 @@ DEPENDENCIES
   capybara
   colorize (>= 0.8.1)
   counter_culture (~> 2.0)
+  custom_error_message!
   database_cleaner
   devise
   dotenv-rails
