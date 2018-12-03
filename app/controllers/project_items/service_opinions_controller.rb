@@ -25,7 +25,7 @@ class ProjectItems::ServiceOpinionsController < ApplicationController
 
   private
     def find_project_item
-      @project_item = ProjectItem.joins(:service).find(params[:project_item_id])
+      @project_item = ProjectItem.joins(:offer).find(params[:project_item_id])
     end
 
     def service_opinion_template

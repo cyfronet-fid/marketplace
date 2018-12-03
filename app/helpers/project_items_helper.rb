@@ -20,11 +20,6 @@ module ProjectItemsHelper
   end
 
   def ratingable?
-    (@project_item.ready? && project_item_ready?(@project_item) && @project_item.service_opinion.nil?)
-  end
-
-  def project_item_ready?(project_item)
-    project_item_change = project_item.project_item_changes.where(status: :ready).pluck(:created_at)
-    project_item_change.empty? ? false : (project_item_change.first < RATE_AFTER_PERIOD.ago)
+    (@project_item.ready? && @project_item.service_opinion.nil?)
   end
 end
