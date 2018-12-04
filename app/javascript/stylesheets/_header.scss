@@ -183,10 +183,6 @@ header {
     }
   }
 
-  .navbar.navbar-expand-lg .navbar-nav .nav-link {
-    text-align: right;
-  }
-
   .navbar-brand {
     padding: 10px 10px 20px 0;
     text-align: center;
@@ -197,5 +193,17 @@ header {
     font-size: 12px;
     padding-left: 0.2rem;
     padding-right: 1.1rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .navbar-collapse {
+    float: right;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .navbar.navbar-expand-lg .navbar-nav .nav-link {
+    text-align: right;
   }
 }
