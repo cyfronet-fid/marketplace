@@ -16,7 +16,7 @@ class ServiceOpinion::UpdateService
 
     def sum
       ServiceOpinion.joins(project_item: :offer).
-        where(offers: { service_id: service }).sum(:rating)
+        where(offers: { service_id: service }).sum(:service_rating)
     end
 
     def count
