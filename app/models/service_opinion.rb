@@ -9,6 +9,7 @@ class ServiceOpinion < ApplicationRecord
               only_integer: true,
               greater_than_or_equal_to: 0,
               less_than_or_equal_to: 5 }
+  validates :project_item, uniqueness: true
 
   after_save :update_service_rating
 
