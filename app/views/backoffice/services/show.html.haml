@@ -37,6 +37,10 @@
   - @service.providers.each do |provider|
     %p= provider.name
 
+  %h2 Category
+  - @service.categories.each do |category|
+    %p= category.name
+
   - if policy([:backoffice, @service]).edit?
     = link_to "Edit",
               edit_backoffice_service_path(@service),

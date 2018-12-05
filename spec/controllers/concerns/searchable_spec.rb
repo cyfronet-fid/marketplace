@@ -34,20 +34,25 @@ RSpec.describe SearchableFakeController do
 
     it "should count all services if no category is specified" do
       expect(controller.send(:provider_options).size).to eq(2)
-      expect(controller.send(:provider_options)).to include([provider_2.name, provider_2.id, 2])
+      expect(controller.send(:provider_options)).to include([provider_2.name, provider_2.id, 1])
     end
 
   end
 
   context "target_groups_options" do
-    it "should count services depending on the category" do
+    it "should count services depending on the category 2" do
       expect(controller.send(:target_groups_options, category_2).size).to eq(1)
       expect(controller.send(:target_groups_options, category_2).first).to eq([target_group.name, target_group.id, 1])
     end
 
+    it "should count services depending on the category 1" do
+      expect(controller.send(:target_groups_options, category_1).size).to eq(1)
+      expect(controller.send(:target_groups_options, category_1).first).to eq([target_group.name, target_group.id, 2])
+    end
+
     it "should count all services if no category is specified" do
       expect(controller.send(:target_groups_options).size).to eq(1)
-      expect(controller.send(:target_groups_options)).to include([target_group.name, target_group.id, 3])
+      expect(controller.send(:target_groups_options)).to include([target_group.name, target_group.id, 2])
     end
   end
 
@@ -59,7 +64,7 @@ RSpec.describe SearchableFakeController do
 
     it "should count all services if no category is specified" do
       expect(controller.send(:related_platform_options).size).to eq(2)
-      expect(controller.send(:related_platform_options)).to include([platform_2.name, platform_2.id, 2])
+      expect(controller.send(:related_platform_options)).to include([platform_2.name, platform_2.id, 1])
     end
   end
 end
