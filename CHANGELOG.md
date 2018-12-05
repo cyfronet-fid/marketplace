@@ -162,6 +162,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Unify confirmation views - order, new affiliation, affiliation confirmations (@mkasztelnik)
 - Improve wording of service, affiliation and project item mails (@jswk)
 - Replace dedicated_for with target_group (@martaswiatkowska)
+- Rating to three field form service_rating, order_rating and opinion (@kmarszalek)
 
 ### Deprecated
 

@@ -1,4 +1,44 @@
-%hr/
-%h4 Rate this service: #{@project_item.service.title}
-%p You are using the service for more than two months. Share your opinion with others.
-= render "form", project_item: @project_item
+- breadcrumb :project_item, @project_item
+
+.container
+  .row
+    .col-md-3
+      - if @project_item.service.logo.attached?
+        = image_tag @project_item.service.logo.variant(resize: "170x112")
+      - else
+        = image_tag "eosc-img.png"
+    .col-md-9
+      %h1
+        = @project_item.service.title
+      %span
+        = @project_item.service.tagline
+  .row
+    .col-md-12
+      %h1 Service review
+      = simple_form_for [:project_item, @service_opinion] do |f|
+        = f.error_notification
+        = f.hidden_field :service_rating, value: 0
+        = f.hidden_field :order_rating, value: 0
+        %ul
+          %li
+            Answer two questions and share your opinion with other EOSC Marketplace users.
+          %li
+            %strong How are you satisfied with the #{@project_item.service.title} service on a scale of 1 - 5?
+            %br/
+            %i From 1 - very poor to 5 - excellent
+            = render "stars", field: "service_opinion_service_rating"
+            %strong
+              On a scale of 1 - 5, please rate the service access enabling process that took place.
+              Everything that has happened since submitting the order to the moment of receiving access to the service.
+            %br/
+            %i From 1 - very poor to 5 - excellent
+            = render "stars", field: "service_opinion_order_rating"
+          %li
+            %p
+              If you would like to share further insight on the #{@project_item.service.title} service or its access
+              enabling process, please use the field below. Each comment is highly appreciated as it will serve the
+              EOSC Marketplace user community. Furthermore, it will give guidance on how to improve EOSC services and
+              their delivery to the users.
+        = f.input :opinion, label: false
+        = f.button :submit, "Send review", class: "btn btn-primary"
+        = link_to "CANCEL AND BACK TO PREVIOUS PAGE", @project_item, class: "btn btn-link"
