@@ -20,7 +20,7 @@ class ServiceOpinionPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:rating, :opinion]
+    [:service_rating, :order_rating, :opinion]
   end
 
   private

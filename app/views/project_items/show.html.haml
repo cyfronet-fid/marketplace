@@ -31,11 +31,6 @@
             providers = @project_item.service.providers.
                         map { |p| link_to(p.name, services_path(providers: p)) }
           = safe_join(providers, ", ")
-        - if ratingable?
-          %li.mt-3
-            = link_to "Rate this service",
-              new_project_item_service_opinion_path(@project_item),
-              class: "btn btn-secondary"
 
       - if @project_item.affiliation.present?
         %h3.mb-3 Connected affiliation
@@ -67,5 +62,15 @@
               = @project_item.affiliation.supervisor_profile
 
       = render "project_items/attributes", property_values: @project_item.property_values
+
+      - if ratingable?
+        %h3.mb-3 Rate this service
+        %ul
+          %li
+            Share your opinion with others.
+          %li
+            = link_to "Rate",
+              new_project_item_service_opinion_path(@project_item),
+              class: "btn btn-primary"
 
 
