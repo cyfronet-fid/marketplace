@@ -18,7 +18,7 @@ RSpec.describe ProjectItemsHelper, type: :helper do
     it "is false when project_item is ready but there is service_opinion" do
       @project_item = create(:project_item, status: :created)
       @project_item.new_change(status: :ready, message: "ProjectItem ready")
-      create(:service_opinion, rating: "3", project_item: @project_item)
+      create(:service_opinion, service_rating: "3", order_rating: "3", project_item: @project_item)
       expect(ratingable?).to eq(false)
     end
 
