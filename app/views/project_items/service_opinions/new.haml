@@ -1,44 +1,41 @@
 - breadcrumb :project_item, @project_item
 
 .container
-  .row
+  %h1 Service review
+  .row.border-5.border-bottom.pb-4
     .col-md-3
-      - if @project_item.service.logo.attached?
-        = image_tag @project_item.service.logo.variant(resize: "170x112")
-      - else
-        = image_tag "eosc-img.png"
-    .col-md-9
-      %h1
+      .service-image.border
+        - if @project_item.service.logo.attached?
+          = image_tag @project_item.service.logo.variant(resize: "170x112")
+        - else
+          = image_tag "eosc-img.png"
+    .col-md-9.pl-5.pt-5
+      %h2
         = @project_item.service.title
       %span
         = @project_item.service.tagline
   .row
     .col-md-12
-      %h1 Service review
       = simple_form_for [:project_item, @service_opinion] do |f|
         = f.error_notification
         = f.hidden_field :service_rating, value: 0
         = f.hidden_field :order_rating, value: 0
         %ul
           %li
-            Answer two questions and share your opinion with other EOSC Marketplace users.
-          %li
-            %strong How are you satisfied with the #{@project_item.service.title} service on a scale of 1 - 5?
-            %br/
-            %i From 1 - very poor to 5 - excellent
+            %h3.mt-5 Answer two questions and share your opinion with other EOSC Marketplace users.
+          %li.mt-4
+            %strong 1. How are you satisfied with the #{@project_item.service.title} on a scale of 1 - very poor to 5 -
+            excellent?
             = render "stars", field: "service_opinion_service_rating"
+          %li.mt-4
             %strong
-              On a scale of 1 - 5, please rate the service access enabling process that took place.
-              Everything that has happened since submitting the order to the moment of receiving access to the service.
-            %br/
-            %i From 1 - very poor to 5 - excellent
+              2. On a scale of 1 - 5, rate the service of the order.
+              Everything that has happened since sending the order to receiving the service.
             = render "stars", field: "service_opinion_order_rating"
-          %li
-            %p
-              If you would like to share further insight on the #{@project_item.service.title} service or its access
-              enabling process, please use the field below. Each comment is highly appreciated as it will serve the
-              EOSC Marketplace user community. Furthermore, it will give guidance on how to improve EOSC services and
-              their delivery to the users.
+          %li.mt-5
+            %p.pt-3
+              If the above point score is not enough, write more in the field below. Each comment is valid for the EOSC
+              Marketplace community.
         = f.input :opinion, label: false
         = f.button :submit, "Send review", class: "btn btn-primary"
         = link_to "CANCEL AND BACK TO PREVIOUS PAGE", @project_item, class: "btn btn-link"

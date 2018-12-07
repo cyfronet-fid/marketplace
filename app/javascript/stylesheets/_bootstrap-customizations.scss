@@ -1073,6 +1073,19 @@ Filters
   }
 }
 
+.service-image {
+  text-align: center;
+  padding: 15px 0;
+  width: 100%;
+}
+
+.list-inline-item i {
+  font-size: 35px;
+}
+
+.border-5 {
+  border-width: 5px !important;
+}
 
 //scss-lint:disable QualifyingElement
 // This is a little hack, to make checkboxes vertically centered
