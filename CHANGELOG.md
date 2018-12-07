@@ -179,5 +179,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Open access services transition to "Done" state (@michal-szostak)
 - Affiliations UI on small screens (@jarekzet)
 - Support for Select type custom fields in JIRA (`CP-CustomerTypology`) (@michal-szostak)
+- Input for tag_list for Service form in backoffice (@kmarszalek)
 
 ### Security
