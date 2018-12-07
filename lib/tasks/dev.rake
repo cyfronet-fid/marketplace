@@ -37,7 +37,8 @@ if Rails.env.development?
                        restrictions: Faker::Lorem.sentence,
                        phase: Faker::Lorem.sentence,
                        research_areas: [areas.sample],
-                       platforms: [platforms.sample])
+                       platforms: [platforms.sample],
+                       status: :published)
 
       end
 

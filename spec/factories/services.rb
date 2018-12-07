@@ -28,5 +28,6 @@ FactoryBot.define do
     sequence(:research_areas) { |n| [create(:research_area)] }
     sequence(:providers) { |n| [create(:provider)] }
     sequence(:categories) { |n| [create(:category)] }
+    sequence(:status) { :published }
   end
 end
