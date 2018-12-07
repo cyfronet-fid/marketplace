@@ -1,18 +1,18 @@
 .container
   .row
-    .col-md-3
-      .row
-        %i.fas.fa-user-circle.fa-10x.text-color-solid-10
+    .col-md-2.user-info
+      .row.text-center
+        %i.fas.fa-user-circle.fa-4x.text-color-solid-10
       .row
         %p
           %strong= service_opinion.project_item.affiliation.user.first_name
           %strong &nbsp;#{service_opinion.project_item.affiliation.user.last_name.first}.
           %br/
           %i= service_opinion.project_item.affiliation.organization
-    .col-md-9
-      .row
+    .col-md-10.border.review-box.pt-4.pb-4
+      .row.pl-4.pr-4.mb-3
         .mr-2= print_rating_stars(service_opinion.service_rating)
         %strong.mr-2 #{service_opinion.service_rating}/5
-        .mr-2= time_ago_in_words(service_opinion.created_at)
-      .row
+        %i.mr-2= time_ago_in_words(service_opinion.created_at)
+      .row.pl-4.pr-4
         = service_opinion.opinion
