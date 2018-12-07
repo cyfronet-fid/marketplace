@@ -1,6 +1,11 @@
 - breadcrumb :backoffice_service, @service
 .container
   %h1= @service.title
+
+  - unless policy([:backoffice, @service]).published?
+    = link_to "Publish",
+            backoffice_service_path(return_published_service(@service)),
+            class: "btn btn-warning"
   .row
     .col-3
       - if @service.logo.attached?

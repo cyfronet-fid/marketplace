@@ -265,6 +265,7 @@ ActiveRecord::Schema.define(version: 2019_01_10_111453) do
     t.text "activate_message"
     t.string "slug"
     t.string "service_type"
+    t.string "status"
     t.index ["description"], name: "index_services_on_description"
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["title"], name: "index_services_on_title"

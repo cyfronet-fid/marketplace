@@ -19,6 +19,12 @@ class Service < ApplicationRecord
     catalog: "catalog"
   }
 
+  STATUSES = {
+    published: "published",
+    draft: "draft"
+  }
+
+  enum status: STATUSES
 
   has_many :offers, dependent: :restrict_with_error
   has_many :service_categories, dependent: :destroy
@@ -69,6 +75,7 @@ class Service < ApplicationRecord
   validates :research_areas, presence: true
   validates :providers, presence: true
   validates :categories, presence: true
+  validates :status, presence: true
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
 

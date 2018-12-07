@@ -4,8 +4,27 @@ require "rails_helper"
 
 RSpec.describe ServicePolicy do
   let(:user) { create(:user) }
+  let(:scope) { Service.where(status: :published) }
 
   subject { described_class }
+
+  def resolve
+    subject::Scope.new(user, scope).resolve
+  end
+
+  permissions ".scope" do
+    it "not allows draft services" do
+      service = create(:service, status: :draft)
+
+      expect(resolve.count).to eq(0)
+    end
+
+    it "allows published services" do
+      service = create(:service, status: :published)
+
+      expect(resolve.count).to eq(1)
+    end
+  end
 
   permissions :order? do
     it "grants access when there are offers" do
