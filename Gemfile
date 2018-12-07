@@ -55,6 +55,8 @@ gem "jira-ruby"
 gem "redis-rails"
 gem "sidekiq"
 
+gem "custom_error_message", git: "https://github.com/thethanghn/custom-err-msg.git"
+
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
 

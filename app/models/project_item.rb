@@ -42,12 +42,17 @@ class ProjectItem < ApplicationRecord
   validates_associated :property_values
 
   delegate :user, to: :project
-  delegate :service, to: :offer
+
+  def service
+    offer.service unless offer.nil?
+  end
 
   before_save :map_properties
 
+  validate :one_per_project?, on: :create
+
   def open_access?
-    @is_open_access ||= offer&.service&.open_access?
+    @is_open_access ||= service&.open_access?
   end
 
 
@@ -103,5 +108,14 @@ class ProjectItem < ApplicationRecord
     end
     self.write_attribute(:property_values, @property_values)
     @property_values
+  end
+
+  def one_per_project?
+    if open_access?
+      project_items_services = Service.joins(offers: { project_items: :project }).
+        where(id: service.id, offers: { project_items: { project_id: [ project_id] } }).count.positive?
+
+      errors.add(:project, :repited_in_project, message: "^You cannot add open access service #{service.title} to project #{project.name} twice") unless !project_items_services.present?
+    end
   end
 end
