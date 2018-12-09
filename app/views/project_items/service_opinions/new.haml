@@ -2,7 +2,7 @@
 
 .container
   %h1 Service review
-  .row.border-5.border-bottom.pb-4
+  .row.border-5.border-bottom.border-separator.pb-4
     .col-md-3
       .service-image.border
         - if @project_item.service.logo.attached?
@@ -36,6 +36,8 @@
             %p.pt-3
               If the above point score is not enough, write more in the field below. Each comment is valid for the EOSC
               Marketplace community.
-        = f.input :opinion, label: false
+        .col-12.col-lg-9.pl-0.service-opinion
+          = f.input :opinion, label: false
+        .row.border-5.border-bottom.border-separator.pb-4.mb-4.pt-3
         = f.button :submit, "Send review", class: "btn btn-primary"
         = link_to "CANCEL AND BACK TO PREVIOUS PAGE", @project_item, class: "btn btn-link"
