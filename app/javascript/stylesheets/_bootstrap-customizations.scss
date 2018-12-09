@@ -1079,12 +1079,25 @@ Filters
   width: 100%;
 }
 
-.list-inline-item i {
-  font-size: 35px;
-}
-
 .border-5 {
   border-width: 5px !important;
+}
+
+.border-separator {
+  border-color: $palette-solid-10 !important;
+}
+
+.service-opinion {
+
+  textarea {
+    height: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .list-inline-item svg {
+    font-size: 32px !important;
+  }
 }
 
 //scss-lint:disable QualifyingElement
