@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function starsOnClick(node){
-    $(node || 'body').find("[data-rating-stars] > li").on('click', function () {
+    $(node || 'body').find("[data-rating-stars] > li").on('click', function (event) {
         const name = $(event.currentTarget.parentElement).attr("data-rating-stars");
         const value = document.getElementById(name).value
             = parseInt($(event.currentTarget.firstElementChild).attr("value"));
