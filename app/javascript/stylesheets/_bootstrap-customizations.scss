@@ -1029,6 +1029,76 @@ Filters
   }
 }
 
+.user-info {
+  text-align: center;
+
+  svg {
+    margin: 5px auto 15px;
+  }
+
+  p {
+    width: 100%;
+
+    i {
+      color: $palette-gray-50;
+    }
+  }
+}
+
+.review-box::before,
+.review-box::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 15px;
+  width: 0;
+  height: 0;
+}
+
+.review-box::before {
+  left: -23px;
+  border: 11px solid transparent;
+  border-right-color: $border-color;
+}
+
+.review-box::after {
+  left: -21px;
+  border: 11px solid transparent;
+  border-right-color: $white;
+}
+
+.review-box {
+  i {
+    color: $palette-gray-50;
+  }
+}
+
+.service-image {
+  text-align: center;
+  padding: 15px 0;
+  width: 100%;
+}
+
+.border-5 {
+  border-width: 5px !important;
+}
+
+.border-separator {
+  border-color: $palette-solid-10 !important;
+}
+
+.service-opinion {
+
+  textarea {
+    height: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .list-inline-item svg {
+    font-size: 32px !important;
+  }
+}
 
 //scss-lint:disable QualifyingElement
 // This is a little hack, to make checkboxes vertically centered
