@@ -1,6 +1,6 @@
 .container
   .row
-    .col-md-3
+    .col-lg-3.mb-5
       = render "categories/nav/categories", current: category,
                                             categories: categories,
                                             subcategories: subcategories
@@ -11,7 +11,7 @@
                                    tag_options: tag_options,
                                    related_platform_options: related_platform_options
 
-    .col-md-9
+    .col-lg-9
       %header.row.mb-4
         .col-md-8
           = yield

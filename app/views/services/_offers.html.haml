@@ -1,4 +1,4 @@
 - if policy(service).offers_show?
   %h3 Service offers
-  .card-columns
+  .row
     = render partial: "services/offer", collection: offers, as: :offer

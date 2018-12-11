@@ -200,6 +200,10 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   }
 }
 
+.pagination-right ul {
+  float: right;
+}
+
 .media {
   border-bottom: 1px solid $gray-300;
 
@@ -272,6 +276,7 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   ul {
     list-style-position: outside;
     list-style: disc;
+    padding-left: 20px;
 
     li {
       span {
@@ -995,7 +1000,17 @@ Filters
 
   }
 
+}
 
+@media (max-width: 576px) {
+  .pagination-right ul {
+    float: left;
+    margin-top: 20px;
+  }
+
+  .breadcrumbs {
+    font-size: 0.675rem;
+  }
 }
 
 @media (min-width: 768px) {
