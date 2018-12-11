@@ -65,3 +65,31 @@ body {
   line-height: 1.2rem;
   color: $eu-information-color;
 }
+
+@media (max-width: 576px) {
+  .footer {
+    .row {
+      .col-md {
+        width: 50%;
+        margin-bottom: 15px;
+      }
+    }
+
+    .copy-text {
+      font-size: 11px;
+    }
+
+    .socials {
+      margin-top: 0 !important;
+      text-align: center;
+    }
+
+  }
+
+  .eu-information {
+    font-size: 11px;
+    line-height: 1rem;
+    padding: 12px 0 !important;
+  }
+
+}
