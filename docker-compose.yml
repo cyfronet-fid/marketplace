@@ -1,0 +1,18 @@
+version: '3'
+services:
+  elasticsearch:
+    ports:
+      - "127.0.0.1:9200:9200"
+      - "127.0.0.1:9300:9300"
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.5.2
+  redis:
+    ports:
+      - "127.0.0.1:6379:6379"
+      - "127.0.0.1:6380:6380"
+    image: redis
+  postgres:
+    ports:
+      - "127.0.0.1:5432:5432"
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres

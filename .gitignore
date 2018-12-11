@@ -36,3 +36,5 @@ yarn-debug.log*
 # Ignore IDE configuration
 .idea
 /.env
+
+/docker-compose.yml
