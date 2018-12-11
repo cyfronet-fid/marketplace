@@ -1,6 +1,7 @@
-.card
-  .card-body
-    %h4.card-title= offer.name
-    %p.card-text= offer.description
-    %h5.text-uppercase.parameters-title.mb-0= "Technical parameters"
-    = render "services/parameters", parameters: offer.attributes
+.col-md-6.d-flex.align-items-stretch.mb-4
+  .card
+    .card-body
+      %h4.card-title= offer.name
+      %p.card-text= offer.description
+      %h5.text-uppercase.parameters-title.mb-0= "Technical parameters"
+      = render "services/parameters", parameters: offer.attributes
