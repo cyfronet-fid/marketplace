@@ -11,12 +11,13 @@ class CategoriesController < ApplicationController
     @services = paginate(category_services.order(ordering))
     @siblings = siblings
     @subcategories = category.children.order(:name)
-    @provider_options = provider_options(category)
-    @target_groups_options = target_groups_options(category)
-    @rating_options = rating_options(category)
-    @research_areas = research_areas
-    @tag_options = tag_options
-    @related_platform_options = related_platform_options(category)
+    @provider_options = options_providers(category)
+    @target_groups_options = options_target_groups(category)
+    @rating_options = options_rating(category)
+    @research_areas = options_research_area
+    @tag_options = options_tag
+    @active_filters = active_filters
+    @related_platform_options = options_related_platforms(category)
   end
 
   private
