@@ -41,7 +41,11 @@ Rails.application.routes.draw do
 
   resource :backoffice, only: :show
   namespace :backoffice do
-    resources :services
+    resources :services do
+      scope module: :services do
+        resources :offers
+      end
+    end
   end
 
   namespace :api do
