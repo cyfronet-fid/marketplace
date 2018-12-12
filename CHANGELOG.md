@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - Breadcrumbs for Admin and Back office sections (@mkasztelnik)
 - Add `service_portfolio_manager` role (@mkasztelnik)
+- Possibility of adding offers to the services (@martaswiatkowska)
 
 ### Changed
 - Unify Back office and Admin layout navbars (@mkasztelnik)

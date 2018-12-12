@@ -42,6 +42,9 @@
   - @service.categories.each do |category|
     %p= category.name
 
+  %h2 Offers
+  = render "backoffice/services/offers/offers", service: @service
+
   - if policy([:backoffice, @service]).edit?
     = link_to "Edit",
               edit_backoffice_service_path(@service),

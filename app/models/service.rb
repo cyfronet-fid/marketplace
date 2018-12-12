@@ -81,6 +81,10 @@ class Service < ApplicationRecord
     service_categories.first&.update_attributes(main: true)
   end
 
+  def offers?
+    offers_count.positive?
+  end
+
   private
 
     def main_category_missing?
