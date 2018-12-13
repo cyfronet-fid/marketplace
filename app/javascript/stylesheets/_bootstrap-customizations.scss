@@ -465,20 +465,20 @@ textarea {
 
     &.current {
       &::before {
-        border-left: 2px solid $secondary;
+        border-left: 2px solid $palette-gray-30;
       }
 
       &::after {
         content: '';
         padding-top: 1px;
-        width: 19px;
-        height: 18px;
+        width: 22px;
+        height: 22px;
         top: 2px;
-        left: -9px;
+        left: -10px;
         font-size: 14px;
         text-align: center;
-        border: 2px solid $secondary;
-        background-color: $white;
+        border: 4px solid $white;
+        background-color: $secondary;
       }
     }
 
@@ -492,11 +492,12 @@ textarea {
 
   .time {
     position: absolute;
-    left: -70px;
+    left: -75px;
     line-height: 1.4;
-    text-align: center;
+    font-size: 11px;
+    text-align: right;
     padding-top: 4px;
-    width: 50px;
+    width: 55px;
   }
 }
 
@@ -1158,9 +1159,98 @@ Filters
   }
 }
 
+.back-link {
+  svg {
+    color: $palette-gray-30;
+  }
+
+  a {
+    font-size: 13px;
+    color: $palette-blue;
+  }
+}
+
+.details {
+
+  dl {
+    display: table;
+    width: 100%;
+    margin: 0 0 8px;
+  }
+
+  dt,
+  dd {
+    display: table-cell;
+    padding: 0 0 8px;
+    border-bottom: 1px solid $palette-solid-10;
+  }
+
+  dd {
+    font-weight: bold;
+
+    a {
+      color: $body-color;
+    }
+  }
+
+  dt {
+    font-weight: 300;
+    width: 33%;
+  }
+
+  dt::after,
+  dd::after {
+    clear: both;
+  }
+}
+
 @media (max-width: 768px) {
   .list-inline-item svg {
     font-size: 32px !important;
+  }
+}
+
+.progress-box {
+  max-height: 315px;
+  overflow-y: auto;
+}
+
+.question-box {
+  border-top: 1px solid $palette-gray-10;
+}
+
+.blue-row {
+  background: $palette-light-blue;
+  padding: 12px 15px;
+  font-size: 13px;
+  line-height: 21px;
+
+  i {
+    margin-right: 15px;
+    width: 50px;
+  }
+
+  svg {
+    font-size: 44px;
+    width: 50px;
+    color: $palette-blue;
+  }
+
+  .voucher-name {
+    font-size: 22px;
+    font-weight: bold;
+  }
+}
+
+.step-progress-item {
+  .frame {
+    padding: 8px 14px;
+    max-width: 90%;
+    margin-top: 10px;
+    border: 1px solid $palette-gray-30;
+    font-style: italic;
+    font-size: 12px;
+    line-height: 18px;
   }
 }
 
