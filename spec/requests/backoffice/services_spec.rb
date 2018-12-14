@@ -14,5 +14,14 @@ RSpec.describe "Backoffice service" do
       expect { delete backoffice_service_path(service) }.
         to change { Service.count }.by(-1)
     end
+
+    it "I can publish service" do
+      service = create(:service, owner: user, status: :draft)
+
+      post backoffice_service_publish_path(service)
+      service.reload
+
+      expect(service).to be_published
+    end
   end
 end

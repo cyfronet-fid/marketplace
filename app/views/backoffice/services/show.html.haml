@@ -2,9 +2,11 @@
 .container
   %h1= @service.title
 
-  - unless policy([:backoffice, @service]).published?
+  - if policy([:backoffice, @service]).publish?
     = link_to "Publish",
-            backoffice_service_path(return_published_service(@service)),
+            backoffice_service_publish_path(@service),
+            method: :post,
+            data: { confirm: "Are you sure you want to publish this service?" },
             class: "btn btn-warning"
   .row
     .col-3

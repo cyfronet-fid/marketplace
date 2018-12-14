@@ -94,4 +94,20 @@ RSpec.describe Backoffice::ServicePolicy do
       expect(scope.resolve.count).to be_zero
     end
   end
+
+  permissions :publish? do
+    it "grants access for owned not published service" do
+      expect(subject).
+        to permit(user, build(:service, owner: user, status: :draft))
+    end
+
+    it "denies access for other users" do
+      expect(subject).to_not permit(user, build(:service, status: :draft))
+    end
+
+    it "denies access for already published service" do
+      expect(subject).
+        to_not permit(user, build(:service, owner: user, status: :published))
+    end
+  end
 end
