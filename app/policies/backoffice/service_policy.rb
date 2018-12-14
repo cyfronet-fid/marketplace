@@ -34,8 +34,8 @@ class Backoffice::ServicePolicy < ApplicationPolicy
     service_portfolio_manager?
   end
 
-  def published?
-    owner? && !record.status == "draft"
+  def publish?
+    owner? && !record.published?
   end
 
   def destroy?

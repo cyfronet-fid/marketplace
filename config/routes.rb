@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   namespace :backoffice do
     resources :services do
       scope module: :services do
-        resources :offers
+        resource :publish, only: :create
       end
     end
   end
