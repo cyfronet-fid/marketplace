@@ -12,6 +12,9 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name, :reason_for_access, :customer_typology]
+    [:name, :reason_for_access,
+     :customer_typology, :user_group_name,
+     :project_name, :project_website_url,
+     :company_name, :company_website_url]
   end
 end
