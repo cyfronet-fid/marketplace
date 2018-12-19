@@ -138,6 +138,7 @@ private
     when "SO-1"
       "#{project_item.service.categories.first.name}/" +
       "#{project_item.service.title}/" +
+      "#{project_item.offer&.name}?" +
       "#{encode_properties(project_item.properties)}"
     else
       nil
