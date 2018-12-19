@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_10_111453) do
+ActiveRecord::Schema.define(version: 2018_12_12_102330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,6 +124,11 @@ ActiveRecord::Schema.define(version: 2019_01_10_111453) do
     t.text "additional_information"
     t.bigint "affiliation_id"
     t.jsonb "properties"
+    t.text "user_group_name"
+    t.string "project_name"
+    t.string "project_website_url"
+    t.string "company_name"
+    t.string "company_website_url"
     t.index ["affiliation_id"], name: "index_project_items_on_affiliation_id"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
@@ -134,6 +139,11 @@ ActiveRecord::Schema.define(version: 2019_01_10_111453) do
     t.bigint "user_id", null: false
     t.text "reason_for_access"
     t.string "customer_typology"
+    t.string "user_group_name"
+    t.string "project_name"
+    t.string "project_website_url"
+    t.string "company_name"
+    t.string "company_website_url"
     t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -255,6 +265,7 @@ ActiveRecord::Schema.define(version: 2019_01_10_111453) do
     t.text "activate_message"
     t.string "slug"
     t.string "service_type"
+    t.string "status"
     t.index ["description"], name: "index_services_on_description"
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["title"], name: "index_services_on_title"

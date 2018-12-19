@@ -23,6 +23,8 @@ class ProjectItemPolicy < ApplicationPolicy
       # TODO handle other attribute value types
     }
     [:service_id, :project_id, :affiliation_id, :customer_typology,
-     :access_reason, :additional_information, property_values: attributes]
+     :access_reason, :additional_information, :user_group_name,
+     :project_name, :project_website_url, :company_name,
+     :company_website_url, property_values: attributes]
   end
 end

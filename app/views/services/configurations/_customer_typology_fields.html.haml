@@ -1,0 +1,17 @@
+= f.input :user_group_name,
+  wrapper_html: { class: "hidden-fields", "data-target" => "project-item.research project-item.input" },
+  input_html: { "data-target" => "project-item.userGroupName" }
+= f.input :project_name,
+  wrapper_html: { class: "hidden-fields", "data-target" => "project-item.project project-item.input" },
+  input_html: { "data-target" => "project-item.projectName" }
+= f.input :project_website_url,
+  wrapper_html: { class: "hidden-fields", "data-target" => "project-item.project project-item.input" },
+  input_html: { "data-target" => "project-item.projectWebsiteUrl" }
+= f.input :company_name,
+  wrapper_html: { class: "hidden-fields", "data-target" => "project-item.privateCompany project-item.input" },
+  input_html: { "data-target" => "project-item.companyName" }
+= f.input :company_website_url,
+  wrapper_html: { class: "hidden-fields", "data-target" => "project-item.privateCompany project-item.input" },
+  input_html: { "data-target" => "project-item.companyWebsiteUrl" }
+
+
