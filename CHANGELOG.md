@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 Please view this file on the master branch, on stable branches it's out of date.
 
 ## [Unreleased]
+### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.0.0] - 2018-12-20
 ### Added
 - Basic application structure and configuration (@mkasztelnik)
 - Service model, simple index and show pages integrated with elasticsearch (@mkasztelnik)
