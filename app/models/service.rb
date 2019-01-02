@@ -107,7 +107,9 @@ class Service < ApplicationRecord
         __elasticsearch__.index_document
       end
     else
-      __elasticsearch__.delete_document
+      if @status_was == :published
+        __elasticsearch__.index_document
+      end
     end
   end
 
