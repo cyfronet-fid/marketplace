@@ -65,4 +65,42 @@ RSpec.describe Service do
 
     expect(s1.related_services).to contain_exactly(s2, s3)
   end
+
+  context "category services counter cache" do
+    let(:category) { create(:category) }
+
+    it "is inceased when creating already published service" do
+      create(:service, status: "published", categories: [category])
+
+      category.reload
+
+      expect(category.services_count).to eq(1)
+    end
+
+    it "is not modified when creating draft service" do
+      create(:service, status: "draft", categories: [category])
+
+      category.reload
+
+      expect(category.services_count).to eq(0)
+    end
+
+    it "is increased when publishing" do
+      service = create(:service, status: "draft", categories: [category])
+
+      service.published!
+      category.reload
+
+      expect(category.services_count).to eq(1)
+    end
+
+    it "is decreased when unpublishing" do
+      service = create(:service, status: "published", categories: [category])
+
+      service.draft!
+      category.reload
+
+      expect(category.services_count).to eq(0)
+    end
+  end
 end
