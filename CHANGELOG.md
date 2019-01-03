@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Corrected typos in terms and conditions hint (@mkasztelnik)
 
 ### Security
 
@@ -140,7 +141,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Customizable from email (@mkasztelnik)
 - Flash fade out after 5 seconds (@mkasztelnik)
 - Add new supported JIRA states (rejected, waiting for response) (@michal-szostak)
-- ASSET_HOST and ASSET_PROTOCOL for mailer config (@kmarszalek) 
+- ASSET_HOST and ASSET_PROTOCOL for mailer config (@kmarszalek)
 - Additional field mapping to JIRA order (@michal-szostak)
 - Possibility to setup RATE_AFTER_PERIOD ENV variable (@kmarszalek)
 - Category field on create service view (@martaswiatkowska)
