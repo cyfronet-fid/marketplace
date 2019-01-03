@@ -92,29 +92,24 @@ class Service < ApplicationRecord
   end
 
   after_commit on: [:create] do
-    __elasticsearch__.index_document if self.published?
-  end
-
-  before_update do
-    @status_was = self.status_was
+    __elasticsearch__.index_document if published?
   end
 
   after_commit on: [:update] do
-    if self.published?
-      if @status_was == :published
+    was_published = attribute_before_last_save(:status) == "published"
+    if published?
+      if was_published
         __elasticsearch__.update_document
       else
         __elasticsearch__.index_document
       end
     else
-      if @status_was == :published
-        __elasticsearch__.index_document
-      end
+      __elasticsearch__.delete_document if was_published
     end
   end
 
   after_commit on: [:destroy] do
-    __elasticsearch__.delete_document if self.published?
+    __elasticsearch__.delete_document if published?
   end
 
   private
