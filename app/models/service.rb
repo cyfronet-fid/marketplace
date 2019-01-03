@@ -112,6 +112,11 @@ class Service < ApplicationRecord
     __elasticsearch__.delete_document if published?
   end
 
+  after_commit on: [:update] do
+    # Update categories counters
+    service_categories.each(&:touch) if saved_change_to_status
+  end
+
   private
 
     def main_category_missing?
