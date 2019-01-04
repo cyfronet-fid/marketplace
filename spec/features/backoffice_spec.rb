@@ -35,7 +35,7 @@ RSpec.feature "Backoffice" do
     scenario "I'm able to enter into backoffice" do
       visit backoffice_path
 
-      expect(page).to have_content("EOSC Portal Backoffice")
+      expect(page).to have_current_path(backoffice_path)
     end
   end
 end
