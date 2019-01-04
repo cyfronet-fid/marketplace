@@ -8,6 +8,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ## [Unreleased]
 ### Added
+- Breadcrumbs for Admin and Back office sections (@mkasztelnik)
 
 ### Changed
 - Unify Back office and Admin layout navbars (@mkasztelnik)

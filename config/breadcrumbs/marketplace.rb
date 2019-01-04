@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-crumb :root do
+crumb :marketplace_root do
   link "Home", root_path
 end
 
 crumb :profile do
   link "My profile", profile_path
+  parent :marketplace_root
 end
 
 crumb :affiliation do |affiliation|
@@ -21,6 +22,7 @@ end
 
 crumb :services do
   link "Services", services_path
+  parent :marketplace_root
 end
 
 crumb :service do |service|
@@ -48,10 +50,10 @@ end
 
 crumb :projects do
   link "My services", projects_path
-  parent :root
+  parent :marketplace_root
 end
 
 crumb :congratulations do |project_item|
   link "Congratulations", project_item_path(project_item)
-  parent :root
+  parent :marketplace_root
 end
