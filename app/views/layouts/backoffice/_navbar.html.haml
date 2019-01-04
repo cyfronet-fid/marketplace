@@ -1,8 +1,9 @@
+= render "layouts/sections", section: :backoffice
 .container
   %nav.navbar.navbar-expand-lg.navbar-light
-    = link_to backoffice_path, class: "navbar-brand" do
-      %strong EOSC
-      Portal Backoffice
+    = link_to root_path, class: "navbar-brand col-12 col-lg-3 pl-0" do
+      = image_tag "eosc-logo-color-backoffice.png"
+
     %button.navbar-toggler{ "aria-controls" => "navbar-supported-content",
                             "aria-expanded" => "false", "aria-label" => "Toggle navigation",
                             "data-target" => "#navbar-supported-content",
@@ -12,12 +13,10 @@
 
     #navbar-supported-content.collapse.navbar-collapse
       %ul.navbar-nav.ml-auto.pt-2
-        = nav_link controller: :backoffices do
+        = nav_link controller: :backoffices, html_options: { class: "nav-item" } do
           = link_to "Getting Started", backoffice_path, class: "nav-link px-3 py-1"
-        = nav_link controller: :services do
+        = nav_link controller: :services, html_options: { class: "nav-item" } do
           = link_to "Owned Services", backoffice_services_path, class: "nav-link px-3 py-1"
-        = nav_link controller: :home do
-          = link_to "EOSC Portal", root_path, class: "nav-link px-3 py-1"
         %li.nav-item
           = link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link px-3 py-1"
 

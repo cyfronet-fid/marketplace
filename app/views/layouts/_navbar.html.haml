@@ -1,14 +1,4 @@
-.bg-light.pt-1.pb-1
-  .container.text-right.pr-1.top-row
-    %ul.list-inline.mb-0.font-weight-light
-      - if policy([:backoffice, :backoffice]).show?
-        %li.list-inline-item.ml-2
-          = link_to "Backoffice", backoffice_path
-
-      %li.list-inline-item.ml-2
-        %a{ href: "https://eosc-portal.eu" } EOSC Portal
-      %li.list-inline-item.ml-2
-        %a.active{ href: "/" } EOSC Marketplace
+= render "layouts/sections"
 .container.pl-0.pr-0
   %nav.navbar.navbar-expand-lg.pl-0.pr-0
     = link_to root_path, class: "navbar-brand col-12 col-lg-3 pl-0" do
