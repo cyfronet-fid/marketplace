@@ -33,6 +33,12 @@ class Service < ApplicationRecord
   has_many :service_target_groups, dependent: :destroy
   has_many :target_groups, through: :service_target_groups
 
+  has_many :service_user_relationships, dependent: :destroy
+  has_many :owners,
+           through: :service_user_relationships,
+           source: :user,
+           class_name: "User"
+
   has_many :source_relationships,
            class_name: "ServiceRelationship",
            foreign_key: "target_id",

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_10_095634) do
+ActiveRecord::Schema.define(version: 2019_01_10_111453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -218,6 +218,15 @@ ActiveRecord::Schema.define(version: 2019_01_10_095634) do
     t.index ["target_group_id"], name: "index_service_target_groups_on_target_group_id"
   end
 
+  create_table "service_user_relationships", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service_id"], name: "index_service_user_relationships_on_service_id"
+    t.index ["user_id"], name: "index_service_user_relationships_on_user_id"
+  end
+
   create_table "services", force: :cascade do |t|
     t.string "title", null: false
     t.text "description", null: false
@@ -298,6 +307,7 @@ ActiveRecord::Schema.define(version: 2019_01_10_095634) do
     t.string "last_name", null: false
     t.integer "roles_mask"
     t.integer "active_affiliations_count", default: 0
+    t.integer "owned_services_count", default: 0, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
@@ -315,5 +325,7 @@ ActiveRecord::Schema.define(version: 2019_01_10_095634) do
   add_foreign_key "service_research_areas", "services"
   add_foreign_key "service_target_groups", "services"
   add_foreign_key "service_target_groups", "target_groups"
+  add_foreign_key "service_user_relationships", "services"
+  add_foreign_key "service_user_relationships", "users"
   add_foreign_key "services", "providers"
 end
