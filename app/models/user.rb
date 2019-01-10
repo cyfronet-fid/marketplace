@@ -36,4 +36,8 @@ class User < ApplicationRecord
   def service_owner?
     owned_services_count.positive?
   end
+
+  def to_s
+    full_name
+  end
 end
