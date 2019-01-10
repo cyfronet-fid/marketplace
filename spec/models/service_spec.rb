@@ -10,9 +10,6 @@ RSpec.describe Service do
   it { should validate_presence_of(:rating) }
   it { should validate_presence_of(:categories) }
 
-
-  it { should belong_to(:owner) }
-
   it { should have_many(:providers) }
   it { should have_many(:service_categories).dependent(:destroy) }
   it { should have_many(:offers).dependent(:restrict_with_error) }

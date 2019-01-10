@@ -5,14 +5,10 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: %i[checkin]
 
   include RoleModel
-  roles :admin, :service_owner
+  roles :admin, :service_portfolio_manager
 
   has_many :projects, dependent: :destroy
   has_many :affiliations, dependent: :destroy
-  has_many :owned_services,
-           class_name: "Service",
-           foreign_key: "owner_id",
-           dependent: :nullify
 
   validates :first_name, presence: true
   validates :last_name, presence: true

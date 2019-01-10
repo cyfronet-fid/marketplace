@@ -9,7 +9,7 @@ RSpec.describe Backoffice::BackofficePolicy do
   permissions :show? do
     it "grants access for service owner" do
       expect(subject).
-        to permit(build(:user, roles: [:service_owner]),
+        to permit(build(:user, roles: [:service_portfolio_manager]),
                  [:backoffice, :backoffice])
     end
 
