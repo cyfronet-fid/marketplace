@@ -33,7 +33,7 @@ describe Jira::Client do
                           offer: create(:offer, name: "off1", service: create(:service,
                                                                         title: "s1",
                                                                         categories: [create(:category, name: "cat1")])),
-                          project: create(:project, user: user),
+                          project: create(:project, user: user, name: "My Secret Project"),
                           customer_typology: "single_user",
                           access_reason: "some reason", properties: [
             {
@@ -78,6 +78,7 @@ describe Jira::Client do
                        "CI-SupervisorProfile-1" => "http://jim.supervisor.edu",
                        "CP-CustomerTypology-1" => { "id" => "20000" },
                        "CP-ReasonForAccess-1" => "some reason",
+                       "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
                        "SO-1-1" => "cat1/s1/off1?Data repository name=aaaaaa&" +
                                    "Harvesting method=OAI-PMH&" +
                                    "Harvesting endpoint=aaaaa" }
@@ -104,7 +105,7 @@ describe Jira::Client do
                                                                  service_type: "open_access",
                                                                  connected_url:  "http://service.org/access",
                                                                  categories: [create(:category, name: "cat1")])),
-                          project: create(:project, user: user))
+                          project: create(:project, user: user, name: "My Secret Project"))
 
     expected_fields = { summary: "Service order, John Doe, s1",
                         project: { key: "MP" },
@@ -115,6 +116,7 @@ describe Jira::Client do
                         "CI-Surname-1" => "Doe",
                         "CI-DisplayName-1" => "John Doe",
                         "CI-EOSC-UniqueID-1" => "uid2",
+                        "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
                         "SO-1-1" => "cat1/s1/off1?" }
 
     issue = double(:Issue)
