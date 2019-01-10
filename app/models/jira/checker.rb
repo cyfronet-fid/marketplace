@@ -134,7 +134,7 @@ class Jira::Checker
 
   def check_workflow_transitions!(issue)
     begin
-      trs = issue.transitions.select { |tr| tr.to.id.to_i == client.wf_done_id }
+      trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_done_id }
       if trs.length == 0
         raise CheckerError.new("Could not transition from 'TODO' to 'DONE' state, " +
                                    "this will affect open access services ")
