@@ -67,9 +67,16 @@ or you can also use `systemctl`, it shouldn't matter which one you use.
 ## JIRA
 
 Marketplace is integrating with jira on a rather tight level.
-For tests JIRA is stubbed, and for normal development it can be omitted,
+For tests JIRA is mocked, and for normal development it can be omitted,
 but in case there is a need for JIRA instance to exist it is recommeded
 to use jira instance provided by atlassian SDK.
+
+## For Admins
+
+If you are an admin, who wants to integrate production instance of JIRA go to 
+[JIRA integration manual](./docs/jira_integration.md) otherwise read on.
+
+## For Developers
 
 Here are instructions how to install atlassian SDK on \*nix systems:
 https://developer.atlassian.com/server/framework/atlassian-sdk/install-the-atlassian-sdk-on-a-linux-or-mac-system/
@@ -134,7 +141,6 @@ checked on. (**NOTICE:** don't forget to set you ENV variables correctly (see ab
 especially `MP_HOST` variable, without it rake task will not be able to identify which
 webhook is pointing to your application)
 
-
 ## Run
 
 To start web application in development mode (with auto refresh capability when
@@ -188,6 +194,7 @@ ENV variables:
   * `ASSET_HOST` and `ASSET_PROTOCOL` - assets mailer config is mandatory 
     (e.g. ASSET_HOST = marketplace.eosc-portal.eu/ and ASSET_PROTOCOL = https )
   * `RATE_AFTER_PERIOD` - number of days after which user can rate service (default is set to 90 days)
+  * ENV Variables connected to JIRA integration are described in [JIRA integration manual](./docs/jira_integration.md)  
 
 ## Commits
 
@@ -198,7 +205,7 @@ or any other scripts which traditionally set environmental variables.
 
 Installed githooks require access to ruby, so ruby environment must be available for IDE.
 
-For Jetbrains IDE some solutions can be found (here)[https://emmanuelbernard.com/blog/2012/05/09/setting-global-variables-intellij/]
+For Jetbrains IDE some solutions can be found [here](https://emmanuelbernard.com/blog/2012/05/09/setting-global-variables-intellij/)
 
 For OSX solution might be calling `sudo launchctl config user path $PATH`
 For Linux systems modifying `PATH` in `/etc/environment` should do the job.
