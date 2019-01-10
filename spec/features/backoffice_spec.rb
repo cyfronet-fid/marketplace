@@ -38,4 +38,25 @@ RSpec.feature "Backoffice" do
       expect(page).to have_current_path(backoffice_path)
     end
   end
+
+  context "as a service owner" do
+    let(:user) do
+      create(:user).tap do |user|
+        service = create(:service)
+        ServiceUserRelationship.create!(user: user, service: service)
+      end
+    end
+
+    scenario "I see Backoffice link in navbar" do
+      visit root_path
+
+      expect(page).to have_content("Backoffice")
+    end
+
+    scenario "I'm able to enter into backoffice" do
+      visit backoffice_path
+
+      expect(page).to have_current_path(backoffice_path)
+    end
+  end
 end

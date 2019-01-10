@@ -3,16 +3,23 @@
 class Backoffice::ServicePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      user.service_portfolio_manager? ? scope : Service.none
+      if user.service_portfolio_manager?
+        scope
+      elsif user.service_owner?
+        scope.joins(:service_user_relationships).
+          where(service_user_relationships: { user: user })
+      else
+        Service.none
+      end
     end
   end
 
   def index?
-    true
+    service_portfolio_manager? || service_owner?
   end
 
   def show?
-    service_portfolio_manager?
+    service_portfolio_manager? || owned_service?
   end
 
   def new?
@@ -46,9 +53,18 @@ class Backoffice::ServicePolicy < ApplicationPolicy
 
   private
 
-    # shortcat for service portfolio manager
     def service_portfolio_manager?
       user.service_portfolio_manager?
+    end
+
+    def service_owner?
+      user.service_owner?
+    end
+
+    def owned_service?
+      ServiceUserRelationship.
+        where(service: record, user: user).
+        count.positive?
     end
 
     def project_items

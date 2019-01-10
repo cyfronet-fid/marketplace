@@ -7,6 +7,7 @@
 # methods are overriden to add :backoffice prefix in automatic way.
 class Backoffice::BackofficePolicy < Struct.new(:user, :backoffice)
   def show?
-    user&.service_portfolio_manager?
+    user&.service_portfolio_manager? ||
+      user&.service_owner?
   end
 end
