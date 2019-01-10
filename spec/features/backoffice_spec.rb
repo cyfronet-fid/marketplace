@@ -24,7 +24,7 @@ RSpec.feature "Backoffice" do
   end
 
   context "as a service owner" do
-    let(:user) { create(:user, roles: [:service_owner]) }
+    let(:user) { create(:user, roles: [:service_portfolio_manager]) }
 
     scenario "I see Backoffice link in navbar" do
       visit root_path

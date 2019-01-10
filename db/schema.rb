@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_05_143939) do
+ActiveRecord::Schema.define(version: 2019_01_10_095634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -225,7 +225,6 @@ ActiveRecord::Schema.define(version: 2018_12_05_143939) do
     t.datetime "updated_at", null: false
     t.text "terms_of_use"
     t.text "tagline", null: false
-    t.bigint "owner_id"
     t.decimal "rating", precision: 2, scale: 1, default: "0.0", null: false
     t.text "connected_url"
     t.bigint "provider_id"
@@ -248,7 +247,6 @@ ActiveRecord::Schema.define(version: 2018_12_05_143939) do
     t.string "slug"
     t.string "service_type"
     t.index ["description"], name: "index_services_on_description"
-    t.index ["owner_id"], name: "index_services_on_owner_id"
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["title"], name: "index_services_on_title"
   end
@@ -318,5 +316,4 @@ ActiveRecord::Schema.define(version: 2018_12_05_143939) do
   add_foreign_key "service_target_groups", "services"
   add_foreign_key "service_target_groups", "target_groups"
   add_foreign_key "services", "providers"
-  add_foreign_key "services", "users", column: "owner_id"
 end

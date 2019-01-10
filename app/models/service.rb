@@ -46,9 +46,6 @@ class Service < ApplicationRecord
   has_many :related_services,
            through: :target_relationships,
            source: :target
-  belongs_to :owner,
-             class_name: "User",
-             optional: true
 
   validates :title, presence: true
   validates :description, presence: true

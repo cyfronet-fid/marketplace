@@ -3,7 +3,7 @@
 class Backoffice::ServicePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(owner: user)
+      user.service_portfolio_manager? ? scope : Service.none
     end
   end
 
@@ -12,23 +12,23 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   end
 
   def show?
-    owner?
+    service_portfolio_manager?
   end
 
   def new?
-    true
+    service_portfolio_manager?
   end
 
   def create?
-    true
+    service_portfolio_manager?
   end
 
   def update?
-    owner?
+    service_portfolio_manager?
   end
 
   def destroy?
-    owner? && project_items.count.zero?
+    service_portfolio_manager? && project_items.count.zero?
   end
 
   def permitted_attributes
@@ -46,8 +46,9 @@ class Backoffice::ServicePolicy < ApplicationPolicy
 
   private
 
-    def owner?
-      record.owner == user
+    # shortcat for service portfolio manager
+    def service_portfolio_manager?
+      user.service_portfolio_manager?
     end
 
     def project_items
