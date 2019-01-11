@@ -21,6 +21,12 @@ body {
     height: 79px;
   }
 
+  .eosc-hub-logo-mono {
+    background: url('../../assets/images/eosc-footer-logo.png') center no-repeat;
+    width: 148px;
+    height: 79px;
+  }
+
   ul {
     line-height: 1.1rem;
   }
@@ -83,7 +89,11 @@ body {
       margin-top: 0 !important;
       text-align: center;
     }
+  }
 
+  .eosc-logo-mono,
+  .eosc-hub-logo-mono {
+    margin: auto;
   }
 
   .eu-information {
@@ -91,5 +101,4 @@ body {
     line-height: 1rem;
     padding: 12px 0 !important;
   }
-
 }
