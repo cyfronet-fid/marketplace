@@ -31,15 +31,18 @@ class ProjectItem < ApplicationRecord
   belongs_to :offer
   belongs_to :affiliation, required: false
   belongs_to :project
+  belongs_to :research_area, required: false
   has_one :service_opinion, dependent: :restrict_with_error
   has_many :project_item_changes, dependent: :destroy
 
   validates :offer, presence: true
   validates :affiliation, presence: true, unless: :open_access?
+  validates :research_area, presence: true, unless: :open_access?
   validates :project, presence: true
   validates :status, presence: true
   validates :customer_typology, presence: true, unless: :open_access?
   validates :access_reason, presence: true, unless: :open_access?
+  validate :research_area_is_a_leaf
   validates_associated :property_values
   validates :user_group_name, presence: true, if: :research?
   validates :project_name, presence: true, if: :project?
@@ -123,5 +126,9 @@ class ProjectItem < ApplicationRecord
 
       errors.add(:project, :repited_in_project, message: "^You cannot add open access service #{service.title} to project #{project.name} twice") unless !project_items_services.present?
     end
+  end
+
+  def research_area_is_a_leaf
+    errors.add(:research_area_id, "cannot have children") if research_area&.has_children?
   end
 end
