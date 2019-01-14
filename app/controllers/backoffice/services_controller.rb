@@ -12,7 +12,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   def new
-    @service = Service.new(owner: current_user)
+    @service = Service.new
     authorize(@service)
   end
 
@@ -50,8 +50,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   private
     def service_template
-      Service.new(permitted_attributes(Service).
-                      merge(owner: current_user))
+      Service.new(permitted_attributes(Service))
     end
 
     def find_and_authorize

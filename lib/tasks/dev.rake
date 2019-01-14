@@ -13,12 +13,14 @@ if Rails.env.development?
       target_groups = TargetGroup.all
       puts "Generating #{services_size} new services"
       services_size.times do
+        sample_user = users.sample
+        owners = sample_user ? [sample_user] : []
         Service.create(title: Faker::Lorem.sentence,
                        description: Faker::Lorem.paragraph,
                        terms_of_use: Faker::Lorem.paragraph,
                        tagline: Faker::Lorem.sentence,
                        categories: [Category.all.sample],
-                       owner: users.sample,
+                       owners: owners,
                        rating: Random.rand(5.0),
                        connected_url: Faker::Internet.url,
                        providers: Provider.all.sample(2),

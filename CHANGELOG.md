@@ -9,9 +9,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 ### Added
 - Breadcrumbs for Admin and Back office sections (@mkasztelnik)
+- Add `service_portfolio_manager` role (@mkasztelnik)
 
 ### Changed
 - Unify Back office and Admin layout navbars (@mkasztelnik)
+- Service can have many owners, owners can see but not modify owned services (@mkasztelnik)
 
 ### Deprecated
 
