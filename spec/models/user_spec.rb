@@ -10,7 +10,6 @@ RSpec.describe User do
 
   it { should have_many(:projects).dependent(:destroy) }
   it { should have_many(:affiliations).dependent(:destroy) }
-  it { should have_many(:owned_services).dependent(:nullify) }
 
   context "#full_name" do
     it "is composed from first and last name" do
@@ -68,6 +67,22 @@ RSpec.describe User do
       user.reload
 
       expect(user).to_not be_active_affiliation
+    end
+  end
+
+  context "#service_owner?" do
+    it "is false when user does not own any services" do
+      user = create(:user)
+
+      expect(user).to_not be_service_owner
+    end
+
+    it "is true when user owns services" do
+      user = create(:user)
+      service = create(:service)
+      ServiceUserRelationship.create!(user: user, service: service)
+
+      expect(user).to be_service_owner
     end
   end
 end

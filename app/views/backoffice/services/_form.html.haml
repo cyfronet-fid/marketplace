@@ -29,6 +29,7 @@
   = f.association :platforms, multiple: true
   = f.input :tag_list, input_html: { value: service.tag_list.to_s }
   = f.association :categories, multiple: true
+  = f.association :owners, multiple: true
 
   %a#add-email-field Add additional email
   .invalid-feedback{ styles: "display:block" }

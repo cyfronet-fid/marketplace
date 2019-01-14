@@ -3,51 +3,71 @@
 class Backoffice::ServicePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(owner: user)
+      if user.service_portfolio_manager?
+        scope
+      elsif user.service_owner?
+        scope.joins(:service_user_relationships).
+          where(service_user_relationships: { user: user })
+      else
+        Service.none
+      end
     end
   end
 
   def index?
-    true
+    service_portfolio_manager? || service_owner?
   end
 
   def show?
-    owner?
+    service_portfolio_manager? || owned_service?
   end
 
   def new?
-    true
+    service_portfolio_manager?
   end
 
   def create?
-    true
+    service_portfolio_manager?
   end
 
   def update?
-    owner?
+    service_portfolio_manager?
   end
 
   def destroy?
-    owner? && project_items.count.zero?
+    service_portfolio_manager? && project_items.count.zero?
   end
 
   def permitted_attributes
-    [:title, :description, :terms_of_use,
-     :tagline, :connected_url, :service_type,
-     [provider_ids: []], :places, :languages,
-     [target_group_ids: []], :terms_of_use_url,
-     :access_policies_url, :corporate_sla_url,
-     :webpage_url, :manual_url, :helpdesk_url,
-     :tutorial_url, :restrictions, :phase,
-     :activate_message, :logo,
-     [contact_emails: []], [research_area_ids: []],
-     [platform_ids: []], :tag_list, [category_ids: []]]
+    [
+      :title, :description, :terms_of_use,
+      :tagline, :connected_url, :service_type,
+      [provider_ids: []], :places, :languages,
+      [target_group_ids: []], :terms_of_use_url,
+      :access_policies_url, :corporate_sla_url,
+      :webpage_url, :manual_url, :helpdesk_url,
+      :tutorial_url, :restrictions, :phase,
+      :activate_message, :logo,
+      [contact_emails: []], [research_area_ids: []],
+      [platform_ids: []], :tag_list, [category_ids: []],
+      [owner_ids: []]
+    ]
   end
 
   private
 
-    def owner?
-      record.owner == user
+    def service_portfolio_manager?
+      user.service_portfolio_manager?
+    end
+
+    def service_owner?
+      user.service_owner?
+    end
+
+    def owned_service?
+      ServiceUserRelationship.
+        where(service: record, user: user).
+        count.positive?
     end
 
     def project_items

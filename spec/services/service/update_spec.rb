@@ -3,10 +3,9 @@
 require "rails_helper"
 
 RSpec.describe Service::Update do
-  let(:user) { create(:user) }
-  let(:service) { create(:service, owner: user) }
-
   it "updates affiliation" do
+    service = create(:service)
+
     described_class.new(service, title: "new title").call
 
     expect(service.title).to eq("new title")
