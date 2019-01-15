@@ -69,4 +69,24 @@ RSpec.describe ProjectItem do
       expect(build(:project_item, status: :rejected)).to_not be_active
     end
   end
+
+  describe "research typology" do
+    subject { build(:project_item, customer_typology: "research") }
+
+    it { is_expected.to validate_presence_of(:user_group_name) }
+  end
+
+  describe "project typology" do
+    subject { build(:project_item, customer_typology: "project") }
+
+    it { is_expected.to validate_presence_of(:project_name) }
+    it { is_expected.to validate_presence_of(:project_website_url) }
+  end
+
+  describe "private_company typology" do
+    subject { build(:project_item, customer_typology: "private_company") }
+
+    it { is_expected.to validate_presence_of(:company_name) }
+    it { is_expected.to validate_presence_of(:company_website_url) }
+  end
 end

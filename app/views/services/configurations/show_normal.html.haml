@@ -27,7 +27,11 @@
   %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Usage
   = f.input :customer_typology,
     collection: @customer_topologies,
-    input_html: { "data-target" => "project-item.customer" }
+    input_html: { "data-target" => "project-item.customer",
+                  "data-action" => "change->project-item#showSelectedSection" }
+
+  = render "services/configurations/customer_typology_fields", f: f
+
   = f.input :access_reason, input_html: { "data-target" => "project-item.reason" }
   = f.input :additional_information
 

@@ -44,9 +44,10 @@ en:
       defaults:
         customer_typology:
           single_user: "Single user"
-          research: "Representing a research community/project"
+          research: "Representing a research community"
           private_company: "Representing a private company"
-      project_item:
+          project: "Representing a project"
+    project_item:
         status:
           created: Created
           registered: Open

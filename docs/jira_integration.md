@@ -353,3 +353,4 @@ To sum up all the environmetnal variables which you need to make sure to have se
 * `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_single_user`
 * `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_research`
 * `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_private_company`
+* `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_project`

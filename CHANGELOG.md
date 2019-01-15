@@ -149,6 +149,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Additional field mapping to JIRA order (@michal-szostak)
 - Possibility to setup RATE_AFTER_PERIOD ENV variable (@kmarszalek)
 - Category field on create service view (@martaswiatkowska)
+- Additional customer typologies fields for project_item and project (@martaswiatkowska)
 
 ### Changed
 - Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)

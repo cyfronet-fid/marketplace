@@ -36,7 +36,7 @@ default: &default
         single_user: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_single_user"] || "") + "'" %>
         research: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_research"] || "") + "'" %>
         private_company: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_private_company"] || "") + "'" %>
-
+        project: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_project"] || "") + "'" %>
 development:
   <<: *default
 
