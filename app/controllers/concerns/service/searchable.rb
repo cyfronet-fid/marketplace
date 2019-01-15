@@ -11,54 +11,58 @@ module Service::Searchable
     extend ActiveSupport::Concern
 
     def filter_related_platforms(services, search_value)
-      services.joins(:service_related_platforms).group("services.id").
+      @filter_related_platforms ||= services.joins(:service_related_platforms).group("services.id").
           where("service_related_platforms.platform_id IN (?)", search_value)
     end
 
     def options_related_platforms(category = nil)
-      query = Platform.select("platforms.name, platforms.id, COUNT(services.id) as service_count")
+      @options_related_platforms ||=
+      begin
+        query = Platform.select("platforms.name, platforms.id, COUNT(services.id) as service_count")
 
-      if category.nil?
-        query = query.joins(:services)
-      else
-        query = query.joins(:categories).where("categories.id = ?", category.id)
+        if category.nil?
+          query = query.joins(:services)
+        else
+          query = query.joins(:categories).where("categories.id = ?", category.id)
+        end
+
+        query.group("platforms.id")
+            .order(:name)
+            .map { |provider| [provider.name, provider.id, provider.service_count] }
       end
-
-      query.group("platforms.id")
-          .order(:name)
-          .map { |provider| [provider.name, provider.id, provider.service_count] }
     end
 
     def filter_location(services, search_value)
-      # TODO filter by parameter
-      services
+      @filter_location ||= services
     end
 
     def options_location
-      []
+      @options_location ||= []
     end
 
     def filter_target_groups(services, search_value)
-      services.joins(:service_target_groups).
+      @filter_target_groups ||= services.joins(:service_target_groups).
           where("service_target_groups.target_group_id IN (?)", search_value)
     end
 
     def options_target_groups(category = nil)
-      query = TargetGroup.select("target_groups.name, target_groups.id, count(services.id) as service_count")
+      @options_target_groups ||= begin
+        query = TargetGroup.select("target_groups.name, target_groups.id, count(services.id) as service_count")
 
-      if category.nil?
-        query = query.joins(:services)
-      else
-        query = query.joins(:categories).where("categories.id = ?", category.id)
+        if category.nil?
+          query = query.joins(:services)
+        else
+          query = query.joins(:categories).where("categories.id = ?", category.id)
+        end
+
+        query.group("target_groups.id")
+            .order(:name)
+            .map { |target_group| [target_group.name, target_group.id, target_group.service_count] }
       end
-
-      query.group("target_groups.id")
-          .order(:name)
-          .map { |target_group| [target_group.name, target_group.id, target_group.service_count] }
     end
 
     def filter_rating(services, search_value)
-      services.where("rating >= ?", search_value)
+      @filter_rating ||= services.where("rating >= ?", search_value)
     end
 
     def options_rating(category = nil)
@@ -71,27 +75,33 @@ module Service::Searchable
     end
 
     def filter_providers(services, search_value)
-      services.joins(:service_providers).group("services.id")
-          .where("service_providers.provider_id IN (?)", search_value)
+      @filter_providers ||=
+        services.joins(:service_providers).group("services.id")
+            .where("service_providers.provider_id IN (?)", search_value)
     end
 
     def options_providers(category = nil)
-      query = Provider.select("providers.name, providers.id, count(service_providers.service_id) as service_count")
+      @options_providers ||= begin
+        query = Provider.select("providers.name, providers.id, count(service_providers.service_id) as service_count")
 
-      if category.nil?
-        query = query.joins(:services)
-      else
-        query = query.joins(:categories).where("categories.id = ?", category.id)
+        if category.nil?
+          query = query.joins(:services)
+        else
+          query = query.joins(:categories).where("categories.id = ?", category.id)
+        end
+
+        query.group("providers.id")
+            .order(:name)
+            .map { |provider| [provider.name, provider.id, provider.service_count] }
       end
-
-      query.group("providers.id")
-          .order(:name)
-          .map { |provider| [provider.name, provider.id, provider.service_count] }
     end
 
     def filter_research_area(services, search_value)
-      research_area = ResearchArea.find_by(id: search_value)
-      if research_area
+      @research_area ||= begin
+        research_area = ResearchArea.find_by(id: search_value)
+        if research_area.nil?
+          return nil
+        end
         ids = [research_area.id] + research_area.descendant_ids
         services.joins(:service_research_areas).
             where(service_research_areas: { research_area_id: ids })
@@ -121,12 +131,11 @@ module Service::Searchable
           map { |t| [t.name, t.name] }.
           sort { |x, y| x[0] <=> y[0] }
     end
-
-    def filters_on?
-      searchable_fields.any? { |f| params[f].present? }
-    end
   end
 
+  def filters_on?
+    searchable_fields.any? { |f| params[f].present? }
+  end
 
   include FieldFilterable
 
@@ -150,7 +159,7 @@ private
   end
 
   def filter_by_field(elements, field)
-    self.send("filter_#{field}", elements, params[field])
+    @filter_by_field ||= self.send("filter_#{field}", elements, params[field])
   end
 
   def search_scope
@@ -170,19 +179,19 @@ private
   end
 
   def active_searchable_fields
-    searchable_fields.select { |field| params[field].present? }
+    @active_searchable_fields ||= searchable_fields.select { |field| params[field].present? }
   end
 
   def active_filters
-    active_searchable_fields
+    @active_filters ||= active_searchable_fields
         .map { |field| params[field].is_a?(Array) ? [field, params[field]] : [field, [params[field]]] }
         .map do |field, field_params|
-      field_params.map do |p|
-        [field, self.send("options_#{field}").find do |name, id, count|
-          p == id.to_s
-        end]
-      end
-    end
+          field_params.map do |p|
+            [field, self.send("options_#{field}").find do |name, id, count|
+              p == id.to_s
+            end]
+          end
+        end
         .flatten(1)
         .reject { |field, options| options.nil? }
         .map { |field, options| [field, options[0], options[1], options[2]] }
