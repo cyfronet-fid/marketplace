@@ -217,25 +217,55 @@ RSpec.feature "Service ordering" do
       expect(page).to_not have_text("Order")
     end
 
-    # Not sure why this is not working: ActionController::UnknownFormat
-    # error is thrown when trying to click "Add new project button.
-    # TODO: discover why
-    #
-    # scenario "I can create new project on order configuration view" do
-    #   service = create(:service)
-    #   create(:offer, service: service)
-    #
-    #   visit service_path(service)
-    #
-    #   click_on "Order"
-    #   expect do
-    #     click_on "Add new project"
-    #     within("#ajax-modal") do
-    #       fill_in "Name", with: "New project"
-    #       click_on "Create new project"
-    #     end
-    #   end.to change { user.projects.count }.by(1)
-    # end
+    scenario "I can create new project on order configuration view", js: true do
+      service = create(:service)
+      create(:offer, service: service)
+
+      visit service_path(service)
+
+      click_on "Order"
+      click_on "Add new project"
+      within("#ajax-modal") do
+        fill_in "Name", with: "New project"
+      end
+      click_on "Create new project"
+
+      expect(page).to have_select("project_item_project_id", selected: "New project")
+
+      new_project = Project.all.last
+      expect(new_project.name).to eq("New project")
+      expect(user.projects.find { |project| project.name == "New project" }).to_not be_nil
+    end
+
+    scenario "I can create new project for private company typology", js: true do
+      service = create(:service)
+      create(:offer, service: service)
+
+      visit service_path(service)
+
+      click_on "Order"
+      click_on "Add new project"
+      within("#ajax-modal") do
+        fill_in "Name", with: "New project"
+        select "Representing a private company", from: "Customer typology"
+
+        expect(page).to have_field("Company name")
+        expect(page).to have_field("Company website url")
+
+        fill_in "Company name", with: "Company name"
+        fill_in "Company website url", with: "https://www.company.name"
+        click_on "Create new project"
+      end
+
+      expect(page).to have_select("project_item_project_id", selected: "New project")
+      expect(page).to have_field("Company name", with: "Company name")
+      expect(page).to have_field("Company website url", with: "https://www.company.name")
+
+      new_project = Project.all.last
+      expect(new_project.name).to eq("New project")
+      expect(user.projects.find { |project| project.name == "New project" }).to_not be_nil
+    end
+
   end
 
   context "as anonymous user" do
