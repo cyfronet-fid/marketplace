@@ -70,7 +70,7 @@ RSpec.describe Service do
     let(:category) { create(:category) }
 
     it "is inceased when creating already published service" do
-      create(:service, status: "published", categories: [category])
+      create(:service, status: :published, categories: [category])
 
       category.reload
 
@@ -95,7 +95,7 @@ RSpec.describe Service do
     end
 
     it "is decreased when unpublishing" do
-      service = create(:service, status: "published", categories: [category])
+      service = create(:service, status: :published, categories: [category])
 
       service.draft!
       category.reload

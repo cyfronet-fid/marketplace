@@ -3,7 +3,7 @@
 class ServicePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(status: "published")
+      scope.where(status: :published)
     end
   end
 

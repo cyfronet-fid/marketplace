@@ -98,16 +98,16 @@ RSpec.describe Backoffice::ServicePolicy do
   permissions :publish? do
     it "grants access for owned not published service" do
       expect(subject).
-        to permit(user, build(:service, owner: user, status: :draft))
+        to permit(service_portfolio_manager, build(:service, owners: [service_portfolio_manager], status: :draft))
     end
 
     it "denies access for other users" do
-      expect(subject).to_not permit(user, build(:service, status: :draft))
+      expect(subject).to_not permit(service_owner, build(:service, status: :draft))
     end
 
     it "denies access for already published service" do
       expect(subject).
-        to_not permit(user, build(:service, owner: user, status: :published))
+        to_not permit(service_portfolio_manager, build(:service, owners: [service_portfolio_manager], status: :published))
     end
   end
 end

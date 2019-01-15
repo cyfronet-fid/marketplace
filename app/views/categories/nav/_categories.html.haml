@@ -1,7 +1,7 @@
 - active = "font-weight-bolder" unless local_assigns[:current]
 #all-services-link{ class: "mb-3 d-flex justify-content-between align-items-center #{active}" }
   = link_to "All Services", services_path
-  %span= Service.all.count
+  %span= Service.published.count
 
 %h5.text-uppercase.underline-light.mb-2.pb-2 Categories
 %ul

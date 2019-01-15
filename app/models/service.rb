@@ -96,7 +96,7 @@ class Service < ApplicationRecord
   end
 
   after_commit on: [:update] do
-    was_published = attribute_before_last_save(:status) == "published"
+    was_published = attribute_before_last_save(:status) == published?
     if published?
       if was_published
         __elasticsearch__.update_document

@@ -16,7 +16,7 @@ class ServiceCategory < ApplicationRecord
   attribute :status
 
   def published?
-    status == "published"
+    status == Service.statuses[:published]
   end
 
   def category_id_before_last_save
@@ -31,7 +31,7 @@ class ServiceCategory < ApplicationRecord
   end
 
   def status
-    super || service.status
+    super || (service && service.status)
   end
 
   private
