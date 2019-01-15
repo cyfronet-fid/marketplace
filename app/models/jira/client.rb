@@ -59,6 +59,7 @@ class Jira::Client < JIRA::Client
       # "CP-UserGroupName": "?", TODO -
       # "CP-ProjectInformation": "?", TODO -
       # For now only single Service Offer is supported
+      "SO-ProjectName": fields_config["SO-ProjectName"],
       "SO-1": fields_config["SO-1"]
     }
 
@@ -135,6 +136,8 @@ private
       end
     when "CP-ReasonForAccess"
       project_item.access_reason
+    when "SO-ProjectName"
+      "#{project_item.project&.name} (#{project_item.project&.id})"
     when "SO-1"
       "#{project_item.service.categories.first.name}/" +
       "#{project_item.service.title}/" +
