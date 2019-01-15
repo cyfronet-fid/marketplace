@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Breadcrumbs for Admin and Back office sections (@mkasztelnik)
 - Add `service_portfolio_manager` role (@mkasztelnik)
 - Possibility of adding offers to the services (@martaswiatkowska)
+- `SO-ProjectName` to issue created in JIRA (@michal-szostak)
 
 ### Changed
 - Unify Back office and Admin layout navbars (@mkasztelnik)
