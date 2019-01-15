@@ -1,0 +1,12 @@
+
+.card-deck.row
+  - if @service.offers?
+    = render partial: "backoffice/services/offers/offer", collection: service.offers, locals: { service: service }
+  - else
+    %p This service has no offers
+
+.div
+  = link_to "Add new offer", new_backoffice_service_offer_path(service),
+    class: "btn btn-primary"
+
+

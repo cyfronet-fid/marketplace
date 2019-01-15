@@ -92,5 +92,51 @@ RSpec.feature "Services in backoffice" do
 
       expect(page).to have_content("updated title")
     end
+
+    scenario "I can add new offer" do
+      service = create(:service, title: "my service", owners: [user])
+
+      visit backoffice_service_path(service)
+      click_on "Add new offer"
+
+      expect {
+        fill_in "Name", with: "new offer"
+        fill_in "Description", with: "test offer"
+        click_on "Create Offer"
+      }.to change { service.offers.count }.by(1)
+
+      expect(service.offers.last.name).to eq("new offer")
+    end
+
+    scenario "I can edit offer" do
+      service = create(:service, title: "my service", owners: [user])
+      offer = create(:offer, name: "offer1", description: "desc", service: service)
+
+      visit backoffice_service_path(service)
+      click_on(class: "edit-offer")
+
+      fill_in "Description", with: "new desc"
+      click_on "Update Offer"
+
+      expect(page).to have_content("new desc")
+      expect(offer.reload.description).to eq("new desc")
+    end
+
+    scenario "I can delete offer" do
+      service = create(:service, title: "my service", owners: [user])
+      offer = create(:offer, name: "offer1", description: "desc", service: service)
+
+      visit backoffice_service_path(service)
+      expect {
+        click_on(class: "delete-offer")
+      }.to change { service.offers.count }.by(-1)
+    end
+
+    scenario "I can delete offer" do
+      service = create(:service, title: "my service", owners: [user])
+
+      visit backoffice_service_path(service)
+      expect(page).to have_content("This service has no offers")
+    end
   end
 end
