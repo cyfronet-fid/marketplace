@@ -45,7 +45,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   def destroy
     Service::Destroy.new(@service).call
     redirect_to backoffice_services_path,
-                notice: "Affiliation destroyed"
+                notice: "Service destroyed"
   end
 
   private

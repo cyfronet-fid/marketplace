@@ -1,0 +1,8 @@
+= simple_form_for [:backoffice, service, offer]  do |f|
+  = f.input :name
+  = f.input :description
+
+  .btn-group
+    = f.button :submit, class: "btn btn-success"
+    = link_to "Cancel", backoffice_service_path(service), class: "btn btn-secondary"
+
