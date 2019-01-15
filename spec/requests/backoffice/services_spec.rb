@@ -16,7 +16,7 @@ RSpec.describe "Backoffice service" do
     end
 
     it "I can publish service" do
-      service = create(:service, owner: user, status: :draft)
+      service = create(:service, owners: [user], status: :draft)
 
       post backoffice_service_publish_path(service)
       service.reload

@@ -1,7 +1,8 @@
 - breadcrumb :backoffice_service, @service
 .container
   %h1= @service.title
-
+  %h2 Status
+  %p= @service.status
   - if policy([:backoffice, @service]).publish?
     = link_to "Publish",
             backoffice_service_publish_path(@service),
@@ -57,7 +58,7 @@
               edit_backoffice_service_path(@service),
               class: "btn btn-warning"
   - if policy([:backoffice, @service]).destroy?
-    = link_to "Destroy",
+    = link_to "Decommission",
               backoffice_service_path(@service),
               method: :delete, data: { confirm: "Are you sure?" },
               class: "btn btn-danger"

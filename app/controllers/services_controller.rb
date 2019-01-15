@@ -21,7 +21,6 @@ class ServicesController < ApplicationController
     @service = Service.
                includes(:offers, related_services: :providers).
                friendly.find(params[:id])
-
     @offers = @service.offers
     @related_services = @service.related_services
 
