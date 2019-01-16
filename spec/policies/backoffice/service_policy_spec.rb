@@ -13,59 +13,115 @@ RSpec.describe Backoffice::ServicePolicy do
 
   subject { described_class }
 
-  permissions :index? do
-    it "grants access for service portfolio manager" do
-      expect(subject).to permit(service_portfolio_manager, build(:service))
+  context "service draft" do
+    permissions :index? do
+      it "grants access for service portfolio manager" do
+        expect(subject).to permit(service_portfolio_manager, build(:service, status: :draft))
+      end
+
+      it "grants access for service owner" do
+        expect(subject).to permit(service_owner, build(:service, status: :draft))
+      end
     end
 
-    it "grants access for service owner" do
-      expect(subject).to permit(service_owner, build(:service))
+    permissions :show? do
+      it "grants access for service portfolio manager" do
+        expect(subject).to permit(service_portfolio_manager, build(:service, status: :draft))
+      end
+
+
+      it "grants access for owned service" do
+        expect(subject).to permit(service_owner, service_owner.owned_services.first)
+      end
+
+      it "denies access for not owned service" do
+        expect(subject).to_not permit(service_owner, build(:service, status: :draft))
+      end
+    end
+
+    permissions :new?, :create?, :update? do
+      it "grants access for service portfolio manager" do
+        expect(subject).to permit(service_portfolio_manager, build(:service, status: :draft))
+      end
+
+      it "denies access for service owner" do
+        expect(subject).to_not permit(service_owner, build(:service, status: :draft))
+      end
+
+      it "grants access for service portfolio manager" do
+        expect(subject).to permit(service_portfolio_manager, build(:service, status: :draft))
+      end
+    end
+
+    permissions :destroy? do
+      it "grants access for service portfolio manager" do
+        expect(subject).to permit(service_portfolio_manager, build(:service, status: :draft))
+      end
+
+      it "denies access for service owner" do
+        expect(subject).to_not permit(service_owner, build(:service, status: :draft))
+      end
+
+      it "denies when service has project_items attached" do
+        service = create(:service, status: :draft)
+        create(:project_item, offer: create(:offer, service: service))
+
+        expect(subject).to_not permit(service_portfolio_manager, service)
+      end
     end
   end
 
-  permissions :show? do
-    it "grants access for service portfolio manager" do
-      expect(subject).to permit(service_portfolio_manager, build(:service))
+  context "Service published" do
+    permissions :index? do
+      it "grants access for service portfolio manager" do
+        expect(subject).to permit(service_portfolio_manager, build(:service))
+      end
+
+      it "grants access for service owner" do
+        expect(subject).to permit(service_owner, build(:service))
+      end
     end
 
+    permissions :show? do
+      it "grants access for service portfolio manager" do
+        expect(subject).to permit(service_portfolio_manager, build(:service))
+      end
 
-    it "grants access for owned service" do
-      expect(subject).to permit(service_owner, service_owner.owned_services.first)
+
+      it "grants access for owned service" do
+        expect(subject).to permit(service_owner, service_owner.owned_services.first)
+      end
+
+      it "denies access for not owned service" do
+        expect(subject).to_not permit(service_owner, build(:service))
+      end
     end
 
-    it "denies access for not owned service" do
-      expect(subject).to_not permit(service_owner, build(:service))
-    end
-  end
+    permissions :update? do
+      it "denies access for service portfolio manager" do
+        expect(subject).to permit(service_portfolio_manager, build(:service))
+      end
 
-  permissions :new?, :create?, :update? do
-    it "grants access for service portfolio manager" do
-      expect(subject).to permit(service_portfolio_manager, build(:service))
-    end
-
-    it "denies access for service owner" do
-      expect(subject).to_not permit(service_owner, build(:service))
+      it "denies access for service owner" do
+        expect(subject).to_not permit(service_owner, build(:service))
+      end
     end
 
-    it "grants access for service portfolio manager" do
-      expect(subject).to permit(service_portfolio_manager, build(:service))
-    end
-  end
+    permissions :destroy? do
+      it "denies access for service portfolio manager" do
+        expect(subject).to_not permit(service_portfolio_manager, build(:service))
+      end
 
-  permissions :destroy? do
-    it "grants access for service portfolio manager" do
-      expect(subject).to permit(service_portfolio_manager, build(:service))
-    end
+      it "denies access for service owner" do
+        expect(subject).to_not permit(service_owner, build(:service))
+      end
 
-    it "denies access for service owner" do
-      expect(subject).to_not permit(service_owner, build(:service))
-    end
+      it "denies when service has project_items attached" do
+        service = create(:service)
+        create(:project_item, offer: create(:offer, service: service))
 
-    it "denies when service has project_items attached" do
-      service = create(:service)
-      create(:project_item, offer: create(:offer, service: service))
-
-      expect(subject).to_not permit(service_portfolio_manager, service)
+        expect(subject).to_not permit(service_portfolio_manager, service)
+      end
     end
   end
 

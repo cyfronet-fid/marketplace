@@ -9,7 +9,7 @@ RSpec.describe "Backoffice service" do
     before { login_as(user) }
 
     it "I can delete service when there is no project_items yet" do
-      service = create(:service)
+      service = create(:service, status: :draft)
 
       expect { delete backoffice_service_path(service) }.
         to change { Service.count }.by(-1)
@@ -23,5 +23,15 @@ RSpec.describe "Backoffice service" do
 
       expect(service).to be_published
     end
+
+    it "I can change service status to draft" do
+      service = create(:service, owners: [user])
+
+      post backoffice_service_draft_path(service)
+      service.reload
+
+      expect(service).to be_draft
+    end
+
   end
 end

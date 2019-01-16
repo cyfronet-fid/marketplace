@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       scope module: :services do
         resources :offers
         resource :publish, only: :create
+        resource :draft, only: :create
       end
     end
   end
