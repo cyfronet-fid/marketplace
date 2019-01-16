@@ -9,6 +9,12 @@
             method: :post,
             data: { confirm: "Are you sure you want to publish this service?" },
             class: "btn btn-warning"
+  - if policy([:backoffice, @service]).draft?
+    = link_to "Stop showing in the MP",
+            backoffice_service_draft_path(@service),
+            method: :post,
+            data: { confirm: "Are you sure you want to stop showing this service?" },
+            class: "btn btn-warning"
   .row
     .col-3
       - if @service.logo.attached?

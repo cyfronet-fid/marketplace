@@ -35,11 +35,17 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   end
 
   def publish?
-    service_portfolio_manager? && !record.published?
+    service_portfolio_manager? && record.draft?
+  end
+
+  def draft?
+    service_portfolio_manager? && record.published?
   end
 
   def destroy?
-    service_portfolio_manager? && project_items.count.zero?
+    service_portfolio_manager? &&
+      (project_items && project_items.count.zero?) &&
+      record.draft?
   end
 
   def permitted_attributes

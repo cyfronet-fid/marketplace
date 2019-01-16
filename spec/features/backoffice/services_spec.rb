@@ -113,7 +113,7 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "I can edit offer" do
-      service = create(:service, title: "my service", owners: [user])
+      service = create(:service, title: "my service", status: :draft)
       offer = create(:offer, name: "offer1", description: "desc", service: service)
 
       visit backoffice_service_path(service)
@@ -127,20 +127,29 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "I can delete offer" do
-      service = create(:service, title: "my service", owners: [user])
+      service = create(:service, title: "my service", status: :draft)
       offer = create(:offer, name: "offer1", description: "desc", service: service)
 
       visit backoffice_service_path(service)
-      expect {
-        click_on(class: "delete-offer")
-      }.to change { service.offers.count }.by(-1)
+      click_on(class: "delete-offer")
+
+      expect(page).to have_content("This service has no offers")
     end
 
     scenario "I can delete offer" do
-      service = create(:service, title: "my service", owners: [user])
+      service = create(:service, title: "my service")
 
       visit backoffice_service_path(service)
       expect(page).to have_content("This service has no offers")
+    end
+
+    scenario "I can change service status from publish to draft" do
+      service = create(:service, title: "my service")
+
+      visit backoffice_service_path(service)
+      click_on("Stop showing in the MP")
+
+      expect(page).to have_selector(:link_or_button, "Publish")
     end
   end
 end
