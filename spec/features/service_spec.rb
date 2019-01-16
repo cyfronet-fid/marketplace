@@ -353,6 +353,11 @@ RSpec.feature "Service filtering and sorting" do
   scenario "searching via location", js: true do
     `pending "add test after implementing location to filtering #{__FILE__}"`
   end
+
+  scenario "remove active filters" do
+    visit services_path(related_platforms: [platform.id])
+    expect(page).to have_selector(".active-filters > *", count: 1)
+  end
 end
 
 
