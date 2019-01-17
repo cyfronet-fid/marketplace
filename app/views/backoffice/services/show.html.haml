@@ -1,6 +1,20 @@
 - breadcrumb :backoffice_service, @service
 .container
   %h1= @service.title
+  %h2 Status
+  %p= @service.status
+  - if policy([:backoffice, @service]).publish?
+    = link_to "Publish",
+            backoffice_service_publish_path(@service),
+            method: :post,
+            data: { confirm: "Are you sure you want to publish this service?" },
+            class: "btn btn-warning"
+  - if policy([:backoffice, @service]).draft?
+    = link_to "Stop showing in the MP",
+            backoffice_service_draft_path(@service),
+            method: :post,
+            data: { confirm: "Are you sure you want to stop showing this service?" },
+            class: "btn btn-warning"
   .row
     .col-3
       - if @service.logo.attached?
@@ -50,7 +64,7 @@
               edit_backoffice_service_path(@service),
               class: "btn btn-warning"
   - if policy([:backoffice, @service]).destroy?
-    = link_to "Destroy",
+    = link_to "Decommission",
               backoffice_service_path(@service),
               method: :delete, data: { confirm: "Are you sure?" },
               class: "btn btn-danger"
