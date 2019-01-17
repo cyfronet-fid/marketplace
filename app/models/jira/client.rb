@@ -56,8 +56,8 @@ class Jira::Client < JIRA::Client
       "CI-SupervisorProfile": fields_config["CI-SupervisorProfile"],
       "CP-CustomerTypology": fields_config["CP-CustomerTypology"],
       "CP-ReasonForAccess": fields_config["CP-ReasonForAccess"],
-      # "CP-UserGroupName": "?", TODO -
-      # "CP-ProjectInformation": "?", TODO -
+      "CP-UserGroupName": fields_config["CP-UserGroupName"],
+      "CP-ProjectInformation": fields_config["CP-ProjectInformation"],
       # For now only single Service Offer is supported
       "SO-ProjectName": fields_config["SO-ProjectName"],
       "SO-1": fields_config["SO-1"]
@@ -136,6 +136,10 @@ private
       end
     when "CP-ReasonForAccess"
       project_item.access_reason
+    when "CP-ProjectInformation"
+      project_item.project_name
+    when "CP-UserGroupName"
+      project_item.user_group_name
     when "SO-ProjectName"
       "#{project_item.project&.name} (#{project_item.project&.id})"
     when "SO-1"
