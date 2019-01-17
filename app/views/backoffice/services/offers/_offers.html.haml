@@ -6,7 +6,8 @@
     %p This service has no offers
 
 .div
-  = link_to "Add new offer", new_backoffice_service_offer_path(service),
-    class: "btn btn-primary"
+  - if policy([:backoffice, @service]).new?
+    = link_to "Add new offer", new_backoffice_service_offer_path(service),
+      class: "btn btn-primary"
 
 

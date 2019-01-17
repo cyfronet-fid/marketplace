@@ -333,11 +333,10 @@ RSpec.feature "Service filtering and sorting" do
     expect(page).to have_css("#all-services-link > span", text: Service.all.count)
   end
 
-  scenario "delete all filters" do
+  scenario "delete all filters", js: true do
     visit services_path
 
     # set filters
-    find(:css, "input[name='target_groups[]'][value='#{target_group.id}']").set(true)
     select "★★★★★", from: "rating"
 
     click_on(id: "filter-submit")

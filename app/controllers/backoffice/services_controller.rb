@@ -50,7 +50,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   private
     def service_template
-      Service.new(permitted_attributes(Service))
+      Service.new(permitted_attributes(Service).merge(status: :draft))
     end
 
     def find_and_authorize

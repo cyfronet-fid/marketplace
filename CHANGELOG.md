@@ -7,16 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 Please view this file on the master branch, on stable branches it's out of date.
 
 ## [Unreleased]
+
 ### Added
 - Breadcrumbs for Admin and Back office sections (@mkasztelnik)
 - Add `service_portfolio_manager` role (@mkasztelnik)
 - Possibility of adding offers to the services (@martaswiatkowska)
 - `SO-ProjectName` to issue created in JIRA (@michal-szostak)
 - Active filter list & remove in filter sidebar (@michal-szostak)
+- Status to service (@martaswiatkowska)
 
 ### Changed
 - Unify Back office and Admin layout navbars (@mkasztelnik)
 - Service can have many owners, owners can see but not modify owned services (@mkasztelnik)
+- Category counter cache takes into account service status (@mkasztelnik)
 
 ### Deprecated
 
@@ -28,6 +31,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Security
 
 ## [1.0.0] - 2018-12-20
+
 ### Added
 - Basic application structure and configuration (@mkasztelnik)
 - Service model, simple index and show pages integrated with elasticsearch (@mkasztelnik)

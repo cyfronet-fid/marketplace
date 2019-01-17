@@ -34,8 +34,18 @@ class Backoffice::ServicePolicy < ApplicationPolicy
     service_portfolio_manager?
   end
 
+  def publish?
+    service_portfolio_manager? && record.draft?
+  end
+
+  def draft?
+    service_portfolio_manager? && record.published?
+  end
+
   def destroy?
-    service_portfolio_manager? && project_items.count.zero?
+    service_portfolio_manager? &&
+      (project_items && project_items.count.zero?) &&
+      record.draft?
   end
 
   def permitted_attributes
@@ -50,7 +60,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       :activate_message, :logo,
       [contact_emails: []], [research_area_ids: []],
       [platform_ids: []], :tag_list, [category_ids: []],
-      [owner_ids: []]
+      [owner_ids: []], :status
     ]
   end
 

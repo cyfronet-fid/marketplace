@@ -7,7 +7,7 @@
       = link_to "Edit",
                 edit_backoffice_service_offer_path(service, offer),
                 class: "edit-offer card-link"
-    - if policy([:backoffice, @service]).destroy?
+    - if policy([:backoffice, offer]).destroy?
       = link_to "Delete",
                 backoffice_service_offer_path(service, offer),
                 method: :delete, data: { confirm: "Are you sure?" },
