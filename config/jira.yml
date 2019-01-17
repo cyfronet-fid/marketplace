@@ -29,6 +29,8 @@ default: &default
     CI-SupervisorProfile: <%= "'" + (ENV["MP_JIRA_FIELD_CI_SupervisorProfile"] || "") + "'" %>
     CP-CustomerTypology: <%= "'" + (ENV["MP_JIRA_FIELD_CP_CustomerTypology"] || "") + "'" %>
     CP-ReasonForAccess: <%= "'" + (ENV["MP_JIRA_FIELD_CP_ReasonForAccess"] || "") + "'" %>
+    CP-UserGroupName: <%= "'" + (ENV["MP_JIRA_FIELD_CP_UserGroupName"] || "") + "'" %>
+    CP-ProjectInformation: <%= "'" + (ENV["MP_JIRA_FIELD_CP_ProjectInformation"] || "") + "'" %>
     SO-ProjectName: <%= "'" + (ENV["MP_JIRA_FIELD_SO_ProjectName"] || "") + "'" %>
     SO-1: <%= "'" + (ENV["MP_JIRA_FIELD_SO_1"] || "") + "'" %>
 
@@ -69,6 +71,8 @@ test:
     CI-SupervisorProfile: "CI-SupervisorProfile-1"
     CP-CustomerTypology: "CP-CustomerTypology-1"
     CP-ReasonForAccess: "CP-ReasonForAccess-1"
+    CP-UserGroupName: "CP-UserGroupName-1"
+    CP-ProjectInformation: "CP-ProjectInformation-1"
     SO-ProjectName: "SO-ProjectName-1"
     SO-1: "SO-1-1"
 

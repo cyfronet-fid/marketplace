@@ -33,6 +33,8 @@ describe Jira::Client do
                           offer: create(:offer, name: "off1", service: create(:service,
                                                                         title: "s1",
                                                                         categories: [create(:category, name: "cat1")])),
+                          user_group_name: "User Group Name 1",
+                          project_name: "My Secret Project",
                           project: create(:project, user: user, name: "My Secret Project"),
                           customer_typology: "single_user",
                           access_reason: "some reason", properties: [
@@ -78,6 +80,8 @@ describe Jira::Client do
                        "CI-SupervisorProfile-1" => "http://jim.supervisor.edu",
                        "CP-CustomerTypology-1" => { "id" => "20000" },
                        "CP-ReasonForAccess-1" => "some reason",
+                       "CP-UserGroupName-1" => "User Group Name 1",
+                       "CP-ProjectInformation-1" => "My Secret Project",
                        "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
                        "SO-1-1" => "cat1/s1/off1?Data repository name=aaaaaa&" +
                                    "Harvesting method=OAI-PMH&" +
@@ -100,6 +104,8 @@ describe Jira::Client do
                           access_reason: nil,
                           additional_information: nil,
                           affiliation: nil,
+                          user_group_name: nil,
+                          project_name: nil,
                           offer: create(:offer, name: "off1",  service: create(:service,
                                                                  title: "s1",
                                                                  service_type: "open_access",
