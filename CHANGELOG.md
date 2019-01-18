@@ -9,6 +9,21 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.1.0] - 2019-01-18
+
+
+### Added
 - Breadcrumbs for Admin and Back office sections (@mkasztelnik)
 - Add `service_portfolio_manager` role (@mkasztelnik)
 - Possibility of adding offers to the services (@martaswiatkowska)
@@ -22,14 +37,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service can have many owners, owners can see but not modify owned services (@mkasztelnik)
 - Category counter cache takes into account service status (@mkasztelnik)
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 - Corrected typos in terms and conditions hint (@mkasztelnik)
 
-### Security
 
 ## [1.0.0] - 2018-12-20
 
