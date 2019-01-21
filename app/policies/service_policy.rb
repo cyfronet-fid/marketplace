@@ -12,7 +12,7 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def order?
-    record.offers? && !record.catalog?
+    record.offers? && !record.catalog? && record.offers.any? { |s| s.published? }
   end
 
   def offers_show?

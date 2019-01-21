@@ -152,11 +152,30 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("This service has no offers")
     end
 
-    scenario "I can delete offer" do
+    scenario "I can see info if service has no offer" do
       service = create(:service, title: "my service")
 
       visit backoffice_service_path(service)
+
       expect(page).to have_content("This service has no offers")
+    end
+
+    scenario "I can change offer status from published to draft" do
+      offer = create(:offer)
+
+      visit backoffice_service_path(offer.service)
+      click_on "Stop showing offer"
+
+      expect(offer.reload.status).to eq("draft")
+    end
+
+    scenario "I can change offer status from draft to publish" do
+      offer = create(:offer, status: :draft)
+
+      visit backoffice_service_path(offer.service)
+      click_on "Publish offer"
+
+      expect(offer.reload.status).to eq("published")
     end
 
     scenario "I can change service status from publish to draft" do

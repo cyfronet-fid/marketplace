@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Service::Publish do
-  it "removes service from db" do
+  it "publish service" do
     service = create(:service)
 
     described_class.new(service).call

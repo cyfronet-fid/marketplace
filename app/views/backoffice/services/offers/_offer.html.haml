@@ -1,7 +1,10 @@
 .col-md-6.d-flex.align-items-stretch.mb-4
   .card
+
     .card-body.pt-4.pb-0
-      %h4.card-title= offer.name
+      = offer_status(offer)
+      %h4.card-title
+        = offer.name
       %p.card-text= markdown(offer.description)
     .card-footer
       - if policy([:backoffice, offer]).edit?
@@ -13,4 +16,15 @@
                   backoffice_service_offer_path(service, offer),
                   method: :delete, data: { confirm: "Are you sure?" },
                   class: "delete-offer card-link"
+
+      - if policy([:backoffice, offer]).publish?
+        = link_to "Publish offer",
+                  backoffice_service_offer_publish_path(service, offer),
+                  method: :post,
+                  class: "publish-offer card-link"
+      - if policy([:backoffice, offer]).draft?
+        = link_to "Stop showing offer",
+                  backoffice_service_offer_draft_path(service, offer),
+                  method: :post,
+                  class: "draft-offer card-link"
 
