@@ -85,6 +85,9 @@ describe Jira::Client do
                        "CP-ProjectInformation-1" => "My Secret Project",
                        "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
                        "CP-ScientificDiscipline-1" => "My RA",
+                       "CP-Platforms-1" => "",
+                       "CP-INeedAVoucher-1" => { "id" => "20004" },
+                       "CP-VoucherID-1" => "",
                        "SO-1-1" => "cat1/s1/off1?Data repository name=aaaaaa&" +
                                    "Harvesting method=OAI-PMH&" +
                                    "Harvesting endpoint=aaaaa" }
@@ -125,6 +128,9 @@ describe Jira::Client do
                         "CI-Surname-1" => "Doe",
                         "CI-DisplayName-1" => "John Doe",
                         "CI-EOSC-UniqueID-1" => "uid2",
+                        "CP-Platforms-1" => "",
+                        "CP-INeedAVoucher-1" => { "id" => "20004" },
+                        "CP-VoucherID-1" => "",
                         "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
                         "SO-1-1" => "cat1/s1/off1?" }
 
@@ -134,4 +140,97 @@ describe Jira::Client do
 
     expect(client.create_service_issue(project_item)).to be(issue)
   end
+
+  it "create_service open access issue should save issue with correct fields" do
+    allow(ENV).to receive(:[]).and_call_original
+    allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
+
+    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2", affiliations: [])
+    project_item = create(:project_item,
+                          customer_typology: nil,
+                          access_reason: nil,
+                          additional_information: nil,
+                          affiliation: nil,
+                          user_group_name: nil,
+                          project_name: nil,
+                          offer: create(:offer,
+                                        name: "off1",
+                                        voucherable: true,
+                                        service: create(:service,
+                                                                 title: "s1",
+                                                                 service_type: "open_access",
+                                                                 connected_url:  "http://service.org/access",
+                                                                 categories: [create(:category, name: "cat1")])),
+                          research_area: nil,
+                          voucher_id: "123123",
+                          project: create(:project, user: user, name: "My Secret Project"))
+
+    expected_fields = { summary: "Service order, John Doe, s1",
+                        project: { key: "MP" },
+                        issuetype: { id: 10000 },
+                        "Order reference-1" => Rails.application.routes.url_helpers.project_item_url(id: project_item.id,
+                                                                                                     host: "https://mp.edu"),
+                        "CI-Name-1" => "John",
+                        "CI-Surname-1" => "Doe",
+                        "CI-DisplayName-1" => "John Doe",
+                        "CI-EOSC-UniqueID-1" => "uid2",
+                        "CP-Platforms-1" => "",
+                        "CP-INeedAVoucher-1" => { "id" => "20004" },
+                        "CP-VoucherID-1" => "123123",
+                        "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
+                        "SO-1-1" => "cat1/s1/off1?" }
+
+    issue = double(:Issue)
+    expect(issue).to receive("save").with(fields: expected_fields).and_return(true)
+    expect(client).to receive_message_chain("Issue.build").and_return(issue)
+
+    expect(client.create_service_issue(project_item)).to be(issue)
+  end
+
+  it "create_service open access issue should save issue with correct fields" do
+    allow(ENV).to receive(:[]).and_call_original
+    allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
+
+    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2", affiliations: [])
+    project_item = create(:project_item,
+                          customer_typology: nil,
+                          access_reason: nil,
+                          additional_information: nil,
+                          affiliation: nil,
+                          user_group_name: nil,
+                          project_name: nil,
+                          offer: create(:offer,
+                                        name: "off1",
+                                        voucherable: true,
+                                        service: create(:service,
+                                                                 title: "s1",
+                                                                 service_type: "open_access",
+                                                                 connected_url:  "http://service.org/access",
+                                                                 categories: [create(:category, name: "cat1")])),
+                          research_area: nil,
+                          request_voucher: true,
+                          project: create(:project, user: user, name: "My Secret Project"))
+
+    expected_fields = { summary: "Service order, John Doe, s1",
+                        project: { key: "MP" },
+                        issuetype: { id: 10000 },
+                        "Order reference-1" => Rails.application.routes.url_helpers.project_item_url(id: project_item.id,
+                                                                                                     host: "https://mp.edu"),
+                        "CI-Name-1" => "John",
+                        "CI-Surname-1" => "Doe",
+                        "CI-DisplayName-1" => "John Doe",
+                        "CI-EOSC-UniqueID-1" => "uid2",
+                        "CP-Platforms-1" => "",
+                        "CP-INeedAVoucher-1" => { "id" => "20003" },
+                        "CP-VoucherID-1" => "",
+                        "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
+                        "SO-1-1" => "cat1/s1/off1?" }
+
+    issue = double(:Issue)
+    expect(issue).to receive("save").with(fields: expected_fields).and_return(true)
+    expect(client).to receive_message_chain("Issue.build").and_return(issue)
+
+    expect(client.create_service_issue(project_item)).to be(issue)
+  end
+
 end
