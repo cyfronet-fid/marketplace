@@ -107,4 +107,22 @@ RSpec.describe ProjectItem do
     it { is_expected.to validate_presence_of(:company_name) }
     it { is_expected.to validate_presence_of(:company_website_url) }
   end
+
+  describe "#voucher_id" do
+    it "can not be empty if offer supports vouchers and request_voucher is false" do
+      subject = build(:project_item, request_voucher: false, offer: create(:offer, voucherable: true))
+      expect(subject).to validate_presence_of(:voucher_id)
+    end
+
+    it "must be empty if offer supports vouchers and request_voucher is true" do
+      subject = build(:project_item, request_voucher: true, offer: create(:offer, voucherable: true))
+      expect(subject).to validate_absence_of(:voucher_id)
+    end
+
+    it "must be empty and request_voucher must be false if voucherable is false" do
+      subject = build(:project_item, offer: create(:offer, voucherable: false))
+      expect(subject).to validate_absence_of(:voucher_id)
+      expect(subject).to validate_absence_of(:request_voucher)
+    end
+  end
 end
