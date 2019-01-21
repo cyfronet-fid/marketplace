@@ -5,17 +5,17 @@ to marketplace via JIRA's webhooks.
 
 ## Overview
 
-JIRA integration require configuring mapping of several key properties. This can be done via ENV variables 
+JIRA integration require configuring mapping of several key properties. This can be done via ENV variables
 (described later on). JIRA instance itself should have workflow and custom fields which corresponds to what
 application itself expects (more in *JIRA instance requirements*), at the end to make marketplace respond to
-changes in JIRA webhook should be added to JIRA instance. 
+changes in JIRA webhook should be added to JIRA instance.
 
 ## How to? Instructions for admins
 
 Here is a step by step tutorial which will teach you how to connect marketplace to JIRA, and how to check whether
 the integration works on the most rudimentary level.
 
-### JIRA instance 
+### JIRA instance
 
 JIRA instance does not require much additional configuration, apart from configuring webhook, but it must
 fulfill certain requirements described below.
@@ -29,7 +29,7 @@ Additionally new service user must be added to JIRA and have following priviledg
 * (optional) delete issue
 * (optional) delete comment
 
-Marketplace will perform all of it's operation as this user, it's credentials will have to be provided to 
+Marketplace will perform all of it's operation as this user, it's credentials will have to be provided to
 the marketplace instance.
 
 #### JIRA instance requirements
@@ -38,7 +38,7 @@ JIRA should fulfill following *workflow* and *custom fields* requirements
 
 ##### Workflow requirements
 
-**TODO** - copy from documentation 
+**TODO** - copy from documentation
 
 ##### Custom Fields requirements
 
@@ -91,7 +91,7 @@ Checking JIRA instance on https://my.jira.net:8080
 Checking connection... OK
 Checking issue type presence... FAIL
   - ERROR: It seems that ticket with id 3 does not exist, make sure to add existing issue type into configuration
-AVAILABLE ISSUE TYPES: 
+AVAILABLE ISSUE TYPES:
   - Task [id: 10100]
   - Sub-task [id: 10101]
   - Request for Change [id: 10302]
@@ -104,13 +104,13 @@ Trying to manipulate issue...
   - create issue... FAIL
     - ERROR: Could not create issue in project: EOSCSOSTAGING and issuetype: 3
   - check workflow transitions... FAIL
-    - ERROR: Could not transition from 'TODO' to 'DONE' state, this will affect open access services 
+    - ERROR: Could not transition from 'TODO' to 'DONE' state, this will affect open access services
   - update issue... FAIL
     - ERROR: Could not update issue description
   - add comment to issue... FAIL
     - ERROR: Could not post comment
   - delete issue... FAIL
-    - ERROR: Could not delete issue, reason: 405: 
+    - ERROR: Could not delete issue, reason: 405:
 Checking workflow...
   - todo [id: 1]... OK
   - in_progress [id: 2]... FAIL
@@ -134,8 +134,9 @@ Checking custom fields mappings... FAIL
     - CI-SupervisorProfile: ✕
     - CP-CustomerTypology: ✕
     - CP-ReasonForAccess: ✕
+    - CP-ScientificDiscipline: ✕
     - SO-1: ✕
-SUGGESTED MAPPINGS ...    
+SUGGESTED MAPPINGS ...
 ```
 
 This means that marketplace could connect to jira, but everything else is not configured yet. If the output says it
@@ -145,12 +146,12 @@ could not connect make sure that you configured user, password, project, and url
 
 #### Issue type
 
-First let's start with setting up issue types. As every JIRA instance can have different IDs for issue types they 
+First let's start with setting up issue types. As every JIRA instance can have different IDs for issue types they
 must be provided manually in the configuration. Marketplace required you to select 1 issue type which will be
-used for creating issues, it shows you all available issue types: 
+used for creating issues, it shows you all available issue types:
 
 ```
-AVAILABLE ISSUE TYPES: 
+AVAILABLE ISSUE TYPES:
   - Task [id: 10100]
   - Sub-task [id: 10101]
   - Request for Change [id: 10302]
@@ -173,7 +174,7 @@ Which means that that issue type has been configured correctly.
 
 #### Permissions
 
-If `jira:check` shows 
+If `jira:check` shows
 ```
 Trying to manipulate issue...
   - create issue... OK
@@ -187,7 +188,7 @@ checks fail (apart from *delete*, which is optional) you should make sure that c
 
 #### Workflow
 
-At this point you should notice, that 
+At this point you should notice, that
 
 ```
   - check workflow transitions... FAIL
@@ -208,7 +209,7 @@ Checking workflow...
 
 ```
 
-Shows that most workflow states are not correctly mapped. You should look for `AVAILABLE ISSUE STATES` 
+Shows that most workflow states are not correctly mapped. You should look for `AVAILABLE ISSUE STATES`
 (should be displayed near the end of the `jira:check` output) All issue states are listed there, make sure you choose
 issue states which are part of the workflow used by the JIRA project to which marketplace is connected!
 
@@ -273,6 +274,7 @@ Checking custom fields mappings... FAIL
     - CI-SupervisorProfile: ✕
     - CP-CustomerTypology: ✕
     - CP-ReasonForAccess: ✕
+    - CP-ScientificDiscipline: ✕
     - SO-1: ✕
 SUGGESTED MAPPINGS
   - Order reference: customfield_10254 (export MP_JIRA_FIELD_Order_reference='customfield_10254')
@@ -288,6 +290,7 @@ SUGGESTED MAPPINGS
   - CI-SupervisorProfile: customfield_10249 (export MP_JIRA_FIELD_CI_SupervisorProfile='customfield_10249')
   - CP-CustomerTypology: customfield_10250 (export MP_JIRA_FIELD_CP_CustomerTypology='customfield_10250')
   - CP-ReasonForAccess: customfield_10251 (export MP_JIRA_FIELD_CP_ReasonForAccess='customfield_10251')
+  - CP-ScientificDiscipline: customfield_10252 (export MP_JIRA_FIELD_CP_ScientificDiscipline='customfield_10252')
   - SO-1: customfield_10400 (export MP_JIRA_FIELD_SO_1='customfield_10400')
 AVAILABLE CUSTOM FIELDS
   ...
@@ -348,6 +351,7 @@ To sum up all the environmetnal variables which you need to make sure to have se
 * `MP_JIRA_FIELD_CI_SupervisorProfile`
 * `MP_JIRA_FIELD_CP_CustomerTypology`
 * `MP_JIRA_FIELD_CP_ReasonForAccess`
+* `MP_JIRA_FIELD_CP_ScientificDiscipline`
 * `MP_JIRA_FIELD_SO_1`
 * `MP_JIRA_FIELD_CI_DepartmentalWebPage`
 * `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_single_user`

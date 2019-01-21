@@ -33,6 +33,7 @@ RSpec.feature "Service ordering" do
     scenario "I can order service" do
       offer, _seconds_offer = create_list(:offer, 2, service: service)
       affiliation = create(:affiliation, status: :active, user: user)
+      research_area = create(:research_area)
 
       visit service_path(service)
 
@@ -54,6 +55,7 @@ RSpec.feature "Service ordering" do
 
       select "Services"
       select affiliation.organization
+      select research_area.name, from: "Research area"
       select "Single user", from: "Customer typology"
       fill_in "Access reason", with: "To pass test"
       fill_in "Additional information", with: "Additional information test"
@@ -91,6 +93,7 @@ RSpec.feature "Service ordering" do
       service = create(:service, terms_of_use_url: "")
       offer, _seconds_offer = create_list(:offer, 2, service: service)
       affiliation = create(:affiliation, status: :active, user: user)
+      research_area = create(:research_area)
 
       visit service_path(service)
 
@@ -105,6 +108,7 @@ RSpec.feature "Service ordering" do
 
       select "Services"
       select affiliation.organization
+      select research_area.name, from: "Research area"
       select "Single user", from: "Customer typology"
       fill_in "Access reason", with: "To pass test"
       fill_in "Additional information", with: "Additional information test"
