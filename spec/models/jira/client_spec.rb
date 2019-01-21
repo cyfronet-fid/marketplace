@@ -37,6 +37,7 @@ describe Jira::Client do
                           project_name: "My Secret Project",
                           project: create(:project, user: user, name: "My Secret Project"),
                           customer_typology: "single_user",
+                          research_area: create(:research_area, name: "My RA"),
                           access_reason: "some reason", properties: [
             {
                 "id": "id1",
@@ -83,6 +84,7 @@ describe Jira::Client do
                        "CP-UserGroupName-1" => "User Group Name 1",
                        "CP-ProjectInformation-1" => "My Secret Project",
                        "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
+                       "CP-ScientificDiscipline-1" => "My RA",
                        "SO-1-1" => "cat1/s1/off1?Data repository name=aaaaaa&" +
                                    "Harvesting method=OAI-PMH&" +
                                    "Harvesting endpoint=aaaaa" }
@@ -111,6 +113,7 @@ describe Jira::Client do
                                                                  service_type: "open_access",
                                                                  connected_url:  "http://service.org/access",
                                                                  categories: [create(:category, name: "cat1")])),
+                          research_area: nil,
                           project: create(:project, user: user, name: "My Secret Project"))
 
     expected_fields = { summary: "Service order, John Doe, s1",

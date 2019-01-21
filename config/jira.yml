@@ -32,6 +32,7 @@ default: &default
     CP-UserGroupName: <%= "'" + (ENV["MP_JIRA_FIELD_CP_UserGroupName"] || "") + "'" %>
     CP-ProjectInformation: <%= "'" + (ENV["MP_JIRA_FIELD_CP_ProjectInformation"] || "") + "'" %>
     SO-ProjectName: <%= "'" + (ENV["MP_JIRA_FIELD_SO_ProjectName"] || "") + "'" %>
+    CP-ScientificDiscipline: <%= "'" + (ENV["MP_JIRA_FIELD_CP_ScientificDiscipline"] || "") + "'" %>
     SO-1: <%= "'" + (ENV["MP_JIRA_FIELD_SO_1"] || "") + "'" %>
 
     select_values:
@@ -74,6 +75,7 @@ test:
     CP-UserGroupName: "CP-UserGroupName-1"
     CP-ProjectInformation: "CP-ProjectInformation-1"
     SO-ProjectName: "SO-ProjectName-1"
+    CP-ScientificDiscipline: "CP-ScientificDiscipline-1"
     SO-1: "SO-1-1"
 
     select_values:
