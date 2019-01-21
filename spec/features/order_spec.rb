@@ -330,9 +330,8 @@ RSpec.feature "Service ordering" do
       visit service_path(service)
 
       click_on "Order"
-
       # Step 2
-      choose "I do not have a voucher, and I would like to request one"
+      find("label", id: "ask").click
       expect(page).to_not have_text("Voucher ID")
 
 
@@ -350,7 +349,7 @@ RSpec.feature "Service ordering" do
       # Step 2 - again
       expect(current_path).to eq service_configuration_path(service)
       expect(page).to_not have_text("Voucher ID")
-      choose "I already have a voucher and I would like to provide it"
+      find("label", id: "have").click
       fill_in "Voucher ID", with: "11111-22222-33333-44444"
       click_on "Next", match: :first
 
@@ -362,7 +361,7 @@ RSpec.feature "Service ordering" do
       # Step 2 - again
       expect(current_path).to eq service_configuration_path(service)
       expect(page).to have_selector("input[value='11111-22222-33333-44444']")
-      choose "I do not have a voucher, and I would like to request one"
+      find("label", id: "ask").click
       click_on "Next", match: :first
 
       # Step 3
