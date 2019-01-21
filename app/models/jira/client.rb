@@ -58,6 +58,7 @@ class Jira::Client < JIRA::Client
       "CP-ReasonForAccess": fields_config["CP-ReasonForAccess"],
       "CP-UserGroupName": fields_config["CP-UserGroupName"],
       "CP-ProjectInformation": fields_config["CP-ProjectInformation"],
+      "CP-ScientificDiscipline": fields_config["CP-ScientificDiscipline"],
       # For now only single Service Offer is supported
       "SO-ProjectName": fields_config["SO-ProjectName"],
       "SO-1": fields_config["SO-1"]
@@ -142,6 +143,8 @@ private
       project_item.user_group_name
     when "SO-ProjectName"
       "#{project_item.project&.name} (#{project_item.project&.id})"
+    when "CP-ScientificDiscipline"
+      project_item.research_area&.name
     when "SO-1"
       "#{project_item.service.categories.first.name}/" +
       "#{project_item.service.title}/" +
