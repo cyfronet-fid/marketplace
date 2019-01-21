@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_10_111453) do
+ActiveRecord::Schema.define(version: 2019_01_14_121032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,9 +129,11 @@ ActiveRecord::Schema.define(version: 2019_01_10_111453) do
     t.string "project_website_url"
     t.string "company_name"
     t.string "company_website_url"
+    t.bigint "research_area_id"
     t.index ["affiliation_id"], name: "index_project_items_on_affiliation_id"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
+    t.index ["research_area_id"], name: "index_project_items_on_research_area_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -326,6 +328,7 @@ ActiveRecord::Schema.define(version: 2019_01_10_111453) do
   add_foreign_key "project_items", "affiliations"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
+  add_foreign_key "project_items", "research_areas"
   add_foreign_key "service_providers", "providers"
   add_foreign_key "service_providers", "services"
   add_foreign_key "service_related_platforms", "platforms"

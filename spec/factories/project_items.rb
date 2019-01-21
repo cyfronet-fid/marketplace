@@ -11,6 +11,7 @@ FactoryBot.define do
     project_website_url { "https://project_website.url" }
     company_name { |n| "company name #{n}" }
     company_website_url { "https://company_website.url" }
+    research_area
 
     properties []
 
