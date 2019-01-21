@@ -11,6 +11,11 @@ class Services::ConfigurationsController < Services::ApplicationController
 
   def update
     @project_item = ProjectItem.new(configuration_params)
+
+    if @project_item.request_voucher
+      @project_item.voucher_id = ""
+    end
+
     if @project_item.valid?
       session[session_key] = @project_item.attributes
       redirect_to service_summary_path(@service)

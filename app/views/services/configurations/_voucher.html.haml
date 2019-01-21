@@ -1,0 +1,11 @@
+- if project_item.offer.voucherable
+  %h2.mb-4.font-weight-normal= "Voucher"
+  = f.input :request_voucher, as: :radio_buttons,
+      label: "The service's offer you have chosen supports vouchers, we need some information in regards to that.",
+      readonly: nil,
+      collection: [["I do not have a voucher, and I would like to request one", "true"],
+                   ["I already have a voucher and I would like to provide it", "false"]],
+      input_html: { "data-action" => "change->project-item#voucherChanged" }
+
+  %div{ "data-target" => "project-item.hasVoucher", class: ("hidden-fields" if project_item.request_voucher) }
+    = f.input :voucher_id, label: "Voucher ID", input_html: { autocomplete: "new-password" }

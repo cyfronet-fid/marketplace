@@ -5,7 +5,7 @@ export default class extends Controller {
                     "project", "privateCompany", "input",
                     "userGroupName", "projectName",
                     "projectWebsiteUrl", "companyName",
-                    "companyWebsiteUrl"];
+                    "companyWebsiteUrl", "hasVoucher"];
 
   connect() {
    }
@@ -53,6 +53,13 @@ export default class extends Controller {
         el.classList.remove("hidden-fields");
       })
     }
+  }
+
+  voucherChanged(event) {
+    if(event.currentTarget.value === "false")
+      this.hasVoucherTarget.classList.remove('hidden-fields');
+    else
+      this.hasVoucherTarget.classList.add('hidden-fields');
   }
 
   _hideCustomerTypologieFields() {
