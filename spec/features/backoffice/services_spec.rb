@@ -46,13 +46,13 @@ RSpec.feature "Services in backoffice" do
       fill_in "Places", with: "Europe"
       fill_in "Languages", with: "English"
       select target_group.name, from: "Dedicated For"
-      fill_in "Terms of use url", with: "https://sample.url"
-      fill_in "Access policies url", with: "https://sample.url"
-      fill_in "Corporate sla url", with: "https://sample.url"
-      fill_in "Webpage url", with: "https://sample.url"
-      fill_in "Manual url", with: "https://sample.url"
-      fill_in "Helpdesk url", with: "https://sample.url"
-      fill_in "Tutorial url", with: "https://sample.url"
+      fill_in "Terms of use url", with: "https://terms.sample.url"
+      fill_in "Access policies url", with: "https://policies.sample.url"
+      fill_in "Corporate sla url", with: "https://sla.sample.url"
+      fill_in "Webpage url", with: "https://webpage.sample.url"
+      fill_in "Manual url", with: "https://manual.sample.url"
+      fill_in "Helpdesk url", with: "https://helpdesk.sample.url"
+      fill_in "Tutorial url", with: "https://tutorial.sample.url"
       fill_in "Restrictions", with: "Reaserch affiliation needed"
       fill_in "Phase", with: "Production"
       fill_in "Activate message", with: "Welcome!!!"
@@ -74,7 +74,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("service description")
       expect(page).to have_content("service terms of use")
       expect(page).to have_content("service tagline")
-      expect(page).to have_content("https://sample.url")
+      expect(page).to have_link(href: "https://sample.url")
       expect(page).to have_content("open_access")
       expect(page).to have_content("person1@test.ok")
       expect(page).to have_content("person2@test.ok")
@@ -128,18 +128,11 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I can delete offer" do
       service = create(:service, title: "my service", status: :draft)
-      offer = create(:offer, name: "offer1", description: "desc", service: service)
+      _offer = create(:offer, name: "offer1", description: "desc", service: service)
 
       visit backoffice_service_path(service)
       click_on(class: "delete-offer")
 
-      expect(page).to have_content("This service has no offers")
-    end
-
-    scenario "I can delete offer" do
-      service = create(:service, title: "my service")
-
-      visit backoffice_service_path(service)
       expect(page).to have_content("This service has no offers")
     end
 

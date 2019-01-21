@@ -1,70 +1,38 @@
 - breadcrumb :backoffice_service, @service
 .container
-  %h1= @service.title
-  %h2 Status
-  %p= @service.status
-  - if policy([:backoffice, @service]).publish?
-    = link_to "Publish",
-            backoffice_service_publish_path(@service),
-            method: :post,
-            data: { confirm: "Are you sure you want to publish this service?" },
-            class: "btn btn-warning"
-  - if policy([:backoffice, @service]).draft?
-    = link_to "Stop showing in the MP",
-            backoffice_service_draft_path(@service),
-            method: :post,
-            data: { confirm: "Are you sure you want to stop showing this service?" },
-            class: "btn btn-warning"
-  .row
-    .col-3
-      - if @service.logo.attached?
-        = image_tag @service.logo.variant(resize: "200x200")
-    .col-9
-      %p
-        %b= @service.tagline
-      %p= @service.description
+  = render "services/header", service: @service do
+    - if policy([:backoffice, @service]).edit?
+      = link_to "Edit",
+                edit_backoffice_service_path(@service),
+                class: "btn btn-primary"
+    - if policy([:backoffice, @service]).new?
+      = link_to "Add new offer", new_backoffice_service_offer_path(@service),
+        class: "btn btn-primary mt-2"
+    - if policy([:backoffice, @service]).destroy?
+      = link_to "Decommission",
+        backoffice_service_path(@service),
+          method: :delete, data: { confirm: "Are you sure?" },
+            class: "btn btn-danger mt-2"
 
-  %h2 Terms of use
-  = markdown(@service.terms_of_use)
+  .d-flex.my-2.mx-2
+    .flex-grow-1
+      Status:
+      %strong= @service.status
+    .d-inline
+      - if policy([:backoffice, @service]).publish?
+        = link_to "Publish",
+                backoffice_service_publish_path(@service),
+                method: :post,
+                data: { confirm: "Are you sure you want to publish this service?" },
+                class: "btn-sm btn-warning"
+      - if policy([:backoffice, @service]).draft?
+        = link_to "Stop showing in the MP",
+                backoffice_service_draft_path(@service),
+                method: :post,
+                data: { confirm: "Are you sure you want to stop showing this service?" },
+                class: "btn-sm btn-warning"
 
-  %h2 Service website
-  %p= @service.connected_url
 
-  %h2 Service type
-  %p= @service.service_type
-
-  %h2 Activate message
-  %p= @service.activate_message
-
-  %h2 Contact emails
-  - @service.contact_emails.each do |email|
-    %p= email
-
-  %h2 Areas
-  - @service.research_areas.each do |area|
-    %p= area.name
-
-  %h2 Dedicated For
-  - @service.target_groups.each do |group|
-    %p= group.name
-
-  %h2 Providers
-  - @service.providers.each do |provider|
-    %p= provider.name
-
-  %h2 Category
-  - @service.categories.each do |category|
-    %p= category.name
-
-  %h2 Offers
-  = render "backoffice/services/offers/offers", service: @service
-
-  - if policy([:backoffice, @service]).edit?
-    = link_to "Edit",
-              edit_backoffice_service_path(@service),
-              class: "btn btn-warning"
-  - if policy([:backoffice, @service]).destroy?
-    = link_to "Decommission",
-              backoffice_service_path(@service),
-              method: :delete, data: { confirm: "Are you sure?" },
-              class: "btn btn-danger"
+  .tab-content
+    = render "services/about", service: @service, offers: @service.offers
+    = render "services/tags", service: @service
