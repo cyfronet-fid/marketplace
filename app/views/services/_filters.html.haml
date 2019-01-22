@@ -50,7 +50,7 @@
         %select#research-area.form-control.form-control-sm{ name: "research_area" }
           %option{ value: "", selected: "selected" }
             Any
-          = options_for_select(ancestry_tree(research_areas), params[:research_area])
+          = options_for_select(ancestry_id_tree(research_areas), params[:research_area])
   .row
     .col-md-12
       %button#filter-submit.btn.btn-primary.mt-4.w-100{ type: "submit" }

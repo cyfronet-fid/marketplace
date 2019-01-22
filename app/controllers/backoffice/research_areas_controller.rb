@@ -5,7 +5,7 @@ class Backoffice::ResearchAreasController < Backoffice::ApplicationController
 
   def index
     authorize(ResearchArea)
-    @research_areas = policy_scope(ResearchArea).page(params[:page])
+    @research_areas = policy_scope(ResearchArea)
   end
 
   def show

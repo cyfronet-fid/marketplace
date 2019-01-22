@@ -10,5 +10,5 @@
       .clearfix
   %hr/
   %ul
-    = render @categories
-  = will_paginate @categories
+    - ancestry_tree(@categories).each do |record|
+      %li= link_to record.first, backoffice_category_path(record.last)

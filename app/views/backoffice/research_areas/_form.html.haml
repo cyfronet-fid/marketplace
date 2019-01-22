@@ -1,7 +1,7 @@
 = simple_form_for [:backoffice, research_area] do |f|
   = f.input :name
   = f.input :parent_id,
-    collection: ancestry_tree(research_area.potential_parents),
+    collection: ancestry_id_tree(research_area.potential_parents),
     label_method: :first, value_method: :last, as: :select, include_blank: true
 
 
