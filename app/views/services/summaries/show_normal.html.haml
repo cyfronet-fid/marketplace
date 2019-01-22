@@ -18,6 +18,15 @@
   %h3.mb-4
     Additional information
 
+  - if @project_item.offer.voucherable
+    %h3 Voucher
+    %dl.mb-4
+      - if @project_item.request_voucher
+        %dt I don't have a voucher, and I would like to request for one
+      - else
+        %dt Voucher ID
+        %dd= @project_item.voucher_id
+
   %h3 Usage
   %dl.mb-4
     %dt Customer typology

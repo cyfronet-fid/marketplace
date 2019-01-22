@@ -13,6 +13,8 @@ FactoryBot.define do
     company_website_url { "https://company_website.url" }
     research_area
 
+    voucher_id ""
+    request_voucher false
     properties []
 
     offer

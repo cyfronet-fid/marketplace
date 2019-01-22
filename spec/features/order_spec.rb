@@ -270,6 +270,105 @@ RSpec.feature "Service ordering" do
       expect(user.projects.find { |project| project.name == "New project" }).to_not be_nil
     end
 
+    scenario "Voucher inputs should not be visible in voucher disabled offer" do
+      service = create(:service)
+      offer = create(:offer, service: service, voucherable: false)
+      affiliation = create(:affiliation, status: :active, user: user)
+      research_area = create(:research_area)
+
+      visit service_path(service)
+
+      click_on "Order"
+
+      # Step 2
+      expect(page).to_not have_text("Voucher")
+
+      select "Services"
+      select affiliation.organization
+      select research_area.name, from: "Research area"
+      select "Single user", from: "Customer typology"
+      fill_in "Access reason", with: "To pass test"
+
+      click_on "Next", match: :first
+
+      # Step 3
+      expect(page).to_not have_text("Voucher")
+    end
+
+    scenario "Voucher ID input should be visible for voucher enabled service" do
+      service = create(:service)
+      offer = create(:offer, service: service, voucherable: true)
+      affiliation = create(:affiliation, status: :active, user: user)
+      research_area = create(:research_area)
+
+      visit service_path(service)
+
+      click_on "Order"
+
+      # Step 2
+      expect(page).to have_text("Voucher ID")
+      fill_in "Voucher ID", with: "11111-22222-33333-44444"
+
+      select "Services"
+      select affiliation.organization
+      select research_area.name, from: "Research area"
+      select "Single user", from: "Customer typology"
+      fill_in "Access reason", with: "To pass test"
+
+      click_on "Next", match: :first
+
+      # Step 3
+      expect(page).to have_text("Voucher")
+      expect(page).to have_text("11111-22222-33333-44444")
+    end
+
+    scenario "Voucher ID input should not be visible if 'request voucher' radio is set", js: true do
+      offer = create(:offer, service: service, voucherable: true)
+      affiliation = create(:affiliation, status: :active, user: user)
+      research_area = create(:research_area)
+
+      visit service_path(service)
+
+      click_on "Order"
+
+      # Step 2
+      choose "I do not have a voucher, and I would like to request one"
+      expect(page).to_not have_text("Voucher ID")
+
+
+      select "Services"
+      select affiliation.organization
+      select research_area.name, from: "Research area"
+      select "Single user", from: "Customer typology"
+      fill_in "Access reason", with: "To pass test"
+      click_on "Next", match: :first
+
+      # Step 3
+      expect(current_path).to eq service_summary_path(service)
+      click_on "Back to previous step - configuration"
+
+      # Step 2 - again
+      expect(current_path).to eq service_configuration_path(service)
+      expect(page).to_not have_text("Voucher ID")
+      choose "I already have a voucher and I would like to provide it"
+      fill_in "Voucher ID", with: "11111-22222-33333-44444"
+      click_on "Next", match: :first
+
+      # Step 3
+      expect(current_path).to eq service_summary_path(service)
+      expect(page).to have_text("11111-22222-33333-44444")
+      click_on "Back to previous step - configuration"
+
+      # Step 2 - again
+      expect(current_path).to eq service_configuration_path(service)
+      expect(page).to have_selector("input[value='11111-22222-33333-44444']")
+      choose "I do not have a voucher, and I would like to request one"
+      click_on "Next", match: :first
+
+      # Step 3
+      expect(current_path).to eq service_summary_path(service)
+      expect(page).to_not have_text("11111-22222-33333-44444")
+    end
   end
 
   context "as anonymous user" do
