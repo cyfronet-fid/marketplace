@@ -14,10 +14,6 @@ module ResearchAreasHelper
     end.map { |k, v| [k, v] }.sort { |v1, v2| v1.first <=> v2.first }
   end
 
-  def research_areas_tree(research_areas)
-    create_research_areas_tree(research_areas, ResearchArea.new, 0)
-  end
-
   private
 
     def group_research_areas!(result, current_path, key, values)
@@ -28,20 +24,5 @@ module ResearchAreasHelper
       else
         result << [current_path, key]
       end
-    end
-
-    def create_research_areas_tree(research_areas, parent, level)
-      research_areas.
-          select { |ra| ra.ancestry_depth == level && ra.child_of?(parent) }.
-          map do |ra|
-        [[indented_name(ra.name, level), ra.id],
-          *create_research_areas_tree(research_areas, ra, level + 1)]
-      end.
-          flatten(1)
-    end
-
-    def indented_name(name, level)
-      indentation = "&nbsp;&nbsp;" * level
-      "#{indentation}#{ERB::Util.html_escape(name)}".html_safe
     end
 end

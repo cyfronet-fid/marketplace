@@ -20,6 +20,25 @@
       "note": ""
     },
     {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "5b32fc9858a0588687f0fa6a4b12f5cdf1b34c535157b765fdb5cbe1a83a1bd8",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/backoffice/categories/index.html.haml",
+      "line": 13,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => policy_scope(Category).page(params[:page]), {})",
+      "render_path": [{"type":"controller","class":"Backoffice::CategoriesController","method":"index","line":9,"file":"app/controllers/backoffice/categories_controller.rb","rendered":{"name":"backoffice/categories/index","file":"/home/marek/git/mp/app/views/backoffice/categories/index.html.haml"}}],
+      "location": {
+        "type": "template",
+        "template": "backoffice/categories/index"
+      },
+      "user_input": "params[:page]",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
       "warning_type": "Mass Assignment",
       "warning_code": 70,
       "fingerprint": "70e7b861d074bffcc48c1852503c02b1d81412d166341e23e4306071c465ddc8",
@@ -154,6 +173,6 @@
       "note": ""
     }
   ],
-  "updated": "2019-01-22 19:50:20 +0100",
+  "updated": "2019-01-22 21:50:06 +0100",
   "brakeman_version": "4.4.0"
 }
