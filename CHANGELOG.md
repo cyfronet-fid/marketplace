@@ -22,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - RWD for offer selection (@jarekzet)
 - Show `*` near order research area field, show errors when research area is not
   selected (@mkasztelnik)
+- Remove shell command invocation in one of the test (@mkasztelnik)
 
 ### Security
 
