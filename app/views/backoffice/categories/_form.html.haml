@@ -1,13 +1,13 @@
-= simple_form_for [:backoffice, research_area] do |f|
+= simple_form_for [:backoffice, category] do |f|
   = f.input :name
   = f.input :parent_id,
-    collection: ancestry_tree(research_area.potential_parents),
+    collection: ancestry_tree(category.potential_parents),
     label_method: :first, value_method: :last, as: :select, include_blank: true
 
 
   .btn-group
     = f.button :submit, class: "btn btn-success"
     :ruby
-      path = research_area.persisted? && backoffice_research_area_path(research_area) ||
-             backoffice_research_areas_path
+      path = category.persisted? && backoffice_category_path(category) ||
+             backoffice_categories_path
     = link_to "Cancel", path, class: "btn btn-secondary"

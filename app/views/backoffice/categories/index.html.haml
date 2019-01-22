@@ -1,0 +1,14 @@
+- breadcrumb :backoffice_categories
+.container
+  %h1
+    Categories
+    - if policy([:backoffice, Category]).new?
+      .float-right
+        = link_to "New Category",
+                  new_backoffice_category_path,
+                  class: "btn btn-success"
+      .clearfix
+  %hr/
+  %ul
+    = render @categories
+  = will_paginate @categories

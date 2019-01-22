@@ -20,6 +20,9 @@
         - if policy([:backoffice, ResearchArea]).index?
           = nav_link controller: :research_areas, html_options: { class: "nav-item" } do
             = link_to "Research Areas", backoffice_research_areas_path, class: "nav-link px-3 py-1"
+        - if policy([:backoffice, Category]).index?
+          = nav_link controller: :categories, html_options: { class: "nav-item" } do
+            = link_to "Categories", backoffice_categories_path, class: "nav-link px-3 py-1"
         %li.nav-item
           = link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link px-3 py-1"
 
