@@ -23,3 +23,23 @@ crumb :backoffice_service_edit do |service|
   link "Edit", edit_backoffice_service_path(service)
   parent :backoffice_service, service
 end
+
+crumb :backoffice_research_areas do
+  link "Research Areas", backoffice_research_areas_path
+  parent :backoffice_root
+end
+
+crumb :backoffice_research_area do |research_area|
+  link research_area.name, backoffice_research_area_path(research_area)
+  parent :backoffice_research_areas
+end
+
+crumb :backoffice_research_area_new do |research_area|
+  link research_area.name, new_backoffice_research_area_path(research_area)
+  parent :backoffice_research_areas
+end
+
+crumb :backoffice_research_area_edit do |research_area|
+  link research_area.name, edit_backoffice_research_area_path(research_area)
+  parent :backoffice_research_areas
+end

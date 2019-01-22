@@ -108,18 +108,8 @@ module Service::Searchable
       end
     end
 
-    def research_areas_tree(research_areas, parent, level)
-      research_areas.
-          select { |ra| ra.ancestry_depth == level && ra.child_of?(parent) }.
-          map do |ra|
-        [[indented_name(ra.name, level), ra.id],
-         *research_areas_tree(research_areas, ra, level + 1)]
-      end.
-          flatten(1)
-    end
-
     def options_research_area
-      research_areas_tree(ResearchArea.all, ResearchArea.new, 0)
+      ResearchArea.all
     end
 
     def filter_tag(services, tags)
@@ -140,11 +130,6 @@ module Service::Searchable
   include FieldFilterable
 
 private
-
-  def indented_name(name, level)
-    indentation = "&nbsp;&nbsp;" * level
-    "#{indentation}#{ERB::Util.html_escape(name)}".html_safe
-  end
 
   def records
     active_searchable_fields.
