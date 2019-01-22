@@ -50,6 +50,10 @@ class ProjectItem < ApplicationRecord
   validates :company_name, presence: true, if: :private_company?
   validates :company_website_url, url: true, presence: true, if: :private_company?
 
+  validates :request_voucher, absence: true, unless: :vaucherable?
+  validates :voucher_id, absence: true, unless: :voucher_id_required?
+  validates :voucher_id, presence: true, allow_blank: false, if: :voucher_id_required?
+
   delegate :user, to: :project
 
   def service
@@ -130,5 +134,13 @@ class ProjectItem < ApplicationRecord
 
   def research_area_is_a_leaf
     errors.add(:research_area_id, "cannot have children") if research_area&.has_children?
+  end
+
+  def vaucherable?
+    offer&.voucherable
+  end
+
+  def voucher_id_required?
+    vaucherable? && request_voucher == false
   end
 end

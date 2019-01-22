@@ -9,6 +9,8 @@
 = simple_form_for @project_item, url: service_configuration_path(@service), method: :put,
   html: { id: "order-form", "data-controller" => "project-item", "data-project-item-url" => projects_path } do |f|
 
+  = render "services/configurations/voucher", project_item: @project_item, f: f
+
   - unless @project_item.property_values.blank?
     %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Technical parameters
     = render "services/configurations/attributes", project_item: @project_item, form: f
