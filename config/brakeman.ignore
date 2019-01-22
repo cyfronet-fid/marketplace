@@ -7,10 +7,10 @@
       "check_name": "Render",
       "message": "Render path contains parameter value",
       "file": "app/views/projects/index.html.haml",
-      "line": 12,
+      "line": 15,
       "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
       "code": "render(action => policy_scope(Project).order(:name).eager_load(:project_items).where(\"project_items.status = ?\", params[:status]), {})",
-      "render_path": [{"type":"controller","class":"ProjectsController","method":"index","line":9,"file":"app/controllers/projects_controller.rb"}],
+      "render_path": [{"type":"controller","class":"ProjectsController","method":"index","line":9,"file":"app/controllers/projects_controller.rb","rendered":{"name":"projects/index","file":"/home/marek/git/mp/app/views/projects/index.html.haml"}}],
       "location": {
         "type": "template",
         "template": "projects/index"
@@ -29,7 +29,7 @@
       "line": 14,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.permit!",
-      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":18,"file":"app/controllers/categories_controller.rb"},{"type":"template","name":"categories/show","line":2,"file":"app/views/categories/show.html.haml"},{"type":"template","name":"services/_index","line":29,"file":"app/views/services/_index.html.haml"}],
+      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":21,"file":"app/controllers/categories_controller.rb","rendered":{"name":"categories/show","file":"/home/marek/git/mp/app/views/categories/show.html.haml"}},{"type":"template","name":"categories/show","line":2,"file":"app/views/categories/show.html.haml","rendered":{"name":"services/_index","file":"/home/marek/git/mp/app/views/services/_index.html.haml"}},{"type":"template","name":"services/_index","line":33,"file":"app/views/services/_index.html.haml","rendered":{"name":"services/_paginate","file":"/home/marek/git/mp/app/views/services/_paginate.haml"}}],
       "location": {
         "type": "template",
         "template": "services/_paginate"
@@ -45,10 +45,10 @@
       "check_name": "Render",
       "message": "Render path contains parameter value",
       "file": "app/views/backoffice/services/index.html.haml",
-      "line": 11,
+      "line": 12,
       "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
       "code": "render(action => policy_scope(Service).page(params[:page]), {})",
-      "render_path": [{"type":"controller","class":"Backoffice::ServicesController","method":"index","line":9,"file":"app/controllers/backoffice/services_controller.rb"}],
+      "render_path": [{"type":"controller","class":"Backoffice::ServicesController","method":"index","line":9,"file":"app/controllers/backoffice/services_controller.rb","rendered":{"name":"backoffice/services/index","file":"/home/marek/git/mp/app/views/backoffice/services/index.html.haml"}}],
       "location": {
         "type": "template",
         "template": "backoffice/services/index"
@@ -82,17 +82,36 @@
       "warning_code": 4,
       "fingerprint": "b5f47c5cc63d05149ec53c573da4a042d39fcbd89b8925bd371cc4340b80bfd5",
       "check_name": "LinkToHref",
-      "message": "Potentially unsafe model attribute in link_to href",
+      "message": "Potentially unsafe model attribute in `link_to` href",
       "file": "app/views/profiles/affiliations/_affiliation.html.haml",
-      "line": 46,
+      "line": 48,
       "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
       "code": "link_to((Unresolved Model).new.webpage, (Unresolved Model).new.webpage)",
-      "render_path": [{"type":"template","name":"profiles/affiliations/_index","line":3,"file":"app/views/profiles/affiliations/_index.html.haml"}],
+      "render_path": [{"type":"template","name":"profiles/affiliations/_index","line":3,"file":"app/views/profiles/affiliations/_index.html.haml","rendered":{"name":"profiles/affiliations/_affiliation","file":"/home/marek/git/mp/app/views/profiles/affiliations/_affiliation.html.haml"}}],
       "location": {
         "type": "template",
         "template": "profiles/affiliations/_affiliation"
       },
       "user_input": "(Unresolved Model).new.webpage",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "bf2846b86313d3af3fe09771e32d855f647c5cf28f745a9325a80555219d1921",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/backoffice/research_areas/index.html.haml",
+      "line": 13,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => policy_scope(ResearchArea).page(params[:page]), {})",
+      "render_path": [{"type":"controller","class":"Backoffice::ResearchAreasController","method":"index","line":9,"file":"app/controllers/backoffice/research_areas_controller.rb","rendered":{"name":"backoffice/research_areas/index","file":"/home/marek/git/mp/app/views/backoffice/research_areas/index.html.haml"}}],
+      "location": {
+        "type": "template",
+        "template": "backoffice/research_areas/index"
+      },
+      "user_input": "params[:page]",
       "confidence": "Weak",
       "note": ""
     },
@@ -106,7 +125,7 @@
       "line": 11,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.permit!",
-      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":18,"file":"app/controllers/categories_controller.rb"},{"type":"template","name":"categories/show","line":2,"file":"app/views/categories/show.html.haml"},{"type":"template","name":"services/_index","line":29,"file":"app/views/services/_index.html.haml"}],
+      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":21,"file":"app/controllers/categories_controller.rb","rendered":{"name":"categories/show","file":"/home/marek/git/mp/app/views/categories/show.html.haml"}},{"type":"template","name":"categories/show","line":2,"file":"app/views/categories/show.html.haml","rendered":{"name":"services/_index","file":"/home/marek/git/mp/app/views/services/_index.html.haml"}},{"type":"template","name":"services/_index","line":33,"file":"app/views/services/_index.html.haml","rendered":{"name":"services/_paginate","file":"/home/marek/git/mp/app/views/services/_paginate.haml"}}],
       "location": {
         "type": "template",
         "template": "services/_paginate"
@@ -125,7 +144,7 @@
       "line": 9,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.permit!",
-      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":18,"file":"app/controllers/categories_controller.rb"},{"type":"template","name":"categories/show","line":2,"file":"app/views/categories/show.html.haml"},{"type":"template","name":"services/_index","line":29,"file":"app/views/services/_index.html.haml"}],
+      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":21,"file":"app/controllers/categories_controller.rb","rendered":{"name":"categories/show","file":"/home/marek/git/mp/app/views/categories/show.html.haml"}},{"type":"template","name":"categories/show","line":2,"file":"app/views/categories/show.html.haml","rendered":{"name":"services/_index","file":"/home/marek/git/mp/app/views/services/_index.html.haml"}},{"type":"template","name":"services/_index","line":33,"file":"app/views/services/_index.html.haml","rendered":{"name":"services/_paginate","file":"/home/marek/git/mp/app/views/services/_paginate.haml"}}],
       "location": {
         "type": "template",
         "template": "services/_paginate"
@@ -135,6 +154,6 @@
       "note": ""
     }
   ],
-  "updated": "2018-11-14 09:44:47 +0100",
-  "brakeman_version": "4.3.1"
+  "updated": "2019-01-22 19:50:20 +0100",
+  "brakeman_version": "4.4.0"
 }

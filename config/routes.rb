@@ -48,6 +48,7 @@ Rails.application.routes.draw do
         resource :draft, only: :create
       end
     end
+    resources :research_areas
   end
 
   namespace :api do
