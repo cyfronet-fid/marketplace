@@ -5,7 +5,7 @@ class Backoffice::CategoriesController < Backoffice::ApplicationController
 
   def index
     authorize(Category)
-    @categories = policy_scope(Category).page(params[:page])
+    @categories = policy_scope(Category)
   end
 
   def show
