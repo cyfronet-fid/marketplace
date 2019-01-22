@@ -34,7 +34,7 @@
 
   = f.input :access_reason, input_html: { "data-target" => "project-item.reason" }
   = f.input :additional_information
-  = f.input :research_area_id, as: :grouped_select,
+  = f.association :research_area, as: :grouped_select,
     collection: grouped_research_areas, group_method: :last
 
   %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Affiliation
