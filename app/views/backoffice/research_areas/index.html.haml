@@ -1,0 +1,14 @@
+- breadcrumb :backoffice_research_areas
+.container
+  %h1
+    Research Areas
+    - if policy([:backoffice, ResearchArea]).new?
+      .float-right
+        = link_to "New Research Area",
+                  new_backoffice_research_area_path,
+                  class: "btn btn-success"
+      .clearfix
+  %hr/
+  %ul
+    - ancestry_tree(@research_areas).each do |record|
+      %li= link_to record.first, backoffice_research_area_path(record.last)

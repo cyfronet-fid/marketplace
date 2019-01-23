@@ -28,4 +28,11 @@ module ApplicationHelper
   def current_action?(*args)
     args.any? { |v| v.to_s.downcase == action_name }
   end
+
+  def back_link_to(title, record, options = {})
+    prefix = options.delete(:prefix)
+    to_obj = record.persisted? ? record : record.class
+    to = prefix ? [prefix, to_obj] : to_obj
+    link_to(title, to, options)
+  end
 end
