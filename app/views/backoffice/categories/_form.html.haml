@@ -7,7 +7,4 @@
 
   .btn-group
     = f.button :submit, class: "btn btn-success"
-    :ruby
-      path = category.persisted? && backoffice_category_path(category) ||
-             backoffice_categories_path
-    = link_to "Cancel", path, class: "btn btn-secondary"
+    = back_link_to "Cancel", category, prefix: :backoffice, class: "btn btn-secondary"

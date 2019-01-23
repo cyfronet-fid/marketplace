@@ -7,7 +7,4 @@
 
   .btn-group
     = f.button :submit, class: "btn btn-success"
-    :ruby
-      path = research_area.persisted? && backoffice_research_area_path(research_area) ||
-             backoffice_research_areas_path
-    = link_to "Cancel", path, class: "btn btn-secondary"
+    = back_link_to "Cancel", research_area, prefix: :backoffice, class: "btn btn-secondary"

@@ -36,8 +36,7 @@
 
   .btn-group
     = f.button :submit, class: "btn btn-success"
-    - path = service.persisted? ? backoffice_service_path(service) : backoffice_services_path
-    = link_to "Cancel", path, class: "btn btn-secondary"
+    = back_link_to "Cancel", service, prefix: :backoffice, class: "btn btn-secondary"
 
 :javascript
   $(document).ready(function() {
