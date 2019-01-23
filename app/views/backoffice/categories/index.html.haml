@@ -1,0 +1,14 @@
+- breadcrumb :backoffice_categories
+.container
+  %h1
+    Categories
+    - if policy([:backoffice, Category]).new?
+      .float-right
+        = link_to "New Category",
+                  new_backoffice_category_path,
+                  class: "btn btn-success"
+      .clearfix
+  %hr/
+  %ul
+    - ancestry_tree(@categories).each do |record|
+      %li= link_to record.first, backoffice_category_path(record.last)

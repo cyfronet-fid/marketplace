@@ -1,0 +1,10 @@
+= simple_form_for [:backoffice, category] do |f|
+  = f.input :name
+  = f.input :parent_id,
+    collection: ancestry_id_tree(category.potential_parents),
+    label_method: :first, value_method: :last, as: :select, include_blank: true
+
+
+  .btn-group
+    = f.button :submit, class: "btn btn-success"
+    = back_link_to "Cancel", category, prefix: :backoffice, class: "btn btn-secondary"

@@ -4,8 +4,7 @@ class Category < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
-
-  has_ancestry
+  include Parentable
 
   # This callback need to be defined byfore dependent: :destroy
   # relation, because in this case project_item matter. This callback need to be
