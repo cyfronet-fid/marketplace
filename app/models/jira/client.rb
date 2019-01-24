@@ -59,6 +59,9 @@ class Jira::Client < JIRA::Client
       "CP-UserGroupName": fields_config["CP-UserGroupName"],
       "CP-ProjectInformation": fields_config["CP-ProjectInformation"],
       "CP-ScientificDiscipline": fields_config["CP-ScientificDiscipline"],
+      "CP-Platforms": fields_config["CP-Platforms"],
+      "CP-INeedAVoucher": fields_config["CP-INeedAVoucher"],
+      "CP-VoucherID": fields_config["CP-VoucherID"],
       # For now only single Service Offer is supported
       "SO-ProjectName": fields_config["SO-ProjectName"],
       "SO-1": fields_config["SO-1"]
@@ -141,6 +144,12 @@ private
       project_item.project_name
     when "CP-UserGroupName"
       project_item.user_group_name
+    when "CP-Platforms"
+      project_item.offer.service.platforms.pluck(:name).join(", ")
+    when "CP-INeedAVoucher"
+      { "id" => @jira_config["custom_fields"]["select_values"]["CP-INeedAVoucher"][project_item.request_voucher] }
+    when "CP-VoucherID"
+      project_item.voucher_id || nil
     when "SO-ProjectName"
       "#{project_item.project&.name} (#{project_item.project&.id})"
     when "CP-ScientificDiscipline"

@@ -33,6 +33,9 @@ default: &default
     CP-ProjectInformation: <%= "'" + (ENV["MP_JIRA_FIELD_CP_ProjectInformation"] || "") + "'" %>
     SO-ProjectName: <%= "'" + (ENV["MP_JIRA_FIELD_SO_ProjectName"] || "") + "'" %>
     CP-ScientificDiscipline: <%= "'" + (ENV["MP_JIRA_FIELD_CP_ScientificDiscipline"] || "") + "'" %>
+    CP-Platforms: <%= "'" + (ENV["MP_JIRA_FIELD_CP_Platforms"] || "") + "'" %>
+    CP-INeedAVoucher: <%= "'" + (ENV["MP_JIRA_FIELD_CP_INeedAVoucher"] || "") + "'" %>
+    CP-VoucherID: <%= "'" + (ENV["MP_JIRA_FIELD_CP_VoucherID"] || "") + "'" %>
     SO-1: <%= "'" + (ENV["MP_JIRA_FIELD_SO_1"] || "") + "'" %>
 
     select_values:
@@ -41,6 +44,10 @@ default: &default
         research: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_research"] || "") + "'" %>
         private_company: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_private_company"] || "") + "'" %>
         project: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_project"] || "") + "'" %>
+      CP-INeedAVoucher:
+        yes: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_true"] || "") + "'" %>
+        no: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_false"] || "") + "'" %>
+
 development:
   <<: *default
 
@@ -76,6 +83,10 @@ test:
     CP-ProjectInformation: "CP-ProjectInformation-1"
     SO-ProjectName: "SO-ProjectName-1"
     CP-ScientificDiscipline: "CP-ScientificDiscipline-1"
+    CP-Platforms: "CP-Platforms-1"
+    CP-INeedAVoucher: "CP-INeedAVoucher-1"
+    CP-VoucherID: "CP-VoucherID-1"
+ 
     SO-1: "SO-1-1"
 
     select_values:
@@ -83,6 +94,9 @@ test:
         single_user: '20000'
         research: '20001'
         private_company: '20002'
+      CP-INeedAVoucher:
+        yes: '20003'
+        no: '20004'
 
 production:
   <<: *default
