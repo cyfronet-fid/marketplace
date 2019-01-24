@@ -51,6 +51,7 @@ Rails.application.routes.draw do
     resources :research_areas
     resources :categories
     resources :providers
+    resources :platforms
   end
 
   namespace :api do
