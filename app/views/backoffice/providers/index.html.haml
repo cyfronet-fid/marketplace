@@ -1,0 +1,16 @@
+- breadcrumb :backoffice_providers
+.container
+  %h1
+    Providers
+    - if policy([:backoffice, Provider]).new?
+      .float-right
+        = link_to "New Provider",
+                  new_backoffice_provider_path,
+                  class: "btn btn-success"
+      .clearfix
+  %hr/
+  %ul
+    - @providers.each do |provider|
+      %li= link_to provider.name, backoffice_provider_path(provider)
+
+  = will_paginate @providers

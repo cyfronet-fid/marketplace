@@ -1,0 +1,6 @@
+= simple_form_for [:backoffice, provider] do |f|
+  = f.input :name
+
+  .btn-group
+    = f.button :submit, class: "btn btn-success"
+    = back_link_to "Cancel", provider, prefix: :backoffice, class: "btn btn-secondary"
