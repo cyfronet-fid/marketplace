@@ -1,4 +1,16 @@
+- if offers.find { |offer| offer.voucherable }
+  .container
+    .voucher-box.row.p-3
+      .col-12.col-lg-4.pl-0.pt-2.voucher-title
+        %i.fas.fa-ticket-alt.fa-3x.d-inline
+        .d-inline
+          %span.text-uppercase.mb-3 Marketplace
+          %span.big Vouchers
+      .col-12.col-lg-7
+        %p.pt-3
+          Vouchers allow researchers to test different configurations or different services to choose the best offer
+          for their needs.
 - if policy(service).offers_show?
-  %h3 Service offers
+  %h3.mb-3.mt-5 Service offers
   .row
     = render partial: "services/offer", collection: offers, as: :offer

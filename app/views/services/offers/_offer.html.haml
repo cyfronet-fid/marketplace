@@ -1,6 +1,10 @@
-.col-lg-4
+.col-lg-4.d-flex.align-items-stretch
   .card.m-0.mb-5
-    .card-body
+    .card-body.pt-4
+      - if offer.voucherable
+        .card-label
+          %i.fas.fa-ticket-alt
+          %span Voucher
       %h4.card-title= offer.name
       %p.card-text.mb-4= offer.description
       %h5.text-uppercase.parameters-title.mb-0= "Technical parameters"
