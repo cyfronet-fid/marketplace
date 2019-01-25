@@ -117,6 +117,10 @@ class Service < ApplicationRecord
     service_categories.each(&:touch) if saved_change_to_status
   end
 
+  def aod?
+    platforms.pluck(:name).include?("EGI Applications on Demand")
+  end
+
   private
 
     def main_category_missing?

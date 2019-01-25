@@ -61,4 +61,27 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       expect(encoded_body).to match(/#{project_item_url(project_item)}/)
     end
   end
+
+  context "aod request" do
+    it "notify if accepted" do
+      project_item = create(:project_item)
+
+      mail = described_class.aod_accepted(project_item).deliver_now
+      encoded_body = mail.body.encoded
+
+      expect(mail.subject).to match(/EGI Applications on Demand service approved/)
+      expect(encoded_body).to include("This email is to inform you that your request to access the EGI\r\n" + \
+                                      "Applications on Demand (AoD) service has been approved.")
+    end
+
+    it "notify if voucher accepted" do
+      project_item = create(:project_item)
+
+      mail = described_class.aod_voucher_accepted(project_item).deliver_now
+      encoded_body = mail.body.encoded
+
+      expect(mail.subject).to match(/EGI Applications on Demand service with voucher approved/)
+      expect(encoded_body).to match(/To redeem an Exoscale voucher, please follow these steps:/)
+    end
+  end
 end
