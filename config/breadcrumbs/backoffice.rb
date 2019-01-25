@@ -83,3 +83,23 @@ crumb :backoffice_provider_edit do |provider|
   link "Edit", edit_backoffice_provider_path(provider)
   parent :backoffice_provider, provider
 end
+
+crumb :backoffice_platforms do
+  link "Platforms", backoffice_platforms_path
+  parent :backoffice_root
+end
+
+crumb :backoffice_platform do |platform|
+  link platform.name, backoffice_platform_path(platform)
+  parent :backoffice_platforms
+end
+
+crumb :backoffice_platform_new do |platform|
+  link "New", new_backoffice_platform_path(platform)
+  parent :backoffice_platforms
+end
+
+crumb :backoffice_platform_edit do |platform|
+  link "Edit", edit_backoffice_platform_path(platform)
+  parent :backoffice_platform, platform
+end
