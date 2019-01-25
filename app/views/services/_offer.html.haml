@@ -1,7 +1,15 @@
 .col-md-6.d-flex.align-items-stretch.mb-4
-  .card
-    .card-body
+  .card.offers
+    .card-body.pt-4.collapse-group
+      - if offer.voucherable
+        .card-label
+          %i.fas.fa-ticket-alt
+          %span Voucher
       %h4.card-title= offer.name
-      %p.card-text= offer.description
+      %p.card-text.mb-2= offer.description
+      %p#view-details-01.card-text.xxx.collapse= offer.description
+      %a.nav-link.p-0.mb-3{ "data-toggle": "collapse", "data-target": "#view-details-01", "aria-expanded": "false",
+      "aria-controls": "#view-details-01" }
+        Show more
       %h5.text-uppercase.parameters-title.mb-0= "Technical parameters"
       = render "services/parameters", parameters: offer.attributes

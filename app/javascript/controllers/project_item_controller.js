@@ -5,7 +5,8 @@ export default class extends Controller {
                     "project", "privateCompany", "input",
                     "userGroupName", "projectName",
                     "projectWebsiteUrl", "companyName",
-                    "companyWebsiteUrl", "hasVoucher"];
+                    "companyWebsiteUrl", "hasVoucher",
+                    "iDontHaveVoucher", "iHaveVoucher"];
 
   connect() {
    }
@@ -56,10 +57,15 @@ export default class extends Controller {
   }
 
   voucherChanged(event) {
-    if(event.currentTarget.value === "false")
+    if(event.currentTarget.value === "false") {
       this.hasVoucherTarget.classList.remove('hidden-fields');
-    else
+      this.iHaveVoucherTarget.classList.add("active");
+      this.iDontHaveVoucherTarget.classList.remove("active");
+    } else {
       this.hasVoucherTarget.classList.add('hidden-fields');
+      this.iHaveVoucherTarget.classList.remove("active");
+      this.iDontHaveVoucherTarget.classList.add("active");
+    }
   }
 
   _hideCustomerTypologieFields() {
