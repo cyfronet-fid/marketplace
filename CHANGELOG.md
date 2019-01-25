@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Basic CRUD for backoffice Categories (@mkasztelnik)
 - New custom fields for voucher in jira (@martaswiatkowska)
 - Basic CRUD for backoffice Providers (@mkasztelnik)
+- Basic CRUD for backoffice Platforms (@mkasztelnik)
 
 ### Changed
 
