@@ -40,6 +40,22 @@ class ProjectItemMailer < ApplicationMailer
          template_name: "new_message")
   end
 
+  def aod_voucher_accepted(project_item)
+    @user = project_item.user
+
+    mail(to: @user.email,
+       subject: "EGI Applications on Demand service with voucher approved",
+       template_name: "aod_voucher_accepted")
+  end
+
+  def aod_accepted(project_item)
+    @user = project_item.user
+
+    mail(to: @user.email,
+         subject: "EGI Applications on Demand service approved",
+         template_name: "aod_accepted")
+  end
+
   private
 
     def status_changed(project_item)

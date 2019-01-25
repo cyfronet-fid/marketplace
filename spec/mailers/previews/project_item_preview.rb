@@ -15,4 +15,12 @@ class ProjectItemPreview < ActionMailer::Preview
   def new_message
     ProjectItemMailer.new_message(ProjectItem.last)
   end
+
+  def aod_voucher_accepted
+    ProjectItemMailer.aod_voucher_accepted(ProjectItem.last)
+  end
+
+  def aod_accepted
+    ProjectItemMailer.aod_accepted(ProjectItem.last)
+  end
 end
