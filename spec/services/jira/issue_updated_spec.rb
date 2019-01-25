@@ -35,6 +35,30 @@ RSpec.describe Jira::IssueUpdated do
     expect(last_change.message).to eq("Welcome!!!")
   end
 
+  context "EGI Applications on Demand" do
+    it "notify if accepted" do
+      platform_aod = create(:platform, name: "EGI Applications on Demand")
+      service = create(:service, platforms: [platform_aod])
+      offer = create(:offer, service: service)
+      project_item = create(:project_item, offer: offer)
+
+      expect {
+        described_class.new(project_item, changelog(to: jira_client.wf_done_id)).call
+      }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+
+    it "notify if voucher accepted" do
+      platform_aod = create(:platform, name: "EGI Applications on Demand")
+      service = create(:service, platforms: [platform_aod])
+      offer = create(:offer, service: service, voucherable: true)
+      project_item = create(:project_item, offer: offer, voucher_id: "123456")
+
+      expect {
+        described_class.new(project_item, changelog(to: jira_client.wf_done_id)).call
+      }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+  end
+
   def changelog(to:)
     { "items" => [
       { "field" => "status", "to" => to }

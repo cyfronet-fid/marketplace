@@ -1,0 +1,43 @@
+%p Dear User,
+%p
+  This email is to inform you that your request to access the EGI
+  Applications on Demand (AoD) service has been approved. You can now proceed to:
+%ul
+  %li Create your self-managed VMs through our dashboard [1];
+  %li
+    Run application(s) [2] through any of the connected application hosting
+    framework (e.g. Science Gateways and VREs);
+  %li Create your Jupyter Notebook through the web portal [3].
+%p == IMPORTANT NOTICE ==
+%p
+  The Applicant is tasked to acknowledge EGI in the scientific publications/presentations
+  benefiting from the Service. The following acknowledgement text can be used for this
+  purpose: "This work used the EGI Applications on Demand service, which is co-funded by
+  the EOSC-hub project (grant number 777536)".
+%p == HELPDESK ===
+%p
+  If you need of any assistance, please describe your problems
+  writing at
+  = mail_to "applications-platform-info@mailman.egi.eu",
+    "applications-platform-info@mailman.egi.eu"
+  \. Your request will be processed by the EGI User Support operator
+  of the Service.
+%p Should you have any questions, please contact us at [4].
+%p
+  %div Your Sincerely,
+  %div EGI User Community Support Team
+%div
+  [1] The EGI VMOps dashboard -
+  = link_to "https://dashboard.appdb.egi.eu/",
+    "https://dashboard.appdb.egi.eu/"
+%div
+  [2]
+  = link_to "https://marketplace.egi.eu/42-scientific-applications",
+    "https://marketplace.egi.eu/42-scientific-applications"
+%div
+  [3]
+  = link_to "https://notebooks.egi.eu/hub/login",
+    "https://notebooks.egi.eu/hub/login"
+%div
+  [4]
+  = mail_to "support@egi.eu", "support@egi.eu"

@@ -31,7 +31,15 @@ class Jira::IssueUpdated
 
         if status
           @project_item.new_change(status: status, message: message)
-          ProjectItemMailer.changed(@project_item).deliver_later
+          if status == :ready
+            if aod_voucherable?
+              ProjectItemMailer.aod_voucher_accepted(@project_item).deliver_later
+            else
+              ProjectItemMailer.aod_accepted(@project_item).deliver_later
+            end
+          else
+            ProjectItemMailer.changed(@project_item).deliver_later
+          end
         end
       end
     end
@@ -42,5 +50,9 @@ class Jira::IssueUpdated
     def service
       @service ||= Service.joins(offers: :project_items).
                    find_by(offers: { project_items: @project_item })
+    end
+
+    def aod_voucherable?
+      service.aod? ? @project_item.vaucherable? : false
     end
 end

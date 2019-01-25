@@ -1,0 +1,58 @@
+%p Dear User,
+
+%p
+  This email is to inform you that your request to access
+  the HNSciCloud pilot services via the EC3 portal [1] has
+  been approved.
+%p
+  To redeem an Exoscale voucher, please follow these steps:
+%ul
+  %li Open the provided voucher link within a web browser.
+  %li A typical link looks like: https://portal.exoscale.com/register?coupon=XXXX
+  %li The voucherID will be provided in a separate email.
+  %li Enter the email address and password you wish to use. Accept the terms and sign up.
+  %li A validation email has been sent. Check out your mailbox and click on the verification link.
+  %li Choose “for team projects” and fill your details. Choose your Exoscale organisation name and submit.
+%p To configure the tenant settings:
+%ul
+  %li
+    Access the Exoscale dashboard at:
+    = link_to "https://portal.exoscale.com/", "https://portal.exoscale.com/"
+    and check the tenant settings (click in the User profile on the left)
+  %li Remember the API key and Secret key settings for the EC3 portal.
+%p How to monitor your voucher credit:
+%ul
+  %li
+    Access the Exoscale dashboard at:
+    = link_to "https://portal.exoscale.com/", "https://portal.exoscale.com/"
+    (billing section)
+%p == IMPORTANT NOTICE ==
+%p
+  The Applicant is tasked to acknowledge EGI in the scientific
+  publications/presentations benefiting from the Service. The
+  following acknowledgement text can be used for this purpose:
+  "This work used the EGI Applications on Demand service, which
+  is co-funded by the EOSC-hub project (grant number 777536). The
+  HNSciCloud project (grant number 687614) is also sponsoring the
+  service, allowing users to access the HNSciCloud services pilot
+  for limited scale usage using the voucher schemes provided by
+  "Exoscale".
+%p == HELPDESK ==
+%p
+  If you need of any assistance, please describe your problems
+  writing at
+  = mail_to "applications-platform-info@mailman.egi.eu",
+    "applications-platform-info@mailman.egi.eu"
+  \. Your request
+  will be processed by the EGI User Support operator of the Service.
+%p Should you have any questions, please contact us at [2].
+
+%p
+  %div Your Sincerely,
+  %div EGI User Community Support Team
+%div
+  [1] The Elastic Cloud Computing Cluster (EC3) -
+  = link_to "https://servproject.i3m.upv.es/ec3-ltos/index.php", "https://servproject.i3m.upv.es/ec3-ltos/index.php"
+%div
+  [2]
+  = mail_to "support@egi.eu", "support@egi.eu"
