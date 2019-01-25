@@ -1,0 +1,15 @@
+- breadcrumb :backoffice_provider, @provider
+
+%h1= @provider.name
+
+.btn-group
+  - if policy([:backoffice, @provider]).edit?
+    = link_to "Edit",
+              edit_backoffice_provider_path(@provider),
+              class: "btn btn-warning"
+  - if policy([:backoffice, @provider]).destroy?
+    = link_to "Delete",
+              backoffice_provider_path(@provider),
+              method: :delete,
+              data: { confirm: "Are you sure you want to remove this provider" },
+              class: "btn btn-danger"

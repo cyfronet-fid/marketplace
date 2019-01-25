@@ -50,6 +50,7 @@ Rails.application.routes.draw do
     end
     resources :research_areas
     resources :categories
+    resources :providers
   end
 
   namespace :api do

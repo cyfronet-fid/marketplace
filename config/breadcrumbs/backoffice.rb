@@ -63,3 +63,23 @@ crumb :backoffice_category_edit do |category|
   link "Edit", edit_backoffice_category_path(category)
   parent :backoffice_category, category
 end
+
+crumb :backoffice_providers do
+  link "Providers", backoffice_providers_path
+  parent :backoffice_root
+end
+
+crumb :backoffice_provider do |provider|
+  link provider.name, backoffice_provider_path(provider)
+  parent :backoffice_providers
+end
+
+crumb :backoffice_provider_new do |provider|
+  link "New", new_backoffice_provider_path(provider)
+  parent :backoffice_providers
+end
+
+crumb :backoffice_provider_edit do |provider|
+  link "Edit", edit_backoffice_provider_path(provider)
+  parent :backoffice_provider, provider
+end
