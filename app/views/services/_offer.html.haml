@@ -1,4 +1,4 @@
-.col-md-6.d-flex.align-items-stretch.mb-4
+.col-md-6.d-flex.align-items-stretch.mb-4{ "data-controller" => "service-offer" }
   .card.offers
     .card-body.pt-4.collapse-group
       - if offer.voucherable
@@ -6,10 +6,14 @@
           %i.fas.fa-ticket-alt
           %span Voucher
       %h4.card-title= offer.name
-      %p.card-text.mb-2= offer.description
-      %p#view-details-01.card-text.xxx.collapse= offer.description
-      %a.nav-link.p-0.mb-3{ "data-toggle": "collapse", "data-target": "#view-details-01", "aria-expanded": "false",
-      "aria-controls": "#view-details-01" }
-        Show more
+      %p.card-text.mb-2
+        - if offer.description.size > 200
+          = offer.description.truncate(200, separator: " ")
+          = link_to "Show more", "#", class: "show-more-#{offer.id}",
+                                  data: { "target" => "service-offer.showMore",
+                                          "action" => "click->service-offer#showMore",
+                                          "text": "#{offer.description}" }
+        - else
+          = offer.description
       %h5.text-uppercase.parameters-title.mb-0= "Technical parameters"
       = render "services/parameters", parameters: offer.attributes
