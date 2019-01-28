@@ -1,13 +1,15 @@
 - active = "font-weight-bolder" unless local_assigns[:current]
 #all-services-link{ class: "mb-3 d-flex justify-content-between align-items-center #{active}" }
-  = link_to "All Services", services_path
+  = link_to "All Services", content_for(:all_services) || services_path
   %span= Service.published.count
 
 %h5.text-uppercase.underline-light.mb-2.pb-2 Categories
 %ul
+  - view = content_for(:category_view) || "services/nav/category"
   - categories.each do |category|
-    = render "categories/nav/category", category: category, current: current
+    = render view, category: category, current: current
     - if current == category && !subcategories.empty?
       %ul.ml-3
-        = render partial: "categories/nav/category",
-          collection: subcategories, as: :category
+        = render partial: view, collection: subcategories, as: :category
+
+= yield :test
