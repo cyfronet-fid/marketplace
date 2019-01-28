@@ -16,7 +16,6 @@ class Api::Webhooks::JirasController < ActionController::API
   def create
     project_item = ProjectItem.where.not(issue_id: nil).
             find_by(issue_id: params["issue_id"])
-
     if project_item
       case params["webhookEvent"]
       when "jira:issue_updated"

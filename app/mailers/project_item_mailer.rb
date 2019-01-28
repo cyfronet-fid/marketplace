@@ -35,7 +35,7 @@ class ProjectItemMailer < ApplicationMailer
   end
 
   def new_message(project_item)
-    mail(to: @user,
+    mail(to: @user.email,
          subject: "Question about your service access request in EOSC Portal Marketplace",
          template_name: "new_message")
   end
@@ -59,7 +59,7 @@ class ProjectItemMailer < ApplicationMailer
   private
 
     def status_changed(project_item)
-      mail(to: @user,
+      mail(to: @user.email,
             subject: "Status of your service access request in EOSC Portal Marketplace has changed",
             template_name: "changed")
     end
