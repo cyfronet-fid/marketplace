@@ -1,0 +1,9 @@
+.search-box
+  = form_tag url_for, method: :get, role: "search" do
+
+    .input-group
+      %label.sr-only{ for: "search" } Search
+      = text_field_tag :q, params[:q], class: "form-control w-50", placeholder: "Find service..."
+      .input-group-append
+        %button#query-submit.input-group-text.bg-white
+          %i.fas.fa-search

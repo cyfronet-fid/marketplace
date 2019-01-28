@@ -29,7 +29,7 @@ RSpec.feature "Service searching in top bar", js: true do
 
     url = URI.parse(page.current_path)
 
-    expect(url.path).to eq(category_path(category))
+    expect(url.path).to eq(category_services_path(category_id: category))
 
     expect(page).to have_select("category-select", selected: category.name)
   end

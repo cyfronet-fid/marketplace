@@ -6,7 +6,6 @@
     = render "layouts/flash"
     %header.pb-2
       = render "layouts/navbar",
-        search_submit_path: @search_submit_path,
         categories: @siblings || @root_categories
     %main
       = render "layouts/breadcrumb"
