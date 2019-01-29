@@ -3,6 +3,10 @@
 require "rails_helper"
 
 RSpec.describe ProjectItemMailer, type: :mailer do
+  let(:user) { create(:user) }
+  let(:project) { create(:project, user: user) }
+
+
   context "project_item created" do
     let(:project_item) { build(:project_item, id: 1) }
     let(:mail) { described_class.created(project_item).deliver_now }
@@ -23,7 +27,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
 
   context "project_item change" do
     it "notifies about project_item status change" do
-      project_item = create(:project_item)
+      project_item = create(:project_item, project: project)
       project_item.new_change(status: :created, message: "ProjectItem created")
       project_item.new_change(status: :registered, message: "ProjectItem registered")
 
@@ -33,10 +37,11 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       expect(mail.subject).to match(/has changed/)
       expect(encoded_body).to match(/from "created" to "registered"/)
       expect(encoded_body).to match(/#{project_item_url(project_item)}/)
+      expect(mail.to).to contain_exactly(user.email)
     end
 
     it "notifies about new project_item message" do
-      project_item = create(:project_item)
+      project_item = create(:project_item, project: project)
       project_item.new_change(status: :created, message: "ProjectItem created")
       project_item.new_change(status: :created, message: "New message")
 
@@ -46,12 +51,13 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       expect(mail.subject).to match(/Question about/)
       expect(encoded_body).to match(/A new message was added/)
       expect(encoded_body).to match(/#{project_item_url(project_item)}/)
+      expect(mail.to).to contain_exactly(user.email)
     end
   end
 
   context "Rating service" do
     it "notifies about service rating possibility" do
-      project_item = create(:project_item)
+      project_item = create(:project_item, project: project)
 
       mail = described_class.rate_service(project_item).deliver_now
       encoded_body = mail.body.encoded
@@ -64,7 +70,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
 
   context "aod request" do
     it "notify if accepted" do
-      project_item = create(:project_item)
+      project_item = create(:project_item, project: project)
 
       mail = described_class.aod_accepted(project_item).deliver_now
       encoded_body = mail.body.encoded
@@ -75,7 +81,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
     end
 
     it "notify if voucher accepted" do
-      project_item = create(:project_item)
+      project_item = create(:project_item, project: project)
 
       mail = described_class.aod_voucher_accepted(project_item).deliver_now
       encoded_body = mail.body.encoded
