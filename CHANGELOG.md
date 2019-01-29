@@ -9,6 +9,20 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.2.0] - 2019-01-29
+
+### Added
 - User needs to select "Research area" while ordering service (@mkasztelnik)
 - Add voucher support in service ordering (@michal-szostak)
 - Basic CRUD for backoffice Research areas (@mkasztelnik)
