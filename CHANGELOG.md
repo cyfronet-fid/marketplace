@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Basic CRUD for backoffice Platforms (@mkasztelnik)
 - Voucher styling (@jarekzet)
 - Vouchers emails (@martaswiatkowska)
+- External Sources information for services (@michal-szostak)
 
 ### Changed
 

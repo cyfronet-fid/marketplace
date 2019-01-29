@@ -16,6 +16,8 @@ RSpec.describe Service do
   it { should have_many(:categories) }
   it { should have_many(:service_research_areas).dependent(:destroy) }
 
+  it { should belong_to(:upstream) }
+
   it "sets first category as default" do
     c1, c2 = create_list(:category, 2)
     service = create(:service, categories: [c1, c2])

@@ -56,6 +56,16 @@
   - @service.categories.each do |category|
     %p= category.name
 
+  %h2 Upstream External Source
+  %p= @service.upstream || "MP"
+
+  %h2 External Sources
+  - @service.sources.each do |source|
+    %p
+      - if @service.upstream_id == source.id
+        %i.fas.fa-check
+      = source
+
   %h2 Offers
   = render "backoffice/services/offers/offers", service: @service
 
