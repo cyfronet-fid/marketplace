@@ -57,6 +57,13 @@ class Service < ApplicationRecord
   has_many :related_services,
            through: :target_relationships,
            source: :target
+  has_many :sources, source: :service_sources, class_name: "ServiceSource", dependent: :destroy
+
+  accepts_nested_attributes_for :sources,
+                                reject_if: lambda { |attributes| attributes["eid"].blank? || attributes["source_type"].blank? },
+                                allow_destroy: true
+
+  belongs_to :upstream, foreign_key: "upstream_id", class_name: "ServiceSource", optional: true
 
   validates :title, presence: true
   validates :description, presence: true

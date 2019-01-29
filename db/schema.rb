@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_22_205054) do
+ActiveRecord::Schema.define(version: 2019_01_28_142124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,9 +131,9 @@ ActiveRecord::Schema.define(version: 2019_01_22_205054) do
     t.string "project_website_url"
     t.string "company_name"
     t.string "company_website_url"
-    t.bigint "research_area_id"
     t.boolean "request_voucher", default: false, null: false
     t.string "voucher_id", default: "", null: false
+    t.bigint "research_area_id"
     t.index ["affiliation_id"], name: "index_project_items_on_affiliation_id"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
@@ -224,6 +224,16 @@ ActiveRecord::Schema.define(version: 2019_01_22_205054) do
     t.index ["service_id"], name: "index_service_research_areas_on_service_id"
   end
 
+  create_table "service_sources", force: :cascade do |t|
+    t.integer "eid", null: false
+    t.string "source_type", null: false
+    t.bigint "service_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["eid", "source_type", "service_id"], name: "index_service_sources_on_eid_and_source_type_and_service_id", unique: true
+    t.index ["service_id"], name: "index_service_sources_on_service_id"
+  end
+
   create_table "service_target_groups", force: :cascade do |t|
     t.bigint "service_id"
     t.bigint "target_group_id"
@@ -272,6 +282,7 @@ ActiveRecord::Schema.define(version: 2019_01_22_205054) do
     t.string "slug"
     t.string "service_type"
     t.string "status"
+    t.integer "upstream_id"
     t.index ["description"], name: "index_services_on_description"
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["title"], name: "index_services_on_title"
@@ -346,4 +357,5 @@ ActiveRecord::Schema.define(version: 2019_01_22_205054) do
   add_foreign_key "service_user_relationships", "services"
   add_foreign_key "service_user_relationships", "users"
   add_foreign_key "services", "providers"
+  add_foreign_key "services", "service_sources", column: "upstream_id", on_delete: :nullify
 end
