@@ -29,5 +29,7 @@ FactoryBot.define do
     sequence(:providers) { |n| [create(:provider)] }
     sequence(:categories) { |n| [create(:category)] }
     sequence(:status) { :published }
+
+    upstream nil
   end
 end
