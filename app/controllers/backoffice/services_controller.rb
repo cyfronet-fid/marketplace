@@ -13,6 +13,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def new
     @service = Service.new
+    @service.sources.build source_type: "eic"
     authorize(@service)
   end
 
@@ -31,6 +32,9 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   def edit
+    if @service.sources.empty?
+      @service.sources.build source_type: "eic"
+    end
   end
 
   def update
