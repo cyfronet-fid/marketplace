@@ -66,7 +66,7 @@ RSpec.feature "Services in backoffice" do
       select category.name, from: "Categories"
       select user, from: "Owners"
 
-      fill_in "service_sources_attributes_0_eid", with: "12345"
+      fill_in "service_sources_attributes_0_eid", with: "12345a"
 
       expect { click_on "Create Service" }.
         to change { user.owned_services.count }.by(1)
@@ -85,7 +85,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content(target_group.name)
       expect(page).to have_content(category.name)
       expect(page).to have_content("Publish")
-      expect(page).to have_content("eic: 12345")
+      expect(page).to have_content("eic: 12345a")
     end
 
     scenario "I can edit any service" do
@@ -157,15 +157,15 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I can change external id of the service" do
       service = create(:service, title: "my service")
-      external_source = create(:service_source, eid: 777, source_type: "eic", service: service)
+      external_source = create(:service_source, eid: "777", source_type: "eic", service: service)
 
       visit backoffice_service_path(service)
       click_on "Edit"
 
       expect(page).to have_content("777")
-      fill_in "service_sources_attributes_0_eid", with: "12345"
+      fill_in "service_sources_attributes_0_eid", with: "12345a"
       click_on "Update Service"
-      expect(page).to have_content("eic: 12345")
+      expect(page).to have_content("eic: 12345a")
     end
 
     scenario "I can change upstream" do
