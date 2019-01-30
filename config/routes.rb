@@ -78,6 +78,7 @@ Rails.application.routes.draw do
   get "errors/not_found"
   get "errors/unprocessable"
   get "errors/internal_server_error"
+  match "about", to: "pages#about", via: "get", as: :about
 
   if Rails.env.production?
     match "/404", to: "errors#not_found", via: :all

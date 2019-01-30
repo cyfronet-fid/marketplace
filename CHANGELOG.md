@@ -33,6 +33,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Voucher styling (@jarekzet)
 - Vouchers emails (@martaswiatkowska)
 - External Sources information for services (@michal-szostak)
+- "about Marketplace" static page (@goreck888)
 
 ### Changed
 - External Sources EID type has been changed to string (@michal-szostak)
