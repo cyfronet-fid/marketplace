@@ -35,6 +35,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - External Sources information for services (@michal-szostak)
 
 ### Changed
+- External Sources EID type has been changed to string (@michal-szostak)
 
 ### Deprecated
 
