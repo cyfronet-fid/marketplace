@@ -34,12 +34,6 @@ class ProjectItemMailer < ApplicationMailer
          subject: "EOSC Portal - Rate your service", template_name: "rating_service")
   end
 
-  def new_message(project_item)
-    mail(to: @user.email,
-         subject: "Question about your service access request in EOSC Portal Marketplace",
-         template_name: "new_message")
-  end
-
   def aod_voucher_accepted(project_item)
     @user = project_item.user
 
@@ -57,8 +51,17 @@ class ProjectItemMailer < ApplicationMailer
   end
 
   private
+    def new_message(project_item)
+      @user = project_item.user
+
+      mail(to: @user.email,
+           subject: "Question about your service access request in EOSC Portal Marketplace",
+           template_name: "new_message")
+    end
 
     def status_changed(project_item)
+      @user = project_item.user
+
       mail(to: @user.email,
             subject: "Status of your service access request in EOSC Portal Marketplace has changed",
             template_name: "changed")

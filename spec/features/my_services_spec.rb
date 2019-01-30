@@ -43,6 +43,17 @@ RSpec.feature "My Services" do
       expect(page).to have_text(project_item.service.title)
     end
 
+    # Test added after hotfix for a bug in `project_items/show.html.haml:30` (v1.2.0)
+    scenario "I can see project_item details without research_area" do
+      offer = create(:offer, service: create(:open_access_service))
+      project = create(:project, user: user)
+      project_item = create(:project_item, project: project, offer: offer, research_area: nil)
+
+      visit project_item_path(project_item)
+
+      expect(page).to have_text(project_item.service.title)
+    end
+
     scenario "I cannot se other users project_items" do
       other_user_project_item = create(:project_item, offer: offer)
 
