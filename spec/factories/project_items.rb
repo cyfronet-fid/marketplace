@@ -11,7 +11,6 @@ FactoryBot.define do
     project_website_url { "https://project_website.url" }
     company_name { |n| "company name #{n}" }
     company_website_url { "https://company_website.url" }
-    research_area
 
     voucher_id ""
     request_voucher false
@@ -20,5 +19,7 @@ FactoryBot.define do
     offer
     project
     affiliation
+
+    research_area { service.open_access? ? nil : create(:research_area) }
   end
 end

@@ -45,6 +45,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Show `*` near order research area field, show errors when research area is not
   selected (@mkasztelnik)
 - Remove shell command invocation in one of the test (@mkasztelnik)
+- ProjectItem details view crash for open access services (@michal-szostak)
 
 ### Security
 

@@ -27,7 +27,7 @@
           = l @project_item.created_at
         %li
           %strong Research area:
-          = @project_item.research_area.name
+          = @project_item.research_area&.name
         %li
           %strong Providers:
           :ruby
