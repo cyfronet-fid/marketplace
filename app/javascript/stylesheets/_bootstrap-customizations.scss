@@ -1196,3 +1196,15 @@ label[data-multicheckbox].small {
 .btn-group.btn-group-toggle > label:not(.active) > .fa-check {
   display: none;
 }
+
+//TODO: This class should be deleted and used as a bootstrap class in pages/about.html.haml
+.simple-list {
+  padding: 0 0 0 30px;
+  margin: 0 0 25px;
+
+  li {
+    list-style: square;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+}
