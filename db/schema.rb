@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_28_142124) do
+ActiveRecord::Schema.define(version: 2019_01_30_130546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -225,7 +225,7 @@ ActiveRecord::Schema.define(version: 2019_01_28_142124) do
   end
 
   create_table "service_sources", force: :cascade do |t|
-    t.integer "eid", null: false
+    t.string "eid", null: false
     t.string "source_type", null: false
     t.bigint "service_id", null: false
     t.datetime "created_at", null: false
