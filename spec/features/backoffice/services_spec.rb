@@ -101,7 +101,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("updated title")
     end
 
-    scenario "I can add new offer" do
+    scenario "I can add new offer", js: true do
       service = create(:service, title: "my service", owners: [user])
 
       visit backoffice_service_path(service)
@@ -110,6 +110,16 @@ RSpec.feature "Services in backoffice" do
       expect {
         fill_in "Name", with: "new offer 1"
         fill_in "Description", with: "test offer"
+        fill_in "offer_parameters_as_string_0",
+                with: "{" \
+                      "\"id\":\"id1\"," \
+                      "\"type\":\"select\"," \
+                      "\"label\":\"Number of CPU Cores\"," \
+                      "\"config\":{\"mode\":\"buttons\"," \
+                      "\"values\":[\"1\", \"2\", \"4\", \"8\"]}," \
+                      "\"value_type\":\"integer\"," \
+                      "\"description\":\"Select number of cores you want\"}"
+
         click_on "Create Offer"
       }.to change { service.offers.count }.by(1)
 
@@ -128,9 +138,33 @@ RSpec.feature "Services in backoffice" do
       find(".card-body p", text: "Description offer")
     end
 
-    scenario "I can edit offer" do
+    scenario "I cannot add invalid offer", js: true do
+      service = create(:service, title: "my service", owners: [user])
+
+      visit backoffice_service_path(service)
+      click_on "Add new offer", match: :first
+
+      expect {
+        fill_in "Name", with: "new offer"
+        fill_in "Description", with: "test offer"
+        fill_in "offer_parameters_as_string_0",
+                with: "random text!"
+        click_on "Create Offer"
+      }.to change { service.offers.count }.by(0)
+    end
+
+    scenario "I can edit offer", js: true do
       service = create(:service, title: "my service", status: :draft)
-      offer = create(:offer, name: "offer1", description: "desc", service: service)
+      offer = create(:offer, name: "offer1", description: "desc", service: service,
+                     parameters: [{
+                                  "id": "id1",
+                                  "type": "select",
+                                  "label": "Number of CPU Cores",
+                                  "config": { "mode": "buttons",
+                                  "values": [1, 2, 4, 8] },
+                                  "value_type": "integer",
+                                  "description": "Select number of cores you want"
+                                  }])
 
       visit backoffice_service_path(service)
       click_on(class: "edit-offer")
@@ -141,6 +175,56 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("new desc")
       expect(offer.reload.description).to eq("new desc")
     end
+
+    scenario "I can delete existed parameters", js: true do
+      service = create(:service, title: "my service", status: :draft)
+      offer = create(:offer, name: "offer1", description: "desc", service: service,
+                     parameters: [{ "id": "id1",
+                                    "type": "select",
+                                    "label": "Number of CPU Cores",
+                                    "config": { "mode": "buttons",
+                                    "values": [1, 2, 4, 8] },
+                                    "value_type": "integer",
+                                    "description": "Select number of cores you want" },
+                                  { "id": "id2",
+                                    "type": "select",
+                                    "label": "Number of CPU Cores",
+                                    "config": { "mode": "buttons",
+                                    "values": [1, 2, 4, 8] },
+                                    "value_type": "integer",
+                                    "description": "Select number of cores you want" }])
+
+      visit backoffice_service_path(service)
+      click_on(class: "edit-offer")
+
+      fill_in "offer_parameters_as_string_0", with: ""
+      fill_in "offer_parameters_as_string_1", with: ""
+      click_on "Update Offer"
+
+      expect(offer.reload.parameters).to eq([])
+    end
+
+    scenario "I cannot create parameters with two identical ids", js: true do
+      service = create(:service, title: "my service", status: :draft)
+      expect {
+        create(:offer, name: "offer1", description: "desc", service: service,
+                     parameters: [{ "id": "id1",
+                                    "type": "select",
+                                    "label": "Number of CPU Cores",
+                                    "config": { "mode": "buttons",
+                                    "values": [1, 2, 4, 8] },
+                                    "value_type": "integer",
+                                    "description": "Select number of cores you want" },
+                                  { "id": "id1",
+                                    "type": "select",
+                                    "label": "Number of CPU Cores",
+                                    "config": { "mode": "buttons",
+                                    "values": [1, 2, 4, 8] },
+                                    "value_type": "integer",
+                                    "description": "Select number of cores you want" }])
+      }.to raise_error(ActiveRecord::RecordInvalid)
+    end
+
 
     scenario "I can delete offer" do
       service = create(:service, title: "my service", status: :draft)

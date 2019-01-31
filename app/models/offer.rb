@@ -14,12 +14,14 @@ class Offer < ApplicationRecord
 
   enum status: STATUSES
 
+  before_save :convert_parameters_to_json, on: [:create, :update]
+
   belongs_to :service
+
+  counter_culture :service, column_name: proc { |model| model.published? ? "offers_count" : nil }
 
   has_many :project_items,
            dependent: :restrict_with_error
-
-  counter_culture :service, column_name: proc { |model| model.published? ? "offers_count" : nil }
 
   validate :set_iid, on: :create
   validates :name, presence: true
@@ -27,6 +29,8 @@ class Offer < ApplicationRecord
   validates :service, presence: true
   validates :iid, presence: true, numericality: true
   validates :status, presence: true
+  validate :parameters_are_valid_attributes, on: [:create, :update]
+  validates :parameters_as_string, attribute_id_unique: true
 
   def to_param
     iid.to_s
@@ -52,7 +56,41 @@ class Offer < ApplicationRecord
     offer_type == "catalog"
   end
 
+  def parameters_as_string?
+    @parameters_as_string.present?
+  end
+
+  def parameters_as_string=(parameters_as_string)
+    @parameters_as_string = parameters_as_string
+  end
+
+  def parameters_as_string
+    if !@parameters_as_string && !parameters.nil?
+      @parameters_as_string = parameters.map(&:to_json)
+    end
+    @parameters_as_string
+  end
+
   private
+    def parameters_are_valid_attributes
+      (parameters_as_string || []).each_with_index.map do |param, i|
+        begin
+          param = JSON.parse(param)
+          attribute = Attribute.from_json(param)
+          attribute.validate_config!
+        rescue JSON::ParserError
+          errors.add("parameters_as_string_#{i}", "Cannot convert parameters to json")
+        rescue JSON::Schema::ValidationError => e
+          errors.add("parameters_as_string_#{i}", e.message)
+        end
+      end
+    end
+
+    def convert_parameters_to_json
+      unless parameters_as_string.nil?
+        self.parameters = parameters_as_string.map { |p| JSON.parse(p) }
+      end
+    end
 
     def set_iid
       self.iid = offers_count + 1 if iid.blank?

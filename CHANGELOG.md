@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - Offer status (@martaswiatkowska)
 - markdown rendering in offer's description (@goreck888)
+- Offers parameters in backoffice - initial (@martaswiatkowska)
 
 ### Changed
 

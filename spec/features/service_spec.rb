@@ -127,7 +127,7 @@ RSpec.feature "Service browsing" do
                                           "value_type": "integer",
                                           "description": "Amount of local disk space" },
                                         { "id": "id4",
-                                          "type": "input",
+                                          "type": "range",
                                           "label": "Number of VM instances",
                                           "config": { "maximum": 50, "minimum": 1 },
                                           "value_type": "integer",
@@ -143,6 +143,7 @@ RSpec.feature "Service browsing" do
                                           "label": "Start of service",
                                           "value_type": "string",
                                           "description": "Please choose start date" }])
+
 
     checkin_sign_in_as(user)
     visit service_path(offer.service)
