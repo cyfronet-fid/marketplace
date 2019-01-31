@@ -18,19 +18,33 @@
             = link_to "Become a provider", "#{Mp::Application.config.portal_base_url}/for-providers", class: "card-link"
 
     .col-12.col-lg-9.right-column.pl-5
-      %p.subtitle.mt-4 In the EOSC Marketplace you can
-      %p.title find the services you need
-      %p.title.text-right for your research
+      %p.subtitle.mt-4  EOSC Marketplace
+      %p.title services for your research
       %ul.feature-list.mt-5
         %li
           %i.fas.fa-arrow-right
-          free of charge services for researchers
+          %p
+            %strong
+              Easy to access:
+            log in with own credentials
         %li
           %i.fas.fa-arrow-right
-          unified order management
+          %p
+            %strong
+              Lots to explore:
+            tools and services for many research domains
         %li
           %i.fas.fa-arrow-right
-          compatible services linking to ready to use environments
+          %p
+            %strong
+              Integrated services:
+            analytical tools empowered by compute and data services
+        %li
+          %i.fas.fa-arrow-right
+          %p
+            %strong
+              Ready to use:
+            virtual environments pre-packed with services and tools
 
       .numbers.mt-5.row
         .col-3.text-center.pt-4
