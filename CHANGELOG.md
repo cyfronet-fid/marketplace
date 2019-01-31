@@ -11,6 +11,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- Offers displaying on backoffice and portal view (@martaswiatkowska)
+- Height of the textarea in the ofers form (@martaswiatkowska)
 
 ### Deprecated
 

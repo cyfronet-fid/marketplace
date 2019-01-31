@@ -11,6 +11,6 @@ export default class extends Controller {
   showMore(event){
     const element = event.target
     event.preventDefault()
-    this.showMoreTarget.parentElement.textContent = element.dataset.text
+    this.showMoreTarget.parentElement.innerHTML = element.dataset.text
   }
 }
