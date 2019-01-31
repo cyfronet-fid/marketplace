@@ -20,6 +20,18 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## [1.2.1] - 2019-01-30
+
+### Added
+- "about Marketplace" static page (@goreck888)
+
+### Changed
+- External Sources EID type has been changed to string (@michal-szostak)
+
+### Fixed
+- ProjectItem details view crash for open access services (@michal-szostak)
+- Order mailing (@michal-szostak)
+
 ## [1.2.0] - 2019-01-29
 
 ### Added
@@ -33,27 +45,14 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Voucher styling (@jarekzet)
 - Vouchers emails (@martaswiatkowska)
 - External Sources information for services (@michal-szostak)
-- "about Marketplace" static page (@goreck888)
-
-### Changed
-- External Sources EID type has been changed to string (@michal-szostak)
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - RWD for offer selection (@jarekzet)
 - Show `*` near order research area field, show errors when research area is not
   selected (@mkasztelnik)
 - Remove shell command invocation in one of the test (@mkasztelnik)
-- ProjectItem details view crash for open access services (@michal-szostak)
-- Order mailing (@michal-szostak)
-
-### Security
 
 ## [1.1.0] - 2019-01-18
-
 
 ### Added
 - Breadcrumbs for Admin and Back office sections (@mkasztelnik)
