@@ -934,9 +934,9 @@ Filters
 }
 
 .subtitle {
-  font-size: 26px;
+  font-size: 28px;
   line-height: 50px;
-  font-weight: 300;
+  font-weight: 100;
   margin-bottom: 10px;
   color: $palette-solid-100;
 }
@@ -950,7 +950,7 @@ Filters
 
 .feature-list {
   li {
-    font-size: 26px;
+    font-size: 21px;
     line-height: 1.05;
     margin: 17px 0;
 
@@ -958,6 +958,12 @@ Filters
       color: $palette-yellow;
       font-size: 17px;
       margin-right: 7px;
+      margin-top: 3px;
+      float: left;
+    }
+
+    p {
+      padding-left: 27px;
     }
   }
 }
@@ -1008,6 +1014,14 @@ Filters
 }
 
 .home-carousel {
+
+  .card-deck {
+    padding-bottom: 1px;
+  }
+
+  .card {
+    border-color: $palette-gray-10;
+  }
 
   .card-img-top {
     height: 120px;
