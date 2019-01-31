@@ -107,12 +107,24 @@ RSpec.feature "Services in backoffice" do
       click_on "Add new offer"
 
       expect {
-        fill_in "Name", with: "new offer"
+        fill_in "Name", with: "new offer 1"
         fill_in "Description", with: "test offer"
         click_on "Create Offer"
       }.to change { service.offers.count }.by(1)
 
-      expect(service.offers.last.name).to eq("new offer")
+      expect(page).to have_content("test offer")
+      expect(service.offers.last.name).to eq("new offer 1")
+    end
+
+    scenario "Offer are converted from markdown to html on service view" do
+      offer = create(:offer,
+                     name: "offer1",
+                     description: "# Test offer\r\n\rDescription offer")
+
+      visit backoffice_service_path(offer.service)
+
+      find(".card-body h1", text: "Test offer")
+      find(".card-body p", text: "Description offer")
     end
 
     scenario "I can edit offer" do

@@ -1,7 +1,7 @@
 .card.col-md-4
   .card-body
     %h4.card-title= offer.name
-    %p.card-text.mb-4= offer.description
+    %p.card-text.mb-4= markdown(offer.description)
   .card-footer
     - if policy([:backoffice, offer]).edit?
       = link_to "Edit",
