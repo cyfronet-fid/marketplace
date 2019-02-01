@@ -6,14 +6,15 @@
           %i.fas.fa-ticket-alt
           %span Voucher
       %h4.card-title= offer.name
-      %p.card-text.mb-2
-        - if offer.description.size > 200
-          = offer.description.truncate(200, separator: " ")
-          = link_to "Show more", "#", class: "show-more-#{offer.id}",
+      %p
+        .card-text.mb-2
+          - if offer.description.size > 200
+            = markdown(offer.description.truncate(200, separator: " "))
+            = link_to "Show more", "#", class: "show-more-#{offer.id}",
                                   data: { "target" => "service-offer.showMore",
                                           "action" => "click->service-offer#showMore",
-                                          "text": "#{offer.description}" }
-        - else
-          = offer.description
+                                          "text": markdown(offer.description) }
+          - else
+            = markdown(offer.description)
       %h5.text-uppercase.parameters-title.mb-0= "Technical parameters"
       = render "services/parameters", parameters: offer.attributes
