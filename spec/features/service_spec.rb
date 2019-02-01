@@ -76,6 +76,7 @@ RSpec.feature "Service browsing" do
 
     expect(page.body).to_not have_content "Suggested compatible services"
   end
+
   context "service has no offers" do
     scenario "service offers section are not displayed" do
       service = create(:service)
@@ -85,6 +86,16 @@ RSpec.feature "Service browsing" do
       expect(page.body).not_to have_content("Service offers")
     end
   end
+
+  scenario "Offer are converted from markdown to html on service view" do
+    offer = create(:offer, description: "# Test offer\r\n\rDescription offer")
+
+    visit service_path(offer.service)
+
+    find(".card-body h1", text: "Test offer")
+    find(".card-body p", text: "Description offer")
+  end
+
 
   scenario "show technical parameters in service view" do
     offer = create(:offer, parameters: [{ "id": "id1",
