@@ -1,8 +1,9 @@
-- breadcrumb :services
+- @category ? breadcrumb(:category, @category) : breadcrumb(:services)
+
 = render "services/index", services: @services,
-                           category: nil,
-                           categories: @root_categories,
-                           subcategories: nil,
+                           category: @category,
+                           categories: @siblings,
+                           subcategories: @subcategories,
                            provider_options: @provider_options,
                            research_areas: @research_areas,
                            target_groups_options: @target_groups_options,
@@ -10,4 +11,11 @@
                            tag_options: @tag_options,
                            active_filters: @active_filters,
                            related_platform_options: @related_platform_options do
-  %h1 Services
+
+  .col-md-8
+    %h1= @category&.name || "Services"
+  .col-md-3.offset-md-1.my-auto
+    = render "services/order"
+
+  - if @category
+    %p.text-muted.mb-4.ml-3= @category.description

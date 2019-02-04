@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       resources :opinions, only: :index
     end
   end
+  get "services/c/:category_id" => "services#index", as: :category_services
 
   resources :categories, only: :show
 
@@ -48,6 +49,7 @@ Rails.application.routes.draw do
         resource :draft, only: :create
       end
     end
+    get "services/c/:category_id" => "services#index", as: :category_services
     resources :research_areas
     resources :categories
     resources :providers

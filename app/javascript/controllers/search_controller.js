@@ -8,7 +8,7 @@ export default class extends Controller {
         this.CATEGORIES_URL = this.data.get("categoriesPath");
 
         this.categorySelectTarget.value = "";
-        let match = window.location.pathname.match(new RegExp(`^${this.CATEGORIES_URL}/([^/]+$)`));
+        let match = window.location.pathname.match(new RegExp(`^.*${this.CATEGORIES_URL}/([^/]+$)`));
         if(match !== null)
             this.categorySelectTarget.value = match[1];
 

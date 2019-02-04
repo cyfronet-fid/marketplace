@@ -1,26 +1,10 @@
-//Static element from Andrzej's draft
-%ul.list-unstyled
-  %li.media.pb-4.mb-4
-    .media-body
-      %h2.font-weight-bold= link_to service.title, [:backoffice, service]
-      .mb-3= service.description
-      %p.small.float-left.mr-4
-        By
-        %a{ href: "" }
-          SHAPE
-      %p.small
-        Available for SME only within 1 day
-      .row
-        .col
-          %i.fas.fa-star
-          %i.fas.fa-star
-          %i.fas.fa-star
-          %i.fas.fa-star
-          %i.fas.fa-star-half-alt
-          %span.small.ml-1.font-weight-bold
-            (2.3/5)
-          %a.small.ml-3{ href: "" }
-            5 opinions
-
-
-
+.media.border-bottom.pb-4.mb-4
+  .media-body
+    %h2.font-weight-bolder
+      = service_status(service)
+      = link_to [:backoffice, service] do
+        = service.title
+    %p.mb-3= service.tagline
+    = render "services/categorization", service: service
+  - if service.logo.attached?
+    = image_tag service.logo.variant(resize: "120x80"), class: "align-self-center mx-2"
