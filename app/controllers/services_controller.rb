@@ -2,11 +2,12 @@
 
 class ServicesController < ApplicationController
   include Service::Searchable
+  include Service::Categorable
   include Service::Sortable
   include Paginable
 
   def index
-    @services = paginate(records.order(ordering))
+    @services = paginate(category_records.order(ordering))
 
     @provider_options = options_providers
     @target_groups_options = options_target_groups

@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Searchable backoffice services index view (@mkasztelnik)
 
 ### Changed
 - Offers displaying on backoffice and portal view (@martaswiatkowska)
