@@ -34,6 +34,11 @@ a {
 
 h1 {
   font-weight: $font-weight-light;
+
+  .service-name {
+    font-size: 22px;
+    font-weight: bold;
+  }
 }
 
 h2 {
@@ -1220,5 +1225,15 @@ label[data-multicheckbox].small {
     list-style: square;
     line-height: 1.5;
     margin-bottom: 12px;
+  }
+}
+
+.vert-middle {
+  display: flex;
+  align-items: center;
+  text-align: right;
+
+  .btn {
+    margin-left: 20px;
   }
 }
