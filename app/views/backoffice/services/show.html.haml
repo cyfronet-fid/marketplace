@@ -1,6 +1,25 @@
 - breadcrumb :backoffice_service, @service
 .container
-  %h1= @service.title
+  .container
+  .row
+    .col-2
+      - if @service.logo.attached?
+        = image_tag @service.logo.variant(resize: "180x180"), class: "border img-fluid"
+    .col-6.vertical-middle
+      %h1.service-name= @service.title
+    .col-4.vertical-middle
+      - if policy([:backoffice, @service]).edit?
+        = link_to "Edit",
+                  edit_backoffice_service_path(@service),
+                  class: "btn btn-primary float-right"
+      - if policy([:backoffice, @service]).destroy?
+        = link_to "Decommission",
+                  backoffice_service_path(@service),
+                  method: :delete, data: { confirm: "Are you sure?" },
+                  class: "btn btn-danger float-right"
+      - if policy([:backoffice, @service]).new?
+        = link_to "Add new offer", new_backoffice_service_offer_path(@service),
+            class: "btn btn-primary float-right"
   %h2 Status
   %p= @service.status
   - if policy([:backoffice, @service]).publish?
