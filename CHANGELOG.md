@@ -14,6 +14,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - Offers displaying on backoffice and portal view (@martaswiatkowska)
 - Height of the textarea in the ofers form (@martaswiatkowska)
+- Phase to select on service edit view (@kmarszalek)
+- Phase to enum in Service model (@kmarszalek)
 
 ### Deprecated
 

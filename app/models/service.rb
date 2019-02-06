@@ -19,6 +19,15 @@ class Service < ApplicationRecord
     catalog: "catalog"
   }
 
+  enum phase: {
+    discovery: "Discovery (min. TRL 1)",
+    planned: "Planned (min. TRL 3)",
+    alpha: "Alpha (min. TRL 5)",
+    beta: "Beta (min. TRL 7)",
+    production: "Production (min. TRL 8)",
+    retired: "Retired (n/a)"
+  }
+
   STATUSES = {
     published: "published",
     draft: "draft"

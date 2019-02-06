@@ -19,7 +19,7 @@
   = f.input :helpdesk_url
   = f.input :tutorial_url
   = f.input :restrictions
-  = f.input :phase
+  = f.input :phase, collection: Service.phases.values.map(&:to_sym)
   = f.input :service_type, collection: Service.service_types.keys.map(&:to_sym)
   = f.input :activate_message
   = f.input :logo
