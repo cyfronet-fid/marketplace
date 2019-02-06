@@ -1,17 +1,12 @@
 - breadcrumb :backoffice_service, @service
 .container
-  .container
   .row
     .col-2
       - if @service.logo.attached?
         = image_tag @service.logo.variant(resize: "180x180"), class: "border img-fluid"
     .col-6.vertical-middle
       %h1.service-name= @service.title
-    .col-4.vertical-middle
-      - if policy([:backoffice, @service]).edit?
-        = link_to "Edit",
-                  edit_backoffice_service_path(@service),
-                  class: "btn btn-primary float-right"
+    .col-4
       - if policy([:backoffice, @service]).destroy?
         = link_to "Decommission",
                   backoffice_service_path(@service),
@@ -19,35 +14,43 @@
                   class: "btn btn-danger float-right"
       - if policy([:backoffice, @service]).new?
         = link_to "Add new offer", new_backoffice_service_offer_path(@service),
-            class: "btn btn-primary float-right"
-  %h2 Status
-  %p= @service.status
-  - if policy([:backoffice, @service]).publish?
-    = link_to "Publish",
-            backoffice_service_publish_path(@service),
-            method: :post,
-            data: { confirm: "Are you sure you want to publish this service?" },
-            class: "btn btn-warning"
-  - if policy([:backoffice, @service]).draft?
-    = link_to "Stop showing in the MP",
-            backoffice_service_draft_path(@service),
-            method: :post,
-            data: { confirm: "Are you sure you want to stop showing this service?" },
-            class: "btn btn-warning"
+            class: "btn btn-primary float-right ml-3"
+      - if policy([:backoffice, @service]).edit?
+        = link_to "Edit",
+                  edit_backoffice_service_path(@service),
+                  class: "btn btn-primary float-right"
+  .container.grey-row.mt-5
+    .row
+      .col-6
+        %span Status
+        %span.text-strong= @service.status
+      .col-6
+        - if policy([:backoffice, @service]).publish?
+          = link_to "Publish",
+                  backoffice_service_publish_path(@service),
+                  method: :post,
+                  data: { confirm: "Are you sure you want to publish this service?" },
+                  class: "btn btn-warning float-right"
+        - if policy([:backoffice, @service]).draft?
+          = link_to "Stop showing in the MP",
+                  backoffice_service_draft_path(@service),
+                  method: :post,
+                  data: { confirm: "Are you sure you want to stop showing this service?" },
+                  class: "btn btn-warning float-right"
   .row
-    .col-3
-      - if @service.logo.attached?
-        = image_tag @service.logo.variant(resize: "200x200")
     .col-9
       %p
         %b= @service.tagline
       %p= @service.description
 
-  %h2 Terms of use
-  = markdown(@service.terms_of_use)
+      %h2 Offers
+      = render "backoffice/services/offers/offers", service: @service
+    .col-3
+      %h2 Terms of use
+      = markdown(@service.terms_of_use)
 
-  %h2 Service website
-  %p= @service.connected_url
+      %h2 Service website
+      %p= @service.connected_url
 
   %h2 Phase
   %p= t "simple_form.options.service.phase.#{@service.phase}"
@@ -55,48 +58,35 @@
   %h2 Service type
   %p= @service.service_type
 
-  %h2 Activate message
-  %p= @service.activate_message
+      %h2 Activate message
+      %p= @service.activate_message
 
-  %h2 Contact emails
-  - @service.contact_emails.each do |email|
-    %p= email
+      %h2 Contact emails
+      - @service.contact_emails.each do |email|
+        %p= email
 
-  %h2 Areas
-  - @service.research_areas.each do |area|
-    %p= area.name
+      %h2 Areas
+      - @service.research_areas.each do |area|
+        %p= area.name
 
-  %h2 Dedicated For
-  - @service.target_groups.each do |group|
-    %p= group.name
+      %h2 Dedicated For
+      - @service.target_groups.each do |group|
+        %p= group.name
 
-  %h2 Providers
-  - @service.providers.each do |provider|
-    %p= provider.name
+      %h2 Providers
+      - @service.providers.each do |provider|
+        %p= provider.name
 
-  %h2 Category
-  - @service.categories.each do |category|
-    %p= category.name
+      %h2 Category
+      - @service.categories.each do |category|
+        %p= category.name
 
-  %h2 Upstream External Source
-  %p= @service.upstream || "MP"
+      %h2 Upstream External Source
+      %p= @service.upstream || "MP"
 
-  %h2 External Sources
-  - @service.sources.each do |source|
-    %p
-      - if @service.upstream_id == source.id
-        %i.fas.fa-check
-      = source
-
-  %h2 Offers
-  = render "backoffice/services/offers/offers", service: @service
-
-  - if policy([:backoffice, @service]).edit?
-    = link_to "Edit",
-              edit_backoffice_service_path(@service),
-              class: "btn btn-warning"
-  - if policy([:backoffice, @service]).destroy?
-    = link_to "Decommission",
-              backoffice_service_path(@service),
-              method: :delete, data: { confirm: "Are you sure?" },
-              class: "btn btn-danger"
+      %h2 External Sources
+      - @service.sources.each do |source|
+        %p
+          - if @service.upstream_id == source.id
+            %i.fas.fa-check
+          = source
