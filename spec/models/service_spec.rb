@@ -105,4 +105,16 @@ RSpec.describe Service do
       expect(category.services_count).to eq(0)
     end
   end
+
+  it "it removes leading and trailing spaces from urls before validation" do
+    service = create(:service)
+    service.terms_of_use_url = "https://sample.url "
+    service.access_policies_url = " https://sample.url"
+
+    expect(service.valid?).to be_truthy
+    expect(service.terms_of_use_url).to eq("https://sample.url")
+    expect(service.access_policies_url).to eq("https://sample.url")
+
+  end
+
 end
