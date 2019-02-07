@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Searchable backoffice services index view (@mkasztelnik)
+- Hint to url inputs in service edit view (@kmarszalek)
 
 ### Changed
 - Offers displaying on backoffice and portal view (@martaswiatkowska)
