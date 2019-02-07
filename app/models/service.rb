@@ -94,6 +94,7 @@ class Service < ApplicationRecord
   validates :status, presence: true
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
+  before_validation :strip_whitespace
 
   def main_category
     @main_category ||= categories.joins(:service_categories).
@@ -121,5 +122,16 @@ class Service < ApplicationRecord
 
     def main_category_missing?
       service_categories.where(main: true).count.zero?
+    end
+
+    def strip_whitespace
+      self.terms_of_use_url&.strip!
+      self.access_policies_url&.strip!
+      self.corporate_sla_url&.strip!
+      self.webpage_url&.strip!
+      self.manual_url&.strip!
+      self.helpdesk_url&.strip!
+      self.tutorial_url&.strip!
+      self.connected_url&.strip!
     end
 end
