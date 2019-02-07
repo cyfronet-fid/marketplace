@@ -2,7 +2,10 @@
 
 # README
 
-Market place is...
+Marketplace is a place where you can find services you need for your research:
+  * free of charge services for researchers
+  * unified order management
+  * compatible services linking to ready to use environments
 
 ## Development environment
 
