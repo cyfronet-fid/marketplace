@@ -1,12 +1,12 @@
 - breadcrumb :backoffice_service, @service
 .container
   .row
-    .col-2
+    .col-5.col-md-2
       - if @service.logo.attached?
         = image_tag @service.logo.variant(resize: "180x180"), class: "border img-fluid"
-    .col-6.vertical-middle
+    .col-7.col-md-6.vertical-middle
       %h1.service-name= @service.title
-    .col-4
+    .col-12.col-md-4.mt-4
       - if policy([:backoffice, @service]).destroy?
         = link_to "Decommission",
                   backoffice_service_path(@service),
@@ -19,12 +19,12 @@
         = link_to "Edit",
                   edit_backoffice_service_path(@service),
                   class: "btn btn-primary float-right"
-  .container.grey-row.mt-5
+  .container.grey-row.mt-4
     .row
-      .col-6
+      .col-12.col-sm-6
         %span Status:
         %span.font-weight-bold= @service.status
-      .col-6
+      .col-12.col-sm-6
         - if policy([:backoffice, @service]).publish?
           = link_to "Publish",
                   backoffice_service_publish_path(@service),
@@ -38,7 +38,7 @@
                   data: { confirm: "Are you sure you want to stop showing this service?" },
                   class: "btn btn-warning float-right btn-sm"
   .row.mt-4
-    .col-8
+    .col-12.col-sm-8
       %p
         %b= @service.tagline
       %p= @service.description
@@ -50,8 +50,8 @@
             = link_to "Add new offer", new_backoffice_service_offer_path(@service),
               class: "btn btn-primary btn-sm float-right"
       = render "backoffice/services/offers/offers", service: @service
-    .col-1.separator.d-sm-none.d-md-block
-    .col-3.info-col
+    .col-1.separator.d-none.d-xl-block
+    .col-12.col-sm-3.info-col
       %h5 Category
       - @service.categories.each do |category|
         %p= category.name
