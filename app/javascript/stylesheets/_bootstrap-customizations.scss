@@ -1239,4 +1239,32 @@ label[data-multicheckbox].small {
 
 .grey-row {
   background: $palette-gray-10;
+  padding: 10px 15px;
+
+  span {
+    font-size: 16px;
+    line-height: 28px;
+  }
+}
+
+.info-col {
+  h5 {
+    text-transform: uppercase;
+    line-height: 2;
+    margin: 10px 0 0;
+  }
+
+  hr {
+    margin: 35px 0;
+    border: 2px solid $palette-gray-10;
+  }
+}
+
+.col-1.separator {
+  border-right: 3px solid $palette-gray-10;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 4.33333%;
+  flex: 0 0 4.33333%;
+  max-width: 4.333%;
+  margin-right: 4%;
 }
