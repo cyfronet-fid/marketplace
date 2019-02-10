@@ -1268,3 +1268,49 @@ label[data-multicheckbox].small {
   max-width: 4.333%;
   margin-right: 4%;
 }
+
+.service-description {
+  textarea {
+    height: 400px;
+  }
+}
+
+.service-activate-message {
+  textarea {
+    height: 135px;
+  }
+}
+
+.edit-service {
+  .form-group {
+    input,
+    select {
+      padding: 0.75rem;
+      height: auto !important;
+    }
+
+    textarea {
+      padding: 0.75rem;
+    }
+  }
+}
+
+.service-contact-emails {
+  input {
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 0.2rem;
+    border: 1px solid $palette-gray-30;
+    outline: none !important;
+  }
+
+  input:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.bottom-hr {
+  background-color: $palette-gray-10;
+  border: 0 none;
+  height: 5px;
+}
