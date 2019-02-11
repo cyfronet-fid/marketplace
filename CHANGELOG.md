@@ -8,6 +8,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- voucher_id in aod_voucher_accepted email (@kmarszalek)
 
 ### Changed
 
