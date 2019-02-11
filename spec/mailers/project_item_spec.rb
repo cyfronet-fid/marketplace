@@ -80,7 +80,19 @@ RSpec.describe ProjectItemMailer, type: :mailer do
                                       "Applications on Demand (AoD) service has been approved.")
     end
 
-    it "notify if voucher accepted" do
+    it "notify if voucher accepted with voucher_id" do
+      project_item = create(:project_item, project: project)
+      project_item.voucher_id = "1234"
+
+      mail = described_class.aod_voucher_accepted(project_item).deliver_now
+      encoded_body = mail.body.encoded
+
+      expect(mail.subject).to match(/EGI Applications on Demand service with voucher approved/)
+      expect(encoded_body).to match(/To redeem an Exoscale voucher, please follow these steps:/)
+      expect(encoded_body).to have_content("1234")
+    end
+
+    it "notify if voucher accepted without voucher_id" do
       project_item = create(:project_item, project: project)
 
       mail = described_class.aod_voucher_accepted(project_item).deliver_now
@@ -88,6 +100,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
 
       expect(mail.subject).to match(/EGI Applications on Demand service with voucher approved/)
       expect(encoded_body).to match(/To redeem an Exoscale voucher, please follow these steps:/)
+      expect(encoded_body).to have_content("A typical link looks like: https://portal.exoscale.com/register?coupon=3D=\n=0D\n")
     end
   end
 end
