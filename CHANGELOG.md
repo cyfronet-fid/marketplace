@@ -5,8 +5,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
-
 ## [Unreleased]
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.3.0] - 2019-02-11
 
 ### Added
 - Searchable backoffice services index view (@mkasztelnik)
@@ -17,14 +30,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Height of the textarea in the ofers form (@martaswiatkowska)
 - Phase to select on service edit view (@kmarszalek)
 - Phase to enum in Service model (@kmarszalek)
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 
 ## [1.2.1] - 2019-01-30
 
