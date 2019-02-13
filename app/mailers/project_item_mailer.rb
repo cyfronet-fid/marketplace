@@ -36,6 +36,7 @@ class ProjectItemMailer < ApplicationMailer
 
   def aod_voucher_accepted(project_item)
     @user = project_item.user
+    @voucher_id = project_item.voucher_id
 
     mail(to: @user.email,
        subject: "EGI Applications on Demand service with voucher approved",
