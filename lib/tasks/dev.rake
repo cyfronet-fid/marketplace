@@ -35,7 +35,7 @@ if Rails.env.development?
                        helpdesk_url: Faker::Internet.url,
                        tutorial_url: Faker::Internet.url,
                        restrictions: Faker::Lorem.sentence,
-                       phase: Faker::Lorem.sentence,
+                       phase: :production,
                        research_areas: [areas.sample],
                        platforms: [platforms.sample],
                        status: :published)

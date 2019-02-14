@@ -62,6 +62,14 @@ en:
           research: "Representing a research community"
           private_company: "Representing a private company"
           project: "Representing a project"
+      service:
+        phase:
+          discovery: "Discovery (min. TRL 1)"
+          planned: "Planned (min. TRL 3)"
+          alpha: "Alpha (min. TRL 5)"
+          beta: "Beta (min. TRL 7)"
+          production: "Production (min. TRL 8)"
+          retired: "Retired (n/a)"
     project_item:
         status:
           created: Created

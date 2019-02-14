@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - voucher_id in aod_voucher_accepted email (@kmarszalek)
 
 ### Changed
+- Change service phase values into keys (@mkasztelnik)
 
 ### Deprecated
 
