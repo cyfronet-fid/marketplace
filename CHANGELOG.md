@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - voucher_id in aod_voucher_accepted email (@kmarszalek)
+- `elasticsearch` version added to `.tool-versions` file (@mkasztelnik)
 
 ### Changed
 
