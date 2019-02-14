@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_30_130546) do
+ActiveRecord::Schema.define(version: 2019_02_15_073516) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,9 +131,9 @@ ActiveRecord::Schema.define(version: 2019_01_30_130546) do
     t.string "project_website_url"
     t.string "company_name"
     t.string "company_website_url"
+    t.bigint "research_area_id"
     t.boolean "request_voucher", default: false, null: false
     t.string "voucher_id", default: "", null: false
-    t.bigint "research_area_id"
     t.index ["affiliation_id"], name: "index_project_items_on_affiliation_id"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"

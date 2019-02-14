@@ -18,8 +18,23 @@ We will need:
   * nodejs (specific version can be found in [.tool-versions](.tool-versions)).
     Recommented way to manage nodejs versions is to use [asdf](https://github.com/asdf-vm/asdf)
     with [asdf-nodejs](https://github.com/asdf-vm/asdf-nodejs) plugin.
+  * elasticsearch (specific version can be found in [.tool-versions](.tool-versions)).
+    Recommented way to manage nodejs versions is to use [asdf](https://github.com/asdf-vm/asdf)
+    with [asdf-elasticsearch](https://github.com/asdf-vm/asdf-elasticsearch) plugin.
   * [postgresql](https://www.postgresql.org)
   * redis (https://redis.io)
+
+If you are using [asdf](https://github.com/asdf-vm/asdf) the easiest way to
+install required ruby, nodejs and elasticsearch version is to type
+
+```
+asdf install
+```
+
+in marketplace root directory. Ruby and nodejs versions will be set in automatic
+way. To start correct elasticsearch version type `elasticsearch` in the
+marketplace root directory.
+
 ### Setup
 
   * First time run `/bin/setup`. It will install bundler, foreman,
@@ -76,7 +91,7 @@ to use jira instance provided by atlassian SDK.
 
 ## For Admins
 
-If you are an admin, who wants to integrate production instance of JIRA go to 
+If you are an admin, who wants to integrate production instance of JIRA go to
 [JIRA integration manual](./docs/jira_integration.md) otherwise read on.
 
 ## For Developers
@@ -194,10 +209,10 @@ ENV variables:
     script is added into head section)
   * `PORTAL_BASE_URL` - portal base URL used to generate footer and other static
     links to EOSC portal
-  * `ASSET_HOST` and `ASSET_PROTOCOL` - assets mailer config is mandatory 
+  * `ASSET_HOST` and `ASSET_PROTOCOL` - assets mailer config is mandatory
     (e.g. ASSET_HOST = marketplace.eosc-portal.eu/ and ASSET_PROTOCOL = https )
   * `RATE_AFTER_PERIOD` - number of days after which user can rate service (default is set to 90 days)
-  * ENV Variables connected to JIRA integration are described in [JIRA integration manual](./docs/jira_integration.md)  
+  * ENV Variables connected to JIRA integration are described in [JIRA integration manual](./docs/jira_integration.md)
 
 ## Commits
 
