@@ -12,9 +12,9 @@
     .col-12.col-md-5
       = f.input :service_type, collection: Service.service_types.keys.map(&:to_sym)
 
-  = f.association :categories, multiple: true
-  = f.association :providers, multiple: true
-  = f.association :platforms, multiple: true
+  = f.association :categories, multiple: true, input_html: { data: { choice: true } }
+  = f.association :providers, multiple: true, input_html: { data: { choice: true } }
+  = f.association :platforms, multiple: true, input_html: { data: { choice: true } }
   = f.association :research_areas, input_html: { multiple: true }, include_hidden: false
   = f.association :target_groups,
                   label: "Dedicated For",
