@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - `elasticsearch` version added to `.tool-versions` file (@mkasztelnik)
 - Offer type (`normal`, `open_access`, `catalog`) with service type taken as
   default (@mkasztelnik)
+- Offer can be selected from `service#show` (@mkasztelnik)
 
 ### Changed
 - Change service phase values into keys (@mkasztelnik)
