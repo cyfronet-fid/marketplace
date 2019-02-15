@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 2019_02_15_073516) do
     t.datetime "updated_at", null: false
     t.jsonb "parameters"
     t.boolean "voucherable", default: false, null: false
+    t.string "offer_type"
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
     t.index ["service_id"], name: "index_offers_on_service_id"

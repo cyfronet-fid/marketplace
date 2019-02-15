@@ -37,7 +37,7 @@ class Backoffice::OfferPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name, :description]
+    [:name, :description, :offer_type]
   end
 
   private
