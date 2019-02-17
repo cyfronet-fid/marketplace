@@ -1314,3 +1314,25 @@ label[data-multicheckbox].small {
   border: 0 none;
   height: 5px;
 }
+
+// scss-lint:disable all
+.choices__list--multiple .choices__item {
+  background: #fff5cc;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  color: #000;
+  margin: 1px 4px 1px 0;
+  font-size: 13px;
+  font-weight: 300;
+  border: none;
+  padding: 9px 12px;
+
+  .choices__button {
+    border: none;
+    background: url('../../assets/images/close.png') top left no-repeat;
+    background-size: 11px 11px;
+    margin-left: 12px;
+  }
+}
+// scss-lint:enable all
