@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - `elasticsearch` version added to `.tool-versions` file (@mkasztelnik)
 
 ### Changed
+- Change service phase values into keys (@mkasztelnik)
 
 ### Deprecated
 

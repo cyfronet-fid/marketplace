@@ -20,12 +20,12 @@ class Service < ApplicationRecord
   }
 
   enum phase: {
-    discovery: "Discovery (min. TRL 1)",
-    planned: "Planned (min. TRL 3)",
-    alpha: "Alpha (min. TRL 5)",
-    beta: "Beta (min. TRL 7)",
-    production: "Production (min. TRL 8)",
-    retired: "Retired (n/a)"
+    discovery: "discovery",
+    planned: "planned",
+    alpha: "alpha",
+    beta: "beta",
+    production: "production",
+    retired: "retired"
   }
 
   STATUSES = {

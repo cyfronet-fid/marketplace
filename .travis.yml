@@ -45,6 +45,7 @@ jobs:
   include:
     - stage: test
       script:
+        - bin/rails db:migrate RAILS_ENV=test
         - bundle exec rspec
     - stage: test
       script:
