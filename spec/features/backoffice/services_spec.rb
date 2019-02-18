@@ -86,6 +86,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content(category.name)
       expect(page).to have_content("Publish")
       expect(page).to have_content("eic: 12345a")
+      expect(page).to have_content("Alpha (min. TRL 5)")
     end
 
     scenario "I can edit any service" do

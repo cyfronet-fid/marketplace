@@ -30,6 +30,9 @@
   %h2 Service website
   %p= @service.connected_url
 
+  %h2 Phase
+  %p= t "simple_form.options.service.phase.#{@service.phase}"
+
   %h2 Service type
   %p= @service.service_type
 
