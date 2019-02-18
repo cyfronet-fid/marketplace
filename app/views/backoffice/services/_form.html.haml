@@ -67,11 +67,11 @@
   %hr.bottom-hr.mt-5.mb-4
 
   .row.mt-5
-    .col-12.col-md-6.mb-3
+    .col-12
+      = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5"
       = back_link_to "Cancel and back to previous page", service, prefix: :backoffice,
-      class: "text-left flex-grow-1 text-uppercase"
-    .col-12.col-md-6
-      = f.button :submit, class: "btn btn-primary pl-5 pr-5 float-right"
+        class: "text-left flex-grow-1 text-uppercase"
+
 
 
 :javascript
