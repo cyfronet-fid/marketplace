@@ -14,21 +14,21 @@
     #navbar-supported-content.collapse.navbar-collapse
       %ul.navbar-nav.ml-auto.pt-2
         = nav_link controller: :backoffices, html_options: { class: "nav-item" } do
-          = link_to "Getting Started", backoffice_path, class: "nav-link px-3 py-1"
+          = link_to "Getting Started", backoffice_path, class: "nav-link px-2 py-1"
         = nav_link controller: :services, html_options: { class: "nav-item" } do
-          = link_to "Owned Services", backoffice_services_path, class: "nav-link px-3 py-1"
+          = link_to "Owned Services", backoffice_services_path, class: "nav-link px-2 py-1"
         - if policy([:backoffice, ResearchArea]).index?
           = nav_link controller: :research_areas, html_options: { class: "nav-item" } do
-            = link_to "Research Areas", backoffice_research_areas_path, class: "nav-link px-3 py-1"
+            = link_to "Research Areas", backoffice_research_areas_path, class: "nav-link px-2 py-1"
         - if policy([:backoffice, Category]).index?
           = nav_link controller: :categories, html_options: { class: "nav-item" } do
-            = link_to "Categories", backoffice_categories_path, class: "nav-link px-3 py-1"
+            = link_to "Categories", backoffice_categories_path, class: "nav-link px-2 py-1"
         - if policy([:backoffice, Provider]).index?
           = nav_link controller: :providers, html_options: { class: "nav-item" } do
-            = link_to "Providers", backoffice_providers_path, class: "nav-link px-3 py-1"
+            = link_to "Providers", backoffice_providers_path, class: "nav-link px-2 py-1"
         - if policy([:backoffice, Platform]).index?
           = nav_link controller: :platforms, html_options: { class: "nav-item" } do
-            = link_to "Platforms", backoffice_platforms_path, class: "nav-link px-3 py-1"
+            = link_to "Platforms", backoffice_platforms_path, class: "nav-link px-2 py-1"
         %li.nav-item
-          = link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link px-3 py-1"
+          = link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link px-2 py-1"
 

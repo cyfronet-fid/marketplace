@@ -1335,4 +1335,7 @@ label[data-multicheckbox].small {
     margin-left: 12px;
   }
 }
+.choices__inner input.choices__input {
+  width: auto !important;
+}
 // scss-lint:enable all
