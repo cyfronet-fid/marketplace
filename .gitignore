@@ -34,5 +34,5 @@ yarn-debug.log*
 .DS_Store
 
 # Ignore IDE configuration
-.idea
+/.idea
 /.env
