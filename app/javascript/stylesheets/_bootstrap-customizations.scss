@@ -1335,7 +1335,48 @@ label[data-multicheckbox].small {
     margin-left: 12px;
   }
 }
-.choices__inner input.choices__input {
-  width: auto !important;
+
+.choices__inner {
+  padding-top: 6px;
+  padding-bottom: 4px;
+  input.choices__input {
+    width: auto !important;
+    background: transparent;
+  }
 }
+
+
+.choices[data-type*="select-multiple"] .choices__inner,
+.choices[data-type*="text"] .choices__inner {
+  cursor: text;
+  background: #fff;
+}
+
+.choices__input.choices__input--cloned {
+  display:block;
+  padding: 10px 5px 4px 3px !important;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.choices__input.choices__input--cloned::placeholder {
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  font-weight: 300;
+  letter-spacing: normal;
+  opacity: 1;
+  color: #000;
+}
+
+.choices__list--multiple .choices__item.is-highlighted {
+  background: #ffd3a5;
+  border: none;
+}
+
+
+
+
+
 // scss-lint:enable all

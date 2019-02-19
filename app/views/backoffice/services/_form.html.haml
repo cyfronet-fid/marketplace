@@ -15,10 +15,10 @@
   = f.association :categories, multiple: true, input_html: { data: { choice: true } }
   = f.association :providers, multiple: true, input_html: { data: { choice: true } }
   = f.association :platforms, multiple: true, input_html: { data: { choice: true } }
-  = f.association :research_areas, input_html: { multiple: true }, include_hidden: false
+  = f.association :research_areas, input_html: { data: { choice: true } }, include_hidden: false
   = f.association :target_groups,
                   label: "Dedicated For",
-                  input_html: { multiple: true },
+                  input_html: { data: { choice: true }, class: "target_groups"},
                   include_hidden: false
   .row.mt-5
     .col-12.col-md-5

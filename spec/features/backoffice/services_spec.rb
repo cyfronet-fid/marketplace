@@ -45,6 +45,11 @@ RSpec.feature "Services in backoffice" do
       fill_in "Service website", with: "https://sample.url"
       fill_in "Places", with: "Europe"
       fill_in "Languages", with: "English"
+      within(".service_target_groups") do
+        within(".choices") do
+          fill_in "choices__input", with: target_group.name
+        end
+      end
       select target_group.name, from: "Dedicated For"
       fill_in "Terms of use url", with: "https://sample.url"
       fill_in "Access policies url", with: "https://sample.url"
@@ -105,7 +110,7 @@ RSpec.feature "Services in backoffice" do
       service = create(:service, title: "my service", owners: [user])
 
       visit backoffice_service_path(service)
-      click_on "Add new offer"
+      click_on "Add new offer", match: :first
 
       expect {
         fill_in "Name", with: "new offer 1"
