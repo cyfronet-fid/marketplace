@@ -41,6 +41,8 @@ class Jira::IssueUpdated
             ProjectItemMailer.changed(@project_item).deliver_later
           end
         end
+      elsif change["field"] == "CP-VoucherID"
+        @project_item.new_voucher_change(change["toString"])
       end
     end
   end
