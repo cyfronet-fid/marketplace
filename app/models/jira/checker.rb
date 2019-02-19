@@ -91,7 +91,7 @@ class Jira::Checker
     unless issue.save(fields: { summary: "TEST TICKET, TO CHECK WHETHER JIRA INTEGRATION WORKS",
                                 project: { key: self.client.jira_project_key },
                                 issuetype: { id: self.client.jira_issue_type_id } })
-      raise CheckerError.new "Could not create issue in project: #{self.client.jira_project_key} and issuetype: #{self.client.jira_issue_type_id}"
+      raise CriticalCheckerError.new "Could not create issue in project: #{self.client.jira_project_key} and issuetype: #{self.client.jira_issue_type_id}"
     end
   end
 
