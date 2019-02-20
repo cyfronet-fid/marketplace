@@ -1465,8 +1465,25 @@ label[data-multicheckbox].small {
   border: none;
 }
 
-
-
-
-
 // scss-lint:enable all
+.research-areas {
+  a {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .btn-sm {
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: $white !important;
+  }
+
+  .delete-icon {
+    font-size: 18px;
+
+    svg {
+      color: $palette-gray-70;
+    }
+  }
+}
