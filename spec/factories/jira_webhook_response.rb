@@ -9,6 +9,34 @@ FactoryBot.define do
       timestamp 1525698237764
       issue_id 0
       issue_status 4
+      voucher_id_from nil
+      voucher_id_to nil
+
+      changelog do
+        {
+            "toString":   "A new summary.",
+            "to":         issue_status,
+            "fromString": "What is going on here?????",
+            "from":       0,
+            "fieldtype":  "jira",
+            "field":      "status"
+        }
+      end
+    end
+
+    trait :voucher_id_change do
+      transient do
+        changelog do
+          {
+              "toString":   voucher_id_to,
+              "to":         nil,
+              "fromString": voucher_id_from,
+              "from":       nil,
+              "fieldtype":  "custom",
+              "field":      "CP-VoucherID"
+          }
+        end
+      end
     end
 
     initialize_with do
@@ -41,14 +69,7 @@ FactoryBot.define do
         },
         "changelog":    {
             "items": [
-                         {
-                             "toString":   "A new summary.",
-                             "to":         issue_status,
-                             "fromString": "What is going on here?????",
-                             "from":       0,
-                             "fieldtype":  "jira",
-                             "field":      "status"
-                         }
+                         changelog
                      ],
             "id":    10124
         },
