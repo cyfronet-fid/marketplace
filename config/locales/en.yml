@@ -50,6 +50,11 @@ en:
       description: |
         You can organize your services in projects.
         Add this service to a specific project or create a new one.
+  offer:
+    order_text:
+      normal: Order
+      open_access: Add to my services
+      catalog: Go to the service
 
   affiliation_confirmations:
     index:
