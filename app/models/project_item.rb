@@ -51,7 +51,7 @@ class ProjectItem < ApplicationRecord
   validates :company_website_url, url: true, presence: true, if: :private_company?
 
   validates :request_voucher, absence: true, unless: :vaucherable?
-  validates :voucher_id, absence: true, unless: :voucher_id_required?
+  validates :voucher_id, absence: true, if: :voucher_id_unwanted?
   validates :voucher_id, presence: true, allow_blank: false, if: :voucher_id_required?
 
   delegate :user, to: :project
@@ -81,6 +81,24 @@ class ProjectItem < ApplicationRecord
 
     project_item_changes.create(status: status, message: message, author: author, iid: iid).tap do
       update_attributes(status: status)
+    end
+  end
+
+  def new_voucher_change(voucher_id, author: nil, iid: nil)
+    voucher_id ||= ""
+
+    return unless voucher_id != self.voucher_id
+
+    message = if self.voucher_id.blank? && !voucher_id.blank?
+      "Voucher has been granted to you, ID: #{voucher_id}"
+    elsif !self.voucher_id.blank? && voucher_id.blank?
+      "Voucher has been revoked"
+    elsif !self.voucher_id.blank? && !voucher_id.blank?
+      "Voucher ID has been updated: #{voucher_id}"
+    end
+
+    project_item_changes.create(status: self.status, message: message, author: author, iid: iid).tap do
+      update_attributes(voucher_id: voucher_id)
     end
   end
 
@@ -142,5 +160,9 @@ class ProjectItem < ApplicationRecord
 
   def voucher_id_required?
     vaucherable? && request_voucher == false
+  end
+
+  def voucher_id_unwanted?
+    created? && !voucher_id_required?
   end
 end
