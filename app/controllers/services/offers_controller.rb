@@ -37,7 +37,7 @@ class Services::OffersController < Services::ApplicationController
     end
 
     def init_offer_selection!
-      @offers = @service.offers
+      @offers = @service.offers.reject { |o| o.catalog? }
       @project_item = ProjectItem.new(session[session_key])
     end
 end

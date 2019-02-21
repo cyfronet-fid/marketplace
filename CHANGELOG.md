@@ -9,7 +9,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - voucher_id in aod_voucher_accepted email (@kmarszalek)
+- voucher_id updates from jira (@michal-szostak)
 - `elasticsearch` version added to `.tool-versions` file (@mkasztelnik)
+- Offer type (`normal`, `open_access`, `catalog`) with service type taken as
+  default (@mkasztelnik)
+- Offer can be selected from `service#show` (@mkasztelnik)
 
 ### Changed
 - Change service phase values into keys (@mkasztelnik)

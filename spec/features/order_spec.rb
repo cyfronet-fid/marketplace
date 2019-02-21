@@ -37,7 +37,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Order", match: :first
 
       # Step 1
       expect(page).to have_current_path(service_offers_path(service))
@@ -97,7 +97,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Order", match: :first
 
       # Step 1
 
@@ -125,8 +125,8 @@ RSpec.feature "Service ordering" do
 
     scenario "I cannot order open_access service twice in one project" do
       open_access_service = create(:open_access_service)
-      offer = create(:offer, service: open_access_service)
-      default_project = user.projects.find_by(name: "Services")
+      _offer = create(:offer, service: open_access_service)
+      _default_project = user.projects.find_by(name: "Services")
 
       visit service_path(open_access_service)
 
@@ -380,7 +380,7 @@ RSpec.feature "Service ordering" do
 
       expect(page).to have_selector(:link_or_button, "Order", exact: true)
 
-      click_on "Order"
+      click_on "Order", match: :first
 
       checkin_sign_in_as(user)
 
