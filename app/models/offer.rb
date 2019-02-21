@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 class Offer < ApplicationRecord
+  enum offer_type: {
+    normal: "normal",
+    open_access: "open_access",
+    catalog: "catalog"
+  }
+
   belongs_to :service,
              counter_cache: true
 
@@ -19,6 +25,22 @@ class Offer < ApplicationRecord
 
   def attributes
     (parameters || []).map { |param| Attribute.from_json(param) }
+  end
+
+  def offer_type
+    super || service.service_type
+  end
+
+  def open_access?
+    offer_type == "open_access"
+  end
+
+  def normal?
+    offer_type == "normal"
+  end
+
+  def catalog?
+    offer_type == "catalog"
   end
 
   private

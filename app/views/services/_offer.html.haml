@@ -1,4 +1,4 @@
-.col-md-6.d-flex.align-items-stretch.mb-4{ "data-controller" => "service-offer" }
+.col-md-6.d-flex.align-items-stretch.mb-5{ "data-controller" => "service-offer" }
   .card.offers
     .card-body.pt-4.collapse-group
       - if offer.voucherable
@@ -18,3 +18,13 @@
             = markdown(offer.description)
       %h5.text-uppercase.parameters-title.mb-0= "Technical parameters"
       = render "services/parameters", parameters: offer.attributes
+    .card-button.text-center
+      %label
+        - if offer.catalog?
+          = link_to offer.service.connected_url do
+            %span.btn.btn-light.border.border-secondary.font-weight-bold
+              = t("offer.order_text.#{offer.offer_type}")
+        - else
+          = link_to service_offers_path(offer.service, project_item: { offer_id: offer.iid }), method: :put do
+            %span.btn.btn-light.border.border-secondary.font-weight-bold
+              = t("offer.order_text.#{offer.offer_type}")
