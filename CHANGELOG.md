@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Change service phase values into keys (@mkasztelnik)
+- Change names of buttons and headers (@goreck888)
 
 ### Deprecated
 

@@ -4,10 +4,10 @@
   %h1 Congratulations!
   %p.mb-4
     #{@project_item.service.title} has been added to #{@project_item.project.name}
-    project. Now you can access it from #{link_to "My services", projects_path} list.
+    project. Now you can access it from #{link_to "My projects", projects_path} list.
 
   .mb-4
-    = link_to "Go to My services", projects_path,
+    = link_to "Go to My projects", projects_path,
       class: "btn btn-primary mr-3 mb-3"
     = link_to "Get access to other services", services_path,
       class: "btn btn-secondary mr-3 mb-3"
