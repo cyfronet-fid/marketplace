@@ -65,7 +65,7 @@ class Attribute
 
   def value_from_param(param)
     if !param.blank?
-      case @value_type
+      case value_type
       when "integer"
         @value = Integer(param)
       when "string"
@@ -87,7 +87,7 @@ class Attribute
   def value_schema
     # overload this method to create other schemas for values
     {
-        "type": @value_type
+        "type": value_type
     }
   end
 
@@ -114,6 +114,8 @@ class Attribute
       attr = Attribute::Date.new
     when "range-property"
       attr = Attribute::RangeProperty.new
+    when "quantity_price"
+      attr = Attribute::QuantityPrice.new
     else
       attr = Attribute.new
     end
@@ -145,7 +147,9 @@ class Attribute
         },
         "type": {
             "type": "string",
-            "enum": ["attribute", "input", "range-property", "select", "multiselect", "range", "date"]
+            "enum": [
+              "attribute", "input", "range-property", "select",
+              "multiselect", "range", "date", "quantity_price"]
         },
         # maybe value type support should be validated per attribute type
         "value_type": {
