@@ -3,14 +3,3 @@
 %h1= @research_area.name
 %h2= @research_area.parent ? "Parent: #{@research_area.parent.name}" : "Root element"
 
-.btn-group
-  - if policy([:backoffice, @research_area]).edit?
-    = link_to "Edit",
-              edit_backoffice_research_area_path(@research_area),
-              class: "btn btn-warning"
-  - if policy([:backoffice, @research_area]).destroy?
-    = link_to "Delete",
-              backoffice_research_area_path(@research_area),
-              method: :delete,
-              data: { confirm: "Are you sure you want to remove this research area?" },
-              class: "btn btn-danger"
