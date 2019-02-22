@@ -14,6 +14,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Offer type (`normal`, `open_access`, `catalog`) with service type taken as
   default (@mkasztelnik)
 - Offer can be selected from `service#show` (@mkasztelnik)
+- Date attribute `min` and `max` validation (@mkasztelnik)
 
 ### Changed
 - Change service phase values into keys (@mkasztelnik)
