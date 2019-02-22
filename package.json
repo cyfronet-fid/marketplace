@@ -8,6 +8,7 @@
     "@rails/webpacker": "3.5",
     "bootstrap": "^4.1.1",
     "bootstrap-datepicker": "^1.8.0",
+    "choices.js": "^6.0.0",
     "expose-loader": "^0.7.5",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.3",

@@ -1,83 +1,104 @@
 - breadcrumb :backoffice_service, @service
 .container
-  %h1= @service.title
-  %h2 Status
-  %p= @service.status
-  - if policy([:backoffice, @service]).publish?
-    = link_to "Publish",
-            backoffice_service_publish_path(@service),
-            method: :post,
-            data: { confirm: "Are you sure you want to publish this service?" },
-            class: "btn btn-warning"
-  - if policy([:backoffice, @service]).draft?
-    = link_to "Stop showing in the MP",
-            backoffice_service_draft_path(@service),
-            method: :post,
-            data: { confirm: "Are you sure you want to stop showing this service?" },
-            class: "btn btn-warning"
   .row
-    .col-3
+    .col-5.col-md-2
       - if @service.logo.attached?
-        = image_tag @service.logo.variant(resize: "200x200")
-    .col-9
+        = image_tag @service.logo.variant(resize: "180x180"), class: "border img-fluid"
+    .col-7.col-md-6.vertical-middle
+      %h1.service-name= @service.title
+    .col-12.col-md-4.mt-4
+      - if policy([:backoffice, @service]).destroy?
+        = link_to "Decommission",
+                  backoffice_service_path(@service),
+                  method: :delete, data: { confirm: "Are you sure?" },
+                  class: "btn btn-danger float-right"
+      - if policy([:backoffice, @service]).new?
+        = link_to "Add new offer", new_backoffice_service_offer_path(@service),
+            class: "btn btn-primary float-right ml-3 mb-3"
+      - if policy([:backoffice, @service]).edit?
+        = link_to "Edit",
+                  edit_backoffice_service_path(@service),
+                  class: "btn btn-primary float-right"
+  .container.grey-row.mt-4
+    .row
+      .col-12.col-sm-6
+        %span Status:
+        %span.font-weight-bold= @service.status
+      .col-12.col-sm-6
+        - if policy([:backoffice, @service]).publish?
+          = link_to "Publish",
+                  backoffice_service_publish_path(@service),
+                  method: :post,
+                  data: { confirm: "Are you sure you want to publish this service?" },
+                  class: "btn btn-warning float-right btn-sm"
+        - if policy([:backoffice, @service]).draft?
+          = link_to "Stop showing in the MP",
+                  backoffice_service_draft_path(@service),
+                  method: :post,
+                  data: { confirm: "Are you sure you want to stop showing this service?" },
+                  class: "btn btn-warning float-right btn-sm"
+  .row.mt-4
+    .col-12.col-sm-8
       %p
         %b= @service.tagline
       %p= @service.description
+      .row.mt-5.mb-4
+        .col-6
+          %h3.m-0.mt-2 Offers
+        .col-6
+          - if policy([:backoffice, @service]).new?
+            = link_to "Add new offer", new_backoffice_service_offer_path(@service),
+              class: "btn btn-primary btn-sm float-right"
+      = render "backoffice/services/offers/offers", service: @service
+    .col-1.separator.d-none.d-xl-block
+    .col-12.col-sm-3.info-col
+      %h5 Category
+      - @service.categories.each do |category|
+        %p= category.name
 
-  %h2 Terms of use
-  = markdown(@service.terms_of_use)
+      %h5 Service type
+      %p= @service.service_type
 
-  %h2 Service website
-  %p= @service.connected_url
+      %h5 Dedicated For
+      %ul
+        - @service.target_groups.each do |group|
+          %li= group.name
 
-  %h2 Phase
-  %p= t "simple_form.options.service.phase.#{@service.phase}"
+      %hr
 
-  %h2 Service type
-  %p= @service.service_type
+      %h5 Terms of use
+      = markdown(@service.terms_of_use)
 
-  %h2 Activate message
-  %p= @service.activate_message
+      %h5 Service website
+      %p= @service.connected_url
 
-  %h2 Contact emails
-  - @service.contact_emails.each do |email|
-    %p= email
+      %h2 Phase
+      %p= t "simple_form.options.service.phase.#{@service.phase}"
 
-  %h2 Areas
-  - @service.research_areas.each do |area|
-    %p= area.name
+      %h2 Service type
+      %p= @service.service_type
 
-  %h2 Dedicated For
-  - @service.target_groups.each do |group|
-    %p= group.name
+      %h5 Activate message
+      %p= @service.activate_message
 
-  %h2 Providers
-  - @service.providers.each do |provider|
-    %p= provider.name
+      %h5 Contact emails
+      - @service.contact_emails.each do |email|
+        %p= email
 
-  %h2 Category
-  - @service.categories.each do |category|
-    %p= category.name
+      %h5 Areas
+      - @service.research_areas.each do |area|
+        %p= area.name
 
-  %h2 Upstream External Source
-  %p= @service.upstream || "MP"
+      %h5 Providers
+      - @service.providers.each do |provider|
+        %p= provider.name
 
-  %h2 External Sources
-  - @service.sources.each do |source|
-    %p
-      - if @service.upstream_id == source.id
-        %i.fas.fa-check
-      = source
+      %h5 Upstream External Source
+      %p= @service.upstream || "MP"
 
-  %h2 Offers
-  = render "backoffice/services/offers/offers", service: @service
-
-  - if policy([:backoffice, @service]).edit?
-    = link_to "Edit",
-              edit_backoffice_service_path(@service),
-              class: "btn btn-warning"
-  - if policy([:backoffice, @service]).destroy?
-    = link_to "Decommission",
-              backoffice_service_path(@service),
-              method: :delete, data: { confirm: "Are you sure?" },
-              class: "btn btn-danger"
+      %h5 External Sources
+      - @service.sources.each do |source|
+        %p
+          - if @service.upstream_id == source.id
+            %i.fas.fa-check
+          = source
