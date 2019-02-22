@@ -1,15 +1,16 @@
-.card.col-md-4
-  .card-body
-    %h4.card-title= offer.name
-    %p.card-text.mb-4= markdown(offer.description)
-  .card-footer
-    - if policy([:backoffice, offer]).edit?
-      = link_to "Edit",
-                edit_backoffice_service_offer_path(service, offer),
-                class: "edit-offer card-link"
-    - if policy([:backoffice, offer]).destroy?
-      = link_to "Delete",
-                backoffice_service_offer_path(service, offer),
-                method: :delete, data: { confirm: "Are you sure?" },
-                class: "delete-offer card-link"
+.col-md-6.d-flex.align-items-stretch.mb-4
+  .card
+    .card-body.pt-4.pb-0
+      %h4.card-title= offer.name
+      %p.card-text= markdown(offer.description)
+    .card-footer
+      - if policy([:backoffice, offer]).edit?
+        = link_to "Edit",
+                  edit_backoffice_service_offer_path(service, offer),
+                  class: "edit-offer card-link"
+      - if policy([:backoffice, offer]).destroy?
+        = link_to "Delete",
+                  backoffice_service_offer_path(service, offer),
+                  method: :delete, data: { confirm: "Are you sure?" },
+                  class: "delete-offer card-link"
 

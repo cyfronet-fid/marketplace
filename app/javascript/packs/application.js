@@ -26,6 +26,7 @@ import { definitionsFromContext } from "stimulus/webpack-helpers"
 import "./sort_filter"
 import initSortingAndFiltering from "./sort_filter";
 import initFlash from "./flash";
+import initChoises from "./choises";
 
 
 const application = Application.start();
@@ -39,6 +40,10 @@ document.addEventListener("turbolinks:before-render", function(event) {
     starsOnClick(event.data.newBody);
     initSortingAndFiltering(event.data.newBody);
     dom.watch();
+});
+
+document.addEventListener("turbolinks:load", function(event) {
+    initChoises();
 });
 
 /**
