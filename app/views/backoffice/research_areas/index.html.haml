@@ -12,6 +12,11 @@
     - ancestry_tree(@research_areas).each do |record|
       %li.list-group-item
         = link_to record.first, backoffice_research_area_path(record.last)
-        %a.delete-icon.float-right
-          %i.fas.fa-trash-alt
-        %a.btn-sm.btn-warning.float-right.mr-4 Edit
+        - if policy([:backoffice, record[1]]).destroy?
+          = link_to backoffice_research_area_path(record[1]),
+                method: :delete,
+                data: { confirm: "Are you sure you want to remove this research area?" },
+                class: "delete-icon float-right" do
+            %i.far.fa-trash-alt
+        - if policy([:backoffice, record[1]]).edit?
+          = link_to "Edit", edit_backoffice_research_area_path(record[1]), class: "btn-sm btn-warning float-right mr-4"
