@@ -21,6 +21,6 @@
                     service_offers_path(service),
                     class: "btn btn-primary d-block mb-4"
         - if service.open_access? || service.catalog?
-          = link_to "Go to the service", service.connected_url, class: "btn btn-primary d-block mb-4", target: "_blank"
+          = link_to "Access the service", service.connected_url, class: "btn btn-primary d-block mb-4", target: "_blank"
 
         = render "services/ask_question", service: service, question: question

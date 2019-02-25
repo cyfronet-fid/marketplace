@@ -27,7 +27,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(open_access_service)
 
-      expect(page).to have_text("Add to my services")
+      expect(page).to have_text("Add to a project")
     end
 
     scenario "I can order service" do
@@ -130,7 +130,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(open_access_service)
 
-      click_on "Add to my services"
+      click_on "Add to a project"
 
       # Project selection
       select "Services", from: "project_item_project_id"
@@ -138,12 +138,12 @@ RSpec.feature "Service ordering" do
 
       expect do
         check "Accept terms and conditions"
-        click_on "Add to my services", match: :first
+        click_on "Add to a project", match: :first
       end.to change { ProjectItem.count }.by(1)
 
       visit service_path(open_access_service)
 
-      click_on "Add to my services"
+      click_on "Add to a project"
 
       select "Services", from: "project_item_project_id"
       click_on "Next", match: :first
@@ -190,7 +190,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(open_access_service)
 
-      click_on "Add to my services"
+      click_on "Add to a project"
 
       # Project selection
       expect(page).to have_current_path(service_configuration_path(open_access_service))
@@ -201,11 +201,11 @@ RSpec.feature "Service ordering" do
       # Summary page
       expect(page).to have_current_path(service_summary_path(open_access_service))
       expect(page).to have_selector(:link_or_button,
-                                    "Add to my services", exact: true)
+                                    "Add to a project", exact: true)
 
       expect do
         check "Accept terms and conditions"
-        click_on "Add to my services", match: :first
+        click_on "Add to a project", match: :first
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
 
@@ -403,8 +403,8 @@ RSpec.feature "Service ordering" do
 
       visit service_path(open_access_service)
 
-      expect(page).to have_selector(:link_or_button, "Add to my services", exact: true)
-      expect(page).to have_selector(:link_or_button, "Go to the service", exact: true)
+      expect(page).to have_selector(:link_or_button, "Add to a project", exact: true)
+      expect(page).to have_selector(:link_or_button, "Access the service", exact: true)
     end
 
     scenario "I can see catalog service button" do
@@ -412,7 +412,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(catalog)
 
-      expect(page).to have_selector(:link_or_button, "Go to the service", exact: true)
+      expect(page).to have_selector(:link_or_button, "Access the service", exact: true)
     end
   end
 end

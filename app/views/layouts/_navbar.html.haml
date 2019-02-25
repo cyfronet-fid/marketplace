@@ -28,7 +28,7 @@
               %i.fas.fa-chevron-up.d-lg-none.mr-2
               My EOSC Marketplace
             .dropdown-menu.ml-4.ml-lg-0.shadow
-              %a.dropdown-item{ href: "/projects" } My services
+              %a.dropdown-item{ href: "/projects" } My projects
               %a.dropdown-item{ href: "/profile" } Profile
 
               - if user_signed_in?
@@ -41,7 +41,7 @@
             = link_to "Login", user_checkin_omniauth_authorize_path, class: "nav-link d-block mb-2"
         - else
           %li.nav-item.ml-1
-            %a.dropdown-item{ href: "/projects" } My services
+            %a.dropdown-item{ href: "/projects" } My projects
           %li.nav-item.ml-1
             %a.dropdown-item{ href: "/profile" } Profile
           %li.nav-item.ml-1

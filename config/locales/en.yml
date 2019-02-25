@@ -42,7 +42,7 @@ en:
         configuration: Service configuration
     open_access:
       order:
-        title: Add to my services
+        title: Add to a project
         cancel: Quit
         configuration: Add to a project
   project:
@@ -53,7 +53,7 @@ en:
   offer:
     order_text:
       normal: Order
-      open_access: Add to my services
+      open_access: Add to a project
       catalog: Go to the service
 
   affiliation_confirmations:

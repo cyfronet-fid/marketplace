@@ -49,7 +49,7 @@ crumb :project_item do |project_item|
 end
 
 crumb :projects do
-  link "My services", projects_path
+  link "My projects", projects_path
   parent :marketplace_root
 end
 
