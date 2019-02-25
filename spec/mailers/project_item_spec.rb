@@ -87,20 +87,42 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       mail = described_class.aod_voucher_accepted(project_item).deliver_now
       encoded_body = mail.body.encoded
 
-      expect(mail.subject).to match(/EGI Applications on Demand service with voucher approved/)
+      expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) service with voucher approved/)
       expect(encoded_body).to match(/To redeem an Exoscale voucher, please follow these steps:/)
       expect(encoded_body).to have_content("1234")
     end
 
     it "notify if voucher accepted without voucher_id" do
       project_item = create(:project_item, project: project)
+      project_item.voucher_id = "1234"
 
       mail = described_class.aod_voucher_accepted(project_item).deliver_now
       encoded_body = mail.body.encoded
 
-      expect(mail.subject).to match(/EGI Applications on Demand service with voucher approved/)
+      expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) service with voucher approved/)
       expect(encoded_body).to match(/To redeem an Exoscale voucher, please follow these steps:/)
-      expect(encoded_body).to have_content("A typical link looks like: https://portal.exoscale.com/register?coupon=3D=\n=0D\n")
+      expect(encoded_body).to have_content("Open your web browser at https://portal.exoscale.com/register?coupon=3D=\n1234=0D\n")
     end
+
+    it "notify if voucher rejected with voucher_id" do
+      project_item = create(:project_item, project: project)
+
+      mail = described_class.aod_voucher_rejected(project_item).deliver_now
+      encoded_body = mail.body.encoded
+
+      expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) service with voucher rejected/)
+      expect(encoded_body).to match(/Cloud Computing Cluster \(EC3\) platform has been rejected./)
+    end
+
+    it "notify if voucher rejected without voucher_id" do
+      project_item = create(:project_item, project: project)
+
+      mail = described_class.aod_voucher_rejected(project_item).deliver_now
+      encoded_body = mail.body.encoded
+
+      expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) service with voucher rejected/)
+      expect(encoded_body).to match(/Cloud Computing Cluster \(EC3\) platform has been rejected./)
+    end
+
   end
 end
