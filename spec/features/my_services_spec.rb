@@ -133,7 +133,7 @@ RSpec.feature "My Services" do
     scenario "I don't see my services page" do
       visit root_path
 
-      expect(page).to_not have_text("My services")
+      expect(page).to_not have_text("My projects")
     end
   end
 end
