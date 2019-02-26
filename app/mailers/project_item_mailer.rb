@@ -39,8 +39,17 @@ class ProjectItemMailer < ApplicationMailer
     @voucher_id = project_item.voucher_id
 
     mail(to: @user.email,
-       subject: "EGI Applications on Demand service with voucher approved",
+       subject: "Elastic Cloud Compute Cluster (EC3) service with voucher approved",
        template_name: "aod_voucher_accepted")
+  end
+
+  def aod_voucher_rejected(project_item)
+    @user = project_item.user
+    @voucher_id = project_item.voucher_id
+
+    mail(to: @user.email,
+         subject: "Elastic Cloud Compute Cluster (EC3) service with voucher rejected",
+         template_name: "aod_voucher_rejected")
   end
 
   def aod_accepted(project_item)

@@ -45,6 +45,9 @@ RSpec.describe Jira::IssueUpdated do
       expect {
         described_class.new(project_item, changelog(to: jira_client.wf_done_id)).call
       }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      mail = ActionMailer::Base.deliveries.last
+
+      expect(mail.subject).to eq("EGI Applications on Demand service approved")
     end
 
     it "notify if voucher accepted" do
@@ -56,6 +59,23 @@ RSpec.describe Jira::IssueUpdated do
       expect {
         described_class.new(project_item, changelog(to: jira_client.wf_done_id)).call
       }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      mail = ActionMailer::Base.deliveries.last
+
+      expect(mail.subject).to eq("Elastic Cloud Compute Cluster (EC3) service with voucher approved")
+    end
+
+    it "notify if voucher rejected" do
+      platform_aod = create(:platform, name: "EGI Applications on Demand")
+      service = create(:service, platforms: [platform_aod])
+      offer = create(:offer, service: service, voucherable: true)
+      project_item = create(:project_item, offer: offer, voucher_id: "123456")
+
+      expect {
+        described_class.new(project_item, changelog(to: jira_client.wf_rejected_id)).call
+      }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      mail = ActionMailer::Base.deliveries.last
+
+      expect(mail.subject).to eq("Elastic Cloud Compute Cluster (EC3) service with voucher rejected")
     end
   end
 
