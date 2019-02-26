@@ -8,7 +8,7 @@
                   new_backoffice_research_area_path,
                   class: "btn btn-primary"
       .clearfix
-  %ul.list-group.research-areas.mt-5
+  %ul.list-group.backoffice-list.mt-5.mb-3
     - ancestry_tree(@research_areas).each do |record|
       %li.list-group-item
         = link_to record.first, backoffice_research_area_path(record.last)
