@@ -1465,8 +1465,25 @@ label[data-multicheckbox].small {
   border: none;
 }
 
-
-
-
-
 // scss-lint:enable all
+.backoffice-list {
+  a {
+    font-size: 16px;
+    font-weight: 300;
+  }
+
+  .btn-sm {
+    font-size: 12px;
+    font-weight: 300;
+    text-transform: uppercase;
+    color: $white !important;
+  }
+
+  .delete-icon {
+    font-size: 18px;
+
+    svg {
+      color: $palette-gray-70;
+    }
+  }
+}

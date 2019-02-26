@@ -6,10 +6,23 @@
       .float-right
         = link_to "New Platform",
                   new_backoffice_platform_path,
-                  class: "btn btn-success"
+                  class: "btn btn-primary"
       .clearfix
-  %hr/
-  %ul
+  %ul.list-group.backoffice-list.mt-5.mb-3
     - @platforms.each do |platform|
-      %li= link_to platform.name, backoffice_platform_path(platform)
+      %li.list-group-item
+        = link_to platform.name, backoffice_platform_path(platform)
+        - if policy([:backoffice, platform]).destroy?
+          = link_to backoffice_platform_path(platform),
+              method: :delete,
+              data: { confirm: "Are you sure you want to remove this platform" },
+              class: "delete-icon float-right" do
+            %i.far.fa-trash-alt
+
+        - if policy([:backoffice, platform]).edit?
+          = link_to "Edit",
+              edit_backoffice_platform_path(platform),
+              class: "btn-sm btn-warning float-right mr-4"
+
   = will_paginate @services
+
