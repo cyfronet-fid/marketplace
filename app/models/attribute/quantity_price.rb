@@ -57,7 +57,7 @@ class Attribute::QuantityPrice < Attribute
 
   protected
 
-    TYPE = "quantity_price"
+    TYPE = "quantity-price"
 
   private
 
