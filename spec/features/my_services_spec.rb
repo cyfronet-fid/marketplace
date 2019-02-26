@@ -54,7 +54,7 @@ RSpec.feature "My Services" do
       expect(page).to have_text(project_item.service.title)
     end
 
-    scenario "I cannot se other users project_items" do
+    scenario "I cannot see other users project_items" do
       other_user_project_item = create(:project_item, offer: offer)
 
       visit project_item_path(other_user_project_item)
@@ -83,6 +83,35 @@ RSpec.feature "My Services" do
 
       expect(page).to have_text("Status changed from registered to ready")
       expect(page).to have_text("Service is ready")
+    end
+
+    scenario "I can voucher id" do
+      project = create(:project, user: user)
+      project_item = create(:project_item, project: project, offer: create(:offer, voucherable: true),
+                            voucher_id: "V123V")
+
+      visit project_item_path(project_item)
+
+      expect(page).to have_text(project_item.voucher_id)
+    end
+
+    scenario "I cannot voucher entry" do
+      project = create(:project, user: user)
+      project_item = create(:project_item, project: project, offer: offer)
+
+      visit project_item_path(project_item)
+
+      expect(page).to_not have_text("Voucher")
+    end
+
+    scenario "I can see that voucher has been requested" do
+      project = create(:project, user: user)
+      project_item = create(:project_item, project: project, offer: create(:offer, voucherable: true),
+                            request_voucher: true)
+
+      visit project_item_path(project_item)
+
+      expect(page).to have_text("Vouchers\nRequested")
     end
 
     scenario "I can ask question about my project_item" do
