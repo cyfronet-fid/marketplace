@@ -23,4 +23,8 @@ class ProjectItemPreview < ActionMailer::Preview
   def aod_accepted
     ProjectItemMailer.aod_accepted(ProjectItem.last)
   end
+
+  def aod_voucher_rejected
+    ProjectItemMailer.aod_voucher_rejected(ProjectItem.last)
+  end
 end
