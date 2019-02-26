@@ -95,15 +95,32 @@
             = link_to "Rate",
               new_project_item_service_opinion_path(@project_item),
               class: "btn btn-primary"
-      %h2.mb-
-        Vouchers
-      .blue-row.form-inline.mb-5
-        .d-inline.mr-4
-          %i.fas.fa-ticket-alt
-        .d-inline
-          Your voucher ID
-          %br
-          %span.voucher-name KLdsiw31A
+
+
+
+          %dl
+            %dt
+              Voucher:
+            %dd
+              - if @project_item.voucher_id.blank?
+                Requested
+              - else
+                = @project_item.voucher_id
+      - unless @project_item.voucher_id.blank? && !@project_item.request_voucher
+        %h2.mb-
+          Vouchers
+        .blue-row.form-inline.mb-5
+          .d-inline.mr-4
+            %i.fas.fa-ticket-alt
+          - if @project_item.voucher_id.blank?
+            .d-inline
+              Requested
+          - else
+            .d-inline
+              Your voucher ID
+              %br
+              %span.voucher-name= @project_item.voucher_id
+
       %h2.mb-3
         Your review
       .blue-row.form-inline.mb-3
