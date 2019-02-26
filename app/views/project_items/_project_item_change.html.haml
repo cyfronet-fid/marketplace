@@ -1,8 +1,11 @@
-%li.step-progress-item.current.ml-4
-  %p.time.x-small.text-muted= l current.created_at
+%li.step-progress-item.current.ml-5
+  .time.x-small
+    12.12.2018
+    %span.text-muted 12:00
+
   .ml-4
-    .x-small.text-uppercase.d-block= status_change(previous, current)
-    %p= markdown(current.message)
+    .d-block= status_change(previous, current)
+    %p.frame= current.message
 
 
 

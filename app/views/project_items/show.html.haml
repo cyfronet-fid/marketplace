@@ -4,67 +4,87 @@
   .row
     .col-md-9
       %h1
-        Project item (#{@project_item.service.title})
-    .col-md-3.my-auto
-      %p.text-uppercase.text-right.font-weight-bold.text-secondary.my-auto
+        #{@project_item.service.title}
+    .col-md-3
+      %p.text-uppercase.text-right.font-weight-bold.text-secondary.mt-4.mb-0
         = @project_item.status
-  %hr.mb-4
+  .row
+    .col-md-12.back-link
+      %i.fas.fa-chevron-left.fa-xs.mr-1
+      %a{ href: "/projects" }  back to my services list
+  %hr.mb-5.border-5.border-separator
   .row.justify-content-between
-    .col-md-6
-      = render "project_items/project_item_changes",
-                project_item_changes: @project_item.project_item_changes.order("updated_at DESC").to_a,
-                project_item: @project_item,
-                question: @question
     .col-md-5
-      %h3.mb-3
+      %h2.mb-4
         Details
-      %ul
-        %li
-          %strong Ordered service:
-          = link_to @project_item.service.title, @project_item.service
-        %li
-          %strong Order date:
-          = l @project_item.created_at
-        %li
-          %strong Research area:
-          = @project_item.research_area&.name
-        %li
-          %strong Providers:
-          :ruby
-            providers = @project_item.service.providers.
-                        map { |p| link_to(p.name, services_path(providers: p)) }
-          = safe_join(providers, ", ")
+      .details.mb-5
+        %dl
+          %dt
+            Ordered service:
+          %dd
+            = link_to @project_item.service.title, @project_item.service
+        %dl
+          %dt
+            Order date:
+          %dd
+            = l @project_item.created_at
+        %dl
+          %dt
+            Research area:
+          %dd
+            = @project_item.research_area&.name
+        %dl
+          %dt
+            Providers:
+          %dd
+            :ruby
+              providers = @project_item.service.providers.
+                          map { |p| link_to(p.name, services_path(providers: p)) }
+            = safe_join(providers, ", ")
+        %dl
+          %dt
+            Status:
+          %dd
+            %span.text-uppercase= @project_item.status
 
       - if @project_item.affiliation.present?
-        %h3.mb-3 Connected affiliation
-        %ul
-          %li
-            %strong Organization:
-            = @project_item.affiliation.organization
-          - if @project_item.affiliation.department.present?
-            %li
-              %strong Department:
-              = @project_item.affiliation.department
-          %li
-            %strong Email:
-            = @project_item.affiliation.email
-          - if @project_item.affiliation.phone.present?
-            %li
-              %strong Phone:
-              = @project_item.affiliation.phone
-          %li
-            %strong Webpage:
-            = @project_item.affiliation.webpage
-          - if @project_item.affiliation.supervisor.present?
-            %li
-              %strong Supervisor:
-              = @project_item.affiliation.supervisor
-          - if @project_item.affiliation.supervisor_profile.present?
-            %li
-              %strong Supervisor profile:
-              = @project_item.affiliation.supervisor_profile
+        %h5.text-uppercase.parameters-title.mb-3 Connected affiliation
+        .details.mb-5
+          %dl
+            %dt
+              Organization:
+            %dd
+              = @project_item.affiliation.organization
+            - if @project_item.affiliation.department.present?
+              %dl
+                %dt Department:
+                %dd
+                  = @project_item.affiliation.department
+          %dl
+            %dt Email:
+            %dd
+              = @project_item.affiliation.email
+            - if @project_item.affiliation.phone.present?
+              %dl
+                %dt Phone:
+                %dd
+                  = @project_item.affiliation.phone
+          %dl
+            %dt Webpage:
+            %dd
+              = @project_item.affiliation.webpage
+            - if @project_item.affiliation.supervisor.present?
+              %dl
+                %dt Supervisor:
+                %dd
+                  = @project_item.affiliation.supervisor
+            - if @project_item.affiliation.supervisor_profile.present?
+              %dl
+                %dt Supervisor profile:
+                %dd
+                  = @project_item.affiliation.supervisor_profile
 
-      = render "project_items/attributes", property_values: @project_item.property_values
+        = render "project_items/attributes", property_values: @project_item.property_values
 
       - if ratingable?
         %h3.mb-3 Rate this service
@@ -75,5 +95,25 @@
             = link_to "Rate",
               new_project_item_service_opinion_path(@project_item),
               class: "btn btn-primary"
-
+      %h2.mb-
+        Vouchers
+      .blue-row.form-inline.mb-5
+        .d-inline.mr-4
+          %i.fas.fa-ticket-alt
+        .d-inline
+          Your voucher ID
+          %br
+          %span.voucher-name KLdsiw31A
+      %h2.mb-3
+        Your review
+      .blue-row.form-inline.mb-3
+        .d-inline.mr-4
+          %i.fas.fa-star.fa-pull-left
+          You have been using this service from 3 months. Please share your opinion with others EOSC Marketplace users.
+      %button.btn.btn-primary.btn-sm{ type: "submit" } Review service
+    .col-md-6
+      = render "project_items/project_item_changes",
+                project_item_changes: @project_item.project_item_changes.order("updated_at DESC").to_a,
+                project_item: @project_item,
+                question: @question
 
