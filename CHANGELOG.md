@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
   default (@mkasztelnik)
 - Offer can be selected from `service#show` (@mkasztelnik)
 - Date attribute `min` and `max` validation (@mkasztelnik)
+- voucher_id display in project items's details (@michal-szostak)
 
 ### Changed
 - Change service phase values into keys (@mkasztelnik)
