@@ -1,0 +1,16 @@
+= field.input :id, label: attr.label, hint: attr.description,
+  error: attr.errors.messages[:id].join(" ") do
+  .input-group.pl-0{ data: { "controller": "quantity-price",
+    "quantity-price": { "start-price": attr.start_price, "step-price": attr.step_price } } }
+    - has_errors = attr.errors[:id].present?
+    - valid = !has_errors && attr.value
+    = field.input_field attr.id,
+      class: "form-control #{"is-invalid" if has_errors} #{"is-valid" if valid}",
+      value: attr.value, step: 1,
+      min: 0, max: attr.max,
+      as: :integer,
+      "data-action": "change->quantity-price#calculate",
+      "data-target": "quantity-price.quantity"
+    .input-group-append
+      %span.input-group-text{ "data-target": "quantity-price.price" } 0
+      %span.input-group-text= attr.currency
