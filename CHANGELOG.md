@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Change service phase values into keys (@mkasztelnik)
 - Change names of buttons and headers (@goreck888)
 - Changes in aod_voucher_accepted mails and new mail sended after rejection (@martaswiatkowska)
+- Change styles for project item details (@jarekzet)
 
 ### Deprecated
 
