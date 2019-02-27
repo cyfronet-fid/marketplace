@@ -86,26 +86,6 @@
 
         = render "project_items/attributes", property_values: @project_item.property_values
 
-      - if ratingable?
-        %h3.mb-3 Rate this service
-        %ul
-          %li
-            Share your opinion with others.
-          %li
-            = link_to "Rate",
-              new_project_item_service_opinion_path(@project_item),
-              class: "btn btn-primary"
-
-
-
-          %dl
-            %dt
-              Voucher:
-            %dd
-              - if @project_item.voucher_id.blank?
-                Requested
-              - else
-                = @project_item.voucher_id
       - unless @project_item.voucher_id.blank? && !@project_item.request_voucher
         %h2.mb-
           Vouchers
@@ -120,14 +100,17 @@
               Your voucher ID
               %br
               %span.voucher-name= @project_item.voucher_id
-
-      %h2.mb-3
-        Your review
-      .blue-row.form-inline.mb-3
-        .d-inline.mr-4
-          %i.fas.fa-star.fa-pull-left
-          You have been using this service from 3 months. Please share your opinion with others EOSC Marketplace users.
-      %button.btn.btn-primary.btn-sm{ type: "submit" } Review service
+      - if ratingable?
+        %h2.mb-3
+          Your review
+        .blue-row.form-inline.mb-3
+          .d-inline.mr-4
+            %i.fas.fa-star.fa-pull-left
+            You have been using this service for #{distance_of_time_in_words(@project_item.created_at, DateTime.now)}.
+            Please share your opinion with others EOSC Marketplace users.
+        = link_to "Review service",
+            new_project_item_service_opinion_path(@project_item),
+            class: "btn btn-primary btn-sm"
     .col-md-6
       = render "project_items/project_item_changes",
                 project_item_changes: @project_item.project_item_changes.order("updated_at DESC").to_a,
