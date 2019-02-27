@@ -8,6 +8,20 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.4.0] - 2019-02-26
+
+### Added
 - voucher_id in aod_voucher_accepted email (@kmarszalek)
 - voucher_id updates from jira (@michal-szostak)
 - `elasticsearch` version added to `.tool-versions` file (@mkasztelnik)
@@ -23,14 +37,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Change names of buttons and headers (@goreck888)
 - Changes in aod_voucher_accepted mails and new mail sended after rejection (@martaswiatkowska)
 - Change styles for project item details (@jarekzet)
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 
 ## [1.3.0] - 2019-02-11
 
