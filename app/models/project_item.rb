@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ProjectItem < ApplicationRecord
+  include Attributes
+
   STATUSES = {
     created: "created",
     registered: "registered",
@@ -43,7 +45,6 @@ class ProjectItem < ApplicationRecord
   validates :customer_typology, presence: true, unless: :open_access?
   validates :access_reason, presence: true, unless: :open_access?
   validate :research_area_is_a_leaf
-  validates_associated :property_values
   validates :user_group_name, presence: true, if: :research?
   validates :project_name, presence: true, if: :project?
   validates :project_website_url, url: true, presence: true, if: :project?
@@ -59,8 +60,6 @@ class ProjectItem < ApplicationRecord
   def service
     offer.service unless offer.nil?
   end
-
-  before_save :map_properties
 
   validate :one_per_project?, on: :create
 
@@ -104,41 +103,6 @@ class ProjectItem < ApplicationRecord
 
   def to_s
     "##{id}"
-  end
-
-  def map_properties
-    self.properties = property_values.map(&:to_json)
-  end
-
-  attribute :property_values
-
-  def property_values
-    if !@property_values
-      if properties.nil?
-        @property_values = offer.attributes.dup
-      else
-        @property_values = properties.map { |prop| Attribute.from_json(prop) }
-      end
-    end
-    @property_values
-  end
-
-  def property_values=(property_values)
-    if property_values.is_a?(Array)
-      @property_values = property_values
-    elsif property_values.is_a?(Hash)
-      props = []
-      property_values.each { |id, value|
-        attr = offer.attributes.find { |attr|
-          id == attr.id
-        }.dup
-        attr.value_from_param(value)
-        props << attr
-      }
-      @property_values = props
-    end
-    self.write_attribute(:property_values, @property_values)
-    @property_values
   end
 
   def one_per_project?
