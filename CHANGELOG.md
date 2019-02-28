@@ -17,6 +17,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 
+- Small view error in my order detail page 
+
 ### Security
 
 ## [1.4.0] - 2019-02-26

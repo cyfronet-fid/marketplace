@@ -85,7 +85,7 @@ RSpec.feature "My Services" do
       expect(page).to have_text("Service is ready")
     end
 
-    scenario "I can voucher id" do
+    scenario "I can see voucher id" do
       project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: create(:offer, voucherable: true),
                             voucher_id: "V123V")
@@ -95,7 +95,7 @@ RSpec.feature "My Services" do
       expect(page).to have_text(project_item.voucher_id)
     end
 
-    scenario "I cannot voucher entry" do
+    scenario "I cannot see voucher entry" do
       project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
@@ -112,6 +112,25 @@ RSpec.feature "My Services" do
       visit project_item_path(project_item)
 
       expect(page).to have_text("Vouchers\nRequested")
+    end
+
+    scenario "I cannot see review section" do
+      project = create(:project, user: user)
+      project_item = create(:project_item, project: project, offer: offer)
+
+      visit project_item_path(project_item)
+
+      expect(page).to_not have_text("Your review")
+    end
+
+    scenario "I can see review section" do
+      project = create(:project, user: user)
+      project_item = create(:project_item, project: project, offer: offer, status: :ready)
+      travel 1.day
+      visit project_item_path(project_item)
+
+      expect(page).to have_text("Your review")
+      expect(page).to have_text("You have been using this service for 1 day.")
     end
 
     scenario "I can ask question about my project_item" do
