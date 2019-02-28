@@ -3,6 +3,8 @@
     = render "services/offers/description", offer: offer
     = render "services/offers/parameters",
       technical_parameters: filter_technical_parameters(offer.attributes.map(&:to_json))
+    - if offer.bundle?
+      = render "services/bundle", bundled_offers: offer.bundled_offers
 
     .card-button.text-center
       %label
