@@ -18,6 +18,9 @@
             = markdown(offer.description)
       %h5.text-uppercase.parameters-title.mb-0= "Technical parameters"
       = render "services/parameters", parameters: offer.attributes
+
+      - if offer.bundle?
+        = render "services/bundle", bundled_offers: offer.bundled_offers
     .card-button.text-center
       %label
         - if offer.catalog?

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_15_114245) do
+ActiveRecord::Schema.define(version: 2019_02_28_074718) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,16 @@ ActiveRecord::Schema.define(version: 2019_02_15_114245) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
+  create_table "offer_links", force: :cascade do |t|
+    t.bigint "source_id", null: false
+    t.bigint "target_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_id", "target_id"], name: "index_offer_links_on_source_id_and_target_id", unique: true
+    t.index ["source_id"], name: "index_offer_links_on_source_id"
+    t.index ["target_id"], name: "index_offer_links_on_target_id"
+  end
+
   create_table "offers", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -91,32 +101,10 @@ ActiveRecord::Schema.define(version: 2019_02_15_114245) do
     t.jsonb "parameters"
     t.boolean "voucherable", default: false, null: false
     t.string "offer_type"
+    t.integer "bundled_offers_count", default: 0, null: false
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
     t.index ["service_id"], name: "index_offers_on_service_id"
-  end
-
-  create_table "order_changes", force: :cascade do |t|
-    t.string "status"
-    t.text "message"
-    t.bigint "order_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "author_id"
-    t.index ["author_id"], name: "index_order_changes_on_author_id"
-    t.index ["order_id"], name: "index_order_changes_on_order_id"
-  end
-
-  create_table "orders", force: :cascade do |t|
-    t.string "status", null: false
-    t.bigint "service_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "issue_id"
-    t.integer "issue_status", default: 2, null: false
-    t.index ["service_id"], name: "index_orders_on_service_id"
-    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "platforms", force: :cascade do |t|
@@ -363,6 +351,8 @@ ActiveRecord::Schema.define(version: 2019_02_15_114245) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "offer_links", "offers", column: "source_id"
+  add_foreign_key "offer_links", "offers", column: "target_id"
   add_foreign_key "project_item_changes", "users", column: "author_id"
   add_foreign_key "project_items", "affiliations"
   add_foreign_key "project_items", "offers"

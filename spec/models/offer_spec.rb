@@ -19,4 +19,28 @@ RSpec.describe Offer do
       expect(offer.offer_type).to eq "catalog"
     end
   end
+
+  context "bundle offer" do
+    let(:source) { create(:offer) }
+    let(:target) { create(:offer) }
+
+    before { OfferLink.create!(source: source, target: target) }
+
+    it "returns linked offer targets" do
+      expect(source.bundled_offers).to contain_exactly(target)
+    end
+
+    it "remove link when source is removed" do
+      expect { source.destroy! }.to change { OfferLink.count }.by(-1)
+    end
+
+    it "remove link when target is removed" do
+      expect { target.destroy! }.to change { OfferLink.count }.by(-1)
+    end
+
+    it "is when there are linked offers" do
+      expect(source).to be_bundle
+      expect(target).to_not be_bundle
+    end
+  end
 end

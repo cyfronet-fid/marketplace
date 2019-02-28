@@ -13,6 +13,22 @@ class Offer < ApplicationRecord
   has_many :project_items,
            dependent: :restrict_with_error
 
+  has_many :target_offer_links,
+           class_name: "OfferLink",
+           foreign_key: "source_id",
+           inverse_of: "source",
+           dependent: :destroy
+
+  has_many :source_offer_links,
+           class_name: "OfferLink",
+           foreign_key: "target_id",
+           inverse_of: "target",
+           dependent: :destroy
+
+  has_many :bundled_offers,
+           through: :target_offer_links,
+           source: :target
+
   validate :set_iid, on: :create
   validates :name, presence: true
   validates :description, presence: true
@@ -41,6 +57,10 @@ class Offer < ApplicationRecord
 
   def catalog?
     offer_type == "catalog"
+  end
+
+  def bundle?
+    bundled_offers_count.positive?
   end
 
   private

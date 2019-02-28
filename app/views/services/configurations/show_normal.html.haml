@@ -10,10 +10,8 @@
   html: { id: "order-form", "data-controller" => "project-item", "data-project-item-url" => projects_path } do |f|
 
   = render "services/configurations/voucher", project_item: @project_item, f: f
-
-  - unless @project_item.property_values.blank?
-    %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Technical parameters
-    = render "services/configurations/attributes", project_item: @project_item, form: f
+  = render "services/configurations/attributes", project_item: @project_item, f: f
+  = render "services/configurations/bundled_offers", project_item: @project_item, f: f
 
   %h5.mb-3.font-weight-bold.configuration-title.text-uppercase My projects
   %p.mb-4= t("project.select.description")
