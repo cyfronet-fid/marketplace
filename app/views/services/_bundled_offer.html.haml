@@ -1,1 +1,6 @@
-%li= offer.service.title
+%li.list-group-item
+  %strong
+    = offer.service.title
+  - if offer.service.description.size > 10
+    = markdown(offer.service.description.truncate(100, separator: " "))
+    = link_to "Read more", "#", class: "btn-link"
