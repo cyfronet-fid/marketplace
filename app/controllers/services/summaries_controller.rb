@@ -64,6 +64,10 @@ class Services::SummariesController < Services::ApplicationController
       params[:project_item][:additional_comment]
     end
 
+    def project_item_template
+      CustomizableProjectItem.new(session[session_key])
+    end
+
     def send_user_action
       if Mp::Application.config.recommender_host.nil?
         return
