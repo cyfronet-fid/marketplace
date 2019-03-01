@@ -7,7 +7,9 @@
           %span Voucher
       %h4.card-title= offer.name
       %p.card-text.mb-4= offer.description
-      %h5.text-uppercase.parameters-title.mb-0= "Technical parameters"
+      %h5.text-uppercase.parameters-title.mb-0
+        %i.fas.fa-tachometer-alt
+        Technical parameters
       = render "services/parameters", parameters: offer.attributes
       - if offer.bundle?
         = render "services/bundle", bundled_offers: offer.bundled_offers

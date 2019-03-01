@@ -684,39 +684,53 @@ Service detail
 /* -----------------------
 Card style
 -------------------------*/
-
+h5,h4 {
+  svg {
+    margin-right: 10px;
+    color: $palette-yellow
+  }
+}
 .card {
 
   &.offers {
     .card-text {
       height: 125px;
     }
+  }
 
 
-      .bundle-item {
-        margin: 0;
-        border: none;
-        padding: 10px;
-        color: $palette-solid-100;
-        background: $palette-yellow-opacity;
-        border-right: 2px solid #fff;
-        border-bottom: 2px solid #fff;
 
+  .bundle-box {
+    h4 {
+      border-bottom: 2px solid $palette-gray-10 !important;
+      padding-bottom: 5px;
+      margin-top: 20px;
+      text-transform: uppercase;
+    }
 
-        strong {
-          display: block;
-          line-height: 1rem;
-          margin-bottom: 10px;
-        }
+    .bundle-item {
+      margin: 0;
+      border: none;
+      padding: 10px;
+      color: $palette-solid-100;
+      background: $palette-yellow-opacity !important;
+      border: none !important;
+      border-right: 2px solid #fff !important;
+      border-bottom: 2px solid #fff !important;
 
-        p {
-          margin: 3px 0 5px 0;
-          padding: 0;
-          line-height: 1.1rem;
-          opacity: 0.8;
-        }
+      strong {
+        display: block;
+        line-height: 1rem;
+        margin-bottom: 10px;
       }
 
+      p {
+        margin: 3px 0 5px 0;
+        padding: 0;
+        line-height: 1.1rem;
+        opacity: 0.8;
+      }
+    }
   }
 
   border-color: $palette-yellow;

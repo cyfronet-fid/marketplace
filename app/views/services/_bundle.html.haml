@@ -1,5 +1,8 @@
-%h3.mb-1.mt-4 Bundle services
-.row.no-gutters
-  = render partial: "services/bundled_offer",
-    collection: bundled_offers, as: :offer
+.bundle-box
+  %h4
+    %i.fas.fa-box-open
+    Bundle services
+  .row.no-gutters
+    = render partial: "services/bundled_offer",
+      collection: bundled_offers, as: :offer
 
