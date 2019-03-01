@@ -11,6 +11,10 @@ body {
   }
 }
 
+.container {
+  max-width: 1180px;
+}
+
 *:focus {
   outline: none !important;
 }
@@ -688,29 +692,30 @@ Card style
       height: 125px;
     }
 
-    .bundle-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      border: none;
 
-      li.list-group-item {
+      .bundle-item {
         margin: 0;
-        margin-bottom: 5px;
         border: none;
-        padding: 15px;
+        padding: 10px;
         color: $palette-solid-100;
         background: $palette-yellow-opacity;
+        border-right: 2px solid #fff;
+        border-bottom: 2px solid #fff;
 
+
+        strong {
+          display: block;
+          line-height: 1rem;
+          margin-bottom: 10px;
+        }
 
         p {
-          margin: 3px 0;
+          margin: 3px 0 5px 0;
           padding: 0;
-          line-height: 1rem;
+          line-height: 1.1rem;
+          opacity: 0.8;
         }
       }
-
-    }
 
   }
 
