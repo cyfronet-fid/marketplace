@@ -684,13 +684,18 @@ Service detail
 /* -----------------------
 Card style
 -------------------------*/
-h5,h4 {
+h5,
+h4 {
   svg {
     margin-right: 10px;
-    color: $palette-yellow
+    color: $palette-yellow;
   }
 }
+
 .card {
+
+  border-color: $palette-yellow;
+  border-radius: $radius-common;
 
   &.offers {
     .card-text {
@@ -710,13 +715,12 @@ h5,h4 {
 
     .bundle-item {
       margin: 0;
-      border: none;
       padding: 10px;
       color: $palette-solid-100;
       background: $palette-yellow-opacity !important;
       border: none !important;
-      border-right: 2px solid #fff !important;
-      border-bottom: 2px solid #fff !important;
+      border-right: 2px solid $palette-white !important;
+      border-bottom: 2px solid $palette-white !important;
 
       strong {
         display: block;
@@ -725,7 +729,7 @@ h5,h4 {
       }
 
       p {
-        margin: 3px 0 5px 0;
+        margin: 3px 0 5px;
         padding: 0;
         line-height: 1.1rem;
         opacity: 0.8;
@@ -733,8 +737,7 @@ h5,h4 {
     }
   }
 
-  border-color: $palette-yellow;
-  border-radius: $radius-common;
+
 
   .card-header {
     border-bottom: none;
