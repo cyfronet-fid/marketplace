@@ -12,11 +12,16 @@ class ProjectItem::Part
     values.each { |id, value| update_attribute(id, value) }
   end
 
+  def validate
+    attributes.map { |a| a.validate }.all?
+  end
+
   def to_hash
-    {
-      "service_name" => offer.service.title,
-      "attributes" => attributes.map { |a| a.to_json }
-    }
+    attributes.map { |a| a.to_json }
+  end
+
+  def id
+    offer.id.to_s
   end
 
   private

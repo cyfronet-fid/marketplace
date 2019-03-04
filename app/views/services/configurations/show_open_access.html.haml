@@ -6,9 +6,8 @@
 = simple_form_for @project_item, url: service_configuration_path(@service),
   method: :put, html: { id: "order-form" } do |f|
 
-  - unless @project_item.property_values.blank?
-    %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Technical parameters
-    = render "services/configurations/attributes", project_item: @project_item, form: f
+  = render "services/configurations/attributes", project_item: @project_item, f: f
+  = render "services/configurations/bundled_offers", project_item: @project_item, f: f
 
   = f.input :project do
     .input-group.col-6.pl-0
