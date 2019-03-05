@@ -15,7 +15,7 @@ class ProjectItem::OfferValues
   def update(values)
     id_to_part = @parts.map { |p| [p.id.to_s, p] }.to_h
     values.each do |id, part_values|
-      part = id_to_part[id]
+      part = id_to_part[id.to_s]
       part.update(part_values) if part
     end
   end

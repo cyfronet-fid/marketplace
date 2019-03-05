@@ -5,12 +5,12 @@ class Services::ConfigurationsController < Services::ApplicationController
 
   def show
     setup_show_variables!
-    @project_item = ProjectItem.new(session[session_key])
+    @project_item = CustomizableProjectItem.new(session[session_key])
     render "show_#{@service.service_type}"
   end
 
   def update
-    @project_item = ProjectItem.new(configuration_params)
+    @project_item = CustomizableProjectItem.new(configuration_params)
 
     if @project_item.request_voucher
       @project_item.voucher_id = ""
@@ -27,7 +27,7 @@ class Services::ConfigurationsController < Services::ApplicationController
 
   private
     def configuration_params
-      template = ProjectItem.new(session[session_key])
+      template = CustomizableProjectItem.new(session[session_key])
       session[session_key].
           merge(permitted_attributes(template)).
           merge(status: :created)

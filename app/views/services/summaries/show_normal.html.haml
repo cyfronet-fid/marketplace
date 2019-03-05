@@ -13,6 +13,8 @@
 
 = render "services/summaries/technical_configuration",
          service: @service, project_item: @project_item
+= render "services/summaries/bundled_services",
+         project_item: @project_item
 
 .additional-information.mb-4
   %h3.mb-4

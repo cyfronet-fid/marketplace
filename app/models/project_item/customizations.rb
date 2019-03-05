@@ -1,19 +1,14 @@
 # frozen_string_literal: true
 
-module ProjectItem::Attributes
+module ProjectItem::Customization
   extend ActiveSupport::Concern
 
-  included do
-    validate :validate_property_values
-  end
-
-
-  def property_values
+  def customizations
     offer_values.attributes_map[offer]
   end
 
   def property_values=(property_values)
-    offer_values.update(offer => property_values)
+    offer_values.update(offer.id => property_values)
     self.properties = offer_values.to_hash
   end
 
@@ -24,7 +19,7 @@ module ProjectItem::Attributes
   def bundled_property_values=(bundled_property_values)
     bundled_property_values.each do |offer_id, property_values|
       offer = id_to_bundled_offer[offer_id]
-      offer_values.update(offer => property_values) if offer
+      offer_values.update(offer.id => property_values) if offer
     end
     self.properties = offer_values.to_hash
   end
@@ -41,6 +36,6 @@ module ProjectItem::Attributes
     end
 
     def id_to_bundled_offer
-      @id_to_offer ||= offer.bundled_offers.map { |o| [o.id.to_s, o] }.to_h
+      @id_to_offer ||= offer.bundled_offers.map { |o| ["o#{o.id}", o] }.to_h
     end
 end

@@ -43,7 +43,7 @@ class Services::SummariesController < Services::ApplicationController
     end
 
     def project_item_template
-      ProjectItem.new(session[session_key])
+      CustomizableProjectItem.new(session[session_key])
     end
 
     def confirmation_params
