@@ -23,6 +23,7 @@ class ProjectItem::Part
       "service" => offer.service.title,
       "offer" => offer.name,
       "offer_id" => offer.id,
+      "category" => offer.service.categories.first.name,
       "attributes" => attributes.map { |a| a.to_json }
     }
   end
