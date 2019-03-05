@@ -5,15 +5,16 @@ class ProjectItem::OfferValues
 
   def initialize(offer:, parameters: nil)
     @offer = offer
-    @parts = parts_from_parameters(parameters || {})
+    @main = ProjectItem::Part.new(offer: offer, parameters: parameters)
+    @parts = bundled_parts(parameters&.[]("bundled_services") || [])
   end
 
   def attributes_map
-    @parts.map { |p| [p.offer, p.attributes] }.to_h
+    all_parts.map { |p| [p.offer, p.attributes] }.to_h
   end
 
   def update(values)
-    id_to_part = @parts.map { |p| [p.id.to_s, p] }.to_h
+    id_to_part = all_parts.map { |p| [p.id.to_s, p] }.to_h
     values.each do |id, part_values|
       part = id_to_part[id.to_s]
       part.update(part_values) if part
@@ -21,18 +22,26 @@ class ProjectItem::OfferValues
   end
 
   def validate
-    @parts.map { |p| p.validate }.all?
+    all_parts.map { |p| p.validate }.all?
   end
 
   def to_hash
-    @parts.map { |p| [p.id, p.to_hash] }.to_h
+    @main.to_hash.tap do |hsh|
+      hsh["bundled_services"] = @parts.map { |p| p.to_hash } if @parts.present?
+    end
   end
 
   private
 
-    def parts_from_parameters(all_parameters)
-      (offer.bundled_offers + [offer]).map do |offer|
-        ProjectItem::Part.new(offer: offer, parameters: all_parameters[offer.id.to_s])
+    def all_parts
+      @parts + [@main]
+    end
+
+    def bundled_parts(parameters)
+      id_to_part_parameters = parameters.map { |p| [p["offer_id"], p] }.to_h
+      offer.bundled_offers.map do |offer|
+        ProjectItem::Part.new(offer: offer,
+                              parameters: id_to_part_parameters[offer.id])
       end
     end
 end

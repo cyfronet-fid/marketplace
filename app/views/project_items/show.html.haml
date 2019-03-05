@@ -84,7 +84,10 @@
                 %dd
                   = @project_item.affiliation.supervisor_profile
 
-        = render "project_items/attributes", property_values: @project_item.property_values
+        = render "project_items/attributes",
+                 property_values: @project_item.customizations
+        = render "project_items/bundled_services",
+                 bundled_services: @project_item.bundled_services
 
       - if ratingable?
         %h3.mb-3 Rate this service

@@ -1,41 +1,15 @@
 # frozen_string_literal: true
 
-module ProjectItem::Customization
+module ProjectItem::Customizations
   extend ActiveSupport::Concern
 
   def customizations
-    offer_values.attributes_map[offer]
+    @customizations ||= properties["attributes"].map { |p| Attribute.from_json(p) }
   end
 
-  def property_values=(property_values)
-    offer_values.update(offer.id => property_values)
-    self.properties = offer_values.to_hash
+  def bundled_services
+    @bundled_services ||= (properties["bundled_services"] || []).map do |parameters|
+      ProjectItem::ReadonlyPart.new(parameters: parameters)
+    end
   end
-
-  def bundled_property_values
-    offer_values.attributes_map.reject { |o, _| o == offer }
-  end
-
-  def bundled_property_values=(bundled_property_values)
-    bundled_property_values.each do |offer_id, property_values|
-      offer = id_to_bundled_offer[offer_id]
-      offer_values.update(offer.id => property_values) if offer
-    end
-    self.properties = offer_values.to_hash
-  end
-
-  private
-
-    def validate_property_values
-      offer_values.validate
-    end
-
-    def offer_values
-      @offers_values ||= ProjectItem::OfferValues.new(offer: offer,
-                                                      parameters: properties)
-    end
-
-    def id_to_bundled_offer
-      @id_to_offer ||= offer.bundled_offers.map { |o| ["o#{o.id}", o] }.to_h
-    end
 end

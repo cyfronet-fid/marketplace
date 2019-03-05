@@ -2,6 +2,7 @@
 
 class CustomizableProjectItem < ProjectItem
   validate :validate_property_values
+  validates_associated :property_values
 
   def property_values
     offer_values.attributes_map[offer]

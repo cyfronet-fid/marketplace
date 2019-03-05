@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ProjectItem < ApplicationRecord
-  # include Attributes
+  include Customizations
 
   STATUSES = {
     created: "created",

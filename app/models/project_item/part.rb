@@ -5,7 +5,9 @@ class ProjectItem::Part
 
   def initialize(offer:, parameters: nil)
     @offer = offer
-    @attributes = attributes_from_params(parameters || offer.parameters.dup || [])
+
+    parameters = parameters&.[]("attributes") || offer.parameters.dup || []
+    @attributes = attributes_from_params(parameters)
   end
 
   def update(values)
@@ -17,7 +19,12 @@ class ProjectItem::Part
   end
 
   def to_hash
-    attributes.map { |a| a.to_json }
+    {
+      "service" => offer.service.title,
+      "offer" => offer.name,
+      "offer_id" => offer.id,
+      "attributes" => attributes.map { |a| a.to_json }
+    }
   end
 
   def id

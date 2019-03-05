@@ -1,0 +1,6 @@
+- if bundled_services.present?
+  %h5.text-uppercase.parameters-title.mb-3 Bundled services
+  - bundled_services.each do |bundle_part|
+    %h6 #{bundle_part.service} (#{bundle_part.offer})
+    = render "project_items/attributes", property_values: bundle_part.attributes
+
