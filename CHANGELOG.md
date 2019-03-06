@@ -12,6 +12,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 - markdown rendering in offer's description (@goreck888)
 - Offers parameters in backoffice - initial (@martaswiatkowska)
 
+- Order Target field to Service (@michal-szostak)
+- Passing of Order Target field to JIRA (field `SO-ServiceOrderTarget`) (@michal-szostak)
+
 ### Changed
 
 ### Deprecated
@@ -19,6 +22,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+
+- Date and time display in order history
 
 ### Security
 

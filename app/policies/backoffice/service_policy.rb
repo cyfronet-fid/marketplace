@@ -57,6 +57,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       :access_policies_url, :corporate_sla_url,
       :webpage_url, :manual_url, :helpdesk_url,
       :tutorial_url, :restrictions, :phase,
+      :order_target,
       :activate_message, :logo,
       [contact_emails: []], [research_area_ids: []],
       [platform_ids: []], :tag_list, [category_ids: []],

@@ -47,6 +47,8 @@ en:
           Url should start with http or https [e.g. http://webpage.org]
         tag_list: |
           Use "," to separate tags
+        order_target: |
+          Email address - eg. email@domain.com
     #     username: 'User name to sign in.'
     #     password: 'No special characters, please.'
     # include_blanks:

@@ -313,7 +313,7 @@ one task, you have to ask either a JIRA admin, or check yourself, if you have ad
 
 #### Webhooks
 
-Webhook configuration has been described abouve in [Configuring webhook](#configuring-webhook)
+Webhook configuration has been described above in [Configuring webhook](#configuring-webhook)
 
 Make sure to set `MP_JIRA_WEBHOOK_SECRET` variable to the same value as the one in webhook, otherwise marketplace
 will not receive any data from JIRA.
@@ -358,3 +358,12 @@ To sum up all the environmetnal variables which you need to make sure to have se
 * `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_research`
 * `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_private_company`
 * `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_project`
+* `MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_true`
+* `MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_false`
+* `MP_JIRA_FIELD_SO_ServiceOrderTarget`
+* `MP_JIRA_FIELD_CP_VoucherID`
+* `MP_JIRA_FIELD_CP_INeedAVoucher`
+* `MP_JIRA_FIELD_CP_Platforms`
+* `MP_JIRA_FIELD_SO_ProjectName`
+* `MP_JIRA_FIELD_CP_ProjectInformation`
+* `MP_JIRA_FIELD_CP_UserGroupName`
