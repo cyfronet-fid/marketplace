@@ -1,8 +1,6 @@
 
 .card-group.row
-  - if @service.offers?
+  - if @service.offers.count.positive?
     = render partial: "backoffice/services/offers/offer", collection: service.offers, locals: { service: service }
   - else
     %p This service has no offers
-
-

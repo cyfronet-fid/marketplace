@@ -29,9 +29,9 @@ RSpec.describe ServicePolicy do
   permissions :order? do
     it "grants access when there are offers" do
       service = create(:service)
-      create(:offer, service: service)
+      offer = create(:offer, service: service)
 
-      expect(subject).to permit(user, service)
+      expect(subject).to permit(user, service.reload)
     end
 
     it "denies when there is not offers" do
@@ -43,15 +43,14 @@ RSpec.describe ServicePolicy do
     it "grants when there is more than on offer" do
       service = create(:service)
       create_list(:offer, 2, service: service)
-
-      expect(subject).to permit(user, service)
+      expect(subject).to permit(user, service.reload)
     end
 
     it "denies when there is only one offer" do
       service = create(:service)
       create(:offer, service: service)
 
-      expect(subject).to_not permit(user, service)
+      expect(subject).to_not permit(user, service.reload)
     end
 
     it "denies when there is not offers" do

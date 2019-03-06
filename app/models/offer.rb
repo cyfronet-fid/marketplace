@@ -7,17 +7,26 @@ class Offer < ApplicationRecord
     catalog: "catalog"
   }
 
-  belongs_to :service,
-             counter_cache: true
+  STATUSES = {
+    published: "published",
+    draft: "draft"
+  }
+
+  enum status: STATUSES
+
+  belongs_to :service
 
   has_many :project_items,
            dependent: :restrict_with_error
+
+  counter_culture :service, column_name: proc { |model| model.published? ? "offers_count" : nil }
 
   validate :set_iid, on: :create
   validates :name, presence: true
   validates :description, presence: true
   validates :service, presence: true
   validates :iid, presence: true, numericality: true
+  validates :status, presence: true
 
   def to_param
     iid.to_s
