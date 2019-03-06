@@ -5,5 +5,6 @@ FactoryBot.define do
     sequence(:name) { |n| "offer #{n}" }
     sequence(:description) { |n| "offer #{n} description" }
     sequence(:service) { |n| create(:service, offers_count: 1) }
+    sequence(:status) { :published }
   end
 end
