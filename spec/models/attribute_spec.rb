@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Attribute do
 
-  it "creates correct string select with value from json", focus: true do
+  it "creates correct string select with value from json" do
     attr = Attribute.from_json("id" => "id1",
                                "label" => "Attribute 1",
                                "type" => "select",
@@ -17,7 +17,7 @@ RSpec.describe Attribute do
     expect(attr.value_valid?).to be true
   end
 
-  it "sets value of correct select from request param", focus: true do
+  it "sets value of correct select from request param" do
     attr = Attribute.from_json("id" => "id1",
                                "label" => "Attribute 1",
                                "type" => "select",
@@ -28,7 +28,7 @@ RSpec.describe Attribute do
     attr.value_from_param(["a"])
   end
 
-  it "creates correct non changable attribute with unit from string", focus: true do
+  it "creates correct non changable attribute with unit from string" do
     attr = Attribute.from_json("id" => "id7",
                                "label" => "Attribute non changable",
                                "type" => "attribute",
@@ -39,7 +39,7 @@ RSpec.describe Attribute do
   end
 
   # TODO - known issue for now. Rails auto-coerces to numeric types. Bring this test back once fixed
-  # it "creates attribute number string assigned to string", focus: true do
+  # it "creates attribute number string assigned to string" do
   #   attr = Attribute.from_json({
   #                                  "id" => "id7",
   #                                  "label" => "Attribute non changable",
@@ -51,7 +51,7 @@ RSpec.describe Attribute do
   #   expect(attr.value_valid?).to be true
   # end
 
-  it "fails on wrong value type", focus: true do
+  it "fails on wrong value type" do
     attr = Attribute.from_json("id" => "id1",
                                "label" => "Attribute 1",
                                "type" => "attribute",
@@ -60,7 +60,7 @@ RSpec.describe Attribute do
     expect(attr.value_valid?).to be true
   end
 
-  it "creates correct date property from json", focus: true do
+  it "creates correct date property from json" do
     attr = Attribute.from_json("id" => "id1",
                                "label" => "Attribute 1",
                                "type" => "date",
@@ -69,20 +69,22 @@ RSpec.describe Attribute do
     expect(attr.value_valid?).to be true
   end
 
-  it "fails on invalid attribute type", focus: true do
+  it "fails on invalid attribute type" do
+
     expect {
       Attribute.from_json("id" => "id1",
-                           "label" => "Attribute 1",
-                           "type" => "select",
-                           "value_type" => "fail",
-                           "value" => "b",
-                           "config" => {
-                               "values" => ["a", "b", "c"]
+                          "label" => "Attribute 1",
+                          "type" => "select",
+                          "value_type" => "fail",
+                          "value" => "b",
+                          "config" => {
+                              "values" => ["a", "b", "c"]
                            })
+
     }.to raise_exception(JSON::Schema::ValidationError)
   end
 
-  it "creates correct integer select with value from json", focus: true do
+  it "creates correct integer select with value from json" do
     attr = Attribute.from_json("id" => "id1",
                                "label" => "Attribute 1",
                                "type" => "select",
@@ -95,7 +97,7 @@ RSpec.describe Attribute do
     expect(attr.value_valid?).to be true
   end
 
-  it "creates correct integer multiselectselect with value from json", focus: true do
+  it "creates correct integer multiselectselect with value from json" do
     attr = Attribute.from_json("id" => "id1",
                                "label" => "Attribute 1",
                                "type" => "multiselect",
@@ -108,7 +110,7 @@ RSpec.describe Attribute do
     expect(attr.value_valid?).to be true
   end
 
-  it "does anything", focus: true do
+  it "does anything" do
     attr = Attribute.from_json("id" => "id1",
                                "label" => "Attribute 1",
                                "type" => "multiselect",
@@ -121,7 +123,7 @@ RSpec.describe Attribute do
     expect(attr.value_valid?).to be true
   end
 
-  it "creates correct range property from json", focus: true do
+  it "creates correct range property from json" do
     attr = Attribute.from_json("id" => "id1",
                                "label" => "Attribute 1",
                                "type" => "range-property",
@@ -134,7 +136,7 @@ RSpec.describe Attribute do
   end
 
 
-  it "creates correct number range with value from json", focus: true do
+  it "creates correct number range with value from json" do
     attr = Attribute.from_json("id" => "id1",
                                "label" => "Attribute 1",
                                "type" => "range",
@@ -147,7 +149,7 @@ RSpec.describe Attribute do
     expect(attr.value_valid?).to be true
   end
 
-  it "creates correct number range with invalid value from json", focus: true do
+  it "creates correct number range with invalid value from json" do
     attr = Attribute.from_json("id" => "id1",
                                "label" => "Attribute 1",
                                "type" => "range",
@@ -161,7 +163,7 @@ RSpec.describe Attribute do
     expect(attr.value_valid?).to be false
   end
 
-  it "fails to create dummy attribute", focus: true do
+  it "fails to create dummy attribute" do
     expect { Attribute.from_json("id" => "id1") }.to raise_exception(JSON::Schema::ValidationError)
   end
 

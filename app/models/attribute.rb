@@ -101,6 +101,7 @@ class Attribute
 
   def self.from_json(json)
     JSON::Validator.validate!(ATTRIBUTE_SCHEMA, json)
+
     case json["type"]
     when "input"
       attr = Attribute::Input.new

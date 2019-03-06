@@ -3,7 +3,6 @@
 class ArrayInput < SimpleForm::Inputs::StringInput
   def input(wrapper_options)
     input_html_options[:type] ||= input_type
-
     existing_value = Array(object.public_send(attribute_name)).map.with_index do |array_el, index|
       @builder.text_field(nil, input_html_options.merge(value: array_el,
                                                         name: "#{object_name}[#{attribute_name}][]",

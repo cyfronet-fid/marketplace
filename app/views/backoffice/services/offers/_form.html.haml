@@ -1,9 +1,18 @@
-= simple_form_for [:backoffice, service, offer]  do |f|
+= simple_form_for [:backoffice, service, offer], html: { "data-controller": "offer" } do |f|
+  = f.error_notification
   = f.input :name
   = f.input :description, input_html: { rows: 10 }
   = f.input :offer_type, collection: Offer.offer_types.keys.map(&:to_sym)
+  = f.input :parameters_as_string,
+      as: :attributes,
+      multiple: true,
+      wrapper_html: { "data-target": "offer.parameters" },
+      input_html: { rows: 10 }
 
+  %div
+    %a#add-parameter-field{ "data-action": "click->offer#addField", class: "btn btn-secondary" }
+      Add additional parameters
+  %hr.bottom-hr.mb-4
   .btn-group
     = f.button :submit, class: "btn btn-success"
     = link_to "Cancel", backoffice_service_path(service), class: "btn btn-secondary"
-
