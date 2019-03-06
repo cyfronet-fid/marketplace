@@ -22,7 +22,7 @@ class ServicesController < ApplicationController
     @service = Service.
                includes(:offers, related_services: :providers).
                friendly.find(params[:id])
-    @offers = @service.offers
+    @offers = policy_scope(@service.offers)
     @related_services = @service.related_services
 
     @service_opinions = ServiceOpinion.joins(project_item: :offer).

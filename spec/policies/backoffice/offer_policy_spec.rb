@@ -15,49 +15,62 @@ RSpec.describe Backoffice::OfferPolicy do
 
   subject { described_class }
 
-  context "Service draft" do
-    permissions :new?, :create? do
-      it "grants access service portfolio manager" do
-        expect(subject).to permit(service_portfolio_manager, build(:offer, service: build(:service, status: :draft)))
+  context "offer published" do
+    context "Service draft" do
+      permissions :new?, :create?, :edit?, :update?, :destroy? do
+        it "grants access service portfolio manager" do
+          expect(subject).to permit(service_portfolio_manager, build(:offer, service: build(:service, status: :draft)))
+        end
+      end
+
+      permissions :destroy?, :new?, :update?, :edit?, :create? do
+        it "denied access  service owner" do
+          expect(subject).to_not permit(service_owner, build(:offer, service: service_owner.owned_services.draft.first))
+        end
       end
     end
 
-    permissions :edit?, :update? do
-      it "grants access service portfolio manager" do
-        expect(subject).to permit(service_portfolio_manager, build(:offer, service: build(:service, status: :draft)))
+    context "service published" do
+      permissions :new?, :create?, :edit?, :update?, :destroy? do
+        it "grants access service portfolio manager" do
+          expect(subject).to permit(service_portfolio_manager, build(:offer, service: build(:service)))
+        end
       end
-    end
 
-    permissions :destroy? do
-      it "grants access service portfolio manager" do
-        expect(subject).to permit(service_portfolio_manager, build(:offer, service: build(:service, status: :draft)))
-      end
-    end
-
-    permissions :destroy?, :new?, :update?, :edit?, :create? do
-      it "denied access  service owner" do
-        expect(subject).to_not permit(service_owner, build(:offer, service: service_owner.owned_services.draft.first))
+      permissions :new?, :create?, :edit?, :update?, :destroy? do
+        it "danies access service owner" do
+          expect(subject).to_not permit(service_owner, build(:offer, service: service_owner.owned_services.published.first))
+        end
       end
     end
   end
 
-  context "service published" do
+  context "offer draft" do
+    context "Service draft" do
+      permissions :new?, :create?, :edit?, :update?, :destroy? do
+        it "grants access service portfolio manager" do
+          expect(subject).to permit(service_portfolio_manager, build(:offer, status: :draft, service: build(:service, status: :draft)))
+        end
+      end
 
-    permissions :new?, :create? do
-      it "grants access service portfolio manager" do
-        expect(subject).to permit(service_portfolio_manager, build(:offer, service: build(:service)))
+      permissions :destroy?, :new?, :update?, :edit?, :create? do
+        it "denied access  service owner" do
+          expect(subject).to_not permit(service_owner, build(:offer, status: :draft, service: service_owner.owned_services.draft.first))
+        end
       end
     end
 
-    permissions  :edit?, :update?, :destroy? do
-      it "danied access service portfolio manager" do
-        expect(subject).to_not permit(service_portfolio_manager, build(:offer, service:  build(:service)))
+    context "service published" do
+      permissions :new?, :create?, :edit?, :update?, :destroy? do
+        it "grants access service portfolio manager" do
+          expect(subject).to permit(service_portfolio_manager, build(:offer, status: :draft, service: build(:service)))
+        end
       end
-    end
 
-    permissions :new?, :create?, :edit?, :update?, :destroy? do
-      it "danies access service owner" do
-        expect(subject).to_not permit(service_owner, build(:offer, service: service_owner.owned_services.published.first))
+      permissions :new?, :create?, :edit?, :update?, :destroy? do
+        it "danies access service owner" do
+          expect(subject).to_not permit(service_owner, build(:offer, status: :draft, service: service_owner.owned_services.published.first))
+        end
       end
     end
   end

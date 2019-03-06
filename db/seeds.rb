@@ -89,7 +89,10 @@ yaml_hash["services"].each do |_, hash|
     hash["logo"] && service.logo.attach(io: File.open("db/logos/#{hash["logo"]}"), filename: hash["logo"])
 
     hash["offers"] && hash["offers"].each do |_, h|
-      service.offers.create!(name: h["name"], description: h["description"], parameters: h["parameters"])
+      service.offers.create!(name: h["name"],
+                             description: h["description"],
+                             parameters: h["parameters"],
+                             status: :published)
     end
   end
   puts "Generated service #{ hash["title"] }"

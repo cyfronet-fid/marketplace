@@ -23,17 +23,26 @@ class Backoffice::OfferPolicy < ApplicationPolicy
   end
 
   def edit?
-    service_portfolio_manager? && record.service.draft?
+    service_portfolio_manager?
   end
 
   def update?
-    service_portfolio_manager? && record.service.draft?
+    service_portfolio_manager?
   end
 
   def destroy?
     service_portfolio_manager? &&
-      project_items.count.zero? &&
-      record.service.draft?
+      project_items.count.zero?
+  end
+
+  def publish?
+    service_portfolio_manager? &&
+      record.draft?
+  end
+
+  def draft?
+    service_portfolio_manager? &&
+      record.published?
   end
 
   def permitted_attributes
