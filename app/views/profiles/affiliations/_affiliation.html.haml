@@ -12,8 +12,8 @@
         = affiliation.status
       %span.small.my-auto.ml-3
         last change: #{affiliation.updated_at.strftime("%d.%m.%Y")}
-    .col-12.col-md-4.mt-4.mt-md-0
-      .btn-group.my-auto.ml-3.float-right
+    .col-12.col-md-4.mt-4.mt-md-0.d-flex.justify-content-end
+      .btn-group.my-auto.ml-3.align-self-center
         - if policy(affiliation).edit?
           = link_to "Edit",
                     edit_profile_affiliation_path(affiliation),
