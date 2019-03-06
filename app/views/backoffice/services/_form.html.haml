@@ -28,6 +28,10 @@
       = f.input :contact_emails, multiple: true, as: :array
       %a#add-email-field.text-primary Add additional email
   .row.mt-5
+    .col-12.col-md-10
+      = f.input :order_target, label: "Service Order Target"
+
+  .row.mt-5
     .col-12.col-md-5
       = f.input :places
       = f.input :languages

@@ -117,4 +117,17 @@ RSpec.describe Service do
 
   end
 
+  it "requires service_order_target to be an email" do
+    service = create(:service)
+    service.order_target = "not-valid-email"
+    expect(service.valid?).to be_falsey
+    service.order_target = "valid@email.com"
+    expect(service.valid?).to be_truthy
+  end
+
+  it "allows service_order_target to be blank" do
+    service = create(:service)
+    service.order_target = ""
+    expect(service.valid?).to be_truthy
+  end
 end

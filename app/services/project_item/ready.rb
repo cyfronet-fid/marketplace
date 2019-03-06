@@ -30,6 +30,7 @@ class ProjectItem::Ready
           transition.save!("transition" => { "id" => trs.first.id })
           @project_item.update_attributes(issue_id: issue.id, issue_status: :jira_active)
         else
+          @project_item.update_attributes(issue_id: issue.id)
           @project_item.jira_errored!
           raise JIRATransitionSaveError.new(@project_item)
         end

@@ -90,7 +90,8 @@ describe Jira::Client do
                        "CP-VoucherID-1" => "",
                        "SO-1-1" => "cat1/s1/off1?Data repository name=aaaaaa&" +
                                    "Harvesting method=OAI-PMH&" +
-                                   "Harvesting endpoint=aaaaa" }
+                                   "Harvesting endpoint=aaaaa",
+                       "SO-ServiceOrderTarget-1" => "" }
 
     issue = double(:Issue)
     expect(issue).to receive("save").with(fields: expected_fields).and_return(true)
@@ -112,10 +113,11 @@ describe Jira::Client do
                           user_group_name: nil,
                           project_name: nil,
                           offer: create(:offer, name: "off1",  service: create(:service,
-                                                                 title: "s1",
-                                                                 service_type: "open_access",
-                                                                 connected_url:  "http://service.org/access",
-                                                                 categories: [create(:category, name: "cat1")])),
+                                                                               order_target: "email@domain.com",
+                                                                               title: "s1",
+                                                                               service_type: "open_access",
+                                                                               connected_url:  "http://service.org/access",
+                                                                               categories: [create(:category, name: "cat1")])),
                           research_area: nil,
                           project: create(:project, user: user, name: "My Secret Project"))
 
@@ -132,7 +134,8 @@ describe Jira::Client do
                         "CP-INeedAVoucher-1" => { "id" => "20004" },
                         "CP-VoucherID-1" => "",
                         "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
-                        "SO-1-1" => "cat1/s1/off1?" }
+                        "SO-1-1" => "cat1/s1/off1?",
+                        "SO-ServiceOrderTarget-1" => "email@domain.com" }
 
     issue = double(:Issue)
     expect(issue).to receive("save").with(fields: expected_fields).and_return(true)
@@ -141,7 +144,7 @@ describe Jira::Client do
     expect(client.create_service_issue(project_item)).to be(issue)
   end
 
-  it "create_service open access issue should save issue with correct fields" do
+  it "create_service open access with voucher id" do
     allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
 
@@ -178,7 +181,8 @@ describe Jira::Client do
                         "CP-INeedAVoucher-1" => { "id" => "20004" },
                         "CP-VoucherID-1" => "123123",
                         "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
-                        "SO-1-1" => "cat1/s1/off1?" }
+                        "SO-1-1" => "cat1/s1/off1?",
+                        "SO-ServiceOrderTarget-1" => "" }
 
     issue = double(:Issue)
     expect(issue).to receive("save").with(fields: expected_fields).and_return(true)
@@ -187,7 +191,7 @@ describe Jira::Client do
     expect(client.create_service_issue(project_item)).to be(issue)
   end
 
-  it "create_service open access issue should save issue with correct fields" do
+  it "create_service open access requesting vouchers" do
     allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
 
@@ -224,7 +228,8 @@ describe Jira::Client do
                         "CP-INeedAVoucher-1" => { "id" => "20003" },
                         "CP-VoucherID-1" => "",
                         "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
-                        "SO-1-1" => "cat1/s1/off1?" }
+                        "SO-1-1" => "cat1/s1/off1?",
+                        "SO-ServiceOrderTarget-1" => "" }
 
     issue = double(:Issue)
     expect(issue).to receive("save").with(fields: expected_fields).and_return(true)
