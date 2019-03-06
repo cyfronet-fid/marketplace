@@ -64,7 +64,8 @@ class Jira::Client < JIRA::Client
       "CP-VoucherID": fields_config["CP-VoucherID"],
       # For now only single Service Offer is supported
       "SO-ProjectName": fields_config["SO-ProjectName"],
-      "SO-1": fields_config["SO-1"]
+      "SO-1": fields_config["SO-1"],
+      "SO-ServiceOrderTarget": fields_config["SO-ServiceOrderTarget"]
     }
 
     super(options)
@@ -159,6 +160,8 @@ private
       "#{project_item.service.title}/" +
       "#{project_item.offer&.name}?" +
       "#{encode_properties(project_item.properties)}"
+    when "SO-ServiceOrderTarget"
+      project_item.service.order_target
     else
       nil
     end

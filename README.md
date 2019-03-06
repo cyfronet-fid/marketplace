@@ -85,79 +85,23 @@ or you can also use `systemctl`, it shouldn't matter which one you use.
 ## JIRA
 
 Marketplace is integrating with jira on a rather tight level.
-For tests JIRA is mocked, and for normal development it can be omitted,
-but in case there is a need for JIRA instance to exist it is recommeded
-to use jira instance provided by atlassian SDK.
+For tests JIRA is mocked, and for normal development connection from MP to JIRA is provided.
+All fields and JIRA variables are stored in encrypted credentials. The default project to which 
+issues are written is `EOSCSODEV`. If you require backward communication from JIRA to your application
+you can use reverse tunnel to connect WH to your local application instance. To do so execute following command
+(first make sure that your local instance of marketplace has been started already):
+
+```
+ssh -R <port_number - from 9001 to 9015>:localhost:5000 mszostak@docker-fid.grid.cyf-kr.edu.pl -N
+```
+
+If you can not connect, try different port - it is possible that other developer connected 
+to this port and is blocking it
 
 ## For Admins
 
 If you are an admin, who wants to integrate production instance of JIRA go to
 [JIRA integration manual](./docs/jira_integration.md) otherwise read on.
-
-## For Developers
-
-Here are instructions how to install atlassian SDK on \*nix systems:
-https://developer.atlassian.com/server/framework/atlassian-sdk/install-the-atlassian-sdk-on-a-linux-or-mac-system/
-
-After installation you can start local JIRA instance by
-
-```
-atlas-run-standalone --product jira --server localhost
-```
-
-Afterwards JIRA can be accessed by the browser on http://localhost:2990/jira
-default username and password is: `admin/admin`.
-Make sure that environmental variables are set as follows (if you don't know some
-ids skip it for now, `rails jira:check` will give you sensible hints, `.dotenv` gem should be active
-in the development environment, so you can store following variables in `.env` file in the root of the project):
-
-```
-export MP_JIRA_PROJECT=MP
-export MP_JIRA_USERNAME=admin
-export MP_JIRA_PASSWORD=admin
-export MP_JIRA_CONTEXT_PATH=/jira
-export MP_JIRA_URL=http://localhost:2990
-export MP_JIRA_ISSUE_TYPE_ID=10000  #this might be different
-export MP_JIRA_WF_TODO=10000  #this might be different
-export MP_JIRA_WF_IN_PROGRESS=10001  #this might be different
-export MP_JIRA_WF_DONE=10002  #this might be different
-export MP_JIRA_WF_WAITING_FOR_RESPONSE=10003  #this might be different
-export MP_JIRA_WF_REJECTED=10004  #this might be different
-export MP_HOST="http://localhost:5000" # this is address of MP application
-```
-
-Afterwards you should run rake task which will check JIRA connection and will detect potential problems
-
-```
-rails jira:check
-```
-
-If you run fresh jira instance you can also create project by running
-```
-rails jira:setup
-```
-
-### Webhooks
-
-As of now webhooks must be created manually. You can do it in your administrator
-panel on your JIRA instance.
-
-Webhook url must be as follows
-`<MP HOSTNAME e.g. http://localhost:5000>/api/webhooks/jira?issue_id=${issue.id}&secret=<app_secret>`.
-`app_secret` should be the same as the one defined in `jira.yml` - `webhook_secret` or in `MP_JIRA_WEBHOOK_SECRET`
-environmental variable.
-JQL for querying should be: `project = <PROJECT_KEY>`
-All notifications for issues and comments should be enabled.
-
-If you create webhook, but are not sure whether options you have choosen are correct
-running
-```
-rails jira:check
-```
-will show you all problems with your webhook, including notifications you should have
-checked on. (**NOTICE:** don't forget to set you ENV variables correctly (see above),
-especially `MP_HOST` variable, without it rake task will not be able to identify which
-webhook is pointing to your application)
 
 ## Run
 

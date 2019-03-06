@@ -55,6 +55,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Tutorial url", with: "https://sample.url"
       fill_in "Restrictions", with: "Reaserch affiliation needed"
       fill_in "Activate message", with: "Welcome!!!"
+      fill_in "Service Order Target", with: "email@domain.com"
       select "Alpha (min. TRL 5)", from: "Phase"
       select research_area.name, from: "Research areas"
       select provider.name, from: "Providers"
@@ -71,6 +72,8 @@ RSpec.feature "Services in backoffice" do
       expect { click_on "Create Service" }.
         to change { user.owned_services.count }.by(1)
 
+
+      expect(user.owned_services.last.order_target).to eq("email@domain.com")
 
       expect(page).to have_content("service title")
       expect(page).to have_content("service description")
