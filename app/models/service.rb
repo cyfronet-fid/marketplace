@@ -92,6 +92,7 @@ class Service < ApplicationRecord
   validates :providers, presence: true
   validates :categories, presence: true
   validates :status, presence: true
+  validates :order_target, allow_blank: true, email: true
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
   before_validation :strip_whitespace
