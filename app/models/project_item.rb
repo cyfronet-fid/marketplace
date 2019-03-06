@@ -28,6 +28,10 @@ class ProjectItem < ApplicationRecord
   enum issue_status: ISSUE_STATUSES
   enum customer_typology: CUSTOMER_TYPOLOGIES
 
+  attribute :property_values
+
+  before_save :map_properties
+
   belongs_to :offer
   belongs_to :affiliation, required: false
   belongs_to :project
@@ -53,16 +57,13 @@ class ProjectItem < ApplicationRecord
   validates :request_voucher, absence: true, unless: :vaucherable?
   validates :voucher_id, absence: true, if: :voucher_id_unwanted?
   validates :voucher_id, presence: true, allow_blank: false, if: :voucher_id_required?
+  validate :one_per_project?, on: :create
 
   delegate :user, to: :project
 
   def service
     offer.service unless offer.nil?
   end
-
-  before_save :map_properties
-
-  validate :one_per_project?, on: :create
 
   def open_access?
     @is_open_access ||= service&.open_access?
@@ -109,8 +110,6 @@ class ProjectItem < ApplicationRecord
   def map_properties
     self.properties = property_values.map(&:to_json)
   end
-
-  attribute :property_values
 
   def property_values
     if !@property_values
