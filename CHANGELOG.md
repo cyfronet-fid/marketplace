@@ -8,6 +8,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Offer status (@martaswiatkowska)
+- markdown rendering in offer's description (@goreck888)
 
 ### Changed
 
@@ -23,7 +25,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 
-- Small view error in my order detail page 
+- Small view error in my order detail page
 
 ## [1.4.0] - 2019-02-26
 

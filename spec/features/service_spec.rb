@@ -96,6 +96,14 @@ RSpec.feature "Service browsing" do
     find(".card-body p", text: "Description offer")
   end
 
+  scenario "Unpublished offers are not showed" do
+    offer = create(:offer, name: "unpublished offer", status: :draft)
+
+    visit service_path(offer.service)
+
+    expect(page).not_to have_content("unpublished offer")
+  end
+
 
   scenario "show technical parameters in service view" do
     offer = create(:offer, parameters: [{ "id": "id1",
@@ -148,6 +156,26 @@ RSpec.feature "Service browsing" do
     expect(page.body).to have_content("10 - 40 GB")
     expect(page.body).to_not have_content("Access type")
     expect(page.body).to_not have_content("Start of service")
+  end
+
+  scenario "I cannot order serice if there is no published offer" do
+    offer = create(:offer, status: :draft)
+
+    visit service_path(offer.service)
+
+    expect(page).to_not have_link("Order")
+  end
+
+  scenario "I cannot see offers section when only one is published" do
+    service = create(:service)
+    offer1 = create(:offer, status: :draft, service: service)
+    offer2 = create(:offer, service: service)
+
+    visit service_path(service)
+
+    expect(page).to have_link("Order")
+    expect(page).to_not have_content(offer2.name)
+    expect(page).to_not have_content(offer1.name)
   end
 
   context "as not logged in user" do

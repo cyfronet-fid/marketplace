@@ -44,7 +44,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   private
     def offer_template
       Offer.new(permitted_attributes(Offer).
-                                  merge(service: @service))
+                                  merge(service: @service, status: :draft))
     end
 
     def find_service
