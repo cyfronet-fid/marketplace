@@ -1,6 +1,6 @@
 = render "layouts/order/nav", service: @service, step: 2
 
-%h2.mb-4.font-weight-normal= t "service.normal.order.configuration"
+%h2.mb-3.mt-4.font-weight-light= t "service.normal.order.configuration"
 %p.mb-4
   We need more information about your request.
   We will be able to process your request quicker
@@ -13,7 +13,7 @@
   = render "services/configurations/attributes", project_item: @project_item, f: f
   = render "services/configurations/bundled_offers", project_item: @project_item, f: f
 
-  %h5.mb-3.font-weight-bold.configuration-title.text-uppercase My projects
+  %h2.mt-5 My projects
   %p.mb-4= t("project.select.description")
   = f.input :project do
     .input-group.col-6.pl-0
@@ -24,7 +24,7 @@
         = link_to "Add new project", new_project_path,
           class: "btn btn-primary", remote: true
 
-  %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Usage
+  %h2.mt-5 Usage
   = f.input :customer_typology,
     collection: @customer_topologies,
     input_html: { "data-target" => "project-item.customer",
@@ -37,7 +37,7 @@
   = f.association :research_area, as: :grouped_select,
     collection: grouped_research_areas, group_method: :last
 
-  %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Affiliation
+  %h2.mt-5 Affiliation
   = f.association :affiliation,
     collection: @affiliations, label_method: :organization,
     hint: "Click #{link_to "here", new_profile_affiliation_path} to create a new affilition".html_safe
