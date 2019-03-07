@@ -8,12 +8,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
-- Offer status (@martaswiatkowska)
-- markdown rendering in offer's description (@goreck888)
-- Offers parameters in backoffice - initial (@martaswiatkowska)
-
-- Order Target field to Service (@michal-szostak)
-- Passing of Order Target field to JIRA (field `SO-ServiceOrderTarget`) (@michal-szostak)
 
 ### Changed
 
@@ -23,14 +17,23 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 
-- Date and time display in order history
-
 ### Security
+
+## [1.5.0] - 2019-03-06
+
+### Added
+- Offer status (@martaswiatkowska)
+- markdown rendering in offer's description (@goreck888)
+- Offers parameters in backoffice - initial (@martaswiatkowska)
+- Order Target field to Service (@michal-szostak)
+- Passing of Order Target field to JIRA (field `SO-ServiceOrderTarget`) (@michal-szostak)
+
+### Fixed
+- Date and time display in order history
 
 ## [1.4.1] - 2019-02-28
 
 ### Fixed
-
 - Small view error in my order detail page
 
 ## [1.4.0] - 2019-02-26
