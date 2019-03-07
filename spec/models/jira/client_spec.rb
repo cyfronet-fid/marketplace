@@ -91,7 +91,8 @@ describe Jira::Client do
                        "SO-1-1" => "cat1/s1/off1?Data repository name=aaaaaa&" +
                                    "Harvesting method=OAI-PMH&" +
                                    "Harvesting endpoint=aaaaa",
-                       "SO-ServiceOrderTarget-1" => "" }
+                       "SO-ServiceOrderTarget-1" => "",
+                       "SO-OfferType-1" => { "id" => "20005" } }
 
     issue = double(:Issue)
     expect(issue).to receive("save").with(fields: expected_fields).and_return(true)
@@ -135,7 +136,9 @@ describe Jira::Client do
                         "CP-VoucherID-1" => "",
                         "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
                         "SO-1-1" => "cat1/s1/off1?",
-                        "SO-ServiceOrderTarget-1" => "email@domain.com" }
+                        "SO-ServiceOrderTarget-1" => "email@domain.com",
+                        "SO-OfferType-1" => { "id" => "20006" } }
+
 
     issue = double(:Issue)
     expect(issue).to receive("save").with(fields: expected_fields).and_return(true)
@@ -182,7 +185,8 @@ describe Jira::Client do
                         "CP-VoucherID-1" => "123123",
                         "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
                         "SO-1-1" => "cat1/s1/off1?",
-                        "SO-ServiceOrderTarget-1" => "" }
+                        "SO-ServiceOrderTarget-1" => "",
+                        "SO-OfferType-1" => { "id" => "20006" } }
 
     issue = double(:Issue)
     expect(issue).to receive("save").with(fields: expected_fields).and_return(true)
@@ -229,7 +233,8 @@ describe Jira::Client do
                         "CP-VoucherID-1" => "",
                         "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
                         "SO-1-1" => "cat1/s1/off1?",
-                        "SO-ServiceOrderTarget-1" => "" }
+                        "SO-ServiceOrderTarget-1" => "",
+                        "SO-OfferType-1" => { "id" => "20006" } }
 
     issue = double(:Issue)
     expect(issue).to receive("save").with(fields: expected_fields).and_return(true)

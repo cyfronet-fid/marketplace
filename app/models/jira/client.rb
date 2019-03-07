@@ -65,7 +65,8 @@ class Jira::Client < JIRA::Client
       # For now only single Service Offer is supported
       "SO-ProjectName": fields_config["SO-ProjectName"],
       "SO-1": fields_config["SO-1"],
-      "SO-ServiceOrderTarget": fields_config["SO-ServiceOrderTarget"]
+      "SO-ServiceOrderTarget": fields_config["SO-ServiceOrderTarget"],
+      "SO-OfferType": fields_config["SO-OfferType"]
     }
 
     super(options)
@@ -162,6 +163,8 @@ private
       "#{encode_properties(project_item.properties)}"
     when "SO-ServiceOrderTarget"
       project_item.service.order_target
+    when "SO-OfferType"
+      { "id" => @jira_config["custom_fields"]["select_values"]["SO-OfferType"][project_item.offer.offer_type] }
     else
       nil
     end
