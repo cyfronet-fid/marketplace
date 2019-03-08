@@ -150,17 +150,18 @@ RSpec.describe Attribute do
   end
 
   it "creates correct number range with invalid value from json" do
-    attr = Attribute.from_json("id" => "id1",
-                               "label" => "Attribute 1",
-                               "type" => "range",
-                               "value_type" => "number",
-                               "value" => 0,
-                               "config" => {
-                                   "minimum" => 1,
-                                   "maximum" => 100,
-                                   "exclusiveMinimum" => true
-                               })
-    expect(attr.value_valid?).to be false
+    expect {
+      Attribute.from_json("id" => "id1",
+                          "label" => "Attribute 1",
+                          "type" => "range",
+                          "value_type" => "number",
+                          "value" => 0,
+                          "config" => {
+                            "minimum" => 1,
+                            "maximum" => 100,
+                            "exclusiveMinimum" => true
+                          })
+    }.to raise_exception(JSON::Schema::ValidationError)
   end
 
   it "fails to create dummy attribute" do
