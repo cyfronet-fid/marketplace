@@ -89,6 +89,68 @@ RSpec.feature "Service ordering" do
       expect(page).to have_content(service.title)
     end
 
+    scenario "I can order service with offert containing range", js: true do
+      offer = create(:offer, service: service,
+                          parameters: [{ "id": "id1",
+                                         "label": "Attribute 1",
+                                         "type": "range",
+                                         "value_type": "integer",
+                                         "value": 1,
+                                         "config": {
+                                           "minimum": 1,
+                                           "maximum": 100,
+                                         } }])
+
+      affiliation = create(:affiliation, status: :active, user: user)
+      research_area = create(:research_area)
+
+      visit service_path(service)
+
+      click_on "Order", match: :first
+
+      # Step 2
+      expect(page).to have_current_path(service_configuration_path(service))
+      expect(page).to have_selector(:link_or_button,
+                                    "Next", exact: true)
+
+      fill_in "Attribute 1", with: "95"
+      select "Services"
+      select affiliation.organization
+      select research_area.name, from: "Research area"
+      select "Single user", from: "Customer typology"
+      fill_in "Access reason", with: "To pass test"
+      fill_in "Additional information", with: "Additional information test"
+
+      click_on "Next", match: :first
+
+      # Step 3
+      expect(page).to have_current_path(service_summary_path(service))
+      expect(page).to have_selector(:link_or_button,
+                                    "Order", exact: true)
+      expect(page).to have_text("Single user")
+      expect(page).to have_text("To pass test")
+      expect(page).to have_text("Additional information test")
+
+      expect do
+        check "Accept terms and conditions"
+        click_on "Order", match: :first
+      end.to change { ProjectItem.count }.by(1)
+      project_item = ProjectItem.last
+      expect(project_item.offer_id).to eq(offer.id)
+
+      # Summary
+      expect(page).to have_current_path(service_summary_path(service))
+      expect(page).to have_selector(:link_or_button,
+                                    "Go to requested service", exact: true)
+
+      click_on "Go to requested service"
+
+      # Project item page
+      expect(page).to have_current_path(project_item_path(project_item))
+      expect(page).to have_content(service.title)
+    end
+
+
     scenario "I can order service without terms and contitions" do
       service = create(:service, terms_of_use_url: "")
       offer, _seconds_offer = create_list(:offer, 2, service: service)
