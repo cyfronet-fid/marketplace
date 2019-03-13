@@ -89,7 +89,7 @@ RSpec.feature "Service ordering" do
       expect(page).to have_content(service.title)
     end
 
-    scenario "I can order service with offert containing range", js: true do
+    scenario "I can order service with offert containing range" do
       offer = create(:offer, service: service,
                           parameters: [{ "id": "id1",
                                          "label": "Attribute 1",

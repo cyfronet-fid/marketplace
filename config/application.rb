@@ -34,7 +34,9 @@ module Mp
 
     config.autoload_paths << Rails.root.join("lib")
 
-    config.redis_url = ENV["REDIS_URL"] || "redis://localhost:6379/0"
+    default_redis_url = if Rails.env == "test" then "redis://localhost:6379/1" else "redis://localhost:6379/0" end
+
+    config.redis_url = ENV["REDIS_URL"] || default_redis_url
 
     config.portal_base_url = "https://eosc-portal.eu"
     config.portal_base_url = ENV["PORTAL_BASE_URL"] if ENV["PORTAL_BASE_URL"].present?
