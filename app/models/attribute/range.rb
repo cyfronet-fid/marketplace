@@ -6,7 +6,7 @@ class Attribute::Range < Attribute
   def value_type_schema
     {
         "type": "string",
-        "enum": ["integer", "number"]
+        "enum": ["integer"]
     }
   end
 
@@ -21,7 +21,14 @@ class Attribute::Range < Attribute
   end
 
   def value_from_param(param)
-    raise "not implemented yet"
+    if !param.blank?
+      case value_type
+      when "integer"
+        @value = Integer(param)
+      else
+        @value = param
+      end
+    end
   end
 
   def config_schema

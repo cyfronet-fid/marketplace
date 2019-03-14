@@ -350,7 +350,7 @@ services:
               - id:  "id4"
                 label:  "Number of VM instances"
                 description:  "Type number of VM instances from 1-50"
-                type:  "input"
+                type:  "range"
                 value_type:  "integer"
                 config:
                   minimum: 1
@@ -371,7 +371,7 @@ services:
               - id:  "id7"
                 label:  "Number of days"
                 description:  "Choose number of days"
-                type:  "input"
+                type:  "range"
                 value_type:  "integer"
                 config:
                   minimum: 1
@@ -413,7 +413,7 @@ services:
               - id:  "id4"
                 label:  "Number of VM instances"
                 description:  "Type number of VM instances from 1-50"
-                type:  "input"
+                type:  "range"
                 value_type:  "integer"
                 config:
                   minimum: 1
@@ -432,7 +432,7 @@ services:
               - id:  "id7"
                 label:  "Number of days"
                 description:  "Choose number of days"
-                type:  "input"
+                type:  "range"
                 value_type:  "integer"
                 config:
                   minimum: 1
@@ -474,7 +474,7 @@ services:
               - id:  "id4"
                 label:  "Number of VM instances"
                 description:  "Type number of VM instances from 1-50"
-                type:  "input"
+                type:  "range"
                 value_type:  "integer"
                 config:
                   minimum: 1
@@ -493,7 +493,7 @@ services:
               - id:  "id7"
                 label:  "Number of days"
                 description:  "Choose number of days"
-                type:  "input"
+                type:  "range"
                 value_type:  "integer"
                 config:
                   minimum: 1
@@ -537,7 +537,7 @@ services:
               - id:  "id5"
                 label:  "Number of VM instances"
                 description:  "Type number of VM instances from 1-50"
-                type:  "input"
+                type:  "range"
                 value_type:  "integer"
                 config:
                   minimum: 1
@@ -556,7 +556,7 @@ services:
               - id:  "id8"
                 label:  "Number of days"
                 description:  "Choose number of days"
-                type:  "input"
+                type:  "range"
                 value_type:  "integer"
                 config:
                   minimum: 1
@@ -613,20 +613,20 @@ services:
               - id:  "id1"
                 label:  "Number of CPU hours"
                 description:  "Choose number of hours"
-                type:  "input"
+                type:  "range"
                 value_type:  "integer"
                 unit: "h"
                 config:
                   minimum: 1
-                  maximumm: 10000000
+                  maximum: 10000000
               - id:  "id2"
                 label:  "Guaranteed number of CPU cores"
                 description:  "Choose number of cores between 1 and 32"
-                type:  "input"
+                type:  "range"
                 value_type:  "integer"
                 config:
                   minimum: 1
-                  maximumm: 32
+                  maximum: 32
               - id:  "id3"
                 label:  "Amount of RAM per CPU core"
                 description:  "Choose amount of RAM"
@@ -657,7 +657,7 @@ services:
               - id:  "id7"
                 label:  "Number of days"
                 description:  "Choose number of days"
-                type:  "input"
+                type:  "range"
                 value_type:  "integer"
                 config:
                   minimum: 1
@@ -670,20 +670,20 @@ services:
               - id:  "id1"
                 label:  "Number of CPU hours"
                 description:  "Choose number of hours"
-                type:  "input"
+                type:  "range"
                 value_type:  "integer"
                 unit: "h"
                 config:
                   minimum: 1
-                  maximumm: 10000000
+                  maximum: 10000000
               - id:  "id2"
                 label:  "Guaranteed number of CPU cores"
                 description:  "Choose number of cores between 1 and 32"
-                type:  "input"
+                type:  "range"
                 value_type:  "integer"
                 config:
                   minimum: 1
-                  maximumm: 32
+                  maximum: 32
               - id:  "id3"
                 label:  "Amount of RAM per CPU core"
                 description:  "Choose amount of RAM"
@@ -696,7 +696,7 @@ services:
               - id:  "id4"
                 label:  "Parallelism (Threads)"
                 description:  "Choose number of threads from 8 to 24"
-                type:  "input"
+                type:  "range"
                 value_type:  "integer"
                 config:
                   minimum: 8
@@ -722,7 +722,7 @@ services:
               - id:  "id8"
                 label:  "Number of days"
                 description:  "Choose number of days"
-                type:  "input"
+                type:  "range"
                 value_type:  "integer"
                 config:
                   minimum: 1
@@ -1700,12 +1700,12 @@ services:
                 description:  "Type special requirements"
                 type:  "input"
                 value_type:  "string"
-              - id:  "id4"
+              - id:  "id5"
                 label:  "Start of service"
                 description:  "Please choose the start date"
                 type:  "date"
                 value_type:  "string"
-              - id:  "id5"
+              - id:  "id6"
                 label:  "Number of days"
                 description:  "Choose number of days"
                 type:  "input"
@@ -1746,12 +1746,12 @@ services:
                 description:  "Type special requirements"
                 type:  "input"
                 value_type:  "string"
-              - id:  "id4"
+              - id:  "id5"
                 label:  "Start of service"
                 description:  "Please choose the start date"
                 type:  "date"
                 value_type:  "string"
-              - id:  "id5"
+              - id:  "id6"
                 label:  "Number of days"
                 description:  "Choose number of days"
                 type:  "input"
@@ -2254,7 +2254,7 @@ services:
 #            - id: "id6"
 #              label: "Number of days"
 #              description:  "Choose service start date"
-#              type:  "input"
+#              type:  "range"
 #              value_type:  "integer"
 #              value: 365
 #              config:
@@ -2688,13 +2688,14 @@ services:
             Community specific deployment to provide notebooks for all the users of a community.
             Allows further customisation to meet the community needs (e.g. shared storage)
           parameters:
-            - id:  "idq"
+            - id:  "id1"
               label:  "Number of users"
               description:  "Please type number of users"
-              type:  "input"
+              type:  "range"
               value_type:  "integer"
               config:
                 minimum: 1
+                maximum: 99999
             - id:  "id2"
               label:  "Amount of RAM"
               description:  "Please choose amount of RAM"
@@ -2707,7 +2708,7 @@ services:
               type:  "select"
               value_type:  "integer"
               config:
-                mode: "button"
+                mode: "buttons"
                 values: [1, 2, 4]
             - id:  "id4"
               label:  "Storage per user"
@@ -4039,10 +4040,11 @@ services:
             - id:  "id3"
               label:  "Number of concurrent trainees"
               description:  "Type number of concurrent trainees"
-              type:  "input"
+              type:  "range"
               value_type:  "integer"
               config:
                 minimum: 1
+                maximum: 99999
             - id:  "id4"
               label:  "Number of cores"
               description:  "Type number of cores"
@@ -4053,26 +4055,26 @@ services:
             - id:  "id5"
               label:  "Amount od RAM"
               description:  "Type amount of RAM"
-              type:  "input"
+              type:  "range"
               unit: "GB"
               value_type:  "integer"
               config:
                 minimum: 1
+                maximum: 99999
             - id:  "id6"
               label:  "Online storage size"
               description:  "Type online storage size"
-              type:  "input"
+              type:  "range"
               unit: "GB"
               value_type:  "integer"
               config:
                 minimum: 1
+                maximum: 99999
             - id:  "id7"
               label:  "Special requirements"
               description:  "Type special requirements"
               type:  "input"
               value_type:  "string"
-              config:
-                minimum: 1
             - id:  "id8"
               label:  "Start of service"
               description:  "Please choose start date"
@@ -4081,7 +4083,7 @@ services:
             - id:  "id9"
               label:  "Number of days"
               description:  "Type number of days"
-              type:  "input"
+              type:  "range"
               value_type:  "integer"
               config:
                 minimum: 1
@@ -4145,10 +4147,11 @@ services:
             - id:  "id3"
               label:  "Number of students"
               description:  "Type number of students"
-              type:  "input"
+              type:  "range"
               value_type:  "integer"
               config:
                 minimum: 1
+                maximum: 99999
           2:
             name: Advanced Level in Service Planning and Delivery
             description: |
