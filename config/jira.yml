@@ -38,6 +38,7 @@ default: &default
     CP-VoucherID: <%= "'" + (ENV["MP_JIRA_FIELD_CP_VoucherID"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CP-VoucherID".to_sym) || "") + "'" %>
     SO-1: <%= "'" + (ENV["MP_JIRA_FIELD_SO_1"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "SO-1".to_sym) || "") + "'" %>
     SO-ServiceOrderTarget: <%= "'" + (ENV["MP_JIRA_FIELD_SO_ServiceOrderTarget"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "SO-ServiceOrderTarget".to_sym) || "") + "'" %>
+    SO-OfferType:  <%= "'" + (ENV["MP_JIRA_FIELD_SO_OfferType"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "SO-OfferType".to_sym) || "") + "'" %>
 
     select_values:
       CP-CustomerTypology:
@@ -48,6 +49,10 @@ default: &default
       CP-INeedAVoucher:
         yes: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_true"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, "CP-INeedAVoucher".to_sym, true) || "") + "'" %>
         no: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_false"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, "CP-INeedAVoucher".to_sym, false) || "") + "'" %>
+      SO-OfferType:
+        normal: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_SO_OfferType_normal"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, "SO-OfferType".to_sym, :normal) || "") + "'" %>
+        open_access: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_SO_OfferType_open_access"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, "SO-OfferType".to_sym, :open_access) || "") + "'" %>
+        catalog: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_SO_OfferType_catalog"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, "SO-OfferType".to_sym, :catalog) || "") + "'" %>
 
 development:
   <<: *default
@@ -89,6 +94,7 @@ test:
     CP-VoucherID: "CP-VoucherID-1"
     SO-1: "SO-1-1"
     SO-ServiceOrderTarget: "SO-ServiceOrderTarget-1"
+    SO-OfferType: "SO-OfferType-1"
 
     select_values:
       CP-CustomerTypology:
@@ -98,6 +104,10 @@ test:
       CP-INeedAVoucher:
         yes: '20003'
         no: '20004'
+      SO-OfferType:
+        normal: '20005'
+        open_access: '20006'
+        catalog: '20007'
 
 production:
   <<: *default
