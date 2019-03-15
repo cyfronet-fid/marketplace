@@ -9,12 +9,7 @@ class ServicesController < ApplicationController
   def index
     @services = paginate(category_records.order(ordering))
 
-    @provider_options = options_providers
-    @target_groups_options = options_target_groups
-    @rating_options = options_rating
-    @research_areas = options_research_area
-    @related_platform_options = options_related_platforms
-    @tag_options = options_tag
+    @filters = visible_filters
     @active_filters = active_filters
   end
 

@@ -1,0 +1,6 @@
+%h6= filter.title
+.row
+  .col-md-12
+    .form-group
+      %select.form-control.form-control-sm{ name: filter.field_name }
+        = options_for_select(filter.options, params[filter.field_name])
