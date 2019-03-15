@@ -24,7 +24,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Security
 
 
-## [1.5.1] - 2019-03-06
+## [1.5.1] - 2019-03-15
 
 ### Fixed
 
