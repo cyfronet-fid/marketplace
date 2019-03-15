@@ -26,6 +26,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ## [1.5.1] - 2019-03-06
 
+### Fixed
+
+- Fix infinitive loop while updating main service category (@mkasztelnik)
+
 ### Security
 
 - Rails upgraded with fixes for: CVE-2019-5418, CVE-2019-5419 and CVE-2019-5420 (@mkasztelnik)
