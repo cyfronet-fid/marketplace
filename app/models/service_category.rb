@@ -10,7 +10,7 @@ class ServiceCategory < ApplicationRecord
   validates :service, presence: true
   validates :category, presence: true
 
-  after_save :guarantee_only_one_main
+  after_save :guarantee_only_one_main, if: :main?
   after_touch :_update_counts_after_update
 
   attribute :status
