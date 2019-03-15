@@ -15,6 +15,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Removed
 
+- Remove unused `orders` and `order_changes` tables from `db/schema.rb` (@mkasztelnik)
+
 ### Fixed
 - service creation bug (@martaswiatkowska)
 
