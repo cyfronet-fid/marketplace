@@ -24,7 +24,7 @@ class Attribute::Range < Attribute
     if !param.blank?
       case value_type
       when "integer"
-        @value = Integer(param)
+        @value = Integer(param) rescue String(param)
       else
         @value = param
       end

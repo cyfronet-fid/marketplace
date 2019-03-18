@@ -28,7 +28,7 @@ class Attribute::Select < Attribute
     if (param.length > 0)
       case @value_type
       when "integer"
-        @value = Integer(param.first)
+        @value = Integer(param.first) rescue param.first
       else
         @value = param.first
       end
