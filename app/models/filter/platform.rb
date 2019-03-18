@@ -1,29 +1,15 @@
 # frozen_string_literal: true
 
-class Filter::Platform < Filter
+class Filter::Platform < Filter::Multiselect
   def initialize(params = {})
     super(params: params.fetch(:params, {}),
-          field_name: "related_platforms", type: :multiselect,
-          title: "Related Infrastructures and platforms")
-
-    @category = params[:category]
+          category: params[:category],
+          field_name: "related_platforms",
+          title: "Related Infrastructures and platforms",
+          query: ::Platform.select("platforms.name, platforms.id, COUNT(services.id) as service_count"))
   end
 
   private
-
-    def fetch_options
-      query = ::Platform.select("platforms.name, platforms.id, COUNT(services.id) as service_count")
-
-      if @category.nil?
-        query = query.joins(:services)
-      else
-        query = query.joins(:categories).where("categories.id = ?", @category.id)
-      end
-
-      query.group("platforms.id")
-          .order(:name)
-          .map { |provider| [provider.name, provider.id, provider.service_count] }
-    end
 
     def do_call(services)
       services.joins(:service_related_platforms).group("services.id").
