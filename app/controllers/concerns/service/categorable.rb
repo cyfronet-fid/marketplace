@@ -13,12 +13,12 @@ module Service::Categorable
       @subcategories = category&.children&.order(:name)
     end
 
-    def category_records
+    def category_records(search_scope)
       if category
-        records.joins(:service_categories).
+        search_scope.joins(:service_categories).
           where(service_categories: { category_id: category_and_descendant_ids })
       else
-        records
+        search_scope
       end
     end
 
