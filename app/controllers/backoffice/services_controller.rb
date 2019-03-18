@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Backoffice::ServicesController < Backoffice::ApplicationController
+  include Service::Filterable
   include Service::Searchable
   include Service::Categorable
   include Service::Sortable
@@ -10,12 +11,11 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   prepend_before_action :index_authorize, only: :index
 
   def index
-    # services
-    @services = paginate(category_records.order(ordering))
+    searched = search(scope)
+    filtered = filter(searched)
+    from_category = category_records(filtered)
 
-    # filetering
-    @filters = visible_filters
-    @active_filters = active_filters
+    @services = paginate(from_category.order(ordering))
   end
 
   def show
@@ -74,5 +74,9 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     def find_and_authorize
       @service = Service.friendly.find(params[:id])
       authorize(@service)
+    end
+
+    def scope
+      policy_scope(Service).with_attached_logo
     end
 end
