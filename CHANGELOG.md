@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - OfferType field in jira (@martaswiatkowska)
 
 ### Changed
+- improvements in backoffice service form (@martaswiatkowska)
 
 ### Deprecated
 

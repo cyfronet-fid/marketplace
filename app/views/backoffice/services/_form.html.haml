@@ -1,4 +1,4 @@
-= simple_form_for [:backoffice, service] do |f|
+= simple_form_for [:backoffice, service], html: { "data-controller" => "service" }  do |f|
   = f.error_notification
   .row
     .col-12.col-md-10
@@ -10,7 +10,10 @@
         = f.input :description
   .row.mt-5
     .col-12.col-md-5
-      = f.input :service_type, collection: Service.service_types.keys.map(&:to_sym)
+      = f.input :service_type, collection: Service.service_types.keys.map(&:to_sym),
+        input_html: { "data-target" => "service.serviceType", "data-action" => "change->service#showConnectedUrl" }
+      = f.input :connected_url, label: "Service website",
+        wrapper_html: { "data-target" => "service.connectedUrl" }
 
   = f.association :categories, multiple: true, input_html: { data: { choice: true } }
   = f.association :providers, multiple: true, input_html: { data: { choice: true } }
@@ -38,7 +41,6 @@
   .row
     .col-12.col-md-10
       = f.input :terms_of_use
-      = f.input :connected_url, label: "Service website"
       = f.input :terms_of_use_url
       = f.input :access_policies_url
       = f.input :corporate_sla_url
