@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Link to the tutorial of creating attributes in backoffice (@goreck888)
 
 ### Changed
+- Filters refactored and moved into `Service::Filterable` concern (@mkasztelnik)
 
 ### Deprecated
 
@@ -28,7 +29,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - OfferType field in jira (@martaswiatkowska)
 
 ### Changed
-- improvements in backoffice service form (@martaswiatkowska)
+- Improvements in backoffice service form (@martaswiatkowska)
+
 ### Removed
 - Remove unused `orders` and `order_changes` tables from `db/schema.rb` (@mkasztelnik)
 
