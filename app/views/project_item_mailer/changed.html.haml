@@ -1,7 +1,7 @@
 %p Dear #{@user.full_name},
 %p
   Your service #{link_to "##{@project_item.id}", project_item_url(@project_item)} status was changed from
-  "#{@previous_status}" to "#{@current_status}". You can check
-  your project_item details using this #{link_to "link", project_item_url(@project_item)}.
+  "#{@previous_status}" to "#{@current_status}".
+%p You can check your project_item details using this #{link_to "link", project_item_url(@project_item)}.
 
 
