@@ -67,7 +67,7 @@ class Attribute
     if !param.blank?
       case value_type
       when "integer"
-        @value = Integer(param)
+        @value = Integer(param) rescue String(param)
       when "string"
         @value = String(param)
       else
