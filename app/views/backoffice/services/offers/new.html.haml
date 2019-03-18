@@ -1,4 +1,7 @@
 .container
   %h2 New Offer
-  = render "form", service: @service, offer: @offer
+  = render "form",
+    service: @service,
+    offer: @offer,
+    documentation_url: @documentation_url
 

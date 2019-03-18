@@ -5,6 +5,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   before_action :find_offer_and_authorize, only: [:destroy, :edit, :update]
 
   def new
+    @documentation_url = documentation_url
     @offer = Offer.new(service: @service)
     authorize(@offer)
   end
@@ -24,6 +25,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   end
 
   def edit
+    @documentation_url = documentation_url
   end
 
   def update
@@ -62,5 +64,9 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     def find_offer_and_authorize
       @offer = @service.offers.find_by(iid: params[:id])
       authorize(@offer)
+    end
+
+    def documentation_url
+      ENV["ATTRIBUTES_DOCS_URL"] || "https://confluence.egi.eu/x/wYI7Ag"
     end
 end
