@@ -79,7 +79,7 @@ RSpec.describe Attribute do
                           "value" => "b",
                           "config" => {
                               "values" => ["a", "b", "c"]
-                           })
+                          })
 
     }.to raise_exception(JSON::Schema::ValidationError)
   end
@@ -157,11 +157,67 @@ RSpec.describe Attribute do
                           "value_type" => "number",
                           "value" => 0,
                           "config" => {
-                            "minimum" => 1,
-                            "maximum" => 100,
-                            "exclusiveMinimum" => true
+                              "minimum" => 1,
+                              "maximum" => 100,
+                              "exclusiveMinimum" => true
                           })
     }.to raise_exception(JSON::Schema::ValidationError)
+  end
+
+
+  it "integer attribute should not raise when created with non integer value [,], should not validate" do
+    expect(Attribute.from_json("id" => "id1",
+                               "label" => "Attribute 1",
+                               "type" => "input",
+                               "value_type" => "integer",
+                               "value" => "13,2").value_valid?).to be_falsey
+  end
+
+
+  it "integer attribute should not raise when created with non integer value [.], should not validate" do
+    expect(Attribute.from_json("id" => "id1",
+                               "label" => "Attribute 1",
+                               "type" => "input",
+                               "value_type" => "integer",
+                               "value" => "13.2").value_valid?).to be_falsey
+  end
+
+  it "range attribute should not raise when created with non integer value [,], should not validate" do
+    expect(Attribute.from_json("id" => "id1",
+                               "label" => "Attribute 1",
+                               "type" => "range",
+                               "value_type" => "integer",
+                               "value" => "13,2",
+                               "config" => {
+                                   "minimum" => 1,
+                                   "maximum" => 100,
+                                   "exclusiveMinimum" => true
+                               }).value_valid?).to be_falsey
+  end
+
+  it "range attribute should not raise when created with non integer value [.], should not validate" do
+    expect(Attribute.from_json("id" => "id1",
+                               "label" => "Attribute 1",
+                               "type" => "range",
+                               "value_type" => "integer",
+                               "value" => "13.2",
+                               "config" => {
+                                   "minimum" => 1,
+                                   "maximum" => 100,
+                                   "exclusiveMinimum" => true
+                               }).value_valid?).to be_falsey
+  end
+
+  it "select attribute should not raise when created with non integer value [,], should not validate" do
+    attr = Attribute.from_json("id" => "id1",
+                               "label" => "Attribute 1",
+                               "type" => "select",
+                               "value_type" => "string",
+                               "value" => "1,2",
+                               "config" => {
+                                   "values" => [1, 2, 3]
+                               })
+    expect(attr.value_valid?).to be_falsey
   end
 
   it "fails to create dummy attribute" do

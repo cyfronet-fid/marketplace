@@ -21,6 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - service creation bug (@martaswiatkowska)
+- integer and range validation bug (@michal-szostak / @martaswiatkowska)
 
 ### Security
 
