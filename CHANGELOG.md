@@ -5,35 +5,43 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
+
 ## [Unreleased]
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+
+## [1.6.0] - 2019-03-18
 
 ### Added
 - OfferType field in jira (@martaswiatkowska)
 
 ### Changed
 - improvements in backoffice service form (@martaswiatkowska)
-
-### Deprecated
-
 ### Removed
-
 - Remove unused `orders` and `order_changes` tables from `db/schema.rb` (@mkasztelnik)
 
 ### Fixed
 - service creation bug (@martaswiatkowska)
 - integer and range validation bug (@michal-szostak / @martaswiatkowska)
 
-### Security
-
 
 ## [1.5.1] - 2019-03-15
 
 ### Fixed
-
 - Fix infinitive loop while updating main service category (@mkasztelnik)
 
 ### Security
-
 - Rails upgraded with fixes for: CVE-2019-5418, CVE-2019-5419 and CVE-2019-5420 (@mkasztelnik)
 
 ## [1.5.0] - 2019-03-06
