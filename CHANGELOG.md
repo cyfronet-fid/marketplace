@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Link to the tutorial of creating attributes in backoffice (@goreck888)
 
 ### Changed
 
