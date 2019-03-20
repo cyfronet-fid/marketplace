@@ -4,6 +4,8 @@
   = f.input :description, input_html: { rows: 10 }
   = f.input :offer_type, collection: Offer.offer_types.keys.map(&:to_sym)
   = f.input :parameters_as_string,
+      label: "Parameters as string (#{link_to "See the tutorial", documentation_url,
+      class: "card-link", target: "_blank"})".html_safe,
       as: :attributes,
       multiple: true,
       wrapper_html: { "data-target": "offer.parameters" },

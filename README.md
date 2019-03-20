@@ -86,7 +86,7 @@ or you can also use `systemctl`, it shouldn't matter which one you use.
 
 Marketplace is integrating with jira on a rather tight level.
 For tests JIRA is mocked, and for normal development connection from MP to JIRA is provided.
-All fields and JIRA variables are stored in encrypted credentials. The default project to which 
+All fields and JIRA variables are stored in encrypted credentials. The default project to which
 issues are written is `EOSCSODEV`. If you require backward communication from JIRA to your application
 you can use reverse tunnel to connect WH to your local application instance. To do so execute following command
 (first make sure that your local instance of marketplace has been started already):
@@ -95,7 +95,7 @@ you can use reverse tunnel to connect WH to your local application instance. To 
 ssh -R <port_number - from 9001 to 9015>:localhost:5000 mszostak@docker-fid.grid.cyf-kr.edu.pl -N
 ```
 
-If you can not connect, try different port - it is possible that other developer connected 
+If you can not connect, try different port - it is possible that other developer connected
 to this port and is blocking it
 
 ## For Admins
@@ -156,6 +156,7 @@ ENV variables:
   * `ASSET_HOST` and `ASSET_PROTOCOL` - assets mailer config is mandatory
     (e.g. ASSET_HOST = marketplace.eosc-portal.eu/ and ASSET_PROTOCOL = https )
   * `RATE_AFTER_PERIOD` - number of days after which user can rate service (default is set to 90 days)
+  * `ATTRIBUTES_DOCS_URL` - offer attributes definition documentation (external link)
   * ENV Variables connected to JIRA integration are described in [JIRA integration manual](./docs/jira_integration.md)
 
 ## Commits
