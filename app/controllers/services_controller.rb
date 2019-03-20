@@ -1,21 +1,18 @@
 # frozen_string_literal: true
 
 class ServicesController < ApplicationController
+  include Service::Filterable
   include Service::Searchable
   include Service::Categorable
   include Service::Sortable
   include Paginable
 
   def index
-    @services = paginate(category_records.order(ordering))
+    searched = search(scope)
+    filtered = filter(searched)
+    from_category = category_records(filtered)
 
-    @provider_options = options_providers
-    @target_groups_options = options_target_groups
-    @rating_options = options_rating
-    @research_areas = options_research_area
-    @related_platform_options = options_related_platforms
-    @tag_options = options_tag
-    @active_filters = active_filters
+    @services = paginate(from_category.order(ordering))
   end
 
   def show
@@ -29,4 +26,10 @@ class ServicesController < ApplicationController
                         where(offers: { service_id: @service })
     @question = Service::Question.new(service: @service)
   end
+
+  private
+
+    def scope
+      policy_scope(Service).with_attached_logo
+    end
 end
