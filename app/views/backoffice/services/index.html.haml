@@ -1,7 +1,7 @@
 - breadcrumb :backoffice_services, @category
 
 = content_for :category_view, "backoffice/categories/nav/category"
-= content_for :all_services, backoffice_services_path
+= content_for :all_services, backoffice_services_path(category_query_params)
 
 = render "services/index", services: @services,
                            category: @category,
