@@ -8,49 +8,17 @@
         = label
 .row
   .col-md-12
-    - if controller.filters_on?
+    - if active_filters.present?
       .x-small.mb-3.mt-1
         = link_to controller: controller.controller_name, action: action_name,
                   per_page: params[:per_page], sort: params[:sort] do
           .fa.fa-times
           Clear all filters
+
 = form_tag "", method: :get, role: "search", class: "filters", "data-sync-query-form": "data-sync-query-form" do
-  %h6 Provider location
-  .row
-    .col-md-12
-      .form-group
-        %select#location.form-control.form-control-sm{ name: "location" }
-          = options_for_select([["Any", ""], ["EU", "EU"]], params[:location])
+  - @filters.each do |filter|
+    = render "services/filters/#{filter.type}", filter: filter
 
-  %h6 Providers
-  .col-md-12
-    .form-group
-      = multi_checkbox :providers, params[:providers], provider_options
-
-  %h6 Related Infrastructures and platforms
-  .col-md-12
-    .form-group
-      = multi_checkbox :related_platforms, params[:related_platforms], related_platform_options
-
-  %h6 For
-  .col-md-12
-    .form-group
-      = multi_checkbox :target_groups, params[:target_groups], target_groups_options
-  %h6 Rating
-  .row
-    .col-md-12
-      .form-group
-        %select#rating.form-control.form-control-sm{ name: "rating" }
-          = options_for_select(rating_options, params[:rating])
-
-  %h6 Research Area
-  .row
-    .col-md-12
-      .form-group
-        %select#research-area.form-control.form-control-sm{ name: "research_area" }
-          %option{ value: "", selected: "selected" }
-            Any
-          = options_for_select(ancestry_id_tree(research_areas), params[:research_area])
   .row
     .col-md-12
       %button#filter-submit.btn.btn-primary.mt-4.w-100{ type: "submit" }
