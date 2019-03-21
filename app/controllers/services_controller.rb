@@ -8,11 +8,10 @@ class ServicesController < ApplicationController
   include Paginable
 
   def index
-    searched = search(scope)
-    filtered = filter(searched)
-    from_category = category_records(filtered)
-
-    @services = paginate(from_category.order(ordering))
+    filtered = filter(scope)
+    searched = search(filtered)
+    from_category = category_records(searched)
+    @services = paginate(ordering.nil? ? from_category : from_category.order(ordering))
   end
 
   def show

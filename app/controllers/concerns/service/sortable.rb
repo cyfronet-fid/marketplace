@@ -15,7 +15,11 @@ module Service::Sortable
             sort_options[sort_key] = :asc
           end
         else
-          sort_options[:title] = :asc
+          if params[:q].present?
+            return
+          else
+            sort_options[:title] = :asc
+          end
         end
       end
     end
