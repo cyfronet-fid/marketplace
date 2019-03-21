@@ -219,10 +219,12 @@ RSpec.feature "Service filtering and sorting" do
     create(:service, title: "DDDD Something 2", rating: 4.0, platforms: [platform_2], categories: [category_1])
     create(:service, title: "DDDD Something 3", rating: 3.9, platforms: [platform_2], categories: [category_1])
 
+    Service.reindex
+
     sleep(1)
   end
 
-  scenario "searching in top bar will preserve existing query params", js: true do
+  scenario "searching in top bar will preserve existing query params", js: true, search: true do
     visit services_path(sort: "title")
 
     fill_in "q", with: "DDDD Something"
@@ -234,7 +236,7 @@ RSpec.feature "Service filtering and sorting" do
     expect(page).to have_selector(".media", count: 3)
   end
 
-  scenario "clicking filter button in side bar will preserve existing query params", js: true do
+  scenario "clicking filter button in side bar will preserve existing query params", js: true, search: true do
     visit services_path(sort: "title", q: "DDDD Something", utf8: "✓")
 
     click_on(id: "filter-submit")
@@ -245,7 +247,7 @@ RSpec.feature "Service filtering and sorting" do
     expect(page).to have_selector(".media", count: 3)
   end
 
-  scenario "selecting sorting will set query param and preserve existing ones", js: true do
+  scenario "selecting sorting will set query param and preserve existing ones", js: true, search: true do
     visit services_path(q: "DDDD Something", utf8: "✓")
 
     select "by rate 1-5", from: "sort"
@@ -253,8 +255,8 @@ RSpec.feature "Service filtering and sorting" do
     # For turbolinks to load
     sleep(1)
 
-    expect(page.body.index("DDDD Something 3")).to be < page.body.index("DDDD Something 2")
-    expect(page.body.index("DDDD Something 2")).to be < page.body.index("DDDD Something 1")
+    expect(page.body.index("DDDD Something 3")).to be > page.body.index("DDDD Something 2")
+    expect(page.body.index("DDDD Something 2")).to be > page.body.index("DDDD Something 1")
   end
 
   scenario "limit number of services per page" do
