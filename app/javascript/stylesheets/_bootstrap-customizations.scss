@@ -1487,3 +1487,35 @@ label[data-multicheckbox].small {
     }
   }
 }
+
+.service-box {
+  border: 1px solid $palette-gray-10;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+
+  .media-body {
+    border-right: 1px solid $palette-gray-10;
+
+    dl {
+      width: 100%;
+      float: left;
+
+      dt {
+        display: inline;
+        float: left;
+        color: $palette-solid-100;
+        padding-right: 10px;
+        margin-bottom: 0;
+      }
+
+      dd {
+        display: inline;
+        float: left;
+        max-width: 83%;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+}
