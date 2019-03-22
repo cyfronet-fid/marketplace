@@ -1,7 +1,7 @@
-.media.border-bottom.pb-4.mb-4
-  .media-body
-    %h2.font-weight-bolder= link_to service.title, service
+.media.mb-4.service-box.shadow-sm
+  .media-body.p-4
+    %h2.mb-3= link_to service.title, service
     %p.mb-3= service.tagline
     = render "services/categorization", service: service
   - if service.logo.attached?
-    = image_tag service.logo.variant(resize: "120x80"), class: "align-self-center mx-2"
+    = image_tag service.logo.variant(resize: "120x120"), class: "align-self-center mx-4"
