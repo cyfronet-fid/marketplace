@@ -12,10 +12,15 @@
                            active_filters: @active_filters,
                            related_platform_options: @related_platform_options do
 
-  .col-md-8
+  .col-md-12
     %h1= @category&.name || "Services"
-  .col-md-3.offset-md-1.my-auto
+  .col-md-12
+    %hr.category-separator
+  .col-md-3
+    1-10 results from 38
+  .col-md-6
     = render "services/order"
-
+  .col-md-3
+    = render "services/paginate", services: @services
   - if @category
     %p.text-muted.mb-4.ml-3= @category.description

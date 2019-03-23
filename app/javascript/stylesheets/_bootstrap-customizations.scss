@@ -1507,6 +1507,7 @@ label[data-multicheckbox].small {
         color: $palette-solid-100;
         padding-right: 10px;
         margin-bottom: 0;
+        font-weight: 300;
       }
 
       dd {
@@ -1514,8 +1515,16 @@ label[data-multicheckbox].small {
         float: left;
         max-width: 83%;
         margin-bottom: 0;
+
+        a {
+          font-weight: 300;
+        }
       }
     }
   }
+}
 
+.category-separator {
+  border-top: 5px solid $palette-gray-5;
+  margin: 0 0 1.4rem;
 }
