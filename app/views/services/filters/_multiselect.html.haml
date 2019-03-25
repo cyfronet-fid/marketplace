@@ -1,4 +1,11 @@
-%h6= filter.title
-.col-md-12
-  .form-group
-    = multi_checkbox filter.field_name, params[filter.field_name], filter.options
+.row
+  .col-10
+    %h6= filter.title
+  .col-2
+    %a.collapse-icon{ "href": "##{filter.field_name}", "data-toggle": "collapse", "aria-expanded": "false",
+    "aria-controls": "collapseExample", "role": "button" }
+      %i.fas.fa-chevron-down
+.row
+  .col-md-12
+    .form-group
+      = multi_checkbox filter.field_name, params[filter.field_name], filter.options
