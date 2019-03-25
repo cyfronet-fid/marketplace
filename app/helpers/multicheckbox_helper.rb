@@ -6,7 +6,7 @@ module MulticheckboxHelper
       value = []
     end
 
-    result = "<div data-controller=\"multicheckbox\" id=\"#{name}\">"
+    result = "<div class=\"collapse\" data-controller=\"multicheckbox\" id=\"#{name}\">"
     options.each do | option |
       disabled = (option[2] == 0)
       result += "<div data-target=\"multicheckbox.element\"><label

@@ -16,11 +16,11 @@
     %h1= @category&.name || "Services"
   .col-md-12
     %hr.category-separator
-  .col-md-3
+  .col-md-3.results-info
     1-10 results from 38
-  .col-md-6
+  .col-md-5
     = render "services/order"
-  .col-md-3
-    = render "services/paginate", services: @services
+  .col-md-4
+    = render "services/paginate_simple", services: @services
   - if @category
     %p.text-muted.mb-4.ml-3= @category.description

@@ -100,13 +100,37 @@ a {
 }
 
 .breadcrumbs {
-  font-size: $font-size-sm;
+  font-size: 15px;
+  font-weight: 300;
+  color: $text-muted;
 
   a {
+    padding: 0 2px;
+    font-size: 12px;
+
+    &:first-child {
+      background: url('../../assets/images/home-icon.svg') top center no-repeat;
+      height: 16px;
+      opacity: 0.5;
+      width: 17px;
+      margin-top: 3px;
+      text-indent: 100%;
+      float: left;
+      padding: 0;
+      margin-right: 4px;
+      overflow: hidden;
+    }
+
     &:hover {
       opacity: 0.6;
       text-decoration: none;
     }
+  }
+
+  .current {
+    padding: 0 2px;
+    color: $body-color;
+    font-size: 12px;
   }
 }
 
@@ -792,9 +816,42 @@ Card style
 Filters
 -------------------------*/
 .filters {
+
   label {
     width: 85%;
+    font-size: 13px;
     word-wrap: break-word;
+  }
+
+  select {
+    margin-bottom: 15px;
+  }
+
+  h6 {
+    font-size: 14px;
+    margin-top: 6px;
+  }
+
+  .form-group {
+    margin-bottom: 0;
+
+    a {
+      margin: 10px auto 20px;
+      font-size: 13px;
+      text-align: center;
+      display: block;
+      font-weight: bold;
+    }
+  }
+
+  .collapse-icon {
+
+    svg {
+      color: $black;
+      margin-top: 6px;
+      float: right;
+      font-size: 11px;
+    }
   }
 }
 
@@ -1257,10 +1314,12 @@ Filters
 //scss-lint:disable QualifyingElement
 // This is a little hack, to make checkboxes vertically centered
 label[data-multicheckbox].small {
-  margin-bottom: 1px;
+  margin-bottom: 6px;
 
   > input[type="checkbox"] {
-    margin-top: 3px;
+    float: left;
+    position: relative;
+    margin: 0 5px 0 0;
   }
 }
 
@@ -1528,3 +1587,41 @@ label[data-multicheckbox].small {
   border-top: 5px solid $palette-gray-5;
   margin: 0 0 1.4rem;
 }
+
+.results-info {
+  font-style: italic;
+  line-height: 30px;
+}
+
+.sort-box {
+  label {
+    line-height: 30px;
+    height: 30px;
+    text-align: center;
+    margin: 0;
+  }
+}
+
+.categories-list {
+  li {
+    font-size: 16px;
+    margin-bottom: 6px;
+
+    span {
+      font-size: 14px;
+      color: $palette-gray-100;
+    }
+  }
+}
+
+// scss-lint:disable all
+#all-services-link {
+  font-size: 16px;
+  margin-bottom: 6px;
+
+  span {
+    font-size: 14px;
+    color: $palette-gray-100;
+  }
+}
+// scss-lint:enable all
