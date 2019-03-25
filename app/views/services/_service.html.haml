@@ -6,4 +6,4 @@
     .mt-3.float-left
       = print_rating_stars(service.rating)
   - if service.logo.attached?
-    = image_tag service.logo.variant(resize: "120x120"), class: "align-self-center mx-4"
+    = image_tag service.logo.variant(resize: "120x120"), class: "align-self-center mx-4 service-logo"
