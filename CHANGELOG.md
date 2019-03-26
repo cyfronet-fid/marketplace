@@ -13,6 +13,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Filters refactored and moved into `Service::Filterable` concern (@mkasztelnik)
+- Filters cleared when user type new query (@mkasztelnik)
+- Filters not cleared when changing category (@mkasztelnik)
 
 ### Deprecated
 
