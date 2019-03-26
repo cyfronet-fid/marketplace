@@ -36,6 +36,15 @@ h1 {
   font-weight: $font-weight-light;
 }
 
+.categories {
+  font-weight: 300;
+
+  span {
+    font-weight: 200;
+    color: $palette-solid-80;
+  }
+}
+
 h2 {
   font-weight: $font-weight-bold;
 }
@@ -823,12 +832,61 @@ Card style
 /* -----------------------
 Filters
 -------------------------*/
+
+.filter-tag {
+  padding: 8px 12px;
+  display: inline;
+  margin: 0 5px 5px 0;
+  float: left;
+  font-size: 13px;
+  background: $tag-bg-color;
+  font-weight: normal;
+
+  span {
+    font-weight: 200;
+    color: $palette-solid-50;
+  }
+
+  svg {
+    margin-left: 7px;
+    font-size: 15px;
+  }
+}
+
+.clear {
+  background: $palette-solid-10;
+
+  span {
+    color: $black;
+  }
+}
+
+h5 {
+  .collapse-trigger {
+    float: right;
+    font-weight: normal;
+    text-transform: none;
+    font-size: 12px;
+  }
+}
+
 .filters {
 
   label {
     width: 85%;
     font-size: 13px;
+    cursor: pointer;
+    margin-left: 20px;
     word-wrap: break-word;
+  }
+
+  .empty {
+
+    opacity: 0.5;
+
+    label {
+      cursor: default;
+    }
   }
 
   select {
@@ -850,6 +908,10 @@ Filters
       display: block;
       font-weight: bold;
     }
+
+    .counter {
+      font-size: 13px;
+    }
   }
 
   .collapse-icon {
@@ -861,7 +923,60 @@ Filters
       font-size: 11px;
     }
   }
+
+  // scss-lint:disable all
+  .checkbox {
+
+    label {
+
+      input[type="checkbox"] {
+        display: none;
+      }
+
+      input[type="checkbox"]+.cr>.cr-icon {
+        opacity: 0;
+      }
+
+      input[type="checkbox"]:checked+.cr>.cr-icon {
+        opacity: 1;
+      }
+
+      input[type="checkbox"]:disabled+.cr {
+        opacity: 0.5;
+      }
+
+      label::after {
+        content: '';
+        display: table;
+        clear: both;
+      }
+
+      .cr {
+        position: relative;
+        display: inline-block;
+        border: 1px solid $palette-solid-30;
+        border-radius: 0.15em;
+        width: 1.1em;
+        height: 1.1em;
+        float: left;
+        margin-top: 2px;
+        margin-left: -20px;
+        margin-right: 0.5em;
+
+        .cr-icon {
+          position: absolute;
+          font-size: 0.8em;
+          line-height: 0;
+          top: 10%;
+          left: 15%;
+        }
+      }
+    }
+  }
+  // scss-lint:enable all
 }
+
+
 
 
 @media only screen and (max-width: 768px) {
@@ -1322,7 +1437,7 @@ Filters
 //scss-lint:disable QualifyingElement
 // This is a little hack, to make checkboxes vertically centered
 label[data-multicheckbox].small {
-  margin-bottom: 6px;
+  margin-bottom: 7px;
 
   > input[type="checkbox"] {
     float: left;

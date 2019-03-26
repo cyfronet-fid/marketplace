@@ -13,7 +13,30 @@
                            related_platform_options: @related_platform_options do
 
   .col-md-12
-    %h1= @category&.name || "Services"
+    %h1.categories
+      %span Lookng for:
+      = @category&.name || "Services"
+  .col-md-12.mb-3
+    %p.mb-1 Active filters
+    .filter-tag
+      %span Provider:
+      EGI Federation
+      %i.fas.fa-times
+    .filter-tag
+      %span Dedicated for:
+      Researchers
+      %i.fas.fa-times
+    .filter-tag
+      %span Dedicated for:
+      Research group
+      %i.fas.fa-times
+    .filter-tag
+      %span Dedicated for:
+      Research group
+      %i.fas.fa-times
+    %a.filter-tag.clear
+      %span Clear all filters
+      %i.fas.fa-times
   .col-md-12
     %hr.category-separator
   .col-md-3.results-info
