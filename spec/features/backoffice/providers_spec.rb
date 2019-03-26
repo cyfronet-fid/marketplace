@@ -50,5 +50,41 @@ RSpec.feature "Providers in backoffice" do
 
       expect(page).to have_content("New name")
     end
+
+    scenario "I can create provider with external source" do
+      visit backoffice_providers_path
+      click_on "New Provider"
+
+      fill_in "Name", with: "My new provider"
+      fill_in "provider_sources_attributes_0_eid", with: "12345a"
+
+      expect { click_on "Create Provider" }.
+          to change { Provider.count }.by(1)
+
+      expect(page).to have_content("My new provider")
+      expect(page).to have_content("eic: 12345a")
+    end
+
+    scenario "I can change external id of the provider" do
+      provider = create(:provider, name: "Old name")
+      external_source = create(:provider_source, eid: "777abc", source_type: "eic", provider: provider)
+
+      visit edit_backoffice_provider_path(provider)
+
+      expect(page).to have_selector("input[value='777abc']")
+      fill_in "provider_sources_attributes_0_eid", with: "12345a"
+      click_on "Update Provider"
+      expect(page).to have_content("eic: 12345a")
+    end
+
+    scenario "I can delete external source" do
+      provider = create(:provider)
+      external_source = create(:provider_source, eid: "777abc", source_type: "eic", provider: provider)
+
+      visit edit_backoffice_provider_path(provider)
+      find(:css, "#provider_sources_attributes_0__destroy").set(true)
+      expect { click_on "Update Provider" }.to change { ProviderSource.count }.by(-1)
+
+    end
   end
 end

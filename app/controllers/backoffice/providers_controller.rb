@@ -13,6 +13,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
 
   def new
     @provider = Provider.new
+    @provider.sources.build source_type: "eic"
     authorize(@provider)
   end
 
@@ -29,6 +30,9 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   end
 
   def edit
+    if @provider.sources.empty?
+      @provider.sources.build source_type: "eic"
+    end
   end
 
   def update

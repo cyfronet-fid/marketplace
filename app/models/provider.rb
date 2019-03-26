@@ -7,4 +7,10 @@ class Provider < ApplicationRecord
   has_many :categories, through: :service_categories
 
   validates :name, presence: true
+
+  has_many :sources, source: :provider_sources, class_name: "ProviderSource", dependent: :destroy
+
+  accepts_nested_attributes_for :sources,
+                                reject_if: lambda { |attributes| attributes["eid"].blank? || attributes["source_type"].blank? },
+                                allow_destroy: true
 end
