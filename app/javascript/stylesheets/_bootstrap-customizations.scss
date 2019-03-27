@@ -1686,6 +1686,11 @@ label[data-multicheckbox].small {
   -moz-border-radius: 5px;
   border-radius: 5px;
 
+  .service-logo {
+    min-width: 120px;
+    height: auto;
+  }
+
   .media-body {
     border-right: 1px solid $palette-gray-10;
 
@@ -1717,6 +1722,13 @@ label[data-multicheckbox].small {
         }
       }
     }
+  }
+}
+
+@media (max-width: 576px) {
+  .media-body {
+    float: left;
+    padding-bottom: 0 !important;
   }
 }
 
