@@ -1,6 +1,21 @@
 = simple_form_for [:backoffice, provider] do |f|
   = f.input :name
 
-  .btn-group
-    = f.button :submit, class: "btn btn-success"
-    = back_link_to "Cancel", provider, prefix: :backoffice, class: "btn btn-secondary"
+  %h3 External Sources
+
+  = f.fields_for :sources do |sources_form|
+    = sources_form.hidden_field :id
+    = sources_form.input :source_type, collection: ProviderSource.source_types.keys.map(&:to_sym)
+    = sources_form.input :eid, label: "eInfraCentral External ID"
+    - unless sources_form.object.id.nil?
+      = sources_form.check_box :_destroy
+      = sources_form.label :_destroy, "Remove external source"
+
+
+  %hr.bottom-hr.mt-5.mb-4
+  .row.mt-5
+    .col-12
+
+      = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5"
+      = back_link_to "Cancel and back to previous page", provider, prefix: :backoffice,
+        class: "text-left flex-grow-1 text-uppercase"

@@ -10,11 +10,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Link to the tutorial of creating attributes in backoffice (@goreck888)
+- External ID input to backoffice provider's form (@michal-szostak)
 
 ### Changed
 - Filters refactored and moved into `Service::Filterable` concern (@mkasztelnik)
 - Filters cleared when user type new query (@mkasztelnik)
 - Filters not cleared when changing category (@mkasztelnik)
+- Button styling in backoffice provider form (@michal-szostak)
 
 ### Deprecated
 
