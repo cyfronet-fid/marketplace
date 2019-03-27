@@ -5,5 +5,8 @@
     = render "services/categorization", service: service
     .mt-3.float-left
       = print_rating_stars(service.rating)
+      %span.ml-1.font-weight-bold
+        (#{service.rating} /5)
+      = link_to "#{service.service_opinion_count} reviews", service_opinions_path(service), class: "ml-3"
   - if service.logo.attached?
     = image_tag service.logo.variant(resize: "120x120"), class: "align-self-center mx-4 service-logo"
