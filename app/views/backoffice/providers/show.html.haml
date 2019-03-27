@@ -2,6 +2,12 @@
 
 %h1= @provider.name
 
+- unless @provider.sources.empty?
+  %h3 External Sources:
+  %ul
+    - @provider.sources.each do |source|
+      %li "#{source.source_type}: #{source.eid}"
+
 .btn-group
   - if policy([:backoffice, @provider]).edit?
     = link_to "Edit",
