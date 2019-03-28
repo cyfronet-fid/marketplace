@@ -255,8 +255,8 @@ RSpec.feature "Service filtering and sorting" do
     # For turbolinks to load
     sleep(1)
 
-    expect(page.body.index("DDDD Something 3")).to be > page.body.index("DDDD Something 2")
-    expect(page.body.index("DDDD Something 2")).to be > page.body.index("DDDD Something 1")
+    expect(page.body.index("DDDD Something 3")).to be < page.body.index("DDDD Something 2")
+    expect(page.body.index("DDDD Something 2")).to be < page.body.index("DDDD Something 1")
   end
 
   scenario "limit number of services per page" do
