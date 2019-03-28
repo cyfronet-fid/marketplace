@@ -5,13 +5,12 @@ class ServicesController < ApplicationController
   include Service::Searchable
   include Service::Categorable
   include Service::Sortable
-  include Paginable
 
   def index
     filtered = filter(scope)
-    searched = search(filtered)
-    from_category = category_records(searched)
-    @services = paginate(ordering.nil? ? from_category : from_category.order(ordering))
+    from_category = category_records(filtered)
+
+    @services = search(from_category)
   end
 
   def show
