@@ -11,6 +11,10 @@ body {
   }
 }
 
+.container {
+  max-width: 1180px;
+}
+
 *:focus {
   outline: none !important;
 }
@@ -700,20 +704,33 @@ Service detail
     }
   }
 
-
   .list-group {
     margin-bottom: 1.4rem;
     border: 1px solid $palette-solid-10;
-    padding: 0.5rem;
-    list-style-type: circle;
+    padding: 0.8rem 0.5rem;
   }
 
   .list-group-item {
     border: none;
-    margin: 0.2rem;
-    padding: 0.2rem 0.95rem;
+    margin: 0 0 0 1.5rem;
+    padding: 0 0.2rem;
     color: $secondary;
-    display: inline-block;
+    list-style-type: disc !important;
+    display: list-item;
+  }
+
+  .arrows {
+    list-style: none;
+
+    .list-group-item {
+      list-style-type: none !important;
+      margin: 0 0 0 0.5rem;
+
+      svg {
+        margin-right: 9px;
+        font-size: 10px;
+      }
+    }
   }
 }
 
@@ -1032,12 +1049,6 @@ h5 {
 
 .sub-text {
   font-size: 16px;
-}
-
-.card-button label input:checked ~ span,
-.card-button label span:hover {
-  background: $secondary;
-  color: $white;
 }
 
 .order-container .form-group select,
