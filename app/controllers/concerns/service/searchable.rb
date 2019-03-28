@@ -22,6 +22,8 @@ module Service::Searchable
                      fields: ["title^10", "description"],
                      operator: "or",
                      where: { id: search_scope.ids },
-                     page: params[:page], per_page: per_page
+                     page: params[:page], per_page: per_page,
+                     order: ordering,
+                     scope_results: ->(r) { r.includes(:research_areas, :providers, :target_groups).with_attached_logo }
     end
 end

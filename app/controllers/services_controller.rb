@@ -10,7 +10,7 @@ class ServicesController < ApplicationController
     filtered = filter(scope)
     from_category = category_records(filtered)
 
-    @services = search(from_category)
+    @services = search(from_category.order(ordering))
   end
 
   def show
