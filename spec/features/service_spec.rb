@@ -247,7 +247,7 @@ RSpec.feature "Service filtering and sorting" do
     expect(page).to have_selector(".media", count: 3)
   end
 
-  scenario "selecting sorting will set query param and preserve existing ones", js: true, search: true do
+  scenario "selecting sorting will set query param and preserve existing ones", js: true do
     visit services_path(q: "DDDD Something", utf8: "✓")
 
     select "by rate 1-5", from: "sort"

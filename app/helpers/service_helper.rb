@@ -46,8 +46,4 @@ module ServiceHelper
   def providers_text(service)
     service.providers.map { |target| target.name }
   end
-
-  def total_services(services)
-    params[:q].present? ? services.total_count : services.total_entries
-  end
 end
