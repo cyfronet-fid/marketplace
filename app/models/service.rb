@@ -7,6 +7,8 @@ class Service < ApplicationRecord
   # and define which services are indexed in elasticsearch
   searchkick
   scope :search_import, -> { where(status: :published) }
+  # search_data are definition whitch
+  # fields are mapped to elasticsearch
   def search_data
     {
       title: title,
