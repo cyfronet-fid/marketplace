@@ -45,5 +45,5 @@ chdir APP_ROOT do
   system! "bin/rails restart"
 
   puts "\n== Generating elasticsearch indexes =="
-  system! "FORCE=y bin/rake elasticsearch:import:all"
+  system! "FORCE=y bin/rake searchkick:reindex:all"
 end
