@@ -7,15 +7,13 @@ module MulticheckboxHelper
     end
 
     result = "<div class=\"collapse\" data-controller=\"multicheckbox\" id=\"#{name}\">"
-
     options.each do | option |
       disabled = (option[2] == 0)
-      result += "<div data-target=\"multicheckbox.element\" class=\"checkbox\"><label
+      result += "<div data-target=\"multicheckbox.element\"><label
                  data-multicheckbox class=\"#{disabled ? "text-muted" : ""} small\">
                  <input class=\"form-check-input\" #{disabled ? "disabled=\"disabled\"" : ""} name=\"#{name}[]\"
-                        multiple=\"true\" type=\"checkbox\" #{value.include?(option[1].to_s) ? "checked=\"checked\"" : ""} value=\"#{option[1]}\">
-                 <span class=\"cr\"><i class=\"cr-icon fas fa-check\"></i></span>#{option[0]}</label>
-                 <span class=\"float-right counter #{disabled ? "text-muted" : ""}\">#{option[2]}</span></div>"
+                        multiple=\"true\" type=\"checkbox\" #{value.include?(option[1].to_s) ? "checked=\"checked\"" : ""} value=\"#{option[1]}\">#{option[0]}</label>
+                 <span class=\"float-right small #{disabled ? "text-muted" : ""}\">#{option[2]}</span></div>"
     end
 
     result += "<a data-target=\"multicheckbox.toggler\" href=\"javascript:undefined\"
