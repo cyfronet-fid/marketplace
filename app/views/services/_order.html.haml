@@ -1,6 +1,8 @@
-= form_tag url_for, method: :get, role: "search" do
-  %select#sort.query-sort.form-control.form-control-sm{ "data-submit-on-change": "data-submit-on-change" }
+= form_tag url_for, method: :get, role: "search", "data-controller": "order" do
+  %select#sort.query-sort.form-control.form-control-sm{ "data-target": "order.select",
+                                                        "data-submit-on-change": "data-submit-on-change" }
     = options_for_select([["by name A-Z", "title"],
                           ["by name Z-A", "-title"],
                           ["by rate 1-5", "rating"],
-                          ["by rate 5-1", "-rating"]], params[:sort])
+                          ["by rate 5-1", "-rating"],
+                          ["Best match", "_score"]], params[:sort])

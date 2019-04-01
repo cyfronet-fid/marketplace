@@ -11,11 +11,10 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   prepend_before_action :index_authorize, only: :index
 
   def index
-    searched = search(scope)
-    filtered = filter(searched)
+    filtered = filter(scope)
     from_category = category_records(filtered)
 
-    @services = paginate(from_category.order(ordering))
+    @services = search(from_category.order(ordering))
   end
 
   def show

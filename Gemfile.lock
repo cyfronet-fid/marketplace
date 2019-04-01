@@ -100,17 +100,12 @@ GEM
     dotenv-rails (2.5.0)
       dotenv (= 2.5.0)
       railties (>= 3.2, < 6.0)
-    elasticsearch (5.0.5)
-      elasticsearch-api (= 5.0.5)
-      elasticsearch-transport (= 5.0.5)
-    elasticsearch-api (5.0.5)
+    elasticsearch (6.2.0)
+      elasticsearch-api (= 6.2.0)
+      elasticsearch-transport (= 6.2.0)
+    elasticsearch-api (6.2.0)
       multi_json
-    elasticsearch-model (5.0.2)
-      activesupport (> 3)
-      elasticsearch (~> 5)
-      hashie
-    elasticsearch-rails (5.0.2)
-    elasticsearch-transport (5.0.5)
+    elasticsearch-transport (6.2.0)
       faraday
       multi_json
     erubi (1.8.0)
@@ -359,6 +354,10 @@ GEM
     scss_lint (0.57.0)
       rake (>= 0.9, < 13)
       sass (~> 3.5.5)
+    searchkick (3.1.2)
+      activemodel (>= 4.2)
+      elasticsearch (>= 5)
+      hashie
     selenium-webdriver (3.14.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2)
@@ -457,8 +456,6 @@ DEPENDENCIES
   database_cleaner
   devise
   dotenv-rails
-  elasticsearch-model
-  elasticsearch-rails
   factory_bot_rails
   faker
   friendly_id (~> 5.2.0)
@@ -491,6 +488,7 @@ DEPENDENCIES
   rubocop-rails (>= 1.5.0)
   sass-rails (~> 5.0)
   scss_lint
+  searchkick
   selenium-webdriver
   sentry-raven
   shoulda-matchers
