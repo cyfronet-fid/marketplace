@@ -14,16 +14,16 @@
 
   .col-md-12.mb-2
     %h1.categories
-      %span Lookng for:
       = @category&.name || "Services"
+  .col-md-12.mb-1
+    - if @category
+      %p.text-muted.mb-4.ml-1= @category.description
   - if @active_filters.present?
     .col-md-12.mb-3
       %p.mb-1 Active filters
       .active-filters
         - @active_filters.each do |label, p|
           .filter-tag
-            %span
-              ="Filter:"
             = label
             = link_to(p) do
               .fas.fa-times
@@ -37,11 +37,8 @@
 
   .col-md-12
     %hr.category-separator
-  .col-md-3.results-info
-    1-10 results of 38
-  .col-md-5
-    = render "services/order"
-  .col-md-4
+  .col-md-6
     = render "services/paginate_simple", services: @services
-  - if @category
-    %p.text-muted.mb-4.ml-3= @category.description
+  .col-md-6.float-right
+    = render "services/order"
+

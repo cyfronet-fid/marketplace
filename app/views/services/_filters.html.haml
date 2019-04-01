@@ -1,6 +1,5 @@
 %h5.text-uppercase.underline-light.mb-2.pb-2.mt-4
   Filters
-  %a.collapse-trigger Collapse all
 
 = form_tag "", method: :get, role: "search", class: "filters", "data-sync-query-form": "data-sync-query-form" do
   - @filters.each do |filter|
