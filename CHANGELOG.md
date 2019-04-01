@@ -21,6 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Deprecated
 
 ### Removed
+- Remove terms and conditions from service order confirmation view (@mkasztelnik)
 
 ### Fixed
 - Show accept terms of use only when terms are given for the service (@mkasztelnik)
