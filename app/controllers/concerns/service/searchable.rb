@@ -23,7 +23,7 @@ module Service::Searchable
                      operator: "or",
                      where: { id: search_scope.ids },
                      page: params[:page], per_page: per_page,
-                     order: ordering,
+                     order: params[:sort].blank? ? nil : ordering,
                      match: :text_middle,
                      scope_results: ->(r) { r.includes(:research_areas, :providers, :target_groups).with_attached_logo }
     end
