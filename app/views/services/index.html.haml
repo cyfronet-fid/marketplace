@@ -12,35 +12,33 @@
                            active_filters: @active_filters,
                            related_platform_options: @related_platform_options do
 
-  .col-md-12
+  .col-md-12.mb-2
     %h1.categories
       %span Lookng for:
       = @category&.name || "Services"
-  .col-md-12.mb-3
-    %p.mb-1 Active filters
-    .filter-tag
-      %span Provider:
-      EGI Federation
-      %i.fas.fa-times
-    .filter-tag
-      %span Dedicated for:
-      Researchers
-      %i.fas.fa-times
-    .filter-tag
-      %span Dedicated for:
-      Research group
-      %i.fas.fa-times
-    .filter-tag
-      %span Dedicated for:
-      Research group
-      %i.fas.fa-times
-    %a.filter-tag.clear
-      %span Clear all filters
-      %i.fas.fa-times
+  - if @active_filters.present?
+    .col-md-12.mb-3
+      %p.mb-1 Active filters
+      .active-filters
+        - @active_filters.each do |label, p|
+          .filter-tag
+            %span
+              ="Filter:"
+            = label
+            = link_to(p) do
+              .fas.fa-times
+
+        - if @active_filters.present?
+          .filter-tag.clear
+            = link_to controller: controller.controller_name, action: action_name,
+                      per_page: params[:per_page], sort: params[:sort] do
+              %span Clear all filters
+              .fa.fa-times
+
   .col-md-12
     %hr.category-separator
   .col-md-3.results-info
-    1-10 results from 38
+    1-10 results of 38
   .col-md-5
     = render "services/order"
   .col-md-4
