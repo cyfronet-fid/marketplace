@@ -71,7 +71,6 @@ RSpec.feature "Service ordering" do
       expect(page).to have_text("Additional information test")
 
       expect do
-        check "Accept terms and conditions"
         click_on "Order", match: :first
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
@@ -132,7 +131,6 @@ RSpec.feature "Service ordering" do
       expect(page).to have_text("Additional information test")
 
       expect do
-        check "Accept terms and conditions"
         click_on "Order", match: :first
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
@@ -150,41 +148,6 @@ RSpec.feature "Service ordering" do
       expect(page).to have_content(service.title)
     end
 
-
-    scenario "I can order service without terms and contitions" do
-      service = create(:service, terms_of_use_url: "")
-      offer, _seconds_offer = create_list(:offer, 2, service: service)
-      affiliation = create(:affiliation, status: :active, user: user)
-      research_area = create(:research_area)
-
-      visit service_path(service)
-
-      click_on "Order", match: :first
-
-      # Step 1
-
-      choose "project_item_offer_id_#{offer.iid}"
-      click_on "Next", match: :first
-
-      # Step 2
-
-      select "Services"
-      select affiliation.organization
-      select research_area.name, from: "Research area"
-      select "Single user", from: "Customer typology"
-      fill_in "Access reason", with: "To pass test"
-      fill_in "Additional information", with: "Additional information test"
-
-      click_on "Next", match: :first
-
-      # Step 3
-      expect(page).not_to have_text("Accept terms and conditions")
-
-      expect do
-        click_on "Order", match: :first
-      end.to change { ProjectItem.count }.by(1)
-    end
-
     scenario "I cannot order open_access service twice in one project" do
       open_access_service = create(:open_access_service)
       _offer = create(:offer, service: open_access_service)
@@ -199,7 +162,6 @@ RSpec.feature "Service ordering" do
       click_on "Next", match: :first
 
       expect do
-        check "Accept terms and conditions"
         click_on "Add to a project", match: :first
       end.to change { ProjectItem.count }.by(1)
 
@@ -266,7 +228,6 @@ RSpec.feature "Service ordering" do
                                     "Add to a project", exact: true)
 
       expect do
-        check "Accept terms and conditions"
         click_on "Add to a project", match: :first
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
