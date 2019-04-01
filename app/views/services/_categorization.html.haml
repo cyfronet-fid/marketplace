@@ -1,15 +1,21 @@
 :ruby
   area_links = service.research_areas.
                map { |ra| link_to(ra.name, services_path(research_area: ra.to_param)) }
-
-.row
-  .col.x-small
+%dl.mb-0
+  %dt.x-small
     %span
-      By:
+      Provided by:
+  %dd.x-small
     %strong.mr-4= safe_join(providers(service), ", ")
+%dl.mb-0
+  %dt.x-small
     %span
       Research area:
+  %dd.x-small
     %strong.mr-4= safe_join(area_links, ", ")
+%dl.mb-0
+  %dt.x-small
     %span
-      For:
+      Dedicatedor:
+  %dd.x-small
     %strong.mr-4= safe_join(dedicated_for_links(service), ", ")

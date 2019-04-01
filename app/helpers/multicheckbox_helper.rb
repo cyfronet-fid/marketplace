@@ -6,13 +6,13 @@ module MulticheckboxHelper
       value = []
     end
 
-    result = "<div data-controller=\"multicheckbox\" id=\"#{name}\">"
+    result = "<div class=\"collapse\" data-controller=\"multicheckbox\" id=\"#{name}\">"
     options.each do | option |
       disabled = (option[2] == 0)
       result += "<div data-target=\"multicheckbox.element\"><label
                  data-multicheckbox class=\"#{disabled ? "text-muted" : ""} small\">
                  <input class=\"form-check-input\" #{disabled ? "disabled=\"disabled\"" : ""} name=\"#{name}[]\"
-                        multiple=\"true\" type=\"checkbox\" #{value.include?(option[1].to_s) ? "checked=\"checked\"" : ""} value=\"#{option[1]}\">#{option[0]}</label>
+                        multiple=\"true\" type=\"checkbox\" #{value.include?(option[1].to_s) ? "checked=\"checked\"" : ""} value=\"#{option[1]}\"><span>#{option[0]}</span></label>
                  <span class=\"float-right small #{disabled ? "text-muted" : ""}\">#{option[2]}</span></div>"
     end
 

@@ -36,6 +36,15 @@ h1 {
   font-weight: $font-weight-light;
 }
 
+.categories {
+  font-weight: 300;
+
+  span {
+    font-weight: 200;
+    color: $palette-solid-80;
+  }
+}
+
 h2 {
   font-weight: $font-weight-bold;
 }
@@ -100,13 +109,37 @@ a {
 }
 
 .breadcrumbs {
-  font-size: $font-size-sm;
+  font-size: 15px;
+  font-weight: 300;
+  color: $text-muted;
 
   a {
+    padding: 0 2px;
+    font-size: 12px;
+
+    &:first-child {
+      background: url('../../assets/images/home-icon.svg') top center no-repeat;
+      height: 16px;
+      opacity: 0.5;
+      width: 17px;
+      margin-top: 3px;
+      text-indent: 100%;
+      float: left;
+      padding: 0;
+      margin-right: 4px;
+      overflow: hidden;
+    }
+
     &:hover {
       opacity: 0.6;
       text-decoration: none;
     }
+  }
+
+  .current {
+    padding: 0 2px;
+    color: $body-color;
+    font-size: 12px;
   }
 }
 
@@ -378,6 +411,14 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   .accordion .card-header h6 .display-2 {
     min-height: 26px;
     font-size: 16px;
+  }
+
+  .service-box {
+    display: block;
+
+    .service-logo {
+      margin: 20px 0;
+    }
   }
 }
 
@@ -791,12 +832,168 @@ Card style
 /* -----------------------
 Filters
 -------------------------*/
-.filters {
-  label {
-    width: 85%;
-    word-wrap: break-word;
+
+.filter-tag {
+  padding: 8px 12px;
+  display: inline;
+  margin: 0 5px 5px 0;
+  float: left;
+  font-size: 13px;
+  background: $tag-bg-color;
+  font-weight: normal;
+
+  span {
+    font-weight: 200;
+    color: $palette-solid-50;
+  }
+
+  svg {
+    margin-left: 7px;
+    font-size: 15px;
   }
 }
+
+.clear {
+  background: $palette-solid-10;
+
+  span {
+    color: $black;
+  }
+}
+
+h5 {
+  .collapse-trigger {
+    float: right;
+    font-weight: normal;
+    text-transform: none;
+    font-size: 12px;
+  }
+}
+
+.filters {
+
+  label {
+    width: 85%;
+    font-size: 13px;
+    cursor: pointer;
+    margin-left: 20px;
+    margin-right: -20px;
+    word-wrap: break-word;
+  }
+
+  .empty {
+    opacity: 0.5;
+
+    label {
+      cursor: default;
+    }
+  }
+
+  .custom-select {
+    background: $footer-color url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%231c313a'><polygon points='0,0 100,0 50,50'/></svg>") no-repeat;
+    background-size: 12px;
+    background-position: calc(100% - 10px) 12px;
+    padding: 2px 7px;
+  }
+
+  select {
+    margin-bottom: 15px;
+  }
+
+  a {
+
+    h6 {
+      font-size: 14px;
+      margin-top: 6px;
+      color: $body-color;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 0;
+
+    a {
+      margin: 10px auto 20px;
+      font-size: 13px;
+      text-align: center;
+      display: block;
+      font-weight: bold;
+    }
+
+    .counter {
+      font-size: 13px;
+    }
+  }
+
+  .collapse-icon {
+
+    svg {
+      color: $black;
+      margin-top: 6px;
+      float: right;
+      font-size: 11px;
+    }
+  }
+
+  // scss-lint:disable all
+  .checkbox {
+
+    label {
+
+      input[type="checkbox"] {
+        display: none;
+      }
+
+      input[type="checkbox"]+.cr>.cr-icon {
+        opacity: 0;
+      }
+
+      input[type="checkbox"]:checked+.cr>.cr-icon {
+        opacity: 1;
+      }
+
+      input[type="checkbox"]:disabled+.cr {
+        opacity: 0.5;
+      }
+
+      label::after {
+        content: '';
+        display: table;
+        clear: both;
+      }
+
+      .cr {
+        position: relative;
+        display: inline-block;
+        border: 1px solid $palette-solid-30;
+        border-radius: 0.15em;
+        width: 1.1em;
+        height: 1.1em;
+        float: left;
+        margin-top: 2px;
+        margin-left: -20px;
+        margin-right: 0.5em;
+
+        .cr-icon {
+          position: absolute;
+          font-size: 0.8em;
+          line-height: 0;
+          top: 10%;
+          left: 15%;
+        }
+      }
+    }
+  }
+  // scss-lint:enable all
+}
+
+.active-filters {
+  a {
+    color: inherit;
+  }
+}
+
+
 
 
 @media only screen and (max-width: 768px) {
@@ -1257,10 +1454,15 @@ Filters
 //scss-lint:disable QualifyingElement
 // This is a little hack, to make checkboxes vertically centered
 label[data-multicheckbox].small {
-  margin-bottom: 1px;
+  margin-bottom: 7px;
 
   > input[type="checkbox"] {
-    margin-top: 3px;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  span {
+    display: inline-block;
   }
 }
 
@@ -1487,3 +1689,98 @@ label[data-multicheckbox].small {
     }
   }
 }
+
+.service-box {
+  border: 1px solid $palette-gray-10;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+
+  .service-logo {
+    min-width: 120px;
+    height: auto;
+  }
+
+  .media-body {
+    border-right: 1px solid $palette-gray-10;
+
+    h2 {
+      font-weight: 300;
+    }
+
+    dl {
+      width: 100%;
+      float: left;
+
+      dt {
+        display: inline;
+        float: left;
+        color: $palette-solid-100;
+        padding-right: 10px;
+        margin-bottom: 0;
+        font-weight: 300;
+      }
+
+      dd {
+        display: inline;
+        float: left;
+        max-width: 83%;
+        margin-bottom: 0;
+
+        a {
+          font-weight: 300;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .media-body {
+    float: left;
+    padding-bottom: 0 !important;
+  }
+}
+
+.category-separator {
+  border-top: 5px solid $palette-gray-5;
+  margin: 0 0 1.4rem;
+}
+
+.results-info {
+  font-style: italic;
+  line-height: 30px;
+}
+
+.sort-box {
+  label {
+    line-height: 30px;
+    height: 30px;
+    text-align: center;
+    margin: 0;
+  }
+}
+
+.categories-list {
+  li {
+    font-size: 16px;
+    margin-bottom: 6px;
+
+    span {
+      font-size: 14px;
+      color: $palette-gray-100;
+    }
+  }
+}
+
+// scss-lint:disable all
+#all-services-link {
+  font-size: 16px;
+  margin-bottom: 6px;
+
+  span {
+    font-size: 14px;
+    color: $palette-gray-100;
+  }
+}
+// scss-lint:enable all
