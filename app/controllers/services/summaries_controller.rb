@@ -6,30 +6,21 @@ class Services::SummariesController < Services::ApplicationController
 
   def show
     @project_item = project_item_template
-    @confirmation = Confirmation.new
     render "show_#{@service.service_type}"
   end
 
   def create
-    @confirmation = Confirmation.new(confirmation_params.
-                                       merge(required: @service.terms_of_use_url))
+    authorize(project_item_template)
 
-    if @confirmation.valid?
-      authorize(project_item_template)
+    @project_item = ProjectItem::Create.new(project_item_template).call
 
-      @project_item = ProjectItem::Create.new(project_item_template).call
-
-      if @project_item.persisted?
-        session.delete(session_key)
-        @related_services = @service.related_services.includes(:providers)
-        render "confirmation_#{@service.service_type}", layout: "application"
-      else
-        redirect_to service_configuration_path(@service),
-                    alert: "Service request configuration invalid"
-      end
+    if @project_item.persisted?
+      session.delete(session_key)
+      @related_services = @service.related_services.includes(:providers)
+      render "confirmation_#{@service.service_type}", layout: "application"
     else
-      @project_item = project_item_template
-      render "show_#{@service.service_type}"
+      redirect_to service_configuration_path(@service),
+                  alert: "Service request configuration invalid"
     end
   end
 
@@ -44,13 +35,5 @@ class Services::SummariesController < Services::ApplicationController
 
     def project_item_template
       ProjectItem.new(session[session_key])
-    end
-
-    def confirmation_params
-      if @service.terms_of_use_url.present?
-        params.fetch(:confirmation).permit(:terms_and_conditions)
-      else
-        {}
-      end
     end
 end
