@@ -9,6 +9,21 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+
+## [1.7.0] - 2019-04-01
+
+### Added
 - Link to the tutorial of creating attributes in backoffice (@goreck888)
 - External ID input to backoffice provider's form (@michal-szostak)
 - External import task (@michal-szostak)
@@ -20,15 +35,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Filters not cleared when changing category (@mkasztelnik)
 - Button styling in backoffice provider form (@michal-szostak)
 
-### Deprecated
-
 ### Removed
 - Remove terms and conditions from service order confirmation view (@mkasztelnik)
 
 ### Fixed
 - Show accept terms of use only when terms are given for the service (@mkasztelnik)
-
-### Security
 
 
 ## [1.6.0] - 2019-03-18
@@ -46,8 +57,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - service creation bug (@martaswiatkowska)
 - integer and range validation bug (@michal-szostak / @martaswiatkowska)
 
-
 ## [1.5.1] - 2019-03-15
+
 
 ### Fixed
 - Fix infinitive loop while updating main service category (@mkasztelnik)
