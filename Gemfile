@@ -98,3 +98,6 @@ group :production do
   gem "faker", require: false
   gem "newrelic_rpm"
 end
+
+gem "unirest", "~> 1.0"
+gem "reverse_markdown"

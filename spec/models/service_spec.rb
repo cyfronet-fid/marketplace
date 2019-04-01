@@ -8,7 +8,6 @@ RSpec.describe Service do
   it { should validate_presence_of(:tagline) }
   it { should validate_presence_of(:providers) }
   it { should validate_presence_of(:rating) }
-  it { should validate_presence_of(:categories) }
 
   it { should have_many(:providers) }
   it { should have_many(:service_categories).dependent(:destroy) }

@@ -102,7 +102,6 @@ class Service < ApplicationRecord
   validates :logo, blob: { content_type: :image }
   validates :research_areas, presence: true
   validates :providers, presence: true
-  validates :categories, presence: true
   validates :status, presence: true
   validates :order_target, allow_blank: true, email: true
 
