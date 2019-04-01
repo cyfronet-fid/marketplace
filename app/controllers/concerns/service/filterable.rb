@@ -31,12 +31,13 @@ module Service::Filterable
 
     def filter_classes
       [
-        Filter::Location,
-        Filter::Provider,
-        Filter::Platform,
-        Filter::TargetGroup,
-        Filter::Rating,
+
         Filter::ResearchArea,
+        Filter::Provider,
+        Filter::TargetGroup,
+        Filter::Platform,
+        Filter::Rating,
+        Filter::Location,
         Filter::Tag
       ]
     end

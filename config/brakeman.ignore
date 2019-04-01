@@ -10,7 +10,7 @@
       "line": 15,
       "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
       "code": "render(action => policy_scope(Project).order(:name).eager_load(:project_items).where(\"project_items.status = ?\", params[:status]), {})",
-      "render_path": [{"type":"controller","class":"ProjectsController","method":"index","line":9,"file":"app/controllers/projects_controller.rb","rendered":{"name":"projects/index","file":"/home/marek/git/mp/app/views/projects/index.html.haml"}}],
+      "render_path": [{"type":"controller","class":"ProjectsController","method":"index","line":9,"file":"app/controllers/projects_controller.rb","rendered":{"name":"projects/index","file":"/Users/andrzej/RubymineProjects/marketplace/app/views/projects/index.html.haml"}}],
       "location": {
         "type": "template",
         "template": "projects/index"
@@ -22,39 +22,58 @@
     {
       "warning_type": "Mass Assignment",
       "warning_code": 70,
-      "fingerprint": "70e7b861d074bffcc48c1852503c02b1d81412d166341e23e4306071c465ddc8",
+      "fingerprint": "219eb1e71f339d7c676ecd67ad984bd1f288e536c8f133f60aa10eec6f2db710",
       "check_name": "MassAssignment",
       "message": "Parameters should be whitelisted for mass assignment",
-      "file": "app/views/services/_paginate.haml",
-      "line": 14,
+      "file": "app/views/services/_paginate_simple.haml",
+      "line": 8,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.permit!",
-      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":21,"file":"app/controllers/categories_controller.rb","rendered":{"name":"categories/show","file":"/home/marek/git/mp/app/views/categories/show.html.haml"}},{"type":"template","name":"categories/show","line":2,"file":"app/views/categories/show.html.haml","rendered":{"name":"services/_index","file":"/home/marek/git/mp/app/views/services/_index.html.haml"}},{"type":"template","name":"services/_index","line":33,"file":"app/views/services/_index.html.haml","rendered":{"name":"services/_paginate","file":"/home/marek/git/mp/app/views/services/_paginate.haml"}}],
+      "render_path": [{"type":"controller","class":"ServicesController","method":"index","line":14,"file":"app/controllers/services_controller.rb","rendered":{"name":"services/index","file":"/Users/andrzej/RubymineProjects/marketplace/app/views/services/index.html.haml"}},{"type":"template","name":"services/index","line":41,"file":"app/views/services/index.html.haml","rendered":{"name":"services/_paginate_simple","file":"/Users/andrzej/RubymineProjects/marketplace/app/views/services/_paginate_simple.haml"}}],
       "location": {
         "type": "template",
-        "template": "services/_paginate"
+        "template": "services/_paginate_simple"
       },
       "user_input": null,
       "confidence": "Medium",
       "note": ""
     },
     {
-      "warning_type": "Dynamic Render Path",
-      "warning_code": 15,
-      "fingerprint": "77ce5d3f4dc49b266bfc30250e63c42ce08d3ea00e6709efac8a0cd1d7e69a97",
-      "check_name": "Render",
-      "message": "Render path contains parameter value",
-      "file": "app/views/backoffice/services/index.html.haml",
-      "line": 12,
-      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => policy_scope(Service).page(params[:page]), {})",
-      "render_path": [{"type":"controller","class":"Backoffice::ServicesController","method":"index","line":9,"file":"app/controllers/backoffice/services_controller.rb","rendered":{"name":"backoffice/services/index","file":"/home/marek/git/mp/app/views/backoffice/services/index.html.haml"}}],
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "32383897a8f519e0708ef53a8b932c668e3a2c0e9bca8ef47a0b0698cdc3a50a",
+      "check_name": "MassAssignment",
+      "message": "Parameters should be whitelisted for mass assignment",
+      "file": "app/views/services/_paginate_simple.haml",
+      "line": 6,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.permit!",
+      "render_path": [{"type":"controller","class":"ServicesController","method":"index","line":14,"file":"app/controllers/services_controller.rb","rendered":{"name":"services/index","file":"/Users/andrzej/RubymineProjects/marketplace/app/views/services/index.html.haml"}},{"type":"template","name":"services/index","line":41,"file":"app/views/services/index.html.haml","rendered":{"name":"services/_paginate_simple","file":"/Users/andrzej/RubymineProjects/marketplace/app/views/services/_paginate_simple.haml"}}],
       "location": {
         "type": "template",
-        "template": "backoffice/services/index"
+        "template": "services/_paginate_simple"
       },
-      "user_input": "params[:page]",
-      "confidence": "Weak",
+      "user_input": null,
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "703a60310683040eb1a378df0359231df070c00c5c6f17edfdb7430751bd9ff9",
+      "check_name": "MassAssignment",
+      "message": "Parameters should be whitelisted for mass assignment",
+      "file": "app/views/services/_paginate_simple.haml",
+      "line": 11,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.permit!",
+      "render_path": [{"type":"controller","class":"ServicesController","method":"index","line":14,"file":"app/controllers/services_controller.rb","rendered":{"name":"services/index","file":"/Users/andrzej/RubymineProjects/marketplace/app/views/services/index.html.haml"}},{"type":"template","name":"services/index","line":41,"file":"app/views/services/index.html.haml","rendered":{"name":"services/_paginate_simple","file":"/Users/andrzej/RubymineProjects/marketplace/app/views/services/_paginate_simple.haml"}}],
+      "location": {
+        "type": "template",
+        "template": "services/_paginate_simple"
+      },
+      "user_input": null,
+      "confidence": "Medium",
       "note": ""
     },
     {
@@ -87,7 +106,7 @@
       "line": 48,
       "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
       "code": "link_to((Unresolved Model).new.webpage, (Unresolved Model).new.webpage)",
-      "render_path": [{"type":"template","name":"profiles/affiliations/_index","line":3,"file":"app/views/profiles/affiliations/_index.html.haml","rendered":{"name":"profiles/affiliations/_affiliation","file":"/home/marek/git/mp/app/views/profiles/affiliations/_affiliation.html.haml"}}],
+      "render_path": [{"type":"template","name":"profiles/affiliations/_index","line":3,"file":"app/views/profiles/affiliations/_index.html.haml","rendered":{"name":"profiles/affiliations/_affiliation","file":"/Users/andrzej/RubymineProjects/marketplace/app/views/profiles/affiliations/_affiliation.html.haml"}}],
       "location": {
         "type": "template",
         "template": "profiles/affiliations/_affiliation"
@@ -95,46 +114,8 @@
       "user_input": "(Unresolved Model).new.webpage",
       "confidence": "Weak",
       "note": ""
-    },
-    {
-      "warning_type": "Mass Assignment",
-      "warning_code": 70,
-      "fingerprint": "df67224e8f04c8de98b6fb0f2df04ed86e92a1dda97ac0d20b950f4a0235b7ea",
-      "check_name": "MassAssignment",
-      "message": "Parameters should be whitelisted for mass assignment",
-      "file": "app/views/services/_paginate.haml",
-      "line": 11,
-      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
-      "code": "params.permit!",
-      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":21,"file":"app/controllers/categories_controller.rb","rendered":{"name":"categories/show","file":"/home/marek/git/mp/app/views/categories/show.html.haml"}},{"type":"template","name":"categories/show","line":2,"file":"app/views/categories/show.html.haml","rendered":{"name":"services/_index","file":"/home/marek/git/mp/app/views/services/_index.html.haml"}},{"type":"template","name":"services/_index","line":33,"file":"app/views/services/_index.html.haml","rendered":{"name":"services/_paginate","file":"/home/marek/git/mp/app/views/services/_paginate.haml"}}],
-      "location": {
-        "type": "template",
-        "template": "services/_paginate"
-      },
-      "user_input": null,
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
-      "warning_type": "Mass Assignment",
-      "warning_code": 70,
-      "fingerprint": "edd3a91ae1d2fcca0d1ce636654ab9b8c56b766e2ebdf47f01d189a47847ef66",
-      "check_name": "MassAssignment",
-      "message": "Parameters should be whitelisted for mass assignment",
-      "file": "app/views/services/_paginate.haml",
-      "line": 9,
-      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
-      "code": "params.permit!",
-      "render_path": [{"type":"controller","class":"CategoriesController","method":"show","line":21,"file":"app/controllers/categories_controller.rb","rendered":{"name":"categories/show","file":"/home/marek/git/mp/app/views/categories/show.html.haml"}},{"type":"template","name":"categories/show","line":2,"file":"app/views/categories/show.html.haml","rendered":{"name":"services/_index","file":"/home/marek/git/mp/app/views/services/_index.html.haml"}},{"type":"template","name":"services/_index","line":33,"file":"app/views/services/_index.html.haml","rendered":{"name":"services/_paginate","file":"/home/marek/git/mp/app/views/services/_paginate.haml"}}],
-      "location": {
-        "type": "template",
-        "template": "services/_paginate"
-      },
-      "user_input": null,
-      "confidence": "Medium",
-      "note": ""
     }
   ],
-  "updated": "2019-01-22 23:27:19 +0100",
-  "brakeman_version": "4.4.0"
+  "updated": "2019-04-01 18:19:52 +0200",
+  "brakeman_version": "4.5.0"
 }

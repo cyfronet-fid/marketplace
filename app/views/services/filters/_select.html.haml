@@ -1,6 +1,12 @@
-%h6= filter.title
+%a{ "href": "#collapse_#{filter.field_name}", "data-toggle": "collapse", "aria-expanded": "false", "role": "button" }
+  .row
+    .col-10
+      %h6= filter.title
+    .col-2
+      .collapse-icon
+        %i.fas.fa-chevron-down
 .row
-  .col-md-12
+  .col-md-12.collapse{ "id": "collapse_#{filter.field_name}" }
     .form-group
-      %select.form-control.form-control-sm{ name: filter.field_name }
+      %select.form-control.custom-select.form-control-sm{ name: filter.field_name }
         = options_for_select(filter.options, params[filter.field_name])
