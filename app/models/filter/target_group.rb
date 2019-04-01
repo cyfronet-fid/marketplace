@@ -5,7 +5,7 @@ class Filter::TargetGroup < Filter::Multiselect
     super(params: params.fetch(:params, {}),
           category: params[:category],
           field_name: "target_groups",
-          title: "For",
+          title: "Dedicated for",
           query: ::TargetGroup.select("target_groups.name, target_groups.id, count(services.id) as service_count"))
   end
 

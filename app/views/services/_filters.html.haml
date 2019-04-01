@@ -1,20 +1,6 @@
 %h5.text-uppercase.underline-light.mb-2.pb-2.mt-4
   Filters
   %a.collapse-trigger Collapse all
-.row.active-filters
-  - active_filters.each do |label, p|
-    .x-small.col-md-12
-      = link_to(p) do
-        .fa.fa-times
-        = label
-.row
-  .col-md-12
-    - if active_filters.present?
-      .x-small.mb-3.mt-1
-        = link_to controller: controller.controller_name, action: action_name,
-                  per_page: params[:per_page], sort: params[:sort] do
-          .fa.fa-times
-          Clear all filters
 
 = form_tag "", method: :get, role: "search", class: "filters", "data-sync-query-form": "data-sync-query-form" do
   - @filters.each do |filter|
