@@ -12,7 +12,7 @@ module MulticheckboxHelper
       result += "<div data-target=\"multicheckbox.element\"><label
                  data-multicheckbox class=\"#{disabled ? "text-muted" : ""} small\">
                  <input class=\"form-check-input\" #{disabled ? "disabled=\"disabled\"" : ""} name=\"#{name}[]\"
-                        multiple=\"true\" type=\"checkbox\" #{value.include?(option[1].to_s) ? "checked=\"checked\"" : ""} value=\"#{option[1]}\">#{option[0]}</label>
+                        multiple=\"true\" type=\"checkbox\" #{value.include?(option[1].to_s) ? "checked=\"checked\"" : ""} value=\"#{option[1]}\"><span>#{option[0]}</span></label>
                  <span class=\"float-right small #{disabled ? "text-muted" : ""}\">#{option[2]}</span></div>"
     end
 
