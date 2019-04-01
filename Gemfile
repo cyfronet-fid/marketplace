@@ -36,9 +36,7 @@ gem "counter_culture", "~> 2.0"
 gem "valid_email2"
 gem "json-schema"
 
-gem "elasticsearch-model"
-gem "elasticsearch-rails"
-
+gem "searchkick"
 gem "devise"
 gem "omniauth"
 gem "omniauth_openid_connect"

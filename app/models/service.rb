@@ -1,10 +1,22 @@
 # frozen_string_literal: true
 
-require "elasticsearch/model"
 
 class Service < ApplicationRecord
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  # ELASTICSEARCH
+  # scope :search_import working with should_indexe?
+  # and define which services are indexed in elasticsearch
+  searchkick text_middle: [:title, :description]
+  scope :search_import, -> { where(status: :published) }
+  # search_data are definition whitch
+  # fields are mapped to elasticsearch
+  def search_data
+    {
+      title: title,
+      description: description,
+      status: status,
+      rating: rating
+    }
+  end
 
   extend FriendlyId
   friendly_id :title, use: :slugged
@@ -117,6 +129,12 @@ class Service < ApplicationRecord
 
   def aod?
     platforms.pluck(:name).include?("EGI Applications on Demand")
+  end
+
+  # should_index? define
+  # which records are indexed in elasticsearch
+  def should_index?
+    published?
   end
 
   private
