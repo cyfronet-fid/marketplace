@@ -1,14 +1,12 @@
-.row
-  .col-10
-    %a{ "href": "##{filter.field_name}", "data-toggle": "collapse", "aria-expanded": "false",
-    "aria-controls": "collapseExample", "role": "button" }
+%a{ "href": "#collapse_#{filter.field_name}", "data-toggle": "collapse", "aria-expanded": "false", "role": "button" }
+  .row
+    .col-10
       %h6= filter.title
-  .col-2
-    %a.collapse-icon{ "href": "##{filter.field_name}", "data-toggle": "collapse", "aria-expanded": "false",
-    "aria-controls": "collapseExample", "role": "button" }
-      %i.fas.fa-chevron-down
+    .col-2
+      .collapse-icon
+        %i.fas.fa-chevron-down
 .row
-  .col-md-12
-    .form-group.collapse{ "id": "#{filter.field_name}" }
+  .col-md-12.collapse{ "id": "collapse_#{filter.field_name}" }
+    .form-group
       %select.form-control.custom-select.form-control-sm{ name: filter.field_name }
         = options_for_select(filter.options, params[filter.field_name])
