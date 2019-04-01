@@ -876,7 +876,8 @@ h5 {
     width: 85%;
     font-size: 13px;
     cursor: pointer;
-    margin-left: 20px;
+    margin-left:20px;
+    margin-right: -20px;
     word-wrap: break-word;
   }
 
@@ -1456,9 +1457,12 @@ label[data-multicheckbox].small {
   margin-bottom: 7px;
 
   > input[type="checkbox"] {
-    float: left;
-    position: relative;
-    margin: 0 5px 0 0;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  span {
+    display: inline-block;
   }
 }
 
