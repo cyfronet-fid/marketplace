@@ -35,12 +35,13 @@ gem "counter_culture", "~> 2.0"
 # validation
 gem "valid_email2"
 gem "json-schema"
+gem "validate_url", github: "perfectline/validates_url"
 
 gem "searchkick"
 gem "devise"
 gem "omniauth"
 gem "omniauth_openid_connect"
-gem "pundit", "2.0.0"
+gem "pundit", "~> 2.0"
 gem "role_model"
 
 # Markdown
@@ -99,5 +100,5 @@ group :production do
   gem "newrelic_rpm"
 end
 
-gem "unirest", "~> 1.0"
+gem "unirest"
 gem "reverse_markdown"
