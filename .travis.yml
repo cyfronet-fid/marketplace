@@ -29,6 +29,7 @@ before_script:
 
 
 install:
+  - gem update --system
   - bundle install
   - nvm install node
   - node -v
