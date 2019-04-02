@@ -6,11 +6,11 @@ FactoryBot.define do
     skip_create
     transient do
       sequence(:id)
-      timestamp 1525698237764
-      issue_id 0
-      issue_status 4
-      voucher_id_from nil
-      voucher_id_to nil
+      timestamp { 1525698237764 }
+      issue_id { 0 }
+      issue_status { 4 }
+      voucher_id_from { nil }
+      voucher_id_to { nil }
 
       changelog do
         {
