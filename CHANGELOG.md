@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- search autocomplete (@martaswiatkowska)
 
 ### Changed
 - ruby and js dependencies upgraded (@mkasztelnik)

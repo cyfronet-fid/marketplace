@@ -420,6 +420,14 @@ RSpec.feature "Service filtering and sorting" do
     visit services_path(related_platforms: [platform.id])
     expect(page).to have_selector(".active-filters > *", count: 2)
   end
+
+  scenario "After starting searching autocomplete are shown", js: true, search: true do
+    visit services_path
+
+    fill_in "q", with: "DDDD Something"
+
+    expect(page).to have_selector("li.dropdown-item[role='option']:not([style*=\"display: none\"]", count: 3)
+  end
 end
 
 
