@@ -2,7 +2,7 @@
 
 %h5.text-uppercase.underline-light.mb-2.pb-2 Categories
 #all-services-link{ class: "d-flex justify-content-between align-items-center #{active}" }
-  = link_to "All Services", content_for(:all_services) || services_path(category_query_params)
+  = link_to "All Services", content_for(:all_services) || services_path(category_query_params.merge(page: nil).permit!)
   %span= Service.published.count
 %ul.categories-list
   - view = content_for(:category_view) || "services/nav/category"
