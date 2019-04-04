@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Link to all services should contain filter params (@mkasztelnik)
+- Use searchkick reindex in setup instead of elasticsearch import (@martaswiatkowska)
 
 ### Security
 
@@ -42,7 +43,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Show accept terms of use only when terms are given for the service (@mkasztelnik)
-
 
 ## [1.6.0] - 2019-03-18
 
