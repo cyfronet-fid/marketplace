@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :project_item do
-    status :created
+    status { :created }
     customer_typology { ProjectItem.customer_typologies.keys.sample }
     access_reason { |n| "Reason #{n}" }
     additional_information { |n| "Additional information #{n}" }
@@ -12,9 +12,9 @@ FactoryBot.define do
     company_name { |n| "company name #{n}" }
     company_website_url { "https://company_website.url" }
 
-    voucher_id ""
-    request_voucher false
-    properties []
+    voucher_id { "" }
+    request_voucher { false }
+    properties { [] }
 
     offer
     project

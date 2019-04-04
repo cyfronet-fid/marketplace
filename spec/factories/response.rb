@@ -8,9 +8,9 @@ FactoryBot.define do
   factory :response, class: MockResponse do
     skip_create
     transient do
-      code "200"
-      message ""
-      headers Hash.new
+      code { "200" }
+      message { "" }
+      headers { Hash.new }
     end
 
     initialize_with do
