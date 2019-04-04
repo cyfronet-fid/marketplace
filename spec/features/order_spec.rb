@@ -397,14 +397,13 @@ RSpec.feature "Service ordering" do
       service = create(:service)
       create_list(:offer, 2, service: service)
       user = create(:user)
+      stub_checkin(user)
 
       visit service_path(service)
 
       expect(page).to have_selector(:link_or_button, "Order", exact: true)
 
       click_on "Order", match: :first
-
-      checkin_sign_in_as(user)
 
       expect(page).to have_current_path(service_offers_path(service))
       expect(page).to have_text(service.title)
