@@ -14,6 +14,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - ruby and js dependencies upgraded (@mkasztelnik)
 - Project item attributes refactored (@mkasztelnik)
 - `SO-1` jira field changed from url to json (@mkasztelnik)
+- `rubocop-rails` gem was renamed to `rubocop-rails_config` (@mkasztelnik)
 
 ### Deprecated
 

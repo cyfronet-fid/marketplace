@@ -55,7 +55,6 @@ RSpec.feature "Affiliations" do
       visit affiliation_confirmations_path(at: "secret")
 
       expect(page).to have_content("not belong to you")
-
     end
 
     scenario "I can edit my affiliation" do

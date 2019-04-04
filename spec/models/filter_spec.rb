@@ -50,7 +50,6 @@ RSpec.describe Filter do
       filter = MyFilter.new
 
       expect(filter.call(["s1", "s2"])).to eq(["s1", "s2"])
-
     end
   end
 
