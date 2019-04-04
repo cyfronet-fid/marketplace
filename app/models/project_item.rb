@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ProjectItem < ApplicationRecord
+  include Customization
+
   STATUSES = {
     created: "created",
     registered: "registered",
@@ -28,10 +30,6 @@ class ProjectItem < ApplicationRecord
   enum issue_status: ISSUE_STATUSES
   enum customer_typology: CUSTOMER_TYPOLOGIES
 
-  attribute :property_values
-
-  before_save :map_properties
-
   belongs_to :offer
   belongs_to :affiliation, required: false
   belongs_to :project
@@ -53,7 +51,6 @@ class ProjectItem < ApplicationRecord
   validates :project_website_url, url: true, presence: true, if: :project?
   validates :company_name, presence: true, if: :private_company?
   validates :company_website_url, url: true, presence: true, if: :private_company?
-
   validates :request_voucher, absence: true, unless: :vaucherable?
   validates :voucher_id, absence: true, if: :voucher_id_unwanted?
   validates :voucher_id, presence: true, allow_blank: false, if: :voucher_id_required?
@@ -105,39 +102,6 @@ class ProjectItem < ApplicationRecord
 
   def to_s
     "##{id}"
-  end
-
-  def map_properties
-    self.properties = property_values.map(&:to_json)
-  end
-
-  def property_values
-    if !@property_values
-      if properties.nil?
-        @property_values = offer.attributes.dup
-      else
-        @property_values = properties.map { |prop| Attribute.from_json(prop) }
-      end
-    end
-    @property_values
-  end
-
-  def property_values=(property_values)
-    if property_values.is_a?(Array)
-      @property_values = property_values
-    elsif property_values.is_a?(Hash)
-      props = []
-      property_values.each { |id, value|
-        attr = offer.attributes.find { |attr|
-          id == attr.id
-        }.dup
-        attr.value_from_param(value)
-        props << attr
-      }
-      @property_values = props
-    end
-    self.write_attribute(:property_values, @property_values)
-    @property_values
   end
 
   def one_per_project?
