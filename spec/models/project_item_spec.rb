@@ -13,7 +13,7 @@ RSpec.describe ProjectItem do
   it { should validate_presence_of(:access_reason) }
 
   it { should belong_to(:project) }
-  it { should belong_to(:affiliation) }
+  it { should belong_to(:affiliation).required(false) }
   it { should belong_to(:offer) }
   it { should have_many(:project_item_changes).dependent(:destroy) }
 

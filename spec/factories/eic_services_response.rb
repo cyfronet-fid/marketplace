@@ -4,9 +4,9 @@ FactoryBot.define do
   factory :eic_services_response, class: Hash do
     skip_create
     transient do
-      trl "trl-7"
-      category "aggregator"
-      tagline "Large-Scale computing for medical metabolomics"
+      trl { "trl-7" }
+      category { "aggregator" }
+      tagline { "Large-Scale computing for medical metabolomics" }
     end
     initialize_with do
       # noinspection RubyStringKeysInHashInspection
