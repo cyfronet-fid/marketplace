@@ -275,7 +275,8 @@ textarea:-ms-input-placeholder { /* IE 10+ */
     &.active {
       border-color: $palette-solid-5 $palette-solid-5 $white;
       padding: 0.8rem 1rem;
-      margin-top: -5px;
+      margin-top: -3px;
+      margin-bottom: -4px;
 
       &:hover {
         opacity: 1;
