@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Attribute do
-
   it "creates correct string select with value from json" do
     attr = Attribute.from_json("id" => "id1",
                                "label" => "Attribute 1",
@@ -70,7 +69,6 @@ RSpec.describe Attribute do
   end
 
   it "fails on invalid attribute type" do
-
     expect {
       Attribute.from_json("id" => "id1",
                           "label" => "Attribute 1",
@@ -80,7 +78,6 @@ RSpec.describe Attribute do
                           "config" => {
                               "values" => ["a", "b", "c"]
                           })
-
     }.to raise_exception(JSON::Schema::ValidationError)
   end
 

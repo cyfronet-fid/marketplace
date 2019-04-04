@@ -2,5 +2,5 @@ AllCops:
    TargetRubyVersion: 2.5.1
 
 inherit_gem:
-  rubocop-rails:
+  rubocop-rails_config:
     - config/rails.yml

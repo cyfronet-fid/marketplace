@@ -8,7 +8,6 @@ RSpec.feature "Service browsing" do
   let(:user) { create(:user) }
 
   context "as logged in user" do
-
     before { checkin_sign_in_as(user) }
 
     scenario "allows to see details" do
@@ -28,7 +27,6 @@ RSpec.feature "Service browsing" do
       visit service_path(service)
 
       expect(page).to have_content "Want to ask a question about this service?"
-
     end
 
     scenario "I can see question-modal if I click on link", js: true do

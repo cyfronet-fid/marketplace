@@ -123,6 +123,5 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) service with voucher rejected/)
       expect(encoded_body).to match(/Cloud Computing Cluster \(EC3\) platform has been rejected./)
     end
-
   end
 end

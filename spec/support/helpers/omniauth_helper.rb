@@ -4,16 +4,18 @@ module OmniauthHelper
   def stub_omniauth(provider, options = {})
     first_name = options.fetch(:first_name, "John"),
     last_name = options.fetch(:last_name, "Doe"),
+    email = options.fetch(:email, "#{first_name}.#{last_name}@email.pl")
+    uid = options.fetch(:uid, 123)
 
     OmniAuth.config.add_mock(
       provider,
       info: {
         first_name: first_name,
         last_name: last_name,
-        email: options.fetch(:email, "#{first_name}.#{last_name}@email.pl")
+        email: email
       },
       provider: provider,
-      uid: options.fetch(:uid, 123)
+      uid: uid
     )
   end
 

@@ -44,7 +44,7 @@ module Import
 
       @providers = rp.body["results"].index_by { |provider| provider["id"] }
 
-      categories = []
+      # categories = []
 
       updated = 0
       created = 0
@@ -56,11 +56,11 @@ module Import
       r.body["results"].each do |service|
         eid = service["id"]
         url = service["url"]
-        order_url = service["order"]
+        # order_url = service["order"]
         user_manual_url = service["userManual"]
         training_information_url = service["trainingInformation"]
         helpdesk_url = service["helpdesk"]
-        feedback_url = service["feedback"]
+        # feedback_url = service["feedback"]
         price_url = service["price"]
         service_level_agreement_url = service["serviceLevelAgreement"]
         terms_of_use = service["termsOfUse"] # list
@@ -69,22 +69,22 @@ module Import
         tagline = service["tagline"]
         description = ReverseMarkdown.convert(service["description"], unknown_tags: :bypass, github_flavored: false)
         options = service["options"]
-        target_users = service["targetUsers"]
+        # target_users = service["targetUsers"]
         user_value = service["userValue"]
         user_base = service["userBase"]
-        image_url = service["symbol"]
-        last_update = service["lastUpdate"]
-        change_log = service["changeLog"]
-        category = service["category"]
-        subcategory = service["subcategory"]
-        tags = service["tags"]
-        places = service["places"]
+        # image_url = service["symbol"]
+        # last_update = service["lastUpdate"]
+        # change_log = service["changeLog"]
+        # category = service["category"]
+        # subcategory = service["subcategory"]
+        # tags = service["tags"]
+        # places = service["places"]
         place_names = service["placeNames"]
-        languages = service["languages"]
+        # languages = service["languages"]
         language_names = service["languageNames"]
         category = service["category"]
-        category_name = service["categoryName"]
-        subcategory_name = service["subCategoryName"]
+        # category_name = service["categoryName"]
+        # subcategory_name = service["subCategoryName"]
         phase = service["trl"]
         provider_eid = service["providers"][0]
 

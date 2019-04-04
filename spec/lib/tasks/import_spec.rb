@@ -25,9 +25,11 @@ describe "import:eic", type: :task do
   it "should call Import::EIC.call" do
     allow(importer).to receive(:call)
     import_class_stub = class_double(Import::EIC).as_stubbed_const(transfer_nested_constants: true)
-    allow(import_class_stub).to receive(:new).with("http://beta.einfracentral.eu", false, false)
-                                    .and_return(importer)
+    allow(import_class_stub).
+      to receive(:new).
+      with("http://beta.einfracentral.eu", false, false).
+      and_return(importer)
+
     subject.invoke
   end
-
 end
