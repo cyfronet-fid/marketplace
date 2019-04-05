@@ -227,9 +227,8 @@ RSpec.feature "Service filtering and sorting" do
 
     fill_in "q", with: "DDDD Something"
     click_on(id: "query-submit")
-
-    expect(page.body.index("DDDD Something 1")).to be < page.body.index("DDDD Something 2")
-    expect(page.body.index("DDDD Something 2")).to be < page.body.index("DDDD Something 3")
+    expect(page.body.index("<b>DDDD</b> <b>Something</b> 1")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 2")
+    expect(page.body.index("<b>DDDD</b> <b>Something</b> 2")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 3")
 
     expect(page).to have_selector(".media", count: 3)
   end
@@ -239,8 +238,8 @@ RSpec.feature "Service filtering and sorting" do
 
     click_on(id: "filter-submit")
 
-    expect(page.body.index("DDDD Something 1")).to be < page.body.index("DDDD Something 2")
-    expect(page.body.index("DDDD Something 2")).to be < page.body.index("DDDD Something 3")
+    expect(page.body.index("<b>DDDD</b> <b>Something</b> 1")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 2")
+    expect(page.body.index("<b>DDDD</b> <b>Something</b> 2")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 3")
 
     expect(page).to have_selector(".media", count: 3)
   end
@@ -253,8 +252,8 @@ RSpec.feature "Service filtering and sorting" do
     # For turbolinks to load
     sleep(1)
 
-    expect(page.body.index("DDDD Something 3")).to be < page.body.index("DDDD Something 2")
-    expect(page.body.index("DDDD Something 2")).to be < page.body.index("DDDD Something 1")
+    expect(page.body.index("<b>DDDD</b> <b>Something</b> 3")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 2")
+    expect(page.body.index("<b>DDDD</b> <b>Something</b> 2")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 1")
   end
 
   scenario "limit number of services per page" do
