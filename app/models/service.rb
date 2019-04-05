@@ -5,9 +5,9 @@ class Service < ApplicationRecord
   # ELASTICSEARCH
   # scope :search_import working with should_indexe?
   # and define which services are indexed in elasticsearch
-  searchkick text_middle: [:title, :description],
-             word_middle: [:title], highlight: [:title]
+  searchkick word_middle: [:title, :description], highlight: [:title]
   scope :search_import, -> { where(status: :published) }
+
   # search_data are definition whitch
   # fields are mapped to elasticsearch
   def search_data

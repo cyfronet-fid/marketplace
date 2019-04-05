@@ -15,7 +15,9 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     filtered = filter(scope)
     from_category = category_records(filtered)
 
-    @services = search(from_category.order(ordering))
+    from_search = search(order(from_category))
+    @services = from_search
+    @highlights = highlights(from_search)
   end
 
   def show
