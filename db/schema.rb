@@ -81,6 +81,16 @@ ActiveRecord::Schema.define(version: 2019_04_08_131604) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
+  create_table "offer_links", force: :cascade do |t|
+    t.bigint "source_id", null: false
+    t.bigint "target_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_id", "target_id"], name: "index_offer_links_on_source_id_and_target_id", unique: true
+    t.index ["source_id"], name: "index_offer_links_on_source_id"
+    t.index ["target_id"], name: "index_offer_links_on_target_id"
+  end
+
   create_table "offers", force: :cascade do |t|
     t.string "name"
     t.text "description"
