@@ -1715,36 +1715,43 @@ label[data-multicheckbox].small {
 
   .media-body {
     border-right: 1px solid $palette-gray-10;
+  }
 
-    h2 {
+  h2 {
+    font-weight: 300;
+  }
+
+  dl {
+    width: 100%;
+    float: left;
+
+    dt {
+      display: inline;
+      float: left;
+      color: $palette-solid-100;
+      padding-right: 10px;
+      margin-bottom: 0;
       font-weight: 300;
     }
 
-    dl {
-      width: 100%;
+    dd {
+      display: inline;
       float: left;
+      max-width: 83%;
+      margin-bottom: 0;
 
-      dt {
-        display: inline;
-        float: left;
-        color: $palette-solid-100;
-        padding-right: 10px;
-        margin-bottom: 0;
+      a {
         font-weight: 300;
-      }
-
-      dd {
-        display: inline;
-        float: left;
-        max-width: 83%;
-        margin-bottom: 0;
-
-        a {
-          font-weight: 300;
-        }
       }
     }
   }
+
+  .img-service-details {
+    img {
+      margin: 0 auto;
+    }
+  }
+
 }
 
 @media (max-width: 576px) {
