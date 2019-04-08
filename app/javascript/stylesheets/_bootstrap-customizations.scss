@@ -1746,9 +1746,19 @@ label[data-multicheckbox].small {
     }
   }
 
+
   .img-service-details {
     img {
       margin: 0 auto;
+
+  &.service-detail {
+    img {
+      margin: 0 auto;
+    }
+
+    dd {
+      font-weight: 500 !important;
+
     }
   }
 
