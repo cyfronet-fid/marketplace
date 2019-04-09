@@ -74,6 +74,7 @@ RSpec.feature "Service ordering" do
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
       expect(project_item.offer_id).to eq(offer.id)
+      expect(project_item.properties).to eq([])
 
       # Summary
       expect(page).to have_current_path(service_summary_path(service))

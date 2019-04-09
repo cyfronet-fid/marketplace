@@ -31,6 +31,7 @@ class Offer < ApplicationRecord
   validates :status, presence: true
   validate :parameters_are_valid_attributes, on: [:create, :update]
   validates :parameters_as_string, attribute_id_unique: true
+  validate :parameters_not_nil
 
   attr_writer :parameters_as_string
 
@@ -94,5 +95,11 @@ class Offer < ApplicationRecord
 
     def offers_count
       service && service.offers.maximum(:iid).to_i || 0
+    end
+
+    def parameters_not_nil
+      if self.parameters.nil?
+        errors.add :parameters, "cannot be nil"
+      end
     end
 end

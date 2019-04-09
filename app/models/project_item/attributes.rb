@@ -5,7 +5,10 @@ class ProjectItem::Attributes
 
   def initialize(offer:, parameters: nil)
     @offer = offer
-    @attributes = attributes_from_params(parameters || offer.parameters.dup || [])
+    if parameters.blank?
+      parameters = offer.parameters.dup
+    end
+    @attributes = attributes_from_params(parameters)
   end
 
   def update(values)
