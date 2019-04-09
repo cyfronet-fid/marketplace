@@ -21,6 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Link to all services should contain filter params (@mkasztelnik)
 - Use searchkick reindex in setup instead of elasticsearch import (@martaswiatkowska)
+- Show 404 error page when affiliation is not found (@mkasztelnik)
 
 ### Security
 
