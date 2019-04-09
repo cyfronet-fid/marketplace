@@ -1,9 +1,18 @@
 .search-box
-  = form_tag url_for, method: :get, role: "search" do
+  = form_tag url_for, method: :get, role: "search",
+             "data-target": "autocomplete.form",
+             "data-controller": "autocomplete",
+             "data-autocomplete-url": "service_autocomplete_backoffice" do
 
     .input-group
       %label.sr-only{ for: "search" } Search
-      = text_field_tag :q, params[:q], class: "form-control w-50", placeholder: "Find service..."
+      = text_field_tag :q, params[:q], class: "form-control w-50",
+                                       placeholder: "Find service...",
+                                       "data-target": "autocomplete.input",
+                                       "data-toggle": "dropdown"
+      = hidden_field "service_id", nil, "data-target": "autocomplete.hidden"
+
       .input-group-append
         %button#query-submit.input-group-text.bg-white
           %i.fas.fa-search
+    %ul.autocomplete-results{ "data-target": "autocomplete.results" }

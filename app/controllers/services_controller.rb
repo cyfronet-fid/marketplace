@@ -5,6 +5,7 @@ class ServicesController < ApplicationController
   include Service::Searchable
   include Service::Categorable
   include Service::Sortable
+  include Service::Autocomplete
 
   def index
     filtered = filter(scope)

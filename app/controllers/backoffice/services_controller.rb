@@ -6,6 +6,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   include Service::Categorable
   include Service::Sortable
   include Paginable
+  include Service::Autocomplete
 
   before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
   prepend_before_action :index_authorize, only: :index
