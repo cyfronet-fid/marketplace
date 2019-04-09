@@ -59,7 +59,7 @@ describe Jira::ConsoleChecker do
     it "should handle Jira::Checker::CriticalCheckerError and abort" do
       message = "MSG"
       expect(con_checker).to receive(:abort!)
-      expect { output = con_checker.error_and_abort!(Jira::Checker::CriticalCheckerError.new(message)) }.to output(" FAIL".red + "\n" + "  " + "- ERROR".red + ": #{ message }\n").to_stdout
+      expect { con_checker.error_and_abort!(Jira::Checker::CriticalCheckerError.new(message)) }.to output(" FAIL".red + "\n" + "  " + "- ERROR".red + ": #{ message }\n").to_stdout
     end
 
     it "should handle Jira::Checker::CheckerCompositeError and return false" do

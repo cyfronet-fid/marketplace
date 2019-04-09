@@ -113,7 +113,6 @@ RSpec.describe Service do
     expect(service.valid?).to be_truthy
     expect(service.terms_of_use_url).to eq("https://sample.url")
     expect(service.access_policies_url).to eq("https://sample.url")
-
   end
 
   it "requires service_order_target to be an email" do

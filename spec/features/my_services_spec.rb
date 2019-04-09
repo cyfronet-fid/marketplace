@@ -6,7 +6,6 @@ RSpec.feature "My Services" do
   include OmniauthHelper
 
   context "as logged in user" do
-
     let(:user) { create(:user) }
     let(:service) { create(:service) }
     let(:offer) { create(:offer, service: service) }

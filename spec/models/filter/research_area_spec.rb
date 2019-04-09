@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Filter::ResearchArea do
-
   context "call" do
     it "filters services basing on ranking" do
       research_area = create(:research_area)

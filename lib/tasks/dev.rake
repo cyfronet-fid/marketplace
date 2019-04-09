@@ -39,11 +39,9 @@ if Rails.env.development?
                        research_areas: [areas.sample],
                        platforms: [platforms.sample],
                        status: :published)
-
       end
 
       puts "Done!"
-
     end
   end
 end

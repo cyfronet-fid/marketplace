@@ -25,7 +25,7 @@ class Attribute::Select < Attribute
 
   def value_from_param(param)
     param = param.reject(&:blank?)
-    if (param.length > 0)
+    if param.length > 0
       case @value_type
       when "integer"
         @value = Integer(param.first) rescue param.first

@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Filter::TargetGroup do
-
   context "#options" do
     let!(:target_group1) { create(:target_group) }
     let!(:target_group2) { create(:target_group) }

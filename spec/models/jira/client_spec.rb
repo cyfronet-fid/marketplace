@@ -264,5 +264,4 @@ describe Jira::Client do
 
     expect(client.create_service_issue(project_item)).to be(issue)
   end
-
 end
