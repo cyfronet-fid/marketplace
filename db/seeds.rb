@@ -91,7 +91,7 @@ yaml_hash["services"].each do |_, hash|
     hash["offers"] && hash["offers"].each do |_, h|
       service.offers.create!(name: h["name"],
                              description: h["description"],
-                             parameters: h["parameters"],
+                             parameters: h["parameters"] || [],
                              status: :published)
     end
   end
