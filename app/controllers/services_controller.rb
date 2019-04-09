@@ -11,7 +11,9 @@ class ServicesController < ApplicationController
     filtered = filter(scope)
     from_category = category_records(filtered)
 
-    @services = search(order(from_category))
+    from_search = search(order(from_category))
+    @services = from_search
+    @highlights = highlights(from_search)
   end
 
   def show

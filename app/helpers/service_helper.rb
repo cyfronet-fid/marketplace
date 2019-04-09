@@ -43,4 +43,8 @@ module ServiceHelper
   def providers_text(service)
     service.providers.map { |target| target.name }
   end
+
+  def service_title(service, highlights)
+    highlights&.dig(service.id, :title)&.html_safe || service.title
+  end
 end
