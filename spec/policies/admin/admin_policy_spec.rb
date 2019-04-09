@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Admin::AdminPolicy do
-
   subject { described_class }
 
   permissions :show? do

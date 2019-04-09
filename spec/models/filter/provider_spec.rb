@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Filter::Provider do
-
   context "#options" do
     let!(:provider1) { create(:provider) }
     let!(:provider2) { create(:provider) }

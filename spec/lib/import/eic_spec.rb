@@ -148,7 +148,6 @@ describe Import::EIC do
     eic.call
 
     expect(Service.first.tagline).to eq("NO IMPORTED TAGLINE")
-
   end
 
   it "should correctly map trls" do

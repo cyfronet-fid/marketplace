@@ -14,11 +14,10 @@ module AncestryHelper
 
     def create_ancestry_tree(records, parent, level)
       records.select { |r| r.ancestry_depth == level && r.child_of?(parent) }.
-              map do |r|
+              flat_map do |r|
                 [[indented_name(r.name, level), r],
                  *create_ancestry_tree(records, r, level + 1)]
-              end.
-              flatten(1)
+              end
     end
 
     def indented_name(name, level)

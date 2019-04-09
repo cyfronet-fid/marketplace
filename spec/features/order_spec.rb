@@ -7,7 +7,6 @@ RSpec.feature "Service ordering" do
 
 
   context "as logged in user" do
-
     let(:user) { create(:user) }
     let(:service) { create(:service) }
 
@@ -295,7 +294,7 @@ RSpec.feature "Service ordering" do
 
     scenario "Voucher inputs should not be visible in voucher disabled offer" do
       service = create(:service)
-      offer = create(:offer, service: service, voucherable: false)
+      _offer = create(:offer, service: service, voucherable: false)
       affiliation = create(:affiliation, status: :active, user: user)
       research_area = create(:research_area)
 
@@ -320,7 +319,7 @@ RSpec.feature "Service ordering" do
 
     scenario "Voucher ID input should be visible for voucher enabled service" do
       service = create(:service)
-      offer = create(:offer, service: service, voucherable: true)
+      _offer = create(:offer, service: service, voucherable: true)
       affiliation = create(:affiliation, status: :active, user: user)
       research_area = create(:research_area)
 
@@ -346,7 +345,7 @@ RSpec.feature "Service ordering" do
     end
 
     scenario "Voucher ID input should not be visible if 'request voucher' radio is set", js: true do
-      offer = create(:offer, service: service, voucherable: true)
+      _offer = create(:offer, service: service, voucherable: true)
       affiliation = create(:affiliation, status: :active, user: user)
       research_area = create(:research_area)
 
@@ -398,14 +397,13 @@ RSpec.feature "Service ordering" do
       service = create(:service)
       create_list(:offer, 2, service: service)
       user = create(:user)
+      stub_checkin(user)
 
       visit service_path(service)
 
       expect(page).to have_selector(:link_or_button, "Order", exact: true)
 
       click_on "Order", match: :first
-
-      checkin_sign_in_as(user)
 
       expect(page).to have_current_path(service_offers_path(service))
       expect(page).to have_text(service.title)

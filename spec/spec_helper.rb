@@ -19,7 +19,6 @@ require "support/tasks"
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
-
   config.before(:suite) do
     # reindex models
     Service.reindex

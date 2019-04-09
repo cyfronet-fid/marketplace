@@ -4,17 +4,14 @@ module ServiceHelper
   def print_rating_stars(rating)
     result = ""
     # full stars
-    for i in 0...rating.floor
-      result += content_tag(:i, "", class: "fas fa-star fa-lg")
-    end
+    (0...rating.floor).each { result += content_tag(:i, "", class: "fas fa-star fa-lg") }
+
     # half stars
-    if rating % 1 != 0
-      result += content_tag(:i, "", class: "fas fa-star-half-alt fa-lg")
-    end
+    result += content_tag(:i, "", class: "fas fa-star-half-alt fa-lg") if rating % 1 != 0
+
     # empty stars
-    for i in 0...5 - rating.ceil
-      result += content_tag(:i, "", class: "far fa-star fa-lg")
-    end
+    (0...5 - rating.ceil).each { result += content_tag(:i, "", class: "far fa-star fa-lg") }
+
     result.html_safe
   end
 
