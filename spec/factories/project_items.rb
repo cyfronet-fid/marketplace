@@ -14,7 +14,6 @@ FactoryBot.define do
 
     voucher_id { "" }
     request_voucher { false }
-    properties { [] }
 
     offer
     project
