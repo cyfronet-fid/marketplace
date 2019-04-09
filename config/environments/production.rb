@@ -114,4 +114,7 @@ Rails.application.configure do
       authentication: "plain",
       enable_starttls_auto: true
   }
+
+  # custom error pages with webpage layout
+  config.exceptions_app = self.routes
 end
