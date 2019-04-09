@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_26_203609) do
+ActiveRecord::Schema.define(version: 2019_04_08_131604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,7 +88,7 @@ ActiveRecord::Schema.define(version: 2019_03_26_203609) do
     t.bigint "service_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "parameters"
+    t.jsonb "parameters", default: [], null: false
     t.boolean "voucherable", default: false, null: false
     t.string "offer_type"
     t.string "status"
@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(version: 2019_03_26_203609) do
     t.text "access_reason"
     t.text "additional_information"
     t.bigint "affiliation_id"
-    t.jsonb "properties"
+    t.jsonb "properties", default: [], null: false
     t.text "user_group_name"
     t.string "project_name"
     t.string "project_website_url"

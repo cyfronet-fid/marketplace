@@ -125,4 +125,14 @@ RSpec.describe ProjectItem do
       expect(subject).to validate_absence_of(:request_voucher)
     end
   end
+
+  context "#properties" do
+    it "should disallow null" do
+      expect(build(:project_item, properties: nil).valid?).to be_falsey
+    end
+
+    it "should defaults to []" do
+      expect(create(:project_item).reload.properties).to eq([])
+    end
+  end
 end
