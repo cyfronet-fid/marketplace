@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - search autocomplete (@martaswiatkowska)
+- Highlights on main search (@martaswiatkowska)
 
 ### Changed
 - ruby and js dependencies upgraded (@mkasztelnik)
