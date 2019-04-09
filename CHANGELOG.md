@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - ruby and js dependencies upgraded (@mkasztelnik)
 - Project item attributes refactored (@mkasztelnik)
+- `SO-1` jira field changed from url to json (@mkasztelnik)
 
 ### Deprecated
 
