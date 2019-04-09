@@ -45,7 +45,6 @@ class ProjectItem < ApplicationRecord
   validates :customer_typology, presence: true, unless: :open_access?
   validates :access_reason, presence: true, unless: :open_access?
   validate :research_area_is_a_leaf
-  validates_associated :property_values
   validates :user_group_name, presence: true, if: :research?
   validates :project_name, presence: true, if: :project?
   validates :project_website_url, url: true, presence: true, if: :project?
