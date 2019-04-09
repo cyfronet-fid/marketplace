@@ -55,6 +55,7 @@ class ProjectItem < ApplicationRecord
   validates :voucher_id, absence: true, if: :voucher_id_unwanted?
   validates :voucher_id, presence: true, allow_blank: false, if: :voucher_id_required?
   validate :one_per_project?, on: :create
+  validate :properties_not_nil
 
   delegate :user, to: :project
 
@@ -127,5 +128,11 @@ class ProjectItem < ApplicationRecord
 
   def voucher_id_unwanted?
     created? && !voucher_id_required?
+  end
+
+  def properties_not_nil
+    if self.properties.nil?
+      errors.add :properties, "cannot be nil"
+    end
   end
 end
