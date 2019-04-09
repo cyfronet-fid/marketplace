@@ -119,6 +119,29 @@ header {
   border: 1px solid $palette-solid-50;
 }
 
+.autocomplete-results {
+  min-width: 375px;
+  z-index: 10000;
+  background-color: $white;
+  position: absolute;
+  border: 1px solid $palette-gray-10;
+
+  .dropdown-item.active {
+    color: $palette-blue;
+    background-color: transparent;
+  }
+
+  .dropdown-item:hover {
+    color: $palette-blue;
+    background-color: transparent;
+
+  }
+}
+
+.autocomplete-input {
+  position: relative;
+}
+
 @media (max-width: 576px) {
 
   .top-row {
@@ -195,6 +218,7 @@ header {
     padding-right: 1.1rem;
   }
 }
+
 
 @media (max-width: 992px) {
   .navbar-collapse {
