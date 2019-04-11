@@ -29,6 +29,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Use custom error pages with webpage layout in production environment (@mkasztelnik)
 - Fix bug with JIRA issue creation (attribute mapping to SO-1) (@michal-szostak)
 - Remove std out/err logs from test suite output (@mkasztelnik)
+- Fix show opinions for open access services (@mkasztelnik)
 
 ### Security
 
