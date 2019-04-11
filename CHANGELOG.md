@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - ruby and js dependencies upgraded (@mkasztelnik)
 - Project item attributes refactored (@mkasztelnik)
+- Fix reset services page after change number of items and after category change(@goreck888)
 - `SO-1` jira field changed from url to json (@mkasztelnik)
 - `rubocop-rails` gem was renamed to `rubocop-rails_config` (@mkasztelnik)
 
