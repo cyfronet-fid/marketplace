@@ -31,6 +31,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Fix bug with JIRA issue creation (attribute mapping to SO-1) (@michal-szostak)
 - Remove std out/err logs from test suite output (@mkasztelnik)
 - Fix show opinions for open access services (@mkasztelnik)
+- Fix authorising affiliation from user affiliations, not affiliations at all (@goreck888)
 
 ### Security
 
