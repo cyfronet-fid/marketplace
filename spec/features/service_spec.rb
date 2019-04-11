@@ -412,7 +412,8 @@ RSpec.feature "Service filtering and sorting" do
   end
 
   scenario "searching via location", js: true do
-    `pending "add test after implementing location to filtering #{__FILE__}"`
+    pending "add test after implementing location to filtering #{__FILE__}"
+    raise
   end
 
   scenario "remove active filters" do
