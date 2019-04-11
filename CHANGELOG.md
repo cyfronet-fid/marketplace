@@ -28,6 +28,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Show 404 error page when affiliation is not found (@mkasztelnik)
 - Use custom error pages with webpage layout in production environment (@mkasztelnik)
 - Fix bug with JIRA issue creation (attribute mapping to SO-1) (@michal-szostak)
+- Remove std out/err logs from test suite output (@mkasztelnik)
 
 ### Security
 
