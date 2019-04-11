@@ -10,7 +10,7 @@
       "line": 15,
       "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
       "code": "render(action => policy_scope(Project).order(:name).eager_load(:project_items).where(\"project_items.status = ?\", params[:status]), {})",
-      "render_path": [{"type":"controller","class":"ProjectsController","method":"index","line":9,"file":"app/controllers/projects_controller.rb","rendered":{"name":"projects/index","file":"/Users/andrzej/RubymineProjects/marketplace/app/views/projects/index.html.haml"}}],
+      "render_path": [{"type":"controller","class":"ProjectsController","method":"index","line":9,"file":"app/controllers/projects_controller.rb","rendered":{"name":"projects/index","file":"/home/goreck/workspace/RubymineProjects/marketplace/app/views/projects/index.html.haml"}}],
       "location": {
         "type": "template",
         "template": "projects/index"
@@ -29,7 +29,29 @@
       "line": 8,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.permit!",
-      "render_path": [{"type":"controller","class":"ServicesController","method":"index","line":14,"file":"app/controllers/services_controller.rb","rendered":{"name":"services/index","file":"/Users/andrzej/RubymineProjects/marketplace/app/views/services/index.html.haml"}},{"type":"template","name":"services/index","line":41,"file":"app/views/services/index.html.haml","rendered":{"name":"services/_paginate_simple","file":"/Users/andrzej/RubymineProjects/marketplace/app/views/services/_paginate_simple.haml"}}],
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "ServicesController",
+          "method": "index",
+          "line": 14,
+          "file": "app/controllers/services_controller.rb",
+          "rendered": {
+            "name": "services/index",
+            "file": "/Users/andrzej/RubymineProjects/marketplace/app/views/services/index.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "services/index",
+          "line": 41,
+          "file": "app/views/services/index.html.haml",
+          "rendered": {
+            "name": "services/_paginate_simple",
+            "file": "/Users/andrzej/RubymineProjects/marketplace/app/views/services/_paginate_simple.haml"
+          }
+        }
+      ],
       "location": {
         "type": "template",
         "template": "services/_paginate_simple"
@@ -48,7 +70,29 @@
       "line": 6,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.permit!",
-      "render_path": [{"type":"controller","class":"ServicesController","method":"index","line":14,"file":"app/controllers/services_controller.rb","rendered":{"name":"services/index","file":"/Users/andrzej/RubymineProjects/marketplace/app/views/services/index.html.haml"}},{"type":"template","name":"services/index","line":41,"file":"app/views/services/index.html.haml","rendered":{"name":"services/_paginate_simple","file":"/Users/andrzej/RubymineProjects/marketplace/app/views/services/_paginate_simple.haml"}}],
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "ServicesController",
+          "method": "index",
+          "line": 14,
+          "file": "app/controllers/services_controller.rb",
+          "rendered": {
+            "name": "services/index",
+            "file": "/Users/andrzej/RubymineProjects/marketplace/app/views/services/index.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "services/index",
+          "line": 41,
+          "file": "app/views/services/index.html.haml",
+          "rendered": {
+            "name": "services/_paginate_simple",
+            "file": "/Users/andrzej/RubymineProjects/marketplace/app/views/services/_paginate_simple.haml"
+          }
+        }
+      ],
       "location": {
         "type": "template",
         "template": "services/_paginate_simple"
@@ -67,7 +111,29 @@
       "line": 11,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.permit!",
-      "render_path": [{"type":"controller","class":"ServicesController","method":"index","line":14,"file":"app/controllers/services_controller.rb","rendered":{"name":"services/index","file":"/Users/andrzej/RubymineProjects/marketplace/app/views/services/index.html.haml"}},{"type":"template","name":"services/index","line":41,"file":"app/views/services/index.html.haml","rendered":{"name":"services/_paginate_simple","file":"/Users/andrzej/RubymineProjects/marketplace/app/views/services/_paginate_simple.haml"}}],
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "ServicesController",
+          "method": "index",
+          "line": 14,
+          "file": "app/controllers/services_controller.rb",
+          "rendered": {
+            "name": "services/index",
+            "file": "/Users/andrzej/RubymineProjects/marketplace/app/views/services/index.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "services/index",
+          "line": 41,
+          "file": "app/views/services/index.html.haml",
+          "rendered": {
+            "name": "services/_paginate_simple",
+            "file": "/Users/andrzej/RubymineProjects/marketplace/app/views/services/_paginate_simple.haml"
+          }
+        }
+      ],
       "location": {
         "type": "template",
         "template": "services/_paginate_simple"
@@ -97,6 +163,44 @@
       "note": ""
     },
     {
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "adf4c035c781fab7c37fc81076019c3b30cf4cae6afa7caff9163f9cf595bae8",
+      "check_name": "MassAssignment",
+      "message": "Parameters should be whitelisted for mass assignment",
+      "file": "app/views/services/_paginate_simple.haml",
+      "line": 8,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.permit!",
+      "render_path": [{"type":"controller","class":"ServicesController","method":"index","line":14,"file":"app/controllers/services_controller.rb","rendered":{"name":"services/index","file":"/home/goreck/workspace/RubymineProjects/marketplace/app/views/services/index.html.haml"}},{"type":"template","name":"services/index","line":41,"file":"app/views/services/index.html.haml","rendered":{"name":"services/_paginate_simple","file":"/home/goreck/workspace/RubymineProjects/marketplace/app/views/services/_paginate_simple.haml"}}],
+      "location": {
+        "type": "template",
+        "template": "services/_paginate_simple"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "b2f9d8afd89a1ed3f9c035e2ba59a3892ce0425c11e9a1a471039913a289ef4c",
+      "check_name": "MassAssignment",
+      "message": "Parameters should be whitelisted for mass assignment",
+      "file": "app/views/services/_paginate_simple.haml",
+      "line": 11,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.permit!",
+      "render_path": [{"type":"controller","class":"ServicesController","method":"index","line":14,"file":"app/controllers/services_controller.rb","rendered":{"name":"services/index","file":"/home/goreck/workspace/RubymineProjects/marketplace/app/views/services/index.html.haml"}},{"type":"template","name":"services/index","line":41,"file":"app/views/services/index.html.haml","rendered":{"name":"services/_paginate_simple","file":"/home/goreck/workspace/RubymineProjects/marketplace/app/views/services/_paginate_simple.haml"}}],
+      "location": {
+        "type": "template",
+        "template": "services/_paginate_simple"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 4,
       "fingerprint": "b5f47c5cc63d05149ec53c573da4a042d39fcbd89b8925bd371cc4340b80bfd5",
@@ -106,7 +210,7 @@
       "line": 48,
       "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
       "code": "link_to((Unresolved Model).new.webpage, (Unresolved Model).new.webpage)",
-      "render_path": [{"type":"template","name":"profiles/affiliations/_index","line":3,"file":"app/views/profiles/affiliations/_index.html.haml","rendered":{"name":"profiles/affiliations/_affiliation","file":"/Users/andrzej/RubymineProjects/marketplace/app/views/profiles/affiliations/_affiliation.html.haml"}}],
+      "render_path": [{"type":"template","name":"profiles/affiliations/_index","line":3,"file":"app/views/profiles/affiliations/_index.html.haml","rendered":{"name":"profiles/affiliations/_affiliation","file":"/home/goreck/workspace/RubymineProjects/marketplace/app/views/profiles/affiliations/_affiliation.html.haml"}}],
       "location": {
         "type": "template",
         "template": "profiles/affiliations/_affiliation"
@@ -114,8 +218,27 @@
       "user_input": "(Unresolved Model).new.webpage",
       "confidence": "Weak",
       "note": ""
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "ebc7f75afbc88557eed5d046d6e471b8da8567f7ff8c8f83ff77ff9d68e72601",
+      "check_name": "MassAssignment",
+      "message": "Parameters should be whitelisted for mass assignment",
+      "file": "app/views/services/_paginate_simple.haml",
+      "line": 6,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.permit!",
+      "render_path": [{"type":"controller","class":"ServicesController","method":"index","line":14,"file":"app/controllers/services_controller.rb","rendered":{"name":"services/index","file":"/home/goreck/workspace/RubymineProjects/marketplace/app/views/services/index.html.haml"}},{"type":"template","name":"services/index","line":41,"file":"app/views/services/index.html.haml","rendered":{"name":"services/_paginate_simple","file":"/home/goreck/workspace/RubymineProjects/marketplace/app/views/services/_paginate_simple.haml"}}],
+      "location": {
+        "type": "template",
+        "template": "services/_paginate_simple"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "note": ""
     }
   ],
-  "updated": "2019-04-01 18:19:52 +0200",
+  "updated": "2019-04-08 14:23:42 +0200",
   "brakeman_version": "4.5.0"
 }
