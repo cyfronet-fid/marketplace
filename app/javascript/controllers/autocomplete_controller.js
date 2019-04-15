@@ -185,25 +185,26 @@ export default class extends Controller {
     url.search = params.toString()
 
     this.element.dispatchEvent(new CustomEvent('loadstart'))
+    Rails.ajax({
+      type: "GET",
+      url: url.toString(),
+      success: this.success.bind(this),
+      error: this.error.bind(this)
+    })
+  }
 
-    fetch(url.toString(), {
-      headers: {
-        "Accept": "text/html"
-      }
-    })
-    .then(response => response.text())
-      .then(html => {
-        this.resultsTarget.innerHTML = html
-        this.identifyOptions()
-        const hasResults = !!this.resultsTarget.querySelector('[role="option"]')
-        this.resultsTarget.hidden = !hasResults
-        this.element.dispatchEvent(new CustomEvent('load'))
-        this.element.dispatchEvent(new CustomEvent('loadend'))
-      })
-    .catch(() => {
-      this.element.dispatchEvent(new CustomEvent('error'))
-      this.element.dispatchEvent(new CustomEvent('loadend'))
-    })
+  success(response) {
+    this.resultsTarget.innerHTML  = response.body.innerHTML
+    this.identifyOptions()
+    const hasResults = !!this.resultsTarget.querySelector('[role="option"]')
+    this.resultsTarget.hidden = !hasResults
+    this.element.dispatchEvent(new CustomEvent('load'))
+    this.element.dispatchEvent(new CustomEvent('loadend'))
+  }
+
+  error(response) {
+    this.element.dispatchEvent(new CustomEvent('error'))
+    this.element.dispatchEvent(new CustomEvent('loadend'))
   }
 
   open() {
