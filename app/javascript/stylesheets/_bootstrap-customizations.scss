@@ -1750,6 +1750,8 @@ label[data-multicheckbox].small {
   .img-service-details {
     img {
       margin: 0 auto;
+    }
+  }
 
   &.service-detail {
     img {
@@ -1761,7 +1763,6 @@ label[data-multicheckbox].small {
 
     }
   }
-
 }
 
 @media (max-width: 576px) {
