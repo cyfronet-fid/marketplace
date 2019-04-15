@@ -12,12 +12,21 @@ module Service::Autocomplete
       load: false,
       highlight: { tag: "<b>" }
     )
-    html_results = query.highlights.map.with_index { |s, i| "<li class=\"dropdown-item\" role=\"option\" data-autocomplete-value=\"#{i}\">#{s[:title]}</li>" }.join
 
-    respond_to do |format|
-      format.html do
-        render status: :ok, html: html_results.html_safe
-      end
+    if request.xhr?
+      generate_html(query)
     end
   end
+
+  private
+
+    def generate_html(query)
+      html_results = query.highlights.map.with_index { |s, i| "<li class=\"dropdown-item\" role=\"option\" data-autocomplete-value=\"#{i}\">#{s[:title]}</li>" }.join
+
+      respond_to do |format|
+        format.html do
+          render status: :ok, html: html_results.html_safe
+        end
+      end
+    end
 end

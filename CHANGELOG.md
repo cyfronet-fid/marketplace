@@ -22,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Shadow box for service header
 - Yellow bullets and arrows in sidebar lists
 - All services link moved above the category list
+- Autocomplete content are serve only from ajax request (@martaswiatkowska)
 
 ### Deprecated
 
