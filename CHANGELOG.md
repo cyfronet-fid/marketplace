@@ -18,6 +18,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Fix reset services page after change number of items and after category change(@goreck888)
 - `SO-1` jira field changed from url to json (@mkasztelnik)
 - `rubocop-rails` gem was renamed to `rubocop-rails_config` (@mkasztelnik)
+- Site width 1180px
+- Shadow box for service header
+- Yellow bullets and arrows in sidebar lists
+- All services link moved above the category list
 
 ### Deprecated
 
