@@ -323,7 +323,7 @@ RSpec.feature "Service filtering and sorting" do
 
     find(:css, "a[href=\"#providers\"][role=\"button\"] h6").click
 
-    find(:css, "#providers a", text: "Show 1 more")
+    find(:css, "#providers > a", text: "Show 1 more")
   end
 
   scenario "searching via providers", js: true do

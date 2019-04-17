@@ -1,12 +1,12 @@
 #desc.tab-pane.container.pt-2.active.desc{ "aria-labelledby" => "home-tab", role: "tabpanel" }
-  .row.pt-3.justify-content-between
+  .row.pt-5.justify-content-between
     %main.col-12.col-xl-9.pr-5.mb-4
 
       = markdown(service.description)
       - if policy(service).order? && !offers.empty?
         = render "services/offers", offers: offers, service: service
 
-    %sidebar.col-12.col-xl-3
+    %sidebar.col-12.col-xl-3.pl-5
       - if any_present?(service, :places, :languages)
         %h5 Places and languages
         %ul.list-group
@@ -29,37 +29,44 @@
 
       - if any_present?(service, :webpage_url, :helpdesk_url, :manual_url, :tutorial_url)
         %h5 Support
-        %ul.list-group
+        %ul.list-group.arrows
           - if !service.webpage_url.blank?
             %li.list-group-item
+              %i.fas.fa-arrow-right
               %span
                 = link_to("Webpage", service.webpage_url)
           - if !service.manual_url.blank?
             %li.list-group-item
+              %i.fas.fa-arrow-right
               %span
                 = link_to("Manual", service.manual_url)
           - if !service.helpdesk_url.blank?
             %li.list-group-item
+              %i.fas.fa-arrow-right
               %span
                 = link_to("Helpdesk", service.helpdesk_url)
           - if !service.tutorial_url.blank?
             %li.list-group-item
+              %i.fas.fa-arrow-right
               %span
                 = link_to("Tutorial", service.tutorial_url)
 
       - if any_present?(service, :corporate_sla_url, :terms_of_use_url, :access_policies_url)
         %h5 Documents
-        %ul.list-group
+        %ul.list-group.arrows
           - if !service.corporate_sla_url.blank?
             %li.list-group-item
+              %i.fas.fa-arrow-right
               %span
                 = link_to("Corporate SLA", service.corporate_sla_url)
           - if !service.terms_of_use_url.blank?
             %li.list-group-item
+              %i.fas.fa-arrow-right
               %span
                 = link_to("Terms of use", service.terms_of_use_url)
           - if !service.access_policies_url.blank?
             %li.list-group-item
+              %i.fas.fa-arrow-right
               %span
                 = link_to("Access policies", service.access_policies_url)
 
