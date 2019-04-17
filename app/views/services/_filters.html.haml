@@ -1,12 +1,18 @@
-%h5.text-uppercase.underline-light.mb-2.pb-2.mt-4
-  Filters
+.panel-group{ "id": "filters", "role": "tablist", "data-controller": "filters", "aria-multiselectable": "true" }
+  %h5.underline-light.mb-2.pb-2.mt-4
+    .row
+      .col-7.text-uppercase
+        Filters
+      %a.col-5.collapseall.text-right.text-dark{ "data-toggle": "collapse", "data-target": ".panel-collapse.show",
+      "aria-controls": "collapsible" }
+        Collapse All
 
-= form_tag "", method: :get, role: "search", class: "filters", "data-sync-query-form": "data-sync-query-form" do
-  - @filters.each do |filter|
-    = render "services/filters/#{filter.type}", filter: filter
 
-  .row
-    .col-md-12
-      %button#filter-submit.btn.btn-primary.mt-4.w-100.filter-submit{ type: "submit" }
-        Filter
+  = form_tag "", method: :get, role: "search", class: "filters", "data-sync-query-form": "data-sync-query-form" do
+    - @filters.each do |filter|
+      = render "services/filters/#{filter.type}", filter: filter
 
+    .row
+      .col-md-12
+        %button#filter-submit.btn.btn-primary.mt-4.w-100.filter-submit{ type: "submit" }
+          Filter
