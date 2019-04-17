@@ -60,3 +60,16 @@ en:
     index:
       not_found: "Affiliation for the given token cannot be found."
       not_owned: "Affiliation does not belong to you."
+
+  will_paginate:
+    page_entries_info:
+      single_page:
+        zero: "No results"
+        one: "Found 1 %{model}"
+        other: "Found %{count} results"
+      single_page_html:
+        zero:  "No results"
+        one:   "Found <b>1</b> %{model}"
+        other: "Found <b>&nbsp;%{count}</b> results"
+      multi_page: "%{from} - %{to} of %{count} results"
+      multi_page_html: "<b>%{from}&nbsp;-&nbsp;%{to}</b> of <b>%{count}</b> results"

@@ -41,8 +41,11 @@
 
   .col-md-12
     %hr.category-separator
-  .col-md-6
-    = render "services/paginate_simple", services: @services
-  .col-md-6.float-right
+  .col-md-3.pt-md-2
+    %i.control-label
+      = page_entries_info @services
+  .col-md-4
     = render "services/order"
-
+  .col-md-5
+    .float-right
+      = render "services/paginate_simple", services: @services
