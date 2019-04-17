@@ -15,10 +15,13 @@
 
   .col-md-12.mb-2
     %h1.categories
-      = @category&.name || "Services"
-  .col-md-12.mb-1
-    - if @category
-      %p.text-muted.mb-4.ml-1= @category.description
+      - unless params[:q].blank?
+        Looking for: #{params[:q]}
+      - else
+        = @category&.name || "Services"
+    .col-md-12.mb-1
+      - if @category && params[:q].blank?
+        %p.text-muted.mb-4.ml-1= @category.description
   - if @active_filters.present?
     .col-md-12.mb-3
       %p.mb-1 Active filters
