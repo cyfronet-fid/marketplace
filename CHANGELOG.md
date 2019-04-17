@@ -11,6 +11,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - search autocomplete (@martaswiatkowska)
 - Highlights on main search (@martaswiatkowska)
+- "collapse all" for service filters (@goreck888)
+- "looking for" header in search (@goreck888)
+- Controller for active filters (@goreck888)
+- Counter in services view (@goreck888)
 
 ### Changed
 - ruby and js dependencies upgraded (@mkasztelnik)
@@ -23,6 +27,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Yellow bullets and arrows in sidebar lists
 - All services link moved above the category list
 - Autocomplete content are serve only from ajax request (@martaswiatkowska)
+- View of services navigation bar (@goreck888)
 
 ### Deprecated
 
