@@ -15,10 +15,13 @@
 
   .col-md-12.mb-2
     %h1.categories
-      = @category&.name || "Services"
-  .col-md-12.mb-1
-    - if @category
-      %p.text-muted.mb-4.ml-1= @category.description
+      - unless params[:q].blank?
+        Looking for: #{params[:q]}
+      - else
+        = @category&.name || "Services"
+    .col-md-12.mb-1
+      - if @category && params[:q].blank?
+        %p.text-muted.mb-4.ml-1= @category.description
   - if @active_filters.present?
     .col-md-12.mb-3
       %p.mb-1 Active filters
@@ -38,8 +41,11 @@
 
   .col-md-12
     %hr.category-separator
-  .col-md-6
-    = render "services/paginate_simple", services: @services
-  .col-md-6.float-right
+  .col-md-3.pt-md-2
+    %i.control-label
+      = page_entries_info @services
+  .col-md-4
     = render "services/order"
-
+  .col-md-5
+    .float-right
+      = render "services/paginate_simple", services: @services
