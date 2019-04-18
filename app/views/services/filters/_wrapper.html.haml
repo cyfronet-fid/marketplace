@@ -1,0 +1,14 @@
+%a{ "href": "#collapse_#{filter.field_name}", "data-toggle": "collapse",
+    "data-parent": "#filters", "role": "button", class: ("collapsed" unless filter.present?) }
+  .row
+    .col-10
+      %h6.panel-heading= filter.title
+    .col-2
+      .collapse-icon
+        %i.fas.fa-chevron-down
+        %i.fas.fa-chevron-up
+
+.row
+  .col-md-12.panel-collapse.collapse{ "id": "collapse_#{filter.field_name}",
+    "data-target": "filters.filter", class: ("show" if filter.present?) }
+    = yield
