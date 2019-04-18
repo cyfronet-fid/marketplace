@@ -9,6 +9,20 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.8.0] - 2019-04-18
+
+### Added
 - search autocomplete (@martaswiatkowska)
 - Highlights on main search (@martaswiatkowska)
 - "collapse all" for service filters (@goreck888)
@@ -29,10 +43,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Autocomplete content are serve only from ajax request (@martaswiatkowska)
 - View of services navigation bar (@goreck888)
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 - Link to all services should contain filter params (@mkasztelnik)
 - Use searchkick reindex in setup instead of elasticsearch import (@martaswiatkowska)
@@ -42,8 +52,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Remove std out/err logs from test suite output (@mkasztelnik)
 - Fix show opinions for open access services (@mkasztelnik)
 - Fix authorising affiliation from user affiliations, not affiliations at all (@goreck888)
-
-### Security
 
 
 ## [1.7.0] - 2019-04-01
