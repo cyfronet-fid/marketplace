@@ -9,6 +9,6 @@
         %i.fas.fa-chevron-down
         %i.fas.fa-chevron-up
 .row
-  .col-md-12.panel-collapse.collapse.in{ "id": "collapse_#{filter.field_name}", "data-target": "filters.filter" }
+  .col-md-12.panel-collapse.collapse.in{ "id": "collapse_#{filter.field_name}", "data-target": "filters.filter", class: "#{"show" if filter.present?}" }
     .form-group.panel-body{ name: filter.field_name }
       = multi_checkbox filter.field_name, params[filter.field_name], filter.options

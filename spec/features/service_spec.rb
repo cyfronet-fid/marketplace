@@ -321,8 +321,6 @@ RSpec.feature "Service filtering and sorting" do
     find(:css, "input[name='providers[]'][value='#{Provider.order(:name).last.id}']").set(true)
     click_on(id: "filter-submit")
 
-    find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
-
     find(:css, "#providers > a", text: "Show 1 more")
   end
 
