@@ -32,6 +32,10 @@ class Filter
     true
   end
 
+  def values
+    (value.is_a?(Array) ? value : [value]).reject(&:blank?)
+  end
+
   protected
 
     def fetch_options
@@ -51,10 +55,6 @@ class Filter
     end
 
   private
-
-    def values
-      (value.is_a?(Array) ? value : [value]).reject(&:blank?)
-    end
 
     def name(val)
       options.find { |_name, id, _count| val == id.to_s }&.[](0)

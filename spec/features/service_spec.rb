@@ -347,8 +347,8 @@ RSpec.feature "Service filtering and sorting" do
 
   scenario "searching vis research_area" do
     visit services_path
-    find(:css, "a[href=\"#collapse_research_area\"][role=\"button\"] h6").click
-    select ResearchArea.first.name, from: "research_area"
+    find(:css, "a[href=\"#collapse_research_areas\"][role=\"button\"] h6").click
+    find(:css, "input[name='research_areas[]'][value='#{ResearchArea.first.id}']").set(true)
     click_on(id: "filter-submit")
 
     expect(page).to have_selector(".media", count: 1)

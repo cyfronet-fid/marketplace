@@ -16,8 +16,7 @@ module MulticheckboxHelper
                  <span class=\"float-right small #{disabled ? "text-muted" : ""}\">#{option[2]}</span></div>"
     end
 
-    result += "<a data-target=\"multicheckbox.toggler\" href=\"javascript:undefined\"
-                  data-action=\"click->multicheckbox#toggle\"></a></div>"
+    result += "<a data-target=\"multicheckbox.toggler\" href=\"javascript:undefined\" data-action=\"click->multicheckbox#toggle\"></a></div>"
     result.html_safe
   end
 end
