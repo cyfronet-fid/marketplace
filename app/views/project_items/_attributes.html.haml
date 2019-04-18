@@ -11,7 +11,7 @@
           %td
             - begin
               = render "project_items/attributes/#{attr.type}", attr: attr
-            - rescue => e
+            - rescue
               = render "project_items/attributes/default", attr: attr
     - else
       %tr

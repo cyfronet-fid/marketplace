@@ -29,6 +29,7 @@ before_script:
 
 
 install:
+  - gem update --system
   - bundle install
   - nvm install node
   - node -v
@@ -57,7 +58,7 @@ jobs:
         - bundle exec rubocop
     - stage: test
       script:
-        - gem install brakeman --no-ri --no-rdoc
+        - gem install brakeman
         - brakeman --exit-on-warn --quiet -f plain
 
     - stage: development deploy

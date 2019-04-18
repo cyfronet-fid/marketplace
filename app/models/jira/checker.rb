@@ -4,12 +4,10 @@ class Class
   def block_error_handling(*attrs)
     attrs.each do |method_name|
       define_method(method_name[0...-1]) do |*args, &error_handler|
-        begin
-          self.send(method_name, *args)
-          return true
-        rescue => e
-          error_handler.call(e) if error_handler
-        end
+        self.send(method_name, *args)
+        return true
+      rescue => e
+        error_handler.call(e) if error_handler
       end
     end
   end
@@ -49,37 +47,31 @@ class Jira::Checker
   block_error_handling :check_custom_fields!
 
   def check_connection!
-    begin
-      self.client.Project.all
-    rescue JIRA::HTTPError => e
-      if e.response.code == "401"
-        raise CriticalCheckerError.new("Could not authenticate #{self.client.jira_config["username"]} on #{self.client.jira_config["url"]}")
-      else
-        raise e
-      end
-    end
-  end
-
-  def check_issue_type!
-    begin
-      self.client.mp_issue_type
-    rescue JIRA::HTTPError => e
-      if e.response.code == "404"
-        raise CheckerError.new("It seems that ticket with id #{client.jira_issue_type_id} does not exist, make sure to add existing issue type into configuration")
-      end
+    self.client.Project.all
+  rescue JIRA::HTTPError => e
+    if e.response.code == "401"
+      raise CriticalCheckerError.new("Could not authenticate #{self.client.jira_config["username"]} on #{self.client.jira_config["url"]}")
+    else
       raise e
     end
   end
 
+  def check_issue_type!
+    self.client.mp_issue_type
+  rescue JIRA::HTTPError => e
+    if e.response.code == "404"
+      raise CheckerError.new("It seems that ticket with id #{client.jira_issue_type_id} does not exist, make sure to add existing issue type into configuration")
+    end
+    raise e
+  end
+
   def check_project!
-    begin
-      self.client.mp_project
-    rescue JIRA::HTTPError => e
-      if e.response.code == "404"
-        raise CriticalCheckerError.new "Could not find project #{client.jira_project_key}, make sure it exists and user #{client.jira_config["username"]} has access to it"
-      else
-        raise e
-      end
+    self.client.mp_project
+  rescue JIRA::HTTPError => e
+    if e.response.code == "404"
+      raise CriticalCheckerError.new "Could not find project #{client.jira_project_key}, make sure it exists and user #{client.jira_config["username"]} has access to it"
+    else
+      raise e
     end
   end
 
@@ -109,36 +101,30 @@ class Jira::Checker
   end
 
   def check_delete_issue!(issue)
-    begin
-      issue.delete
-    rescue JIRA::HTTPError => e
-      if e.response.code == "403"
-        raise CheckerWarning.new("Could not delete issue #{issue.key}, this is not critical but you will have to delete it manually from the project")
-      else
-        raise CheckerError.new("Could not delete issue, reason: #{e.response.code}: #{e.response.body}")
-      end
+    issue.delete
+  rescue JIRA::HTTPError => e
+    if e.response.code == "403"
+      raise CheckerWarning.new("Could not delete issue #{issue.key}, this is not critical but you will have to delete it manually from the project")
+    else
+      raise CheckerError.new("Could not delete issue, reason: #{e.response.code}: #{e.response.body}")
     end
   end
 
   def check_workflow!(id)
-    begin
-      self.client.Status.find(id)
-    rescue JIRA::HTTPError => e
-      if e.response.code == "404"
-        raise CheckerError.new("STATUS WITH ID: #{id} DOES NOT EXIST IN JIRA")
-      else
-        raise e
-      end
+    self.client.Status.find(id)
+  rescue JIRA::HTTPError => e
+    if e.response.code == "404"
+      raise CheckerError.new("STATUS WITH ID: #{id} DOES NOT EXIST IN JIRA")
+    else
+      raise e
     end
   end
 
   def check_workflow_transitions!(issue)
-    begin
-      trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_done_id }
-      if trs.length == 0
-        raise CheckerError.new("Could not transition from 'TODO' to 'DONE' state, " +
-                                   "this will affect open access services ")
-      end
+    trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_done_id }
+    if trs.length == 0
+      raise CheckerError.new("Could not transition from 'TODO' to 'DONE' state, " +
+                                  "this will affect open access services ")
     end
   end
 
@@ -164,7 +150,7 @@ class Jira::Checker
           raise CheckerWarning.new("Webhook \"#{wh.name}\" is not enabled")
         end
 
-        if wh.filters["issue-related-events-section"].match(/project = #{self.client.jira_project_key}/)
+        if wh.filters["issue-related-events-section"].match?(/project = #{self.client.jira_project_key}/)
           webhook = wh
         else
           raise CheckerWarning.new("Webhook \"#{wh.name}\" does not define proper \"Issue related events\" - required: " +

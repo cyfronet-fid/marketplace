@@ -24,6 +24,10 @@ class Filter
       reject { |f| f[0].blank? }
   end
 
+  def present?
+    values.present?
+  end
+
   def visible?
     true
   end

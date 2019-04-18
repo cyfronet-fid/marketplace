@@ -88,9 +88,16 @@ describe Jira::Client do
                        "CP-Platforms-1" => "",
                        "CP-INeedAVoucher-1" => { "id" => "20004" },
                        "CP-VoucherID-1" => "",
-                       "SO-1-1" => "cat1/s1/off1?Data repository name=aaaaaa&" +
-                                   "Harvesting method=OAI-PMH&" +
-                                   "Harvesting endpoint=aaaaa",
+                       "SO-1-1" => {
+                         "category" => "cat1",
+                         "service" => "s1",
+                         "offer" => "off1",
+                         "attributes" => {
+                           "Data repository name" => "aaaaaa",
+                           "Harvesting method" => "OAI-PMH",
+                           "Harvesting endpoint" => "aaaaa",
+                         }
+                       }.to_json,
                        "SO-ServiceOrderTarget-1" => "",
                        "SO-OfferType-1" => { "id" => "20005" } }
 
@@ -135,7 +142,12 @@ describe Jira::Client do
                         "CP-INeedAVoucher-1" => { "id" => "20004" },
                         "CP-VoucherID-1" => "",
                         "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
-                        "SO-1-1" => "cat1/s1/off1?",
+                        "SO-1-1" => {
+                          "category" => "cat1",
+                          "service" => "s1",
+                          "offer" => "off1",
+                          "attributes" => {}
+                        }.to_json,
                         "SO-ServiceOrderTarget-1" => "email@domain.com",
                         "SO-OfferType-1" => { "id" => "20006" } }
 
@@ -184,7 +196,12 @@ describe Jira::Client do
                         "CP-INeedAVoucher-1" => { "id" => "20004" },
                         "CP-VoucherID-1" => "123123",
                         "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
-                        "SO-1-1" => "cat1/s1/off1?",
+                        "SO-1-1" => {
+                          "category" => "cat1",
+                          "service" => "s1",
+                          "offer" => "off1",
+                          "attributes" => {}
+                        }.to_json,
                         "SO-ServiceOrderTarget-1" => "",
                         "SO-OfferType-1" => { "id" => "20006" } }
 
@@ -232,7 +249,12 @@ describe Jira::Client do
                         "CP-INeedAVoucher-1" => { "id" => "20003" },
                         "CP-VoucherID-1" => "",
                         "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
-                        "SO-1-1" => "cat1/s1/off1?",
+                        "SO-1-1" => {
+                          "category" => "cat1",
+                          "service" => "s1",
+                          "offer" => "off1",
+                          "attributes" => {}
+                        }.to_json,
                         "SO-ServiceOrderTarget-1" => "",
                         "SO-OfferType-1" => { "id" => "20006" } }
 
@@ -242,5 +264,4 @@ describe Jira::Client do
 
     expect(client.create_service_issue(project_item)).to be(issue)
   end
-
 end

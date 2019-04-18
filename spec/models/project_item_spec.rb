@@ -13,7 +13,7 @@ RSpec.describe ProjectItem do
   it { should validate_presence_of(:access_reason) }
 
   it { should belong_to(:project) }
-  it { should belong_to(:affiliation) }
+  it { should belong_to(:affiliation).required(false) }
   it { should belong_to(:offer) }
   it { should have_many(:project_item_changes).dependent(:destroy) }
 
@@ -123,6 +123,16 @@ RSpec.describe ProjectItem do
       subject = build(:project_item, offer: create(:offer, voucherable: false))
       expect(subject).to validate_absence_of(:voucher_id)
       expect(subject).to validate_absence_of(:request_voucher)
+    end
+  end
+
+  context "#properties" do
+    it "should disallow null" do
+      expect(build(:project_item, properties: nil).valid?).to be_falsey
+    end
+
+    it "should defaults to []" do
+      expect(create(:project_item).reload.properties).to eq([])
     end
   end
 end

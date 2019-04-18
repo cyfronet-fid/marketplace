@@ -14,13 +14,13 @@ RSpec.describe ServicePolicy do
 
   permissions ".scope" do
     it "not allows draft services" do
-      service = create(:service, status: :draft)
+      create(:service, status: :draft)
 
       expect(resolve.count).to eq(0)
     end
 
     it "allows published services" do
-      service = create(:service, status: :published)
+      create(:service, status: :published)
 
       expect(resolve.count).to eq(1)
     end
@@ -29,7 +29,7 @@ RSpec.describe ServicePolicy do
   permissions :order? do
     it "grants access when there are offers" do
       service = create(:service)
-      offer = create(:offer, service: service)
+      create(:offer, service: service)
 
       expect(subject).to permit(user, service.reload)
     end

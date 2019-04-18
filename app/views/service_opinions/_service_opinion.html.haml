@@ -5,10 +5,11 @@
         %i.fas.fa-user-circle.fa-4x.text-color-solid-10
       .row
         %p
-          %strong= service_opinion.project_item.affiliation.user.first_name
-          %strong &nbsp;#{service_opinion.project_item.affiliation.user.last_name.first}.
-          %br/
-          %i= service_opinion.project_item.affiliation.organization
+          %strong= service_opinion.project_item.user.first_name
+          %strong &nbsp;#{service_opinion.project_item.user.last_name.first}.
+          - if service_opinion.project_item.affiliation
+            %br/
+            %i= service_opinion.project_item.affiliation.organization
     .col-md-10.border.review-box.pt-4.pb-4
       .row.pl-4.pr-4.mb-3
         .mr-2= print_rating_stars(service_opinion.service_rating)

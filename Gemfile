@@ -35,12 +35,13 @@ gem "counter_culture", "~> 2.0"
 # validation
 gem "valid_email2"
 gem "json-schema"
+gem "validate_url", github: "perfectline/validates_url"
 
 gem "searchkick"
 gem "devise"
 gem "omniauth"
 gem "omniauth_openid_connect"
-gem "pundit", "2.0.0"
+gem "pundit", "~> 2.0"
 gem "role_model"
 
 # Markdown
@@ -77,7 +78,7 @@ group :development do
   gem "listen", ">= 3.0.5", "< 3.2"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
-  gem "rubocop-rails", ">=1.5.0"
+  gem "rubocop-rails_config"
   gem "overcommit", require: false
   gem "haml_lint", require: false
   gem "scss_lint", require: false
@@ -99,5 +100,5 @@ group :production do
   gem "newrelic_rpm"
 end
 
-gem "unirest", "~> 1.0"
+gem "unirest"
 gem "reverse_markdown"

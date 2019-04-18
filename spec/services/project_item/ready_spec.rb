@@ -68,7 +68,6 @@ RSpec.describe ProjectItem::Ready do
 
       described_class.new(project_item).call
       expect(project_item).to be_ready
-
     end
 
     context "Normal service project item" do

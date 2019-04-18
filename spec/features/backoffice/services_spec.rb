@@ -65,7 +65,7 @@ RSpec.feature "Services in backoffice" do
       # page.find("#add-email-field").click
       # fill_in "service_contact_emails_1", with: "person2@test.ok"
       select category.name, from: "Categories"
-      select user, from: "Owners"
+      select user.to_s, from: "Owners"
 
       fill_in "service_sources_attributes_0_eid", with: "12345a"
 
@@ -231,7 +231,7 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I can delete offer" do
       service = create(:service, title: "my service", status: :draft)
-      offer = create(:offer, name: "offer1", description: "desc", service: service)
+      _offer = create(:offer, name: "offer1", description: "desc", service: service)
 
       visit backoffice_service_path(service)
       click_on(class: "delete-offer")
@@ -276,7 +276,7 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I can change external id of the service" do
       service = create(:service, title: "my service")
-      external_source = create(:service_source, eid: "777", source_type: "eic", service: service)
+      _external_source = create(:service_source, eid: "777", source_type: "eic", service: service)
 
       visit backoffice_service_path(service)
       click_on "Edit"

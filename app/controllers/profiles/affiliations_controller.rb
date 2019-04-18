@@ -52,7 +52,7 @@ class Profiles::AffiliationsController < ApplicationController
     end
 
     def find_and_authorize
-      @affiliation = Affiliation.find_by(iid: params[:id])
+      @affiliation = current_user.affiliations.find_by!(iid: params[:id])
       authorize(@affiliation)
     end
 end

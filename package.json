@@ -13,7 +13,8 @@
     "jquery": "^3.3.1",
     "popper.js": "^1.14.3",
     "stimulus": "^1.0.1",
-    "turbolinks": "^5.1.1"
+    "turbolinks": "^5.1.1",
+    "lodash.debounce": "^4.0.8"
   },
   "devDependencies": {
     "webpack-dev-server": "2.11.2"

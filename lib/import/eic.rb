@@ -2,7 +2,9 @@
 
 module Import
   class EIC
-    def initialize(eic_base_url, dry_run = true, dont_create_providers = true, unirest = Unirest)
+    def initialize(eic_base_url,
+                   dry_run = true, dont_create_providers = true, unirest = Unirest,
+                   logger: ->(msg) { puts msg })
       @eic_base_url = eic_base_url
       @dry_run = dry_run
       @unirest = unirest
@@ -13,10 +15,11 @@ module Import
           "trl-8" => "production",
           "trl-9" => "production"
       }
+      @logger = logger
     end
 
     def call
-      puts "Importing services from eInfraCentral..."
+      log "Importing services from eInfraCentral..."
 
       get_db_dependencies
 
@@ -44,23 +47,23 @@ module Import
 
       @providers = rp.body["results"].index_by { |provider| provider["id"] }
 
-      categories = []
+      # categories = []
 
       updated = 0
       created = 0
       not_modified = 0
       total_service_count = r.body["results"].length
 
-      puts "EIC - all services #{total_service_count}"
+      log "EIC - all services #{total_service_count}"
 
       r.body["results"].each do |service|
         eid = service["id"]
         url = service["url"]
-        order_url = service["order"]
+        # order_url = service["order"]
         user_manual_url = service["userManual"]
         training_information_url = service["trainingInformation"]
         helpdesk_url = service["helpdesk"]
-        feedback_url = service["feedback"]
+        # feedback_url = service["feedback"]
         price_url = service["price"]
         service_level_agreement_url = service["serviceLevelAgreement"]
         terms_of_use = service["termsOfUse"] # list
@@ -69,22 +72,22 @@ module Import
         tagline = service["tagline"]
         description = ReverseMarkdown.convert(service["description"], unknown_tags: :bypass, github_flavored: false)
         options = service["options"]
-        target_users = service["targetUsers"]
+        # target_users = service["targetUsers"]
         user_value = service["userValue"]
         user_base = service["userBase"]
-        image_url = service["symbol"]
-        last_update = service["lastUpdate"]
-        change_log = service["changeLog"]
-        category = service["category"]
-        subcategory = service["subcategory"]
-        tags = service["tags"]
-        places = service["places"]
+        # image_url = service["symbol"]
+        # last_update = service["lastUpdate"]
+        # change_log = service["changeLog"]
+        # category = service["category"]
+        # subcategory = service["subcategory"]
+        # tags = service["tags"]
+        # places = service["places"]
         place_names = service["placeNames"]
-        languages = service["languages"]
+        # languages = service["languages"]
         language_names = service["languageNames"]
         category = service["category"]
-        category_name = service["categoryName"]
-        subcategory_name = service["subCategoryName"]
+        # category_name = service["categoryName"]
+        # subcategory_name = service["subCategoryName"]
         phase = service["trl"]
         provider_eid = service["providers"][0]
 
@@ -96,10 +99,10 @@ module Import
                                                            "provider_sources.eid": provider_eid)
         if mapped_provider.nil?
           if @dont_create_providers
-            puts "[WARNING] No mapping for eic provider '#{provider_eid}', skipping service #{name}, #{eid}"
+            log "[WARNING] No mapping for eic provider '#{provider_eid}', skipping service #{name}, #{eid}"
             next
           else
-            puts "No mapped provider '#{provider_eid}', creating..."
+            log "No mapped provider '#{provider_eid}', creating..."
             unless @dry_run
               mapped_provider = Provider.new(name: @providers[provider_eid]["name"])
               mapped_provider.save
@@ -135,7 +138,7 @@ module Import
 
         if (service_source = ServiceSource.find_by(eid: eid, source_type: "eic")).nil?
           created += 1
-          puts "Adding [NEW] service: #{name}, eid: #{eid}"
+          log "Adding [NEW] service: #{name}, eid: #{eid}"
           unless @dry_run
             service = Service.new(updated_service_data)
             service.save!
@@ -145,17 +148,17 @@ module Import
           service = Service.find_by(id: service_source.service_id)
           if service.upstream_id == service_source.id
             updated += 1
-            puts "Updating [EXISTING] service #{service.title}, id: #{service_source.id}, eid: #{eid}"
+            log "Updating [EXISTING] service #{service.title}, id: #{service_source.id}, eid: #{eid}"
             unless @dry_run
               service.update!(updated_service_data.except(:research_areas, :categories))
             end
           else
             not_modified += 1
-            puts "Service's upstream is not set to EIC, not updating #{service.title}, id: #{service_source.id}"
+            log "Service's upstream is not set to EIC, not updating #{service.title}, id: #{service_source.id}"
           end
         end
       end
-      puts "PROCESSED: #{total_service_count}, CREATED: #{created}, UPDATED: #{updated}, NOT MODIFIED: #{not_modified}"
+      log "PROCESSED: #{total_service_count}, CREATED: #{created}, UPDATED: #{updated}, NOT MODIFIED: #{not_modified}"
     end
 
     def map_category(category)
@@ -183,5 +186,11 @@ module Import
     def map_phase(phase)
       @phase_mapping[phase] || "discovery"
     end
+
+    private
+
+      def log(msg)
+        @logger.call(msg)
+      end
   end
 end

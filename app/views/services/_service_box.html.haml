@@ -10,11 +10,11 @@
   .card-footer.no-gutters.row.mb-2
     .col.x-small
       %span
-        By:
+        Provided by:
       %strong
         #{service.providers.map { |p| p.name }.join(", ")}
     .col.x-small.no-gutters
       %span.text-right
-        For:
+        Dedicated for:
       %strong.text-right
         #{service.target_groups.map { |x| x.name }.join(", ")}
