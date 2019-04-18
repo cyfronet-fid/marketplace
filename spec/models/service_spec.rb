@@ -15,7 +15,7 @@ RSpec.describe Service do
   it { should have_many(:categories) }
   it { should have_many(:service_research_areas).dependent(:destroy) }
 
-  it { should belong_to(:upstream) }
+  it { should belong_to(:upstream).required(false) }
 
   it "sets first category as default" do
     c1, c2 = create_list(:category, 2)
@@ -113,7 +113,6 @@ RSpec.describe Service do
     expect(service.valid?).to be_truthy
     expect(service.terms_of_use_url).to eq("https://sample.url")
     expect(service.access_policies_url).to eq("https://sample.url")
-
   end
 
   it "requires service_order_target to be an email" do

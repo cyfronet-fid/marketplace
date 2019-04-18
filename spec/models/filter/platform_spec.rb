@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Filter::Platform do
-
   context "#options" do
     let!(:platform1) { create(:platform) }
     let!(:platform2) { create(:platform) }

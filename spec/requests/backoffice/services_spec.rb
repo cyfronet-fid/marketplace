@@ -32,6 +32,5 @@ RSpec.describe "Backoffice service" do
 
       expect(service).to be_draft
     end
-
   end
 end

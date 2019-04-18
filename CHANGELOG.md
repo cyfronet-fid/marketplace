@@ -20,6 +20,39 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## [1.8.0] - 2019-04-18
+
+### Added
+- search autocomplete (@martaswiatkowska)
+- Highlights on main search (@martaswiatkowska)
+- "collapse all" for service filters (@goreck888)
+- "looking for" header in search (@goreck888)
+- Controller for active filters (@goreck888)
+- Counter in services view (@goreck888)
+
+### Changed
+- ruby and js dependencies upgraded (@mkasztelnik)
+- Project item attributes refactored (@mkasztelnik)
+- Fix reset services page after change number of items and after category change(@goreck888)
+- `SO-1` jira field changed from url to json (@mkasztelnik)
+- `rubocop-rails` gem was renamed to `rubocop-rails_config` (@mkasztelnik)
+- Site width 1180px
+- Shadow box for service header
+- Yellow bullets and arrows in sidebar lists
+- All services link moved above the category list
+- Autocomplete content are serve only from ajax request (@martaswiatkowska)
+- View of services navigation bar (@goreck888)
+
+### Fixed
+- Link to all services should contain filter params (@mkasztelnik)
+- Use searchkick reindex in setup instead of elasticsearch import (@martaswiatkowska)
+- Show 404 error page when affiliation is not found (@mkasztelnik)
+- Use custom error pages with webpage layout in production environment (@mkasztelnik)
+- Fix bug with JIRA issue creation (attribute mapping to SO-1) (@michal-szostak)
+- Remove std out/err logs from test suite output (@mkasztelnik)
+- Fix show opinions for open access services (@mkasztelnik)
+- Fix authorising affiliation from user affiliations, not affiliations at all (@goreck888)
+
 
 ## [1.7.0] - 2019-04-01
 
@@ -40,7 +73,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Show accept terms of use only when terms are given for the service (@mkasztelnik)
-
 
 ## [1.6.0] - 2019-03-18
 

@@ -1,6 +1,6 @@
 - if project_item.offer.voucherable
-  %h2.mb-1.font-weight-normal= "Voucher"
-  .btn-group.voucher-radio.btn-group-toggle.mb-4.col-12.col-lg-4.p-0
+  %h2.mb-3.font-weight-normal= "Voucher"
+  .btn-group.voucher-radio.btn-group-toggle.mb-4.col-12.col-lg-8.p-0
     %label#have.btn.btn-secondary.p-2.pl-5.pr-5{ "data-target" => "project-item.iHaveVoucher",
                                             class: ("active" unless project_item.request_voucher) }
       %input{ "type": "radio", "name": "project_item[request_voucher]",

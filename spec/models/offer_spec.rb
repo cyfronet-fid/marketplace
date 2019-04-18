@@ -19,4 +19,14 @@ RSpec.describe Offer do
       expect(offer.offer_type).to eq "catalog"
     end
   end
+
+  context "#parameters" do
+    it "should disallow null" do
+      expect(build(:offer, parameters: nil).valid?).to be_falsey
+    end
+
+    it "should defaults to []" do
+      expect(create(:offer).reload.parameters).to eq([])
+    end
+  end
 end

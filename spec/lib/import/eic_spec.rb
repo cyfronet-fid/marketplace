@@ -6,8 +6,10 @@ require "jira/setup"
 describe Import::EIC do
   test_url = "https://localhost"
 
+  let(:nil_logger) { ->(_msg) { } }
   let(:unirest) { double }
   let(:eic) { Import::EIC.new(test_url, false, false, unirest) }
+  let(:log_less_eic) { Import::EIC.new(test_url, false, false, unirest, logger: nil_logger) }
   let!(:research_area_other) { create(:research_area, name: "Other") }
   let!(:storage) { create(:category, name: "Storage") }
   let!(:training) { create(:category, name: "Training & Support") }
@@ -33,7 +35,7 @@ describe Import::EIC do
     it "should abort if /api/services errored" do
       response = double(code: 500, body: {})
       expect_responses(unirest, test_url, response)
-      expect { eic.call }.to raise_error(SystemExit)
+      expect { log_less_eic.call }.to raise_error(SystemExit).and output.to_stderr
     end
 
     it "should abort if /api/providers errored" do
@@ -41,8 +43,8 @@ describe Import::EIC do
       provider_response = double(code: 500, body: {})
       expect_responses(unirest, test_url, response, provider_response)
 
-      eic = Import::EIC.new(test_url, false, true, unirest)
-      expect { eic.call }.to raise_error(SystemExit)
+      eic = Import::EIC.new(test_url, false, true, unirest, logger: nil_logger)
+      expect { eic.call }.to raise_error(SystemExit).and output.to_stderr
     end
   end
 
@@ -54,12 +56,12 @@ describe Import::EIC do
     end
 
     it "should not create if 'dont_create_providers' is set to true" do
-      eic = Import::EIC.new(test_url, false, true, unirest)
+      eic = Import::EIC.new(test_url, false, true, unirest, logger: nil_logger)
       expect { eic.call }.to change { Provider.count }.by(0)
     end
 
     it "should create provider if it didn't exist and add external source for it" do
-      expect { eic.call }.to change { Provider.count }.by(1)
+      expect { log_less_eic.call }.to change { Provider.count }.by(1)
       provider = Provider.first
 
       expect(provider.sources.count).to eq(1)
@@ -131,7 +133,7 @@ describe Import::EIC do
       source = create(:service_source, eid: "phenomenal.phenomenal", service_id: service.id, source_type: "eic")
       service.update!(upstream_id: source.id)
 
-      eic.call
+      log_less_eic.call
 
       expect(Service.first.categories).to eq(service.categories)
       expect(Service.first.research_areas).to eq(service.research_areas)
@@ -143,12 +145,11 @@ describe Import::EIC do
     provider_response = double(code: 200, body: create(:eic_providers_response))
     expect_responses(unirest, test_url, response, provider_response)
 
-    eic = Import::EIC.new(test_url, false, false, unirest)
+    eic = Import::EIC.new(test_url, false, false, unirest, logger: nil_logger)
 
     eic.call
 
     expect(Service.first.tagline).to eq("NO IMPORTED TAGLINE")
-
   end
 
   it "should correctly map trls" do

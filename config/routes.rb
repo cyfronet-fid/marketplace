@@ -8,6 +8,10 @@ Rails.application.routes.draw do
     delete "users/logout", to: "devise/sessions#destroy", as: :destroy_user_session
   end
 
+  get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
+  get "backoffice/service_autocomplete_backoffice", to: "backoffice/services#autocomplete", as: :service_autocomplete_backoffice
+
+
   resources :services, only: [:index, :show] do
     scope module: :services do
       resources :offers, only: :index

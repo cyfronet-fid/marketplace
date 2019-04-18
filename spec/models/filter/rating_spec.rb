@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Filter::Rating do
-
   context "call" do
     it "filters services basing on ranking" do
       high_ranking = create(:service, rating: 3)

@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe ProjectItemChange, type: :model do
   it { should belong_to(:project_item) }
-  it { should belong_to(:author) }
+  it { should belong_to(:author).required(false) }
 
   describe "#question?" do
     it "is true when project_item change is created by project_item owner" do

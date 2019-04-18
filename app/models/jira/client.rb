@@ -107,7 +107,16 @@ class Jira::Client < JIRA::Client
 private
 
   def encode_properties(properties)
-    properties.map { |p| "#{p["label"]}=#{p["value"]}" }.join("&")
+    properties.map { |p| [ p["label"],  p["value"] ] }.to_h
+  end
+
+  def encode_order_properties(project_item)
+    {
+      "category" => project_item.service.categories.first.name,
+      "service" => project_item.service.title,
+      "offer" => project_item.offer&.name,
+      "attributes" => encode_properties(project_item.properties)
+    }.to_json
   end
 
   def generate_custom_field_value(field_name, project_item)
@@ -157,10 +166,7 @@ private
     when "CP-ScientificDiscipline"
       project_item.research_area&.name
     when "SO-1"
-      "#{project_item.service.categories.first.name}/" +
-      "#{project_item.service.title}/" +
-      "#{project_item.offer&.name}?" +
-      "#{encode_properties(project_item.properties)}"
+      encode_order_properties(project_item)
     when "SO-ServiceOrderTarget"
       project_item.service.order_target
     when "SO-OfferType"

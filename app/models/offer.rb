@@ -31,6 +31,9 @@ class Offer < ApplicationRecord
   validates :status, presence: true
   validate :parameters_are_valid_attributes, on: [:create, :update]
   validates :parameters_as_string, attribute_id_unique: true
+  validate :parameters_not_nil
+
+  attr_writer :parameters_as_string
 
   def to_param
     iid.to_s
@@ -60,10 +63,6 @@ class Offer < ApplicationRecord
     @parameters_as_string.present?
   end
 
-  def parameters_as_string=(parameters_as_string)
-    @parameters_as_string = parameters_as_string
-  end
-
   def parameters_as_string
     if !@parameters_as_string && !parameters.nil?
       @parameters_as_string = parameters.map(&:to_json)
@@ -74,15 +73,13 @@ class Offer < ApplicationRecord
   private
     def parameters_are_valid_attributes
       (parameters_as_string || []).each_with_index.map do |param, i|
-        begin
-          param = JSON.parse(param)
-          attribute = Attribute.from_json(param)
-          attribute.validate_config!
-        rescue JSON::ParserError
-          errors.add("parameters_as_string_#{i}", "Cannot convert parameters to json")
-        rescue JSON::Schema::ValidationError => e
-          errors.add("parameters_as_string_#{i}", e.message)
-        end
+        param = JSON.parse(param)
+        attribute = Attribute.from_json(param)
+        attribute.validate_config!
+      rescue JSON::ParserError
+        errors.add("parameters_as_string_#{i}", "Cannot convert parameters to json")
+      rescue JSON::Schema::ValidationError => e
+        errors.add("parameters_as_string_#{i}", e.message)
       end
     end
 
@@ -98,5 +95,11 @@ class Offer < ApplicationRecord
 
     def offers_count
       service && service.offers.maximum(:iid).to_i || 0
+    end
+
+    def parameters_not_nil
+      if self.parameters.nil?
+        errors.add :parameters, "cannot be nil"
+      end
     end
 end

@@ -1,12 +1,12 @@
 = form_tag url_for, method: :get, role: "search", "data-controller": "order" do
   .form-group.row.sort-box
     %label.col-sm-3.control-label.pr-0
-      sort:
+      Sort by:
     .col-sm-9.pl-0
       %select#sort.query-sort.form-control.form-control-sm{ "data-target": "order.select",
                                                             "data-submit-on-change": "data-submit-on-change" }
-        = options_for_select([["by name A-Z", "title"],
-                              ["by name Z-A", "-title"],
-                              ["by rate 1-5", "rating"],
-                              ["by rate 5-1", "-rating"],
+        = options_for_select([["name A-Z", "title"],
+                              ["name Z-A", "-title"],
+                              ["rate 1-5", "rating"],
+                              ["rate 5-1", "-rating"],
                               ["Best match", "_score"]], params[:sort])

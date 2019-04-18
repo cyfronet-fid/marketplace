@@ -30,6 +30,6 @@ FactoryBot.define do
     sequence(:categories) { |n| [create(:category)] }
     sequence(:status) { :published }
 
-    upstream nil
+    upstream { nil }
   end
 end

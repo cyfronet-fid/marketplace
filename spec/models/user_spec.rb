@@ -46,7 +46,6 @@ RSpec.describe User do
       user.reload
 
       expect(user.active_affiliations_count).to eq(1)
-
     end
   end
 

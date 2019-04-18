@@ -8,7 +8,6 @@ RSpec.feature "Service browsing" do
   let(:user) { create(:user) }
 
   context "as logged in user" do
-
     before { checkin_sign_in_as(user) }
 
     scenario "allows to see details" do
@@ -28,7 +27,6 @@ RSpec.feature "Service browsing" do
       visit service_path(service)
 
       expect(page).to have_content "Want to ask a question about this service?"
-
     end
 
     scenario "I can see question-modal if I click on link", js: true do
@@ -229,9 +227,8 @@ RSpec.feature "Service filtering and sorting" do
 
     fill_in "q", with: "DDDD Something"
     click_on(id: "query-submit")
-
-    expect(page.body.index("DDDD Something 1")).to be < page.body.index("DDDD Something 2")
-    expect(page.body.index("DDDD Something 2")).to be < page.body.index("DDDD Something 3")
+    expect(page.body.index("<b>DDDD</b> <b>Something</b> 1")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 2")
+    expect(page.body.index("<b>DDDD</b> <b>Something</b> 2")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 3")
 
     expect(page).to have_selector(".media", count: 3)
   end
@@ -241,8 +238,8 @@ RSpec.feature "Service filtering and sorting" do
 
     click_on(id: "filter-submit")
 
-    expect(page.body.index("DDDD Something 1")).to be < page.body.index("DDDD Something 2")
-    expect(page.body.index("DDDD Something 2")).to be < page.body.index("DDDD Something 3")
+    expect(page.body.index("<b>DDDD</b> <b>Something</b> 1")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 2")
+    expect(page.body.index("<b>DDDD</b> <b>Something</b> 2")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 3")
 
     expect(page).to have_selector(".media", count: 3)
   end
@@ -250,13 +247,13 @@ RSpec.feature "Service filtering and sorting" do
   scenario "selecting sorting will set query param and preserve existing ones", js: true do
     visit services_path(q: "DDDD Something", utf8: "✓")
 
-    select "by rate 1-5", from: "sort"
+    select "rate 1-5", from: "sort"
 
     # For turbolinks to load
     sleep(1)
 
-    expect(page.body.index("DDDD Something 3")).to be < page.body.index("DDDD Something 2")
-    expect(page.body.index("DDDD Something 2")).to be < page.body.index("DDDD Something 1")
+    expect(page.body.index("<b>DDDD</b> <b>Something</b> 3")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 2")
+    expect(page.body.index("<b>DDDD</b> <b>Something</b> 2")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 1")
   end
 
   scenario "limit number of services per page" do
@@ -271,7 +268,7 @@ RSpec.feature "Service filtering and sorting" do
   scenario "multiselect toggle", js: true do
     visit services_path
 
-    find(:css, "a[href=\"#providers\"][role=\"button\"] h6").click
+    find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
 
     expect(page).to have_selector("input[name='providers[]']:not([style*=\"display: none\"])", count: 5)
     click_on("Show 2 more")
@@ -283,14 +280,14 @@ RSpec.feature "Service filtering and sorting" do
   scenario "multiselect shows checked element regardless of toggle state", js: true do
     visit services_path
 
-    find(:css, "a[href=\"#providers\"][role=\"button\"] h6").click
+    find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
 
     expect(page).to have_selector("input[name='providers[]']", count: 5)
     click_on("Show 2 more")
     expect(page).to have_selector("input[name='providers[]']", count: 7)
     find(:css, "input[name='providers[]'][value='#{Provider.order(:name).last.id}']").set(true)
     click_on(id: "filter-submit")
-    find(:css, "a[href=\"#providers\"][role=\"button\"] h6").click
+    find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
 
     expect(page).to have_selector("input[name='providers[]']", count: 6)
   end
@@ -298,7 +295,7 @@ RSpec.feature "Service filtering and sorting" do
   scenario "multiselect does not show toggle button if everything is shown", js: true do
     visit services_path
 
-    find(:css, "a[href=\"#providers\"][role=\"button\"] h6").click
+    find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
 
     expect(page).to have_selector("input[name='providers[]']", count: 5)
     click_on("Show 2 more")
@@ -318,25 +315,23 @@ RSpec.feature "Service filtering and sorting" do
   scenario "toggle button changes number of providers to show", js: true do
     visit services_path
 
-    find(:css, "a[href=\"#providers\"][role=\"button\"] h6").click
+    find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
 
     click_on("Show 2 more")
     find(:css, "input[name='providers[]'][value='#{Provider.order(:name).last.id}']").set(true)
     click_on(id: "filter-submit")
 
-    find(:css, "a[href=\"#providers\"][role=\"button\"] h6").click
-
-    find(:css, "#providers a", text: "Show 1 more")
+    find(:css, "#providers > a", text: "Show 1 more")
   end
 
   scenario "searching via providers", js: true do
     visit services_path
-    find(:css, "a[href=\"#providers\"][role=\"button\"] h6").click
+    find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
     find(:css, "input[name='providers[]'][value='#{Provider.order(:name).first.id}']").set(true)
     click_on(id: "filter-submit")
 
     expect(page).to have_selector(".media", count: 1)
-    find(:css, "a[href=\"#providers\"][role=\"button\"] h6").click
+    find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
     expect(page).to have_selector("input[name='providers[]']" +
                                       "[value='#{Provider.order(:name).first.id}'][checked='checked']")
   end
@@ -362,18 +357,18 @@ RSpec.feature "Service filtering and sorting" do
 
   scenario "searching via target_groups", js: true do
     visit services_path
-    find(:css, "a[href=\"#target_groups\"][role=\"button\"] h6").click
+    find(:css, "a[href=\"#collapse_target_groups\"][role=\"button\"] h6").click
     find(:css, "input[name='target_groups[]'][value='#{target_group.id}']").set(true)
     click_on(id: "filter-submit")
 
     expect(page).to have_selector(".media", count: 3)
-    find(:css, "a[href=\"#target_groups\"][role=\"button\"] h6").click
+    find(:css, "a[href=\"#collapse_target_groups\"][role=\"button\"] h6").click
     expect(page).to have_selector("input[name='target_groups[]'][value='#{target_group.id}'][checked='checked']")
   end
 
   scenario "searching via platforms", js: true do
     visit services_path
-    find(:css, "a[href=\"#related_platforms\"][role=\"button\"] h6").click
+    find(:css, "a[href=\"#collapse_related_platforms\"][role=\"button\"] h6").click
     find(:css, "input[name='related_platforms[]'][value='#{platform.id}']").set(true)
     click_on(id: "filter-submit")
 
@@ -383,7 +378,7 @@ RSpec.feature "Service filtering and sorting" do
   scenario "page query param should be reset after filtering", js: true do
     create_list(:service, 40)
     visit services_path(page: 3)
-    find(:css, "a[href=\"#related_platforms\"][role=\"button\"] h6").click
+    find(:css, "a[href=\"#collapse_related_platforms\"][role=\"button\"] h6").click
     find(:css, "input[name='related_platforms[]'][value='#{platform.id}']").set(true)
     click_on(id: "filter-submit")
 
@@ -415,12 +410,21 @@ RSpec.feature "Service filtering and sorting" do
   end
 
   scenario "searching via location", js: true do
-    `pending "add test after implementing location to filtering #{__FILE__}"`
+    pending "add test after implementing location to filtering #{__FILE__}"
+    raise
   end
 
   scenario "remove active filters" do
     visit services_path(related_platforms: [platform.id])
     expect(page).to have_selector(".active-filters > *", count: 2)
+  end
+
+  scenario "After starting searching autocomplete are shown", js: true, search: true do
+    visit services_path
+
+    fill_in "q", with: "DDDD Something"
+
+    expect(page).to have_selector("li.dropdown-item[role='option']:not([style*=\"display: none\"]", count: 3)
   end
 end
 
