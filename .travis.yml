@@ -31,7 +31,7 @@ before_script:
 install:
   - gem update --system
   - bundle install
-  - nvm install node
+  - nvm install v10.15.0
   - node -v
   - npm i -g yarn
   - yarn
