@@ -287,7 +287,6 @@ RSpec.feature "Service filtering and sorting" do
     expect(page).to have_selector("input[name='providers[]']", count: 7)
     find(:css, "input[name='providers[]'][value='#{Provider.order(:name).last.id}']").set(true)
     click_on(id: "filter-submit")
-    find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
 
     expect(page).to have_selector("input[name='providers[]']", count: 6)
   end
