@@ -18,6 +18,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Don't close already opened filter in test (@mkasztelnik)
+- Don't duplicate results when service belongs to e.g. 2 selected in filter
+  providers (@mkasztelnik)
 
 ### Security
 
