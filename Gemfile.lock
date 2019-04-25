@@ -300,7 +300,6 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
-    rb-readline (0.5.5)
     redcarpet (3.4.0)
     redis (4.1.0)
     redis-actionpack (5.0.2)
@@ -512,7 +511,6 @@ DEPENDENCIES
   pundit (~> 2.0)
   rack_session_access
   rails (~> 5.2.0)
-  rb-readline
   redcarpet
   redis-rails
   reverse_markdown
