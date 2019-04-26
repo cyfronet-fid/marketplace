@@ -5,13 +5,14 @@ module Service::Searchable
 
   included do
     include Paginable
+    include Service::Sortable
+  end
+
+  def search(search_scope)
+    query_present? ? search_fields(search_scope) : paginate(order(search_scope.distinct))
   end
 
   private
-
-    def search(search_scope)
-      query_present? ? search_fields(search_scope) : paginate(search_scope)
-    end
 
     def query_present?
       params[:q].present?
