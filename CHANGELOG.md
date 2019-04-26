@@ -17,11 +17,15 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+
+### Security
+
+## [1.8.1]- 2019-04-26
+
+### Fixed
 - Don't close already opened filter in test (@mkasztelnik)
 - Don't duplicate results when service belongs to e.g. 2 selected in filter
   providers (@mkasztelnik)
-
-### Security
 
 ## [1.8.0] - 2019-04-18
 
