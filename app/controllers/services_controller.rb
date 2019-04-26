@@ -4,14 +4,13 @@ class ServicesController < ApplicationController
   include Service::Filterable
   include Service::Searchable
   include Service::Categorable
-  include Service::Sortable
   include Service::Autocomplete
 
   def index
     filtered = filter(scope)
     from_category = category_records(filtered)
+    from_search = search(from_category)
 
-    from_search = search(order(from_category))
     @services = from_search
     @highlights = highlights(from_search)
   end
