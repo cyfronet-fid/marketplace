@@ -4,8 +4,6 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   include Service::Filterable
   include Service::Searchable
   include Service::Categorable
-  include Service::Sortable
-  include Paginable
   include Service::Autocomplete
 
   before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
@@ -14,8 +12,8 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   def index
     filtered = filter(scope)
     from_category = category_records(filtered)
+    from_search = search(from_category)
 
-    from_search = search(order(from_category))
     @services = from_search
     @highlights = highlights(from_search)
   end
