@@ -1,4 +1,5 @@
 = render "services/filters/wrapper", filter: filter do
   .form-group
     %select.panel-body.form-control.custom-select.form-control-sm{ name: filter.field_name }
-      = options_for_select(filter.options, params[filter.field_name])
+      = options_for_select(filter.options.map { |x| [x[:name], x[:id]] },
+                           params[filter.field_name])

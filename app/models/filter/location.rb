@@ -10,7 +10,7 @@ class Filter::Location < Filter
   private
 
     def fetch_options
-      [["Any", ""], ["EU", "EU"]]
+      [{ name: "Any", id: "" }, { name: "EU", id: "EU" }]
     end
 
     def do_call(services)

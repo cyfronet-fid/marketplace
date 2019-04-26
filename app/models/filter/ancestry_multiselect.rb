@@ -2,7 +2,7 @@
 
 class Filter::AncestryMultiselect < Filter
   def initialize(params:, title:, field_name:, model:, joining_model:)
-    super(params: params, type: :ancestry_multiselect,
+    super(params: params, type: :multiselect,
           field_name: field_name, title: title)
 
     @model = model
