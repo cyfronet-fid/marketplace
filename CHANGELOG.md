@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Unescape query string while showing it to the user (@mkasztelnik)
 
 ### Security
 
