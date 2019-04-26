@@ -1,8 +1,0 @@
-= render "services/filters/wrapper", filter: filter do
-  .form-group.panel-body{ data: { controller: "multicheckbox" } }
-    = render "services/filters/multiselect_level",
-      options: filter.options, html_classes: "pl-0 pr-0",
-      name: filter.field_name, values: filter.values, root: true
-
-    %a{ data: { target: "multicheckbox.toggler", action: "click->multicheckbox#toggle" },
-        href: "javascript:undefined" }

@@ -13,15 +13,16 @@ RSpec.describe Filter::Platform do
     it "returns platforms with services count depending on the category service belongs to" do
       filter = described_class.new(category: category)
 
-      expect(filter.options).to contain_exactly([platform1.name, platform1.id, 1])
+      expect(filter.options).
+        to contain_exactly(name: platform1.name, id: platform1.id, count: 1)
     end
 
     it "returns all platforms with services count if no category is specified" do
       filter = described_class.new
 
       expect(filter.options).
-        to contain_exactly([platform1.name, platform1.id, 2],
-                           [platform2.name, platform2.id, 1])
+        to contain_exactly({ name: platform1.name, id: platform1.id, count: 2 },
+                           { name: platform2.name, id: platform2.id, count: 1 })
     end
   end
 

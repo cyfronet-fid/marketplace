@@ -13,15 +13,16 @@ RSpec.describe Filter::Provider do
     it "returns providers with services count depending on the category service belongs to" do
       filter = described_class.new(category: category)
 
-      expect(filter.options).to contain_exactly([provider1.name, provider1.id, 1])
+      expect(filter.options).
+        to contain_exactly(name: provider1.name, id: provider1.id, count: 1)
     end
 
     it "returns all providers with services count if no category is specified" do
       filter = described_class.new
 
       expect(filter.options).
-        to contain_exactly([provider1.name, provider1.id, 2],
-                           [provider2.name, provider2.id, 1])
+        to contain_exactly({ name: provider1.name, id: provider1.id, count: 2 },
+                           { name: provider2.name, id: provider2.id, count: 1 })
     end
   end
 

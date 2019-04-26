@@ -15,8 +15,8 @@ class Filter::Tag < Filter
 
     def fetch_options
       ActsAsTaggableOn::Tag.all.
-        map { |t| [t.name, t.name] }.
-        sort { |x, y| x[0] <=> y[0] }
+        map { |t| { name: t.name, id: t.name } }.
+        sort { |x, y| x[:name] <=> y[:name] }
     end
 
     def do_call(services)
