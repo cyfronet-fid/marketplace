@@ -3,8 +3,8 @@
 class Provider < ApplicationRecord
   has_many :service_providers, dependent: :destroy
   has_many :services, through: :service_providers
-  has_many :service_categories, through: :services
-  has_many :categories, through: :service_categories
+  has_many :categorizations, through: :services
+  has_many :categories, through: :categorizations
 
   validates :name, presence: true
 
