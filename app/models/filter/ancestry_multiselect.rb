@@ -53,7 +53,7 @@ class Filter::AncestryMultiselect < Filter
     end
 
     def ids
-      @research_area_ids ||= begin
+      @ids ||= begin
         selected = @model.where(id: values)
         grouped = selected.group_by { |record| parent?(record, selected) }
         (
