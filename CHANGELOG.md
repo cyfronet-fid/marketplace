@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- Research area filter changed to hierarchical and multi-select (@mkasztelnik)
 
 ### Deprecated
 

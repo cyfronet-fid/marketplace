@@ -10,12 +10,14 @@ class Filter::Rating < Filter
   private
 
     def fetch_options
-      [["Any", ""],
-        ["★+", "1"],
-        ["★★+", "2"],
-        ["★★★+", "3"],
-        ["★★★★+", "4"],
-        ["★★★★★", "5"]]
+      [
+        { name: "Any", id: "" },
+        { name: "★+", id: "1" },
+        { name: "★★+", id: "2" },
+        { name: "★★★+", id: "3" },
+        { name: "★★★★+", id: "4" },
+        { name: "★★★★★", id: "5" }
+      ]
     end
 
     def do_call(services)

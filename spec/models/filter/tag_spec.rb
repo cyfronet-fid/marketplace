@@ -9,9 +9,9 @@ RSpec.describe Filter::Tag do
       create(:service, tag_list: ["tag3"])
       filter = described_class.new
 
-      expect(filter.options).to contain_exactly(["tag1", "tag1"],
-                                                ["tag2", "tag2"],
-                                                ["tag3", "tag3"])
+      expect(filter.options).to contain_exactly({ name: "tag1", id: "tag1" },
+                                                { name: "tag2", id: "tag2" },
+                                                { name: "tag3", id: "tag3" })
     end
   end
 
