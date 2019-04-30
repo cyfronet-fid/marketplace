@@ -1,0 +1,14 @@
+%ul{ class: html_classes }
+  - options.each do |option|
+    - disabled = option[:count].to_i.zero?
+    %li{ root ? { data: { target: "multicheckbox.element" } } : {} }
+      %label{ class: ("text-muted" if disabled) }
+        %input.form-check-input{ type: "checkbox", disabled: disabled, name: "#{name}[]",
+          multiple: true, checked: values.include?(option[:id].to_s), value: option[:id] }
+        %span= option[:name]
+      %span.float-right.small{ class: ("text-muted" if disabled) }= option[:count]
+      - if option[:children]
+        = render "services/filters/multiselect_level",
+          options: option[:children], html_classes: "pl-3 pr-0",
+          name: name, values: values, root: false
+
