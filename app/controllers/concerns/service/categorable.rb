@@ -15,8 +15,8 @@ module Service::Categorable
 
     def category_records(search_scope)
       if category
-        search_scope.joins(:service_categories).
-          where(service_categories: { category_id: category_and_descendant_ids })
+        search_scope.joins(:categorizations).
+          where(categorizations: { category_id: category_and_descendant_ids })
       else
         search_scope
       end

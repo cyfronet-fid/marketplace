@@ -12,8 +12,8 @@ class Category < ApplicationRecord
   # services.
   before_destroy :store_affected_services
 
-  has_many :service_categories, autosave: true, dependent: :destroy
-  has_many :services, through: :service_categories
+  has_many :categorizations, autosave: true, dependent: :destroy
+  has_many :services, through: :categorizations
 
   validates :name, presence: true
 
@@ -23,8 +23,8 @@ class Category < ApplicationRecord
 
     def store_affected_services
       # neet do store results in array since relation is lazy evaluated
-      @main_services = Service.joins(:service_categories).
-        where(service_categories: { category: self, main: true }).to_a
+      @main_services = Service.joins(:categorizations).
+        where(categorizations: { category: self, main: true }).to_a
     end
 
     def update_main_categories!

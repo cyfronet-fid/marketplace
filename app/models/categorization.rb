@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ServiceCategory < ApplicationRecord
+class Categorization < ApplicationRecord
   belongs_to :service
   belongs_to :category
   counter_culture :category,
@@ -37,7 +37,7 @@ class ServiceCategory < ApplicationRecord
   private
 
     def guarantee_only_one_main
-      ServiceCategory.where(service: service).
+      Categorization.where(service: service).
                       where.not(id: id).
                       update(main: false)
     end
