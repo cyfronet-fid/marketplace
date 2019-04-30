@@ -49,8 +49,8 @@ class Service < ApplicationRecord
   enum status: STATUSES
 
   has_many :offers, dependent: :restrict_with_error
-  has_many :service_categories, dependent: :destroy
-  has_many :categories, through: :service_categories
+  has_many :categorizations, dependent: :destroy
+  has_many :categories, through: :categorizations
   has_many :service_opinions, through: :project_items
   has_many :service_research_areas, dependent: :destroy
   has_many :research_areas, through: :service_research_areas
@@ -110,12 +110,12 @@ class Service < ApplicationRecord
   before_validation :strip_whitespace
 
   def main_category
-    @main_category ||= categories.joins(:service_categories).
-                                  find_by(service_categories: { main: true })
+    @main_category ||= categories.joins(:categorizations).
+                                  find_by(categorizations: { main: true })
   end
 
   def set_first_category_as_main!
-    service_categories.first&.update_attributes(main: true)
+    categorizations.first&.update_attributes(main: true)
   end
 
   def offers?
@@ -124,7 +124,7 @@ class Service < ApplicationRecord
 
   after_commit on: [:update] do
     # Update categories counters
-    service_categories.each(&:touch) if saved_change_to_status
+    categorizations.each(&:touch) if saved_change_to_status
   end
 
   def aod?
@@ -140,7 +140,7 @@ class Service < ApplicationRecord
   private
 
     def main_category_missing?
-      service_categories.where(main: true).count.zero?
+      categorizations.where(main: true).count.zero?
     end
 
     def strip_whitespace

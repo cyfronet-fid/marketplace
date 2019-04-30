@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Research area filter changed to hierarchical and multi-select (@mkasztelnik)
+- Rename `ServiceCategory` model to `Categorization` (@mkasztelnik)
 
 ### Deprecated
 
