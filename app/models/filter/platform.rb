@@ -6,7 +6,9 @@ class Filter::Platform < Filter::Multiselect
           category: params[:category],
           field_name: "related_platforms",
           title: "Related Infrastructures and platforms",
-          query: ::Platform.select("platforms.name, platforms.id, COUNT(services.id) as service_count"))
+          model: ::Platform,
+          index: "platforms",
+          filter_scope: params[:filter_scope])
   end
 
   private

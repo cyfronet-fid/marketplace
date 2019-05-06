@@ -6,7 +6,9 @@ class Filter::TargetGroup < Filter::Multiselect
           category: params[:category],
           field_name: "target_groups",
           title: "Dedicated for",
-          query: ::TargetGroup.select("target_groups.name, target_groups.id, count(services.id) as service_count"))
+          model: ::TargetGroup,
+          index: "target_groups",
+          filter_scope: params[:filter_scope])
   end
 
   private

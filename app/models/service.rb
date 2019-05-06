@@ -20,7 +20,7 @@ class Service < ApplicationRecord
       research_areas: research_areas.map(&:id),
       providers: providers.map(&:id),
       platforms: platforms.map(&:id),
-      target_groups: service_target_groups.map(&:id),
+      target_groups: target_groups.map(&:id),
     }
   end
 
