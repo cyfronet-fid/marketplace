@@ -9,11 +9,15 @@ module Service::Searchable
   end
 
   def search(search_scope)
-    query_present? ? (Service.search *(complex_params(search_scope))) : paginate(order(search_scope.distinct))
+    Service.search *(list_params(search_scope))
   end
 
   def search_for_filters(search_scope)
     Service.search *(params_for_filters(search_scope))
+  end
+
+  def search_for_categories(search_scope)
+    Service.search *(params_for_categories(search_scope))
   end
 
   private
@@ -23,7 +27,18 @@ module Service::Searchable
     end
 
     def query
-      params[:q].present? ? params[:q] : "*"
+      query_present? ? params[:q] : "*"
+    end
+
+    def params_for_categories(search_scope)
+      [
+          query,
+          fields: [ "title^7", "tagline^3", "description"],
+          operator: "or",
+          where: { id: search_scope.ids },
+          match: :word_middle,
+          aggs: [:categories]
+      ]
     end
 
     def params_for_filters(search_scope)
@@ -31,18 +46,18 @@ module Service::Searchable
           query,
           fields: [ "title^7", "tagline^3", "description"],
           operator: "or",
-          where: { id: search_scope.ids },
+          where: category_constr({ id: search_scope.ids }),
           match: :word_middle,
-          aggs: [:providers]
+          aggs: [:research_areas, :providers, :platforms, :target_groups]
       ]
     end
 
-    def complex_params(search_scope)
+    def list_params(search_scope)
       [
           query,
           fields: [ "title^7", "tagline^3", "description"],
           operator: "or",
-          where: { id: search_scope.ids },
+          where: category_constr({ id: search_scope.ids }),
           page: params[:page],
           per_page: per_page,
           order: params[:sort].blank? ? nil : ordering,
@@ -52,7 +67,23 @@ module Service::Searchable
       ]
     end
 
+    def category_constr(hash)
+      hash[:categories] = category.id unless category.nil?
+      hash
+    end
+
     def highlights(from_search)
       (from_search.try(:with_highlights) || []).map { |s, h| [s.id, h] }.to_h
+    end
+
+    def filter_constr(hash)
+      constr = {
+          #status: status,
+          #rating: rating,
+          #research_areas: research_areas.map(&:id),
+          #platforms: platforms.map(&:id),
+          target_groups: ::TargetGroup.first.id
+      }
+      hash.merge!(constr)
     end
 end
