@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Tracking code for Hotjar (@abacz)
 
 ### Changed
 - Research area filter changed to hierarchical and multi-select (@mkasztelnik)
