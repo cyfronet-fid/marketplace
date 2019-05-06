@@ -12,8 +12,8 @@ module Service::Searchable
     query_present? ? (Service.search *(complex_params(search_scope))) : paginate(order(search_scope.distinct))
   end
 
-  def search_simple(search_scope)
-    query_present? ? (Service.search *(simple_params(search_scope))) : search_scope.distinct
+  def search_for_filters(search_scope)
+    Service.search *(params_for_filters(search_scope))
   end
 
   private
@@ -22,19 +22,24 @@ module Service::Searchable
       params[:q].present?
     end
 
-    def simple_params(search_scope)
+    def query
+      params[:q].present? ? params[:q] : "*"
+    end
+
+    def params_for_filters(search_scope)
       [
-          params[:q],
+          query,
           fields: [ "title^7", "tagline^3", "description"],
           operator: "or",
           where: { id: search_scope.ids },
           match: :word_middle,
+          aggs: [:providers]
       ]
     end
 
     def complex_params(search_scope)
       [
-          params[:q],
+          query,
           fields: [ "title^7", "tagline^3", "description"],
           operator: "or",
           where: { id: search_scope.ids },
