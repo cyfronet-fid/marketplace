@@ -4,6 +4,7 @@ module Service::Filterable
   extend ActiveSupport::Concern
 
   included do
+    include Service::Searchable
     before_action only: :index do
       @filters = visible_filters
       @active_filters = active_filters
@@ -22,7 +23,7 @@ module Service::Filterable
 
     def filters
       @all_filters ||= filter_classes.
-                      map { |f| f.new(params: params, category: @category) }
+                      map { |f| f.new(params: params, category: @category, filter_scope: filter_scope) }
     end
 
     def active_filters
@@ -31,15 +32,17 @@ module Service::Filterable
 
     def filter_classes
       [
-
         Filter::ResearchArea,
         Filter::Provider,
         Filter::TargetGroup,
         Filter::Platform,
-        # Temporary removed because of #858
-        # Filter::Rating,
+        Filter::Rating,
         Filter::Location,
         Filter::Tag
       ]
+    end
+
+    def filter_scope
+      @filter_scope ||= search_for_filters(scope)
     end
 end
