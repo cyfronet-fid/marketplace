@@ -8,8 +8,7 @@ class ServicesController < ApplicationController
 
   def index
     filtered = filter(scope)
-    from_category = category_records(filtered)
-    from_search = search(from_category)
+    from_search = search(filtered)
 
     @services = from_search
     @highlights = highlights(from_search)
