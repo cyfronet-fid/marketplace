@@ -32,7 +32,7 @@ module Service::Categorable
     end
 
     def categories_scope
-      @categories_scope ||= search_for_categories(scope)
+      @categories_scope ||= search_for_categories(scope, filters)
     end
 
     def counters

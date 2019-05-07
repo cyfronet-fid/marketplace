@@ -10,11 +10,8 @@ class ServicesController < ApplicationController
     if params["service_id"].present?
       redirect_to Service.find(params["service_id"])
     end
-    filtered = filter(scope)
-    from_search = search(filtered)
-
-    @services = from_search
-    @highlights = highlights(from_search)
+    @services = search_and_filter(scope)
+    @highlights = highlights(@services)
   end
 
   def show

@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 class Filter::Multiselect < Filter
-  def initialize(params:, category:, title:, field_name:, model:, index:, filter_scope:)
+
+  def initialize(params:, title:, field_name:, model:, index:)
     super(params: params, field_name: field_name,
-          type: :multiselect, title: title)
+          type: :multiselect, title: title, index: index)
     @model = model
-    @index = index
-    @category = category
-    @filter_scope = filter_scope
   end
 
   protected
@@ -15,7 +13,13 @@ class Filter::Multiselect < Filter
     def fetch_options
       counters = @filter_scope.aggregations[@index][@index]["buckets"].
           inject({}){ |h, e| h[e["key"]] = e["doc_count"]; h}
-      @model.distinct.map { |e| {name: e.name, id: e.id, count: counters[e.id] || 0} }.sort_by!{ |e| [-e[:count], e[:name] ] }
+      @model.distinct
+          .map { |e| {name: e.name, id: e.id, count: counters[e.id] || 0} }
+          .sort_by!{ |e| [-e[:count], e[:name] ] }
+    end
+
+    def where_constraint
+      { @index.to_sym => values }
     end
 
 end

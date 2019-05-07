@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Filter::AncestryMultiselect < Filter
-  def initialize(params:, title:, field_name:, model:, joining_model:)
+  def initialize(params:, title:, field_name:, model:, joining_model:, index:)
     super(params: params, type: :multiselect,
-          field_name: field_name, title: title)
+          field_name: field_name, title: title, index: index)
 
     @model = model
     @joining_model = joining_model
@@ -16,14 +16,16 @@ class Filter::AncestryMultiselect < Filter
     end
 
     def create_ancestry_tree(arranged)
+      @counters ||= @filter_scope.aggregations[@index][@index]["buckets"].
+          inject({}){ |h, e| h[e["key"]] = e["doc_count"]; h}
       arranged.map do |record, children|
         {
           name: record.name,
           id: record.id,
-          count: (grouped_services[record.id] | children_services(children)).size,
+          count: @counters[record.id] || 0,
           children: create_ancestry_tree(children)
         }
-      end
+      end.sort_by!{ |e| [-e[:count], e[:name] ] }
     end
 
     def children_services(arranged)
@@ -38,15 +40,20 @@ class Filter::AncestryMultiselect < Filter
           inject(Hash.new { |h, k| h[k] = Set.new }) { |h, (k, v)| h[k] << v; h }
     end
 
-    def do_call(services)
-      if ids.size.positive?
-        joining_table_name = @joining_model.table_name.to_sym
-        services.joins(joining_table_name).
-          where(joining_table_name => { relation_column_name.to_sym => ids })
-      else
-        services
-      end
+
+    def where_constraint
+      { @index.to_sym => ids }
     end
+
+    # def do_call(services)
+    #   if ids.size.positive?
+    #     joining_table_name = @joining_model.table_name.to_sym
+    #     services.joins(joining_table_name).
+    #       where(joining_table_name => { relation_column_name.to_sym => ids })
+    #   else
+    #     services
+    #   end
+    # end
 
     def relation_column_name
       "#{@model.table_name.singularize}_id"
