@@ -11,8 +11,8 @@ module Service::Filterable
     end
   end
 
-  def filter(search_scope)
-    filters.inject(search_scope) { |filtered, filter| filter.call(filtered) }
+  def search_and_filter(search_scope)
+    search(search_scope, filters)
   end
 
   private
@@ -22,8 +22,12 @@ module Service::Filterable
     end
 
     def filters
-      @all_filters ||= filter_classes.
-                      map { |f| f.new(params: params, category: @category, filter_scope: filter_scope) }
+      if (@all_filters.nil?)
+        @all_filters = filter_classes.
+            map { |f| f.new(params: params) }
+        @all_filters.each { |f| f.filter_scope = search_for_filters(scope, @all_filters, f) }
+      end
+      @all_filters
     end
 
     def active_filters
@@ -42,7 +46,4 @@ module Service::Filterable
       ]
     end
 
-    def filter_scope
-      @filter_scope ||= search_for_filters(scope)
-    end
 end

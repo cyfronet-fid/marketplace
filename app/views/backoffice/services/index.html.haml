@@ -5,7 +5,8 @@
 
 = render "services/index", services: @services,
                            category: @category,
-                           categories: @siblings,
+                           services_count: @services_total,
+                           categories: @siblings_with_counters,
                            subcategories: @subcategories,
                            provider_options: @provider_options,
                            research_areas: @research_areas,

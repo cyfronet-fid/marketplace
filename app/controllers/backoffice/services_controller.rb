@@ -13,12 +13,8 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     if params["service_id"].present?
       redirect_to [:backoffice, Service.find(params["service_id"])]
     end
-    filtered = filter(scope)
-    from_category = category_records(filtered)
-    from_search = search(from_category)
-
-    @services = from_search
-    @highlights = highlights(from_search)
+    @services = search_and_filter(scope)
+    @highlights = highlights(@services)
   end
 
   def show
