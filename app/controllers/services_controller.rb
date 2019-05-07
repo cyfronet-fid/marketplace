@@ -7,11 +7,8 @@ class ServicesController < ApplicationController
   include Service::Autocomplete
 
   def index
-    filtered = filter(scope)
-    from_search = search(filtered)
-
-    @services = from_search
-    @highlights = highlights(from_search)
+    @services = search_and_filter(scope)
+    @highlights = highlights(@services)
   end
 
   def show
