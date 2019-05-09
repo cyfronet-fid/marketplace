@@ -47,4 +47,8 @@ module ServiceHelper
   def service_title(service, highlights)
     highlights&.dig(service.id, :title)&.html_safe || service.title
   end
+
+  def service_tagline(service, highlights)
+    highlights&.dig(service.id, :tagline)&.html_safe || service.tagline
+  end
 end
