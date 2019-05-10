@@ -1,7 +1,7 @@
 .media.mb-3.service-box.shadow-sm
   .media-body.p-4
-    %h2.mb-3= link_to service_title(service, highlights), service
-    %p.mb-3= service_tagline(service, highlights)
+    %h2.mb-3= link_to highlighted_for(:title, service, highlights), service
+    %p.mb-3= highlighted_for(:tagline, service, highlights)
     = render "services/categorization", service: service
   - if service.logo.attached?
     = image_tag service.logo.variant(resize: "120x120"), class: "align-self-center mx-4 service-logo"
