@@ -9,7 +9,6 @@ Rails.application.routes.draw do
   end
 
   get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
-  get "backoffice/service_autocomplete_backoffice", to: "backoffice/services#autocomplete", as: :service_autocomplete_backoffice
 
 
   resources :services, only: [:index, :show] do
