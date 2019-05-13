@@ -10,10 +10,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Added tagline to elasticsearch index (@martaswiatkowska)
 
 ### Changed
 - Research area filter changed to hierarchical and multi-select (@mkasztelnik)
 - Rename `ServiceCategory` model to `Categorization` (@mkasztelnik)
+- Autocomplete routing (@martaswiatkowska)
+- Fields weights in elasticearch (@martaswiatkowska)
 
 ### Deprecated
 
@@ -21,6 +24,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Unescape query string while showing it to the user (@mkasztelnik)
+- Multiplication of parameter q in autocomplete url(@martaswiatkowska)
 
 ### Security
 
