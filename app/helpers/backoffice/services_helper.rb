@@ -10,8 +10,4 @@ module Backoffice::ServicesHelper
     status_badge_class = offer.published? ? "badge-success" : "badge-warning"
     content_tag(:span, offer.status, class: "badge #{status_badge_class}")
   end
-
-  def highlighted_for(field, service, highlights)
-    highlights&.dig(service.id, field)&.html_safe || service.send(field)
-  end
 end
