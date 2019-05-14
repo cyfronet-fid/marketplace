@@ -6,7 +6,6 @@ class Service < ApplicationRecord
   # scope :search_import working with should_indexe?
   # and define which services are indexed in elasticsearch
   searchkick word_middle: [:title, :tagline, :description], highlight: [:title, :tagline]
-  scope :search_import, -> { where(status: :published) }
 
   # search_data are definition whitch
   # fields are mapped to elasticsearch
@@ -130,12 +129,6 @@ class Service < ApplicationRecord
 
   def aod?
     platforms.pluck(:name).include?("EGI Applications on Demand")
-  end
-
-  # should_index? define
-  # which records are indexed in elasticsearch
-  def should_index?
-    published?
   end
 
   private
