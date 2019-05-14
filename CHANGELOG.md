@@ -6,8 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-
 ## [Unreleased]
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.10.0] 2019-05-13
 
 ### Added
 - Added tagline to elasticsearch index (@martaswiatkowska)
@@ -18,21 +31,14 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Autocomplete routing (@martaswiatkowska)
 - Fields weights in elasticearch (@martaswiatkowska)
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 - Unescape query string while showing it to the user (@mkasztelnik)
 - Multiplication of parameter q in autocomplete url(@martaswiatkowska)
-
-### Security
 
 ## [1.9.0] - 2019-05-06
 
 ### Added
 - Tracking code for Hotjar (@abacz)
-
 
 ## [1.8.1]- 2019-04-26
 
