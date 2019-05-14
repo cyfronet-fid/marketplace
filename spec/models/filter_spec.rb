@@ -14,7 +14,7 @@ RSpec.describe Filter do
 
       def fetch_options
         unless @my_options
-          @my_options = [["A", "1", 1], ["B", "2", 2]]
+          @my_options = [{ name: "A", id: "1", count: 1 }, { name: "B", id: "2", count: 2 }]
         else
           raise "boom! fetching options for the second time"
         end
@@ -29,8 +29,10 @@ RSpec.describe Filter do
     it "returns filter select options" do
       filter = MyFilter.new
 
-      expect(filter.options).to contain_exactly(["A", "1", 1], ["B", "2", 2])
+      expect(filter.options).to contain_exactly(
+        { name: "A", id: "1", count: 1 }, { name: "B", id: "2", count: 2 })
     end
+
     it "are cached" do
       filter = MyFilter.new
 

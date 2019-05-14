@@ -3,8 +3,8 @@
 class Platform < ApplicationRecord
   has_many :service_related_platforms, dependent: :destroy
   has_many :services, through: :service_related_platforms
-  has_many :service_categories, through: :services
-  has_many :categories, through: :service_categories
+  has_many :categorizations, through: :services
+  has_many :categories, through: :categorizations
 
   validates :name, presence: true
 end
