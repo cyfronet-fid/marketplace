@@ -18,8 +18,8 @@ class Filter::Multiselect < Filter
         query = @query.joins(:categories).where(categories: { id: @category.id })
       end
 
-      query.group(:id)
-          .order(:name)
-          .map { |record| [record.name, record.id, record.service_count] }
+      query.group(:id).order(:name).map do |record|
+        { name: record.name, id: record.id, count: record.service_count }
+      end
     end
 end

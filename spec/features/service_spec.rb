@@ -320,19 +320,18 @@ RSpec.feature "Service filtering and sorting" do
     find(:css, "input[name='providers[]'][value='#{Provider.order(:name).last.id}']").set(true)
     click_on(id: "filter-submit")
 
-    find(:css, "#providers > a", text: "Show 1 more")
+    find(:css, "#collapse_providers > div > a", text: "Show 1 more")
   end
 
   scenario "searching via providers", js: true do
+    provider_id = Provider.order(:name).first.id
     visit services_path
     find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
-    find(:css, "input[name='providers[]'][value='#{Provider.order(:name).first.id}']").set(true)
+    find(:css, "input[name='providers[]'][value='#{provider_id}']").set(true)
     click_on(id: "filter-submit")
 
     expect(page).to have_selector(".media", count: 1)
-    find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
-    expect(page).to have_selector("input[name='providers[]']" +
-                                      "[value='#{Provider.order(:name).first.id}'][checked='checked']")
+    expect(page).to have_selector("input[name='providers[]'][value='#{provider_id}'][checked]")
   end
 
   scenario "searching via rating", js: true do
@@ -347,8 +346,8 @@ RSpec.feature "Service filtering and sorting" do
 
   scenario "searching vis research_area" do
     visit services_path
-    find(:css, "a[href=\"#collapse_research_area\"][role=\"button\"] h6").click
-    select ResearchArea.first.name, from: "research_area"
+    find(:css, "a[href=\"#collapse_research_areas\"][role=\"button\"] h6").click
+    find(:css, "input[name='research_areas[]'][value='#{ResearchArea.first.id}']").set(true)
     click_on(id: "filter-submit")
 
     expect(page).to have_selector(".media", count: 1)
@@ -362,7 +361,7 @@ RSpec.feature "Service filtering and sorting" do
 
     expect(page).to have_selector(".media", count: 3)
     find(:css, "a[href=\"#collapse_target_groups\"][role=\"button\"] h6").click
-    expect(page).to have_selector("input[name='target_groups[]'][value='#{target_group.id}'][checked='checked']")
+    expect(page).to have_selector("input[name='target_groups[]'][value='#{target_group.id}'][checked]")
   end
 
   scenario "searching via platforms", js: true do

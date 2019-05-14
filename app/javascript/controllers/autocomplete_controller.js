@@ -179,8 +179,8 @@ export default class extends Controller {
 
     if (!this.src) return
 
-    const url = new URL(this.src, window.location.href)
-    const params = new URLSearchParams(url.search.slice(1))
+    const url = new URL(this.src, window.location.origin)
+    const params = new URLSearchParams(window.location.search.slice(1))
     params.append('q', query)
     url.search = params.toString()
 

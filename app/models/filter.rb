@@ -32,6 +32,10 @@ class Filter
     true
   end
 
+  def values
+    (value.is_a?(Array) ? value : [value]).reject(&:blank?)
+  end
+
   protected
 
     def fetch_options
@@ -52,12 +56,8 @@ class Filter
 
   private
 
-    def values
-      (value.is_a?(Array) ? value : [value]).reject(&:blank?)
-    end
-
     def name(val)
-      options.find { |_name, id, _count| val == id.to_s }&.[](0)
+      options.find { |option| val == option[:id].to_s }&.[](:name)
     end
 
     def remove_filter_params(val)

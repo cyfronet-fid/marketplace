@@ -13,15 +13,16 @@ RSpec.describe Filter::TargetGroup do
     it "returns target_groups with services count depending on the category service belongs to" do
       filter = described_class.new(category: category)
 
-      expect(filter.options).to contain_exactly([target_group1.name, target_group1.id, 1])
+      expect(filter.options).
+        to contain_exactly(name: target_group1.name, id: target_group1.id, count: 1)
     end
 
     it "returns all target_groups with services count if no category is specified" do
       filter = described_class.new
 
       expect(filter.options).
-        to contain_exactly([target_group1.name, target_group1.id, 2],
-                           [target_group2.name, target_group2.id, 1])
+        to contain_exactly({ name: target_group1.name, id: target_group1.id, count: 2 },
+                           { name: target_group2.name, id: target_group2.id, count: 1 })
     end
   end
 
