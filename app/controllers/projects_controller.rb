@@ -30,20 +30,33 @@ class ProjectsController < ApplicationController
   end
 
   def new
+    @project = Project.new(user: current_user)
+
     respond_to do |format|
+      format.html do
+        @show_as_modal = false
+      end
       format.js do
-        @project = Project.new(user: current_user)
+        @show_as_modal = true
         render_modal_form
       end
     end
   end
 
   def create
-    respond_to do |format|
-      format.js do
-        @project = Project.new(permitted_attributes(Project).
-                               merge(user: current_user))
+    @project = Project.new(permitted_attributes(Project).
+                           merge(user: current_user))
 
+    respond_to do |format|
+      format.html do
+        if @project.save
+          redirect_to projects_path
+        else
+          render :new, status: :bad_request
+        end
+      end
+
+      format.js do
         if @project.save
           render :show
         else
