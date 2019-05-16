@@ -1,4 +1,4 @@
-= simple_form_for @project, remote: true,
+= simple_form_for @project, remote: @show_as_modal,
   html: { role: "form", id: "modal-form", "data-controller" => "project-item" } do |f|
   = f.input :name
   = f.input :reason_for_access

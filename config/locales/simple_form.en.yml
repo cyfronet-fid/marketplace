@@ -51,6 +51,11 @@ en:
           Use "," to separate tags
         order_target: |
           Email address - eg. email@domain.com
+      project:
+        project_website_url: |
+          Url should start with http or https [e.g. http://webpage.org]
+        company_website_url: |
+          Url should start with http or https [e.g. http://webpage.org]
     #     username: 'User name to sign in.'
     #     password: 'No special characters, please.'
     # include_blanks:
