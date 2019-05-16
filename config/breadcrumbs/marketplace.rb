@@ -57,3 +57,8 @@ crumb :congratulations do |project_item|
   link "Congratulations", project_item_path(project_item)
   parent :marketplace_root
 end
+
+crumb :project_new do
+  link "New project", new_project_path
+  parent :projects
+end
