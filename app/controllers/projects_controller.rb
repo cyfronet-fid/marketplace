@@ -14,6 +14,7 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.json do
         render status: :ok, json: {
+          additional_information: @project.additional_information,
           name: @project.name,
           reason_for_access: @project.reason_for_access,
           customer_typology: t(@project.customer_typology, scope: [:project, :customer_typology]),

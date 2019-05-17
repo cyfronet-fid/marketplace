@@ -5,7 +5,8 @@ export default class extends Controller {
                     "userGroupName", "projectName",
                     "projectWebsiteUrl", "companyName",
                     "companyWebsiteUrl", "hasVoucher",
-                    "iDontHaveVoucher", "iHaveVoucher", "project"];
+                    "iDontHaveVoucher", "iHaveVoucher", "project",
+                    "additionalInformation"];
 
   connect() {
   }
@@ -62,6 +63,7 @@ export default class extends Controller {
     this.projectWebsiteUrlTarget.innerHTML = this._wrap_text(project["project_website_url"], "Project website url");
     this.companyNameTarget.innerHTML = this._wrap_text(project["company_name"], "Company name");
     this.companyWebsiteUrlTarget.innerHTML = this._wrap_text(project["company_website_url"], "Company website url");
+    this.additionalInformationTarget.innerHTML = this._wrap_text(project["additional_information"], "Additional Information");
   }
 
   _wrap_text(text, label) {
