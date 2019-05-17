@@ -31,9 +31,9 @@
     %dt Reason to request access to #{@service.title}
     %dd= @project_item.project.reason_for_access
 
-    - if @project_item.additional_information.present?
+    - if @project_item.project.additional_information.present?
       %dt Additional information
-      %dd= @project_item.additional_information
+      %dd= @project_item.project.additional_information
 
     %dt Research area
     %dd= @project_item.research_area.name

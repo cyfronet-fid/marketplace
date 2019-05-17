@@ -35,10 +35,11 @@
   %div{ "data-target" => "project-item.projectWebsiteUrl" }
   %div{ "data-target" => "project-item.companyName" }
   %div{ "data-target" => "project-item.companyWebsiteUrl" }
+  %div{ "data-target" => "project-item.additionalInformation" }
 
-  = f.input :additional_information
   = f.association :research_area, as: :grouped_select,
     collection: grouped_research_areas, group_method: :last
+
   %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Affiliation
   = f.association :affiliation,
     collection: @affiliations, label_method: :organization,

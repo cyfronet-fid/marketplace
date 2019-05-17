@@ -57,7 +57,6 @@ RSpec.feature "Service ordering" do
       select "Services"
       select affiliation.organization
       select research_area.name, from: "Research area"
-      fill_in "Additional information", with: "Additional information test"
 
       click_on "Next", match: :first
 
@@ -65,9 +64,9 @@ RSpec.feature "Service ordering" do
       expect(page).to have_current_path(service_summary_path(service))
       expect(page).to have_selector(:link_or_button,
                                     "Order", exact: true)
+
       expect(page).to have_text("Single user")
       expect(page).to have_text("To pass test")
-      expect(page).to have_text("Additional information test")
 
       expect do
         click_on "Order", match: :first
@@ -116,7 +115,6 @@ RSpec.feature "Service ordering" do
       select "Services"
       select affiliation.organization
       select research_area.name, from: "Research area"
-      fill_in "Additional information", with: "Additional information test"
 
       click_on "Next", match: :first
 
@@ -126,7 +124,6 @@ RSpec.feature "Service ordering" do
                                     "Order", exact: true)
       expect(page).to have_text("Single user")
       expect(page).to have_text("To pass test")
-      expect(page).to have_text("Additional information test")
 
       expect do
         click_on "Order", match: :first
@@ -251,9 +248,9 @@ RSpec.feature "Service ordering" do
       click_on "Order"
       click_on "Add new project"
       within("#ajax-modal") do
-        fill_in "Name", with: "New project"
+        fill_in "Project name", with: "New project"
         select "Single user", from: "Customer typology"
-        fill_in "Reason for access", with: "Some reason"
+        fill_in "Reason to request access to the EOSC services", with: "Some reason"
       end
       click_on "Create new project"
 
@@ -273,8 +270,8 @@ RSpec.feature "Service ordering" do
       click_on "Order"
       click_on "Add new project"
       within("#ajax-modal") do
-        fill_in "Name", with: "New project"
-        fill_in "Reason for access", with: "To pass test"
+        fill_in "Project name", with: "New project"
+        fill_in "Reason to request access to the EOSC services", with: "To pass test"
         select "Representing a private company", from: "Customer typology"
 
         expect(page).to have_field("Company name")
