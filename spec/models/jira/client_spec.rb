@@ -100,7 +100,6 @@ describe Jira::Client do
 
     user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2", affiliations: [])
     project_item = create(:project_item,
-                          additional_information: nil,
                           affiliation: nil,
                           offer: create(:offer, name: "off1",  service: create(:service,
                                                                                order_target: "email@domain.com",
@@ -147,7 +146,6 @@ describe Jira::Client do
 
     user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2", affiliations: [])
     project_item = create(:project_item,
-                          additional_information: nil,
                           affiliation: nil,
                           offer: create(:offer,
                                         name: "off1",
@@ -196,7 +194,6 @@ describe Jira::Client do
 
     user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2", affiliations: [])
     project_item = create(:project_item,
-                          additional_information: nil,
                           affiliation: nil,
                           offer: create(:offer,
                                         name: "off1",

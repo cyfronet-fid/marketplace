@@ -10,6 +10,7 @@ FactoryBot.define do
     sequence(:project_website_url) { "htpps://project_website.url" }
     sequence(:company_name) { |n| "company name #{n}" }
     sequence(:company_website_url) { "https://company_website.url" }
+    sequence(:additional_information) { |n| "Additional information #{n}" }
     user
     issue_status { :jira_active }
     issue_id { 1 }

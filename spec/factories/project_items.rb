@@ -3,8 +3,6 @@
 FactoryBot.define do
   factory :project_item do
     status { :created }
-    additional_information { |n| "Additional information #{n}" }
-
     voucher_id { "" }
     request_voucher { false }
 

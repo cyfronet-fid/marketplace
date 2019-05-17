@@ -22,9 +22,8 @@ RSpec.feature "Project" do
       click_on "Create new project"
 
       expect(project_create).to receive(:call)
-
-      fill_in "Name", with: "First test"
-      fill_in "Reason for access", with: "because I'm testing"
+      fill_in "project_name", with: "First test"
+      fill_in "Reason to request access to the EOSC services", with: "because I'm testing"
       select "Single user", from: "Customer typology"
       expect { click_on "Create" }.
         to change { user.projects.count }.by(1)
@@ -40,8 +39,8 @@ RSpec.feature "Project" do
 
       expect(project_create).to receive(:call)
 
-      fill_in "Name", with: "Second test"
-      fill_in "Reason for access", with: "because I'm testing"
+      fill_in "project_name", with: "Second test"
+      fill_in "Reason to request access to the EOSC services", with: "because I'm testing"
       select "Single user", from: "Customer typology"
       click_on "Create"
 
@@ -54,7 +53,7 @@ RSpec.feature "Project" do
 
       click_on "Edit"
 
-      fill_in "Name", with: "Edited First Project"
+      fill_in "project_name", with: "Edited First Project"
 
       click_on "Update"
 
@@ -69,7 +68,7 @@ RSpec.feature "Project" do
 
       click_on "Edit"
 
-      fill_in "Name", with: ""
+      fill_in "project_name", with: ""
 
       click_on "Update"
 
