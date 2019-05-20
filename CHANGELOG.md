@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Don't add `+` instead of space to query value during filtering (@mkasztelnik)
 
 ### Security
 
