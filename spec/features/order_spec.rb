@@ -7,7 +7,9 @@ RSpec.feature "Service ordering" do
 
 
   context "as logged in user" do
-    let(:user) { create(:user) }
+    let(:user) do
+      create(:user).tap { |u| create(:project, name: "Services", user: u) }
+    end
     let(:service) { create(:service) }
 
     before { checkin_sign_in_as(user) }
