@@ -24,7 +24,7 @@ library.add(fas, far);
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
 import "./sort_filter"
-import initSortingAndFiltering from "./sort_filter";
+import initSorting from "./sort_filter";
 import initFlash from "./flash";
 import initChoises from "./choises";
 
@@ -38,7 +38,7 @@ document.addEventListener("turbolinks:before-render", function(event) {
         node: event.data.newBody
     });
     starsOnClick(event.data.newBody);
-    initSortingAndFiltering(event.data.newBody);
+    initSorting(event.data.newBody);
     dom.watch();
 });
 
@@ -52,7 +52,7 @@ document.addEventListener("turbolinks:load", function(event) {
 document.addEventListener('DOMContentLoaded', function () {
     dom.i2svg();
     starsOnClick();
-    initSortingAndFiltering();
+    initSorting();
     initFlash();
     dom.watch();
 });
