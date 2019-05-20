@@ -335,6 +335,8 @@ RSpec.feature "Service filtering and sorting" do
   end
 
   scenario "searching via rating", js: true do
+    pending "Temporary rating filter was removed from the view, see #858"
+
     visit services_path
 
     find(:css, "a[href=\"#collapse_rating\"][role=\"button\"] h6").click
@@ -391,15 +393,10 @@ RSpec.feature "Service filtering and sorting" do
   end
 
   scenario "delete all filters", js: true do
-    visit services_path
+    visit services_path(target_groups: [target_group.id])
 
-    # set filters
-    find(:css, "a[href=\"#collapse_rating\"][role=\"button\"] h6").click
-    select "★★★★★", from: "rating"
-
-    click_on(id: "filter-submit")
-
-    expect(page).to have_selector(".media", count: 1)
+    # With filters applied
+    expect(page).to have_selector(".media", count: 3)
 
     # click clear filters
     click_on("Clear all filters")
