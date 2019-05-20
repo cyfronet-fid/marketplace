@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Removed
 - Remove rating filter from the view until we have enough ratings to show it (@mkasztelnik)
+- Remove default project creation (@mkasztelnik)
 
 ### Fixed
 - Don't add `+` instead of space to query value during filtering (@mkasztelnik)
