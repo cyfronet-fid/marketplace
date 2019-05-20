@@ -36,7 +36,8 @@ module Service::Filterable
         Filter::Provider,
         Filter::TargetGroup,
         Filter::Platform,
-        Filter::Rating,
+        # Temporary removed because of #858
+        # Filter::Rating,
         Filter::Location,
         Filter::Tag
       ]
