@@ -251,6 +251,8 @@ RSpec.feature "Service ordering" do
         fill_in "Project name", with: "New project"
         select "Single user", from: "Customer typology"
         fill_in "Reason to request access to the EOSC services", with: "Some reason"
+        select "non-European", from: "Country of customer"
+        select "Single user", from: "Customer typology"
       end
       click_on "Create new project"
 
@@ -272,7 +274,9 @@ RSpec.feature "Service ordering" do
       within("#ajax-modal") do
         fill_in "Project name", with: "New project"
         fill_in "Reason to request access to the EOSC services", with: "To pass test"
+        select "non-European", from: "Country of customer"
         select "Representing a private company", from: "Customer typology"
+        select "non-European", from: "Country of collaboration"
 
         expect(page).to have_field("Company name")
         expect(page).to have_field("Company website url")

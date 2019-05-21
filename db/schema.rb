@@ -154,6 +154,8 @@ ActiveRecord::Schema.define(version: 2019_06_14_094412) do
     t.string "project_website_url"
     t.string "company_name"
     t.string "company_website_url"
+    t.string "country_of_customer", null: false
+    t.string "country_of_collaboration", default: [], null: false, array: true
     t.integer "issue_id"
     t.integer "issue_status", default: 2, null: false
     t.string "issue_key"
