@@ -24,6 +24,7 @@ RSpec.feature "Project" do
       expect(project_create).to receive(:call)
       fill_in "project_name", with: "First test"
       fill_in "Reason to request access to the EOSC services", with: "because I'm testing"
+      select "non-European", from: "Country of customer"
       select "Single user", from: "Customer typology"
       expect { click_on "Create" }.
         to change { user.projects.count }.by(1)
@@ -41,6 +42,7 @@ RSpec.feature "Project" do
 
       fill_in "project_name", with: "Second test"
       fill_in "Reason to request access to the EOSC services", with: "because I'm testing"
+      select "non-European", from: "Country of customer"
       select "Single user", from: "Customer typology"
       click_on "Create"
 
