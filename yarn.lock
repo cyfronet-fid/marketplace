@@ -1075,6 +1075,11 @@ bootstrap-datepicker@^1.8.0:
   dependencies:
     jquery ">=1.7.1 <4.0.0"
 
+bootstrap-select@^1.13.10:
+  version "1.13.10"
+  resolved "https://registry.yarnpkg.com/bootstrap-select/-/bootstrap-select-1.13.10.tgz#b0cf57f8d448bc0488faba04ecaa2f4c5216e144"
+  integrity sha512-mwfyd+VWHY8wDN4je4Y8PPEaOAzDPUz95z5F5zxzlIqebqxtbrujclFWLrhkVOyETpsgZCL1rsfyEnHpAugtGg==
+
 bootstrap@^4.1.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.3.1.tgz#280ca8f610504d99d7b6b4bfc4b68cec601704ac"
@@ -3151,6 +3156,11 @@ https-browserify@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
   integrity sha1-7AbBDgo0wPL68Zn3/X/Hj//QPHM=
+
+i18n-iso-countries@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/i18n-iso-countries/-/i18n-iso-countries-4.1.1.tgz#2036672ba6626e70d25fc0033c4ec2209fc54641"
+  integrity sha512-8nOOko1MLl08CF4/ispv1Wj7P/UBHS38RBJAj5GF8kj90H6AOTZDxw9TnWV2quvWHONnA3NIy4imUM7SvNDDtw==
 
 iconv-lite@0.4.19:
   version "0.4.19"

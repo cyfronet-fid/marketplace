@@ -1866,3 +1866,9 @@ label[data-multicheckbox].small {
     }
   }
 }
+
+.bootstrap-select {
+  li:first-child {
+    display: none;
+  }
+}

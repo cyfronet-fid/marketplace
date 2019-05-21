@@ -13,4 +13,5 @@
  *= require_tree .
  *= require_self
  *= require bootstrap-datepicker/dist/css/bootstrap-datepicker.css
+ *= require bootstrap-select/dist/css/bootstrap-select.css
  */
