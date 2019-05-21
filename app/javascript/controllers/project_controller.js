@@ -1,8 +1,9 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["customer", "research",
-                    "project", "privateCompany", "input"];
+  static targets = ["customer", "research", "customerCountry",
+                    "collaborationCountry", "project", "privateCompany",
+                    "input"];
 
   connect() {
   }
@@ -34,6 +35,10 @@ export default class extends Controller {
       this.privateCompanyTargets.forEach ((el, i) => {
         el.classList.remove("hidden-fields");
       })
+    }
+    if (customer !== "" && customer !== this.CUSTOMER_TYPOLOGIES.single_user){
+       this.collaborationCountryTarget.classList.remove("hidden-fields");
+        $('.selectpicker').selectpicker('refresh');
     }
   }
 
