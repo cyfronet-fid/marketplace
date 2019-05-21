@@ -11,7 +11,9 @@ class Project < ApplicationRecord
             presence: true,
             uniqueness: { scope: :user, message: "Project name need to be unique" }
 
+  validates :country_of_customer, presence: true
   validates :user_group_name, presence: true, if: :research?
+  validates :country_of_collaboration, presence: true, unless: :single_user?
   validates :project_name, presence: true, if: :project?
   validates :project_website_url, url: true, presence: true, if: :project?
   validates :company_name, presence: true, if: :private_company?

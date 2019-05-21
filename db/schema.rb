@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_26_144042) do
+ActiveRecord::Schema.define(version: 2019_05_22_114751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,29 @@ ActiveRecord::Schema.define(version: 2019_04_26_144042) do
     t.index ["service_id"], name: "index_offers_on_service_id"
   end
 
+  create_table "order_changes", force: :cascade do |t|
+    t.string "status"
+    t.text "message"
+    t.bigint "order_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "author_id"
+    t.index ["author_id"], name: "index_order_changes_on_author_id"
+    t.index ["order_id"], name: "index_order_changes_on_order_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.string "status", null: false
+    t.bigint "service_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "issue_id"
+    t.integer "issue_status", default: 2, null: false
+    t.index ["service_id"], name: "index_orders_on_service_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
   create_table "platforms", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -162,6 +185,8 @@ ActiveRecord::Schema.define(version: 2019_04_26_144042) do
     t.string "project_website_url"
     t.string "company_name"
     t.string "company_website_url"
+    t.string "country_of_customer"
+    t.string "country_of_collaboration"
     t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -186,6 +211,16 @@ ActiveRecord::Schema.define(version: 2019_04_26_144042) do
     t.text "name", null: false
     t.string "ancestry"
     t.integer "ancestry_depth", default: 0
+  end
+
+  create_table "service_categories", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "category_id"
+    t.boolean "main", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_service_categories_on_category_id"
+    t.index ["service_id"], name: "index_service_categories_on_service_id"
   end
 
   create_table "service_opinions", force: :cascade do |t|

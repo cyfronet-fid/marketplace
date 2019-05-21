@@ -256,6 +256,8 @@ RSpec.feature "Service ordering" do
       click_on "Add new project"
       within("#ajax-modal") do
         fill_in "Name", with: "New project"
+        select "non-European", from: "Country of customer"
+        select "Single user", from: "Customer typology"
       end
       click_on "Create new project"
 
@@ -276,6 +278,7 @@ RSpec.feature "Service ordering" do
       click_on "Add new project"
       within("#ajax-modal") do
         fill_in "Name", with: "New project"
+        select "non-European", from: "Country of customer"
         select "Representing a private company", from: "Customer typology"
 
         expect(page).to have_field("Company name")
@@ -283,12 +286,15 @@ RSpec.feature "Service ordering" do
 
         fill_in "Company name", with: "Company name"
         fill_in "Company website url", with: "https://www.company.name"
+        select "International", from: "Country of collaboration"
+
+        expect(page).to have_field("Company name", with: "Company name")
+        expect(page).to have_field("Company website url", with: "https://www.company.name")
+
         click_on "Create new project"
       end
 
       expect(page).to have_select("project_item_project_id", selected: "New project")
-      expect(page).to have_field("Company name", with: "Company name")
-      expect(page).to have_field("Company website url", with: "https://www.company.name")
 
       new_project = Project.all.last
       expect(new_project.name).to eq("New project")

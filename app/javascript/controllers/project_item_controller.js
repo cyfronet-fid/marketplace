@@ -1,9 +1,9 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["reason", "customer", "research",
-                    "project", "privateCompany", "input",
-                    "userGroupName", "projectName",
+  static targets = ["reason", "customer", "research", "customerCountry",
+                    "collaborationCountry", "project", "privateCompany",
+                    "input", "userGroupName", "projectName",
                     "projectWebsiteUrl", "companyName",
                     "companyWebsiteUrl", "hasVoucher",
                     "iDontHaveVoucher", "iHaveVoucher"];
@@ -38,6 +38,10 @@ export default class extends Controller {
     const customer  = this.customerTarget.value
 
     this._hideCustomerTypologieFields();
+
+    if ( customer !== "" && customer !== this.CUSTOMER_TYPOLOGIES.single_user){
+      this.collaborationCountryTarget.classList.remove("hidden-fields")
+    }
 
     if ( customer === this.CUSTOMER_TYPOLOGIES.research){
       this.researchTargets.forEach ((el, i) => {
@@ -79,6 +83,8 @@ export default class extends Controller {
   _setProjectDefaults(project) {
     this.reasonTarget.value = project["reason_for_access"];
     this.customerTarget.value = project["customer_typology"];
+    this.customerCountryTarget.value = project["country_of_customer"];
+    this.collaborationCountryTarget.value = project["country_of_collaboration"];
     this.userGroupNameTarget.value = project["user_group_name"];
     this.projectNameTarget.value = project["project_name"];
     this.projectWebsiteUrlTarget.value = project["project_website_url"];
