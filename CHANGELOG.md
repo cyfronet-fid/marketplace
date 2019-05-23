@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Cookie policies consent popup (@mkasztelnik)
 
 ### Changed
 - Improve empty project description (@mkasztelnik)
