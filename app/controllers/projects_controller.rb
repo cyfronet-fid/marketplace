@@ -26,6 +26,7 @@ class ProjectsController < ApplicationController
           company_website_url: @project.company_website_url
         }
       end
+      format.html
     end
   end
 

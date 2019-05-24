@@ -1,6 +1,13 @@
-.row.mb-4
-  .col-md-3.col-lg-2
-    %h2.font-weight-normal= project.name
-  .col-md
-    %ul.list-group
-      = render(project.project_items) || render("empty_project")
+.row.list-group-item
+  %a.collapsed{ "href": "#collapse_#{project.id}", "aria-controls": "collapse_#{project.id}",
+      "data-toggle": "collapse", "role": "tab", "aria-expanded": "false" }
+    .collapse-icon.d-inline
+      %i.fas.fa-chevron-down
+      %i.fas.fa-chevron-up
+    %h2.d-inline.ml-3.font-weight-normal= project.name
+    - if policy(project).show?
+      = link_to "Details", project_url(project),
+        class: "float-right btn-sm btn btn-secondary d-inline"
+
+.row.align-items-center.border.panel-collapse.collapse.p-3{ "id": "collapse_#{project.id}" }
+  = render "projects/details_box", project: project
