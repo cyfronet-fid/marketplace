@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Cookie policies consent popup (@mkasztelnik)
+- Project details view (@martaswiatkowska)
 
 ### Changed
 - Improve empty project description (@mkasztelnik)
