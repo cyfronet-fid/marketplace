@@ -62,3 +62,8 @@ crumb :project_new do
   link "New project", new_project_path
   parent :projects
 end
+
+crumb :project do |project|
+  link project.name, project_path(project)
+  parent :projects
+end

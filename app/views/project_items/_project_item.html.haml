@@ -5,15 +5,16 @@
     .col-md-2
       %span.text-uppercase
         = project_item.status
-    .col-md-3
+    .col-md-4
 
       - if project_item.status == ProjectItem.statuses[:ready]
         %span
           = link_to "Access the service", project_item.service.webpage_url,
-            class: "btn btn-primary"
+            class: "btn btn-primary btn-sm"
     .col-md.text-md-right
       %span
         last change: #{time_ago_in_words(project_item.updated_at)} ago
-
-
+%li.list-group-item.mt-2
+  .row.d-flex.justify-content-center
+    = link_to "Add another service", services_url
 
