@@ -1,0 +1,31 @@
+#details.tab-pane.container.pt-2.active{ "role": "tabpanel" }
+  .row.pt-5.justify-content-between
+    .col-6
+      %h5 Customer Typology
+      %p
+        = t "projeproject.customer_typology.#{project.customer_typology}"
+      %h5 Access Reason
+      %p
+        = project.reason_for_access
+      - if project.research?
+        %h5 User group name
+        %p
+          = project.user_group_name
+      - if project.project?
+        %h5 Project name
+        %p
+          = project.project_name
+        %h5 Project website url
+        %p
+          = project.project_website_url
+      - if project.private_company?
+        %h5 Company name
+        %p
+          = project.company_name
+        %h5 Company website url
+        %p
+          = project.company_website_url
+    .col-6.mb-3
+      %h5 Services in this project section
+      = render(project.project_items) || render("empty_project")
+

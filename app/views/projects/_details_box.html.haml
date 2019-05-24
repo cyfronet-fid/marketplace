@@ -1,0 +1,10 @@
+.col
+  %h5 Customer typology
+  %p
+    = t "projeproject.customer_typology.#{project.customer_typology}"
+  %h5 Reason to request access to the EOSC services
+  %p
+    = project.reason_for_access
+.col
+  %ul.list-group
+    = render(project.project_items) || render("empty_project")
