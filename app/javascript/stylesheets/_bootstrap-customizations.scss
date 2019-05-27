@@ -1825,7 +1825,7 @@ label[data-multicheckbox].small {
 // scss-lint:enable all
 
 .cc-banner {
-  padding: 2em 0 !important;
+  padding: 2em 1.2em !important;
 
   .cc-message {
     font-family: 'Ubuntu';
@@ -1843,7 +1843,6 @@ label[data-multicheckbox].small {
 
 @media (max-width: 768px) {
   .cc-banner {
-    padding: 1em 0 !important;
 
     .cc-message {
       line-height: 1.2;
