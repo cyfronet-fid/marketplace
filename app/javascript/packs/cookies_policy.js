@@ -17,7 +17,7 @@ export default function initCookiesPolicy() {
       "href": "https://eosc-portal.eu/privacy-policy-summary"
     },
     elements: {
-      dismiss: '<a aria-label="dismiss cookie message" tabindex="0" class="btn btn-primary btn-close">{{dismiss}}</a>',
+      dismiss: '<a aria-label="dismiss cookie message" tabindex="0" class="btn btn-primary btn-close cc-dismiss">{{dismiss}}</a>',
       messagelink: `
           <span id="cookieconsent:desc" class="cc-message">
             We use browser cookies to give you the best possible experience.
