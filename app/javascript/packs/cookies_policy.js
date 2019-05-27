@@ -4,7 +4,7 @@ export default function initCookiesPolicy() {
   window.cookieconsent.initialise({
     "palette": {
       "popup": {
-        "background": "#252e39"
+        "background": "#1b303a"
       },
       "button": {
         "background": "#14a7d0"

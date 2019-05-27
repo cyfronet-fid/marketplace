@@ -1823,3 +1823,36 @@ label[data-multicheckbox].small {
   }
 }
 // scss-lint:enable all
+
+.cc-banner {
+  padding: 2em 0 !important;
+
+  .cc-message {
+    font-family: 'Ubuntu';
+    line-height: 1.3;
+    width: 80%;
+    float: left;
+  }
+
+  .btn-close {
+    width: 160px;
+    font-family: 'Ubuntu';
+    float: right;
+  }
+}
+
+@media (max-width: 768px) {
+  .cc-banner {
+    padding: 1em 0 !important;
+
+    .cc-message {
+      line-height: 1.2;
+      width: 100%;
+    }
+
+    .cc-compliance {
+      display: block;
+      float: left;
+    }
+  }
+}
