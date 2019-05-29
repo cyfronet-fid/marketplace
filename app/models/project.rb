@@ -1,7 +1,14 @@
 # frozen_string_literal: true
 
 class Project < ApplicationRecord
-  enum customer_typology: ProjectItem::CUSTOMER_TYPOLOGIES
+  CUSTOMER_TYPOLOGIES = {
+    single_user: "single_user",
+    research: "research",
+    private_company: "private_company",
+    project: "project"
+  }
+
+  enum customer_typology: CUSTOMER_TYPOLOGIES
 
   belongs_to :user
   has_many :project_items, dependent: :destroy
@@ -11,6 +18,8 @@ class Project < ApplicationRecord
             presence: true,
             uniqueness: { scope: :user, message: "Project name need to be unique" }
 
+  validates :customer_typology, presence: true
+  validates :reason_for_access, presence: true
   validates :user_group_name, presence: true, if: :research?
   validates :project_name, presence: true, if: :project?
   validates :project_website_url, url: true, presence: true, if: :project?

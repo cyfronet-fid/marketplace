@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_26_144042) do
+ActiveRecord::Schema.define(version: 2019_05_29_114220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,16 +133,9 @@ ActiveRecord::Schema.define(version: 2019_04_26_144042) do
     t.integer "issue_status", default: 2, null: false
     t.bigint "project_id"
     t.bigint "offer_id"
-    t.string "customer_typology"
-    t.text "access_reason"
     t.text "additional_information"
     t.bigint "affiliation_id"
     t.jsonb "properties", default: [], null: false
-    t.text "user_group_name"
-    t.string "project_name"
-    t.string "project_website_url"
-    t.string "company_name"
-    t.string "company_website_url"
     t.bigint "research_area_id"
     t.boolean "request_voucher", default: false, null: false
     t.string "voucher_id", default: "", null: false
