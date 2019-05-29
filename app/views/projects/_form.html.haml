@@ -1,9 +1,9 @@
 = simple_form_for @project, remote: @show_as_modal,
-  html: { role: "form", id: "modal-form", "data-controller" => "project-item" } do |f|
+  html: { role: "form", id: "modal-form", "data-controller" => "project" } do |f|
   = f.input :name
   = f.input :reason_for_access
   = f.input :customer_typology, collection: Project.customer_typologies.keys.map(&:to_sym),
-    input_html: { "data-target" => "project-item.customer",
-                  "data-action" => "change->project-item#showSelectedSection" }
+    input_html: { "data-target" => "project.customer",
+                  "data-action" => "change->project#showSelectedSection" }
 
-  = render "services/configurations/customer_typology_fields", f: f
+  = render "customer_typology_fields", f: f
