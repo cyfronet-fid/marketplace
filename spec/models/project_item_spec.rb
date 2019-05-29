@@ -6,11 +6,8 @@ RSpec.describe ProjectItem do
   subject { create(:project_item) }
 
   it { should validate_presence_of(:offer) }
-  it { should validate_presence_of(:affiliation) }
   it { should validate_presence_of(:project) }
   it { should validate_presence_of(:status) }
-  it { should validate_presence_of(:customer_typology) }
-  it { should validate_presence_of(:access_reason) }
 
   it { should belong_to(:project) }
   it { should belong_to(:affiliation).required(false) }
@@ -86,26 +83,6 @@ RSpec.describe ProjectItem do
       expect(build(:project_item, status: :ready)).to_not be_active
       expect(build(:project_item, status: :rejected)).to_not be_active
     end
-  end
-
-  describe "research typology" do
-    subject { build(:project_item, customer_typology: "research") }
-
-    it { is_expected.to validate_presence_of(:user_group_name) }
-  end
-
-  describe "project typology" do
-    subject { build(:project_item, customer_typology: "project") }
-
-    it { is_expected.to validate_presence_of(:project_name) }
-    it { is_expected.to validate_presence_of(:project_website_url) }
-  end
-
-  describe "private_company typology" do
-    subject { build(:project_item, customer_typology: "private_company") }
-
-    it { is_expected.to validate_presence_of(:company_name) }
-    it { is_expected.to validate_presence_of(:company_website_url) }
   end
 
   describe "#voucher_id" do

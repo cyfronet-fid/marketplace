@@ -144,17 +144,17 @@ private
     when "CI-SupervisorProfile"
       project_item.affiliation&.supervisor_profile || nil
     when "CP-CustomerTypology"
-      if project_item.customer_typology
-        { "id" => @jira_config["custom_fields"]["select_values"]["CP-CustomerTypology"][project_item.customer_typology] }
+      if project_item.project.customer_typology
+        { "id" => @jira_config["custom_fields"]["select_values"]["CP-CustomerTypology"][project_item.project.customer_typology] }
       else
         nil
       end
     when "CP-ReasonForAccess"
-      project_item.access_reason
+      project_item.project.reason_for_access
     when "CP-ProjectInformation"
-      project_item.project_name
+      project_item.project.name
     when "CP-UserGroupName"
-      project_item.user_group_name
+      project_item.project.user_group_name
     when "CP-Platforms"
       project_item.offer.service.platforms.pluck(:name).join(", ")
     when "CP-INeedAVoucher"
