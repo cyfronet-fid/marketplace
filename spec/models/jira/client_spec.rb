@@ -33,12 +33,10 @@ describe Jira::Client do
                           offer: create(:offer, name: "off1", service: create(:service,
                                                                         title: "s1",
                                                                         categories: [create(:category, name: "cat1")])),
-                          user_group_name: "User Group Name 1",
-                          project_name: "My Secret Project",
-                          project: create(:project, user: user, name: "My Secret Project"),
-                          customer_typology: "single_user",
+                          project: create(:project, user: user, name: "My Secret Project",
+                                          user_group_name: "New user group", reason_for_access: "Some reason"),
                           research_area: create(:research_area, name: "My RA"),
-                          access_reason: "some reason", properties: [
+                          properties: [
             {
                 "id": "id1",
                 "type": "input",
@@ -80,8 +78,8 @@ describe Jira::Client do
                        "CI-SupervisorName-1" => "Jim Supervisor",
                        "CI-SupervisorProfile-1" => "http://jim.supervisor.edu",
                        "CP-CustomerTypology-1" => { "id" => "20000" },
-                       "CP-ReasonForAccess-1" => "some reason",
-                       "CP-UserGroupName-1" => "User Group Name 1",
+                       "CP-ReasonForAccess-1" => "Some reason",
+                       "CP-UserGroupName-1" => "New user group",
                        "CP-ProjectInformation-1" => "My Secret Project",
                        "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
                        "CP-ScientificDiscipline-1" => "My RA",
@@ -114,12 +112,8 @@ describe Jira::Client do
 
     user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2", affiliations: [])
     project_item = create(:project_item,
-                          customer_typology: nil,
-                          access_reason: nil,
                           additional_information: nil,
                           affiliation: nil,
-                          user_group_name: nil,
-                          project_name: nil,
                           offer: create(:offer, name: "off1",  service: create(:service,
                                                                                order_target: "email@domain.com",
                                                                                title: "s1",
@@ -127,7 +121,11 @@ describe Jira::Client do
                                                                                connected_url:  "http://service.org/access",
                                                                                categories: [create(:category, name: "cat1")])),
                           research_area: nil,
-                          project: create(:project, user: user, name: "My Secret Project"))
+                          project: create(:project, user: user,
+                                          name: "My Secret Project",
+                                          user_group_name: nil,
+                                          reason_for_access: "Some reason",
+                                          customer_typology: "single_user"))
 
     expected_fields = { summary: "Service order, John Doe, s1",
                         project: { key: "MP" },
@@ -139,6 +137,9 @@ describe Jira::Client do
                         "CI-DisplayName-1" => "John Doe",
                         "CI-EOSC-UniqueID-1" => "uid2",
                         "CP-Platforms-1" => "",
+                        "CP-ReasonForAccess-1" => "Some reason",
+                        "CP-ProjectInformation-1" => "My Secret Project",
+                        "CP-CustomerTypology-1" => { "id" => "20000" },
                         "CP-INeedAVoucher-1" => { "id" => "20004" },
                         "CP-VoucherID-1" => "",
                         "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
@@ -165,12 +166,8 @@ describe Jira::Client do
 
     user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2", affiliations: [])
     project_item = create(:project_item,
-                          customer_typology: nil,
-                          access_reason: nil,
                           additional_information: nil,
                           affiliation: nil,
-                          user_group_name: nil,
-                          project_name: nil,
                           offer: create(:offer,
                                         name: "off1",
                                         voucherable: true,
@@ -181,7 +178,11 @@ describe Jira::Client do
                                                                  categories: [create(:category, name: "cat1")])),
                           research_area: nil,
                           voucher_id: "123123",
-                          project: create(:project, user: user, name: "My Secret Project"))
+                          project: create(:project, user: user,
+                                          name: "My Secret Project",
+                                          user_group_name: "New user group",
+                                          reason_for_access: "Some reason",
+                                          customer_typology: "single_user"))
 
     expected_fields = { summary: "Service order, John Doe, s1",
                         project: { key: "MP" },
@@ -193,6 +194,10 @@ describe Jira::Client do
                         "CI-DisplayName-1" => "John Doe",
                         "CI-EOSC-UniqueID-1" => "uid2",
                         "CP-Platforms-1" => "",
+                        "CP-CustomerTypology-1" => { "id" => "20000" },
+                        "CP-ReasonForAccess-1" => "Some reason",
+                        "CP-ProjectInformation-1" => "My Secret Project",
+                        "CP-UserGroupName-1" => "New user group",
                         "CP-INeedAVoucher-1" => { "id" => "20004" },
                         "CP-VoucherID-1" => "123123",
                         "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
@@ -218,12 +223,8 @@ describe Jira::Client do
 
     user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2", affiliations: [])
     project_item = create(:project_item,
-                          customer_typology: nil,
-                          access_reason: nil,
                           additional_information: nil,
                           affiliation: nil,
-                          user_group_name: nil,
-                          project_name: nil,
                           offer: create(:offer,
                                         name: "off1",
                                         voucherable: true,
@@ -234,7 +235,8 @@ describe Jira::Client do
                                                                  categories: [create(:category, name: "cat1")])),
                           research_area: nil,
                           request_voucher: true,
-                          project: create(:project, user: user, name: "My Secret Project"))
+                          project: create(:project, user: user, name: "My Secret Project",
+                                          user_group_name: "New user group", reason_for_access: "Some reason"))
 
     expected_fields = { summary: "Service order, John Doe, s1",
                         project: { key: "MP" },
@@ -243,9 +245,13 @@ describe Jira::Client do
                                                                                                      host: "https://mp.edu"),
                         "CI-Name-1" => "John",
                         "CI-Surname-1" => "Doe",
+                        "CP-CustomerTypology-1" => { "id" => "20000" },
+                        "CP-ReasonForAccess-1" => "Some reason",
                         "CI-DisplayName-1" => "John Doe",
                         "CI-EOSC-UniqueID-1" => "uid2",
                         "CP-Platforms-1" => "",
+                        "CP-ProjectInformation-1" => "My Secret Project",
+                        "CP-UserGroupName-1" => "New user group",
                         "CP-INeedAVoucher-1" => { "id" => "20003" },
                         "CP-VoucherID-1" => "",
                         "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
