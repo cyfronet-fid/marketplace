@@ -11,5 +11,8 @@ FactoryBot.define do
     sequence(:company_name) { |n| "company name #{n}" }
     sequence(:company_website_url) { "https://company_website.url" }
     user
+    issue_status { :jira_active }
+    issue_id { 1 }
+    issue_key { "MP-1" }
   end
 end
