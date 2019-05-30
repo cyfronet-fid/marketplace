@@ -755,7 +755,15 @@ Card style
     input {
       display: none;
     }
+
+    span {
+      cursor: pointer;
+    }
+    // scss-lint:disable all
+    input[type="radio"]:checked+span { background: $yellow; }
+    // scss-lint:enable all
   }
+
 
   .card-img-top {
     text-align: center;
