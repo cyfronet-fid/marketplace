@@ -334,6 +334,8 @@ RSpec.feature "Service filtering and sorting" do
     visit services_path
 
     find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
+    # again - problem with animations, which should be disabled
+    sleep(1)
 
     click_on("Show 2 more")
     find(:css, "input[name='providers[]'][value='#{Provider.order(:name).last.id}']").set(true)

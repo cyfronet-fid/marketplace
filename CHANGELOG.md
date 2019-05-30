@@ -48,6 +48,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - Cookie policies consent popup (@mkasztelnik)
 - Project details view (@martaswiatkowska)
+- Master / sub issue jira integration
+- jira master / sub issue migration rake task
 
 ### Changed
 - Improve empty project description (@mkasztelnik)

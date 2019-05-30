@@ -27,3 +27,16 @@ describe "jira:setup", type: :task do
     subject.invoke
   end
 end
+
+describe "jira:migrate_projects", type: :task do
+  it "preloads the Rails environment" do
+    expect(task.prerequisites).to include "environment"
+  end
+
+  it "should call Jira::Setup.call" do
+    instance = double("Jira::ProjectMigrator")
+    expect(instance).to receive(:call)
+    expect(Jira::ProjectMigrator).to receive(:new).and_return(instance)
+    subject.invoke
+  end
+end
