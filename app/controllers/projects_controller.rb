@@ -59,6 +59,7 @@ class ProjectsController < ApplicationController
 
       format.js do
         if @project.save
+          Project::Create.new(@project).call
           render :show
         else
           render_modal_form
