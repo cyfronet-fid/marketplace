@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_29_114220) do
+ActiveRecord::Schema.define(version: 2019_06_11_144042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,9 @@ ActiveRecord::Schema.define(version: 2019_05_29_114220) do
     t.string "project_website_url"
     t.string "company_name"
     t.string "company_website_url"
+    t.integer "issue_id"
+    t.integer "issue_status", default: 2, null: false
+    t.string "issue_key"
     t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end

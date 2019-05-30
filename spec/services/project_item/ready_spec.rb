@@ -109,7 +109,7 @@ RSpec.describe ProjectItem::Ready do
     end
 
     it "sets jira error and raises exception on failed jira issue creation" do
-      error = Jira::Client::JIRAIssueCreateError.new(project_item, "key" => "can not have value X")
+      error = Jira::Client::JIRAProjectItemIssueCreateError.new(project_item, "key" => "can not have value X")
 
       allow(jira_client).to receive(:create_service_issue).with(project_item).and_raise(error)
 
