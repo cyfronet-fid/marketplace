@@ -101,6 +101,7 @@ class Service < ApplicationRecord
   validates :helpdesk_url, url: true, if: :helpdesk_url?
   validates :tutorial_url, url: true, if: :tutorial_url?
   validates :logo, blob: { content_type: :image }
+  validate :logo_variable, on: [:create, :update]
   validates :research_areas, presence: true
   validates :providers, presence: true
   validates :status, presence: true
@@ -132,6 +133,13 @@ class Service < ApplicationRecord
   end
 
   private
+    def logo_variable
+      if logo.present? && !logo.variable?
+        errors.add(:logo, "^Sorry, but the logo format you were trying to attach is not supported
+                          in the Marketplace. Please attach the logo in png, gif, jpg, jpeg,
+                          pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon format.")
+      end
+    end
 
     def main_category_missing?
       categorizations.where(main: true).count.zero?

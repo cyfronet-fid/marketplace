@@ -22,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Don't add `+` instead of space to query value during filtering (@mkasztelnik)
 - Showing draft services on search in backoffice (@martaswiatkowska)
+- Validation logo format (@martaswiatkowska)
 
 ### Security
 
