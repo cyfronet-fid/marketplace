@@ -3,10 +3,8 @@
     .row
       .col-7.text-uppercase
         Filters
-      %a.col-5.collapseall.text-right.text-dark{ "data-toggle": "collapse", "data-target": ".panel-collapse.show",
+      %a.col-5.collapseall.text-right.text-dark.collapsed{ "data-toggle": "collapse", "data-target": ".panel-collapse",
       "aria-controls": "collapsible" }
-        Collapse All
-
 
   = form_tag "", method: :get, role: "search", class: "filters"  do
     = hidden_field_tag :q, params[:q] if params[:q].present?
