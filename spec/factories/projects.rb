@@ -7,7 +7,7 @@ FactoryBot.define do
     sequence(:customer_typology) { |n| "single_user" }
     sequence(:user_group_name) { |n| "User group #{n}" }
     sequence(:project_name) { |n| "Project name #{n}" }
-    sequence(:country_of_customer) { "N/A" }
+    sequence(:country_of_customer) { "N/E" }
     sequence(:country_of_collaboration) { ["I/N"] }
     sequence(:project_website_url) { "htpps://project_website.url" }
     sequence(:company_name) { |n| "company name #{n}" }
