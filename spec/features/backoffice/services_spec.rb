@@ -92,6 +92,26 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("Alpha (min. TRL 5)")
     end
 
+    scenario "I cannot create service with wrong logo file" do
+      provider = create(:provider)
+      research_area = create(:research_area)
+
+      visit backoffice_services_path
+      click_on "Create new service"
+
+      attach_file("service_logo", "spec/lib/images/invalid-logo.svg")
+      fill_in "Title", with: "service title"
+      fill_in "Description", with: "service description"
+      fill_in "Tagline", with: "service tagline"
+      select research_area.name, from: "Research areas"
+      select provider.name, from: "Providers"
+
+      expect { click_on "Create Service" }.
+        to change { user.owned_services.count }.by(0)
+
+      expect(page).to have_content("Sorry, but the logo format you were trying to attach is not supported in the Marketplace.")
+    end
+
     scenario "I can edit any service" do
       service = create(:service, title: "my service")
 
