@@ -10,6 +10,7 @@ module Service::Autocomplete
       match: :word_middle,
       limit: 5,
       load: false,
+      where: { id: scope.ids },
       highlight: { tag: "<b>" }
     )
 
@@ -19,7 +20,6 @@ module Service::Autocomplete
   end
 
   private
-
     def generate_html(query)
       html_results = query.highlights.map.with_index { |s, i| "<li class=\"dropdown-item\" role=\"option\" data-autocomplete-value=\"#{i}\">#{s[:title]}</li>" }.join
 

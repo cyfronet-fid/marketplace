@@ -40,22 +40,6 @@ function setSearchParams(search, params) {
     return parts.join('&');
 }
 
-export function syncQueryForm(node) {
-    let params = searchToObj(window.location.search);
-    $(node || 'body').find("[data-sync-query-form]").each(function() {
-        let _params = {...params};
-        $(this).find("input").add($(this).find("select")).each(function() {
-            let encodedName = encodeURI($(this).attr('name'));
-            if(encodedName in _params)
-                delete _params[encodedName];
-        });
-
-        for(let key in _params) {
-            $(this).append($(`<input type="hidden" id="${decodeURI(key)}" name="${decodeURI(key)}" value="${_params[key]}" />`));
-        }
-    });
-}
-
 export function registerSubmitOnChange(node) {
     $(node || 'body').find("[data-submit-on-change]").on('change', function () {
         let id = $(this).attr('id');
@@ -66,7 +50,6 @@ export function registerSubmitOnChange(node) {
     });
 }
 
-export default function initSortingAndFiltering(node) {
-    syncQueryForm(node);
+export default function initSorting(node) {
     registerSubmitOnChange(node);
 }

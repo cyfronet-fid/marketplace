@@ -323,6 +323,33 @@ RSpec.feature "Service filtering and sorting" do
     find(:css, "#collapse_providers > div > a", text: "Show 1 more")
   end
 
+  scenario "expand all should expand all filters, including selected ones", js: true do
+    provider_id = Provider.order(:name).first.id
+    target_group_id = target_group.id
+
+    visit services_path
+    find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
+    find(:css, "input[name='providers[]'][value='#{provider_id}']").set(true)
+
+    click_on(id: "filter-submit")
+
+    expect(page).to have_selector(".collapseall.collapsed")
+    # provider controls should be visible
+    expect(page).to have_selector("input[name='providers[]'][value='#{provider_id}']")
+    find(:css, ".collapseall").click
+
+    expect(page).to have_selector("input[name='target_groups[]'][value='#{target_group_id}']")
+    # this is necessary for bootstrap animation to finish properly, kind of a hack
+    # possible solution is either to disable animations (might be a good idea)
+    sleep 1
+    # collapse all
+    find(:css, ".collapseall").click
+
+    save_and_open_screenshot
+    expect(page).to_not have_selector("input[name='providers[]'][value='#{provider_id}']")
+    expect(page).to_not have_selector("input[name='target_groups[]'][value='#{target_group_id}']")
+  end
+
   scenario "searching via providers", js: true do
     provider_id = Provider.order(:name).first.id
     visit services_path
@@ -335,6 +362,8 @@ RSpec.feature "Service filtering and sorting" do
   end
 
   scenario "searching via rating", js: true do
+    pending "Temporary rating filter was removed from the view, see #858"
+
     visit services_path
 
     find(:css, "a[href=\"#collapse_rating\"][role=\"button\"] h6").click
@@ -391,15 +420,10 @@ RSpec.feature "Service filtering and sorting" do
   end
 
   scenario "delete all filters", js: true do
-    visit services_path
+    visit services_path(target_groups: [target_group.id])
 
-    # set filters
-    find(:css, "a[href=\"#collapse_rating\"][role=\"button\"] h6").click
-    select "★★★★★", from: "rating"
-
-    click_on(id: "filter-submit")
-
-    expect(page).to have_selector(".media", count: 1)
+    # With filters applied
+    expect(page).to have_selector(".media", count: 3)
 
     # click clear filters
     click_on("Clear all filters")

@@ -59,6 +59,7 @@ Rails.application.routes.draw do
         resource :draft, only: :create
       end
     end
+    get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
     get "services/c/:category_id" => "services#index", as: :category_services
     resources :research_areas
     resources :categories
