@@ -9,13 +9,25 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.11.0] 2019-06-04
+
+### Added
 - Cookie policies consent popup (@mkasztelnik)
 
 ### Changed
 - Improve empty project description (@mkasztelnik)
 - Improve collapse / expand all behaviour for filters (@michal-szostak)
-
-### Deprecated
 
 ### Removed
 - Remove rating filter from the view until we have enough ratings to show it (@mkasztelnik)
@@ -25,8 +37,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Don't add `+` instead of space to query value during filtering (@mkasztelnik)
 - Showing draft services on search in backoffice (@martaswiatkowska)
 - Validation logo format (@martaswiatkowska)
-
-### Security
 
 ## [1.10.0] 2019-05-13
 
