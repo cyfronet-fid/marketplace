@@ -14,6 +14,16 @@ module CountriesHelper
     countries(INTERNATIONAL, NON_EUROPEAN)
   end
 
+  def country_name(codes)
+    if codes.is_a? Array
+      codes.map { |code| collaboration_countries.rassoc(code).first }
+    elsif codes.is_a? String
+      collaboration_countries.rassoc(codes).first
+    else
+      nil
+    end
+  end
+
   def countries(*extra)
     extra + ISO3166::Country.find_all_countries_by_region("Europe").sort.map { |c| [c.name, c.alpha2] }
   end

@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - Service owner can edit service draft and service offer drafts (@mkasztelnik)
 - Country of customer and country of collaboration fields (@goreck888)
+- Country fields transfer to jira issues (@goreck888)
 
 ### Changed
 
