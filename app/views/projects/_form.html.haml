@@ -7,11 +7,11 @@
   = f.input :customer_typology, collection: Project.customer_typologies.keys.map(&:to_sym),
     input_html: { "data-target" => "project.customer",
                   "data-action" => "change->project#showSelectedSection" }
+  = render "customer_typology_fields", f: f
   = f.input :country_of_collaboration, collection: collaboration_countries, include_hidden: false,
     wrapper_html: { class: "hidden-fields",
       "data-target" => "project.collaborationCountry project.input" },
     input_html: { class: "selectpicker", "title" => "Choose countries",
       "data-target" => "project.collaborationCountry", "multiple" => "true" }
-  = render "customer_typology_fields", f: f
   = f.input :additional_information
 
