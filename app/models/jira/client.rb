@@ -74,7 +74,9 @@ class Jira::Client < JIRA::Client
       "CI-DepartmentalWebPage": fields_config["CI-DepartmentalWebPage"],
       "CI-SupervisorName": fields_config["CI-SupervisorName"],
       "CI-SupervisorProfile": fields_config["CI-SupervisorProfile"],
+      "CP-CustomerCountry": fields_config["CP-CustomerCountry"],
       "CP-CustomerTypology": fields_config["CP-CustomerTypology"],
+      "CP-CollaborationCountry": fields_config["CP-CollaborationCountry"],
       "CP-ReasonForAccess": fields_config["CP-ReasonForAccess"],
       "CP-UserGroupName": fields_config["CP-UserGroupName"],
       "CP-ProjectInformation": fields_config["CP-ProjectInformation"],
@@ -192,6 +194,10 @@ private
       else
         nil
       end
+    when "CP-CustomerCountry"
+      project.country_of_customer
+    when "CP-CollaborationCountry"
+      project.country_of_collaboration.join(", ")
     # when "CP-ReasonForAccess"
     #   project.reason_for_access
     # when "CP-ProjectInformation"
