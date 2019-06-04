@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Improve empty project description (@mkasztelnik)
+- Improve collapse / expand all behaviour for filters (@michal-szostak)
 
 ### Deprecated
 

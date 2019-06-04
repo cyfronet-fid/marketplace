@@ -323,6 +323,33 @@ RSpec.feature "Service filtering and sorting" do
     find(:css, "#collapse_providers > div > a", text: "Show 1 more")
   end
 
+  scenario "expand all should expand all filters, including selected ones", js: true do
+    provider_id = Provider.order(:name).first.id
+    target_group_id = target_group.id
+
+    visit services_path
+    find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
+    find(:css, "input[name='providers[]'][value='#{provider_id}']").set(true)
+
+    click_on(id: "filter-submit")
+
+    expect(page).to have_selector(".collapseall.collapsed")
+    # provider controls should be visible
+    expect(page).to have_selector("input[name='providers[]'][value='#{provider_id}']")
+    find(:css, ".collapseall").click
+
+    expect(page).to have_selector("input[name='target_groups[]'][value='#{target_group_id}']")
+    # this is necessary for bootstrap animation to finish properly, kind of a hack
+    # possible solution is either to disable animations (might be a good idea)
+    sleep 1
+    # collapse all
+    find(:css, ".collapseall").click
+
+    save_and_open_screenshot
+    expect(page).to_not have_selector("input[name='providers[]'][value='#{provider_id}']")
+    expect(page).to_not have_selector("input[name='target_groups[]'][value='#{target_group_id}']")
+  end
+
   scenario "searching via providers", js: true do
     provider_id = Provider.order(:name).first.id
     visit services_path
