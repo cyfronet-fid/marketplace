@@ -27,6 +27,7 @@ import "./sort_filter"
 import initSorting from "./sort_filter";
 import initFlash from "./flash";
 import initChoises from "./choises";
+import initCookiesPolicy from "./cookies_policy";
 
 
 const application = Application.start();
@@ -44,6 +45,7 @@ document.addEventListener("turbolinks:before-render", function(event) {
 
 document.addEventListener("turbolinks:load", function(event) {
     initChoises();
+    initCookiesPolicy();
 });
 
 /**
@@ -70,4 +72,3 @@ function starsOnClick(node){
         });
     });
 }
-
