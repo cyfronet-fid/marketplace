@@ -6,7 +6,6 @@ class Service < ApplicationRecord
   # scope :search_import working with should_indexe?
   # and define which services are indexed in elasticsearch
   searchkick word_middle: [:title, :tagline, :description], highlight: [:title, :tagline]
-  scope :search_import, -> { where(status: :published) }
 
   # search_data are definition whitch
   # fields are mapped to elasticsearch
@@ -102,6 +101,7 @@ class Service < ApplicationRecord
   validates :helpdesk_url, url: true, if: :helpdesk_url?
   validates :tutorial_url, url: true, if: :tutorial_url?
   validates :logo, blob: { content_type: :image }
+  validate :logo_variable, on: [:create, :update]
   validates :research_areas, presence: true
   validates :providers, presence: true
   validates :status, presence: true
@@ -132,13 +132,14 @@ class Service < ApplicationRecord
     platforms.pluck(:name).include?("EGI Applications on Demand")
   end
 
-  # should_index? define
-  # which records are indexed in elasticsearch
-  def should_index?
-    published?
-  end
-
   private
+    def logo_variable
+      if logo.present? && !logo.variable?
+        errors.add(:logo, "^Sorry, but the logo format you were trying to attach is not supported
+                          in the Marketplace. Please attach the logo in png, gif, jpg, jpeg,
+                          pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon format.")
+      end
+    end
 
     def main_category_missing?
       categorizations.where(main: true).count.zero?

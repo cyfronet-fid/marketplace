@@ -3,12 +3,18 @@
     .row
       .col-7.text-uppercase
         Filters
-      %a.col-5.collapseall.text-right.text-dark{ "data-toggle": "collapse", "data-target": ".panel-collapse.show",
+      :javascript
+        function handleCollapseAll(self) {
+        console.log(self)
+          $(self).toggleClass('collapsed');
+          $(self).hasClass('collapsed') ? $('.panel-collapse').collapse('hide') : $('.panel-collapse').collapse('show');
+        }
+      %a.col-5.collapseall.text-right.text-dark.collapsed{ "data-target": ".panel-collapse",
+      "onclick": "handleCollapseAll(this)",
       "aria-controls": "collapsible" }
-        Collapse All
 
-
-  = form_tag "", method: :get, role: "search", class: "filters", "data-sync-query-form": "data-sync-query-form" do
+  = form_tag "", method: :get, role: "search", class: "filters"  do
+    = hidden_field_tag :q, params[:q] if params[:q].present?
     - @filters.each do |filter|
       = render "services/filters/#{filter.type}", filter: filter
 

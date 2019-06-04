@@ -16,7 +16,7 @@
   .col-md-12.mb-2
     %h1.categories
       - unless params[:q].blank?
-        Looking for: #{CGI.unescape(params[:q])}
+        Looking for: #{params[:q]}
       - else
         = @category&.name || "Services"
     .col-md-12.mb-1
