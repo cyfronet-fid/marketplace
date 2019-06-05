@@ -17,9 +17,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- fixed button dismiss action
 
 ### Security
+
+## [1.11.1] 2019-06-05
+
+### Fixed
+- fixed button dismiss action
 
 ## [1.11.0] 2019-06-04
 
