@@ -67,3 +67,8 @@ crumb :project do |project|
   link project.name, project_path(project)
   parent :projects
 end
+
+crumb :project_edit do |project|
+  link "Edit", edit_project_path(project)
+  parent :project, project
+end

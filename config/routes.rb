@@ -26,7 +26,7 @@ Rails.application.routes.draw do
 
   resources :categories, only: :show
 
-  resources :projects, only: [:index, :show, :new, :create] do
+  resources :projects do
     scope module: :projects do
       resources :about, only: :index
     end

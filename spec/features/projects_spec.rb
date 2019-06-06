@@ -6,42 +6,114 @@ RSpec.feature "Project" do
   include OmniauthHelper
 
   let(:user) { create(:user) }
-  let(:project_create) { double("Project::Create") }
-  before { checkin_sign_in_as(user) }
-  before(:each) {
-    project_create_class_stub = class_double(Project::Create).
-        as_stubbed_const(transfer_nested_constants: true)
-    allow(project_create_class_stub).to receive(:new).and_return(project_create)
-  }
 
-  scenario "I can create new project" do
-    visit projects_path
+  context "As logged in user" do
+    let(:project_create) { double("Project::Create") }
+    before { checkin_sign_in_as(user) }
+    before(:each) {
+      project_create_class_stub = class_double(Project::Create).
+          as_stubbed_const(transfer_nested_constants: true)
+      allow(project_create_class_stub).to receive(:new).and_return(project_create)
+    }
 
-    click_on "Create new project"
+    scenario "I can create new project" do
+      visit projects_path
 
-    expect(project_create).to receive(:call)
+      click_on "Create new project"
 
-    fill_in "Name", with: "First test"
-    fill_in "Reason for access", with: "because I'm testing"
-    select "Single user", from: "Customer typology"
-    expect { click_on "Create" }.
-      to change { user.projects.count }.by(1)
-    new_project = Project.last
+      expect(project_create).to receive(:call)
 
-    expect(new_project.name).to eq("First test")
+      fill_in "Name", with: "First test"
+      fill_in "Reason for access", with: "because I'm testing"
+      select "Single user", from: "Customer typology"
+      expect { click_on "Create" }.
+        to change { user.projects.count }.by(1)
+      new_project = Project.last
+
+      expect(new_project.name).to eq("First test")
+    end
+
+    scenario "After successful creation new project I'm redirected to projects page" do
+      visit projects_path
+
+      click_on "Create new project"
+
+      expect(project_create).to receive(:call)
+
+      fill_in "Name", with: "Second test"
+      fill_in "Reason for access", with: "because I'm testing"
+      select "Single user", from: "Customer typology"
+      click_on "Create"
+
+      expect(current_url).to eq(projects_url)
+    end
+
+    scenario "I can edit project" do
+      project = create(:project, name: "First Project", user: user)
+      visit project_path(project)
+
+      click_on "Edit"
+
+      fill_in "Name", with: "Edited First Project"
+
+      click_on "Update"
+
+      expect(current_url).to eq(project_url(project))
+      expect(page).to have_text(project.name)
+    end
+
+    scenario "I cannot edit invalid project" do
+      project = create(:project, name: "First Project", user: user)
+
+      visit project_path(project)
+
+      click_on "Edit"
+
+      fill_in "Name", with: ""
+
+      click_on "Update"
+
+      expect(page).to have_text("Name can't be blank")
+      expect(page.status_code).to eq(400)
+    end
+
+    scenario "I can delete project without any project_item" do
+      project = create(:project, name: "First Project", user: user)
+
+      visit project_path(project)
+
+      expect { click_on "Delete" }.
+        to change { user.projects.count }.by(-1)
+    end
+
+    scenario "I cannot delete project with project_item" do
+      project = create(:project, name: "First Project", user: user)
+      service = create(:open_access_service)
+      offer = create(:offer, service: service)
+
+      create(:project_item, offer: offer, project: project)
+
+      visit project_path(project)
+
+      click_on "Delete"
+
+      expect(page).to have_content("Projects with pending or active service access request cannot be deleted or archived")
+    end
+
+    scenario "I cannot see not my projects" do
+      project = create(:project)
+
+      visit project_path(project)
+
+      expect(page).to have_text("You are not authorized to see this page")
+    end
   end
 
-  scenario "After successful creation new project I'm redirected to projects page" do
-    visit projects_path
+  context "As anonymous user" do
+    scenario "I cannot visit My projects" do
+      visit root_path
 
-    click_on "Create new project"
-
-    expect(project_create).to receive(:call)
-
-    fill_in "Name", with: "Second test"
-    fill_in "Reason for access", with: "because I'm testing"
-    select "Single user", from: "Customer typology"
-    click_on "Create"
-    expect(current_url).to eq(projects_url)
+      expect(page.body).to have_no_selector("nav", text: "My projects")
+    end
   end
 end

@@ -4,6 +4,12 @@
     %h1.ml-3
       = @project.name
     %p
+      = link_to "Edit", edit_project_path(@project),
+                class: "btn btn-primary btn-sm float-right"
+      = link_to "Delete", project_path(@project),
+                method: :delete,
+                data: { confirm: "Are you sure?" },
+                class: "btn btn-danger btn-sm float-right"
       = link_to projects_url do
         %i.fa.fa-chevron-left
         back to my projects and orders
