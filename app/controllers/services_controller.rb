@@ -19,6 +19,7 @@ class ServicesController < ApplicationController
     @service = Service.
                includes(:offers, related_services: :providers).
                friendly.find(params[:id])
+    authorize @service
     @offers = policy_scope(@service.offers)
     @related_services = @service.related_services
 

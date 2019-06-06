@@ -4,3 +4,7 @@ en:
     affiliation_policy:
       "edit?": "You cannot edit an affiliation which has been activated"
       "destroy?": "You cannot remove an affiliation which has a project item"
+    service_policy:
+      "show?": "This service is not published in the Marketplace yet, therefore it cannot be accessed.
+        If you are the Service Owner or Service Portfolio Manager and wish to manage this service,
+        please log in and go to the Backoffice tab."
