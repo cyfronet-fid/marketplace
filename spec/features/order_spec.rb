@@ -8,7 +8,7 @@ RSpec.feature "Service ordering" do
 
   context "as logged in user" do
     let(:user) do
-      create(:user).tap { |u| create(:project, name: "Services", user: u) }
+      create(:user).tap { |u| create(:project, name: "Services", user: u, reason_for_access: "To pass test") }
     end
     let(:service) { create(:service) }
 
@@ -57,8 +57,6 @@ RSpec.feature "Service ordering" do
       select "Services"
       select affiliation.organization
       select research_area.name, from: "Research area"
-      select "Single user", from: "Customer typology"
-      fill_in "Access reason", with: "To pass test"
       fill_in "Additional information", with: "Additional information test"
 
       click_on "Next", match: :first
@@ -118,8 +116,6 @@ RSpec.feature "Service ordering" do
       select "Services"
       select affiliation.organization
       select research_area.name, from: "Research area"
-      select "Single user", from: "Customer typology"
-      fill_in "Access reason", with: "To pass test"
       fill_in "Additional information", with: "Additional information test"
 
       click_on "Next", match: :first
@@ -256,6 +252,8 @@ RSpec.feature "Service ordering" do
       click_on "Add new project"
       within("#ajax-modal") do
         fill_in "Name", with: "New project"
+        select "Single user", from: "Customer typology"
+        fill_in "Reason for access", with: "Some reason"
       end
       click_on "Create new project"
 
@@ -276,19 +274,20 @@ RSpec.feature "Service ordering" do
       click_on "Add new project"
       within("#ajax-modal") do
         fill_in "Name", with: "New project"
+        fill_in "Reason for access", with: "To pass test"
         select "Representing a private company", from: "Customer typology"
 
         expect(page).to have_field("Company name")
         expect(page).to have_field("Company website url")
 
-        fill_in "Company name", with: "Company name"
+        fill_in "Company name", with: "New company name"
         fill_in "Company website url", with: "https://www.company.name"
         click_on "Create new project"
       end
 
       expect(page).to have_select("project_item_project_id", selected: "New project")
-      expect(page).to have_field("Company name", with: "Company name")
-      expect(page).to have_field("Company website url", with: "https://www.company.name")
+      expect(page).to have_text("New company name")
+      expect(page).to have_text("https://www.company.name")
 
       new_project = Project.all.last
       expect(new_project.name).to eq("New project")
@@ -311,8 +310,6 @@ RSpec.feature "Service ordering" do
       select "Services"
       select affiliation.organization
       select research_area.name, from: "Research area"
-      select "Single user", from: "Customer typology"
-      fill_in "Access reason", with: "To pass test"
 
       click_on "Next", match: :first
 
@@ -337,8 +334,6 @@ RSpec.feature "Service ordering" do
       select "Services"
       select affiliation.organization
       select research_area.name, from: "Research area"
-      select "Single user", from: "Customer typology"
-      fill_in "Access reason", with: "To pass test"
 
       click_on "Next", match: :first
 
@@ -363,8 +358,6 @@ RSpec.feature "Service ordering" do
       select "Services"
       select affiliation.organization
       select research_area.name, from: "Research area"
-      select "Single user", from: "Customer typology"
-      fill_in "Access reason", with: "To pass test"
       click_on "Next", match: :first
 
       # Step 3
