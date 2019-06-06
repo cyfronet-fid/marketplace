@@ -2,6 +2,7 @@
 
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
+  before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
 
   def index
     @projects = policy_scope(Project).order(:name).eager_load(:project_items)
@@ -10,9 +11,6 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id])
-    authorize(@project)
-
     respond_to do |format|
       format.json do
         render status: :ok, json: {
@@ -69,6 +67,25 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def edit
+    @show_as_modal = false
+  end
+
+  def update
+    if Project::Update.new(@project, permitted_attributes(@project)).call
+      redirect_to project_path(@project),
+                  notice: "Project updated correctly"
+    else
+      render :edit, status: :bad_request
+    end
+  end
+
+  def destroy
+    Project::Destroy.new(@project).call
+    redirect_to projects_path,
+                notice: "Project destroyed"
+  end
+
   private
     def filterable?(param)
       (param.present? && ProjectItem.statuses.has_key?(param))
@@ -81,5 +98,10 @@ class ProjectsController < ApplicationController
                 action_btn: "Create new project",
                 form: "projects/form"
               }
+    end
+
+    def find_and_authorize
+      @project = Project.find(params[:id])
+      authorize(@project)
     end
 end
