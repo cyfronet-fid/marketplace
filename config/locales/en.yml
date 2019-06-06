@@ -46,6 +46,11 @@ en:
         cancel: Quit
         configuration: Add to a project
   project:
+    customer_typology:
+      single_user: "Single user"
+      research: "Representing a research community"
+      private_company: "Representing a private company"
+      project: "Representing a project"
     select:
       description: |
         You can organize your services in projects.
@@ -77,4 +82,3 @@ en:
         other: "Found <b>&nbsp;%{count}</b> results"
       multi_page: "%{from} - %{to} of %{count} results"
       multi_page_html: "<b>%{from}&nbsp;-&nbsp;%{to}</b> of <b>%{count}</b> results"
-
