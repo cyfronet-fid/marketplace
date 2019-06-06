@@ -8,7 +8,7 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def show?
-    true
+    record.published?
   end
 
   def order?

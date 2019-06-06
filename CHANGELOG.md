@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Blocked access to the draft service via direct link
 
 ### Security
 
