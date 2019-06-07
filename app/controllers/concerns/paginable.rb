@@ -11,6 +11,6 @@ module Paginable
 
     def per_page
       per_page = params[:per_page].to_i
-      per_page == 0 ? 10 : per_page
+      per_page < 1 ? 10 : per_page
     end
 end

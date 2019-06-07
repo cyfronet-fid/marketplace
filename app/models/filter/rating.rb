@@ -21,7 +21,6 @@ class Filter::Rating < Filter
     end
 
     def where_constraint
-      { @index.to_sym => {gte: value} }
+      { @index.to_sym => { gte: value } }
     end
-
 end

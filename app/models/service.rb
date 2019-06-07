@@ -21,6 +21,7 @@ class Service < ApplicationRecord
       providers: providers.map(&:id),
       platforms: platforms.map(&:id),
       target_groups: target_groups.map(&:id),
+      tags: tag_list
     }
   end
 
