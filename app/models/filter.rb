@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Filter
-  attr_accessor :filter_scope
+  attr_accessor :counters
   attr_reader :title, :field_name, :type, :index
 
   def initialize(params: {}, field_name:, type:, title:, index:)
@@ -45,10 +45,6 @@ class Filter
     end
 
     def where_constraint
-      raise "Need to be implemented in descendent class!!!"
-    end
-
-    def fetch_options
       raise "Need to be implemented in descendent class!!!"
     end
 

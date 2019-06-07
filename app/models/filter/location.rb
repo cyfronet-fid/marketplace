@@ -14,4 +14,8 @@ class Filter::Location < Filter
     def fetch_options
       [{ name: "Any", id: "" }, { name: "EU", id: "EU" }]
     end
+
+    def where_constraint
+      {}  # TODO finish this filter
+    end
 end

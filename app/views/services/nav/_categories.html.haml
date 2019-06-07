@@ -7,10 +7,11 @@
 %h5.text-uppercase.underline-light.mb-2.pb-2 Categories
 %ul.categories-list
   - view = content_for(:category_view) || "services/nav/category"
-  - categories.each do |id, category|
+  - categories.each do |cid, category|
     = render view, category: category[:category], current: current, counter: category[:counter]
-    - if current == category && !subcategories.empty?
+    - if current == category[:category] && !subcategories.empty?
       %ul.ml-3
-        = render partial: view, collection: subcategories, as: :category
+        - subcategories.each do |sid, subcategory|
+          = render view, category: subcategory[:category], current: current, counter: subcategory[:counter]
 
 = yield :test
