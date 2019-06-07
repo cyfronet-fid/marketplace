@@ -5,9 +5,6 @@ export default class extends Controller {
 
   connect(){}
 
-  initialize(){
-    let url = new URL(window.location.href)
-    if(url.searchParams.has("q") && !url.searchParams.has("sort"))
-      this.selectTarget.value = "_score"
-  }
+  initialize(){}
+
 }

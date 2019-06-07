@@ -31,5 +31,10 @@ FactoryBot.define do
     sequence(:status) { :published }
 
     upstream { nil }
+
+    after(:create) do |service, _evaluator|
+      service.reindex(refresh: true)
+    end
+
   end
 end

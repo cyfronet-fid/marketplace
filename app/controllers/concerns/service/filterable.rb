@@ -22,12 +22,9 @@ module Service::Filterable
     end
 
     def filters
-      if (@all_filters.nil?)
-        @all_filters = filter_classes.
-            map { |f| f.new(params: params) }
-        @all_filters.each { |f| f.filter_scope = search_for_filters(scope, @all_filters, f) }
-      end
-      @all_filters
+        @all_filters ||= filter_classes.
+            map { |f| f.new(params: params) }.
+            tap { |all| all.each { |f| f.counters = filter_counters(scope, all, f) }}
     end
 
     def active_filters
@@ -40,8 +37,7 @@ module Service::Filterable
         Filter::Provider,
         Filter::TargetGroup,
         Filter::Platform,
-        Filter::Rating,
-        Filter::Location,
+        Filter::Rating, Filter::Location,
         Filter::Tag
       ]
     end

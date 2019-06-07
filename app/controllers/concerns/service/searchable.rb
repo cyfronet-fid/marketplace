@@ -6,6 +6,7 @@ module Service::Searchable
   included do
     include Paginable
     include Service::Sortable
+    include Service::Categorable
   end
 
   def search(search_scope, filters)
@@ -68,17 +69,35 @@ module Service::Searchable
           scope_results: ->(r) { r.includes(:research_areas, :providers, :target_groups).with_attached_logo }
       ]
     end
+  end
 
-    def id_constr(search_scope, constr = {})
-      constr.merge!({ id: search_scope.ids })
+  def category_counters(search_scope, filters)
+    services = search_for_categories(search_scope, filters)
+    counters = services.aggregations["categories"]["categories"]["buckets"].
+        inject({}){ |h, e| h[e["key"]]=e["doc_count"]; h}
+    counters.tap { |c| c[nil] = services.aggregations["categories"]["doc_count"] }
+  end
+
+  private
+
+    def query_present?
+      params[:q].present?
+    end
+
+    def query
+      query_present? ? params[:q] : "*"
+    end
+
+    def scope_constr(search_scope, constr = {})
+      constr.tap { |c| c[:id] = search_scope.ids.uniq }
     end
 
     def category_constr(constr = {})
-      constr.tap { |c| c[:categories] = category.id unless category.nil? }
+      constr.tap { |c| c[:categories] = category.descendant_ids + [category.id] unless category.nil? }
     end
 
     def filter_constr(filters, constr = {})
-      filters.reduce(constr) { |h, f| h.merge(f.constraint) }
+      filters.reduce(constr) { |c, f| c.merge(f.constraint) }
     end
 
     def highlights(from_search)

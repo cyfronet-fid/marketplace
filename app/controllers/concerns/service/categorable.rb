@@ -11,35 +11,38 @@ module Service::Categorable
   private
     def init_categories_tree
       @siblings = siblings
-      @subcategories = category&.children&.order(:name)
+      @subcategories = subcategories
       @siblings_with_counters = siblings_with_counters
+      @subcategories_with_counters = subcategories_with_counters
+      @services_total ||= counters[nil]
     end
 
     def category
       @category ||= Category.friendly.find(params[:category_id]) if params[:category_id]
     end
 
-    def category_and_descendant_ids
-      [category] + category.descendant_ids
+    def siblings
+      category&.ancestry.nil? ? @root_categories : category.siblings.order(:name)
     end
 
-    def siblings
-      category&.ancestry.nil? ? @root_categories : category.parent.children.order(:name)
+    def subcategories
+      category&.children&.order(:name)
     end
 
     def siblings_with_counters
-      siblings.inject({}) { |h, cat| h[cat.id] = {category: cat, counter: counters[cat.id] || 0}; h}
+      siblings.inject({}) { |h, cat| h[cat.id] = {category: cat, counter: count_services(cat)}; h}
     end
 
-    def categories_scope
-      @categories_scope ||= search_for_categories(scope, filters)
+    def subcategories_with_counters
+      subcategories&.inject({}) { |h, cat| h[cat.id] = {category: cat, counter: count_services(cat)}; h}
+    end
+
+    def count_services(category)
+      (counters[category.id] || 0) + category.descendants.reduce(0) { |p, c| p + (counters[c.id] || 0) }
     end
 
     def counters
-      @counters ||= categories_scope.aggregations["categories"]["categories"]["buckets"].
-          inject({}){ |h, e| h[e["key"]]=e["doc_count"]; h}
-      @services_total ||= categories_scope.aggregations["categories"]["doc_count"]
-      @counters
+      @counters ||= category_counters(scope, filters)
     end
 
 end

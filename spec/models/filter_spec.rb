@@ -7,7 +7,7 @@ RSpec.describe Filter do
     def initialize(params = {})
       super(params: params.fetch(:params, {}),
             field_name: "my_filter", type: :select,
-            title: "My Filter")
+            title: "My Filter", index: "test")
     end
 
     protected
@@ -20,8 +20,8 @@ RSpec.describe Filter do
         end
       end
 
-      def do_call(services)
-        services.select { |s| s == value }
+      def where_constraint
+        { key: :value }
       end
   end
 
@@ -41,17 +41,17 @@ RSpec.describe Filter do
     end
   end
 
-  context "#call" do
+  context "#constraints" do
     it "is invoked when filter is active" do
       filter = MyFilter.new(params: { "my_filter" => "s2" })
 
-      expect(filter.call(["s1", "s2"])).to contain_exactly("s2")
+      expect(filter.constraint).to eq({ key: :value })
     end
 
     it "returns all records when filter is not active" do
       filter = MyFilter.new
 
-      expect(filter.call(["s1", "s2"])).to eq(["s1", "s2"])
+      expect(filter.constraint).to eq({})
     end
   end
 

@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 class Filter::Tag < Filter
-  #   TODO finish this filter
 
   def initialize(params = {})
     super(params: params.fetch(:params, {}),
           field_name: "tag", type: :select,
-          title: "Tags", index: nil)
+          title: "Tags", index: "tags")
   end
 
   def visible?
@@ -21,8 +20,8 @@ class Filter::Tag < Filter
         sort { |x, y| x[:name] <=> y[:name] }
     end
 
-    # def do_call(services)
-    #   services.tagged_with(value)
-    # end
+    def where_constraint
+      { @index.to_sym => values }
+    end
 
 end

@@ -11,10 +11,8 @@ class Filter::Multiselect < Filter
   protected
 
     def fetch_options
-      counters = @filter_scope.aggregations[@index][@index]["buckets"].
-          inject({}){ |h, e| h[e["key"]] = e["doc_count"]; h}
       @model.distinct
-          .map { |e| {name: e.name, id: e.id, count: counters[e.id] || 0} }
+          .map { |e| {name: e.name, id: e.id, count: @counters[e.id] || 0} }
           .sort_by!{ |e| [-e[:count], e[:name] ] }
     end
 

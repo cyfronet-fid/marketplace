@@ -8,12 +8,12 @@
 
     .input-group
       %label.sr-only{ for: "search" } Search
+      = hidden_field_tag "sort", "_score"
       = text_field_tag :q, params[:q], class: "autocomplete-input form-control w-50",
                                        placeholder: "Find service...",
                                        "data-target": "autocomplete.input",
                                        "data-toggle": "dropdown"
-
-      = hidden_field "service_id", nil, "data-target": "autocomplete.hidden"
+      = hidden_field_tag "service_id", nil, "data-target": "autocomplete.hidden"
       %select#category-select.custom-select.rounded-0{ "data-action": "change->search#refresh",
                                                        "data-target": "search.categorySelect" }
         %option{ value: "", selected: "selected" }

@@ -12,6 +12,9 @@ RSpec.describe Filter::ResearchArea do
       create(:service, research_areas: [child1, child2])
       create(:service, research_areas: [child2])
 
+      counters = { root.id => 3, child1.id => 1, child2.id => 2 }
+      subject.counters = counters
+
       options = subject.options
 
       expect(options.count).to eq(1)
@@ -26,7 +29,7 @@ RSpec.describe Filter::ResearchArea do
         { name: child2.name, id: child2.id, count: 2, children: [] })
     end
   end
-  context "#call" do
+  context "#constraint" do
     it "use parent and all children when parent is selected" do
       parent = create(:research_area)
       child = create(:research_area, parent: parent)
@@ -34,10 +37,10 @@ RSpec.describe Filter::ResearchArea do
       child_research_area_service = create(:service, research_areas: [child])
       create(:service)
 
-      filter = described_class.new(params: { "research_areas" => [parent.id.to_s] })
+      filter = described_class.new(params: { "research_areas" => [child.id.to_s] })
 
-      expect(filter.call(Service.all)).
-        to contain_exactly(service, child_research_area_service)
+      expect(filter.constraint).
+         to eq({research_areas: [child.id]})
     end
 
     it "use only parent and selected children when parent and children is selected" do
@@ -49,8 +52,8 @@ RSpec.describe Filter::ResearchArea do
 
       filter = described_class.new(params: { "research_areas" => [parent.id.to_s, child1.id.to_s] })
 
-      expect(filter.call(Service.all)).
-        to contain_exactly(service, child_research_area_service)
+      expect(filter.constraint).
+          to eq({research_areas: [parent.id, child1.id]})
     end
   end
 end
