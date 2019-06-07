@@ -33,27 +33,23 @@ RSpec.describe Filter::ResearchArea do
     it "use parent and all children when parent is selected" do
       parent = create(:research_area)
       child = create(:research_area, parent: parent)
-      service = create(:service, research_areas: [parent])
-      child_research_area_service = create(:service, research_areas: [child])
       create(:service)
 
       filter = described_class.new(params: { "research_areas" => [child.id.to_s] })
 
       expect(filter.constraint).
-         to eq({research_areas: [child.id]})
+         to eq(research_areas: [child.id])
     end
 
     it "use only parent and selected children when parent and children is selected" do
       parent = create(:research_area)
       child1, child2 = create_list(:research_area, 2, parent: parent)
-      service = create(:service, research_areas: [parent])
-      child_research_area_service = create(:service, research_areas: [child1])
       create(:service, research_areas: [child2])
 
       filter = described_class.new(params: { "research_areas" => [parent.id.to_s, child1.id.to_s] })
 
       expect(filter.constraint).
-          to eq({research_areas: [parent.id, child1.id]})
+          to eq(research_areas: [parent.id, child1.id])
     end
   end
 end

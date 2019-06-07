@@ -9,7 +9,7 @@ RSpec.describe Filter::Provider do
     let!(:service1)  { create(:service, providers: [provider1]) }
     let!(:service2)  { create(:service, providers: [provider1, provider2]) }
     let!(:category)  { create(:category, services: [service1]) }
-    let!(:counters) { {provider1.id => 2, provider2.id => 1} }
+    let!(:counters) { { provider1.id => 2, provider2.id => 1 } }
 
     it "returns all providers with services count if no category is specified" do
       filter = described_class.new
@@ -20,5 +20,4 @@ RSpec.describe Filter::Provider do
                            { name: provider2.name, id: provider2.id, count: 1 })
     end
   end
-
 end

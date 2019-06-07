@@ -22,9 +22,9 @@ module Service::Filterable
     end
 
     def filters
-        @all_filters ||= filter_classes.
-            map { |f| f.new(params: params) }.
-            tap { |all| all.each { |f| f.counters = filter_counters(scope, all, f) }}
+      @all_filters ||= filter_classes.
+        map { |f| f.new(params: params) }.
+        tap { |all| all.each { |f| f.counters = filter_counters(scope, all, f) } }
     end
 
     def active_filters
@@ -41,5 +41,4 @@ module Service::Filterable
         Filter::Tag
       ]
     end
-
 end

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Filter::Tag < Filter
-
   def initialize(params = {})
     super(params: params.fetch(:params, {}),
           field_name: "tag", type: :select,
@@ -23,5 +22,4 @@ class Filter::Tag < Filter
     def where_constraint
       { @index.to_sym => values }
     end
-
 end

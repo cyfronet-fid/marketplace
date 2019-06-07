@@ -45,7 +45,7 @@ RSpec.describe Filter do
     it "is invoked when filter is active" do
       filter = MyFilter.new(params: { "my_filter" => "s2" })
 
-      expect(filter.constraint).to eq({ key: :value })
+      expect(filter.constraint).to eq(key: :value)
     end
 
     it "returns all records when filter is not active" do

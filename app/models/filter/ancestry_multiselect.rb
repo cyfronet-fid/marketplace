@@ -22,7 +22,7 @@ class Filter::AncestryMultiselect < Filter
           count: @counters[record.id] || 0,
           children: create_ancestry_tree(children)
         }
-      end.sort_by!{ |e| [-e[:count], e[:name] ] }
+      end.sort_by! { |e| [-e[:count], e[:name] ] }
     end
 
     def children_services(arranged)

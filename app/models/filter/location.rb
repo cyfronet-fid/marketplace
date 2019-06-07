@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Filter::Location < Filter
-
   #   TODO finish this filter
 
   def initialize(params = {})
@@ -19,6 +18,4 @@ class Filter::Location < Filter
     def where_constraint
       {}  # TODO finish this filter
     end
-
-
 end

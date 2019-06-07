@@ -14,5 +14,4 @@ RSpec.describe Filter::Tag do
                                                 { name: "tag3", id: "tag3" })
     end
   end
-
 end

@@ -30,11 +30,11 @@ module Service::Categorable
     end
 
     def siblings_with_counters
-      siblings.inject({}) { |h, cat| h[cat.id] = {category: cat, counter: count_services(cat)}; h}
+      siblings.inject({}) { |h, cat| h[cat.id] = { category: cat, counter: count_services(cat) }; h }
     end
 
     def subcategories_with_counters
-      subcategories&.inject({}) { |h, cat| h[cat.id] = {category: cat, counter: count_services(cat)}; h}
+      subcategories&.inject({}) { |h, cat| h[cat.id] = { category: cat, counter: count_services(cat) }; h }
     end
 
     def count_services(category)
@@ -44,5 +44,4 @@ module Service::Categorable
     def counters
       @counters ||= category_counters(scope, filters)
     end
-
 end

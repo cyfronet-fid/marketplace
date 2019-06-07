@@ -9,7 +9,7 @@ RSpec.describe Filter::Platform do
     let!(:service1)  { create(:service, platforms: [platform1]) }
     let!(:service2)  { create(:service, platforms: [platform1, platform2]) }
     let!(:category)  { create(:category, services: [service1]) }
-    let!(:counters) { {platform1.id => 2, platform2.id => 1} }
+    let!(:counters) { { platform1.id => 2, platform2.id => 1 } }
 
     it "returns all platforms with services count if no category is specified" do
       filter = described_class.new
@@ -19,5 +19,4 @@ RSpec.describe Filter::Platform do
                            { name: platform2.name, id: platform2.id, count: 1 })
     end
   end
-
 end

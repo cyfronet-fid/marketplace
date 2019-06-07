@@ -35,6 +35,5 @@ FactoryBot.define do
     after(:create) do |service, _evaluator|
       service.reindex(refresh: true)
     end
-
   end
 end
