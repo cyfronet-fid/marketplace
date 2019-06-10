@@ -9,51 +9,43 @@ module Service::Searchable
     include Service::Categorable
   end
 
-  def search(search_scope, filters)
-    Service.search(query,
-                   fields: [ "title^7", "tagline^3", "description"],
-                   operator: "or",
-                   match: :word_middle,
-                   where: filter_constr(filters, scope_constr(search_scope, category_constr())),
-                   page: params[:page],
-                   per_page: per_page,
-                   order: ordering,
-                   highlight: { fields: [:title], tag: "<b>" },
-                   scope_results: ->(r) { r.includes(:research_areas, :providers, :target_groups).with_attached_logo })
+  def search(scope, filters)
+    Service.search(query, common_params.
+        merge(where: filter_constr(filters, scope_constr(scope, category_constr)),
+             page: params[:page],
+             per_page: per_page,
+             order: ordering,
+             highlight: { fields: [:title], tag: "<b>" },
+             scope_results: ->(r) { r.includes(:research_areas, :providers, :target_groups).with_attached_logo }))
   end
 
-  def search_for_filters(search_scope, filters, current_filter)
-    Service.search(query,
-                   fields: [ "title^7", "tagline^3", "description"],
-                   operator: "or",
-                   match: :word_middle,
-                   where: filter_constr(filters.reject {|f| f == current_filter}, scope_constr(search_scope, category_constr())),
-                   aggs: (!current_filter.index.blank? ? [current_filter.index] : []),
-                   load: false)
+  def search_for_filters(scope, filters, current_filter)
+    filters = filters - [current_filter]
+    Service.search(query, common_params.
+        merge(where: filter_constr(filters, scope_constr(scope, category_constr)),
+              aggs: [current_filter.index],
+              load: false))
   end
 
-  def search_for_categories(search_scope, filters)
-    Service.search(query,
-                   fields: [ "title^7", "tagline^3", "description"],
-                   operator: "or",
-                   match: :word_middle,
-                   where: filter_constr(filters, scope_constr(search_scope)),
-                   aggs: [:categories],
-                   load: false)
+  def search_for_categories(scope, filters)
+    Service.search(query, common_params.
+        merge(where: filter_constr(filters, scope_constr(scope)),
+              aggs: [:categories],
+              load: false))
   end
 
-  def filter_counters(search_scope, filters, current_filter)
+  def filter_counters(scope, filters, current_filter)
     {}.tap do |hash|
       unless current_filter.index.blank?
-        services = search_for_filters(search_scope, filters, current_filter)
+        services = search_for_filters(scope, filters, current_filter)
         services.aggregations[current_filter.index][current_filter.index]["buckets"].
-            inject(hash){ |h, e| h[e["key"]] = e["doc_count"]; h}
+            inject(hash) { |h, e| h[e["key"]] = e["doc_count"]; h }
       end
     end
   end
 
-  def category_counters(search_scope, filters)
-    services = search_for_categories(search_scope, filters)
+  def category_counters(scope, filters)
+    services = search_for_categories(scope, filters)
     counters = services.aggregations["categories"]["categories"]["buckets"].
         inject({}) { |h, e| h[e["key"]] = e["doc_count"]; h }
     counters.tap { |c| c[nil] = services.aggregations["categories"]["doc_count"] }
@@ -69,8 +61,16 @@ module Service::Searchable
       query_present? ? params[:q] : "*"
     end
 
-    def scope_constr(search_scope, constr = {})
-      constr.tap { |c| c[:id] = search_scope.ids.uniq }
+    def common_params
+      {
+          fields: [ "title^7", "tagline^3", "description"],
+          operator: "or",
+          match: :word_middle
+      }
+    end
+
+    def scope_constr(scope, constr = {})
+      constr.tap { |c| c[:id] = scope.ids.uniq }
     end
 
     def category_constr(constr = {})
