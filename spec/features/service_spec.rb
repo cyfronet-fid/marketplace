@@ -345,7 +345,6 @@ RSpec.feature "Service filtering and sorting" do
     # collapse all
     find(:css, ".collapseall").click
 
-    save_and_open_screenshot
     expect(page).to_not have_selector("input[name='providers[]'][value='#{provider_id}']")
     expect(page).to_not have_selector("input[name='target_groups[]'][value='#{target_group_id}']")
   end
@@ -362,8 +361,6 @@ RSpec.feature "Service filtering and sorting" do
   end
 
   scenario "searching via rating", js: true do
-    pending "Temporary rating filter was removed from the view, see #858"
-
     visit services_path
 
     find(:css, "a[href=\"#collapse_rating\"][role=\"button\"] h6").click

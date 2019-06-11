@@ -27,7 +27,7 @@ module Service::Searchable
                    fields: [ "title^7", "tagline^3", "description"],
                    operator: "or",
                    match: :word_middle,
-                   where: filter_constr(filters.reject {|f| f == current_filter}, scope_constr(search_scope, category_constr())),
+                   where: filter_constr(filters.reject { |f| f == current_filter }, scope_constr(search_scope, category_constr())),
                    aggs: (!current_filter.index.blank? ? [current_filter.index] : []),
                    load: false)
   end
@@ -47,7 +47,7 @@ module Service::Searchable
       unless current_filter.index.blank?
         services = search_for_filters(search_scope, filters, current_filter)
         services.aggregations[current_filter.index][current_filter.index]["buckets"].
-            inject(hash){ |h, e| h[e["key"]] = e["doc_count"]; h}
+            inject(hash) { |h, e| h[e["key"]] = e["doc_count"]; h }
       end
     end
   end
