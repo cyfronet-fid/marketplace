@@ -51,6 +51,7 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.html do
         if @project.save
+          Project::Create.new(@project).call
           redirect_to projects_path
         else
           render :new, status: :bad_request

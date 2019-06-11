@@ -18,7 +18,6 @@ class Project < ApplicationRecord
 
   enum customer_typology: CUSTOMER_TYPOLOGIES
   enum issue_status: ISSUE_STATUSES
-  enum customer_typology: ProjectItem::CUSTOMER_TYPOLOGIES
 
   belongs_to :user
   has_many :project_items, dependent: :destroy

@@ -14,7 +14,7 @@ class Project::Register
   private
     def register_in_jira!
       client = Jira::Client.new
-      @project.save
+      @project.save!
 
       begin
         issue = client.create_project_issue(@project)
