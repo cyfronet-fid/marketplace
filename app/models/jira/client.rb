@@ -192,10 +192,10 @@ private
       else
         nil
       end
-    when "CP-ReasonForAccess"
-      project.reason_for_access
-    when "CP-ProjectInformation"
-      project.name
+    # when "CP-ReasonForAccess"
+    #   project.reason_for_access
+    # when "CP-ProjectInformation"
+    #   project.name
     when "CP-UserGroupName"
       project.user_group_name
     when "SO-ProjectName"
@@ -220,8 +220,6 @@ private
       { "id" => @jira_config["custom_fields"]["select_values"]["CP-INeedAVoucher"][project_item.request_voucher] }
     when "CP-VoucherID"
       project_item.voucher_id || nil
-    when "CP-ReasonForAccess"
-      project_item.access_reason
     when "CP-ScientificDiscipline"
       project_item.research_area&.name
     when "SO-1"

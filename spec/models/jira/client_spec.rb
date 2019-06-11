@@ -34,7 +34,7 @@ describe Jira::Client do
                                                                         title: "s1",
                                                                         categories: [create(:category, name: "cat1")])),
                           project: create(:project, user: user, name: "My Secret Project",
-                                          user_group_name: "New user group", reason_for_access: "Some reason"),
+                                          user_group_name: "New user group", reason_for_access: "some reason"),
                           research_area: create(:research_area, name: "My RA"),
                           properties: [
             {
@@ -70,7 +70,6 @@ describe Jira::Client do
                        # "CI-EOSC-UniqueID-1" => "uid1",
                        # "CI-Institution-1" => "organization 1",
                        "Epic Link-1" => "MP-1",
-                       "CP-ReasonForAccess-1" => "some reason",
                        "CP-Platforms-1" => "",
                        "CP-INeedAVoucher-1" => { "id" => "20004" },
                        "CP-VoucherID-1" => "",
@@ -260,8 +259,8 @@ describe Jira::Client do
                         "CP-CustomerTypology-1" => { "id" => "20001" },
                         "SO-ProjectName-1" => "My Secret Project (#{project.id})",
                         "CP-UserGroupName-1" => "User Group Name 1",
-                        "CP-ReasonForAccess-1" => "some reason",
-                        "CP-ProjectInformation-1" => "My Secret Project",
+                          # "CP-ReasonForAccess-1" => "some reason",
+                          # "CP-ProjectInformation-1" => "My Secret Project",
                         }
 
     issue = double(:Issue)
