@@ -97,6 +97,21 @@ RSpec.describe ProjectItem::Ready do
         expect(ActionMailer::Base.deliveries.last.subject).to_not start_with("[ProjectItem #")
       end
     end
+
+    context "no project issue set" do
+      let(:project_register_service) { double("Project:Register") }
+      before(:each) {
+        project_register_class_stub = class_double(Project::Register).
+            as_stubbed_const(transfer_nested_constants: true)
+        allow(project_register_class_stub).to receive(:new).and_return(project_register_service)
+      }
+
+      it "should call Project::Register" do
+        project_item.project.jira_uninitialized!
+        expect(project_register_service).to receive(:call)
+        described_class.new(project_item).call
+      end
+    end
   end
 
   context "(JIRA raises Errors)" do

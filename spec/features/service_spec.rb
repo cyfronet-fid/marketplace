@@ -355,12 +355,12 @@ RSpec.feature "Service filtering and sorting" do
   scenario "searching via providers", js: true do
     provider_id = Provider.order(:name).first.id
     visit services_path
-    find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
+    find(:css, ".collapseall").click
+    sleep(1)
     find(:css, "input[name='providers[]'][value='#{provider_id}']").set(true)
     click_on(id: "filter-submit")
-
-    expect(page).to have_selector(".media", count: 1)
     expect(page).to have_selector("input[name='providers[]'][value='#{provider_id}'][checked]")
+    expect(page).to have_selector(".media", count: Provider.order(:name).first.services.count)
   end
 
   scenario "searching via rating", js: true do
