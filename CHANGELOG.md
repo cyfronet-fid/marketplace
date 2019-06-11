@@ -12,11 +12,17 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 
+- Reimplemented filters and categories after creating indexes in Elasticsearch (@bwilk) 
+
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+
+- Category and filter counters (@bwilk)
+- Hierarchical filters deactivation buttons (@bwilk)
+- Choice of "best match" sorting strategy after search (@bwilk)
 
 ### Security
 
