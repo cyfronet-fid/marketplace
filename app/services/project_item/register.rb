@@ -26,9 +26,9 @@ class ProjectItem::Register
         @project_item.update_attributes(issue_id: issue.id, issue_status: :jira_active)
         @project_item.save
         true
-        rescue Jira::Client::JIRAIssueCreateError => e
-          @project_item.jira_errored!
-          raise e
+      rescue Jira::Client::JIRAIssueCreateError => e
+        @project_item.jira_errored!
+        raise e
       end
     end
 
