@@ -21,6 +21,16 @@ RSpec.feature "Service browsing" do
       expect(body).to have_content "my-tag"
     end
 
+    scenario "not allows to see draft service via direct link for default user" do
+      service = create(:service, status: :draft)
+      visit service_path(service)
+
+      expect(page).to have_content("This service is not published in the Marketplace yet, " +
+      "therefore it cannot be accessed. If you are the Service Owner or Service Portfolio Manager and wish " +
+      "to manage this service, please log in and go to the Backoffice tab.")
+      expect(current_path).to eq(root_path)
+    end
+
     scenario "I see Ask Question" do
       service = create(:service)
 
