@@ -458,6 +458,19 @@ RSpec.feature "Service filtering and sorting" do
 
     expect(page).to have_selector("li.dropdown-item[role='option']:not([style*=\"display: none\"]", count: 3)
   end
+
+  scenario "redirect when selecting service_id by autocomplete controller", js: true, search: true do
+    service = Service.first
+    fill_in "q", with: service.title
+    find(:css, "li.dropdown-item[id='-option-0']").click
+    expect(current_path).to eq(service_path(service))
+  end
+
+  scenario "redirect when selecting service_id by autocomplete controller", js: true, search: true do
+    service = Service.first
+    visit services_path(service_id: service.id)
+    expect(current_path).to eq(service_path(service))
+  end
 end
 
 
