@@ -7,6 +7,9 @@ class ServicesController < ApplicationController
   include Service::Autocomplete
 
   def index
+    if params["service_id"].present?
+      redirect_to Service.find(params["service_id"])
+    end
     filtered = filter(scope)
     from_category = category_records(filtered)
     from_search = search(from_category)

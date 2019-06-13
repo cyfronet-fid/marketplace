@@ -12,6 +12,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 
+- Redirection to a service upon choice made by autocomplete in search bar (@bwilk)
+
 ### Deprecated
 
 ### Removed
