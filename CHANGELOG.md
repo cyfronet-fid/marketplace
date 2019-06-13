@@ -25,6 +25,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Category and filter counters (@bwilk)
 - Hierarchical filters deactivation buttons (@bwilk)
 - Choice of "best match" sorting strategy after search (@bwilk)
+- Maintaining sort order when filters are applied (@bwilk)
 
 ### Security
 
