@@ -15,7 +15,7 @@ module Service::Sortable
     def ordering
       {}.tap do |sort_options|
         sort_key = params[:sort]
-        unless params[:sort].blank?
+        unless sort_key.blank?
           if sort_key == "_score"
             return
           else
