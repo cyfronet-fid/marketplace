@@ -48,9 +48,12 @@ RSpec.feature "Service filtering" do
     expect(page).to have_selector(".media", count: 2)
 
     visit services_path(tag: ["a", "b"])
-    expect(page).to have_selector(".media", count: 1)
+    expect(page).to have_selector(".media", count: 2)
 
     visit services_path(tag: ["a", "b", "c"])
+    expect(page).to have_selector(".media", count: 3)
+
+    visit services_path(tag: ["d"])
     expect(page).to have_selector(".media", count: 0)
   end
 end

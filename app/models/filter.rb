@@ -1,21 +1,19 @@
 # frozen_string_literal: true
 
 class Filter
-  attr_reader :title, :field_name, :type
+  attr_accessor :counters
+  attr_reader :title, :field_name, :type, :index
 
-  def initialize(params: {}, field_name:, type:, title:)
+  def initialize(params: {}, field_name:, type:, title:, index:)
     @params = params
     @field_name = field_name
     @title = title
     @type = type
+    @index = index
   end
 
   def options
     @options ||= fetch_options
-  end
-
-  def call(services)
-    active? ? do_call(services) : services
   end
 
   def active_filters
@@ -36,13 +34,17 @@ class Filter
     (value.is_a?(Array) ? value : [value]).reject(&:blank?)
   end
 
+  def constraint
+    active? ? where_constraint : {}
+  end
+
   protected
 
     def fetch_options
       raise "Need to be implemented in descendent class!!!"
     end
 
-    def do_call(services)
+    def where_constraint
       raise "Need to be implemented in descendent class!!!"
     end
 
