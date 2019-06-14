@@ -1,6 +1,8 @@
 en:
   pundit:
     default: "You are not authorized to see this page"
+    project_policy:
+      "destroy?": "Projects with pending or active service access request cannot be deleted or archived"
     affiliation_policy:
       "edit?": "You cannot edit an affiliation which has been activated"
       "destroy?": "You cannot remove an affiliation which has a project item"

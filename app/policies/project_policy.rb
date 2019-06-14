@@ -8,7 +8,19 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def show?
-    record.user == user
+    owner?
+  end
+
+  def edit?
+    owner?
+  end
+
+  def update?
+    owner?
+  end
+
+  def destroy?
+    owner? && !has_project_item?
   end
 
   def permitted_attributes
@@ -17,4 +29,13 @@ class ProjectPolicy < ApplicationPolicy
      :project_name, :project_website_url,
      :company_name, :company_website_url]
   end
+
+  private
+    def owner?
+      record.user == user
+    end
+
+    def has_project_item?
+      record.project_items.count.positive?
+    end
 end
