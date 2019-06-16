@@ -1,6 +1,4 @@
 header {
-
-
   .input-group {
     &:focus {
       box-shadow: 0 0 3px $secondary;
@@ -113,11 +111,25 @@ header {
   }
 }
 
+
+.search-box {
+  position: relative;
+}
+
 .search-box .form-control,
 .search-box select,
 .search-box button {
   border: 1px solid $palette-solid-50;
 }
+
+.search-clear {
+  margin-left: -23px;
+  z-index: 99;
+  margin-right: 13px;
+  padding-top: 9px;
+  color: $palette-black;
+}
+
 
 .autocomplete-results {
   min-width: 375px;
