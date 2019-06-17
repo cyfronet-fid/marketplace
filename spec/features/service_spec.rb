@@ -232,6 +232,15 @@ RSpec.feature "Service filtering and sorting" do
     sleep(1)
   end
 
+  scenario "clear search visible" do
+    visit services_path(q: "DDDD Something")
+    expect(page).to have_css(".categories", text: "Looking for: DDDD Something")
+    expect(page).to have_selector(".search-clear")
+    find(:css, ".search-clear").click
+    expect(page).to have_css(".categories", text: "Services")
+    expect(page).not_to have_selector(".search-clear")
+  end
+
   scenario "searching in top bar will preserve existing query params", js: true, search: true do
     visit services_path(sort: "title")
 
