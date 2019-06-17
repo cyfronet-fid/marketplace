@@ -15,7 +15,13 @@ class Service < ApplicationRecord
       tagline: tagline,
       description: description,
       status: status,
-      rating: rating
+      rating: rating,
+      categories: categories.map(&:id),
+      research_areas: research_areas.map(&:id),
+      providers: providers.map(&:id),
+      platforms: platforms.map(&:id),
+      target_groups: target_groups.map(&:id),
+      tags: tag_list
     }
   end
 

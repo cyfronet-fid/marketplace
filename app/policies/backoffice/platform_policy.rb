@@ -38,6 +38,6 @@ class Backoffice::PlatformPolicy < ApplicationPolicy
   private
 
     def service_portfolio_manager?
-      user.service_portfolio_manager?
+      user&.service_portfolio_manager?
     end
 end

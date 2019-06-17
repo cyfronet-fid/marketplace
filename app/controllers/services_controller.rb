@@ -7,18 +7,18 @@ class ServicesController < ApplicationController
   include Service::Autocomplete
 
   def index
-    filtered = filter(scope)
-    from_category = category_records(filtered)
-    from_search = search(from_category)
-
-    @services = from_search
-    @highlights = highlights(from_search)
+    if params["service_id"].present?
+      redirect_to Service.find(params["service_id"])
+    end
+    @services = search_and_filter(scope)
+    @highlights = highlights(@services)
   end
 
   def show
     @service = Service.
                includes(:offers, related_services: :providers).
                friendly.find(params[:id])
+    authorize @service
     @offers = policy_scope(@service.offers)
     @related_services = @service.related_services
 

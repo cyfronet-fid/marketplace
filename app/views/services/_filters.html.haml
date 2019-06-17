@@ -15,6 +15,7 @@
 
   = form_tag "", method: :get, role: "search", class: "filters"  do
     = hidden_field_tag :q, params[:q] if params[:q].present?
+    = hidden_field_tag :sort, params[:sort] if params[:sort].present?
     - @filters.each do |filter|
       = render "services/filters/#{filter.type}", filter: filter
 

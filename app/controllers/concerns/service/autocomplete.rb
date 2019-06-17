@@ -21,7 +21,7 @@ module Service::Autocomplete
 
   private
     def generate_html(query)
-      html_results = query.highlights.map.with_index { |s, i| "<li class=\"dropdown-item\" role=\"option\" data-autocomplete-value=\"#{i}\">#{s[:title]}</li>" }.join
+      html_results = query.with_highlights.map { |s, h| "<li class=\"dropdown-item\" role=\"option\" data-autocomplete-value=\"#{s[:id]}\">#{h[:title]}</li>" }.join
 
       respond_to do |format|
         format.html do
