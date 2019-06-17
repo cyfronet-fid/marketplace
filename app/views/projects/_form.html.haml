@@ -1,9 +1,10 @@
 = simple_form_for @project, remote: @show_as_modal,
   html: { role: "form", id: "modal-form", "data-controller" => "project" } do |f|
-  = f.input :name
-  = f.input :reason_for_access
+  = f.input :name, label: "Project name"
+  = f.input :reason_for_access, label: "Reason to request access to the EOSC services"
   = f.input :customer_typology, collection: Project.customer_typologies.keys.map(&:to_sym),
     input_html: { "data-target" => "project.customer",
                   "data-action" => "change->project#showSelectedSection" }
-
   = render "customer_typology_fields", f: f
+  = f.input :additional_information
+

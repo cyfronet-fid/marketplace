@@ -25,6 +25,10 @@
         %h5 Company website url
         %p
           = project.company_website_url
+      - if project.additional_information
+        %h5 Additional Information
+        %p
+          = project.additional_information
     .col-6.mb-3
       %h5 Services in this project section
       = render(project.project_items) || render("empty_project")
