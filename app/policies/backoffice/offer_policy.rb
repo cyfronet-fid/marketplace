@@ -52,7 +52,7 @@ class Backoffice::OfferPolicy < ApplicationPolicy
   private
 
     def service_portfolio_manager?
-      user.service_portfolio_manager?
+      user&.service_portfolio_manager?
     end
 
     def project_items

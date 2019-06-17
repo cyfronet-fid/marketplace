@@ -69,11 +69,11 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   private
 
     def service_portfolio_manager?
-      user.service_portfolio_manager?
+      user&.service_portfolio_manager?
     end
 
     def service_owner?
-      user.service_owner?
+      user&.service_owner?
     end
 
     def owned_service?

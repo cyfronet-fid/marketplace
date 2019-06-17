@@ -3,7 +3,8 @@
     .col-lg-3.mb-5
       = render "services/nav/categories", current: category,
                                           categories: categories,
-                                          subcategories: subcategories
+                                          subcategories: subcategories,
+                                          services_count: services_count
       = render "services/filters", provider_options: provider_options,
                                    research_areas: research_areas,
                                    target_groups_options: target_groups_options,

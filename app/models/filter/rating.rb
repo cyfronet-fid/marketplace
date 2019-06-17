@@ -4,7 +4,7 @@ class Filter::Rating < Filter
   def initialize(params = {})
     super(params: params.fetch(:params, {}),
           field_name: "rating", type: :select,
-          title: "Rating")
+          title: "Rating", index: "rating")
   end
 
   private
@@ -20,7 +20,7 @@ class Filter::Rating < Filter
       ]
     end
 
-    def do_call(services)
-      services.where("rating >= ?", value)
+    def where_constraint
+      { @index.to_sym => { gte: value } }
     end
 end

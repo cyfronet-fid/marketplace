@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class HomeController < ApplicationController
-  include Service::Searchable
-
   before_action :load_services
 
   def index

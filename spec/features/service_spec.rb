@@ -21,6 +21,16 @@ RSpec.feature "Service browsing" do
       expect(body).to have_content "my-tag"
     end
 
+    scenario "not allows to see draft service via direct link for default user" do
+      service = create(:service, status: :draft)
+      visit service_path(service)
+
+      expect(page).to have_content("This service is not published in the Marketplace yet, " +
+      "therefore it cannot be accessed. If you are the Service Owner or Service Portfolio Manager and wish " +
+      "to manage this service, please log in and go to the Backoffice tab.")
+      expect(current_path).to eq(root_path)
+    end
+
     scenario "I see Ask Question" do
       service = create(:service)
 
@@ -222,6 +232,15 @@ RSpec.feature "Service filtering and sorting" do
     sleep(1)
   end
 
+  scenario "clear search visible" do
+    visit services_path(q: "DDDD Something")
+    expect(page).to have_css(".categories", text: "Looking for: DDDD Something")
+    expect(page).to have_selector(".search-clear")
+    find(:css, ".search-clear").click
+    expect(page).to have_css(".categories", text: "Services")
+    expect(page).not_to have_selector(".search-clear")
+  end
+
   scenario "searching in top bar will preserve existing query params", js: true, search: true do
     visit services_path(sort: "title")
 
@@ -345,7 +364,6 @@ RSpec.feature "Service filtering and sorting" do
     # collapse all
     find(:css, ".collapseall").click
 
-    save_and_open_screenshot
     expect(page).to_not have_selector("input[name='providers[]'][value='#{provider_id}']")
     expect(page).to_not have_selector("input[name='target_groups[]'][value='#{target_group_id}']")
   end
@@ -362,8 +380,6 @@ RSpec.feature "Service filtering and sorting" do
   end
 
   scenario "searching via rating", js: true do
-    pending "Temporary rating filter was removed from the view, see #858"
-
     visit services_path
 
     find(:css, "a[href=\"#collapse_rating\"][role=\"button\"] h6").click
@@ -447,6 +463,19 @@ RSpec.feature "Service filtering and sorting" do
     fill_in "q", with: "DDDD Something"
 
     expect(page).to have_selector("li.dropdown-item[role='option']:not([style*=\"display: none\"]", count: 3)
+  end
+
+  scenario "redirect when selecting service_id by autocomplete controller", js: true, search: true do
+    service = Service.first
+    fill_in "q", with: service.title
+    find(:css, "li.dropdown-item[id='-option-0']").click
+    expect(current_path).to eq(service_path(service))
+  end
+
+  scenario "redirect when selecting service_id by autocomplete controller", js: true, search: true do
+    service = Service.first
+    visit services_path(service_id: service.id)
+    expect(current_path).to eq(service_path(service))
   end
 end
 
