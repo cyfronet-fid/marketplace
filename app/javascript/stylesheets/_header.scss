@@ -137,6 +137,11 @@ header {
   background-color: $white;
   position: absolute;
   border: 1px solid $palette-gray-10;
+  width: 100%;
+
+  li {
+    cursor: pointer;
+  }
 
   .dropdown-item.active {
     color: $palette-blue;
@@ -153,6 +158,8 @@ header {
 .autocomplete-input {
   position: relative;
 }
+
+
 
 @media (max-width: 576px) {
 
