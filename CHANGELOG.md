@@ -5,17 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
-
 ## [Unreleased]
 
 ### Added
 
-- Clear search button in the search bar (@bwilk, @abacz)
-
 ### Changed
-
-- Redirection to a service upon choice made by autocomplete in search bar (@bwilk)
-- Reimplemented filters and categories after creating indexes in Elasticsearch (@bwilk) 
 
 ### Deprecated
 
@@ -23,13 +17,23 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 
+### Security
+
+## [1.12.0] 2019-06-17
+
+### Added
+- Clear search button in the search bar (@bwilk, @abacz)
+
+### Changed
+- Redirection to a service upon choice made by autocomplete in search bar (@bwilk)
+- Reimplemented filters and categories after creating indexes in Elasticsearch (@bwilk) 
+
+### Fixed
 - Blocked access to the draft service via direct link
 - Category and filter counters (@bwilk)
 - Hierarchical filters deactivation buttons (@bwilk)
 - Choice of "best match" sorting strategy after search (@bwilk)
 - Maintaining sort order when filters are applied (@bwilk)
-
-### Security
 
 ## [1.11.1] 2019-06-05
 
