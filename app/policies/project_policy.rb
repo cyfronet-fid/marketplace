@@ -27,7 +27,8 @@ class ProjectPolicy < ApplicationPolicy
     [:name, :reason_for_access,
      :customer_typology, :user_group_name,
      :project_name, :project_website_url,
-     :company_name, :company_website_url]
+     :company_name, :company_website_url,
+     :additional_information]
   end
 
   private
