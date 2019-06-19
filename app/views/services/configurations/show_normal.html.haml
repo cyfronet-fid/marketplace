@@ -42,11 +42,6 @@
   = f.association :research_area, as: :grouped_select,
     collection: grouped_research_areas, group_method: :last
 
-  %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Affiliation
-  = f.association :affiliation,
-    collection: @affiliations, label_method: :organization,
-    hint: "Click #{link_to "here", new_profile_affiliation_path} to create a new affiliation".html_safe
-
 = content_for :next_button do
   %button.btn.btn-primary{ form: "order-form", type: "submit" }
     Next

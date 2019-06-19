@@ -25,14 +25,6 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  def active_affiliations
-    affiliations.where(status: :active)
-  end
-
-  def active_affiliation?
-    active_affiliations_count.positive?
-  end
-
   def service_owner?
     owned_services_count.positive?
   end

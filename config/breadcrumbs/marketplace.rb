@@ -9,17 +9,6 @@ crumb :profile do
   parent :marketplace_root
 end
 
-crumb :affiliation do |affiliation|
-  link "Affiliation ##{affiliation.iid}", profile_affiliation_path(affiliation)
-  parent :profile
-end
-
-
-crumb :affiliation_new do
-  link "New Affiliation", new_profile_affiliation_path
-  parent :profile
-end
-
 crumb :services do
   link "Services", services_path
   parent :marketplace_root
