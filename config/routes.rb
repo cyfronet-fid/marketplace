@@ -39,13 +39,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :profile, only: [:show] do
-    scope module: :profiles do
-      resources :affiliations
-    end
-  end
-  resources :affiliation_confirmations, only: :index
-
   resource :profile, only: :show
 
   resource :backoffice, only: :show
