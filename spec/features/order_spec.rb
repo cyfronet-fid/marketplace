@@ -245,7 +245,10 @@ RSpec.feature "Service ordering" do
       click_on "Add new project"
       within("#ajax-modal") do
         fill_in "Project name", with: "New project"
+        fill_in "Email", with: "john@doe.com"
         select "Single user", from: "Customer typology"
+        fill_in "Organization", with: "Home corp."
+        fill_in "Webpage", with: "http://home.corp.com"
         fill_in "Reason to request access to the EOSC services", with: "Some reason"
         select "non-European", from: "Country of customer"
         select "Single user", from: "Customer typology"
@@ -291,6 +294,7 @@ RSpec.feature "Service ordering" do
         fill_in "Project name", with: "New project"
         fill_in "Reason to request access to the EOSC services", with: "To pass test"
         select "non-European", from: "Country of customer"
+        fill_in "Email", with: "john@doe.com"
         select "Representing a private company", from: "Customer typology"
         find("button[data-id=\"project_country_of_collaboration\"]").click
         find("span[class=\"text\"", text: "non-European").click

@@ -33,21 +33,34 @@ class Project < ApplicationRecord
   validates :name,
             presence: true,
             uniqueness: { scope: :user, message: "Project name need to be unique" }
-
-  def require_jira_issue?
-    jira_active? || jira_deleted?
-  end
-
-  validates :issue_id, presence: true, if: :require_jira_issue?
-  validates :issue_key, presence: true, if: :require_jira_issue?
-  validates :customer_typology, presence: true
+  validates :email, presence: true
   validates :reason_for_access, presence: true
   validates :country_of_customer, presence: true, inclusion: { in: allowed_countries }
+  validates :customer_typology, presence: true
+
+  validates :organization, presence: true, if: :single_user_or_community?
+  validates :webpage, presence: true, url: true, if: :single_user_or_community?
+
   validates :user_group_name, presence: true, if: :research?
+
   validates :project_name, presence: true, if: :project?
   validates :project_website_url, url: true, presence: true, if: :project?
+
   validates :company_name, presence: true, if: :private_company?
   validates :country_of_collaboration, multiselect_choices: { collection: allowed_countries },
             presence: true, unless: :single_user?
   validates :company_website_url,  url: true, presence: true, if: :private_company?
+
+  validates :issue_id, presence: true, if: :require_jira_issue?
+  validates :issue_key, presence: true, if: :require_jira_issue?
+
+  private
+
+    def require_jira_issue?
+      jira_active? || jira_deleted?
+    end
+
+    def single_user_or_community?
+      single_user? || research?
+    end
 end
