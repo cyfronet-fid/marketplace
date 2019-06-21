@@ -1,5 +1,10 @@
 .border.text-center
-  %p You have no services in this project yet.
   %p
+    You have no services in this project yet.
+    %br
     = link_to "Use our catalogue to add one.", services_url
+  %p
+    If you need help with these don't hesitate and
+    %br
+    = link_to "contact with our support!", project_chat_path(project)
 
