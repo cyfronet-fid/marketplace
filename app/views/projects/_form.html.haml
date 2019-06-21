@@ -4,6 +4,7 @@
   = f.input :reason_for_access, label: "Reason to request access to the EOSC services"
   = f.input :country_of_customer, collection: customer_countries,
     input_html: { "data-target" => "project.customerCountry" }
+  = f.input :email, hint: "Email address in your institute's domain"
   = f.input :customer_typology, collection: Project.customer_typologies.keys.map(&:to_sym),
     input_html: { "data-target" => "project.customer",
                   "data-action" => "change->project#showSelectedSection" }
