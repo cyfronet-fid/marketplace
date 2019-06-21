@@ -6,7 +6,7 @@
       %i.fas.fa-chevron-up
     %h2.d-inline.ml-3.font-weight-normal= project.name
     - if policy(project).show?
-      = link_to "Details", project_url(project),
+      = link_to "Manage and get support", project_url(project),
         class: "float-right btn-sm btn btn-secondary d-inline"
 
 .row.align-items-center.border.panel-collapse.collapse.show.p-3{ "id": "collapse_#{project.id}" }

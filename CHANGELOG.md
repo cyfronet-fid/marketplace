@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Redirection to a service upon choice made by autocomplete in search bar (@bwilk)
 - Reimplemented filters and categories after creating indexes in Elasticsearch (@bwilk)
 - Expand all projects on projects index view (@mkasztelnik)
+- Improvements for project box views (@mkasztelnik)
 
 ### Deprecated
 
