@@ -1,9 +1,9 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["customer", "research", "customerCountry",
-                    "collaborationCountry", "project", "privateCompany",
-                    "input"];
+  static targets = ["singleUser", "customer", "research",
+                    "customerCountry", "collaborationCountry",
+                    "project", "privateCompany", "input"];
 
   connect() {
   }
@@ -21,20 +21,17 @@ export default class extends Controller {
 
     this._hideCustomerTypologieFields();
 
+    if ( customer === this.CUSTOMER_TYPOLOGIES.single_user){
+      this._showFields(this.singleUserTargets);
+    }
     if ( customer === this.CUSTOMER_TYPOLOGIES.research){
-      this.researchTargets.forEach ((el, i) => {
-        el.classList.remove("hidden-fields");
-      })
+      this._showFields(this.researchTargets);
     }
     if (customer === this.CUSTOMER_TYPOLOGIES.project){
-      this.projectTargets.forEach ((el, i) => {
-        el.classList.remove("hidden-fields");
-      })
+      this._showFields(this.projectTargets);
     }
     if (customer === this.CUSTOMER_TYPOLOGIES.private_company){
-      this.privateCompanyTargets.forEach ((el, i) => {
-        el.classList.remove("hidden-fields");
-      })
+      this._showFields(this.privateCompanyTargets);
     }
     if (customer !== "" && customer !== this.CUSTOMER_TYPOLOGIES.single_user){
        this.collaborationCountryTarget.classList.remove("hidden-fields");
@@ -48,5 +45,11 @@ export default class extends Controller {
         el.classList.add("hidden-fields");
       }
     })
+  }
+
+  _showFields(fields) {
+    fields.forEach((el, i) => {
+      el.classList.remove("hidden-fields");
+    });
   }
 }

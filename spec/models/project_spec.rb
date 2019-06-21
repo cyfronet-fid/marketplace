@@ -9,12 +9,22 @@ RSpec.describe Project do
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:customer_typology) }
   it { should validate_presence_of(:reason_for_access) }
+  it { should validate_presence_of(:email) }
   it { should have_many(:project_items) }
+
+  describe "single user" do
+    subject { build(:project, customer_typology: "single_user") }
+
+    it { is_expected.to validate_presence_of(:organization) }
+    it { is_expected.to validate_presence_of(:webpage) }
+  end
 
   describe "research typology" do
     subject { build(:project, customer_typology: "research") }
 
     it { is_expected.to validate_presence_of(:user_group_name) }
+    it { is_expected.to validate_presence_of(:organization) }
+    it { is_expected.to validate_presence_of(:webpage) }
   end
 
   describe "project typology" do
