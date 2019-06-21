@@ -7,4 +7,4 @@
     = project.reason_for_access
 .col
   %ul.list-group
-    = render(project.project_items) || render("empty_project")
+    = render(project.project_items) || render("projects/empty_project", project: project)
