@@ -6,13 +6,5 @@
     = link_to "Create new project",
                   new_project_path,
                   class: "btn btn-success"
-    %form.my-auto
-      %select#status.form-control.form-control-sm.custom-select{ "data-submit-on-change": "data-submit-on-change" }
-        %option{ value: "", selected: "selected" }
-          All
-        :ruby
-          status_options = ProjectItem.statuses.values.
-                           map { |s| [t("simple_form.options.project_item.status.#{s}"), s] }
-        = options_for_select(status_options, params[:status])
 
   = render @projects
