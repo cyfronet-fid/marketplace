@@ -263,6 +263,26 @@ RSpec.feature "Service ordering" do
       expect(user.projects.find { |project| project.name == "New project" }).to_not be_nil
     end
 
+    scenario "I will stay in project edit modal while trying to create empty project", js: true do
+      service = create(:service)
+      create(:offer, service: service)
+
+      visit service_path(service)
+
+      click_on "Order"
+      click_on "Add new project"
+
+      click_on "Create new project"
+      within("#ajax-modal") do
+        expect(page).to have_button("Create new project")
+      end
+
+      click_on "Create new project"
+      within("#ajax-modal") do
+        expect(page).to have_button("Create new project")
+      end
+    end
+
     scenario "I can create new project for private company typology", js: true do
       service = create(:service)
       create(:offer, service: service)

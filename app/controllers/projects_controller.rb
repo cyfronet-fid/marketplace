@@ -33,11 +33,8 @@ class ProjectsController < ApplicationController
     @project = Project.new(user: current_user)
 
     respond_to do |format|
-      format.html do
-        @show_as_modal = false
-      end
+      format.html
       format.js do
-        @show_as_modal = true
         render_modal_form
       end
     end
@@ -69,7 +66,6 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    @show_as_modal = false
   end
 
   def update
@@ -90,6 +86,7 @@ class ProjectsController < ApplicationController
   private
 
     def render_modal_form
+      @show_as_modal = true
       render "layouts/show_modal",
               locals: {
                 title: "New project",
