@@ -6,6 +6,7 @@ module OmniauthHelper
     last_name = options.fetch(:last_name, "Doe"),
     email = options.fetch(:email, "#{first_name}.#{last_name}@email.pl")
     uid = options.fetch(:uid, 123)
+    origin = options.fetch(:origin, current_path)
 
     OmniAuth.config.add_mock(
       provider,
@@ -17,6 +18,9 @@ module OmniauthHelper
       provider: provider,
       uid: uid
     )
+    OmniAuth.config.before_callback_phase do |env|
+      env["omniauth.origin"] = origin
+    end
   end
 
   def stub_checkin(user)
