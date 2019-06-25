@@ -745,6 +745,10 @@ Card style
   border-color: $palette-yellow;
   border-radius: $radius-common;
 
+  &.offers {
+    width: 100%;
+  }
+
   .card-header {
     border-bottom: none;
   }
