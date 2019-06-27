@@ -47,44 +47,6 @@
           %dd
             %span.text-uppercase= @project_item.status
 
-      - if @project_item.affiliation.present?
-        %h5.text-uppercase.parameters-title.mb-3 Connected affiliation
-        .details.mb-5
-          %dl
-            %dt
-              Organization:
-            %dd
-              = @project_item.affiliation.organization
-          - if @project_item.affiliation.department.present?
-            %dl
-              %dt Department:
-              %dd
-                = @project_item.affiliation.department
-          %dl
-            %dt Email:
-            %dd
-              = @project_item.affiliation.email
-          - if @project_item.affiliation.phone.present?
-            %dl
-              %dt Phone:
-              %dd
-                = @project_item.affiliation.phone
-          - if @project_item.affiliation.webpage.present?
-            %dl
-              %dt Webpage:
-              %dd
-                = @project_item.affiliation.webpage
-          - if @project_item.affiliation.supervisor.present?
-            %dl
-              %dt Supervisor:
-              %dd
-                = @project_item.affiliation.supervisor
-          - if @project_item.affiliation.supervisor_profile.present?
-            %dl
-              %dt Supervisor profile:
-              %dd
-                = @project_item.affiliation.supervisor_profile
-
         = render "project_items/attributes", property_values: @project_item.property_values
 
       - unless @project_item.voucher_id.blank? && !@project_item.request_voucher
