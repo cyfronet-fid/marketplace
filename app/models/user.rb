@@ -8,7 +8,6 @@ class User < ApplicationRecord
   roles :admin, :service_portfolio_manager
 
   has_many :projects, dependent: :destroy
-  has_many :affiliations, dependent: :destroy
 
   has_many :service_user_relationships, dependent: :destroy
   has_many :owned_services,
