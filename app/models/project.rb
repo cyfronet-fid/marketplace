@@ -54,13 +54,13 @@ class Project < ApplicationRecord
   validates :issue_id, presence: true, if: :require_jira_issue?
   validates :issue_key, presence: true, if: :require_jira_issue?
 
+  def single_user_or_community?
+    single_user? || research?
+  end
+
   private
 
     def require_jira_issue?
       jira_active? || jira_deleted?
-    end
-
-    def single_user_or_community?
-      single_user? || research?
     end
 end

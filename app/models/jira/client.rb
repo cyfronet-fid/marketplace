@@ -184,7 +184,13 @@ private
     when "CI-Surname"
       project.user.last_name
     when "CI-Email"
-      project.user.email || nil
+      project.email || nil
+    when "CI-Institution"
+      project.single_user_or_community? ? project.organization : nil
+    when "CI-Department"
+      project.single_user_or_community? ? project.department : nil
+    when "CI-DepartmentalWebPage"
+      project.single_user_or_community? ? project.webpage : nil
     when "CI-DisplayName"
       "#{project.user.first_name} #{project.user.last_name}"
     when "CI-EOSC-UniqueID"
