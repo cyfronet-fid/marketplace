@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Deprecated
 
 ### Removed
+- Affiliation model removed (@mkasztelnik)
 
 ### Fixed
 - Display choices.js in the owners multiselect field in the new service form (@goreck888)
