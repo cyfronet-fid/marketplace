@@ -1,7 +1,8 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["reason", "customer","privateCompany",
+  static targets = ["reason", "customerCountry", "customer",
+                    "privateCompany", "collaborationCountry",
                     "userGroupName", "projectName",
                     "projectWebsiteUrl", "companyName",
                     "companyWebsiteUrl", "hasVoucher",
@@ -57,7 +58,11 @@ export default class extends Controller {
 
   _showProjectFields(project) {
     this.reasonTarget.innerHTML = this._wrap_text(project["reason_for_access"], "Access reason");
-    this.customerTarget.innerHTML = this._wrap_text(project["customer_typology"], "Customer typology")
+    this.customerCountryTarget.innerHTML =
+        this._wrap_text(this._getCountriesNames(project["country_of_customer"]),"Customer country");
+    this.customerTarget.innerHTML = this._wrap_text(project["customer_typology"], "Customer typology");
+    this.collaborationCountryTarget.innerHTML =
+        this._wrap_text(this._getCountriesNames(project["country_of_collaboration"]), "Country of collaboration");
     this.userGroupNameTarget.innerHTML = this._wrap_text(project["user_group_name"], "User group name");
     this.projectNameTarget.innerHTML = this._wrap_text(project["project_name"], "Project name");
     this.projectWebsiteUrlTarget.innerHTML = this._wrap_text(project["project_website_url"], "Project website url");
@@ -69,4 +74,36 @@ export default class extends Controller {
   _wrap_text(text, label) {
     return text && "<h4>" + label + "</h4> <p>" + text + "</p>";
   }
+
+  _getCountriesNames(codes) {
+    const countries = require("i18n-iso-countries");
+    countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
+
+    let result = "";
+    if(!Array.isArray(codes)) {
+      codes = [codes]
+    }
+    for (const [idx, alpha2] of codes.entries()) {
+      switch (alpha2) {
+        case "N/E":
+          result += "non-European";
+          break;
+        case "N/A":
+          result += "non Applicable";
+          break;
+        case "I/N":
+          result += "International";
+        default:
+          result += countries.getName(alpha2, "en");
+      }
+      if (idx === codes.length -1 ) {
+        return result;
+      }
+      else {
+        result += ", ";
+      }
+    };
+  }
+
+
 }

@@ -42,6 +42,8 @@ default: &default
     SO-1: <%= "'" + (ENV["MP_JIRA_FIELD_SO_1"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "SO-1".to_sym) || "") + "'" %>
     SO-ServiceOrderTarget: <%= "'" + (ENV["MP_JIRA_FIELD_SO_ServiceOrderTarget"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "SO-ServiceOrderTarget".to_sym) || "") + "'" %>
     SO-OfferType:  <%= "'" + (ENV["MP_JIRA_FIELD_SO_OfferType"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "SO-OfferType".to_sym) || "") + "'" %>
+    CP-CustomerCountry: <%= "'" + (ENV["MP_JIRA_FIELD_CP_CustomerCountry"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CP-CustomerCountry".to_sym) || "") + "'" %>
+    CP-CollaborationCountry: <%= "'" + (ENV["MP_JIRA_FIELD_CP_CollaborationCountry"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CP-CollaborationCountry".to_sym) || "") + "'" %>
 
     select_values:
       CP-CustomerTypology:
@@ -101,6 +103,8 @@ test:
     SO-1: "SO-1-1"
     SO-ServiceOrderTarget: "SO-ServiceOrderTarget-1"
     SO-OfferType: "SO-OfferType-1"
+    CP-CustomerCountry: "CP-CustomerCountry-1"
+    CP-CollaborationCountry: "CP-CollaborationCountry-1"
 
     select_values:
       CP-CustomerTypology:
