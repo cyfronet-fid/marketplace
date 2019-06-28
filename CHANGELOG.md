@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service owner can edit service draft and service offer drafts (@mkasztelnik)
 - Country of customer and country of collaboration fields (@goreck888)
 - Country fields transfer to jira issues (@goreck888)
+- Create project copy (@mkasztelnik)
 
 ### Changed
 
@@ -45,7 +46,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Hierarchical filters deactivation buttons (@bwilk)
 - Choice of "best match" sorting strategy after search (@bwilk)
 - Maintaining sort order when filters are applied (@bwilk)
-- Redirection to project edit view on project creation failure while ordering (@bwilk) 
+- Redirection to project edit view on project creation failure while ordering (@bwilk)
 
 ## [1.11.1] 2019-06-05
 
