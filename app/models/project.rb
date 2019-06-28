@@ -19,6 +19,13 @@ class Project < ApplicationRecord
   enum customer_typology: CUSTOMER_TYPOLOGIES
   enum issue_status: ISSUE_STATUSES
 
+  NON_APPLICABLE = "N/A"
+  INTERNATIONAL = "I/N"
+  NON_EUROPEAN = "N/E"
+
+  allowed_countries = [NON_APPLICABLE, INTERNATIONAL, NON_EUROPEAN] +
+        ISO3166::Country.find_all_countries_by_region("Europe").sort.map { |c| c.alpha2 }
+
   belongs_to :user
   has_many :project_items, dependent: :destroy
 
@@ -35,9 +42,12 @@ class Project < ApplicationRecord
   validates :issue_key, presence: true, if: :require_jira_issue?
   validates :customer_typology, presence: true
   validates :reason_for_access, presence: true
+  validates :country_of_customer, presence: true, inclusion: { in: allowed_countries }
   validates :user_group_name, presence: true, if: :research?
   validates :project_name, presence: true, if: :project?
   validates :project_website_url, url: true, presence: true, if: :project?
   validates :company_name, presence: true, if: :private_company?
+  validates :country_of_collaboration, multiselect_choices: { collection: allowed_countries },
+            presence: true, unless: :single_user?
   validates :company_website_url,  url: true, presence: true, if: :private_company?
 end

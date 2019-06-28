@@ -17,6 +17,8 @@ class ProjectsController < ApplicationController
           reason_for_access: @project.reason_for_access,
           customer_typology: t(@project.customer_typology, scope: [:project, :customer_typology]),
           user_group_name: @project.user_group_name,
+          country_of_customer: @project.country_of_customer,
+          country_of_collaboration: @project.country_of_collaboration,
           project_name: @project.project_name,
           project_website_url: @project.project_website_url,
           company_name: @project.company_name,
