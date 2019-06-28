@@ -49,6 +49,23 @@ RSpec.feature "Project" do
       expect(current_url).to eq(projects_url)
     end
 
+    scenario "I can create project duplicate" do
+      allow(project_create).to receive(:call)
+      project = create(:project)
+
+      visit new_project_path(source: project.id)
+
+      fill_in "Project name", with: "Copy", match: :first
+      expect { click_on "Create" }.
+        to change { user.projects.count }.by(1)
+      new_project = Project.last
+
+      expect(new_project.name).to eq("Copy")
+      expect(new_project.reason_for_access).to eq(project.reason_for_access)
+      expect(new_project.issue_key).to be_nil
+      expect(new_project).to be_jira_uninitialized
+    end
+
     scenario "I can edit project" do
       project = create(:project, name: "First Project", user: user)
       visit project_path(project)
