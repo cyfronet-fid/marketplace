@@ -6,6 +6,7 @@
 
     %div
       = link_to "Edit project", edit_project_path(project), class: "btn btn-secondary"
+      = link_to "Duplicate", new_project_path(source: project.id), class: "btn btn-secondary"
       = link_to "Delete", project_path(project), method: :delete,
         data: { confirm: "Are you sure?" }, class: "btn btn-danger"
   = link_to projects_url do
