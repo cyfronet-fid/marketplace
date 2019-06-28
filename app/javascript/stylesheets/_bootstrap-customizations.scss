@@ -1872,3 +1872,17 @@ label[data-multicheckbox].small {
     display: none;
   }
 }
+
+// scss-lint:disable all
+.project_country_of_collaboration {
+  .dropdown {
+    border: 1px solid $palette-solid-20;
+
+    .dropdown-toggle {
+      padding: 6px 12px;
+      border-radius: 0;
+      background: none;
+    }
+  }
+}
+// scss-lint:enable all
