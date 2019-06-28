@@ -1,20 +1,7 @@
 %li.list-group-item
-  .row
-    .col-md.font-weight-bold
-      = link_to project_item.service.title, project_item
-    .col-md-2
-      %span.text-uppercase
-        = project_item.status
-    .col-md-4
-
-      - if project_item.status == ProjectItem.statuses[:ready]
-        %span
-          = link_to "Access the service", project_item.service.webpage_url,
-            class: "btn btn-primary btn-sm"
-    .col-md.text-md-right
-      %span
-        last change: #{time_ago_in_words(project_item.updated_at)} ago
-%li.list-group-item.mt-2
-  .row.d-flex.justify-content-center
-    = link_to "Add another service", services_url
-
+  = link_to project_item.service.title, project_item
+  .float-right
+    - if project_item.open_access?
+      = link_to "Visit website", project_item.service.webpage_url
+    - else
+      = project_item_status(project_item)

@@ -1,13 +1,34 @@
-.row.list-group-item
-  %a{ "href": "#collapse_#{project.id}", "aria-controls": "collapse_#{project.id}",
-      "data-toggle": "collapse", "role": "tab", "aria-expanded": "false" }
-    .collapse-icon.d-inline
-      %i.fas.fa-chevron-down
-      %i.fas.fa-chevron-up
-    %h2.d-inline.ml-3.font-weight-normal= project.name
-    - if policy(project).show?
-      = link_to "Manage and get support", project_url(project),
-        class: "float-right btn-sm btn btn-secondary d-inline"
+.card.mb-2.rounded
+  .card-header{ id: "project_header_#{project.id}" }
+    %h2.mb-0
+      %button.btn.btn-link{ type: "button",
+        data: { toggle: "collapse", target: "#project#{project.id}" },
+        aria: { controls: "project#{project.id}", expanded: "true" } }
+        .collapse-icon.d-inline
+          %i.fas.fa-chevron-down
+          %i.fas.fa-chevron-up
+        = project.name
 
-.row.align-items-center.border.panel-collapse.collapse.show.p-3{ "id": "collapse_#{project.id}" }
-  = render "projects/details_box", project: project
+  .collapse.show{ id: "project#{project.id}", "aria-labelledby": "projectHeader#{project.id}" }
+    .container.m-3
+      .row
+        .col
+          %dl
+            %dt Customer typology
+            %dd= t "projeproject.customer_typology.#{project.customer_typology}"
+            %dt Reason to request access to the EOSC services
+            %dd= project.reason_for_access
+        .col.mr-4
+          %h3.text-uppercase
+            %i.fas.fa-box-open
+            Project services
+          - if project.project_items.size.positive?
+            %ul.list-group-flush
+              = render(project.project_items)
+            .row
+              .col.d-flex.justify-content-end
+                = link_to "Add service to this project", services_url,
+                  class: "btn btn-primary btn-sm"
+          - else
+            = render("projects/empty_project", project: project)
+
