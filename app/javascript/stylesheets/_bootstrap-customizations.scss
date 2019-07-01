@@ -1886,3 +1886,47 @@ label[data-multicheckbox].small {
   }
 }
 // scss-lint:enable all
+
+.border-header {
+  border-bottom: 5px solid $border-header;
+}
+
+.projects-collapse {
+  margin-top: 22px;
+  background: $collapse-background;
+  padding: 1.1rem 1.25rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+
+  h2,
+  .collapse-icon {
+    color: $palette-gray-100;
+  }
+}
+
+.projects-collapse-content {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+  h5 {
+    font-size: 14px;
+    margin-bottom: 0.3rem;
+  }
+}
+
+.project-services {
+  font-size: 14px;
+  text-transform: uppercase;
+  border-bottom: 2px solid $palette-yellow;
+
+  svg {
+    color: $palette-yellow;
+    font-size: 20px;
+    vertical-align: bottom;
+  }
+}
+
+.projects-list {
+  border: none;
+  border-bottom: 1px solid $border-color;
+}
