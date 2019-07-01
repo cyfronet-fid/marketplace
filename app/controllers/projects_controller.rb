@@ -91,7 +91,7 @@ class ProjectsController < ApplicationController
 
     IGNORED_ATTRIBUTES = ["id", "name", "issue_key", "issue_status", "issue_key"]
     def attributes
-      source = params[:source] && Project.find_by(id: params[:source])
+      source = params[:source] && current_user.projects.find_by(id: params[:source])
       if source
         source.attributes.
           reject { |a| IGNORED_ATTRIBUTES.include?(a) }.
