@@ -1,4 +1,4 @@
-%li.list-group-item
+%li.projects-list
   .row
     .col-md.font-weight-bold
       = link_to project_item.service.title, project_item
@@ -14,7 +14,4 @@
     .col-md.text-md-right
       %span
         last change: #{time_ago_in_words(project_item.updated_at)} ago
-%li.list-group-item.mt-2
-  .row.d-flex.justify-content-center
-    = link_to "Add another service", services_url
 
