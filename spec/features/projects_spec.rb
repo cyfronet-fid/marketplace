@@ -51,7 +51,7 @@ RSpec.feature "Project" do
 
     scenario "I can create project duplicate" do
       allow(project_create).to receive(:call)
-      project = create(:project)
+      project = create(:project, user: user)
 
       visit new_project_path(source: project.id)
 
@@ -64,6 +64,15 @@ RSpec.feature "Project" do
       expect(new_project.reason_for_access).to eq(project.reason_for_access)
       expect(new_project.issue_key).to be_nil
       expect(new_project).to be_jira_uninitialized
+    end
+
+    scenario "I cannot use other user project as duplicate source" do
+      project = create(:project)
+
+      visit new_project_path(source: project.id)
+
+      fill_in "Project name", with: "Copy", match: :first
+      expect { click_on "Create" }.to_not change { user.projects.count }
     end
 
     scenario "I can edit project" do
