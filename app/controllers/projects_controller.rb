@@ -30,7 +30,7 @@ class ProjectsController < ApplicationController
   end
 
   def new
-    @project = Project.new(user: current_user)
+    @project = new_record
 
     respond_to do |format|
       format.html
@@ -84,6 +84,22 @@ class ProjectsController < ApplicationController
   end
 
   private
+
+    def new_record
+      Project.new(attributes)
+    end
+
+    IGNORED_ATTRIBUTES = ["id", "name", "issue_key", "issue_status", "issue_key"]
+    def attributes
+      source = params[:source] && current_user.projects.find_by(id: params[:source])
+      if source
+        source.attributes.
+          reject { |a| IGNORED_ATTRIBUTES.include?(a) }.
+          merge(user: current_user)
+      else
+        { user: current_user }
+      end
+    end
 
     def render_modal_form
       @show_as_modal = true
