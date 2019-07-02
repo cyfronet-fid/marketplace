@@ -1589,12 +1589,6 @@ label[data-multicheckbox].small {
   margin-right: 4%;
 }
 
-.service-description {
-  textarea {
-    height: 400px;
-  }
-}
-
 .service-activate-message {
   textarea {
     height: 135px;
@@ -1910,6 +1904,45 @@ label[data-multicheckbox].small {
   }
 }
 
+.service-description {
+
+  textarea {
+    height: 400px;
+  }
+
+  h5 {
+    font-size: 14px;
+    margin-bottom: 0.3rem;
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .details-content {
+    padding-left: 15px;
+    margin: 15px 0 35px;
+    border-left: solid 3px $border-color;
+
+    p,
+    h5 {
+      font-size: 16px;
+      line-height: 25px;
+    }
+
+    h5 {
+      margin-bottom: 0;
+    }
+  }
+
+  h3 {
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+
+}
+
 .project-services {
   font-size: 14px;
   text-transform: uppercase;
@@ -1924,5 +1957,34 @@ label[data-multicheckbox].small {
 
 .projects-list {
   border: none;
+  padding: 7px 0;
   border-bottom: 1px solid $border-color;
+
+  .status {
+    font-size: 12px;
+
+    svg {
+      font-size: 9px;
+    }
+
+    .registered {
+      color: $orange;
+    }
+
+    .ready {
+      color: $green;
+    }
+
+    .rejected {
+      color: $red;
+    }
+  }
+}
+
+.buttons-panel {
+
+  .btn-outline-danger {
+    border-style: solid;
+    border-width: 1px;
+  }
 }

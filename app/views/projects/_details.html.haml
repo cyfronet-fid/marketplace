@@ -1,34 +1,47 @@
-.row.pt-5.justify-content-between
+.row.pt-5.justify-content-between.service-description
   .col-6
-    %h5 Customer Typology
-    %p
-      = t "projeproject.customer_typology.#{project.customer_typology}"
-    %h5 Access Reason
-    %p
-      = project.reason_for_access
-    - if project.research?
-      %h5 User group name
-      %p
-        = project.user_group_name
-    - if project.project?
+    %h3 Project details
+    .details-content
       %h5 Project name
       %p
         = project.project_name
+    - if project.project?
       %h5 Project website url
       %p
         = project.project_website_url
-    - if project.private_company?
-      %h5 Company name
+
+    %h3 Customer details
+    .details-content
+      %h5 Customer Typology
       %p
-        = project.company_name
-      %h5 Company website url
+        = t "projeproject.customer_typology.#{project.customer_typology}"
+      - if project.research?
+        %h5 User group name
+        %p
+          = project.user_group_name
+      - if project.private_company?
+        %h5 Company name
+        %p
+          = project.company_name
+        %h5 Company website url
+        %p
+          = project.company_website_url
+
+    %h3 Usage
+    .details-content
+      %h5 Reason to request access to the EOSC services
       %p
-        = project.company_website_url
-    - if project.additional_information
-      %h5 Additional Information
-      %p
-        = project.additional_information
+        = project.reason_for_access
+
+    %h3 Additional Information
+    .details-content
+      - if project.additional_information
+        %p
+          = project.additional_information
   .col-6.mb-3
-    %h5 Services in this project section
-    = render(project.project_items) || render("empty_project", project: project)
+    %h3.project-services.pb-2.mb-3
+      %i.fas.fa-box-open.mr-2
+      Services in this project
+    %ul.list-group
+      = render(project.project_items) || render("empty_project", project: project)
 
