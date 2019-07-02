@@ -1,17 +1,20 @@
 = simple_form_for @project, remote: @show_as_modal,
   html: { role: "form", id: "modal-form", "data-controller" => "project" } do |f|
-  = f.input :name, label: "Project name"
-  = f.input :reason_for_access, label: "Reason to request access to the EOSC services"
-  = f.input :country_of_customer, collection: customer_countries,
-    input_html: { "data-target" => "project.customerCountry" }
+  = f.input :name, label: "Project name", wrapper_html: { class: "col-6 pl-0" }
+  %h5.mb-3.mt-5.font-weight-bold.configuration-title.text-uppercase Customer details
   = f.input :customer_typology, collection: Project.customer_typologies.keys.map(&:to_sym),
     input_html: { "data-target" => "project.customer",
-                  "data-action" => "change->project#showSelectedSection" }
+                  "data-action" => "change->project#showSelectedSection" }, wrapper_html: { class: "col-6 pl-0" }
   = render "customer_typology_fields", f: f
+  = f.input :country_of_customer, collection: customer_countries,
+    input_html: { "data-target" => "project.customerCountry" }, wrapper_html: { class: "col-6 pl-0" }
   = f.input :country_of_collaboration, collection: collaboration_countries, include_hidden: false,
-    wrapper_html: { class: "hidden-fields",
+    wrapper_html: { class: "hidden-fields col-6 pl-0",
       "data-target" => "project.collaborationCountry project.input" },
     input_html: { class: "selectpicker", "title" => "Choose countries",
-      "data-target" => "project.collaborationCountry", "multiple" => "true" }
-  = f.input :additional_information
+      "data-target" => "project.collaborationCountry", "multiple" => "true" }, wrapper_html: { class: "col-6 pl-0" }
+  %h5.mb-3.mt-5.font-weight-bold.configuration-title.text-uppercase Usage
+  = f.input :reason_for_access, label: "Reason to request access to the EOSC services",
+    wrapper_html: { class: "col-8 pl-0 textarea-tall" }
+  = f.input :additional_information, wrapper_html: { class: "col-8 pl-0 textarea-medium" }
 
