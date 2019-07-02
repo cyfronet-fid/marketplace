@@ -1992,3 +1992,16 @@ label[data-multicheckbox].small {
     border-width: 1px;
   }
 }
+
+.textarea-tall {
+
+  textarea {
+    height: 200px;
+  }
+}
+
+.textarea-medium {
+  textarea {
+    height: 90px;
+  }
+}

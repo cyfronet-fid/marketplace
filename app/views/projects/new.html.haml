@@ -1,10 +1,11 @@
 - breadcrumb :project_new
 .container
-  %h2 New Project
+  .mb-4.pb-4.border-header
+    %h1.mr-auto.my-auto  Create new project
   = render "form", project: @project
   .row.mt-5
     .col-12
-      = back_link_to "Close", @project,
-        class: "btn btn-secondary"
       %button.btn.btn-primary{ type: "submit",
                                form: "modal-form" } Create
+      = back_link_to "Cancel", @project,
+        class: "btn btn-link"
