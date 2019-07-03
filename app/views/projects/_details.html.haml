@@ -1,34 +1,47 @@
 .row.pt-5.justify-content-between
-  .col-6
-    %h5 Customer Typology
-    %p
-      = t "projeproject.customer_typology.#{project.customer_typology}"
-    %h5 Access Reason
-    %p
-      = project.reason_for_access
-    - if project.research?
-      %h5 User group name
-      %p
-        = project.user_group_name
-    - if project.project?
-      %h5 Project name
-      %p
-        = project.project_name
-      %h5 Project website url
-      %p
-        = project.project_website_url
-    - if project.private_company?
-      %h5 Company name
-      %p
-        = project.company_name
-      %h5 Company website url
-      %p
-        = project.company_website_url
-    - if project.additional_information
-      %h5 Additional Information
-      %p
-        = project.additional_information
-  .col-6.mb-3
+  .col
+    %dl
+      %dt Customer Typology
+      %dl= t "projeproject.customer_typology.#{project.customer_typology}"
+
+      %dt Email
+      %dl= link_to project.email, "mailto:#{project.email}"
+
+      %dt Reason to request access to the EOSC services
+      %dl= project.reason_for_access
+
+      - if project.single_user_or_community?
+        %dt Organization
+        %dl= project.organization
+
+        - if project.department
+          %dt Department
+          %dl= project.department
+
+        %dt Webpage
+        %dl= project.webpage
+
+      - if project.research?
+        %dt User group name
+        %dl= project.user_group_name
+
+      - if project.project?
+        %dt Project name
+        %dl= project.project_name
+
+        %dt Project website url
+        %dl= project.project_website_url
+
+      - if project.private_company?
+        %dt Company name
+        %dl= project.company_name
+
+        %dt Company website url
+        %dl= project.company_website_url
+
+      - if project.additional_information
+        %dt Additional Information
+        %dl= project.additional_information
+  .col.mb-3
     %h5 Services in this project section
     = render(project.project_items) || render("empty_project", project: project)
-

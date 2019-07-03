@@ -3,9 +3,6 @@ en:
     default: "You are not authorized to see this page"
     project_policy:
       "destroy?": "Projects with pending or active service access request cannot be deleted or archived"
-    affiliation_policy:
-      "edit?": "You cannot edit an affiliation which has been activated"
-      "destroy?": "You cannot remove an affiliation which has a project item"
     service_policy:
       "show?": "This service is not published in the Marketplace yet, therefore it cannot be accessed.
         If you are the Service Owner or Service Portfolio Manager and wish to manage this service,
