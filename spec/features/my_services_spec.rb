@@ -45,8 +45,8 @@ RSpec.feature "My Services" do
     # Test added after hotfix for a bug in `project_items/show.html.haml:30` (v1.2.0)
     scenario "I can see project_item details without research_area" do
       offer = create(:offer, service: create(:open_access_service))
-      project = create(:project, user: user)
-      project_item = create(:project_item, project: project, offer: offer, research_area: nil)
+      project = create(:project, user: user, research_areas: [])
+      project_item = create(:project_item, project: project, offer: offer)
 
       visit project_item_path(project_item)
 

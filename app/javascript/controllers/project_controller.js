@@ -35,7 +35,7 @@ export default class extends Controller {
     }
     if (customer !== "" && customer !== this.CUSTOMER_TYPOLOGIES.single_user){
        this.collaborationCountryTarget.classList.remove("hidden-fields");
-        $('.selectpicker').selectpicker('refresh');
+       $('.selectpicker').selectpicker('refresh');
     }
   }
 

@@ -14,23 +14,6 @@ RSpec.describe ProjectItem do
   it { should belong_to(:offer) }
   it { should have_many(:project_item_changes).dependent(:destroy) }
 
-  context "#research_area" do
-    it "can be a leaf" do
-      leaf = create(:research_area)
-
-      expect(build(:project_item, research_area: leaf)).to be_valid
-    end
-
-    it "cannot have children" do
-      root = create(:research_area)
-      create(:research_area, parent: root)
-
-      project_item = build(:project_item, research_area: root)
-
-      expect(project_item).to_not be_valid
-      expect(project_item.errors[:research_area_id]).to_not be_empty
-    end
-  end
 
   describe "#new_change" do
     it "change is not created when no message and status is given" do

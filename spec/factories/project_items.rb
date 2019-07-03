@@ -9,7 +9,5 @@ FactoryBot.define do
     offer
     project
     affiliation
-
-    research_area { service.open_access? ? nil : create(:research_area) }
   end
 end
