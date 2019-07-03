@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Reimplemented filters and categories after creating indexes in Elasticsearch (@bwilk)
 - Expand all projects on projects index view (@mkasztelnik)
 - Improvements for project box views (@mkasztelnik)
+- Project card redesigned (@mkasztelnik)
 
 ### Deprecated
 

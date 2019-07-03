@@ -152,15 +152,6 @@ RSpec.feature "My Services" do
 
       expect(page).to have_text("Question cannot be blank")
     end
-
-    scenario "I see webservice link if service is ready" do
-      project = create(:project, user: user)
-      project_item = create(:project_item, project: project, offer: offer, status: :ready)
-
-      visit projects_path
-
-      expect(page).to have_link("Access the service", href: project_item.service.webpage_url)
-    end
   end
 
   context "as anonymous user" do

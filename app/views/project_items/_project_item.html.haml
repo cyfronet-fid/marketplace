@@ -1,16 +1,7 @@
 %li.projects-list
-  .row
-    .col-9
-      = link_to project_item.service.title, project_item
-    .col-3.text-right.status
-      - if project_item.status == ProjectItem.statuses[:registered]
-        %i.fas.fa-circle.registered
-      - if project_item.status == ProjectItem.statuses[:ready]
-        %i.fas.fa-circle.ready
-      - if project_item.status == ProjectItem.statuses[:rejected]
-        %i.fas.fa-circle.rejected
-      - if project_item.status == ProjectItem.statuses[:in_progress]
-        %i.fas.fa-spinner.in_progress
-      - if project_item.status == ProjectItem.statuses[:created]
-        %span
-          = link_to "Visit website", project_item.service.webpage_url
+  = link_to project_item.service.title, project_item
+  .float-right.status
+    - if project_item.open_access?
+      = link_to "Visit website", project_item.service.webpage_url
+    - else
+      = project_item_status(project_item)
