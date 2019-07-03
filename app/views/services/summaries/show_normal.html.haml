@@ -38,35 +38,6 @@
     %dt Research area
     %dd= @project_item.research_area.name
 
-  - if @project_item.affiliation
-    %h4 Affiliation
-    %dl.mb-4
-      %dt Organization
-      %dd= @project_item.affiliation.organization
-
-      - if @project_item.affiliation.department.present?
-        %dt Department
-        %dd= @project_item.affiliation.department
-
-      %dt Email
-      %dd= @project_item.affiliation.email
-
-      - if @project_item.affiliation.phone.present?
-        %dt Phone
-        %dd= @project_item.affiliation.phone
-
-      %dt Webpage
-      %dd= @project_item.affiliation.webpage
-
-      - if @project_item.affiliation.supervisor.present?
-        %dt Supervisor
-        %dd= @project_item.affiliation.supervisor
-
-      - if @project_item.affiliation.supervisor_profile.present?
-        %dt Supervisor profile
-        %dd= @project_item.affiliation.supervisor_profile
-
-
   %h4 My projects
   %dl.mb-4
     %dt Project name
