@@ -35,6 +35,7 @@
     %h4{ "data-target" => "project-item.usage" }
     %dl.mb-4
       %dd{ "data-target" => "project-item.reason" }
+      %dd{ "data-target" => "project-item.researchAreas" }
       %dd{ "data-target" => "project-item.customer" }
       %dd{ "data-target" => "project-item.customerCountry" }
       %dd{ "data-target" => "project-item.email" }
@@ -49,8 +50,6 @@
       %dd{ "data-target" => "project-item.webpage" }
       %dd{ "data-target" => "project-item.additionalInformation" }
 
-  = f.association :research_area, as: :grouped_select,
-    collection: grouped_research_areas, group_method: :last
 
 = content_for :next_button do
   %button.btn.btn-primary{ form: "order-form", type: "submit" }

@@ -3,7 +3,7 @@ import { Controller } from "stimulus"
 export default class extends Controller {
   static targets = ["reason", "usage", "customerCountry", "customer",
                     "privateCompany", "collaborationCountry",
-                    "userGroupName", "projectName",
+                    "userGroupName", "projectName", "researchAreas",
                     "projectWebsiteUrl", "companyName",
                     "companyWebsiteUrl", "hasVoucher",
                     "email", "organization", "department", "webpage",
@@ -60,6 +60,7 @@ export default class extends Controller {
   _showProjectFields(project) {
     this.usageTarget.innerHTML = "Usage"
     this.reasonTarget.innerHTML = this._wrap_text(project["reason_for_access"], "Access reason");
+    this.researchAreasTarget.innerHTML = this._wrap_text(project["research_areas"], "Research Areas")
     this.customerCountryTarget.innerHTML =
         this._wrap_text(this._getCountriesNames(project["country_of_customer"]),"Customer country");
     this.customerTarget.innerHTML = this._wrap_text(project["customer_typology"], "Customer typology");
