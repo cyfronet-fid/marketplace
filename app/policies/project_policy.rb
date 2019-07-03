@@ -27,7 +27,7 @@ class ProjectPolicy < ApplicationPolicy
     [:name, :reason_for_access, :email,
      :country_of_customer, [country_of_collaboration: []],
      :customer_typology, :user_group_name,
-     :organization, :deparment, :webpage,
+     :organization, :department, :webpage,
      :project_name, :project_website_url,
      :company_name, :company_website_url,
      :additional_information]
