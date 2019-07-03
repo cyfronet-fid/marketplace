@@ -7,9 +7,9 @@
     = project.reason_for_access
 .col-md-6.ml-auto
   %ul.list-group
-    %h3.project-services.pb-2.mb-3
+    %h3.project-services.pb-2.mb-2
       %i.fas.fa-box-open.mr-2
       Project services
     = render(project.project_items) || render("projects/empty_project", project: project)
   - if project.project_items.any?
-    = link_to "Add service to this project", services_url, class: "btn float-right btn-primary mt-3"
+    = link_to "Add service to this project", services_url, class: "btn-sm float-right btn-primary mt-3"
