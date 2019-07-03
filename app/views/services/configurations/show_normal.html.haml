@@ -30,6 +30,7 @@
   %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Usage
   %div{ "data-target" => "project-item.reason" }
   %div{ "data-target" => "project-item.customerCountry" }
+  %div{ "data-target" => "project-item.email" }
   %div{ "data-target" => "project-item.customer" }
   %div{ "data-target" => "project-item.collaborationCountry" }
   %div{ "data-target" => "project-item.userGroupName" }
@@ -37,6 +38,9 @@
   %div{ "data-target" => "project-item.projectWebsiteUrl" }
   %div{ "data-target" => "project-item.companyName" }
   %div{ "data-target" => "project-item.companyWebsiteUrl" }
+  %div{ "data-target" => "project-item.organization" }
+  %div{ "data-target" => "project-item.department" }
+  %div{ "data-target" => "project-item.webpage" }
   %div{ "data-target" => "project-item.additionalInformation" }
 
   = f.association :research_area, as: :grouped_select,

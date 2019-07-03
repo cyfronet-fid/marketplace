@@ -4,6 +4,9 @@
       %dt Customer Typology
       %dl= t "projeproject.customer_typology.#{project.customer_typology}"
 
+      %dt Email
+      %dl= link_to project.email, "mailto:#{project.email}"
+
       %dt Access Reason
       %dl= project.reason_for_access
 
@@ -42,4 +45,3 @@
   .col.mb-3
     %h5 Services in this project section
     = render(project.project_items) || render("empty_project", project: project)
-
