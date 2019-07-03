@@ -7,7 +7,7 @@
       %dt Email
       %dl= link_to project.email, "mailto:#{project.email}"
 
-      %dt Access Reason
+      %dt Reason to request access to the EOSC services
       %dl= project.reason_for_access
 
       - if project.single_user_or_community?
