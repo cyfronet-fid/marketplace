@@ -2001,3 +2001,23 @@ label[data-multicheckbox].small {
     height: 90px;
   }
 }
+
+@media (max-width: 768px) {
+  .projects-collapse-content .col-md-5 {
+    margin-bottom: 25px;
+  }
+
+  .buttons-panel {
+    margin-bottom: 15px;
+
+    .btn {
+      padding: 4px 15px;
+      font-size: 0.85rem;
+    }
+  }
+
+  .service-description .details-content p {
+    font-size: 15px;
+    line-height: 23px;
+  }
+}
