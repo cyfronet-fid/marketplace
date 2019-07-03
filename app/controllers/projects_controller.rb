@@ -22,7 +22,11 @@ class ProjectsController < ApplicationController
           project_name: @project.project_name,
           project_website_url: @project.project_website_url,
           company_name: @project.company_name,
-          company_website_url: @project.company_website_url
+          company_website_url: @project.company_website_url,
+          email: @project.email,
+          department: @project.department,
+          organization: @project.organization,
+          webpage: @project.webpage
         }
       end
       format.html
