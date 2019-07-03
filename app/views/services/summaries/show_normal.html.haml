@@ -36,7 +36,7 @@
       %dd= @project_item.project.additional_information
 
     %dt Research area
-    %dd= @project_item.research_area.name
+    %dd= @project_item.project.research_areas.names.join(", ")
 
   %h4 My projects
   %dl.mb-4
