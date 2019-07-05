@@ -1030,6 +1030,49 @@ h5 {
   display: block;
 }
 
+
+.order-container {
+  .form-group select,
+  .form-group select {
+    width: 33%;
+  }
+
+  textarea {
+    width: 70%;
+  }
+
+  table {
+    margin-bottom: 0;
+  }
+
+  .form-check .form-check-input {
+    margin-top: 0.2rem;
+    margin-right: 0.5rem;
+  }
+
+  .form-check .form-check-label,
+  .form-check .form-text {
+    padding-left: 10px;
+  }
+
+  .configuration-big-title {
+    text-transform: none;
+    border: none;
+    font-size: 18px;
+  }
+
+  .details-content {
+
+    h4 {
+      border: none;
+      font-size: 16px;
+      line-height: 25px;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+}
+
 @media only screen and (max-width: 768px) {
 
   .area-bg {
@@ -1058,38 +1101,10 @@ h5 {
   font-size: 1.05em;
 }
 
-.order-container .configuration-big-title {
-  text-transform: none;
-  border: none;
-  font-size: 18px;
-}
-
 .sub-text {
   font-size: 16px;
 }
 
-.order-container .form-group select,
-.order-container .form-group select {
-  width: 33%;
-}
-
-.order-container textarea {
-  width: 70%;
-}
-
-.order-container table {
-  margin-bottom: 0;
-}
-
-.order-container .form-check .form-check-input {
-  margin-top: 0.2rem;
-  margin-right: 0.5rem;
-}
-
-.order-container .form-check .form-check-label,
-.order-container .form-check .form-text {
-  padding-left: 10px;
-}
 
 .card-body table tr:first-child td {
   border-top: none;
@@ -1939,6 +1954,8 @@ label[data-multicheckbox].small {
   h3 {
     text-transform: uppercase;
     font-size: 14px;
+    border: none;
+    margin-bottom: 8px;
   }
 
 }
