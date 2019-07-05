@@ -32,11 +32,8 @@
     %dl.mb-4
       %dt Customer typology
       %dd= t "simple_form.options.defaults.customer_typology.#{@project_item.project.customer_typology}"
-
       %dd{ "data-target" => "project-item.customerCountry" }
-
       %dd{ "data-target" => "project-item.reason" }
-
       %dd{ "data-target" => "project-item.customerCountry" }
       %dd{ "data-target" => "project-item.email" }
       %dd{ "data-target" => "project-item.customer" }
@@ -53,7 +50,6 @@
 
       = f.association :research_area, as: :grouped_select,
       collection: grouped_research_areas, group_method: :last
-
 
     - unless @project_item.property_values.blank?
       %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Technical parameters
