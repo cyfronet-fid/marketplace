@@ -60,13 +60,13 @@ export default class extends Controller {
   _showProjectFields(project) {
     this.usageTarget.innerHTML = "Usage"
     this.reasonTarget.innerHTML = this._wrap_text(project["reason_for_access"], "Access reason");
-    this.researchAreasTarget.innerHTML = this._wrap_text(project["research_areas"], "Research Areas")
+    this.researchAreasTarget.innerHTML =
+        this._wrap_text(this._getResearchAreasNames(project["research_areas"]) || "Not specified", "Research Areas");
     this.customerCountryTarget.innerHTML =
         this._wrap_text(this._getCountriesNames(project["country_of_customer"]),"Customer country");
     this.customerTarget.innerHTML = this._wrap_text(project["customer_typology"], "Customer typology");
     this.collaborationCountryTarget.innerHTML =
-        project["country_of_collaboration"].length ?
-        this._wrap_text(this._getCountriesNames(project["country_of_collaboration"]), "Country of collaboration") : "";
+        this._wrap_text(this._getCountriesNames(project["country_of_collaboration"]) || null, "Country of collaboration");
     this.userGroupNameTarget.innerHTML = this._wrap_text(project["user_group_name"], "User group name");
     this.projectNameTarget.innerHTML = this._wrap_text(project["project_name"], "Project name");
     this.projectWebsiteUrlTarget.innerHTML = this._wrap_text(project["project_website_url"], "Project website url");
@@ -111,7 +111,20 @@ export default class extends Controller {
       else {
         result += ", ";
       }
-    };
+    }
+  }
+
+  _getResearchAreasNames(areas) {
+    let result = "";
+    for (const [idx, area] of areas.entries()) {
+      result += area.name;
+      if (idx === areas.length -1 ) {
+        return result;
+      }
+      else {
+        result += ", ";
+      }
+    }
   }
 
 
