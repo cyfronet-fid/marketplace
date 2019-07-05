@@ -25,6 +25,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Removed
 - Project filter removed from projects index view (@mkasztelnik)
+- Affiliations were removed from all views (@mkasztelnik)
 
 ### Fixed
 

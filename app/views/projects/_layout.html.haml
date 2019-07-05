@@ -20,6 +20,5 @@
     %li.nav-item
       = link_to "Contact with support", project_chat_path(project),
         class: "nav-link #{"active" if controller.controller_name == "chats"}"
-  .tab-content
-    .container.pt-2
-      = yield
+  .container.pt-2
+    = yield

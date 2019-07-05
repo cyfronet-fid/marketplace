@@ -1,6 +1,16 @@
 = f.input :user_group_name,
   wrapper_html: { class: "hidden-fields col-6 pl-0", "data-target" => "project.research project.input" },
   input_html: { "data-target" => "project.userGroupName" }
+= f.input :organization,
+  wrapper_html: { class: "hidden-fields", "data-target" => "project.singleUser project.research project.input" },
+  input_html: { "data-target" => "project.organization" }
+= f.input :department,
+  wrapper_html: { class: "hidden-fields", "data-target" => "project.singleUser project.research project.input" },
+  input_html: { "data-target" => "project.department" }
+= f.input :webpage,
+  wrapper_html: { class: "hidden-fields", "data-target" => "project.singleUser project.research project.input" },
+  input_html: { "data-target" => "project.webpage" },
+  hint: "Url should start with http or https [e.g. http://webpage.org]"
 = f.input :project_name,
   wrapper_html: { class: "hidden-fields col-6 pl-0", "data-target" => "project.project project.input" },
   input_html: { "data-target" => "project.projectName" }
@@ -13,5 +23,3 @@
 = f.input :company_website_url,
   wrapper_html: { class: "hidden-fields col-6 pl-0", "data-target" => "project.privateCompany project.input" },
   input_html: { "data-target" => "project.companyWebsiteUrl" }
-
-

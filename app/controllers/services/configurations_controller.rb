@@ -35,6 +35,5 @@ class Services::ConfigurationsController < Services::ApplicationController
 
     def setup_show_variables!
       @projects = current_user.projects
-      @affiliations = current_user.active_affiliations
     end
 end

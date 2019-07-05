@@ -1940,6 +1940,12 @@ label[data-multicheckbox].small {
     margin: 15px 0 35px;
     border-left: solid 3px $border-color;
 
+    .form-control-label {
+      font-size: 16px;
+      line-height: 25px;
+      font-weight: 600;
+    }
+
     p,
     h5 {
       font-size: 16px;

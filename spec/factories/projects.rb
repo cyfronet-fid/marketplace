@@ -3,8 +3,12 @@
 FactoryBot.define do
   factory :project do
     sequence(:name) { |n| "project #{n}" }
+    sequence(:email) { |n| "username#{n}@email.com" }
     sequence(:reason_for_access) { |n| "reason #{n}" }
     sequence(:customer_typology) { |n| "single_user" }
+    sequence(:organization) { |n| "organization #{n}" }
+    sequence(:department) { |n| "department #{n}" }
+    sequence(:webpage) { |n| "http://webpage#{n}.pl" }
     sequence(:user_group_name) { |n| "User group #{n}" }
     sequence(:project_name) { |n| "Project name #{n}" }
     sequence(:country_of_customer) { "N/E" }
