@@ -11,13 +11,11 @@
 
   = render "services/configurations/voucher", project_item: @project_item, f: f
 
-  - unless @project_item.property_values.blank?
-    %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Technical parameters
-    = render "services/configurations/attributes", project_item: @project_item, form: f
+  .additional-information.mb-4.service-description
+    %h5.mb-4.mt-5.font-weight-bold.configuration-title.text-uppercase
+      Additional information
 
-  .service-description
-    %h5.mb-4.mt-5.font-weight-bold.configuration-title.text-uppercase Additional informations
-    %h3.mb-3.font-weight-bold.configuration-title.text-uppercase My projects
+    %h4 My projects
     .details-content
       %p.mb-4= t("project.select.description")
       = f.input :project do
@@ -31,26 +29,36 @@
               class: "btn btn-primary", remote: true
 
     %h3 Usage
-    .details-content
-      %div{ "data-target" => "project-item.customer" }
-      %div{ "data-target" => "project-item.reason" }
-      %div{ "data-target" => "project-item.customerCountry" }
-      %div{ "data-target" => "project-item.collaborationCountry" }
-      %div{ "data-target" => "project-item.userGroupName" }
-      %div{ "data-target" => "project-item.projectName" }
-      %div{ "data-target" => "project-item.projectWebsiteUrl" }
-      %div{ "data-target" => "project-item.companyName" }
-      %div{ "data-target" => "project-item.companyWebsiteUrl" }
-      %div{ "data-target" => "project-item.additionalInformation" }
+    %dl.mb-4
+      %dt Customer typology
+      %dd= t "simple_form.options.defaults.customer_typology.#{@project_item.project.customer_typology}"
+
+      %dd{ "data-target" => "project-item.customerCountry" }
+
+      %dd{ "data-target" => "project-item.reason" }
+
+      %dd{ "data-target" => "project-item.customerCountry" }
+      %dd{ "data-target" => "project-item.email" }
+      %dd{ "data-target" => "project-item.customer" }
+      %dd{ "data-target" => "project-item.collaborationCountry" }
+      %dd{ "data-target" => "project-item.userGroupName" }
+      %dd{ "data-target" => "project-item.projectName" }
+      %dd{ "data-target" => "project-item.projectWebsiteUrl" }
+      %dd{ "data-target" => "project-item.companyName" }
+      %dd{ "data-target" => "project-item.companyWebsiteUrl" }
+      %dd{ "data-target" => "project-item.organization" }
+      %dd{ "data-target" => "project-item.department" }
+      %dd{ "data-target" => "project-item.webpage" }
+      %dd{ "data-target" => "project-item.additionalInformation" }
 
       = f.association :research_area, as: :grouped_select,
-        collection: grouped_research_areas, group_method: :last
+      collection: grouped_research_areas, group_method: :last
 
-    %h3 Affiliation
-    .details-content
-      = f.association :affiliation,
-        collection: @affiliations, label_method: :organization,
-        hint: "Click #{link_to "here", new_profile_affiliation_path} to create a new affiliation".html_safe
+
+    - unless @project_item.property_values.blank?
+      %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Technical parameters
+      = render "services/configurations/attributes", project_item: @project_item, form: f
+
 
 = content_for :next_button do
   %button.btn.btn-primary{ form: "order-form", type: "submit" }

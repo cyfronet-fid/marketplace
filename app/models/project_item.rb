@@ -30,7 +30,6 @@ class ProjectItem < ApplicationRecord
   has_many :project_item_changes, dependent: :destroy
 
   validates :offer, presence: true
-  validates :affiliation, presence: true, unless: :open_access?
   validates :research_area, presence: true, unless: :open_access?
   validates :project, presence: true
   validates :status, presence: true

@@ -23,9 +23,13 @@ RSpec.feature "Project" do
 
       expect(project_create).to receive(:call)
       fill_in "project_name", with: "First test"
+      fill_in "Email", with: "john@doe.com"
       fill_in "Reason to request access to the EOSC services", with: "because I'm testing"
       select "non-European", from: "Country of customer"
       select "Single user", from: "Customer typology"
+      fill_in "Organization", with: "Home corp."
+      fill_in "Webpage", with: "http://home.corp.com"
+
       expect { click_on "Create" }.
         to change { user.projects.count }.by(1)
       new_project = Project.last
@@ -41,9 +45,12 @@ RSpec.feature "Project" do
       expect(project_create).to receive(:call)
 
       fill_in "project_name", with: "Second test"
+      fill_in "Email", with: "john@doe.com"
       fill_in "Reason to request access to the EOSC services", with: "because I'm testing"
       select "non-European", from: "Country of customer"
       select "Single user", from: "Customer typology"
+      fill_in "Organization", with: "Home corp."
+      fill_in "Webpage", with: "http://home.corp.com"
       click_on "Create"
 
       expect(current_url).to eq(projects_url)
@@ -89,7 +96,7 @@ RSpec.feature "Project" do
       expect(page).to have_text(project.name)
     end
 
-    scenario "I cannot edit invalid project" do
+    scenario "I cannot update project with invalid fields" do
       project = create(:project, name: "First Project", user: user)
 
       visit project_path(project)

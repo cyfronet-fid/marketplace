@@ -23,20 +23,13 @@ describe Jira::Client do
 
     user = create(:user, first_name: "John", last_name: "Doe", uid: "uid1")
     project_item = create(:project_item,
-                          affiliation: create(:affiliation,
-                                              user: user,
-                                              organization: "organization 1",
-                                              department: "department 1",
-                                              email: "john.doe@organization.com", webpage: "http://organization.com",
-                                              supervisor: "Jim Supervisor",
-                                              supervisor_profile: "http://jim.supervisor.edu"),
-                          offer: create(:offer, name: "off1", service: create(:service,
-                                                                        title: "s1",
-                                                                        categories: [create(:category, name: "cat1")])),
-                          project: create(:project, user: user, name: "My Secret Project",
-                                          user_group_name: "New user group", reason_for_access: "some reason"),
-                          research_area: create(:research_area, name: "My RA"),
-                          properties: [
+          offer: create(:offer, name: "off1", service: create(:service,
+                                                        title: "s1",
+                                                        categories: [create(:category, name: "cat1")])),
+          project: create(:project, user: user, name: "My Secret Project",
+                          user_group_name: "New user group", reason_for_access: "some reason"),
+          research_area: create(:research_area, name: "My RA"),
+          properties: [
             {
                 "id": "id1",
                 "type": "input",
@@ -98,9 +91,8 @@ describe Jira::Client do
     allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
 
-    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2", affiliations: [])
+    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2")
     project_item = create(:project_item,
-                          affiliation: nil,
                           offer: create(:offer, name: "off1",  service: create(:service,
                                                                                order_target: "email@domain.com",
                                                                                title: "s1",
@@ -144,9 +136,8 @@ describe Jira::Client do
     allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
 
-    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2", affiliations: [])
+    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2")
     project_item = create(:project_item,
-                          affiliation: nil,
                           offer: create(:offer,
                                         name: "off1",
                                         voucherable: true,
@@ -192,9 +183,8 @@ describe Jira::Client do
     allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
 
-    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2", affiliations: [])
+    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2")
     project_item = create(:project_item,
-                          affiliation: nil,
                           offer: create(:offer,
                                         name: "off1",
                                         voucherable: true,
@@ -238,10 +228,12 @@ describe Jira::Client do
     allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
 
     user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2",
-                  affiliations: [], email: "john.doe@email.eu")
+                  email: "john.doe@email.eu")
     project = create(:project, user: user, name: "My Secret Project",
+                     email: "project@email.com",
                      user_group_name: "User Group Name 1",
                      customer_typology: "research",
+                     organization: "org", department: "dep", webpage: "http://dep-wwww.pl",
                      reason_for_access: "some reason")
 
     expected_fields = { summary: "Project, John Doe, My Secret Project",
@@ -251,7 +243,10 @@ describe Jira::Client do
                         "CI-Name-1" => "John",
                         "CI-Surname-1" => "Doe",
                         "CI-DisplayName-1" => "John Doe",
-                        "CI-Email-1" => "john.doe@email.eu",
+                        "CI-Email-1" => "project@email.com",
+                        "CI-Institution-1" => "org",
+                        "CI-Department-1" => "dep",
+                        "CI-DepartmentalWebPage-1" => "http://dep-wwww.pl",
                         "CI-EOSC-UniqueID-1" => "uid2",
                         "CP-CustomerTypology-1" => { "id" => "20001" },
                         "SO-ProjectName-1" => "My Secret Project (#{project.id})",

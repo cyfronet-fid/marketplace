@@ -65,10 +65,6 @@ en:
       normal: Order
       open_access: Add to a project
       catalog: Go to the service
-  affiliation_confirmations:
-    index:
-      not_found: "Affiliation for the given token cannot be found."
-      not_owned: "Affiliation does not belong to you."
 
   will_paginate:
     page_entries_info:

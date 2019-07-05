@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_14_094412) do
+ActiveRecord::Schema.define(version: 2019_06_19_112716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,8 +100,8 @@ ActiveRecord::Schema.define(version: 2019_06_14_094412) do
     t.datetime "updated_at", null: false
     t.jsonb "parameters", default: [], null: false
     t.boolean "voucherable", default: false, null: false
-    t.string "status"
     t.string "offer_type"
+    t.string "status"
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
     t.index ["service_id"], name: "index_offers_on_service_id"
@@ -154,12 +154,16 @@ ActiveRecord::Schema.define(version: 2019_06_14_094412) do
     t.string "project_website_url"
     t.string "company_name"
     t.string "company_website_url"
+    t.string "country_of_customer", null: false
+    t.string "country_of_collaboration", default: [], null: false, array: true
     t.integer "issue_id"
     t.integer "issue_status", default: 2, null: false
     t.string "issue_key"
     t.text "additional_information"
-    t.string "country_of_customer", null: false
-    t.string "country_of_collaboration", default: [], null: false, array: true
+    t.string "email"
+    t.string "organization"
+    t.string "department"
+    t.string "webpage"
     t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -345,7 +349,6 @@ ActiveRecord::Schema.define(version: 2019_06_14_094412) do
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.integer "roles_mask"
-    t.integer "active_affiliations_count", default: 0
     t.integer "owned_services_count", default: 0, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
