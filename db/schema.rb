@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_19_112716) do
+ActiveRecord::Schema.define(version: 2019_06_19_152804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,18 @@ ActiveRecord::Schema.define(version: 2019_06_19_112716) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "author_id"
+    t.text "message"
+    t.integer "iid"
+    t.string "messageable_type"
+    t.bigint "messageable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_messages_on_author_id"
+    t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id"
   end
 
   create_table "offers", force: :cascade do |t|
@@ -301,6 +313,18 @@ ActiveRecord::Schema.define(version: 2019_06_19_112716) do
     t.index ["description"], name: "index_services_on_description"
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["title"], name: "index_services_on_title"
+  end
+
+  create_table "statuses", force: :cascade do |t|
+    t.bigint "author_id"
+    t.string "status"
+    t.text "message"
+    t.string "pipeline_type"
+    t.bigint "pipeline_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_statuses_on_author_id"
+    t.index ["pipeline_type", "pipeline_id"], name: "index_statuses_on_pipeline_type_and_pipeline_id"
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|

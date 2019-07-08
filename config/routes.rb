@@ -29,14 +29,16 @@ Rails.application.routes.draw do
   resources :projects do
     scope module: :projects do
       resources :about, only: :index
-      resource :chat, only: :show
+      resource :conversation, only: [:show, :create]
     end
   end
-  resources :project_items, only: :show do
+
+  resources :project_items, only: [:show, :message] do
     scope module: :project_items do
-      resources :questions, only: [:index, :create]
       resources :service_opinions, only: [:new, :create]
+      resource :conversation, only: :create
     end
+    post "message", to: "project_items#message", as: :message
   end
 
   resource :profile, only: :show

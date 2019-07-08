@@ -9,7 +9,7 @@ class ProjectItem::Create
     @project_item.created!
 
     if @project_item.save
-      @project_item.new_change(status: :created,
+      @project_item.statuses.create(status: :created,
                                message: "Service request created")
 
       if open_access?

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-class ProjectItem::RegisterQuestionJob < ApplicationJob
+class Message::RegisterMessageJob < ApplicationJob
   queue_as :orders
 
-  rescue_from(ProjectItem::RegisterQuestion::JIRACommentCreateError) do |exception|
-    # TODO: we need to define what to do when question registration in e.g.
+  rescue_from(Message::RegisterMessage::JIRACommentCreateError) do |exception|
+    # TODO: we need to define what to do when message registration in e.g.
     #       JIRA fails. Maybe we should report this problem to Sentry and
     #       do some manual intervantion?
   end
@@ -14,9 +14,9 @@ class ProjectItem::RegisterQuestionJob < ApplicationJob
     # caught just in case
   end
 
-  def perform(question)
-    if question.question?
-      ProjectItem::RegisterQuestion.new(question).call
+  def perform(message)
+    if message.question?
+      Message::RegisterMessage.new(message).call
     end
   end
 end

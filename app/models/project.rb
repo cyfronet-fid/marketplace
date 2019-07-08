@@ -30,7 +30,7 @@ class Project < ApplicationRecord
   has_many :project_items, dependent: :destroy
   has_many :project_research_areas, dependent: :destroy
   has_many :research_areas, through: :project_research_areas
-
+  has_many :messages, as: :messageable, dependent: :destroy
 
   validates :name,
             presence: true,
