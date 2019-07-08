@@ -1,4 +1,4 @@
-.row.list-group-item
+.list-group-item.projects-collapse
   %a{ "href": "#collapse_#{project.id}", "aria-controls": "collapse_#{project.id}",
       "data-toggle": "collapse", "role": "tab", "aria-expanded": "false" }
     .collapse-icon.d-inline
@@ -9,5 +9,6 @@
       = link_to "Manage and get support", project_url(project),
         class: "float-right btn-sm btn btn-secondary d-inline"
 
-.row.align-items-center.border.panel-collapse.collapse.show.p-3{ "id": "collapse_#{project.id}" }
-  = render "projects/details_box", project: project
+.border.panel-collapse.collapse.show.p-4.projects-collapse-content.shadow-sm{ "id": "collapse_#{project.id}" }
+  .row
+    = render "projects/details_box", project: project

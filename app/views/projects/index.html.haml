@@ -1,10 +1,10 @@
 - breadcrumb :projects
 
 .container
-  .d-flex.mb-5
+  .d-flex.mb-4.pb-4.border-header
     %h1.mr-auto.my-auto My projects and orders
     = link_to "Create new project",
                   new_project_path,
-                  class: "btn btn-success"
+                  class: "btn btn-primary d-inline-block mt-2 align-middle"
 
   = render @projects

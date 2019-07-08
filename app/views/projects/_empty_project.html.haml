@@ -1,10 +1,14 @@
-.border.text-center
-  %p
-    You have no services in this project yet.
-    %br
-    = link_to "Use our catalogue to add one.", services_url
-  %p
-    If you need help with these don't hesitate and
-    %br
-    = link_to "contact with our support!", project_chat_path(project)
+.row
+  .col.pt-2
+    %p
+      You have no services in this project yet.
+      %br
+      Use our catalogue to add one.
+    %p
+      If you need help with these don't hesitate and contact with our support.
+
+  .col.pt-2
+    = link_to "Add service to this project", services_url,
+    class: "btn-sm btn-block btn-primary mb-4 pl-2 pr-2 text-center"
+    = link_to "Contact with support", project_chat_path(project), class: "btn-sm btn-block btn-primary text-center"
 
