@@ -28,8 +28,8 @@ RSpec.describe ProjectItemMailer, type: :mailer do
   context "project_item change" do
     it "notifies about project_item status change" do
       project_item = create(:project_item, project: project)
-      project_item.new_change(status: :created, message: "ProjectItem created")
-      project_item.new_change(status: :registered, message: "ProjectItem registered")
+      project_item.new_status(status: :created, message: "ProjectItem created")
+      project_item.new_status(status: :registered, message: "ProjectItem registered")
 
       mail = described_class.changed(project_item).deliver_now
       encoded_body = mail.body.encoded
@@ -42,8 +42,8 @@ RSpec.describe ProjectItemMailer, type: :mailer do
 
     it "notifies about new project_item message" do
       project_item = create(:project_item, project: project)
-      project_item.new_change(status: :created, message: "ProjectItem created")
-      project_item.new_change(status: :created, message: "New message")
+      project_item.new_status(status: :created, message: "ProjectItem created")
+      project_item.new_status(status: :created, message: "New message")
 
       mail = described_class.changed(project_item).deliver_now
       encoded_body = mail.body.encoded
