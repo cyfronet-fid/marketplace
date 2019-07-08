@@ -2044,3 +2044,11 @@ label[data-multicheckbox].small {
     line-height: 23px;
   }
 }
+
+.modal-dialog {
+  .col-6 {
+    width: 100%;
+    max-width: 100%;
+    padding-right: 0;
+  }
+}
