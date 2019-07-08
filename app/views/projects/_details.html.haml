@@ -1,47 +1,61 @@
-.row.pt-5.justify-content-between
-  .col
+.row.pt-4.justify-content-between.order-container
+  .col.additional-information
+    %h3 Project details
     %dl
-      %dt Customer Typology
-      %dl= t "projeproject.customer_typology.#{project.customer_typology}"
-
-      %dt Email
-      %dl= link_to project.email, "mailto:#{project.email}"
-
-      %dt Reason to request access to the EOSC services
-      %dl= project.reason_for_access
-
-      - if project.single_user_or_community?
-        %dt Organization
-        %dl= project.organization
-
-        - if project.department
-          %dt Department
-          %dl= project.department
-
-        %dt Webpage
-        %dl= project.webpage
-
-      - if project.research?
-        %dt User group name
-        %dl= project.user_group_name
-
       - if project.project?
         %dt Project name
-        %dl= project.project_name
+        %dd= project.project_name
 
+      %dt Email
+      %dd= link_to project.email, "mailto:#{project.email}"
+
+      - if project.project_website_url?
         %dt Project website url
-        %dl= project.project_website_url
+        %dd= project.project_website_url
 
       - if project.private_company?
         %dt Company name
-        %dl= project.company_name
+        %dd= project.company_name
 
+
+    %h3 Customer details
+    %dl
+
+      %dt Customer Typology
+      %dd= t "projeproject.customer_typology.#{project.customer_typology}"
+
+      - if project.research?
+        %dt User group name
+        %dd= project.user_group_name
+
+      - if project.single_user_or_community?
+        %dt Organization
+        %dd= project.organization
+
+      - if project.department
+        %dt Department
+        %dd= project.department
+
+      - if project.webpage?
+        %dt Webpage
+        %dd= project.webpage
+
+      - if project.company_website_url?
         %dt Company website url
-        %dl= project.company_website_url
+        %dd= project.company_website_url
 
+    %h3 Usage
+    %dl
+      %dt Reason to request access to the EOSC services
+      %dd= project.reason_for_access
+
+    %h3 Additional information
+    %dl
       - if project.additional_information
-        %dt Additional Information
-        %dl= project.additional_information
+        %dd= project.additional_information
   .col.mb-3
-    %h5 Services in this project section
-    = render(project.project_items) || render("empty_project", project: project)
+    %ul.list-group
+      %h3.project-services.pb-2.mb-2
+        %i.fas.fa-box-open.mr-2
+        Services in this project
+      = render(project.project_items) || render("empty_project", project: project)

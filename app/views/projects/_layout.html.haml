@@ -1,14 +1,14 @@
 - breadcrumb :project, project
 .container
-  .d-flex.d-flex-row
+  .d-md-flex.d-md-flex-row
     %h1.flex-grow-1
       = project.name
 
-    %div
+    .buttons-panel
       = link_to "Edit project", edit_project_path(project), class: "btn btn-secondary"
       = link_to "Duplicate", new_project_path(source: project.id), class: "btn btn-secondary"
       = link_to "Delete", project_path(project), method: :delete,
-        data: { confirm: "Are you sure?" }, class: "btn btn-danger"
+        data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger"
   = link_to projects_url do
     %small
       %i.fa.fa-chevron-left
@@ -18,8 +18,7 @@
       = link_to "Project details", project_path(project),
         class: "nav-link #{"active" if controller.controller_name == "projects"}"
     %li.nav-item
-      = link_to "Chat with customer service", project_chat_path(project),
+      = link_to "Contact with support", project_chat_path(project),
         class: "nav-link #{"active" if controller.controller_name == "chats"}"
-  .tab-content
-    .container.pt-2
-      = yield
+  .container.pt-2
+    = yield
