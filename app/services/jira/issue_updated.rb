@@ -30,7 +30,7 @@ class Jira::IssueUpdated
         end
 
         if status
-          @project_item.new_change(status: status, message: message)
+          @project_item.new_status(status: status, message: message)
           if status == :ready
             if aod_voucherable?
               ProjectItemMailer.aod_voucher_accepted(@project_item).deliver_later

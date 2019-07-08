@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 module ProjectItemsHelper
-  def status_change(previous, current)
-    if current.question?
-      "Your question to service provider"
-    elsif previous
-      if answer?(previous, current)
-        "Service provider message"
+  def label_message(previous, current)
+    if current.is_a?(Message)
+      if current.question?
+        t("#{controller_name}.message.question")
       else
-        "Status changed from #{previous.status} to #{current.status}"
+        t("#{controller_name}.message.answer")
       end
+    elsif previous && previous.is_a?(Status) && !answer?(previous, current)
+      "Status changed from #{previous.status} to #{current.status}"
     else
       "Service request #{current.status}"
     end

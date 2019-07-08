@@ -45,7 +45,7 @@ class ProjectItem::Ready
     end
 
     def update_status!
-      @project_item.new_change(status: :ready,
+      @project_item.new_status(status: :ready,
                                message: activate_message)
     end
 
