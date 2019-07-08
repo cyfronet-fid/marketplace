@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProjectItem::RegisterQuestion
+class Message::RegisterMessage
   class JIRACommentCreateError < StandardError
     def initialize(question, msg = nil)
       @question = question
@@ -8,7 +8,7 @@ class ProjectItem::RegisterQuestion
     end
   end
 
-  delegate :project_item, :message, to: :@question
+  delegate :message, :messageable, to: :@question
   attr_reader :question
 
   def initialize(question)
@@ -16,8 +16,7 @@ class ProjectItem::RegisterQuestion
   end
 
   def call
-    issue = Jira::Client.new.Issue.find(project_item.issue_id)
-
+    issue = Jira::Client.new.Issue.find(messageable.issue_id)
     comment = issue.comments.build
     if comment.save(body: message)
       question.update(iid: comment.id)

@@ -10,7 +10,7 @@ class ProjectItemMailer < ApplicationMailer
   end
 
   def changed(project_item)
-    changes = project_item.project_item_changes.last(2)
+    changes = project_item.statuses.last(2)
 
     if changes.size > 1
       @project_item = project_item

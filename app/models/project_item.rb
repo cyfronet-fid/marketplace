@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ProjectItem < ApplicationRecord
+  delegate :url_helpers, to: "Rails.application.routes"
   include Customization
 
   STATUSES = {
@@ -27,7 +28,8 @@ class ProjectItem < ApplicationRecord
   belongs_to :project
   belongs_to :research_area, required: false
   has_one :service_opinion, dependent: :restrict_with_error
-  has_many :project_item_changes, dependent: :destroy
+  has_many :messages, as: :messageable, dependent: :destroy
+  has_many :statuses, as: :pipeline
 
   validates :offer, presence: true
   validates :project, presence: true
@@ -40,6 +42,10 @@ class ProjectItem < ApplicationRecord
   validate :properties_not_nil
 
   delegate :user, to: :project
+
+  def message_url
+    url_helpers.project_item_message_path(self)
+  end
 
   def service
     offer.service unless offer.nil?
@@ -54,13 +60,13 @@ class ProjectItem < ApplicationRecord
     !(ready? || rejected?)
   end
 
-  def new_change(status: nil, message: nil, author: nil, iid: nil)
+  def new_status(status: nil, message: nil, author: nil)
     # don't create change when there is not status and message given
     return unless status || message
 
     status ||= self.status
 
-    project_item_changes.create(status: status, message: message, author: author, iid: iid).tap do
+    statuses.create(status: status, message: message, author: author).tap do
       update_attributes(status: status)
     end
   end
@@ -78,7 +84,7 @@ class ProjectItem < ApplicationRecord
       "Voucher ID has been updated: #{voucher_id}"
     end
 
-    project_item_changes.create(status: self.status, message: message, author: author, iid: iid).tap do
+    messages.create(message: message, author: author, iid: iid).tap do
       update_attributes(voucher_id: voucher_id)
     end
   end

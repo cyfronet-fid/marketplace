@@ -60,6 +60,15 @@ en:
       research: "Representing a research community"
       private_company: "Representing a private company"
       project: "Representing a project"
+  conversations:
+    message:
+      question: "Your question to the costomer service"
+      answer: "Customer service message"
+  project_items:
+    message:
+      question: "Your question to the service provider"
+      answer: "Service provider message"
+
   offer:
     order_text:
       normal: Order

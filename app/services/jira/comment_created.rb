@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 class Jira::CommentCreated
-  def initialize(project_item, comment)
-    @project_item = project_item
+  def initialize(messageable, comment)
+    @messageable = messageable
     @comment = comment
   end
 
   def call
     return if body.blank? || reject?
 
-    @project_item.new_change(message: body, author: author, iid: id)
+    @messageable.messages.create(message: body, author: author, iid: id)
   end
 
   private
