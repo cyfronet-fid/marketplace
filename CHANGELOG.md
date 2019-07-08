@@ -21,6 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Improvements for project box views (@mkasztelnik)
 - Project card redesigned (@mkasztelnik)
 - Move ResearchArea association from project item to the project
+- Content of mail templates by voucher accept (@goreck888)
 
 ### Deprecated
 

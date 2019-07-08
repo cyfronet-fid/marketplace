@@ -5,9 +5,12 @@
   the HNSciCloud pilot services via the EC3 portal [1] has
   been approved.
 %p
-  To redeem an Exoscale voucher, please follow these steps:
+  To redeem an Exoscale voucher:
 %ul
-  %li Open your web browser at https://portal.exoscale.com/register?coupon=#{@voucher_id}
+  %li
+    Open your web browser at
+    = link_to "https://portal.exoscale.com/register?coupon=#{@voucher_id}",
+    "https://portal.exoscale.com/register?coupon=#{@voucher_id}"
   %li Enter the email address and password you wish to use. Accept the terms and sign up.
   %li Check out your mailbox and click on the verification link you receive by email.
   %li Choose “for team projects” and fill your details. Choose your Exoscale organisation name and submit.
@@ -18,33 +21,72 @@
     = link_to "https://portal.exoscale.com/", "https://portal.exoscale.com/"
     and check the tenant settings (click in the User profile on the left)
   %li Remember the API key and Secret key settings for the EC3 portal.
-%p How to monitor your voucher credit:
+%p To check your voucher credit:
 %ul
   %li
     Access the Exoscale dashboard at:
     = link_to "https://portal.exoscale.com/", "https://portal.exoscale.com/"
     (billing section)
+  %li The voucher credit is shown in the top-right of the dashboard.
+  %li In case voucher credit is going to expire, a notification email will be sent by the dashboard.
+%p To report feedback on the Exoscale vouchers:
+%ul
+  %li
+    Please fill in the following web form:
+    = link_to "https://forms.gle/cVT7JRd4TFxZiYmQ8", "https://forms.gle/cVT7JRd4TFxZiYmQ8"
+%p To report an issue:
+%ul
+  %li
+    If you need any assistance, please report at:
+    = mail_to "applications-platform-info@mailman.egi.eu", "applications-platform-info@mailman.egi.eu"
+    Your request will be processed by the EGI User Support operator of the Service.
+%p Should you have any questions, please contact us at [2].
 %p == IMPORTANT NOTICE ==
 %p
-  The Applicant is tasked to acknowledge EGI in the scientific
-  publications/presentations benefiting from the Service. The
-  following acknowledgement text can be used for this purpose:
-  "This work used the EGI Applications on Demand service, which
-  is co-funded by the EOSC-hub project (grant number 777536). The
-  HNSciCloud project (grant number 687614) is also sponsoring the
-  service, allowing users to access the HNSciCloud services pilot
-  for limited scale usage using the voucher schemes provided by
-  "Exoscale".
-%p == HELPDESK ==
+  %ol{ type: "A" }
+    %li
+      The Applicant is tasked to acknowledge EGI in the scientific publications/presentations
+      benefiting from the Service. The following acknowledgement text can be used for this purpose:
+      "This work used the EGI Applications on Demand service, which is co-funded by the EOSC-hub
+      project (grant number 777536). The HNSciCloud project (grant number 687614) is also sponsoring the service,
+      allowing users to access the HNSciCloud services pilot for limited scale usage
+      using the voucher schemes provided by "Exoscale".
+    %li
+      Services that you are about to access (“Services”) are provided in a direct relationship between you
+      and Exoscale (“Supplier”) according to the relevant terms and policies as described
+      in the relevant documents governing the Service.
+      In no event will CERN or STFC, be liable with respect to any subject matter of your agreement
+      with the Supplier under any contract, negligence, strict liability or other legal or equitable theory for:
+    %ol{ type: "i" }
+      %li any special, incidental or consequential damages;
+      %li the cost of procurement for substitute products or services;
+      %li for interruption of use or loss or corruption of data; or
+      %li for any amounts that exceed the value of the voucher used to access the Services.
 %p
-  If you need of any assistance, please describe your problems
-  writing at
-  = mail_to "applications-platform-info@mailman.egi.eu",
-    "applications-platform-info@mailman.egi.eu"
-  \. Your request
-  will be processed by the EGI User Support operator of the Service.
-%p Should you have any questions, please contact us at [2].
-
+  In using the Services, you enable or use services, products, software, embeds, or applications developed by Supplier.
+  If you proceed to use the Services, you acknowledge, accept vis-à-vis CERN and STFC explicitly and understand that:
+  %ul
+    %li Services are not vetted, endorsed, or controlled by CERN or STFC.
+    %li
+      Any use of Services is at your own risk, and CERN or STFC shall not be responsible
+      or liable to you or anyone for the Services.
+    %li
+      Use of Services is solely between you and the Supplier and will be governed by the
+      relevant terms and policies as described in the relevant governing documents.
+      It is your responsibility to review such documents before using a Service.
+    %li
+      Some Services may request or require access to your (yours, your organisation’s,
+      directors, officers, employees, and agents, students’ or customers’) data.
+      If you use the Service or grant access, such data will be handled in accordance with the
+      Supplier’s policies and practices. CERN or STFC do not have control over how a Service may use your data.
+      You should carefully review Supplier’s data collection, retention and use policies
+      and practices before proceeding beyond this notice.
+    %li
+      Services may not work appropriately with your systems, and CERN or STFC do not provide
+      support for issues caused by any Service.
+    %li
+      If you have questions or concerns about how a Service operates, or need support,
+      please contact the Supplier directly.
 %p
   %div Your Sincerely,
   %div EGI User Community Support Team
