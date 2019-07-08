@@ -11,9 +11,13 @@
 
   = render "services/configurations/voucher", project_item: @project_item, f: f
 
+  - unless @project_item.property_values.blank?
+    %h5.mb-4.mt-5.font-weight-bold.configuration-title.text-uppercase Technical parameters
+    = render "services/configurations/attributes", project_item: @project_item, form: f
+
   .additional-information.mb-4.service-description
     %h5.mb-4.mt-5.font-weight-bold.configuration-title.text-uppercase
-      Additional information
+      Usage information
 
     %h4 My projects
     .details-content
@@ -28,15 +32,12 @@
             = link_to "Add new project", new_project_path,
               class: "btn btn-primary", remote: true
 
-    %h3 Usage
+    %h4{ "data-target" => "project-item.usage" }
     %dl.mb-4
-      %dt Customer typology
-      %dd= t "simple_form.options.defaults.customer_typology.#{@project_item.project.customer_typology}"
-      %dd{ "data-target" => "project-item.customerCountry" }
       %dd{ "data-target" => "project-item.reason" }
+      %dd{ "data-target" => "project-item.customer" }
       %dd{ "data-target" => "project-item.customerCountry" }
       %dd{ "data-target" => "project-item.email" }
-      %dd{ "data-target" => "project-item.customer" }
       %dd{ "data-target" => "project-item.collaborationCountry" }
       %dd{ "data-target" => "project-item.userGroupName" }
       %dd{ "data-target" => "project-item.projectName" }
@@ -48,13 +49,8 @@
       %dd{ "data-target" => "project-item.webpage" }
       %dd{ "data-target" => "project-item.additionalInformation" }
 
-      = f.association :research_area, as: :grouped_select,
-      collection: grouped_research_areas, group_method: :last
-
-    - unless @project_item.property_values.blank?
-      %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Technical parameters
-      = render "services/configurations/attributes", project_item: @project_item, form: f
-
+  = f.association :research_area, as: :grouped_select,
+    collection: grouped_research_areas, group_method: :last
 
 = content_for :next_button do
   %button.btn.btn-primary{ form: "order-form", type: "submit" }
