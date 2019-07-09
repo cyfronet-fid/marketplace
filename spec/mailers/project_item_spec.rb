@@ -88,7 +88,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       encoded_body = mail.body.encoded
 
       expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) service with voucher approved/)
-      expect(encoded_body).to match(/To redeem an Exoscale voucher, please follow these steps:/)
+      expect(encoded_body).to match(/To redeem an Exoscale voucher:/)
       expect(encoded_body).to have_content("1234")
     end
 
@@ -100,7 +100,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       encoded_body = mail.body.encoded
 
       expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) service with voucher approved/)
-      expect(encoded_body).to match(/To redeem an Exoscale voucher, please follow these steps:/)
+      expect(encoded_body).to match(/To redeem an Exoscale voucher:/)
       expect(encoded_body).to have_content("Open your web browser at https://portal.exoscale.com/register?coupon=3D=\n1234=0D\n")
     end
 
