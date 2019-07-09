@@ -11,6 +11,7 @@ FactoryBot.define do
     sequence(:webpage) { |n| "http://webpage#{n}.pl" }
     sequence(:user_group_name) { |n| "User group #{n}" }
     sequence(:project_name) { |n| "Project name #{n}" }
+    sequence(:research_areas) { |n| [create(:research_area)] }
     sequence(:country_of_customer) { "N/E" }
     sequence(:country_of_collaboration) { ["I/N"] }
     sequence(:project_website_url) { "htpps://project_website.url" }
