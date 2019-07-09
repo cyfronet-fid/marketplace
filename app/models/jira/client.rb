@@ -193,6 +193,8 @@ private
       project.single_user_or_community? ? project.webpage : nil
     when "CI-DisplayName"
       "#{project.user.first_name} #{project.user.last_name}"
+    when "CP-ScientificDiscipline"
+      project.research_areas.names.join(", ")
     when "CI-EOSC-UniqueID"
       project.user.uid
     when "CP-CustomerTypology"
@@ -233,8 +235,6 @@ private
       { "id" => @jira_config["custom_fields"]["select_values"]["CP-INeedAVoucher"][project_item.request_voucher] }
     when "CP-VoucherID"
       project_item.voucher_id || nil
-    when "CP-ScientificDiscipline"
-      project_item.research_area&.name
     when "SO-1"
       encode_order_properties(project_item)
     when "SO-ServiceOrderTarget"

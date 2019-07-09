@@ -40,14 +40,35 @@
         %dt Webpage
         %dd= project.webpage
 
+      - if project.research_areas.present?
+        %dt Research Areas
+      - @project.research_areas.each do |area|
+        %dd= area.name
+
+      - if project.research?
+        %dt User group name
+        %dd= project.user_group_name
+
+      - if project.project?
+        %dt Project name
+        %dd= project.project_name
+
+        %dt Project website url
+        %dd= project.project_website_url
+
       - if project.company_website_url?
         %dt Company website url
         %dd= project.company_website_url
+
+      - unless project.single_user?
+        %dt Collaboration countries
+        %dl= country_name(project.country_of_collaboration).join(", ")
 
     %h3 Usage
     %dl
       %dt Reason to request access to the EOSC services
       %dd= project.reason_for_access
+
 
     %h3 Additional information
     %dl

@@ -30,9 +30,9 @@
             = l @project_item.created_at
         %dl
           %dt
-            Research area:
+            Research areas:
           %dd
-            = @project_item.research_area&.name
+            = @project_item.project.research_areas.names.join(", ")
         %dl
           %dt
             Providers:

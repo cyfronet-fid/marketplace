@@ -40,8 +40,8 @@
       %dt Additional information
       %dd= @project_item.project.additional_information
 
-    %dt Research area
-    %dd= @project_item.research_area.name
+    %dt Research areas
+    %dd= @project_item.project.research_areas.names.join(", ")
 
 
 = content_for :next_button do

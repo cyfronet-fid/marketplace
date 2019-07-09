@@ -2,6 +2,8 @@
   html: { role: "form", id: "modal-form", "data-controller" => "project" } do |f|
   = f.input :name, label: "Project name"
   = f.input :reason_for_access, label: "Reason to request access to the EOSC services"
+  = f.association :research_areas, multiple: true, include_hidden: false,
+    input_html: { data: { choice: true } }
   = f.input :country_of_customer, collection: customer_countries,
     input_html: { "data-target" => "project.customerCountry" }
   = f.input :email, hint: "Email address in your institute's domain"
@@ -9,10 +11,11 @@
     input_html: { "data-target" => "project.customer",
                   "data-action" => "change->project#showSelectedSection" }
   = render "customer_typology_fields", f: f
-  = f.input :country_of_collaboration, collection: collaboration_countries, include_hidden: false,
+  = f.input :country_of_collaboration, as: :select, collection: collaboration_countries,
+    include_blank: false, include_hidden: false,
     wrapper_html: { class: "hidden-fields",
       "data-target" => "project.collaborationCountry project.input" },
-    input_html: { class: "selectpicker", "title" => "Choose countries",
-      "data-target" => "project.collaborationCountry", "multiple" => "true" }
+    input_html: { class: "choices-multiple-no-sorting", data: { choice: true },
+    "data-target" => "project.collaborationCountry", "multiple" => "true" }
   = f.input :additional_information
 

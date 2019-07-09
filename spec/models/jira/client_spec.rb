@@ -28,7 +28,6 @@ describe Jira::Client do
                                                         categories: [create(:category, name: "cat1")])),
           project: create(:project, user: user, name: "My Secret Project",
                           user_group_name: "New user group", reason_for_access: "some reason"),
-          research_area: create(:research_area, name: "My RA"),
           properties: [
             {
                 "id": "id1",
@@ -66,7 +65,6 @@ describe Jira::Client do
                        "CP-Platforms-1" => "",
                        "CP-INeedAVoucher-1" => { "id" => "20004" },
                        "CP-VoucherID-1" => "",
-                       "CP-ScientificDiscipline-1" => "My RA",
                        "SO-1-1" => {
                          "category" => "cat1",
                          "service" => "s1",
@@ -99,7 +97,6 @@ describe Jira::Client do
                                                                                service_type: "open_access",
                                                                                connected_url:  "http://service.org/access",
                                                                                categories: [create(:category, name: "cat1")])),
-                          research_area: nil,
                           project: create(:project, user: user,
                                           name: "My Secret Project",
                                           user_group_name: nil,
@@ -146,7 +143,6 @@ describe Jira::Client do
                                                                  service_type: "open_access",
                                                                  connected_url:  "http://service.org/access",
                                                                  categories: [create(:category, name: "cat1")])),
-                          research_area: nil,
                           voucher_id: "123123",
                           project: create(:project, user: user,
                                           name: "My Secret Project",
@@ -193,7 +189,6 @@ describe Jira::Client do
                                                                  service_type: "open_access",
                                                                  connected_url:  "http://service.org/access",
                                                                  categories: [create(:category, name: "cat1")])),
-                          research_area: nil,
                           request_voucher: true,
                           project: create(:project, user: user, name: "My Secret Project",
                                           user_group_name: "New user group", reason_for_access: "Some reason"))
@@ -233,8 +228,11 @@ describe Jira::Client do
                      email: "project@email.com",
                      user_group_name: "User Group Name 1",
                      customer_typology: "research",
-                     organization: "org", department: "dep", webpage: "http://dep-wwww.pl",
-                     reason_for_access: "some reason")
+                     reason_for_access: "some reason",
+                     department: "dep",
+                     webpage: "http://dep-wwww.pl",
+                     organization: "org",
+                     research_areas: [create(:research_area, name: "My RA")])
 
     expected_fields = { summary: "Project, John Doe, My Secret Project",
                         project: { key: "MP" },
@@ -248,6 +246,7 @@ describe Jira::Client do
                         "CI-Department-1" => "dep",
                         "CI-DepartmentalWebPage-1" => "http://dep-wwww.pl",
                         "CI-EOSC-UniqueID-1" => "uid2",
+                        "CP-ScientificDiscipline-1" => "My RA",
                         "CP-CustomerTypology-1" => { "id" => "20001" },
                         "SO-ProjectName-1" => "My Secret Project (#{project.id})",
                         "CP-UserGroupName-1" => "User Group Name 1",

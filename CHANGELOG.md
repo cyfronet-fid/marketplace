@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Expand all projects on projects index view (@mkasztelnik)
 - Improvements for project box views (@mkasztelnik)
 - Project card redesigned (@mkasztelnik)
+- Move ResearchArea association from project item to the project
 
 ### Deprecated
 
