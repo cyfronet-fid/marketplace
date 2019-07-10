@@ -1,9 +1,15 @@
 # frozen_string_literal: true
 
+require "mini_magick"
+
 module Import
   class EIC
     def initialize(eic_base_url,
-                   dry_run = true, dont_create_providers = true, unirest = Unirest,
+                   dry_run: true,
+                   dont_create_providers: true,
+                   ids: [],
+                   filepath: nil,
+                   unirest: Unirest,
                    logger: ->(msg) { puts msg })
       @eic_base_url = eic_base_url
       @dry_run = dry_run
@@ -16,6 +22,8 @@ module Import
           "trl-9" => "production"
       }
       @logger = logger
+      @ids = ids || []
+      @filepath = filepath
     end
 
     def call
@@ -47,17 +55,20 @@ module Import
 
       @providers = rp.body["results"].index_by { |provider| provider["id"] }
 
-      # categories = []
-
       updated = 0
       created = 0
       not_modified = 0
       total_service_count = r.body["results"].length
+      output = []
 
       log "EIC - all services #{total_service_count}"
 
-      r.body["results"].each do |service|
+      r.body["results"].select { |_r| @ids.empty? || @ids.include?(_r["id"]) }
+          .each do |service|
         eid = service["id"]
+
+        output.append(service)
+
         url = service["url"]
         # order_url = service["order"]
         user_manual_url = service["userManual"]
@@ -75,7 +86,7 @@ module Import
         # target_users = service["targetUsers"]
         user_value = service["userValue"]
         user_base = service["userBase"]
-        # image_url = service["symbol"]
+        image_url = service["symbol"]
         # last_update = service["lastUpdate"]
         # change_log = service["changeLog"]
         # category = service["category"]
@@ -91,7 +102,31 @@ module Import
         phase = service["trl"]
         provider_eid = service["providers"][0]
 
+        logo = nil
 
+        begin
+          logo = open(image_url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
+          logo_content_type = logo.content_type
+
+          if logo_content_type == "image/svg+xml"
+            img = MiniMagick::Image.read(logo, ".svg")
+            img.format "png" do |convert|
+              convert.args.unshift "800x800"
+              convert.args.unshift "-resize"
+              convert.args.unshift "1200"
+              convert.args.unshift "-density"
+              convert.args.unshift "none"
+              convert.args.unshift "-background"
+            end
+
+            logo = StringIO.new
+            logo.write(img.to_blob)
+            logo.seek(0)
+            logo_content_type = "image/png"
+          end
+        rescue OpenURI::HTTPError, SocketError => e
+          log "ERROR - there was a problem processing image for #{eid} #{image_url}: #{e}"
+        end
         aggregated_description = [description, options, user_value, user_base].join("\n")
 
         # Get Provider or create new
@@ -141,6 +176,9 @@ module Import
           log "Adding [NEW] service: #{name}, eid: #{eid}"
           unless @dry_run
             service = Service.new(updated_service_data)
+            unless logo.nil?
+              service.logo.attach(io: logo, filename: eid, content_type: logo_content_type)
+            end
             service.save!
             ServiceSource.new(service_id: service.id, eid: eid, source_type: "eic").save!
           end
@@ -159,6 +197,12 @@ module Import
         end
       end
       log "PROCESSED: #{total_service_count}, CREATED: #{created}, UPDATED: #{updated}, NOT MODIFIED: #{not_modified}"
+
+      unless @filepath.nil?
+        open(@filepath, "w") do |file|
+          file << JSON.pretty_generate(output)
+        end
+      end
     end
 
     def map_category(category)
