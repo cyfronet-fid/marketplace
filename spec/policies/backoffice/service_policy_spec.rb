@@ -53,6 +53,22 @@ RSpec.describe Backoffice::ServicePolicy do
       end
     end
 
+    permissions :update? do
+      let(:owner) { create(:user) }
+
+      it "grants access for service owner when service is a draft" do
+        service = create(:service, owners: [owner], status: :draft)
+
+        expect(subject).to permit(owner, service)
+      end
+
+      it "denies access for service owner when service is published" do
+        service = create(:service, owners: [owner], status: :published)
+
+        expect(subject).to_not permit(owner, service)
+      end
+    end
+
     permissions :destroy? do
       it "grants access for service portfolio manager" do
         expect(subject).to permit(service_portfolio_manager, build(:service, status: :draft))

@@ -8,6 +8,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Service owner can edit service draft (@mkasztelnik)
 
 ### Changed
 
@@ -28,7 +29,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Redirection to a service upon choice made by autocomplete in search bar (@bwilk)
-- Reimplemented filters and categories after creating indexes in Elasticsearch (@bwilk) 
+- Reimplemented filters and categories after creating indexes in Elasticsearch (@bwilk)
 
 ### Fixed
 - Blocked access to the draft service via direct link

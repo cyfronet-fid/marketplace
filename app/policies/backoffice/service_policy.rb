@@ -31,7 +31,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   end
 
   def update?
-    service_portfolio_manager?
+    service_portfolio_manager? || (record.draft? && owned_service?)
   end
 
   def publish?
