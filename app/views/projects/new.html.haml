@@ -5,7 +5,9 @@
   = render "form", project: @project
   .row.mt-5
     .col-12
+      = back_link_to t("project.buttons.cancel"), @project,
+        class: "btn btn-secondary"
       %button.btn.btn-primary{ type: "submit",
-                               form: "modal-form" } Create
-      = back_link_to "Cancel", @project,
-        class: "btn btn-link"
+                               form: "modal-form" }
+        = t("project.buttons.create")
+
