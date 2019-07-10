@@ -111,7 +111,7 @@ class ProjectsController < ApplicationController
       render "layouts/show_modal",
               locals: {
                 title: "New project",
-                action_btn: "Create new project",
+                action_btn: t("project.buttons.create"),
                 form: "projects/form"
               }
     end
