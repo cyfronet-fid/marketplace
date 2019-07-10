@@ -77,9 +77,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
     end
 
     def owned_service?
-      ServiceUserRelationship.
-        where(service: record, user: user).
-        count.positive?
+      record.owned_by?(user)
     end
 
     def project_items

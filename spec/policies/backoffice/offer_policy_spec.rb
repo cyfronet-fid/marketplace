@@ -20,10 +20,10 @@ RSpec.describe Backoffice::OfferPolicy do
         end
       end
 
-      permissions :destroy?, :new?, :update?, :edit?, :create? do
-        it "denied access to service owner" do
-          expect(subject)
-            .to_not permit(owner, build(:offer, service: service_draft))
+      permissions :destroy?, :update?, :edit?, :create? do
+        it "denies access to service owner" do
+          expect(subject).
+            to_not permit(owner, build(:offer, service: service_draft))
         end
       end
     end
@@ -39,10 +39,9 @@ RSpec.describe Backoffice::OfferPolicy do
       end
 
       permissions :destroy?, :new?, :update?, :edit?, :create? do
-        it "denied access to service owner" do
+        it "grant access to service owner" do
           expect(subject)
-            .to_not permit(owner,
-                           build(:offer, status: :draft, service: service_draft))
+            .to permit(owner, build(:offer, status: :draft, service: service_draft))
         end
       end
     end
@@ -60,7 +59,7 @@ RSpec.describe Backoffice::OfferPolicy do
         end
       end
 
-      permissions :new?, :create?, :edit?, :update?, :destroy? do
+      permissions :create?, :edit?, :update?, :destroy? do
         it "danies access to service owner" do
           expect(subject)
             .to_not permit(owner, build(:offer, service: service_published))
@@ -78,10 +77,9 @@ RSpec.describe Backoffice::OfferPolicy do
       end
 
       permissions :new?, :create?, :edit?, :update?, :destroy? do
-        it "danies access to service owner" do
+        it "grant access to service owner" do
           expect(subject)
-            .to_not permit(owner,
-                           build(:offer, status: :draft, service: service_published))
+            .to permit(owner, build(:offer, status: :draft, service: service_published))
         end
       end
     end

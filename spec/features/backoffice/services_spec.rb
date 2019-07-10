@@ -335,5 +335,19 @@ RSpec.feature "Services in backoffice" do
       click_on "Update Service"
       expect(page).to have_content("Owner can edit service draft")
     end
+
+    scenario "I can create new offer" do
+      service = create(:service, owners: [user])
+
+      visit backoffice_service_path(service)
+      click_on "Add new offer", match: :first
+
+      fill_in "Name", with: "New offer"
+      fill_in "Description", with: "New fancy offer"
+      click_on "Create Offer"
+
+      expect(page).to have_content("New offer")
+      expect(page).to have_content("New fancy offer")
+    end
   end
 end

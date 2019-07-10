@@ -18,6 +18,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   def show
+    @offer = Offer.new(service: @service, status: :draft)
   end
 
   def new
