@@ -37,7 +37,8 @@ class Project < ApplicationRecord
             uniqueness: { scope: :user, message: "Project name need to be unique" }
   validates :email, presence: true
   validates :reason_for_access, presence: true
-  validates :country_of_customer, presence: true, inclusion: { in: allowed_countries }
+  validates :country_of_customer, presence: true, if: :single_user_or_private_company?,
+            inclusion: { in: allowed_countries }
   validates :customer_typology, presence: true
 
   validates :organization, presence: true, if: :single_user_or_community?
@@ -49,8 +50,8 @@ class Project < ApplicationRecord
   validates :project_website_url, url: true, presence: true, if: :project?
 
   validates :company_name, presence: true, if: :private_company?
-  validates :country_of_collaboration, multiselect_choices: { collection: allowed_countries },
-            presence: true, unless: :single_user?
+  validates :country_of_collaboration, presence: true, if: :research_or_project?,
+            multiselect_choices: { collection: allowed_countries }
   validates :company_website_url,  url: true, presence: true, if: :private_company?
 
   validates :issue_id, presence: true, if: :require_jira_issue?
@@ -58,6 +59,14 @@ class Project < ApplicationRecord
 
   def single_user_or_community?
     single_user? || research?
+  end
+
+  def research_or_project?
+    research? || project?
+  end
+
+  def single_user_or_private_company?
+    single_user? || private_company?
   end
 
   private
