@@ -4,12 +4,45 @@ require "rails_helper"
 require "jira/setup"
 
 describe Import::EIC do
-  test_url = "https://localhost"
+  let(:test_url) { "https://localhost" }
+  let(:unirest) { double(Unirest) }
 
-  let(:nil_logger) { ->(_msg) { } }
-  let(:unirest) { double }
-  let(:eic) { Import::EIC.new(test_url, false, false, unirest) }
-  let(:log_less_eic) { Import::EIC.new(test_url, false, false, unirest, logger: nil_logger) }
+  def make_and_stub_eic(ids: [], dry_run: false, dont_create_providers: false, filepath: nil, log: false)
+    options = {
+        dry_run: dry_run,
+        dont_create_providers: dont_create_providers,
+        ids: ids,
+        filepath: filepath,
+        unirest: unirest
+    }
+
+    unless log
+      options[:logger] = ->(_msg) { }
+    end
+
+    eic = Import::EIC.new(test_url, options)
+
+    def stub_http_file(eic, file_fixture_name, url, content_type: "image/png")
+      r = open(file_fixture(file_fixture_name))
+      r.define_singleton_method(:content_type) { content_type }
+      allow(eic).to receive(:open).with(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_return(r)
+    end
+
+    stub_http_file(eic, "PhenoMeNal_logo.png",
+                   "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png")
+
+    stub_http_file(eic, "MetalPDB.png",
+                   "http://metalweb.cerm.unifi.it/global/images/MetalPDB.png")
+
+    stub_http_file(eic, "PDB_logo_rect_medium.svg",
+                   "https://pdb-redo.eu/images/PDB_logo_rect_medium.svg",
+                   content_type: "image/svg+xml")
+
+    eic
+  end
+
+  let(:eic) { make_and_stub_eic(log: true) }
+  let(:log_less_eic) { make_and_stub_eic(log: false) }
   let!(:research_area_other) { create(:research_area, name: "Other") }
   let!(:storage) { create(:category, name: "Storage") }
   let!(:training) { create(:category, name: "Training & Support") }
@@ -42,9 +75,7 @@ describe Import::EIC do
       response = double(code: 200, body: create(:eic_services_response))
       provider_response = double(code: 500, body: {})
       expect_responses(unirest, test_url, response, provider_response)
-
-      eic = Import::EIC.new(test_url, false, true, unirest, logger: nil_logger)
-      expect { eic.call }.to raise_error(SystemExit).and output.to_stderr
+      expect { log_less_eic.call }.to raise_error(SystemExit).and output.to_stderr
     end
   end
 
@@ -56,12 +87,12 @@ describe Import::EIC do
     end
 
     it "should not create if 'dont_create_providers' is set to true" do
-      eic = Import::EIC.new(test_url, false, true, unirest, logger: nil_logger)
+      eic = make_and_stub_eic(ids: [], dry_run: false, dont_create_providers: true)
       expect { eic.call }.to change { Provider.count }.by(0)
     end
 
     it "should create provider if it didn't exist and add external source for it" do
-      expect { log_less_eic.call }.to change { Provider.count }.by(1)
+      expect { log_less_eic.call }.to change { Provider.count }.by(2)
       provider = Provider.first
 
       expect(provider.sources.count).to eq(1)
@@ -70,7 +101,7 @@ describe Import::EIC do
     end
 
     it "should create service if none existed" do
-      expect { eic.call }.to output(/PROCESSED: 1, CREATED: 1, UPDATED: 0, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(1)
+      expect { eic.call }.to output(/PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(3)
 
       service = Service.first
 
@@ -101,14 +132,20 @@ describe Import::EIC do
       expect(service.categories).to eq([])
       expect(service.research_areas).to eq([research_area_other])
       expect(service.sources.count).to eq(1)
+      expect(service.logo.download).to eq(file_fixture("PhenoMeNal_logo.png").read.b)
       expect(service.sources.first.eid).to eq("phenomenal.phenomenal")
+
+      expect(Service.find_by(title: "MetalPDB")).to_not be_nil
+      expect(Service.find_by(title: "PDB_REDO server")).to_not be_nil
     end
 
     it "should not update service which has upstream to null" do
       service = create(:service)
       create(:service_source, eid: "phenomenal.phenomenal", service_id: service.id, source_type: "eic")
 
-      expect { eic.call }.to output(/PROCESSED: 1, CREATED: 0, UPDATED: 0, NOT MODIFIED: 1$/).to_stdout.and change { Service.count }.by(0)
+      eic = make_and_stub_eic(ids: ["phenomenal.phenomenal"], log: true)
+
+      expect { eic.call }.to output(/PROCESSED: 3, CREATED: 0, UPDATED: 0, NOT MODIFIED: 1$/).to_stdout.and change { Service.count }.by(0)
       expect(Service.first.as_json(except: [:created_at, :updated_at])).to eq(service.as_json(except: [:created_at, :updated_at]))
     end
 
@@ -117,13 +154,15 @@ describe Import::EIC do
       source = create(:service_source, eid: "phenomenal.phenomenal", service_id: service.id, source_type: "eic")
       service.update!(upstream_id: source.id)
 
-      expect { eic.call }.to output(/PROCESSED: 1, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(0)
+      eic = make_and_stub_eic(ids: ["phenomenal.phenomenal"], log: true)
+
+      expect { eic.call }.to output(/PROCESSED: 3, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(0)
       expect(Service.first.as_json(except: [:created_at, :updated_at])).to_not eq(service.as_json(except: [:created_at, :updated_at]))
     end
 
     it "should not change db if dry_run is set to true" do
-      eic = Import::EIC.new(test_url, true, false, unirest)
-      expect { eic.call }.to output(/PROCESSED: 1, CREATED: 1, UPDATED: 0, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(0).and change { Provider.count }.by(0)
+      eic = make_and_stub_eic(dry_run: true, dont_create_providers: false, log: true)
+      expect { eic.call }.to output(/PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(0).and change { Provider.count }.by(0)
     end
 
     it "should not update research_areas and categories" do
@@ -138,6 +177,36 @@ describe Import::EIC do
       expect(Service.first.categories).to eq(service.categories)
       expect(Service.first.research_areas).to eq(service.research_areas)
     end
+
+    it "should filter by ids if they are provided" do
+      eic = make_and_stub_eic(ids: ["phenomenal.phenomenal"])
+      expect { eic.call }.to change { Service.count }.by(1)
+      expect(Service.last.title).to eq("PhenoMeNal")
+    end
+
+    # TODO - have to compare image itself
+    # it "should convert svg logos to png" do
+    #   eic = make_and_stub_eic(["West-Life.pdb_redo_server"])
+    #   eic.call
+    #   expect(Service.first.logo.download).to eq(open(file_fixture("PDB_logo_rect_medium.png")).read.b)
+    # end
+
+    it "should output file with unprocessed data (only selected services)" do
+      filename = "eic_output.json"
+      mock_file = StringIO.new
+      eic = make_and_stub_eic(ids: ["phenomenal.phenomenal"], filepath: filename)
+      expect(eic).to receive(:open).with(filename, "w").and_yield(mock_file)
+      eic.call
+      expect(mock_file.string).to eq(file_fixture("eic_import_output.json").read)
+    end
+
+    it "should gracefully handle error with logo download" do
+      eic = make_and_stub_eic(ids: ["phenomenal.phenomenal"])
+      allow(eic).to receive(:open).with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
+                                        ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(OpenURI::HTTPError.new("", status: 404))
+      eic.call
+      expect(Service.first.logo.attached?).to be_falsey
+    end
   end
 
   it "should set placeholder tagline if it's empty" do
@@ -145,8 +214,7 @@ describe Import::EIC do
     provider_response = double(code: 200, body: create(:eic_providers_response))
     expect_responses(unirest, test_url, response, provider_response)
 
-    eic = Import::EIC.new(test_url, false, false, unirest, logger: nil_logger)
-
+    eic = make_and_stub_eic(ids: [], dry_run: false, dont_create_providers: false)
     eic.call
 
     expect(Service.first.tagline).to eq("NO IMPORTED TAGLINE")
