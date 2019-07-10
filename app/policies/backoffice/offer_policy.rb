@@ -15,24 +15,23 @@ class Backoffice::OfferPolicy < ApplicationPolicy
   end
 
   def new?
-    service_portfolio_manager?
+    service_portfolio_manager? || record.service.owned_by?(user)
   end
 
   def create?
-    service_portfolio_manager?
+    managed?
   end
 
   def edit?
-    service_portfolio_manager?
+    managed?
   end
 
   def update?
-    service_portfolio_manager?
+    managed?
   end
 
   def destroy?
-    service_portfolio_manager? &&
-      project_items.count.zero?
+    managed? && project_items.count.zero?
   end
 
   def publish?
@@ -50,6 +49,11 @@ class Backoffice::OfferPolicy < ApplicationPolicy
   end
 
   private
+
+    def managed?
+      service_portfolio_manager? ||
+        (record.service.owned_by?(user) && record.draft?)
+    end
 
     def service_portfolio_manager?
       user&.service_portfolio_manager?

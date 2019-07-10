@@ -8,7 +8,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
-- Service owner can edit service draft (@mkasztelnik)
+- Service owner can edit service draft and service offer drafts (@mkasztelnik)
 
 ### Changed
 
