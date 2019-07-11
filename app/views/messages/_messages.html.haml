@@ -1,8 +1,8 @@
-.progress-box.mt-4
+.progress-box.mt-4{ "data-controller": "messages", "data-target": "messages.scrollbar" }
   %ul.step-progress.pl-5.pb-4
     - if messages.count.positive?
-      = (messages + [nil]).each_cons(2) do |current, previous|
-        = render "messages/message", previous: previous, current: current
+      - messages.each do |current|
+        = render "messages/message", current: current
     - else
       %p Conversation not started yet.
 

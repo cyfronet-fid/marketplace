@@ -1,22 +1,16 @@
 # frozen_string_literal: true
 
 module ProjectItemsHelper
-  def label_message(previous, current)
-    if current.is_a?(Message)
-      if current.question?
+  def label_message(previous)
+    if previous.is_a?(Message)
+      if previous.question?
         t("#{controller_name}.message.question")
       else
         t("#{controller_name}.message.answer")
       end
-    elsif previous && previous.is_a?(Status) && !answer?(previous, current)
-      "Status changed from #{previous.status} to #{current.status}"
     else
-      "Service request #{current.status}"
+      "Service request #{previous.status}"
     end
-  end
-
-  def answer?(previous, current)
-    previous.status == current.status
   end
 
   def ratingable?
