@@ -319,4 +319,35 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content(external_source.to_s, count: 2)
     end
   end
+
+  context "as a service owner" do
+    let(:user) { create(:user) }
+
+    before { checkin_sign_in_as(user) }
+
+    scenario "I can edit service draft" do
+      service = create(:service, owners: [user], status: :draft)
+
+      visit backoffice_service_path(service)
+      click_on "Edit"
+
+      fill_in "Title", with: "Owner can edit service draft"
+      click_on "Update Service"
+      expect(page).to have_content("Owner can edit service draft")
+    end
+
+    scenario "I can create new offer" do
+      service = create(:service, owners: [user])
+
+      visit backoffice_service_path(service)
+      click_on "Add new offer", match: :first
+
+      fill_in "Name", with: "New offer"
+      fill_in "Description", with: "New fancy offer"
+      click_on "Create Offer"
+
+      expect(page).to have_content("New offer")
+      expect(page).to have_content("New fancy offer")
+    end
+  end
 end
