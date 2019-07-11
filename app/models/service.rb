@@ -138,6 +138,10 @@ class Service < ApplicationRecord
     platforms.pluck(:name).include?("EGI Applications on Demand")
   end
 
+  def owned_by?(user)
+    service_user_relationships.where(user: user).count.positive?
+  end
+
   private
     def logo_variable
       if logo.present? && !logo.variable?

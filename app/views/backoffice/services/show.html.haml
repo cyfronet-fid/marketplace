@@ -12,7 +12,7 @@
                   backoffice_service_path(@service),
                   method: :delete, data: { confirm: "Are you sure?" },
                   class: "btn btn-danger float-right"
-      - if policy([:backoffice, @service]).new?
+      - if policy([:backoffice, @offer]).new?
         = link_to "Add new offer", new_backoffice_service_offer_path(@service),
             class: "btn btn-primary float-right ml-3 mb-3"
       - if policy([:backoffice, @service]).edit?
@@ -46,7 +46,7 @@
         .col-6
           %h3.m-0.mt-2 Offers
         .col-6
-          - if policy([:backoffice, @service]).new?
+          - if policy([:backoffice, @offer]).new?
             = link_to "Add new offer", new_backoffice_service_offer_path(@service),
               class: "btn btn-primary btn-sm float-right"
       = render "backoffice/services/offers/offers", service: @service

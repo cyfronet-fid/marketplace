@@ -15,34 +15,31 @@ class Backoffice::OfferPolicy < ApplicationPolicy
   end
 
   def new?
-    service_portfolio_manager?
+    service_portfolio_manager? || record.service.owned_by?(user)
   end
 
   def create?
-    service_portfolio_manager?
+    managed?
   end
 
   def edit?
-    service_portfolio_manager?
+    managed?
   end
 
   def update?
-    service_portfolio_manager?
+    managed?
   end
 
   def destroy?
-    service_portfolio_manager? &&
-      project_items.count.zero?
+    managed? && orderless?
   end
 
   def publish?
-    service_portfolio_manager? &&
-      record.draft?
+    service_portfolio_manager? && record.draft?
   end
 
   def draft?
-    service_portfolio_manager? &&
-      record.published?
+    service_portfolio_manager? && record.published?
   end
 
   def permitted_attributes
@@ -51,11 +48,16 @@ class Backoffice::OfferPolicy < ApplicationPolicy
 
   private
 
+    def managed?
+      service_portfolio_manager? ||
+        (record.service.owned_by?(user) && record.draft?)
+    end
+
     def service_portfolio_manager?
       user&.service_portfolio_manager?
     end
 
-    def project_items
-      ProjectItem.joins(:offer).where(offers: { service_id: record.service })
+    def orderless?
+      record.project_items.count.zero?
     end
 end

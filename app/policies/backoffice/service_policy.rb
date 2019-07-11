@@ -31,7 +31,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   end
 
   def update?
-    service_portfolio_manager?
+    service_portfolio_manager? || (record.draft? && owned_service?)
   end
 
   def publish?
@@ -77,9 +77,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
     end
 
     def owned_service?
-      ServiceUserRelationship.
-        where(service: record, user: user).
-        count.positive?
+      record.owned_by?(user)
     end
 
     def project_items
