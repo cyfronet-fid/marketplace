@@ -26,6 +26,18 @@ RSpec.describe Backoffice::OfferPolicy do
     end
   end
 
+  permissions :destroy? do
+    let(:offer) { create(:offer, service: service) }
+
+    before { create(:project_item, offer: offer) }
+
+    it "denies for all when service is ordered using this offer" do
+      expect(subject).to_not permit(service_portfolio_manager, offer)
+      expect(subject).to_not permit(owner, offer)
+      expect(subject).to_not permit(stranger, offer)
+    end
+  end
+
   context "when offer is published" do
     let(:offer) { build(:offer, service: service, status: :published) }
 

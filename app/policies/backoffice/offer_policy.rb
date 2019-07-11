@@ -31,17 +31,15 @@ class Backoffice::OfferPolicy < ApplicationPolicy
   end
 
   def destroy?
-    managed? && project_items.count.zero?
+    managed? && orderless?
   end
 
   def publish?
-    service_portfolio_manager? &&
-      record.draft?
+    service_portfolio_manager? && record.draft?
   end
 
   def draft?
-    service_portfolio_manager? &&
-      record.published?
+    service_portfolio_manager? && record.published?
   end
 
   def permitted_attributes
@@ -59,7 +57,7 @@ class Backoffice::OfferPolicy < ApplicationPolicy
       user&.service_portfolio_manager?
     end
 
-    def project_items
-      ProjectItem.joins(:offer).where(offers: { service_id: record.service })
+    def orderless?
+      record.project_items.count.zero?
     end
 end
