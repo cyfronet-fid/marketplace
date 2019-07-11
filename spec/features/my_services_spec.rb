@@ -76,11 +76,8 @@ RSpec.feature "My Services" do
       expect(page).to have_text("ready")
 
       expect(page).to have_text("Service request created")
-
-      expect(page).to have_text("Status changed from created to registered")
       expect(page).to have_text("Service request registered")
-
-      expect(page).to have_text("Status changed from registered to ready")
+      expect(page).to have_text("Service request ready")
       expect(page).to have_text("Service is ready")
     end
 
