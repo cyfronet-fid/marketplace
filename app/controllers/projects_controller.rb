@@ -50,7 +50,7 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(permitted_attributes(Project).
-                           merge(user: current_user))
+                           merge(user: current_user, status: :active))
 
     respond_to do |format|
       format.html do
@@ -94,7 +94,7 @@ class ProjectsController < ApplicationController
   private
 
     def new_record
-      Project.new(attributes)
+      Project.new(attributes.merge(status: :active))
     end
 
     IGNORED_ATTRIBUTES = ["id", "name", "issue_key", "issue_status", "issue_key"]

@@ -16,6 +16,12 @@ class Project < ApplicationRecord
       jira_errored: 3
   }
 
+  PROJECT_STATUSES = {
+    active: "active",
+    archived: "archived"
+  }
+
+  enum status: PROJECT_STATUSES
   enum customer_typology: CUSTOMER_TYPOLOGIES
   enum issue_status: ISSUE_STATUSES
 
@@ -52,6 +58,7 @@ class Project < ApplicationRecord
 
   validates :issue_id, presence: true, if: :require_jira_issue?
   validates :issue_key, presence: true, if: :require_jira_issue?
+  validates :status, presence: true
 
   def single_user_or_community?
     single_user? || research?
