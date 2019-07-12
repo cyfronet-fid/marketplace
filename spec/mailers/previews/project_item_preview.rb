@@ -8,8 +8,8 @@ class ProjectItemPreview < ActionMailer::Preview
     ProjectItemMailer.created(ProjectItem.last)
   end
 
-  def changed
-    ProjectItemMailer.changed(ProjectItem.last)
+  def status_changed
+    ProjectItemMailer.status_changed(ProjectItem.last)
   end
 
   def new_message
