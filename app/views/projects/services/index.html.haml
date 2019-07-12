@@ -1,0 +1,8 @@
+= render "projects/project_layout", project: @project, projects: @projects do
+  %ul.list-group
+    %h3.project-services.pb-2.mb-2
+      %i.fas.fa-box-open.mr-2
+      Services in this project
+    = render(partial: "project_items/project_item",
+             collection: @project_items) || render("projects/empty_project", project: @project)
+

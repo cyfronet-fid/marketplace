@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   resources :projects do
     scope module: :projects do
       resources :about, only: :index
+      resources :services, only: [:show, :index]
       resource :chat, only: :show
     end
   end

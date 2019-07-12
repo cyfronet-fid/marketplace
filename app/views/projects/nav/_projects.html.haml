@@ -1,0 +1,6 @@
+%ul.nav.flex-column
+  - projects.each do |project|
+    %li.nav-item
+      = link_to project.name, [project, :services],
+        class: "nav-link #{"active" if project == current}"
+= link_to "New project", new_project_path, class: "btn btn-primary"
