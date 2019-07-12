@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class ProjectItem < ApplicationRecord
-  delegate :url_helpers, to: "Rails.application.routes"
   include Customization
 
   STATUSES = {
@@ -42,10 +41,6 @@ class ProjectItem < ApplicationRecord
   validate :properties_not_nil
 
   delegate :user, to: :project
-
-  def message_url
-    url_helpers.project_item_message_path(self)
-  end
 
   def service
     offer.service unless offer.nil?

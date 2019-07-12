@@ -38,7 +38,6 @@ Rails.application.routes.draw do
       resources :service_opinions, only: [:new, :create]
       resource :conversation, only: :create
     end
-    post "message", to: "project_items#message", as: :message
   end
 
   resource :profile, only: :show
