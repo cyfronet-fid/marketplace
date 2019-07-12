@@ -19,12 +19,12 @@ class Project < ApplicationRecord
   enum customer_typology: CUSTOMER_TYPOLOGIES
   enum issue_status: ISSUE_STATUSES
 
-  NON_APPLICABLE = "N/A"
-  INTERNATIONAL = "I/N"
-  NON_EUROPEAN = "N/E"
+  NON_EUROPEAN = ISO3166::Country.new("N/E")
+  INTERNATIONAL = ISO3166::Country.new("I/N")
+  NON_APPLICABLE = ISO3166::Country.new("N/A")
 
   allowed_countries = [NON_APPLICABLE, INTERNATIONAL, NON_EUROPEAN] +
-        ISO3166::Country.find_all_countries_by_region("Europe").sort.map { |c| c.alpha2 }
+        ISO3166::Country.find_all_countries_by_region("Europe").sort
 
   belongs_to :user
   has_many :project_items, dependent: :destroy
@@ -32,13 +32,16 @@ class Project < ApplicationRecord
   has_many :research_areas, through: :project_research_areas
   has_many :messages, as: :messageable, dependent: :destroy
 
+  serialize :country_of_customer, CountrySerializer
+  serialize :country_of_collaboration, CountrySerializer
+
   validates :name,
             presence: true,
             uniqueness: { scope: :user, message: "Project name need to be unique" }
   validates :email, presence: true
   validates :reason_for_access, presence: true
   validates :country_of_customer, presence: true, if: :single_user_or_private_company?,
-            inclusion: { in: allowed_countries }
+             inclusion: { in: allowed_countries }, on: :create
   validates :customer_typology, presence: true
 
   validates :organization, presence: true, if: :single_user_or_community?
@@ -51,7 +54,7 @@ class Project < ApplicationRecord
 
   validates :company_name, presence: true, if: :private_company?
   validates :country_of_collaboration, presence: true, if: :research_or_project?,
-            multiselect_choices: { collection: allowed_countries }
+             multiselect_choices: { collection: allowed_countries }, on: :create
   validates :company_website_url,  url: true, presence: true, if: :private_company?
 
   validates :issue_id, presence: true, if: :require_jira_issue?

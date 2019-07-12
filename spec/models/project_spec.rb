@@ -41,6 +41,24 @@ RSpec.describe Project do
     it { is_expected.to validate_presence_of(:company_website_url) }
   end
 
+  describe "country_of_collaboration" do
+    subject { build(:project, country_of_collaboration: [ CountriesHelper::INTERNATIONAL, CountriesHelper::NON_EUROPEAN ]) }
+    it "should check country_of_collaboration" do
+      expect(subject.save).to be true
+      project = Project.find(subject.id)
+      expect(project.country_of_collaboration).to match_array( [ CountriesHelper::INTERNATIONAL, CountriesHelper::NON_EUROPEAN ])
+    end
+  end
+
+  describe "country_of_customer" do
+    subject { build(:project, country_of_customer: CountriesHelper::INTERNATIONAL) }
+    it "should check country_of_collaboration" do
+      expect(subject.save).to be true
+      project = Project.find(subject.id)
+      expect(project.country_of_customer).to eq(CountriesHelper::INTERNATIONAL)
+    end
+  end
+
   context "#jira" do
     it "should validate presence of issue_id & issue_key" do
       expect(build(:project, issue_status: :jira_require_migration, issue_id: nil, issue_key: nil)).to be_valid
