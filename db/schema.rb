@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_19_152804) do
+ActiveRecord::Schema.define(version: 2019_07_01_175439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,13 +147,21 @@ ActiveRecord::Schema.define(version: 2019_06_19_152804) do
     t.bigint "offer_id"
     t.bigint "affiliation_id"
     t.jsonb "properties", default: [], null: false
-    t.bigint "research_area_id"
     t.boolean "request_voucher", default: false, null: false
     t.string "voucher_id", default: "", null: false
     t.index ["affiliation_id"], name: "index_project_items_on_affiliation_id"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
-    t.index ["research_area_id"], name: "index_project_items_on_research_area_id"
+  end
+
+  create_table "project_research_areas", force: :cascade do |t|
+    t.bigint "project_id"
+    t.bigint "research_area_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id", "research_area_id"], name: "index_project_research_areas_on_project_id_and_research_area_id", unique: true
+    t.index ["project_id"], name: "index_project_research_areas_on_project_id"
+    t.index ["research_area_id"], name: "index_project_research_areas_on_research_area_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -381,7 +389,8 @@ ActiveRecord::Schema.define(version: 2019_06_19_152804) do
   add_foreign_key "project_items", "affiliations"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
-  add_foreign_key "project_items", "research_areas"
+  add_foreign_key "project_research_areas", "projects"
+  add_foreign_key "project_research_areas", "research_areas"
   add_foreign_key "service_providers", "providers"
   add_foreign_key "service_providers", "services"
   add_foreign_key "service_related_platforms", "platforms"

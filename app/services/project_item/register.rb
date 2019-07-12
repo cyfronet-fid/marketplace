@@ -39,7 +39,7 @@ class ProjectItem::Register
     end
 
     def notify!
-      ProjectItemMailer.changed(@project_item).deliver_later
+      ProjectItemMailer.status_changed(@project_item).deliver_later
     end
 
     def encode_properties(property_values)
