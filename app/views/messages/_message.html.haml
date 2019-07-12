@@ -1,8 +1,6 @@
 %li.step-progress-item.current.ml-5
   .time.x-small
-    = current.created_at.strftime("%d.%m.%Y")
-
-    %span.text-muted= current.created_at.strftime("%H:%M")
+    = time_ago_in_words(current.created_at)
 
   .ml-4
     .d-block= label_message(current)
