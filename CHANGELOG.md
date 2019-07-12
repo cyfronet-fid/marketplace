@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Country of customer and country of collaboration fields (@goreck888)
 - Country fields transfer to jira issues (@goreck888)
 - Create project copy (@mkasztelnik)
+- Conversation to project (@martaswiatkowska)
 
 ### Changed
 
@@ -22,6 +23,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Project card redesigned (@mkasztelnik)
 - Move ResearchArea association from project item to the project
 - Content of mail templates by voucher accept (@goreck888)
+- Reimplemented sending messages to providers (@martaswiatkowska)
 
 ### Deprecated
 
