@@ -31,6 +31,14 @@ RSpec.describe Jira::CommentCreated do
                                     id: "321", name: jira_username)).call
       end.to_not change { project_item.messages.count }
     end
+
+    it "sand email to user about response" do
+      expect { described_class.new(project_item, comment(message: "response", id: 123)).call }.
+        to change { ActionMailer::Base.deliveries.count }.by(1)
+      email = ActionMailer::Base.deliveries.last
+
+      expect(email.to).to contain_exactly(project_item.user.email)
+    end
   end
 
   context "for project" do
@@ -57,6 +65,14 @@ RSpec.describe Jira::CommentCreated do
                             comment(message: "question",
                                     id: "321", name: jira_username)).call
       end.to_not change { project.messages.count }
+    end
+
+    it "sand email to user about response" do
+      expect { described_class.new(project, comment(message: "response", id: 123)).call }.
+        to change { ActionMailer::Base.deliveries.count }.by(1)
+      email = ActionMailer::Base.deliveries.last
+
+      expect(email.to).to contain_exactly(project.user.email)
     end
   end
 

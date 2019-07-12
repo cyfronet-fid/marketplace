@@ -63,7 +63,7 @@ RSpec.feature "My Services" do
       expect(page).to have_text("not authorized")
     end
 
-    scenario "I can see project_item change history" do
+    scenario "I can see project_item change history", js: true do
       project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 

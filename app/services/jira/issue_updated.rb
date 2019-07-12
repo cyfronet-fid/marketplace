@@ -41,7 +41,7 @@ class Jira::IssueUpdated
             if aod_voucherable? && status == :rejected
               ProjectItemMailer.aod_voucher_rejected(@project_item).deliver_later
             else
-              ProjectItemMailer.changed(@project_item).deliver_later
+              ProjectItemMailer.status_changed(@project_item).deliver_later
             end
           end
         end

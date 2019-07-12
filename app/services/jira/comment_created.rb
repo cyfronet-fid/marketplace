@@ -8,8 +8,9 @@ class Jira::CommentCreated
 
   def call
     return if body.blank? || reject?
-
-    @messageable.messages.create(message: body, author: author, iid: id)
+    if @messageable.messages.create(message: body, author: author, iid: id)
+      WebhookJiraMailer.new_message(@messageable).deliver_later
+    end
   end
 
   private
