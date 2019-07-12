@@ -1,4 +1,4 @@
-.progress-box.mt-4{ "data-controller": "messages", "data-target": "messages.scrollbar" }
+#scrollbar.progress-box.mt-4
   %ul.step-progress.pl-5.pb-4
     - if messages.count.positive?
       - messages.each do |current|
@@ -6,3 +6,8 @@
     - else
       %p Conversation not started yet.
 
+:javascript
+  window.onload = function () {
+    scrollbar = document.getElementById('scrollbar')
+    scrollbar.scrollTo(0, scrollbar.scrollHeight)
+  }
