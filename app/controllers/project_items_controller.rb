@@ -4,8 +4,10 @@ class ProjectItemsController < ApplicationController
   before_action :authenticate_user!
 
   def show
+    @projects = policy_scope(Project).order(:name)
     @project_item = ProjectItem.joins(offer: :service, project: :user).
                     find(params[:id])
+    @project = @project_item.project
 
     authorize(@project_item)
 

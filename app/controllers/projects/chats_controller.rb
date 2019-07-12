@@ -2,9 +2,11 @@
 
 class Projects::ChatsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_and_authorize_project!
 
-  def index
+  include Project::Authorize
+
+  def show
+    @projects = policy_scope(Project).order(:name)
   end
 
   private
