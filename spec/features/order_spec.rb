@@ -71,13 +71,6 @@ RSpec.feature "Service ordering" do
       expect(project_item.offer_id).to eq(offer.id)
       expect(project_item.properties).to eq([])
 
-      # Summary
-      expect(page).to have_current_path(service_summary_path(service))
-      expect(page).to have_selector(:link_or_button,
-                                    "Go to requested service", exact: true)
-
-      click_on "Go to requested service"
-
       # Project item page
       expect(page).to have_current_path(project_item_path(project_item))
       expect(page).to have_content(service.title)
@@ -123,13 +116,6 @@ RSpec.feature "Service ordering" do
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
       expect(project_item.offer_id).to eq(offer.id)
-
-      # Summary
-      expect(page).to have_current_path(service_summary_path(service))
-      expect(page).to have_selector(:link_or_button,
-                                    "Go to requested service", exact: true)
-
-      click_on "Go to requested service"
 
       # Project item page
       expect(page).to have_current_path(project_item_path(project_item))
