@@ -3,9 +3,11 @@
   .mb-4.pb-4.border-header
     %h1.mr-auto.my-auto  Create new project
   = render "form", project: @project
-  .row.mt-5
+
+  %hr.bottom-hr.mt-5.mb-4
+  .row
     .col-12
-      %button.btn.btn-primary{ type: "submit",
+      %button.btn.btn-primary.pl-5.pr-5{ type: "submit",
                                form: "modal-form" } Create
       = back_link_to "Cancel", @project,
-        class: "btn btn-link"
+        class: "btn btn-link text-uppercase"

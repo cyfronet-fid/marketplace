@@ -1,22 +1,30 @@
 = render "projects/layout", project: @project, projects: @projects do
-  .d-md-flex.d-md-flex-row
-    %h1.flex-grow-1
-      = project.name
-
-    .buttons-panel
-      = link_to "Edit project", edit_project_path(project), class: "btn btn-secondary"
-      = link_to "Duplicate", new_project_path(source: project.id), class: "btn btn-secondary"
-      = link_to "Delete", project_path(project), method: :delete,
-        data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger"
-  %ul.nav.nav-tabs.mt-4.pl-3.row
-    %li.nav-item
-      = link_to "Services", project_services_path(project),
-        class: "nav-link #{"active" if controller.controller_name == "services"}"
-    %li.nav-item
-      = link_to "Project details", project_path(project),
-        class: "nav-link #{"active" if controller.controller_name == "projects"}"
-    %li.nav-item
-      = link_to "Contact with support", project_chat_path(project),
-        class: "nav-link #{"active" if controller.controller_name == "chats"}"
-  .container.pt-2
+  .pt-4.pl-3.pr-3.shadow-sm.rounded.service-box.service-detail.mb-4.project-heading
+    .row
+      .col-md-9
+        %h1.flex-grow-1
+          = project.name
+        .details-row
+          .details-box Created at 12.07.2019
+          .separator
+          .details-box= t "projeproject.customer_typology.#{project.customer_typology}"
+          - if project.organization?
+            .separator
+            .details-box= project.organization
+      .buttons-panel.col-md-3.float-right
+        = link_to "Edit", edit_project_path(project), class: "btn btn-outline-secondary btn-sm mb-2"
+        = link_to "Duplicate", new_project_path(source: project.id), class: "btn btn-outline-secondary btn-sm mb-2"
+        = link_to "Delete", project_path(project), method: :delete,
+          data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger btn-sm"
+    %ul.nav.nav-tabs.mt-4.pl-3.row
+      %li.nav-item
+        = link_to "Services", project_services_path(project),
+          class: "nav-link #{"active" if controller.controller_name == "services"} text-uppercase"
+      %li.nav-item
+        = link_to "Project details", project_path(project),
+          class: "nav-link #{"active" if controller.controller_name == "projects"} text-uppercase"
+      %li.nav-item
+        = link_to "Contact with project support", project_chat_path(project),
+          class: "nav-link #{"active" if controller.controller_name == "chats"} text-uppercase"
+  .container.p-0
     = yield
