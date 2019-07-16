@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
 
+
   def index
     @projects = policy_scope(Project)
     redirect_to @projects.first if @projects.count.positive?

@@ -204,9 +204,9 @@ private
         nil
       end
     when "CP-CustomerCountry"
-      country_name(project.country_of_customer)
+      project.country_of_customer.name
     when "CP-CollaborationCountry"
-      country_name(project.country_of_collaboration).join(", ")
+      project.country_of_collaboration.map(&:name).join(", ")
     # when "CP-ReasonForAccess"
     #   project.reason_for_access
     # when "CP-ProjectInformation"
