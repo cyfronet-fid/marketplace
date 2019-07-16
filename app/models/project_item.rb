@@ -28,7 +28,7 @@ class ProjectItem < ApplicationRecord
   belongs_to :research_area, required: false
   has_one :service_opinion, dependent: :restrict_with_error
   has_many :messages, as: :messageable, dependent: :destroy
-  has_many :statuses, as: :pipeline
+  has_many :statuses, as: :status_holder
 
   validates :offer, presence: true
   validates :project, presence: true

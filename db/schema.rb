@@ -327,12 +327,12 @@ ActiveRecord::Schema.define(version: 2019_07_01_175439) do
     t.bigint "author_id"
     t.string "status"
     t.text "message"
-    t.string "pipeline_type"
-    t.bigint "pipeline_id"
+    t.string "status_holder_type"
+    t.bigint "status_holder_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_statuses_on_author_id"
-    t.index ["pipeline_type", "pipeline_id"], name: "index_statuses_on_pipeline_type_and_pipeline_id"
+    t.index ["status_holder_type", "status_holder_id"], name: "index_statuses_on_status_holder_type_and_status_holder_id"
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
