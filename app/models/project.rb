@@ -19,12 +19,8 @@ class Project < ApplicationRecord
   enum customer_typology: CUSTOMER_TYPOLOGIES
   enum issue_status: ISSUE_STATUSES
 
-  NON_EUROPEAN = ISO3166::Country.new("N/E")
-  INTERNATIONAL = ISO3166::Country.new("I/N")
-  NON_APPLICABLE = ISO3166::Country.new("N/A")
-
-  allowed_countries = [NON_APPLICABLE, INTERNATIONAL, NON_EUROPEAN] +
-        ISO3166::Country.find_all_countries_by_region("Europe").sort
+  ALLOWED_COUNTRIES = [Country::NON_APPLICABLE, Country::INTERNATIONAL, Country::NON_EUROPEAN] +
+        Country.european_countries
 
   belongs_to :user
   has_many :project_items, dependent: :destroy
@@ -32,8 +28,8 @@ class Project < ApplicationRecord
   has_many :research_areas, through: :project_research_areas
   has_many :messages, as: :messageable, dependent: :destroy
 
-  serialize :country_of_customer, CountrySerializer
-  serialize :country_of_collaboration, CountrySerializer
+  serialize :country_of_customer, Country
+  serialize :country_of_collaboration, Country
 
   validates :name,
             presence: true,
@@ -41,7 +37,7 @@ class Project < ApplicationRecord
   validates :email, presence: true
   validates :reason_for_access, presence: true
   validates :country_of_customer, presence: true, if: :single_user_or_private_company?,
-             inclusion: { in: allowed_countries }, on: :create
+             inclusion: { in: ALLOWED_COUNTRIES }
   validates :customer_typology, presence: true
 
   validates :organization, presence: true, if: :single_user_or_community?
@@ -54,7 +50,7 @@ class Project < ApplicationRecord
 
   validates :company_name, presence: true, if: :private_company?
   validates :country_of_collaboration, presence: true, if: :research_or_project?,
-             multiselect_choices: { collection: allowed_countries }, on: :create
+             multiselect_choices: { collection: ALLOWED_COUNTRIES }
   validates :company_website_url,  url: true, presence: true, if: :private_company?
 
   validates :issue_id, presence: true, if: :require_jira_issue?
@@ -70,6 +66,14 @@ class Project < ApplicationRecord
 
   def single_user_or_private_company?
     single_user? || private_company?
+  end
+
+  def country_of_customer=(value)
+    self[:country_of_customer] = Country.for(value)
+  end
+
+  def country_of_collaboration=(value)
+    self[:country_of_collaboration] = value.map { |v| Country.for(v) }
   end
 
   private

@@ -66,7 +66,7 @@ export default class extends Controller {
         this._wrap_text(this._getCountriesNames(project["country_of_customer"]),"Customer country");
     this.customerTarget.innerHTML = this._wrap_text(project["customer_typology"], "Customer typology");
     this.collaborationCountryTarget.innerHTML =
-        this._wrap_text(this._getCountriesNames(project["country_of_collaboration"]) || null, "Country of collaboration");
+        this._wrap_text(this._getCountriesNames(project["country_of_collaboration"]), "Country of collaboration");
     this.userGroupNameTarget.innerHTML = this._wrap_text(project["user_group_name"], "User group name");
     this.projectNameTarget.innerHTML = this._wrap_text(project["project_name"], "Project name");
     this.projectWebsiteUrlTarget.innerHTML = this._wrap_text(project["project_website_url"], "Project website url");
@@ -84,28 +84,17 @@ export default class extends Controller {
     return text && "<h4>" + label + "</h4> <p>" + text + "</p>";
   }
 
-  _getCountriesNames(codes) {
-    const countries = require("i18n-iso-countries");
-    countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
-
+  _getCountriesNames(countries) {
     let result = "";
-    if(!Array.isArray(codes)) {
-      codes = [codes]
+    if(!Array.isArray(countries)) {
+      countries = [countries]
     }
-    for (const [idx, alpha2] of codes.entries()) {
-      switch (alpha2) {
-        case "N/E":
-          result += "non-European";
-          break;
-        case "N/A":
-          result += "non Applicable";
-          break;
-        case "I/N":
-          result += "International";
-        default:
-          result += countries.getName(alpha2, "en");
+    for (const [idx, country] of countries.entries()) {
+      if(!country) {
+        return result = null;
       }
-      if (idx === codes.length -1 ) {
+      result += country.data.name
+      if (idx === countries.length -1 ) {
         return result;
       }
       else {

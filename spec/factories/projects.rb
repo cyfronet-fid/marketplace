@@ -12,8 +12,8 @@ FactoryBot.define do
     sequence(:user_group_name) { |n| "User group #{n}" }
     sequence(:project_name) { |n| "Project name #{n}" }
     sequence(:research_areas) { |n| [create(:research_area)] }
-    sequence(:country_of_customer) { CountriesHelper::NON_EUROPEAN }
-    sequence(:country_of_collaboration) { [ CountriesHelper::INTERNATIONAL ] }
+    sequence(:country_of_customer) { Country::NON_EUROPEAN }
+    sequence(:country_of_collaboration) { [ Country::INTERNATIONAL ] }
     sequence(:project_website_url) { "htpps://project_website.url" }
     sequence(:company_name) { |n| "company name #{n}" }
     sequence(:company_website_url) { "https://company_website.url" }
