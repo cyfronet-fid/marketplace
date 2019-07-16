@@ -3,6 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Status do
-  it { should belong_to(:pipeline) }
+  it { should belong_to(:status_holder) }
   it { should validate_presence_of(:status) }
 end
