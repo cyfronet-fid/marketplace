@@ -1,6 +1,7 @@
-%ul.nav.flex-column
+%h5.mb-2.font-weight-bold.projects-title.text-uppercase My projects
+%ul.nav.flex-column.project-menu.pb-2.mb-3
   - projects.each do |project|
     %li.nav-item
       = link_to project.name, [project, :services],
         class: "nav-link #{"active" if project == current}"
-= link_to "New project", new_project_path, class: "btn btn-primary"
+= link_to "+ Create new project", new_project_path, class: "simple-link text-uppercase"

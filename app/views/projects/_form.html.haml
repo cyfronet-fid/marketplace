@@ -1,21 +1,25 @@
 = simple_form_for @project, remote: @show_as_modal,
   html: { role: "form", id: "modal-form", "data-controller" => "project" } do |f|
-  = f.input :name, label: "Project name"
-  = f.input :reason_for_access, label: "Reason to request access to the EOSC services"
-  = f.association :research_areas, multiple: true, include_hidden: false,
-    input_html: { data: { choice: true } }
-  = f.input :country_of_customer, collection: customer_countries,
-    input_html: { "data-target" => "project.customerCountry" }
-  = f.input :email, hint: "Email address in your institute's domain"
+  = f.input :name, label: "Project name", input_html: { class: "col-lg-6 form-control-lg" }
+  = f.input :email, hint: "Email address in your institute's domain", input_html: { class: "col-lg-6 form-control-lg" }
+  %h4 Customer details
   = f.input :customer_typology, collection: Project.customer_typologies.keys.map(&:to_sym),
     input_html: { "data-target" => "project.customer",
-                  "data-action" => "change->project#showSelectedSection" }
+                  "data-action" => "change->project#showSelectedSection", class: "col-lg-5 form-control-lg" }
   = render "customer_typology_fields", f: f
   = f.input :country_of_collaboration, as: :select, collection: collaboration_countries,
     include_blank: false, include_hidden: false,
-    wrapper_html: { class: "hidden-fields",
+    wrapper_html: { class: "hidden-fields col-lg-6 pl-0 pr-0",
       "data-target" => "project.collaborationCountry project.input" },
-    input_html: { class: "choices-multiple-no-sorting", data: { choice: true },
+    input_html: { class: "choices-multiple-no-sortingform-control-lg", data: { choice: true },
     "data-target" => "project.collaborationCountry", "multiple" => "true" }
-  = f.input :additional_information
+  = f.input :country_of_customer, collection: customer_countries,
+    input_html: { "data-target" => "project.customerCountry", class: "col-lg-6 form-control-lg"  }
+  %h4 Usage
+  = f.input :reason_for_access, label: "Reason to request access to the EOSC services",
+    input_html: { class: "col-lg-8 form-control-lg textarea-lg" }
+  = f.association :research_areas, multiple: true, include_hidden: false,
+    wrapper_html: { class: "col-lg-8 pl-0 pr-0" },
+    input_html: { data: { choice: true } }
+  = f.input :additional_information, input_html: { class: "col-lg-8 form-control-lg textarea-md" }
 
