@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :tatus do
     value { :created }
-    association(:pipeline, factory: :project_item)
+    association(:status_holder, factory: :project_item)
   end
 end

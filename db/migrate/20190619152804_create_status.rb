@@ -4,7 +4,7 @@ class CreateStatus < ActiveRecord::Migration[5.2]
       t.belongs_to :author
       t.string :status
       t.text :message
-      t.references :pipeline, polymorphic: true, index: true
+      t.references :status_holder, polymorphic: true, index: true
 
       t.timestamps
     end
