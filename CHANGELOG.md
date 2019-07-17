@@ -53,6 +53,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Choice of "best match" sorting strategy after search (@bwilk)
 - Maintaining sort order when filters are applied (@bwilk)
 - Redirection to project edit view on project creation failure while ordering (@bwilk)
+- Blocked possibility to set existing draft offer for service (@goreck888)
 
 ## [1.11.1] 2019-06-05
 
