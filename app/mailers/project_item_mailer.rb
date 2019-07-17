@@ -9,8 +9,8 @@ class ProjectItemMailer < ApplicationMailer
          subject: "New request for service access in EOSC Portal Marketplace created")
   end
 
-  def changed(project_item)
-    changes = project_item.project_item_changes.last(2)
+  def status_changed(project_item)
+    changes = project_item.statuses.last(2)
 
     if changes.size > 1
       @project_item = project_item
@@ -18,11 +18,9 @@ class ProjectItemMailer < ApplicationMailer
       @current_status = changes.second.status
       @previous_status = changes.first.status
 
-      if @current_status == @previous_status
-        new_message(project_item)
-      else
-        status_changed(project_item)
-      end
+      mail(to: @user.email,
+            subject: "Status of your service access request in EOSC Portal Marketplace has changed",
+            template_name: "changed")
     end
   end
 
@@ -59,21 +57,4 @@ class ProjectItemMailer < ApplicationMailer
          subject: "EGI Applications on Demand service approved",
          template_name: "aod_accepted")
   end
-
-  private
-    def new_message(project_item)
-      @user = project_item.user
-
-      mail(to: @user.email,
-           subject: "Question about your service access request in EOSC Portal Marketplace",
-           template_name: "new_message")
-    end
-
-    def status_changed(project_item)
-      @user = project_item.user
-
-      mail(to: @user.email,
-            subject: "Status of your service access request in EOSC Portal Marketplace has changed",
-            template_name: "changed")
-    end
 end

@@ -63,24 +63,21 @@ RSpec.feature "My Services" do
       expect(page).to have_text("not authorized")
     end
 
-    scenario "I can see project_item change history" do
+    scenario "I can see project_item change history", js: true do
       project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
-      project_item.new_change(status: :created, message: "Service request created")
-      project_item.new_change(status: :registered, message: "Service request registered")
-      project_item.new_change(status: :ready, message: "Service is ready")
+      project_item.new_status(status: :created, message: "Service request created")
+      project_item.new_status(status: :registered, message: "Service request registered")
+      project_item.new_status(status: :ready, message: "Service is ready")
 
       visit project_item_path(project_item)
 
       expect(page).to have_text("ready")
 
       expect(page).to have_text("Service request created")
-
-      expect(page).to have_text("Status changed from created to registered")
       expect(page).to have_text("Service request registered")
-
-      expect(page).to have_text("Status changed from registered to ready")
+      expect(page).to have_text("Service request ready")
       expect(page).to have_text("Service is ready")
     end
 
@@ -137,7 +134,7 @@ RSpec.feature "My Services" do
       project_item = create(:project_item, project: project, offer: offer)
 
       visit project_item_path(project_item)
-      fill_in "project_item_question_text", with: "This is my question"
+      fill_in "message_message", with: "This is my question"
       click_button "Send message"
 
       expect(page).to have_text("This is my question")
@@ -150,7 +147,7 @@ RSpec.feature "My Services" do
       visit project_item_path(project_item)
       click_button "Send message"
 
-      expect(page).to have_text("Question cannot be blank")
+      expect(page).to have_text("Message can't be blank")
     end
   end
 

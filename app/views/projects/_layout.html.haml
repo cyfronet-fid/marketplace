@@ -18,7 +18,7 @@
       = link_to "Project details", project_path(project),
         class: "nav-link #{"active" if controller.controller_name == "projects"}"
     %li.nav-item
-      = link_to "Contact with support", project_chat_path(project),
-        class: "nav-link #{"active" if controller.controller_name == "chats"}"
+      = link_to "Contact with support", project_conversation_path(project),
+        class: "nav-link #{"active" if controller.controller_name == "conversations"}"
   .container.pt-2
     = yield
