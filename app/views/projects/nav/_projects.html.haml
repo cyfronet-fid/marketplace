@@ -4,4 +4,6 @@
     %li.nav-item
       = link_to project.name, [project, :services],
         class: "nav-link #{"active" if project == current}"
+      .message
+        %i.far.fa-comment
 = link_to "+ Create new project", new_project_path, class: "simple-link text-uppercase"

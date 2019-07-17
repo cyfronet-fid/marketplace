@@ -16,7 +16,7 @@
         = link_to "Duplicate", new_project_path(source: project.id), class: "btn btn-outline-secondary btn-sm mb-2"
         = link_to "Delete", project_path(project), method: :delete,
           data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger btn-sm"
-    %ul.nav.nav-tabs.mt-4.pl-3.row
+    %ul.nav.nav-tabs.mt-4.pl-3.row.services-menu
       %li.nav-item
         = link_to "Services", project_services_path(project),
           class: "nav-link #{"active" if controller.controller_name == "services"} text-uppercase"
@@ -26,5 +26,7 @@
       %li.nav-item
         = link_to "Contact with project support", project_chat_path(project),
           class: "nav-link #{"active" if controller.controller_name == "chats"} text-uppercase"
+        .message
+          %i.far.fa-comment
   .container.p-0
     = yield

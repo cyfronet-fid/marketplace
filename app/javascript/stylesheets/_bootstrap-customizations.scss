@@ -1984,7 +1984,7 @@ label[data-multicheckbox].small {
   padding: 15px 25px;
   margin-bottom: 4px;
   border-radius: 2px;
-  background: $palette-solid-5;
+  background: $services-list;
 
   .status {
     font-size: 12px;
@@ -2054,10 +2054,13 @@ label[data-multicheckbox].small {
 
   .buttons-panel {
     margin-bottom: 15px;
+    margin-top: 25px;
 
     .btn {
       padding: 4px 15px;
       font-size: 0.85rem;
+      width: 100%;
+      margin-bottom: 1rem !important;
     }
   }
 
@@ -2092,13 +2095,56 @@ label[data-multicheckbox].small {
 .project-menu {
   border-bottom: 1px solid $palette-gray-30;
 
-  .nav-link {
-    padding: 0.4rem 0;
-    font-size: 16px;
+  .nav-item {
+    position: relative;
+
+    .nav-link {
+      padding: 0.4rem 0;
+      font-size: 16px;
+    }
   }
 
   .active {
     font-weight: bold;
+  }
+
+  .message {
+    position: absolute;
+    top: 6px;
+    text-align: center;
+    right: 0;
+    background: $palette-yellow;
+    border-radius: 100%;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+
+    svg {
+      font-size: 13px;
+    }
+  }
+}
+
+.services-menu {
+
+  .nav-item {
+    position: relative;
+  }
+
+  .message {
+    position: absolute;
+    top: 11px;
+    text-align: center;
+    right: -10px;
+    background: $palette-yellow;
+    border-radius: 100%;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+
+    svg {
+      font-size: 13px;
+    }
   }
 }
 
@@ -2127,4 +2173,43 @@ label[data-multicheckbox].small {
     width: 35px;
     border-top: 2px solid $palette-gray-10;
   }
+}
+
+@media (max-width: 992px) {
+  .details-row {
+
+    .details-box {
+      font-size: 11px;
+    }
+
+    .separator {
+      margin: 7px 5px 0;
+      width: 5px;
+    }
+  }
+
+  .buttons-panel {
+    .btn {
+      width: 100%;
+    }
+  }
+}
+
+.empty-project {
+  border: 1px solid $palette-gray-10;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+
+  h3 {
+    font-weight: 300;
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
+}
+
+.empty-list-img {
+  width: 100%;
+  height: 225px;
+  background: url('../../assets/images/empty-listy.png') top center no-repeat;
 }
