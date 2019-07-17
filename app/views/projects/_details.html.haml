@@ -2,9 +2,8 @@
   .additional-information
     %h3 Project details
     %dl
-      - if project.project?
-        %dt Project name
-        %dd= project.project_name
+      %dt Project name
+      %dd= project.name
 
       %dt Email
       %dd= link_to project.email, "mailto:#{project.email}"
