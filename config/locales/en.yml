@@ -46,6 +46,9 @@ en:
         cancel: Quit
         configuration: Add to a project
   project:
+    mail:
+      new_message: |
+        Question about your service access request in EOSC Portal Marketplace
     customer_typology:
       single_user: "Single user"
       research: "Representing a research community"
@@ -60,6 +63,19 @@ en:
       research: "Representing a research community"
       private_company: "Representing a private company"
       project: "Representing a project"
+  project_item:
+    mail:
+      new_message: |
+        Question about your service access request in EOSC Portal Marketplace
+  conversations:
+    message:
+      question: "Your question to the customer service"
+      answer: "Customer service message"
+  project_items:
+    message:
+      question: "Your question to the service provider"
+      answer: "Service provider message"
+
   offer:
     order_text:
       normal: Order

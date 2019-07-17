@@ -75,8 +75,9 @@
             new_project_item_service_opinion_path(@project_item),
             class: "btn btn-primary btn-sm"
     .col-md-6
-      = render "project_items/project_item_changes",
-                project_item_changes: @project_item.project_item_changes.order("updated_at DESC").to_a,
-                project_item: @project_item,
-                question: @question
+      = render "messages/messages", messages: @messages
 
+      .question-box.mt-5.pt-4
+        = simple_form_for @message, url: project_item_conversation_path(@project_item) do |f|
+          = f.input :message, label: "Message to customer service about your order"
+          %button.btn.btn-primary.btn-sm.mt-4{ type: "submit" } Send message

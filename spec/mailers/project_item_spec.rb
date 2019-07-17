@@ -28,28 +28,14 @@ RSpec.describe ProjectItemMailer, type: :mailer do
   context "project_item change" do
     it "notifies about project_item status change" do
       project_item = create(:project_item, project: project)
-      project_item.new_change(status: :created, message: "ProjectItem created")
-      project_item.new_change(status: :registered, message: "ProjectItem registered")
+      project_item.new_status(status: :created, message: "ProjectItem created")
+      project_item.new_status(status: :registered, message: "ProjectItem registered")
 
-      mail = described_class.changed(project_item).deliver_now
+      mail = described_class.status_changed(project_item).deliver_now
       encoded_body = mail.body.encoded
 
       expect(mail.subject).to match(/has changed/)
       expect(encoded_body).to match(/from "created" to "registered"/)
-      expect(encoded_body).to match(/#{project_item_url(project_item)}/)
-      expect(mail.to).to contain_exactly(user.email)
-    end
-
-    it "notifies about new project_item message" do
-      project_item = create(:project_item, project: project)
-      project_item.new_change(status: :created, message: "ProjectItem created")
-      project_item.new_change(status: :created, message: "New message")
-
-      mail = described_class.changed(project_item).deliver_now
-      encoded_body = mail.body.encoded
-
-      expect(mail.subject).to match(/Question about/)
-      expect(encoded_body).to match(/A new message was added/)
       expect(encoded_body).to match(/#{project_item_url(project_item)}/)
       expect(mail.to).to contain_exactly(user.email)
     end

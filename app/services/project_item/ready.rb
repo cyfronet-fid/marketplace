@@ -45,7 +45,7 @@ class ProjectItem::Ready
     end
 
     def update_status!
-      @project_item.new_change(status: :ready,
+      @project_item.new_status(status: :ready,
                                message: activate_message)
     end
 
@@ -54,7 +54,7 @@ class ProjectItem::Ready
     end
 
     def notify!
-      ProjectItemMailer.changed(@project_item).deliver_later unless @project_item.open_access?
+      ProjectItemMailer.status_changed(@project_item).deliver_later unless @project_item.open_access?
       ProjectItemMailer.rate_service(@project_item).deliver_later(wait_until: RATE_AFTER_PERIOD.from_now)
     end
 

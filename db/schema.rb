@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_19_112716) do
+ActiveRecord::Schema.define(version: 2019_07_01_175439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,18 @@ ActiveRecord::Schema.define(version: 2019_06_19_112716) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.bigint "author_id"
+    t.text "message"
+    t.integer "iid"
+    t.string "messageable_type"
+    t.bigint "messageable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_messages_on_author_id"
+    t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id"
+  end
+
   create_table "offers", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -100,8 +112,8 @@ ActiveRecord::Schema.define(version: 2019_06_19_112716) do
     t.datetime "updated_at", null: false
     t.jsonb "parameters", default: [], null: false
     t.boolean "voucherable", default: false, null: false
-    t.string "offer_type"
     t.string "status"
+    t.string "offer_type"
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
     t.index ["service_id"], name: "index_offers_on_service_id"
@@ -135,13 +147,21 @@ ActiveRecord::Schema.define(version: 2019_06_19_112716) do
     t.bigint "offer_id"
     t.bigint "affiliation_id"
     t.jsonb "properties", default: [], null: false
-    t.bigint "research_area_id"
     t.boolean "request_voucher", default: false, null: false
     t.string "voucher_id", default: "", null: false
     t.index ["affiliation_id"], name: "index_project_items_on_affiliation_id"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
-    t.index ["research_area_id"], name: "index_project_items_on_research_area_id"
+  end
+
+  create_table "project_research_areas", force: :cascade do |t|
+    t.bigint "project_id"
+    t.bigint "research_area_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id", "research_area_id"], name: "index_project_research_areas_on_project_id_and_research_area_id", unique: true
+    t.index ["project_id"], name: "index_project_research_areas_on_project_id"
+    t.index ["research_area_id"], name: "index_project_research_areas_on_research_area_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -303,6 +323,18 @@ ActiveRecord::Schema.define(version: 2019_06_19_112716) do
     t.index ["title"], name: "index_services_on_title"
   end
 
+  create_table "statuses", force: :cascade do |t|
+    t.bigint "author_id"
+    t.string "status"
+    t.text "message"
+    t.string "status_holder_type"
+    t.bigint "status_holder_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_statuses_on_author_id"
+    t.index ["status_holder_type", "status_holder_id"], name: "index_statuses_on_status_holder_type_and_status_holder_id"
+  end
+
   create_table "taggings", id: :serial, force: :cascade do |t|
     t.integer "tag_id"
     t.string "taggable_type"
@@ -357,7 +389,8 @@ ActiveRecord::Schema.define(version: 2019_06_19_112716) do
   add_foreign_key "project_items", "affiliations"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
-  add_foreign_key "project_items", "research_areas"
+  add_foreign_key "project_research_areas", "projects"
+  add_foreign_key "project_research_areas", "research_areas"
   add_foreign_key "service_providers", "providers"
   add_foreign_key "service_providers", "services"
   add_foreign_key "service_related_platforms", "platforms"
