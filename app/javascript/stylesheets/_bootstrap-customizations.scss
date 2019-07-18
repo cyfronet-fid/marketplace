@@ -1504,13 +1504,21 @@ h5 {
 
 .step-progress-item {
   .frame {
-    padding: 8px 14px;
+    padding: 14px 15px 12px;
     max-width: 90%;
     margin-top: 10px;
     border: 1px solid $palette-gray-30;
+    font-size: 14px;
+    margin-bottom: 5px;
+    line-height: 1.55;
+  }
+
+  .message-info {
     font-style: italic;
+    color: $palette-gray-50;
+    text-align: right;
     font-size: 12px;
-    line-height: 18px;
+    max-width: 90%;
   }
 }
 
@@ -2222,3 +2230,13 @@ label[data-multicheckbox].small {
   height: 225px;
   background: url('../../assets/images/empty-listy.png') top center no-repeat;
 }
+
+// scss-lint:disable all
+.modal-content {
+  .form-control,
+  .project_research_areas {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+// scss-lint:enable all
