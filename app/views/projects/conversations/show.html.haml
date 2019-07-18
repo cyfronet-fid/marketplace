@@ -5,5 +5,5 @@
     .h3
       Contact with customer service
     = simple_form_for @message, url: project_conversation_path(@project) do |f|
-      = f.input :message, label: "Message to customer service about your project"
+      = f.input :message, label: "Message to customer service about your project", input_html: { class: "textarea-md" }
       %button.btn.btn-primary.btn-sm.mt-4{ type: "submit" } Send message
