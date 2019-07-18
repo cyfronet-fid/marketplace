@@ -2229,6 +2229,13 @@ label[data-multicheckbox].small {
   width: 100%;
   height: 225px;
   background: url('../../assets/images/empty-listy.png') top center no-repeat;
+  background-size: contain;
+}
+
+.empty-list-img-big {
+  width: 100%;
+  height: 320px;
+  background: url('../../assets/images/empty-listy.png') top center no-repeat;
 }
 
 // scss-lint:disable all
