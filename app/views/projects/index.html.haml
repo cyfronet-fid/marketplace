@@ -1,6 +1,6 @@
 - breadcrumb :projects
 
-.container
+= render "projects/layout", project: @project, projects: @projects do
   .alert.alert-primary
     Big banner showing projects purpose
     = link_to "Create new project", new_project_path, class: "btn btn-primary"
