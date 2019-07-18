@@ -129,9 +129,7 @@ RSpec.feature "Project" do
 
       visit project_path(project)
 
-      click_on "Delete"
-
-      expect(page).to have_content("Projects with pending or active service access request cannot be deleted or archived")
+      expect(page).to_not have_content("Delete")
     end
 
     scenario "I cannot see not my projects" do
