@@ -25,8 +25,8 @@
         = link_to "Project details", project_path(project),
           class: "nav-link #{"active" if controller.controller_name == "projects"} text-uppercase"
       %li.nav-item
-        = link_to "Contact with project support", project_chat_path(project),
-          class: "nav-link #{"active" if controller.controller_name == "chats"} text-uppercase"
+        = link_to "Contact with project support", project_conversation_path(project),
+          class: "nav-link #{"active" if controller.controller_name == "conversations"} text-uppercase"
         .message
           %i.comment
   .container.p-0
