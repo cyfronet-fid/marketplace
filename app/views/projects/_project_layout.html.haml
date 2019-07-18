@@ -6,7 +6,7 @@
           %h1.flex-grow-1
             = project.name
           .details-row
-            .details-box Created at 12.07.2019
+            .details-box Created at #{l(@project.created_at, format: :short)}
             .separator
             .details-box= t "projeproject.customer_typology.#{project.customer_typology}"
             - if project.organization?
