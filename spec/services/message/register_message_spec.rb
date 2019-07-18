@@ -2,11 +2,11 @@
 
 require "rails_helper"
 
-RSpec.describe ProjectItem::RegisterQuestion do
+RSpec.describe Message::RegisterMessage do
   include JiraHelper
 
   let(:project_item) { create(:project_item, issue_id: 1) }
-  let(:question) { create(:project_item_change, project_item: project_item, message: "Question message") }
+  let(:message) { create(:message, messageable: project_item, message: "Message message") }
   let(:comment) { double("Comment", id: 123) }
 
   # Stub JIRA client
@@ -20,27 +20,27 @@ RSpec.describe ProjectItem::RegisterQuestion do
     allow(jira_client).to receive_message_chain(:Issue, :find) { issue }
   end
 
-  it "creates jira comment from question" do
+  it "creates jira comment from message" do
     expect(comment).
-      to receive(:save).with(body: question.message).and_return(comment)
+      to receive(:save).with(body: message.message).and_return(comment)
 
-    described_class.new(question).call
+    described_class.new(message).call
   end
 
   it "sets jira internal comment id" do
     expect(comment).
-      to receive(:save).with(body: question.message).and_return(comment)
+      to receive(:save).with(body: message.message).and_return(comment)
 
-    described_class.new(question).call
-    question.reload
+    described_class.new(message).call
+    message.reload
 
-    expect(question.iid).to eq(123)
+    expect(message.iid).to eq(123)
   end
 
   it "raises JIRACommentCreateError if comment was not created" do
     allow(comment).to receive(:save).and_return(nil)
 
-    expect { described_class.new(question).call }.
-      to raise_error(ProjectItem::RegisterQuestion::JIRACommentCreateError)
+    expect { described_class.new(message).call }.
+      to raise_error(Message::RegisterMessage::JIRACommentCreateError)
   end
 end
