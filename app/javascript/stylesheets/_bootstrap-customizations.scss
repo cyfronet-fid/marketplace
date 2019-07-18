@@ -2079,7 +2079,8 @@ label[data-multicheckbox].small {
 }
 
 // scss-lint:disable all
-.new_project {
+.new_project,
+.edit-project {
   h4 {
     font-size: 14px;
     text-transform: uppercase;
