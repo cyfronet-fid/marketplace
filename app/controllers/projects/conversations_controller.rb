@@ -5,7 +5,7 @@ class Projects::ConversationsController < ApplicationController
   before_action :load_and_authorize_project!
 
   def show
-    @projects = policy_scope(Project)
+    @projects = policy_scope(Project).order(:name)
     @messages = @project.messages.order("created_at ASC")
     @message = Message.new(messageable: @project)
   end
@@ -20,6 +20,7 @@ class Projects::ConversationsController < ApplicationController
       redirect_to project_conversation_path(@project)
     else
       @messages = @project.messages
+      @projects = policy_scope(Project).order(:name)
       render :show, status: :bad_request
     end
   end

@@ -53,7 +53,7 @@ RSpec.feature "Project" do
       fill_in "Webpage", with: "http://home.corp.com"
       click_on "Create"
 
-      expect(current_url).to eq(projects_url)
+      expect(current_url).to eq(project_url(Project.last))
     end
 
     scenario "I can create project duplicate" do

@@ -13,6 +13,8 @@ class ProjectItems::ConversationsController < ApplicationController
       flash[:notice] = "Message sent successfully"
       redirect_to @project_item
     else
+      @projects = policy_scope(Project)
+      @project = @project_item.project
       @messages = @project_item.messages
       render "project_items/show", status: :bad_request
     end
