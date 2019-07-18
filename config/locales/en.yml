@@ -33,6 +33,7 @@ en:
   time:
     formats:
       default: "%e.%m.%Y %k:%M"
+      short: "%e.%m.%Y"
 
   service:
     normal:
