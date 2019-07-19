@@ -56,7 +56,7 @@ class ProjectsController < ApplicationController
       format.html do
         if @project.save
           Project::Create.new(@project).call
-          redirect_to projects_path
+          redirect_to project_path(@project)
         else
           render :new, status: :bad_request
         end
