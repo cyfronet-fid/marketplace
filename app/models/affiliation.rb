@@ -9,11 +9,6 @@ class Affiliation < ApplicationRecord
   }
 
   belongs_to :user
-  counter_culture :user,
-    column_name: ->(model) { model.active? ? "active_affiliations_count" : nil },
-    column_names: {
-      ["affiliations.status = ?", "active"] => "active_affiliations_count"
-    }
 
   has_many :project_items, dependent: :restrict_with_error
 

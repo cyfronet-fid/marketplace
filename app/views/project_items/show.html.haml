@@ -1,120 +1,84 @@
 - breadcrumb :project_item, @project_item
 
-.container
-  .row
-    .col-md-9
-      %h1
-        #{@project_item.service.title}
-    .col-md-3
-      %p.text-uppercase.text-right.font-weight-bold.text-secondary.mt-4.mb-0
-        = @project_item.status
-  .row
-    .col-md-12.back-link
-      %i.fas.fa-chevron-left.fa-xs.mr-1
-      %a{ href: "/projects" }  back to my services list
-  %hr.mb-5.border-5.border-separator
-  .row.justify-content-between
-    .col-md-5
-      %h2.mb-4
-        Details
-      .details.mb-5
-        %dl
-          %dt
-            Ordered service:
-          %dd
-            = link_to @project_item.service.title, @project_item.service
-        %dl
-          %dt
-            Order date:
-          %dd
-            = l @project_item.created_at
-        %dl
-          %dt
-            Research area:
-          %dd
-            = @project_item.research_area&.name
-        %dl
-          %dt
-            Providers:
-          %dd
-            :ruby
-              providers = @project_item.service.providers.
-                          map { |p| link_to(p.name, services_path(providers: p)) }
-            = safe_join(providers, ", ")
-        %dl
-          %dt
-            Status:
-          %dd
-            %span.text-uppercase= @project_item.status
-
-      - if @project_item.affiliation.present?
-        %h5.text-uppercase.parameters-title.mb-3 Connected affiliation
+= render "projects/layout", project: @project, projects: @projects do
+  .container
+    .row
+      .col-md-9
+        %h1
+          #{@project_item.service.title}
+      .col-md-3
+        %p.text-uppercase.text-right.font-weight-bold.text-secondary.mt-4.mb-0
+          = @project_item.status
+    .row
+      .col-md-12.back-link
+        %i.fas.fa-chevron-left.fa-xs.mr-1
+        = link_to "back to project services", [@project, :services]
+    %hr.mb-5.border-5.border-separator
+    .row.justify-content-between
+      .col-md-5
+        %h2.mb-4
+          Details
         .details.mb-5
           %dl
             %dt
-              Organization:
+              Ordered service:
             %dd
-              = @project_item.affiliation.organization
-          - if @project_item.affiliation.department.present?
-            %dl
-              %dt Department:
-              %dd
-                = @project_item.affiliation.department
+              = link_to @project_item.service.title, @project_item.service
           %dl
-            %dt Email:
+            %dt
+              Order date:
             %dd
-              = @project_item.affiliation.email
-          - if @project_item.affiliation.phone.present?
-            %dl
-              %dt Phone:
-              %dd
-                = @project_item.affiliation.phone
-          - if @project_item.affiliation.webpage.present?
-            %dl
-              %dt Webpage:
-              %dd
-                = @project_item.affiliation.webpage
-          - if @project_item.affiliation.supervisor.present?
-            %dl
-              %dt Supervisor:
-              %dd
-                = @project_item.affiliation.supervisor
-          - if @project_item.affiliation.supervisor_profile.present?
-            %dl
-              %dt Supervisor profile:
-              %dd
-                = @project_item.affiliation.supervisor_profile
+              = l @project_item.created_at
+          %dl
+            %dt
+              Research areas:
+            %dd
+              = @project_item.project.research_areas.names.join(", ")
+          %dl
+            %dt
+              Providers:
+            %dd
+              :ruby
+                providers = @project_item.service.providers.
+                            map { |p| link_to(p.name, services_path(providers: p)) }
+              = safe_join(providers, ", ")
+          %dl
+            %dt
+              Status:
+            %dd
+              %span.text-uppercase= @project_item.status
 
-        = render "project_items/attributes", property_values: @project_item.property_values
+          = render "project_items/attributes", property_values: @project_item.property_values
 
-      - unless @project_item.voucher_id.blank? && !@project_item.request_voucher
-        %h2.mb-
-          Vouchers
-        .blue-row.form-inline.mb-5
-          .d-inline.mr-4
-            %i.fas.fa-ticket-alt
-          - if @project_item.voucher_id.blank?
-            .d-inline
-              Requested
-          - else
-            .d-inline
-              Your voucher ID
-              %br
-              %span.voucher-name= @project_item.voucher_id
-      - if ratingable?
-        %h2.mb-3
-          Your review
-        .blue-row.form-inline.mb-3
-          .d-inline.mr-4
-            %i.fas.fa-star.fa-pull-left
-            You have been using this service for #{distance_of_time_in_words(@project_item.created_at, DateTime.now)}.
-            Please share your opinion with others EOSC Marketplace users.
-        = link_to "Review service",
-            new_project_item_service_opinion_path(@project_item),
-            class: "btn btn-primary btn-sm"
-    .col-md-6
-      = render "project_items/project_item_changes",
-                project_item_changes: @project_item.project_item_changes.order("updated_at DESC").to_a,
-                project_item: @project_item,
-                question: @question
+        - unless @project_item.voucher_id.blank? && !@project_item.request_voucher
+          %h2.mb-
+            Vouchers
+          .blue-row.form-inline.mb-5
+            .d-inline.mr-4
+              %i.fas.fa-ticket-alt
+            - if @project_item.voucher_id.blank?
+              .d-inline
+                Requested
+            - else
+              .d-inline
+                Your voucher ID
+                %br
+                %span.voucher-name= @project_item.voucher_id
+        - if ratingable?
+          %h2.mb-3
+            Your review
+          .blue-row.form-inline.mb-3
+            .d-inline.mr-4
+              %i.fas.fa-star.fa-pull-left
+              You have been using this service for #{distance_of_time_in_words(@project_item.created_at, DateTime.now)}.
+              Please share your opinion with others EOSC Marketplace users.
+          = link_to "Review service",
+              new_project_item_service_opinion_path(@project_item),
+              class: "btn btn-primary btn-sm"
+      .col-md-6
+        = render "messages/messages", messages: @messages
 
+        .question-box.mt-5.pt-4
+          = simple_form_for @message, url: project_item_conversation_path(@project_item) do |f|
+            = f.input :message, label: "Message to customer service about your order"
+            %button.btn.btn-primary.btn-sm.mt-4{ type: "submit" } Send message

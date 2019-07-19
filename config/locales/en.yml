@@ -33,6 +33,7 @@ en:
   time:
     formats:
       default: "%e.%m.%Y %k:%M"
+      short: "%e.%m.%Y"
 
   service:
     normal:
@@ -46,20 +47,39 @@ en:
         cancel: Quit
         configuration: Add to a project
   project:
+    mail:
+      new_message: |
+        Question about your service access request in EOSC Portal Marketplace
+    customer_typology:
+      single_user: "Single user"
+      research: "Representing a research community"
+      private_company: "Representing a private company"
+      project: "Representing a project"
     select:
       description: |
         You can organize your services in projects.
         Add this service to a specific project or create a new one.
+    buttons:
+      create: Create new project
+      update: Update
+      cancel: Cancel
+  project_item:
+    mail:
+      new_message: |
+        Question about your service access request in EOSC Portal Marketplace
+  conversations:
+    message:
+      question: "Your question to the customer service"
+      answer: "Customer service message"
+  project_items:
+    message:
+      question: "Your question to the service provider"
+      answer: "Service provider message"
   offer:
     order_text:
       normal: Order
       open_access: Add to a project
       catalog: Go to the service
-
-  affiliation_confirmations:
-    index:
-      not_found: "Affiliation for the given token cannot be found."
-      not_owned: "Affiliation does not belong to you."
 
   will_paginate:
     page_entries_info:
@@ -73,4 +93,3 @@ en:
         other: "Found <b>&nbsp;%{count}</b> results"
       multi_page: "%{from} - %{to} of %{count} results"
       multi_page_html: "<b>%{from}&nbsp;-&nbsp;%{to}</b> of <b>%{count}</b> results"
-

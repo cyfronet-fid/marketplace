@@ -11,10 +11,27 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service owner can edit service draft and service offer drafts (@mkasztelnik)
 
 ### Changed
+- Country of customer and country of collaboration fields (@goreck888)
+- Country fields transfer to jira issues (@goreck888)
+- Create project copy (@mkasztelnik)
+- Conversation to project (@martaswiatkowska)
+
+### Changed
+
+- Redirection to a service upon choice made by autocomplete in search bar (@bwilk)
+- Reimplemented filters and categories after creating indexes in Elasticsearch (@bwilk)
+- Expand all projects on projects index view (@mkasztelnik)
+- Improvements for project box views (@mkasztelnik)
+- Project card redesigned (@mkasztelnik)
+- Move ResearchArea association from project item to the project
+- Content of mail templates by voucher accept (@goreck888)
+- Reimplemented sending messages to providers (@martaswiatkowska)
 
 ### Deprecated
 
 ### Removed
+- Project filter removed from projects index view (@mkasztelnik)
+- Affiliations were removed from all views (@mkasztelnik)
 
 ### Fixed
 
@@ -37,6 +54,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Hierarchical filters deactivation buttons (@bwilk)
 - Choice of "best match" sorting strategy after search (@bwilk)
 - Maintaining sort order when filters are applied (@bwilk)
+- Redirection to project edit view on project creation failure while ordering (@bwilk)
 
 ## [1.11.1] 2019-06-05
 
@@ -47,14 +65,19 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Cookie policies consent popup (@mkasztelnik)
+- Project details view (@martaswiatkowska)
+- Master / sub issue jira integration
+- jira master / sub issue migration rake task
 
 ### Changed
 - Improve empty project description (@mkasztelnik)
 - Improve collapse / expand all behaviour for filters (@michal-szostak)
+- Move additional_information from project_item to project (@martaswiatkowska)
 
 ### Removed
 - Remove rating filter from the view until we have enough ratings to show it (@mkasztelnik)
 - Remove default project creation (@mkasztelnik)
+- Remove duplicated project fields from project-item (@martaswiatkowska)
 
 ### Fixed
 - Don't add `+` instead of space to query value during filtering (@mkasztelnik)

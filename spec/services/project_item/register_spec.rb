@@ -23,12 +23,12 @@ RSpec.describe ProjectItem::Register do
       expect(jira_client).to receive(:create_service_issue).with(project_item)
 
       described_class.new(project_item).call
-      expect(project_item.project_item_changes.last).to be_registered
+      expect(project_item.statuses.last).to be_registered
     end
 
     it "creates new project_item change" do
       described_class.new(project_item).call
-      expect(project_item.project_item_changes.last).to be_registered
+      expect(project_item.statuses.last).to be_registered
     end
 
     it "changes project_item status into registered on success" do
@@ -39,7 +39,7 @@ RSpec.describe ProjectItem::Register do
 
     it "sent email to project_item owner" do
       # project_item change email is sent only when there is more than 1 change
-      project_item.new_change(status: :created, message: "ProjectItem created")
+      project_item.new_status(status: :created, message: "ProjectItem created")
 
       expect { described_class.new(project_item).call }.
           to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -56,7 +56,7 @@ RSpec.describe ProjectItem::Register do
     end
 
     it "sets jira error and raises exception on failed jira issue creation" do
-      error = Jira::Client::JIRAIssueCreateError.new(project_item, "key" => "can not have value X")
+      error = Jira::Client::JIRAProjectItemIssueCreateError.new(project_item, "key" => "can not have value X")
 
       allow(jira_client).to receive(:create_service_issue).with(project_item).and_raise(error)
 
