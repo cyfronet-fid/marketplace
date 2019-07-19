@@ -28,7 +28,7 @@ RSpec.feature "My Services" do
       project = create(:project, user: user)
       create(:project_item, project: project, offer: offer)
 
-      visit projects_path
+      visit project_services_path(project)
 
       expect(page).to have_text(service.title)
     end

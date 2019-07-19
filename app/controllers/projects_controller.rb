@@ -5,7 +5,8 @@ class ProjectsController < ApplicationController
   before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
 
   def index
-    @projects = policy_scope(Project).order(:name).eager_load(:project_items)
+    @projects = policy_scope(Project)
+    redirect_to @projects.first if @projects.count.positive?
   end
 
   def show
@@ -30,7 +31,9 @@ class ProjectsController < ApplicationController
           webpage: @project.webpage
         }
       end
-      format.html
+      format.html do
+        @projects = policy_scope(Project).order(:name)
+      end
     end
   end
 
@@ -53,7 +56,7 @@ class ProjectsController < ApplicationController
       format.html do
         if @project.save
           Project::Create.new(@project).call
-          redirect_to projects_path
+          redirect_to project_path(@project)
         else
           render :new, status: :bad_request
         end
