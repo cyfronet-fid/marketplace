@@ -34,7 +34,7 @@ end
 
 crumb :project_item do |project_item|
   link "Service (#{project_item.service.title})", project_item_path(project_item)
-  parent :projects
+  parent :project, project_item.project
 end
 
 crumb :projects do

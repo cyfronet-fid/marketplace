@@ -1,14 +1,10 @@
-.row
-  .col.pt-2
-    %p
-      You have no services in this project yet.
-      %br
-      Use our catalogue to add one.
-    %p
-      If you need help with these don't hesitate and contact with our support.
-
-  .col.pt-2
-    = link_to "Add service to this project", services_url,
-    class: "btn-sm btn-block btn-primary mb-4 pl-2 pr-2 text-center"
-    = link_to "Contact with support", project_conversation_path(project),
-    class: "btn-sm btn-block btn-primary text-center"
+.empty-project
+  .row
+    .col-lg-5.pt-4.pb-3.pl-5
+      %h3 You have no services in this project yet.
+      %p Use our catalogue to add one.
+      %p If you need help with these don't hesitate and contact with our support.
+      = link_to "Add your first service", services_url,
+      class: "btn btn-primary mb-4 pl-5 pr-5 mt-3 text-center"
+    .col
+      .empty-list-img.mt-4

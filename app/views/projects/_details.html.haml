@@ -1,10 +1,9 @@
-.row.pt-4.justify-content-between.order-container
-  .col.additional-information
+.container.pt-3.order-container
+  .additional-information
     %h3 Project details
     %dl
-      - if project.project?
-        %dt Project name
-        %dd= project.project_name
+      %dt Project name
+      %dd= project.name
 
       %dt Email
       %dd= link_to project.email, "mailto:#{project.email}"
@@ -62,7 +61,7 @@
 
       - unless project.single_user?
         %dt Collaboration countries
-        %dl= country_name(project.country_of_collaboration).join(", ")
+        %dd= country_name(project.country_of_collaboration).join(", ")
 
     %h3 Usage
     %dl
@@ -74,9 +73,3 @@
     %dl
       - if project.additional_information
         %dd= project.additional_information
-  .col.mb-3
-    %ul.list-group
-      %h3.project-services.pb-2.mb-2
-        %i.fas.fa-box-open.mr-2
-        Services in this project
-      = render(project.project_items) || render("empty_project", project: project)
