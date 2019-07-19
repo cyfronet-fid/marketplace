@@ -14,4 +14,8 @@ namespace :jira do
   task setup: :environment do
     Jira::Setup.new.call
   end
+
+  task migrate_projects: :environment do
+    Jira::ProjectMigrator.new.call
+  end
 end

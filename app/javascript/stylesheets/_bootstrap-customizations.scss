@@ -210,6 +210,20 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   color: $gray-500 !important;
 }
 
+.form-control-lg {
+  font-size: 1rem;
+  height: calc(1.5em + 1.4rem + 2px);
+  padding: 0.7rem 1rem;
+}
+
+.textarea-lg {
+  height: 250px !important;
+}
+
+.textarea-md {
+  height: 125px !important;
+}
+
 .pagination {
   a {
     color: $body-color;
@@ -1034,6 +1048,49 @@ h5 {
   display: block;
 }
 
+
+.order-container {
+  .form-group select,
+  .form-group select {
+    width: 33%;
+  }
+
+  textarea {
+    width: 70%;
+  }
+
+  table {
+    margin-bottom: 0;
+  }
+
+  .form-check .form-check-input {
+    margin-top: 0.2rem;
+    margin-right: 0.5rem;
+  }
+
+  .form-check .form-check-label,
+  .form-check .form-text {
+    padding-left: 10px;
+  }
+
+  .configuration-big-title {
+    text-transform: none;
+    border: none;
+    font-size: 18px;
+  }
+
+  .details-content {
+
+    h4 {
+      border: none;
+      font-size: 16px;
+      line-height: 25px;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+}
+
 @media only screen and (max-width: 768px) {
 
   .area-bg {
@@ -1062,38 +1119,16 @@ h5 {
   font-size: 1.05em;
 }
 
-.order-container .configuration-big-title {
-  text-transform: none;
-  border: none;
-  font-size: 18px;
+.projects-title {
+  padding: 0 0 7px;
+  border-bottom: 1px solid $palette-gray-30;
+  font-size: 0.9em;
 }
 
 .sub-text {
   font-size: 16px;
 }
 
-.order-container .form-group select,
-.order-container .form-group select {
-  width: 33%;
-}
-
-.order-container textarea {
-  width: 70%;
-}
-
-.order-container table {
-  margin-bottom: 0;
-}
-
-.order-container .form-check .form-check-input {
-  margin-top: 0.2rem;
-  margin-right: 0.5rem;
-}
-
-.order-container .form-check .form-check-label,
-.order-container .form-check .form-text {
-  padding-left: 10px;
-}
 
 .card-body table tr:first-child td {
   border-top: none;
@@ -1473,13 +1508,21 @@ h5 {
 
 .step-progress-item {
   .frame {
-    padding: 8px 14px;
+    padding: 14px 15px 12px;
     max-width: 90%;
     margin-top: 10px;
     border: 1px solid $palette-gray-30;
+    font-size: 14px;
+    margin-bottom: 5px;
+    line-height: 1.55;
+  }
+
+  .message-info {
     font-style: italic;
+    color: $palette-gray-50;
+    text-align: right;
     font-size: 12px;
-    line-height: 18px;
+    max-width: 90%;
   }
 }
 
@@ -1591,12 +1634,6 @@ label[data-multicheckbox].small {
   flex: 0 0 4.33333%;
   max-width: 4.333%;
   margin-right: 4%;
-}
-
-.service-description {
-  textarea {
-    height: 400px;
-  }
 }
 
 .service-activate-message {
@@ -1866,3 +1903,351 @@ label[data-multicheckbox].small {
     }
   }
 }
+
+
+.border-header {
+  border-bottom: 5px solid $border-header;
+}
+
+.projects-collapse {
+  margin-top: 22px;
+  background: $collapse-background;
+  padding: 1.1rem 1.25rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+
+  h2,
+  .collapse-icon {
+    color: $palette-gray-100;
+  }
+}
+
+.projects-collapse-content {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+  h5 {
+    font-size: 14px;
+    margin-bottom: 0.3rem;
+  }
+}
+
+.service-description {
+
+  textarea {
+    height: 400px;
+  }
+
+  h5 {
+    font-size: 14px;
+    margin-bottom: 0.3rem;
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .details-content {
+    padding-left: 15px;
+    margin: 15px 0 35px;
+    border-left: solid 3px $border-color;
+
+    .form-control-label {
+      font-size: 16px;
+      line-height: 25px;
+      font-weight: 600;
+    }
+
+    p,
+    h5 {
+      font-size: 16px;
+      line-height: 25px;
+    }
+
+    h5 {
+      margin-bottom: 0;
+    }
+  }
+
+  h3 {
+    text-transform: uppercase;
+    font-size: 14px;
+    border: none;
+    margin-bottom: 8px;
+  }
+
+}
+
+.project-services {
+  font-size: 14px;
+  text-transform: uppercase;
+  border-bottom: 2px solid $palette-yellow;
+
+  svg {
+    color: $palette-yellow;
+    font-size: 20px;
+    vertical-align: bottom;
+  }
+}
+
+.projects-list {
+  border: none;
+  padding: 15px 25px;
+  margin-bottom: 4px;
+  border-radius: 2px;
+  background: $services-list;
+
+  .status {
+    font-size: 12px;
+
+    svg {
+      font-size: 9px;
+    }
+
+    .registered {
+      color: $orange;
+    }
+
+    .ready {
+      color: $green;
+    }
+
+    .rejected {
+      color: $red;
+    }
+  }
+}
+
+.buttons-panel {
+
+  .btn {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+    color: $palette-gray-100;
+    width: 80%;
+    float: right;
+  }
+
+  .btn-outline-danger {
+    border-style: solid;
+    border-width: 1px;
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  .btn-outline-secondary {
+    border-style: solid;
+    border-width: 1px;
+  }
+
+}
+
+.textarea-tall {
+
+  textarea {
+    height: 200px;
+  }
+}
+
+.textarea-medium {
+  textarea {
+    height: 90px;
+  }
+}
+
+@media (max-width: 768px) {
+  .projects-collapse-content .col-md-5 {
+    margin-bottom: 25px;
+  }
+
+  .buttons-panel {
+    margin-bottom: 15px;
+    margin-top: 25px;
+
+    .btn {
+      padding: 4px 15px;
+      font-size: 0.85rem;
+      width: 100%;
+      margin-bottom: 1rem !important;
+    }
+  }
+
+  .service-description .details-content p {
+    font-size: 15px;
+    line-height: 23px;
+  }
+}
+
+.modal-dialog {
+  .col-6 {
+    width: 100%;
+    max-width: 100%;
+    padding-right: 0;
+  }
+}
+
+// scss-lint:disable all
+.new_project,
+.edit-project {
+  h4 {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: $palette-gray-70;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid $palette-gray-10;
+    margin-bottom: 25px;
+    margin-top: 55px;
+  }
+}
+// scss-lint:enable all
+
+.project-menu {
+  border-bottom: 1px solid $palette-gray-30;
+
+  .nav-item {
+    position: relative;
+
+    .nav-link {
+      padding: 0.4rem 0;
+      font-size: 16px;
+    }
+  }
+
+  .active {
+    font-weight: bold;
+  }
+
+  .message {
+    position: absolute;
+    top: 6px;
+    text-align: center;
+    right: 0;
+    background: $palette-yellow;
+    border-radius: 100%;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+
+    .comment {
+      width: 100%;
+      height: 17px;
+      margin-top: 5px;
+      float: left;
+      background: url('../../assets/images/ico_notification.svg') top center no-repeat;
+    }
+  }
+}
+
+.services-menu {
+
+  .nav-item {
+    position: relative;
+  }
+
+  .message {
+    position: absolute;
+    top: 11px;
+    text-align: center;
+    right: -10px;
+    background: $palette-yellow;
+    border-radius: 100%;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+
+    .comment {
+      width: 100%;
+      height: 17px;
+      margin-top: 5px;
+      float: left;
+      background: url('../../assets/images/ico_notification.svg') top center no-repeat;
+    }
+  }
+}
+
+.simple-link {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.project-heading {
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+}
+
+.details-row {
+  .details-box {
+    display: inline;
+    float: left;
+  }
+
+  .separator {
+    display: inline;
+    float: left;
+    margin: 9px 10px 0;
+    width: 35px;
+    border-top: 2px solid $palette-gray-10;
+  }
+}
+
+@media (max-width: 992px) {
+  .details-row {
+
+    .details-box {
+      font-size: 11px;
+    }
+
+    .separator {
+      margin: 7px 5px 0;
+      width: 5px;
+    }
+  }
+
+  .buttons-panel {
+    .btn {
+      width: 100%;
+    }
+  }
+}
+
+.empty-project {
+  border: 1px solid $palette-gray-10;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+
+  h3 {
+    font-weight: 300;
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
+}
+
+.empty-list-img {
+  width: 100%;
+  height: 225px;
+  background: url('../../assets/images/empty-listy.png') top center no-repeat;
+  background-size: contain;
+}
+
+.empty-list-img-big {
+  width: 100%;
+  height: 320px;
+  background: url('../../assets/images/empty-listy.png') top center no-repeat;
+}
+
+// scss-lint:disable all
+.modal-content {
+  .form-control,
+  .project_research_areas {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+// scss-lint:enable all

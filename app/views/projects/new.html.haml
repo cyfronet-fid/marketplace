@@ -1,0 +1,14 @@
+- breadcrumb :project_new
+.container
+  .mb-4.pb-4.border-header
+    %h1.mr-auto.my-auto  Create new project
+  = render "form", project: @project
+
+  %hr.bottom-hr.mt-5.mb-4
+  .row
+    .col-12
+      %button.btn.btn-primary.pl-5.pr-5{ type: "submit",
+                               form: "modal-form" }
+        = t("project.buttons.create")
+      = back_link_to t("project.buttons.cancel"), @project,
+        class: "btn btn-link text-uppercase"

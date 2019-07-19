@@ -8,7 +8,7 @@ RSpec.feature "Service ordering" do
 
   context "as logged in user" do
     let(:user) do
-      create(:user).tap { |u| create(:project, name: "Services", user: u) }
+      create(:user).tap { |u| create(:project, name: "Services", user: u, reason_for_access: "To pass test") }
     end
     let(:service) { create(:service) }
 
@@ -33,8 +33,6 @@ RSpec.feature "Service ordering" do
 
     scenario "I can order service" do
       offer, _seconds_offer = create_list(:offer, 2, service: service)
-      affiliation = create(:affiliation, status: :active, user: user)
-      research_area = create(:research_area)
 
       visit service_path(service)
 
@@ -55,11 +53,6 @@ RSpec.feature "Service ordering" do
                                     "Next", exact: true)
 
       select "Services"
-      select affiliation.organization
-      select research_area.name, from: "Research area"
-      select "Single user", from: "Customer typology"
-      fill_in "Access reason", with: "To pass test"
-      fill_in "Additional information", with: "Additional information test"
 
       click_on "Next", match: :first
 
@@ -67,9 +60,9 @@ RSpec.feature "Service ordering" do
       expect(page).to have_current_path(service_summary_path(service))
       expect(page).to have_selector(:link_or_button,
                                     "Order", exact: true)
+
       expect(page).to have_text("Single user")
       expect(page).to have_text("To pass test")
-      expect(page).to have_text("Additional information test")
 
       expect do
         click_on "Order", match: :first
@@ -77,13 +70,6 @@ RSpec.feature "Service ordering" do
       project_item = ProjectItem.last
       expect(project_item.offer_id).to eq(offer.id)
       expect(project_item.properties).to eq([])
-
-      # Summary
-      expect(page).to have_current_path(service_summary_path(service))
-      expect(page).to have_selector(:link_or_button,
-                                    "Go to requested service", exact: true)
-
-      click_on "Go to requested service"
 
       # Project item page
       expect(page).to have_current_path(project_item_path(project_item))
@@ -102,8 +88,6 @@ RSpec.feature "Service ordering" do
                                            "maximum": 100,
                                          } }])
 
-      affiliation = create(:affiliation, status: :active, user: user)
-      research_area = create(:research_area)
 
       visit service_path(service)
 
@@ -116,11 +100,7 @@ RSpec.feature "Service ordering" do
 
       fill_in "Attribute 1", with: "95"
       select "Services"
-      select affiliation.organization
-      select research_area.name, from: "Research area"
-      select "Single user", from: "Customer typology"
-      fill_in "Access reason", with: "To pass test"
-      fill_in "Additional information", with: "Additional information test"
+
 
       click_on "Next", match: :first
 
@@ -130,20 +110,12 @@ RSpec.feature "Service ordering" do
                                     "Order", exact: true)
       expect(page).to have_text("Single user")
       expect(page).to have_text("To pass test")
-      expect(page).to have_text("Additional information test")
 
       expect do
         click_on "Order", match: :first
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
       expect(project_item.offer_id).to eq(offer.id)
-
-      # Summary
-      expect(page).to have_current_path(service_summary_path(service))
-      expect(page).to have_selector(:link_or_button,
-                                    "Go to requested service", exact: true)
-
-      click_on "Go to requested service"
 
       # Project item page
       expect(page).to have_current_path(project_item_path(project_item))
@@ -255,7 +227,14 @@ RSpec.feature "Service ordering" do
       click_on "Order"
       click_on "Add new project"
       within("#ajax-modal") do
-        fill_in "Name", with: "New project"
+        fill_in "Project name", with: "New project"
+        fill_in "Email", with: "john@doe.com"
+        select "Single user", from: "Customer typology"
+        fill_in "Organization", with: "Home corp."
+        fill_in "Webpage", with: "http://home.corp.com"
+        fill_in "Reason to request access to the EOSC services", with: "Some reason"
+        select "non-European", from: "Country of customer"
+        select "Single user", from: "Customer typology"
       end
       click_on "Create new project"
 
@@ -266,7 +245,7 @@ RSpec.feature "Service ordering" do
       expect(user.projects.find { |project| project.name == "New project" }).to_not be_nil
     end
 
-    scenario "I can create new project for private company typology", js: true do
+    scenario "I will stay in project edit modal while trying to create empty project", js: true do
       service = create(:service)
       create(:offer, service: service)
 
@@ -274,21 +253,55 @@ RSpec.feature "Service ordering" do
 
       click_on "Order"
       click_on "Add new project"
+
+      click_on "Create new project"
       within("#ajax-modal") do
-        fill_in "Name", with: "New project"
+        expect(page).to have_button("Create new project")
+      end
+
+      click_on "Create new project"
+      within("#ajax-modal") do
+        expect(page).to have_button("Create new project")
+      end
+    end
+
+    scenario "I can create new project for private company typology", js: true do
+      service = create(:service)
+      research_area = create(:research_area)
+      create(:offer, service: service)
+
+      visit service_path(service)
+
+      click_on "Order"
+      click_on "Add new project"
+      within("#ajax-modal") do
+        fill_in "Project name", with: "New project"
+        fill_in "Reason to request access to the EOSC services", with: "To pass test"
+        within ".project_research_areas" do
+          find("label", text: "Research areas").click
+          find("div", class: "choices__item", text: research_area.name).click
+        end
+        select "non-European", from: "Country of customer"
+        fill_in "Email", with: "john@doe.com"
         select "Representing a private company", from: "Customer typology"
 
         expect(page).to have_field("Company name")
         expect(page).to have_field("Company website url")
 
-        fill_in "Company name", with: "Company name"
+        within ".project_country_of_collaboration" do
+          find("label", text: "Country of collaboration").click
+          find("div", class: "choices__item", text: "non-European").click
+        end
+        fill_in "Company name", with: "New company name"
         fill_in "Company website url", with: "https://www.company.name"
+
         click_on "Create new project"
       end
-
       expect(page).to have_select("project_item_project_id", selected: "New project")
-      expect(page).to have_field("Company name", with: "Company name")
-      expect(page).to have_field("Company website url", with: "https://www.company.name")
+      expect(page).to have_text(research_area.name)
+      expect(page).to have_text("New company name")
+      expect(page).to have_text("https://www.company.name")
+      expect(page).to have_text("non-European")
 
       new_project = Project.all.last
       expect(new_project.name).to eq("New project")
@@ -298,8 +311,6 @@ RSpec.feature "Service ordering" do
     scenario "Voucher inputs should not be visible in voucher disabled offer" do
       service = create(:service)
       _offer = create(:offer, service: service, voucherable: false)
-      affiliation = create(:affiliation, status: :active, user: user)
-      research_area = create(:research_area)
 
       visit service_path(service)
 
@@ -309,10 +320,6 @@ RSpec.feature "Service ordering" do
       expect(page).to_not have_text("Voucher")
 
       select "Services"
-      select affiliation.organization
-      select research_area.name, from: "Research area"
-      select "Single user", from: "Customer typology"
-      fill_in "Access reason", with: "To pass test"
 
       click_on "Next", match: :first
 
@@ -323,8 +330,6 @@ RSpec.feature "Service ordering" do
     scenario "Voucher ID input should be visible for voucher enabled service" do
       service = create(:service)
       _offer = create(:offer, service: service, voucherable: true)
-      affiliation = create(:affiliation, status: :active, user: user)
-      research_area = create(:research_area)
 
       visit service_path(service)
 
@@ -335,10 +340,7 @@ RSpec.feature "Service ordering" do
       fill_in "Voucher ID", with: "11111-22222-33333-44444"
 
       select "Services"
-      select affiliation.organization
-      select research_area.name, from: "Research area"
-      select "Single user", from: "Customer typology"
-      fill_in "Access reason", with: "To pass test"
+
 
       click_on "Next", match: :first
 
@@ -349,8 +351,6 @@ RSpec.feature "Service ordering" do
 
     scenario "Voucher ID input should not be visible if 'request voucher' radio is set", js: true do
       _offer = create(:offer, service: service, voucherable: true)
-      affiliation = create(:affiliation, status: :active, user: user)
-      research_area = create(:research_area)
 
       visit service_path(service)
 
@@ -361,10 +361,6 @@ RSpec.feature "Service ordering" do
 
 
       select "Services"
-      select affiliation.organization
-      select research_area.name, from: "Research area"
-      select "Single user", from: "Customer typology"
-      fill_in "Access reason", with: "To pass test"
       click_on "Next", match: :first
 
       # Step 3

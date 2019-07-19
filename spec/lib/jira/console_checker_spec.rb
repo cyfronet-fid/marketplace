@@ -105,18 +105,21 @@ describe Jira::ConsoleChecker do
   end
 
   it "check should print to stdout" do
-    expect(checker.client).to receive_message_chain("Issue.build").and_return(double("Issue"))
+    allow(checker.client).to receive_message_chain("Issue.build").and_return(double("Issue"))
 
     expect(checker).to receive(:check_connection).and_return(true)
     expect(checker).to receive(:check_project).and_return(true)
     expect(checker).to receive(:check_create_issue).and_return(true)
-    expect(checker).to receive(:check_update_issue).and_return(true)
+    expect(checker).to receive(:check_update_issue).twice.and_return(true)
     expect(checker).to receive(:check_add_comment).and_return(true)
-    expect(checker).to receive(:check_delete_issue).and_return(true)
+    expect(checker).to receive(:check_delete_issue).twice.and_return(true)
     expect(checker).to receive(:check_workflow).exactly(5).and_return(true)
     expect(checker).to receive(:check_issue_type).and_return(true)
     expect(checker).to receive(:check_workflow_transitions).and_return(true)
     expect(checker).to receive(:check_custom_fields).and_return(true)
+    expect(checker).to receive(:check_project_issue_type).and_return(true)
+    expect(checker).to receive(:check_create_project_issue).and_return(true)
+
 
     expect { con_checker.check }.to output("Checking JIRA instance on http://localhost:2990\n" +
                                            "Checking connection..." + " OK".green + "\n" +
@@ -135,6 +138,11 @@ describe Jira::ConsoleChecker do
                                            "  - done [id: 3]..." + " OK".green + "\n" +
                                            "  - rejected [id: 5]..." + " OK".green + "\n" +
                                            "Checking custom fields mappings..." + " OK".green + "\n" +
+                                           "Checking Project issue type presence..." + " OK".green + "\n" +
+                                           "Trying to manipulate project issue...\n" +
+                                           "  - create issue..." + " OK".green + "\n" +
+                                           "  - update issue..." + " OK".green + "\n" +
+                                           "  - delete issue..." + " OK".green + "\n" +
                                            "WARNING: Webhook won't be check, set MP_HOST env variable if you want to check it".yellow + "\n"
                                     ).to_stdout
   end
@@ -146,23 +154,25 @@ describe Jira::ConsoleChecker do
     original_stdout = $stdout
     $stdout = StringIO.new
 
-    expect(con_checker).to receive(:show_available_issue_types)
+    expect(con_checker).to receive(:show_available_issue_types).twice
     expect(con_checker).to receive(:show_available_issue_states)
 
-    expect(checker.client).to receive_message_chain("Issue.build").and_return(double("Issue"))
+    allow(checker.client).to receive_message_chain("Issue.build").and_return(double("Issue"))
 
     expect(checker).to receive(:check_connection) { |&block| block.call(error); next false }
     expect(checker).to receive(:check_project) { |&block| block.call(error); next false }
     expect(checker).to receive(:check_issue_type) { |&block| block.call(error); next false }
     expect(checker).to receive(:check_create_issue) { |&block| block.call(error); next false }
     expect(checker).to receive(:check_workflow_transitions) { |&block| block.call(error); next false }
-    expect(checker).to receive(:check_update_issue) { |&block| block.call(error); next false }
+    expect(checker).to receive(:check_update_issue).twice { |&block| block.call(error); next false }
     expect(checker).to receive(:check_add_comment) { |&block| block.call(error); next false }
-    expect(checker).to receive(:check_delete_issue) { |&block| block.call(error); next false }
+    expect(checker).to receive(:check_delete_issue).twice { |&block| block.call(error); next false }
     expect(checker).to receive(:check_workflow).exactly(5) { |&block| block.call(error); next false }
     expect(checker).to receive(:check_custom_fields) { |&block| block.call(error); next false }
+    expect(checker).to receive(:check_project_issue_type) { |&block| block.call(error); next false }
+    expect(checker).to receive(:check_create_project_issue) { |&block| block.call(error); next false }
 
-    expect(con_checker).to receive(:error_and_abort!).exactly(14).with(error, any_args)
+    expect(con_checker).to receive(:error_and_abort!).exactly(18).with(error, any_args)
     con_checker.check
 
     $stdout = original_stdout

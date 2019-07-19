@@ -9,17 +9,6 @@ crumb :profile do
   parent :marketplace_root
 end
 
-crumb :affiliation do |affiliation|
-  link "Affiliation ##{affiliation.iid}", profile_affiliation_path(affiliation)
-  parent :profile
-end
-
-
-crumb :affiliation_new do
-  link "New Affiliation", new_profile_affiliation_path
-  parent :profile
-end
-
 crumb :services do
   link "Services", services_path
   parent :marketplace_root
@@ -45,7 +34,7 @@ end
 
 crumb :project_item do |project_item|
   link "Service (#{project_item.service.title})", project_item_path(project_item)
-  parent :projects
+  parent :project, project_item.project
 end
 
 crumb :projects do
@@ -56,4 +45,19 @@ end
 crumb :congratulations do |project_item|
   link "Congratulations", project_item_path(project_item)
   parent :marketplace_root
+end
+
+crumb :project_new do
+  link "New project", new_project_path
+  parent :projects
+end
+
+crumb :project do |project|
+  link project.name, project_path(project)
+  parent :projects
+end
+
+crumb :project_edit do |project|
+  link "Edit", edit_project_path(project)
+  parent :project, project
 end

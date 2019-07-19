@@ -1,0 +1,9 @@
+%h5.mb-2.font-weight-bold.projects-title.text-uppercase My projects
+- if projects.any?
+  %ul.nav.flex-column.project-menu.pb-2
+    - projects.each do |project|
+      %li.nav-item
+        = link_to project.name, [project, :services],
+          class: "nav-link #{"active" if project == current}"
+        -# TODO: Commented since we don't have notification mechanism yet  .message  %i.comment
+= link_to "+ Create new project", new_project_path, class: "simple-link text-uppercase d-block mt-3"

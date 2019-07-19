@@ -26,20 +26,20 @@ Rails.application.routes.draw do
 
   resources :categories, only: :show
 
-  resources :projects, only: [:index, :show, :new, :create]
-  resources :project_items, only: :show do
-    scope module: :project_items do
-      resources :questions, only: [:index, :create]
-      resources :service_opinions, only: [:new, :create]
+  resources :projects do
+    scope module: :projects do
+      resources :about, only: :index
+      resources :services, only: [:show, :index]
+      resource :conversation, only: [:show, :create]
     end
   end
 
-  resource :profile, only: [:show] do
-    scope module: :profiles do
-      resources :affiliations
+  resources :project_items, only: [:show, :message] do
+    scope module: :project_items do
+      resources :service_opinions, only: [:new, :create]
+      resource :conversation, only: :create
     end
   end
-  resources :affiliation_confirmations, only: :index
 
   resource :profile, only: :show
 
