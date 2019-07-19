@@ -93,10 +93,6 @@ class ProjectsController < ApplicationController
 
   private
 
-    def projectless?
-      policy_scope(Project).count.zero?
-    end
-
     def new_record
       Project.new(attributes)
     end
