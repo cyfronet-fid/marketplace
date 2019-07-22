@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Country fields transfer to jira issues (@goreck888)
 - Create project copy (@mkasztelnik)
 - Conversation to project (@martaswiatkowska)
+- Project item view is split into details and conversation (@mkasztelnik)
 
 ### Changed
 
