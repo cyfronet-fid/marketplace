@@ -2020,6 +2020,7 @@ label[data-multicheckbox].small {
 }
 
 .buttons-panel {
+  min-height: 100px;
 
   .btn {
     text-transform: uppercase;
@@ -2033,9 +2034,11 @@ label[data-multicheckbox].small {
   .btn-outline-danger {
     border-style: solid;
     border-width: 1px;
+    border-color: $danger;
 
     &:hover {
       color: $white;
+      background: $danger;
     }
   }
 
