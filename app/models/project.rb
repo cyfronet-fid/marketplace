@@ -29,7 +29,7 @@ class Project < ApplicationRecord
   has_many :messages, as: :messageable, dependent: :destroy
 
   serialize :country_of_customer, Country
-  serialize :country_of_collaboration, Country
+  serialize :country_of_collaboration, Country::Array
 
   validates :name,
             presence: true,

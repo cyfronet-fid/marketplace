@@ -34,16 +34,30 @@ class Country
 
     def load(code)
       return nil if code.blank?
-      code.is_a?(Array) ? code.map { |c| Country.for(c) } : Country.for(code)
+      Country.for(code)
     end
 
     def dump(obj)
       return nil if obj.blank?
-      obj.is_a?(Array) ? obj.map { |o| o.alpha2 } : obj.alpha2
+      obj.alpha2
     end
 
     def european_countries
       ISO3166::Country.find_all_countries_by_region("Europe").sort
+    end
+  end
+
+  class Array
+    class << self
+      def load(code)
+        return nil if code.blank?
+        code.map { |c| Country.for(c) }
+      end
+
+      def dump(obj)
+        return nil if obj.blank?
+        obj.map { |o| o.alpha2 }
+      end
     end
   end
 end
