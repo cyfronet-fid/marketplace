@@ -32,22 +32,14 @@ class Country
       ISO3166::Country.new(value)
     end
 
-    def load(json)
-      return nil if json.blank?
-      if json.is_a? Array
-        json.map { |e| Country.for(JSON.parse(e)) }
-      else
-        Country.for(JSON.parse(json))
-      end
+    def load(code)
+      return nil if code.blank?
+      code.is_a?(Array) ? code.map { |c| Country.for(c) } : Country.for(code)
     end
 
     def dump(obj)
       return nil if obj.blank?
-      if obj.is_a? Array
-        obj.map(&:alpha2).map(&:to_json) unless obj.any? { |c| c.nil? }
-      else
-        obj.alpha2.to_json
-      end
+      obj.is_a?(Array) ? obj.map { |o| o.alpha2 } : obj.alpha2
     end
 
     def european_countries
