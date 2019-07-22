@@ -9,7 +9,9 @@ class ProjectItem < ApplicationRecord
     in_progress: "in_progress",
     waiting_for_response: "waiting_for_response",
     ready: "ready",
-    rejected: "rejected"
+    rejected: "rejected",
+    closed: "closed",
+    approved: "approved"
   }
 
   ISSUE_STATUSES = {

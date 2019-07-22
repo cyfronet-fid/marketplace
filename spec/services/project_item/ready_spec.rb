@@ -39,16 +39,16 @@ RSpec.describe ProjectItem::Ready do
     it "creates new project_item status change" do
       described_class.new(project_item).call
 
-      expect(project_item.statuses.last).to be_ready
+      expect(project_item.project_item_changes.last).to be_approved
     end
 
-    it "changes project_item status into ready on success" do
+    it "changes project_item status into approved on success" do
       described_class.new(project_item).call
 
-      expect(project_item).to be_ready
+      expect(project_item).to be_approved
     end
 
-    it "uses activate message when project item status is changed to ready" do
+    it "uses activate message when project item status is changed to approved" do
       service = create(:open_access_service, activate_message: "Welcome!!!")
       offer = create(:offer, service: service)
       project_item = create(:project_item, offer: offer)
@@ -67,13 +67,13 @@ RSpec.describe ProjectItem::Ready do
       expect(transition).to receive(:save!).with("transition" => { "id" => "2" })
 
       described_class.new(project_item).call
-      expect(project_item).to be_ready
+      expect(project_item).to be_approved
     end
 
     context "Normal service project item" do
-      it "sents ready and rate service emails to owner" do
-        # project_item ststus change email is sent only when there is more than 1 change
-        project_item.new_status(status: :created, message: "ProjectItem is ready")
+      it "sents approved and rate service emails to owner" do
+        # project_item change email is sent only when there is more than 1 change
+        project_item.new_change(status: :created, message: "ProjectItem is approved")
 
         expect { described_class.new(project_item).call }.
             to change { ActionMailer::Base.deliveries.count }.by(2)
@@ -89,7 +89,7 @@ RSpec.describe ProjectItem::Ready do
       end
 
       it "sends only rate service email to owner" do
-        project_item.new_status(status: :ready, message: "ProjectItem is ready")
+        project_item.new_change(status: :approved, message: "ProjectItem is approved")
 
         expect { described_class.new(project_item).call }.
             to change { ActionMailer::Base.deliveries.count }.by(1)
