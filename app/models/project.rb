@@ -69,11 +69,11 @@ class Project < ApplicationRecord
   end
 
   def country_of_customer=(value)
-    self[:country_of_customer] = Country.for(value)
+    super(Country.for(value))
   end
 
   def country_of_collaboration=(value)
-    self[:country_of_collaboration] = value.map { |v| Country.for(v) }
+    super(value.map { |v| Country.for(v) })
   end
 
   private
