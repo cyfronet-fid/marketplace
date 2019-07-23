@@ -36,6 +36,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 
 - Wrong redirection after logging in while browsing the portal (@bwilk)
+- Disabled possibility to 
 
 ### Security
 
