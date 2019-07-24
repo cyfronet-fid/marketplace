@@ -41,21 +41,21 @@ RSpec.describe Project do
     it { is_expected.to validate_presence_of(:company_website_url) }
   end
 
-  describe "country_of_collaboration" do
-    subject { build(:project, country_of_collaboration: [ Country::INTERNATIONAL, Country::NON_EUROPEAN ]) }
-    it "should check country_of_collaboration" do
+  describe "countries_of_partnership" do
+    subject { build(:project, countries_of_partnership: [ "PL", "N/E" ]) }
+    it "should check countries_of_partnership" do
       expect(subject.save).to be true
       project = Project.find(subject.id)
-      expect(project.country_of_collaboration).to match_array([ Country::INTERNATIONAL, Country::NON_EUROPEAN ])
+      expect(project.countries_of_partnership).to match_array([ Country.for("PL"), Country.for("N/E") ])
     end
   end
 
-  describe "country_of_customer" do
-    subject { build(:project, country_of_customer: Country::INTERNATIONAL) }
-    it "should check country_of_collaboration" do
+  describe "country_of_origin" do
+    subject { build(:project, country_of_origin: "PL") }
+    it "should check country_of_origin" do
       expect(subject.save).to be true
       project = Project.find(subject.id)
-      expect(project.country_of_customer).to eq(Country::INTERNATIONAL)
+      expect(project.country_of_origin).to eq(Country.for("PL"))
     end
   end
 

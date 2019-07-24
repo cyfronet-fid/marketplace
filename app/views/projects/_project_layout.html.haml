@@ -8,7 +8,7 @@
           .details-row
             .details-box Created at #{l(project.created_at, format: :short)}
             .separator
-            .details-box= t "projeproject.customer_typology.#{project.customer_typology}"
+            .details-box= t "project.customer_typology.#{project.customer_typology}"
             - if project.organization?
               .separator
               .details-box= project.organization

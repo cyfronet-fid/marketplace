@@ -2,7 +2,7 @@ import { Controller } from "stimulus"
 
 export default class extends Controller {
   static targets = ["singleUser", "customer", "research",
-                    "customerCountry", "collaborationCountry", "customerHint",
+                    "originCountry", "partnershipCountries", "customerHint",
                     "project", "privateCompany", "input"];
 
   connect() {
@@ -22,21 +22,21 @@ export default class extends Controller {
     this._hideCustomerTypologieFields();
     if ( customer === this.CUSTOMER_TYPOLOGIES.single_user){
       this._showFields(this.singleUserTargets);
-      this._createHint(this.customerCountryTarget.parentElement, 'In which country is your institution located?');
+      this._createHint(this.originCountryTarget.parentElement, 'In which country is your institution located?');
     }
     if ( customer === this.CUSTOMER_TYPOLOGIES.research){
       this._showFields(this.researchTargets);
-      this._createHint(this.collaborationCountryTarget,
+      this._createHint(this.partnershipCountriesTarget,
           'Which countries are involved in this community? Please select those you are aware of');
     }
     if (customer === this.CUSTOMER_TYPOLOGIES.project){
       this._showFields(this.projectTargets);
-      this._createHint(this.collaborationCountryTarget,
+      this._createHint(this.partnershipCountriesTarget,
           'Which countries are involved in these projects? Please select those you are aware of');
     }
     if (customer === this.CUSTOMER_TYPOLOGIES.private_company){
       this._showFields(this.privateCompanyTargets);
-      this._createHint(this.customerCountryTarget.parentElement, 'Where is it located?');
+      this._createHint(this.originCountryTarget.parentElement, 'Where is it located?');
     }
     // if (customer !== "" && customer !== this.CUSTOMER_TYPOLOGIES.single_user){
     //    this.collaborationCountryTarget.classList.remove("hidden-fields");

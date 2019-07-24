@@ -2,7 +2,6 @@
 
 class Jira::Client < JIRA::Client
   include Rails.application.routes.url_helpers
-  include CountriesHelper
 
   class JIRAIssueCreateError < StandardError
   end
@@ -204,9 +203,13 @@ private
         nil
       end
     when "CP-CustomerCountry"
-      project.country_of_customer.name
+      project.country_of_origin.name || "N/A"
     when "CP-CollaborationCountry"
-      project.country_of_collaboration.map(&:name).join(", ")
+      if project.countries_of_partnership.present?
+        project.countries_of_partnership.map(&:name).join(", ")
+      else
+        "N/A"
+      end
     # when "CP-ReasonForAccess"
     #   project.reason_for_access
     # when "CP-ProjectInformation"
