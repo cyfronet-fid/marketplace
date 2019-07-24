@@ -1,0 +1,75 @@
+.container.pt-3.order-container
+  .additional-information
+    %h3 Project details
+    %dl
+      %dt Project name
+      %dd= project.name
+
+      %dt Email
+      %dd= link_to project.email, "mailto:#{project.email}"
+
+      - if project.project_website_url?
+        %dt Project website url
+        %dd= project.project_website_url
+
+      - if project.private_company?
+        %dt Company name
+        %dd= project.company_name
+
+
+    %h3 Customer details
+    %dl
+
+      %dt Customer Typology
+      %dd= t "projeproject.customer_typology.#{project.customer_typology}"
+
+      - if project.research?
+        %dt User group name
+        %dd= project.user_group_name
+
+      - if project.single_user_or_community?
+        %dt Organization
+        %dd= project.organization
+
+      - if project.department
+        %dt Department
+        %dd= project.department
+
+      - if project.webpage?
+        %dt Webpage
+        %dd= project.webpage
+
+      - if project.research_areas.present?
+        %dt Research Areas
+      - @project.research_areas.each do |area|
+        %dd= area.name
+
+      - if project.research?
+        %dt User group name
+        %dd= project.user_group_name
+
+      - if project.project?
+        %dt Project name
+        %dd= project.project_name
+
+        %dt Project website url
+        %dd= project.project_website_url
+
+      - if project.company_website_url?
+        %dt Company website url
+        %dd= project.company_website_url
+
+      - unless project.single_user?
+        %dt Collaboration countries
+        %dd= country_name(project.country_of_collaboration).join(", ")
+
+    %h3 Usage
+    %dl
+      %dt Reason to request access to the EOSC services
+      %dd= project.reason_for_access
+
+
+    %h3 Additional information
+    %dl
+      - if project.additional_information
+        %dd= project.additional_information

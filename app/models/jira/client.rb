@@ -2,17 +2,35 @@
 
 class Jira::Client < JIRA::Client
   include Rails.application.routes.url_helpers
+  include CountriesHelper
 
   class JIRAIssueCreateError < StandardError
+  end
+
+  class JIRAProjectItemIssueCreateError < JIRAIssueCreateError
     def initialize(project_item, msg = "")
       super(msg)
       @project_item = project_item
     end
   end
 
+  class JIRAProjectIssueCreateError < JIRAIssueCreateError
+    def initialize(project, msg = "")
+      super(msg)
+      @project = project
+    end
+  end
+
+  class ProjectIssueDoesNotExist < StandardError
+    def initialize(project, msg = "")
+      super(msg)
+      @project = project
+    end
+  end
+
   attr_reader :jira_config
   attr_reader :jira_project_key
-  attr_reader :jira_issue_type_id
+  attr_reader :jira_issue_type_id, :jira_project_issue_type_id
   attr_reader :webhook_secret
   attr_reader :custom_fields
   attr_reader :wf_todo_id, :wf_in_progress_id, :wf_done_id, :wf_rejected_id, :wf_waiting_for_response_id
@@ -33,6 +51,7 @@ class Jira::Client < JIRA::Client
 
     @jira_project_key = @jira_config["project"]
     @jira_issue_type_id = @jira_config["issue_type_id"]
+    @jira_project_issue_type_id = @jira_config["project_issue_type_id"]
 
     @wf_todo_id = @jira_config["workflow"]["todo"]
     @wf_in_progress_id = @jira_config["workflow"]["in_progress"]
@@ -43,6 +62,8 @@ class Jira::Client < JIRA::Client
     fields_config = @jira_config["custom_fields"]
 
     @custom_fields = {
+      "Epic Link": fields_config["Epic Link"],
+      "Epic Name": fields_config["Epic Name"],
       "Order reference": fields_config["Order reference"],
       "CI-Name": fields_config["CI-Name"],
       "CI-Surname": fields_config["CI-Surname"],
@@ -54,7 +75,9 @@ class Jira::Client < JIRA::Client
       "CI-DepartmentalWebPage": fields_config["CI-DepartmentalWebPage"],
       "CI-SupervisorName": fields_config["CI-SupervisorName"],
       "CI-SupervisorProfile": fields_config["CI-SupervisorProfile"],
+      "CP-CustomerCountry": fields_config["CP-CustomerCountry"],
       "CP-CustomerTypology": fields_config["CP-CustomerTypology"],
+      "CP-CollaborationCountry": fields_config["CP-CollaborationCountry"],
       "CP-ReasonForAccess": fields_config["CP-ReasonForAccess"],
       "CP-UserGroupName": fields_config["CP-UserGroupName"],
       "CP-ProjectInformation": fields_config["CP-ProjectInformation"],
@@ -72,7 +95,36 @@ class Jira::Client < JIRA::Client
     super(options)
   end
 
+  def create_project_issue(project)
+    issue = self.Issue.build
+
+    fields = { summary: "Project, #{project.user.first_name} " +
+                        "#{project.user.last_name}, " +
+                        "#{project.name}",
+               project: { key: @jira_project_key },
+               issuetype: { id: @jira_project_issue_type_id },
+    }
+
+    @custom_fields.reject { |k, v| v.empty? }.each do |field_name, field_id|
+      value = generate_project_custom_field_value(field_name.to_s, project)
+      unless value.nil?
+        fields[field_id.to_s] = value
+      end
+    end
+
+    if issue.save(fields: fields)
+      issue
+    else
+      raise JIRAProjectIssueCreateError.new(project, issue.errors)
+    end
+  end
+
+
   def create_service_issue(project_item)
+    unless project_item.project.jira_active?
+      raise ProjectIssueDoesNotExist.new(project_item.project)
+    end
+
     issue = self.Issue.build
 
     fields = { summary: "Service order, #{project_item.project.user.first_name} " +
@@ -83,7 +135,7 @@ class Jira::Client < JIRA::Client
     }
 
     @custom_fields.reject { |k, v| v.empty? }.each do |field_name, field_id|
-      value = generate_custom_field_value(field_name.to_s, project_item)
+      value = generate_project_item_custom_field_value(field_name.to_s, project_item)
       unless value.nil?
         fields[field_id.to_s] = value
       end
@@ -92,12 +144,16 @@ class Jira::Client < JIRA::Client
     if issue.save(fields: fields)
       issue
     else
-      raise JIRAIssueCreateError.new(project_item, issue.errors)
+      raise JIRAProjectItemIssueCreateError.new(project_item, issue.errors)
     end
   end
 
   def mp_issue_type
     self.Issuetype.find(@jira_issue_type_id)
+  end
+
+  def mp_project_issue_type
+    self.Issuetype.find(@jira_project_issue_type_id)
   end
 
   def mp_project
@@ -119,52 +175,66 @@ private
     }.to_json
   end
 
-  def generate_custom_field_value(field_name, project_item)
+  def generate_project_custom_field_value(field_name, project)
     case field_name
-    when "Order reference"
-      ENV["ROOT_URL"].blank? ? project_item_path(project_item) : project_item_url(project_item, host: ENV["ROOT_URL"])
+    when "Epic Name"
+      project.name
     when "CI-Name"
-      project_item.project.user.first_name
+      project.user.first_name
     when "CI-Surname"
-      project_item.project.user.last_name
+      project.user.last_name
     when "CI-Email"
-      project_item.affiliation&.email || nil
-    when "CI-DisplayName"
-      "#{project_item.project.user.first_name} #{project_item.project.user.last_name}"
-    when "CI-EOSC-UniqueID"
-      project_item.project.user.uid
+      project.email || nil
     when "CI-Institution"
-      project_item.affiliation&.organization || nil
+      project.single_user_or_community? ? project.organization : nil
     when "CI-Department"
-      project_item.affiliation&.department || nil
+      project.single_user_or_community? ? project.department : nil
     when "CI-DepartmentalWebPage"
-      project_item.affiliation&.webpage || nil
-    when "CI-SupervisorName"
-      project_item.affiliation&.supervisor || nil
-    when "CI-SupervisorProfile"
-      project_item.affiliation&.supervisor_profile || nil
+      project.single_user_or_community? ? project.webpage : nil
+    when "CI-DisplayName"
+      "#{project.user.first_name} #{project.user.last_name}"
+    when "CP-ScientificDiscipline"
+      project.research_areas.names.join(", ")
+    when "CI-EOSC-UniqueID"
+      project.user.uid
     when "CP-CustomerTypology"
-      if project_item.customer_typology
-        { "id" => @jira_config["custom_fields"]["select_values"]["CP-CustomerTypology"][project_item.customer_typology] }
+      if project.customer_typology
+        { "id" => @jira_config["custom_fields"]["select_values"]["CP-CustomerTypology"][project.customer_typology] }
       else
         nil
       end
-    when "CP-ReasonForAccess"
-      project_item.access_reason
-    when "CP-ProjectInformation"
-      project_item.project_name
+    when "CP-CustomerCountry"
+      country_name(project.country_of_customer)
+    when "CP-CollaborationCountry"
+      country_name(project.country_of_collaboration).join(", ")
+    # when "CP-ReasonForAccess"
+    #   project.reason_for_access
+    # when "CP-ProjectInformation"
+    #   project.name
     when "CP-UserGroupName"
-      project_item.user_group_name
+      project.user_group_name
+    when "SO-ProjectName"
+      "#{project&.name} (#{project&.id})"
+    # this is not a property of project
+    # when "CP-ScientificDiscipline"
+    #   project.research_area&.name
+    else
+      nil
+    end
+  end
+
+  def generate_project_item_custom_field_value(field_name, project_item)
+    case field_name
+    when "Order reference"
+      ENV["ROOT_URL"].blank? ? project_item_path(project_item) : project_item_url(project_item, host: ENV["ROOT_URL"])
+    when "Epic Link"
+      project_item.project.issue_key
     when "CP-Platforms"
       project_item.offer.service.platforms.pluck(:name).join(", ")
     when "CP-INeedAVoucher"
       { "id" => @jira_config["custom_fields"]["select_values"]["CP-INeedAVoucher"][project_item.request_voucher] }
     when "CP-VoucherID"
       project_item.voucher_id || nil
-    when "SO-ProjectName"
-      "#{project_item.project&.name} (#{project_item.project&.id})"
-    when "CP-ScientificDiscipline"
-      project_item.research_area&.name
     when "SO-1"
       encode_order_properties(project_item)
     when "SO-ServiceOrderTarget"

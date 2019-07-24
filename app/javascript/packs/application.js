@@ -48,6 +48,11 @@ document.addEventListener("turbolinks:load", function(event) {
     initCookiesPolicy();
 });
 
+document.addEventListener("ajax:success", function(event) {
+    initChoises();
+});
+
+
 /**
  * Apart from turbolinks we need to replace FA for the first page load
  */

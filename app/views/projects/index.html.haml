@@ -1,15 +1,12 @@
 - breadcrumb :projects
 
-.container
-  .d-flex.mb-5
-    %h1.mr-auto.my-auto My projects and orders
-    %form.my-auto
-      %select#status.form-control.form-control-sm.custom-select{ "data-submit-on-change": "data-submit-on-change" }
-        %option{ value: "", selected: "selected" }
-          All
-        :ruby
-          status_options = ProjectItem.statuses.values.
-                           map { |s| [t("simple_form.options.project_item.status.#{s}"), s] }
-        = options_for_select(status_options, params[:status])
-
-  = render @projects
+= render "projects/layout", project: @project, projects: @projects do
+  .empty-project.container.shadow-sm
+    .row
+      .col-lg-6.pt-5.pb-5.pl-5
+        %h1.mb-4 Welcome to projects!
+        %p.lead.font-weight-light Use our quick creation form to add one.
+        %p.lead.font-weight-light If you need help with these don't hesitate and contact with our support.
+        = link_to "Create your first project", new_project_path, class: "btn btn-primary mt-4"
+      .col
+        .empty-list-img-big.mt-4

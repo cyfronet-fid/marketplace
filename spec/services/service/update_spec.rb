@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Service::Update do
-  it "updates affiliation" do
+  it "updates attributes" do
     service = create(:service)
 
     described_class.new(service, title: "new title").call
