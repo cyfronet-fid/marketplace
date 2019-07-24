@@ -2022,6 +2022,8 @@ label[data-multicheckbox].small {
 
 .buttons-panel {
   min-height: 100px;
+  flex-direction: column;
+  justify-content: center;
 
   .btn {
     text-transform: uppercase;
