@@ -9,11 +9,11 @@ FactoryBot.define do
       tagline { "Large-Scale computing for medical metabolomics" }
     end
     initialize_with do
-      # noinspection RubyStringKeysInHashInspection
+      # noinspection RubyStringKeysInHashInspection,RubyScope
       next {
           "total" => 154,
           "from" => 0,
-          "to" => 1,
+          "to" => 3,
           "results" => [
               {
                   "id" => "phenomenal.phenomenal",
@@ -74,6 +74,132 @@ FactoryBot.define do
                   "ratings" => 2,
                   "userRate" => 0.0,
                   "hasRate" => 3.0,
+                  "favourites" => 1,
+                  "isFavourite" => false
+              },
+              {
+                  "id" => "West-Life.metalpdb",
+                  "url" => "http://metalweb.cerm.unifi.it/",
+                  "name" => "MetalPDB",
+                  "tagline" => "",
+                  "description" => "Knowledge on metal sites in biological macromolecules, built on structural information in the Protein Data Bank (PDB).",
+                  "options" => "",
+                  "targetUsers" => "",
+                  "userValue" => "",
+                  "userBase" => "",
+                  "symbol" => "http://metalweb.cerm.unifi.it/global/images/MetalPDB.png",
+                  "multimediaURL" => nil,
+                  "providers" => [
+                      "West-Life"
+                  ],
+                  "version" => "1.0",
+                  "lastUpdate" => 1518912000000,
+                  "changeLog" => "",
+                  "validFor" => nil,
+                  "lifeCycleStatus" => "production",
+                  "trl" => "trl-9",
+                  "category" => "software",
+                  "subcategory" => "tool",
+                  "places" => [
+                      "WW"
+                  ],
+                  "languages" => [
+                      "english"
+                  ],
+                  "tags" => [
+                      "Data management",
+                      "Biochemistry"
+                  ],
+                  "requiredServices" => [],
+                  "relatedServices" => [],
+                  "order" => "http://metalweb.cerm.unifi.it/",
+                  "helpdesk" => "https://about.west-life.eu/network/west-life/documentation",
+                  "userManual" => nil,
+                  "trainingInformation" => nil,
+                  "feedback" => nil,
+                  "price" => nil,
+                  "serviceLevelAgreement" => "https://auth.west-life.eu/aai/AUP.pdf",
+                  "termsOfUse" => [
+                      "https://auth.west-life.eu/aai/AUP.pdf"
+                  ],
+                  "funding" => "EC funding ",
+                  "categoryName" => "Software",
+                  "subCategoryName" => "Tool",
+                  "trlName" => "9 - actual system proven in operational environment",
+                  "lifeCycleStatusName" => "Production",
+                  "languageNames" => [
+                      "English"
+                  ],
+                  "placeNames" => [
+                      "World"
+                  ],
+                  "views" => 0,
+                  "ratings" => 0,
+                  "userRate" => 0,
+                  "hasRate" => 0,
+                  "favourites" => 1,
+                  "isFavourite" => false
+              },
+              {
+                  "id" => "West-Life.pdb_redo_server",
+                  "url" => "http://xtal.nki.nl/pdb_redo",
+                  "name" => "PDB_REDO server",
+                  "tagline" => "",
+                  "description" => "The PDB_REDO web server allows users to optimise their crystallographic structure model in an automated way. The model is refined and rebuilt in the context of the experimental data. The server returns a new structure model, new electron density maps, validation data, a script to visualise model changes in COOT, and a settings file for further model refinement in REFMAC.",
+                  "options" => "",
+                  "targetUsers" => "",
+                  "userValue" => "",
+                  "userBase" => "",
+                  "symbol" => "https://pdb-redo.eu/images/PDB_logo_rect_medium.svg",
+                  "multimediaURL" => nil,
+                  "providers" => [
+                      "West-Life"
+                  ],
+                  "version" => "6.26",
+                  "lastUpdate" => 1537228800000,
+                  "changeLog" => "",
+                  "validFor" => nil,
+                  "lifeCycleStatus" => "production",
+                  "trl" => "trl-9",
+                  "category" => "software",
+                  "subcategory" => "tool",
+                  "places" => [
+                      "WW"
+                  ],
+                  "languages" => [
+                      "english"
+                  ],
+                  "tags" => [
+                      "X-ray diffraction",
+                      "Structure analysis"
+                  ],
+                  "requiredServices" => [],
+                  "relatedServices" => [],
+                  "order" => "http://xtal.nki.nl/pdb_redo",
+                  "helpdesk" => "https://about.west-life.eu/network/west-life/documentation",
+                  "userManual" => nil,
+                  "trainingInformation" => nil,
+                  "feedback" => nil,
+                  "price" => nil,
+                  "serviceLevelAgreement" => "https://auth.west-life.eu/aai/AUP.pdf",
+                  "termsOfUse" => [
+                      "https://auth.west-life.eu/aai/AUP.pdf"
+                  ],
+                  "funding" => "EC funding ",
+                  "categoryName" => "Software",
+                  "subCategoryName" => "Tool",
+                  "trlName" => "9 - actual system proven in operational environment",
+                  "lifeCycleStatusName" => "Production",
+                  "languageNames" => [
+                      "English"
+                  ],
+                  "placeNames" => [
+                      "World"
+                  ],
+                  "views" => 0,
+                  "ratings" => 1,
+                  "userRate" => 0,
+                  "hasRate" => 5,
                   "favourites" => 1,
                   "isFavourite" => false
               }

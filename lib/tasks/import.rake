@@ -6,8 +6,10 @@ namespace :import do
   desc "Imports services data from external providers"
 
   task eic: :environment do
-    Import::EIC.new(ENV["MP_IMPORT_EIC_URL"] || "http://beta.einfracentral.eu",
-                    ENV["DRY_RUN"] || false,
-                    ENV["DONT_CREATE_PROVIDERS"] || false).call
+    Import::EIC.new(ENV["MP_IMPORT_EIC_URL"] || "https://catalogue.eosc-portal.eu",
+                    dry_run: ENV["DRY_RUN"] || false,
+                    dont_create_providers: ENV["DONT_CREATE_PROVIDERS"] || false,
+                    ids: (ENV["IDS"] || "").split(","),
+                    filepath: ENV["OUTPUT"]).call
   end
 end
