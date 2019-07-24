@@ -4,37 +4,76 @@ require "rails_helper"
 
 RSpec.describe Jira::CommentCreated do
   let(:project_item) { create(:project_item, status: :registered) }
+  let(:project) { create(:project) }
 
-  it "creates new project_item change" do
-    expect { described_class.new(project_item, comment(message: "msg", id: 123)).call }.
-      to change { project_item.project_item_changes.count }.by(1)
+  context "for project_item" do
+    it "creates new project_item message" do
+      expect { described_class.new(project_item, comment(message: "msg", id: 123)).call }.
+        to change { project_item.messages.count }.by(1)
+    end
+
+    it "sets message and comment id" do
+      described_class.new(project_item, comment(message: "msg", id: "123")).call
+      last_message = project_item.messages.last
+
+      expect(last_message.message).to eq("msg")
+      expect(last_message.iid).to eq(123)
+    end
+
+    it "does not duplicate project_item messages" do
+      # Such situation can occur when we are sending question from MP to jira.
+      # Than jira webhood with new comment is triggered.
+      project_item.messages.create(message: "question")
+
+      expect do
+        described_class.new(project_item,
+                            comment(message: "question",
+                                    id: "321", name: jira_username)).call
+      end.to_not change { project_item.messages.count }
+    end
+
+    it "sand email to user about response" do
+      expect { described_class.new(project_item, comment(message: "response", id: 123)).call }.
+        to change { ActionMailer::Base.deliveries.count }.by(1)
+      email = ActionMailer::Base.deliveries.last
+
+      expect(email.to).to contain_exactly(project_item.user.email)
+    end
   end
 
-  it "sets message and comment id" do
-    described_class.new(project_item, comment(message: "msg", id: "123")).call
-    last_change = project_item.project_item_changes.last
+  context "for project" do
+    it "creates new project message" do
+      expect { described_class.new(project, comment(message: "msg", id: 124)).call }.
+        to change { project.messages.count }.by(1)
+    end
 
-    expect(last_change.message).to eq("msg")
-    expect(last_change.iid).to eq(123)
-  end
+    it "sets message and comment id" do
+      described_class.new(project, comment(message: "msg", id: "123")).call
+      last_message = project.messages.last
 
-  it "does not change project_item status" do
-    described_class.new(project_item, comment(message: "msg", id: "123")).call
+      expect(last_message.message).to eq("msg")
+      expect(last_message.iid).to eq(123)
+    end
 
-    expect(project_item).to be_registered
-    expect(project_item.project_item_changes.last).to be_registered
-  end
+    it "does not duplicate project messages" do
+      # Such situation can occur when we are sending question from MP to jira.
+      # Than jira webhood with new comment is triggered.
+      project.messages.create(message: "question")
 
-  it "does not duplicate project_item changes" do
-    # Such situation can occur when we are sending question from MP to jira.
-    # Than jira webhood with new comment is triggered.
-    project_item.new_change(message: "question")
+      expect do
+        described_class.new(project,
+                            comment(message: "question",
+                                    id: "321", name: jira_username)).call
+      end.to_not change { project.messages.count }
+    end
 
-    expect do
-      described_class.new(project_item,
-                          comment(message: "question",
-                                  id: "321", name: jira_username)).call
-    end.to_not change { project_item.project_item_changes.count }
+    it "sand email to user about response" do
+      expect { described_class.new(project, comment(message: "response", id: 123)).call }.
+        to change { ActionMailer::Base.deliveries.count }.by(1)
+      email = ActionMailer::Base.deliveries.last
+
+      expect(email.to).to contain_exactly(project.user.email)
+    end
   end
 
   def comment(message:, id:, email: "non@existing.pl", name: "nonexisting")

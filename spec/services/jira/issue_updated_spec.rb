@@ -9,18 +9,18 @@ RSpec.describe Jira::IssueUpdated do
 
   let(:project_item) { create(:project_item) }
 
-  it "creates new changelog entry" do
+  it "creates new status" do
     described_class.new(project_item, changelog(to: jira_client.wf_in_progress_id)).call
 
-    expect(project_item.project_item_changes.last).to be_in_progress
+    expect(project_item.statuses.last).to be_in_progress
   end
 
   it "set dedicated changelog message when service become ready" do
     described_class.new(project_item, changelog(to: jira_client.wf_done_id)).call
-    last_change = project_item.project_item_changes.last
+    last_status = project_item.statuses.last
 
-    expect(last_change).to be_ready
-    expect(last_change.message).to include "ready to be used"
+    expect(last_status).to be_ready
+    expect(last_status.message).to include "ready to be used"
   end
 
   it "uses service activate message when service become ready" do
@@ -29,7 +29,7 @@ RSpec.describe Jira::IssueUpdated do
     project_item = create(:project_item, offer: offer)
 
     described_class.new(project_item, changelog(to: jira_client.wf_done_id)).call
-    last_change = project_item.project_item_changes.last
+    last_change = project_item.statuses.last
 
     expect(last_change).to be_ready
     expect(last_change.message).to eq("Welcome!!!")

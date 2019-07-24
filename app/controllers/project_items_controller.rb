@@ -9,6 +9,9 @@ class ProjectItemsController < ApplicationController
 
     authorize(@project_item)
 
-    @question = ProjectItem::Question.new(project_item: @project_item)
+    @projects = policy_scope(Project).order(:name)
+    @project = @project_item.project
+    @message = Message.new(messageable: @project_item)
+    @messages = (@project_item.messages + @project_item.statuses).sort_by(&:updated_at)
   end
 end

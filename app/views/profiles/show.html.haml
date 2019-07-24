@@ -4,22 +4,11 @@
   %h1 Profile
 
   .row.h-100.justify-content-center.bg-gray-5.pt-4.pb-4
-    = render "profiles/profile"
+    %i.fas.fa-user-circle.fa-10x.text-color-solid-10
+    .ml-5.my-auto
+      %p.display-1.mb-1
+        = current_user.first_name
+        = current_user.last_name
+      %p.display-2.font-weight-light
+        = current_user.email
 
-  %ul#my-tab.nav.nav-tabs.row.pl-3{ role: "tablist" }
-    %li.nav-item
-      %a#affiliations-tab.nav-link.text-uppercase.active{ "aria-controls" => "affiliations",
-                                                  "aria-selected" => "true",
-                                                  "data-toggle" => "tab",
-                                                  href: "#affiliations",
-                                                  role: "tab" } Affiliations
-    %li.nav-item
-      %a#newsletter-tab.nav-link.text-uppercase{ "aria-controls" => "newsletter",
-                                              "aria-selected" => "false",
-                                              "data-toggle" => "tab",
-                                              href: "#newsletter",
-                                              role: "tab" } Newsletter
-
-  .tab-content.pt-4
-    = render "profiles/affiliations/index", affiliations: @affiliations
-    = render "profiles/newsletter"

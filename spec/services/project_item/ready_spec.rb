@@ -36,10 +36,10 @@ RSpec.describe ProjectItem::Ready do
       allow(transition). to receive(:save!).and_return(transition)
     }
 
-    it "creates new project_item change" do
+    it "creates new project_item status change" do
       described_class.new(project_item).call
 
-      expect(project_item.project_item_changes.last).to be_ready
+      expect(project_item.statuses.last).to be_ready
     end
 
     it "changes project_item status into ready on success" do
@@ -54,7 +54,7 @@ RSpec.describe ProjectItem::Ready do
       project_item = create(:project_item, offer: offer)
 
       described_class.new(project_item).call
-      last_change = project_item.project_item_changes.last
+      last_change = project_item.statuses.last
 
       expect(last_change.message).to eq("Welcome!!!")
     end
@@ -72,8 +72,8 @@ RSpec.describe ProjectItem::Ready do
 
     context "Normal service project item" do
       it "sents ready and rate service emails to owner" do
-        # project_item change email is sent only when there is more than 1 change
-        project_item.new_change(status: :created, message: "ProjectItem is ready")
+        # project_item ststus change email is sent only when there is more than 1 change
+        project_item.new_status(status: :created, message: "ProjectItem is ready")
 
         expect { described_class.new(project_item).call }.
             to change { ActionMailer::Base.deliveries.count }.by(2)
@@ -89,12 +89,27 @@ RSpec.describe ProjectItem::Ready do
       end
 
       it "sends only rate service email to owner" do
-        project_item.new_change(status: :ready, message: "ProjectItem is ready")
+        project_item.new_status(status: :ready, message: "ProjectItem is ready")
 
         expect { described_class.new(project_item).call }.
             to change { ActionMailer::Base.deliveries.count }.by(1)
         expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
         expect(ActionMailer::Base.deliveries.last.subject).to_not start_with("[ProjectItem #")
+      end
+    end
+
+    context "no project issue set" do
+      let(:project_register_service) { double("Project:Register") }
+      before(:each) {
+        project_register_class_stub = class_double(Project::Register).
+            as_stubbed_const(transfer_nested_constants: true)
+        allow(project_register_class_stub).to receive(:new).and_return(project_register_service)
+      }
+
+      it "should call Project::Register" do
+        project_item.project.jira_uninitialized!
+        expect(project_register_service).to receive(:call)
+        described_class.new(project_item).call
       end
     end
   end
@@ -109,7 +124,7 @@ RSpec.describe ProjectItem::Ready do
     end
 
     it "sets jira error and raises exception on failed jira issue creation" do
-      error = Jira::Client::JIRAIssueCreateError.new(project_item, "key" => "can not have value X")
+      error = Jira::Client::JIRAProjectItemIssueCreateError.new(project_item, "key" => "can not have value X")
 
       allow(jira_client).to receive(:create_service_issue).with(project_item).and_raise(error)
 

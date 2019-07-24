@@ -1,7 +1,0 @@
-%h3
-  Dear #{@user.full_name},
-
-%p
-  You created a new affiliation to be used when ordering a service.
-  You need to confirm it by clicking
-  #{link_to "this link", affiliation_confirmations_url(at: @affiliation.token)}.

@@ -1,0 +1,21 @@
+// scss-lint:disable all
+.status-created {
+  color: $palette-yellow;
+}
+
+.status-registered {
+  color: $palette-orange;
+}
+
+.status-waiting_for_response {
+  color: $palette-yellow;
+}
+
+.status-ready {
+  color: $green;
+}
+
+.status-rejected {
+  color: $red;
+}
+// scss-lint:enable all

@@ -14,14 +14,15 @@ class Api::Webhooks::JirasController < ActionController::API
   end
 
   def create
-    project_item = ProjectItem.where.not(issue_id: nil).
-            find_by(issue_id: params["issue_id"])
-    if project_item
+    element_updated =
+      find_jira_item(ProjectItem) || find_jira_item(Project)
+
+    if element_updated
       case params["webhookEvent"]
       when "jira:issue_updated"
-        Jira::IssueUpdated.new(project_item, params["changelog"]).call
+        Jira::IssueUpdated.new(element_updated, params["changelog"]).call
       when "comment_created"
-        Jira::CommentCreated.new(project_item, params["comment"]).call
+        Jira::CommentCreated.new(element_updated, params["comment"]).call
       else
         logger.warn("Webhook event not supported: #{params["webhookEvent"]}")
       end
@@ -31,6 +32,11 @@ class Api::Webhooks::JirasController < ActionController::API
   end
 
   private
+
+    def find_jira_item(clazz)
+      clazz.where.not(issue_id: nil).
+        find_by(issue_id: params["issue_id"])
+    end
 
     def valid_jira_request?
       params.fetch("secret", "") == jira_client.webhook_secret

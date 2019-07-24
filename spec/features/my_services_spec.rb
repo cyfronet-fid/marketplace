@@ -28,7 +28,7 @@ RSpec.feature "My Services" do
       project = create(:project, user: user)
       create(:project_item, project: project, offer: offer)
 
-      visit projects_path
+      visit project_services_path(project)
 
       expect(page).to have_text(service.title)
     end
@@ -45,8 +45,8 @@ RSpec.feature "My Services" do
     # Test added after hotfix for a bug in `project_items/show.html.haml:30` (v1.2.0)
     scenario "I can see project_item details without research_area" do
       offer = create(:offer, service: create(:open_access_service))
-      project = create(:project, user: user)
-      project_item = create(:project_item, project: project, offer: offer, research_area: nil)
+      project = create(:project, user: user, research_areas: [])
+      project_item = create(:project_item, project: project, offer: offer)
 
       visit project_item_path(project_item)
 
@@ -63,24 +63,21 @@ RSpec.feature "My Services" do
       expect(page).to have_text("not authorized")
     end
 
-    scenario "I can see project_item change history" do
+    scenario "I can see project_item change history", js: true do
       project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
-      project_item.new_change(status: :created, message: "Service request created")
-      project_item.new_change(status: :registered, message: "Service request registered")
-      project_item.new_change(status: :ready, message: "Service is ready")
+      project_item.new_status(status: :created, message: "Service request created")
+      project_item.new_status(status: :registered, message: "Service request registered")
+      project_item.new_status(status: :ready, message: "Service is ready")
 
       visit project_item_path(project_item)
 
       expect(page).to have_text("ready")
 
       expect(page).to have_text("Service request created")
-
-      expect(page).to have_text("Status changed from created to registered")
       expect(page).to have_text("Service request registered")
-
-      expect(page).to have_text("Status changed from registered to ready")
+      expect(page).to have_text("Service request ready")
       expect(page).to have_text("Service is ready")
     end
 
@@ -137,7 +134,7 @@ RSpec.feature "My Services" do
       project_item = create(:project_item, project: project, offer: offer)
 
       visit project_item_path(project_item)
-      fill_in "project_item_question_text", with: "This is my question"
+      fill_in "message_message", with: "This is my question"
       click_button "Send message"
 
       expect(page).to have_text("This is my question")
@@ -150,29 +147,7 @@ RSpec.feature "My Services" do
       visit project_item_path(project_item)
       click_button "Send message"
 
-      expect(page).to have_text("Question cannot be blank")
-    end
-
-    scenario "I can filter services by status", js: true do
-      project1, project2 = create_list(:project, 2, user: user)
-      project_item = create(:project_item, project: project1, offer: offer)
-
-      visit projects_path
-
-      select "Created", from: "status"
-
-      expect(page).to have_text(project1.name)
-      expect(page).to have_text(project_item.service.title)
-      expect(page).not_to have_text(project2.name)
-    end
-
-    scenario "I see webservice link if service is ready" do
-      project = create(:project, user: user)
-      project_item = create(:project_item, project: project, offer: offer, status: :ready)
-
-      visit projects_path
-
-      expect(page).to have_link("Access the service", href: project_item.service.webpage_url)
+      expect(page).to have_text("Message can't be blank")
     end
   end
 

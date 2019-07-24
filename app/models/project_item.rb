@@ -12,13 +12,6 @@ class ProjectItem < ApplicationRecord
     rejected: "rejected"
   }
 
-  CUSTOMER_TYPOLOGIES = {
-    single_user: "single_user",
-    research: "research",
-    private_company: "private_company",
-    project: "project"
-  }
-
   ISSUE_STATUSES = {
       jira_active: 0,
       jira_deleted: 1,
@@ -28,28 +21,19 @@ class ProjectItem < ApplicationRecord
 
   enum status: STATUSES
   enum issue_status: ISSUE_STATUSES
-  enum customer_typology: CUSTOMER_TYPOLOGIES
 
   belongs_to :offer
   belongs_to :affiliation, required: false
   belongs_to :project
   belongs_to :research_area, required: false
   has_one :service_opinion, dependent: :restrict_with_error
-  has_many :project_item_changes, dependent: :destroy
+  has_many :messages, as: :messageable, dependent: :destroy
+  has_many :statuses, as: :status_holder
 
   validates :offer, presence: true
-  validates :affiliation, presence: true, unless: :open_access?
-  validates :research_area, presence: true, unless: :open_access?
   validates :project, presence: true
   validates :status, presence: true
-  validates :customer_typology, presence: true, unless: :open_access?
-  validates :access_reason, presence: true, unless: :open_access?
   validate :research_area_is_a_leaf
-  validates :user_group_name, presence: true, if: :research?
-  validates :project_name, presence: true, if: :project?
-  validates :project_website_url, url: true, presence: true, if: :project?
-  validates :company_name, presence: true, if: :private_company?
-  validates :company_website_url, url: true, presence: true, if: :private_company?
   validates :request_voucher, absence: true, unless: :vaucherable?
   validates :voucher_id, absence: true, if: :voucher_id_unwanted?
   validates :voucher_id, presence: true, allow_blank: false, if: :voucher_id_required?
@@ -71,13 +55,13 @@ class ProjectItem < ApplicationRecord
     !(ready? || rejected?)
   end
 
-  def new_change(status: nil, message: nil, author: nil, iid: nil)
+  def new_status(status: nil, message: nil, author: nil)
     # don't create change when there is not status and message given
     return unless status || message
 
     status ||= self.status
 
-    project_item_changes.create(status: status, message: message, author: author, iid: iid).tap do
+    statuses.create(status: status, message: message, author: author).tap do
       update_attributes(status: status)
     end
   end
@@ -95,7 +79,7 @@ class ProjectItem < ApplicationRecord
       "Voucher ID has been updated: #{voucher_id}"
     end
 
-    project_item_changes.create(status: self.status, message: message, author: author, iid: iid).tap do
+    messages.create(message: message, author: author, iid: iid).tap do
       update_attributes(voucher_id: voucher_id)
     end
   end
