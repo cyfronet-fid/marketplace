@@ -17,9 +17,9 @@ en:
       question:
         text: Your question to provider about %{title}
       project:
-        country_of_customer: |
-          Customer country
-        country_of_collaboration: |
+        country_of_origin: |
+          Origin country
+        countries_of_partnership: |
           Collaboration countries
     #   defaults:
     #     password: 'Password'

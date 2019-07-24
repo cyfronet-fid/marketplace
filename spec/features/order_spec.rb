@@ -233,7 +233,7 @@ RSpec.feature "Service ordering" do
         fill_in "Organization", with: "Home corp."
         fill_in "Webpage", with: "http://home.corp.com"
         fill_in "Reason to request access to the EOSC services", with: "Some reason"
-        select "non-European", from: "Customer country"
+        select "non-European", from: "Origin country"
       end
       click_on "Create new project"
 
@@ -284,7 +284,7 @@ RSpec.feature "Service ordering" do
 
         select "Representing a private company", from: "Customer typology"
         fill_in "Email", with: "john@doe.com"
-        select "non-European", from: "Customer country"
+        select "non-European", from: "Origin country"
 
         expect(page).to have_field("Company name")
         expect(page).to have_field("Company website url")

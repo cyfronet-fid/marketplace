@@ -1,8 +1,8 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["reason", "usage", "customerCountry", "customer",
-                    "privateCompany", "collaborationCountry",
+  static targets = ["reason", "usage", "originCountry", "customer", "customerDetails",
+                    "privateCompany", "partnershipCountries",
                     "userGroupName", "projectName", "researchAreas",
                     "projectWebsiteUrl", "companyName",
                     "companyWebsiteUrl", "hasVoucher",
@@ -58,23 +58,23 @@ export default class extends Controller {
   }
 
   _showProjectFields(project) {
-    this.usageTarget.innerHTML = "Usage"
+    this.usageTarget.innerHTML = "Usage";
+    this.customerDetailsTarget.innerHTML = "Customer details";
     this.reasonTarget.innerHTML = this._wrap_text(project["reason_for_access"], "Access reason");
     this.researchAreasTarget.innerHTML =
         this._wrap_text(this._getResearchAreasNames(project["research_areas"]) || "Not specified", "Research Areas");
-    this.customerCountryTarget.innerHTML =
-        this._wrap_text(this._getCountriesNames(project["country_of_customer"]),"Customer country");
+    this.additionalInformationTarget.innerHTML = this._wrap_text(project["additional_information"], "Additional Information");
     this.customerTarget.innerHTML = this._wrap_text(project["customer_typology"], "Customer typology");
-    this.collaborationCountryTarget.innerHTML =
-        this._wrap_text(this._getCountriesNames(project["country_of_collaboration"]), "Country of collaboration");
+    this.originCountryTarget.innerHTML =
+        this._wrap_text(this._getCountriesNames(project["country_of_origin"]),"Customer country");
+    this.partnershipCountriesTarget.innerHTML =
+        this._wrap_text(this._getCountriesNames(project["countries_of_partnership"]), "Country of collaboration");
     this.userGroupNameTarget.innerHTML = this._wrap_text(project["user_group_name"], "User group name");
     this.projectNameTarget.innerHTML = this._wrap_text(project["project_name"], "Project name");
     this.projectWebsiteUrlTarget.innerHTML = this._wrap_text(project["project_website_url"], "Project website url");
     this.companyNameTarget.innerHTML = this._wrap_text(project["company_name"], "Company name");
     this.companyWebsiteUrlTarget.innerHTML = this._wrap_text(project["company_website_url"], "Company website url");
-    this.additionalInformationTarget.innerHTML = this._wrap_text(project["additional_information"], "Additional Information");
-
-    this.emailTarget.innerHTML = this._wrap_text(project["email"], "Email");
+        this.emailTarget.innerHTML = this._wrap_text(project["email"], "Email");
     this.organizationTarget.innerHTML = this._wrap_text(project["organization"], "Organization");
     this.departmentTarget.innerHTML = this._wrap_text(project["department"], "Department");
     this.webpageTarget.innerHTML = this._wrap_text(project["webpage"], "Webpage");
