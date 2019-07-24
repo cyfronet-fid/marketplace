@@ -26,7 +26,7 @@ RSpec.feature "Project" do
       select "Single user", from: "Customer typology"
       fill_in "Email", with: "john@doe.com"
       fill_in "Reason to request access to the EOSC services", with: "because I'm testing"
-      select "non-European", from: "Customer country"
+      select "non-European", from: "Origin country"
       fill_in "Organization", with: "Home corp."
       fill_in "Webpage", with: "http://home.corp.com"
 
@@ -47,7 +47,7 @@ RSpec.feature "Project" do
       fill_in "project_name", with: "Second test"
       fill_in "Email", with: "john@doe.com"
       fill_in "Reason to request access to the EOSC services", with: "because I'm testing"
-      select "non-European", from: "Customer country"
+      select "non-European", from: "Origin country"
       select "Single user", from: "Customer typology"
       fill_in "Organization", with: "Home corp."
       fill_in "Webpage", with: "http://home.corp.com"

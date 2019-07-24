@@ -16,18 +16,18 @@
 = f.input :company_name,
   wrapper_html: { class: "hidden-fields", "data-target" => "project.privateCompany project.input" },
   input_html: { "data-target" => "project.companyName", class: "col-lg-6 form-control-lg" }
-= f.input :country_of_customer, collection: customer_countries,
-  label: t("simple_form.labels.project.country_of_customer"),
+= f.input :country_of_origin, collection: Country.all.map { |c| [ c.name, "value" => c.alpha2 ] },
+  label: t("simple_form.labels.project.country_of_origin"),
   wrapper_html: { class: "hidden-fields",
   "data-target" => "project.singleUser project.privateCompany project.input" },
-  input_html: { "data-target" => "project.customerCountry", class: "col-lg-6 form-control-lg" }
-= f.input :country_of_collaboration, as: :select, collection: collaboration_countries,
-  label: t("simple_form.labels.project.country_of_collaboration"),
+  input_html: { "data-target" => "project.originCountry", class: "col-lg-6 form-control-lg" }
+= f.input :countries_of_partnership, as: :select, collection: Country.all.map { |c| [ c.name, "value" => c.alpha2 ] },
+  label: t("simple_form.labels.project.countries_of_partnership"),
   include_blank: false, include_hidden: false,
   wrapper_html: { class: "hidden-fields",
-  "data-target" => "project.collaborationCountry project.input project.research project.project" },
+  "data-target" => "project.partnershipCountries project.input project.research project.project" },
   input_html: { class: "choices-multiple-no-sorting col-lg-6 form-control-lg", data: { choice: true },
-  "data-target" => "project.collaborationCountry", "multiple" => "true" }
+  "data-target" => "project.partnershipCountries", "multiple" => "true" }
 = f.input :project_website_url,
   wrapper_html: { class: "hidden-fields", "data-target" => "project.project project.input" },
   input_html: { "data-target" => "project.projectWebsiteUrl", class: "col-lg-6 form-control-lg" },

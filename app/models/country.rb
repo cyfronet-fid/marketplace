@@ -8,24 +8,6 @@ class Country
         "en" => "non-European"
     })
 
-  ISO3166::Data.register(
-    alpha2: "I/N",
-    name: "International",
-    translations: {
-        "en" => "International"
-    })
-
-  ISO3166::Data.register(
-    alpha2: "N/A",
-    name: "non-applicable",
-    translations: {
-        "en" => "non-applicable"
-    })
-
-  NON_EUROPEAN = ISO3166::Country.new("N/E")
-  INTERNATIONAL = ISO3166::Country.new("I/N")
-  NON_APPLICABLE = ISO3166::Country.new("N/A")
-
   class << self
     def for(value)
       return value if value.is_a?(ISO3166::Country)
@@ -42,8 +24,9 @@ class Country
       obj.alpha2
     end
 
-    def european_countries
-      ISO3166::Country.find_all_countries_by_region("Europe").sort
+    def all
+      @all ||= (ISO3166::Country.find_all_countries_by_region("Europe") +
+                [ISO3166::Country.new("N/E")]).sort
     end
   end
 
@@ -56,7 +39,7 @@ class Country
 
       def dump(obj)
         return nil if obj.blank?
-        obj.map { |o| o.alpha2 }
+        obj.compact.map { |o| o.alpha2 }
       end
     end
   end
