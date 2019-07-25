@@ -11,8 +11,8 @@
             .col-md-12.back-link
               %i.fas.fa-chevron-left.fa-xs.mr-1
               = link_to "back to project services", [project, :services]
-      .buttons-panel.col-md-3.float-right
-        %p.text-uppercase.text-right.font-weight-bold.text-secondary.mt-4.mb-0
+      .buttons-panel.col-md-3.float-right.d-flex.justify-content-center
+        %p.text-uppercase.text-right.font-weight-bold.text-secondary.mb-0
           %span{ class: "status-#{project_item.status}" }= project_item.status
     %ul.nav.nav-tabs.mt-4.pl-3.row.services-menu
       %li.nav-item
