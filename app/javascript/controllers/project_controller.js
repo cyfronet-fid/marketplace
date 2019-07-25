@@ -38,9 +38,6 @@ export default class extends Controller {
       this._showFields(this.privateCompanyTargets);
       this._createHint(this.originCountryTarget.parentElement, 'Where is it located?');
     }
-    // if (customer !== "" && customer !== this.CUSTOMER_TYPOLOGIES.single_user){
-    //    this.collaborationCountryTarget.classList.remove("hidden-fields");
-    // }
   }
 
   _hideCustomerTypologieFields() {
