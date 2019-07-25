@@ -41,21 +41,20 @@ RSpec.describe Project do
     it { is_expected.to validate_presence_of(:company_website_url) }
   end
 
-  describe "countries_of_partnership" do
-    subject { build(:project, countries_of_partnership: [ "PL", "N/E" ]) }
-    it "should check countries_of_partnership" do
-      expect(subject.save).to be true
-      project = Project.find(subject.id)
-      expect(project.countries_of_partnership).to match_array([ Country.for("PL"), Country.for("N/E") ])
+  describe "#countries_of_partnership" do
+    subject { create(:project, countries_of_partnership: [ "PL", "N/E" ]) }
+
+    it "uses Country model for serialization" do
+      expect(subject.countries_of_partnership).
+        to contain_exactly(Country.for("PL"), Country.for("N/E"))
     end
   end
 
-  describe "country_of_origin" do
-    subject { build(:project, country_of_origin: "PL") }
-    it "should check country_of_origin" do
-      expect(subject.save).to be true
-      project = Project.find(subject.id)
-      expect(project.country_of_origin).to eq(Country.for("PL"))
+  describe "#country_of_origin" do
+    subject { create(:project, country_of_origin: "PL") }
+
+    it "uses Country model for serialization" do
+      expect(subject.country_of_origin).to eq(Country.for("PL"))
     end
   end
 
