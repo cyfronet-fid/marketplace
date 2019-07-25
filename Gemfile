@@ -28,7 +28,7 @@ gem "acts-as-taggable-on", "~> 6.0"
 gem "countries"
 
 gem "activestorage-validator"
-gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.9.2"
 
 # turbo-charged counter caches
 gem "counter_culture", "~> 2.0"
@@ -60,7 +60,7 @@ gem "custom_error_message", git: "https://github.com/thethanghn/custom-err-msg.g
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
 
-  gem "rspec-rails", "~> 3.7"
+  gem "rspec-rails", "~> 3.8.2"
 
   gem "pry"
   gem "pry-byebug"
