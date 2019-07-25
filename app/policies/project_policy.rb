@@ -25,7 +25,7 @@ class ProjectPolicy < ApplicationPolicy
 
   def permitted_attributes
     [:name, :reason_for_access, :email,
-     :country_of_customer, [country_of_collaboration: []],
+     :country_of_origin, [countries_of_partnership: []],
      :customer_typology, :user_group_name,
      :organization, :department, :webpage,
      :project_name, :project_website_url,

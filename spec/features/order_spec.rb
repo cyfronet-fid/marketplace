@@ -228,13 +228,12 @@ RSpec.feature "Service ordering" do
       click_on "Add new project"
       within("#ajax-modal") do
         fill_in "Project name", with: "New project"
-        fill_in "Email", with: "john@doe.com"
         select "Single user", from: "Customer typology"
+        fill_in "Email", with: "john@doe.com"
         fill_in "Organization", with: "Home corp."
         fill_in "Webpage", with: "http://home.corp.com"
         fill_in "Reason to request access to the EOSC services", with: "Some reason"
-        select "non-European", from: "Country of customer"
-        select "Single user", from: "Customer typology"
+        select "non-European", from: "Origin country"
       end
       click_on "Create new project"
 
@@ -281,17 +280,15 @@ RSpec.feature "Service ordering" do
           find("label", text: "Research areas").click
           find("div", class: "choices__item", text: research_area.name).click
         end
-        select "non-European", from: "Country of customer"
-        fill_in "Email", with: "john@doe.com"
+
+
         select "Representing a private company", from: "Customer typology"
+        fill_in "Email", with: "john@doe.com"
+        select "non-European", from: "Origin country"
 
         expect(page).to have_field("Company name")
         expect(page).to have_field("Company website url")
 
-        within ".project_country_of_collaboration" do
-          find("label", text: "Country of collaboration").click
-          find("div", class: "choices__item", text: "non-European").click
-        end
         fill_in "Company name", with: "New company name"
         fill_in "Company website url", with: "https://www.company.name"
 

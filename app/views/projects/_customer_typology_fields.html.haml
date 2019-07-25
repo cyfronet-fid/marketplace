@@ -1,3 +1,6 @@
+= f.input :email, hint: "Email address in your institute's domain",
+  wrapper_html: { class: "hidden-fields",
+  "data-target" => "project.input project.research project.project project.singleUser project.privateCompany" }
 = f.input :user_group_name,
   wrapper_html: { class: "hidden-fields", "data-target" => "project.research project.input" },
   input_html: { "data-target" => "project.userGroupName", class: "col-lg-6 form-control-lg" }
@@ -7,19 +10,33 @@
 = f.input :department,
   wrapper_html: { class: "hidden-fields", "data-target" => "project.singleUser project.research project.input" },
   input_html: { "data-target" => "project.department", class: "col-lg-6 form-control-lg" }
-= f.input :webpage,
-  wrapper_html: { class: "hidden-fields", "data-target" => "project.singleUser project.research project.input" },
-  input_html: { "data-target" => "project.webpage", class: "col-lg-6 form-control-lg" },
-  hint: "Url should start with http or https [e.g. http://webpage.org]"
 = f.input :project_name,
   wrapper_html: { class: "hidden-fields", "data-target" => "project.project project.input" },
   input_html: { "data-target" => "project.projectName", class: "col-lg-6 form-control-lg" }
-= f.input :project_website_url,
-  wrapper_html: { class: "hidden-fields", "data-target" => "project.project project.input" },
-  input_html: { "data-target" => "project.projectWebsiteUrl", class: "col-lg-6 form-control-lg" }
 = f.input :company_name,
   wrapper_html: { class: "hidden-fields", "data-target" => "project.privateCompany project.input" },
   input_html: { "data-target" => "project.companyName", class: "col-lg-6 form-control-lg" }
+= f.input :country_of_origin, collection: Country.all.map { |c| [ c.name, "value" => c.alpha2 ] },
+  label: t("simple_form.labels.project.country_of_origin"),
+  wrapper_html: { class: "hidden-fields",
+  "data-target" => "project.singleUser project.privateCompany project.input" },
+  input_html: { "data-target" => "project.originCountry", class: "col-lg-6 form-control-lg" }
+= f.input :countries_of_partnership, as: :select, collection: Country.all.map { |c| [ c.name, "value" => c.alpha2 ] },
+  label: t("simple_form.labels.project.countries_of_partnership"),
+  include_blank: false, include_hidden: false,
+  wrapper_html: { class: "hidden-fields",
+  "data-target" => "project.partnershipCountries project.input project.research project.project" },
+  input_html: { class: "choices-multiple-no-sorting col-lg-6 form-control-lg", data: { choice: true },
+  "data-target" => "project.partnershipCountries", "multiple" => "true" }
+= f.input :project_website_url,
+  wrapper_html: { class: "hidden-fields", "data-target" => "project.project project.input" },
+  input_html: { "data-target" => "project.projectWebsiteUrl", class: "col-lg-6 form-control-lg" },
+  hint: t("simple_form.hints.project.project_website_url")
+= f.input :webpage,
+  wrapper_html: { class: "hidden-fields", "data-target" => "project.singleUser project.research project.input" },
+  input_html: { "data-target" => "project.webpage", class: "col-lg-6 form-control-lg" },
+  hint: t("simple_form.hints.project.project_website_url")
 = f.input :company_website_url,
   wrapper_html: { class: "hidden-fields", "data-target" => "project.privateCompany project.input" },
-  input_html: { "data-target" => "project.companyWebsiteUrl", class: "col-lg-6 form-control-lg" }
+  input_html: { "data-target" => "project.companyWebsiteUrl", class: "col-lg-6 form-control-lg" },
+  hint: t("simple_form.hints.project.company_website_url")

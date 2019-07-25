@@ -250,8 +250,8 @@ describe Jira::Client do
                         "CP-CustomerTypology-1" => { "id" => "20001" },
                         "SO-ProjectName-1" => "My Secret Project (#{project.id})",
                         "CP-UserGroupName-1" => "User Group Name 1",
-                        "CP-CustomerCountry-1" => "non-European",
-                        "CP-CollaborationCountry-1" => "International"
+                        "CP-CustomerCountry-1" => "#{project.country_of_origin.name}",
+                        "CP-CollaborationCountry-1" => "#{project.countries_of_partnership.map(&:name).join(", ")}"
                           # "CP-ReasonForAccess-1" => "some reason",
                           # "CP-ProjectInformation-1" => "My Secret Project",
                         }

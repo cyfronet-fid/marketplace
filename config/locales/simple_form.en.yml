@@ -16,6 +16,11 @@ en:
         terms_and_conditions: Accept terms and conditions
       question:
         text: Your question to provider about %{title}
+      project:
+        country_of_origin: |
+          Origin country
+        countries_of_partnership: |
+          Collaboration countries
     #   defaults:
     #     password: 'Password'
     #   user:

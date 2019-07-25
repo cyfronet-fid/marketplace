@@ -41,6 +41,23 @@ RSpec.describe Project do
     it { is_expected.to validate_presence_of(:company_website_url) }
   end
 
+  describe "#countries_of_partnership" do
+    subject { create(:project, countries_of_partnership: [ "PL", "N/E" ]) }
+
+    it "uses Country model for serialization" do
+      expect(subject.countries_of_partnership).
+        to contain_exactly(Country.for("PL"), Country.for("N/E"))
+    end
+  end
+
+  describe "#country_of_origin" do
+    subject { create(:project, country_of_origin: "PL") }
+
+    it "uses Country model for serialization" do
+      expect(subject.country_of_origin).to eq(Country.for("PL"))
+    end
+  end
+
   context "#jira" do
     it "should validate presence of issue_id & issue_key" do
       expect(build(:project, issue_status: :jira_require_migration, issue_id: nil, issue_key: nil)).to be_valid
