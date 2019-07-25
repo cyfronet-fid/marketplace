@@ -290,7 +290,8 @@ textarea:-ms-input-placeholder { /* IE 10+ */
       border-color: $palette-solid-5 $palette-solid-5 $white;
       padding: 0.8rem 1rem;
       margin-top: -3px;
-      margin-bottom: -4px;
+      margin-bottom: -6px;
+      border-bottom: 3px solid $white;
 
       &:hover {
         opacity: 1;
@@ -2020,11 +2021,15 @@ label[data-multicheckbox].small {
 }
 
 .buttons-panel {
+  min-height: 100px;
+  flex-direction: column;
+  justify-content: center;
 
   .btn {
     text-transform: uppercase;
     font-weight: bold;
     font-size: 12px;
+    padding-bottom: 0.0625rem;
     color: $palette-gray-100;
     width: 80%;
     float: right;
@@ -2033,9 +2038,11 @@ label[data-multicheckbox].small {
   .btn-outline-danger {
     border-style: solid;
     border-width: 1px;
+    border-color: $danger;
 
     &:hover {
       color: $white;
+      background: $danger;
     }
   }
 
