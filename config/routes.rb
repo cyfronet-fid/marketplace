@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   resources :project_items, only: [:show, :message] do
     scope module: :project_items do
       resources :service_opinions, only: [:new, :create]
-      resource :conversation, only: :create
+      resource :conversation, only: [:show, :create]
     end
   end
 

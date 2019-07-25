@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProjectItemsController < ApplicationController
+class Projects::ItemsController < ApplicationController
   before_action :authenticate_user!
 
   def show
@@ -11,5 +11,7 @@ class ProjectItemsController < ApplicationController
 
     @projects = policy_scope(Project).order(:name)
     @project = @project_item.project
+    @message = Message.new(messageable: @project_item)
+    @messages = (@project_item.messages + @project_item.statuses).sort_by(&:updated_at)
   end
 end

@@ -71,7 +71,7 @@ RSpec.feature "My Services" do
       project_item.new_status(status: :registered, message: "Service request registered")
       project_item.new_status(status: :ready, message: "Service is ready")
 
-      visit project_item_path(project_item)
+      visit project_item_conversation_path(project_item)
 
       expect(page).to have_text("ready")
 
@@ -133,7 +133,7 @@ RSpec.feature "My Services" do
       project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
-      visit project_item_path(project_item)
+      visit project_item_conversation_path(project_item)
       fill_in "message_message", with: "This is my question"
       click_button "Send message"
 
@@ -144,7 +144,7 @@ RSpec.feature "My Services" do
       project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
-      visit project_item_path(project_item)
+      visit project_item_conversation_path(project_item)
       click_button "Send message"
 
       expect(page).to have_text("Message can't be blank")
