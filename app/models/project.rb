@@ -77,7 +77,7 @@ class Project < ApplicationRecord
   end
 
   def countries_of_partnership=(value)
-    super(value.map { |v| Country.for(v) })
+    super(value&.map { |v| Country.for(v) })
   end
 
   private

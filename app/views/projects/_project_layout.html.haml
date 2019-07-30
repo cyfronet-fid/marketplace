@@ -19,6 +19,9 @@
         - if policy(project).destroy?
           = link_to "Delete", project_path(project), method: :delete,
             data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger btn-sm mb-1 mt-1"
+        - if policy(project).archive?
+          = link_to "Archive", project_archive_path(project), method: :post, data: { confirm: "Are you sure?" },
+            class: "btn btn-outline-danger"
     %ul.nav.nav-tabs.mt-4.pl-3.row.services-menu
       %li.nav-item
         = link_to "Services", project_services_path(project),
