@@ -211,8 +211,8 @@ private
     when "CP-CustomerCountry"
       project.country_of_origin&.name || "N/A"
     when "CP-CollaborationCountry"
-      if project.countries_of_partnership.present?
-        project.countries_of_partnership.map(&:name).join(", ")
+      if project.countries_of_partnership&.present?
+        project.countries_of_partnership&.map(&:name).join(", ")
       else
         "N/A"
       end
