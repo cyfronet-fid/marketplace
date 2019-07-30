@@ -1,10 +1,23 @@
 .empty-project
   .row
-    .col-lg-5.pt-4.pb-3.pl-5
-      %h3 You have no services in this project yet.
-      %p Use our catalogue to add one.
-      %p If you need help with these don't hesitate and contact with our support.
+    .col-lg-6.pt-5.pb-4.pl-5.order-lg-first.order-md-last.order-sm-last.order-last
+      %h3
+        You have no services
+        %br
+        in this project yet.
+      %ul.simple-list
+        %li
+          %span
+            Browse our catalogue to find EOSC services that can support your scientific work and add them to your
+            Marketplace Project
+        %li
+          %span Follow the status of your service access request and gain all necessary information
+        %li
+          %span
+            If you need help with any of these, don't hesitate and contact our customer support in ‘CONTACT WITH
+            PROJECT SUPPORT’ tab
+
       = link_to "Add your first service", services_url,
       class: "btn btn-primary mb-4 pl-5 pr-5 mt-3 text-center"
-    .col
-      .empty-list-img.mt-4
+    .col.pt-5.order-lg-last.order-md-first.order-sm-first.order-first
+      .empty-list-img.mt-5
