@@ -61,7 +61,7 @@
 
       - unless project.single_user?
         %dt Collaboration countries
-        %dd= project.countries_of_partnership.join(", ")
+        %dd= project.countries_of_partnership&.join(", ")
 
     %h3 Usage
     %dl

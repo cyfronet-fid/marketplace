@@ -38,8 +38,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 
+- Fixed showing projects with empty countries of partnerhip list (@bwilk)
 - Wrong redirection after logging in while browsing the portal (@bwilk)
-- Disabled possibility to 
+- Disabled possibility to add offers in drafts (@goreck888)
 
 ### Security
 
