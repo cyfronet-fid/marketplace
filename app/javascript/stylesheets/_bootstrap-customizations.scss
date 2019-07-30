@@ -2225,10 +2225,26 @@ label[data-multicheckbox].small {
   -moz-border-radius: 5px;
   border-radius: 5px;
 
+  h1 {
+    font-weight: 300;
+    font-size: 36px;
+    margin-bottom: 30px;
+  }
+
   h3 {
     font-weight: 300;
     font-size: 30px;
     margin-bottom: 30px;
+  }
+
+  .lead {
+    font-size: 18px;
+    line-height: 29px;
+  }
+
+  .info {
+    font-size: 16px;
+    line-height: 1.38;
   }
 
   .simple-list {
@@ -2250,6 +2266,24 @@ label[data-multicheckbox].small {
     }
   }
 
+  .short-list {
+    padding: 0 0 0 20px;
+    margin: 0 0 25px;
+
+    li {
+      list-style: disc;
+      color: $yellow;
+      font-size: 22px;
+      line-height: 26px;
+      margin-bottom: 4px;
+
+      span {
+        color: $palette-gray-100;
+        font-size: 16px;
+        line-height: 22px;
+      }
+    }
+  }
 }
 
 .empty-list-img {
@@ -2270,9 +2304,32 @@ label[data-multicheckbox].small {
 
 .empty-list-img-big {
   width: 100%;
-  height: 320px;
-  background: url('../../assets/images/empty-listy.png') top center no-repeat;
+  height: 350px;
+  background: url('../../assets/images/createfirstproject.png') bottom left no-repeat;
+  background-size: contain;
 }
+
+
+@media (max-width: 992px) {
+  .empty-list-img-big {
+    margin-top: 20px !important;
+    width: 69%;
+    margin: auto;
+    height: 190px;
+  }
+
+  .empty-project {
+    h1 {
+      font-size: 25px;
+    }
+
+    .lead {
+      font-size: 16px;
+      line-height: 26px;
+    }
+  }
+}
+
 
 // scss-lint:disable all
 .modal-content {
