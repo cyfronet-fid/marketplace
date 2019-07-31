@@ -9,16 +9,11 @@ RSpec.feature "Project" do
 
   context "As logged in user" do
     let(:project_create) { double("Project::Create") }
-    let(:project_archive) { double("Project::Archive") }
     before { checkin_sign_in_as(user) }
     before(:each) {
       project_create_class_stub = class_double(Project::Create).
           as_stubbed_const(transfer_nested_constants: true)
       allow(project_create_class_stub).to receive(:new).and_return(project_create)
-
-      project_archive_class_stub = class_double(Project::Archive).
-          as_stubbed_const(transfer_nested_constants: true)
-      allow(project_archive_class_stub).to receive(:new).and_return(project_archive)
     }
 
     scenario "I can create new project" do
@@ -145,49 +140,59 @@ RSpec.feature "Project" do
       expect(page).to have_text("You are not authorized to see this page")
     end
 
-    scenario "I cannot see archive button when are no services" do
-      project = create(:project, name: "First Project", user: user)
+    context "archive" do
+      let(:project_archive) { double("Project::Archive") }
 
-      visit project_path(project)
+      before(:each) {
+        project_archive_class_stub = class_double(Project::Archive).
+            as_stubbed_const(transfer_nested_constants: true)
+        allow(project_archive_class_stub).to receive(:new).and_return(project_archive)
+      }
 
-      expect(page).to_not have_selector(:link_or_button, "Archive")
-    end
+      scenario "I cannot see archive button when are no services" do
+        project = create(:project, name: "First Project", user: user)
 
-    scenario "I see archive button when all project_items are ended" do
-      project = create(:project, name: "First Project", user: user)
-      service = create(:open_access_service)
-      offer = create(:offer, service: service)
+        visit project_path(project)
 
-      create(:project_item, offer: offer, project: project, status: :closed)
+        expect(page).to_not have_selector(:link_or_button, "Archive")
+      end
 
-      visit project_path(project)
+      scenario "I see archive button when all project_items are ended" do
+        project = create(:project, name: "First Project", user: user)
+        service = create(:open_access_service)
+        offer = create(:offer, service: service)
 
-      expect(page).to have_selector(:link_or_button, "Archive")
-    end
+        create(:project_item, offer: offer, project: project, status: :closed)
 
-    scenario "I cannot see archive button when all project_items are not ended" do
-      project = create(:project, name: "First Project", user: user)
-      service = create(:open_access_service)
-      create(:offer, service: service)
+        visit project_path(project)
 
-      visit project_path(project)
+        expect(page).to have_selector(:link_or_button, "Archive")
+      end
 
-      expect(page).to_not have_selector(:link_or_button, "Archive")
-    end
+      scenario "I cannot see archive button when all project_items are not ended" do
+        project = create(:project, name: "First Project", user: user)
+        service = create(:open_access_service)
+        create(:offer, service: service)
 
-    scenario "I can archive service when all project_items are ended" do
-      project = create(:project, name: "First Project", user: user)
-      service = create(:service)
+        visit project_path(project)
 
-      expect(project_archive).to receive(:call)
+        expect(page).to_not have_selector(:link_or_button, "Archive")
+      end
 
-      offer = create(:offer, service: service)
-      create(:project_item, offer: offer, project: project, status: :closed)
+      scenario "I can archive service when all project_items are ended" do
+        project = create(:project, name: "First Project", user: user)
+        service = create(:service)
 
-      visit project_path(project)
-      click_on "Archive"
+        expect(project_archive).to receive(:call)
 
-      expect(page).to have_content("Project archived")
+        offer = create(:offer, service: service)
+        create(:project_item, offer: offer, project: project, status: :closed)
+
+        visit project_path(project)
+        click_on "Archive"
+
+        expect(page).to have_content("Project archived")
+      end
     end
   end
 

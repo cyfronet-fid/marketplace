@@ -9,18 +9,18 @@ RSpec.describe ProjectItem::Ready do
 
   context "(JIRA works without errors)" do
     before(:each) {
-      wf_done_id = 6
+      wf_ready_id = 6
       wf_in_progress_id = 7
 
       jira_client = double("Jira::Client",
                            jira_project_key: "MP",
                            jira_issue_type_id: 5,
                            wf_in_progress_id: wf_in_progress_id,
-                           wf_done_id: wf_done_id)
+                           wf_ready_id: wf_ready_id)
       transition_start = double("Transition", id: "1", name: "____Start Progress____",
                                 to: double(id: wf_in_progress_id.to_s))
       transition_done = double("Transition", id: "2", name: "____Done____",
-                               to: double(id: wf_done_id.to_s))
+                               to: double(id: wf_ready_id.to_s))
       jira_class_stub = class_double(Jira::Client).
           as_stubbed_const(transfer_nested_constants: true)
 
@@ -39,16 +39,16 @@ RSpec.describe ProjectItem::Ready do
     it "creates new project_item status change" do
       described_class.new(project_item).call
 
-      expect(project_item.statuses.last).to be_approved
+      expect(project_item.statuses.last).to be_ready
     end
 
-    it "changes project_item status into approved on success" do
+    it "changes project_item status into ready on success" do
       described_class.new(project_item).call
 
-      expect(project_item).to be_approved
+      expect(project_item).to be_ready
     end
 
-    it "uses activate message when project item status is changed to approved" do
+    it "uses activate message when project item status is changed to ready" do
       service = create(:open_access_service, activate_message: "Welcome!!!")
       offer = create(:offer, service: service)
       project_item = create(:project_item, offer: offer)
@@ -67,13 +67,13 @@ RSpec.describe ProjectItem::Ready do
       expect(transition).to receive(:save!).with("transition" => { "id" => "2" })
 
       described_class.new(project_item).call
-      expect(project_item).to be_approved
+      expect(project_item).to be_ready
     end
 
     context "Normal service project item" do
-      it "sents approved and rate service emails to owner" do
+      it "sents ready and rate service emails to owner" do
         # project_item change email is sent only when there is more than 1 change
-        project_item.new_status(status: :created, message: "ProjectItem is approved")
+        project_item.new_status(status: :created, message: "ProjectItem is ready")
 
         expect { described_class.new(project_item).call }.
             to change { ActionMailer::Base.deliveries.count }.by(2)
@@ -89,7 +89,7 @@ RSpec.describe ProjectItem::Ready do
       end
 
       it "sends only rate service email to owner" do
-        project_item.new_status(status: :approved, message: "ProjectItem is approved")
+        project_item.new_status(status: :ready, message: "ProjectItem is ready")
 
         expect { described_class.new(project_item).call }.
             to change { ActionMailer::Base.deliveries.count }.by(1)
