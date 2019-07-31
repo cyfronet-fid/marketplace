@@ -27,7 +27,6 @@ class Jira::IssueUpdated
           message = service.activate_message || "Service is ready to be used"
         when @jira_client.wf_closed_id
           status = :closed
-          message = service.activate_message || "Service is closed"
         when @jira_client.wf_approved_id
           status = :approved
         else

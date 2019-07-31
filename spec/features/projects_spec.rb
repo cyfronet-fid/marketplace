@@ -178,21 +178,6 @@ RSpec.feature "Project" do
 
         expect(page).to_not have_selector(:link_or_button, "Archive")
       end
-
-      scenario "I can archive service when all project_items are ended" do
-        project = create(:project, name: "First Project", user: user)
-        service = create(:service)
-
-        expect(project_archive).to receive(:call)
-
-        offer = create(:offer, service: service)
-        create(:project_item, offer: offer, project: project, status: :closed)
-
-        visit project_path(project)
-        click_on "Archive"
-
-        expect(page).to have_content("Project archived")
-      end
     end
   end
 

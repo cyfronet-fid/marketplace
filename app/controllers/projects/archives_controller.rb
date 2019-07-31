@@ -4,12 +4,11 @@ class Projects::ArchivesController < ApplicationController
   before_action :load_and_authorize_project!
 
   def create
-    if policy(@project).archive?
-      Project::Archive.new(@project).call
+    if Project::Archive.new(@project).call
       redirect_to projects_path,
                   notice: "Project archived"
     else
-      flash[:allert] = "Project cannot be archive"
+      flash[:allert] = "Project cannot be archived"
       redirect_to project_path(@project)
     end
   end
