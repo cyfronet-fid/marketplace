@@ -64,6 +64,11 @@ en:
       create: Create new project
       update: Update
       cancel: Cancel
+    archive:
+      confirmation: |
+        Are you sure you want to archive this project? It won't be possible to use it any more
+      tip: |
+        The archived project will be read only or for copying
   project_item:
     mail:
       new_message: |

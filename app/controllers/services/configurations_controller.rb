@@ -34,6 +34,6 @@ class Services::ConfigurationsController < Services::ApplicationController
     end
 
     def setup_show_variables!
-      @projects = current_user.projects
+      @projects = policy_scope(current_user.projects.active)
     end
 end

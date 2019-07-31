@@ -27,7 +27,6 @@ class Project::Archive
       transition.save!("transition" => { "id" => trs.first.id })
       @project.update_attributes(issue_id: issue.id, issue_status: :jira_active)
     else
-      @project.update_attributes(issue_id: issue.id)
       @project.jira_errored!
       raise JIRATransitionSaveError.new(@project)
     end

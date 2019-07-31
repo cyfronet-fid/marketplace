@@ -35,8 +35,8 @@ RSpec.describe Jira::IssueUpdated do
     expect(last_status.message).to eq("Welcome!!!")
   end
 
-  it "uses service activate message when service become created" do
-    service = create(:service, activate_message: "Closed!!!")
+  it "uses service activate message when service become closed" do
+    service = create(:service)
     offer = create(:offer, service: service)
     project_item = create(:project_item, offer: offer)
 
@@ -45,7 +45,6 @@ RSpec.describe Jira::IssueUpdated do
 
 
     expect(last_status).to be_closed
-    expect(last_status.message).to eq("Closed!!!")
   end
 
   it "set dedicated changelog message when service become approved" do
