@@ -6,52 +6,7 @@
   We will be able to process your request quicker
   if the form is filled with as much detail as possible.
 
-= simple_form_for @project_item, url: service_configuration_path(@service), method: :put,
-  html: { id: "order-form", "data-controller" => "project-item", "data-project-item-url" => projects_path } do |f|
-
-  = render "services/configurations/voucher", project_item: @project_item, f: f
-
-  - unless @project_item.property_values.blank?
-    %h5.mb-4.mt-5.font-weight-bold.configuration-title.text-uppercase Technical parameters
-    = render "services/configurations/attributes", project_item: @project_item, form: f
-
-  .additional-information.mb-4.service-description
-    %h5.mb-4.mt-5.font-weight-bold.configuration-title.text-uppercase
-      Usage information
-
-    %h4 My projects
-    .details-content
-      %p.mb-4= t("project.select.description")
-      = f.input :project do
-        .input-group.col-6.pl-0
-          = f.input_field :project_id, collection: @projects,
-            class: "form-control custom-select #{"is-invalid" unless @project_item.errors[:project].empty?}",
-            "data-action" => "change->project-item#projectChanged",
-            "data-target" => "project-item.project"
-          .input-group-append
-            = link_to "Add new project", new_project_path,
-              class: "btn btn-primary", remote: true
-
-    %h4{ "data-target" => "project-item.usage" }
-    %dl.mb-4
-      %dd{ "data-target" => "project-item.reason" }
-      %dd{ "data-target" => "project-item.researchAreas" }
-    %h4{ "data-target" => "project-item.customerDetails" }
-    %dl.mb-4
-      %dd{ "data-target" => "project-item.customer" }
-      %dd{ "data-target" => "project-item.originCountry" }
-      %dd{ "data-target" => "project-item.email" }
-      %dd{ "data-target" => "project-item.partnershipCountries" }
-      %dd{ "data-target" => "project-item.userGroupName" }
-      %dd{ "data-target" => "project-item.projectName" }
-      %dd{ "data-target" => "project-item.projectWebsiteUrl" }
-      %dd{ "data-target" => "project-item.companyName" }
-      %dd{ "data-target" => "project-item.companyWebsiteUrl" }
-      %dd{ "data-target" => "project-item.organization" }
-      %dd{ "data-target" => "project-item.department" }
-      %dd{ "data-target" => "project-item.webpage" }
-      %dd{ "data-target" => "project-item.additionalInformation" }
-
+= render "services/configurations/project_browser", service: @service, project_item: @project_item, projects: @projects
 
 = content_for :next_button do
   %button.btn.btn-primary{ form: "order-form", type: "submit" }

@@ -31,7 +31,7 @@
         %dt Organization
         %dd= project.organization
 
-      - if project.department
+      - if project.department?
         %dt Department
         %dd= project.department
 
@@ -41,7 +41,7 @@
 
       - if project.research_areas.present?
         %dt Research Areas
-      - @project.research_areas.each do |area|
+      - project.research_areas.each do |area|
         %dd= area.name
 
       - if project.research?
@@ -52,6 +52,7 @@
         %dt Project name
         %dd= project.project_name
 
+      - if project.project_website_url?
         %dt Project website url
         %dd= project.project_website_url
 
@@ -59,7 +60,7 @@
         %dt Company website url
         %dd= project.company_website_url
 
-      - unless project.single_user?
+      - unless project.single_user? || project.countries_of_partnership.blank?
         %dt Collaboration countries
         %dd= project.countries_of_partnership&.join(", ")
 
@@ -68,8 +69,6 @@
       %dt Reason to request access to the EOSC services
       %dd= project.reason_for_access
 
-
-    %h3 Additional information
-    %dl
-      - if project.additional_information
+      - if project.additional_information?
+        %dt Additional information
         %dd= project.additional_information

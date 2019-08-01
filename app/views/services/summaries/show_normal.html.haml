@@ -31,7 +31,7 @@
   %h3 Usage
   %dl.mb-4
     %dt Customer typology
-    %dd= t "simple_form.options.defaults.customer_typology.#{@project_item.project.customer_typology}"
+    %dd= t "simple_form.options.defaults.customer_typology.#{@project_item.project.customer_typology || "none"}"
 
     %dt Reason to request access to #{@service.title}
     %dd= @project_item.project.reason_for_access

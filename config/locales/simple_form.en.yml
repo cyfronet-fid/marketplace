@@ -79,6 +79,7 @@ en:
           research: "Representing a research community"
           private_company: "Representing a private company"
           project: "Representing a project"
+          none: "Customer typology not set"
       service:
         phase:
           discovery: "Discovery (min. TRL 1)"
