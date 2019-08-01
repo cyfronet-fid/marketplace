@@ -203,7 +203,7 @@ private
         nil
       end
     when "CP-CustomerCountry"
-      project.country_of_origin.name || "N/A"
+      project.country_of_origin&.name || "N/A"
     when "CP-CollaborationCountry"
       if project.countries_of_partnership.present?
         project.countries_of_partnership.map(&:name).join(", ")
