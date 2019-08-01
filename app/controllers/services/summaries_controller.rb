@@ -16,6 +16,7 @@ class Services::SummariesController < Services::ApplicationController
 
     if @project_item.persisted?
       session.delete(session_key)
+      session.delete(:selected_project)
       redirect_to @project_item,
                   notice: "Service ordered sucessfully"
     else
