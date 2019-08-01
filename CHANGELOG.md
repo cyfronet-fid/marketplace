@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service owner can edit service draft and service offer drafts (@mkasztelnik)
 - Task for importing service data from eIC (@michal-szostak)
 - Selective import of services from eIC based on ID (@michal-szostak)
+- Auto select project when adding service to project from project view (@mkasztelnik)
 
 ### Changed
 - Country of customer and country of collaboration fields (@goreck888)
