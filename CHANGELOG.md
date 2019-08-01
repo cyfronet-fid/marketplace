@@ -18,9 +18,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Create project copy (@mkasztelnik)
 - Conversation to project (@martaswiatkowska)
 - Project item view is split into details and conversation (@mkasztelnik)
-
-### Changed
-
 - Refacotoring of ordering - split project details in fragments (@bwilk)
 - Redirection to a service upon choice made by autocomplete in search bar (@bwilk)
 - Reimplemented filters and categories after creating indexes in Elasticsearch (@bwilk)
@@ -42,6 +39,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Fixed showing projects with empty countries of partnerhip list (@bwilk)
 - Wrong redirection after logging in while browsing the portal (@bwilk)
 - Disabled possibility to add offers in drafts (@goreck888)
+- Vulnerabilities alerts (@martaswiatkowska)
 
 ### Security
 
