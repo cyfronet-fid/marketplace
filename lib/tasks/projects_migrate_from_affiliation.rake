@@ -4,7 +4,6 @@ require "securerandom"
 
 namespace :projects do
   desc "Remove default projects without services attached"
-
   task migrate_from_affiliation: :environment do
     Project.transaction do
       Project.includes(:project_items, user: :affiliations)
@@ -45,11 +44,7 @@ namespace :projects do
       project.reason_for_access = "Not specified" if project.reason_for_access.blank?
       project.user_group_name = "Not speficied" if project.user_group_name.blank?
 
-      unless project.valid?
-        puts "ERROR!!!!!!!!! #{project.errors.inspect}"
-      end
-
-      project.save!
+      project.save!(validate: false)
     end
   end
 end
