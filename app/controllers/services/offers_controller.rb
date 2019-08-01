@@ -26,6 +26,7 @@ class Services::OffersController < Services::ApplicationController
     def select_offer(offer)
       session[session_key] ||= {}
       session[session_key]["offer_id"] = offer.id
+      session[session_key]["project_id"] ||= session[:selected_project]
     end
 
     def offer
