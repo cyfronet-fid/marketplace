@@ -10,7 +10,7 @@
           .row
             .col-md-12.back-link
               %i.fas.fa-chevron-left.fa-xs.mr-1
-                = link_to "back to #{project.name} project services", [project, :services]
+              = link_to "back to #{project.name} project services", [project, :services]
       .buttons-panel.col-md-3.float-right.d-flex.justify-content-center
         %p.text-uppercase.text-right.font-weight-bold.text-secondary.mb-0
           %span{ class: "status-#{project_item.status}" }= project_item.status
