@@ -11,7 +11,8 @@ module Jira
     def call
       Project.where(issue_status: :jira_require_migration).each do |project|
         issue = @client.create_project_issue project
-        project.update_attributes(issue_id: issue.id, issue_key: issue.key, issue_status: :jira_active)
+        project.update_columns(issue_id: issue.id, issue_key: issue.key,
+                               issue_status: :jira_active)
 
         puts "Created issue for Project with ID '#{project.id}' - JIRA issue: #{issue.key}"
 
