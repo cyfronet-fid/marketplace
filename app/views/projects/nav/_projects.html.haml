@@ -2,7 +2,7 @@
 - if projects.any?
   %ul.nav.flex-column.project-menu.pb-2
     - projects.each do |project|
-      %li.nav-item
+      %li.nav-item.text-break
         = link_to project.name, [project, :services],
           class: "nav-link #{"active" if project == current}"
         -# TODO: Commented since we don't have notification mechanism yet  .message  %i.comment
