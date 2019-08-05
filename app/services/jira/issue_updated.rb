@@ -22,9 +22,13 @@ class Jira::IssueUpdated
           status = :registered
         when @jira_client.wf_in_progress_id
           status = :in_progress
-        when @jira_client.wf_done_id
+        when @jira_client.wf_ready_id
           status = :ready
           message = service.activate_message || "Service is ready to be used"
+        when @jira_client.wf_closed_id
+          status = :closed
+        when @jira_client.wf_approved_id
+          status = :approved
         else
           Rails.logger.warn("Unknown issue status (#{change["to"]}")
         end

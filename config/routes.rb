@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   resources :projects do
     scope module: :projects do
       resource :add, only: :create
+      resource :archive, only: :create
       resources :about, only: :index
       resources :services, only: [:show, :index]
       resource :conversation, only: [:show, :create]

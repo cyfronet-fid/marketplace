@@ -16,7 +16,7 @@ RSpec.describe Jira::IssueUpdated do
   end
 
   it "set dedicated changelog message when service become ready" do
-    described_class.new(project_item, changelog(to: jira_client.wf_done_id)).call
+    described_class.new(project_item, changelog(to: jira_client.wf_ready_id)).call
     last_status = project_item.statuses.last
 
     expect(last_status).to be_ready
@@ -28,11 +28,37 @@ RSpec.describe Jira::IssueUpdated do
     offer = create(:offer, service: service)
     project_item = create(:project_item, offer: offer)
 
-    described_class.new(project_item, changelog(to: jira_client.wf_done_id)).call
-    last_change = project_item.statuses.last
+    described_class.new(project_item, changelog(to: jira_client.wf_ready_id)).call
+    last_status = project_item.statuses.last
 
-    expect(last_change).to be_ready
-    expect(last_change.message).to eq("Welcome!!!")
+    expect(last_status).to be_ready
+    expect(last_status.message).to eq("Welcome!!!")
+  end
+
+  it "uses service activate message when service become closed" do
+    service = create(:service)
+    offer = create(:offer, service: service)
+    project_item = create(:project_item, offer: offer)
+
+    described_class.new(project_item, changelog(to: jira_client.wf_closed_id)).call
+    last_status = project_item.statuses.last
+
+
+    expect(last_status).to be_closed
+  end
+
+  it "set dedicated changelog message when service become approved" do
+    described_class.new(project_item, changelog(to: jira_client.wf_approved_id)).call
+    last_status = project_item.statuses.last
+
+    expect(last_status).to be_approved
+  end
+
+  it "set dedicated changelog message when service become ready" do
+    described_class.new(project_item, changelog(to: jira_client.wf_ready_id)).call
+    last_status = project_item.statuses.last
+
+    expect(last_status).to be_ready
   end
 
   context "EGI Applications on Demand" do
@@ -43,7 +69,7 @@ RSpec.describe Jira::IssueUpdated do
       project_item = create(:project_item, offer: offer)
 
       expect {
-        described_class.new(project_item, changelog(to: jira_client.wf_done_id)).call
+        described_class.new(project_item, changelog(to: jira_client.wf_ready_id)).call
       }.to change { ActionMailer::Base.deliveries.count }.by(1)
       mail = ActionMailer::Base.deliveries.last
 
@@ -57,7 +83,7 @@ RSpec.describe Jira::IssueUpdated do
       project_item = create(:project_item, offer: offer, voucher_id: "123456")
 
       expect {
-        described_class.new(project_item, changelog(to: jira_client.wf_done_id)).call
+        described_class.new(project_item, changelog(to: jira_client.wf_ready_id)).call
       }.to change { ActionMailer::Base.deliveries.count }.by(1)
       mail = ActionMailer::Base.deliveries.last
 

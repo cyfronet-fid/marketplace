@@ -32,7 +32,10 @@ class Jira::Client < JIRA::Client
   attr_reader :jira_issue_type_id, :jira_project_issue_type_id
   attr_reader :webhook_secret
   attr_reader :custom_fields
-  attr_reader :wf_todo_id, :wf_in_progress_id, :wf_done_id, :wf_rejected_id, :wf_waiting_for_response_id
+  attr_reader :wf_todo_id, :wf_in_progress_id, :wf_done_id,
+              :wf_rejected_id, :wf_waiting_for_response_id,
+              :wf_closed_id, :wf_ready_id, :wf_approved_id,
+              :wf_archived_id
 
   def initialize
     # read required options and initialize jira client
@@ -54,9 +57,12 @@ class Jira::Client < JIRA::Client
 
     @wf_todo_id = @jira_config["workflow"]["todo"]
     @wf_in_progress_id = @jira_config["workflow"]["in_progress"]
-    @wf_done_id = @jira_config["workflow"]["done"]
     @wf_rejected_id = @jira_config["workflow"]["rejected"]
     @wf_waiting_for_response_id = @jira_config["workflow"]["waiting_for_response"]
+    @wf_closed_id = @jira_config["workflow"]["closed"]
+    @wf_ready_id = @jira_config["workflow"]["ready"]
+    @wf_approved_id = @jira_config["workflow"]["approved"]
+    @wf_archived_id = @jira_config["workflow"]["archived"]
 
     fields_config = @jira_config["custom_fields"]
 
@@ -205,8 +211,8 @@ private
     when "CP-CustomerCountry"
       project.country_of_origin&.name || "N/A"
     when "CP-CollaborationCountry"
-      if project.countries_of_partnership.present?
-        project.countries_of_partnership.map(&:name).join(", ")
+      if project.countries_of_partnership&.present?
+        project.countries_of_partnership&.map(&:name).join(", ")
       else
         "N/A"
       end
