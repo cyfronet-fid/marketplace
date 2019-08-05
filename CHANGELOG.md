@@ -52,6 +52,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Use project details partial on service order configuration step (@mkasztelnik)
 - Apply a new view and functionalities of the start page (@jarekzet, @goreck888)
 - Rename buttons for creating new platforms, providers and categories in the backoffice (@goreck888)
+- Disabled css animations in the test environment (@goreck888)
 
 ### Removed
 - Affiliation model removed (@mkasztelnik)
