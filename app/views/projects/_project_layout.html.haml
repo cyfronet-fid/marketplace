@@ -6,6 +6,9 @@
           %h1.flex-grow-1.text-break
             = project.name
           .details-row
+            - if project.archived?
+              .details-box.text-uppercase= project.status
+              .separator
             .details-box Created at #{l(project.created_at, format: :short)}
             .separator
             .details-box= t "project.customer_typology.#{project.customer_typology || "none"}"
