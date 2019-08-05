@@ -11,6 +11,7 @@ RSpec.describe Project do
   it { should validate_presence_of(:reason_for_access) }
   it { should validate_presence_of(:email) }
   it { should have_many(:project_items) }
+  it { should validate_presence_of(:status) }
 
   describe "single user" do
     subject { build(:project, customer_typology: "single_user") }

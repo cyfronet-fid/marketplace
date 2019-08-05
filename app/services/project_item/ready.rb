@@ -28,7 +28,9 @@ class ProjectItem::Ready
         end
 
         issue = client.create_service_issue(@project_item)
-        trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_done_id }
+
+        trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_ready_id }
+
         if trs.length > 0
           transition = issue.transitions.build
           transition.save!("transition" => { "id" => trs.first.id })

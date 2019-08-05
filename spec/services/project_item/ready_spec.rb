@@ -9,18 +9,18 @@ RSpec.describe ProjectItem::Ready do
 
   context "(JIRA works without errors)" do
     before(:each) {
-      wf_done_id = 6
+      wf_ready_id = 6
       wf_in_progress_id = 7
 
       jira_client = double("Jira::Client",
                            jira_project_key: "MP",
                            jira_issue_type_id: 5,
                            wf_in_progress_id: wf_in_progress_id,
-                           wf_done_id: wf_done_id)
+                           wf_ready_id: wf_ready_id)
       transition_start = double("Transition", id: "1", name: "____Start Progress____",
                                 to: double(id: wf_in_progress_id.to_s))
       transition_done = double("Transition", id: "2", name: "____Done____",
-                               to: double(id: wf_done_id.to_s))
+                               to: double(id: wf_ready_id.to_s))
       jira_class_stub = class_double(Jira::Client).
           as_stubbed_const(transfer_nested_constants: true)
 
@@ -72,7 +72,7 @@ RSpec.describe ProjectItem::Ready do
 
     context "Normal service project item" do
       it "sents ready and rate service emails to owner" do
-        # project_item ststus change email is sent only when there is more than 1 change
+        # project_item change email is sent only when there is more than 1 change
         project_item.new_status(status: :created, message: "ProjectItem is ready")
 
         expect { described_class.new(project_item).call }.

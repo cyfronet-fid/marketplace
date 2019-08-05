@@ -129,7 +129,7 @@ RSpec.feature "Project" do
 
       visit project_path(project)
 
-      expect(page).to_not have_content("Delete")
+      expect(page).to_not have_selector(:link_or_button, "Delete")
     end
 
     scenario "I cannot see not my projects" do
@@ -138,6 +138,46 @@ RSpec.feature "Project" do
       visit project_path(project)
 
       expect(page).to have_text("You are not authorized to see this page")
+    end
+
+    context "archive" do
+      let(:project_archive) { double("Project::Archive") }
+
+      before(:each) {
+        project_archive_class_stub = class_double(Project::Archive).
+            as_stubbed_const(transfer_nested_constants: true)
+        allow(project_archive_class_stub).to receive(:new).and_return(project_archive)
+      }
+
+      scenario "I cannot see archive button when are no services" do
+        project = create(:project, name: "First Project", user: user)
+
+        visit project_path(project)
+
+        expect(page).to_not have_selector(:link_or_button, "Archive")
+      end
+
+      scenario "I see archive button when all project_items are ended" do
+        project = create(:project, name: "First Project", user: user)
+        service = create(:open_access_service)
+        offer = create(:offer, service: service)
+
+        create(:project_item, offer: offer, project: project, status: :closed)
+
+        visit project_path(project)
+
+        expect(page).to have_selector(:link_or_button, "Archive")
+      end
+
+      scenario "I cannot see archive button when all project_items are not ended" do
+        project = create(:project, name: "First Project", user: user)
+        service = create(:open_access_service)
+        create(:offer, service: service)
+
+        visit project_path(project)
+
+        expect(page).to_not have_selector(:link_or_button, "Archive")
+      end
     end
   end
 

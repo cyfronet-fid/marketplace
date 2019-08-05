@@ -13,8 +13,11 @@ default: &default
     todo: <%= ENV["MP_JIRA_WF_TODO"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :workflow, :todo) || 1 %>
     in_progress: <%= ENV["MP_JIRA_WF_IN_PROGRESS"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :workflow, :in_progress) || 2 %>
     waiting_for_response: <%= ENV["MP_JIRA_WF_WAITING_FOR_RESPONSE"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :workflow, :waiting_for_response) || 3 %>
-    done: <%= ENV["MP_JIRA_WF_DONE"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :workflow, :done) || 4 %>
+    approved: <%= ENV["MP_JIRA_WF_APPROVED"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :workflow, :approved) || 4 %>
     rejected: <%= ENV["MP_JIRA_WF_REJECTED"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :workflow, :rejected) || 5 %>
+    closed: <%= ENV["MP_JIRA_WF_CLOSED"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :workflow, :closed) || 6 %>
+    ready: <%= ENV["MP_JIRA_WF_READY"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :workflow, :ready) || 7 %>
+    archived: <%= ENV["MP_JIRA_WF_ARCHIVED"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :workflow, :archived) || 8 %>
 
   custom_fields:
     "Epic Link": <%= "'" + (ENV["MP_JIRA_FIELD_Epic_Link"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "Epic Link".to_sym) || "") + "'" %>
@@ -74,8 +77,11 @@ test:
     todo: 1
     in_progress: 2
     waiting_for_response: 3
-    done: 4
+    approved: 4
     rejected: 5
+    closed: 6
+    ready: 7
+    archived: 8
 
   custom_fields:
     "Epic Link": "Epic Link-1"
