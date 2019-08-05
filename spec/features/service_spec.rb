@@ -228,8 +228,6 @@ RSpec.feature "Service filtering and sorting" do
     create(:service, title: "DDDD Something 3", rating: 3.9, platforms: [platform_2], categories: [category_1])
 
     Service.reindex
-
-    sleep(1)
   end
 
   scenario "clear search visible" do
@@ -334,9 +332,6 @@ RSpec.feature "Service filtering and sorting" do
     visit services_path
 
     find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
-    # again - problem with animations, which should be disabled
-    sleep(1)
-
     click_on("Show 2 more")
     find(:css, "input[name='providers[]'][value='#{Provider.order(:name).last.id}']").set(true)
     click_on(id: "filter-submit")
@@ -360,9 +355,6 @@ RSpec.feature "Service filtering and sorting" do
     find(:css, ".collapseall").click
 
     expect(page).to have_selector("input[name='target_groups[]'][value='#{target_group_id}']")
-    # this is necessary for bootstrap animation to finish properly, kind of a hack
-    # possible solution is either to disable animations (might be a good idea)
-    sleep 1
     # collapse all
     find(:css, ".collapseall").click
 
@@ -374,7 +366,6 @@ RSpec.feature "Service filtering and sorting" do
     provider_id = Provider.order(:name).first.id
     visit services_path
     find(:css, ".collapseall").click
-    sleep(1)
     find(:css, "input[name='providers[]'][value='#{provider_id}']").set(true)
     click_on(id: "filter-submit")
     expect(page).to have_selector("input[name='providers[]'][value='#{provider_id}'][checked]")
@@ -407,7 +398,6 @@ RSpec.feature "Service filtering and sorting" do
     click_on(id: "filter-submit")
 
     expect(page).to have_selector(".media", count: 3)
-    find(:css, "a[href=\"#collapse_target_groups\"][role=\"button\"] h6").click
     expect(page).to have_selector("input[name='target_groups[]'][value='#{target_group.id}'][checked]")
   end
 

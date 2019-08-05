@@ -1,5 +1,5 @@
 !!!
-%html{ lang: "en" }
+%html{ lang: "en", class: "#{Rails.env}" }
   = render "layouts/head"
 
   %body{ class: ("main" if current_page?("/")) }
