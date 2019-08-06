@@ -17,11 +17,19 @@ module Jira
         puts "Created issue for Project with ID '#{project.id}' - JIRA issue: #{issue.key}"
 
         project.project_items.each do |pi|
-          issue = @client.Issue.find(pi.issue_id)
-          unless issue.save(fields: { "#{@client.custom_fields[:"Epic Link"]}" => project.issue_key })
-            puts "ERROR".red + " Could not link epic #{project.issue_key} to #{issue.key}"
+            issue = @client.Issue.find(pi.issue_id)
+
+            unless issue.save(fields: { "#{@client.custom_fields[:"Epic Link"]}" => project.issue_key })
+              puts "ERROR".red + " Could not link epic #{project.issue_key} to #{issue.key}"
+            end
+          rescue JIRA::HTTPError => e
+            if e.code == "404"
+              puts "WARNING".yellow + " Issue with id: #{pi.issue_id} does not exist in JIRA, skipping..."
+              pi.jira_deleted!
+            else
+              raise e
+            end
           end
-        end
 
       rescue Jira::Client::JIRAIssueCreateError => e
         project.jira_errored!
