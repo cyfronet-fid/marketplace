@@ -2340,3 +2340,8 @@ label[data-multicheckbox].small {
   }
 }
 // scss-lint:enable all
+
+.form-control.is-valid,
+.form-control.is-invalid {
+  background-position: center right calc(1.375em + 0.1875rem);
+}
