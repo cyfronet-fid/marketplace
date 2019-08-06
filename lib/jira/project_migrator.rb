@@ -17,6 +17,11 @@ module Jira
         puts "Created issue for Project with ID '#{project.id}' - JIRA issue: #{issue.key}"
 
         project.project_items.each do |pi|
+            if pi.issue_id.nil?
+              puts "WARNING".yellow + " Project Item with id #{pi.id} does not have issue_id! Please review it manually"
+              next
+            end
+
             issue = @client.Issue.find(pi.issue_id)
 
             unless issue.save(fields: { "#{@client.custom_fields[:"Epic Link"]}" => project.issue_key })
@@ -24,10 +29,11 @@ module Jira
             end
           rescue JIRA::HTTPError => e
             if e.code == "404"
-              puts "WARNING".yellow + " Issue with id: #{pi.issue_id} does not exist in JIRA, skipping..."
+              puts "WARNING".yellow + " Issue with jira id: #{pi.issue_id} does not exist in JIRA, skipping..."
               pi.jira_deleted!
             else
-              raise e
+              puts "ERROR".red + " Issue for Project Item with id #{pi.id} could not be updated! Please review it manually"
+              pi.jira_errored!
             end
           end
 
