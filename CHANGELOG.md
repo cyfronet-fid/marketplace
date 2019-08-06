@@ -41,6 +41,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Wrong redirection after logging in while browsing the portal (@bwilk)
 - Disabled possibility to add offers in drafts (@goreck888)
 - Vulnerabilities alerts (@martaswiatkowska)
+- Project migration task when JIRA issues has been deleted (@michal-szostak)
 
 ### Security
 
