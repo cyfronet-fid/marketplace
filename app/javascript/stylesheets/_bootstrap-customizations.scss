@@ -2339,6 +2339,11 @@ label[data-multicheckbox].small {
     max-width: 100%;
   }
 }
+
+abbr[title] {
+  text-decoration: none;
+}
+
 // scss-lint:enable all
 
 .form-control.is-valid,
