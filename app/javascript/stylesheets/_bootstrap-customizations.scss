@@ -2339,4 +2339,19 @@ label[data-multicheckbox].small {
     max-width: 100%;
   }
 }
+
+abbr[title] {
+  text-decoration: none;
+}
+
+.form-control.is-valid,
+.form-control.is-invalid {
+  background-position: right 4% center !important;
+}
+
+textarea.form-control.is-valid,
+textarea.form-control.is-invalid {
+  background-position: right 2% top 15px !important;
+}
+
 // scss-lint:enable all
