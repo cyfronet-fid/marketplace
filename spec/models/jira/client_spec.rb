@@ -23,22 +23,12 @@ describe Jira::Client do
 
     user = create(:user, first_name: "John", last_name: "Doe", uid: "uid1")
     project_item = create(:project_item,
-                          affiliation: create(:affiliation,
-                                              user: user,
-                                              organization: "organization 1",
-                                              department: "department 1",
-                                              email: "john.doe@organization.com", webpage: "http://organization.com",
-                                              supervisor: "Jim Supervisor",
-                                              supervisor_profile: "http://jim.supervisor.edu"),
-                          offer: create(:offer, name: "off1", service: create(:service,
-                                                                        title: "s1",
-                                                                        categories: [create(:category, name: "cat1")])),
-                          user_group_name: "User Group Name 1",
-                          project_name: "My Secret Project",
-                          project: create(:project, user: user, name: "My Secret Project"),
-                          customer_typology: "single_user",
-                          research_area: create(:research_area, name: "My RA"),
-                          access_reason: "some reason", properties: [
+          offer: create(:offer, name: "off1", service: create(:service,
+                                                        title: "s1",
+                                                        categories: [create(:category, name: "cat1")])),
+          project: create(:project, user: user, name: "My Secret Project",
+                          user_group_name: "New user group", reason_for_access: "some reason"),
+          properties: [
             {
                 "id": "id1",
                 "type": "input",
@@ -69,22 +59,9 @@ describe Jira::Client do
                        issuetype: { id: 10000 },
                        "Order reference-1" => Rails.application.routes.url_helpers.project_item_url(id: project_item.id,
                                                                                                     host: "https://mp.edu"),
-                       "CI-Name-1" => "John",
-                       "CI-Surname-1" => "Doe",
-                       "CI-Email-1" => "john.doe@organization.com",
-                       "CI-DisplayName-1" => "John Doe",
-                       "CI-EOSC-UniqueID-1" => "uid1",
-                       "CI-Institution-1" => "organization 1",
-                       "CI-Department-1" => "department 1",
-                       "CI-DepartmentalWebPage-1" => "http://organization.com",
-                       "CI-SupervisorName-1" => "Jim Supervisor",
-                       "CI-SupervisorProfile-1" => "http://jim.supervisor.edu",
-                       "CP-CustomerTypology-1" => { "id" => "20000" },
-                       "CP-ReasonForAccess-1" => "some reason",
-                       "CP-UserGroupName-1" => "User Group Name 1",
-                       "CP-ProjectInformation-1" => "My Secret Project",
-                       "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
-                       "CP-ScientificDiscipline-1" => "My RA",
+                       # "CI-EOSC-UniqueID-1" => "uid1",
+                       # "CI-Institution-1" => "organization 1",
+                       "Epic Link-1" => "MP-1",
                        "CP-Platforms-1" => "",
                        "CP-INeedAVoucher-1" => { "id" => "20004" },
                        "CP-VoucherID-1" => "",
@@ -112,36 +89,29 @@ describe Jira::Client do
     allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
 
-    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2", affiliations: [])
+    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2")
     project_item = create(:project_item,
-                          customer_typology: nil,
-                          access_reason: nil,
-                          additional_information: nil,
-                          affiliation: nil,
-                          user_group_name: nil,
-                          project_name: nil,
                           offer: create(:offer, name: "off1",  service: create(:service,
                                                                                order_target: "email@domain.com",
                                                                                title: "s1",
                                                                                service_type: "open_access",
                                                                                connected_url:  "http://service.org/access",
                                                                                categories: [create(:category, name: "cat1")])),
-                          research_area: nil,
-                          project: create(:project, user: user, name: "My Secret Project"))
+                          project: create(:project, user: user,
+                                          name: "My Secret Project",
+                                          user_group_name: nil,
+                                          reason_for_access: "Some reason",
+                                          customer_typology: "single_user"))
 
     expected_fields = { summary: "Service order, John Doe, s1",
                         project: { key: "MP" },
                         issuetype: { id: 10000 },
                         "Order reference-1" => Rails.application.routes.url_helpers.project_item_url(id: project_item.id,
                                                                                                      host: "https://mp.edu"),
-                        "CI-Name-1" => "John",
-                        "CI-Surname-1" => "Doe",
-                        "CI-DisplayName-1" => "John Doe",
-                        "CI-EOSC-UniqueID-1" => "uid2",
+                        "Epic Link-1" => "MP-1",
                         "CP-Platforms-1" => "",
                         "CP-INeedAVoucher-1" => { "id" => "20004" },
                         "CP-VoucherID-1" => "",
-                        "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
                         "SO-1-1" => {
                           "category" => "cat1",
                           "service" => "s1",
@@ -163,14 +133,8 @@ describe Jira::Client do
     allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
 
-    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2", affiliations: [])
+    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2")
     project_item = create(:project_item,
-                          customer_typology: nil,
-                          access_reason: nil,
-                          additional_information: nil,
-                          affiliation: nil,
-                          user_group_name: nil,
-                          project_name: nil,
                           offer: create(:offer,
                                         name: "off1",
                                         voucherable: true,
@@ -179,23 +143,22 @@ describe Jira::Client do
                                                                  service_type: "open_access",
                                                                  connected_url:  "http://service.org/access",
                                                                  categories: [create(:category, name: "cat1")])),
-                          research_area: nil,
                           voucher_id: "123123",
-                          project: create(:project, user: user, name: "My Secret Project"))
+                          project: create(:project, user: user,
+                                          name: "My Secret Project",
+                                          user_group_name: "New user group",
+                                          reason_for_access: "Some reason",
+                                          customer_typology: "single_user"))
 
     expected_fields = { summary: "Service order, John Doe, s1",
                         project: { key: "MP" },
                         issuetype: { id: 10000 },
                         "Order reference-1" => Rails.application.routes.url_helpers.project_item_url(id: project_item.id,
                                                                                                      host: "https://mp.edu"),
-                        "CI-Name-1" => "John",
-                        "CI-Surname-1" => "Doe",
-                        "CI-DisplayName-1" => "John Doe",
-                        "CI-EOSC-UniqueID-1" => "uid2",
+                        "Epic Link-1" => "MP-1",
                         "CP-Platforms-1" => "",
                         "CP-INeedAVoucher-1" => { "id" => "20004" },
                         "CP-VoucherID-1" => "123123",
-                        "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
                         "SO-1-1" => {
                           "category" => "cat1",
                           "service" => "s1",
@@ -216,14 +179,8 @@ describe Jira::Client do
     allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
 
-    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2", affiliations: [])
+    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2")
     project_item = create(:project_item,
-                          customer_typology: nil,
-                          access_reason: nil,
-                          additional_information: nil,
-                          affiliation: nil,
-                          user_group_name: nil,
-                          project_name: nil,
                           offer: create(:offer,
                                         name: "off1",
                                         voucherable: true,
@@ -232,23 +189,19 @@ describe Jira::Client do
                                                                  service_type: "open_access",
                                                                  connected_url:  "http://service.org/access",
                                                                  categories: [create(:category, name: "cat1")])),
-                          research_area: nil,
                           request_voucher: true,
-                          project: create(:project, user: user, name: "My Secret Project"))
+                          project: create(:project, user: user, name: "My Secret Project",
+                                          user_group_name: "New user group", reason_for_access: "Some reason"))
 
     expected_fields = { summary: "Service order, John Doe, s1",
                         project: { key: "MP" },
                         issuetype: { id: 10000 },
                         "Order reference-1" => Rails.application.routes.url_helpers.project_item_url(id: project_item.id,
                                                                                                      host: "https://mp.edu"),
-                        "CI-Name-1" => "John",
-                        "CI-Surname-1" => "Doe",
-                        "CI-DisplayName-1" => "John Doe",
-                        "CI-EOSC-UniqueID-1" => "uid2",
+                        "Epic Link-1" => "MP-1",
                         "CP-Platforms-1" => "",
                         "CP-INeedAVoucher-1" => { "id" => "20003" },
                         "CP-VoucherID-1" => "",
-                        "SO-ProjectName-1" => "My Secret Project (#{project_item.project.id})",
                         "SO-1-1" => {
                           "category" => "cat1",
                           "service" => "s1",
@@ -263,5 +216,50 @@ describe Jira::Client do
     expect(client).to receive_message_chain("Issue.build").and_return(issue)
 
     expect(client.create_service_issue(project_item)).to be(issue)
+  end
+
+  it "create_project_issue should save issue with correct fields" do
+    allow(ENV).to receive(:[]).and_call_original
+    allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
+
+    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2",
+                  email: "john.doe@email.eu")
+    project = create(:project, user: user, name: "My Secret Project",
+                     email: "project@email.com",
+                     user_group_name: "User Group Name 1",
+                     customer_typology: "research",
+                     reason_for_access: "some reason",
+                     department: "dep",
+                     webpage: "http://dep-wwww.pl",
+                     organization: "org",
+                     research_areas: [create(:research_area, name: "My RA")])
+
+    expected_fields = { summary: "Project, John Doe, My Secret Project",
+                        project: { key: "MP" },
+                        issuetype: { id: 10001 },
+                        "Epic Name-1" => "My Secret Project",
+                        "CI-Name-1" => "John",
+                        "CI-Surname-1" => "Doe",
+                        "CI-DisplayName-1" => "John Doe",
+                        "CI-Email-1" => "project@email.com",
+                        "CI-Institution-1" => "org",
+                        "CI-Department-1" => "dep",
+                        "CI-DepartmentalWebPage-1" => "http://dep-wwww.pl",
+                        "CI-EOSC-UniqueID-1" => "uid2",
+                        "CP-ScientificDiscipline-1" => "My RA",
+                        "CP-CustomerTypology-1" => { "id" => "20001" },
+                        "SO-ProjectName-1" => "My Secret Project (#{project.id})",
+                        "CP-UserGroupName-1" => "User Group Name 1",
+                        "CP-CustomerCountry-1" => "#{project.country_of_origin.name}",
+                        "CP-CollaborationCountry-1" => "#{project.countries_of_partnership.map(&:name).join(", ")}"
+                          # "CP-ReasonForAccess-1" => "some reason",
+                          # "CP-ProjectInformation-1" => "My Secret Project",
+                        }
+
+    issue = double(:Issue)
+    expect(issue).to receive("save").with(fields: expected_fields).and_return(true)
+    expect(client).to receive_message_chain("Issue.build").and_return(issue)
+
+    expect(client.create_project_issue(project)).to be(issue)
   end
 end

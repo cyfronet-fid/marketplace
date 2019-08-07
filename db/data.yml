@@ -239,6 +239,8 @@ area:
         name: &socialSciences "Social Sciences"
     Philosophy:
         name: &philosophy "Philosophy / History"
+    Other:
+        name: &other "Other"
 
 
 

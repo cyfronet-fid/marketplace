@@ -136,6 +136,21 @@ module Jira
       # in case of mismatched issue states, print all available
       self.show_available_issue_states if show_issue_states
 
+      print "Checking Project issue type presence..."
+
+      self.show_available_issue_types unless @checker.check_project_issue_type { |e| self.error_and_abort!(e) } && self.ok!
+
+      puts "Trying to manipulate project issue..."
+      print "  - create issue..."
+      issue = @checker.client.Issue.build
+      @checker.check_create_project_issue(issue) { |e| self.error_and_abort!(e, 2) } && self.ok!
+
+      print "  - update issue..."
+      @checker.check_update_issue(issue) { |e| self.error_and_abort!(e, 2) } && self.ok!
+
+      print "  - delete issue..."
+      @checker.check_delete_issue(issue) { |e| self.error_and_abort!(e, 2) } && self.ok!
+
       self.check_webhook
     end
 

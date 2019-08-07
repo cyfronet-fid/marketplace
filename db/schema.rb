@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_26_144042) do
+ActiveRecord::Schema.define(version: 2019_07_29_123238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,18 @@ ActiveRecord::Schema.define(version: 2019_04_26_144042) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.bigint "author_id"
+    t.text "message"
+    t.integer "iid"
+    t.string "messageable_type"
+    t.bigint "messageable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_messages_on_author_id"
+    t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id"
+  end
+
   create_table "offers", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -133,23 +145,23 @@ ActiveRecord::Schema.define(version: 2019_04_26_144042) do
     t.integer "issue_status", default: 2, null: false
     t.bigint "project_id"
     t.bigint "offer_id"
-    t.string "customer_typology"
-    t.text "access_reason"
-    t.text "additional_information"
     t.bigint "affiliation_id"
     t.jsonb "properties", default: [], null: false
-    t.text "user_group_name"
-    t.string "project_name"
-    t.string "project_website_url"
-    t.string "company_name"
-    t.string "company_website_url"
-    t.bigint "research_area_id"
     t.boolean "request_voucher", default: false, null: false
     t.string "voucher_id", default: "", null: false
     t.index ["affiliation_id"], name: "index_project_items_on_affiliation_id"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
-    t.index ["research_area_id"], name: "index_project_items_on_research_area_id"
+  end
+
+  create_table "project_research_areas", force: :cascade do |t|
+    t.bigint "project_id"
+    t.bigint "research_area_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id", "research_area_id"], name: "index_project_research_areas_on_project_id_and_research_area_id", unique: true
+    t.index ["project_id"], name: "index_project_research_areas_on_project_id"
+    t.index ["research_area_id"], name: "index_project_research_areas_on_research_area_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -162,6 +174,19 @@ ActiveRecord::Schema.define(version: 2019_04_26_144042) do
     t.string "project_website_url"
     t.string "company_name"
     t.string "company_website_url"
+    t.string "country_of_origin"
+    t.string "countries_of_partnership", default: [], array: true
+    t.integer "issue_id"
+    t.integer "issue_status", default: 2, null: false
+    t.string "issue_key"
+    t.text "additional_information"
+    t.string "email"
+    t.string "organization"
+    t.string "department"
+    t.string "webpage"
+    t.string "status"
+    t.datetime "created_at", default: "2019-07-31 06:45:15", null: false
+    t.datetime "updated_at", default: "2019-07-31 06:45:15", null: false
     t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -301,6 +326,18 @@ ActiveRecord::Schema.define(version: 2019_04_26_144042) do
     t.index ["title"], name: "index_services_on_title"
   end
 
+  create_table "statuses", force: :cascade do |t|
+    t.bigint "author_id"
+    t.string "status"
+    t.text "message"
+    t.string "status_holder_type"
+    t.bigint "status_holder_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_statuses_on_author_id"
+    t.index ["status_holder_type", "status_holder_id"], name: "index_statuses_on_status_holder_type_and_status_holder_id"
+  end
+
   create_table "taggings", id: :serial, force: :cascade do |t|
     t.integer "tag_id"
     t.string "taggable_type"
@@ -347,7 +384,6 @@ ActiveRecord::Schema.define(version: 2019_04_26_144042) do
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.integer "roles_mask"
-    t.integer "active_affiliations_count", default: 0
     t.integer "owned_services_count", default: 0, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
@@ -356,7 +392,8 @@ ActiveRecord::Schema.define(version: 2019_04_26_144042) do
   add_foreign_key "project_items", "affiliations"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
-  add_foreign_key "project_items", "research_areas"
+  add_foreign_key "project_research_areas", "projects"
+  add_foreign_key "project_research_areas", "research_areas"
   add_foreign_key "service_providers", "providers"
   add_foreign_key "service_providers", "services"
   add_foreign_key "service_related_platforms", "platforms"

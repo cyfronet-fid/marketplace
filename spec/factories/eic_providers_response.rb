@@ -36,6 +36,19 @@ FactoryBot.define do
                   "active" => true,
                   "status" => "approved"
               },
+              {
+                  "id" => "West-Life",
+                  "name" => "World-wide E-infrastructure for structural biology",
+                  "website" => "https://west-life.eu",
+                  "catalogueOfResources" => "https://bio.tools/",
+                  "publicDescOfResources" => "https://about.west-life.eu/network/west-life/services",
+                  "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
+                  "additionalInfo" => "https://about.west-life.eu/network/west-life/about/project. For more information contact chris.morris@stfc.ac.uk",
+                  "contactInformation" => "+44 1925 603689",
+                  "users" => nil,
+                  "active" => true,
+                  "status" => "approved"
+              }
           ],
           "facets" => [
               {

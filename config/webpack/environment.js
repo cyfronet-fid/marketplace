@@ -3,6 +3,7 @@ const webpack = require('webpack')
 
 /**
  * Automatically load modules instead of having to import or require them
+ *
  * everywhere. Support by webpack. To get more information:
  *
  * https://webpack.js.org/plugins/provide-plugin/

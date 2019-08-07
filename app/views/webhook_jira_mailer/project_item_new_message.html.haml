@@ -1,0 +1,6 @@
+%p Dear #{@user.full_name},
+%p
+  A new message was added to your service request #{link_to "##{@model.id}", project_item_url(@model)}.
+  You can check this message through this #{link_to "link", project_item_url(@model)}.
+
+

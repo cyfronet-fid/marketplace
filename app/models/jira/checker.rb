@@ -36,8 +36,10 @@ class Jira::Checker
 
   block_error_handling :check_connection!
   block_error_handling :check_issue_type!
+  block_error_handling :check_project_issue_type!
   block_error_handling :check_project!
   block_error_handling :check_create_issue!
+  block_error_handling :check_create_project_issue!
   block_error_handling :check_update_issue!
   block_error_handling :check_add_comment!
   block_error_handling :check_delete_issue!
@@ -65,6 +67,15 @@ class Jira::Checker
     raise e
   end
 
+  def check_project_issue_type!
+    self.client.mp_project_issue_type
+  rescue JIRA::HTTPError => e
+    if e.response.code == "404"
+      raise CheckerError.new("It seems that ticket with id #{client.jira_project_issue_type_id} does not exist, make sure to add existing issue type into configuration")
+    end
+    raise e
+  end
+
   def check_project!
     self.client.mp_project
   rescue JIRA::HTTPError => e
@@ -84,6 +95,21 @@ class Jira::Checker
                                 project: { key: self.client.jira_project_key },
                                 issuetype: { id: self.client.jira_issue_type_id } })
       raise CriticalCheckerError.new "Could not create issue in project: #{self.client.jira_project_key} and issuetype: #{self.client.jira_issue_type_id}"
+    end
+  end
+
+  def check_create_project_issue!(issue = nil)
+    if issue == nil
+      issue = self.client.Issue.build
+    end
+
+    fields = { summary: "TEST PROJECT, TO CHECK WHETHER JIRA INTEGRATION WORKS",
+               project: { key: self.client.jira_project_key },
+               issuetype: { id: self.client.jira_project_issue_type_id } }
+    fields[self.client.custom_fields["Epic Name".to_sym]] = "TEST EPIC"
+
+    unless issue.save(fields: fields)
+      raise CriticalCheckerError.new "Could not create product issue in project: #{self.client.jira_project_key} and issuetype: #{self.client.jira_project_issue_type_id}"
     end
   end
 

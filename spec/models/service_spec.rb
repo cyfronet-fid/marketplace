@@ -128,4 +128,20 @@ RSpec.describe Service do
     service.order_target = ""
     expect(service.valid?).to be_truthy
   end
+
+  context "#owned_by?" do
+    it "is true when user is in the owners list" do
+      owner = create(:user)
+      service = create(:service, owners: [owner])
+
+      expect(service.owned_by?(owner)).to be_truthy
+    end
+
+    it "is false when user is not in the owers list" do
+      stranger = create(:user)
+      service = create(:service)
+
+      expect(service.owned_by?(stranger)).to be_falsy
+    end
+  end
 end
