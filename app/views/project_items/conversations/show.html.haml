@@ -1,0 +1,9 @@
+= render "project_items/layout",
+  project: @project, projects: @projects, project_item: @project_item do
+
+  = render "messages/messages", messages: @messages
+
+  .question-box.mt-5.pt-4
+    = simple_form_for @message, url: project_item_conversation_path(@project_item) do |f|
+      = f.input :message, label: "Message to customer service about your order"
+      %button.btn.btn-primary.btn-sm.mt-4{ type: "submit" } Send message

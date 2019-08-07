@@ -26,6 +26,7 @@ class Services::OffersController < Services::ApplicationController
     def select_offer(offer)
       session[session_key] ||= {}
       session[session_key]["offer_id"] = offer.id
+      session[session_key]["project_id"] ||= session[:selected_project]
     end
 
     def offer
@@ -37,7 +38,7 @@ class Services::OffersController < Services::ApplicationController
     end
 
     def init_offer_selection!
-      @offers = @service.offers.reject { |o| o.catalog? }
+      @offers = @service.offers.reject { |o| o.catalog? || o.draft? }
       @project_item = ProjectItem.new(session[session_key])
     end
 end

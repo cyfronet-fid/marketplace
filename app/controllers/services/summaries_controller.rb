@@ -16,8 +16,9 @@ class Services::SummariesController < Services::ApplicationController
 
     if @project_item.persisted?
       session.delete(session_key)
-      @related_services = @service.related_services.includes(:providers)
-      render "confirmation_#{@service.service_type}", layout: "application"
+      session.delete(:selected_project)
+      redirect_to @project_item,
+                  notice: "Service ordered sucessfully"
     else
       redirect_to service_configuration_path(@service),
                   alert: "Service request configuration invalid"

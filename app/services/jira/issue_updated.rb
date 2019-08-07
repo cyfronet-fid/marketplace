@@ -22,15 +22,19 @@ class Jira::IssueUpdated
           status = :registered
         when @jira_client.wf_in_progress_id
           status = :in_progress
-        when @jira_client.wf_done_id
+        when @jira_client.wf_ready_id
           status = :ready
           message = service.activate_message || "Service is ready to be used"
+        when @jira_client.wf_closed_id
+          status = :closed
+        when @jira_client.wf_approved_id
+          status = :approved
         else
           Rails.logger.warn("Unknown issue status (#{change["to"]}")
         end
 
         if status
-          @project_item.new_change(status: status, message: message)
+          @project_item.new_status(status: status, message: message)
           if status == :ready
             if aod_voucherable?
               ProjectItemMailer.aod_voucher_accepted(@project_item).deliver_later
@@ -41,7 +45,7 @@ class Jira::IssueUpdated
             if aod_voucherable? && status == :rejected
               ProjectItemMailer.aod_voucher_rejected(@project_item).deliver_later
             else
-              ProjectItemMailer.changed(@project_item).deliver_later
+              ProjectItemMailer.status_changed(@project_item).deliver_later
             end
           end
         end

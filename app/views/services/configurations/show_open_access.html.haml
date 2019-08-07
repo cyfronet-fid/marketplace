@@ -3,20 +3,7 @@
 %h2.mb-4.font-weight-normal= t "service.open_access.order.configuration"
 %p.mb-4= t("project.select.description")
 
-= simple_form_for @project_item, url: service_configuration_path(@service),
-  method: :put, html: { id: "order-form" } do |f|
-
-  - unless @project_item.property_values.blank?
-    %h5.mb-3.font-weight-bold.configuration-title.text-uppercase Technical parameters
-    = render "services/configurations/attributes", project_item: @project_item, form: f
-
-  = f.input :project do
-    .input-group.col-6.pl-0
-      = f.input_field :project_id, collection: @projects,
-        class: "form-control custom-select #{"is-invalid" unless @project_item.errors[:project].empty?}"
-      .input-group-append
-        = link_to "Add new project", new_project_path,
-          class: "btn btn-primary", remote: true
+= render "services/configurations/project_browser", service: @service, project_item: @project_item, projects: @projects
 
 = content_for :next_button do
   %button.btn.btn-primary{ form: "order-form", type: "submit" }

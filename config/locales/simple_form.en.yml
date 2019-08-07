@@ -16,6 +16,11 @@ en:
         terms_and_conditions: Accept terms and conditions
       question:
         text: Your question to provider about %{title}
+      project:
+        country_of_origin: |
+          Origin country
+        countries_of_partnership: |
+          Collaboration countries
     #   defaults:
     #     password: 'Password'
     #   user:
@@ -54,6 +59,11 @@ en:
         logo: |
           Supported logo formats: png, gif, jpg, jpeg, pjpeg, tiff,
           vnd.adobe.photoshop and vnd.microsoft.icon
+      project:
+        project_website_url: |
+          Url should start with http or https [e.g. http://webpage.org]
+        company_website_url: |
+          Url should start with http or https [e.g. http://webpage.org]
     #     username: 'User name to sign in.'
     #     password: 'No special characters, please.'
     # include_blanks:
@@ -69,6 +79,7 @@ en:
           research: "Representing a research community"
           private_company: "Representing a private company"
           project: "Representing a project"
+          none: "Customer typology not set"
       service:
         phase:
           discovery: "Discovery (min. TRL 1)"

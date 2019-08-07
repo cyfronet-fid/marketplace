@@ -1,9 +1,16 @@
-= simple_form_for @project, remote: true,
-  html: { role: "form", id: "modal-form", "data-controller" => "project-item" } do |f|
-  = f.input :name
-  = f.input :reason_for_access
+= simple_form_for @project, remote: @show_as_modal,
+  html: { role: "form", id: "modal-form", "data-controller" => "project" } do |f|
+  %h4 Usage
+  = f.input :name, label: "Project name", input_html: { class: "col-lg-6 form-control-lg" }
+  = f.input :reason_for_access, label: "Reason to request access to the EOSC services",
+  input_html: { class: "col-lg-8 form-control-lg textarea-lg" }
+  = f.association :research_areas, multiple: true, include_hidden: false,
+    wrapper_html: { class: "col-lg-8 pl-0 pr-0" }, input_html: { data: { choice: true } }
+  = f.input :additional_information,
+  input_html: { class: "col-lg-8 form-control-lg textarea-md" }
+  %h4 Customer details
   = f.input :customer_typology, collection: Project.customer_typologies.keys.map(&:to_sym),
-    input_html: { "data-target" => "project-item.customer",
-                  "data-action" => "change->project-item#showSelectedSection" }
+    input_html: { "data-target" => "project.customer",
+                  "data-action" => "change->project#showSelectedSection", class: "col-lg-5 form-control-lg" }
+  = render "customer_typology_fields", f: f
 
-  = render "services/configurations/customer_typology_fields", f: f

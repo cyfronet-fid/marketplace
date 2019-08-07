@@ -9,7 +9,7 @@ RSpec.describe ProjectItem::Create do
   let(:offer) { create(:offer, service: service) }
   let(:project_item_template) { build(:project_item, project: project, offer: offer) }
 
-  it "creates project_item and set initial project_item change" do
+  it "creates project_item and set initial project_item status" do
     project_item = described_class.new(project_item_template).call
 
     expect(project_item).to be_created
@@ -17,11 +17,11 @@ RSpec.describe ProjectItem::Create do
     expect(project_item.service).to eq(service)
   end
 
-  it "creates first project_item change" do
+  it "creates first project_item status" do
     project_item = described_class.new(project_item_template).call
 
-    expect(project_item.project_item_changes.count).to eq(1)
-    expect(project_item.project_item_changes.first).to be_created
+    expect(project_item.statuses.count).to eq(1)
+    expect(project_item.statuses.first).to be_created
   end
 
   it "triggers register project_item in external system" do

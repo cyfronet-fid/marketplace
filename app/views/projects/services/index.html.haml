@@ -1,0 +1,10 @@
+- breadcrumb :project, @project
+
+= render "projects/project_layout", project: @project, projects: @projects do
+  %ul.list-group
+    = render(partial: "project_items/project_item",
+             collection: @project_items) || render("projects/empty_project", project: @project)
+  - if !@project.archived? && @project_items.any?
+    = link_to "+ Add service to this project", project_add_path(@project),
+      class: "simple-link text-uppercase d-block mt-3 pl-4",
+      method: :post

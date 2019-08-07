@@ -4,73 +4,71 @@ require "rails_helper"
 
 RSpec.describe Backoffice::OfferPolicy do
   let(:service_portfolio_manager) { create(:user, roles: [:service_portfolio_manager]) }
-  let(:service_owner) do
-    create(:user).tap do |user|
-      service_draft = create(:service, status: :draft)
-      service_published = create(:service, status: :published)
-      ServiceUserRelationship.create!(user: user, service: service_draft)
-      ServiceUserRelationship.create!(user: user, service: service_published)
-    end
-  end
+  let(:owner) { create(:user) }
+  let(:stranger) { create(:user) }
+  let(:service) { create(:service, owners: [owner]) }
 
   subject { described_class }
 
-  context "offer published" do
-    context "Service draft" do
-      permissions :new?, :create?, :edit?, :update?, :destroy? do
-        it "grants access service portfolio manager" do
-          expect(subject).to permit(service_portfolio_manager, build(:offer, service: build(:service, status: :draft)))
-        end
-      end
+  permissions :new? do
+    let(:offer) { build(:offer, service: service) }
 
-      permissions :destroy?, :new?, :update?, :edit?, :create? do
-        it "denied access  service owner" do
-          expect(subject).to_not permit(service_owner, build(:offer, service: service_owner.owned_services.draft.first))
-        end
-      end
+    it "grants access to service portfolio manager" do
+      expect(subject).to permit(service_portfolio_manager, offer)
     end
 
-    context "service published" do
-      permissions :new?, :create?, :edit?, :update?, :destroy? do
-        it "grants access service portfolio manager" do
-          expect(subject).to permit(service_portfolio_manager, build(:offer, service: build(:service)))
-        end
+    it "grants access to service owner" do
+      expect(subject).to permit(owner, offer)
+    end
+
+    it "denies access to other users" do
+      expect(subject).to_not permit(stranger, offer)
+    end
+  end
+
+  permissions :destroy? do
+    let(:offer) { create(:offer, service: service) }
+
+    before { create(:project_item, offer: offer) }
+
+    it "denies for all when service is ordered using this offer" do
+      expect(subject).to_not permit(service_portfolio_manager, offer)
+      expect(subject).to_not permit(owner, offer)
+      expect(subject).to_not permit(stranger, offer)
+    end
+  end
+
+  context "when offer is published" do
+    let(:offer) { build(:offer, service: service, status: :published) }
+
+    permissions :create?, :edit?, :update?, :destroy? do
+      it "grants access to service portfolio manager" do
+        expect(subject).to permit(service_portfolio_manager, offer)
       end
 
-      permissions :new?, :create?, :edit?, :update?, :destroy? do
-        it "danies access service owner" do
-          expect(subject).to_not permit(service_owner, build(:offer, service: service_owner.owned_services.published.first))
-        end
+      it "denies access to service owner" do
+        expect(subject).to_not permit(owner, offer)
+      end
+
+      it "denies access to other users" do
+        expect(subject).to_not permit(stranger, offer)
       end
     end
   end
 
-  context "offer draft" do
-    context "Service draft" do
-      permissions :new?, :create?, :edit?, :update?, :destroy? do
-        it "grants access service portfolio manager" do
-          expect(subject).to permit(service_portfolio_manager, build(:offer, status: :draft, service: build(:service, status: :draft)))
-        end
+  context "when offer is a draft" do
+    let(:offer) { build(:offer, service: service, status: :draft) }
+
+    permissions :create?, :edit?, :update?, :destroy? do
+      it "grants access to service portfolio manager" do
+        expect(subject).to permit(service_portfolio_manager, offer)
       end
 
-      permissions :destroy?, :new?, :update?, :edit?, :create? do
-        it "denied access  service owner" do
-          expect(subject).to_not permit(service_owner, build(:offer, status: :draft, service: service_owner.owned_services.draft.first))
-        end
+      it "grant access to service owner" do
+        expect(subject).to permit(owner, offer)
       end
-    end
-
-    context "service published" do
-      permissions :new?, :create?, :edit?, :update?, :destroy? do
-        it "grants access service portfolio manager" do
-          expect(subject).to permit(service_portfolio_manager, build(:offer, status: :draft, service: build(:service)))
-        end
-      end
-
-      permissions :new?, :create?, :edit?, :update?, :destroy? do
-        it "danies access service owner" do
-          expect(subject).to_not permit(service_owner, build(:offer, status: :draft, service: service_owner.owned_services.published.first))
-        end
+      it "denies access to other users" do
+        expect(subject).to_not permit(stranger, offer)
       end
     end
   end

@@ -23,8 +23,14 @@ class ProjectItem::Ready
     def ready_in_jira!
       client = Jira::Client.new
       begin
+        unless @project_item.project.jira_active?
+          Project::Register.new(@project_item.project).call
+        end
+
         issue = client.create_service_issue(@project_item)
-        trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_done_id }
+
+        trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_ready_id }
+
         if trs.length > 0
           transition = issue.transitions.build
           transition.save!("transition" => { "id" => trs.first.id })
@@ -41,7 +47,7 @@ class ProjectItem::Ready
     end
 
     def update_status!
-      @project_item.new_change(status: :ready,
+      @project_item.new_status(status: :ready,
                                message: activate_message)
     end
 
@@ -50,7 +56,7 @@ class ProjectItem::Ready
     end
 
     def notify!
-      ProjectItemMailer.changed(@project_item).deliver_later unless @project_item.open_access?
+      ProjectItemMailer.status_changed(@project_item).deliver_later unless @project_item.open_access?
       ProjectItemMailer.rate_service(@project_item).deliver_later(wait_until: RATE_AFTER_PERIOD.from_now)
     end
 

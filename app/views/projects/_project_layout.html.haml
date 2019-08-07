@@ -1,0 +1,45 @@
+= render "projects/layout", project: project, projects: projects do
+  .pt-4.pl-3.pr-3.shadow-sm.rounded.service-box.service-detail.mb-4.project-heading
+    .row
+      .col-md-9.d-flex.align-items-center
+        .box-wrapper
+          %h1.flex-grow-1.text-break
+            = project.name
+          .details-row
+            - if project.archived?
+              .details-box.text-uppercase= project.status
+              .separator
+            .details-box Created at #{l(project.created_at, format: :short)}
+            .separator
+            .details-box= t "project.customer_typology.#{project.customer_typology || "none"}"
+            - if project.organization?
+              .separator
+              .details-box= project.organization
+      .buttons-panel.col-md-3.float-right.d-flex.align-items-center
+        - if policy(project).edit?
+          = link_to "Edit", edit_project_path(project), class: "btn btn-outline-secondary btn-sm mb-1 mt-1"
+        = link_to "Duplicate", new_project_path(source: project.id), class: "btn btn-outline-secondary btn-sm mb-1 mt-1"
+        - if policy(project).destroy?
+          = link_to "Delete", project_path(project), method: :delete,
+            data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger btn-sm mb-1 mt-1"
+        - if policy(project).archive?
+          = link_to "Archive", project_archive_path(project), method: :post,
+            data: { confirm: "#{t "project.archive.confirmation"}" },
+            class: "btn btn-outline-danger",
+            "data-toggle": "tooltip", "data-placement": "bottom",
+            "title": "#{t "project.archive.tip"}"
+          :javascript
+            $('a[data-toggle="tooltip"]').tooltip();
+    %ul.nav.nav-tabs.mt-4.pl-3.row.services-menu
+      %li.nav-item
+        = link_to "Services", project_services_path(project),
+          class: "nav-link #{"active" if controller.controller_name == "services"} text-uppercase"
+      %li.nav-item
+        = link_to "Project details", project_path(project),
+          class: "nav-link #{"active" if controller.controller_name == "projects"} text-uppercase"
+      %li.nav-item
+        = link_to "Contact with project support", project_conversation_path(project),
+          class: "nav-link #{"active" if controller.controller_name == "conversations"} text-uppercase"
+        -# TODO: Commented, because we don't have notification mechanism yet : .message %i.comment
+  .container.p-0
+    = yield

@@ -9,6 +9,7 @@ class ProjectItemsController < ApplicationController
 
     authorize(@project_item)
 
-    @question = ProjectItem::Question.new(project_item: @project_item)
+    @projects = policy_scope(Project).order(:name)
+    @project = @project_item.project
   end
 end

@@ -68,9 +68,7 @@
     text-transform: uppercase;
     font-size: 14px;
     font-weight: bold;
-    border-bottom: 1px solid $border-color;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 
     a {
       margin-left: 10px;
@@ -115,15 +113,34 @@
 
     dl {
       padding-left: 15px;
-      border-left: 3px solid lighten($border-color, 5%);
+      margin: 15px 0 35px;
+      border-left: 3px solid $border-color;
 
       dd {
-        color: $palette-gray-70;
+        font-size: 16px;
+        margin-bottom: 1rem;
+
+        h4 {
+          text-transform: none;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 25px;
+          margin: 0;
+        }
+      }
+
+      .form-control-label {
+        font-size: 16px;
+        line-height: 25px;
+        font-weight: 600;
       }
     }
 
     dt {
       margin-top: 15px;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 25px;
 
       &:first-of-type {
         margin-top: 0;

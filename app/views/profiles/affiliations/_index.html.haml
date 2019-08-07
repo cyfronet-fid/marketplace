@@ -1,9 +1,0 @@
-#affiliations.tab-pane.container.active.pl-0.pr-0{ "aria-labelledby" => "affiliations-tab", role: "tabpanel" }
-  #accordion-affiliations.accordion.mb-4{ "aria-multiselectable" => "true", :role => "tablist" }
-    = render partial: "profiles/affiliations/affiliation",
-                      collection: affiliations
-  = will_paginate affiliations
-  = link_to "Add new affiliation",
-            new_profile_affiliation_path,
-            class: "btn btn-primary"
-  .clearfix
