@@ -8,6 +8,20 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [2.0.0] 2019-08-06
+
+### Added
 - Service owner can edit service draft and service offer drafts (@mkasztelnik)
 - Task for importing service data from eIC (@michal-szostak)
 - Selective import of services from eIC based on ID (@michal-szostak)
@@ -29,21 +43,16 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Content of mail templates by voucher accept (@goreck888)
 - Reimplemented sending messages to providers (@martaswiatkowska)
 
-### Deprecated
-
 ### Removed
 - Project filter removed from projects index view (@mkasztelnik)
 - Affiliations were removed from all views (@mkasztelnik)
 
 ### Fixed
-
 - Fixed showing projects with empty countries of partnerhip list (@bwilk)
 - Wrong redirection after logging in while browsing the portal (@bwilk)
 - Disabled possibility to add offers in drafts (@goreck888)
 - Vulnerabilities alerts (@martaswiatkowska)
 - Project migration task when JIRA issues has been deleted (@michal-szostak)
-
-### Security
 
 ## [1.12.0] 2019-06-17
 
