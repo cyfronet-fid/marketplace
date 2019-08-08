@@ -25,7 +25,7 @@
                   include_hidden: false
   .row.mt-5
     .col-12.col-md-5
-      = f.association :owners, multiple: true
+      = f.association :owners, multiple: true, input_html: { data: { choice: true } }
   .row.service-contact-emails
     .col-12.col-md-6
       = f.input :contact_emails, multiple: true, as: :array
