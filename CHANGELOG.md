@@ -17,6 +17,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- display choices.js in the owners multiselect field in the new service form (@goreck888)
+- styling in the e-mails field in the new service form (@goreck888)
 
 ### Security
 
