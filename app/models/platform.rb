@@ -6,5 +6,5 @@ class Platform < ApplicationRecord
   has_many :categorizations, through: :services
   has_many :categories, through: :categorizations
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
 end
