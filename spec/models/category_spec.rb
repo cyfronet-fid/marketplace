@@ -3,7 +3,12 @@
 require "rails_helper"
 
 RSpec.describe Category do
-  it { should validate_presence_of(:name) }
+  describe "validations" do
+    it { should validate_presence_of(:name) }
+
+    subject { create(:category) }
+    it { should validate_uniqueness_of(:name) }
+  end
 
   it "is hierarchical" do
     category = create(:category)
