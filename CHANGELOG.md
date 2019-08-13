@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
+
 ## [Unreleased]
 
 ### Added
@@ -18,6 +19,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 
 ### Security
+
+## [2.0.1] 2019-08-13
+
+### Fixed
+- Showing only published services at the homepage
 
 ## [2.0.0] 2019-08-06
 
