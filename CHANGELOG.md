@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Add new field helpdesk_email in the service model (@goreck888)
+- Services sort by their status in the backoffice (@goreck888)
 
 ### Changed
 - Move project create logic from controller to service (@mkasztelnik)
