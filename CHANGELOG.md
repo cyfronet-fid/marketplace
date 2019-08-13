@@ -16,6 +16,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Showing only published services at the homepage
+
 
 ### Security
 
