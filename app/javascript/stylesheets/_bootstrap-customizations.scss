@@ -1656,6 +1656,8 @@ label[data-multicheckbox].small {
 .service-contact-emails {
   input {
     width: 100%;
+    height: auto !important;
+    padding: 0.5rem 0.8rem;
     margin-bottom: 1rem;
     border-radius: 0.2rem;
     border: 1px solid $palette-gray-30;
