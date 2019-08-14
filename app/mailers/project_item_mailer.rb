@@ -3,6 +3,7 @@
 class ProjectItemMailer < ApplicationMailer
   def created(project_item)
     @project_item = project_item
+    @project = project_item.project
     @user = project_item.user
 
     mail(to: @user.email,
@@ -14,6 +15,7 @@ class ProjectItemMailer < ApplicationMailer
 
     if changes.size > 1
       @project_item = project_item
+      @project = project_item.project
       @user = project_item.user
       @current_status = changes.second.status
       @previous_status = changes.first.status
@@ -26,6 +28,7 @@ class ProjectItemMailer < ApplicationMailer
 
   def rate_service(project_item)
     @project_item = project_item
+    @project = project_item.project
     @user = project_item.user
 
     mail(to: @user.email,

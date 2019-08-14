@@ -16,7 +16,8 @@
         = @project_item.service.tagline
   .row
     .col-md-12
-      = simple_form_for [:project_item, @service_opinion] do |f|
+      = simple_form_for @service_opinion,
+        url: project_service_opinion_path(@project, @project_item) do |f|
         = f.error_notification
         = f.hidden_field :service_rating, value: 0
         = f.hidden_field :order_rating, value: 0
@@ -40,4 +41,6 @@
           = f.input :opinion, label: false
         .row.border-5.border-bottom.border-separator.pb-4.mb-4.pt-3
         = f.button :submit, "Send review", class: "btn btn-primary"
-        = link_to "CANCEL AND BACK TO PREVIOUS PAGE", @project_item, class: "btn btn-link"
+        = link_to "CANCEL AND BACK TO PREVIOUS PAGE",
+          project_service_path(@project_item.project, @project_item),
+          class: "btn btn-link"

@@ -57,8 +57,8 @@ describe Jira::Client do
     expected_fields = { summary: "Service order, John Doe, s1",
                        project: { key: "MP" },
                        issuetype: { id: 10000 },
-                       "Order reference-1" => Rails.application.routes.url_helpers.project_item_url(id: project_item.id,
-                                                                                                    host: "https://mp.edu"),
+                       "Order reference-1" => Rails.application.routes.url_helpers.
+                                              project_service_url(project_item.project, project_item, host: "https://mp.edu"),
                        # "CI-EOSC-UniqueID-1" => "uid1",
                        # "CI-Institution-1" => "organization 1",
                        "Epic Link-1" => "MP-1",
@@ -106,8 +106,8 @@ describe Jira::Client do
     expected_fields = { summary: "Service order, John Doe, s1",
                         project: { key: "MP" },
                         issuetype: { id: 10000 },
-                        "Order reference-1" => Rails.application.routes.url_helpers.project_item_url(id: project_item.id,
-                                                                                                     host: "https://mp.edu"),
+                        "Order reference-1" => Rails.application.routes.url_helpers.
+                                               project_service_url(project_item.project, project_item, host: "https://mp.edu"),
                         "Epic Link-1" => "MP-1",
                         "CP-Platforms-1" => "",
                         "CP-INeedAVoucher-1" => { "id" => "20004" },
@@ -153,8 +153,8 @@ describe Jira::Client do
     expected_fields = { summary: "Service order, John Doe, s1",
                         project: { key: "MP" },
                         issuetype: { id: 10000 },
-                        "Order reference-1" => Rails.application.routes.url_helpers.project_item_url(id: project_item.id,
-                                                                                                     host: "https://mp.edu"),
+                        "Order reference-1" => Rails.application.routes.url_helpers.
+                                               project_service_url(project_item.project, project_item, host: "https://mp.edu"),
                         "Epic Link-1" => "MP-1",
                         "CP-Platforms-1" => "",
                         "CP-INeedAVoucher-1" => { "id" => "20004" },
@@ -196,8 +196,8 @@ describe Jira::Client do
     expected_fields = { summary: "Service order, John Doe, s1",
                         project: { key: "MP" },
                         issuetype: { id: 10000 },
-                        "Order reference-1" => Rails.application.routes.url_helpers.project_item_url(id: project_item.id,
-                                                                                                     host: "https://mp.edu"),
+                        "Order reference-1" => Rails.application.routes.url_helpers.
+                                               project_service_url(project_item.project, project_item, host: "https://mp.edu"),
                         "Epic Link-1" => "MP-1",
                         "CP-Platforms-1" => "",
                         "CP-INeedAVoucher-1" => { "id" => "20003" },

@@ -2,6 +2,7 @@
 
 class ProjectItem < ApplicationRecord
   include Customization
+  include Iid
 
   STATUSES = {
     created: "created",
@@ -87,7 +88,7 @@ class ProjectItem < ApplicationRecord
   end
 
   def to_s
-    "##{id}"
+    "\"#{project.name}##{id}\""
   end
 
   def one_per_project?

@@ -1,0 +1,12 @@
+- breadcrumb :project_item, @project_item
+
+= render "layout",
+  project: @project, projects: @projects, project_item: @project_item do
+  .details.mb-5
+    = render "details", project: @project, project_item: @project_item
+    = render "attributes/index", property_values: @project_item.property_values
+  .row
+    .col-7
+      = render "rating", project: @project, project_item: @project_item
+    .col-5
+      = render "vaucher", project_item: @project_item

@@ -1,0 +1,18 @@
+%dl
+  %dt Ordered service:
+  %dd= link_to project_item.service.title, project_item.service
+%dl
+  %dt Order date:
+  %dd= l project_item.created_at, format: :short
+%dl
+  %dt Providers:
+  %dd= service_providers_list(project_item)
+%dl
+  %dt Status:
+  %dd
+    %span.text-uppercase{ class: "status-#{project_item.status}" }
+      = project_item.status
+%dl
+  %dt
+    Project:
+  %dd= link_to project.name, project
