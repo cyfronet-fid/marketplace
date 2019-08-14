@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_14_112139) do
+ActiveRecord::Schema.define(version: 2019_08_14_203908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(version: 2019_08_14_112139) do
     t.jsonb "properties", default: [], null: false
     t.boolean "request_voucher", default: false, null: false
     t.string "voucher_id", default: "", null: false
+    t.integer "iid"
     t.index ["affiliation_id"], name: "index_project_items_on_affiliation_id"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
@@ -186,8 +187,8 @@ ActiveRecord::Schema.define(version: 2019_08_14_112139) do
     t.string "department"
     t.string "webpage"
     t.string "status"
-    t.datetime "created_at", default: "2019-08-14 12:33:12", null: false
-    t.datetime "updated_at", default: "2019-08-14 12:33:12", null: false
+    t.datetime "created_at", default: "2019-08-20 10:20:27", null: false
+    t.datetime "updated_at", default: "2019-08-20 10:20:27", null: false
     t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end

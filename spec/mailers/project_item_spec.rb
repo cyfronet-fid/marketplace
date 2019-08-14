@@ -8,7 +8,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
 
 
   context "project_item created" do
-    let(:project_item) { build(:project_item, id: 1) }
+    let(:project_item) { build(:project_item, id: 1, project: project) }
     let(:mail) { described_class.created(project_item).deliver_now }
 
     it "sends email to project_item owner" do
@@ -21,7 +21,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
 
       expect(encoded_body).to match(/#{project_item.user.full_name}/)
       expect(encoded_body).to match(/#{project_item.service.title}/)
-      expect(encoded_body).to match(/#{project_item_url(project_item)}/)
+      expect(encoded_body).to match(/#{project_service_url(project, project_item)}/)
     end
   end
 
@@ -36,7 +36,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
 
       expect(mail.subject).to match(/has changed/)
       expect(encoded_body).to match(/from "created" to "registered"/)
-      expect(encoded_body).to match(/#{project_item_url(project_item)}/)
+      expect(encoded_body).to match(/#{project_service_url(project, project_item)}/)
       expect(mail.to).to contain_exactly(user.email)
     end
   end
@@ -50,7 +50,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
 
       expect(mail.subject).to match(/EOSC Portal - Rate your service/)
       expect(encoded_body).to match(/Rate your service/)
-      expect(encoded_body).to match(/#{project_item_url(project_item)}/)
+      expect(encoded_body).to match(/#{project_service_url(project, project_item)}/)
     end
   end
 
