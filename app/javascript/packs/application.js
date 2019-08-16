@@ -77,3 +77,12 @@ function starsOnClick(node){
         });
     });
 }
+
+/**
+ * Homepage dynamic tabs
+ */
+$(document).ready(function(){
+    $(".nav-tabs a").click(function(){
+        $(this).tab('show');
+    });
+});
