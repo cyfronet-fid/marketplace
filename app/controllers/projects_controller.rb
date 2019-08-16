@@ -42,9 +42,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js do
-        render_modal_form
-      end
+      format.js { render_modal_form }
     end
   end
 
@@ -53,22 +51,12 @@ class ProjectsController < ApplicationController
                            merge(user: current_user, status: :active))
 
     respond_to do |format|
-      format.html do
-        if @project.save
-          Project::Create.new(@project).call
-          redirect_to project_path(@project)
-        else
-          render :new, status: :bad_request
-        end
-      end
-
-      format.js do
-        if @project.save
-          Project::Create.new(@project).call
-          render :show
-        else
-          render_modal_form
-        end
+      if Project::Create.new(@project).call
+        format.html { redirect_to project_path(@project) }
+        format.js { render :show }
+      else
+        format.html { render :new, status: :bad_request }
+        format.js { render_modal_form }
       end
     end
   end
@@ -86,9 +74,11 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    Project::Destroy.new(@project).call
-    redirect_to projects_path,
-                notice: "Project destroyed"
+    if Project::Destroy.new(@project).call
+      redirect_to projects_path, notice: "Project destroyed"
+    else
+      redirect_to project_path(@project), alert: "Unable to remove project"
+    end
   end
 
   private
