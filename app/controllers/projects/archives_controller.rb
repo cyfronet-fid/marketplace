@@ -8,7 +8,7 @@ class Projects::ArchivesController < ApplicationController
       redirect_to projects_path,
                   notice: "Project archived"
     else
-      flash[:allert] = "Project cannot be archived"
+      flash[:alert] = "Project cannot be archived"
       redirect_to project_path(@project)
     end
   end
