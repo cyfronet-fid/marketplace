@@ -10,18 +10,12 @@ RSpec.feature "Project" do
   context "As logged in user" do
     let(:project_create) { double("Project::Create") }
     before { checkin_sign_in_as(user) }
-    before(:each) {
-      project_create_class_stub = class_double(Project::Create).
-          as_stubbed_const(transfer_nested_constants: true)
-      allow(project_create_class_stub).to receive(:new).and_return(project_create)
-    }
 
     scenario "I can create new project" do
       visit projects_path
 
       click_on "Create new project"
 
-      expect(project_create).to receive(:call)
       fill_in "project_name", with: "First test"
       select "Single user", from: "Customer typology"
       fill_in "Email", with: "john@doe.com"
@@ -41,8 +35,6 @@ RSpec.feature "Project" do
       visit projects_path
 
       click_on "Create new project"
-
-      expect(project_create).to receive(:call)
 
       fill_in "project_name", with: "Second test"
       fill_in "Email", with: "john@doe.com"
