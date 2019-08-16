@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- Move project create logic from controller to service (@mkasztelnik)
 
 ### Deprecated
 
