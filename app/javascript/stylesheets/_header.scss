@@ -237,6 +237,23 @@ header {
   }
 }
 
+.navbar-brand {
+  position: relative;
+
+  img {
+    position: relative;
+    z-index: 100;
+  }
+
+  .logo-bg {
+    position: absolute;
+    top: -7px;
+    left: -35px;
+    width: 335px;
+    height: 133px;
+    background: url('../../assets/images/logo-bg.png') no-repeat;
+  }
+}
 
 @media (max-width: 992px) {
   .navbar-collapse {

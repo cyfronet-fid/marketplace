@@ -1141,7 +1141,7 @@ h5 {
 
 .top-row a {
   color: $palette-gray-80;
-  padding-bottom: 4px;
+  padding-bottom: 5px;
 
   &.active {
     border-bottom: 2px solid $palette-yellow;
@@ -1209,9 +1209,31 @@ h5 {
 
 .title {
   font-size: 52px;
-  line-height: 0.8;
-  font-weight: bold;
-  color: $palette-yellow;
+  line-height: 1.12;
+  margin-bottom: 70px;
+  font-weight: normal;
+  color: $palette-gray-100;
+}
+
+.home-lead {
+  font-size: 21px;
+  font-weight: 300;
+  line-height: 1.48;
+}
+
+.home-intro {
+  .right-column {
+    position: relative;
+
+    .home-image {
+      position: absolute;
+      top: -105px;
+      right: -100px;
+      width: 797px;
+      height: 676px;
+      background: url('../../assets/images/gfx_whole_illustation_desktop.png') no-repeat;
+    }
+  }
 }
 
 .feature-list {
@@ -1236,23 +1258,40 @@ h5 {
 
 
 .main {
-  background: url('../../assets/images/main-bg.png') no-repeat;
-  background-position: calc(50% + 700px) 450px;
+  background: url('../../assets/images/home-bg.png') no-repeat;
+  background-position: 50% -120px;
 }
 
-.numbers {
-  background: url('../../assets/images/main-bg-dots.png') no-repeat;
-  background-position: center 100px;
+.main-elements {
+  background: url('../../assets/images/home-bg-elements.png') no-repeat;
+  background-position: top center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 302px;
+}
+
+.intro-box {
+  font-size: 18px;
+  line-height: 1.44;
+  font-weight: normal;
+  background: url('../../assets/images/main-box-bg.png') no-repeat;
+  background-position: top left;
 
   a {
-    color: $palette-gray-100;
+    padding-top: 13px;
+    margin-top: 13px;
+    background: url('../../assets/images/main-box-separator.png') no-repeat;
+    float: left;
+    width: 100%;
 
-    &:hover,
-    &:active {
-      color: $palette-gray-100;
+    svg {
+      color: $palette-yellow;
+      font-size: 15px;
+      margin-right: 4px;
     }
   }
-
 }
 
 .box {
