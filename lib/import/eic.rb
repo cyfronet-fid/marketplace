@@ -158,7 +158,7 @@ module Import
             dedicated_for: [],
             terms_of_use_url: terms_of_use[0] || "",
             access_policies_url: price_url,
-            corporate_sla_url: service_level_agreement_url || "",
+            sla_url: service_level_agreement_url || "",
             webpage_url: url || "",
             manual_url: user_manual_url || "",
             helpdesk_url: helpdesk_url || "",

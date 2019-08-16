@@ -28,7 +28,7 @@ if Rails.env.development?
                        target_groups: [target_groups.sample],
                        terms_of_use_url: Faker::Internet.url,
                        access_policies_url: Faker::Internet.url,
-                       corporate_sla_url: Faker::Internet.url,
+                       sla_url: Faker::Internet.url,
                        webpage_url: Faker::Internet.url,
                        manual_url: Faker::Internet.url,
                        helpdesk_url: Faker::Internet.url,

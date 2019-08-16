@@ -120,7 +120,7 @@ describe Import::EIC do
       expect(service.dedicated_for).to eq([])
       expect(service.terms_of_use_url).to eq("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/09/Phenomenal-Terms-of-Use-version-11.pdf")
       expect(service.access_policies_url).to eq("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/09/Phenomenal-Terms-of-Use-version-11.pdf")
-      expect(service.corporate_sla_url).to eq("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/09/Phenomenal-Terms-of-Use-version-11.pdf")
+      expect(service.sla_url).to eq("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/09/Phenomenal-Terms-of-Use-version-11.pdf")
       expect(service.webpage_url).to eq("https://portal.phenomenal-h2020.eu/home")
       expect(service.manual_url).to eq("https://github.com/phnmnl/phenomenal-h2020/wiki")
       expect(service.helpdesk_url).to eq("http://phenomenal-h2020.eu/home/help")

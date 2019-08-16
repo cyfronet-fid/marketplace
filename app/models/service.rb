@@ -101,7 +101,7 @@ class Service < ApplicationRecord
   validates :rating, presence: true
   validates :terms_of_use_url, url: true, if: :terms_of_use_url?
   validates :access_policies_url, url: true, if: :access_policies_url?
-  validates :corporate_sla_url, url: true, if: :corporate_sla_url?
+  validates :sla_url, url: true, if: :sla_url?
   validates :webpage_url, url: true, if: :webpage_url?
   validates :manual_url, url: true, if: :manual_url?
   validates :helpdesk_url, url: true, if: :helpdesk_url?
@@ -158,7 +158,7 @@ class Service < ApplicationRecord
     def strip_whitespace
       self.terms_of_use_url&.strip!
       self.access_policies_url&.strip!
-      self.corporate_sla_url&.strip!
+      self.sla_url&.strip!
       self.webpage_url&.strip!
       self.manual_url&.strip!
       self.helpdesk_url&.strip!

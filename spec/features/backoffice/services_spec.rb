@@ -48,7 +48,7 @@ RSpec.feature "Services in backoffice" do
       select target_group.name, from: "Dedicated For"
       fill_in "Terms of use url", with: "https://sample.url"
       fill_in "Access policies url", with: "https://sample.url"
-      fill_in "Corporate sla url", with: "https://sample.url"
+      fill_in "Sla url", with: "https://sample.url"
       fill_in "Webpage url", with: "https://sample.url"
       fill_in "Manual url", with: "https://sample.url"
       fill_in "Helpdesk url", with: "https://sample.url"
