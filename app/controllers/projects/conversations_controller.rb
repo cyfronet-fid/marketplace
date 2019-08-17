@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class Projects::ConversationsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :load_and_authorize_project!
+  include Project::Authorize
 
   def show
     @projects = policy_scope(Project).order(:name)
@@ -24,11 +23,4 @@ class Projects::ConversationsController < ApplicationController
       render :show, status: :bad_request
     end
   end
-
-  private
-
-    def load_and_authorize_project!
-      @project = Project.find(params[:project_id])
-      authorize(@project, :show?)
-    end
 end
