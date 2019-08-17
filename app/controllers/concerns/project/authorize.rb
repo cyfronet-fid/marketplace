@@ -4,6 +4,7 @@ module Project::Authorize
   extend ActiveSupport::Concern
 
   included do
+    before_action :authenticate_user!
     before_action :load_and_authorize_project!
   end
 

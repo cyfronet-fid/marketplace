@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Projects::ServicesController < ApplicationController
-  before_action :authenticate_user!
-
   include Project::Authorize
 
   before_action :load_projects
