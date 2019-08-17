@@ -10,30 +10,10 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      format.json do
-        render status: :ok, json: {
-          additional_information: @project.additional_information,
-          name: @project.name,
-          reason_for_access: @project.reason_for_access,
-          customer_typology: t(@project.customer_typology, scope: [:project, :customer_typology]),
-          research_areas: @project.research_areas,
-          user_group_name: @project.user_group_name,
-          country_of_origin: @project.country_of_origin,
-          countries_of_partnership: @project.countries_of_partnership,
-          project_name: @project.project_name,
-          project_website_url: @project.project_website_url,
-          company_name: @project.company_name,
-          company_website_url: @project.company_website_url,
-          email: @project.email,
-          department: @project.department,
-          organization: @project.organization,
-          webpage: @project.webpage
-        }
-      end
-      format.html do
-        @projects = policy_scope(Project).order(:name)
-      end
+    if request.xhr?
+      render template: "projects/_details", locals: { project: @project }, layout: false
+    else
+      @projects = policy_scope(Project).order(:name)
     end
   end
 

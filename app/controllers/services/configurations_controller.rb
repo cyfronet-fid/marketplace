@@ -6,7 +6,6 @@ class Services::ConfigurationsController < Services::ApplicationController
   def show
     setup_show_variables!
     @project_item = ProjectItem.new(session[session_key])
-    render "show_#{@service.service_type}"
   end
 
   def update
@@ -21,7 +20,7 @@ class Services::ConfigurationsController < Services::ApplicationController
       redirect_to service_summary_path(@service)
     else
       setup_show_variables!
-      render "show_#{@service.service_type}"
+      render :show
     end
   end
 
