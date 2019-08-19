@@ -18,6 +18,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Project services (`ProjectItem`) id changed to project scoped (@mkasztelnik)
 - Rename corporate_sla_url field to sla_url in services (@goreck888)
 - Use project details partial on service order configuration step (@mkasztelnik)
+- Apply a new view and functionalities of the start page (@jarekzet, @goreck888)
+- Rename buttons for creating new platforms, providers and categories in the backoffice (@goreck888)
 
 ### Deprecated
 

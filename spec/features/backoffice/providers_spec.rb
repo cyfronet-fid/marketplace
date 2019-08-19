@@ -30,7 +30,7 @@ RSpec.feature "Providers in backoffice" do
 
     scenario "I can create new provider" do
       visit backoffice_providers_path
-      click_on "New Provider"
+      click_on "Add new Provider"
 
       fill_in "Name", with: "My new provider"
 
@@ -53,7 +53,7 @@ RSpec.feature "Providers in backoffice" do
 
     scenario "I can create provider with external source" do
       visit backoffice_providers_path
-      click_on "New Provider"
+      click_on "Add new Provider"
 
       fill_in "Name", with: "My new provider"
       fill_in "provider_sources_attributes_0_eid", with: "12345a"
