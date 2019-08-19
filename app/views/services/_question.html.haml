@@ -9,22 +9,12 @@
         %button.close{ type: "button", "data-dismiss": "modal", "aria-label": "Close" }
           %span{ "aria-hidden": true }
             &times;
-      .modal-body
-        = simple_form_for question, url: service_questions_path(service) do |f|
+      = simple_form_for question, url: service_questions_path(service) do |f|
+        .modal-body
           = f.input :text, as: :text, input_html: { rows: 10 },
             label: t("simple_form.labels.question.text", title: service.title),
             hint: t("simple_form.hints.question.text", email: current_user.email)
-      .modal-footer
-        %button#submit-button.btn.btn-primary
-          SEND
+        .modal-footer
+          = f.submit "SEND", class: "btn btn-primary"
 
-:javascript
-  $(document).ready(function() {
-    $('#submit-button').on('click', function() {
-      $('#new_service_question').submit();
-    });
 
-    $('#new_service_question').on('submit', function() {
-      $('#question-modal').modal('hide');
-    });
-  });
