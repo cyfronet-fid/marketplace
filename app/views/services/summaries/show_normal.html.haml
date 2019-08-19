@@ -14,11 +14,6 @@
   %h5.mb-4.mt-5.font-weight-bold.configuration-title.text-uppercase
     Additional information
 
-  %h4 My projects
-  %dl.mb-4
-    %dt Project name
-    %dd= @project_item.project.name
-
   - if @project_item.offer.voucherable
     %h4 Voucher
     %dl.mb-4
@@ -28,21 +23,8 @@
         %dt Voucher ID
         %dd= @project_item.voucher_id
 
-  %h3 Usage
-  %dl.mb-4
-    %dt Customer typology
-    %dd= t "simple_form.options.defaults.customer_typology.#{@project_item.project.customer_typology || "none"}"
 
-    %dt Reason to request access to #{@service.title}
-    %dd= @project_item.project.reason_for_access
-
-    - if @project_item.project.additional_information.present?
-      %dt Additional information
-      %dd= @project_item.project.additional_information
-
-    %dt Research areas
-    %dd= @project_item.project.research_areas.names.join(", ")
-
+  = render "projects/details", project: @project_item.project
 
 = content_for :next_button do
   = link_to t("service.normal.order.title"),

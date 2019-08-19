@@ -5,7 +5,7 @@
   #{@service.title} will be added to to you #{@project_item.project.name} project.
   %br
   In order to change it, please go back to
-  = link_to t("service.open_access.order.configuration"), service_configuration_path(@service)
+  = link_to t("service.open_access.order.configuration.title"), service_configuration_path(@service)
   step.
 
 = render "services/summaries/technical_configuration",
@@ -17,6 +17,6 @@
             method: :post, class: "btn btn-primary"
 
 = content_for :back_link do
-  = link_to "Back to previous step - #{t("service.open_access.order.configuration")}",
+  = link_to "Back to previous step - #{t("service.open_access.order.configuration.title")}",
             service_configuration_path(@service),
             class: "text-uppercase"
