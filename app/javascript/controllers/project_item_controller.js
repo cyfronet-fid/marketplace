@@ -1,28 +1,7 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["project", "projectDetails",
-                    "hasVoucher", "iHaveVaucher", "iDontHaveVoucher"];
-
-  connect() {
-  }
-
-  initialize() {
-    this._fetchProjectData(this.projectTarget.value)
-  }
-
-  projectChanged(event) {
-    this._fetchProjectData(event.target.value)
-  }
-
-  _fetchProjectData(project_id) {
-    if (project_id) {
-      fetch(`${this.data.get("url")}/${project_id}`,
-            { headers: { "X-Requested-With": "XMLHttpRequest" }})
-        .then(response => response.text())
-        .then(html => this.projectDetailsTarget.innerHTML = html)
-    }
-  }
+  static targets = ["hasVoucher", "iHaveVaucher", "iDontHaveVoucher"];
 
   voucherChanged(event) {
     if(event.currentTarget.value === "false") {
