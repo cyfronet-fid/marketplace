@@ -36,7 +36,7 @@ RSpec.feature "Services in backoffice" do
       target_group = create(:target_group)
 
       visit backoffice_services_path
-      click_on "Create new service"
+      click_on "Create new Service"
 
       fill_in "Title", with: "service title"
       fill_in "Description", with: "service description"
@@ -96,7 +96,7 @@ RSpec.feature "Services in backoffice" do
       research_area = create(:research_area)
 
       visit backoffice_services_path
-      click_on "Create new service"
+      click_on "Create new Service"
 
       attach_file("service_logo", "spec/lib/images/invalid-logo.svg")
       fill_in "Title", with: "service title"
