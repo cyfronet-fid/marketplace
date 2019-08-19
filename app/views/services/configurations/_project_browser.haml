@@ -1,14 +1,15 @@
-%h4 My projects
-.details-content
-  %p.mb-4= t("project.select.description")
-  = f.input :project do
-    .input-group.col-6.pl-0
-      = f.input_field :project_id, collection: projects,
-        class: "form-control custom-select #{"is-invalid" unless project_item.errors[:project].empty?}",
-        "data-action" => "change->project-item#projectChanged",
-        "data-target" => "project-item.project"
-      .input-group-append
-        = link_to "Add new project", new_project_path,
-          class: "btn btn-primary", remote: true
+%div{ "data-controller" => "details-loader", "data-details-loader-url" => projects_path }
+  %h4 My projects
+  .details-content
+    %p.mb-4= t("project.select.description")
+    = f.input :project do
+      .input-group.col-6.pl-0
+        = f.input_field :project_id, collection: projects,
+          class: "form-control custom-select #{"is-invalid" unless project_item.errors[:project].empty?}",
+          "data-action" => "change->details-loader#changed",
+          "data-target" => "details-loader.idSource"
+        .input-group-append
+          = link_to "Add new project", new_project_path,
+            class: "btn btn-primary", remote: true
 
-%div{ "data-target" => "project-item.projectDetails" }
+  %div{ "data-target" => "details-loader.details" }
