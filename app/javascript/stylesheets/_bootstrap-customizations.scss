@@ -1256,7 +1256,6 @@ h5 {
   }
 }
 
-
 .main {
   background: url('../../assets/images/home-bg.png') no-repeat;
   background-position: 50% -120px;
@@ -2396,3 +2395,95 @@ textarea.form-control.is-invalid {
 }
 
 // scss-lint:enable all
+
+@media (max-width: 992px) {
+
+  .title {
+    font-size: 28px;
+    line-height: 37px;
+    text-align: center;
+  }
+
+  .home-lead {
+    font-size: 18px;
+    line-height: 1.48;
+    text-align: center;
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .home-image {
+    position: relative !important;
+    width: 100% !important;
+    height: 260px !important;
+    background-size: contain !important;
+    background-position: 50% 50% !important;
+    top: -60px !important;
+    right: auto !important;
+
+  }
+
+}
+
+.tabs {
+  margin: 0 0 20px;
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+
+  li {
+    background: none;
+    color: $palette-gray-100;
+    display: inline-block;
+    font-size: 17px;
+    float: left;
+    text-align: center;
+    font-weight: normal;
+    padding: 13px 0;
+    border: 1px solid $palette-yellow;
+    width: 50%;
+    cursor: pointer;
+  }
+
+  .current {
+    background: $palette-yellow;
+  }
+
+  li:first-child {
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+  }
+
+  li:last-child {
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+  }
+}
+
+.tab-content-home {
+  display: none;
+
+  &.current {
+    display: inherit;
+  }
+}
+
+.branch-box {
+  border: 3px solid $branch-box;
+  border-radius: 5px;
+  text-align: center;
+  display: block;
+  margin-bottom: 20px;
+  min-height: 190px;
+  padding: 35px 0 20px;
+
+  .branch-name {
+    margin-top: 25px;
+    font-size: 20px;
+    color: $palette-blue;
+  }
+}
+
+.branch-box:hover {
+  border: 3px solid $services-list;
+}

@@ -1,5 +1,7 @@
 .container.home-intro.pt-5.pb-4
-  .row.pt-2
+  .row.pt-2.d-flex
+    .col-12.col-lg-5.right-column.order-lg-last
+      .home-image
     .col-12.col-lg-7.left-column
       %p.title
         Welcome to Marketplace
@@ -24,14 +26,72 @@
             %i.fas.fa-arrow-right
             Go to your projects
 
-    .col-12.col-lg-5.right-column
-      .home-image
+
 
 .home-tabs.container.mt-5
-  %nav.nav.nav-pills.nav-fill
-    %a.nav-item.nav-link.active xxxxx
-    %a.nav-item.nav-link xxxxx
+  %ul.tabs
+    %li.tab-link.current{ "data-tab" => "tab-1" }Branch of science
+    %li.tab-link{ "data-tab" => "tab-2" }Categories
 
+  #tab-1.tab-content-home.current
+    .container
+      .row
+        .col-12.col-lg-4
+          %a.branch-box
+            .branch-icon
+              = image_tag("ico_interdisciplinary.png", alt: "Interdisciplinary")
+            .branch-name Interdisciplinary
+
+        .col-12.col-lg-4
+          %a.branch-box
+            .branch-icon
+              = image_tag("ico_humanities.png", alt: "Humanities")
+            .branch-name Humanities
+
+        .col-12.col-lg-4
+          %a.branch-box
+            .branch-icon
+              = image_tag("ico_naturalsciences.png", alt: "Natural sciences")
+            .branch-name Natural sciences
+
+        .col-12.col-lg-4
+          %a.branch-box
+            .branch-icon
+              = image_tag("ico_interdisciplinary.png", alt: "Interdisciplinary")
+            .branch-name Interdisciplinary
+
+        .col-12.col-lg-4
+          %a.branch-box
+            .branch-icon
+              = image_tag("ico_humanities.png", alt: "Humanities")
+            .branch-name Humanities
+
+        .col-12.col-lg-4
+          %a.branch-box
+            .branch-icon
+              = image_tag("ico_naturalsciences.png", alt: "Natural sciences")
+            .branch-name Natural sciences
+
+        .col-12.col-lg-4
+          %a.branch-box
+            .branch-icon
+              = image_tag("ico_interdisciplinary.png", alt: "Interdisciplinary")
+            .branch-name Interdisciplinary
+
+        .col-12.col-lg-4
+          %a.branch-box
+            .branch-icon
+              = image_tag("ico_humanities.png", alt: "Humanities")
+            .branch-name Humanities
+
+        .col-12.col-lg-4
+          %a.branch-box
+            .branch-icon
+              = image_tag("ico_naturalsciences.png", alt: "Natural sciences")
+            .branch-name Natural sciences
+
+  #tab-2.tab-content
+    %p jythjythtr trhtrhtrht trh trhtrr
 
 .container.home-intro
   .row
