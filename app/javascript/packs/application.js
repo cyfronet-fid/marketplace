@@ -38,7 +38,6 @@ document.addEventListener("turbolinks:before-render", function(event) {
     dom.i2svg({
         node: event.data.newBody
     });
-    starsOnClick(event.data.newBody);
     initSorting(event.data.newBody);
     dom.watch();
 });
@@ -58,22 +57,7 @@ document.addEventListener("ajax:success", function(event) {
  */
 document.addEventListener('DOMContentLoaded', function () {
     dom.i2svg();
-    starsOnClick();
     initSorting();
     initFlash();
     dom.watch();
 });
-
-function starsOnClick(node){
-    $(node || 'body').find("[data-rating-stars] > li").on('click', function (event) {
-        const name = $(event.currentTarget.parentElement).attr("data-rating-stars");
-        const value = document.getElementById(name).value
-            = parseInt($(event.currentTarget.firstElementChild).attr("value"));
-        const stars = event.currentTarget.parentElement.children;
-        $.each(stars, function (index){
-            const star = $(this.firstElementChild);
-            (index < value) ?
-                star.attr('data-prefix','fas') : star.attr('data-prefix','far')
-        });
-    });
-}
