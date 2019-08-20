@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_29_123238) do
+ActiveRecord::Schema.define(version: 2019_08_14_112139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 2019_07_29_123238) do
     t.integer "ancestry_depth", default: 0
     t.index ["ancestry"], name: "index_categories_on_ancestry"
     t.index ["description"], name: "index_categories_on_description"
-    t.index ["name"], name: "index_categories_on_name"
+    t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
   create_table "categorizations", force: :cascade do |t|
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 2019_07_29_123238) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_platforms_on_name", unique: true
   end
 
   create_table "project_item_changes", force: :cascade do |t|
@@ -185,8 +186,8 @@ ActiveRecord::Schema.define(version: 2019_07_29_123238) do
     t.string "department"
     t.string "webpage"
     t.string "status"
-    t.datetime "created_at", default: "2019-07-31 06:45:15", null: false
-    t.datetime "updated_at", default: "2019-07-31 06:45:15", null: false
+    t.datetime "created_at", default: "2019-08-14 12:33:12", null: false
+    t.datetime "updated_at", default: "2019-08-14 12:33:12", null: false
     t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -205,12 +206,14 @@ ActiveRecord::Schema.define(version: 2019_07_29_123238) do
     t.text "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_providers_on_name", unique: true
   end
 
   create_table "research_areas", force: :cascade do |t|
     t.text "name", null: false
     t.string "ancestry"
     t.integer "ancestry_depth", default: 0
+    t.index ["name"], name: "index_research_areas_on_name", unique: true
   end
 
   create_table "service_opinions", force: :cascade do |t|
