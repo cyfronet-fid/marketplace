@@ -1,4 +1,4 @@
 %p Dear #{@user.full_name},
 %p Your request for the #{@project_item.service.title} service was created.
-%p You can check its details using this #{link_to "link", project_item_url(@project_item)}.
+%p You can check its details using this #{link_to "link", project_service_url(@project, @project_item)}.
 

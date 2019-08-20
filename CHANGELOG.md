@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - Move project create logic from controller to service (@mkasztelnik)
 - Reuse `Project::Authorize`concern in project related controllers (@mkasztelnik)
+- Project services (`ProjectItem`) id changed to project scoped (@mkasztelnik)
 
 ### Deprecated
 

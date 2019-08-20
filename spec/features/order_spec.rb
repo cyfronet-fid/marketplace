@@ -72,7 +72,7 @@ RSpec.feature "Service ordering" do
       expect(project_item.properties).to eq([])
 
       # Project item page
-      expect(page).to have_current_path(project_item_path(project_item))
+      expect(page).to have_current_path(project_service_path(project_item.project, project_item))
       expect(page).to have_content(service.title)
     end
 
@@ -118,7 +118,7 @@ RSpec.feature "Service ordering" do
       expect(project_item.offer_id).to eq(offer.id)
 
       # Project item page
-      expect(page).to have_current_path(project_item_path(project_item))
+      expect(page).to have_current_path(project_service_path(project_item.project, project_item))
       expect(page).to have_content(service.title)
     end
 

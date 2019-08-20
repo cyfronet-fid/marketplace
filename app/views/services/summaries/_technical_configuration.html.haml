@@ -6,5 +6,4 @@
     .card-body.p-4
       %h4.card-title= project_item.offer.name
       .card-text= markdown(project_item.offer.description)
-      = render "project_items/attributes",
-        property_values: project_item.property_values
+      = render "attributes/index", property_values: project_item.property_values
