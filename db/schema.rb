@@ -36,25 +36,6 @@ ActiveRecord::Schema.define(version: 2019_08_14_203908) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "affiliations", force: :cascade do |t|
-    t.integer "iid", null: false
-    t.string "organization", null: false
-    t.string "department"
-    t.string "email", null: false
-    t.string "phone"
-    t.string "webpage", null: false
-    t.string "token"
-    t.string "status", default: "created", null: false
-    t.string "supervisor"
-    t.string "supervisor_profile"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["iid"], name: "index_affiliations_on_iid"
-    t.index ["token"], name: "index_affiliations_on_token"
-    t.index ["user_id"], name: "index_affiliations_on_user_id"
-  end
-
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
     t.string "description"
@@ -146,12 +127,10 @@ ActiveRecord::Schema.define(version: 2019_08_14_203908) do
     t.integer "issue_status", default: 2, null: false
     t.bigint "project_id"
     t.bigint "offer_id"
-    t.bigint "affiliation_id"
     t.jsonb "properties", default: [], null: false
     t.boolean "request_voucher", default: false, null: false
     t.string "voucher_id", default: "", null: false
     t.integer "iid"
-    t.index ["affiliation_id"], name: "index_project_items_on_affiliation_id"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
   end
@@ -187,8 +166,8 @@ ActiveRecord::Schema.define(version: 2019_08_14_203908) do
     t.string "department"
     t.string "webpage"
     t.string "status"
-    t.datetime "created_at", default: "2019-08-20 10:20:27", null: false
-    t.datetime "updated_at", default: "2019-08-20 10:20:27", null: false
+    t.datetime "created_at", default: "2019-08-20 11:12:44", null: false
+    t.datetime "updated_at", default: "2019-08-20 11:12:44", null: false
     t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -393,7 +372,6 @@ ActiveRecord::Schema.define(version: 2019_08_14_203908) do
   end
 
   add_foreign_key "project_item_changes", "users", column: "author_id"
-  add_foreign_key "project_items", "affiliations"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
   add_foreign_key "project_research_areas", "projects"

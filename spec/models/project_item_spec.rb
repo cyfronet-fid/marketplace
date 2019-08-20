@@ -10,7 +10,6 @@ RSpec.describe ProjectItem do
   it { should validate_presence_of(:status) }
 
   it { should belong_to(:project) }
-  it { should belong_to(:affiliation).required(false) }
   it { should belong_to(:offer) }
 
 
