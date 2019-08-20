@@ -4,7 +4,6 @@ FactoryBot.define do
   factory :service do
     sequence(:title) { |n| "service #{n}" }
     sequence(:description) { |n| "service #{n} description" }
-    sequence(:terms_of_use) { |n| "service #{n} terms of use" }
     sequence(:tagline) { |n| "service #{n} tagline" }
     sequence(:service_type) { :normal }
 

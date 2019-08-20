@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Removed
 - Affiliation model removed (@mkasztelnik)
+- Remove terms_of_use field from the service model and forms (@goreck888)
 
 ### Fixed
 - Display choices.js in the owners multiselect field in the new service form (@goreck888)
