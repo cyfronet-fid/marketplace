@@ -10,6 +10,6 @@
             = attr.label
           %td
             - begin
-              = render "project_items/attributes/#{attr.type}", attr: attr
+              = render "attributes/#{attr.type}", attr: attr
             - rescue
-              = render "project_items/attributes/default", attr: attr
+              = render "attributes/default", attr: attr

@@ -16,10 +16,10 @@
           %span{ class: "status-#{project_item.status}" }= project_item.status
     %ul.nav.nav-tabs.mt-4.pl-3.row.services-menu
       %li.nav-item
-        = link_to "Service Details", project_item_path(project_item),
-          class: "nav-link #{"active" if controller.controller_name == "project_items"} text-uppercase"
+        = link_to "Service Details", project_service_path(project, project_item),
+          class: "nav-link #{"active" if controller.controller_name == "services"} text-uppercase"
       %li.nav-item
-        = link_to "Contact with project support", project_item_conversation_path(project_item),
+        = link_to "Contact with project support", project_service_conversation_path(project, project_item),
           class: "nav-link #{"active" if controller.controller_name == "conversations"} text-uppercase"
 
   .container.p-0
