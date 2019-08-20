@@ -50,7 +50,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
 
   def permitted_attributes
     [
-      :title, :description, :terms_of_use,
+      :title, :description,
       :tagline, :connected_url, :service_type,
       [provider_ids: []], :places, :languages,
       [target_group_ids: []], :terms_of_use_url,
