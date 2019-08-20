@@ -46,7 +46,7 @@ en:
         webpage_url: |
           Url should start with http or https [e.g. http://webpage.org]</br>
           This url will be available under "Webpage" in Support section in the service view
-        corporate_sla_url: |
+        sla_url: |
           Url should start with http or https [e.g. http://webpage.org]
         access_policies_url: |
           Url should start with http or https [e.g. http://webpage.org]

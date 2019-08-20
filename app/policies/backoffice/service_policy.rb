@@ -54,7 +54,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       :tagline, :connected_url, :service_type,
       [provider_ids: []], :places, :languages,
       [target_group_ids: []], :terms_of_use_url,
-      :access_policies_url, :corporate_sla_url,
+      :access_policies_url, :sla_url,
       :webpage_url, :manual_url, :helpdesk_url,
       :tutorial_url, :restrictions, :phase,
       :order_target,
