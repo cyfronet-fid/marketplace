@@ -51,14 +51,14 @@
               %span
                 = link_to("Tutorial", service.tutorial_url)
 
-      - if any_present?(service, :corporate_sla_url, :terms_of_use_url, :access_policies_url)
+      - if any_present?(service, :sla_url, :terms_of_use_url, :access_policies_url)
         %h5 Documents
         %ul.list-group.arrows
-          - if !service.corporate_sla_url.blank?
+          - if !service.sla_url.blank?
             %li.list-group-item
               %i.fas.fa-arrow-right
               %span
-                = link_to("Corporate SLA", service.corporate_sla_url)
+                = link_to("Corporate SLA", service.sla_url)
           - if !service.terms_of_use_url.blank?
             %li.list-group-item
               %i.fas.fa-arrow-right

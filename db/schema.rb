@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_16_135743) do
+ActiveRecord::Schema.define(version: 2019_08_16_143734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -289,7 +289,7 @@ ActiveRecord::Schema.define(version: 2019_08_16_135743) do
     t.string "dedicated_for", array: true
     t.string "terms_of_use_url"
     t.string "access_policies_url"
-    t.string "corporate_sla_url"
+    t.string "sla_url"
     t.string "webpage_url"
     t.string "manual_url"
     t.string "helpdesk_url"
