@@ -27,7 +27,7 @@
               %span
                 = platform.name
 
-      - if any_present?(service, :webpage_url, :helpdesk_url, :manual_url, :tutorial_url)
+      - if any_present?(service, :webpage_url, :helpdesk_url, :helpdesk_email, :manual_url, :tutorial_url)
         %h5 Support
         %ul.list-group.arrows
           - if !service.webpage_url.blank?
@@ -45,6 +45,11 @@
               %i.fas.fa-arrow-right
               %span
                 = link_to("Helpdesk", service.helpdesk_url)
+          - if !service.helpdesk_email.blank?
+            %li.list-group-item
+              %i.fas.fa-arrow-right
+              %span
+                = mail_to(service.helpdesk_email, "Helpdesk e-mail")
           - if !service.tutorial_url.blank?
             %li.list-group-item
               %i.fas.fa-arrow-right

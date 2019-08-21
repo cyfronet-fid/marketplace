@@ -105,6 +105,8 @@ class Service < ApplicationRecord
   validates :webpage_url, url: true, if: :webpage_url?
   validates :manual_url, url: true, if: :manual_url?
   validates :helpdesk_url, url: true, if: :helpdesk_url?
+  validates :helpdesk_email, allow_blank: true, email: true
+  validates :contact_emails, array: { email: true }
   validates :tutorial_url, url: true, if: :tutorial_url?
   validates :logo, blob: { content_type: :image }
   validate :logo_variable, on: [:create, :update]
