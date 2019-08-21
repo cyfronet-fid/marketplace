@@ -1,6 +1,8 @@
-- project_item.property_values.each do |attr|
-  = form.simple_fields_for :property_values, attr do |field|
-    = render "services/configurations/attributes/#{attr.type}", attr: attr, field: field
-  - rescue
-    = e.message
+- unless project_item.property_values.blank?
+  %h5.mb-4.mt-5.font-weight-bold.configuration-title.text-uppercase Technical parameters
+  - project_item.property_values.each do |attr|
+    = form.simple_fields_for :property_values, attr do |field|
+      = render "services/configurations/attributes/#{attr.type}", attr: attr, field: field
+    - rescue
+      = e.message
 

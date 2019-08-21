@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Reuse `Project::Authorize`concern in project related controllers (@mkasztelnik)
 - Project services (`ProjectItem`) id changed to project scoped (@mkasztelnik)
 - Rename corporate_sla_url field to sla_url in services (@goreck888)
+- Use project details partial on service order configuration step (@mkasztelnik)
 
 ### Deprecated
 
