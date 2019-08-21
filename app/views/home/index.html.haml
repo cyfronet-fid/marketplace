@@ -1,139 +1,101 @@
 = render "home/products", providers_number: @providers_number,
                           services_number: @services_number,
                           countries_number: @countries_number
-
-.container
-  .home-communities.p-4
-    .row
-      .col-12.col-lg-6
-        .h3.mt-2.mb-3 Communities and infrastructures
-        .row
-          .col-12.col-lg-6
-            %ul
-              %li
-                %a BIOEXCEL
-              %li
-                %a CLARIN
-              %li
-                %a Copernicus
-              %li
-                %a D4Science
-              %li
-                %a ECOPOTENTIAL Virtual lab...
-          .col-12.col-lg-6
-            %ul
-              %li
-                %a Copernicus
-              %li
-                %a D4Science
-              %li
-                %a ECOPOTENTIAL
-              %li
-                %a BIOEXCEL
-              %li
-                %a CLARIN
-        .row
-          .col-12
-            %a.more-link.d-block
-              %i.fas.fa-arrow-right
-              We have
-              %strong 48 more
-              Communities and infreastructures
-      .col-12.col-lg-3
-        .h3.mt-2.mb-3 Providers
-        %ul
-          %li
-            %a CloudFerro
-          %li
-            %a CSC
-          %li
-            %a Cyberbotics Ltd.
-          %li
-            %a D4Science org infrastructure
-          %li
-            %a Deutches Elektronen-Synch...
-        %a.more-link.d-block
-          %i.fas.fa-arrow-right
-          You can find
-          %strong 27 more
-          providers
-      .col-12.col-lg-3
-        .h3.mt-2.mb-3 Dedicated for
-        %ul
-          %li
-            %a Business
-          %li
-            %a Providers
-          %li
-            %a Researcher
-          %li
-            %a Research group
-          %li
-            %a Research organisations
+= render "home/communities"
 
 .container
   %h2.home-title Learn more
   .row
     .col-12.col-lg-4
-      .card
+      .card.learn-more.first
         %a.card-body{ "href": "xxxx" }
           %h5.card-title How it works?
           .card-description
             Curabitur condimentum, turpis quis tristique congue, tellus tortor mattis dui, quis mollis
             justo augue eget es.
-          .card-icon.works
+          .card-icon
+            = image_tag "ico_howitworks.png"
+    .col-12.col-lg-4
+      .card.learn-more
+        %a.card-body{ "href": "xxxx" }
+          %h5.card-title Projects
+          .card-description
+            Curabitur condimentum, turpis quis tristique congue, tellus tortor mattis dui, quis mollis
+            justo augue eget es.
+          .card-icon
+            = image_tag "ico_projects.png"
+    .col-12.col-lg-4
+      .card.learn-more
+        %a.card-body{ "href": "xxxx" }
+          %h5.card-title For providers
+          .card-description
+            Curabitur condimentum, turpis quis tristique congue, tellus tortor mattis dui, quis mollis
+            justo augue eget es.
+          .card-icon
+            = image_tag "ico_providers.png"
 
 .container
-  %h2.mb-3.mt-4 Popular services
+  %h2.home-title Popular services
+
   #home-carousel.carousel.slide.home-carousel{ "data-ride" => "carousel" }
+
     .carousel-inner
       .carousel-item.active
         .card-deck
-          - @services[0..3].each do |service|
-            .card
-              .card-img-top
-                - if service.logo.attached?
-                  = image_tag service.logo.variant(resize: "170x112")
-                - else
-                  = image_tag "eosc-img.png"
+          - @services[0..2].each do |service|
+            .card.shadow-sm
               .card-body
                 .card-title
                   = link_to service.title.truncate(35), service
+                .card-description
+                  %p
+                    - if service.logo.attached?
+                      = image_tag service.logo.variant(resize: "100x70")
+                    - else
+                      = image_tag "eosc-img.png"
+                    B2FIND is the EUDAT metadata service and provides a discovery portal which allows users to find
+                    data collections within an...
               .card-footer
-                %p
-                  %small By:
-                  = safe_join(providers_text(service), ", ").truncate(22)
-                %p
-                  %small For:
-                  = safe_join(dedicated_for_text(service), ", ").truncate(21)
-      - if @services.count > 4
+                .row
+                  .col-6
+                    %p
+                      %small Provided by:
+                      %br
+                      = safe_join(providers_text(service), ", ").truncate(24)
+                  .col-6
+                    %p.text-right
+                      %small Dedicated for:
+                      %br
+                      = safe_join(dedicated_for_text(service), ", ").truncate(24)
+      - if @services.count > 3
         .carousel-item
           .card-deck
-            - @services[4..7].each do |service|
-              .card
-                .card-img-top
-                  - if service.logo.attached?
-                    = image_tag service.logo.variant(resize: "170x112")
-                  - else
-                    = image_tag "eosc-img.png"
+            - @services[3..5].each do |service|
+              .card.shadow-sm
                 .card-body
                   .card-title
                     = link_to service.title.truncate(35), service
+                  .card-description
+                    %p
+                      - if service.logo.attached?
+                        = image_tag service.logo.variant(resize: "100x70")
+                      - else
+                        = image_tag "eosc-img.png"
+                      B2FIND is the EUDAT metadata service and provides a discovery portal which allows users to find
+                      data collections within an...
                 .card-footer
-                  %p
-                    %small By:
-                    = safe_join(providers_text(service), ", ").truncate(22)
-                  %p
-                    %small For:
-                    = safe_join(dedicated_for_text(service), ", ").truncate(21)
-
+                  .row
+                    .col-6
+                      %p
+                        %small Provided by:
+                        %br
+                        = safe_join(providers_text(service), ", ").truncate(24)
+                    .col-6
+                      %p.text-right
+                        %small Dedicated for:
+                        %br
+                        = safe_join(dedicated_for_text(service), ", ").truncate(24)
 
     %ol.carousel-indicators
       %li.active{ "data-target" => "#home-carousel", "data-slide-to" => "0" }
       %li{ "data-target" => "#home-carousel", "data-slide-to" => "1" }
-
-
-  .row.d-flex.justify-content-center.mt-5
-    = link_to "Browse all services", services_path, class: "btn btn-primary mt-4"
-
-
