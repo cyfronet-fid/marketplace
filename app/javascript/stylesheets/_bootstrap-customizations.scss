@@ -849,30 +849,6 @@ Card style
   height: auto;
 }
 
-.for-providers {
-  border: none;
-  background: url('../../assets/images/bg-lines-small.png') no-repeat right center $palette-lightblue;
-  border-radius: $radius-common;
-
-
-  .card-body {
-    padding: 1rem 1.5rem;
-  }
-
-  .card-title {
-    font-size: 0.85rem;
-  }
-
-  p {
-    font-size: 0.75rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .card-link {
-    font-size: 0.8rem;
-  }
-}
-
 
 /* -----------------------
 Filters
@@ -2486,4 +2462,79 @@ textarea.form-control.is-invalid {
 
 .branch-box:hover {
   border: 3px solid $services-list;
+}
+
+.home-communities {
+  background: $palette-blue;
+  color: $white;
+  border-radius: 5px;
+  margin-top: 6rem !important;
+
+  .more-link {
+    background: url('../../assets/images/link-separator-bg.png') no-repeat;
+    background-size: 190px 2px;
+    padding-top: 12px;
+
+    svg {
+      color: $palette-yellow;
+      font-size: 10px;
+      margin-right: 3px;
+    }
+
+    &:hover {
+      color: $palette-yellow !important;
+    }
+  }
+
+  ul {
+    list-style-type: disc !important;
+    padding-left: 1em !important;
+    margin-left: 1em;
+
+    li {
+      color: $palette-yellow;
+      font-size: 21px;
+      line-height: 24px;
+
+      a {
+        font-size: 16px;
+        line-height: 24px;
+        color: $white !important;
+
+        &:hover {
+          color: $palette-yellow !important;
+        }
+      }
+    }
+  }
+}
+
+.home-title {
+  font-size: 28px;
+  margin-top: 6rem;
+  margin-bottom: 2rem;
+}
+
+.learn-more-card {
+  border: none;
+  background: url('../../assets/images/bg-lines-small.png') no-repeat right center $palette-lightblue;
+  border-radius: $radius-common;
+
+
+  .card-body {
+    padding: 1rem 1.5rem;
+  }
+
+  .card-title {
+    font-size: 0.85rem;
+  }
+
+  p {
+    font-size: 0.75rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .card-link {
+    font-size: 0.8rem;
+  }
 }

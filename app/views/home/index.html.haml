@@ -1,6 +1,88 @@
 = render "home/products", providers_number: @providers_number,
                           services_number: @services_number,
                           countries_number: @countries_number
+
+.container
+  .home-communities.p-4
+    .row
+      .col-12.col-lg-6
+        .h3.mt-2.mb-3 Communities and infrastructures
+        .row
+          .col-12.col-lg-6
+            %ul
+              %li
+                %a BIOEXCEL
+              %li
+                %a CLARIN
+              %li
+                %a Copernicus
+              %li
+                %a D4Science
+              %li
+                %a ECOPOTENTIAL Virtual lab...
+          .col-12.col-lg-6
+            %ul
+              %li
+                %a Copernicus
+              %li
+                %a D4Science
+              %li
+                %a ECOPOTENTIAL
+              %li
+                %a BIOEXCEL
+              %li
+                %a CLARIN
+        .row
+          .col-12
+            %a.more-link.d-block
+              %i.fas.fa-arrow-right
+              We have
+              %strong 48 more
+              Communities and infreastructures
+      .col-12.col-lg-3
+        .h3.mt-2.mb-3 Providers
+        %ul
+          %li
+            %a CloudFerro
+          %li
+            %a CSC
+          %li
+            %a Cyberbotics Ltd.
+          %li
+            %a D4Science org infrastructure
+          %li
+            %a Deutches Elektronen-Synch...
+        %a.more-link.d-block
+          %i.fas.fa-arrow-right
+          You can find
+          %strong 27 more
+          providers
+      .col-12.col-lg-3
+        .h3.mt-2.mb-3 Dedicated for
+        %ul
+          %li
+            %a Business
+          %li
+            %a Providers
+          %li
+            %a Researcher
+          %li
+            %a Research group
+          %li
+            %a Research organisations
+
+.container
+  %h2.home-title Learn more
+  .row
+    .col-12.col-lg-4
+      .card
+        %a.card-body{ "href": "xxxx" }
+          %h5.card-title How it works?
+          .card-description
+            Curabitur condimentum, turpis quis tristique congue, tellus tortor mattis dui, quis mollis
+            justo augue eget es.
+          .card-icon.works
+
 .container
   %h2.mb-3.mt-4 Popular services
   #home-carousel.carousel.slide.home-carousel{ "data-ride" => "carousel" }
