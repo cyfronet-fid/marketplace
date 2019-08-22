@@ -34,112 +34,33 @@
   #tab-1.tab-content-home.current
     .container
       .row
-        .col-12.col-lg-4
-          %a.branch-box{ "href": "/services?utf8=✓&research_areas%5B%5D=1&rating=&location=" }
-            .branch-icon
-              = image_tag("ico_interdisciplinary.png", alt: "Interdisciplinary")
-            .branch-name Interdisciplinary
-
-        .col-12.col-lg-4
-          %a.branch-box{ "href": "/services?utf8=✓&research_areas%5B%5D=8&rating=&location=" }
-            .branch-icon
-              = image_tag("ico_humanities.png", alt: "Humanities")
-            .branch-name Humanities
-
-        .col-12.col-lg-4
-          %a.branch-box{ "href": "/services?utf8=✓&research_areas%5B%5D=5&rating=&location=" }
-            .branch-icon
-              = image_tag("ico_naturalsciences.png", alt: "Natural sciences")
-            .branch-name Natural sciences
-
-        .col-12.col-lg-4
-          %a.branch-box{ "href": "#" }
-            .branch-icon
-              = image_tag("ico_support.png", alt: "Support activities")
-            .branch-name Support activities
-
-        .col-12.col-lg-4
-          %a.branch-box{ "href": "#" }
-            .branch-icon
-              = image_tag("ico_agricultural.png", alt: "Agricultural sciences")
-            .branch-name Agricultural sciences
-
-        .col-12.col-lg-4
-          %a.branch-box{ "href": "/services?utf8=✓&research_areas%5B%5D=16&rating=&location=" }
-            .branch-icon
-              = image_tag("ico_medical.png", alt: "Medical and health sciences")
-            .branch-name Medical and health sciences
-
-        .col-12.col-lg-4
-          %a.branch-box{ "href": "/services?utf8=✓&research_areas%5B%5D=16&rating=&location=" }
-            .branch-icon
-              = image_tag("ico_engineering.png", alt: "Engineering and technology")
-            .branch-name Engineering and technology
-
-        .col-12.col-lg-4
-          %a.branch-box{ "href": "/services?utf8=✓&research_areas%5B%5D=19&rating=&location=" }
-            .branch-icon
-              = image_tag("ico_social.png", alt: "Social sciences")
-            .branch-name Social sciences
-
-        .col-12.col-lg-4
-          %a.branch-box{ "href": "/services?utf8=✓&research_areas%5B%5D=21&rating=&location=" }
-            .branch-icon
-              = image_tag("ico_other.png", alt: "Other")
-            .branch-name Other
+        - @main_research_areas.each do |ra|
+          .col-12.col-lg-4
+            .branch-box
+              = link_to services_path(research_areas: ra.to_param) do
+                .branch-icon
+                  - if File.exist?("app/assets/images/ico_#{ra&.name.split.first}.png".underscore)
+                    = image_tag("ico_#{ra.name.split.first}.png".underscore, alt: "#{ra.name}")
+                  - else
+                    = image_tag("ico_ra_default.png", alt: "#{ra.name}")
+                .branch-name
+                  = ra.name
       .row.d-flex.justify-content-center.mt-4
         = link_to "Browse all services", services_path, class: "btn btn-primary font-weight-bold mt-3"
 
   #tab-2.tab-content-home
     .container
       .row
-        .col-12.col-lg-4
-          %a.branch-box{ "href": "/services/c/compute" }
-            .branch-icon
-              = image_tag("ico_compute.png", alt: "Compute")
-            .branch-name Compute
-
-        .col-12.col-lg-4
-          %a.branch-box{ "href": "/services/c/data-management" }
-            .branch-icon
-              = image_tag("ico_data_management.png", alt: "Data management")
-            .branch-name Data management
-
-        .col-12.col-lg-4
-          %a.branch-box{ "href": "/services/c/networking" }
-            .branch-icon
-              = image_tag("ico_networking.png", alt: "Networking")
-            .branch-name Networking
-
-        .col-12.col-lg-4
-          %a.branch-box{ "href": "/services/c/processing-analysis" }
-            .branch-icon
-              = image_tag("ico_processing.png", alt: "Proscessing & analysis")
-            .branch-name Proscessing & analysis
-
-        .col-12.col-lg-4
-          %a.branch-box{ "href": "/services/c/security-operations" }
-            .branch-icon
-              = image_tag("ico_security.png", alt: "Security & operations")
-            .branch-name Security & operations
-
-        .col-12.col-lg-4
-          %a.branch-box{ "href": "/services/c/sharing-discovery" }
-            .branch-icon
-              = image_tag("ico_sharing.png", alt: "Sharing & discovery")
-            .branch-name Sharing & discovery
-
-        .col-12.col-lg-4
-          %a.branch-box{ "href": "/services/c/storage" }
-            .branch-icon
-              = image_tag("ico_storage.png", alt: "Storage")
-            .branch-name Storage
-
-        .col-12.col-lg-4
-          %a.branch-box{ "href": "/services/c/training-support" }
-            .branch-icon
-              = image_tag("ico_training.png", alt: "Training & support")
-            .branch-name Training & support
-
+        - @root_categories.each do |root_category|
+          .col-12.col-lg-4
+            .branch-box
+              = link_to root_category do
+                .branch-icon
+                  - if File.exist?("app/assets/images/ico_#{root_category.name.split.first}.png".underscore)
+                    = image_tag("ico_#{root_category.name.split.first}.png".underscore, alt: "#{root_category.name}")
+                  - else
+                    = image_tag("ico_default.png", alt: "#{root_category.name}")
+                .branch-name
+                  = root_category.name
       .row.d-flex.justify-content-center.mt-4
         = link_to "Browse all services", services_path, class: "btn btn-primary font-weight-bold mt-3"

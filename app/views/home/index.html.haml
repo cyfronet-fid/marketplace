@@ -1,7 +1,9 @@
 = render "home/products", providers_number: @providers_number,
                           services_number: @services_number,
                           countries_number: @countries_number
-= render "home/communities"
+= render "home/communities", home_platforms_counter: @home_platforms_counter,
+                             home_providers_counter: @home_providers_counter,
+                             home_target_groups_counter: @home_target_groups_counter
 
 .container
   %h2.home-title Learn more
