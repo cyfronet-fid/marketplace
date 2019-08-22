@@ -2531,9 +2531,21 @@ textarea.form-control.is-invalid {
   }
 }
 
+@media (max-width: 992px) {
+  .communities-wrapper {
+    margin-bottom: 35px;
+  }
+
+  .home-communities {
+    .more-link {
+      font-size: 12px;
+    }
+  }
+}
+
 .home-title {
   font-size: 28px;
-  margin-top: 6rem;
+  margin-top: 5.2rem;
   margin-bottom: 2rem;
 }
 
@@ -2586,6 +2598,63 @@ textarea.form-control.is-invalid {
       .card-icon {
         top: 25px;
         right: 45px;
+      }
+    }
+  }
+}
+
+.opinion {
+  border: none;
+  background: $home-card-bg;
+
+  .card-body {
+    padding: 1.3rem 1rem;
+    position: relative;
+    font-size: 14px;
+    line-height: 18px;
+    color: $palette-solid-100;
+
+    .card-title {
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: bold;
+      color: $palette-blue;
+    }
+
+    .list-inline {
+      margin-bottom: 0.8rem;
+
+      li {
+        margin-right: 2px;
+
+        svg {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+
+.testimonial {
+  border: none;
+
+  .card-body {
+    padding: 0 0 0 75px;
+    position: relative;
+    font-size: 16px;
+    line-height: 23px;
+    background: url('../../assets/images/ico_testimonials.png') no-repeat 0 5px;
+    color: $palette-solid-100;
+
+    .list-inline {
+      margin-bottom: 0.8rem;
+
+      li {
+        margin-right: 2px;
+
+        svg {
+          font-size: 16px;
+        }
       }
     }
   }
