@@ -19,7 +19,30 @@
     "turbolinks": "^5.1.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "mutationobserver-shim": "^0.3.3",
     "postcss-custom-properties": "^9.0.2",
     "webpack-dev-server": "^3.7.2"
+  },
+  "jest": {
+    "testPathIgnorePatterns": ["/node_modules/", "/config/"],
+    "setupFiles": [
+      "./spec/javascript/setup.js"
+    ],
+    "testRegex": ".*_spec.js",
+    "roots": [
+      "spec/javascript"
+    ],
+
+    "moduleDirectories": [
+      "node_modules",
+        "app/javascript/controllers"
+    ]
+  },
+  "scripts": {
+    "test": "jest"
   }
 }
