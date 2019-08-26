@@ -10,7 +10,7 @@
         .row
           - if home_platforms_counter > 0
             .col-12
-              %a.more-link.d-block
+              %a.more-link.d-block{ href: "#{root_path}communities" }
                 %i.fas.fa-arrow-right
                 We have
                 %strong #{home_platforms_counter} more
@@ -24,7 +24,7 @@
         .row
           - if home_platforms_counter > 0
             .col-12
-              %a.more-link.d-block
+              %a.more-link.d-block{ href: "#{root_path}providers" }
                 %i.fas.fa-arrow-right
                 You can find
                 %strong #{home_providers_counter} more
