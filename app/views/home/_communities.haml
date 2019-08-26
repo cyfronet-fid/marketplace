@@ -3,12 +3,10 @@
     .row
       .col-12.col-lg-6.communities-wrapper
         .h3.mt-2.mb-3 Communities and infrastructures
-        .row
-          .col-12.col-lg-6
-            %ul
-              - @home_platforms.each do |platform|
-                %li
-                  = link_to platform.name, services_path(related_platforms: platform.to_param)
+        %ul.row
+          - @home_platforms.each do |platform|
+            %li.col-lg-6
+              = link_to platform.name, services_path(related_platforms: platform.to_param)
         .row
           - if home_platforms_counter > 0
             .col-12
