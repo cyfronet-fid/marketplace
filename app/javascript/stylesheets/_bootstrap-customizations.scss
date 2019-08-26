@@ -2509,6 +2509,7 @@ textarea.form-control.is-invalid {
     background: url('../../assets/images/link-separator-bg.png') no-repeat;
     background-size: 190px 2px;
     padding-top: 12px;
+    color: $white !important;
 
     svg {
       color: $palette-yellow;
@@ -2541,6 +2542,36 @@ textarea.form-control.is-invalid {
         white-space: nowrap;
         text-overflow: ellipsis;
         color: $white !important;
+
+        &:hover {
+          color: $palette-yellow !important;
+        }
+      }
+    }
+  }
+}
+
+.pages {
+  ul {
+    list-style-type: disc !important;
+    padding-left: 1em !important;
+    margin-left: 1em;
+
+    li {
+      color: $palette-yellow;
+      font-size: 21px;
+      padding: 0;
+      line-height: 24px;
+
+      a {
+        font-size: 16px;
+        max-width: 990px;
+        display: block;
+        line-height: 24px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: $black !important;
 
         &:hover {
           color: $palette-yellow !important;

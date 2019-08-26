@@ -1,0 +1,12 @@
+%main.pages
+  .container
+    .row
+      %h1.mb-4.display-1 Communities and infrastructures
+      .media.border-0
+        .media-body
+          .row
+            .col-12.col-lg-6.communities-wrapper
+            %ul.row
+              - @platforms.each do |platform|
+                %li.col-lg-6
+                  = link_to platform.name, services_path(related_platforms: platform.to_param)

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class HomeController < ApplicationController
-  before_action :load_services, :load_platforms, :load_providers, :load_target_groups
+  before_action :load_services, :load_platforms, :load_providers, :load_target_groups, :load_opinion
 
   def index
   end
@@ -28,5 +28,9 @@ class HomeController < ApplicationController
     def load_target_groups
       @home_target_groups = TargetGroup.all.first(5)
       @home_target_groups_counter = TargetGroup.all.count - @home_target_groups.count
+    end
+
+    def load_opinion
+      @opinion = ServiceOpinion.all.sample
     end
 end

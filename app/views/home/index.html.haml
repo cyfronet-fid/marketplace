@@ -1,3 +1,5 @@
+- portal_base = Mp::Application.config.portal_base_url
+
 = render "home/products", providers_number: @providers_number,
                           services_number: @services_number,
                           countries_number: @countries_number
@@ -10,29 +12,28 @@
   .row
     .col-12.col-lg-4
       .card.learn-more.first
-        %a.card-body{ "href": "xxxx" }
-          %h5.card-title How it works?
+        %a.card-body{ "href": "#{portal_base}/about/eosc" }
+          %h5.card-title EOSC initiative
           .card-description
-            Curabitur condimentum, turpis quis tristique congue, tellus tortor mattis dui, quis mollis
-            justo augue eget es.
+            Find out more about EOSC and what it can bring you!
           .card-icon
             = image_tag "ico_howitworks.png"
     .col-12.col-lg-4
       .card.learn-more
-        %a.card-body{ "href": "/projects" }
-          %h5.card-title Projects
+        %a.card-body{ "href": "#{portal_base}/media/events" }
+          %h5.card-title EOSC events
           .card-description
-            Curabitur condimentum, turpis quis tristique congue, tellus tortor mattis dui, quis mollis
-            justo augue eget es.
+            Seek for opportunities to meet with EOSC representatives, EOSC service providers and users, communities
+            joining EOSC. Find out what is new and what is about to come.
           .card-icon
             = image_tag "ico_projects.png"
     .col-12.col-lg-4
       .card.learn-more
-        %a.card-body{ "href": "/for-providers" }
+        %a.card-body{ "href": "#{portal_base}/for-providers" }
           %h5.card-title For providers
           .card-description
-            Curabitur condimentum, turpis quis tristique congue, tellus tortor mattis dui, quis mollis
-            justo augue eget es.
+            Contribute to develop EOSC into a rich environment with a wide range of services and resources for
+            researches.
           .card-icon
             = image_tag "ico_providers.png"
 
@@ -106,42 +107,24 @@
   .row
     .col-12.col-lg-4
       %h2.home-title Recent opinions
-      .card.shadow-sm.opinion
-        .card-body
-          %a.card-title Virtual Language Observatory
-          .row.mt-3
-            .col
-              %ul.list-inline{ data: { rating_stars: "service_opinion_rating" } }
-                %li.list-inline-item
-                  %i.fas.fa-star{ value: 1 }
-                %li.list-inline-item
-                  %i.fas.fa-star{ value: 2 }
-                %li.list-inline-item
-                  %i.fas.fa-star{ value: 3 }
-                %li.list-inline-item
-                  %i.fas.fa-star{ value: 4 }
-                %li.list-inline-item
-                  %i.far.fa-star{ value: 5 }
-                %li.list-inline-item
-                  %span.ml-1.font-weight-bold 4.75/5
-          .card-description
-            It's a good looking application made with decent quality for the price, but if you need something longer
-            lasting, you should look elsewhere.
-
+      = render "opinion", opinion: @opinion || "There are no reviews available."
     .col-12.col-lg-8
-      %h2.home-title Testimonials
+      %h2.home-title Use Cases
       .row
         .col-12.col-lg-6
           .card.testimonial
             .card-body
+              .card-author.font-weight-bold.mb-3
+                %a{ "href": "https://eosc-portal.eu/language-data-insight-clarin-demonstrator" }
+                  From language data to insight: the CLARIN demonstrator
               .card-description
-                Nullam elementum, lectus vitae rhoncus convallis, massa eros ullamcorper tortor, id tempus est lacus et
-                erat. Nunc venenatis nibh eget nibh posuere sollicitudin.
-              .card-author.font-weight-bold.text-right.mt-3 Monica, physicist
+                How the integration of the CLARIN infrastructure into the EOSC portal can facilitate the study of
+                language data.
         .col-12.col-lg-6
           .card.testimonial
             .card-body
+              .card-author.font-weight-bold.mb-3
+                %a{ "href": "https://eosc-portal.eu/eosc-scalable-computing-infrastructure-earth-observation" }
+                  The EOSC as a scalable computing infrastructure for Earth Observation
               .card-description
-                Nullam elementum, lectus vitae rhoncus convallis, massa eros ullamcorper tortor, id tempus est lacus et
-                erat. Nunc venenatis nibh eget nibh posuere sollicitudin.
-              .card-author.font-weight-bold.text-right.mt-3 Monica, physicist
+                How EOSC could open the way for Earth Observation innovation.
