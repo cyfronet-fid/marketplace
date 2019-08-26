@@ -166,8 +166,8 @@ ActiveRecord::Schema.define(version: 2019_08_21_132453) do
     t.string "department"
     t.string "webpage"
     t.string "status"
-    t.datetime "created_at", default: "2019-08-19 15:42:13", null: false
-    t.datetime "updated_at", default: "2019-08-19 15:42:13", null: false
+    t.datetime "created_at", default: "2019-08-26 13:34:45", null: false
+    t.datetime "updated_at", default: "2019-08-26 13:34:45", null: false
     t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
