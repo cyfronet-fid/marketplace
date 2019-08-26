@@ -4,6 +4,9 @@ class PagesController < ApplicationController
   def about
   end
 
+  def about_projects
+  end
+
   def providers
     @providers = Provider.all.order(:name)
   end

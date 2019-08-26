@@ -20,11 +20,10 @@
             = image_tag "ico_howitworks.png"
     .col-12.col-lg-4
       .card.learn-more
-        %a.card-body{ "href": "#{portal_base}/media/events" }
-          %h5.card-title EOSC events
+        %a.card-body{ "href": "#{root_path}about_projects" }
+          %h5.card-title Projects
           .card-description
-            Seek for opportunities to meet with EOSC representatives, EOSC service providers and users, communities
-            joining EOSC. Find out what is new and what is about to come.
+            With Marketplace you can organise your services and gain support from EOSC-hub experts.
           .card-icon
             = image_tag "ico_projects.png"
     .col-12.col-lg-4
@@ -107,7 +106,10 @@
   .row
     .col-12.col-lg-4
       %h2.home-title Recent opinions
-      = render "opinion", opinion: @opinion || "There are no reviews available."
+      - unless @opinion.nil?
+        = render "opinion", opinion: @opinion
+      - else
+        There are no reviews available.
     .col-12.col-lg-8
       %h2.home-title Use Cases
       .row
