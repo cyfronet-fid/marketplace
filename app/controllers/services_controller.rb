@@ -6,6 +6,8 @@ class ServicesController < ApplicationController
   include Service::Categorable
   include Service::Autocomplete
 
+  before_action :sort_options
+
   def index
     if params["service_id"].present?
       redirect_to Service.find(params["service_id"])
@@ -28,6 +30,14 @@ class ServicesController < ApplicationController
   end
 
   private
+
+    def sort_options
+      @sort_options = [["by name A-Z", "title"],
+                       ["by name Z-A", "-title"],
+                       ["by rate 1-5", "rating"],
+                       ["by rate 5-1", "-rating"],
+                       ["Best match", "_score"]]
+    end
 
     def scope
       policy_scope(Service).with_attached_logo
