@@ -1344,6 +1344,10 @@ h5 {
 
 }
 
+.home-anchor {
+  display: none;
+}
+
 @media (max-width: 576px) {
   .pagination-right ul {
     float: left;
@@ -1352,6 +1356,15 @@ h5 {
 
   .breadcrumbs {
     font-size: 0.675rem;
+  }
+
+  .home-anchor {
+    position: fixed;
+    bottom: 50px;
+    display: block;
+    z-index: 100;
+    width: 100%;
+    text-align: center;
   }
 }
 
@@ -2472,7 +2485,7 @@ textarea.form-control.is-invalid {
   text-align: center;
   display: block;
   margin-bottom: 20px;
-  min-height: 190px;
+  min-height: 200px;
   padding: 35px 0 20px;
 
   .branch-name {
@@ -2516,11 +2529,17 @@ textarea.form-control.is-invalid {
     li {
       color: $palette-yellow;
       font-size: 21px;
+      padding: 0;
       line-height: 24px;
 
       a {
         font-size: 16px;
+        max-width: 225px;
+        display: block;
         line-height: 24px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
         color: $white !important;
 
         &:hover {
@@ -2539,6 +2558,12 @@ textarea.form-control.is-invalid {
   .home-communities {
     .more-link {
       font-size: 12px;
+    }
+  }
+
+  .branch-box {
+    .branch-name {
+      font-size: 16px;
     }
   }
 }

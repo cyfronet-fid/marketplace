@@ -94,3 +94,13 @@ $(document).ready(function(){
     })
 
 })
+
+$(function() {
+    $(document).scroll(function() {
+        var y = $(this).scrollTop();
+
+        if (y > 600) {
+            $('.home-anchor').fadeOut();
+        }
+    });
+})

@@ -1,3 +1,6 @@
+%a.home-anchor{ "href": "#find-eosc" }
+  = image_tag("main-link.png")
+
 .container.home-intro.pt-5.pb-4
   .row.pt-2.d-flex
     .col-12.col-lg-5.right-column.order-lg-last
@@ -14,6 +17,7 @@
         Easy acces, lots to explore tools and service for many research domains. Integrated services - analytical tools
         empowerd by compute and data services. Browse by science, category and if you need a help we are here for you!
       .row.mt-2
+        %a#find-eosc
         .col-12.col-lg-5.intro-box.pt-5.pb-5
           Find EOSC Services that suit your usecase yourself
           %a{ href: "/services" }
@@ -35,7 +39,7 @@
     .container
       .row
         - @main_research_areas.each do |ra|
-          .col-12.col-lg-4
+          .col-6.col-lg-4
             .branch-box
               = link_to services_path(research_areas: ra.to_param) do
                 .branch-icon
@@ -52,7 +56,7 @@
     .container
       .row
         - @root_categories.each do |root_category|
-          .col-12.col-lg-4
+          .col-6.col-lg-4
             .branch-box
               = link_to root_category do
                 .branch-icon
