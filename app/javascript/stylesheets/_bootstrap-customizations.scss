@@ -11,6 +11,11 @@ body {
   }
 }
 
+header {
+  position: relative;
+  z-index: 10;
+}
+
 .container {
   max-width: 1180px;
 }
