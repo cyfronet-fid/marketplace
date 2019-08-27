@@ -77,24 +77,6 @@ function starsOnClick(node){
         });
     });
 }
-
-/**
- * Homepage dynamic tabs
- */
-$(document).ready(function(){
-
-    $('ul.tabs li').click(function(){
-        var tab_id = $(this).attr('data-tab');
-
-        $('ul.tabs li').removeClass('current');
-        $('.tab-content-home').removeClass('current');
-
-        $(this).addClass('current');
-        $("#"+tab_id).addClass('current');
-    })
-
-})
-
 $(function() {
     $(document).scroll(function() {
         var y = $(this).scrollTop();
