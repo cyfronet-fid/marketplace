@@ -34,7 +34,7 @@ RSpec.feature "Categories in backoffice" do
       create(:category, name: "parent")
 
       visit backoffice_categories_path
-      click_on "New Category"
+      click_on "Add new Category"
 
       fill_in "Name", with: "My new category"
       select "parent", from: "Parent"

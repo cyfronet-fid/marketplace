@@ -13,10 +13,10 @@
                   method: :delete, data: { confirm: "Are you sure?" },
                   class: "btn btn-danger float-right"
       - if policy([:backoffice, @offer]).new?
-        = link_to "Add new offer", new_backoffice_service_offer_path(@service),
+        = link_to t("backoffice.service.offer.new"), new_backoffice_service_offer_path(@service),
             class: "btn btn-primary float-right ml-3 mb-3"
       - if policy([:backoffice, @service]).edit?
-        = link_to "Edit",
+        = link_to t("backoffice.service.edit"),
                   edit_backoffice_service_path(@service),
                   class: "btn btn-primary float-right"
   .container.grey-row.mt-4

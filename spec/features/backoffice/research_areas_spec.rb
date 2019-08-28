@@ -34,7 +34,7 @@ RSpec.feature "Research areas in backoffice" do
       create(:research_area, name: "parent")
 
       visit backoffice_research_areas_path
-      click_on "Add research area"
+      click_on "Add new Research Area"
 
       fill_in "Name", with: "My new research area"
       select "parent", from: "Parent"

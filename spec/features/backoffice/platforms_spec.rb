@@ -30,7 +30,7 @@ RSpec.feature "Platforms in backoffice" do
 
     scenario "I can create new platform" do
       visit backoffice_platforms_path
-      click_on "New Platform"
+      click_on "Add new Platform"
 
       fill_in "Name", with: "My new platform"
 
