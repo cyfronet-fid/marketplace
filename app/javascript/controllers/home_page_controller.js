@@ -1,9 +1,10 @@
 import {Controller} from 'stimulus'
 
 export default class extends Controller {
-    static targets = ["changeTab", "tab"];
+    static targets = ["changeTab", "tab", "scrollArrow"];
 
     connect() {
+        this.onScrollRunning = true
     }
 
     initialize(){}
@@ -20,5 +21,20 @@ export default class extends Controller {
         });
         tabLink.classList.add('current');
         tab.classList.add('current');
+    }
+
+    onScroll(event) {
+        if (!this.onScrollRunning) {
+            this.onScrollRunning = true;
+        }
+
+        let height = window.scrollY;
+        if (height > 600) {
+            const el = document.getElementsByClassName('.home-anchor').style;
+            el.opacity = 1;
+            (function fade(){(el.opacity-= .1)<0?s.display="none":setTimeout(fade,40)})();
+
+        }
+
     }
 }
