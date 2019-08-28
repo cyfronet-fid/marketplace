@@ -1,0 +1,12 @@
+%main.pages
+  .container
+    .row
+      %h2.home-title.mb-4 Providers
+      .media.border-0
+        .media-body
+          .row
+            .col-12.col-lg-6.communities-wrapper
+            %ul.row
+              - @providers.each do |provider|
+                %li.col-lg-6
+                  = link_to provider.name, services_path(providers: provider.to_param)

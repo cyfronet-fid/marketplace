@@ -1,73 +1,75 @@
-.container.home-intro
-  .row
-    .col-12.col-lg-3.left-column
-      .left-menu.pl-4.pr-4.pt-2.pb-2
-        %ul
-          %li.all-link
-            = link_to "All Services", services_path
-          - @root_categories.each do |root_category|
-            %li
-              = link_to root_category.name, root_category
-      .card.for-providers.mt-4.mb-1
-        .card-body
-          %h5.card-title For providers
-          %p.card-text
-            Contribute to develop EOSC into a rich environment with
-            a wide range of services and resources for researches.
-          %strong
-            = link_to "Become a provider", "#{Mp::Application.config.portal_base_url}/for-providers", class: "card-link"
+%a.home-anchor{ "href": "#find-eosc" }
+  = image_tag("main-link.png")
 
-    .col-12.col-lg-9.right-column.pl-5
-      %p.subtitle.mt-4  EOSC Marketplace
-      %p.title services for your research
-      %ul.feature-list.mt-5
-        %li
-          %i.fas.fa-arrow-right
-          %p
-            %strong
-              Easy to access:
-            log in with own credentials
-        %li
-          %i.fas.fa-arrow-right
-          %p
-            %strong
-              Lots to explore:
-            tools and services for many research domains
-        %li
-          %i.fas.fa-arrow-right
-          %p
-            %strong
-              Integrated services:
-            analytical tools empowered by compute and data services
-        %li
-          %i.fas.fa-arrow-right
-          %p
-            %strong
-              Ready to use:
-            virtual environments pre-packed with services and tools
+.container.home-intro.pt-5.pb-4
+  .row.pt-2.d-flex
+    .col-12.col-lg-5.right-column.order-lg-last
+      .home-image
+    .col-12.col-lg-7.left-column
+      %p.title
+        Welcome to Marketplace
+        %br
+        of European Open
+        %br
+        Science Cloud
 
-      .numbers.mt-5.row
-        .col-3.text-center.pt-4
-          .box
-            .icon
-              %i.far.fa-building
-            .num
-              = link_to providers_number, services_path
-            .sub-num
-              = link_to "providers", services_path
-        .col-6.text-center.pt-4
-          .box
-            .icon
-              %i.fas.fa-cogs
-            .num
-              = link_to services_number, services_path
-            .sub-num
-              = link_to "services", services_path
-        .col-3.text-center.pt-4
-          .box
-            .icon
-              %i.fas.fa-globe
-            .num
-              = link_to countries_number, services_path
-            .sub-num
-              = link_to "countries", services_path
+      %p.home-lead.pr-5.mr-5
+        Easy access, lots of tools and services to explore for various research domains.
+        Integrated services - analytical tools empowered by the compute and data services.
+        Browse by the scientific domain, service category or provider and, if you need help, we are here for you!
+      .row.mt-2
+        %a#find-eosc
+        .col-12.col-lg-5.intro-box.pt-5.pb-5
+          Find EOSC Services that suit your use case yourself
+          %a{ href: "#tab-anchor" }
+            %i.fas.fa-arrow-right
+            Browse through catalogue
+
+        .col-12.col-lg-5.intro-box.pt-5.pb-5
+          Describe your use case and get support from our experts
+          %a{ href: "/projects" }
+            %i.fas.fa-arrow-right
+            Go to your projects
+
+#tab-anchor.home-tabs.container.mt-5{ "data-controller" => "home-page" }
+  %ul.tabs
+    %li.tab-link.current{ data: { "target" => "home-page.changeTab",
+                  "action" => "click->home-page#changeTab", "tab" => "tab-1" },
+                  href: "#" }Branch of science
+    %li.tab-link{ data: { "target" => "home-page.changeTab",
+                  "action" => "click->home-page#changeTab", "tab" => "tab-2" },
+                  href: "#" }Categories
+
+  #tab-1.tab-content-home.current{ "data-target" => "home-page.tab" }
+    .container
+      .row
+        - @main_research_areas.each do |ra|
+          .col-6.col-lg-4
+            .branch-box
+              = link_to services_path(research_areas: ra.to_param) do
+                .branch-icon
+                  - if File.exist?("app/assets/images/ico_#{ra&.name&.split&.first}.png".underscore)
+                    = image_tag("ico_#{ra&.name.split.first}.png".underscore, alt: "#{ra&.name}")
+                  - else
+                    = image_tag("ico_ra_default.png", alt: "#{ra&.name}")
+                .branch-name
+                  = ra&.name
+      .row.d-flex.justify-content-center.mt-4
+        = link_to "Browse all services", services_path, class: "btn btn-primary font-weight-bold mt-3"
+
+  #tab-2.tab-content-home{ "data-target" => "home-page.tab" }
+    .container
+      .row
+        - @root_categories.each do |root_category|
+          .col-6.col-lg-4
+            .branch-box
+              = link_to root_category do
+                .branch-icon
+                  - if File.exist?("app/assets/images/ico_#{root_category.name.split.first}.png".underscore)
+                    = image_tag("ico_#{root_category.name.split.first}.png".underscore, alt: "#{root_category.name}")
+                  - else
+                    = image_tag("ico_default.png", alt: "#{root_category.name}")
+                .branch-name
+                  = root_category.name
+      .row.d-flex.justify-content-center.mt-4
+        = link_to "Browse all services", services_path, class: "btn btn-primary font-weight-bold mt-3"

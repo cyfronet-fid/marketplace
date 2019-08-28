@@ -1,57 +1,132 @@
+- portal_base = Mp::Application.config.portal_base_url
+
 = render "home/products", providers_number: @providers_number,
                           services_number: @services_number,
                           countries_number: @countries_number
+= render "home/communities", home_platforms_counter: @home_platforms_counter,
+                             home_providers_counter: @home_providers_counter,
+                             home_target_groups_counter: @home_target_groups_counter
+
 .container
-  %h2.mb-3.mt-4 Popular services
+  %h2.home-title Learn more
+  .row
+    .col-12.col-lg-4
+      .card.learn-more.first
+        %a.card-body{ "href": "#{portal_base}/about/eosc" }
+          %h5.card-title EOSC initiative
+          .card-description
+            Find out more about EOSC and what it can bring you!
+          .card-icon
+            = image_tag "ico_howitworks.png"
+    .col-12.col-lg-4
+      .card.learn-more
+        %a.card-body{ "href": "#{root_path}about_projects" }
+          %h5.card-title Projects
+          .card-description
+            With Marketplace Projects you can organise your services and gain support from the EOSC experts.
+          .card-icon
+            = image_tag "ico_projects.png"
+    .col-12.col-lg-4
+      .card.learn-more
+        %a.card-body{ "href": "#{portal_base}/for-providers" }
+          %h5.card-title For providers
+          .card-description
+            Contribute to develop EOSC into a rich environment with
+            a wide range of services and resources for researchers.
+          .card-icon
+            = image_tag "ico_providers.png"
+
+.container
+  %h2.home-title Popular services
+
   #home-carousel.carousel.slide.home-carousel{ "data-ride" => "carousel" }
+
     .carousel-inner
       .carousel-item.active
         .card-deck
-          - @services[0..3].each do |service|
-            .card
-              .card-img-top
-                - if service.logo.attached?
-                  = image_tag service.logo.variant(resize: "170x112")
-                - else
-                  = image_tag "eosc-img.png"
+          - @services[0..2].each do |service|
+            .card.shadow-sm
               .card-body
                 .card-title
                   = link_to service.title.truncate(35), service
+                .card-description
+                  %p
+                    - if service.logo.attached?
+                      = image_tag service.logo.variant(resize: "100x70")
+                    - else
+                      = image_tag "eosc-img.png"
+                    B2FIND is the EUDAT metadata service and provides a discovery portal which allows users to find
+                    data collections within an...
               .card-footer
-                %p
-                  %small By:
-                  = safe_join(providers_text(service), ", ").truncate(22)
-                %p
-                  %small For:
-                  = safe_join(dedicated_for_text(service), ", ").truncate(21)
-      - if @services.count > 4
+                .row
+                  .col-6
+                    %p
+                      %small Provided by:
+                      %br
+                      = safe_join(providers_text(service), ", ").truncate(24)
+                  .col-6
+                    %p.text-right
+                      %small Dedicated for:
+                      %br
+                      = safe_join(dedicated_for_text(service), ", ").truncate(24)
+      - if @services.count > 3
         .carousel-item
           .card-deck
-            - @services[4..7].each do |service|
-              .card
-                .card-img-top
-                  - if service.logo.attached?
-                    = image_tag service.logo.variant(resize: "170x112")
-                  - else
-                    = image_tag "eosc-img.png"
+            - @services[3..5].each do |service|
+              .card.shadow-sm
                 .card-body
                   .card-title
                     = link_to service.title.truncate(35), service
+                  .card-description
+                    %p
+                      - if service.logo.attached?
+                        = image_tag service.logo.variant(resize: "100x70")
+                      - else
+                        = image_tag "eosc-img.png"
+                      B2FIND is the EUDAT metadata service and provides a discovery portal which allows users to find
+                      data collections within an...
                 .card-footer
-                  %p
-                    %small By:
-                    = safe_join(providers_text(service), ", ").truncate(22)
-                  %p
-                    %small For:
-                    = safe_join(dedicated_for_text(service), ", ").truncate(21)
-
+                  .row
+                    .col-6
+                      %p
+                        %small Provided by:
+                        %br
+                        = safe_join(providers_text(service), ", ").truncate(24)
+                    .col-6
+                      %p.text-right
+                        %small Dedicated for:
+                        %br
+                        = safe_join(dedicated_for_text(service), ", ").truncate(24)
 
     %ol.carousel-indicators
       %li.active{ "data-target" => "#home-carousel", "data-slide-to" => "0" }
       %li{ "data-target" => "#home-carousel", "data-slide-to" => "1" }
 
-
-  .row.d-flex.justify-content-center.mt-5
-    = link_to "Browse all services", services_path, class: "btn btn-primary mt-4"
-
-
+.container
+  .row
+    .col-12.col-lg-4
+      %h2.home-title Recent opinions
+      - unless @opinion.nil?
+        = render "opinion", opinion: @opinion
+      - else
+        There are no reviews available.
+    .col-12.col-lg-8
+      %h2.home-title Use Cases
+      .row
+        .col-12.col-lg-6
+          .card.testimonial
+            .card-body
+              .card-author.font-weight-bold.mb-3
+                %a{ "href": "https://eosc-portal.eu/language-data-insight-clarin-demonstrator" }
+                  From language data to insight: the CLARIN demonstrator
+              .card-description
+                How the integration of the CLARIN infrastructure into the EOSC Portal can facilitate the study of
+                language data.
+        .col-12.col-lg-6
+          .card.testimonial
+            .card-body
+              .card-author.font-weight-bold.mb-3
+                %a{ "href": "https://eosc-portal.eu/eosc-scalable-computing-infrastructure-earth-observation" }
+                  The EOSC as a scalable computing infrastructure for Earth Observation
+              .card-description
+                How EOSC could open the way for Earth Observation innovation.
