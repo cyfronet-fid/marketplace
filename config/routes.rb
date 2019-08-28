@@ -90,6 +90,9 @@ Rails.application.routes.draw do
   get "errors/unprocessable"
   get "errors/internal_server_error"
   match "about", to: "pages#about", via: "get", as: :about
+  match "providers", to: "pages#providers", via: "get", as: :providers
+  match "communities", to: "pages#communities", via: "get", as: :communities
+  match "about_projects", to: "pages#about_projects", via: "get", as: :about_projects
 
   if Rails.env.production?
     match "/404", to: "errors#not_found", via: :all
