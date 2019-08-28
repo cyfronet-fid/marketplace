@@ -95,6 +95,24 @@ en:
       normal: Order
       open_access: Add to a project
       catalog: Go to the service
+  backoffice:
+    category:
+      new: Add new Category
+    platform:
+      new: Add new Platform
+    provider:
+      new: Add new Provider
+    research_area:
+      new: Add new Research Area
+    service:
+      new: Create new Service
+      edit: Edit
+      offer:
+        new: Add new Offer
+
+
+
+
 
   will_paginate:
     page_entries_info:

@@ -4,7 +4,7 @@
     Categories
     - if policy([:backoffice, Category]).new?
       .float-right
-        = link_to "New Category",
+        = link_to t("backoffice.category.new"),
                   new_backoffice_category_path,
                   class: "btn btn-primary"
       .clearfix

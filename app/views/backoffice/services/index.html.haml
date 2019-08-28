@@ -22,7 +22,7 @@
     %h1
       = @category&.name || "Services"
       - if policy([:backoffice, Service]).new?
-        = link_to "Create new service",
+        = link_to t("backoffice.service.new"),
                   new_backoffice_service_path,
                   class: "btn btn-success"
   .col-md-3.offset-md-1.my-auto
