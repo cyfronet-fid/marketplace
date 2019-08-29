@@ -232,5 +232,25 @@ RSpec.describe ApplicationController, type: :controller do
         basic_test
       end
     end
+
+    context Filter::UpstreamSource do
+      let!(:service1) { create(:service) }
+      let!(:service2) { create(:service) }
+      let!(:service4) { create(:service) }
+      let!(:service_source1) { create(:service_source, source_type: "eic", service_id: service1.id) }
+      let!(:service_source2) { create(:service_source, source_type: "eic", service_id: service2.id) }
+      let!(:filter_class) { Filter::UpstreamSource }
+      let!(:values) { "eic" }
+      let!(:param_name) { :source }
+      let!(:field_name) { :source }
+      it "checks if upstream source filter works" do
+        service1.upstream = service_source1
+        service2.upstream = service_source2
+        service1.save!
+        service2.save!
+        Service.reindex
+        basic_test
+      end
+    end
   end
 end
