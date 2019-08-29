@@ -37,7 +37,8 @@ module Service::Filterable
         Filter::Provider,
         Filter::TargetGroup,
         Filter::Platform,
-        Filter::Rating, Filter::Location,
+        Filter::Rating,
+        Filter::Location,
         Filter::Tag
       ]
     end
