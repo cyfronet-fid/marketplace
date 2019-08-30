@@ -1,4 +1,6 @@
-%a.home-anchor{ "href": "#find-eosc" }
+%a.home-anchor{ "href": "#find-eosc", data: { "controller" => "home-page",
+                                              "target" => "scrollArrow",
+                                              "action" => "onScroll" } }
   = image_tag("main-link.png")
 
 .container.home-intro.pt-5.pb-4
