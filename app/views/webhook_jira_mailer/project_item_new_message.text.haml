@@ -1,4 +1,4 @@
 Dear #{@user.full_name},
 \
-A new message was added to your service request ##{@model.id}.
-You can check this message through this #{link_to "link", project_item_url(@model)}.
+A new message was added to your service request #{@model}.
+You can check this message through this #{link_to "link", project_service_url(@model.project, @model)}.

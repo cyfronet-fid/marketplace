@@ -10,30 +10,10 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      format.json do
-        render status: :ok, json: {
-          additional_information: @project.additional_information,
-          name: @project.name,
-          reason_for_access: @project.reason_for_access,
-          customer_typology: t(@project.customer_typology, scope: [:project, :customer_typology]),
-          research_areas: @project.research_areas,
-          user_group_name: @project.user_group_name,
-          country_of_origin: @project.country_of_origin,
-          countries_of_partnership: @project.countries_of_partnership,
-          project_name: @project.project_name,
-          project_website_url: @project.project_website_url,
-          company_name: @project.company_name,
-          company_website_url: @project.company_website_url,
-          email: @project.email,
-          department: @project.department,
-          organization: @project.organization,
-          webpage: @project.webpage
-        }
-      end
-      format.html do
-        @projects = policy_scope(Project).order(:name)
-      end
+    if request.xhr?
+      render template: "projects/_details", locals: { project: @project }, layout: false
+    else
+      @projects = policy_scope(Project).order(:name)
     end
   end
 
@@ -42,9 +22,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js do
-        render_modal_form
-      end
+      format.js { render_modal_form }
     end
   end
 
@@ -53,22 +31,12 @@ class ProjectsController < ApplicationController
                            merge(user: current_user, status: :active))
 
     respond_to do |format|
-      format.html do
-        if @project.save
-          Project::Create.new(@project).call
-          redirect_to project_path(@project)
-        else
-          render :new, status: :bad_request
-        end
-      end
-
-      format.js do
-        if @project.save
-          Project::Create.new(@project).call
-          render :show
-        else
-          render_modal_form
-        end
+      if Project::Create.new(@project).call
+        format.html { redirect_to project_path(@project) }
+        format.js { render :show }
+      else
+        format.html { render :new, status: :bad_request }
+        format.js { render_modal_form }
       end
     end
   end
@@ -86,9 +54,11 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    Project::Destroy.new(@project).call
-    redirect_to projects_path,
-                notice: "Project destroyed"
+    if Project::Destroy.new(@project).call
+      redirect_to projects_path, notice: "Project destroyed"
+    else
+      redirect_to project_path(@project), alert: "Unable to remove project"
+    end
   end
 
   private

@@ -206,28 +206,11 @@ header {
         }
       }
 
-      .numbers {
-        margin-top: 10px !important;
-        background-position: center 65px;
-        background-size: 53% auto;
-        margin-bottom: 30px;
-
-        .box {
-          .num {
-            font-size: 30px;
-          }
-
-          .sub-num {
-            font-size: 15px;
-          }
-        }
-      }
     }
   }
 
   .navbar-brand {
     padding: 10px 10px 20px 0;
-    text-align: center;
   }
 
   .search-box .custom-select {
@@ -237,6 +220,23 @@ header {
   }
 }
 
+.navbar-brand {
+  position: relative;
+
+  img {
+    position: relative;
+    z-index: 100;
+  }
+
+  .logo-bg {
+    position: absolute;
+    top: -7px;
+    left: -35px;
+    width: 335px;
+    height: 133px;
+    background: url('../../assets/images/logo-bg.png') no-repeat;
+  }
+}
 
 @media (max-width: 992px) {
   .navbar-collapse {

@@ -17,7 +17,6 @@ if Rails.env.development?
         owners = sample_user ? [sample_user] : []
         Service.create(title: Faker::Lorem.sentence,
                        description: Faker::Lorem.paragraph,
-                       terms_of_use: Faker::Lorem.paragraph,
                        tagline: Faker::Lorem.sentence,
                        categories: [Category.all.sample],
                        owners: owners,
@@ -29,7 +28,7 @@ if Rails.env.development?
                        target_groups: [target_groups.sample],
                        terms_of_use_url: Faker::Internet.url,
                        access_policies_url: Faker::Internet.url,
-                       corporate_sla_url: Faker::Internet.url,
+                       sla_url: Faker::Internet.url,
                        webpage_url: Faker::Internet.url,
                        manual_url: Faker::Internet.url,
                        helpdesk_url: Faker::Internet.url,

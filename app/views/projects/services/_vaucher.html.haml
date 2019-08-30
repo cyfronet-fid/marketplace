@@ -1,0 +1,14 @@
+- unless project_item.voucher_id.blank? && !project_item.request_voucher
+  %h2.mb-3
+    Vouchers
+  .blue-row.form-inline.mb-5
+    .d-inline.mr-4
+      %i.fas.fa-ticket-alt
+    - if project_item.voucher_id.blank?
+      .d-inline
+        Requested
+    - else
+      .d-inline
+        Your voucher ID
+        %br
+        %span.voucher-name= project_item.voucher_id

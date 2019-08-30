@@ -20,13 +20,21 @@ RSpec.describe SortableFakeController do
       expect(controller.send(:ordering)).to eq(title: :asc)
     end
 
-    it "should return ascending ordering" do
+    it "should return ascending ordering by rating" do
       controller.params = { sort: "rating" }
       expect(controller.send(:ordering)).to eq("rating" => :asc)
     end
-    it "should return descending ordering" do
+    it "should return descending ordering by rating" do
       controller.params = { sort: "-rating" }
       expect(controller.send(:ordering)).to eq("rating" => :desc)
+    end
+    it "should return ascending ordering by status" do
+      controller.params = { sort: "status" }
+      expect(controller.send(:ordering)).to eq("status" => :asc)
+    end
+    it "should return ascending ordering by status" do
+      controller.params = { sort: "-status" }
+      expect(controller.send(:ordering)).to eq("status" => :desc)
     end
   end
 end

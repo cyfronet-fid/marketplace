@@ -8,6 +8,5 @@ FactoryBot.define do
 
     offer
     project
-    affiliation
   end
 end

@@ -46,7 +46,7 @@ en:
         webpage_url: |
           Url should start with http or https [e.g. http://webpage.org]</br>
           This url will be available under "Webpage" in Support section in the service view
-        corporate_sla_url: |
+        sla_url: |
           Url should start with http or https [e.g. http://webpage.org]
         access_policies_url: |
           Url should start with http or https [e.g. http://webpage.org]
@@ -59,6 +59,8 @@ en:
         logo: |
           Supported logo formats: png, gif, jpg, jpeg, pjpeg, tiff,
           vnd.adobe.photoshop and vnd.microsoft.icon
+        helpdesk_email: |
+          Email address - eg. email@domain.com
       project:
         project_website_url: |
           Url should start with http or https [e.g. http://webpage.org]

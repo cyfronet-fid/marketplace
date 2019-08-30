@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   include Sentryable
   include Pundit
 
-  before_action :load_root_categories!
+  before_action :load_main_research_areas!, :load_root_categories!
 
   protect_from_forgery
 
@@ -20,6 +20,10 @@ class ApplicationController < ActionController::Base
 
     def load_root_categories!
       @root_categories = Category.roots.order(:name)
+    end
+
+    def load_main_research_areas!
+      @main_research_areas = ResearchArea.all[0...8].push(ResearchArea.find_by(name: "Other"))
     end
 
     def not_authorized_message(exception)

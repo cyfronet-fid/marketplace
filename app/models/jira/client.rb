@@ -235,7 +235,11 @@ private
   def generate_project_item_custom_field_value(field_name, project_item)
     case field_name
     when "Order reference"
-      ENV["ROOT_URL"].blank? ? project_item_path(project_item) : project_item_url(project_item, host: ENV["ROOT_URL"])
+      if ENV["ROOT_URL"].blank?
+        project_service_path(project_item.project, project_item)
+      else
+        project_service_url(project_item.project, project_item, host: ENV["ROOT_URL"])
+      end
     when "Epic Link"
       project_item.project.issue_key
     when "CP-Platforms"

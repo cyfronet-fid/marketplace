@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_29_123238) do
+ActiveRecord::Schema.define(version: 2019_08_21_132453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,25 +36,6 @@ ActiveRecord::Schema.define(version: 2019_07_29_123238) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "affiliations", force: :cascade do |t|
-    t.integer "iid", null: false
-    t.string "organization", null: false
-    t.string "department"
-    t.string "email", null: false
-    t.string "phone"
-    t.string "webpage", null: false
-    t.string "token"
-    t.string "status", default: "created", null: false
-    t.string "supervisor"
-    t.string "supervisor_profile"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["iid"], name: "index_affiliations_on_iid"
-    t.index ["token"], name: "index_affiliations_on_token"
-    t.index ["user_id"], name: "index_affiliations_on_user_id"
-  end
-
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
     t.string "description"
@@ -66,7 +47,7 @@ ActiveRecord::Schema.define(version: 2019_07_29_123238) do
     t.integer "ancestry_depth", default: 0
     t.index ["ancestry"], name: "index_categories_on_ancestry"
     t.index ["description"], name: "index_categories_on_description"
-    t.index ["name"], name: "index_categories_on_name"
+    t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
   create_table "categorizations", force: :cascade do |t|
@@ -123,6 +104,7 @@ ActiveRecord::Schema.define(version: 2019_07_29_123238) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_platforms_on_name", unique: true
   end
 
   create_table "project_item_changes", force: :cascade do |t|
@@ -145,11 +127,10 @@ ActiveRecord::Schema.define(version: 2019_07_29_123238) do
     t.integer "issue_status", default: 2, null: false
     t.bigint "project_id"
     t.bigint "offer_id"
-    t.bigint "affiliation_id"
     t.jsonb "properties", default: [], null: false
     t.boolean "request_voucher", default: false, null: false
     t.string "voucher_id", default: "", null: false
-    t.index ["affiliation_id"], name: "index_project_items_on_affiliation_id"
+    t.integer "iid"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
   end
@@ -185,8 +166,8 @@ ActiveRecord::Schema.define(version: 2019_07_29_123238) do
     t.string "department"
     t.string "webpage"
     t.string "status"
-    t.datetime "created_at", default: "2019-07-31 06:45:15", null: false
-    t.datetime "updated_at", default: "2019-07-31 06:45:15", null: false
+    t.datetime "created_at", default: "2019-08-26 13:34:45", null: false
+    t.datetime "updated_at", default: "2019-08-26 13:34:45", null: false
     t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -205,12 +186,14 @@ ActiveRecord::Schema.define(version: 2019_07_29_123238) do
     t.text "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_providers_on_name", unique: true
   end
 
   create_table "research_areas", force: :cascade do |t|
     t.text "name", null: false
     t.string "ancestry"
     t.integer "ancestry_depth", default: 0
+    t.index ["name"], name: "index_research_areas_on_name", unique: true
   end
 
   create_table "service_opinions", force: :cascade do |t|
@@ -295,7 +278,6 @@ ActiveRecord::Schema.define(version: 2019_07_29_123238) do
     t.text "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "terms_of_use"
     t.text "tagline", null: false
     t.decimal "rating", precision: 2, scale: 1, default: "0.0", null: false
     t.text "connected_url"
@@ -307,7 +289,7 @@ ActiveRecord::Schema.define(version: 2019_07_29_123238) do
     t.string "dedicated_for", array: true
     t.string "terms_of_use_url"
     t.string "access_policies_url"
-    t.string "corporate_sla_url"
+    t.string "sla_url"
     t.string "webpage_url"
     t.string "manual_url"
     t.string "helpdesk_url"
@@ -321,6 +303,7 @@ ActiveRecord::Schema.define(version: 2019_07_29_123238) do
     t.string "status"
     t.integer "upstream_id"
     t.string "order_target", default: "", null: false
+    t.string "helpdesk_email", default: ""
     t.index ["description"], name: "index_services_on_description"
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["title"], name: "index_services_on_title"
@@ -389,7 +372,6 @@ ActiveRecord::Schema.define(version: 2019_07_29_123238) do
   end
 
   add_foreign_key "project_item_changes", "users", column: "author_id"
-  add_foreign_key "project_items", "affiliations"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
   add_foreign_key "project_research_areas", "projects"

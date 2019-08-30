@@ -1,4 +1,6 @@
 - breadcrumb :project, @project
 
 = render "projects/project_layout", project: @project, projects: @projects do
-  = render "projects/details", project: @project
+  .container.pt-3.order-container
+    .additional-information
+      = render "projects/details", project: @project

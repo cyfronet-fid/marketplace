@@ -1,0 +1,26 @@
+- breadcrumb :project_item, project_item
+
+= render "projects/layout", project: project, projects: projects do
+  .pt-4.pl-3.pr-3.shadow-sm.rounded.service-box.service-detail.mb-4.project-heading
+    .row
+      .col-md-9.d-flex.align-items-center
+        .box-wrapper
+          %h1.flex-grow-1.text-break
+            #{project_item.service.title}
+          .row
+            .col-md-12.back-link
+              %i.fas.fa-chevron-left.fa-xs.mr-1
+              = link_to "back to #{project.name} project services", [project, :services]
+      .buttons-panel.col-md-3.float-right.d-flex.justify-content-center
+        %p.text-uppercase.text-right.font-weight-bold.text-secondary.mb-0
+          %span{ class: "status-#{project_item.status}" }= project_item.status
+    %ul.nav.nav-tabs.mt-4.pl-3.row.services-menu
+      %li.nav-item
+        = link_to "Service Details", project_service_path(project, project_item),
+          class: "nav-link #{"active" if controller.controller_name == "services"} text-uppercase"
+      %li.nav-item
+        = link_to "Contact with project support", project_service_conversation_path(project, project_item),
+          class: "nav-link #{"active" if controller.controller_name == "conversations"} text-uppercase"
+
+  .container.p-0
+    = yield

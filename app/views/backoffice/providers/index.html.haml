@@ -4,7 +4,7 @@
     Providers
     - if policy([:backoffice, Provider]).new?
       .float-right
-        = link_to "New Provider",
+        = link_to t("backoffice.provider.new"),
                   new_backoffice_provider_path,
                   class: "btn btn-primary"
       .clearfix

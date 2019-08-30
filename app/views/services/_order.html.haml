@@ -5,8 +5,4 @@
     .col-sm-9.pl-0
       %select#sort.query-sort.form-control.form-control-sm{ "data-target": "order.select",
                                                             "data-submit-on-change": "data-submit-on-change" }
-        = options_for_select([["name A-Z", "title"],
-                              ["name Z-A", "-title"],
-                              ["rate 1-5", "rating"],
-                              ["rate 5-1", "-rating"],
-                              ["Best match", "_score"]], params[:sort])
+        = options_for_select(sort_options, params[:sort])

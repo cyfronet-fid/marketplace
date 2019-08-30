@@ -1,9 +1,0 @@
-%li.projects-list
-  = link_to project_item.service.title, project_item
-  .float-right.status
-    - if project_item.closed?
-      = project_item.status
-    - elsif project_item.open_access?
-      = link_to "Visit website", project_item.service.webpage_url
-    - else
-      = project_item_status(project_item)
