@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Projects::ServicesController < ApplicationController
-  before_action :authenticate_user!
-
   include Project::Authorize
 
   before_action :load_projects
@@ -12,8 +10,11 @@ class Projects::ServicesController < ApplicationController
   end
 
   def show
-    @project_item = ProjectItem.joins(offer: :service, project: :user).find(params[:id])
-    @question = ProjectItem::Question.new(project_item: @project_item)
+    @project_item = @project.project_items.
+                    joins(offer: :service, project: :user).
+                    find_by!(iid: params[:id])
+
+    authorize(@project_item)
   end
 
   private

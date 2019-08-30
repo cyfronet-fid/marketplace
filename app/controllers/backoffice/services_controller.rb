@@ -7,6 +7,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   include Service::Autocomplete
 
   before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
+  before_action :sort_options
   prepend_before_action :index_authorize, only: :index
 
   def index
@@ -69,6 +70,16 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
     def service_template
       Service.new(permitted_attributes(Service).merge(status: :draft))
+    end
+
+    def sort_options
+      @sort_options = [["by name A-Z", "title"],
+                       ["by name Z-A", "-title"],
+                       ["draft first", "status"],
+                       ["published first", "-status"],
+                       ["by rate 1-5", "rating"],
+                       ["by rate 5-1", "-rating"],
+                       ["Best match", "_score"]]
     end
 
     def find_and_authorize

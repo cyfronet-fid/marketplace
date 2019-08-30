@@ -272,7 +272,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://documents.egi.eu/document/2733
+        sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: &europe Europe
         languages: &english English
@@ -574,7 +574,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://documents.egi.eu/document/2733
+        sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
@@ -740,7 +740,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-container-compute-training-material
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://documents.egi.eu/document/2733
+        sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
@@ -774,7 +774,7 @@ services:
         helpdesk_url: https://www.eudat.eu/support-request?service=B2DROP
         tutorial_url: https://eudat.eu/services/userdoc/b2drop
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url:
+        sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -906,7 +906,7 @@ services:
         helpdesk_url: http://www.egi.eu/more-information/
         tutorial_url: http://eudat.eu/services/userdoc/b2find
         terms_of_use_url: http://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url:
+        sla_url:
         access_policies_url: http://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1033,7 +1033,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://eudat.eu/services/userdoc/b2handle
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url:
+        sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1154,7 +1154,7 @@ services:
         helpdesk_url: https://www.eudat.eu/contact-support-request?service=B2NOTE
         tutorial_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url:
+        sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1241,7 +1241,7 @@ services:
         helpdesk_url: https://eudat.eu/contact-support-request
         tutorial_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url:
+        sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1295,7 +1295,7 @@ services:
         helpdesk_url: https://eudat.eu/contact-support-request
         tutorial_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url:
+        sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1424,7 +1424,7 @@ services:
         helpdesk_url: https://eudat.eu/contact-support-request
         tutorial_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url:
+        sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1487,7 +1487,7 @@ services:
         helpdesk_url: https://eudat.eu/contact-support-request
         tutorial_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: http://hdl.handle.net/11304/e43b2e3f-83c5-4e3f-b8b7-18d38d37a6cd
+        sla_url: http://hdl.handle.net/11304/e43b2e3f-83c5-4e3f-b8b7-18d38d37a6cd
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1530,7 +1530,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://wiki.egi.eu/wiki/Online_Storage
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url:
+        sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
@@ -1598,7 +1598,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://wiki.egi.eu/wiki/Online_Storage
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url:
+        sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
@@ -1770,7 +1770,7 @@ services:
 #        helpdesk_url: https://www.egi.eu/more-information/
 #        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
 #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        places: *europe
 #        dedicated_for: ["Researchers"] #TODO: but not specified
@@ -1797,7 +1797,7 @@ services:
         helpdesk_url:
         tutorial_url:
         terms_of_use_url: http://geosspublish.uat.esaportal.eu/community/guest/terms-conditions
-        corporate_sla_url:
+        sla_url:
         access_policies_url:
         places: *europe
         target_groups: [*researchers] #TODO: but not specified
@@ -1829,7 +1829,7 @@ services:
         helpdesk_url: http://api.geodab.eu/index.html
         tutorial_url: http://eosc.geodab.eu/gi-cat-StP/
         terms_of_use_url:
-        corporate_sla_url:
+        sla_url:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_groups, *research_organisations]
@@ -1869,7 +1869,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url:
+        sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
@@ -1917,7 +1917,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url:
+        sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
@@ -1981,7 +1981,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url:
+        sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
@@ -2041,7 +2041,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        target_groups: ["Reaserchers"] #TODO: but not specified
 #        places: *europe
@@ -2064,7 +2064,7 @@ services:
 #        helpdesk_url: https://www.egi.eu/more-information/
 #        tutorial_url: https://wiki.egi.eu/wiki/HowToAccessTheEGIMarketPlace
 #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        places: *europe
 #        languages: *english
@@ -2099,7 +2099,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        places: *europe
 #        languages: *english
@@ -2174,7 +2174,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
@@ -2202,7 +2202,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
@@ -2273,7 +2273,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
@@ -2306,7 +2306,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
@@ -2337,7 +2337,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
@@ -2367,7 +2367,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
@@ -2398,7 +2398,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
@@ -2429,7 +2429,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
@@ -2462,7 +2462,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
@@ -2493,7 +2493,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
@@ -2525,7 +2525,7 @@ services:
         tutorial_url:
         #contact: applications-platform-info@mailman.egi.eu
         terms_of_use_url: https://csgf.egi.eu/terms-of-use
-        corporate_sla_url: https://documents.egi.eu/document/2733
+        sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
         places: *europe
         target_groups: [*researchers, *research_organisations, *business]
@@ -2572,7 +2572,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
@@ -2600,7 +2600,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
@@ -2629,7 +2629,7 @@ services:
       helpdesk_url:
       tutorial_url:
       terms_of_use_url:
-      corporate_sla_url:
+      sla_url:
       access_policies_url:
       target_groups: [*researchers, *research_organisations]
       places: *europe
@@ -2728,7 +2728,7 @@ services:
 #        helpdesk_url: https://www.clarin.eu/content/support
 #        tutorial_url: https://www.eosc-hub.eu/training-material/component-metadata-infrastructure-services
 #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        places: *europe
 #        target_groups: ["Researchers"] #TODO: but not specified
@@ -2769,7 +2769,7 @@ services:
         helpdesk_url: https://www.dariah.eu/contact
         tutorial_url: https://www.dariah.eu/tools-services/dariah-training/
         terms_of_use_url:
-        corporate_sla_url:
+        sla_url:
         access_policies_url: https://www.dariah.eu/privacy-notice/
         places: *europe
         target_groups: [*researchers, *research_organisations]
@@ -2829,7 +2829,7 @@ services:
         helpdesk_url:
         tutorial_url:
         terms_of_use_url:
-        corporate_sla_url:
+        sla_url:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations]
@@ -2909,7 +2909,7 @@ services:
         helpdesk_url: https://github.com/markusstocker/pynpf-d4science
         tutorial_url: https://youtu.be/ra9W7b5DbgI
         terms_of_use_url: https://documents.egi.eu/public/ShowDocument?docid=2623
-        corporate_sla_url: https://documents.egi.eu/document/2875
+        sla_url: https://documents.egi.eu/document/2875
         access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
         places: *europe
         target_groups: [*researchers, *research_organisations]
@@ -2940,7 +2940,7 @@ services:
         helpdesk_url: https://portal.enes.org/contact
         tutorial_url:
         terms_of_use_url:
-        corporate_sla_url:
+        sla_url:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations]
@@ -3012,7 +3012,7 @@ services:
         helpdesk_url:
         tutorial_url:
         terms_of_use_url:
-        corporate_sla_url:
+        sla_url:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations]
@@ -3074,7 +3074,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers"] #TODO: but not specified
@@ -3095,7 +3095,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers"] #TODO: but not specified
@@ -3116,7 +3116,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers"] #TODO: but not specified
@@ -3138,7 +3138,7 @@ services:
         helpdesk_url:
         tutorial_url: https://www.eosc-hub.eu/training-material/opencoasts-service
         terms_of_use_url:
-        corporate_sla_url:
+        sla_url:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations]
@@ -3227,7 +3227,7 @@ services:
 #        helpdesk_url: https://www.wenmr.eu/support/
 #        tutorial_url: https://www.wenmr.eu/tutorials/
 #        terms_of_use_url:
-#        corporate_sla_url:
+#        sla_url:
 #        access_policies_url:
 #        places: *europe
 #        languages: *english
@@ -3278,7 +3278,7 @@ services:
         helpdesk_url: http://ask.bioexcel.eu/c/haddock
         tutorial_url: https://www.wenmr.eu/tutorials/#haddock
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
-        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
         target_groups: [*researchers]
@@ -3316,7 +3316,7 @@ services:
         helpdesk_url: http://ask.bioexcel.eu/c/powerfit
         tutorial_url: https://www.wenmr.eu/tutorials/#powerfit
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
-        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
         target_groups: [*researchers]
@@ -3342,7 +3342,7 @@ services:
         helpdesk_url: http://ask.bioexcel.eu/c/disvis
         tutorial_url: https://www.wenmr.eu/tutorials/#disvis
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
-        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
         target_groups: [*researchers]
@@ -3370,7 +3370,7 @@ services:
         helpdesk_url:
         tutorial_url: https://www.wenmr.eu/tutorials/
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
-        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
         target_groups: [*researchers]
@@ -3397,7 +3397,7 @@ services:
         helpdesk_url: http://py-enmr.cerm.unifi.it/feedback/index?type=amps-nmr
         tutorial_url: https://www.wenmr.eu/tutorials/
         terms_of_use_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
-        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         places: *europe
         target_groups: [*researchers]
@@ -3428,7 +3428,7 @@ services:
         helpdesk_url:
         tutorial_url: https://www.wenmr.eu/tutorials/
         terms_of_use_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
-        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         places: *europe
         target_groups: [*researchers]
@@ -3457,7 +3457,7 @@ services:
         helpdesk_url: http://ask.bioexcel.eu/c/spoton
         tutorial_url: https://www.wenmr.eu/tutorials/#spoton
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
-        corporate_sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+        sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
         target_groups: [*researchers]
@@ -3485,7 +3485,7 @@ services:
         #contect: support@terradue.com
         tutorial_url: https://discuss.terradue.com/t/interpreting-the-layers-of-dlr-s-insar-browse-service/216 #TODO: should be able to link several urls
         terms_of_use_url:
-        corporate_sla_url:
+        sla_url:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations, *business]
@@ -3518,7 +3518,7 @@ services:
         #contect: support@terradue.com
         tutorial_url: https://terradue.github.io/doc-tep-geohazards/tutorials/index.html
         terms_of_use_url:
-        corporate_sla_url:
+        sla_url:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations, *business]
@@ -3550,7 +3550,7 @@ services:
         helpdesk_url: https://www.eodc.eu/support-request/
         tutorial_url:
         terms_of_use_url:
-        corporate_sla_url:
+        sla_url:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups]
@@ -3607,7 +3607,7 @@ services:
         #contact: support@eodc.eu
         tutorial_url:
         terms_of_use_url:
-        corporate_sla_url:
+        sla_url:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers]
@@ -3643,7 +3643,7 @@ services:
         helpdesk_url:
         tutorial_url:
         terms_of_use_url:
-        corporate_sla_url:
+        sla_url:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations]
@@ -3670,7 +3670,7 @@ services:
         helpdesk_url:
         tutorial_url:
         terms_of_use_url:
-        corporate_sla_url:
+        sla_url:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations]
@@ -3697,7 +3697,7 @@ services:
         helpdesk_url:
         tutorial_url:
         terms_of_use_url:
-        corporate_sla_url:
+        sla_url:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations]
@@ -3751,7 +3751,7 @@ services:
         helpdesk_url:
         tutorial_url: https://creodias.eu/knowledgebase
         terms_of_use_url: https://creodias.eu/terms-of-service
-        corporate_sla_url: https://creodias.eu/appendix-service-level
+        sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
@@ -3794,7 +3794,7 @@ services:
         helpdesk_url:
         tutorial_url: https://creodias.eu/knowledgebase
         terms_of_use_url: https://creodias.eu/terms-of-service
-        corporate_sla_url: https://creodias.eu/appendix-service-level
+        sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
@@ -3833,7 +3833,7 @@ services:
         helpdesk_url:
         tutorial_url: https://creodias.eu/knowledgebase
         terms_of_use_url: https://creodias.eu/terms-of-service
-        corporate_sla_url: https://creodias.eu/appendix-service-level
+        sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
@@ -3864,7 +3864,7 @@ services:
         helpdesk_url:
         tutorial_url: https://creodias.eu/knowledgebase
         terms_of_use_url: https://creodias.eu/terms-of-service
-        corporate_sla_url: https://creodias.eu/appendix-service-level
+        sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
@@ -3903,7 +3903,7 @@ services:
         helpdesk_url:
         tutorial_url:
         terms_of_use_url:
-        corporate_sla_url:
+        sla_url:
         access_policies_url:
         places: *europe
         target_groups: [*research_organisations]
@@ -3958,7 +3958,7 @@ services:
 #        helpdesk_url:
 #        tutorial_url:
 #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-#        corporate_sla_url: https://documents.egi.eu/document/2733
+#        sla_url: https://documents.egi.eu/document/2733
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        places: *europe
 #        target_groups: ["Research organisations"]
@@ -3989,7 +3989,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://wiki.egi.eu/wiki/Training_infrastructure
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-        corporate_sla_url: https://documents.egi.eu/document/2733
+        sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         target_groups: [*research_groups, *research_organisations]
@@ -4102,7 +4102,7 @@ services:
         helpdesk_url: https://www.egi.eu/more-information/
         tutorial_url: https://www.egi.eu/services/fitsm-training/
         terms_of_use_url: https://www.egi.eu/services/fitsm-training/terms-and-conditions/
-        corporate_sla_url: https://documents.egi.eu/document/2733
+        sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         target_groups: [*research_organisations]
@@ -4196,7 +4196,7 @@ services:
       helpdesk_url: https://support.d4science.org/
       tutorial_url: https://dev.d4science.org/
       terms_of_use_url:  https://services.d4science.org/terms-of-use
-      corporate_sla_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies#Service_Level_Agreement
+      sla_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies#Service_Level_Agreement
       access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
       places: *europe
       target_groups: [*research_groups]
@@ -4242,7 +4242,7 @@ services:
 #      helpdesk_url:
 #      tutorial_url:
 #      terms_of_use_url:
-#      corporate_sla_url:
+#      sla_url:
 #      access_policies_url:
 #      places: *europe
 #      target_groups: ["Research groups", "Research organisations"]
@@ -4268,7 +4268,7 @@ services:
       helpdesk_url:
       tutorial_url:
       terms_of_use_url:
-      corporate_sla_url:
+      sla_url:
       access_policies_url:
       places: *europe
       target_groups: [*research_groups, *research_organisations]
@@ -4308,7 +4308,7 @@ services:
       helpdesk_url: https://eosc-pan-git.desy.de/support
       tutorial_url: https://eosc-pan-git.desy.de
       terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-      corporate_sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+      sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       places: *europe
       target_groups: [*researchers]
@@ -4345,7 +4345,7 @@ services:
       helpdesk_url: https://eosc-pan-git.desy.de/support
       tutorial_url: https://eosc-pan-git.desy.de
       terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-      corporate_sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+      sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       places: *europe
       target_groups: [*researchers]
@@ -4379,7 +4379,7 @@ services:
       helpdesk_url: https://eosc-pan-git.desy.de/support
       tutorial_url: https://eosc-pan-git.desy.de
       terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-      corporate_sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+      sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       places: *europe
       target_groups: [*researchers]
@@ -4413,7 +4413,7 @@ services:
       helpdesk_url: https://eosc-pan-git.desy.de/support
       tutorial_url: https://eosc-pan-git.desy.de
       terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-      corporate_sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+      sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       places: *europe
       target_groups: [*researchers]
@@ -4448,7 +4448,7 @@ services:
       helpdesk_url: https://wiki.egi.eu/wiki/GGUS:WS-PGRADE/gUSE_FAQ
       tutorial_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/help
       terms_of_use_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/terms-of-use
-      corporate_sla_url: https://documents.egi.eu/document/2733
+      sla_url: https://documents.egi.eu/document/2733
       access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
       places: *europe
       target_groups: [*researchers, *research_organisations, *business]
@@ -4493,7 +4493,7 @@ services:
       helpdesk_url:
       tutorial_url:
       terms_of_use_url: https://research.csc.fi/pouta-user-policy
-      corporate_sla_url: https://research.csc.fi/documents/48467/0/ePouta+SLA/cbac49af-f069-4a8b-9636-e519b1ee331d
+      sla_url: https://research.csc.fi/documents/48467/0/ePouta+SLA/cbac49af-f069-4a8b-9636-e519b1ee331d
       access_policies_url: https://research.csc.fi/pricing-of-computing-services
       places: *europe
       target_groups: [*researchers, *research_organisations, *research_groups, *providers]
@@ -4525,7 +4525,7 @@ services:
       helpdesk_url: https://www.uio.no/english/services/it/research/sensitive-data/
       tutorial_url:
       terms_of_use_url:
-      corporate_sla_url:
+      sla_url:
       access_policies_url:
       places: *europe
       target_groups: [*researchers]
@@ -4558,7 +4558,7 @@ services:
       helpdesk_url: https://wiki.egi.eu/wiki/GGUS:EC3_FAQ
       tutorial_url: https://github.com/grycap/ec3
       terms_of_use_url: https://servproject.i3m.upv.es/ec3-ltos/terms.html
-      corporate_sla_url: https://documents.egi.eu/document/2733
+      sla_url: https://documents.egi.eu/document/2733
       access_policies_url:  https://documents.egi.eu/public/ShowDocument?docid=2635
       places: *europe
       target_groups: [*researchers, *research_organisations, *business]

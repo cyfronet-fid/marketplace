@@ -36,7 +36,7 @@ RSpec.feature "Services in backoffice" do
       target_group = create(:target_group)
 
       visit backoffice_services_path
-      click_on "Create new service"
+      click_on "Create new Service"
 
       fill_in "Title", with: "service title"
       fill_in "Description", with: "service description"
@@ -48,7 +48,7 @@ RSpec.feature "Services in backoffice" do
       select target_group.name, from: "Dedicated For"
       fill_in "Terms of use url", with: "https://sample.url"
       fill_in "Access policies url", with: "https://sample.url"
-      fill_in "Corporate sla url", with: "https://sample.url"
+      fill_in "Sla url", with: "https://sample.url"
       fill_in "Webpage url", with: "https://sample.url"
       fill_in "Manual url", with: "https://sample.url"
       fill_in "Helpdesk url", with: "https://sample.url"
@@ -77,7 +77,6 @@ RSpec.feature "Services in backoffice" do
 
       expect(page).to have_content("service title")
       expect(page).to have_content("service description")
-      expect(page).to have_content("service terms of use")
       expect(page).to have_content("service tagline")
       expect(page).to have_content("https://sample.url")
       expect(page).to have_content("open_access")
@@ -97,7 +96,7 @@ RSpec.feature "Services in backoffice" do
       research_area = create(:research_area)
 
       visit backoffice_services_path
-      click_on "Create new service"
+      click_on "Create new Service"
 
       attach_file("service_logo", "spec/lib/images/invalid-logo.svg")
       fill_in "Title", with: "service title"

@@ -33,7 +33,8 @@ crumb :category do |category|
 end
 
 crumb :project_item do |project_item|
-  link "Service (#{project_item.service.title})", project_item_path(project_item)
+  link "Service (#{project_item.service.title})",
+    project_service_path(project_item.project, project_item)
   parent :project, project_item.project
 end
 
@@ -43,7 +44,8 @@ crumb :projects do
 end
 
 crumb :congratulations do |project_item|
-  link "Congratulations", project_item_path(project_item)
+  link "Congratulations",
+       project_service_path(project_item.project, project_item)
   parent :marketplace_root
 end
 

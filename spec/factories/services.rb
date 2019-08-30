@@ -4,7 +4,6 @@ FactoryBot.define do
   factory :service do
     sequence(:title) { |n| "service #{n}" }
     sequence(:description) { |n| "service #{n} description" }
-    sequence(:terms_of_use) { |n| "service #{n} terms of use" }
     sequence(:tagline) { |n| "service #{n} tagline" }
     sequence(:service_type) { :normal }
 
@@ -17,7 +16,7 @@ FactoryBot.define do
     sequence(:helpdesk_url) { "https://helpdesk.url"  }
     sequence(:tutorial_url) { "https://tutorial.url"  }
     sequence(:terms_of_use_url) { "https://terms.of.use.url"  }
-    sequence(:corporate_sla_url) { "https://corporate.sla.url"  }
+    sequence(:sla_url) { "https://corporate.sla.url"  }
     sequence(:access_policies_url) { "https://access.policies.url"  }
 
     sequence(:places) { |n| "service #{n} place" }

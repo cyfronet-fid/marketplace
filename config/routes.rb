@@ -10,7 +10,6 @@ Rails.application.routes.draw do
 
   get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
 
-
   resources :services, only: [:index, :show] do
     scope module: :services do
       resources :offers, only: :index
@@ -23,7 +22,6 @@ Rails.application.routes.draw do
     end
   end
   get "services/c/:category_id" => "services#index", as: :category_services
-
   resources :categories, only: :show
 
   resources :projects do
@@ -31,14 +29,12 @@ Rails.application.routes.draw do
       resource :add, only: :create
       resource :archive, only: :create
       resources :about, only: :index
-      resources :services, only: [:show, :index]
-      resource :conversation, only: [:show, :create]
-    end
-  end
-
-  resources :project_items, only: [:show, :message] do
-    scope module: :project_items do
-      resources :service_opinions, only: [:new, :create]
+      resources :services, only: [:show, :index] do
+        scope module: :services do
+          resource :opinion, only: [:new, :create]
+          resource :conversation, only: [:show, :create]
+        end
+      end
       resource :conversation, only: [:show, :create]
     end
   end
@@ -94,6 +90,9 @@ Rails.application.routes.draw do
   get "errors/unprocessable"
   get "errors/internal_server_error"
   match "about", to: "pages#about", via: "get", as: :about
+  match "providers", to: "pages#providers", via: "get", as: :providers
+  match "communities", to: "pages#communities", via: "get", as: :communities
+  match "about_projects", to: "pages#about_projects", via: "get", as: :about_projects
 
   if Rails.env.production?
     match "/404", to: "errors#not_found", via: :all

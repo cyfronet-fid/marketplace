@@ -73,7 +73,7 @@ yaml_hash["services"].each do |_, hash|
                     helpdesk_url: hash["helpdesk_url"],
                     tutorial_url: hash["tutorial_url"],
                     terms_of_use_url: hash["terms_of_use_url"],
-                    corporate_sla_url: hash["corporate_sla_url"],
+                    sla_url: hash["sla_url"],
                     access_policies_url: hash["access_policies_url"],
                     places: hash["places"],
                     languages: hash["languages"],

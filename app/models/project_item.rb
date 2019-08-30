@@ -2,6 +2,7 @@
 
 class ProjectItem < ApplicationRecord
   include Customization
+  include Iid
 
   STATUSES = {
     created: "created",
@@ -25,7 +26,6 @@ class ProjectItem < ApplicationRecord
   enum issue_status: ISSUE_STATUSES
 
   belongs_to :offer
-  belongs_to :affiliation, required: false
   belongs_to :project
   belongs_to :research_area, required: false
   has_one :service_opinion, dependent: :restrict_with_error
@@ -87,7 +87,7 @@ class ProjectItem < ApplicationRecord
   end
 
   def to_s
-    "##{id}"
+    "\"#{project.name}##{id}\""
   end
 
   def one_per_project?

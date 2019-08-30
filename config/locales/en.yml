@@ -40,12 +40,21 @@ en:
       order:
         title: Order
         cancel: Cancel order and quit
-        configuration: Service configuration
+        configuration:
+          title: Service configuration
+          description: |
+            We need more information about your request.
+            We will be able to process your request quicker
+            if the form is filled with as much detail as possible.
     open_access:
       order:
         title: Add to a project
         cancel: Quit
-        configuration: Add to a project
+        configuration:
+          title: Add to a project
+          description: |
+            You can organize your services in projects.
+            Add this service to a specific project or create a new one.
   project:
     mail:
       new_message: |
@@ -86,6 +95,24 @@ en:
       normal: Order
       open_access: Add to a project
       catalog: Go to the service
+  backoffice:
+    category:
+      new: Add new Category
+    platform:
+      new: Add new Platform
+    provider:
+      new: Add new Provider
+    research_area:
+      new: Add new Research Area
+    service:
+      new: Create new Service
+      edit: Edit
+      offer:
+        new: Add new Offer
+
+
+
+
 
   will_paginate:
     page_entries_info:

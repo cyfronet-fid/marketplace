@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+#  frozen_string_literal: true
 
 class Project::Create
   def initialize(project)
@@ -6,9 +6,9 @@ class Project::Create
   end
 
   def call
-    @project.save!
-    Project::ProjectRegisterJob.perform_later(@project)
-
-    @project
+    if @project.save
+      Project::ProjectRegisterJob.perform_later(@project)
+      true
+    end
   end
 end

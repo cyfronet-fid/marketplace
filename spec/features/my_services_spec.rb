@@ -37,7 +37,7 @@ RSpec.feature "My Services" do
       project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
-      visit project_item_path(project_item)
+      visit project_service_path(project, project_item)
 
       expect(page).to have_text(project_item.service.title)
     end
@@ -48,7 +48,7 @@ RSpec.feature "My Services" do
       project = create(:project, user: user, research_areas: [])
       project_item = create(:project_item, project: project, offer: offer)
 
-      visit project_item_path(project_item)
+      visit project_service_path(project, project_item)
 
       expect(page).to have_text(project_item.service.title)
     end
@@ -56,7 +56,8 @@ RSpec.feature "My Services" do
     scenario "I cannot see other users project_items" do
       other_user_project_item = create(:project_item, offer: offer)
 
-      visit project_item_path(other_user_project_item)
+      visit project_service_path(other_user_project_item.project,
+                                 other_user_project_item)
 
       # TODO: the given service is showing up in Others pane in home view
       # expect(page).to_not have_text(other_user_project_item.service.title)
@@ -71,7 +72,7 @@ RSpec.feature "My Services" do
       project_item.new_status(status: :registered, message: "Service request registered")
       project_item.new_status(status: :ready, message: "Service is ready")
 
-      visit project_item_conversation_path(project_item)
+      visit project_service_conversation_path(project, project_item)
 
       expect(page).to have_text("ready")
 
@@ -86,7 +87,7 @@ RSpec.feature "My Services" do
       project_item = create(:project_item, project: project, offer: create(:offer, voucherable: true),
                             voucher_id: "V123V")
 
-      visit project_item_path(project_item)
+      visit project_service_path(project, project_item)
 
       expect(page).to have_text(project_item.voucher_id)
     end
@@ -95,7 +96,7 @@ RSpec.feature "My Services" do
       project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
-      visit project_item_path(project_item)
+      visit project_service_path(project, project_item)
 
       expect(page).to_not have_text("Voucher")
     end
@@ -105,7 +106,7 @@ RSpec.feature "My Services" do
       project_item = create(:project_item, project: project, offer: create(:offer, voucherable: true),
                             request_voucher: true)
 
-      visit project_item_path(project_item)
+      visit project_service_path(project, project_item)
 
       expect(page).to have_text("Vouchers\nRequested")
     end
@@ -114,7 +115,7 @@ RSpec.feature "My Services" do
       project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
-      visit project_item_path(project_item)
+      visit project_service_path(project, project_item)
 
       expect(page).to_not have_text("Your review")
     end
@@ -123,7 +124,7 @@ RSpec.feature "My Services" do
       project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer, status: :ready)
       travel 1.day
-      visit project_item_path(project_item)
+      visit project_service_path(project, project_item)
 
       expect(page).to have_text("Your review")
       expect(page).to have_text("You have been using this service for 1 day.")
@@ -133,7 +134,7 @@ RSpec.feature "My Services" do
       project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
-      visit project_item_conversation_path(project_item)
+      visit project_service_conversation_path(project, project_item)
       fill_in "message_message", with: "This is my question"
       click_button "Send message"
 
@@ -144,7 +145,7 @@ RSpec.feature "My Services" do
       project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
-      visit project_item_conversation_path(project_item)
+      visit project_service_conversation_path(project, project_item)
       click_button "Send message"
 
       expect(page).to have_text("Message can't be blank")
