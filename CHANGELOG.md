@@ -9,6 +9,20 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [2.1.0] 2019-08-30
+
+### Added
 - Add new field helpdesk_email in the service model (@goreck888)
 - Services sort by their status in the backoffice (@goreck888)
 
@@ -21,8 +35,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Apply a new view and functionalities of the start page (@jarekzet, @goreck888)
 - Rename buttons for creating new platforms, providers and categories in the backoffice (@goreck888)
 
-### Deprecated
-
 ### Removed
 - Affiliation model removed (@mkasztelnik)
 - Remove terms_of_use field from the service model and forms (@goreck888)
@@ -33,8 +45,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Typo in archive project flash type fixed (@mkasztelnik)
 - Uniqueness of names in the platforms, categories, providers and research areas (@goreck888)
 - Email validation in contact_emails field (@goreck888)
-
-### Security
 
 ## [2.0.1] 2019-08-13
 
