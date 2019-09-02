@@ -18,6 +18,16 @@ RSpec.describe User do
     end
   end
 
+  context "#email" do
+    it "two users with the same emails are created" do
+      email = "rambo@john.eu"
+      u1 = build(:user, first_name: "john", last_name: "rambo", email: email)
+      u2 = build(:user, first_name: "johny", last_name: "rambo", email: email)
+      expect(u1.save).to be true
+      expect(u2.save).to be true
+    end
+  end
+
   context "#service_owner?" do
     it "is false when user does not own any services" do
       user = create(:user)
