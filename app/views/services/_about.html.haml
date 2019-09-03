@@ -3,7 +3,7 @@
     %main.col-12.col-xl-9.pr-5.mb-4
 
       = markdown(service.description)
-      - if policy(service).order? && !offers.empty?
+      - if policy(service).order? && !offers&.empty?
         = render "services/offers", offers: offers, service: service
 
     %sidebar.col-12.col-xl-3.pl-5

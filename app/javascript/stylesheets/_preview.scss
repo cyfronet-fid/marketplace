@@ -1,0 +1,20 @@
+.preview {
+  a {
+    pointer-events: none;
+  }
+}
+
+.corner-ribbon {
+  width: 200px;
+  background: $primary;
+  position: absolute;
+  top: 25px;
+  left: -50px;
+  text-align: center;
+  line-height: 40px;
+  letter-spacing: 1px;
+  color: $palette-lightblue;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  z-index: 1000;
+}

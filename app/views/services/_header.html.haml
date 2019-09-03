@@ -12,6 +12,7 @@
           = print_rating_stars(service.rating)
           %span.ml-1.font-weight-bold
             (#{service.rating} /5)
+        - unless current_page? preview_backoffice_service_path
           = link_to "#{service.service_opinion_count} reviews", service_opinions_path(service), class: "ml-3"
   .col-12.col-lg-3.text-center
     - if policy(service).order?
@@ -20,5 +21,5 @@
                     class: "btn btn-primary d-block mb-4"
     - if service.open_access? || service.catalog?
       = link_to "Access the service", service.connected_url, class: "btn btn-primary d-block mb-2", target: "_blank"
-
-    = render "services/ask_question", service: service, question: question
+    - unless current_page? preview_backoffice_service_path
+      = render "services/ask_question", service: service, question: question
