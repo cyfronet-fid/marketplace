@@ -6,7 +6,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   include Service::Categorable
   include Service::Autocomplete
 
-  before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
+  before_action :find_and_authorize, only: [:show, :edit, :preview, :update, :destroy]
   before_action :sort_options
   prepend_before_action :index_authorize, only: :index
 
@@ -28,6 +28,9 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     authorize(@service)
   end
 
+  def preview
+  end
+
   def create
     template = service_template
     authorize(template)
@@ -35,8 +38,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     @service = Service::Create.new(template).call
 
     if @service.persisted?
-      redirect_to backoffice_service_path(@service),
-                  notice: "New service created sucessfully"
+      preview_service_redirector
     else
       render :new, status: :bad_request
     end
@@ -50,8 +52,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def update
     if Service::Update.new(@service, permitted_attributes(@service)).call
-      redirect_to backoffice_service_path(@service),
-                  notice: "Service updated correctly"
+      preview_service_redirector
     else
       render :edit, status: :bad_request
     end
@@ -89,5 +90,14 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
     def scope
       policy_scope(Service).with_attached_logo
+    end
+
+    def preview_service_redirector
+      if params[:commit] == "Preview"
+        redirect_to preview_backoffice_service_path(@service)
+      else
+        redirect_to backoffice_service_path(@service),
+                    notice: "Service updated correctly"
+      end
     end
 end

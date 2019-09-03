@@ -1,0 +1,11 @@
+- breadcrumb :backoffice_service_preview, @service
+.corner-ribbon
+  Service preview
+.row
+  .col-12.text-right
+    = link_to "Go back to edit", edit_backoffice_service_path(@service), class: "btn btn-primary pl-5 pr-5 mr-5"
+    = link_to "Confirm changes", backoffice_service_path(@service), class: "btn btn-primary pl-5 pr-5 mr-5"
+.row.col-12
+  .container
+    .preview
+      = render template: "services/show", service: @service
