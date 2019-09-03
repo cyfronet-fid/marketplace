@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_21_132453) do
+ActiveRecord::Schema.define(version: 2019_09_02_135120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,8 +166,8 @@ ActiveRecord::Schema.define(version: 2019_08_21_132453) do
     t.string "department"
     t.string "webpage"
     t.string "status"
-    t.datetime "created_at", default: "2019-08-26 13:34:45", null: false
-    t.datetime "updated_at", default: "2019-08-26 13:34:45", null: false
+    t.datetime "created_at", default: "2019-09-02 14:47:09", null: false
+    t.datetime "updated_at", default: "2019-09-02 14:47:09", null: false
     t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -368,7 +368,7 @@ ActiveRecord::Schema.define(version: 2019_08_21_132453) do
     t.string "last_name", null: false
     t.integer "roles_mask"
     t.integer "owned_services_count", default: 0, null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["email"], name: "index_users_on_email"
   end
 
   add_foreign_key "project_item_changes", "users", column: "author_id"
