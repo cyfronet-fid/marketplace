@@ -77,6 +77,7 @@
 
   .row.mt-5
     .col-12
+      = link_to "Preview", preview_backoffice_service_path(service), class: "btn btn-primary pl-5 pr-5 mr-5"
       = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5"
       = back_link_to "Cancel and back to previous page", service, prefix: :backoffice,
         class: "text-left flex-grow-1 text-uppercase"
