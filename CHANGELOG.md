@@ -17,14 +17,18 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- Removed uniqueness constraint on user email (@bwilk)
 
 ### Security
+
+## [2.1.2] 2019-09-04
+
+### Fixed
+- Removed uniqueness constraint on user email (@bwilk)
 
 ## [2.1.1] 2019-08-30
 
 ### Changed
-Content change at the home page (@bwilk)
+- Content change at the home page (@bwilk)
 
 ## [2.1.0] 2019-08-30
 
