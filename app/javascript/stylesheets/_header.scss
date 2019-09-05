@@ -159,9 +159,70 @@ header {
   position: relative;
 }
 
+.navbar-brand {
+  position: relative;
+
+  img {
+    position: relative;
+    z-index: 100;
+  }
+
+  .logo-bg {
+    position: absolute;
+    top: -7px;
+    left: -35px;
+    width: 335px;
+    height: 133px;
+    background: url('../../assets/images/logo-bg.png') no-repeat bottom right;
+  }
+}
+
+@media (max-width: 992px) {
+
+  header .bg-light {
+    display: none;
+  }
+
+  .navbar-toggler {
+    display: none;
+  }
+
+  .navbar-collapse {
+    float: right;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .navbar-brand {
+    padding: 25px 10px 33px 0;
+  }
+
+  .navbar-brand img {
+    width: 176px;
+    margin-left: 15px;
+  }
+
+  .navbar-brand .logo-bg {
+    position: absolute;
+    top: 0;
+    left: -10px;
+    width: 220px;
+    background-size: 100% auto;
+    background-position: top left;
+    height: 105px;
+  }
+
+  .navbar.navbar-expand-lg .navbar-nav .nav-link {
+    text-align: right;
+  }
+}
 
 
 @media (max-width: 576px) {
+
+  header .navbar {
+    padding-top: 0;
+  }
 
   .top-row {
     padding-right: 1.5rem !important;
@@ -209,43 +270,9 @@ header {
     }
   }
 
-  .navbar-brand {
-    padding: 10px 10px 20px 0;
-  }
-
   .search-box .custom-select {
     width: 34%;
     padding-left: 0.2rem;
     padding-right: 1.1rem;
-  }
-}
-
-.navbar-brand {
-  position: relative;
-
-  img {
-    position: relative;
-    z-index: 100;
-  }
-
-  .logo-bg {
-    position: absolute;
-    top: -7px;
-    left: -35px;
-    width: 335px;
-    height: 133px;
-    background: url('../../assets/images/logo-bg.png') no-repeat;
-  }
-}
-
-@media (max-width: 992px) {
-  .navbar-collapse {
-    float: right;
-    max-width: 100%;
-    width: 100%;
-  }
-
-  .navbar.navbar-expand-lg .navbar-nav .nav-link {
-    text-align: right;
   }
 }
