@@ -177,10 +177,119 @@ header {
   }
 }
 
+.open-menu {
+  display: none;
+}
+
+.overlay {
+  /* Height & width depends on how you want to reveal the overlay (see JS below) */
+  height: 0%;
+  width: 100%;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  background-color: $white;
+  background-image: url('../../assets/images/home-bg.png');
+  background-size: 1000px auto;
+  background-position: top -105px right -100px;
+  background-repeat: no-repeat;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  transition: 0.5s;
+
+  .closebtn {
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    color: $body-color;
+    right: 20px;
+    padding: 0;
+    font-size: 60px;
+  }
+}
+
+/* Position the content inside the overlay */
+.overlay-content {
+  position: relative;
+  width: 100%; /* 100% width */
+  text-align: center; /* Centered text/links */
+  height: 100vh;
+}
+
+.mobile-links {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  width: 100%;
+
+  ul {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    li {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 40px;
+
+      .simple-item {
+        font-size: 30px;
+        color: $body-color;
+      }
+
+      .logout-link {
+        padding-left: 5rem;
+        padding-right: 5rem;
+      }
+    }
+  }
+}
+
+.bottom-links {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: $palette-gray-5;
+
+  a {
+    color: $palette-gray-50;
+    padding: 15px 0 !important;
+    font-size: 14px;
+    display: block;
+  }
+}
+
+/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+@media screen and (max-height: 450px) {
+  .overlay a {
+    font-size: 20px;
+  }
+
+  .overlay .closebtn {
+    font-size: 40px;
+    top: 15px;
+    right: 35px;
+  }
+}
+
 @media (max-width: 992px) {
 
   header .bg-light {
     display: none;
+  }
+
+  .open-menu {
+    display: block;
+    text-align: right;
+    font-size: 17px;
+    line-height: 1;
+
+    svg {
+      margin-left: 5px;
+      font-size: 19px;
+      line-height: 1;
+    }
   }
 
   .navbar-toggler {

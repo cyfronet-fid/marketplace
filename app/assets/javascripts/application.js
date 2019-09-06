@@ -13,3 +13,13 @@
 //= require rails-ujs
 //= require activestorage
 //= require_tree .
+
+/* Open */
+function openNav() {
+    document.getElementById("mynav").style.height = "100%";
+}
+
+/* Close */
+function closeNav() {
+    document.getElementById("mynav").style.height = "0%";
+}
