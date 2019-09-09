@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Display root categories in the main page (@goreck888)
 
 ### Security
 
