@@ -1395,20 +1395,19 @@ h5 {
 }
 
 .carousel-indicators {
-  top: -50px;
-  float: right;
+  top: -55px;
   z-index: 1;
   display: block;
   position: absolute;
   bottom: 0;
   margin: 0;
-  left: 0;
-  right: 0;
+  left: 230px;
+  right: auto;
   width: auto;
 
   .active {
     background: $palette-yellow;
-    box-shadow: 0 0 2px 2px $white inset;
+    /* box-shadow: 0 0 2px 2px $white inset; */
   }
 }
 
@@ -2498,6 +2497,20 @@ textarea.form-control.is-invalid {
   }
 }
 
+@media (max-width: 992px)  {
+
+  .tabs li:first-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .tabs li:last-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+}
+
 .tab-content-home {
   display: none;
 
@@ -2524,6 +2537,9 @@ textarea.form-control.is-invalid {
     margin-top: 15px;
     font-size: 20px;
     min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: $palette-blue;
   }
 }
