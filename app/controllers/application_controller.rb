@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
     end
 
     def load_main_research_areas!
-      @main_research_areas = ResearchArea.all[0...8].push(ResearchArea.find_by(name: "Other"))
+      @main_research_areas = ResearchArea.roots[0...8].push(ResearchArea.find_by(name: "Other"))
     end
 
     def not_authorized_message(exception)
