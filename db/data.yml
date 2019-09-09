@@ -197,50 +197,86 @@ providers:
 area:
 
     Interdisciplinary:
-        name: &interdisciplinary "Interdisciplinary"
+      name: &interdisciplinary "Interdisciplinary"
     # sub:
     #     name: &ra_test "Just for tests - should be removed by Rox"
     #     parent: *interdisciplinary
-    EarthScience:
-        name: &earthScience "Earth Science"
-    ArtsAndHumanities:
-        name: &artsAndHumanities "Arts & Humanities"
-    Mathematics:
-        name: &mathematics "Mathematics"
-    LiveScience:
-        name: &lifeSciences "Life sciences"
-    ApplicationFrameworks:
-        name: &applicationFrameworks "Application and data analysis framework"
-    DataAnalysis:
-        name: &dataAnalysis "Data analysis"
     Humanities:
-        name: &humanities "Humanities"
-    HighEnergyPhysics:
-        name: &highEnergyPhysics "High-Energy Physics"
-    PhysicalScienceAerosol:
-        name: &physicalScienceAerosol "Physical science (aerosol physics)"
-    PhysicalScienceEarth:
-        name: &physicalScienceEarth "Physical science (earth science)"
-    ClimateScience:
-        name: &climateScience "Climate science"
-    EnvironmentalScience:
-        name: &environmentalScience "Environmental science"
-    BiologicalSciences:
-        name: &biologicalSciences "Biological Sciences"
-    Security:
-        name: &security "Security"
-    AppliedScience:
-        name: &appliedScience "Applied Sciences / Engineering / Healthcare"
-    FormalSciences:
-        name: &formalSciences "Formal Sciences"
-    PhysicalSciences:
-        name: &physicalSciences "Physical Sciences"
-    SocialSciences:
-        name: &socialSciences "Social Sciences"
+      name: &humanities "Humanities"
     Philosophy:
-        name: &philosophy "Philosophy / History"
+      name: &philosophy "Philosophy, ethics and religion"
+      parent: *humanities
+    Arts:
+      name: &arts "Arts"
+      parent: *humanities
+    SocialScience:
+      name: &socialSciences "Social sciences"
+    Political:
+      name: &political "Political sciences"
+      parent: *socialSciences
+    Psychology:
+      name: &psychology "Psychology"
+      parent: *socialSciences
+    engineering:
+      name: &engineering "Engineering and Technology"
+    electrical:
+      name: &electrical "Electrical, electronic and information engineering"
+      parent: *engineering
+    environmental:
+      name: &environmental "Environmental engineering"
+      parent: *engineering
+    supportActivities:
+      name: &supportActivities "Support Activities"
+    agricultural:
+      name: &agricultural "Agricultural Sciences"
+    medical:
+      name: &medical "Medical and Health Sciences"
+    natural:
+      name: &natural "Natural Sciences"
+    HighEnergyPhysics:
+      name: &highEnergyPhysics "High-Energy Physics"
+      parent: *engineering
+    PhysicalScienceAerosol:
+      name: &physicalScienceAerosol "Physical science (aerosol physics)"
+      parent: *engineering
+    PhysicalScienceEarth:
+      name: &physicalScienceEarth "Physical science (earth science)"
+      parent: *natural
+    ClimateScience:
+      name: &climateScience "Climate science"
+      parent: *natural
+    EnvironmentalScience:
+      name: &environmentalScience "Environmental science"
+      parent: *natural
+    BiologicalSciences:
+      name: &biologicalSciences "Biological Sciences"
+      parent: *natural
+    EarthScience:
+      name: &earthScience "Earth Science"
+      parent: *natural
+    LifeScience:
+      name: &lifeSciences "Life sciences"
+      parent: *natural
+    ApplicationFrameworks:
+      name: &applicationFrameworks "Application and data analysis framework"
+      parent: *engineering
+    DataAnalysis:
+      name: &dataAnalysis "Data analysis"
+      parent: *engineering
+    Security:
+      name: &security "Security"
+      parent: *engineering
+    FormalSciences:
+      name: &formalSciences "Formal Sciences"
+      parent: *engineering
+    AppliedScience:
+      name: &appliedScience "Applied Sciences / Engineering / Healthcare"
+      parent: *engineering
+    PhysicalSciences:
+      name: &physicalSciences "Physical Sciences"
+      parent: *engineering
     Other:
-        name: &other "Other"
+      name: &other "Other"
 
 
 
@@ -1986,7 +2022,7 @@ services:
         places: *europe
         languages: *english
         target_groups: [*researchers] #TODO: but not specified
-        area: *artsAndHumanities
+        area: *humanities
 #        #restrictions: *notSpecified
         phase: production
         tagline: A service that allows researchers to create their own citable digital bookmarks.
@@ -2774,7 +2810,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations]
         languages: *english
-        area: *artsAndHumanities
+        area: *humanities
         #restrictions: *notSpecified
         phase: production
         tagline: The DARIAH Science Gateway is a platform that provides access to various digital applications and services for the Arts & Humanities researchers
@@ -4498,7 +4534,7 @@ services:
       places: *europe
       target_groups: [*researchers, *research_organisations, *research_groups, *providers]
       languages: *english
-      area: [*interdisciplinary, *lifeSciences, *socialSciences, *artsAndHumanities, *appliedScience, *philosophy]
+      area: [*interdisciplinary, *lifeSciences, *socialSciences, *humanities, *appliedScience, *philosophy]
       #restrictions: *notSpecified
       phase: production
       tagline: Secure and cost-effective cloud computing for processing sensitive data
