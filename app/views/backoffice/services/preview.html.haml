@@ -3,10 +3,9 @@
   Service preview
 .row
   .col-12.text-right
-    = back_link_to "Go back to edit", edit_backoffice_service_path(@preview), class: "btn btn-primary pl-5 pr-5 mr-5"
-    = link_to :submit, class: "btn btn-success"
-    = link_to "Cancel", backoffice_service_path(@service), class: "btn btn-danger float-right"
+    = link_to "Go back to edit", edit_backoffice_service_path(@service), class: "btn btn-primary pl-5 pr-5 mr-5"
+    = link_to "Confirm changes", backoffice_service_path(@service), class: "btn btn-primary pl-5 pr-5 mr-5"
 .row.col-12
   .container
     .preview
-      = render template: "services/show", service: @preview
+      = render template: "services/show", service: @service

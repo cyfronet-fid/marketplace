@@ -8,7 +8,6 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   before_action :find_and_authorize, only: [:show, :edit, :preview, :update, :destroy]
   before_action :sort_options
-  before_action :ensure_in_session!, only: [:preview]
   prepend_before_action :index_authorize, only: :index
 
   def index
@@ -21,7 +20,6 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def show
     @offer = Offer.new(service: @service, status: :draft)
-    session[:service] = @service.id
   end
 
   def new
@@ -31,8 +29,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   def preview
-    session[:service] = @service.id
-    @service = service_preview_template
+    @service = Service.new(permitted_attributes(@service, "preview"))
   end
 
   def create
@@ -40,12 +37,9 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     authorize(template)
 
     @service = Service::Create.new(template).call
-    session[:service] = @service.id
 
     if @service.persisted?
-      session.delete(:service)
-      redirect_to backoffice_service_path(@service),
-                  notice: "Service updated correctly"
+      preview_service_redirector
     else
       render :new, status: :bad_request
     end
@@ -55,13 +49,11 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     if @service.sources.empty?
       @service.sources.build source_type: "eic"
     end
-    session[:service] = @service.id
   end
 
   def update
     if Service::Update.new(@service, permitted_attributes(@service)).call
-      redirect_to backoffice_service_path(@service),
-                  notice: "Service updated correctly"
+      preview_service_redirector
     else
       render :edit, status: :bad_request
     end
@@ -69,19 +61,9 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def destroy
     Service::Destroy.new(@service).call
-    session.delete(:selected_service)
     redirect_to backoffice_services_path,
                 notice: "Service destroyed"
   end
-
-  protected
-
-    def ensure_in_session!
-      unless session[:service]
-        redirect_to backoffice_service_path(@service),
-                    alert: "Service request template not found"
-      end
-    end
 
   private
     def index_authorize
@@ -90,16 +72,6 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
     def service_template
       Service.new(permitted_attributes(Service).merge(status: :draft))
-    end
-
-    def filter_classes
-      super << Filter::UpstreamSource
-    end
-
-    def service_preview_template
-      template = Service.new(session[:service])
-      session[:service].
-          merge(permitted_attributes(template))
     end
 
     def sort_options
@@ -119,5 +91,14 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
     def scope
       policy_scope(Service).with_attached_logo
+    end
+
+    def preview_service_redirector
+      if params[:commit] == "Preview"
+        redirect_to preview_backoffice_service_path(@service)
+      else
+        redirect_to backoffice_service_path(@service),
+                    notice: "Service updated correctly"
+      end
     end
 end
