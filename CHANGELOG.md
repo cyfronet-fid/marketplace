@@ -20,6 +20,14 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## [2.1.3] 2019-09-10
+
+### Added
+- Filtering by upstream source in the backoffice (@goreck888)
+
+### Fixed
+- Display root categories in the main page (@goreck888)
+
 ## [2.1.2] 2019-09-04
 
 ### Fixed
