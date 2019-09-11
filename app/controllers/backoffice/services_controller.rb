@@ -72,6 +72,10 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       Service.new(permitted_attributes(Service).merge(status: :draft))
     end
 
+    def filter_classes
+      super << Filter::UpstreamSource
+    end
+
     def sort_options
       @sort_options = [["by name A-Z", "title"],
                        ["by name Z-A", "-title"],

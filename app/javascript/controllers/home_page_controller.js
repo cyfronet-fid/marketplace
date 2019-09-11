@@ -37,4 +37,14 @@ export default class extends Controller {
         }
 
     }
+
+    $(".home-anchor").hide();
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 100) {
+            $(".home-anchor").fadeIn("slow");
+        }
+        else {
+            $(".home-anchor").fadeOut("fast");
+        }
+    });
 }
