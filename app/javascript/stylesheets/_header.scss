@@ -133,7 +133,7 @@ header {
 
 .autocomplete-results {
   min-width: 375px;
-  z-index: 10000;
+  z-index: 10;
   background-color: $white;
   position: absolute;
   border: 1px solid $palette-gray-10;
@@ -186,7 +186,7 @@ header {
   height: 0%;
   width: 100%;
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 11; /* Sit on top */
   left: 0;
   top: 0;
   background-color: $white;
