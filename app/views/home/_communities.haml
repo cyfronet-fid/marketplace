@@ -1,7 +1,7 @@
 .container.p-0
   .home-communities.p-4
     .row
-      .col-12.col-lg-6.communities-wrapper
+      .col-12.col-lg-6.col-sm-5.communities-wrapper
         .h3.mt-2.mb-3 Communities and infrastructures
         %ul.row
           - @home_platforms.each do |platform|
@@ -15,7 +15,7 @@
                 We have
                 %strong #{home_platforms_counter} more
                 Communities and infrastructures
-      .col-12.col-lg-3.communities-wrapper
+      .col-12.col-lg-3.col-sm-3.communities-wrapper
         .h3.mt-2.mb-3 Providers
         %ul
           - @home_providers.each do |provider|
@@ -29,7 +29,7 @@
                 You can find
                 %strong #{home_providers_counter} more
                 providers
-      .col-12.col-lg-3
+      .col-12.col-lg-3.col-sm-4
         .h3.mt-2.mb-3 Dedicated for
         %ul
           - @home_target_groups.each do |tg|
