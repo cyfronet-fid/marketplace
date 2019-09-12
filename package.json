@@ -19,8 +19,6 @@
     "turbolinks": "^5.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
     "mutationobserver-shim": "^0.3.3",
