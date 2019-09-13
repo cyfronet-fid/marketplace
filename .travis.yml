@@ -50,6 +50,7 @@ jobs:
       script:
         - bin/rails db:migrate RAILS_ENV=test
         - bundle exec rspec
+        - yarn test
     - stage: test
       script:
         - bundle exec overcommit --install
