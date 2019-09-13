@@ -44,7 +44,7 @@ Rails.application.routes.draw do
   resource :backoffice, only: :show
   namespace :backoffice do
     resources :services do
-      get "preview", via: :post
+      post "preview", on: :member
       scope module: :services do
         resources :offers
         resources :offers do
