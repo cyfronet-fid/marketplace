@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Ask a service question for non-signed in users with re-captcha(@goreck888)
 - All filters are expanded by default, state is stored in cookie (@mkasztelnik)
 - Filter titles in active filters (@goreck888)
+- Propagate Project info update to jira (@martaswiatkowska)
 
 ### Changed
 - Service's status is preserved when updating services during EIC import (@michal-szostak)
