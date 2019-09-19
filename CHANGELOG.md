@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- Category and Research Area name uniqueness is parent scoped (@mkasztelnik)
 
 ### Deprecated
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_19_073353) do
+ActiveRecord::Schema.define(version: 2019_09_19_090322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2019_09_19_073353) do
     t.integer "ancestry_depth", default: 0
     t.index ["ancestry"], name: "index_categories_on_ancestry"
     t.index ["description"], name: "index_categories_on_description"
-    t.index ["name"], name: "index_categories_on_name", unique: true
+    t.index ["name", "ancestry"], name: "index_categories_on_name_and_ancestry", unique: true
   end
 
   create_table "categorizations", force: :cascade do |t|
@@ -165,8 +165,8 @@ ActiveRecord::Schema.define(version: 2019_09_19_073353) do
     t.string "department"
     t.string "webpage"
     t.string "status"
-    t.datetime "created_at", default: "2019-09-19 07:34:55", null: false
-    t.datetime "updated_at", default: "2019-09-19 07:34:55", null: false
+    t.datetime "created_at", default: "2019-09-19 11:45:49", null: false
+    t.datetime "updated_at", default: "2019-09-19 11:45:49", null: false
     t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -192,7 +192,7 @@ ActiveRecord::Schema.define(version: 2019_09_19_073353) do
     t.text "name", null: false
     t.string "ancestry"
     t.integer "ancestry_depth", default: 0
-    t.index ["name"], name: "index_research_areas_on_name", unique: true
+    t.index ["name", "ancestry"], name: "index_research_areas_on_name_and_ancestry", unique: true
   end
 
   create_table "service_opinions", force: :cascade do |t|
