@@ -7,7 +7,7 @@ RSpec.describe Category do
     it { should validate_presence_of(:name) }
 
     subject { create(:category) }
-    it { should validate_uniqueness_of(:name) }
+    it { should validate_uniqueness_of(:name).scoped_to(:ancestry) }
   end
 
   it "is hierarchical" do
