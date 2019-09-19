@@ -21,6 +21,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Hide scrollArrow on scroll event (@goreck888)
 
+- Services descriptions in 'Popular services' section at Home Page (@bwilk)
+
 ### Security
 
 ## [2.1.3] 2019-09-10
