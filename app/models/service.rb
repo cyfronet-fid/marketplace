@@ -132,11 +132,6 @@ class Service < ApplicationRecord
     offers_count.positive?
   end
 
-  after_commit on: [:update] do
-    # Update categories counters
-    categorizations.each(&:touch) if saved_change_to_status
-  end
-
   def aod?
     platforms.pluck(:name).include?("EGI Applications on Demand")
   end

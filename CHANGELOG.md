@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Deprecated
 
 ### Removed
+- Remove category `services_count` (@mkasztelnik)
 
 ### Fixed
 - Hide scrollArrow on scroll event (@goreck888)
