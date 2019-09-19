@@ -168,9 +168,9 @@ RSpec.describe Backoffice::ServicePolicy do
   end
 
   permissions :publish? do
-    it "grants access for owned not published service" do
-      expect(subject).
-        to permit(service_portfolio_manager, build(:service, owners: [service_portfolio_manager], status: :draft))
+    it "grants access for service portfolio manager and not published services" do
+      expect(subject).to permit(service_portfolio_manager, build(:service, status: :draft))
+      expect(subject).to permit(service_portfolio_manager, build(:service, status: :unverified))
     end
 
     it "denies access for other users" do
@@ -178,8 +178,37 @@ RSpec.describe Backoffice::ServicePolicy do
     end
 
     it "denies access for already published service" do
-      expect(subject).
-        to_not permit(service_portfolio_manager, build(:service, owners: [service_portfolio_manager], status: :published))
+      expect(subject).to_not permit(service_portfolio_manager, build(:service, status: :published))
+    end
+  end
+
+  permissions :publish_unverified? do
+    it "grants access for service portfolio manager and not published unverified services" do
+      expect(subject).to permit(service_portfolio_manager, build(:service, status: :draft))
+      expect(subject).to permit(service_portfolio_manager, build(:service, status: :published))
+    end
+
+    it "denies access for other users" do
+      expect(subject).to_not permit(service_owner, build(:service, status: :draft))
+    end
+
+    it "denies access for already published unverified service" do
+      expect(subject).to_not permit(service_portfolio_manager, build(:service, status: :unverified))
+    end
+  end
+
+  permissions :draft? do
+    it "grants access for service portfolio manager and not draft services" do
+      expect(subject).to permit(service_portfolio_manager, build(:service, status: :published))
+      expect(subject).to permit(service_portfolio_manager, build(:service, status: :unverified))
+    end
+
+    it "denies access for other users" do
+      expect(subject).to_not permit(service_owner, build(:service, status: :published))
+    end
+
+    it "denies access fo service in draft state" do
+      expect(subject).to_not permit(service_portfolio_manager, build(:service, status: :draft))
     end
   end
 end
