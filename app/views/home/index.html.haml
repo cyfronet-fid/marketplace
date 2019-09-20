@@ -40,62 +40,16 @@
   %h2.home-title Popular services
 
   #home-carousel.carousel.slide.home-carousel{ "data-ride" => "carousel" }
-
     .carousel-inner
       .carousel-item.active
         .card-deck
           - @services[0..2].each do |service|
-            .card.shadow-sm
-              .card-body
-                .card-title
-                  = link_to service.title.truncate(35), service
-                .card-description
-                  %p
-                    - if service.logo.attached?
-                      = image_tag service.logo.variant(resize: "100x70")
-                    - else
-                      = image_tag "eosc-img.png"
-                    = service.description
-              .card-footer
-                .row
-                  .col-6
-                    %p
-                      %small Provided by:
-                      %br
-                      = safe_join(providers_text(service), ", ").truncate(24)
-                  .col-6
-                    %p.text-right
-                      %small Dedicated for:
-                      %br
-                      = safe_join(dedicated_for_text(service), ", ").truncate(24)
+            = render "carousel-card", service: service
       - if @services.count > 3
         .carousel-item
           .card-deck
             - @services[3..5].each do |service|
-              .card.shadow-sm
-                .card-body
-                  .card-title
-                    = link_to service.title.truncate(35), service
-                  .card-description
-                    %p
-                      - if service.logo.attached?
-                        = image_tag service.logo.variant(resize: "100x70")
-                      - else
-                        = image_tag "eosc-img.png"
-                      B2FIND is the EUDAT metadata service and provides a discovery portal which allows users to find
-                      data collections within an...
-                .card-footer
-                  .row
-                    .col-6
-                      %p
-                        %small Provided by:
-                        %br
-                        = safe_join(providers_text(service), ", ").truncate(24)
-                    .col-6
-                      %p.text-right
-                        %small Dedicated for:
-                        %br
-                        = safe_join(dedicated_for_text(service), ", ").truncate(24)
+              = render "carousel-card", service: service
 
     %ol.carousel-indicators
       %li.active{ "data-target" => "#home-carousel", "data-slide-to" => "0" }

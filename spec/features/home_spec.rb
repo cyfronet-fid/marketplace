@@ -16,15 +16,17 @@ RSpec.feature "Home" do
   end
 
   context "services carousel" do
-    let!(:service1) { create(:service, title: "published-service-1", status: :published) }
-    let!(:service2) { create(:service, title: "published-service-2", status: :published) }
-    let!(:service_draft) { create(:service, title: "draft-service-123", status: :draft) }
+    let!(:service1) { create(:service, description: "published-service-1", status: :published) }
+    let!(:service2) { create(:service, description: "published-service-2", status: :published) }
+    let!(:service_draft) { create(:service, status: :draft) }
+
     it "should not show not published service at carousel" do
       visit "/"
       expect(page).to have_selector("div.card-title", text: service1.title)
       expect(page).to have_selector("div.card-title", text: service2.title)
       expect(page).not_to have_selector("div.card-title", text: service_draft.title)
     end
+
     it "should show appropriate descriptions for all services" do
       visit "/"
       popular = page.find(".home-title", text: "Popular services")
