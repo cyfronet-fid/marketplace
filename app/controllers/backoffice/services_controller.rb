@@ -8,8 +8,6 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
   before_action :sort_options
-  before_action :ensure_in_session!, only: :preview
-  after_action :check_redirect, only: [:edit]
   prepend_before_action :index_authorize, only: :index
 
   def index
@@ -25,47 +23,27 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   def new
-    @service = Service.new
+    @service = Service.new(session[preview_session_key] || {})
     @service.sources.build source_type: "eic"
     authorize(@service)
-  end
-
-  def preview
-    @service = service_preview
-    if @service.valid?
-      session[session_key] = @service.attributes
-      redirect_to
-    else
-      render :edit, status: :bad_request
-    end
   end
 
   def create
     template = service_template
     authorize(template)
 
-    @service = Service::Create.new(template).call
-
-    if @service.persisted?
-      preview_service_redirector
-    else
-      render :new, status: :bad_request
-    end
+    params[:commit] == "Preview" ? perform_preview : perform_create
   end
 
   def edit
+    @service.assign_attributes(session[preview_session_key] || {})
     if @service.sources.empty?
       @service.sources.build source_type: "eic"
     end
   end
 
   def update
-    if Service::Update.new(@service, permitted_attributes(@service)).call
-      redirect_to backoffice_service_path(@service),
-                  notice: "Service updated correctly"
-    else
-      render :edit, status: :bad_request
-    end
+    params[:commit] == "Preview" ? perform_preview : perform_update
   end
 
   def destroy
@@ -74,39 +52,57 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
                 notice: "Service destroyed"
   end
 
-  protected
-    def session_key
-      @service.id.to_s
+  private
+
+    def preview_session_key
+      "service-#{@service&.id}-preview"
     end
 
-    def ensure_in_session!
-      puts session[session_key]
-      unless session[session_key]
-        redirect_to edit_backoffice_service_path(@service),
-                    alert: "Service request template not found"
+    def perform_preview
+      session[preview_session_key] = permitted_attributes(@service || Service)
+
+      @service ||= Service.new(status: :draft)
+      @service.assign_attributes(session[preview_session_key])
+      @offers = @service.offers.where(status: :published)
+      @related_services = @service.related_services
+
+      render :preview
+    end
+
+    def perform_create
+      @service = Service::Create.new(service_template).call
+      session.delete(preview_session_key)
+
+      puts "service errors >>>>>>>>>>>>>>>>>> #{@service.errors.inspect}"
+
+      if @service.persisted?
+        redirect_to backoffice_service_path(@service),
+                    notice: "New service created sucessfully"
+      else
+        render :new, status: :bad_request
       end
     end
 
-  private
+    def perform_update
+      attributes = session[preview_session_key] || permitted_attributes(@service)
+      session.delete(preview_session_key)
+
+      if Service::Update.new(@service, attributes).call
+        redirect_to backoffice_service_path(@service),
+                    notice: "Service updated correctly"
+      else
+        render :edit, status: :bad_request
+      end
+    end
+
     def index_authorize
       authorize(Service)
     end
 
     def service_template
-      Service.new(permitted_attributes(Service).merge(status: :draft))
-    end
+      attributes = session[preview_session_key] || permitted_attributes(Service)
 
-    def service_preview
-      Service.new(permitted_attributes(Service).merge(session[session_key]))
-    end
-
-    def check_redirect
-      if params[:commit] == "Preview"
-        redirect_to preview_backoffice_service_path(@service)
-      end
-      if params[:commit] == "Update"
-        Service::Update.new(@service, permitted_attributes(@service)).call
-      end
+      Service.new(attributes.merge(status: :draft))
     end
 
     def sort_options
@@ -126,11 +122,5 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
     def scope
       policy_scope(Service).with_attached_logo
-    end
-
-    def preview_service_redirector
-      if params[:commit] == "Preview"
-        redirect_to preview_backoffice_service_path(@service)
-      end
     end
 end
