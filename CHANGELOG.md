@@ -11,7 +11,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
-- Category and Research Area name uniqueness is parent scoped (@mkasztelnik)
 
 ### Deprecated
 
@@ -19,9 +18,15 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 
-- Services descriptions in 'Popular services' section at Home Page (@bwilk)
-
 ### Security
+
+## [2.1.4] 2019-09-20
+
+### Changed
+- Category and Research Area name uniqueness is parent scoped (@mkasztelnik)
+
+### Fixed
+- Services descriptions in 'Popular services' section at Home Page (@bwilk)
 
 ## [2.1.3] 2019-09-10
 
