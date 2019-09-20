@@ -47,4 +47,12 @@ module ServiceHelper
   def highlighted_for(field, service, highlights)
     highlights&.dig(service.id, field)&.html_safe || service.send(field)
   end
+
+  def service_logo(service)
+    if service.logo.attached?
+      image_tag service.logo.variant(resize: "100x70")
+    else
+      image_tag "eosc-img.png"
+    end
+  end
 end
