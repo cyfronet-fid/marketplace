@@ -15,7 +15,7 @@ class Category < ApplicationRecord
   has_many :categorizations, autosave: true, dependent: :destroy
   has_many :services, through: :categorizations
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: { scope: :ancestry }
 
   after_destroy :update_main_categories!
 

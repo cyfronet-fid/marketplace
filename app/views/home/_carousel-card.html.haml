@@ -1,0 +1,20 @@
+.card.shadow-sm
+  .card-body
+    .card-title
+      = link_to service.title.truncate(35), service
+    .card-description
+      %p
+        = service_logo(service)
+        = truncate(service.description, length: 120)
+  .card-footer
+    .row
+      .col-6
+        %p
+          %small Provided by:
+          %br
+          = safe_join(providers_text(service), ", ").truncate(24)
+      .col-6
+        %p.text-right
+          %small Dedicated for:
+          %br
+          = safe_join(dedicated_for_text(service), ", ").truncate(24)
