@@ -1,8 +1,0 @@
-= simple_form_for [:project_item, @service_opinion] do |f|
-  = f.error_notification
-  = f.hidden_field :rating, value: 0
-  = render "stars_template"
-
-  = f.input :opinion
-  = f.button :submit, class: "btn btn-success"
-  -# = link_to "Cancel", :project_item, class: "btn btn-link"
