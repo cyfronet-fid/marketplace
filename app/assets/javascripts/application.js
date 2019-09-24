@@ -16,10 +16,10 @@
 
 /* Open */
 function openNav() {
-    document.getElementById("mynav").style.height = "100%";
+    document.getElementById("mynav").style.width = "100%";
 }
 
 /* Close */
 function closeNav() {
-    document.getElementById("mynav").style.height = "0%";
+    document.getElementById("mynav").style.width = "0%";
 }
