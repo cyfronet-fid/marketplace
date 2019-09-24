@@ -1,0 +1,9 @@
+= simple_form_for question, remote: true, url: service_questions_path(service) do |f|
+  - unless current_user
+    = f.input :author, label: t("simple_form.labels.question.author")
+    = f.input :email, as: :email
+  = f.input :text, as: :text, input_html: { rows: 10 },
+                label: t("simple_form.labels.question.text", title: service.title),
+                hint: t("simple_form.hints.question.text", email: current_user&.email || "your")
+  .modal-footer
+  = f.submit "SEND", class: "btn btn-primary"
