@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class ServiceMailer < ApplicationMailer
-  def new_question(recipient_email, author, service_question, service)
+  def new_question(recipient_email, question, service)
     @service = service
-    @message = service_question[:text]
-    @author = author
+    @message = question.text
+    @author = question.author
+    @email = question.email
 
     mail(to: recipient_email,
-         from: @author.email,
          subject: "Question about #{@service.title} service",
          template_name: "new_question")
   end

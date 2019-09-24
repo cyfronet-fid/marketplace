@@ -1,0 +1,4 @@
+$("#question-modal-title").html("<%= title %>")
+$("#question-modal-action-btn").html("<%= action_btn %>")
+$("#question-modal-body").html("<%= j render(form, service: @service, question: @question) %>")
+$("#question-modal").modal("show")

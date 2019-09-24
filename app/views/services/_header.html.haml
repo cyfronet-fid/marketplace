@@ -24,5 +24,5 @@
                     class: "btn btn-primary d-block mb-4"
     - if service.open_access? || service.catalog?
       = link_to "Access the service", service.connected_url, class: "btn btn-primary d-block mb-2", target: "_blank"
-    - if local_assigns[:question]
+    - if local_assigns[:question] && !service.contact_emails.empty?
       = render "services/ask_question", service: service, question: question
