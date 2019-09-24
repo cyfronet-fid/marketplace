@@ -4,7 +4,7 @@ export default class extends Controller {
     static targets = ["changeTab", "tab", "scrollArrow"];
 
     connect() {
-        this.onScrollRunning = true
+        document.addEventListener("scroll", this.onScroll());
     }
 
     initialize(){}
@@ -24,15 +24,11 @@ export default class extends Controller {
     }
 
     onScroll(event) {
-        if (!this.onScrollRunning) {
-            this.onScrollRunning = true;
-        }
-
         let height = window.scrollY;
         if (height > 600) {
-            const el = document.getElementsByClassName('.home-anchor').style;
+            const el = document.getElementsByClassName('home-anchor')[0].style;
             el.opacity = 1;
-            (function fade(){(el.opacity-= .1)<0?s.display="none":setTimeout(fade,40)})();
+            (function fade(){(el.opacity-= .1)<0?el.display="none":setTimeout(fade,60)})();
 
         }
 

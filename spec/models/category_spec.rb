@@ -7,7 +7,7 @@ RSpec.describe Category do
     it { should validate_presence_of(:name) }
 
     subject { create(:category) }
-    it { should validate_uniqueness_of(:name) }
+    it { should validate_uniqueness_of(:name).scoped_to(:ancestry) }
   end
 
   it "is hierarchical" do
@@ -25,15 +25,5 @@ RSpec.describe Category do
     main.destroy
 
     expect(service.main_category).to eq(other)
-  end
-
-  it "has services counter" do
-    category = create(:category, services: create_list(:service, 1))
-    subcategory = create(:category, parent: category, services: create_list(:service, 1))
-    subsubcategory = create(:category, parent: subcategory, services: create_list(:service, 1))
-
-    expect(subsubcategory.reload.services_count).to eq(1)
-    expect(subcategory.reload.services_count).to eq(2)
-    expect(category.reload.services_count).to eq(3)
   end
 end
