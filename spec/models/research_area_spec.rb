@@ -7,7 +7,7 @@ RSpec.describe ResearchArea, type: :model do
     it { should validate_presence_of(:name) }
 
     subject { create(:research_area) }
-    it { should validate_uniqueness_of(:name) }
+    it { should validate_uniqueness_of(:name).scoped_to(:ancestry) }
   end
 
   describe "#potential_parents" do

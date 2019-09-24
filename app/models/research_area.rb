@@ -8,7 +8,7 @@ class ResearchArea < ApplicationRecord
   has_many :project_research_areas, autosave: true, dependent: :destroy
   has_many :projects, through: :project_research_areas
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: { scope: :ancestry }
 
   def self.names
     all.map(&:name)
