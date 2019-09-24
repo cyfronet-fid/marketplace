@@ -15,6 +15,8 @@ en:
       defaults:
         terms_and_conditions: Accept terms and conditions
       question:
+        new: SEND
+        author: Name and surname
         text: Your question to provider about %{title}
       project:
         country_of_origin: |
@@ -31,8 +33,8 @@ en:
     hints:
       question:
         text: |
-          We will send and information service provider.
-          You will receive answer to %{email} email.
+          We will send your question to the Service provider.
+          You will receive an answer to %{email} email address.
       service:
         connected_url: |
           Url should start with http or https [e.g. http://webpage.org].</br>
