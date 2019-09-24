@@ -70,7 +70,8 @@ RSpec.feature "Service browsing" do
       end
 
       expect { click_on "SEND"
-               sleep(1) }.
+               # wait for ajax response
+               sleep(5) }.
         to change { ActionMailer::Base.deliveries.count }.by(2)
       expect(page).to have_content("Your message was successfully sent")
     end
@@ -241,7 +242,8 @@ RSpec.feature "Service browsing" do
       end
 
       expect { click_on "SEND"
-               sleep(1) }.
+               # wait for ajax response
+               sleep(5) }.
           to change { ActionMailer::Base.deliveries.count }.by(2)
       expect(page).to have_content("Your message was successfully sent")
     end

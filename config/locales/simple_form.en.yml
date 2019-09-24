@@ -34,7 +34,7 @@ en:
       question:
         text: |
           We will send your question to the Service provider.
-          You will receive an answer to %{email} email adress.
+          You will receive an answer to %{email} email address.
       service:
         connected_url: |
           Url should start with http or https [e.g. http://webpage.org].</br>
