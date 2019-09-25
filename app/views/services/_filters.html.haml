@@ -5,7 +5,6 @@
         Filters
       :javascript
         function handleCollapseAll(self) {
-        console.log(self)
           $(self).toggleClass('collapsed');
           $(self).hasClass('collapsed') ? $('.panel-collapse').collapse('hide') : $('.panel-collapse').collapse('show');
         }
