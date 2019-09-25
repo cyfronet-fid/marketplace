@@ -5,7 +5,8 @@
     %li{ data: { target: target } }
       %label{ class: ("text-muted" if muted) }
         %input.form-check-input{ type: "checkbox", name: "#{name}[]",
-          multiple: true, checked: values.include?(option[:id].to_s), value: option[:id] }
+          multiple: true, checked: values.include?(option[:id].to_s), value: option[:id],
+          "data-action" => "change->filters#reload" }
         %span= option[:name]
       %span.float-right.small{ class: ("text-muted" if muted) }= option[:count]
       - if option[:children]

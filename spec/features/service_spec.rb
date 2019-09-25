@@ -252,9 +252,8 @@ RSpec.feature "Service filtering and sorting" do
 
   scenario "clicking filter button in side bar will preserve existing query params", js: true, search: true do
     visit services_path(sort: "title", q: "DDDD Something", utf8: "✓")
-
-    click_on(id: "filter-submit")
-
+    click_on("Related Infrastructures and platforms")
+    find(:css, ".form-check-input[value=\"2\"]").check()
     expect(page.body.index("<b>DDDD</b> <b>Something</b> 1")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 2")
     expect(page.body.index("<b>DDDD</b> <b>Something</b> 2")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 3")
 
@@ -302,9 +301,8 @@ RSpec.feature "Service filtering and sorting" do
     expect(page).to have_selector("input[name='providers[]']", count: 5)
     click_on("Show 2 more")
     expect(page).to have_selector("input[name='providers[]']", count: 7)
-    find(:css, "input[name='providers[]'][value='#{Provider.order(:name).last.id}']").set(true)
+    find(:css, "input[name='providers[]'][value='#{Provider.order(:name).last.id}']").check()
     click_on("Show less")
-    click_on(id: "filter-submit")
 
     expect(page).to have_selector("input[name='providers[]']", count: 6)
   end
@@ -312,30 +310,24 @@ RSpec.feature "Service filtering and sorting" do
   scenario "multiselect does not show toggle button if everything is shown", js: true do
     visit services_path
 
-    find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
-
+    click_on("Providers")
     expect(page).to have_selector("input[name='providers[]']", count: 5)
+
     click_on("Show 2 more")
     find(:css, "input[name='providers[]'][value='#{Provider.joins(:services)
                                                       .order(:name)
                                                       .group("providers.id")
-                                                      .order(:name)[-1].id}']").set(true)
-    find(:css, "input[name='providers[]'][value='#{Provider.joins(:services)
-                                                      .order(:name)
-                                                      .group("providers.id")
-                                                      .order(:name)[-2].id}']").set(true)
-    click_on(id: "filter-submit")
-
+                                                      .order(:name)[-1].id}']").check()
+    expect(page).to have_selector("input[name='providers[]']", count: 7)
     expect(page).to_not have_selector("#providers > a")
   end
 
   scenario "toggle button changes number of providers to show", js: true do
     visit services_path
 
-    find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
+    click_on("Providers")
     click_on("Show 2 more")
-    find(:css, "input[name='providers[]'][value='#{Provider.order(:name).last.id}']").set(true)
-    click_on(id: "filter-submit")
+    find(:css, "input[name='providers[]'][value='#{Provider.order(:name).last.id}']").check()
     click_on("Show less")
 
     find(:css, "#collapse_providers > div > a", text: "Show 1 more")
@@ -346,10 +338,8 @@ RSpec.feature "Service filtering and sorting" do
     target_group_id = target_group.id
 
     visit services_path
-    find(:css, "a[href=\"#collapse_providers\"][role=\"button\"] h6").click
-    find(:css, "input[name='providers[]'][value='#{provider_id}']").set(true)
-
-    click_on(id: "filter-submit")
+    click_on("Providers")
+    find(:css, "input[name='providers[]'][value='#{provider_id}']").check()
 
     expect(page).to have_selector(".collapseall.collapsed")
     # provider controls should be visible
@@ -368,8 +358,7 @@ RSpec.feature "Service filtering and sorting" do
     provider_id = Provider.order(:name).first.id
     visit services_path
     find(:css, ".collapseall").click
-    find(:css, "input[name='providers[]'][value='#{provider_id}']").set(true)
-    click_on(id: "filter-submit")
+    find(:css, "input[name='providers[]'][value='#{provider_id}']").check()
     expect(page).to have_selector("input[name='providers[]'][value='#{provider_id}'][checked]")
     expect(page).to have_selector(".media", count: Provider.order(:name).first.services.count)
   end
@@ -379,16 +368,14 @@ RSpec.feature "Service filtering and sorting" do
 
     find(:css, "a[href=\"#collapse_rating\"][role=\"button\"] h6").click
     select "★★★★★", from: "rating"
-    click_on(id: "filter-submit")
 
     expect(page).to have_selector(".media", count: 1)
   end
 
-  scenario "searching vis research_area" do
+  scenario "searching vis research_area", js: true do
     visit services_path
     find(:css, "a[href=\"#collapse_research_areas\"][role=\"button\"] h6").click
-    find(:css, "input[name='research_areas[]'][value='#{ResearchArea.first.id}']").set(true)
-    click_on(id: "filter-submit")
+    find(:css, "input[name='research_areas[]'][value='#{ResearchArea.first.id}']").check
 
     expect(page).to have_selector(".media", count: 1)
   end
@@ -396,8 +383,7 @@ RSpec.feature "Service filtering and sorting" do
   scenario "searching via target_groups", js: true do
     visit services_path
     find(:css, "a[href=\"#collapse_target_groups\"][role=\"button\"] h6").click
-    find(:css, "input[name='target_groups[]'][value='#{target_group.id}']").set(true)
-    click_on(id: "filter-submit")
+    find(:css, "input[name='target_groups[]'][value='#{target_group.id}']").check
 
     expect(page).to have_selector(".media", count: 3)
     expect(page).to have_selector("input[name='target_groups[]'][value='#{target_group.id}'][checked]")
@@ -406,8 +392,7 @@ RSpec.feature "Service filtering and sorting" do
   scenario "searching via platforms", js: true do
     visit services_path
     find(:css, "a[href=\"#collapse_related_platforms\"][role=\"button\"] h6").click
-    find(:css, "input[name='related_platforms[]'][value='#{platform.id}']").set(true)
-    click_on(id: "filter-submit")
+    find(:css, "input[name='related_platforms[]'][value='#{platform.id}']").check
 
     expect(page).to have_selector(".media", count: 1)
   end
@@ -416,8 +401,7 @@ RSpec.feature "Service filtering and sorting" do
     create_list(:service, 40)
     visit services_path(page: 3)
     find(:css, "a[href=\"#collapse_related_platforms\"][role=\"button\"] h6").click
-    find(:css, "input[name='related_platforms[]'][value='#{platform.id}']").set(true)
-    click_on(id: "filter-submit")
+    find(:css, "input[name='related_platforms[]'][value='#{platform.id}']").check()
 
     expect(page.current_path).to_not have_content("page=")
     expect(page).to have_selector(".media", count: 1)
