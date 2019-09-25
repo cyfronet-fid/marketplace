@@ -41,13 +41,16 @@ function setSearchParams(search, params) {
 }
 
 export function registerSubmitOnChange(node) {
-    $(node || 'body').find("[data-submit-on-change]").on('change', function () {
-        let id = $(this).attr('id');
-        let value = $(this).val();
-
-        let search = setSearchParams(window.location.search, {[id]: value});
-        Turbolinks.visit(window.location.pathname + '?' + search);
-    });
+    var element = (node || document).querySelectorAll("[data-submit-on-change]")
+    if (element)
+        element.forEach(el => {
+            el.addEventListener('change', function () {
+                let id = this.attributes['id'].value;
+                let value = this.value;
+                let search = setSearchParams(window.location.search, {[id]: value});
+                Turbolinks.visit(window.location.pathname + '?' + search);
+            });
+        });
 }
 
 export default function initSorting(node) {
