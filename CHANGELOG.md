@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add marketplace service preview in the backoffice (@mkasztelnik, @goreck888)
 - Service unverified but published state (@mkasztelnik)
 - Multi checkbox filters search (@mkasztelnik)
+- Filters autoreload (@martaswiatkowska)
 
 ### Changed
 
