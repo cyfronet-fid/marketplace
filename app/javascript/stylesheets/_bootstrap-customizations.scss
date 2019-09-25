@@ -1211,7 +1211,7 @@ h5 {
       top: -105px;
       right: -100px;
       width: 797px;
-      height: 676px;
+      height: 695px;
       background: url('../../assets/images/gfx_whole_illustation_desktop.png') no-repeat;
     }
   }
@@ -1272,6 +1272,23 @@ h5 {
       margin-right: 4px;
     }
   }
+}
+
+@media (max-width: 992px) {
+
+  .intro-box-wrapper {
+    display: block;
+
+    .intro-box {
+      min-height: 190px;
+
+      &.second {
+        float: right;
+      }
+    }
+
+  }
+
 }
 
 .box {
@@ -1367,49 +1384,50 @@ h5 {
     position: fixed;
     bottom: 50px;
     display: block;
-    z-index: 100;
+    z-index: 1;
     width: 100%;
     text-align: center;
   }
 }
 
-@media (min-width: 768px) {
+.carousel-inner {
+  z-index: 100;
+}
 
-  .carousel-inner {
-    z-index: 100;
-  }
+.carousel-indicators {
+  top: -55px;
+  z-index: 1;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  margin: 0;
+  left: 230px;
+  right: auto;
+  width: auto;
 
-  .carousel-indicators {
-    bottom: auto;
-    top: -50px;
-    float: right;
-    z-index: 1;
-    display: block;
-  }
-
-  .carousel-indicators {
-    position: absolute;
-    bottom: 0;
-    margin: 0;
-    left: 0;
-    right: 0;
-    width: auto;
-  }
-
-  .carousel-indicators li,
-  .carousel-indicators .active {
-    width: 15px;
-    border: 2px solid $footer-header-color;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    border-radius: 100%;
-    height: 15px;
-    float: right !important;
-  }
-
-  .carousel-indicators .active {
+  .active {
     background: $palette-yellow;
-    box-shadow: 0 0 2px 2px $white inset;
+    /* box-shadow: 0 0 2px 2px $white inset; */
+  }
+}
+
+.carousel-indicators li,
+.carousel-indicators .active {
+  width: 15px;
+  border: 2px solid $footer-header-color;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  border-radius: 100%;
+  height: 15px;
+  float: right !important;
+}
+
+@media (max-width: 576px) {
+  .carousel-indicators {
+    top: -25px;
+    float: left;
+    left: 0;
+    right: auto;
   }
 }
 
@@ -2432,11 +2450,14 @@ textarea.form-control.is-invalid {
     position: relative !important;
     width: 100% !important;
     height: 260px !important;
-    background-size: contain !important;
+    background-image: url('../../assets/images/gfx_whole_illustation_phone.png') !important;
     background-position: 50% 50% !important;
-    top: -60px !important;
+    top: -25px !important;
     right: auto !important;
+  }
 
+  .home-intro {
+    padding-top: 0 !important;
   }
 
 }
@@ -2476,6 +2497,22 @@ textarea.form-control.is-invalid {
   }
 }
 
+@media (max-width: 992px)  {
+
+  .tabs li:first-child {
+    border-top-left-radius: 0;
+    border-left: none;
+    border-bottom-left-radius: 0;
+  }
+
+  .tabs li:last-child {
+    border-top-right-radius: 0;
+    border-right: none;
+    border-bottom-right-radius: 0;
+  }
+
+}
+
 .tab-content-home {
   display: none;
 
@@ -2489,15 +2526,29 @@ textarea.form-control.is-invalid {
   border-radius: 5px;
   text-align: center;
   display: block;
-  margin-bottom: 20px;
-  min-height: 200px;
-  padding: 35px 0 20px;
+  margin-bottom: 10px;
+  padding: 15px 7px 12px;
+
+  .branch-icon {
+    height: 84px;
+    line-height: 84px;
+    vertical-align: middle;
+  }
 
   .branch-name {
-    margin-top: 25px;
+    margin-top: 15px;
     font-size: 20px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: $palette-blue;
   }
+}
+
+.services-link {
+  padding-left: 4.5rem;
+  padding-right: 4.5rem;
 }
 
 .branch-box:hover {
@@ -2508,7 +2559,7 @@ textarea.form-control.is-invalid {
   background: $palette-blue;
   color: $white;
   border-radius: 5px;
-  margin-top: 6rem !important;
+  margin-top: 3.5rem !important;
 
   .more-link {
     background: url('../../assets/images/link-separator-bg.png') no-repeat;
@@ -2602,6 +2653,20 @@ textarea.form-control.is-invalid {
       font-size: 16px;
     }
   }
+
+  .home-communities {
+    border-radius: 0;
+  }
+
+  .testimonial {
+    .card-body {
+      margin-bottom: 30px;
+
+      .card-author {
+        margin-bottom: 0.4rem !important;
+      }
+    }
+  }
 }
 
 .home-title {
@@ -2625,6 +2690,7 @@ textarea.form-control.is-invalid {
     .card-title {
       font-size: 20px;
       line-height: 1.05;
+      font-weight: 400;
       color: $palette-solid-100;
     }
 

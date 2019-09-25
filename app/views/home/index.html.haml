@@ -10,7 +10,7 @@
 .container
   %h2.home-title Learn more
   .row
-    .col-12.col-lg-4
+    .col-12.col-lg-4.col-sm-6
       .card.learn-more.first
         %a.card-body{ "href": "#{portal_base}/about/eosc" }
           %h5.card-title EOSC initiative
@@ -18,7 +18,7 @@
             Find out more about EOSC and what it can bring you!
           .card-icon
             = image_tag "ico_howitworks.png"
-    .col-12.col-lg-4
+    .col-12.col-lg-4.col-sm-6
       .card.learn-more
         %a.card-body{ "href": "#{root_path}about_projects" }
           %h5.card-title Projects
@@ -26,7 +26,7 @@
             Through Marketplace Projects you can organise your services and gain support from the EOSC experts.
           .card-icon
             = image_tag "ico_projects.png"
-    .col-12.col-lg-4
+    .col-12.col-lg-4.col-sm-6
       .card.learn-more
         %a.card-body{ "href": "#{portal_base}/for-providers" }
           %h5.card-title For providers
@@ -57,13 +57,13 @@
 
 .container
   .row
-    .col-12.col-lg-4
+    .col-12.col-lg-4.col-sm-5
       %h2.home-title Recent opinions
       - unless @opinion.nil?
         = render "opinion", opinion: @opinion
       - else
         There are no reviews available.
-    .col-12.col-lg-8
+    .col-12.col-lg-8.col-sm-7
       %h2.home-title Use Cases
       .row
         .col-12.col-lg-6

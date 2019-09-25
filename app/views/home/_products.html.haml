@@ -15,21 +15,21 @@
         Integrated platform that allows easy access to lots of services and resources for various
         research domains along with integrated data analytics tools. Browse by scientific domain,
         service category or provider and, if you need help, we are here for you!
-      .row.mt-2
+      .row.mt-2.intro-box-wrapper
         %a#find-eosc
-        .col-12.col-lg-5.intro-box.pt-5.pb-5
+        .col-11.col-lg-5.intro-box.pt-5.pb-5
           Find EOSC Services that suit your use case yourself
           %a{ href: "#tab-anchor" }
             %i.fas.fa-arrow-right
             Browse through catalogue
 
-        .col-12.col-lg-5.intro-box.pt-5.pb-5
+        .col-11.col-lg-5.intro-box.second.pt-5.pb-5
           Describe your use case and get support from our experts
           %a{ href: "/projects" }
             %i.fas.fa-arrow-right
             Go to your projects
 
-#tab-anchor.home-tabs.container.mt-5{ "data-controller" => "home-page" }
+#tab-anchor.home-tabs.container.p-0.mt-5{ "data-controller" => "home-page" }
   %ul.tabs
     %li.tab-link.current{ data: { "target" => "home-page.changeTab",
                   "action" => "click->home-page#changeTab", "tab" => "tab-1" },
@@ -42,7 +42,7 @@
     .container
       .row
         - @main_research_areas.each do |ra|
-          .col-6.col-lg-4
+          .col-6.col-lg-4.pl-1.pr-1
             .branch-box
               = link_to services_path(research_areas: ra.to_param) do
                 .branch-icon
@@ -53,7 +53,7 @@
                 .branch-name
                   = ra&.name
       .row.d-flex.justify-content-center.mt-4
-        = link_to "Browse all services", services_path, class: "btn btn-primary font-weight-bold mt-3"
+        = link_to "Browse all services", services_path, class: "btn btn-primary font-weight-bold mt-3 services-link"
 
   #tab-2.tab-content-home{ "data-target" => "home-page.tab" }
     .container
