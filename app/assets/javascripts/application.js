@@ -13,3 +13,13 @@
 //= require rails-ujs
 //= require activestorage
 //= require_tree .
+
+/* Open */
+function openNav() {
+    document.getElementById("mynav").style.display = "block";
+}
+
+/* Close */
+function closeNav() {
+    document.getElementById("mynav").style.display = "none";
+}

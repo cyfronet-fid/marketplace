@@ -1,10 +1,49 @@
 = render "layouts/sections"
+
+#mynav.overlay
+  %a.closebtn{ "href": "javascript:void(0)", "onclick": "closeNav()" } &times;
+  .overlay-content
+    .mobile-links
+      %ul
+        - if !user_signed_in?
+          %li
+            = link_to user_checkin_omniauth_authorize_path, class: "btn btn-primary font-weight-bold mt-5" do
+              Login to EOSC marketplace
+        - else
+          %li
+            %a.simple-item{ href: "/projects" } My projects
+          %li
+            %a.simple-item{ href: "/profile" } Profile
+          %li
+            = link_to "Logout", destroy_user_session_path, method: :delete,
+            class: "btn btn-primary font-weight-bold mt-5 logout-link"
+
+    .bottom-links
+      .container.text-right.top-row
+        %ul.list-inline.mb-0
+          %li.list-inline-item.ml-2
+            %a{ href: "https://eosc-portal.eu" } EOSC Portal
+          %li.list-inline-item.ml-2
+            = link_to "EOSC Marketplace", root_path,
+              class: "#{"active" if local_assigns[:section] == nil}"
+          - if policy([:backoffice, :backoffice]).show?
+            %li.list-inline-item.ml-2
+              = link_to "Backoffice", backoffice_path,
+                class: "#{"active" if local_assigns[:section] == :backoffice}"
+          - if policy([:admin, :admin]).show?
+            %li.list-inline-item.ml-2
+              = link_to "Admin", admin_path, section: "admin",
+                class: "#{"active" if local_assigns[:section] == :admin}"
+
 .container.pl-0.pr-0
   %nav.navbar.navbar-expand-lg.pl-0.pr-0
-    = link_to root_path, class: "navbar-brand col-12 col-lg-3 pl-0" do
+    = link_to root_path, class: "navbar-brand col-7 col-lg-3 pl-0" do
       = image_tag "eosc-logo-color.png"
       .logo-bg
-    .col-10.col-lg-6.pr-0
+    %span.open-menu.col-4{ "onclick": "openNav()" }
+      Menu
+      %i.fas.fa-bars
+    .col-12.col-lg-6
       = render "services/search", categories: categories
 
     %button.navbar-toggler.col-2{ "aria-controls" => "main-navbar",

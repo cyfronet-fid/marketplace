@@ -25,12 +25,25 @@ export default class extends Controller {
 
     onScroll(event) {
         let height = window.scrollY;
+        const el = document.getElementsByClassName('home-anchor')[0];
         if (height > 600) {
-            const el = document.getElementsByClassName('home-anchor')[0].style;
-            el.opacity = 1;
-            (function fade(){(el.opacity-= .1)<0?el.display="none":setTimeout(fade,60)})();
-
+            el.style.opacity = 1;
+            (function fadeOut() { console.log("zabieram " + height);
+                (el.style.opacity -= .1) > 0 ? setTimeout(fadeOut, 40) : el.classList.add('d-none');
+            })();
+            el.classList.remove('d-block');
+        }
+        if (height < 400 && this.isMobileDevice()) {
+            el.classList.remove('d-none');
+            (function fadeIn(){console.log("daję " + height);
+                (el.style.opacity+= .1)<1?setTimeout(fadeIn,40) : el.classList.add('d-block');
+            })();
+            el.style.opacity = 1;
         }
 
+    }
+
+    isMobileDevice() {
+        return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
     }
 }
