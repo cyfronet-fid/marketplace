@@ -191,7 +191,8 @@ header {
 .overlay {
   /* Height & width depends on how you want to reveal the overlay (see JS below) */
   height: 100%;
-  width: 0;
+  width: 100%;
+  display: none;
   position: fixed; /* Stay in place */
   z-index: 11; /* Sit on top */
   left: 0;
@@ -207,10 +208,10 @@ header {
 
   .closebtn {
     position: absolute;
-    top: 10px;
+    top: 18px;
     z-index: 10;
     color: $body-color;
-    right: 15px;
+    right: 10px;
     padding: 0;
     font-size: 60px;
   }
