@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "image_processing/mini_magick"
+
 class Backoffice::Services::LogoPreviewsController < Backoffice::ApplicationController
   def show
     if params[:service_id] == "new"
@@ -19,7 +21,9 @@ class Backoffice::Services::LogoPreviewsController < Backoffice::ApplicationCont
       logo = logo_from_session
 
       if logo && File.exist?(logo["path"])
-        send_file logo["path"], type: logo["type"]
+        processed = ImageProcessing::MiniMagick.source(logo["path"])
+                    .resize_to_limit!(180, 120)
+        send_file processed.path, type: logo["type"]
       elsif @service&.logo
         redirect_to url_for(@service.logo.variant(resize: "180x120"))
       else
