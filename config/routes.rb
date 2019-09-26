@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   namespace :backoffice do
     resources :services do
       scope module: :services do
+        resource :logo_preview, only: :show
         resources :offers
         resources :offers do
           scope module: :offers do
