@@ -55,7 +55,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   private
 
     def preview_session_key
-      "service-#{@service&.id}-preview"
+      @preview_session_key ||= "service-#{@service&.id}-preview"
     end
 
     def perform_preview
@@ -80,7 +80,8 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
         session[preview_session_key]["logo"] = {
           "filename" => logo.original_filename,
-          "path" => logo_path
+          "path" => logo_path,
+          "type" => logo.content_type
         }
       end
     end
@@ -99,28 +100,31 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       @service = Service::Create.new(service_template).call
 
       if @service.persisted?
-        logo = logo_from_session
-        @service.logo.attach(io: File.open(logo["path"]), filename: logo["filename"]) if logo
+        update_logo_from_session!
+        session.delete(preview_session_key)
         redirect_to backoffice_service_path(@service),
                     notice: "New service created sucessfully"
       else
         render :new, status: :bad_request
       end
-      session.delete(preview_session_key)
     end
 
     def perform_update
       attributes = attributes_from_session || permitted_attributes(@service)
 
       if Service::Update.new(@service, attributes).call
-        logo = logo_from_session
-        @service.logo.attach(io: File.open(logo["path"]), filename: logo["filename"]) if logo
+        update_logo_from_session!
+        session.delete(preview_session_key)
         redirect_to backoffice_service_path(@service),
                     notice: "Service updated correctly"
       else
         render :edit, status: :bad_request
       end
-      session.delete(preview_session_key)
+    end
+
+    def update_logo_from_session!
+      logo = logo_from_session
+      @service.logo.attach(io: File.open(logo["path"]), filename: logo["filename"]) if logo
     end
 
     def index_authorize
