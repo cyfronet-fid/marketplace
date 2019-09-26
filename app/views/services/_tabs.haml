@@ -5,7 +5,7 @@
         %li.nav-item
           %a.nav-link.active.text-uppercase About
         %li.nav-item
-          %a.nav-link.disabled.text-uppercase= "Reviews (#{service.service_opinion_count})"
+          %a.nav-link.disabled.text-uppercase Reviews (#{service.service_opinion_count})
       - else
         %li.nav-item
           = link_to "About", service_path(service),
