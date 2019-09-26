@@ -10,7 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Filtering by upstream source in the backoffice (@goreck888)
-- Add marketplace service preview in the backoffice (@goreck888)
+- Add marketplace service preview in the backoffice (@mkasztelnik, @goreck888)
 
 ### Changed
 
