@@ -23,7 +23,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   def new
-    @service = Service.new(session[preview_session_key] || {})
+    @service = Service.new(attributes_from_session || {})
     @service.sources.build source_type: "eic"
     authorize(@service)
   end
@@ -36,7 +36,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   def edit
-    @service.assign_attributes(session[preview_session_key] || {})
+    @service.assign_attributes(attributes_from_session || {})
     if @service.sources.empty?
       @service.sources.build source_type: "eic"
     end
@@ -59,40 +59,68 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     end
 
     def perform_preview
-      session[preview_session_key] = permitted_attributes(@service || Service)
+      store_in_session!
 
       @service ||= Service.new(status: :draft)
-      @service.assign_attributes(session[preview_session_key])
+      @service.assign_attributes(attributes_from_session)
       @offers = @service.offers.where(status: :published)
       @related_services = @service.related_services
 
       render :preview
     end
 
+    def store_in_session!
+      attributes = permitted_attributes(@service || Service)
+      logo = attributes.delete(:logo)
+      session[preview_session_key] = { "attributes" => attributes }
+
+      if logo
+        logo_path = tmp_path
+        FileUtils.cp logo.tempfile, logo_path
+
+        session[preview_session_key]["logo"] = {
+          "filename" => logo.original_filename,
+          "path" => logo_path
+        }
+      end
+    end
+
+    def attributes_from_session
+      preview = session[preview_session_key]
+      preview["attributes"] if preview
+    end
+
+    def logo_from_session
+      preview = session[preview_session_key]
+      preview["logo"] if preview
+    end
+
     def perform_create
       @service = Service::Create.new(service_template).call
-      session.delete(preview_session_key)
-
-      puts "service errors >>>>>>>>>>>>>>>>>> #{@service.errors.inspect}"
 
       if @service.persisted?
+        logo = logo_from_session
+        @service.logo.attach(io: File.open(logo["path"]), filename: logo["filename"]) if logo
         redirect_to backoffice_service_path(@service),
                     notice: "New service created sucessfully"
       else
         render :new, status: :bad_request
       end
+      session.delete(preview_session_key)
     end
 
     def perform_update
-      attributes = session[preview_session_key] || permitted_attributes(@service)
-      session.delete(preview_session_key)
+      attributes = attributes_from_session || permitted_attributes(@service)
 
       if Service::Update.new(@service, attributes).call
+        logo = logo_from_session
+        @service.logo.attach(io: File.open(logo["path"]), filename: logo["filename"]) if logo
         redirect_to backoffice_service_path(@service),
                     notice: "Service updated correctly"
       else
         render :edit, status: :bad_request
       end
+      session.delete(preview_session_key)
     end
 
     def index_authorize
@@ -100,7 +128,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     end
 
     def service_template
-      attributes = session[preview_session_key] || permitted_attributes(Service)
+      attributes = attributes_from_session || permitted_attributes(Service)
 
       Service.new(attributes.merge(status: :draft))
     end
@@ -122,5 +150,13 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
     def scope
       policy_scope(Service).with_attached_logo
+    end
+
+    def tmp_path
+      tmp_logo = Tempfile.new
+      tmp_path = tmp_logo.path
+      tmp_logo.close
+
+      tmp_path
     end
 end
