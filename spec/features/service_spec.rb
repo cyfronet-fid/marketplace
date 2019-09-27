@@ -303,6 +303,7 @@ RSpec.feature "Service filtering and sorting" do
     click_on("Show 2 more")
     expect(page).to have_selector("input[name='providers[]']", count: 7)
     find(:css, "input[name='providers[]'][value='#{Provider.order(:name).last.id}']").set(true)
+    click_on("Show less")
     click_on(id: "filter-submit")
 
     expect(page).to have_selector("input[name='providers[]']", count: 6)
@@ -335,6 +336,7 @@ RSpec.feature "Service filtering and sorting" do
     click_on("Show 2 more")
     find(:css, "input[name='providers[]'][value='#{Provider.order(:name).last.id}']").set(true)
     click_on(id: "filter-submit")
+    click_on("Show less")
 
     find(:css, "#collapse_providers > div > a", text: "Show 1 more")
   end
