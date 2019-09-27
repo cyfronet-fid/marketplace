@@ -1,7 +1,7 @@
 %ul{ class: html_classes }
   - options.each do |option|
     - muted = option[:count].to_i.zero?
-    - target =  root ? "multicheckbox.element multicheckbox.item" : "multicheckbox.item"
+    - target = root ? "multicheckbox.element multicheckbox.item" : "multicheckbox.item"
     %li{ data: { target: target } }
       %label{ class: ("text-muted" if muted) }
         %input.form-check-input{ type: "checkbox", name: "#{name}[]",

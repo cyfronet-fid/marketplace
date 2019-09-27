@@ -30,7 +30,7 @@ export default class extends Controller {
     const result = this.searchResult();
     const anyChild = function(item) {
       return Array.from(item.getElementsByTagName("li"))
-             .some(e => result.includes(e));
+             .some(e => result.includes(e) || e.querySelector('input').checked);
     };
     const show = function(item) {
       return item.querySelector('input').checked || result.includes(item) ||
