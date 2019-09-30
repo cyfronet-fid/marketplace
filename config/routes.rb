@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   namespace :backoffice do
     resources :services do
       scope module: :services do
+        resource :logo_preview, only: :show
         resources :offers
         resources :offers do
           scope module: :offers do
@@ -52,7 +53,6 @@ Rails.application.routes.draw do
             resource :draft, only: :create
           end
         end
-
         resource :publish, only: :create
         resource :draft, only: :create
       end

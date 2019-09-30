@@ -1,9 +1,16 @@
 .row
   .col-12
     %ul#my-tab.nav.nav-tabs.mt-4.row.pl-3{ role: "tablist" }
-      %li.nav-item
-        = link_to "About", service_path(service),
-          class: "nav-link text-uppercase #{"active" if controller.controller_name == 'services'}", role: "tab"
-      %li.nav-item
-        = link_to "Reviews (#{service.service_opinion_count})", service_opinions_path(service),
-         class: "nav-link text-uppercase #{"active" if controller.controller_name == 'opinions'}", role: "tab"
+      - if local_assigns[:preview]
+        %li.nav-item
+          %a.nav-link.active.text-uppercase About
+        %li.nav-item
+          %a.nav-link.disabled.text-uppercase Reviews (#{service.service_opinion_count})
+      - else
+        %li.nav-item
+          = link_to "About", service_path(service),
+            class: "nav-link text-uppercase #{"active" if controller.controller_name == 'services'}", role: "tab"
+        %li.nav-item
+          = link_to "Reviews (#{service.service_opinion_count})", service_opinions_path(service),
+            class: "nav-link text-uppercase #{"active" if controller.controller_name == 'opinions'}", role: "tab"
+
