@@ -28,13 +28,10 @@ export default class extends Controller {
 
   search() {
     const result = this.searchResult();
-    const anyChild = function(item) {
-      return Array.from(item.getElementsByTagName("li"))
-             .some(e => result.includes(e) || e.querySelector('input').checked);
-    };
     const show = function(item) {
       return item.querySelector('input').checked || result.includes(item) ||
-        anyChild(item);
+        Array.from(item.getElementsByTagName("li"))
+          .some(e => result.includes(e) || e.querySelector('input').checked);
     };
 
     this.itemTargets.
@@ -98,12 +95,18 @@ export default class extends Controller {
   less(targets, toggler) {
     let extraElements = targets.length - this.alwaysShow;
 
+    const show = function(item) {
+      return item.querySelector('input').checked ||
+        Array.from(item.getElementsByTagName("li"))
+          .some(e => e.querySelector('input').checked);
+    };
+
     if(extraElements <= 0) {
       toggler.classList.add('d-none');
     } else {
       targets.forEach((el, i) => {
         if(i >= this.alwaysShow) {
-          if (el.querySelector('input').checked) {
+          if (show(el)) {
             --extraElements;
           } else {
             el.classList.add("d-none");
