@@ -6,6 +6,7 @@ class Filter::Platform < Filter::Multiselect
           field_name: "related_platforms",
           title: "Related Infrastructures and platforms",
           model: ::Platform,
-          index: "platforms")
+          index: "platforms",
+          search: true)
   end
 end
