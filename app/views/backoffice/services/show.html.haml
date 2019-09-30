@@ -25,18 +25,25 @@
         %span Status:
         %span.font-weight-bold= @service.status
       .col-12.col-sm-6
-        - if policy([:backoffice, @service]).publish?
-          = link_to "Publish",
-                  backoffice_service_publish_path(@service),
-                  method: :post,
-                  data: { confirm: "Are you sure you want to publish this service?" },
-                  class: "btn btn-warning float-right btn-sm"
-        - if policy([:backoffice, @service]).draft?
-          = link_to "Stop showing in the MP",
-                  backoffice_service_draft_path(@service),
-                  method: :post,
-                  data: { confirm: "Are you sure you want to stop showing this service?" },
-                  class: "btn btn-warning float-right btn-sm"
+        .btn-group.float-right
+          - if policy([:backoffice, @service]).publish?
+            = link_to "Publish",
+                    backoffice_service_publish_path(@service),
+                    method: :post,
+                    data: { confirm: "Are you sure you want to publish this service?" },
+                    class: "btn btn-success btn-sm"
+          - if policy([:backoffice, @service]).publish_unverified?
+            = link_to "Publish as unverified service",
+                    backoffice_service_publish_path(@service, unverified: true),
+                    method: :post,
+                    data: { confirm: "Are you sure you want to publish this service as unvefiried service?" },
+                    class: "btn btn-warning btn-sm"
+          - if policy([:backoffice, @service]).draft?
+            = link_to "Stop showing in the MP",
+                    backoffice_service_draft_path(@service),
+                    method: :post,
+                    data: { confirm: "Are you sure you want to stop showing this service?" },
+                    class: "btn btn-error btn-sm"
   .row.mt-4
     .col-12.col-sm-8
       %p

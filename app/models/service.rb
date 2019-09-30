@@ -50,6 +50,7 @@ class Service < ApplicationRecord
 
   STATUSES = {
     published: "published",
+    unverified: "unverified",
     draft: "draft"
   }
 

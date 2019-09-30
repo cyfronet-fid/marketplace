@@ -90,6 +90,10 @@ en:
           beta: "Beta (min. TRL 7)"
           production: "Production (min. TRL 8)"
           retired: "Retired (n/a)"
+        status:
+          draft: "Draft"
+          published: "Published"
+          unverified: "Published as unverified"
     project_item:
         status:
           created: Created

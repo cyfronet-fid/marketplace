@@ -35,11 +35,15 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   end
 
   def publish?
-    service_portfolio_manager? && record.draft?
+    service_portfolio_manager? && (record.draft? || record.unverified?)
+  end
+
+  def publish_unverified?
+    service_portfolio_manager? && (record.draft? || record.published?)
   end
 
   def draft?
-    service_portfolio_manager? && record.published?
+    service_portfolio_manager? && (record.published? || record.unverified?)
   end
 
   def destroy?

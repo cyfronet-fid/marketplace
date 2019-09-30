@@ -4,12 +4,11 @@ require "rails_helper"
 
 RSpec.describe ServicePolicy do
   let(:user) { create(:user) }
-  let(:scope) { Service.where(status: :published) }
 
   subject { described_class }
 
   def resolve
-    subject::Scope.new(user, scope).resolve
+    subject::Scope.new(user, Service).resolve
   end
 
   permissions ".scope" do
@@ -23,6 +22,26 @@ RSpec.describe ServicePolicy do
       create(:service, status: :published)
 
       expect(resolve.count).to eq(1)
+    end
+
+    it "allows unverified services" do
+      create(:service, status: :unverified)
+
+      expect(resolve.count).to eq(1)
+    end
+  end
+
+  permissions :show? do
+    it "is granted for published service" do
+      expect(subject).to permit(user, build(:service, status: :published))
+    end
+
+    it "is granted for unvefiried service" do
+      expect(subject).to permit(user, build(:service, status: :unverified))
+    end
+
+    it "denies for draft service" do
+      expect(subject).to_not permit(user, build(:service, status: :draft))
     end
   end
 
