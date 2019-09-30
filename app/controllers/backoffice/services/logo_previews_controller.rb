@@ -17,7 +17,6 @@ class Backoffice::Services::LogoPreviewsController < Backoffice::ApplicationCont
   private
 
     def show_logo_preview
-      puts "service id: #{params[:service_id]}"
       logo = logo_from_session
 
       if logo && File.exist?(logo["path"])
