@@ -5,10 +5,6 @@ export default class extends Controller {
   static targets = ['element', 'toggler', 'item', 'search', 'all'];
   alwaysShow = 5;
 
-  initialize() {
-    console.log('multicheckbox initialize');
-  }
-
   connect() {
     if (this.hasSearchTarget) {
       this.initSearchElements();
