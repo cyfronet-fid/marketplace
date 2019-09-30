@@ -32,7 +32,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     template = service_template
     authorize(template)
 
-    params[:commit] == "Preview" ? perform_preview : perform_create
+    params[:commit] == "Preview" ? perform_preview(:new) : perform_create
   end
 
   def edit
@@ -43,7 +43,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   def update
-    params[:commit] == "Preview" ? perform_preview : perform_update
+    params[:commit] == "Preview" ? perform_preview(:edit) : perform_update
   end
 
   def destroy
@@ -58,15 +58,20 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       @preview_session_key ||= "service-#{@service&.id}-preview"
     end
 
-    def perform_preview
+    def perform_preview(error_view)
       store_in_session!
 
       @service ||= Service.new(status: :draft)
       @service.assign_attributes(attributes_from_session)
-      @offers = @service.offers.where(status: :published)
-      @related_services = @service.related_services
 
-      render :preview
+      if @service.valid?
+        @offers = @service.offers.where(status: :published)
+        @related_services = @service.related_services
+
+        render :preview
+      else
+        render error_view, status: :bad_request
+      end
     end
 
     def store_in_session!
