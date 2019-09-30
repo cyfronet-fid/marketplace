@@ -111,6 +111,33 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("Sorry, but the logo format you were trying to attach is not supported in the Marketplace.")
     end
 
+    scenario "I can publish service" do
+      service = create(:service, status: :draft)
+
+      visit backoffice_service_path(service)
+      click_on "Publish"
+
+      expect(page).to have_content("Status: published")
+    end
+
+    scenario "I can publish as unverified service" do
+      service = create(:service, status: :draft)
+
+      visit backoffice_service_path(service)
+      click_on "Publish as unverified service"
+
+      expect(page).to have_content("Status: unverified")
+    end
+
+    scenario "I can unpublish service" do
+      service = create(:service, status: :published)
+
+      visit backoffice_service_path(service)
+      click_on "Stop showing in the MP"
+
+      expect(page).to have_content("Status: draft")
+    end
+
     scenario "I can edit any service" do
       service = create(:service, title: "my service")
 

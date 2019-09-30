@@ -73,7 +73,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     end
 
     def filter_classes
-      super << Filter::UpstreamSource
+      super + [Filter::UpstreamSource, Filter::Status]
     end
 
     def sort_options
