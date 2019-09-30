@@ -91,6 +91,28 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("Alpha (min. TRL 5)")
     end
 
+    scenario "I can preview service before create" do
+      provider = create(:provider)
+      research_area = create(:research_area)
+
+      visit backoffice_services_path
+      click_on "Create new Service"
+
+      fill_in "Title", with: "service title"
+      fill_in "Tagline", with: "tagline"
+      fill_in "Description", with: "description"
+      select research_area.name, from: "Research areas"
+      select provider.name, from: "Providers"
+
+      click_on "Preview"
+
+      expect(page).to have_content("service title")
+
+      expect { click_on "Confirm changes" }.
+        to change { Service.count }.by(1)
+      expect(page).to have_content("service title")
+    end
+
     scenario "I cannot create service with wrong logo file" do
       provider = create(:provider)
       research_area = create(:research_area)
@@ -147,6 +169,21 @@ RSpec.feature "Services in backoffice" do
       fill_in "Title", with: "updated title"
       click_on "Update Service"
 
+      expect(page).to have_content("updated title")
+    end
+
+    scenario "I can see service preview" do
+      service = create(:service, title: "my service")
+
+      visit backoffice_service_path(service)
+      click_on "Edit"
+
+      fill_in "Title", with: "updated title"
+      click_on "Preview"
+
+      expect(page).to have_content("updated title")
+
+      click_on "Confirm changes"
       expect(page).to have_content("updated title")
     end
 

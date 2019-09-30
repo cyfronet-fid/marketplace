@@ -46,6 +46,10 @@ class Backoffice::ServicePolicy < ApplicationPolicy
     service_portfolio_manager? && (record.published? || record.unverified?)
   end
 
+  def preview?
+    service_portfolio_manager?
+  end
+
   def destroy?
     service_portfolio_manager? &&
       (project_items && project_items.count.zero?) &&
