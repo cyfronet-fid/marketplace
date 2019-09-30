@@ -2,7 +2,7 @@
   .form-group.panel-body{ data: { controller: "multicheckbox" } }
     - if filter.search?
       %input.form-control{ data: { target: "multicheckbox.search", action: "input->multicheckbox#search" },
-        type: "text", placeholder: "Find provider or choose from list below", name: "#{filter.field_name}-filter",
+        type: "text", placeholder: "Find or choose from the list below", name: "#{filter.field_name}-filter",
         value: params["#{filter.field_name}-filter"] }
     %input{ data: { target: "multicheckbox.all" }, type: "hidden",
       name: "#{filter.field_name}-all", value: params["#{filter.field_name}-all"] }
