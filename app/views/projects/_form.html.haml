@@ -1,6 +1,7 @@
 = simple_form_for @project, remote: @show_as_modal,
   html: { role: "form", id: "modal-form",
-    "data-controller" => "project" } do |f|
+          "data-controller" => "project",
+          data: { action: "submit->project#filterFileds" } } do |f|
   %h4 Usage
   = f.input :name, label: "Project name", input_html: { class: "col-lg-6 form-control-lg" }
   = f.input :reason_for_access, label: "Reason to request access to the EOSC services",

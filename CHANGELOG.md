@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - All filters are expanded by default, state is stored in cookie (@mkasztelnik)
 - Filter titles in active filters (@goreck888)
 - Propagate Project info update to jira (@martaswiatkowska)
+- Filter unnecessary customer typology fields (@martaswiatkowska)
 
 ### Changed
 - Service's status is preserved when updating services during EIC import (@michal-szostak)
