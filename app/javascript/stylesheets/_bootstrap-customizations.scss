@@ -1028,17 +1028,6 @@ h5 {
   }
 }
 
-.collapseall.collapsed::before {
-  content: 'Expand All';
-  display: block;
-}
-
-.collapseall::before {
-  content: 'Collapse All';
-  display: block;
-}
-
-
 .order-container {
   .form-group select,
   .form-group select {
