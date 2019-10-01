@@ -23,19 +23,28 @@ RSpec.feature "Service filtering" do
       sub = create(:research_area, parent: root)
       subsub = create(:research_area, parent: sub)
 
-      create(:service, research_areas: [root])
-      create(:service, research_areas: [sub])
-      create(:service, research_areas: [subsub])
-      create(:service)
+      create(:service, research_areas: [root], title: "Root service")
+      create(:service, research_areas: [sub], title: "Sub service")
+      create(:service, research_areas: [subsub], title: "Subsub service")
+      create(:service, title: "Other service")
 
       visit services_path(research_areas: [root.id])
-      expect(page).to have_selector(".media", count: 3)
+      expect(page).to have_text("Root service")
+      expect(page).to have_text("Sub service")
+      expect(page).to have_text("Subsub service")
+      expect(page).to_not have_text("Other service")
 
       visit services_path(research_areas: [sub.id])
-      expect(page).to have_selector(".media", count: 2)
+      expect(page).to_not have_text("Root service")
+      expect(page).to have_text("Sub service")
+      expect(page).to have_text("Subsub service")
+      expect(page).to_not have_text("Other service")
 
       visit services_path(research_areas: [subsub.id])
-      expect(page).to have_selector(".media", count: 1)
+      expect(page).to_not have_text("Root service")
+      expect(page).to_not have_text("Sub service")
+      expect(page).to have_text("Subsub service")
+      expect(page).to_not have_text("Other service")
     end
   end
 
@@ -73,20 +82,28 @@ RSpec.feature "Service filtering" do
   end
 
   it "shows services with tag" do
-    create(:service, tag_list: ["a"])
-    create(:service, tag_list: ["a", "b"])
-    create(:service, tag_list: ["c"])
+    create(:service, tag_list: ["a"], title: "ATag")
+    create(:service, tag_list: ["a", "b"], title: "ABTag")
+    create(:service, tag_list: ["c"], title: "CTag")
 
     visit services_path(tag: "a")
-    expect(page).to have_selector(".media", count: 2)
+    expect(page).to have_text("ATag")
+    expect(page).to have_text("ABTag")
+    expect(page).to_not have_text("CTag")
 
     visit services_path(tag: ["a", "b"])
-    expect(page).to have_selector(".media", count: 2)
+    expect(page).to have_text("ATag")
+    expect(page).to have_text("ABTag")
+    expect(page).to_not have_text("CTag")
 
     visit services_path(tag: ["a", "b", "c"])
-    expect(page).to have_selector(".media", count: 3)
+    expect(page).to have_text("ATag")
+    expect(page).to have_text("ABTag")
+    expect(page).to have_text("CTag")
 
     visit services_path(tag: ["d"])
-    expect(page).to have_selector(".media", count: 0)
+    expect(page).to_not have_text("ATag")
+    expect(page).to_not have_text("ABTag")
+    expect(page).to_not have_text("CTag")
   end
 end
