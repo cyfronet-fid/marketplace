@@ -39,6 +39,39 @@ RSpec.feature "Service filtering" do
     end
   end
 
+  context "filter search", js: true do
+    it "shows only query result and selected" do
+      a = create(:provider, name: "AAAA")
+      c = create(:provider, name: "CCCC")
+      z = create(:provider, name: "ZZZZ")
+
+      visit services_path(providers: [c.id], "providers-filter": "AAA")
+
+      expect(page).to have_text(a.name)
+      expect(page).to have_text(c.name)
+      expect(page).to_not have_text(z.name)
+    end
+
+    it "show query result, parent and selected" do
+      parent_a = create(:research_area, name: "Z1")
+      parent_c = create(:research_area, name: "Z2")
+      parent_z = create(:research_area, name: "Z3")
+
+      a = create(:research_area, parent: parent_a, name: "AAAA")
+      c = create(:research_area, parent: parent_c, name: "CCCC")
+      z = create(:research_area, parent: parent_z, name: "ZZZZ")
+
+      visit services_path(research_areas: [c.id], "research_areas-filter": "AAA")
+
+      expect(page).to have_text(a.name)
+      expect(page).to have_text(parent_a.name)
+      expect(page).to have_text(c.name)
+      expect(page).to have_text(parent_c.name)
+      expect(page).to_not have_text(z.name)
+      expect(page).to_not have_text(parent_z.name)
+    end
+  end
+
   it "shows services with tag" do
     create(:service, tag_list: ["a"])
     create(:service, tag_list: ["a", "b"])

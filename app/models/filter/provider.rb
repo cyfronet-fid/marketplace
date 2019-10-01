@@ -6,6 +6,7 @@ class Filter::Provider < Filter::Multiselect
           field_name: "providers",
           title: "Providers",
           model: ::Provider,
-          index: "providers")
+          index: "providers",
+          search: true)
   end
 end

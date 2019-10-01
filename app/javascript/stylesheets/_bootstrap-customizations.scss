@@ -2786,3 +2786,19 @@ textarea.form-control.is-invalid {
     }
   }
 }
+
+// scss-lint:disable all
+#collapse_research_areas,
+#collapse_related_platforms,
+#collapse_providers {
+  .panel-body {
+    .form-control {
+      font-size: 13px;
+      margin-bottom: 10px;
+      &::placeholder {
+        font-size: 12px;
+      }
+    }
+  }
+}
+// scss-lint:enable all
