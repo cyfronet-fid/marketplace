@@ -1,11 +1,16 @@
 # frozen_string_literal: true
 
 class Filter::AncestryMultiselect < Filter
-  def initialize(params:, title:, field_name:, model:, joining_model:, index:)
+  def initialize(params:, title:, field_name:, model:, joining_model:, index:, search: false)
     super(params: params, type: :multiselect,
           field_name: field_name, title: title, index: index)
     @model = model
     @joining_model = joining_model
+    @search = search
+  end
+
+  def search?
+    @search
   end
 
   private
