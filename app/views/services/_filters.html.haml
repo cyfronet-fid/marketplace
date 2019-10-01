@@ -3,14 +3,6 @@
     .row
       .col-7.text-uppercase
         Filters
-      :javascript
-        function handleCollapseAll(self) {
-          $(self).toggleClass('collapsed');
-          $(self).hasClass('collapsed') ? $('.panel-collapse').collapse('hide') : $('.panel-collapse').collapse('show');
-        }
-      %a.col-5.collapseall.text-right.text-dark.collapsed{ "data-target": ".panel-collapse",
-      "onclick": "handleCollapseAll(this)",
-      "aria-controls": "collapsible" }
 
   = form_tag "", method: :get, role: "search", class: "filters", "data-target": "filters.form", "data-controller": "filter" do
     = hidden_field_tag :q, params[:q] if params[:q].present?
