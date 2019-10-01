@@ -63,4 +63,18 @@ export default class extends Controller {
       el.classList.remove("hidden-fields");
     });
   }
+
+  filterFileds(event) {
+    this.inputTargets.forEach((el) => {
+      if(el.classList.contains("hidden-fields")){
+        var hidden_element = el.getElementsByClassName("form-control")[0];
+        hidden_element.value = "";
+        if (hidden_element.classList.contains("choices__input")) {
+          var empty_option = document.createElement("option");
+          empty_option.selected = true
+          hidden_element.add(empty_option)
+        }
+      }
+    })
+  }
 }
