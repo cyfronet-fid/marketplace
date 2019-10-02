@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Multi checkbox filters search (@mkasztelnik)
 - Filters autoreload (@martaswiatkowska)
 - Project creation time default (@martaswiatkowska)
+- Ask a service question for non-signed in users with re-captcha(@goreck888)
 
 ### Changed
 

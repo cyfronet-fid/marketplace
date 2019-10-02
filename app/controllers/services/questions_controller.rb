@@ -20,7 +20,7 @@ class Services::QuestionsController < ApplicationController
                                      text: params[:service_question][:text],
                                      service: @service)
     respond_to do |format|
-      if @question.valid?
+      if @question.valid? && verify_recaptcha
         @service.contact_emails.each  do |email|
           ServiceMailer.new_question(email, @question, @service).deliver_now
         end
