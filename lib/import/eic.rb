@@ -10,11 +10,13 @@ module Import
                    ids: [],
                    filepath: nil,
                    unirest: Unirest,
-                   logger: ->(msg) { puts msg })
+                   logger: ->(msg) { puts msg },
+                   default_upstream: :mp)
       @eic_base_url = eic_base_url
       @dry_run = dry_run
       @unirest = unirest
       @dont_create_providers = dont_create_providers
+      @default_upstream = default_upstream
 
       @phase_mapping = {
           "trl-7" => "beta",
@@ -139,9 +141,12 @@ module Import
           else
             log "No mapped provider '#{provider_eid}', creating..."
             unless @dry_run
-              mapped_provider = Provider.new(name: @providers[provider_eid]["name"])
-              mapped_provider.save
-              ProviderSource.new(provider_id: mapped_provider.id, source_type: "eic", eid: provider_eid).save
+              if (mapped_provider = Provider.find_by(name: @providers[provider_eid]["name"])).nil?
+                mapped_provider = Provider.create!(name: @providers[provider_eid]["name"])
+              else
+                log "Provider with name '#{@providers[provider_eid]["name"]}' already exists, using existing provider"
+              end
+              ProviderSource.new(provider_id: mapped_provider.id, source_type: "eic", eid: provider_eid).save!
             end
           end
         end
@@ -180,7 +185,10 @@ module Import
               service.logo.attach(io: logo, filename: eid, content_type: logo_content_type)
             end
             service.save!
-            ServiceSource.new(service_id: service.id, eid: eid, source_type: "eic").save!
+            service_source = ServiceSource.create!(service_id: service.id, eid: eid, source_type: "eic")
+            if @default_upstream == :eic
+              service.update(upstream_id: service_source.id)
+            end
           end
         else
           service = Service.find_by(id: service_source.service_id)
@@ -188,7 +196,7 @@ module Import
             updated += 1
             log "Updating [EXISTING] service #{service.title}, id: #{service_source.id}, eid: #{eid}"
             unless @dry_run
-              service.update!(updated_service_data.except(:research_areas, :categories))
+              service.update!(updated_service_data.except(:research_areas, :categories, :status))
             end
           else
             not_modified += 1

@@ -15,8 +15,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Multi checkbox filters search (@mkasztelnik)
 - Filters autoreload (@martaswiatkowska)
 - Project creation time default (@martaswiatkowska)
+- Flag to set default upstream when importing from EIC (@michal-szostak)
 
 ### Changed
+
+- Service's status is preserved when updating services during EIC import (@michal-szostak)
 
 ### Deprecated
 
@@ -26,6 +29,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Hide scrollArrow on scroll event (@goreck888)
+- EIC import when existing provider has the same name as imported one (@michal-szostak)
 
 ### Security
 
