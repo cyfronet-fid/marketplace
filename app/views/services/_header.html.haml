@@ -8,20 +8,21 @@
         = image_tag service.logo.variant(resize: "180x120"), class: "align-self-center img-fluid"
     .col-12.col-sm-9
       %h2.font-weight-bolder= service.title
-      %p.mb-1= service.tagline
+      %p.mb-2= service.tagline
       = render "services/categorization", service: service
       .row.mt-2
         .col
           = print_rating_stars(service.rating)
           %span.ml-1.font-weight-bold
             (#{service.rating} /5)
-        - if service.persisted?
-          = link_to "#{service.service_opinion_count} reviews", service_opinions_path(service), class: "ml-3"
-  .col-12.col-lg-3.text-center
+          - if service.persisted?
+            = link_to "#{service.service_opinion_count} reviews", service_opinions_path(service), class: "ml-3"
+  .col-12.col-lg-3.text-center.vertical-center
+    .vertical-center-inner
     - if policy(service).order?
       = link_to t("service.#{service.service_type}.order.title"),
                     service_offers_path(service),
-                    class: "btn btn-primary d-block mb-4"
+                    class: "btn btn-primary d-block mb-3"
     - if service.open_access? || service.catalog?
       = link_to "Access the service", service.connected_url, class: "btn btn-primary d-block mb-2", target: "_blank"
     - if local_assigns[:question] && !service.contact_emails.empty?
