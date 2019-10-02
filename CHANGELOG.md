@@ -14,6 +14,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service unverified but published state (@mkasztelnik)
 - Multi checkbox filters search (@mkasztelnik)
 - Filters autoreload (@martaswiatkowska)
+- Project creation time default (@martaswiatkowska)
 
 ### Changed
 
