@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_19_090322) do
+ActiveRecord::Schema.define(version: 2019_10_01_140915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,8 +92,8 @@ ActiveRecord::Schema.define(version: 2019_09_19_090322) do
     t.datetime "updated_at", null: false
     t.jsonb "parameters", default: [], null: false
     t.boolean "voucherable", default: false, null: false
-    t.string "offer_type"
     t.string "status"
+    t.string "offer_type"
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
     t.index ["service_id"], name: "index_offers_on_service_id"
@@ -154,8 +154,8 @@ ActiveRecord::Schema.define(version: 2019_09_19_090322) do
     t.string "project_website_url"
     t.string "company_name"
     t.string "company_website_url"
-    t.string "country_of_origin", null: false
-    t.string "countries_of_partnership", default: [], null: false, array: true
+    t.string "country_of_origin"
+    t.string "countries_of_partnership", default: [], array: true
     t.integer "issue_id"
     t.integer "issue_status", default: 2, null: false
     t.string "issue_key"
@@ -164,9 +164,9 @@ ActiveRecord::Schema.define(version: 2019_09_19_090322) do
     t.string "organization"
     t.string "department"
     t.string "webpage"
-    t.datetime "created_at", default: "2019-07-18 10:36:57", null: false
-    t.datetime "updated_at", default: "2019-07-18 10:36:57", null: false
     t.string "status"
+    t.datetime "created_at", default: "2019-10-01 00:00:00", null: false
+    t.datetime "updated_at", default: "2019-10-01 00:00:00", null: false
     t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
