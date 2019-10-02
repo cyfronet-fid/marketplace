@@ -17,7 +17,8 @@
   .col-md-12.mb-2
     %h1.categories
       - unless params[:q].blank?
-        Looking for: #{params[:q]}
+        %span Looking for:
+        #{params[:q]}
       - else
         = @category&.name || "Services"
     .col-md-12.mb-1
@@ -44,8 +45,8 @@
 
   .col-md-12
     %hr.category-separator
-  .col-md-3.pt-md-2
-    %i.control-label
+  .col-md-3
+    %i.control-label.search-results
       = page_entries_info @services
   .col-md-4
     = render "services/order", sort_options: @sort_options

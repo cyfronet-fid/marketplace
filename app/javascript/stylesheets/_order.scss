@@ -3,7 +3,7 @@
   border: 1px solid $border-color;
   border-radius: 100px;
   overflow: hidden;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   $color-1: #1c353d;
   $color-2: #f7f7f7;
 
@@ -19,15 +19,15 @@
       }
 
       &.active::after {
+        width: 0;
+        height: 0;
+        border-top: 90px solid transparent;
+        border-bottom: 90px solid transparent;
+        border-left: 60px solid $color-1;
         position: absolute;
-        top: 0;
-        height: 40px;
-        width: 40px;
-        background: $color-1 !important;
+        top: -70px;
         content: ' ';
-        right: -13px;
-        transform: rotate(-45deg);
-        -webkit-transform: rotate(-45deg);
+        right: -21px;
       }
     }
 
@@ -38,15 +38,19 @@
   }
 
   li:nth-child(2) a::after {
+    width: 0;
+    height: 0;
+    border-top: 90px solid transparent;
+    border-bottom: 90px solid transparent;
+    border-left: 60px solid $white;
     position: absolute;
-    top: 0;
-    height: 40px;
-    width: 40px;
-    background: $white;
+    top: -70px;
     content: ' ';
-    right: -13px;
-    transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
+    right: -21px;
+  }
+
+  li:nth-child(2) .active::after {
+    border-left: 60px solid $color-1;
   }
 
   li:nth-child(2) .active::before,

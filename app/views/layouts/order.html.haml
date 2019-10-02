@@ -9,7 +9,7 @@
         .text-right.flex-grow-1
           = link_to t("service.#{@service.service_type}.order.cancel"),
             service_cancel_path(@service),
-            method: :delete, class: "text-uppercase"
+            method: :delete, class: "text-uppercase align-middle"
           .ml-3.d-inline
             = yield :next_button
       = render "layouts/flash"

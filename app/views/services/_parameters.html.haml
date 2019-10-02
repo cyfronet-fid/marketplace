@@ -3,4 +3,4 @@
     - filter_technical_parameters(parameters.map(&:to_json)).each do |parameter|
       %tr
         %td= parameter["label"]
-        %td.text-right.text-nowrap= parse_offer_parameter_value(parameter)
+        %td.text-right.text-nowrap.font-weight-bold= parse_offer_parameter_value(parameter)
