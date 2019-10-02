@@ -98,6 +98,12 @@ ssh -R <port_number - from 9001 to 9015>:localhost:5000 mszostak@docker-fid.grid
 If you can not connect, try different port - it is possible that other developer connected
 to this port and is blocking it
 
+## ReCaptcha
+
+ReCaptcha is now used in the ask service question form. To work it needs to set 2 environment variables:
+`RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY`. For test, development and internal docker instances
+values of these variables are stored in encrypted credentials. 
+
 ## For Admins
 
 If you are an admin, who wants to integrate production instance of JIRA go to

@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Filters autoreload (@martaswiatkowska)
 - Project creation time default (@martaswiatkowska)
 - Flag to set default upstream when importing from EIC (@michal-szostak)
+- Ask a service question for non-signed in users with re-captcha(@goreck888)
 
 ### Changed
 
