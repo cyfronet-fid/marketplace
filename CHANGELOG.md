@@ -18,6 +18,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 
+- Fix IID in projects (@michal-szostak, @martaswiatkowska)
+
 ### Security
 
 ## [2.1.4] 2019-09-20
