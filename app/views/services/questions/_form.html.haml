@@ -2,9 +2,11 @@
   - unless current_user
     = f.input :author, label: t("simple_form.labels.question.author")
     = f.input :email, as: :email
-  = f.input :text, as: :text, input_html: { rows: 10 },
+  = f.input :text, as: :text, input_html: { rows: 6 },
                 label: t("simple_form.labels.question.text", title: service.title),
                 hint: t("simple_form.hints.question.text", email: current_user&.email || "your")
-  = recaptcha_tags
-  .modal-footer
-  = f.submit "SEND", class: "btn btn-primary"
+  #recaptcha= recaptcha_tags
+  %hr.bottom-hr.mt-4.mb-4
+  = f.submit "SEND", id: "question-modal-action-btn", class: "btn btn-primary pl-5 pr-5 float-left"
+  %button.close.close-link{ type: "button", "data-dismiss": "modal", "aria-label": "Close" }
+    %span Close
