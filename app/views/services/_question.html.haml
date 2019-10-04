@@ -1,4 +1,4 @@
-#question-modal.modal{ tabindex: "-1", role: "dialog",
+#question-modal.modal.question-modal{ tabindex: "-1", role: "dialog",
                             "aria-hidden": true }
   .modal-dialog{ role: "document" }
     .modal-content
@@ -10,4 +10,9 @@
           %span{ "aria-hidden": true }
             &times;
       #question-modal-body.modal-body
+        .modal-info.mb-4
+          %p
+            We will send your question to the Service provider.
+            %br
+            You will receive an answer to your email adress.
         = render "services/questions/form", service: service, question: question
