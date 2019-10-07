@@ -9,6 +9,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
   before_action :sort_options
   prepend_before_action :index_authorize, only: :index
+  helper_method :cant_edit
 
   def index
     if params["service_id"].present?
@@ -50,6 +51,10 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     Service::Destroy.new(@service).call
     redirect_to backoffice_services_path,
                 notice: "Service destroyed"
+  end
+
+  def cant_edit(attribute)
+    !policy([:backoffice, @service]).permitted_attributes.include?(attribute)
   end
 
   private

@@ -2,59 +2,68 @@
   = f.error_notification
   .row
     .col-12.col-md-10
-      = f.input :logo
-      = f.input :title
-      = f.input :tagline
-      = f.input :tag_list, input_html: { value: service.tag_list.to_s }
+      = f.input :logo, disabled: cant_edit(:logo)
+      = f.input :title, disabled: cant_edit(:title)
+      = f.input :tagline, disabled: cant_edit(:tagline)
+      = f.input :tag_list, input_html: { value: service.tag_list.to_s }, disabled: cant_edit(:tag_list)
       .service-description
-        = f.input :description
+        = f.input :description, disabled: cant_edit(:description)
   .row.mt-5
     .col-12.col-md-5
       = f.input :service_type, collection: Service.service_types.keys.map(&:to_sym),
-        input_html: { "data-target" => "service.serviceType", "data-action" => "change->service#showConnectedUrl" }
+        input_html: { "data-target" => "service.serviceType", "data-action" => "change->service#showConnectedUrl" },
+        disabled: cant_edit(:service_type)
       = f.input :connected_url, label: "Service website",
-        wrapper_html: { "data-target" => "service.connectedUrl" }
+        wrapper_html: { "data-target" => "service.connectedUrl" },
+        disabled: cant_edit(:connected_url)
 
-  = f.association :categories, multiple: true, input_html: { data: { choice: true } }
-  = f.association :providers, multiple: true, input_html: { data: { choice: true } }
-  = f.association :platforms, multiple: true, input_html: { data: { choice: true } }
-  = f.association :research_areas, input_html: { data: { choice: true } }, include_hidden: false
+  = f.association :categories, multiple: true, input_html: { data: { choice: true } },
+                  disabled: cant_edit([category_ids: []])
+  = f.association :providers, multiple: true, input_html: { data: { choice: true } },
+                  disabled: cant_edit([provider_ids: []])
+  = f.association :platforms, multiple: true, input_html: { data: { choice: true } },
+                  disabled: cant_edit([platform_ids: []])
+  = f.association :research_areas, input_html: { data: { choice: true } }, include_hidden: false,
+                  disabled: cant_edit([research_area_ids: []])
   = f.association :target_groups,
                   label: "Dedicated For",
                   input_html: { data: { choice: true }, class: "target_groups" },
-                  include_hidden: false
+                  include_hidden: false,
+                  disabled: cant_edit([target_group_ids: []])
   .row.mt-5
     .col-12.col-md-5
-      = f.association :owners, multiple: true, input_html: { data: { choice: true } }
+      = f.association :owners, multiple: true, input_html: { data: { choice: true } },
+                      disabled: cant_edit([owner_ids: []])
   .row.service-contact-emails
     .col-12.col-md-6
-      = f.input :contact_emails, multiple: true, as: :array, wrapper_html: { "data-target" => "service.contactEmails" }
+      = f.input :contact_emails, multiple: true, as: :array, wrapper_html: { "data-target" => "service.contactEmails" },
+        disabled: cant_edit([contact_emails: []])
       %a.text-primary{ "data-action" => "click->service#addNewEmailField" } Add additional email
   .row.mt-5
     .col-12.col-md-10
-      = f.input :order_target, label: "Service Order Target"
+      = f.input :order_target, label: "Service Order Target", disabled: cant_edit(:order_target)
 
   .row.mt-5
     .col-12.col-md-5
-      = f.input :places
-      = f.input :languages
+      = f.input :places, disabled: cant_edit(:places)
+      = f.input :languages, disabled: cant_edit(:languages)
   .row
     .col-12.col-md-10
-      = f.input :terms_of_use_url
-      = f.input :access_policies_url
-      = f.input :sla_url
-      = f.input :webpage_url
-      = f.input :manual_url
-      = f.input :helpdesk_url
-      = f.input :helpdesk_email, input_html: { type: "text" }
-      = f.input :tutorial_url
+      = f.input :terms_of_use_url, disabled: cant_edit(:terms_of_use_url)
+      = f.input :access_policies_url, disabled: cant_edit(:access_policies_url)
+      = f.input :sla_url, disabled: cant_edit(:sla_url)
+      = f.input :webpage_url, disabled: cant_edit(:webpage_url)
+      = f.input :manual_url, disabled: cant_edit(:manual_url)
+      = f.input :helpdesk_url, disabled: cant_edit(:helpdesk_url)
+      = f.input :helpdesk_email, input_html: { type: "text" }, disabled: cant_edit(:helpdesk_email)
+      = f.input :tutorial_url, disabled: cant_edit(:tutorial_url)
   .row
     .col-12.col-md-5
-      = f.input :phase, collection: Service.phases.values.map(&:to_sym)
-      = f.input :restrictions
+      = f.input :phase, collection: Service.phases.values.map(&:to_sym), disabled: cant_edit(:phase)
+      = f.input :restrictions, disabled: cant_edit(:restrictions)
   .row.service-activate-message
     .col-12.col-md-10
-      = f.input :activate_message
+      = f.input :activate_message, disabled: cant_edit(:activate_message)
   .row.mt-5
     .col-12.col-md-5
       = f.input :upstream_id, collection: f.object.sources.reject { |source| source.id.nil? },

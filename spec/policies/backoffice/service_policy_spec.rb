@@ -13,6 +13,42 @@ RSpec.describe Backoffice::ServicePolicy do
 
   subject { described_class }
 
+  context "permitted_attributes" do
+    it "should return attrs if service has no upstream or is not persisted" do
+      policy = described_class.new(service_owner, create(:service))
+      expect(policy.permitted_attributes).to eq([
+                                                    :title, :description,
+                                                    :tagline, :connected_url, :service_type,
+                                                    [provider_ids: []], :places, :languages,
+                                                    [target_group_ids: []], :terms_of_use_url,
+                                                    :access_policies_url, :sla_url,
+                                                    :webpage_url, :manual_url, :helpdesk_url,
+                                                    :helpdesk_email, :tutorial_url, :restrictions,
+                                                    :phase, :order_target,
+                                                    :activate_message, :logo,
+                                                    [contact_emails: []], [research_area_ids: []],
+                                                    [platform_ids: []], :tag_list, [category_ids: []],
+                                                    [owner_ids: []], :status, :upstream_id,
+                                                    sources_attributes: [:id, :source_type, :eid, :_destroy]
+                                                ])
+    end
+
+    it "should filter eic managed fields if upstream is set to eic source" do
+      service = create(:service)
+      source = create(:service_source, source_type: :eic, service: service)
+      service.update!(upstream: source)
+      policy = described_class.new(service_owner, service)
+      expect(policy.permitted_attributes).to eq([
+                                                    [target_group_ids: []], :helpdesk_email, :restrictions,
+                                                    :order_target, :activate_message,
+                                                    [contact_emails: []], [research_area_ids: []],
+                                                    [platform_ids: []], :tag_list, [category_ids: []],
+                                                    [owner_ids: []], :status, :upstream_id,
+                                                    sources_attributes: [:id, :source_type, :eid, :_destroy]
+                                                ])
+    end
+  end
+
   context "service draft" do
     permissions :index? do
       it "grants access for service portfolio manager" do
