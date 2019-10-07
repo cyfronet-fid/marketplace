@@ -1,5 +1,28 @@
 # frozen_string_literal: true
 
+
+EIC_SOURCE_FIELDS = [
+  :logo,
+  :title,
+  :description,
+  :tagline,
+  :connected_url,
+  :places,
+  :languages,
+  :dedicated_for,
+  :terms_of_use_url,
+  :access_policies_url,
+  :sla_url,
+  :webpage_url,
+  :manual_url,
+  :helpdesk_url,
+  :tutorial_url,
+  :phase,
+  :service_type,
+  [provider_ids: []],
+]
+
+
 class Backoffice::ServicePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
@@ -13,6 +36,10 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       end
     end
   end
+
+  SOURCES_FIELDS = {
+      "eic" => EIC_SOURCE_FIELDS
+  }
 
   def index?
     service_portfolio_manager? || service_owner?
@@ -57,7 +84,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [
+    attrs = [
       :title, :description,
       :tagline, :connected_url, :service_type,
       [provider_ids: []], :places, :languages,
@@ -72,6 +99,12 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       [owner_ids: []], :status, :upstream_id,
       sources_attributes: [:id, :source_type, :eid, :_destroy]
     ]
+
+    if !@record.is_a?(Service) || @record.upstream.nil?
+      attrs
+    else
+      attrs - SOURCES_FIELDS[@record.upstream.source_type]
+    end
   end
 
   private
