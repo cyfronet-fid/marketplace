@@ -72,6 +72,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Cleanup and refactoring for service browsing specs (@mkasztelnik)
 - UI Fixes and upgrades (@jarekzet)
 - Show first project services when after entering "My projects" section (@mkasztelnik)
+- Allow only child research areas in services (@goreck888)
 
 ### Removed
 - Remove category `services_count` (@mkasztelnik)

@@ -113,6 +113,7 @@ class Service < ApplicationRecord
   validates :logo, blob: { content_type: :image }
   validate :logo_variable, on: [:create, :update]
   validates :research_areas, presence: true
+  validate :children_research_areas
   validates :providers, presence: true
   validates :status, presence: true
   validates :order_target, allow_blank: true, email: true
@@ -155,5 +156,10 @@ class Service < ApplicationRecord
 
     def main_category_missing?
       categorizations.where(main: true).count.zero?
+    end
+
+    def children_research_areas
+      excluded = research_areas.select { |ra| ResearchArea.leafs.exclude?(ra) }
+      errors.add(:research_areas, "cannot contains parents: #{excluded&.map(&:name).join(", ")}") unless excluded.blank?
     end
 end

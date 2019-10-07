@@ -42,6 +42,15 @@ RSpec.describe Service do
     expect(service.main_category).to eq(main)
   end
 
+  it "doesn't allow to select research area with children" do
+    root = create(:research_area)
+    create(:research_area, parent: root)
+
+    service = build(:service, research_areas: [root])
+
+    expect { service.save! }.to raise_error(ActiveRecord::RecordInvalid)
+  end
+
   context "if open access" do
     before { allow(subject).to receive(:open_access?) { true } }
 

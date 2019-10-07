@@ -31,7 +31,8 @@ RSpec.feature "Services in backoffice" do
     scenario "I can create new service" do
       category = create(:category)
       provider = create(:provider)
-      research_area = create(:research_area)
+      root = create(:research_area)
+      research_area = create(:research_area, parent: root)
       platform = create(:platform)
       target_group = create(:target_group)
 
@@ -57,7 +58,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Activate message", with: "Welcome!!!"
       fill_in "Service Order Target", with: "email@domain.com"
       select "Alpha (min. TRL 5)", from: "Phase"
-      select research_area.name, from: "Research areas"
+      select "#{research_area.root.name} / #{research_area.name}", from: "Research areas"
       select provider.name, from: "Providers"
       select "open_access", from: "Service type"
       select platform.name, from: "Platforms"
@@ -93,7 +94,8 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I can preview service before create" do
       provider = create(:provider)
-      research_area = create(:research_area)
+      root = create(:research_area)
+      research_area = create(:research_area, parent: root)
 
       visit backoffice_services_path
       click_on "Create new Service"
@@ -101,7 +103,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Title", with: "service title"
       fill_in "Tagline", with: "tagline"
       fill_in "Description", with: "description"
-      select research_area.name, from: "Research areas"
+      select "#{research_area.root.name} / #{research_area.name}", from: "Research areas"
       select provider.name, from: "Providers"
 
       click_on "Preview"
@@ -115,7 +117,8 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I cannot create service with wrong logo file" do
       provider = create(:provider)
-      research_area = create(:research_area)
+      root = create(:research_area)
+      research_area = create(:research_area, parent: root)
 
       visit backoffice_services_path
       click_on "Create new Service"
@@ -124,7 +127,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Title", with: "service title"
       fill_in "Description", with: "service description"
       fill_in "Tagline", with: "service tagline"
-      select research_area.name, from: "Research areas"
+      select "#{research_area.root.name} / #{research_area.name}", from: "Research areas"
       select provider.name, from: "Providers"
 
       expect { click_on "Create Service" }.

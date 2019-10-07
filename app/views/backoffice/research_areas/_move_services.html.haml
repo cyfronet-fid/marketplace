@@ -1,0 +1,33 @@
+#action-frame.container
+  %hr
+  .mb-4
+    %p
+      You are trying to add parent which contains following services:
+      %ul.simple-list
+        - parent_services&.each do |service|
+          %li= service.title
+    %p
+      You can move services listed above to the:
+      %ul.simple-list
+        %li "Other for #{research_area&.parent&.name}" (will be automatically created)
+        %li "Other" Research area (if not exist it will be created, unavailable if "Other" has children)
+        %li Research area you want to create
+    %p
+      Choose an option below or choose another parent and click create:
+  .btn-group-toggle
+    = f.button :button, "Create other for #{research_area&.parent&.name}",
+      name: "commit",
+      value: "other_for_parent",
+      class: "btn btn-primary pl-5 pr-5 mr-5 moveButton",
+      data: { controller: "research-area", target: "research-area.move" }
+    - unless ResearchArea.other&.has_children?
+      = f.button :button, "Move to Other",
+        name: "commit",
+        value: "other",
+        class: "btn btn-primary pl-5 pr-5 mr-5 moveButton",
+        data: { controller: "research-area", target: "research-area.move" }
+    = f.button :button, "Move to actually created",
+      name: "commit",
+      value: "current",
+      class: "btn btn-primary pl-5 pr-5 mr-5 moveButton",
+      data: { controller: "research-area", target: "research-area.move" }

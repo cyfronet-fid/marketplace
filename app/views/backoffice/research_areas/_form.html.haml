@@ -1,10 +1,13 @@
-= simple_form_for [:backoffice, research_area] do |f|
+= simple_form_for [:backoffice, research_area], html: { data: { controller: "research-area" } } do |f|
   = f.input :name
   = f.input :parent_id,
     collection: ancestry_id_tree(research_area.potential_parents),
-    label_method: :first, value_method: :last, as: :select, include_blank: true
+    label_method: :first, value_method: :last, as: :select, include_blank: true,
+    input_html: { data: { target: "research-area.parent", action: "change->research-area#hidePrompt" } }
 
 
   .btn-group
     = f.button :submit, class: "btn btn-success"
     = back_link_to "Cancel", research_area, prefix: :backoffice, class: "btn btn-secondary"
+  - unless research_area.errors[:parent_id].empty?
+    = render "move_services", research_area: research_area, parent_services: parent_services, f: f

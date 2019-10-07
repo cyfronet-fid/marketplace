@@ -172,7 +172,7 @@ describe Import::EIC do
     end
 
     it "should not update research_areas and categories" do
-      research_area_something = create(:research_area, name: "Something")
+      research_area_something = create(:research_area, name: "Something", parent: create(:research_area))
 
       service = create(:service, categories: [Category.find_by(name: "Networking")], research_areas: [research_area_something])
       source = create(:service_source, eid: "phenomenal.phenomenal", service_id: service.id, source_type: "eic")
@@ -261,7 +261,7 @@ describe Import::EIC do
 
     make_and_stub_eic(ids: [], dry_run: false, default_upstream: :eic).call
 
-    research_area = create(:research_area)
+    research_area = create(:research_area, parent: create(:research_area))
     service = Service.first
     service.update!(status: "published", research_areas: [research_area], categories: [])
 

@@ -24,7 +24,7 @@ FactoryBot.define do
     sequence(:dedicated_for) { |n| ["service #{n} dedicated for"] }
     sequence(:restrictions) { |n| "service #{n} restrictions" }
     sequence(:phase) { :alpha }
-    sequence(:research_areas) { |n| [create(:research_area)] }
+    sequence(:research_areas) { |n| [create(:research_area, parent: create(:research_area))] }
     sequence(:providers) { |n| [create(:provider)] }
     sequence(:categories) { |n| [create(:category)] }
     sequence(:status) { :published }

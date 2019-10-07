@@ -1909,7 +1909,7 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
-        area: [*socialSciences, *humanities]
+        area: [*political, *philosophy]
         target_groups: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
         phase: production
@@ -1957,7 +1957,7 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
-        area: [*socialSciences, *humanities]
+        area: [*political, *philosophy]
         target_groups: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
         phase: production
@@ -2022,7 +2022,7 @@ services:
         places: *europe
         languages: *english
         target_groups: [*researchers] #TODO: but not specified
-        area: *humanities
+        area: *philosophy
 #        #restrictions: *notSpecified
         phase: production
         tagline: A service that allows researchers to create their own citable digital bookmarks.
@@ -2534,7 +2534,7 @@ services:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
-#        area: *humanities
+#        area: *philosophy
 #        #restrictions: *notSpecified
 #        phase: production
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2810,7 +2810,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations]
         languages: *english
-        area: *humanities
+        area: *philosophy
         #restrictions: *notSpecified
         phase: production
         tagline: The DARIAH Science Gateway is a platform that provides access to various digital applications and services for the Arts & Humanities researchers
@@ -3591,7 +3591,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups]
         languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
+        area: [*lifeSciences, *political, *physicalSciences, *formalSciences, *interdisciplinary]
         restrictions: "Research affiliation needed"
         phase: alpha
         tagline: "EODC JupyterHub provides access to the global EODC Copernicus Data Archive."
@@ -3648,7 +3648,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers]
         languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
+        area: [*lifeSciences, *political, *physicalSciences, *formalSciences, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
         tagline: "Catalog Service for the Web (CSW), OGC compliant catalogue service to expose metadata of geospatial records hosted at EODC"
@@ -3792,7 +3792,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
         languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
+        area: [*lifeSciences, *political, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
         tagline: "Data Collections Catalog is based on two solutions  – CKAN - comprehensive frontend catalogue application for information discovery and EO Browser – specialized catalogue application for robust satellite imagery discovery and quick georeferenced preview"
@@ -3835,7 +3835,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
         languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
+        area: [*lifeSciences, *political, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
         tagline: "CREODIAS platform is a cloud infrastructure adapted to the processing of big amounts of EO data, including an EO Data storage cluster and a dedicated IaaS cloud infrastructure for the platform’s Users"
@@ -3874,7 +3874,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
         languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
+        area: [*lifeSciences, *political, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
         tagline: "Manage your data products"
@@ -3905,7 +3905,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
         languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
+        area: [*lifeSciences, *political, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
         tagline: "The EO Browser allows visualization and basic processing of selected data collections (like Sentinel-1 L1 GRD or Sentinel-2 L1C)"
@@ -4534,7 +4534,7 @@ services:
       places: *europe
       target_groups: [*researchers, *research_organisations, *research_groups, *providers]
       languages: *english
-      area: [*interdisciplinary, *lifeSciences, *socialSciences, *humanities, *appliedScience, *philosophy]
+      area: [*interdisciplinary, *lifeSciences, *political, *appliedScience, *philosophy]
       #restrictions: *notSpecified
       phase: production
       tagline: Secure and cost-effective cloud computing for processing sensitive data

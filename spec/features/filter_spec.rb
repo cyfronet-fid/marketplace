@@ -78,30 +78,30 @@ RSpec.feature "Service filter" do
 
     it "show services from root and children when hierarchical" do
       root = create(:research_area)
-      sub = create(:research_area, parent: root)
-      subsub = create(:research_area, parent: sub)
+      sub1 = create(:research_area, parent: root)
+      sub2 = create(:research_area, parent: root)
 
-      create(:service, research_areas: [root], title: "Root service")
-      create(:service, research_areas: [sub], title: "Sub service")
-      create(:service, research_areas: [subsub], title: "Subsub service")
-      create(:service, title: "Other service")
+      create(:service, research_areas: [sub1], title: "Sub1a service")
+      create(:service, research_areas: [sub1], title: "Sub1b service")
+      create(:service, research_areas: [sub2], title: "Sub2 service")
+      create(:service)
 
       visit services_path(research_areas: [root.id])
-      expect(page).to have_text("Root service")
-      expect(page).to have_text("Sub service")
-      expect(page).to have_text("Subsub service")
+      expect(page).to have_text("Sub1a service")
+      expect(page).to have_text("Sub1b service")
+      expect(page).to have_text("Sub2 service")
       expect(page).to_not have_text("Other service")
 
-      visit services_path(research_areas: [sub.id])
-      expect(page).to_not have_text("Root service")
-      expect(page).to have_text("Sub service")
-      expect(page).to have_text("Subsub service")
+      visit services_path(research_areas: [sub1.id])
+      expect(page).to_not have_text("Sub2 service")
+      expect(page).to have_text("Sub1a service")
+      expect(page).to have_text("Sub1b service")
       expect(page).to_not have_text("Other service")
 
-      visit services_path(research_areas: [subsub.id])
-      expect(page).to_not have_text("Root service")
-      expect(page).to_not have_text("Sub service")
-      expect(page).to have_text("Subsub service")
+      visit services_path(research_areas: [sub2.id])
+      expect(page).to_not have_text("Sub1a service")
+      expect(page).to_not have_text("Sub1b service")
+      expect(page).to have_text("Sub2 service")
       expect(page).to_not have_text("Other service")
     end
 

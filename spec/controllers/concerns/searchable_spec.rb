@@ -199,7 +199,7 @@ RSpec.describe ApplicationController, type: :controller do
     end
 
     context Filter::ResearchArea do
-      let!(:collection) { create_list(:research_area, 3) }
+      let!(:collection) { create_list(:research_area, 3, parent: create(:research_area)) }
       let!(:field_name) { :research_areas }
       let!(:param_name) { :research_areas }
       let!(:filter_class) { Filter::ResearchArea }
