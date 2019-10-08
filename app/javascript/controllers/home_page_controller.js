@@ -28,14 +28,14 @@ export default class extends Controller {
         const el = document.getElementsByClassName('home-anchor')[0];
         if (height > 600) {
             el.style.opacity = 1;
-            (function fadeOut() { console.log("zabieram " + height);
+            (function fadeOut() {
                 (el.style.opacity -= .1) > 0 ? setTimeout(fadeOut, 40) : el.classList.add('d-none');
             })();
             el.classList.remove('d-block');
         }
         if (height < 400 && this.isMobileDevice()) {
             el.classList.remove('d-none');
-            (function fadeIn(){console.log("daję " + height);
+            (function fadeIn(){
                 (el.style.opacity+= .1)<1?setTimeout(fadeIn,40) : el.classList.add('d-block');
             })();
             el.style.opacity = 1;
