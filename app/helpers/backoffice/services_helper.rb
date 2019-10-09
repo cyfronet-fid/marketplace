@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
 module Backoffice::ServicesHelper
+  BADGES = {
+    "published" => "badge-success",
+    "unverified" => "badge-warning",
+    "draft" => "badge-error"
+  }
+
   def service_status(service)
-    status_badge_class = service.published? ? "badge-success" : "badge-warning"
-    content_tag(:span, service.status, class: "badge #{status_badge_class}")
+    content_tag(:span, service.status, class: "badge #{BADGES[service.status]}")
   end
 
   def offer_status(offer)
-    status_badge_class = offer.published? ? "badge-success" : "badge-warning"
-    content_tag(:span, offer.status, class: "badge #{status_badge_class}")
+    content_tag(:span, offer.status, class: "badge #{BADGES[offer.status]}")
   end
 end

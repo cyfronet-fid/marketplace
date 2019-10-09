@@ -1,5 +1,12 @@
 = render "services/filters/wrapper", filter: filter do
   .form-group.panel-body{ data: { controller: "multicheckbox" } }
+    - if filter.search?
+      %input.form-control.smaller-input.mb-2{ data: { target: "multicheckbox.search",
+        action: "input->multicheckbox#search" }, type: "text", placeholder: "Find or choose from the list below",
+        name: "#{filter.field_name}-filter", value: params["#{filter.field_name}-filter"] }
+    %input{ data: { target: "multicheckbox.all" }, type: "hidden",
+      name: "#{filter.field_name}-all", value: params["#{filter.field_name}-all"] }
+
     = render "services/filters/multiselect_level",
       options: filter.options, html_classes: "pl-0 pr-0",
       name: filter.field_name, values: filter.values, root: true

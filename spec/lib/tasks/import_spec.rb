@@ -15,6 +15,7 @@ describe "import:eic", type: :task do
     allow(ENV).to receive(:[]).with("DONT_CREATE_PROVIDERS").and_return("1")
     allow(ENV).to receive(:[]).with("IDS").and_return("sampleeid,sampleeid2")
     allow(ENV).to receive(:[]).with("OUTPUT").and_return("/tmp/output.json")
+    allow(ENV).to receive(:[]).with("UPSTREAM").and_return("eic")
 
     allow(importer).to receive(:call)
     import_class_stub = class_double(Import::EIC).as_stubbed_const(transfer_nested_constants: true)
@@ -22,7 +23,8 @@ describe "import:eic", type: :task do
                                                    dry_run: "1",
                                                    dont_create_providers: "1",
                                                    ids: ["sampleeid", "sampleeid2"],
-                                                   filepath: "/tmp/output.json")
+                                                   filepath: "/tmp/output.json",
+                                                   default_upstream: :eic)
                                     .and_return(importer)
 
     subject.invoke
@@ -33,7 +35,10 @@ describe "import:eic", type: :task do
     import_class_stub = class_double(Import::EIC).as_stubbed_const(transfer_nested_constants: true)
     allow(import_class_stub).
       to receive(:new).
-      with("https://catalogue.eosc-portal.eu", dry_run: false, dont_create_providers: false, filepath: nil, ids: []).
+      with("https://catalogue.eosc-portal.eu",
+           dry_run: false,
+           dont_create_providers: false,
+           filepath: nil, ids: []).
       and_return(importer)
 
     subject.invoke

@@ -42,7 +42,6 @@ ActiveRecord::Schema.define(version: 2019_10_03_120324) do
     t.string "ancestry"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "services_count", default: 0
     t.string "slug"
     t.integer "ancestry_depth", default: 0
     t.index ["ancestry"], name: "index_categories_on_ancestry"

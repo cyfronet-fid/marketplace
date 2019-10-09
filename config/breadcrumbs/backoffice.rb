@@ -29,6 +29,15 @@ crumb :backoffice_service_edit do |service|
   parent :backoffice_service, service
 end
 
+crumb :backoffice_service_preview do |service|
+  link "Preview"
+  if service.persisted?
+    parent :backoffice_service, service
+  else
+    parent :backoffice_services
+  end
+end
+
 crumb :backoffice_research_areas do
   link "Research Areas", backoffice_research_areas_path
   parent :backoffice_root

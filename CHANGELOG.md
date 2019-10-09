@@ -9,14 +9,27 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Filtering by upstream source in the backoffice (@goreck888)
+- Add marketplace service preview in the backoffice (@mkasztelnik, @goreck888)
+- Service unverified but published state (@mkasztelnik)
+- Multi checkbox filters search (@mkasztelnik)
+- Filters autoreload (@martaswiatkowska)
+- Project creation time default (@martaswiatkowska)
+- Flag to set default upstream when importing from EIC (@michal-szostak)
 
 ### Changed
+
+- Service's status is preserved when updating services during EIC import (@michal-szostak)
 
 ### Deprecated
 
 ### Removed
+- Remove category `services_count` (@mkasztelnik)
+- Remove unnecessary logs in js console(@goreck888)
 
 ### Fixed
+- Hide scrollArrow on scroll event (@goreck888)
+- EIC import when existing provider has the same name as imported one (@michal-szostak)
 
 ### Security
 
@@ -65,6 +78,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Use project details partial on service order configuration step (@mkasztelnik)
 - Apply a new view and functionalities of the start page (@jarekzet, @goreck888)
 - Rename buttons for creating new platforms, providers and categories in the backoffice (@goreck888)
+- Disabled css animations in the test environment (@goreck888)
 
 ### Removed
 - Affiliation model removed (@mkasztelnik)

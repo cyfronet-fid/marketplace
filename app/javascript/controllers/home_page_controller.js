@@ -4,7 +4,7 @@ export default class extends Controller {
     static targets = ["changeTab", "tab", "scrollArrow"];
 
     connect() {
-        this.onScrollRunning = true
+        document.addEventListener("scroll", this.onScroll());
     }
 
     initialize(){}
@@ -24,17 +24,26 @@ export default class extends Controller {
     }
 
     onScroll(event) {
-        if (!this.onScrollRunning) {
-            this.onScrollRunning = true;
-        }
-
         let height = window.scrollY;
+        const el = document.getElementsByClassName('home-anchor')[0];
         if (height > 600) {
-            const el = document.getElementsByClassName('.home-anchor').style;
-            el.opacity = 1;
-            (function fade(){(el.opacity-= .1)<0?s.display="none":setTimeout(fade,40)})();
-
+            el.style.opacity = 1;
+            (function fadeOut() {
+                (el.style.opacity -= .1) > 0 ? setTimeout(fadeOut, 40) : el.classList.add('d-none');
+            })();
+            el.classList.remove('d-block');
+        }
+        if (height < 400 && this.isMobileDevice()) {
+            el.classList.remove('d-none');
+            (function fadeIn(){
+                (el.style.opacity+= .1)<1?setTimeout(fadeIn,40) : el.classList.add('d-block');
+            })();
+            el.style.opacity = 1;
         }
 
+    }
+
+    isMobileDevice() {
+        return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
     }
 }

@@ -1,7 +1,10 @@
 .row
   .col-12.col-lg-9.row
     .col-12.col-sm-3.d-flex.img-service-detail
-      - if service.logo.attached?
+      - if local_assigns[:preview]
+        = image_tag backoffice_service_logo_preview_path(service_id: service.id || "new"),
+          class: "align-self-center img-fluid"
+      - elsif service.logo.attached?
         = image_tag service.logo.variant(resize: "180x120"), class: "align-self-center img-fluid"
     .col-12.col-sm-9
       %h2.font-weight-bolder= service.title
@@ -12,6 +15,7 @@
           = print_rating_stars(service.rating)
           %span.ml-1.font-weight-bold
             (#{service.rating} /5)
+        - if service.persisted?
           = link_to "#{service.service_opinion_count} reviews", service_opinions_path(service), class: "ml-3"
   .col-12.col-lg-3.text-center
     - if policy(service).order?
@@ -20,5 +24,5 @@
                     class: "btn btn-primary d-block mb-4"
     - if service.open_access? || service.catalog?
       = link_to "Access the service", service.connected_url, class: "btn btn-primary d-block mb-2", target: "_blank"
-
-    = render "services/ask_question", service: service, question: question
+    - if local_assigns[:question]
+      = render "services/ask_question", service: service, question: question

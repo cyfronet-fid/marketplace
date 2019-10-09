@@ -10,4 +10,12 @@ RSpec.describe Service::Publish do
 
     expect(service.reload).to be_published
   end
+
+  it "publish unverified service" do
+    service = create(:service)
+
+    described_class.new(service, verified: false).call
+
+    expect(service.reload).to be_unverified
+  end
 end

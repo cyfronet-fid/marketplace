@@ -23,7 +23,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   def new
-    @service = Service.new
+    @service = Service.new(attributes_from_session || {})
     @service.sources.build source_type: "eic"
     authorize(@service)
   end
@@ -32,29 +32,18 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     template = service_template
     authorize(template)
 
-    @service = Service::Create.new(template).call
-
-    if @service.persisted?
-      redirect_to backoffice_service_path(@service),
-                  notice: "New service created sucessfully"
-    else
-      render :new, status: :bad_request
-    end
+    params[:commit] == "Preview" ? perform_preview(:new) : perform_create
   end
 
   def edit
+    @service.assign_attributes(attributes_from_session || {})
     if @service.sources.empty?
       @service.sources.build source_type: "eic"
     end
   end
 
   def update
-    if Service::Update.new(@service, permitted_attributes(@service)).call
-      redirect_to backoffice_service_path(@service),
-                  notice: "Service updated correctly"
-    else
-      render :edit, status: :bad_request
-    end
+    params[:commit] == "Preview" ? perform_preview(:edit) : perform_update
   end
 
   def destroy
@@ -64,16 +53,97 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   private
+
+    def preview_session_key
+      @preview_session_key ||= "service-#{@service&.id}-preview"
+    end
+
+    def perform_preview(error_view)
+      store_in_session!
+
+      @service ||= Service.new(status: :draft)
+      @service.assign_attributes(attributes_from_session)
+
+      if @service.valid?
+        @offers = @service.offers.where(status: :published)
+        @related_services = @service.related_services
+
+        render :preview
+      else
+        render error_view, status: :bad_request
+      end
+    end
+
+    def store_in_session!
+      attributes = permitted_attributes(@service || Service)
+      logo = attributes.delete(:logo)
+      session[preview_session_key] = { "attributes" => attributes }
+
+      if logo
+        logo_path = tmp_path
+        FileUtils.cp logo.tempfile, logo_path
+
+        session[preview_session_key]["logo"] = {
+          "filename" => logo.original_filename,
+          "path" => logo_path,
+          "type" => logo.content_type
+        }
+      end
+    end
+
+    def attributes_from_session
+      preview = session[preview_session_key]
+      preview["attributes"] if preview
+    end
+
+    def logo_from_session
+      preview = session[preview_session_key]
+      preview["logo"] if preview
+    end
+
+    def perform_create
+      @service = Service::Create.new(service_template).call
+
+      if @service.persisted?
+        update_logo_from_session!
+        session.delete(preview_session_key)
+        redirect_to backoffice_service_path(@service),
+                    notice: "New service created sucessfully"
+      else
+        render :new, status: :bad_request
+      end
+    end
+
+    def perform_update
+      attributes = attributes_from_session || permitted_attributes(@service)
+
+      if Service::Update.new(@service, attributes).call
+        update_logo_from_session!
+        session.delete(preview_session_key)
+        redirect_to backoffice_service_path(@service),
+                    notice: "Service updated correctly"
+      else
+        render :edit, status: :bad_request
+      end
+    end
+
+    def update_logo_from_session!
+      logo = logo_from_session
+      @service.logo.attach(io: File.open(logo["path"]), filename: logo["filename"]) if logo
+    end
+
     def index_authorize
       authorize(Service)
     end
 
     def service_template
-      Service.new(permitted_attributes(Service).merge(status: :draft))
+      attributes = attributes_from_session || permitted_attributes(Service)
+
+      Service.new(attributes.merge(status: :draft))
     end
 
     def filter_classes
-      super << Filter::UpstreamSource
+      super + [Filter::UpstreamSource, Filter::Status]
     end
 
     def sort_options
@@ -93,5 +163,13 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
     def scope
       policy_scope(Service).with_attached_logo
+    end
+
+    def tmp_path
+      tmp_logo = Tempfile.new
+      tmp_path = tmp_logo.path
+      tmp_logo.close
+
+      tmp_path
     end
 end
