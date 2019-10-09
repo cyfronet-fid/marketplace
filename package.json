@@ -11,6 +11,7 @@
     "choices.js": "^6.0.0",
     "cookieconsent": "^3.1.1",
     "expose-loader": "^0.7.5",
+    "fuse.js": "^3.4.5",
     "jquery": "^3.4.1",
     "lodash.debounce": "^4.0.8",
     "popper.js": "^1.14.3",
@@ -18,7 +19,28 @@
     "turbolinks": "^5.1.1"
   },
   "devDependencies": {
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "mutationobserver-shim": "^0.3.3",
     "postcss-custom-properties": "^9.0.2",
     "webpack-dev-server": "^3.7.2"
+  },
+  "jest": {
+    "testPathIgnorePatterns": ["/node_modules/", "/config/"],
+    "setupFiles": [
+      "./spec/javascript/setup.js"
+    ],
+    "testRegex": ".*_spec.js",
+    "roots": [
+      "spec/javascript"
+    ],
+
+    "moduleDirectories": [
+      "node_modules",
+        "app/javascript/controllers"
+    ]
+  },
+  "scripts": {
+    "test": "jest"
   }
 }

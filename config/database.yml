@@ -23,7 +23,7 @@ default: &default
 
 development:
   <<: *default
-  database: mp_development_pr
+  database: mp_development
   host: <%= ENV["MP_DATABASE_HOST"] %>
   username: <%= ENV["MP_DATABASE_USERNAME"] %>
   password: <%= ENV["MP_DATABASE_PASSWORD"] %>

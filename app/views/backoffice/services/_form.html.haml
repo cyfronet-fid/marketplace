@@ -28,8 +28,8 @@
       = f.association :owners, multiple: true, input_html: { data: { choice: true } }
   .row.service-contact-emails
     .col-12.col-md-6
-      = f.input :contact_emails, multiple: true, as: :array
-      %a#add-email-field.text-primary Add additional email
+      = f.input :contact_emails, multiple: true, as: :array, wrapper_html: { "data-target" => "service.contactEmails" }
+      %a.text-primary{ "data-action" => "click->service#addNewEmailField" } Add additional email
   .row.mt-5
     .col-12.col-md-10
       = f.input :order_target, label: "Service Order Target"
@@ -77,28 +77,12 @@
 
   .row.mt-5
     .col-12
-      = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5"
+      = f.button :button, "Preview",
+        name: "commit",
+        value: "Preview",
+        class: "btn btn-primary pl-5 pr-5 mr-5"
+      = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5",
+        "data-action": "click->service#clearEmptyEmails"
       = back_link_to "Cancel and back to previous page", service, prefix: :backoffice,
         class: "text-left flex-grow-1 text-uppercase"
 
-
-
-:javascript
-  $(document).ready(function() {
-    $("#add-email-field").click(function(event){
-      event.preventDefault();
-      var lastEmailField = document.createElement("input");
-      var parent = document.getElementsByClassName("service_contact_emails");
-
-      lastEmailField.type = "email";
-      lastEmailField.name = "service[contact_emails][]";
-      lastEmailField.id = "service_contact_emails_"+(parent[0].children.length - 1)
-
-      parent[0].appendChild(lastEmailField);
-      });
-
-      $(".simple_form").submit(function (event){
-        $(this).find(':input[type=email]').filter(function() { return !this.value; }).remove()
-        return true;
-      });
-  });

@@ -50,6 +50,7 @@ class Service < ApplicationRecord
 
   STATUSES = {
     published: "published",
+    unverified: "unverified",
     draft: "draft"
   }
 
@@ -130,11 +131,6 @@ class Service < ApplicationRecord
 
   def offers?
     offers_count.positive?
-  end
-
-  after_commit on: [:update] do
-    # Update categories counters
-    categorizations.each(&:touch) if saved_change_to_status
   end
 
   def aod?

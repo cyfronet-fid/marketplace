@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
 class Filter::Multiselect < Filter
-  def initialize(params:, title:, field_name:, model:, index:)
+  def initialize(params:, title:, field_name:, model:, index:, search: false)
     super(params: params, field_name: field_name,
           type: :multiselect, title: title, index: index)
     @model = model
+    @search = search
+  end
+
+  def search?
+    @search
   end
 
   protected

@@ -5,7 +5,6 @@
         Filters
       :javascript
         function handleCollapseAll(self) {
-        console.log(self)
           $(self).toggleClass('collapsed');
           $(self).hasClass('collapsed') ? $('.panel-collapse').collapse('hide') : $('.panel-collapse').collapse('show');
         }
@@ -13,13 +12,8 @@
       "onclick": "handleCollapseAll(this)",
       "aria-controls": "collapsible" }
 
-  = form_tag "", method: :get, role: "search", class: "filters"  do
+  = form_tag "", method: :get, role: "search", class: "filters", "data-target": "filters.form" do
     = hidden_field_tag :q, params[:q] if params[:q].present?
     = hidden_field_tag :sort, params[:sort] if params[:sort].present?
     - @filters.each do |filter|
       = render "services/filters/#{filter.type}", filter: filter
-
-    .row
-      .col-md-12
-        %button#filter-submit.btn.btn-primary.mt-4.w-100.filter-submit{ type: "submit" }
-          Filter
