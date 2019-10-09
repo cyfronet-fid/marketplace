@@ -7,7 +7,8 @@ describe Import::EIC do
   let(:test_url) { "https://localhost" }
   let(:unirest) { double(Unirest) }
 
-  def make_and_stub_eic(ids: [], dry_run: false, dont_create_providers: false, filepath: nil, log: false)
+  def make_and_stub_eic(ids: [], dry_run: false, dont_create_providers: false, filepath: nil, log: false,
+                        default_upstream: nil)
     options = {
         dry_run: dry_run,
         dont_create_providers: dont_create_providers,
@@ -18,6 +19,10 @@ describe Import::EIC do
 
     unless log
       options[:logger] = ->(_msg) { }
+    end
+
+    if default_upstream
+      options[:default_upstream] = default_upstream
     end
 
     eic = Import::EIC.new(test_url, options)
@@ -134,6 +139,7 @@ describe Import::EIC do
       expect(service.sources.count).to eq(1)
       expect(service.logo.download).to eq(file_fixture("PhenoMeNal_logo.png").read.b)
       expect(service.sources.first.eid).to eq("phenomenal.phenomenal")
+      expect(service.upstream_id).to eq(nil)
 
       expect(Service.find_by(title: "MetalPDB")).to_not be_nil
       expect(Service.find_by(title: "PDB_REDO server")).to_not be_nil
@@ -218,6 +224,52 @@ describe Import::EIC do
     eic.call
 
     expect(Service.first.tagline).to eq("NO IMPORTED TAGLINE")
+  end
+
+  it "should set upstream_id if :eic argument is provided" do
+    response = double(code: 200, body: create(:eic_services_response, tagline: ""))
+    provider_response = double(code: 200, body: create(:eic_providers_response))
+    expect_responses(unirest, test_url, response, provider_response)
+
+    eic = make_and_stub_eic(ids: [], dry_run: false, dont_create_providers: false, default_upstream: :eic)
+    eic.call
+
+    service = Service.first
+    expect(service.upstream_id).to eq(service.sources.first.id)
+  end
+
+  it "should update only EIC fields when importing existing service with EIC upstream" do
+    response = double(code: 200, body: create(:eic_services_response, tagline: ""))
+    provider_response = double(code: 200, body: create(:eic_providers_response))
+    expect_responses(unirest, test_url, response, provider_response)
+
+    make_and_stub_eic(ids: [], dry_run: false, default_upstream: :eic).call
+
+    research_area = create(:research_area)
+    service = Service.first
+    service.update!(status: "published", research_areas: [research_area], categories: [])
+
+    expect_responses(unirest, test_url, response, provider_response)
+
+    make_and_stub_eic(ids: [], dry_run: false, default_upstream: :eic).call
+    service.reload
+    expect(service.status).to eq("published")
+    expect(service.research_areas).to eq([research_area])
+    expect(service.categories).to eq([])
+  end
+
+  it "should match provider by name and connect external source" do
+    response = double(code: 200, body: create(:eic_services_response, tagline: ""))
+    provider_response = double(code: 200, body: create(:eic_providers_response))
+    # create provider with matching name to one returned by provider_response
+    provider = create(:provider, name: "Phenomenal")
+    expect_responses(unirest, test_url, response, provider_response)
+
+    make_and_stub_eic(ids: [], dry_run: false, default_upstream: :eic).call
+
+    expect(Service.first.providers).to eq([provider])
+    provider.reload
+    expect(provider.sources.count).to eq(1)
   end
 
   it "should correctly map trls" do
