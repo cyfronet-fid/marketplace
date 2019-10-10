@@ -31,7 +31,7 @@ class Attribute
   end
 
   def value_valid?
-    JSON::Validator.validate(value_schema, value)
+    JSON::Validator.validate(value_schema, value, parse_data: false)
   end
 
   def validate_config!
