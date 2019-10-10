@@ -42,7 +42,8 @@ RSpec.describe Filter::ResearchArea do
       filter.counters = { child2.id => 1 }
 
       expect(filter.active_filters).
-          to include([parent.name, "research_areas" => [child1.id.to_s]], [child1.name, "research_areas" => [parent.id.to_s]])
+          to include(["Research Area", parent.name, "research_areas" => [child1.id.to_s]],
+                     ["Research Area", child1.name, "research_areas" => [parent.id.to_s]])
     end
   end
 

@@ -18,7 +18,7 @@ class Filter
 
   def active_filters
     values.
-      map { |v| [name(v), remove_filter_params(v)] }.
+      map { |v| [ title, name(v), remove_filter_params(v)] }.
       reject { |f| f[0].blank? }
   end
 
