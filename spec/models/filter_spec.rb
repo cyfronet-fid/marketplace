@@ -61,7 +61,7 @@ RSpec.describe Filter do
       filter = MyFilter.new(params: params)
 
       expect(filter.active_filters).
-        to contain_exactly(["A", anything], ["B", anything])
+        to contain_exactly(["My Filter", "A", anything], ["My Filter", "B", anything])
     end
 
     it "returns one active filter when param is a value" do
@@ -69,14 +69,14 @@ RSpec.describe Filter do
       filter = MyFilter.new(params: params)
 
       expect(filter.active_filters).
-        to contain_exactly(["A", anything])
+        to contain_exactly(["My Filter", "A", anything])
     end
 
     it "ignores non existing filter values" do
       params = ActionController::Parameters.new("my_filter" => "non-existing")
       filter = MyFilter.new(params: params)
 
-      expect(filter.active_filters).to be_empty
+      expect(filter.active_filters).to contain_exactly(["My Filter", nil, {}])
     end
 
     it "removes itself from params list" do
@@ -84,7 +84,7 @@ RSpec.describe Filter do
       filter = MyFilter.new(params: params)
 
       expect(filter.active_filters).
-        to contain_exactly(["A", "a" => "b"])
+        to contain_exactly(["My Filter", "A", "a" => "b"])
     end
   end
 end
