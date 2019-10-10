@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Project creation time default (@martaswiatkowska)
 - Flag to set default upstream when importing from EIC (@michal-szostak)
 - Ask a service question for non-signed in users with re-captcha(@goreck888)
+- All filters are expanded by default, state is stored in cookie (@mkasztelnik)
 
 ### Changed
 
