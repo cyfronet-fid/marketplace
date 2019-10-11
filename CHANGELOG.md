@@ -17,9 +17,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- Fix attribute input validation (@martaswiatkowska)
 
 ### Security
+
+## [2.1.6] 2019-10-11
+
+### Fixed
+- Fix attribute input validation (@martaswiatkowska)
 
 ## [2.1.5] 2019-10-09
 
