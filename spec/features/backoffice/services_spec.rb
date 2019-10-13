@@ -381,6 +381,80 @@ RSpec.feature "Services in backoffice" do
       click_on "Update Service"
       expect(page).to have_content(external_source.to_s, count: 2)
     end
+
+    scenario "if upstream is set to MP (nil) all fields should be enabled" do
+      service = create(:service, title: "my service", upstream: nil)
+      create(:service_source, service: service, source_type: :eic)
+
+      visit backoffice_service_path(service)
+      click_on "Edit"
+
+      expect(page).to have_field "Logo", disabled: false
+      expect(page).to have_field "Title", disabled: false
+      expect(page).to have_field "Tag list", disabled: false
+      expect(page).to have_field "Description", disabled: false
+      expect(page).to have_field "Service type", disabled: false
+      expect(page).to have_field "Service website", disabled: false
+      expect(page).to have_field "Categories", disabled: false
+      expect(page).to have_field "Providers", disabled: false
+      expect(page).to have_field "Platforms", disabled: false
+      expect(page).to have_field "Research areas", disabled: false
+      expect(page).to have_field "Dedicated For", disabled: false
+      expect(page).to have_field "Owners", disabled: false
+      expect(page).to have_field "service_contact_emails_0", disabled: false
+      expect(page).to have_field "Service Order Target", disabled: false
+      expect(page).to have_field "Places", disabled: false
+      expect(page).to have_field "Languages", disabled: false
+      expect(page).to have_field "Terms of use url", disabled: false
+      expect(page).to have_field "Access policies url", disabled: false
+      expect(page).to have_field "Sla url", disabled: false
+      expect(page).to have_field "Webpage url", disabled: false
+      expect(page).to have_field "Manual url", disabled: false
+      expect(page).to have_field "Helpdesk url", disabled: false
+      expect(page).to have_field "Helpdesk email", disabled: false
+      expect(page).to have_field "Tutorial url", disabled: false
+      expect(page).to have_field "Phase", disabled: false
+      expect(page).to have_field "Restrictions", disabled: false
+      expect(page).to have_field "Activate message", disabled: false
+    end
+
+    scenario "If EIC is selected as upstream fields imported from there should be disabled" do
+      service = create(:service, title: "my service")
+      external_source = create(:service_source, service: service, source_type: :eic)
+      service.upstream = external_source
+      service.save!
+
+      visit backoffice_service_path(service)
+      click_on "Edit"
+
+      expect(page).to have_field "Logo", disabled: true
+      expect(page).to have_field "Title", disabled: true
+      expect(page).to have_field "Tag list", disabled: false
+      expect(page).to have_field "Description", disabled: true
+      expect(page).to have_field "Service type", disabled: true
+      expect(page).to have_field "Service website", disabled: true
+      expect(page).to have_field "Categories", disabled: false
+      expect(page).to have_field "Providers", disabled: true
+      expect(page).to have_field "Platforms", disabled: false
+      expect(page).to have_field "Research areas", disabled: false
+      expect(page).to have_field "Dedicated For", disabled: false
+      expect(page).to have_field "Owners", disabled: false
+      expect(page).to have_field "service_contact_emails_0", disabled: false
+      expect(page).to have_field "Service Order Target", disabled: false
+      expect(page).to have_field "Places", disabled: true
+      expect(page).to have_field "Languages", disabled: true
+      expect(page).to have_field "Terms of use url", disabled: true
+      expect(page).to have_field "Access policies url", disabled: true
+      expect(page).to have_field "Sla url", disabled: true
+      expect(page).to have_field "Webpage url", disabled: true
+      expect(page).to have_field "Manual url", disabled: true
+      expect(page).to have_field "Helpdesk url", disabled: true
+      expect(page).to have_field "Helpdesk email", disabled: false
+      expect(page).to have_field "Tutorial url", disabled: true
+      expect(page).to have_field "Phase", disabled: true
+      expect(page).to have_field "Restrictions", disabled: false
+      expect(page).to have_field "Activate message", disabled: false
+    end
   end
 
   context "as a service owner" do
