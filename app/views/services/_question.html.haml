@@ -1,20 +1,17 @@
-#question-modal.modal{ tabindex: "-1", role: "dialog",
+#question-modal.modal.question-modal{ tabindex: "-1", role: "dialog",
                             "aria-hidden": true }
   .modal-dialog{ role: "document" }
     .modal-content
       .modal-header
-        .modal-title
-          %h3
-            Ask provider
+        %h3#modal-title
+          Ask provider
         %button.close{ type: "button", "data-dismiss": "modal", "aria-label": "Close" }
           %span{ "aria-hidden": true }
             &times;
-      = simple_form_for question, url: service_questions_path(service) do |f|
-        .modal-body
-          = f.input :text, as: :text, input_html: { rows: 10 },
-            label: t("simple_form.labels.question.text", title: service.title),
-            hint: t("simple_form.hints.question.text", email: current_user.email)
-        .modal-footer
-          = f.submit "SEND", class: "btn btn-primary"
-
-
+      #question-modal-body.modal-body
+        .modal-info.mb-4
+          %p
+            We will send your question to the Service provider.
+            %br
+            You will receive an answer to your email adress.
+        = render "services/questions/form", service: service, question: question

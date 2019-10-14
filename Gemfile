@@ -44,6 +44,7 @@ gem "omniauth"
 gem "omniauth_openid_connect"
 gem "pundit", "~> 2.0"
 gem "role_model"
+gem "recaptcha", require: "recaptcha/rails"
 
 # Markdown
 gem "github-markup"
