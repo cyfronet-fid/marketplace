@@ -31,6 +31,17 @@ RSpec.feature "Project" do
       expect(new_project.name).to eq("First test")
     end
 
+    scenario "I can see first project services when entering My projects" do
+      project = create(:project, user: user)
+      service = create(:service, title: "The best service ever")
+      offer = create(:offer, service: service)
+      create(:project_item, offer: offer, project: project)
+
+      visit projects_path
+
+      expect(page).to have_text("The best service ever")
+    end
+
     scenario "After successful creation new project I'm redirected to projects page" do
       visit projects_path
 
