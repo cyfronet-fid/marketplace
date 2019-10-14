@@ -31,8 +31,16 @@ RSpec.feature "Service browsing" do
       expect(current_path).to eq(root_path)
     end
 
-    scenario "I see Ask Question" do
+    scenario "I cannot see Ask Question if contact emails are empty" do
       service = create(:service)
+
+      visit service_path(service)
+
+      expect(page).to_not have_content "Want to ask a question about this service?"
+    end
+
+    scenario "I can see Ask Question if contact emails are filled" do
+      service = create(:service, contact_emails: ["john.doe@company.com"])
 
       visit service_path(service)
 
@@ -40,7 +48,7 @@ RSpec.feature "Service browsing" do
     end
 
     scenario "I can see question-modal if I click on link", js: true do
-      service = create(:service)
+      service = create(:service, contact_emails: ["john.doe@company.com"])
 
       visit service_path(service)
 
@@ -49,7 +57,7 @@ RSpec.feature "Service browsing" do
       expect(page).to have_css("div#question-modal.show")
     end
 
-    scenario "I can sand message about service", js: true do
+    scenario "I can send message about service", js: true do
       user1, user2 = create_list(:user, 2)
       service = create(:service, contact_emails: [user1.email, user2.email])
 
@@ -61,9 +69,24 @@ RSpec.feature "Service browsing" do
         fill_in("service_question_text", with: "text")
       end
 
-      expect { click_on "SEND" }.
+      expect { click_on "SEND"
+               # wait for ajax response
+               sleep(5) }.
         to change { ActionMailer::Base.deliveries.count }.by(2)
-      expect(page).to have_content("Your message was successfully sended")
+      expect(page).to have_content("Your message was successfully sent")
+    end
+
+    scenario "I cannot send message about service with empty message", js: true do
+      user1, user2 = create_list(:user, 2)
+      service = create(:service, contact_emails: [user1.email, user2.email])
+
+      visit service_path(service)
+
+      find("#modal-show").click
+
+      click_on "SEND"
+
+      expect(page).to have_content("Text Question cannot be blank")
     end
   end
 
@@ -188,12 +211,56 @@ RSpec.feature "Service browsing" do
   end
 
   context "as not logged in user" do
-    scenario "I need to login to asks service question" do
+    scenario "I can ask a question if contact emails are not empty" do
+      service = create(:service, contact_emails: ["john.doe@company.com"])
+
+      visit service_path(service)
+
+      expect(page).to have_content "Want to ask a question about this service?"
+    end
+
+    scenario "I cannot ask a question if contact emails are empty" do
       service = create(:service)
 
       visit service_path(service)
 
-      expect(page).to have_content "If you want to ask a question about this service please login"
+      expect(page).to_not have_content "Want to ask a question about this service?"
+    end
+
+    scenario "I can send message about service", js: true do
+      user1, user2 = create_list(:user, 2)
+      service = create(:service, contact_emails: [user1.email, user2.email])
+
+      visit service_path(service)
+
+      find("#modal-show").click
+
+      within("#question-modal") do
+        fill_in("service_question_author", with: "John Doe")
+        fill_in("service_question_email", with: "john.doe@company.com")
+        fill_in("service_question_text", with: "text")
+      end
+
+      expect { click_on "SEND"
+               # wait for ajax response
+               sleep(5) }.
+          to change { ActionMailer::Base.deliveries.count }.by(2)
+      expect(page).to have_content("Your message was successfully sent")
+    end
+
+    scenario "I cannot send message about service with empty fields", js: true do
+      user1, user2 = create_list(:user, 2)
+      service = create(:service, contact_emails: [user1.email, user2.email])
+
+      visit service_path(service)
+
+      find("#modal-show").click
+
+      click_on "SEND"
+
+      expect(page).to have_content("Author can't be blank")
+      expect(page).to have_content("Email can't be blank and Email is not a valid email address")
+      expect(page).to have_content("Text Question cannot be blank")
     end
   end
 end

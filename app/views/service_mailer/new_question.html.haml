@@ -1,3 +1,9 @@
 %p Dear Sir/Madam,
-%p User #{@author.full_name} sent you message:
+%p You have received a question from #{@email}
+%p The question refers to the Service #{@service.title}
+%p The question was issued by: #{@author}
+%p The content of the question:
 %p= @message
+%p Kindly give your reply to the below email address:
+%p= @email
+%p Kind regards

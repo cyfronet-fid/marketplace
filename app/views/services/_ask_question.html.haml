@@ -1,10 +1,3 @@
-- if current_user
-  %a{ id: "modal-show", "data-toggle": "modal", "data-target": "#question-modal" }
-    Want to ask a question about this service?
-- else
-  %p.mb-0.font-italic
-    If you want to ask a question
-    %br
-    about this service please login
-- if current_user
-  = render "services/question", service: service, question: question
+%a{ id: "modal-show", "data-toggle": "modal", "data-target": "#question-modal", remote: true }
+  Want to ask a question about this service?
+= render "services/question", service: service, question: question
