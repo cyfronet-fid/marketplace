@@ -27,8 +27,10 @@
     .col-md-12.mb-3
       %p.mb-1 Active filters
       .active-filters
-        - @active_filters.each do |label, p|
+        - @active_filters.each do |title, label, p|
           .filter-tag
+            %span.text-muted
+              #{title}:
             = label
             = link_to(p) do
               .fas.fa-times
