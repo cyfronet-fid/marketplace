@@ -22,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 
 - Service's status is preserved when updating services during EIC import (@michal-szostak)
+- Cleanup and refactoring for service browsing specs (@mkasztelnik)
 
 ### Deprecated
 

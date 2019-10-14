@@ -5,89 +5,25 @@ require "rails_helper"
 RSpec.feature "Service browsing" do
   include OmniauthHelper
 
-  let(:user) { create(:user) }
+  scenario "allows to see service details" do
+    service = create(:service, tag_list: ["my-tag"])
 
-  context "as logged in user" do
-    before { checkin_sign_in_as(user) }
+    visit service_path(service)
 
-    scenario "allows to see details" do
-      service = create(:service, tag_list: ["my-tag"])
+    expect(body).to have_content service.title
+    expect(body).to have_content service.description
+    expect(body).to have_content service.tagline
+    expect(body).to have_content "my-tag"
+  end
 
-      visit service_path(service)
+  scenario "not allows to see draft service via direct link for default user" do
+    service = create(:service, status: :draft)
+    visit service_path(service)
 
-      expect(body).to have_content service.title
-      expect(body).to have_content service.description
-      expect(body).to have_content service.tagline
-      expect(body).to have_content "my-tag"
-    end
-
-    scenario "not allows to see draft service via direct link for default user" do
-      service = create(:service, status: :draft)
-      visit service_path(service)
-
-      expect(page).to have_content("This service is not published in the Marketplace yet, " +
-      "therefore it cannot be accessed. If you are the Service Owner or Service Portfolio Manager and wish " +
-      "to manage this service, please log in and go to the Backoffice tab.")
-      expect(current_path).to eq(root_path)
-    end
-
-    scenario "I cannot see Ask Question if contact emails are empty" do
-      service = create(:service)
-
-      visit service_path(service)
-
-      expect(page).to_not have_content "Want to ask a question about this service?"
-    end
-
-    scenario "I can see Ask Question if contact emails are filled" do
-      service = create(:service, contact_emails: ["john.doe@company.com"])
-
-      visit service_path(service)
-
-      expect(page).to have_content "Want to ask a question about this service?"
-    end
-
-    scenario "I can see question-modal if I click on link", js: true do
-      service = create(:service, contact_emails: ["john.doe@company.com"])
-
-      visit service_path(service)
-
-      find("#modal-show").click
-
-      expect(page).to have_css("div#question-modal.show")
-    end
-
-    scenario "I can send message about service", js: true do
-      user1, user2 = create_list(:user, 2)
-      service = create(:service, contact_emails: [user1.email, user2.email])
-
-      visit service_path(service)
-
-      find("#modal-show").click
-
-      within("#question-modal") do
-        fill_in("service_question_text", with: "text")
-      end
-
-      expect { click_on "SEND"
-               # wait for ajax response
-               sleep(5) }.
-        to change { ActionMailer::Base.deliveries.count }.by(2)
-      expect(page).to have_content("Your message was successfully sent")
-    end
-
-    scenario "I cannot send message about service with empty message", js: true do
-      user1, user2 = create_list(:user, 2)
-      service = create(:service, contact_emails: [user1.email, user2.email])
-
-      visit service_path(service)
-
-      find("#modal-show").click
-
-      click_on "SEND"
-
-      expect(page).to have_content("Text Question cannot be blank")
-    end
+    expect(page).to have_content("This service is not published in the Marketplace yet, " +
+    "therefore it cannot be accessed. If you are the Service Owner or Service Portfolio Manager and wish " +
+    "to manage this service, please log in and go to the Backoffice tab.")
+    expect(current_path).to eq(root_path)
   end
 
   scenario "shows related services" do
@@ -108,17 +44,27 @@ RSpec.feature "Service browsing" do
     expect(page.body).to_not have_content "Suggested compatible services"
   end
 
-  context "service has no offers" do
-    scenario "service offers section are not displayed" do
-      service = create(:service)
+  scenario "offers section is not shown when service does not have offers" do
+    service = create(:service)
 
-      visit service_path(service)
+    visit service_path(service)
 
-      expect(page.body).not_to have_content("Service offers")
-    end
+    expect(page.body).not_to have_content("Service offers")
   end
 
-  scenario "Offer are converted from markdown to html on service view" do
+  scenario "I cannot see offers section when only one is published" do
+    service = create(:service)
+    offer1 = create(:offer, status: :draft, service: service)
+    offer2 = create(:offer, service: service)
+
+    visit service_path(service)
+
+    expect(page).to have_link("Order")
+    expect(page).to_not have_content(offer2.name)
+    expect(page).to_not have_content(offer1.name)
+  end
+
+  scenario "Offer are converted from markdown to html" do
     offer = create(:offer, description: "# Test offer\r\n\rDescription offer")
 
     visit service_path(offer.service)
@@ -135,8 +81,7 @@ RSpec.feature "Service browsing" do
     expect(page).not_to have_content("unpublished offer")
   end
 
-
-  scenario "show technical parameters in service view" do
+  scenario "show technical parameters" do
     offer = create(:offer, parameters: [{ "id": "id1",
                                           "type": "select",
                                           "label": "Number of CPU Cores",
@@ -176,7 +121,6 @@ RSpec.feature "Service browsing" do
                                           "description": "Please choose start date" }])
 
 
-    checkin_sign_in_as(user)
     visit service_path(offer.service)
     expect(page.body).to have_content("Number of CPU Cores")
     expect(page.body).to have_content("1 - 8")
@@ -198,175 +142,12 @@ RSpec.feature "Service browsing" do
     expect(page).to_not have_link("Order")
   end
 
-  scenario "I cannot see offers section when only one is published" do
-    service = create(:service)
-    offer1 = create(:offer, status: :draft, service: service)
-    offer2 = create(:offer, service: service)
-
-    visit service_path(service)
-
-    expect(page).to have_link("Order")
-    expect(page).to_not have_content(offer2.name)
-    expect(page).to_not have_content(offer1.name)
-  end
-
-  context "as not logged in user" do
-    scenario "I can ask a question if contact emails are not empty" do
-      service = create(:service, contact_emails: ["john.doe@company.com"])
-
-      visit service_path(service)
-
-      expect(page).to have_content "Want to ask a question about this service?"
-    end
-
-    scenario "I cannot ask a question if contact emails are empty" do
-      service = create(:service)
-
-      visit service_path(service)
-
-      expect(page).to_not have_content "Want to ask a question about this service?"
-    end
-
-    scenario "I can send message about service", js: true do
-      user1, user2 = create_list(:user, 2)
-      service = create(:service, contact_emails: [user1.email, user2.email])
-
-      visit service_path(service)
-
-      find("#modal-show").click
-
-      within("#question-modal") do
-        fill_in("service_question_author", with: "John Doe")
-        fill_in("service_question_email", with: "john.doe@company.com")
-        fill_in("service_question_text", with: "text")
-      end
-
-      expect { click_on "SEND"
-               # wait for ajax response
-               sleep(5) }.
-          to change { ActionMailer::Base.deliveries.count }.by(2)
-      expect(page).to have_content("Your message was successfully sent")
-    end
-
-    scenario "I cannot send message about service with empty fields", js: true do
-      user1, user2 = create_list(:user, 2)
-      service = create(:service, contact_emails: [user1.email, user2.email])
-
-      visit service_path(service)
-
-      find("#modal-show").click
-
-      click_on "SEND"
-
-      expect(page).to have_content("Author can't be blank")
-      expect(page).to have_content("Email can't be blank and Email is not a valid email address")
-      expect(page).to have_content("Text Question cannot be blank")
-    end
-  end
-end
-
-
-RSpec.feature "Service filtering and sorting" do
-  let!(:platform) { create(:platform) }
-  let!(:target_group) { create(:target_group) }
-
-  before(:each) do
-    platform_2 = create(:platform)
-    area = create(:research_area, name: "area 1")
-    provider = create(:provider, name: "first provider")
-    category_1 = create(:category)
-
-    service = create(:service,
-                     title: "AAAA Service",
-                     rating: 5.0,
-                     target_groups: [target_group],
-                     platforms: [platform],
-                     categories: [category_1])
-
-    service.providers << provider
-    service.research_areas << area
-
-    create(:service, title: "BBBB Service", rating: 3.0, target_groups: [target_group], platforms: [platform_2],
-           categories: [category_1])
-    create(:service, title: "CCCC Service", rating: 4.0, target_groups: [target_group], platforms: [platform_2],
-           categories: [category_1])
-    create(:service, title: "DDDD Something 1", rating: 4.1, platforms: [platform_2], categories: [category_1])
-    create(:service, title: "DDDD Something 2", rating: 4.0, platforms: [platform_2], categories: [category_1])
-    create(:service, title: "DDDD Something 3", rating: 3.9, platforms: [platform_2], categories: [category_1])
-
-    Service.reindex
-  end
-
-  scenario "clear search visible" do
-    visit services_path(q: "DDDD Something")
-    expect(page).to have_css(".categories", text: "Looking for: DDDD Something")
-    expect(page).to have_selector(".search-clear")
-    find(:css, ".search-clear").click
-    expect(page).to have_css(".categories", text: "Services")
-    expect(page).not_to have_selector(".search-clear")
-  end
-
-  scenario "searching in top bar will preserve existing query params", js: true, search: true do
-    visit services_path(sort: "title")
-
-    fill_in "q", with: "DDDD Something"
-    click_on(id: "query-submit")
-    expect(page.body.index("<b>DDDD</b> <b>Something</b> 1")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 2")
-    expect(page.body.index("<b>DDDD</b> <b>Something</b> 2")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 3")
-
-    expect(page).to have_selector(".media", count: 3)
-  end
-
-  scenario "selecting sorting will set query param and preserve existing ones", js: true do
-    visit services_path(q: "DDDD Something", utf8: "✓")
-
-    select "rate 1-5", from: "sort"
-
-    # For turbolinks to load
-    sleep(1)
-
-    expect(page.body.index("<b>DDDD</b> <b>Something</b> 3")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 2")
-    expect(page.body.index("<b>DDDD</b> <b>Something</b> 2")).to be < page.body.index("<b>DDDD</b> <b>Something</b> 1")
-  end
-
-  scenario "limit number of services per page" do
-    create_list(:service, 2)
-
-    visit services_path(per_page: "1")
-
-    expect(page).to have_selector(".media", count: 1)
-  end
-
   scenario "should have 'All' link in categories with all services count" do
     visit services_path
 
-    expect(page).to have_css("#all-services-link > span", text: Service.all.count)
+    expect(page).to have_text("All Services #{Service.count}")
   end
 
-  scenario "After starting searching autocomplete are shown", js: true, search: true do
-    visit services_path
-
-    fill_in "q", with: "DDDD Something"
-
-    expect(page).to have_selector("li.dropdown-item[role='option']:not([style*=\"display: none\"]", count: 3)
-  end
-
-  scenario "redirect when selecting service_id by autocomplete controller", js: true, search: true do
-    service = Service.first
-    fill_in "q", with: service.title
-    find(:css, "li.dropdown-item[id='-option-0']").click
-    expect(current_path).to eq(service_path(service))
-  end
-
-  scenario "redirect when selecting service_id by autocomplete controller", js: true, search: true do
-    service = Service.first
-    visit services_path(service_id: service.id)
-    expect(current_path).to eq(service_path(service))
-  end
-end
-
-
-RSpec.feature "Service view" do
   scenario "should by default sort services by name, ascending" do
     create(:service, title: "Service c")
     create(:service, title: "Service b")
@@ -376,5 +157,32 @@ RSpec.feature "Service view" do
 
     expect(page.body.index("Service a")).to be < page.body.index("Service b")
     expect(page.body.index("Service b")).to be < page.body.index("Service c")
+  end
+
+  scenario "selecting sorting will set query param and preserve existing ones", js: true do
+    create(:service, title: "DDDD Something 1", rating: 4.1)
+    create(:service, title: "DDDD Something 2", rating: 4.0)
+    create(:service, title: "DDDD Something 3", rating: 3.9)
+
+    visit services_path(q: "DDDD Something")
+
+    select "rate 1-5", from: "sort"
+
+    # This is a little trick to wait for turbolinks.
+    # See https://stackoverflow.com/questions/41854537/capybara-poltergeist-wait-for-javascript-completions
+    expect(page).to have_text("DDDD Something 1")
+
+    expect(page.text.index("DDDD Something 3")).to be < page.text.index("DDDD Something 2")
+    expect(page.text.index("DDDD Something 2")).to be < page.text.index("DDDD Something 1")
+  end
+
+  scenario "limit number of services per page" do
+    create(:service, title: "Service a")
+    create(:service, title: "Service b")
+
+    visit services_path(per_page: "1")
+
+    expect(page).to have_text("Service a")
+    expect(page).to_not have_text("Service b")
   end
 end
