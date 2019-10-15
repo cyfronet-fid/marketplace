@@ -4,8 +4,8 @@
       .col-7.text-uppercase
         Filters
 
-  = form_tag "", method: :get, role: "search", class: "filters",
-    "data-controller": "filter", "data-target": "filter.form" do
+  = form_tag "", method: :get, role: "search", class: "filters", "data-controller": "filter",
+    "data-target": "filter.form" do
     = hidden_field_tag :q, params[:q] if params[:q].present?
     = hidden_field_tag :sort, params[:sort] if params[:sort].present?
     - @filters.each do |filter|
