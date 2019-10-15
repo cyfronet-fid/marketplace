@@ -262,4 +262,45 @@ describe Jira::Client do
 
     expect(client.create_project_issue(project)).to be(issue)
   end
+
+  it "update_project_issue should update issue with correct fields" do
+    allow(ENV).to receive(:[]).and_call_original
+    allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
+
+    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2",
+                  email: "john.doe@email.eu")
+    project = create(:project, user: user, name: "My Updated Project Name",
+                     email: "project@email.com",
+                     user_group_name: "User Group Name 1",
+                     customer_typology: "research",
+                     reason_for_access: "some reason",
+                     department: "dep",
+                     webpage: "http://dep-wwww.pl",
+                     organization: "org",
+                     issue_id: "1234",
+                     research_areas: [create(:research_area, name: "My RA")])
+
+    issue = double(:Issue)
+    expected_updated_fields = { summary: "Project, John Doe, My Updated Project Name",
+                                "Epic Name-1" => "My Updated Project Name",
+                                "CI-Name-1" => "John",
+                                "CI-Surname-1" => "Doe",
+                                "CI-DisplayName-1" => "John Doe",
+                                "CI-Email-1" => "project@email.com",
+                                "CI-Institution-1" => "org",
+                                "CI-Department-1" => "dep",
+                                "CI-DepartmentalWebPage-1" => "http://dep-wwww.pl",
+                                "CI-EOSC-UniqueID-1" => "uid2",
+                                "CP-ScientificDiscipline-1" => "My RA",
+                                "CP-CustomerTypology-1" => { "id" => "20001" },
+                                "SO-ProjectName-1" => "My Updated Project Name (#{project.id})",
+                                "CP-UserGroupName-1" => "User Group Name 1",
+                                "CP-CustomerCountry-1" => "#{project.country_of_origin.name}",
+                                "CP-CollaborationCountry-1" => "#{project.countries_of_partnership.map(&:name).join(", ")}"
+                                }
+
+    expect(issue).to receive("save").with(fields: expected_updated_fields).and_return(true)
+    expect(client).to receive_message_chain("Issue.find").and_return(issue)
+    expect(client.update_project_issue(project)).to be(issue)
+  end
 end
