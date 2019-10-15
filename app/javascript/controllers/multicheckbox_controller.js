@@ -19,7 +19,7 @@ export default class extends Controller {
       return { 'item': item, 'title': item.getElementsByTagName("span")[0].textContent }
     });
 
-    this.fuse = new Fuse(candidates, { keys: ['title'] });
+    this.fuse = new Fuse(candidates, { keys: ['title'], distance: 1 });
   }
 
   search() {
