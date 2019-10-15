@@ -27,6 +27,13 @@ class Jira::Client < JIRA::Client
     end
   end
 
+  class JIRAProjectIssueUpdateError < JIRAIssueCreateError
+    def initialize(project, msg = "")
+      super(msg)
+      @project = project
+    end
+  end
+
   attr_reader :jira_config
   attr_reader :jira_project_key
   attr_reader :jira_issue_type_id, :jira_project_issue_type_id
@@ -150,6 +157,30 @@ class Jira::Client < JIRA::Client
       issue
     else
       raise JIRAProjectItemIssueCreateError.new(project_item, issue.errors)
+    end
+  end
+
+  def update_project_issue(project)
+    unless project.jira_active?
+      raise ProjectIssueDoesNotExist.new(project)
+    end
+
+    issue = self.Issue.find(project.issue_id)
+
+    fields = { summary: "Project, #{project.user.first_name} " +
+                       "#{project.user.last_name}, " +
+                       "#{project.name}" }
+    @custom_fields.reject { |k, v| v.empty? }.each do |field_name, field_id|
+      value = generate_project_custom_field_value(field_name.to_s, project)
+      unless value.nil?
+        fields[field_id.to_s] = value
+      end
+    end
+
+    if issue.save(fields: fields)
+      issue
+    else
+      raise JIRAProjectIssueUpdateError.new(project, issue.errors)
     end
   end
 
