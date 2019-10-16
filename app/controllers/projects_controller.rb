@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = policy_scope(Project)
-    redirect_to @projects.first if @projects.count.positive?
+    redirect_to project_services_path(@projects.first) if @projects.count.positive?
   end
 
   def show
