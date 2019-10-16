@@ -8,11 +8,10 @@ RSpec.describe Filter::ResearchArea do
       root = create(:research_area)
       child1, child2 = create_list(:research_area, 2, parent: root)
 
-      create(:service, research_areas: [root])
       create(:service, research_areas: [child1, child2])
       create(:service, research_areas: [child2])
 
-      counters = { root.id => 1, child1.id => 1, child2.id => 2 }
+      counters = { root.id => 0, child1.id => 1, child2.id => 2 }
       subject.counters = counters
 
       options = subject.options
@@ -22,7 +21,7 @@ RSpec.describe Filter::ResearchArea do
       first_option = options.first
       expect(first_option[:name]).to eq(root.name)
       expect(first_option[:id]).to eq(root.id)
-      expect(first_option[:count]).to eq(1)
+      expect(first_option[:count]).to eq(3)
 
       expect(first_option[:children]).to contain_exactly(
         { name: child1.name, id: child1.id, count: 1, children: [] },

@@ -35,7 +35,7 @@ class Filter::AncestryMultiselect < Filter
         {
             name: record.name,
             id: record.id,
-            count: @counters[record.id].to_i,
+            count: @ancestry_counters[record.id].to_i,
             children: create_ancestry_tree(children)
         }
       end.sort_by! { |e| [-e[:count], e[:name] ] }
