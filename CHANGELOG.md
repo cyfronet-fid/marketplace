@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- EOSC logo update (@bwilk)
 - Filtering by upstream source in the backoffice (@goreck888)
 - Add marketplace service preview in the backoffice (@mkasztelnik, @goreck888)
 - Service unverified but published state (@mkasztelnik)
