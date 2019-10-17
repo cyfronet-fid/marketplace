@@ -39,5 +39,8 @@ module Mp
 
     config.portal_base_url = "https://eosc-portal.eu"
     config.portal_base_url = ENV["PORTAL_BASE_URL"] if ENV["PORTAL_BASE_URL"].present?
+
+    config.providers_dashboard_url = "https://catalogue.eosc-portal.eu"
+    config.providers_dashboard_url = ENV["PROVIDERS_DASHBOARD_URL"] if ENV["PROVIDERS_DASHBOARD_URL"].present?
   end
 end
