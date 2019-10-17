@@ -37,6 +37,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Hide scrollArrow on scroll event (@goreck888)
 - EIC import when existing provider has the same name as imported one (@michal-szostak)
+- Rescue errors in eic import (@martaswiatkowska)
 
 ### Security
 
