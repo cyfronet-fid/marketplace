@@ -126,8 +126,10 @@ module Import
             logo.seek(0)
             logo_content_type = "image/png"
           end
-        rescue OpenURI::HTTPError, SocketError => e
+        rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, SocketError => e
           log "ERROR - there was a problem processing image for #{eid} #{image_url}: #{e}"
+        rescue => e
+          log "ERROR - there was a unexpected problem processing image for #{eid} #{image_url}: #{e}"
         end
         aggregated_description = [description, options, user_value, user_base].join("\n")
 
