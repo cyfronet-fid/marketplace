@@ -35,6 +35,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Remove unnecessary logs in js console(@goreck888)
 
 ### Fixed
+- EOSC Portal component titles at the top bar (@bwilk)
 - Hide scrollArrow on scroll event (@goreck888)
 - EIC import when existing provider has the same name as imported one (@michal-szostak)
 
