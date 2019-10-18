@@ -213,6 +213,22 @@ describe Import::EIC do
       eic.call
       expect(Service.first.logo.attached?).to be_falsey
     end
+
+    it "should gracefully handle error with logo download" do
+      eic = make_and_stub_eic(ids: ["phenomenal.phenomenal"])
+      allow(eic).to receive(:open).with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
+                                        ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(Errno::EHOSTUNREACH.new)
+      eic.call
+      expect(Service.first.logo.attached?).to be_falsey
+    end
+
+    it "should gracefully handle error with logo download" do
+      eic = make_and_stub_eic(ids: ["phenomenal.phenomenal"])
+      allow(eic).to receive(:open).with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
+                                        ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(StandardError.new)
+      eic.call
+      expect(Service.first.logo.attached?).to be_falsey
+    end
   end
 
   it "should set placeholder tagline if it's empty" do
