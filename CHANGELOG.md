@@ -9,6 +9,20 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [2.2.0] 2019-10-18
+
+### Added
 - Filtering by upstream source in the backoffice (@goreck888)
 - Add marketplace service preview in the backoffice (@mkasztelnik, @goreck888)
 - Service unverified but published state (@mkasztelnik)
@@ -28,8 +42,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - UI Fixes and upgrades (@jarekzet)
 - Show first project services when after entering "My projects" section (@mkasztelnik)
 
-### Deprecated
-
 ### Removed
 - Remove category `services_count` (@mkasztelnik)
 - Remove unnecessary logs in js console(@goreck888)
@@ -39,8 +51,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Hide scrollArrow on scroll event (@goreck888)
 - EIC import when existing provider has the same name as imported one (@michal-szostak)
 - Rescue errors in eic import (@martaswiatkowska)
-
-### Security
 
 ## [2.1.6] 2019-10-11
 
