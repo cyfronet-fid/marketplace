@@ -159,6 +159,7 @@ ENV variables:
     script is added into head section)
   * `PORTAL_BASE_URL` - portal base URL used to generate footer and other static
     links to EOSC portal
+  * `PROVIDERS_DASHBOARD_URL` - Provider's Dashboard URL used to create links to the provider's dashboard
   * `ASSET_HOST` and `ASSET_PROTOCOL` - assets mailer config is mandatory
     (e.g. ASSET_HOST = marketplace.eosc-portal.eu/ and ASSET_PROTOCOL = https )
   * `RATE_AFTER_PERIOD` - number of days after which user can rate service (default is set to 90 days)
