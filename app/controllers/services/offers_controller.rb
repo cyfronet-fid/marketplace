@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Services::OffersController < Services::ApplicationController
+  skip_before_action :authenticate_user!
+
   def index
     init_offer_selection!
 
