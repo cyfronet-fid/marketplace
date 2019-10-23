@@ -1,7 +1,14 @@
 - breadcrumb :backoffice_research_area, @research_area
-
 %h1= @research_area.name
-%h2= @research_area.parent ? "Parent: #{@research_area.parent.name}" : "Root element"
+%h2
+  - unless @research_area.parent.blank?
+    = link_to "Parent: #{@research_area&.parent&.name}", backoffice_research_area_path(@research_area&.parent)
+  - else
+    Root element
+- unless @research_area.children.blank? && @research_area.services.blank?
+  %h2 Subtree with services:
+  = render "tree", research_areas: @research_area.subtree.arrange
+
 
 .btn-group
   - if policy([:backoffice, @research_area]).edit?

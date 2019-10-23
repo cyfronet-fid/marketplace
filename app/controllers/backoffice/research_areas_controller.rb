@@ -3,6 +3,7 @@
 class Backoffice::ResearchAreasController < Backoffice::ApplicationController
   before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
   before_action :parent_services, only: [:create, :update]
+  before_action :leafs
 
   def index
     authorize(ResearchArea)
@@ -13,20 +14,20 @@ class Backoffice::ResearchAreasController < Backoffice::ApplicationController
   end
 
   def new
+    @label = t("backoffice.research_area.create")
     @research_area = ResearchArea.new
     authorize(@research_area)
   end
 
   def create
+    @label = t("backoffice.research_area.create")
     @research_area = ResearchArea.new(permitted_attributes(ResearchArea))
     authorize(@research_area)
+    @leafs.unshift(@research_area)
+    @leafs.delete(@research_area&.parent)
 
-    if params[:commit] == "other_for_parent"
-      move_services(@research_area.parent, other_for(@research_area.parent))
-    elsif params[:commit] == "other"
-      move_services(@research_area.parent, other)
-    elsif params[:commit] == "current"
-      move_services(@research_area.parent, @research_area)
+    if params[:commit] != @label
+      move_services(@research_area.parent, chosen)
     end
 
     if @research_area.save
@@ -38,9 +39,20 @@ class Backoffice::ResearchAreasController < Backoffice::ApplicationController
   end
 
   def edit
+    @label = t("backoffice.research_area.update")
   end
 
   def update
+    @label = t("backoffice.research_area.update")
+    @leafs.unshift(@research_area)
+    @leafs.delete(@research_area&.parent)
+
+    new_parent = ResearchArea.find(params[:research_area][:parent_id])
+
+    if params[:commit] != @label
+      move_services(new_parent, chosen)
+    end
+
     if @research_area.update(permitted_attributes(@research_area))
       redirect_to backoffice_research_area_path(@research_area),
                   notice: "Research area updated correctly"
@@ -65,20 +77,23 @@ class Backoffice::ResearchAreasController < Backoffice::ApplicationController
       @parent_services = ResearchArea.find_by(id: params[:research_area][:parent_id])&.services
     end
 
-    def other_for(research_area)
-      ResearchArea.find_by(name: "Other for #{research_area.name.downcase}") ||
-          ResearchArea.create(name: "Other for #{research_area.name.downcase}", parent: research_area)
-    end
-
-    def other
-      ResearchArea.find_by(name: "Other") || ResearchArea.create(name: "Other")
+    def chosen
+      params[:research_area][:move_ra_id].blank? ?
+          @research_area : ResearchArea.find(params[:research_area][:move_ra_id])
     end
 
     def move_services(from, to)
-      from.services.each do |service|
+      services = from.services
+      services.each do |service|
         service.research_areas.delete(from)
+      end
+      services.each do |service|
         service.research_areas << to
         service.save!
       end
+    end
+
+    def leafs
+      @leafs = ResearchArea.leafs.sort
     end
 end

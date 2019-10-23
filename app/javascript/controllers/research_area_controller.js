@@ -5,10 +5,12 @@ export default class extends Controller {
 
     hidePrompt(event) {
         event.preventDefault();
-        const buttons = document.getElementsByClassName("moveButton")
-        Array.prototype.forEach.call(buttons, function (btn) {
-            btn.setAttribute("disabled", true);
-        });
-        document.getElementById("action-frame").innerHTML = "";
+        const button = document.getElementById("submit");
+        const label = button.getAttribute("label");
+        button.setAttribute("value", label);
+        const frame = document.getElementById("action-frame");
+        if(frame) {
+            frame.remove();
+        }
     }
 }

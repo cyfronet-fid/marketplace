@@ -1,0 +1,10 @@
+%ul.list-group.simple-list.backoffice-list
+  - research_areas.each do |ra, sub_ra|
+    %li.list-group-item.list-group-item-primary= link_to ra.name, backoffice_research_area_path(ra)
+    - unless ra&.services.blank?
+      %ul.list-group.simple-list
+        - ra&.services.each do |service|
+          %li.list-group-item.list-group-item-secondary
+            = link_to service.title, backoffice_service_path(service)
+    - unless sub_ra.blank?
+      = render "tree", research_areas: sub_ra

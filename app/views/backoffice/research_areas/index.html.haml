@@ -12,6 +12,7 @@
     - ancestry_tree(@research_areas).each do |record|
       %li.list-group-item
         = link_to record.first, backoffice_research_area_path(record.last)
+        services: #{record.last.services.count}
         - if policy([:backoffice, record[1]]).destroy?
           = link_to backoffice_research_area_path(record[1]),
                 method: :delete,

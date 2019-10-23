@@ -8,6 +8,13 @@ RSpec.describe ResearchArea, type: :model do
 
     subject { create(:research_area) }
     it { should validate_uniqueness_of(:name).scoped_to(:ancestry) }
+
+    it "should return validation error if we try to create research area with parent contains services" do
+      parent = create(:research_area)
+      create_list(:service, 3, research_areas: [parent])
+      child = build(:research_area, parent: parent)
+      expect { child.save! }.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Parent has services")
+    end
   end
 
   describe "#potential_parents" do

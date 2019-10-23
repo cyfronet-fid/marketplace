@@ -2,6 +2,7 @@
 
 class ResearchArea < ApplicationRecord
   include Parentable
+  attr_accessor :move_ra_id
 
   has_many :service_research_areas, autosave: true, dependent: :destroy
   has_many :services, through: :service_research_areas
@@ -41,7 +42,7 @@ class ResearchArea < ApplicationRecord
       result
     end
 
-    def self.name_with_path(parent, child, separator = " / ")
+    def self.name_with_path(parent, child, separator = " ⇒ ")
       parent.blank? ? child : parent + separator + child
     end
 

@@ -162,6 +162,9 @@ en:
       new: Add new Provider
     research_area:
       new: Add new Research Area
+      create: Create Research area
+      move: "%{label} and move services to the selected one"
+      update: Update Research area
     service:
       new: Create new Service
       edit: Edit
