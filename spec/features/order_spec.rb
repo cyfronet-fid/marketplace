@@ -447,11 +447,9 @@ RSpec.feature "Service ordering" do
   end
 
   context "as anonymous user" do
-    scenario "I nead to login to order service" do
+    scenario "I can see service offers" do
       service = create(:service)
-      create_list(:offer, 2, service: service)
-      user = create(:user)
-      stub_checkin(user)
+      o1, o2 = create_list(:offer, 2, service: service)
 
       visit service_path(service)
 
@@ -459,8 +457,24 @@ RSpec.feature "Service ordering" do
 
       click_on "Order", match: :first
 
-      expect(page).to have_current_path(service_offers_path(service))
       expect(page).to have_text(service.title)
+      expect(page).to have_text(o1.name)
+      expect(page).to have_text(o2.name)
+    end
+
+    scenario "I need to log in to configure my order" do
+      service = create(:service)
+      create(:offer, service: service)
+      user = build(:user)
+      stub_checkin(user)
+
+      expect do
+        visit service_offers_path(service)
+        # If new user is logged in using checkin new user record is created
+      end.to change { User.count }.by(1)
+
+      expect(page).to have_current_path(service_configuration_path(service))
+      expect(User.last.full_name).to eq(user.full_name)
     end
 
     scenario "I can see order button" do
