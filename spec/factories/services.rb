@@ -34,5 +34,9 @@ FactoryBot.define do
     after(:create) do |service, _evaluator|
       service.reindex(refresh: true)
     end
+    factory :catalog_service do
+      sequence(:service_type) { :catalog }
+      sequence(:connected_url) { "https://sample.url" }
+    end
   end
 end
