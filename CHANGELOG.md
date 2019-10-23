@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - EOSC logo update (@bwilk)
+- Catalog can be added to project (@martaswiatkowska)
 
 ### Changed
 - Internal server error message (@goreck888)
