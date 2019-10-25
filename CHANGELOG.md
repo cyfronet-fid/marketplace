@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Active Order button in service preview (@goreck888)
 
 ### Security
 
