@@ -10,7 +10,7 @@ class ResearchArea < ApplicationRecord
   has_many :projects, through: :project_research_areas
 
   validates :name, presence: true, uniqueness: { scope: :ancestry }
-  validate :parent_has_services, if: :parent
+  validate :parent_has_services, if: :parent_id
 
   def self.names
     all.map(&:name)
@@ -47,6 +47,10 @@ class ResearchArea < ApplicationRecord
     end
 
     def parent_has_services
-      errors.add(:parent_id, "has services") unless parent.services.blank?
+      errors.add(:parent_id, "has services") if parent_has_services?
+    end
+
+    def parent_has_services?
+      ServiceResearchArea.where(research_area_id: parent_id).count.positive?
     end
 end
