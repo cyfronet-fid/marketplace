@@ -8,14 +8,14 @@ class Services::OffersController < Services::ApplicationController
 
     if @service.offers_count == 1
       select_offer(@offers.first)
-      redirect_to service_configuration_path(@service)
+      redirect_to service_information_path(@service)
     end
   end
 
   def update
     if offer
       select_offer(offer)
-      redirect_to service_configuration_path(@service)
+      redirect_to service_information_path(@service)
     else
       init_offer_selection!
       flash.now[:alert] = "Please select one of the offer"
