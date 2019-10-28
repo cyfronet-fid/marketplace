@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - EOSC logo update (@bwilk)
 
 ### Changed
+- Internal server error message (@goreck888)
 
 ### Deprecated
 
