@@ -12,7 +12,7 @@ export default class extends Controller {
 
   showConnectedUrl(event){
     const serviceType = this.serviceTypeTarget.value
-    if (serviceType == "catalog" || serviceType == "open_access"){
+    if (serviceType == "external" || serviceType == "open_access"){
       this.connectedUrlTarget.classList.remove("hidden-fields");
     } else {
       this.connectedUrlTarget.classList.add("hidden-fields");

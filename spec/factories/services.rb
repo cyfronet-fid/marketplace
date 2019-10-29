@@ -5,7 +5,7 @@ FactoryBot.define do
     sequence(:title) { |n| "service #{n}" }
     sequence(:description) { |n| "service #{n} description" }
     sequence(:tagline) { |n| "service #{n} tagline" }
-    sequence(:service_type) { :normal }
+    sequence(:service_type) { :orderable }
 
     factory :open_access_service do
       sequence(:connected_url) { "https://sample.url" }
@@ -34,8 +34,8 @@ FactoryBot.define do
     after(:create) do |service, _evaluator|
       service.reindex(refresh: true)
     end
-    factory :catalog_service do
-      sequence(:service_type) { :catalog }
+    factory :external_service do
+      sequence(:service_type) { :external }
       sequence(:connected_url) { "https://sample.url" }
     end
   end

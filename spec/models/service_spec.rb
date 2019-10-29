@@ -49,13 +49,13 @@ RSpec.describe Service do
   end
 
   context "if catalog" do
-    before { allow(subject).to receive(:catalog?) { true } }
+    before { allow(subject).to receive(:external?) { true } }
 
     it { is_expected.to validate_presence_of(:connected_url) }
   end
 
   context "if normal" do
-    before { allow(subject).to receive(:normal?) { true } }
+    before { allow(subject).to receive(:orderable?) { true } }
 
     it { is_expected.to_not validate_presence_of(:connected_url) }
   end
