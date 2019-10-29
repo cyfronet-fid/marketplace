@@ -44,11 +44,11 @@ en:
     type:
       open_access:
         Open Access type
-      normal:
-        Normal type
-      catalog:
-        Catalog type
-    catalog:
+      orderable:
+        Orderable type
+      external:
+        External type
+    external:
       order:
         cancel: Quit
         configuration:
@@ -61,7 +61,7 @@ en:
         service to your <b>'Project'</b>. It helps you to organise your services and orders into logical
         blocks related to your use case, gain EOSC experts support and easily access the selected service.</br>
         To find out more about Projects in EOSC Marketplace, please refer to our FAQ ( link to FAQ)"
-    normal:
+    orderable:
       description_html:
         "%{service_title} can be ordered via EOSC marketplace <b>free of charge</b>.
         The service will be delivered once it is verified that the scientific affiliation

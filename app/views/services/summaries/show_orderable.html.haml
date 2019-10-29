@@ -27,7 +27,7 @@
   = render "projects/details", project: @project_item.project
 
 = content_for :next_button do
-  = link_to t("service.normal.order.title"),
+  = link_to t("service.orderable.order.title"),
             service_summary_path(@service),
             method: :post, class: "btn btn-primary"
 

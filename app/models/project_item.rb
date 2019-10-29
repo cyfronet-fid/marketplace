@@ -43,7 +43,7 @@ class ProjectItem < ApplicationRecord
   validate :properties_not_nil
 
   delegate :user, to: :project
-  delegate :normal?, to: :offer, allow_nil: true
+  delegate :orderable?, to: :offer, allow_nil: true
 
   def service
     offer.service unless offer.nil?

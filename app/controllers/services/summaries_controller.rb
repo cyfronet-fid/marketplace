@@ -6,7 +6,7 @@ class Services::SummariesController < Services::ApplicationController
 
   def show
     @project_item = project_item_template
-    @service.normal? ? (render "show_normal") : (render "show_open_access")
+    @service.orderable? ? (render "show_orderable") : (render "show_open_access")
   end
 
   def create

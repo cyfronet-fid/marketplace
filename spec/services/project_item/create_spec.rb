@@ -41,9 +41,9 @@ RSpec.describe ProjectItem::Create do
     end
   end
 
-  context "when catalog service has been added to Project" do
+  context "when external service has been added to Project" do
     it "not sends email to project_item owner" do
-      service = create(:catalog_service)
+      service = create(:external_service)
       offer = create(:offer, service: service)
       project_item_template = build(:project_item, project: project, offer: offer)
 
@@ -53,7 +53,7 @@ RSpec.describe ProjectItem::Create do
   end
 
 
-  context "when normal service has been ordered" do
+  context "when orderable service has been ordered" do
     it "sends email to project_item owner" do
       expect { described_class.new(project_item_template).call }.
         to change { ActionMailer::Base.deliveries.count }.by(1)
