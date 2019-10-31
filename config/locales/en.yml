@@ -50,6 +50,7 @@ en:
         External type
     external:
       order:
+        title: Add to a project
         cancel: Quit
         configuration:
           title: Add to a project
