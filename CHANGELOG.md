@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - EOSC logo update (@bwilk)
 - Catalog can be added to project (@martaswiatkowska)
+- Project_new_message mails content (@martaswiatkowska)
 
 ### Changed
 - Internal server error message (@goreck888)
