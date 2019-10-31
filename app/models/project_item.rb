@@ -43,15 +43,11 @@ class ProjectItem < ApplicationRecord
   validate :properties_not_nil
 
   delegate :user, to: :project
+  delegate :normal?, to: :service, allow_nil: true
 
   def service
     offer.service unless offer.nil?
   end
-
-  def open_access?
-    @is_open_access ||= service&.open_access?
-  end
-
 
   def active?
     !(ready? || rejected?)
@@ -91,7 +87,7 @@ class ProjectItem < ApplicationRecord
   end
 
   def one_per_project?
-    if open_access?
+    unless  normal?
       project_items_services = Service.joins(offers: { project_items: :project }).
         where(id: service.id, offers: { project_items: { project_id: [ project_id] } }).count.positive?
 

@@ -19,7 +19,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      expect(page).to have_text("Order")
+      expect(page).to have_text("Access the service")
     end
 
     scenario "I see order open acces service button" do
@@ -28,7 +28,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(open_access_service)
 
-      expect(page).to have_text("Add to a project")
+      expect(page).to have_text("Access the service")
     end
 
     scenario "I can order service" do
@@ -36,7 +36,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order", match: :first
+      click_on "Access the service", match: :first
 
       # Step 1
       expect(page).to have_current_path(service_offers_path(service))
@@ -91,7 +91,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order", match: :first
+      click_on "Access the service", match: :first
 
       # Step 2
       expect(page).to have_current_path(service_configuration_path(service))
@@ -129,7 +129,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(open_access_service)
 
-      click_on "Add to a project"
+      click_on "Access the service"
 
       # Project selection
       select "Services", from: "project_item_project_id"
@@ -141,7 +141,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(open_access_service)
 
-      click_on "Add to a project"
+      click_on "Access the service"
 
       select "Services", from: "project_item_project_id"
       click_on "Next", match: :first
@@ -150,12 +150,41 @@ RSpec.feature "Service ordering" do
       expect(page).to have_text("You cannot add open access service #{open_access_service.title} to project Services twice")
     end
 
+    scenario "I cannot order catalog service twice in one project" do
+      catalog_service = create(:catalog_service)
+      _offer = create(:offer, service: catalog_service)
+      _default_project = user.projects.find_by(name: "Services")
+
+      visit service_path(catalog_service)
+
+      click_on "Access the service"
+
+      # Project selection
+      select "Services", from: "project_item_project_id"
+      click_on "Next", match: :first
+
+      expect do
+        click_on "Add to a project", match: :first
+      end.to change { ProjectItem.count }.by(1)
+
+      visit service_path(catalog_service)
+
+      click_on "Access the service"
+
+      select "Services", from: "project_item_project_id"
+      click_on "Next", match: :first
+
+      expect(page).to have_current_path(service_configuration_path(catalog_service))
+      expect(page).to have_text("You cannot add open access service #{catalog_service.title} to project Services twice")
+    end
+
+
     scenario "Skip offers selection when only one offer" do
       create(:offer, service: service)
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Access the service"
 
       expect(page).to have_current_path(service_configuration_path(service))
     end
@@ -173,7 +202,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Access the service"
 
       # Go directly to summary page
       visit service_summary_path(service)
@@ -188,7 +217,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(open_access_service)
 
-      click_on "Add to a project"
+      click_on "Access the service"
 
       # Project selection
       expect(page).to have_current_path(service_configuration_path(open_access_service))
@@ -210,12 +239,41 @@ RSpec.feature "Service ordering" do
       expect(project_item.project).to eq(default_project)
     end
 
+    scenario "I can order catalog service" do
+      catalog_service = create(:catalog_service)
+      offer = create(:offer, service: catalog_service)
+      default_project = user.projects.find_by(name: "Services")
+
+      visit service_path(catalog_service)
+
+      click_on "Access the service"
+
+      # Project selection
+      expect(page).to have_current_path(service_configuration_path(catalog_service))
+      select "Services"
+      click_on "Next", match: :first
+
+
+      # Summary page
+      expect(page).to have_current_path(service_summary_path(catalog_service))
+      expect(page).to have_selector(:link_or_button,
+                                    "Add to a project", exact: true)
+
+      expect {
+        click_on "Add to a project", match: :first
+      }.to change { ProjectItem.count }.by(1)
+      project_item = ProjectItem.last
+
+      expect(project_item.offer).to eq(offer)
+      expect(project_item.project).to eq(default_project)
+    end
+
     scenario "I cannot order service without offers", js: true do
       service = create(:service)
 
       visit service_path(service)
 
-      expect(page).to_not have_text("Order")
+      expect(page).to_not have_text("Access the service")
     end
 
     scenario "I can create new project on order configuration view", js: true do
@@ -224,7 +282,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Access the service"
       click_on "Add new project"
       within("#ajax-modal") do
         fill_in "Project name", with: "New project"
@@ -250,7 +308,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Access the service"
       click_on "Add new project"
 
       click_on "Create new project"
@@ -271,7 +329,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Access the service"
       click_on "Add new project"
       within("#ajax-modal") do
         fill_in "Project name", with: "New project"
@@ -311,7 +369,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Access the service"
 
       # Step 2
       expect(page).to_not have_text("Voucher")
@@ -330,7 +388,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Access the service"
 
       # Step 2
       expect(page).to have_text("Voucher ID")
@@ -351,7 +409,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Access the service"
       # Step 2
       find("label", id: "ask").click
       expect(page).to_not have_text("Voucher ID")
@@ -389,29 +447,43 @@ RSpec.feature "Service ordering" do
   end
 
   context "as anonymous user" do
-    scenario "I nead to login to order service" do
+    scenario "I can see service offers" do
       service = create(:service)
-      create_list(:offer, 2, service: service)
-      user = create(:user)
-      stub_checkin(user)
+      o1, o2 = create_list(:offer, 2, service: service)
 
       visit service_path(service)
 
-      expect(page).to have_selector(:link_or_button, "Order", exact: true)
+      expect(page).to have_selector(:link_or_button, "Access the service", exact: true)
 
-      click_on "Order", match: :first
+      click_on "Access the service", match: :first
 
-      expect(page).to have_current_path(service_offers_path(service))
       expect(page).to have_text(service.title)
+      expect(page).to have_text(o1.name)
+      expect(page).to have_text(o2.name)
     end
 
-    scenario "I can see order button" do
+    scenario "I need to log in to configure my order" do
+      service = create(:service)
+      create(:offer, service: service)
+      user = build(:user)
+      stub_checkin(user)
+
+      expect do
+        visit service_offers_path(service)
+        # If new user is logged in using checkin new user record is created
+      end.to change { User.count }.by(1)
+
+      expect(page).to have_current_path(service_configuration_path(service))
+      expect(User.last.full_name).to eq(user.full_name)
+    end
+
+    scenario "I can see Access the service button" do
       service = create(:service)
       create(:offer, service: service)
 
       visit service_path(service)
 
-      expect(page).to have_selector(:link_or_button, "Order", exact: true)
+      expect(page).to have_selector(:link_or_button, "Access the service", exact: true)
     end
 
     scenario "I can see openaccess service order button" do
@@ -420,15 +492,14 @@ RSpec.feature "Service ordering" do
 
       visit service_path(open_access_service)
 
-      expect(page).to have_selector(:link_or_button, "Add to a project", exact: true)
       expect(page).to have_selector(:link_or_button, "Access the service", exact: true)
     end
 
     scenario "I can see catalog service button" do
-      catalog = create(:service, service_type: :catalog)
+      catalog = create(:catalog_service)
+      create(:offer, service: catalog)
 
       visit service_path(catalog)
-
       expect(page).to have_selector(:link_or_button, "Access the service", exact: true)
     end
   end

@@ -36,6 +36,8 @@ en:
       short: "%e.%m.%Y"
 
   service:
+    order:
+      title: Access the service
     normal:
       order:
         title: Order
@@ -58,7 +60,7 @@ en:
   project:
     mail:
       new_message: |
-        Question about your service access request in EOSC Portal Marketplace
+        Question about your Project %{project_name} in EOSC Portal Marketplace
     customer_typology:
       single_user: "Single user"
       research: "Representing a research community"
@@ -90,11 +92,6 @@ en:
     message:
       question: "Your question to the service provider"
       answer: "Service provider message"
-  offer:
-    order_text:
-      normal: Order
-      open_access: Add to a project
-      catalog: Go to the service
   backoffice:
     category:
       new: Add new Category

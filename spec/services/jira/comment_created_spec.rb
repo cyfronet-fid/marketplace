@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Jira::CommentCreated do
   let(:project_item) { create(:project_item, status: :registered) }
-  let(:project) { create(:project) }
+  let(:project) { create(:project, name: "Project") }
 
   context "for project_item" do
     it "creates new project_item message" do
@@ -38,6 +38,8 @@ RSpec.describe Jira::CommentCreated do
       email = ActionMailer::Base.deliveries.last
 
       expect(email.to).to contain_exactly(project_item.user.email)
+      expect(email.body.encoded).to match(/A new message was added to your service request/)
+      expect(email.subject).to eq("Question about your service access request in EOSC Portal Marketplace")
     end
   end
 
@@ -73,6 +75,8 @@ RSpec.describe Jira::CommentCreated do
       email = ActionMailer::Base.deliveries.last
 
       expect(email.to).to contain_exactly(project.user.email)
+      expect(email.body.encoded).to match(/You have received a message related to your Project/)
+      expect(email.subject).to eq("Question about your Project Project in EOSC Portal Marketplace")
     end
   end
 

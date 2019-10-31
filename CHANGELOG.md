@@ -9,14 +9,21 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- EOSC logo update (@bwilk)
+- Catalog can be added to project (@martaswiatkowska)
+- Project_new_message mails content (@martaswiatkowska)
 
 ### Changed
+- Internal server error message (@goreck888)
+- Anonymous user can enter service offer selection section (@mkasztelnik)
+- Service access button (@martaswiatkowska)
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+- Active Order button in service preview (@goreck888)
 
 ### Security
 
