@@ -67,16 +67,6 @@ RSpec.describe Service do
     expect(s1.related_services).to contain_exactly(s2, s3)
   end
 
-  it "it removes leading and trailing spaces from urls before validation" do
-    service = create(:service)
-    service.terms_of_use_url = "https://sample.url "
-    service.access_policies_url = " https://sample.url"
-
-    expect(service.valid?).to be_truthy
-    expect(service.terms_of_use_url).to eq("https://sample.url")
-    expect(service.access_policies_url).to eq("https://sample.url")
-  end
-
   it "requires service_order_target to be an email" do
     service = create(:service)
     service.order_target = "not-valid-email"

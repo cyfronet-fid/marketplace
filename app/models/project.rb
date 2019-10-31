@@ -44,17 +44,17 @@ class Project < ApplicationRecord
   validates :customer_typology, presence: true
 
   validates :organization, presence: true, if: :single_user_or_community?
-  validates :webpage, presence: true, url: true, if: :single_user_or_community?
+  validates :webpage, presence: true, mp_url: true, if: :single_user_or_community?
 
   validates :user_group_name, presence: true, if: :research?
 
   validates :project_name, presence: true, if: :project?
-  validates :project_website_url, url: true, presence: true, if: :project?
+  validates :project_website_url, mp_url: true, presence: true, if: :project?
 
   validates :company_name, presence: true, if: :private_company?
   validates :countries_of_partnership, presence: true, if: :research_or_project?,
             multiselect_choices: { collection: Country.all }
-  validates :company_website_url,  url: true, presence: true, if: :private_company?
+  validates :company_website_url, mp_url: true, presence: true, if: :private_company?
 
   validates :issue_id, presence: true, if: :require_jira_issue?
   validates :issue_key, presence: true, if: :require_jira_issue?
@@ -81,7 +81,6 @@ class Project < ApplicationRecord
   end
 
   private
-
     def require_jira_issue?
       jira_active? || jira_deleted?
     end
