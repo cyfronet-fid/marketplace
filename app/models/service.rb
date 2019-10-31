@@ -99,7 +99,7 @@ class Service < ApplicationRecord
   validates :title, presence: true
   validates :description, presence: true
   validates :tagline, presence: true
-  validates :connected_url, presence: true, url: true, if: :open_access?
+  validates :connected_url, presence: true, url: true, if: :open_access_or_catalog?
   validates :rating, presence: true
   validates :terms_of_use_url, url: true, if: :terms_of_use_url?
   validates :access_policies_url, url: true, if: :access_policies_url?
@@ -142,6 +142,10 @@ class Service < ApplicationRecord
   end
 
   private
+    def open_access_or_catalog?
+      open_access? || catalog?
+    end
+
     def logo_variable
       if logo.present? && !logo.variable?
         errors.add(:logo, "^Sorry, but the logo format you were trying to attach is not supported
