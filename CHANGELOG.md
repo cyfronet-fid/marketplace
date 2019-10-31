@@ -14,6 +14,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Internal server error message (@goreck888)
+- Anonymous user can enter service offer selection section (@mkasztelnik)
 
 ### Deprecated
 
