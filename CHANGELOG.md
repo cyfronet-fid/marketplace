@@ -17,9 +17,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- Url validation (@martaswiatkowska)
 
 ### Security
+
+## [2.2.1] 2019-10-31
+
+### Fixed
+- Url validation (@martaswiatkowska)
 
 ## [2.2.0] 2019-10-18
 
