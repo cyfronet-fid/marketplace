@@ -1,0 +1,5 @@
+%p Dear Sir/Madam,
+%p You have received a message related to your Project #{@project_title}.
+%p The content of the message:
+%p.font-bold= @message_text
+%p You can send a reply via Marketplace platform using this #{link_to "link", project_conversation_url(@model) }.

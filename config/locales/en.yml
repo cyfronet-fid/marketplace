@@ -60,7 +60,7 @@ en:
   project:
     mail:
       new_message: |
-        Question about your service access request in EOSC Portal Marketplace
+        Question about your Project %{project_name} in EOSC Portal Marketplace
     customer_typology:
       single_user: "Single user"
       research: "Representing a research community"
