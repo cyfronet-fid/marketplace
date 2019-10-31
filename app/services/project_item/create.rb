@@ -12,7 +12,7 @@ class ProjectItem::Create
       @project_item.statuses.create(status: :created,
                                message: "Service request created")
 
-      if open_access?
+      unless normal?
         ProjectItem::ReadyJob.perform_later(@project_item)
       else
         ProjectItemMailer.created(@project_item).deliver_later
@@ -24,10 +24,6 @@ class ProjectItem::Create
   end
 
   private
-
-    def open_access?
-      @project_item.offer.open_access?
-    end
 
     def normal?
       @project_item.offer.normal?

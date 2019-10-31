@@ -39,6 +39,16 @@ RSpec.describe ProjectItem::Create do
     end
   end
 
+  context "Catalog service ordered" do
+    let(:service) { create(:catalog_service) }
+
+    it "sends email to project_item owner" do
+      expect { described_class.new(project_item_template).call }.
+        to_not change { ActionMailer::Base.deliveries.count }
+    end
+  end
+
+
   context "Normal service ordered" do
     it "sends email to project_item owner" do
       expect { described_class.new(project_item_template).call }.

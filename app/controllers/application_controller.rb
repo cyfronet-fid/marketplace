@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   include Turbolinks::Redirection
   include Sentryable
   include Pundit
+  include Devise::StoreLocation
 
   before_action :load_main_research_areas!, :load_root_categories!
 
