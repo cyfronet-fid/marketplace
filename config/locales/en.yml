@@ -36,9 +36,8 @@ en:
       short: "%e.%m.%Y"
 
   service:
-    catalog:
-      order:
-        title: Add to a project
+    order:
+      title: Access the service
     normal:
       order:
         title: Order
@@ -93,11 +92,6 @@ en:
     message:
       question: "Your question to the service provider"
       answer: "Service provider message"
-  offer:
-    order_text:
-      normal: Order
-      open_access: Add to a project
-      catalog: Add to a project
   backoffice:
     category:
       new: Add new Category

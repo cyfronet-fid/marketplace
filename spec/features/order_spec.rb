@@ -19,7 +19,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      expect(page).to have_text("Order")
+      expect(page).to have_text("Access the service")
     end
 
     scenario "I see order open acces service button" do
@@ -28,7 +28,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(open_access_service)
 
-      expect(page).to have_text("Add to a project")
+      expect(page).to have_text("Access the service")
     end
 
     scenario "I can order service" do
@@ -36,7 +36,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order", match: :first
+      click_on "Access the service", match: :first
 
       # Step 1
       expect(page).to have_current_path(service_offers_path(service))
@@ -91,7 +91,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order", match: :first
+      click_on "Access the service", match: :first
 
       # Step 2
       expect(page).to have_current_path(service_configuration_path(service))
@@ -129,7 +129,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(open_access_service)
 
-      click_on "Add to a project"
+      click_on "Access the service"
 
       # Project selection
       select "Services", from: "project_item_project_id"
@@ -141,7 +141,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(open_access_service)
 
-      click_on "Add to a project"
+      click_on "Access the service"
 
       select "Services", from: "project_item_project_id"
       click_on "Next", match: :first
@@ -157,7 +157,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(catalog_service)
 
-      click_on "Add to a project"
+      click_on "Access the service"
 
       # Project selection
       select "Services", from: "project_item_project_id"
@@ -169,7 +169,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(catalog_service)
 
-      click_on "Add to a project"
+      click_on "Access the service"
 
       select "Services", from: "project_item_project_id"
       click_on "Next", match: :first
@@ -184,7 +184,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Access the service"
 
       expect(page).to have_current_path(service_configuration_path(service))
     end
@@ -202,7 +202,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Access the service"
 
       # Go directly to summary page
       visit service_summary_path(service)
@@ -217,7 +217,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(open_access_service)
 
-      click_on "Add to a project"
+      click_on "Access the service"
 
       # Project selection
       expect(page).to have_current_path(service_configuration_path(open_access_service))
@@ -246,7 +246,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(catalog_service)
 
-      click_on "Add to a project"
+      click_on "Access the service"
 
       # Project selection
       expect(page).to have_current_path(service_configuration_path(catalog_service))
@@ -273,7 +273,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      expect(page).to_not have_text("Order")
+      expect(page).to_not have_text("Access the service")
     end
 
     scenario "I can create new project on order configuration view", js: true do
@@ -282,7 +282,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Access the service"
       click_on "Add new project"
       within("#ajax-modal") do
         fill_in "Project name", with: "New project"
@@ -308,7 +308,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Access the service"
       click_on "Add new project"
 
       click_on "Create new project"
@@ -329,7 +329,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Access the service"
       click_on "Add new project"
       within("#ajax-modal") do
         fill_in "Project name", with: "New project"
@@ -369,7 +369,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Access the service"
 
       # Step 2
       expect(page).to_not have_text("Voucher")
@@ -388,7 +388,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Access the service"
 
       # Step 2
       expect(page).to have_text("Voucher ID")
@@ -409,7 +409,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Order"
+      click_on "Access the service"
       # Step 2
       find("label", id: "ask").click
       expect(page).to_not have_text("Voucher ID")
@@ -453,9 +453,9 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      expect(page).to have_selector(:link_or_button, "Order", exact: true)
+      expect(page).to have_selector(:link_or_button, "Access the service", exact: true)
 
-      click_on "Order", match: :first
+      click_on "Access the service", match: :first
 
       expect(page).to have_text(service.title)
       expect(page).to have_text(o1.name)
@@ -477,13 +477,13 @@ RSpec.feature "Service ordering" do
       expect(User.last.full_name).to eq(user.full_name)
     end
 
-    scenario "I can see order button" do
+    scenario "I can see Access the service button" do
       service = create(:service)
       create(:offer, service: service)
 
       visit service_path(service)
 
-      expect(page).to have_selector(:link_or_button, "Order", exact: true)
+      expect(page).to have_selector(:link_or_button, "Access the service", exact: true)
     end
 
     scenario "I can see openaccess service order button" do
@@ -492,15 +492,14 @@ RSpec.feature "Service ordering" do
 
       visit service_path(open_access_service)
 
-      expect(page).to have_selector(:link_or_button, "Add to a project", exact: true)
       expect(page).to have_selector(:link_or_button, "Access the service", exact: true)
     end
 
     scenario "I can see catalog service button" do
       catalog = create(:catalog_service)
+      create(:offer, service: catalog)
 
       visit service_path(catalog)
-
       expect(page).to have_selector(:link_or_button, "Access the service", exact: true)
     end
   end
