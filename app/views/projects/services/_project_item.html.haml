@@ -3,7 +3,7 @@
   .float-right.status
     - if project_item.closed?
       = project_item.status
-    - elsif project_item.open_access?
+    - elsif !project_item.normal?
       = link_to "Visit website", project_item.service.webpage_url
     - else
       = project_item_status(project_item)

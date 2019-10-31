@@ -1826,7 +1826,7 @@ services:
         parents: *sharingAndDicoveryParent
         providers: [*esa]
         logo: geoss-portal.png
-        open_access: true
+        catalog: true
         connected_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
         webpage_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
         manual_url:
@@ -1849,10 +1849,10 @@ services:
           providing discoverability of more than 400M datasets.
           This version of the GEOSS Web Portal is connected also to the ECOPotential Virtual Laboratory,
           allowing users to execute available models utilizing GEOSS data as inputs.
-#        offers:
-#          1:
-#            name: GEOSS Portal
-#            description: *notSpecified
+        offers:
+          1:
+            name: GEOSS Portal
+            description: *notSpecified
     GEO DAB:
         title: &geossDab GEO DAB
         parents: *sharingAndDicoveryParent

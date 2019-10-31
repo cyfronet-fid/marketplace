@@ -59,7 +59,11 @@ yaml_hash["services"].each do |_, hash|
     service_type = if hash["offers"].blank?
       hash["open_access"] ? "catalog" : "normal"
     else
-      hash["open_access"] ? "open_access" : "normal"
+      if hash["catalog"]
+        "catalog"
+      else
+        hash["open_access"] ? "open_access" : "normal"
+      end
     end
 
     service.update!(tagline: hash["tagline"],
