@@ -159,18 +159,12 @@ RSpec.feature "Service browsing" do
     expect(page.body.index("Service b")).to be < page.body.index("Service c")
   end
 
-  scenario "selecting sorting will set query param and preserve existing ones", js: true do
+  scenario "sorting will set query param and preserve existing ones", js: true do
     create(:service, title: "DDDD Something 1", rating: 4.1)
     create(:service, title: "DDDD Something 2", rating: 4.0)
     create(:service, title: "DDDD Something 3", rating: 3.9)
 
-    visit services_path(q: "DDDD Something")
-
-    select "rate 1-5", from: "sort"
-
-    # This is a little trick to wait for turbolinks.
-    # See https://stackoverflow.com/questions/41854537/capybara-poltergeist-wait-for-javascript-completions
-    expect(page).to have_text("DDDD Something 1")
+    visit services_path(q: "DDDD Something", sort: "rating")
 
     expect(page.text.index("DDDD Something 3")).to be < page.text.index("DDDD Something 2")
     expect(page.text.index("DDDD Something 2")).to be < page.text.index("DDDD Something 1")

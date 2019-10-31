@@ -99,17 +99,17 @@ class Service < ApplicationRecord
   validates :title, presence: true
   validates :description, presence: true
   validates :tagline, presence: true
-  validates :connected_url, presence: true, url: true, if: :open_access?
+  validates :connected_url, presence: true, mp_url: true, if: :open_access?
   validates :rating, presence: true
-  validates :terms_of_use_url, url: true, if: :terms_of_use_url?
-  validates :access_policies_url, url: true, if: :access_policies_url?
-  validates :sla_url, url: true, if: :sla_url?
-  validates :webpage_url, url: true, if: :webpage_url?
-  validates :manual_url, url: true, if: :manual_url?
-  validates :helpdesk_url, url: true, if: :helpdesk_url?
+  validates :terms_of_use_url, mp_url: true, if: :terms_of_use_url?
+  validates :access_policies_url, mp_url: true, if: :access_policies_url?
+  validates :sla_url, mp_url: true, if: :sla_url?
+  validates :webpage_url, mp_url: true, if: :webpage_url?
+  validates :manual_url, mp_url: true, if: :manual_url?
+  validates :helpdesk_url, mp_url: true, if: :helpdesk_url?
   validates :helpdesk_email, allow_blank: true, email: true
   validates :contact_emails, array: { email: true }
-  validates :tutorial_url, url: true, if: :tutorial_url?
+  validates :tutorial_url, mp_url: true, if: :tutorial_url?
   validates :logo, blob: { content_type: :image }
   validate :logo_variable, on: [:create, :update]
   validates :research_areas, presence: true
@@ -118,7 +118,6 @@ class Service < ApplicationRecord
   validates :order_target, allow_blank: true, email: true
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
-  before_validation :strip_whitespace
 
   def main_category
     @main_category ||= categories.joins(:categorizations).
@@ -152,16 +151,5 @@ class Service < ApplicationRecord
 
     def main_category_missing?
       categorizations.where(main: true).count.zero?
-    end
-
-    def strip_whitespace
-      self.terms_of_use_url&.strip!
-      self.access_policies_url&.strip!
-      self.sla_url&.strip!
-      self.webpage_url&.strip!
-      self.manual_url&.strip!
-      self.helpdesk_url&.strip!
-      self.tutorial_url&.strip!
-      self.connected_url&.strip!
     end
 end
