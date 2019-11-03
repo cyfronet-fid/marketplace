@@ -123,7 +123,7 @@ RSpec.feature "Service ordering" do
     end
 
     [:open_access_service, :catalog_service].each do |type|
-      scenario "I cannot order #{type} service twice in one project" do
+      scenario "I cannot order #{type} service twice in one project if offer has no parameters" do
         service = create(type)
         _offer = create(:offer, service: service)
         _default_project = user.projects.find_by(name: "Services")
@@ -154,34 +154,38 @@ RSpec.feature "Service ordering" do
       end
     end
 
-    scenario "I cannot order catalog service twice in one project" do
-      catalog_service = create(:catalog_service)
-      _offer = create(:offer, service: catalog_service)
-      _default_project = user.projects.find_by(name: "Services")
+    [:open_access_service, :catalog_service].each do |type|
+      scenario "I can order #{type} service twice in one project if offer has parameters" do
+        service = create(type)
+        _offer = create(:offer_with_parameters, service: service)
+        _default_project = user.projects.find_by(name: "Services")
 
-      visit service_path(catalog_service)
+        visit service_path(service)
 
-      click_on "Access the service"
+        click_on "Access the service"
 
-      # Project selection
-      select "Services", from: "project_item_project_id"
-      click_on "Next", match: :first
+        # Project selection
+        select "Services", from: "project_item_project_id"
+        fill_in "project_item_property_values_id", with: "test"
 
-      expect do
-        click_on "Add to a project", match: :first
-      end.to change { ProjectItem.count }.by(1)
+        click_on "Next", match: :first
 
-      visit service_path(catalog_service)
+        expect do
+          click_on "Add to a project", match: :first
+        end.to change { ProjectItem.count }.by(1)
 
-      click_on "Access the service"
+        visit service_path(service)
 
-      select "Services", from: "project_item_project_id"
-      click_on "Next", match: :first
+        click_on "Access the service"
+        click_on "Next", match: :first
 
-      expect(page).to have_current_path(service_configuration_path(catalog_service))
-      expect(page).to have_text("You cannot add open access service #{catalog_service.title} to project Services twice")
+        select "Services", from: "project_item_project_id"
+        fill_in "project_item_property_values_id", with: "test"
+        click_on "Next", match: :first
+
+        expect(page).to have_current_path(service_summary_path(service))
+      end
     end
-
 
     scenario "Skip offers selection when only one offer" do
       create(:offer, service: service)
