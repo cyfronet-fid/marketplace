@@ -122,32 +122,36 @@ RSpec.feature "Service ordering" do
       expect(page).to have_content(service.title)
     end
 
-    scenario "I cannot order open_access service twice in one project" do
-      open_access_service = create(:open_access_service)
-      _offer = create(:offer, service: open_access_service)
-      _default_project = user.projects.find_by(name: "Services")
+    [:open_access_service, :catalog_service].each do |type|
+      scenario "I cannot order #{type} service twice in one project" do
+        service = create(type)
+        _offer = create(:offer, service: service)
+        _default_project = user.projects.find_by(name: "Services")
 
-      visit service_path(open_access_service)
+        visit service_path(service)
 
-      click_on "Access the service"
+        click_on "Access the service"
+        click_on "Next", match: :first
 
-      # Project selection
-      select "Services", from: "project_item_project_id"
-      click_on "Next", match: :first
+        # Project selection
+        select "Services", from: "project_item_project_id"
+        click_on "Next", match: :first
 
-      expect do
-        click_on "Add to a project", match: :first
-      end.to change { ProjectItem.count }.by(1)
+        expect do
+          click_on "Add to a project", match: :first
+        end.to change { ProjectItem.count }.by(1)
 
-      visit service_path(open_access_service)
+        visit service_path(service)
 
-      click_on "Access the service"
+        click_on "Access the service"
+        click_on "Next", match: :first
 
-      select "Services", from: "project_item_project_id"
-      click_on "Next", match: :first
+        select "Services", from: "project_item_project_id"
+        click_on "Next", match: :first
 
-      expect(page).to have_current_path(service_configuration_path(open_access_service))
-      expect(page).to have_text("You cannot add open access service #{open_access_service.title} to project Services twice")
+        expect(page).to have_current_path(service_configuration_path(service))
+        expect(page).to have_text("You cannot add open access service #{service.title} to project Services twice")
+      end
     end
 
     scenario "I cannot order catalog service twice in one project" do
