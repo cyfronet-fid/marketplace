@@ -226,7 +226,7 @@ private
     when "CI-Department"
       project.single_user_or_community? ? project.department : nil
     when "CI-DepartmentalWebPage"
-      project.single_user_or_community? ? project.webpage : nil
+      project.single_user_or_community? ? URI.parse(project.webpage).to_s : nil
     when "CI-DisplayName"
       "#{project.user.first_name} #{project.user.last_name}"
     when "CP-ScientificDiscipline"
