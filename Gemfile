@@ -36,7 +36,7 @@ gem "counter_culture", "~> 2.0"
 # validation
 gem "valid_email2"
 gem "json-schema"
-gem "validate_url", github: "perfectline/validates_url"
+gem "public_suffix"
 
 gem "searchkick"
 gem "devise"
