@@ -5,18 +5,18 @@ class Services::ConfigurationsController < Services::ApplicationController
 
   def show
     setup_show_variables!
-    @project_item = ProjectItem.new(session[session_key])
+    @step = step_class.new(session[session_key])
   end
 
   def update
-    @project_item = ProjectItem.new(configuration_params)
+    @step = step_class.new(configuration_params)
 
-    if @project_item.request_voucher
-      @project_item.voucher_id = ""
+    if @step.request_voucher
+      @step.voucher_id = ""
     end
 
-    if @project_item.valid?
-      session[session_key] = @project_item.attributes
+    if @step.valid?
+      save_in_session(@step)
       redirect_to service_summary_path(@service)
     else
       setup_show_variables!
@@ -34,5 +34,9 @@ class Services::ConfigurationsController < Services::ApplicationController
 
     def setup_show_variables!
       @projects = policy_scope(current_user.projects.active)
+    end
+
+    def step_class
+      ProjectItem::Wizard::ConfigurationStep
     end
 end

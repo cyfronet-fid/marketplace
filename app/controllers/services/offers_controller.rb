@@ -7,7 +7,7 @@ class Services::OffersController < Services::ApplicationController
     init_step_data
 
     if @service.offers_count == 1
-      params[:project_item] = { offer_id: @offers.first.id }
+      params[:project_item] = { offer_id: @offers.first.iid }
       update
     end
   end
@@ -27,18 +27,19 @@ class Services::OffersController < Services::ApplicationController
 
   private
 
-    def save_in_session(step)
-      session[session_key] = step.project_item.attributes
-    end
-
     def step_class
       ProjectItem::Wizard::OfferSelectionStep
     end
 
     def step_params
-      params.fetch(:project_item, session[session_key] || {})
+      { offer_id: offer&.id, project_id: session[:selected_project] }
+    end
+
+    def offer
+      form_params = params
+        .fetch(:project_item, session[session_key] || {})
         .permit(:offer_id)
-        .merge(project_id: session[:selected_project])
+      @service.offers.find_by(iid: form_params[:offer_id])
     end
 
     def init_step_data
