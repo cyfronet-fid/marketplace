@@ -33,6 +33,7 @@ class Offer < ApplicationRecord
   validates :parameters_as_string, attribute_id_unique: true
   validate :parameters_not_nil
   validates :webpage, presence: true, mp_url: true, unless: :orderable?
+  validates :offer_type, presence: true
 
   attr_writer :parameters_as_string
 
@@ -44,8 +45,8 @@ class Offer < ApplicationRecord
     (parameters || []).map { |param| Attribute.from_json(param) }
   end
 
-  def offer_type
-    super || service&.service_type
+  def offer_type=(value)
+    super(value) || service&.service_type
   end
 
   def open_access?

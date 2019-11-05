@@ -33,6 +33,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Main page greeting change (@goreck888)
 - Move `Service.connected_url` to `Offer.webpage` (@mkasztelnik)
 - Order path styling (@jarekzet)
+- Offer type required (@martaswiatkowska)
 
 ### Deprecated
 

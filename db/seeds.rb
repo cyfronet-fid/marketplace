@@ -96,7 +96,7 @@ yaml_hash["services"].each do |_, hash|
                              webpage: hash["connected_url"],
                              description: h["description"],
                              parameters: h["parameters"] || [],
-                             offer_type: service_type,
+                             offer_type: service_type || "orderable",
                              status: :published)
     end
   end
