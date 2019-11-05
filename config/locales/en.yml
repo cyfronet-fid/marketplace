@@ -38,7 +38,37 @@ en:
   service:
     order:
       title: Access the service
+    next: Next
+    information:
+      title: Information
+    type:
+      open_access:
+        Open Access type
+      normal:
+        Normal type
+      catalog:
+        Catalog type
+    catalog:
+      order:
+        cancel: Quit
+        configuration:
+          title: Add to a project
+      link: Order at provider website
+      description_html:
+        "%{service_title} is accessible by external ordering. You can either directly
+        <b>'Go to the service'</b>, where EOSC Portal will redirect you to the website
+        and you can order the service or what is highly recommended to add the
+        service to your <b>'Project'</b>. It helps you to organise your services and orders into logical
+        blocks related to your use case, gain EOSC experts support and easily access the selected service.</br>
+        To find out more about Projects in EOSC Marketplace, please refer to our FAQ ( link to FAQ)"
     normal:
+      description_html:
+        "%{service_title} can be ordered via EOSC marketplace <b>free of charge</b>.
+        The service will be delivered once it is verified that the scientific affiliation
+        (provided in the details of the underpinned project) entitles you to use it.
+        You will be notified by email about the service request status changes or can be tracked
+        in project’s dashboard.</br>
+        To find out more about Projects in EOSC Marketplace, please refer to our FAQ ( link to FAQ)"
       order:
         title: Order
         cancel: Cancel order and quit
@@ -49,6 +79,14 @@ en:
             We will be able to process your request quicker
             if the form is filled with as much detail as possible.
     open_access:
+      link: Go to service
+      description_html:
+        "%{service_title} is open to everyone, any user can reach the service. You can either directly
+        <b>'Go to the service'</b>, where EOSC Portal will redirect you to the service website or what is
+        highly recommended to add the service to your <b>'Project'</b>. It helps you to organise your services
+        and orders into logical blocks related to your use case, gain EOSC experts support and easily
+        access the selected service.</br>
+        To find out more about Projects in EOSC Marketplace, please refer to our FAQ ( link to FAQ)"
       order:
         title: Add to a project
         cancel: Quit
