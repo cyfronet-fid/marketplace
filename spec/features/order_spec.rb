@@ -464,7 +464,7 @@ RSpec.feature "Service ordering" do
       expect(page).to_not have_text("11111-22222-33333-44444")
     end
 
-    scenario "I see offer type on information step" do
+    scenario "I see offer type description on information step" do
       service = create(:service)
       create(:offer, offer_type: :open_access, service: service)
 
@@ -472,7 +472,7 @@ RSpec.feature "Service ordering" do
 
       click_on "Access the service"
 
-      expect(page).to have_link("Go to the service")
+      expect(current_path).to eq service_information_path(service)
     end
   end
 

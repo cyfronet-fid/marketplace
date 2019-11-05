@@ -194,6 +194,7 @@ RSpec.feature "Services in backoffice" do
       expect {
         fill_in "Name", with: "new offer 1"
         fill_in "Description", with: "test offer"
+        select "orderable", from: "Offer type"
         fill_in "offer_parameters_as_string_0",
                 with: "{" \
                       "\"id\":\"id1\"," \
@@ -476,6 +477,7 @@ RSpec.feature "Services in backoffice" do
       click_on "Add new offer", match: :first
 
       fill_in "Name", with: "New offer"
+      select "orderable", from: "Offer type"
       fill_in "Description", with: "New fancy offer"
       click_on "Create Offer"
 
