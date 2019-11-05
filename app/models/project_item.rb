@@ -39,11 +39,11 @@ class ProjectItem < ApplicationRecord
   validates :request_voucher, absence: true, unless: :vaucherable?
   validates :voucher_id, absence: true, if: :voucher_id_unwanted?
   validates :voucher_id, presence: true, allow_blank: false, if: :voucher_id_required?
-  validate :one_per_project?, on: :create
+  validate :one_per_project?, on: :create, unless: :properties?
   validate :properties_not_nil
 
   delegate :user, to: :project
-  delegate :normal?, to: :service, allow_nil: true
+  delegate :normal?, to: :offer, allow_nil: true
 
   def service
     offer.service unless offer.nil?
@@ -87,12 +87,10 @@ class ProjectItem < ApplicationRecord
   end
 
   def one_per_project?
-    unless  normal?
-      project_items_services = Service.joins(offers: { project_items: :project }).
-        where(id: service.id, offers: { project_items: { project_id: [ project_id] } }).count.positive?
+    project_items_services = Service.joins(offers: { project_items: :project }).
+      where(id: service.id, offers: { project_items: { project_id: [ project_id] } }).count.positive?
 
-      errors.add(:project, :repited_in_project, message: "^You cannot add open access service #{service.title} to project #{project.name} twice") unless !project_items_services.present?
-    end
+    errors.add(:project, :repited_in_project, message: "^You cannot add open access service #{service.title} to project #{project.name} twice") unless !project_items_services.present?
   end
 
   def research_area_is_a_leaf

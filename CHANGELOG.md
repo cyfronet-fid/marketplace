@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Internal server error message (@goreck888)
 - Anonymous user can enter service offer selection section (@mkasztelnik)
 - Service access button (@martaswiatkowska)
+- Services can be added to project multiple times if offer has parameters (@martaswiatkowska)
 
 ### Deprecated
 
