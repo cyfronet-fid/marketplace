@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resources :offers, only: :index
       resource :offers, only: :update
       resource :configuration, only: [:show, :update]
+      resource :information, only: :show
       resource :summary, only: [:show, :create]
       resource :cancel, only: :destroy
       resource :questions, only: [:create]

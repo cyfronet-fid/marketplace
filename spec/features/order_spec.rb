@@ -48,6 +48,13 @@ RSpec.feature "Service ordering" do
       click_on "Next", match: :first
 
       # Step 2
+      expect(page).to have_current_path(service_information_path(service))
+      expect(page).to have_selector(:link_or_button,
+                                    "Next", exact: true)
+
+      click_on "Next", match: :first
+
+      # Step 3
       expect(page).to have_current_path(service_configuration_path(service))
       expect(page).to have_selector(:link_or_button,
                                     "Next", exact: true)
@@ -56,7 +63,8 @@ RSpec.feature "Service ordering" do
 
       click_on "Next", match: :first
 
-      # Step 3
+
+      # Step 4
       expect(page).to have_current_path(service_summary_path(service))
       expect(page).to have_selector(:link_or_button,
                                     "Order", exact: true)
@@ -94,6 +102,12 @@ RSpec.feature "Service ordering" do
       click_on "Access the service", match: :first
 
       # Step 2
+      expect(page).to have_current_path(service_information_path(service))
+      expect(page).to have_selector(:link_or_button,
+                                    "Next", exact: true)
+
+      click_on "Next", match: :first
+      # Step 3
       expect(page).to have_current_path(service_configuration_path(service))
       expect(page).to have_selector(:link_or_button,
                                     "Next", exact: true)
@@ -104,7 +118,7 @@ RSpec.feature "Service ordering" do
 
       click_on "Next", match: :first
 
-      # Step 3
+      # Step 4
       expect(page).to have_current_path(service_summary_path(service))
       expect(page).to have_selector(:link_or_button,
                                     "Order", exact: true)
@@ -131,6 +145,8 @@ RSpec.feature "Service ordering" do
         visit service_path(service)
 
         click_on "Access the service"
+
+        # Information step
         click_on "Next", match: :first
 
         # Project selection
@@ -144,6 +160,9 @@ RSpec.feature "Service ordering" do
         visit service_path(service)
 
         click_on "Access the service"
+        click_on "Next", match: :first
+
+        # Information step
         click_on "Next", match: :first
 
         select "Services", from: "project_item_project_id"
@@ -163,6 +182,7 @@ RSpec.feature "Service ordering" do
         visit service_path(service)
 
         click_on "Access the service"
+        click_on "Next", match: :first
 
         # Project selection
         select "Services", from: "project_item_project_id"
@@ -194,7 +214,15 @@ RSpec.feature "Service ordering" do
 
       click_on "Access the service"
 
-      expect(page).to have_current_path(service_configuration_path(service))
+      expect(page).to have_current_path(service_information_path(service))
+    end
+
+    scenario "I'm redirected from information step into service offers when offer is not chosen" do
+      create_list(:offer, 2, service: service)
+
+      visit service_information_path(service)
+
+      expect(page).to have_current_path(service_offers_path(service))
     end
 
     scenario "I'm redirected into service offers when offer is not chosen" do
@@ -227,6 +255,8 @@ RSpec.feature "Service ordering" do
 
       click_on "Access the service"
 
+      click_on "Next", match: :first
+
       # Project selection
       expect(page).to have_current_path(service_configuration_path(open_access_service))
       select "Services"
@@ -255,6 +285,7 @@ RSpec.feature "Service ordering" do
       visit service_path(catalog_service)
 
       click_on "Access the service"
+      click_on "Next", match: :first
 
       # Project selection
       expect(page).to have_current_path(service_configuration_path(catalog_service))
@@ -291,6 +322,7 @@ RSpec.feature "Service ordering" do
       visit service_path(service)
 
       click_on "Access the service"
+      click_on "Next", match: :first
       click_on "Add new project"
       within("#ajax-modal") do
         fill_in "Project name", with: "New project"
@@ -317,6 +349,7 @@ RSpec.feature "Service ordering" do
       visit service_path(service)
 
       click_on "Access the service"
+      click_on "Next", match: :first
       click_on "Add new project"
 
       click_on "Create new project"
@@ -338,6 +371,7 @@ RSpec.feature "Service ordering" do
       visit service_path(service)
 
       click_on "Access the service"
+      click_on "Next", match: :first
       click_on "Add new project"
       within("#ajax-modal") do
         fill_in "Project name", with: "New project"
@@ -378,6 +412,7 @@ RSpec.feature "Service ordering" do
       visit service_path(service)
 
       click_on "Access the service"
+      click_on "Next", match: :first
 
       # Step 2
       expect(page).to_not have_text("Voucher")
@@ -397,6 +432,7 @@ RSpec.feature "Service ordering" do
       visit service_path(service)
 
       click_on "Access the service"
+      click_on "Next", match: :first
 
       # Step 2
       expect(page).to have_text("Voucher ID")
@@ -418,6 +454,8 @@ RSpec.feature "Service ordering" do
       visit service_path(service)
 
       click_on "Access the service"
+      click_on "Next", match: :first
+
       # Step 2
       find("label", id: "ask").click
       expect(page).to_not have_text("Voucher ID")
@@ -452,6 +490,18 @@ RSpec.feature "Service ordering" do
       expect(current_path).to eq service_summary_path(service)
       expect(page).to_not have_text("11111-22222-33333-44444")
     end
+
+    scenario "I see offer type on information step" do
+      service = create(:service)
+      create(:offer, offer_type: :open_access, service: service)
+
+      visit service_path(service)
+
+      click_on "Access the service"
+
+      expect(page).to have_text("Open Access type")
+      expect(page).to have_link("Go to service")
+    end
   end
 
   context "as anonymous user" do
@@ -481,7 +531,7 @@ RSpec.feature "Service ordering" do
         # If new user is logged in using checkin new user record is created
       end.to change { User.count }.by(1)
 
-      expect(page).to have_current_path(service_configuration_path(service))
+      expect(page).to have_current_path(service_information_path(service))
       expect(User.last.full_name).to eq(user.full_name)
     end
 
