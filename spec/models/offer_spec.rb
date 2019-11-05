@@ -13,10 +13,10 @@ RSpec.describe Offer do
 
   context "#offer_type" do
     it "takes default from service if not set" do
-      service = create(:catalog_service)
+      service = create(:external_service)
       offer = create(:offer, service: service)
 
-      expect(offer.offer_type).to eq "catalog"
+      expect(offer.offer_type).to eq "external"
     end
   end
 

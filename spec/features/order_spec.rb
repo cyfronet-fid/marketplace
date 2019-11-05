@@ -136,7 +136,7 @@ RSpec.feature "Service ordering" do
       expect(page).to have_content(service.title)
     end
 
-    [:open_access_service, :catalog_service].each do |type|
+    [:open_access_service, :external_service].each do |type|
       scenario "I cannot order #{type} service twice in one project if offer has no parameters" do
         service = create(type)
         _offer = create(:offer, service: service)
@@ -173,7 +173,7 @@ RSpec.feature "Service ordering" do
       end
     end
 
-    [:open_access_service, :catalog_service].each do |type|
+    [:open_access_service, :external_service].each do |type|
       scenario "I can order #{type} service twice in one project if offer has parameters" do
         service = create(type)
         _offer = create(:offer_with_parameters, service: service)
@@ -278,23 +278,23 @@ RSpec.feature "Service ordering" do
     end
 
     scenario "I can order catalog service" do
-      catalog_service = create(:catalog_service)
-      offer = create(:offer, service: catalog_service)
+      external_service = create(:external_service)
+      offer = create(:offer, service: external_service)
       default_project = user.projects.find_by(name: "Services")
 
-      visit service_path(catalog_service)
+      visit service_path(external_service)
 
       click_on "Access the service"
       click_on "Next", match: :first
 
       # Project selection
-      expect(page).to have_current_path(service_configuration_path(catalog_service))
+      expect(page).to have_current_path(service_configuration_path(external_service))
       select "Services"
       click_on "Next", match: :first
 
 
       # Summary page
-      expect(page).to have_current_path(service_summary_path(catalog_service))
+      expect(page).to have_current_path(service_summary_path(external_service))
       expect(page).to have_selector(:link_or_button,
                                     "Add to a project", exact: true)
 
@@ -554,10 +554,10 @@ RSpec.feature "Service ordering" do
     end
 
     scenario "I can see catalog service button" do
-      catalog = create(:catalog_service)
-      create(:offer, service: catalog)
+      external = create(:external_service)
+      create(:offer, service: external)
 
-      visit service_path(catalog)
+      visit service_path(external)
       expect(page).to have_selector(:link_or_button, "Access the service", exact: true)
     end
   end

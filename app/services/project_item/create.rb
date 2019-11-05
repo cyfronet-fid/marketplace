@@ -12,7 +12,7 @@ class ProjectItem::Create
       @project_item.statuses.create(status: :created,
                                message: "Service request created")
 
-      unless normal?
+      unless orderable?
         ProjectItem::ReadyJob.perform_later(@project_item)
       else
         ProjectItemMailer.created(@project_item).deliver_later
@@ -25,7 +25,7 @@ class ProjectItem::Create
 
   private
 
-    def normal?
-      @project_item.offer.normal?
+    def orderable?
+      @project_item.offer.orderable?
     end
 end
