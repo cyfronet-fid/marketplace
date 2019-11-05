@@ -8,14 +8,14 @@ module ProjectItem::Wizard
     delegate(*::ProjectItem.attribute_names.map { |a| [a, "#{a}="] }.flatten,
              to: :project_item)
 
-    delegate :offer, :project, to: :project_item
+    delegate :service, :offer, :project, to: :project_item
 
     def initialize(project_item_attributes)
       @project_item = ::ProjectItem.new(project_item_attributes)
     end
 
-    def to_model
-      project_item
+    def model_name
+      project_item.model_name
     end
   end
 
@@ -28,9 +28,15 @@ module ProjectItem::Wizard
   end
 
   class ConfigurationStep < OfferSelectionStep
-    # include ProjectItem::Customization
+    include ProjectItem::Customization
+    include ProjectItem::ProjectValidation
+    include ProjectItem::VoucherValidation
 
-    validates :project, presence: true
+    delegate :properties?, :created?, to: :project_item
+
+    def error
+      "Please correct errors presented below"
+    end
   end
 
   class SummaryStep < ConfigurationStep

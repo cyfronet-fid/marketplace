@@ -2,6 +2,8 @@
 
 class ProjectItem < ApplicationRecord
   include Customization
+  include ProjectValidation
+  include VoucherValidation
   include Iid
 
   STATUSES = {
@@ -33,13 +35,8 @@ class ProjectItem < ApplicationRecord
   has_many :statuses, as: :status_holder
 
   validates :offer, presence: true
-  validates :project, presence: true
   validates :status, presence: true
   validate :research_area_is_a_leaf
-  validates :request_voucher, absence: true, unless: :voucherable?
-  validates :voucher_id, absence: true, if: :voucher_id_unwanted?
-  validates :voucher_id, presence: true, allow_blank: false, if: :voucher_id_required?
-  validate :one_per_project?, on: :create, unless: :properties?
   validate :properties_not_nil
 
   delegate :user, to: :project
@@ -86,27 +83,8 @@ class ProjectItem < ApplicationRecord
     "\"#{project.name}##{id}\""
   end
 
-  def one_per_project?
-    project_items_services = Service.joins(offers: { project_items: :project }).
-      where(id: service.id, offers: { project_items: { project_id: [ project_id] } }).count.positive?
-
-    errors.add(:project, :repited_in_project, message: "^You cannot add open access service #{service.title} to project #{project.name} twice") unless !project_items_services.present?
-  end
-
   def research_area_is_a_leaf
     errors.add(:research_area_id, "cannot have children") if research_area&.has_children?
-  end
-
-  def voucherable?
-    offer&.voucherable
-  end
-
-  def voucher_id_required?
-    voucherable? && request_voucher == false
-  end
-
-  def voucher_id_unwanted?
-    created? && !voucher_id_required?
   end
 
   def properties_not_nil

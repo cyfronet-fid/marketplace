@@ -4,17 +4,17 @@
 %p.mb-4= t "service.#{@service.service_type}.order.configuration.description"
 
 
-= simple_form_for @project_item, url: service_configuration_path(@service), method: :put,
+= simple_form_for @step, url: service_configuration_path(@service), method: :put,
   html: { id: "order-form", "data-controller" => "project-item", "data-project-item-url" => projects_path } do |f|
 
-  = render "services/configurations/voucher", project_item: @project_item, f: f
-  = render "services/configurations/attributes", project_item: @project_item, form: f
+  = render "services/configurations/voucher", project_item: @step, f: f
+  = render "services/configurations/attributes", project_item: @step, form: f
 
   .additional-information.mb-4.service-description
     %h5.mb-4.mt-5.font-weight-bold.configuration-title.text-uppercase
       Usage information
 
-    = render "services/configurations/project_browser", project_item: @project_item, projects: @projects, f: f
+    = render "services/configurations/project_browser", project_item: @step, projects: @projects, f: f
 
 = content_for :next_button do
   %button.btn.btn-primary{ form: "order-form", type: "submit" }

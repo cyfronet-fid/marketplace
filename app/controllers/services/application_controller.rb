@@ -25,4 +25,8 @@ class Services::ApplicationController < ApplicationController
       @service = Service.friendly.find(params[:service_id])
       authorize(@service, :order?)
     end
+
+    def save_in_session(step)
+      session[session_key] = step.project_item.attributes
+    end
 end
