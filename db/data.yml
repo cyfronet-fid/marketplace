@@ -1826,7 +1826,7 @@ services:
         parents: *sharingAndDicoveryParent
         providers: [*esa]
         logo: geoss-portal.png
-        catalog: true
+        external: true
         connected_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
         webpage_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
         manual_url:

@@ -2,9 +2,9 @@
 
 class Offer < ApplicationRecord
   enum offer_type: {
-    normal: "normal",
+    orderable: "orderable",
     open_access: "open_access",
-    catalog: "catalog"
+    external: "external"
   }
 
   STATUSES = {
@@ -51,12 +51,12 @@ class Offer < ApplicationRecord
     offer_type == "open_access"
   end
 
-  def normal?
-    offer_type == "normal"
+  def orderable?
+    offer_type == "orderable"
   end
 
-  def catalog?
-    offer_type == "catalog"
+  def external?
+    offer_type == "external"
   end
 
   def parameters_as_string?
