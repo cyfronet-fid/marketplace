@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Services::InformationController < Services::ApplicationController
+  skip_before_action :authenticate_user!
   before_action :ensure_in_session!
 
   def show
