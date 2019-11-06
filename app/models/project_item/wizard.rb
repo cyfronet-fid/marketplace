@@ -29,10 +29,9 @@ module ProjectItem::Wizard
 
   class ConfigurationStep < OfferSelectionStep
     include ProjectItem::Customization
-    include ProjectItem::ProjectValidation
     include ProjectItem::VoucherValidation
 
-    delegate :properties?, :created?, to: :project_item
+    delegate :created?, to: :project_item
 
     def error
       "Please correct errors presented below"
@@ -40,5 +39,7 @@ module ProjectItem::Wizard
   end
 
   class SummaryStep < ConfigurationStep
+    include ProjectItem::ProjectValidation
+    delegate :properties?, to: :project_item
   end
 end
