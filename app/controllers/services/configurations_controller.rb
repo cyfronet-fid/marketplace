@@ -4,8 +4,13 @@ class Services::ConfigurationsController < Services::ApplicationController
   before_action :ensure_in_session!
 
   def show
-    setup_show_variables!
-    @step = step_class.new(session[session_key])
+    if ProjectItem::Wizard::OfferSelectionStep.new(session[session_key]).valid?
+      setup_show_variables!
+      @step = step_class.new(session[session_key])
+    else
+      redirect_to service_offers_path(@service),
+                  alert: "Please select one of the service offer"
+    end
   end
 
   def update
@@ -20,6 +25,7 @@ class Services::ConfigurationsController < Services::ApplicationController
       redirect_to service_summary_path(@service)
     else
       setup_show_variables!
+      flash.now[:alert] = @step.error
       render :show
     end
   end
