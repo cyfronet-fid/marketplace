@@ -10,25 +10,26 @@
 = render "services/summaries/technical_configuration",
          service: @service, project_item: @step
 
-.additional-information.mb-4
-  %h5.mb-4.mt-5.font-weight-bold.configuration-title.text-uppercase
-    Additional information
+= simple_form_for @step, url: service_summary_path(@service), html: { id: "order-form" } do |f|
+  .additional-information.mb-4
+    %h5.mb-4.mt-5.font-weight-bold.configuration-title.text-uppercase
+      Additional information
 
-  - if @step.offer.voucherable
-    %h4 Voucher
-    %dl.mb-4
-      - if @step.request_voucher
-        %dt I don't have a voucher, and I would like to request for one
-      - else
-        %dt Voucher ID
-        %dd= @step.voucher_id
+    - if @step.offer.voucherable
+      %h4 Voucher
+      %dl.mb-4
+        - if @step.request_voucher
+          %dt I don't have a voucher, and I would like to request for one
+        - else
+          %dt Voucher ID
+          %dd= @step.voucher_id
 
-  = render "projects/details", project: @step.project
+    = render "services/configurations/project_browser", project_item: @step, projects: @projects, f: f
 
 = content_for :next_button do
-  = link_to t("service.#{@offer_type}.order.title"),
-            service_summary_path(@service),
-            method: :post, class: "btn btn-primary"
+  %button.btn.btn-primary{ form: "order-form", type: "submit" }
+    = t("service.#{@offer_type}.order.title")
+
 = content_for :back_link do
   = link_to "Back to previous step - configuration",
             service_configuration_path(@service),

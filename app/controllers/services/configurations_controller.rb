@@ -5,7 +5,6 @@ class Services::ConfigurationsController < Services::ApplicationController
 
   def show
     if ProjectItem::Wizard::OfferSelectionStep.new(session[session_key]).valid?
-      setup_show_variables!
       @step = step_class.new(session[session_key])
     else
       redirect_to service_offers_path(@service),
@@ -24,7 +23,6 @@ class Services::ConfigurationsController < Services::ApplicationController
       save_in_session(@step)
       redirect_to service_summary_path(@service)
     else
-      setup_show_variables!
       flash.now[:alert] = @step.error
       render :show
     end
@@ -36,10 +34,6 @@ class Services::ConfigurationsController < Services::ApplicationController
       session[session_key].
           merge(permitted_attributes(template)).
           merge(status: :created)
-    end
-
-    def setup_show_variables!
-      @projects = policy_scope(current_user.projects.active)
     end
 
     def step_class
