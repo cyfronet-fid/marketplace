@@ -6,7 +6,7 @@ class Services::ApplicationController < ApplicationController
 
   layout "order"
 
-  protected
+  private
 
     def session_key
       @service.id.to_s
@@ -18,8 +18,6 @@ class Services::ApplicationController < ApplicationController
                     alert: "Service request template not found"
       end
     end
-
-  private
 
     def load_and_authenticate_service!
       @service = Service.friendly.find(params[:service_id])
