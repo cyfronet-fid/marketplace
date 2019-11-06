@@ -21,6 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Services can be added to project multiple times if offer has parameters (@martaswiatkowska)
 - Service and offer type enum values (@goreck888)
 - Service ordering summary step unification (@goreck888)
+- Anonymous user can enter information step (@martaswiatkowska)
 
 ### Deprecated
 

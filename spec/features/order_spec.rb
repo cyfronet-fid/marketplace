@@ -526,12 +526,14 @@ RSpec.feature "Service ordering" do
       user = build(:user)
       stub_checkin(user)
 
+      visit service_offers_path(service)
+
       expect do
-        visit service_offers_path(service)
         # If new user is logged in using checkin new user record is created
+        click_on "Next", match: :first
       end.to change { User.count }.by(1)
 
-      expect(page).to have_current_path(service_information_path(service))
+      expect(page).to have_current_path(service_configuration_path(service))
       expect(User.last.full_name).to eq(user.full_name)
     end
 
