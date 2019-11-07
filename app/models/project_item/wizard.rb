@@ -31,7 +31,7 @@ module ProjectItem::Wizard
     include ProjectItem::Customization
     include ProjectItem::VoucherValidation
 
-    delegate :created?, to: :project_item
+    delegate :properties, :created?, to: :project_item
 
     def error
       "Please correct errors presented below"

@@ -23,7 +23,7 @@ class Services::ConfigurationsController < Services::ApplicationController
       save_in_session(@step)
       redirect_to service_summary_path(@service)
     else
-      setup_show_variables!
+      step_class
       flash.now[:alert] = @step.error
       render :show
     end
