@@ -178,32 +178,38 @@ module Import
             research_areas: [@research_area_other]
         }
 
-        if (service_source = ServiceSource.find_by(eid: eid, source_type: "eic")).nil?
-          created += 1
-          log "Adding [NEW] service: #{name}, eid: #{eid}"
-          unless @dry_run
-            service = Service.new(updated_service_data)
-            unless logo.nil?
-              service.logo.attach(io: logo, filename: eid, content_type: logo_content_type)
-            end
-            service.save!
-            service_source = ServiceSource.create!(service_id: service.id, eid: eid, source_type: "eic")
-            if @default_upstream == :eic
-              service.update(upstream_id: service_source.id)
-            end
-          end
-        else
-          service = Service.find_by(id: service_source.service_id)
-          if service.upstream_id == service_source.id
-            updated += 1
-            log "Updating [EXISTING] service #{service.title}, id: #{service_source.id}, eid: #{eid}"
+        begin
+          if (service_source = ServiceSource.find_by(eid: eid, source_type: "eic")).nil?
+            created += 1
+            log "Adding [NEW] service: #{name}, eid: #{eid}"
             unless @dry_run
-              service.update!(updated_service_data.except(:research_areas, :categories, :status))
+              service = Service.new(updated_service_data)
+              unless logo.nil?
+                service.logo.attach(io: logo, filename: eid, content_type: logo_content_type)
+              end
+              service.save!
+              service_source = ServiceSource.create!(service_id: service.id, eid: eid, source_type: "eic")
+              if @default_upstream == :eic
+                service.update(upstream_id: service_source.id)
+              end
             end
           else
-            not_modified += 1
-            log "Service's upstream is not set to EIC, not updating #{service.title}, id: #{service_source.id}"
+            service = Service.find_by(id: service_source.service_id)
+            if service.upstream_id == service_source.id
+              updated += 1
+              log "Updating [EXISTING] service #{service.title}, id: #{service_source.id}, eid: #{eid}"
+              unless @dry_run
+                service.update!(updated_service_data.except(:research_areas, :categories, :status))
+              end
+            else
+              not_modified += 1
+              log "Service's upstream is not set to EIC, not updating #{service.title}, id: #{service_source.id}"
+            end
           end
+        rescue ActiveRecord::RecordInvalid => invalid
+          log "ERROR - #{invalid}! #{service.title} (eid: #{eid}) will NOT be created (please contact catalog manager)"
+        rescue error
+          log "ERROR - Unexpected #{error}! #{service.title} (eid: #{eid}) will NOT be created!"
         end
       end
       log "PROCESSED: #{total_service_count}, CREATED: #{created}, UPDATED: #{updated}, NOT MODIFIED: #{not_modified}"
