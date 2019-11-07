@@ -24,7 +24,7 @@ class ProjectItemPolicy < ApplicationPolicy
     }
     [:service_id, :project_id, :customer_typology,
      :access_reason, :additional_information, :user_group_name,
-     :project_name, :project_website_url, :company_name, :research_area_id,
+     :project_name, :project_website_url, :company_name, :research_area_id, :foo,
      :company_website_url, :voucher_id, :request_voucher, property_values: attributes]
   end
 end

@@ -55,7 +55,7 @@ RSpec.feature "Service ordering" do
       click_on "Next", match: :first
 
       # Step 3
-      expect(page).to have_current_path(service_configuration_path(service))
+      expect(page).to have_current_path(service_confstep_path(service))
       expect(page).to have_selector(:link_or_button,
                                     "Next", exact: true)
 
@@ -104,7 +104,7 @@ RSpec.feature "Service ordering" do
 
       click_on "Next", match: :first
       # Step 3
-      expect(page).to have_current_path(service_configuration_path(service))
+      expect(page).to have_current_path(service_confstep_path(service))
       expect(page).to have_selector(:link_or_button,
                                     "Next", exact: true)
 
@@ -227,7 +227,7 @@ RSpec.feature "Service ordering" do
     scenario "I'm redirected into service offers when offer is not chosen" do
       create_list(:offer, 2, service: service)
 
-      visit service_configuration_path(service)
+      visit service_confstep_path(service)
 
       expect(page).to have_current_path(service_offers_path(service))
     end
@@ -259,7 +259,7 @@ RSpec.feature "Service ordering" do
       click_on "Next", match: :first
 
       # Project selection
-      expect(page).to have_current_path(service_configuration_path(open_access_service))
+      expect(page).to have_current_path(service_confstep_path(open_access_service))
       click_on "Next", match: :first
 
 
@@ -289,7 +289,7 @@ RSpec.feature "Service ordering" do
       click_on "Next", match: :first
 
       # Project selection
-      expect(page).to have_current_path(service_configuration_path(external_service))
+      expect(page).to have_current_path(service_confstep_path(external_service))
       click_on "Next", match: :first
 
 
@@ -467,7 +467,7 @@ RSpec.feature "Service ordering" do
       click_on "Back to previous step - configuration"
 
       # Step 2 - again
-      expect(current_path).to eq service_configuration_path(service)
+      expect(current_path).to eq service_confstep_path(service)
       expect(page).to_not have_text("Voucher ID")
       find("label", id: "have").click
       fill_in "Voucher ID", with: "11111-22222-33333-44444"
@@ -479,7 +479,7 @@ RSpec.feature "Service ordering" do
       click_on "Back to previous step - configuration"
 
       # Step 2 - again
-      expect(current_path).to eq service_configuration_path(service)
+      expect(current_path).to eq service_confstep_path(service)
       expect(page).to have_selector("input[value='11111-22222-33333-44444']")
       find("label", id: "ask").click
       click_on "Next", match: :first
@@ -531,7 +531,7 @@ RSpec.feature "Service ordering" do
         click_on "Next", match: :first
       end.to change { User.count }.by(1)
 
-      expect(page).to have_current_path(service_configuration_path(service))
+      expect(page).to have_current_path(service_confstep_path(service))
       expect(User.last.full_name).to eq(user.full_name)
     end
 

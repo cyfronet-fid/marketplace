@@ -4,10 +4,10 @@
 %p.mb-4= t "service.#{@service.service_type}.order.configuration.description"
 
 
-= simple_form_for @step, url: service_configuration_path(@service), method: :put,
+= simple_form_for @step, url: service_confstep_path(@service), method: :put,
   html: { id: "order-form", "data-controller" => "project-item", "data-project-item-url" => projects_path } do |f|
-  = render "services/configurations/voucher", project_item: @step, f: f
-  = render "services/configurations/attributes", project_item: @step, form: f
+  = render "services/confsteps/voucher", project_item: @step, f: f
+  = render "services/confsteps/attributes", project_item: @step, form: f
 
   -# This a a kind of hack to send form params even when no attributes and vaucher
      is created. It should be removed after this step is shown only when needed.

@@ -4,11 +4,11 @@ class Services::SummariesController < Services::ApplicationController
   before_action :ensure_in_session!
 
   def show
-    if ProjectItem::Wizard::ConfigurationStep.new(session[session_key]).valid?
+    if ProjectItem::Wizard::ConfStep.new(session[session_key]).valid?
       @step = step_class.new(session[session_key])
       setup_show_variables!
     else
-      redirect_to service_configuration_path(@service),
+      redirect_to service_confstep_path(@service),
                   alert: "Please configure your service request"
     end
   end
@@ -37,7 +37,7 @@ class Services::SummariesController < Services::ApplicationController
         redirect_to project_service_path(@project_item.project, @project_item),
                     notice: "Service ordered sucessfully"
       else
-        redirect_to service_configuration_path(@service),
+        redirect_to service_confstep_path(@service),
                     alert: "Service request configuration invalid"
       end
     end

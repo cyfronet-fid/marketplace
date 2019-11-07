@@ -11,7 +11,7 @@
 
 = content_for :next_button do
   = link_to t("service.next"),
-            service_configuration_path(@service),
+            service_confstep_path(@service),
             class: "btn btn-primary"
 
 - if policy(@service).offers_show?

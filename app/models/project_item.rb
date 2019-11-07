@@ -6,6 +6,8 @@ class ProjectItem < ApplicationRecord
   include VoucherValidation
   include Iid
 
+  attr_accessor :foo
+
   STATUSES = {
     created: "created",
     registered: "registered",

@@ -3,12 +3,13 @@
 module ProjectItem::Wizard
   class Base
     include ActiveModel::Model
-    attr_accessor :project_item
+    attr_accessor :project_item, :foo
 
     delegate(*::ProjectItem.attribute_names.map { |a| [a, "#{a}="] }.flatten,
              to: :project_item)
 
-    delegate :service, :offer, :project, to: :project_item
+    delegate :service, :offer, :project, :properties, :properties=, to: :project_item
+    delegate :parameters, to: :offer
 
     def initialize(project_item_attributes)
       @project_item = ::ProjectItem.new(project_item_attributes)
@@ -27,7 +28,7 @@ module ProjectItem::Wizard
     end
   end
 
-  class ConfigurationStep < OfferSelectionStep
+  class ConfStep < OfferSelectionStep
     include ProjectItem::Customization
     include ProjectItem::VoucherValidation
 
@@ -38,7 +39,7 @@ module ProjectItem::Wizard
     end
   end
 
-  class SummaryStep < ConfigurationStep
+  class SummaryStep < ConfStep
     include ProjectItem::ProjectValidation
     delegate :properties?, to: :project_item
   end

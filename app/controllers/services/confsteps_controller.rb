@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Services::ConfigurationsController < Services::ApplicationController
+class Services::ConfstepsController < Services::ApplicationController
   before_action :ensure_in_session!
 
   def show
@@ -38,6 +38,6 @@ class Services::ConfigurationsController < Services::ApplicationController
     end
 
     def step_class
-      ProjectItem::Wizard::ConfigurationStep
+      ProjectItem::Wizard::ConfStep
     end
 end
