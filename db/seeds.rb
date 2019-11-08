@@ -57,9 +57,13 @@ yaml_hash["services"].each do |_, hash|
   Service.find_or_initialize_by(title: hash["title"]) do |service|
 
     service_type = if hash["offers"].blank?
-      hash["open_access"] ? "catalog" : "normal"
+      hash["open_access"] ? "external" : "orderable"
     else
-      hash["open_access"] ? "open_access" : "normal"
+      if hash["external"]
+        "external"
+      else
+        hash["open_access"] ? "open_access" : "orderable"
+      end
     end
 
     service.update!(tagline: hash["tagline"],

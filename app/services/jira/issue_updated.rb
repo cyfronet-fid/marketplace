@@ -63,6 +63,6 @@ class Jira::IssueUpdated
     end
 
     def aod_voucherable?
-      service.aod? ? @project_item.vaucherable? : false
+      service.aod? ? @project_item.voucherable? : false
     end
 end

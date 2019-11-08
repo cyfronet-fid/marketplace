@@ -1,19 +1,21 @@
 # frozen_string_literal: true
 
 class Services::OffersController < Services::ApplicationController
+  skip_before_action :authenticate_user!
+
   def index
     init_offer_selection!
 
     if @service.offers_count == 1
       select_offer(@offers.first)
-      redirect_to service_configuration_path(@service)
+      redirect_to service_information_path(@service)
     end
   end
 
   def update
     if offer
       select_offer(offer)
-      redirect_to service_configuration_path(@service)
+      redirect_to service_information_path(@service)
     else
       init_offer_selection!
       flash.now[:alert] = "Please select one of the offer"
@@ -38,7 +40,7 @@ class Services::OffersController < Services::ApplicationController
     end
 
     def init_offer_selection!
-      @offers = @service.offers.reject { |o| o.catalog? || o.draft? }
+      @offers = @service.offers.reject { |o| o.draft? }
       @project_item = ProjectItem.new(session[session_key])
     end
 end
