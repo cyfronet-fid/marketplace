@@ -17,9 +17,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- EIC import fix - skipping services which don't validate properly (@michal-szostak)
 
 ### Security
+
+## [2.2.2] 2019-11-08
+
+### Fixed
+- EIC import fix - skipping services which don't validate properly (@michal-szostak)
 
 ## [2.2.1] 2019-10-31
 
