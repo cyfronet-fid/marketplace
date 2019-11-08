@@ -64,7 +64,7 @@ class Filter::AncestryMultiselect < Filter
         grouped = selected.group_by { |record| parent?(record, selected) }
         (
           (grouped[true]&.map(&:id) || []) +
-          (grouped[false]&.map { |record| [record.id] + record.descendant_ids } || [])
+          (grouped[false]&.map { |record| [record.id] } || [])
         ).flatten
       end
     end
