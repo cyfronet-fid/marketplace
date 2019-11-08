@@ -34,9 +34,9 @@ class Service < ApplicationRecord
   has_one_attached :logo
 
   enum service_type: {
-    normal: "normal",
+    orderable: "orderable",
     open_access: "open_access",
-    catalog: "catalog"
+    external: "external"
   }
 
   enum phase: {
@@ -99,7 +99,7 @@ class Service < ApplicationRecord
   validates :title, presence: true
   validates :description, presence: true
   validates :tagline, presence: true
-  validates :connected_url, presence: true, mp_url: true, if: :open_access?
+  validates :connected_url, presence: true, mp_url: true, if: :open_access_or_external?
   validates :rating, presence: true
   validates :terms_of_use_url, mp_url: true, if: :terms_of_use_url?
   validates :access_policies_url, mp_url: true, if: :access_policies_url?
@@ -141,6 +141,10 @@ class Service < ApplicationRecord
   end
 
   private
+    def open_access_or_external?
+      open_access? || external?
+    end
+
     def logo_variable
       if logo.present? && !logo.variable?
         errors.add(:logo, "^Sorry, but the logo format you were trying to attach is not supported

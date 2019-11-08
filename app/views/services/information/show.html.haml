@@ -1,0 +1,21 @@
+= render "layouts/order/nav", service: @service, step: 2
+
+.col-8
+  %h2.mb-4.font-weight-normal= t ("service.type.#{@offer.offer_type}")
+  %p.mb-4= t("service.#{@offer.offer_type}.description_html", service_title: @service.title)
+
+  .text-center
+    - unless @offer.orderable? && !@service.connected_url?
+      = link_to t("service.#{@offer.offer_type}.link"),  @service.connected_url.to_s.html_safe,
+        class: "btn btn-primary mb-2", target: "_blank"
+
+= content_for :next_button do
+  = link_to t("service.next"),
+            service_configuration_path(@service),
+            class: "btn btn-primary"
+
+- if policy(@service).offers_show?
+  = content_for :back_link do
+    = link_to "Back to previous step - Offers",
+              service_offers_path(@service),
+              class: "text-uppercase"

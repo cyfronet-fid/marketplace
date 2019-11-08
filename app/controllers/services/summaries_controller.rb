@@ -6,7 +6,7 @@ class Services::SummariesController < Services::ApplicationController
 
   def show
     @project_item = project_item_template
-    render "show_#{@service.service_type}"
+    @offer_type = @project_item&.offer&.offer_type
   end
 
   def create

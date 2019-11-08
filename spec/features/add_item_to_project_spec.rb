@@ -18,7 +18,8 @@ RSpec.feature "Add project item to project" do
     visit project_services_path(project)
     click_on "Add your first service"
 
-    visit service_offers_path(service)
+    visit service_information_path(service)
+    click_on "Next", match: :first
 
     expect(page).to have_select("project_item_project_id",
                                 selected: "my fancy project")

@@ -59,7 +59,7 @@ RSpec.feature "Service browsing" do
 
     visit service_path(service)
 
-    expect(page).to have_link("Order")
+    expect(page).to have_link("Access the service")
     expect(page).to_not have_content(offer2.name)
     expect(page).to_not have_content(offer1.name)
   end

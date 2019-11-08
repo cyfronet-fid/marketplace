@@ -1,4 +1,4 @@
-= render "layouts/order/nav", service: @service, step: 2
+= render "layouts/order/nav", service: @service, step: 3
 
 %h2.mb-4.font-weight-normal= t "service.#{@service.service_type}.order.configuration.title"
 %p.mb-4= t "service.#{@service.service_type}.order.configuration.description"
@@ -20,8 +20,7 @@
   %button.btn.btn-primary{ form: "order-form", type: "submit" }
     Next
 
-- if policy(@service).offers_show?
-  = content_for :back_link do
-    = link_to "Back to previous step - service offers",
-              service_offers_path(@service),
-              class: "text-uppercase"
+= content_for :back_link do
+  = link_to "Back to previous step - service information",
+            service_information_path(@service),
+            class: "text-uppercase"
