@@ -4,11 +4,14 @@ class Services::ConfigurationsController < Services::ApplicationController
   before_action :ensure_in_session!
 
   def show
-    if wizard.step(:information, session[session_key]).valid?
-      @step = step(session[session_key])
+    if prev_step.valid?
+      @step = step(saved_state)
+
+      unless @step.visible?
+        redirect_to service_summary_path(@service)
+      end
     else
-      redirect_to service_offers_path(@service),
-                  alert: "Please select one of the service offer"
+      redirect_to service_offers_path(@service), alert: prev_step.error
     end
   end
 
@@ -30,13 +33,17 @@ class Services::ConfigurationsController < Services::ApplicationController
 
   private
     def configuration_params
-      template = ProjectItem.new(session[session_key])
-      session[session_key].
-          merge(permitted_attributes(template)).
-          merge(status: :created)
+      template = ProjectItem.new(saved_state)
+      saved_state
+        .merge(permitted_attributes(template))
+        .merge(status: :created)
     end
 
     def step(attrs)
       wizard.step(:configuration, attrs)
+    end
+
+    def prev_step
+      @prev_step ||= wizard.step(:information, saved_state)
     end
 end
