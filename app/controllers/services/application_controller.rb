@@ -6,6 +6,8 @@ class Services::ApplicationController < ApplicationController
 
   layout "order"
 
+  attr_reader :wizard
+
   private
 
     def session_key
@@ -22,6 +24,7 @@ class Services::ApplicationController < ApplicationController
     def load_and_authenticate_service!
       @service = Service.friendly.find(params[:service_id])
       authorize(@service, :order?)
+      @wizard = ProjectItem::Wizard.new(@service)
     end
 
     def save_in_session(step)

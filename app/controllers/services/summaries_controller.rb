@@ -4,8 +4,8 @@ class Services::SummariesController < Services::ApplicationController
   before_action :ensure_in_session!
 
   def show
-    if ProjectItem::Wizard::ConfigurationStep.new(session[session_key]).valid?
-      @step = step_class.new(session[session_key])
+    if wizard.step(:configuration, session[session_key]).valid?
+      @step = step(session[session_key])
       setup_show_variables!
     else
       redirect_to service_configuration_path(@service),
@@ -14,7 +14,7 @@ class Services::SummariesController < Services::ApplicationController
   end
 
   def create
-    @step = step_class.new(summary_params)
+    @step = step(summary_params)
 
     if @step.valid?
       do_create(@step.project_item)
@@ -42,8 +42,8 @@ class Services::SummariesController < Services::ApplicationController
       end
     end
 
-    def step_class
-      ProjectItem::Wizard::SummaryStep
+    def step(attrs)
+      wizard.step(:summary, attrs)
     end
 
     def summary_params
