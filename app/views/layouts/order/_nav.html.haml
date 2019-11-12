@@ -1,8 +1,6 @@
 %ul.nav.nav-fill.order-nav
-  - if policy(service).offers_show?
-    = order_nav_link("Offer selection", service_offers_path(service), 1, step)
-  = order_nav_link(t("service.information.title"),
-                   service_information_path(service), 2, step)
-  = order_nav_link(t("service.#{service.service_type}.order.configuration.title"),
-                   service_configuration_path(service), 3, step)
-  = order_nav_link("Summary", service_summary_path(service), 4, step)
+  - wizard.step_names.each_with_index do |name, i|
+    - if wizard.step(name).visible?
+      = order_nav_link(t("service.#{service.service_type}.order.#{name}.title",
+        default: "service.#{name}.title".to_sym),
+        url_for([service, name]), i + 1, step)

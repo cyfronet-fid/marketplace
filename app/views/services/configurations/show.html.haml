@@ -1,4 +1,4 @@
-= render "layouts/order/nav", service: @service, step: 3
+= render "layouts/order/nav", service: @service, wizard: @wizard, step: 3
 
 %h2.mb-4.font-weight-normal= t "service.#{@service.service_type}.order.configuration.title"
 %p.mb-4= t "service.#{@service.service_type}.order.configuration.description"
