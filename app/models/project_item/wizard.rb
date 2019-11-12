@@ -54,6 +54,9 @@ class ProjectItem::Wizard
     end
 
     class InformationStep < OffersStep
+      def visible?
+        true
+      end
     end
 
     class ConfigurationStep < OffersStep
@@ -63,7 +66,7 @@ class ProjectItem::Wizard
       delegate :created?, to: :project_item
 
       def visible?
-        true
+        offer.nil? || project_item.property_values.count.positive? || voucherable?
       end
 
       def error

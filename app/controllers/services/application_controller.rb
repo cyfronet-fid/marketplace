@@ -7,6 +7,7 @@ class Services::ApplicationController < ApplicationController
   layout "order"
 
   attr_reader :wizard
+  helper_method :saved_state
 
   private
 
@@ -15,7 +16,7 @@ class Services::ApplicationController < ApplicationController
     end
 
     def ensure_in_session!
-      unless session[session_key]
+      unless saved_state
         redirect_to service_offers_path(@service),
                     alert: "Service request template not found"
       end
@@ -29,5 +30,9 @@ class Services::ApplicationController < ApplicationController
 
     def save_in_session(step)
       session[session_key] = step.project_item.attributes
+    end
+
+    def saved_state
+      session[session_key]
     end
 end
