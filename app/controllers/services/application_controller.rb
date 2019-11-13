@@ -7,7 +7,10 @@ class Services::ApplicationController < ApplicationController
   layout "order"
 
   attr_reader :wizard
-  helper_method :saved_state
+  helper_method :step
+  helper_method :step_key
+  helper_method :next_step_key
+  helper_method :prev_step_key
 
   private
 
@@ -34,5 +37,25 @@ class Services::ApplicationController < ApplicationController
 
     def saved_state
       session[session_key]
+    end
+
+    def step(attrs = saved_state)
+      wizard.step(step_key, attrs)
+    end
+
+    def next_step_key
+      wizard.next_step_key(step_key)
+    end
+
+    def prev_step_key
+      wizard.prev_step_key(step_key)
+    end
+
+    def prev_step
+      wizard.step(wizard.prev_step_key(step_key), saved_state)
+    end
+
+    def step_key
+      raise "Should be implemented in descendent class"
     end
 end

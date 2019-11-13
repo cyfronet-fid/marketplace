@@ -17,7 +17,7 @@ class Services::OffersController < Services::ApplicationController
 
     if @step.valid?
       save_in_session(@step)
-      redirect_to service_information_path(@service)
+      redirect_to [@service, next_step_key]
     else
       init_step_data
       flash.now[:alert] = @step.error
@@ -27,8 +27,8 @@ class Services::OffersController < Services::ApplicationController
 
   private
 
-    def step(attrs = nil)
-      wizard.step(:offers, attrs)
+    def step_key
+      :offers
     end
 
     def step_params

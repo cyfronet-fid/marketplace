@@ -1,11 +1,11 @@
 %ul.nav.nav-fill.order-nav
   - state = :back
-  - wizard.step_names.each_with_index do |step_name, i|
-    - if wizard.step(step_name, saved_state).visible?
+  - wizard.step_names.each do |step_name|
+    - if step.visible?
       :ruby
         state = :disabled if state == :next
         state = :next if state == :active
-        state = :active if step == i + 1
+        state = :active if step_name == step_key.to_s
 
       = order_nav_link(t("service.#{service.service_type}.order.#{step_name}.title",
         default: "service.#{step_name}.title".to_sym), url_for([service, step_name]), state)
