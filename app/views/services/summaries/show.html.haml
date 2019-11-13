@@ -24,7 +24,7 @@
           %dt Voucher ID
           %dd= @step.voucher_id
 
-    = render "services/configurations/project_browser", project_item: @step, projects: @projects, f: f
+    = render "services/summaries/project_browser", project_item: @step, projects: @projects, f: f
 
 = content_for :next_button do
   %button.btn.btn-primary{ form: "order-form", type: "submit" }
