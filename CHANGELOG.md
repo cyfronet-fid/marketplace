@@ -23,6 +23,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service and offer type enum values (@goreck888)
 - Service ordering summary step unification (@goreck888)
 - Anonymous user can enter information step (@martaswiatkowska)
+- Project selection was moved to last service order step (@mkasztelnik)
 
 ### Deprecated
 

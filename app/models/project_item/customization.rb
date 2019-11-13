@@ -4,7 +4,11 @@ module ProjectItem::Customization
   extend ActiveSupport::Concern
 
   included do
-    validates_associated :property_values
+    validate do
+      property_values
+        .select { |pv| pv.invalid? }
+        .each { |pv| errors.add(:property_values, :invalid, value: pv) }
+    end
   end
 
 

@@ -5,12 +5,12 @@
   This service is available in various options.
   Please select one from the list bellow.
 
-= simple_form_for @project_item, url: service_offers_path(@service), method: :put,
+= simple_form_for @step, url: service_offers_path(@service), method: :put,
   html: { id: "order-form", role: "form", class: "btn-group-toogle", data: { toogle: "buttons" } } do |f|
 
   .card-deck.row
     = render partial: "services/offers/offer",
-      collection: @offers, as: :offer, locals: { f: f, project_item: @project_item }
+      collection: @offers, as: :offer, locals: { f: f, project_item: @step }
 
 = content_for :next_button do
   %button.btn.btn-primary{ form: "order-form", type: "submit" }
