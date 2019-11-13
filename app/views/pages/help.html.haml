@@ -1,0 +1,22 @@
+.container
+  %h1 FAQs
+
+  %h2 About EOSC marketplace
+  #help-about.accordion
+    = render "pages/help_card", parent: "help-about", name: "what",
+      title: "What is the EOSC marketplace?" do
+      EOSC marketplace provides a platform which enables different kinds of users,
+      with different skills and interests to discover, access, use and reuse a
+      broad spectrum of EOSC Resources. Not only does EOSC marketplace offer
+      advanced compute and data services from publicly-funded and commercial
+      organisations, it also allows researchers and institutions to focus on
+      value creation and increase excellence of research and European
+      competitiveness. From the supplier side, the EOSC Marketplace offers
+      local, national and international providers the opportunity to advertise
+      their own services and resources to a broader community.
+
+    = render "pages/help_card", parent: "help-about", name: "who",
+      title: "Who created the EOSC marketplace ? Who maintains the website?" do
+      The EOSC marketplace is co-funded by EGI participants' fees and the H2020
+      EOSC-hub project, and is technically developed and operated by two EGI
+      partners: CYFRONET – Poland, and the Vrije Universiteit Brussel – Belgium.
