@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     scope module: :services do
       resource :offers, only: [:show, :update]
       resource :configuration, only: [:show, :update]
-      resource :information, only: :show
+      resource :information, only: [:show, :update]
       resource :summary, only: [:show, :create]
       resource :cancel, only: :destroy
       resource :questions, only: [:create]

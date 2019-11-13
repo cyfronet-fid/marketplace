@@ -4,12 +4,11 @@ class Services::SummariesController < Services::ApplicationController
   before_action :ensure_in_session!
 
   def show
-    if wizard.step(:configuration, session[session_key]).valid?
+    if prev_step.valid?
       @step = step(session[session_key])
       setup_show_variables!
     else
-      redirect_to service_configuration_path(@service),
-                  alert: "Please configure your service request"
+      redirect_to url_for([@service, prev_step_key]), alert: prev_step.error
     end
   end
 
@@ -20,6 +19,7 @@ class Services::SummariesController < Services::ApplicationController
       do_create(@step.project_item)
     else
       setup_show_variables!
+      flash.now[:alert] = @step.error
       render "show"
     end
   end
@@ -37,13 +37,13 @@ class Services::SummariesController < Services::ApplicationController
         redirect_to project_service_path(@project_item.project, @project_item),
                     notice: "Service ordered sucessfully"
       else
-        redirect_to service_configuration_path(@service),
-                    alert: "Service request configuration invalid"
+        redirect_to url_for([@service, prev_step_key]),
+                    alert: "Service request configuration is invalid"
       end
     end
 
-    def step(attrs)
-      wizard.step(:summary, attrs)
+    def step_key
+      :summary
     end
 
     def summary_params

@@ -8,10 +8,18 @@ class ProjectItem::Wizard
   end
 
   def step(step, attrs = {})
-    raise InvalidStep unless step.to_s.in?(ProjectItem::Wizard::STEPS)
+    raise InvalidStep unless step.to_s.in?(step_names)
 
     "ProjectItem::Wizard::#{step.to_s.camelize}Step"
       .constantize.new(@service, attrs)
+  end
+
+  def next_step_key(step)
+    step_names[step_names.index(step.to_s) + 1]
+  end
+
+  def prev_step_key(step)
+    step_names[step_names.index(step.to_s) - 1]
   end
 
   def step_names
@@ -77,6 +85,10 @@ class ProjectItem::Wizard
     class SummaryStep < ConfigurationStep
       include ProjectItem::ProjectValidation
       delegate :properties?, to: :project_item
+
+      def error
+        "Please select the project where service will be added"
+      end
 
       def visible?
         true
