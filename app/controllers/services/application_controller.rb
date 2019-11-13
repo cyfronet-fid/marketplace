@@ -6,7 +6,7 @@ class Services::ApplicationController < ApplicationController
 
   layout "order"
 
-  protected
+  private
 
     def session_key
       @service.id.to_s
@@ -19,10 +19,12 @@ class Services::ApplicationController < ApplicationController
       end
     end
 
-  private
-
     def load_and_authenticate_service!
       @service = Service.friendly.find(params[:service_id])
       authorize(@service, :order?)
+    end
+
+    def save_in_session(step)
+      session[session_key] = step.project_item.attributes
     end
 end
