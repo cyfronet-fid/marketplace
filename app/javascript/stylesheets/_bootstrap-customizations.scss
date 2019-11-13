@@ -838,17 +838,26 @@ Card style
   .card-body {
     padding: 0.8rem 1rem;
 
-    .border-dark {
-      background-color: $palette-solid-30 !important;
-      border-style: solid !important;
-      border-color: $palette-solid-50 !important;
-      font-size: 0.9em;
-      padding: 2px;
-      color: $palette-black;
+    .badge {
+      font-size: 0.8em;
+      padding: 7px 14px;
+      text-transform: uppercase;
       position: absolute;
-      top: 5px;
-      right: 2px;
+      border-left: 1px solid $palette-solid-10;
+      border-bottom: 1px solid $palette-solid-10;
+      top: 0;
+      color: $palette-solid-50;
       font-weight: 400;
+      right: 0;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
+
+      &.badge-success,
+      &.badge-warning,
+      &.badge-error {
+        color: $white;
+      }
     }
 
     .card-title {
@@ -869,7 +878,7 @@ Card style
     .card-label {
       position: absolute;
       top: 0;
-      right: 0;
+      left: 0;
       font-size: 13px;
       color: $white;
       text-transform: uppercase;
