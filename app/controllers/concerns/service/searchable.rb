@@ -15,7 +15,7 @@ module Service::Searchable
              page: params[:page],
              per_page: per_page,
              order: ordering,
-             highlight: { fields: [:title], tag: "<b>" },
+             highlight: { fields: [:title, :tagline], tag: "<mark>" },
              scope_results: ->(r) { r.includes(:research_areas, :providers, :target_groups).with_attached_logo }))
   end
 
