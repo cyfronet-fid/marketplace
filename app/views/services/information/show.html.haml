@@ -1,7 +1,6 @@
 = render "layouts/order/nav", service: @service, wizard: @wizard
 
 .col-8
-  %h2.mb-4.font-weight-normal= t ("service.type.#{@offer.offer_type}")
   %p.mb-4= t("service.#{@offer.offer_type}.description_html", service_title: @service.title)
 
   .text-center
@@ -10,9 +9,8 @@
         class: "btn btn-primary mb-2", target: "_blank"
 
 = content_for :next_button do
-  = link_to t("service.next"), url_for, method: :put, class: "btn btn-primary"
+  = link_to next_title, url_for, method: :put, class: "btn btn-primary"
 
-- if policy(@service).offers_show?
+- if prev_visible_step_key
   = content_for :back_link do
-    = link_to "Back to previous step - Offers",
-      url_for([@service, prev_step_key]), class: "text-uppercase"
+    = link_to prev_title, url_for([@service, prev_visible_step_key]), class: "text-uppercase"

@@ -1,11 +1,6 @@
 = render "layouts/order/nav", service: @service, wizard: @wizard
 
-%h2.mb-4.font-weight-normal Summary
-%p.mb-4
-  Please carefully read the summary of your order.
-  %br
-  You can change anything now if you need.
-  After clicking the order button your request will be sent to service provider.
+%p.mb-4= t "service.#{@service.service_type}.order.summary.description"
 
 = render "services/summaries/technical_configuration",
          service: @service, project_item: @step
@@ -31,6 +26,4 @@
     = t("service.#{@offer_type}.order.title")
 
 = content_for :back_link do
-  = link_to "Back to previous step - configuration",
-            service_configuration_path(@service),
-            class: "text-uppercase"
+  = link_to prev_title, url_for([@service, prev_visible_step_key]), class: "text-uppercase"

@@ -15,11 +15,13 @@ class ProjectItem::Wizard
   end
 
   def next_step_key(step)
-    step_names[step_names.index(step.to_s) + 1]
+    index = step_names.index(step.to_s)
+    step_names[index + 1] if index < step_names.length - 1
   end
 
   def prev_step_key(step)
-    step_names[step_names.index(step.to_s) - 1]
+    index = step_names.index(step.to_s)
+    step_names[index - 1] if index > 0
   end
 
   def step_names
