@@ -19,3 +19,5 @@
 
     = render "services/summaries/project_browser", project_item: @step, projects: @projects, f: f
 
+    = f.input :additional_comment, as: :text, class: "form-conroll",
+      label: "Please enter additional details of your request."
