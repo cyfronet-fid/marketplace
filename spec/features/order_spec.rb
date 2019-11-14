@@ -54,13 +54,6 @@ RSpec.feature "Service ordering" do
 
       click_on "Next", match: :first
 
-      # Step 3
-      expect(page).to have_current_path(service_configuration_path(service))
-      expect(page).to have_selector(:link_or_button,
-                                    "Next", exact: true)
-
-      click_on "Next", match: :first
-
       # Step 4
       expect(page).to have_current_path(service_summary_path(service))
       expect(page).to have_selector(:link_or_button,
@@ -141,8 +134,6 @@ RSpec.feature "Service ordering" do
 
         # Information step
         click_on "Next", match: :first
-        # Configuration step
-        click_on "Next", match: :first
 
         # Project selection
         select "Services", from: "project_item_project_id"
@@ -156,8 +147,6 @@ RSpec.feature "Service ordering" do
         click_on "Access the service"
 
         # Information step
-        click_on "Next", match: :first
-        # Configuration step
         click_on "Next", match: :first
 
         # Project selection
@@ -256,12 +245,8 @@ RSpec.feature "Service ordering" do
 
       click_on "Access the service"
 
+      # Information page
       click_on "Next", match: :first
-
-      # Project selection
-      expect(page).to have_current_path(service_configuration_path(open_access_service))
-      click_on "Next", match: :first
-
 
       # Summary page
       expect(page).to have_current_path(service_summary_path(open_access_service))
@@ -287,11 +272,6 @@ RSpec.feature "Service ordering" do
 
       click_on "Access the service"
       click_on "Next", match: :first
-
-      # Project selection
-      expect(page).to have_current_path(service_configuration_path(external_service))
-      click_on "Next", match: :first
-
 
       # Summary page
       expect(page).to have_current_path(service_summary_path(external_service))
@@ -324,7 +304,6 @@ RSpec.feature "Service ordering" do
 
       click_on "Access the service"
       click_on "Next", match: :first
-      click_on "Next", match: :first
 
       click_on "Add new project"
       within("#ajax-modal") do
@@ -353,7 +332,6 @@ RSpec.feature "Service ordering" do
 
       click_on "Access the service"
       click_on "Next", match: :first
-      click_on "Next", match: :first
       click_on "Add new project"
 
       click_on "Create new project"
@@ -375,7 +353,6 @@ RSpec.feature "Service ordering" do
       visit service_path(service)
 
       click_on "Access the service"
-      click_on "Next", match: :first
       click_on "Next", match: :first
       click_on "Add new project"
       within("#ajax-modal") do
@@ -417,14 +394,12 @@ RSpec.feature "Service ordering" do
       visit service_path(service)
 
       click_on "Access the service"
-      click_on "Next", match: :first
 
-      # Step 2
-      expect(page).to_not have_text("Voucher")
-
+      # Information step
       click_on "Next", match: :first
 
       # Step 3
+      expect(page).to have_current_path(service_summary_path(service))
       expect(page).to_not have_text("Voucher")
     end
 
@@ -531,7 +506,7 @@ RSpec.feature "Service ordering" do
         click_on "Next", match: :first
       end.to change { User.count }.by(1)
 
-      expect(page).to have_current_path(service_configuration_path(service))
+      expect(page).to have_current_path(service_summary_path(service))
       expect(User.last.full_name).to eq(user.full_name)
     end
 

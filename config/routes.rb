@@ -12,10 +12,9 @@ Rails.application.routes.draw do
 
   resources :services, only: [:index, :show] do
     scope module: :services do
-      resources :offers, only: :index
-      resource :offers, only: :update
+      resource :offers, only: [:show, :update]
       resource :configuration, only: [:show, :update]
-      resource :information, only: :show
+      resource :information, only: [:show, :update]
       resource :summary, only: [:show, :create]
       resource :cancel, only: :destroy
       resource :questions, only: [:create]
