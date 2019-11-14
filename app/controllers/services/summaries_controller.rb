@@ -25,6 +25,9 @@ class Services::SummariesController < Services::ApplicationController
   end
 
   private
+    def next_title
+      I18n.t("service.#{@offer_type}.order.title")
+    end
 
     def do_create(project_item_template)
       authorize(project_item_template)
