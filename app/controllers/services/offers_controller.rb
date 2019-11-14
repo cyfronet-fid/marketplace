@@ -21,7 +21,7 @@ class Services::OffersController < Services::ApplicationController
     else
       init_step_data
       flash.now[:alert] = @step.error
-      render :index
+      render :show
     end
   end
 

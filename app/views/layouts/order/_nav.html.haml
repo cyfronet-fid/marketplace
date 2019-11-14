@@ -1,7 +1,7 @@
 %ul.nav.nav-fill.order-nav
   - state = :back
   - wizard.step_names.each do |step_name|
-    - if step.visible?
+    - if step_for(step_name).visible?
       :ruby
         state = :disabled if state == :next
         state = :next if state == :active
