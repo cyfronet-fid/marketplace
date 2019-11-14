@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Backoffice::ServicesController < Backoffice::ApplicationController
-  include Service::Filterable
   include Service::Searchable
   include Service::Categorable
   include Service::Autocomplete
@@ -15,7 +14,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     if params["service_id"].present?
       redirect_to [:backoffice, Service.find(params["service_id"])]
     end
-    @services = search_and_filter(scope)
+    @services = search(scope)
     @highlights = highlights(@services)
   end
 
