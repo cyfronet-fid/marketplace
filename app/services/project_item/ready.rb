@@ -8,14 +8,16 @@ class ProjectItem::Ready
     end
   end
 
-  def initialize(project_item)
+  def initialize(project_item, message = nil)
     @project_item = project_item
+    @message = message
   end
 
 
   def call
     ready_in_jira! &&
     update_status! &&
+    create_message &&
     notify!
   end
 
@@ -35,6 +37,7 @@ class ProjectItem::Ready
           transition = issue.transitions.build
           transition.save!("transition" => { "id" => trs.first.id })
           @project_item.update_attributes(issue_id: issue.id, issue_status: :jira_active)
+          @project_item.save
         else
           @project_item.update_attributes(issue_id: issue.id)
           @project_item.jira_errored!
@@ -63,5 +66,15 @@ class ProjectItem::Ready
     def service
       @service ||= Service.joins(offers: :project_items).
                    find_by(offers: { project_items: @project_item })
+    end
+
+    def create_message
+      if @message
+        message_temp = Message.new(author: @project_item.user,
+                                   message: @message,
+                                   messageable: @project_item)
+        Message::Create.new(message_temp).call
+      end
+      true
     end
 end

@@ -27,7 +27,7 @@ RSpec.describe ProjectItem::Create do
   it "triggers register project_item in external system" do
     project_item = described_class.new(project_item_template).call
 
-    expect(ProjectItem::RegisterJob).to have_been_enqueued.with(project_item)
+    expect(ProjectItem::RegisterJob).to have_been_enqueued.with(project_item, nil)
   end
 
   context "when open_access service has been added to Project" do
