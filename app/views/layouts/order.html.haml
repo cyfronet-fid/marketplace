@@ -17,14 +17,15 @@
       %h1.font-weight-bold.mt-4
         = @service.title
       %p.summary= @service.tagline
+      = render "layouts/order/nav", service: @service, wizard: @wizard
       = yield
       %hr.bottom-hr.mt-5.mb-4
       .navbar.pr-0.pl-0
         .text-left.flex-grow-1
-          = yield :back_link
+          - if prev_visible_step_key
+            = link_to prev_title, url_for([@service, prev_visible_step_key]), class: "text-uppercase"
         .ml-3.d-inline
-          = yield :next_button
+          %button.btn.btn-primary{ form: "order-form", type: "submit" }= next_title
 
   = render "layouts/footer", root_categories: @root_categories
   = render "layouts/modal"
-

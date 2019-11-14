@@ -170,10 +170,10 @@ RSpec.feature "Service ordering" do
         click_on "Access the service"
         click_on "Next", match: :first
 
-        # Project selection
+        # Configuration step
         fill_in "project_item_property_values_id", with: "test"
 
-        click_on "Next", match: :first
+        click_on "Next - Final details", match: :first
         select "Services", from: "project_item_project_id"
 
         expect do
@@ -186,7 +186,7 @@ RSpec.feature "Service ordering" do
         click_on "Next", match: :first
 
         fill_in "project_item_property_values_id", with: "test"
-        click_on "Next", match: :first
+        click_on "Next - Final details", match: :first
         select "Services", from: "project_item_project_id"
 
         expect do

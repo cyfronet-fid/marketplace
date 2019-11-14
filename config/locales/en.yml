@@ -57,8 +57,6 @@ en:
       order:
         title: Add to a project
         cancel: Quit
-        configuration:
-          title: Add to a project
         summary:
           description: |
             Please select a Project and review the summary below. Once added to
@@ -105,7 +103,6 @@ en:
         title: Add to a project
         cancel: Quit
         configuration:
-          title: Add to a project
           description: |
             You can organize your services in projects.
             Add this service to a specific project or create a new one.

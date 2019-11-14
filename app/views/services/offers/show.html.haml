@@ -1,5 +1,3 @@
-= render "layouts/order/nav", service: @service, wizard: @wizard
-
 %p.mb-4
   To gain the access to the service,
   please select an offer that suits your needs best.
@@ -10,6 +8,3 @@
   .card-deck.row
     = render partial: "services/offers/offer",
       collection: @offers, as: :offer, locals: { f: f, project_item: @step }
-
-= content_for :next_button do
-  %button.btn.btn-primary{ form: "order-form", type: "submit" }= next_title
