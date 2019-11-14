@@ -38,13 +38,14 @@ en:
   service:
     order:
       title: Access the service
+    offer_select: Select an offer
     next: Next
     offers:
       title: Offer selection
     information:
-      title: Information
+      title: Access instructions
     summary:
-      title: Summary
+      title: Final details
     type:
       open_access:
         Open Access
@@ -58,7 +59,12 @@ en:
         cancel: Quit
         configuration:
           title: Add to a project
-      link: Order at provider website
+        summary:
+          description: |
+            Please select a Project and review the summary below. Once added to
+            the project, your service ordering page will be accessible via URL
+            at your Project space.
+      link: Order externally (external link)
       description_html:
         "%{service_title} is accessible by external ordering. You can either directly
         <b>'Go to the service'</b>, where EOSC Portal will redirect you to the website
@@ -75,16 +81,19 @@ en:
         in project’s dashboard.</br>
         To find out more about Projects in EOSC Marketplace, please refer to our FAQ ( link to FAQ)"
       order:
-        title: Order
+        title: Send access request
         cancel: Cancel order and quit
         configuration:
-          title: Service configuration
+          title: Technical configuration
           description: |
-            We need more information about your request.
-            We will be able to process your request quicker
-            if the form is filled with as much detail as possible.
+            Please specify technical parameters. It is necessary to handle your request.
+        summary:
+          description: |
+            Please select a Project and review the summary below. Once you
+            submit the order, your request will be sent to a service provider.
+            The order status will be visible at your Project space.
     open_access:
-      link: Go to service
+      link: Go to service (external link)
       description_html:
         "%{service_title} is open to everyone, any user can reach the service. You can either directly
         <b>'Go to the service'</b>, where EOSC Portal will redirect you to the service website or what is
@@ -100,6 +109,10 @@ en:
           description: |
             You can organize your services in projects.
             Add this service to a specific project or create a new one.
+        summary:
+          description: |
+            Please select a Project and review the summary below. Once added to
+            the project, your service will be accessible via URL at your Project space.
   project:
     mail:
       new_message: |
