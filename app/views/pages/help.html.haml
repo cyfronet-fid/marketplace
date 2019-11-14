@@ -1,8 +1,7 @@
 .container
   %h1 FAQs
-
-  %h2 About EOSC marketplace
-  #help-about.accordion
+  %h3.subsection About EOSC marketplace
+  #help-about.accordion.faq-list
     = render "pages/help_card", parent: "help-about", name: "what",
       title: "What is the EOSC marketplace?" do
       EOSC marketplace provides a platform which enables different kinds of users,
