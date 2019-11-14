@@ -4,8 +4,14 @@ module Service::Categorable
   extend ActiveSupport::Concern
 
   included do
-    include Service::Searchable
     before_action :init_categories_tree, only: :index
+  end
+
+  def category_counters(scope, filters)
+    services = search_for_categories(scope, filters)
+    counters = services.aggregations["categories"]["categories"]["buckets"].
+        inject({}) { |h, e| h[e["key"]] = e["doc_count"]; h }
+    counters.tap { |c| c[nil] = services.aggregations["categories"]["doc_count"] }
   end
 
   private
@@ -42,6 +48,6 @@ module Service::Categorable
     end
 
     def counters
-      @counters ||= category_counters(scope, filters)
+      @counters ||= category_counters(scope, all_filters)
     end
 end

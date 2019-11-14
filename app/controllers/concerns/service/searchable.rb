@@ -7,9 +7,13 @@ module Service::Searchable
     include Paginable
     include Service::Sortable
     include Service::Categorable
+    before_action only: :index do
+      @filters = visible_filters
+      @active_filters = active_filters
+    end
   end
 
-  def search(scope, filters)
+  def search(scope, filters = all_filters)
     Service.search(query, common_params.
         merge(where: filter_constr(filters, scope_constr(scope, category_constr)),
              page: params[:page],
@@ -44,13 +48,6 @@ module Service::Searchable
     end
   end
 
-  def category_counters(scope, filters)
-    services = search_for_categories(scope, filters)
-    counters = services.aggregations["categories"]["categories"]["buckets"].
-        inject({}) { |h, e| h[e["key"]] = e["doc_count"]; h }
-    counters.tap { |c| c[nil] = services.aggregations["categories"]["doc_count"] }
-  end
-
   private
 
     def query_present?
@@ -83,5 +80,31 @@ module Service::Searchable
 
     def highlights(from_search)
       (from_search.try(:with_highlights) || []).map { |s, h| [s.id, h] }.to_h
+    end
+
+    def visible_filters
+      all_filters.select(&:visible?)
+    end
+
+    def all_filters
+      @all_filters ||= filter_classes.
+          map { |f| f.new(params: params) }.
+          tap { |all| all.each { |f| f.counters = filter_counters(scope, all, f) } }
+    end
+
+    def active_filters
+      @active_filters ||= all_filters.flat_map { |f| f.active_filters }
+    end
+
+    def filter_classes
+      [
+          Filter::ResearchArea,
+          Filter::Provider,
+          Filter::TargetGroup,
+          Filter::Platform,
+          Filter::Rating,
+          Filter::Location,
+          Filter::Tag
+      ]
     end
 end
