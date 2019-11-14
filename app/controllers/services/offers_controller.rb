@@ -3,32 +3,32 @@
 class Services::OffersController < Services::ApplicationController
   skip_before_action :authenticate_user!
 
-  def index
+  def show
     init_step_data
 
-    if @service.offers_count == 1
+    unless step.visible?
       params[:project_item] = { offer_id: @offers.first.iid }
       update
     end
   end
 
   def update
-    @step = step_class.new(step_params)
+    @step = step(step_params)
 
     if @step.valid?
       save_in_session(@step)
-      redirect_to service_information_path(@service)
+      redirect_to [@service, next_step_key]
     else
       init_step_data
       flash.now[:alert] = @step.error
-      render :index
+      render :show
     end
   end
 
   private
 
-    def step_class
-      ProjectItem::Wizard::OfferSelectionStep
+    def step_key
+      :offers
     end
 
     def step_params
@@ -44,6 +44,6 @@ class Services::OffersController < Services::ApplicationController
 
     def init_step_data
       @offers = @service.offers.reject { |o| o.draft? }
-      @step = step_class.new(session[session_key])
+      @step = step(session[session_key])
     end
 end

@@ -1,45 +1,97 @@
 # frozen_string_literal: true
 
-module ProjectItem::Wizard
-  class Base
-    include ActiveModel::Model
-    attr_accessor :project_item
+class ProjectItem::Wizard
+  STEPS = %w(offers information configuration summary)
 
-    delegate(*::ProjectItem.attribute_names.map { |a| [a, "#{a}="] }.flatten,
-             to: :project_item)
-
-    delegate :service, :offer, :project, to: :project_item
-
-    def initialize(project_item_attributes)
-      @project_item = ::ProjectItem.new(project_item_attributes)
-    end
-
-    def model_name
-      project_item.model_name
-    end
+  def initialize(service)
+    @service = service
   end
 
-  class OfferSelectionStep < Base
-    validates :offer, presence: true
+  def step(step, attrs = {})
+    raise InvalidStep unless step.to_s.in?(step_names)
 
-    def error
-      "Please select one of the offer"
+    "ProjectItem::Wizard::#{step.to_s.camelize}Step"
+      .constantize.new(@service, attrs)
+  end
+
+  def next_step_key(step)
+    step_names[step_names.index(step.to_s) + 1]
+  end
+
+  def prev_step_key(step)
+    step_names[step_names.index(step.to_s) - 1]
+  end
+
+  def step_names
+    STEPS
+  end
+
+  class InvalidStep < StandardError; end
+
+  private
+
+    class Base
+      include ActiveModel::Model
+      attr_accessor :project_item, :service
+
+      delegate(*::ProjectItem.attribute_names.map { |a| [a, "#{a}="] }.flatten,
+              to: :project_item)
+
+      delegate :offer, :project, to: :project_item
+
+      def initialize(service, project_item_attributes)
+        @service = service
+        @project_item = ::ProjectItem.new(project_item_attributes)
+      end
+
+      def model_name
+        project_item.model_name
+      end
     end
-  end
 
-  class ConfigurationStep < OfferSelectionStep
-    include ProjectItem::Customization
-    include ProjectItem::VoucherValidation
+    class OffersStep < Base
+      validates :offer, presence: true
 
-    delegate :created?, to: :project_item
+      def visible?
+        service.offers_count > 1
+      end
 
-    def error
-      "Please correct errors presented below"
+      def error
+        "Please select one of the offer"
+      end
     end
-  end
 
-  class SummaryStep < ConfigurationStep
-    include ProjectItem::ProjectValidation
-    delegate :properties?, to: :project_item
-  end
+    class InformationStep < OffersStep
+      def visible?
+        true
+      end
+    end
+
+    class ConfigurationStep < OffersStep
+      include ProjectItem::Customization
+      include ProjectItem::VoucherValidation
+
+      delegate :created?, to: :project_item
+
+      def visible?
+        offer.nil? || project_item.property_values.count.positive? || voucherable?
+      end
+
+      def error
+        "Please correct errors presented below"
+      end
+    end
+
+    class SummaryStep < ConfigurationStep
+      include ProjectItem::ProjectValidation
+      delegate :properties?, to: :project_item
+
+      def error
+        "Please select the project where service will be added"
+      end
+
+      def visible?
+        true
+      end
+    end
 end

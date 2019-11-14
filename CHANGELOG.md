@@ -24,6 +24,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service ordering summary step unification (@goreck888)
 - Anonymous user can enter information step (@martaswiatkowska)
 - Project selection was moved to last service order step (@mkasztelnik)
+- Order configuration step is shown when offer is voucherable or has properties (@mkasztelnik)
 
 ### Deprecated
 

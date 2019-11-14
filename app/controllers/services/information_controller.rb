@@ -5,6 +5,30 @@ class Services::InformationController < Services::ApplicationController
   before_action :ensure_in_session!
 
   def show
-    @offer = Offer.find(session[session_key]["offer_id"])
+    if prev_step.valid?
+      @step = step(saved_state)
+      @offer = @step.offer
+
+      unless @step.visible?
+        redirect_to url_for([@service, next_step_key])
+      end
+    else
+      redirect_to url_for([@service, pref_step_key]), alert: prev_step.error
+    end
   end
+
+  def update
+    if step.valid?
+      redirect_to url_for([@service, next_step_key])
+    else
+      flash.now[:alert] = @step.error
+      render :show
+    end
+  end
+
+  private
+
+    def step_key
+      :information
+    end
 end

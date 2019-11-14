@@ -39,8 +39,12 @@ en:
     order:
       title: Access the service
     next: Next
+    offers:
+      title: Offer selection
     information:
       title: Information
+    summary:
+      title: Summary
     type:
       open_access:
         Open Access type

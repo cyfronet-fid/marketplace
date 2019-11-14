@@ -1,4 +1,4 @@
-= render "layouts/order/nav", service: @service, step: 3
+= render "layouts/order/nav", service: @service, wizard: @wizard
 
 %h2.mb-4.font-weight-normal= t "service.#{@service.service_type}.order.configuration.title"
 %p.mb-4= t "service.#{@service.service_type}.order.configuration.description"
@@ -19,5 +19,4 @@
 
 = content_for :back_link do
   = link_to "Back to previous step - service information",
-            service_information_path(@service),
-            class: "text-uppercase"
+    url_for([@service, prev_step_key]), class: "text-uppercase"
