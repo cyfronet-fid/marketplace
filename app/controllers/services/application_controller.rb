@@ -7,7 +7,7 @@ class Services::ApplicationController < ApplicationController
   layout "order"
 
   attr_reader :wizard
-  helper_method :step
+  helper_method :step_for
   helper_method :step_key
   helper_method :next_step_key
   helper_method :prev_step_key
@@ -40,6 +40,10 @@ class Services::ApplicationController < ApplicationController
     end
 
     def step(attrs = saved_state)
+      wizard.step(step_key, attrs)
+    end
+
+    def step_for(step_key, attrs = saved_state)
       wizard.step(step_key, attrs)
     end
 
