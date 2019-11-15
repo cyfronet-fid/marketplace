@@ -2,8 +2,8 @@
 #help-searching.accordion.faq-list
   = render "pages/help_card", parent: "help-searching", name: "how",
     title: "How can I search for services?" do
+    %p The user can search for services in the following ways:
     %ul
-      The user can search for services in the following ways:
       %li
         browse category tree, filter all services by category or subcategories
       %li
@@ -13,12 +13,13 @@
         find services by its name, by target group, by selecting service
         properties specific to the category, by quality tags
 
-    %ul
+    %p
       After a customer has identified a suitable working service,
       he/she might be tempted to find another similar one to further explore
       the EOSC and make comparisons. This use case can be supported with a
       tag mechanism allowing to identify similar services. Tags can be
       triggered in two ways:
+    %ul
       %li
         inserting a tag into the search bar;
       %li
@@ -36,9 +37,10 @@
       their data processing needs, exploiting all the potential of the EOSC
       service catalogue.
 
-    %ol
+    %p
       EOSC services are classified, with respect to the service
       interoperability, in the following three categories:
+    %ol
       %li
         %i Not interoperable services:
         inputs and outputs from them cannot create a logical workflow - trying
