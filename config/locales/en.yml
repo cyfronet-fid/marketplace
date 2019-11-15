@@ -47,11 +47,11 @@ en:
       title: Summary
     type:
       open_access:
-        Open Access type
+        Open Access
       orderable:
-        Orderable type
+        Internal ordering
       external:
-        External type
+        External ordering
     external:
       order:
         title: Add to a project

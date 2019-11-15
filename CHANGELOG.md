@@ -14,6 +14,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Project_new_message mails content (@martaswiatkowska)
 - Information step to ordering path (@martaswiatkowska)
 - Use service type as default order type while seeding db (@mkasztelnik)
+- Offer type to the project and offer selection views (@goreck888, @jarekzet)
 
 ### Changed
 - Internal server error message (@goreck888)
