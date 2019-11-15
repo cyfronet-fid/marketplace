@@ -1,4 +1,4 @@
-%p.mb-4= t("service.#{@offer.offer_type}.description_html", service_title: @service.title)
+%p.mb-4= t("service.#{@offer.offer_type}.description_html", service_title: wizard_title)
 
 .text-center
   - unless @offer.orderable? && !@service.connected_url?

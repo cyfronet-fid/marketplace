@@ -92,7 +92,7 @@ en:
             submit the order, your request will be sent to a service provider.
             The order status will be visible at your Project space.
     open_access:
-      link: Go to service
+      link: Go to the service
       description_html:
         "%{service_title} is open to everyone, any user can reach the service. You can either directly
         <b>'Go to the service'</b>, where EOSC Portal will redirect you to the service website or what is
