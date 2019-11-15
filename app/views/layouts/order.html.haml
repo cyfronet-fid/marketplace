@@ -11,11 +11,11 @@
             service_cancel_path(@service),
             method: :delete, class: "text-uppercase align-middle"
           .ml-3.d-inline
-            = yield :next_button
+            %button.btn.btn-primary{ form: "order-form", type: "submit" }= next_title
       = render "layouts/flash"
     %main.container.order-container
       %h1.font-weight-bold.mt-4
-        = @service.title
+        = wizard_title
       %p.summary= @service.tagline
       = render "layouts/order/nav", service: @service, wizard: @wizard
       = yield
