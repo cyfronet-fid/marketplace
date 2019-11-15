@@ -69,12 +69,12 @@ class Services::ApplicationController < ApplicationController
     end
 
     def find_prev_visible_step_key(step_key)
-      next_step_key = wizard.prev_step_key(step_key)
+      prev_step_key = wizard.prev_step_key(step_key)
 
-      if next_step_key == nil || step_for(next_step_key).visible?
-        next_step_key
+      if prev_step_key == nil || step_for(prev_step_key).visible?
+        prev_step_key
       else
-        find_prev_visible_step_key(next_step_key)
+        find_prev_visible_step_key(prev_step_key)
       end
     end
 
@@ -82,8 +82,8 @@ class Services::ApplicationController < ApplicationController
       wizard.prev_step_key(step_key)
     end
 
-    def prev_step
-      wizard.step(wizard.prev_step_key(step_key), saved_state)
+    def prev_visible_step
+      wizard.step(prev_visible_step_key, saved_state)
     end
 
     def step_key

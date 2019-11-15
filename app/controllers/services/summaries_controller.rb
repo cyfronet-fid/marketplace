@@ -4,11 +4,11 @@ class Services::SummariesController < Services::ApplicationController
   before_action :ensure_in_session!
 
   def show
-    if prev_step.valid?
+    if prev_visible_step.valid?
       @step = step(session[session_key])
       setup_show_variables!
     else
-      redirect_to url_for([@service, prev_step_key]), alert: prev_step.error
+      redirect_to url_for([@service, prev_visible_step_key]), alert: prev_visible_step.error
     end
   end
 
@@ -40,7 +40,7 @@ class Services::SummariesController < Services::ApplicationController
         redirect_to project_service_path(@project_item.project, @project_item),
                     notice: "Service ordered sucessfully"
       else
-        redirect_to url_for([@service, prev_step_key]),
+        redirect_to url_for([@service, prev_visible_step_key]),
                     alert: "Service request configuration is invalid"
       end
     end
