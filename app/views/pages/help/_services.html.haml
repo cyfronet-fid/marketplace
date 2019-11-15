@@ -1,6 +1,234 @@
 %h3.subsection Services in the Marketplace
 #help-services.accordion.faq-list
-  = render "pages/help_card", parent: "help-services", name: "changeme",
-    title: "Template" do
-    Template
+  = render "pages/help_card", parent: "help-services", name: "what-is",
+    title: 'What is "Service" in marketplace?' do
+    Service is a way to provide value to customers through bringing about
+    results that they want to achieve. Services are in general related
+    with all kinds of products, because they “manage” them and requires
+    instantiation by a Service Provider.
 
+
+  = render "pages/help_card", parent: "help-services", name: "what-kind",
+    title: "What kind of services the EOSC marketplace has?" do
+    %ul.list-unstyled
+      %li
+        %strong For Sharing & Discovery:
+        Services to search and discover data, publications, tools and other
+        resources useful for your research
+      %li
+        %strong For Processing & Analysis:
+        Software, platforms, tools, analytics and end-user applications
+        offered-as-a-service or deployed-on-demand also specialised by
+        discipline or research domain
+      %li
+        %strong For Compute:
+        Services to access virtual machines, containers and job processing
+        to support your general computing needs
+      %li
+        %strong For Storage:
+        Service for storing your data 
+      %li
+        %strong For Data Management:
+        Service to manage your data
+      %li
+        %strong For Networking:
+        Services for Ultra-fast connectivity and ubiquitous access to
+        eInfrastructures resources 
+      %li
+        %strong For Training & Support:
+        Service that helps you to grow your research knowledge and skills with
+        specialised training or seek dedicated professional support for a wide
+        range of scientific disciplines and research activities
+      %li
+        %strong For Security & Operations:
+        Services that helps to integrate identity management, authorisation to
+        comply with the policies and regulations or access services to support
+        the operations of your infrastructures and services
+
+
+  = render "pages/help_card", parent: "help-services", name: "service-types",
+    title: "What type of service accesses do we have?" do
+    We have 3 types of services access:  Open access, Catalogue type, Normal type.
+
+    %ul.list-unstyled
+      %li
+        %strong Open access -
+        services is open to everyone, no login required. The user is
+        immediately redirected to the services and no orders are created.
+        The access ‘requests’ are tracked for accounting aim. 
+      %li
+        %strong External ordering -
+        service orders are handled externally, but access requests coming
+        from EOSC-hub can be tracked and reflected in the Management Back
+        Office. Access to the service can be granted automatically after
+        sending the request. 
+      %li
+        %strong Internal ordering -
+        identity of a user is required (user has to be logged in in the EOSC
+        Portal to get access to the service). Service requires submitting a
+        service request with filled in information relevant from provider’s
+        perspective. Access has to be granted manually after analysis of
+        the request.
+
+
+  = render "pages/help_card", parent: "help-services", name: "what-do-we-have",
+    title: "What type of service accesses do we have ?" do
+    We have 3 types of services access:
+    %i Open access, Catalogue type, Normal type.
+
+
+    %ul.list-unstyled
+      %li
+        %strong Open access -
+        services is open to everyone, no login required. The user is
+        immediately redirected to the services and no orders are created.
+        The access ‘requests’ are tracked for accounting aim. 
+      %li
+        %strong External ordering -
+        service orders are handled externally, but access requests coming
+        from EOSC-hub can be tracked and reflected in the Management Back
+        Office. Access to the service can be granted automatically after
+        sending the request.
+      %li
+        %strong Internal ordering - identity of a user is required (user has
+        to be logged in in the EOSC Portal to get access to the service).
+        Service requires submitting a service request with filled in
+        information relevant from provider’s perspective. Access has to be
+        granted manually after analysis of the request.
+
+
+  = render "pages/help_card", parent: "help-services", name: "trl",
+    title: "What does Technology Readiness Level mean?" do
+    Technology Readiness Level (TRL) is a means of systematically gauging the
+    maturity of a technology.
+
+    It is used to describe the maturity of underlying technologies rather than
+    the delivery of them in the form of a service to end users. In addition
+    to this, an end service may be the union of multiple subcomponents, each
+    based on various technologies with differing levels of maturity.
+
+
+  = render "pages/help_card", parent: "help-services", name: "trl-differences",
+    title: "What is the difference between Service Maturity Classification?" do
+    Resources and services onboarded in the initial phase of EOSC-hub are
+    expected to have a minimum Technology Readiness Level of 7.
+
+    %h5.mt-3 TRL 7 - Beta
+    %ul
+      EC definition: "System prototype demonstration in operational environment"
+      %li
+        Service has passed through development and is an advanced stage of
+        pre-production: the software is stable, reliable and has been
+        deployed in an operational environment   
+      %li
+        Functionality as required by the target users is documented,
+        understood, validated with target sample users and accepted by them.
+        Internal documentation exists regarding preliminary validation tests.
+      %li
+        An assessment has been made of the required load of the system once
+        the transition into production is complete and a plan has been made
+        to service this load. This assessment has been documented.
+      %li
+        An SLA is optional.
+
+    %h5.mt-3 TRL 8 - Production
+    %ul
+      EC description: "System complete and qualified"
+      %li
+        There are users who are making real use of the service and rely on it
+        for their work.
+      %li
+        Service documentation for end-users exists and is made available. 
+      %li
+        An acceptable use policy/terms of use/SLA is in place
+      %li
+        Evidence that the service is being delivered in a way consistent with
+        user expectations
+      %li
+        Provision is made for user support, with response to incident and
+        problem management
+
+    %h5.mt-3 TRL 9 - Production
+    %ul
+      EC description: "Actual system proven in operational environment"
+      %li
+        All requirements of TRL 8 are met.
+      %li
+        Customer feedback is gathered and documented. The service has been in
+        a production state and relied upon by users for at least 1 year and
+        evidence is provided to show this.
+      %li
+        There are quantitative outputs as a direct result of the service usage.
+
+  = render "pages/help_card", parent: "help-services", name: "why-level-7",
+    title: "Why do I see services only from Technology Readiness Level 7 and above?" do
+    Resources and services onboarded in the initial phase of EOSC-hub are
+    expected to have a minimum Technology Readiness Level of 7 . At TRL 7
+    we are able to list  services, but TRL 8 or 9 will be needed in order to
+    order through the portal. This is to ensure a c trusted implementation
+    base of technical solutions and service offerings through quality of
+    standards to evolve an open, mature end-to-end data lifecycle workflow.
+    For lower TRL services we may offer some support to increase maturity
+    of services.
+
+
+  = render "pages/help_card", parent: "help-services", name: "service-terms",
+    title: "What does the service terms of use mean?" do
+    Service terms of use is a link describing the rules, service conditions and
+    usage policy which one must agree to abide by in order to use the service.
+
+    %ul
+      %li
+        Services shall be delivered to a defined quality, sufficient to
+        satisfy requirements identified from business processes.
+      %li
+        A clear service portfolio shall be developed and maintained as a
+        basis for all service delivery and service management activities.
+      %li
+        For all services, a corporate level SLA and / or specific SLAs,
+        which have been agreed with relevant stakeholders, shall be in place.
+
+
+  = render "pages/help_card", parent: "help-services", name: "accept-tos",
+    title: "Do i need to accept the terms of use conditions for a service?" do
+    Service terms of use is a link describing the rules, service conditions
+    and usage policy which one must agree to abide by in order to use
+    the service.
+
+
+  = render "pages/help_card", parent: "help-services", name: "opinion",
+    title: "How can i post an opinion about the service? Or How can i rate the service?*" do
+    %ul
+      You should receive an email asking to post an opinion about the service.
+      You will need to rate the service based on two questions : 
+      %li
+        ordering via marketplace:
+        %i about the service itself and about the order process or
+      %li
+        open access services / external oderging:
+        %i
+          about the service itself and about the usage of the project
+          functionality - in case your service has been added to the project 
+
+    You can also leave your comment about the service. Your opinion cannot be
+    commented on by another user. The below rate will be shown on the main
+    page of the service. 
+
+
+  = render "pages/help_card", parent: "help-services", name: "issue-contact",
+    title: "There is an issue with the service functionality. Whom should I contact?" do
+    %p
+      If a service is not operational, so the provider no longer responds,
+      in this case the hub operator needs to be notified in order to
+      suspend/remove the service.
+
+    %p
+      If a service contains material which is not permitted, e.g. copied
+      images or a service which is 'stolen' and the actual owner wishes to
+      report it, in this case the hub operator needs to be notified in order
+      to suspend/remove the service.
+
+    %p
+      If a service has a security breach which might impact the Marketplace
+      and the Portal,in this case the hub operator needs to be notified in
+      order to suspend/remove the service.
