@@ -5,7 +5,7 @@ class Services::InformationController < Services::ApplicationController
   before_action :ensure_in_session!
 
   def show
-    if prev_step.valid?
+    if !prev_visible_step_key || prev_visible_step.valid?
       @step = step(saved_state)
       @offer = @step.offer
 
@@ -13,7 +13,7 @@ class Services::InformationController < Services::ApplicationController
         redirect_to url_for([@service, next_step_key])
       end
     else
-      redirect_to url_for([@service, pref_step_key]), alert: prev_step.error
+      redirect_to url_for([@service, prev_visible_step_key]), alert: prev_visible_step.error
     end
   end
 
