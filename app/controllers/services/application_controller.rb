@@ -96,7 +96,7 @@ class Services::ApplicationController < ApplicationController
     end
 
     def next_title
-      if next_visible_step_key == "summary"
+      if next_visible_step_key == wizard.step_names.last
         "#{I18n.t("service.next")} - #{step_title(next_visible_step_key)}"
       else
         I18n.t("service.next")
