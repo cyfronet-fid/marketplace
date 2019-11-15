@@ -15,8 +15,8 @@
 
   = render "pages/help_card", parent: "help-ordering", name: "who",
     title: "Who can set up a project?" do
+    %p You can create a project as:
     %ul
-      You can create a project as:
       %li
         Single user as your own academic research,
       %li
@@ -34,8 +34,8 @@
       orders, get all relevant information about the service access when
       the access is granted and contact the EOSC support if necessary. 
 
+    %p To create a project:
     %ol
-      To create a project:
       %li
         Go to a Tab >
         %strong My Projects.
@@ -69,9 +69,8 @@
       created only for the project that has been created by a mistake. If you
       want to adjust an information in the project, you can use the Edit
       functionality.
-
+    %p To DELETE a project's details:
     %ol
-      To DELETE a project's details:
       %li
         Open the project you want to change.
       %li
@@ -109,10 +108,11 @@
       Note that when you're copying schemes, any change to the existing scheme
       will not affect all the projects using that scheme.
 
-    %ol
+    %p
       To
       %strong DUPLICATE
       a project's details:
+    %ol
       %li
         Open the project you want to change.
       %li
@@ -136,8 +136,8 @@
       archivization will be active. If you created a project by mistake,
       you will need to use the functionality : Delete the project.
 
+    %p To Archive a project's details:
     %ol
-      To Archive a project's details:
       %li
         Open the project you want to change.
       %li
@@ -154,12 +154,13 @@
     Catalogue and Marketplace.
 
     %h5.mt-3 No ordering
-    %ul
+    %p
       The service is advertised in the Marketplace, but there is no
       integration with the EOSC-hub service order management system.
       When a customer selects one of these kinds of services,
       he/she should be directly redirected to the service (in a new browser
       window) without the need of any further actions.
+    %ul
       %li
         Such services are open to everyone, no login required.
       %li
@@ -167,10 +168,11 @@
         to have a history.
 
     %h5.mt-3 Orders to be delegated
-    %ul
+    %p
       This scenario applies to all services of service providers that decided
       to allow ordering via the EOSC-hub Marketplace but to use their own
       tools to manage them.
+    %ul
       %li
         The user can order the service following the EOSC-hub marketplace
         workflow without the need of following customer procedures
@@ -179,10 +181,11 @@
         SLA from the EOSC-hub Marketplace
 
     %h5.mt-3 Orders to be processed
-    %ul
+    %p
       This scenario applies to all services of service providers that decided
       to adopt the EOSC-hub service order mgmt tool to process orders related
       to its service.
+    %ul
       %li
         The user can order the service following the EOSC-hub marketplace
         workflow without the need of following customer procedure.
@@ -193,8 +196,8 @@
 
   = render "pages/help_card", parent: "help-ordering", name: "add-to-project",
     title: "How can I add the selected service to my project?" do
+    %p To Order a Service to the Project:
     %ol
-      To Order a Service to the Project:
       %li
         Open the project.
       %li
@@ -218,8 +221,10 @@
 
   = render "pages/help_card", parent: "help-ordering", name: "order-status",
     title: "What is the difference between the service order statuses?" do
+    %p
+      Order has many attributes but most importantly - it has a life cycle.
+      Order points in its life cycle relevant to the user:
     %ul.list-unstyled
-      Order has many attributes but most importantly - it has a life cycle. Order points in its life cycle relevant to the user:
       %li
         %i REGISTERED -
         Your service request was registered and shared with customer service team 
