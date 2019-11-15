@@ -64,7 +64,7 @@ en:
             Please select a Project and review the summary below. Once added to
             the project, your service ordering page will be accessible via URL
             at your Project space.
-      link: Order externally (external link)
+      link: Order externally
       description_html:
         "%{service_title} is accessible by external ordering. You can either directly
         <b>'Go to the service'</b>, where EOSC Portal will redirect you to the website
@@ -92,7 +92,7 @@ en:
             submit the order, your request will be sent to a service provider.
             The order status will be visible at your Project space.
     open_access:
-      link: Go to service (external link)
+      link: Go to service
       description_html:
         "%{service_title} is open to everyone, any user can reach the service. You can either directly
         <b>'Go to the service'</b>, where EOSC Portal will redirect you to the service website or what is

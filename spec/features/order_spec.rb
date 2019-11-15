@@ -472,7 +472,6 @@ RSpec.feature "Service ordering" do
 
       click_on "Access the service"
 
-      expect(page).to have_text("Open Access")
       expect(page).to have_link("Go to service")
     end
   end
