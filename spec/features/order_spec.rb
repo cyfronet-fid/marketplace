@@ -472,7 +472,7 @@ RSpec.feature "Service ordering" do
 
       click_on "Access the service"
 
-      expect(page).to have_link("Go to service")
+      expect(page).to have_link("Go to the service")
     end
   end
 
