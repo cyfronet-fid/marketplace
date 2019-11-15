@@ -7,6 +7,7 @@ class Services::ApplicationController < ApplicationController
   layout "order"
 
   attr_reader :wizard
+  helper_method :wizard_title
   helper_method :step_for
   helper_method :step_key, :prev_visible_step_key
   helper_method :step_title, :prev_title, :next_title
@@ -104,5 +105,13 @@ class Services::ApplicationController < ApplicationController
 
     def prev_title
       "Back to previous step - #{step_title(prev_visible_step_key)}"
+    end
+
+    def wizard_title
+      if step.offer
+        "#{@service.title} - #{step.offer.name}"
+      else
+        @service.title
+      end
     end
 end
