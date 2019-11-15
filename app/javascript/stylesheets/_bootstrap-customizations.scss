@@ -471,6 +471,14 @@ textarea:-ms-input-placeholder { /* IE 10+ */
 
   .card-body {
     padding: 1.3rem 2rem;
+
+    ul {
+      padding: 0 0 0 20px;
+
+      li {
+        list-style: square;
+      }
+    }
   }
 
   .collapse,
