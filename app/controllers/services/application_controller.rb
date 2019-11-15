@@ -91,8 +91,7 @@ class Services::ApplicationController < ApplicationController
     end
 
     def step_title(step_name = step_key)
-      I18n.t("service.#{@service.service_type}.order.#{step_name}.title",
-             default: "service.#{step_name}.title".to_sym)
+      I18n.t("service.#{step_name}.title")
     end
 
     def next_title

@@ -44,6 +44,8 @@ en:
       title: Offer selection
     information:
       title: Access instructions
+    configuration:
+      title: Technical configuration
     summary:
       title: Final details
     type:
@@ -82,7 +84,6 @@ en:
         title: Send access request
         cancel: Cancel order and quit
         configuration:
-          title: Technical configuration
           description: |
             Please specify technical parameters. It is necessary to handle your request.
         summary:
