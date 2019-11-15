@@ -101,11 +101,12 @@ en:
         You can either directly use the service by clicking on the button
         <strong>Go to the service</strong> , where EOSC Portal will redirect
         you to the service website or what is highly recommended to add the
-        service to your Project by going to Next steps. Project option helps
-        you to organise your services and orders into logical blocks related
-        to your use case, gain EOSC experts support and easily access the
-        selected service.</p><p> To find out more about Projects in EOSC
-        Marketplace, please refer to our FAQ. ( please link FAQ page here)<p>
+        service to your <strong>Project</strong> by going to Next steps.
+        Project option helps you to organise your services and orders into
+        logical blocks related to your use case, gain EOSC experts support
+        and easily access the selected service.</p><p> To find out more about
+        Projects in EOSC Marketplace, please refer to our FAQ. (please link
+        FAQ page here)<p>
       order:
         title: Add to a project
         cancel: Quit
