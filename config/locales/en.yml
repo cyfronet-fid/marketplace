@@ -74,7 +74,7 @@ en:
         organise your services and orders into logical blocks related to your
         use case, gain EOSC experts support and easily access the selected
         service.</p><p>To find out more about Projects in EOSC Marketplace,
-        please refer to our FAQ. ( please link FAQ page here)</p>
+        please refer to our <a href="%{faq_url}">FAQ</a>.</p>
     orderable:
       description_html: |
         <p>%{service_title} can be ordered via EOSC marketplace <b>free of charge</b>.
@@ -82,7 +82,7 @@ en:
         (provided in the details of the underpinned project) entitles you to use it.
         You will be notified by email about the service request status changes or can be tracked
         in project’s dashboard.</p><p>To find out more about Projects in EOSC
-        Marketplace, please refer to our FAQ ( link to FAQ)</p>
+        Marketplace, please refer to our <a href="%{faq_url}">FAQ</a>.</p>
       order:
         title: Send access request
         cancel: Cancel order and quit
@@ -105,8 +105,8 @@ en:
         Project option helps you to organise your services and orders into
         logical blocks related to your use case, gain EOSC experts support
         and easily access the selected service.</p><p> To find out more about
-        Projects in EOSC Marketplace, please refer to our FAQ. (please link
-        FAQ page here)<p>
+        Projects in EOSC Marketplace, please refer to our
+        <a href="%{faq_url}">FAQ</a>.</p>
       order:
         title: Add to a project
         cancel: Quit
