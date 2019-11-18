@@ -24,6 +24,10 @@ RSpec.describe ProjectItem::Ready do
       jira_class_stub = class_double(Jira::Client).
           as_stubbed_const(transfer_nested_constants: true)
 
+      message_class = double("Message",
+                             message: "test1",
+                             messageable: project_item)
+      message_create_class_stub = instance_double(Message::Create)
 
       allow(jira_class_stub).to receive(:new).and_return(jira_client)
       allow(issue).to receive(:save).and_return(issue)
@@ -33,7 +37,8 @@ RSpec.describe ProjectItem::Ready do
       allow(jira_client).to receive_message_chain(:Issue, :build) { issue }
       allow(issue).to receive_message_chain(:transitions, :all) { [transition_start, transition_done] }
       allow(issue).to receive_message_chain(:transitions, :build) { transition }
-      allow(transition). to receive(:save!).and_return(transition)
+      allow(transition).to receive(:save!).and_return(transition)
+      allow(message_create_class_stub).to receive(:call).and_return(message_class)
     }
 
     it "creates new project_item status change" do
@@ -79,6 +84,16 @@ RSpec.describe ProjectItem::Ready do
             to change { ActionMailer::Base.deliveries.count }.by(2)
         expect(ActionMailer::Base.deliveries[-2].subject).to start_with("Status of your")
         expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
+      end
+    end
+
+    context "With additional comment" do
+      it "should create first komment message" do
+        expect { described_class.new(project_item, "First message").call }.
+          to change { project_item.messages.count }.by(1)
+        last_message = project_item.messages.last
+
+        expect(last_message.message).to eq("First message")
       end
     end
 

@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class ProjectItem::Create
-  def initialize(project_item)
+  def initialize(project_item, message = nil)
     @project_item = project_item
+    @message = message
   end
 
   def call
@@ -13,10 +14,10 @@ class ProjectItem::Create
                                message: "Service request created")
 
       unless orderable?
-        ProjectItem::ReadyJob.perform_later(@project_item)
+        ProjectItem::ReadyJob.perform_later(@project_item, @message)
       else
         ProjectItemMailer.created(@project_item).deliver_later
-        ProjectItem::RegisterJob.perform_later(@project_item)
+        ProjectItem::RegisterJob.perform_later(@project_item, @message)
       end
     end
 

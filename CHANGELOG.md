@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Use service type as default order type while seeding db (@mkasztelnik)
 - Offer type to the project and offer selection views (@goreck888, @jarekzet)
 - Add help static page with example help accordion (@mkasztelnik)
+- Additional information to summary step (@martaswiatkowska)
 
 ### Changed
 - Internal server error message (@goreck888)

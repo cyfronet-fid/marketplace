@@ -9,7 +9,7 @@ RSpec.describe ProjectItem::RegisterJob do
   let(:project_item) {
     project_item = create(:project_item, project: project)
     expect(ProjectItem::Register).to receive(:new).
-        with(project_item).and_return(register_service)
+        with(project_item, nil).and_return(register_service)
     next project_item
   }
 
