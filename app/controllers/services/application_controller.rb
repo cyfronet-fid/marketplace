@@ -7,10 +7,10 @@ class Services::ApplicationController < ApplicationController
   layout "order"
 
   attr_reader :wizard
+  helper_method :wizard_title
   helper_method :step_for
-  helper_method :step_key
-  helper_method :next_step_key
-  helper_method :prev_step_key
+  helper_method :step_key, :prev_visible_step_key
+  helper_method :step_title, :prev_title, :next_title
 
   private
 
@@ -51,15 +51,67 @@ class Services::ApplicationController < ApplicationController
       wizard.next_step_key(step_key)
     end
 
+    def next_visible_step_key
+      @next_visible_step_key ||= find_next_visible_step_key(step_key)
+    end
+
+    def find_next_visible_step_key(step_key)
+      next_step_key = wizard.next_step_key(step_key)
+
+      if next_step_key == nil || step_for(next_step_key).visible?
+        next_step_key
+      else
+        find_next_visible_step_key(next_step_key)
+      end
+    end
+
+    def prev_visible_step_key
+      @prev_visible_step_key ||= find_prev_visible_step_key(step_key)
+    end
+
+    def find_prev_visible_step_key(step_key)
+      prev_step_key = wizard.prev_step_key(step_key)
+
+      if prev_step_key == nil || step_for(prev_step_key).visible?
+        prev_step_key
+      else
+        find_prev_visible_step_key(prev_step_key)
+      end
+    end
+
     def prev_step_key
       wizard.prev_step_key(step_key)
     end
 
-    def prev_step
-      wizard.step(wizard.prev_step_key(step_key), saved_state)
+    def prev_visible_step
+      wizard.step(prev_visible_step_key, saved_state)
     end
 
     def step_key
       raise "Should be implemented in descendent class"
+    end
+
+    def step_title(step_name = step_key)
+      I18n.t("service.#{step_name}.title")
+    end
+
+    def next_title
+      if next_visible_step_key == wizard.step_names.last
+        "#{I18n.t("service.next")} - #{step_title(next_visible_step_key)}"
+      else
+        I18n.t("service.next")
+      end
+    end
+
+    def prev_title
+      "Back to previous step - #{step_title(prev_visible_step_key)}"
+    end
+
+    def wizard_title
+      if step.offer
+        "#{@service.title} - #{step.offer.name}"
+      else
+        @service.title
+      end
     end
 end

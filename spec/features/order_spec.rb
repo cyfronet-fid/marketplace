@@ -50,19 +50,19 @@ RSpec.feature "Service ordering" do
       # Step 2
       expect(page).to have_current_path(service_information_path(service))
       expect(page).to have_selector(:link_or_button,
-                                    "Next", exact: true)
+                                    "Next - Final details", exact: true)
 
-      click_on "Next", match: :first
+      click_on "Next - Final details", match: :first
 
       # Step 4
       expect(page).to have_current_path(service_summary_path(service))
       expect(page).to have_selector(:link_or_button,
-                                    "Order", exact: true)
+                                    "Send access request", exact: true)
 
       select "Services"
 
       expect do
-        click_on "Order", match: :first
+        click_on "Send access request", match: :first
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
       expect(project_item.offer_id).to eq(offer.id)
@@ -99,20 +99,20 @@ RSpec.feature "Service ordering" do
       # Step 3
       expect(page).to have_current_path(service_configuration_path(service))
       expect(page).to have_selector(:link_or_button,
-                                    "Next", exact: true)
+                                    "Next - Final details", exact: true)
 
       fill_in "Attribute 1", with: "95"
 
-      click_on "Next", match: :first
+      click_on "Next - Final details", match: :first
 
       # Step 4
       expect(page).to have_current_path(service_summary_path(service))
       expect(page).to have_selector(:link_or_button,
-                                    "Order", exact: true)
+                                    "Send access request", exact: true)
       select "Services"
 
       expect do
-        click_on "Order", match: :first
+        click_on "Send access request", match: :first
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
       expect(project_item.offer_id).to eq(offer.id)
@@ -154,7 +154,7 @@ RSpec.feature "Service ordering" do
 
         expect do
           click_on "Add to a project", match: :first
-          expect(page).to have_text("You cannot add open access service #{service.title} to project Services twice")
+          expect(page).to have_text("Please note that this service can be added to the Project only once. Please choose another project")
         end.to change { ProjectItem.count }.by(0)
       end
     end
@@ -170,10 +170,10 @@ RSpec.feature "Service ordering" do
         click_on "Access the service"
         click_on "Next", match: :first
 
-        # Project selection
+        # Configuration step
         fill_in "project_item_property_values_id", with: "test"
 
-        click_on "Next", match: :first
+        click_on "Next - Final details", match: :first
         select "Services", from: "project_item_project_id"
 
         expect do
@@ -186,7 +186,7 @@ RSpec.feature "Service ordering" do
         click_on "Next", match: :first
 
         fill_in "project_item_property_values_id", with: "test"
-        click_on "Next", match: :first
+        click_on "Next - Final details", match: :first
         select "Services", from: "project_item_project_id"
 
         expect do
@@ -230,7 +230,7 @@ RSpec.feature "Service ordering" do
 
       # Go directly to summary page
       visit service_summary_path(service)
-      click_on "Order", match: :first
+      click_on "Send access request", match: :first
 
       expect(page).to have_current_path(service_summary_path(service))
       expect(page).to have_text("Project can't be blank")
@@ -439,7 +439,7 @@ RSpec.feature "Service ordering" do
 
       # Step 3
       expect(current_path).to eq service_summary_path(service)
-      click_on "Back to previous step - configuration"
+      click_on "Back to previous step - Technical configuration"
 
       # Step 2 - again
       expect(current_path).to eq service_configuration_path(service)
@@ -451,7 +451,7 @@ RSpec.feature "Service ordering" do
       # Step 3
       expect(current_path).to eq service_summary_path(service)
       expect(page).to have_text("11111-22222-33333-44444")
-      click_on "Back to previous step - configuration"
+      click_on "Back to previous step - Technical configuration"
 
       # Step 2 - again
       expect(current_path).to eq service_configuration_path(service)
@@ -472,8 +472,7 @@ RSpec.feature "Service ordering" do
 
       click_on "Access the service"
 
-      expect(page).to have_text("Open Access")
-      expect(page).to have_link("Go to service")
+      expect(page).to have_link("Go to the service")
     end
   end
 
