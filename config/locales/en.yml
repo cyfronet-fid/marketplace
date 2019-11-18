@@ -60,7 +60,7 @@ en:
         title: Add to a project
         cancel: Quit
         summary:
-          description: |
+          description_html: |
             Please select a Project and review the summary below. Once added to
             the project, your service ordering page will be accessible via URL
             at your Project space.
@@ -115,7 +115,7 @@ en:
             You can organize your services in projects.
             Add this service to a specific project or create a new one.
         summary:
-          description: |
+          description_html: |
             Please select a Project and review the summary below. Once added to
             the project, your service will be accessible via URL at your Project space.
   project:
