@@ -29,6 +29,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Order configuration step is shown when offer is voucherable or has properties (@mkasztelnik)
 - Improve order wizard naming (@mkasztelnik)
 - Highlights in search from bold to mark (@goreck888)
+- Main page greeting change (@goreck888)
 
 ### Deprecated
 
