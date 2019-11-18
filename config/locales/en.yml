@@ -90,9 +90,9 @@ en:
           description: |
             Please specify technical parameters. It is necessary to handle your request.
         summary:
-          description: |
+          description_html: |
             Please select a Project and review the summary below. Once you
-            submit the order, your request will be sent to a service provider.
+            submit the order, your request will be sent to a service provider.<br>
             The order status will be visible at your Project space.
     open_access:
       link: Go to the service

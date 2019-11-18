@@ -3,7 +3,7 @@
   .details-content
     %p.mb-4= t("project.select.description")
     = f.input :project do
-      .input-group.col-6.pl-0
+      .input-group.col-12.col-lg-6.pl-0
         = f.input_field :project_id, collection: projects,
           class: "form-control custom-select #{"is-invalid" unless project_item.errors[:project].empty?}",
           "data-action" => "change->details-loader#changed",
