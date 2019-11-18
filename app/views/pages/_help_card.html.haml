@@ -1,0 +1,11 @@
+- id = "#{parent}-#{name}"
+.card.shadow-sm.rounded
+  .card-header{ id: "#{id}-header" }
+    %button.btn.btn-link{ type: "button",
+        data: { toggle: "collapse", target: "##{id}" },
+        aria: { expanded: true, controls: id } }
+      = title
+
+.collapse{ id: id, "aria-labelledby": "#{id}-header", "data-parent": "##{parent}" }
+  .card-body
+    = yield

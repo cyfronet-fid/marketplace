@@ -1,0 +1,49 @@
+%h3.subsection
+  %a{ id: "registration-and-settings" }
+  Registration and Account Settings
+#help-registration-and-settings.accordion.faq-list
+  = render "pages/help_card", parent: "help-registration-and-settings", name: "do",
+    title: "Do I need an account to use the website? Do I need an account to order?" do
+    In case you want to access technologies or obtain assistance from the international technical teams on the
+    most suitable solutions, you need to log in via available services. There are different mechanisms to authenticate
+    users and to grant appropriate access levels. The Marketplace is tightly integrated with already available services
+    from both EUDAT and EGI infrastructure (e.g. Service Portfolio Management Tool, Operational Tools, GOCDB).
+
+    %h5.mt-3 Current roles in the system:
+    %ul
+      %li
+        Unregistered user
+      %li
+        Registered user
+      %li
+        Service owner / service provider
+      %li
+        Admin
+
+  = render "pages/help_card", parent: "help-registration-and-settings", name: "what",
+      title: "What the difference between registered and unregistered user?" do
+    The primary difference is that an unregistered account doesn't have login credentials associated with it.
+    This effectively means that we don't know who you are and your profile is restricted from certain actions.
+    An unregistered users don’t have the possibility to fully use the EOSC marketplace functionality.
+    Such functionalities as the service catalog and possibility to ask a question about the service is the same
+    for Registered and Unregistered Users.
+    But Only Registered Users have access to the ordering process, modification and possibility to create a project.
+
+  = render "pages/help_card", parent: "help-registration-and-settings", name: "what1",
+      title: "How to become a registered user?" do
+    To become a registered you should Login to the EOSC Portal using checkin IDP.
+
+
+  = render "pages/help_card", parent: "help-registration-and-settings", name: "how",
+    title: "How can I able to review/ edit my user profile?" do
+    The Marketplace is tightly integrated with already available services from both EUDAT and EGI infrastructure,
+    so in case you want to change your profile information,
+    it should be done on the infrastructure which is used while you log in to the Marketplace.
+
+  = render "pages/help_card", parent: "help-registration-and-settings", name: "how1",
+    title: "Am I able to remove my account?" do
+    There is no set up account in the Marketplace. You log in to the platform by using already existing  accounts.
+    So there is no physical account in the Marketplace to be deleted.
+
+
+
