@@ -6,6 +6,7 @@ FactoryBot.define do
     sequence(:description) { |n| "offer #{n} description" }
     sequence(:service) { |n| create(:service, offers_count: 1) }
     sequence(:status) { :published }
+    sequence(:webpage) { |n| "http://webpage#{n}.invalid" }
 
     factory :offer_with_parameters do
       sequence(:parameters) { [{ "id": "id1",

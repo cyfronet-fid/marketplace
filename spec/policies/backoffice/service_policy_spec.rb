@@ -18,7 +18,7 @@ RSpec.describe Backoffice::ServicePolicy do
       policy = described_class.new(service_owner, create(:service))
       expect(policy.permitted_attributes).to eq([
                                                     :title, :description,
-                                                    :tagline, :connected_url, :service_type,
+                                                    :tagline, :service_type,
                                                     [provider_ids: []], :places, :languages,
                                                     [target_group_ids: []], :terms_of_use_url,
                                                     :access_policies_url, :sla_url,

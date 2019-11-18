@@ -11,6 +11,21 @@ RSpec.describe Offer do
 
   it { should have_many(:project_items).dependent(:restrict_with_error) }
 
+  context "is open access" do
+    subject { build(:offer, offer_type: :open_access) }
+    it { should validate_presence_of(:webpage) }
+  end
+
+  context "is external" do
+    subject { build(:offer, offer_type: :external) }
+    it { should validate_presence_of(:webpage) }
+  end
+
+  context "is orderable" do
+    subject { build(:offer, offer_type: :orderable) }
+    it { should_not validate_presence_of(:webpage) }
+  end
+
   context "#offer_type" do
     it "takes default from service if not set" do
       service = create(:external_service)

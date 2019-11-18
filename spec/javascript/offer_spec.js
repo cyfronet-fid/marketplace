@@ -1,5 +1,5 @@
 import { Application } from "stimulus";
-import ServiceController from "service_controller";
+import OfferController from "offer_controller";
 
 const showUrl = (element, value, eventType) => {
   const event = new Event(eventType);
@@ -7,23 +7,23 @@ const showUrl = (element, value, eventType) => {
   element.dispatchEvent(event);
 };
 
-describe("ServiceController", () => {
-  describe("#showConnectedUrl", () => {
+describe("OfferController", () => {
+  describe("#showWebpage", () => {
 
     beforeEach(() => {
       document.body.innerHTML =
-        '<div data-controller="service">' +
-        '<select id="select" data-target="service.serviceType"' +
-        'data-action="change->service#showConnectedUrl" >' +
+        '<div data-controller="offer">' +
+        '<select id="select" data-target="offer.offerType"' +
+        'data-action="change->offer#showWebpage" >' +
         '<option value=""></option>' +
         '<option value="open_access">open_access</option>' +
         '<option value="catalog">catalog</option>' +
         '</select>' +
-        '<div id="result" data-target="service.connectedUrl" class="hidden-fields"> </div>' +
+        '<div id="result" data-target="offer.webpage" class="hidden-fields"> </div>' +
         '</div>';
 
       const application = Application.start();
-      application.register("service", ServiceController);
+      application.register("offer", OfferController);
     })
 
     it("Show connected url", () => {
