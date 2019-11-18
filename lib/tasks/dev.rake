@@ -21,7 +21,6 @@ if Rails.env.development?
                        categories: [Category.all.sample],
                        owners: owners,
                        rating: Random.rand(5.0),
-                       connected_url: Faker::Internet.url,
                        providers: Provider.all.sample(2),
                        places: Faker::Address.country,
                        languages: Faker::Nation.language,

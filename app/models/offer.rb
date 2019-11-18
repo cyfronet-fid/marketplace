@@ -32,6 +32,7 @@ class Offer < ApplicationRecord
   validate :parameters_are_valid_attributes, on: [:create, :update]
   validates :parameters_as_string, attribute_id_unique: true
   validate :parameters_not_nil
+  validates :webpage, presence: true, mp_url: true, unless: :orderable?
 
   attr_writer :parameters_as_string
 
@@ -44,7 +45,7 @@ class Offer < ApplicationRecord
   end
 
   def offer_type
-    super || service.service_type
+    super || service&.service_type
   end
 
   def open_access?

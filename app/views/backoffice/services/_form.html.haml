@@ -11,11 +11,7 @@
   .row.mt-5
     .col-12.col-md-5
       = f.input :service_type, collection: Service.service_types.keys.map(&:to_sym),
-        input_html: { "data-target" => "service.serviceType", "data-action" => "change->service#showConnectedUrl" },
         disabled: cant_edit(:service_type)
-      = f.input :connected_url, label: "Service website",
-        wrapper_html: { "data-target" => "service.connectedUrl" },
-        disabled: cant_edit(:connected_url)
 
   = f.association :categories, multiple: true, input_html: { data: { choice: true } },
                   disabled: cant_edit([category_ids: []])
