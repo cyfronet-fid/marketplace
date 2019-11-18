@@ -5,7 +5,8 @@
         .card-label
           %i.fas.fa-ticket-alt
           %span Voucher
-      %span.text-sm-right.fa-pull-right.badge= t("service.type.#{offer.offer_type}")
+      - unless offer.offer_type.blank?
+        %span.text-sm-right.fa-pull-right.badge= t("service.type.#{offer.offer_type}")
       %h4.card-title= offer.name
       %p
         .card-text.mb-2
