@@ -38,13 +38,16 @@ en:
   service:
     order:
       title: Access the service
+    offer_select: Select an offer
     next: Next
     offers:
       title: Offer selection
     information:
-      title: Information
+      title: Access instructions
+    configuration:
+      title: Technical configuration
     summary:
-      title: Summary
+      title: Final details
     type:
       open_access:
         Open Access
@@ -56,50 +59,65 @@ en:
       order:
         title: Add to a project
         cancel: Quit
-        configuration:
-          title: Add to a project
-      link: Order at provider website
-      description_html:
-        "%{service_title} is accessible by external ordering. You can either directly
-        <b>'Go to the service'</b>, where EOSC Portal will redirect you to the website
-        and you can order the service or what is highly recommended to add the
-        service to your <b>'Project'</b>. It helps you to organise your services and orders into logical
-        blocks related to your use case, gain EOSC experts support and easily access the selected service.</br>
-        To find out more about Projects in EOSC Marketplace, please refer to our FAQ ( link to FAQ)"
+        summary:
+          description: |
+            Please select a Project and review the summary below. Once added to
+            the project, your service ordering page will be accessible via URL
+            at your Project space.
+      link: Order externally
+      description_html: |
+        <p>%{service_title} is accessible by external ordering. You can either use
+        the service by clicking on the button <strong>Order Externally</strong>,
+        where EOSC Portal will redirect you to the website and you can order the
+        service or what is highly recommended to add the service to your
+        <strong>Project</strong> by going to Next steps. It helps you to
+        organise your services and orders into logical blocks related to your
+        use case, gain EOSC experts support and easily access the selected
+        service.</p><p>To find out more about Projects in EOSC Marketplace,
+        please refer to our <a href="%{faq_url}">FAQ</a>.</p>
     orderable:
-      description_html:
-        "%{service_title} can be ordered via EOSC marketplace <b>free of charge</b>.
+      description_html: |
+        <p>%{service_title} can be ordered via EOSC marketplace <b>free of charge</b>.
         The service will be delivered once it is verified that the scientific affiliation
         (provided in the details of the underpinned project) entitles you to use it.
         You will be notified by email about the service request status changes or can be tracked
-        in project’s dashboard.</br>
-        To find out more about Projects in EOSC Marketplace, please refer to our FAQ ( link to FAQ)"
+        in project’s dashboard.</p><p>To find out more about Projects in EOSC
+        Marketplace, please refer to our <a href="%{faq_url}">FAQ</a>.</p>
       order:
-        title: Order
+        title: Send access request
         cancel: Cancel order and quit
         configuration:
-          title: Service configuration
           description: |
-            We need more information about your request.
-            We will be able to process your request quicker
-            if the form is filled with as much detail as possible.
+            Please specify technical parameters. It is necessary to handle your request.
+        summary:
+          description: |
+            Please select a Project and review the summary below. Once you
+            submit the order, your request will be sent to a service provider.
+            The order status will be visible at your Project space.
     open_access:
-      link: Go to service
-      description_html:
-        "%{service_title} is open to everyone, any user can reach the service. You can either directly
-        <b>'Go to the service'</b>, where EOSC Portal will redirect you to the service website or what is
-        highly recommended to add the service to your <b>'Project'</b>. It helps you to organise your services
-        and orders into logical blocks related to your use case, gain EOSC experts support and easily
-        access the selected service.</br>
-        To find out more about Projects in EOSC Marketplace, please refer to our FAQ ( link to FAQ)"
+      link: Go to the service
+      description_html: |
+        <p>%{service_title} is open to everyone, any user can reach the service.
+        You can either directly use the service by clicking on the button
+        <strong>Go to the service</strong> , where EOSC Portal will redirect
+        you to the service website or what is highly recommended to add the
+        service to your <strong>Project</strong> by going to Next steps.
+        Project option helps you to organise your services and orders into
+        logical blocks related to your use case, gain EOSC experts support
+        and easily access the selected service.</p><p> To find out more about
+        Projects in EOSC Marketplace, please refer to our
+        <a href="%{faq_url}">FAQ</a>.</p>
       order:
         title: Add to a project
         cancel: Quit
         configuration:
-          title: Add to a project
           description: |
             You can organize your services in projects.
             Add this service to a specific project or create a new one.
+        summary:
+          description: |
+            Please select a Project and review the summary below. Once added to
+            the project, your service will be accessible via URL at your Project space.
   project:
     mail:
       new_message: |

@@ -27,6 +27,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Anonymous user can enter information step (@martaswiatkowska)
 - Project selection was moved to last service order step (@mkasztelnik)
 - Order configuration step is shown when offer is voucherable or has properties (@mkasztelnik)
+- Improve order wizard naming (@mkasztelnik)
 
 ### Deprecated
 

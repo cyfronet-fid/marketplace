@@ -7,5 +7,4 @@
         state = :next if state == :active
         state = :active if step_name == step_key.to_s
 
-      = order_nav_link(t("service.#{service.service_type}.order.#{step_name}.title",
-        default: "service.#{step_name}.title".to_sym), url_for([service, step_name]), state)
+      = order_nav_link(step_title(step_name), url_for([service, step_name]), state)
