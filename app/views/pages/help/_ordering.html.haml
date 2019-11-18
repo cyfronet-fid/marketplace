@@ -1,0 +1,258 @@
+%h3.subsection
+  %a{ id: "ordering" }
+  Ordering process
+#help-ordering.accordion.faq-list
+  = render "pages/help_card", parent: "help-ordering", name: "what",
+    title: "What is a project in ordering process?" do
+    The marketplace projects is a lightweight approach to assist users on
+    organising their services and related orders into logical blocks which
+    share a common purpose and gaining support in the scope of the created
+    project. Its ultimate goal is to provide a user-friendly and helpful
+    UI where EOSC services of interest can be gathered and managed.
+    The user is guided step by step through the service order management
+    process and able to get assistance from international technical teams
+    who provide advice on the most suitable solutions to address the digital
+    needs.
+
+
+  = render "pages/help_card", parent: "help-ordering", name: "who",
+    title: "Who can set up a project?" do
+    %p You can create a project as:
+    %ul
+      %li
+        Single user as your own academic research,
+      %li
+        Representing a research community as a larger community collaboration
+      %li
+        Representing a private company as a R&D work of your company
+      %li
+        Representing a project as an EC project
+
+
+  = render "pages/help_card", parent: "help-ordering", name: "how",
+    title: "How do I set up a project ?" do
+    %p
+      The marketplace project is the place to follow the status of your
+      orders, get all relevant information about the service access when
+      the access is granted and contact the EOSC support if necessary.
+
+    %p To create a project:
+    %ol
+      %li
+        Go to a Tab >
+        %strong My Projects.
+      %li
+        Select
+        %strong Create project
+        (top left).
+      %li
+        Give your
+        %strong Project a name.
+      %li
+        Describe the
+        %strong Reason to request access to the EOSC services*
+      %li
+        Choose the
+        %strong Research areas
+        from the list ( can be multiple).
+      %li
+        Fill in your
+        %strong CUSTOMER DETAILS
+      %li
+        Edit the relevant details and select
+        %strong Save details.
+
+
+
+  = render "pages/help_card", parent: "help-ordering", name: "project-deleted",
+    title: "Can the project be deleted?" do
+    %p
+      You can remove the project if no orders were placed. The functionality was
+      created only for the project that has been created by a mistake. If you
+      want to adjust an information in the project, you can use the Edit
+      functionality.
+    %p To DELETE a project's details:
+    %ol
+      %li
+        Open the project you want to change.
+      %li
+        From your project's sidebar, select
+        %strong Project Details > DELETE
+      %li
+        Your project will disappear from your list
+
+
+
+  = render "pages/help_card", parent: "help-ordering", name: "project-modified",
+    title: "Can the project be modified?" do
+    %p
+      The user can edit all the values in the project.
+
+    %ol
+      %li
+        Open the project you want to change.
+      %li
+        From your project's sidebar, select
+        %strong Project Details > EDIT
+      %li
+        Edit the relevant details and select
+        %strong Save details.
+
+
+
+  = render "pages/help_card", parent: "help-ordering", name: "project-duplicate",
+    title: "How can i duplicate a project / when can I use this option?" do
+    %p
+      If you want to have a new project with the same parameters that you
+      already have, you should select
+      %strong "DUPLICATE"
+      to select an existing project in order to use that project's schemes.
+      Note that when you're copying schemes, any change to the existing scheme
+      will not affect all the projects using that scheme.
+    %p
+      To
+      %strong DUPLICATE
+      a project's details:
+    %ol
+      %li
+        Open the project you want to change.
+      %li
+        From your project's sidebar, select
+        %strong Project Details > DUPLICATE
+      %li
+        Edit the relevant details and select
+        %strong Save details.
+
+
+
+
+  = render "pages/help_card", parent: "help-ordering", name: "project-archive",
+    title: "How can I archive a project/ when can I use this option?" do
+    %p
+      By archiving a project, you can remove it from the marketplace and
+      preserve the data it contains.  Please remember that you can archive
+      a project only in case all your orders are in status rejected or
+      completed. If you still have not completed order, you will need to
+      wait until it is finalized or canceled. Only then the option for
+      archivization will be active. If you created a project by mistake,
+      you will need to use the functionality : Delete the project.
+
+    %p To Archive a project's details:
+    %ol
+      %li
+        Open the project you want to change.
+      %li
+        From your project's sidebar, select
+        %strong Project Details >Archive
+      %li
+        Your project will disappear from your list
+
+
+
+  = render "pages/help_card", parent: "help-ordering", name: "service-differences",
+    title: "What types of service orders are in the EOSC Portal Catalogue and Marketplace? What is the difference?" do
+    There are 3 different types of ordering systems in the EOSC Portal
+    Catalogue and Marketplace.
+
+    %h5.mt-3 No ordering
+    %p
+      The service is advertised in the Marketplace, but there is no
+      integration with the EOSC-hub service order management system.
+      When a customer selects one of these kinds of services,
+      he/she should be directly redirected to the service (in a new browser
+      window) without the need of any further actions.
+    %ul
+      %li
+        Such services are open to everyone, no login required.
+      %li
+        The user can add the service to the project for the tracking aim,
+        to have a history.
+
+    %h5.mt-3 Orders to be delegated
+    %p
+      This scenario applies to all services of service providers that decided
+      to allow ordering via the EOSC-hub Marketplace but to use their own
+      tools to manage them.
+    %ul
+      %li
+        The user can order the service following the EOSC-hub marketplace
+        workflow without the need of following customer procedures
+      %li
+        The user can check the status of their orders and download the
+        SLA from the EOSC-hub Marketplace
+
+    %h5.mt-3 Orders to be processed
+    %p
+      This scenario applies to all services of service providers that decided
+      to adopt the EOSC-hub service order mgmt tool to process orders related
+      to its service.
+    %ul
+      %li
+        The user can order the service following the EOSC-hub marketplace
+        workflow without the need of following customer procedure.
+      %li
+        The user can check the status of their orders and download the SLA
+        (when the order is approved) from the EOSC-hub Marketplace
+
+
+  = render "pages/help_card", parent: "help-ordering", name: "add-to-project",
+    title: "How can I add the selected service to my project?" do
+    %p To Order a Service to the Project:
+    %ol
+      %li
+        Open the project.
+      %li
+        On your Service sidebar, select
+        %strong Add the Service to this project
+      %li
+        Choose the service from the list. The service will be automatically
+        added to your selected project.
+
+    %p
+      In case you need more details about the next steps, please refer
+      to the FAQ section
+      %i What is the difference between the service order statuses
+
+
+  = render "pages/help_card", parent: "help-ordering", name: "service-limit",
+    title: "Is there a limit to the number of services I can add to the Project?" do
+    There is no limitation to the number of services that you can add to
+    the project.
+
+
+  = render "pages/help_card", parent: "help-ordering", name: "order-status",
+    title: "What is the difference between the service order statuses?" do
+    %p
+      Order has many attributes but most importantly - it has a life cycle.
+      Order points in its life cycle relevant to the user:
+    %ul.list-unstyled
+      %li
+        %i REGISTERED -
+        Your service request was registered and shared with customer service team
+      %li
+        %i UNDER REVIEW -
+        Your service request is under review by customer service team
+      %li
+        %i ADDITIONAL INFORMATION REQUIRED -
+        Customer service team are waiting for your response
+      %li
+        %i BEING PREPARED -
+        You service request has been accepted and is currently being processed
+      %li
+        %i READY TO USE -
+        Your service is now ready to be used
+      %li
+        %i REJECTED -
+        Your service request has been rejected
+      %li
+        %i CLOSED -
+        Your service request is closed. If you want to use the service again,
+        please contact customer service team
+
+
+  = render "pages/help_card", parent: "help-ordering", name: "remove-from-project",
+    title: "Can the service order be removed from the Project?" do
+    If you have placed an order, there is no possibility to remove or cancel
+    the order by yourself. You will need to write an email and ask your
+    customer service team to reject the request. You will need to write a
+    small explanation with the reason for your cancelation.

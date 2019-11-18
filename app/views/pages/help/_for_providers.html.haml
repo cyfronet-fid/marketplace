@@ -1,0 +1,140 @@
+%h3.subsection
+  %a{ id: "for-providers" }
+  For providers
+#help-for-providers.accordion.faq-list
+  = render "pages/help_card", parent: "help-for-providers", name: "available",
+    title: "How can i make my services available in the EOSC Portal Catalogue and Marketplace? " do
+    Here are the steps to help you prepare:
+    %ul
+      %li
+        Conform to Principles of Participation.
+      %li
+        To lower the barrier and enable gradual adoption, multiple compliance
+        levels for services joining the EOSC are envisioned.
+      %li
+        The Service will need to be registered in the EOSC service catalogue,
+        and at a minimum provide structured information about the offered
+        resources. EOSC will define the minimum level of components to be
+        provided, and service providers will describe their service.
+      %li
+        The EOSC Service Management Framework provides multiple levels of
+        federation to enable different “commitment” levels for services
+        provider integration with the EOSC Service Catalogue. At a minimum,
+        a service description will need to be provided containing structured
+        information on aspects of the service such as:
+        %ul
+          %li Quality indicators
+          %li FAIR indicators
+          %li Licenses / Terms of Usage / Access Policies
+          %li Curation & preservation policies
+          %li Access methods
+          %li Etc.
+      %li
+        Federation will apply mostly at the resource delivery level,
+        rather than at the infrastructure level. This facilitates EOSC-fying
+        resources selectively and lowers the barrier for participation.
+      %li
+        In the case of data / metadata resources, specific interoperability
+        requirements will need to be met to enable the findability and
+        accessibility of the provided resources / datasets.
+
+
+
+  = render "pages/help_card", parent: "help-for-providers", name: "why",
+    title: "Why should I make my service available in the EOSC Portal Catalogue and Marketplace?" do
+    %ul
+      %li
+        EOSC allows service providers to show that they can provide a service
+        offering, which is compliant with the needs of the European research
+        community.
+      %li
+        By entering the EOSC realm, the first beneficiaries will be the users
+        of your community.
+      %li
+        Make use of EOSC services / resources.
+      %li
+        Broaden the set of services / access to data you provide to your users.
+      %li
+        Moral or even legal obligation to contribute to open science.
+
+
+
+  = render "pages/help_card", parent: "help-for-providers", name: "requirements",
+    title: "If I want to register a service, what requirements should I apply to?" do
+    Services should include, but not be limited to running virtual machines on
+    demand with complete control over computing services, executing compute
+    and data-intensive workloads, analysing large datasets and executing
+    parallel computing tasks, utilizing large amount of processing capacity
+    over long periods of time, sharing resources and enabling collaborative
+    research.
+
+
+
+  = render "pages/help_card", parent: "help-for-providers", name: "type",
+    title: "What type of service access to choose?" do
+    %h4 Open access
+
+    The service is advertised in the EOSC Portal Catalogue and Marketplace, but there is no integration
+    with the EOSC-hub service order management system.
+
+    %h5.mt-3 Benefits:
+    %ul
+      %li The service is advertised through the EOSC Portal Catalogue and Marketplace.
+      %li
+        The service provider is aware of how many people access its service
+        via the EOSC Portal Catalogue and Marketplace.
+
+
+    %h4 External ordering
+
+    This scenario applies to all services of service providers that decided to
+    allow ordering via the EEOSC Portal Catalogue and Marketplace but to use their own tools to
+    manage them.
+
+    %h5.mt-3 Benefits:
+    %ul
+      %li
+        The service is advertised through the EOSC Portal Catalogue and Marketplace.
+      %li
+        The service provider is aware of how many people access its service
+        via the EOSC Portal Catalogue and Marketplace.
+      %li
+        The order contains information about user identity.
+      %li
+        The order contains information about the customer type (single user,
+        organisation, project, private companies, etc.)
+      %li
+        The order contains information about the reason to access the service.
+      %li
+        A specific service configuration is requested by the customer.
+
+
+    %h4 Internal ordering
+
+    This scenario applies to all services of service providers that decided to
+    adopt the EOSC-hub service order mgmt tool to process orders related to
+    its service.
+
+    %h5.mt-3 Benefits for the service providers:
+    %ul
+      %li
+        The service is advertised through the EOSC Portal Catalogue and Marketplace.
+      %li
+        The service provider is aware of how many people access its service
+        via the EOSC Portal Catalogue and Marketplace.
+      %li
+        The order contains information about user identity.
+      %li
+        The order contains information about the customer type (single user,
+        organisation, project, private companies, etc.)
+      %li
+        The order contains information about the reason to access the service.
+      %li
+        A specific service configuration is requested.
+      %li
+        The service provider can approve/reject orders in the SLA order mgmt tool.
+      %li
+        The service provider can monitor all its SLAs/OLAs.
+      %li
+        Service providers do not need to setup and/or operate their own order
+        management system.

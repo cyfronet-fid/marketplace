@@ -1,7 +1,7 @@
 linters:
   ViewLength:
     enabled: true
-    max: 150
+    max: 500
 
   LineLength:
     enabled: true

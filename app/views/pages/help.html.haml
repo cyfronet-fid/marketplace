@@ -1,0 +1,26 @@
+.container
+  %h1 Frequently Asked Questions
+
+  %ul.list-group
+    %li.list-group-item
+      %a{ href: "#about" } About EOSC Portal Catalogue and Marketplace
+    %li.list-group-item
+      %a{ href: "#registration-and-settings" } Registration and Account Settings
+    %li.list-group-item
+      %a{ href: "#services" } Services in the Marketplace
+    %li.list-group-item
+      %a{ href: "#searching" } Searching in the Marketplace
+    %li.list-group-item
+      %a{ href: "#ordering" } Ordering process
+    %li.list-group-item
+      %a{ href: "#payment" } Method of payment
+    %li.list-group-item
+      %a{ href: "#for-providers" } For providers
+
+  = render "pages/help/about"
+  = render "pages/help/registration_and_settings"
+  = render "pages/help/services"
+  = render "pages/help/searching"
+  = render "pages/help/ordering"
+  = render "pages/help/payment"
+  = render "pages/help/for_providers"

@@ -49,6 +49,7 @@ gem "recaptcha", require: "recaptcha/rails"
 # Markdown
 gem "github-markup"
 gem "redcarpet"
+gem "high_voltage", "~> 3.1"
 
 # jira
 gem "jira-ruby"
