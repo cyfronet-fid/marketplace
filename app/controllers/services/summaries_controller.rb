@@ -16,7 +16,7 @@ class Services::SummariesController < Services::ApplicationController
     @step = step(summary_params)
 
     if @step.valid?
-      do_create(@step.project_item)
+      do_create(@step.project_item, message_text)
     else
       setup_show_variables!
       flash.now[:alert] = @step.error
@@ -29,10 +29,10 @@ class Services::SummariesController < Services::ApplicationController
       I18n.t("service.#{@offer_type}.order.title")
     end
 
-    def do_create(project_item_template)
+    def do_create(project_item_template, message)
       authorize(project_item_template)
 
-      @project_item = ProjectItem::Create.new(project_item_template).call
+      @project_item = ProjectItem::Create.new(project_item_template, message_text).call
 
       if @project_item.persisted?
         session.delete(session_key)
@@ -56,5 +56,9 @@ class Services::SummariesController < Services::ApplicationController
     def setup_show_variables!
       @projects = policy_scope(current_user.projects.active)
       @offer_type = @step.offer.offer_type
+    end
+
+    def message_text
+      params[:project_item][:additional_comment]
     end
 end

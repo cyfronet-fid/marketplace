@@ -9,7 +9,7 @@ RSpec.describe ProjectItem::ReadyJob do
   let(:project_item) {
     project_item = create(:project_item, project: project)
     allow(ProjectItem::Ready).to receive(:new).
-        with(project_item).and_return(ready_service)
+        with(project_item, nil).and_return(ready_service)
     next project_item
   }
 

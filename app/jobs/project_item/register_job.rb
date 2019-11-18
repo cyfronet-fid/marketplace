@@ -16,7 +16,7 @@ class ProjectItem::RegisterJob < ApplicationJob
     raise exception
   end
 
-  def perform(project_item)
-    ProjectItem::Register.new(project_item).call
+  def perform(project_item, message = nil)
+    ProjectItem::Register.new(project_item, message).call
   end
 end
