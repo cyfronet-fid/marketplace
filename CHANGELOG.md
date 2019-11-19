@@ -11,7 +11,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
-- Main page greeting change (@goreck888)
 
 ### Deprecated
 
@@ -20,6 +19,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 
 ### Security
+
+## [2.2.3] 2019-11-19
+
+### Changed
+- Main page greeting change (@goreck888)
 
 ## [2.2.2] 2019-11-08
 
