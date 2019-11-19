@@ -36,6 +36,10 @@ module ServiceHelper
     service.target_groups.map { |target| target.name }
   end
 
+  def research_areas(service)
+    service.research_areas.map { |target| link_to(target.name, services_path(research_areas: target)) }
+  end
+
   def providers(service)
     service.providers.map { |target| link_to(target.name, services_path(providers: target)) }
   end
