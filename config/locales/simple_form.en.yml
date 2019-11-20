@@ -36,9 +36,6 @@ en:
           We will send your question to the Service provider.
           You will receive an answer to %{email} email address.
       service:
-        connected_url: |
-          Url should start with http or https [e.g. http://webpage.org].</br>
-          This url will be available under "Access the service" button in the service view
         tutorial_url: |
           Url should start with http or https [e.g. http://webpage.org]
         helpdesk_url: |
@@ -68,6 +65,10 @@ en:
           Url should start with http or https [e.g. http://webpage.org]
         company_website_url: |
           Url should start with http or https [e.g. http://webpage.org]
+      offer:
+        webpage: |
+          Url should start with http or https [e.g. http://webpage.org].</br>
+          This url will be available on service order information step
     #     username: 'User name to sign in.'
     #     password: 'No special characters, please.'
     # include_blanks:

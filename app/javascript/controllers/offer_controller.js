@@ -1,11 +1,11 @@
 import {Controller} from 'stimulus'
 
 export default class extends Controller {
-  static targets = ["parameters"];
+  static targets = ["parameters", "webpage", "offerType"];
 
-  connect() {}
-
-  initialize() {}
+  initialize() {
+    this.showWebpage();
+  }
 
   addField(event) {
     event.preventDefault();
@@ -18,5 +18,14 @@ export default class extends Controller {
     child.setAttribute("rows", 10)
 
     this.parametersTarget.appendChild(child)
+  }
+
+  showWebpage(event){
+    const offerType = this.offerTypeTarget.value
+    if (offerType == "external" || offerType == "open_access"){
+      this.webpageTarget.classList.remove("hidden-fields");
+    } else {
+      this.webpageTarget.classList.add("hidden-fields");
+    }
   }
 }

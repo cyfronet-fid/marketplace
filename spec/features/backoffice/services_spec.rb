@@ -42,7 +42,6 @@ RSpec.feature "Services in backoffice" do
       fill_in "Description", with: "service description"
       fill_in "Terms of use", with: "service terms of use"
       fill_in "Tagline", with: "service tagline"
-      fill_in "Service website", with: "https://sample.url"
       fill_in "Places", with: "Europe"
       fill_in "Languages", with: "English"
       select target_group.name, from: "Dedicated For"
@@ -78,7 +77,6 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("service title")
       expect(page).to have_content("service description")
       expect(page).to have_content("service tagline")
-      expect(page).to have_content("https://sample.url")
       expect(page).to have_content("open_access")
       expect(page).to have_content("person1@test.ok")
       # expect(page).to have_content("person2@test.ok")
@@ -394,7 +392,6 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Tag list", disabled: false
       expect(page).to have_field "Description", disabled: false
       expect(page).to have_field "Service type", disabled: false
-      expect(page).to have_field "Service website", disabled: false
       expect(page).to have_field "Categories", disabled: false
       expect(page).to have_field "Providers", disabled: false
       expect(page).to have_field "Platforms", disabled: false
@@ -432,7 +429,6 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Tag list", disabled: false
       expect(page).to have_field "Description", disabled: true
       expect(page).to have_field "Service type", disabled: true
-      expect(page).to have_field "Service website", disabled: true
       expect(page).to have_field "Categories", disabled: false
       expect(page).to have_field "Providers", disabled: true
       expect(page).to have_field "Platforms", disabled: false

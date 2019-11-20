@@ -71,7 +71,6 @@ yaml_hash["services"].each do |_, hash|
                     research_areas: area,
                     providers: providers,
                     service_type: service_type,
-                    connected_url: hash["connected_url"],
                     webpage_url: hash["webpage_url"],
                     manual_url: hash["manual_url"],
                     helpdesk_url: hash["helpdesk_url"],
@@ -94,6 +93,7 @@ yaml_hash["services"].each do |_, hash|
 
     hash["offers"] && hash["offers"].each do |_, h|
       service.offers.create!(name: h["name"],
+                             webpage: hash["connected_url"],
                              description: h["description"],
                              parameters: h["parameters"] || [],
                              offer_type: service_type,
