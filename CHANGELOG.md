@@ -39,7 +39,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Active Order button in service preview (@goreck888)
-- Cancel order link redirect for non logged-in user (goreck888)
+- Cancel order link redirect for non logged-in user (@goreck888)
+- Research area links at a service pane apply the filter (@goreck888)
 
 ### Security
 
