@@ -8,7 +8,6 @@ FactoryBot.define do
     sequence(:service_type) { :orderable }
 
     factory :open_access_service do
-      sequence(:connected_url) { "https://sample.url" }
       sequence(:service_type) { :open_access }
     end
     sequence(:webpage_url) { "https://wabpage.url"  }
@@ -36,7 +35,6 @@ FactoryBot.define do
     end
     factory :external_service do
       sequence(:service_type) { :external }
-      sequence(:connected_url) { "https://sample.url" }
     end
   end
 end

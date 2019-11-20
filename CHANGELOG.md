@@ -31,6 +31,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Improve order wizard naming (@mkasztelnik)
 - Highlights in search from bold to mark (@goreck888)
 - Main page greeting change (@goreck888)
+- Move `Service.connected_url` to `Offer.webpage` (@mkasztelnik)
 
 ### Deprecated
 

@@ -119,7 +119,6 @@ describe Import::EIC do
                                             "Reproducible Metabolomics processing and analysis pipeline without the need for expert installation " +
                                             "and maintenance\nWorldwide, individual researchers and larger labs with either commercial cloud-based or in-house deployments.")
       expect(service.tagline).to eq("Large-Scale computing for medical metabolomics")
-      expect(service.connected_url).to eq("https://portal.phenomenal-h2020.eu/home")
       expect(service.places).to eq("World")
       expect(service.languages).to eq("English")
       expect(service.dedicated_for).to eq([])

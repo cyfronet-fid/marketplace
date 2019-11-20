@@ -42,24 +42,6 @@ RSpec.describe Service do
     expect(service.main_category).to eq(main)
   end
 
-  context "if open access" do
-    before { allow(subject).to receive(:open_access?) { true } }
-
-    it { is_expected.to validate_presence_of(:connected_url) }
-  end
-
-  context "if catalog" do
-    before { allow(subject).to receive(:external?) { true } }
-
-    it { is_expected.to validate_presence_of(:connected_url) }
-  end
-
-  context "if normal" do
-    before { allow(subject).to receive(:orderable?) { true } }
-
-    it { is_expected.to_not validate_presence_of(:connected_url) }
-  end
-
   it "has rating" do
     expect(create(:service).rating).to eq(0.0)
   end

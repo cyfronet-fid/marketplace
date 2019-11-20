@@ -71,6 +71,7 @@ module Import
 
         output.append(service)
 
+        # TODO this should be moved to Offer.webpage
         url = service["url"]
         # order_url = service["order"]
         user_manual_url = service["userManual"]
@@ -157,7 +158,6 @@ module Import
             title: name,
             description: aggregated_description,
             tagline: tagline.blank? ? "NO IMPORTED TAGLINE" : tagline,
-            connected_url: url || "",
             # provider_id: ?
             # contact_emails: ?
             places: place_names[0] || "World",

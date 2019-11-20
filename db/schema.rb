@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_29_141900) do
+ActiveRecord::Schema.define(version: 2019_11_18_102902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 2019_10_29_141900) do
     t.boolean "voucherable", default: false, null: false
     t.string "status"
     t.string "offer_type"
+    t.string "webpage"
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
     t.index ["service_id"], name: "index_offers_on_service_id"
@@ -279,7 +280,6 @@ ActiveRecord::Schema.define(version: 2019_10_29_141900) do
     t.datetime "updated_at", null: false
     t.text "tagline", null: false
     t.decimal "rating", precision: 2, scale: 1, default: "0.0", null: false
-    t.text "connected_url"
     t.bigint "provider_id"
     t.integer "service_opinion_count", default: 0
     t.text "contact_emails", default: [], array: true

@@ -99,7 +99,6 @@ class Service < ApplicationRecord
   validates :title, presence: true
   validates :description, presence: true
   validates :tagline, presence: true
-  validates :connected_url, presence: true, mp_url: true, if: :open_access_or_external?
   validates :rating, presence: true
   validates :terms_of_use_url, mp_url: true, if: :terms_of_use_url?
   validates :access_policies_url, mp_url: true, if: :access_policies_url?
