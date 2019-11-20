@@ -8,6 +8,19 @@
   $color-2: #f7f7f7;
 
   li {
+
+    &:not(:first-child) .active::before {
+      position: absolute;
+      top: 0;
+      height: 40px;
+      width: 40px;
+      background: $white;
+      content: ' ';
+      left: -28px;
+      transform: rotate(-45deg);
+      -webkit-transform: rotate(-45deg);
+    }
+
     a {
       color: $color-1;
       padding: 0.5rem 0.5rem 0.5rem 1.1rem;
@@ -16,14 +29,18 @@
       &.active {
         color: $white;
         background: $color-1;
+
+        &::after {
+          border-left: 60px solid $color-1;
+        }
       }
 
-      &.active::after {
+      &::after {
         width: 0;
         height: 0;
         border-top: 90px solid transparent;
         border-bottom: 90px solid transparent;
-        border-left: 60px solid $color-1;
+        border-left: 60px solid $white;
         position: absolute;
         top: -70px;
         content: ' ';
@@ -35,34 +52,6 @@
       background: $palette-gray-5;
       color: $palette-gray-30;
     }
-  }
-
-  li:not(:first-child):not(:last-child) a::after {
-    width: 0;
-    height: 0;
-    border-top: 90px solid transparent;
-    border-bottom: 90px solid transparent;
-    border-left: 60px solid $white;
-    position: absolute;
-    top: -70px;
-    content: ' ';
-    right: -21px;
-  }
-
-  li:not(:first-child):not(:last-child) .active::after {
-    border-left: 60px solid $color-1;
-  }
-
-  li:not(:first-child) .active::before {
-    position: absolute;
-    top: 0;
-    height: 40px;
-    width: 40px;
-    background: $white;
-    content: ' ';
-    left: -28px;
-    transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
   }
 }
 
