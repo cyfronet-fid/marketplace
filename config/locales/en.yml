@@ -60,7 +60,7 @@ en:
         title: Add to a project
         cancel: Quit
         summary:
-          description: |
+          description_html: |
             Please select a Project and review the summary below. Once added to
             the project, your service ordering page will be accessible via URL
             at your Project space.
@@ -90,9 +90,9 @@ en:
           description: |
             Please specify technical parameters. It is necessary to handle your request.
         summary:
-          description: |
+          description_html: |
             Please select a Project and review the summary below. Once you
-            submit the order, your request will be sent to a service provider.
+            submit the order, your request will be sent to a service provider.<br>
             The order status will be visible at your Project space.
     open_access:
       link: Go to the service
@@ -115,7 +115,7 @@ en:
             You can organize your services in projects.
             Add this service to a specific project or create a new one.
         summary:
-          description: |
+          description_html: |
             Please select a Project and review the summary below. Once added to
             the project, your service will be accessible via URL at your Project space.
   project:

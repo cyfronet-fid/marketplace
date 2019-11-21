@@ -1,23 +1,24 @@
-%p.mb-4= t "service.#{@service.service_type}.order.summary.description"
+%p.mb-4= t "service.#{@service.service_type}.order.summary.description_html"
 
 = render "services/summaries/technical_configuration",
          service: @service, project_item: @step
 
 = simple_form_for @step, url: service_summary_path(@service), html: { id: "order-form" } do |f|
   .additional-information.mb-4
-    %h5.mb-4.mt-5.font-weight-bold.configuration-title.text-uppercase
-      Additional information
+    .card.offer-description.mb-4
+      .card-body.pb-2.pt-4.pl-4.pr-4
+        - if @step.offer.voucherable
+          %h4 Voucher
+          %dl.mb-4
+            - if @step.request_voucher
+              %dt I don't have a voucher, and I would like to request for one
+            - else
+              %dt Voucher ID
+              %dd= @step.voucher_id
 
-    - if @step.offer.voucherable
-      %h4 Voucher
-      %dl.mb-4
-        - if @step.request_voucher
-          %dt I don't have a voucher, and I would like to request for one
-        - else
-          %dt Voucher ID
-          %dd= @step.voucher_id
-
-    = render "services/summaries/project_browser", project_item: @step, projects: @projects, f: f
-
-    = f.input :additional_comment, as: :text, class: "form-conroll",
-      label: "Please enter additional details of your request."
+        = render "services/summaries/project_browser", project_item: @step, projects: @projects, f: f
+    .card.offer-description.mb-4
+      .card-body.pb-2.pt-4.pl-4.pr-4
+        %h4 Additional information
+        = f.input :additional_comment, as: :text, class: "form-control",
+          label: "Please enter additional details of your request."
