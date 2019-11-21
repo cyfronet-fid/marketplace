@@ -1214,6 +1214,12 @@ h5 {
   .area-bg {
     height: auto;
   }
+
+  .order-container {
+    textarea {
+      width: 100%;
+    }
+  }
 }
 
 .modal-body textarea {
@@ -3003,4 +3009,15 @@ textarea.form-control.is-invalid {
   font-weight: 300;
   border-bottom: 1px solid $palette-solid-10;
   padding-bottom: 0.3rem;
+}
+
+.additional-information {
+  .offer-description {
+    h4 {
+      border-bottom: 2px solid $palette-orange;
+      margin-top: 0;
+      font-size: 0.875rem;
+      padding-bottom: 0.65rem;
+    }
+  }
 }

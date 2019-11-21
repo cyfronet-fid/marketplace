@@ -1,8 +1,5 @@
 - if project_item.property_values.present? || service.offers_count > 1
-  %h3.mt-4
-    Technical configuration
-
-  .card.offer-description.mb-5
+  .card.offer-description.mb-4
     .card-body.p-4
       %h4.card-title= project_item.offer.name
       .card-text= markdown(project_item.offer.description)
