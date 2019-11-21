@@ -20,7 +20,9 @@
   = f.association :platforms, multiple: true, input_html: { data: { choice: true } },
                   disabled: cant_edit([platform_ids: []])
   = f.association :research_areas, input_html: { data: { choice: true } }, include_hidden: false,
-                  disabled: cant_edit([research_area_ids: []])
+                  disabled: cant_edit([research_area_ids: []]),
+                  collection: ResearchArea.child_names.map { |name, ra| [name, ra.id] },
+                  label_method: :first, value_method: :second
   = f.association :target_groups,
                   label: "Dedicated For",
                   input_html: { data: { choice: true }, class: "target_groups" },
