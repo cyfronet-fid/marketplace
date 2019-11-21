@@ -16,8 +16,12 @@ FactoryBot.define do
                                 "description": "Write sth"
                               }] }
     end
-    after :build do |offer|
-      offer.offer_type = offer.service.service_type || service.service_type
+
+    factory :open_access_offer do
+      sequence(:offer_type) { :open_access }
+    end
+    factory :external_offer do
+      sequence(:offer_type) { :external }
     end
   end
 end

@@ -45,10 +45,6 @@ class Offer < ApplicationRecord
     (parameters || []).map { |param| Attribute.from_json(param) }
   end
 
-  def offer_type=(value)
-    super(value) || service&.service_type
-  end
-
   def open_access?
     offer_type == "open_access"
   end

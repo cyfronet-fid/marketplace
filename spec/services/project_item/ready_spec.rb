@@ -100,7 +100,7 @@ RSpec.describe ProjectItem::Ready do
     context "Open access service project item" do
       let(:project_item) do
         create(:project_item,
-               offer: create(:offer, service: create(:open_access_service)))
+               offer: create(:open_access_offer, service: create(:open_access_service)))
       end
 
       it "sends only rate service email to owner" do

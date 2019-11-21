@@ -91,11 +91,12 @@ describe Jira::Client do
 
     user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2")
     project_item = create(:project_item,
-                          offer: create(:offer, name: "off1",  service: create(:service,
-                                                                               order_target: "email@domain.com",
-                                                                               title: "s1",
-                                                                               service_type: "open_access",
-                                                                               categories: [create(:category, name: "cat1")])),
+                          offer: create(:open_access_offer,
+                                        name: "off1",
+                                        service: create(:open_access_service,
+                                                        order_target: "email@domain.com",
+                                                        title: "s1",
+                                                        categories: [create(:category, name: "cat1")])),
                           project: create(:project, user: user,
                                           name: "My Secret Project",
                                           user_group_name: nil,
@@ -134,12 +135,11 @@ describe Jira::Client do
 
     user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2")
     project_item = create(:project_item,
-                          offer: create(:offer,
+                          offer: create(:open_access_offer,
                                         name: "off1",
                                         voucherable: true,
-                                        service: create(:service,
+                                        service: create(:open_access_service,
                                                                  title: "s1",
-                                                                 service_type: "open_access",
                                                                  categories: [create(:category, name: "cat1")])),
                           voucher_id: "123123",
                           project: create(:project, user: user,
@@ -179,12 +179,11 @@ describe Jira::Client do
 
     user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2")
     project_item = create(:project_item,
-                          offer: create(:offer,
+                          offer: create(:open_access_offer,
                                         name: "off1",
                                         voucherable: true,
-                                        service: create(:service,
+                                        service: create(:open_access_service,
                                                                  title: "s1",
-                                                                 service_type: "open_access",
                                                                  categories: [create(:category, name: "cat1")])),
                           request_voucher: true,
                           project: create(:project, user: user, name: "My Secret Project",
