@@ -125,7 +125,7 @@ RSpec.feature "Service ordering" do
     [:open_access_service, :external_service].each do |type|
       scenario "I cannot order #{type} service twice in one project if offer has no parameters" do
         service = create(type)
-        _offer = create(:offer, service: service)
+        _offer = create(:offer, service: service, offer_type: service.service_type)
         _default_project = user.projects.find_by(name: "Services")
 
         visit service_path(service)
@@ -162,7 +162,7 @@ RSpec.feature "Service ordering" do
     [:open_access_service, :external_service].each do |type|
       scenario "I can order #{type} service twice in one project if offer has parameters" do
         service = create(type)
-        _offer = create(:offer_with_parameters, service: service)
+        _offer = create(:offer_with_parameters, service: service, offer_type: service.service_type)
         _default_project = user.projects.find_by(name: "Services")
 
         visit service_path(service)
@@ -238,7 +238,7 @@ RSpec.feature "Service ordering" do
 
     scenario "I can order open acces service" do
       open_access_service = create(:open_access_service)
-      offer = create(:offer, service: open_access_service)
+      offer = create(:open_access_offer, service: open_access_service)
       default_project = user.projects.find_by(name: "Services")
 
       visit service_path(open_access_service)
@@ -265,7 +265,7 @@ RSpec.feature "Service ordering" do
 
     scenario "I can order catalog service" do
       external_service = create(:external_service)
-      offer = create(:offer, service: external_service)
+      offer = create(:external_offer, service: external_service)
       default_project = user.projects.find_by(name: "Services")
 
       visit service_path(external_service)
@@ -464,15 +464,15 @@ RSpec.feature "Service ordering" do
       expect(page).to_not have_text("11111-22222-33333-44444")
     end
 
-    scenario "I see offer type description on information step" do
+    scenario "I see offer type on information step" do
       service = create(:service)
-      create(:offer, offer_type: :open_access, service: service)
+      create(:open_access_offer, service: service)
 
       visit service_path(service)
 
       click_on "Access the service"
 
-      expect(current_path).to eq service_information_path(service)
+      expect(page).to have_link("Go to the service")
     end
   end
 
