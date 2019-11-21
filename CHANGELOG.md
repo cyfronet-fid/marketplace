@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Offer type to the project and offer selection views (@goreck888, @jarekzet)
 - Add help static page with example help accordion (@mkasztelnik)
 - Additional information to summary step (@martaswiatkowska)
+- Just for test
 
 ### Changed
 - Internal server error message (@goreck888)
