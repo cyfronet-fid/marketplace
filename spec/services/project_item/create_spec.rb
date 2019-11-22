@@ -33,7 +33,7 @@ RSpec.describe ProjectItem::Create do
   context "when open_access service has been added to Project" do
     it "not sends email to project_item owner" do
       service = create(:open_access_service)
-      offer = create(:offer, service: service)
+      offer = create(:open_access_offer, service: service)
       project_item_template = build(:project_item, project: project, offer: offer)
 
       expect { described_class.new(project_item_template).call }.
@@ -44,7 +44,7 @@ RSpec.describe ProjectItem::Create do
   context "when external service has been added to Project" do
     it "not sends email to project_item owner" do
       service = create(:external_service)
-      offer = create(:offer, service: service)
+      offer = create(:external_offer, service: service)
       project_item_template = build(:project_item, project: project, offer: offer)
 
       expect { described_class.new(project_item_template).call }.
