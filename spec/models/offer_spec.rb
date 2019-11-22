@@ -6,7 +6,7 @@ RSpec.describe Offer do
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:description) }
   it { should validate_presence_of(:service) }
-
+  it { should validate_presence_of(:offer_type) }
   it { should belong_to(:service) }
 
   it { should have_many(:project_items).dependent(:restrict_with_error) }
@@ -24,15 +24,6 @@ RSpec.describe Offer do
   context "is orderable" do
     subject { build(:offer, offer_type: :orderable) }
     it { should_not validate_presence_of(:webpage) }
-  end
-
-  context "#offer_type" do
-    it "takes default from service if not set" do
-      service = create(:external_service)
-      offer = create(:offer, service: service)
-
-      expect(offer.offer_type).to eq "external"
-    end
   end
 
   context "#parameters" do
