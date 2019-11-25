@@ -17,8 +17,8 @@
                                           "text": markdown(offer.description) }
           - else
             = markdown(offer.description)
-      %h5.text-uppercase.parameters-title.mb-0= "Technical parameters"
-      = render "services/parameters", parameters: offer.attributes
+
+      = render "services/offers/parameters", parameters: offer.attributes
     .card-button.text-center
       %label
         = link_to service_offers_path(offer.service, project_item: { offer_id: offer.iid }), method: :put do

@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- Hide parameters section when there is not parameters (@martaswiatkowska, @mkasztelnik)
 
 ### Deprecated
 
