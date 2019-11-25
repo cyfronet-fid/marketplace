@@ -464,15 +464,41 @@ RSpec.feature "Service ordering" do
       expect(page).to_not have_text("11111-22222-33333-44444")
     end
 
-    scenario "I see offer type on information step" do
-      service = create(:service)
-      create(:open_access_offer, service: service)
+    context "On information step" do
+      scenario "I can see link to external service webpage when offert is open_access" do
+        service = create(:service)
+        create(:open_access_offer, service: service)
 
-      visit service_path(service)
+        visit service_path(service)
 
-      click_on "Access the service"
+        click_on "Access the service"
 
-      expect(page).to have_link("Go to the service")
+        expect(page).to have_link("Go to the service")
+      end
+
+      scenario "I cannot see link to external service webpage when offert is orderable" do
+        service = create(:service)
+        create(:offer, service: service)
+
+        visit service_path(service)
+
+        click_on "Access the service"
+
+        expect(page).to_not have_link("Go to the service")
+        expect(page).to_not have_link("Order externally")
+        expect(page).to_not have_link("Link")
+      end
+
+      scenario "I can see link to external service webpage when offert is external" do
+        service = create(:service)
+        create(:external_offer, service: service)
+
+        visit service_path(service)
+
+        click_on "Access the service"
+
+        expect(page).to have_link("Order externally")
+      end
     end
   end
 
