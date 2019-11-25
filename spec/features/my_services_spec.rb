@@ -68,18 +68,17 @@ RSpec.feature "My Services" do
       project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
-      project_item.new_status(status: :created, message: "Service request created")
-      project_item.new_status(status: :registered, message: "Service request registered")
-      project_item.new_status(status: :ready, message: "Service is ready")
+      project_item.new_status(status: :created)
+      project_item.new_status(status: :registered)
+      project_item.new_status(status: :ready)
 
       visit project_service_timeline_path(project, project_item)
 
       expect(page).to have_text("ready")
 
-      expect(page).to have_text("Service request created")
-      expect(page).to have_text("Service request registered")
-      expect(page).to have_text("Service request ready")
-      expect(page).to have_text("Service is ready")
+      expect(page).to have_text(I18n.t("conversations.status.created"))
+      expect(page).to have_text(I18n.t("conversations.status.registered"))
+      expect(page).to have_text(I18n.t("conversations.status.ready"))
     end
 
     scenario "I can see voucher id" do

@@ -34,7 +34,7 @@ class ProjectItem::Register
 
     def update_status!
       @project_item.new_status(status: :registered,
-                        message: "Your service request was registered in the order handling system")
+                               message: I18n.t("conversations.status.registered"))
       true
     end
 
