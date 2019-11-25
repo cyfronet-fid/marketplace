@@ -9,6 +9,21 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+
+## [2.3.0] 2019-11-25
+
+### Added
 - EOSC logo update (@bwilk)
 - Catalog can be added to project (@martaswiatkowska)
 - Project_new_message mails content (@martaswiatkowska)
@@ -35,16 +50,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Order path styling (@jarekzet)
 - Offer type required (@martaswiatkowska)
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 - Active Order button in service preview (@goreck888)
 - Cancel order link redirect for non logged-in user (@goreck888)
 - Research area links at a service pane apply the filter (@goreck888)
-
-### Security
 
 ## [2.2.3] 2019-11-19
 
