@@ -4,12 +4,12 @@ module ProjectItemsHelper
   def label_message(previous)
     if previous.is_a?(Message)
       if previous.question?
-        t("#{controller_name}.message.question")
+        t("conversations.message.question")
       else
-        t("#{controller_name}.message.answer")
+        t("conversations.message.answer")
       end
     else
-      "Service request #{previous.status}"
+      "Service reqest status: #{previous.status}"
     end
   end
 
