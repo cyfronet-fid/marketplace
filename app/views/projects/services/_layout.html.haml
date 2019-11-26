@@ -18,8 +18,12 @@
       %li.nav-item
         = link_to "Service Details", project_service_path(project, project_item),
           class: "nav-link #{"active" if controller.controller_name == "services"} text-uppercase"
+      - if project_item.offer.orderable?
+        %li.nav-item
+          = link_to "Timeline", project_service_timeline_path(project, project_item),
+            class: "nav-link #{"active" if controller.controller_name == "timelines"} text-uppercase"
       %li.nav-item
-        = link_to "Contact with project support", project_service_conversation_path(project, project_item),
+        = link_to "Contact with service provider", project_service_conversation_path(project, project_item),
           class: "nav-link #{"active" if controller.controller_name == "conversations"} text-uppercase"
 
   .container.p-0
