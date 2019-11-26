@@ -71,11 +71,6 @@ Rails.application.routes.draw do
     end
   end
 
-  if Rails.env.development?
-    get "playground/:file" => "playground#show",
-        constraints: { file: %r{[^/\.]+} }
-  end
-
   resource :admin, only: :show
   namespace :admin do
     resources :jobs, only: :index
