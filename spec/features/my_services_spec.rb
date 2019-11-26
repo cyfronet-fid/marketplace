@@ -72,7 +72,7 @@ RSpec.feature "My Services" do
       project_item.new_status(status: :registered, message: "Service request registered")
       project_item.new_status(status: :ready, message: "Service is ready")
 
-      visit project_service_conversation_path(project, project_item)
+      visit project_service_timeline_path(project, project_item)
 
       expect(page).to have_text("ready")
 
