@@ -9,8 +9,7 @@ class ProjectItem::Register
   def call
     register_in_jira! &&
     update_status! &&
-    create_message &&
-    notify!
+    create_message
   end
 
   private
@@ -37,10 +36,6 @@ class ProjectItem::Register
       @project_item.new_status(status: :registered,
                         message: "Your service request was registered in the order handling system")
       true
-    end
-
-    def notify!
-      ProjectItemMailer.status_changed(@project_item).deliver_later
     end
 
     def encode_properties(property_values)

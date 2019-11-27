@@ -2,28 +2,61 @@
 
 class ProjectItemMailer < ApplicationMailer
   def created(project_item)
-    @project_item = project_item
-    @project = project_item.project
-    @user = project_item.user
-
-    mail(to: @user.email,
-         subject: "New request for service access in EOSC Portal Marketplace created")
+    load_data(project_item)
+    if @project_item.status == "created"
+      mail(to: @user.email,
+           subject: "New request for the service access in the EOSC Marketplace - CREATED",
+           template_name: "created")
+    end
   end
 
-  def status_changed(project_item)
-    changes = project_item.statuses.last(2)
+  def added_to_project(project_item)
+    load_data(project_item)
 
-    if changes.size > 1
-      @project_item = project_item
-      @project = project_item.project
-      @user = project_item.user
-      @current_status = changes.second.status
-      @previous_status = changes.first.status
+    mail(to: @user.email,
+         subject: "The service #{@project_item.service.title} has been added to your project",
+         template_name: "added_to_project")
+  end
 
-      mail(to: @user.email,
-            subject: "Status of your service access request in EOSC Portal Marketplace has changed",
-            template_name: "changed")
-    end
+  def waiting_for_response(project_item)
+    load_data(project_item)
+
+    mail(to: @user.email,
+         subject: "Status of your service access request " \
+                             "in the EOSC Portal Marketplace has changed to WAITING FOR RESPONSE",
+         template_name: "waiting_for_response")
+  end
+
+  def approved(project_item)
+    load_data(project_item)
+
+    mail(to: @user.email,
+         subject: "Status of your service access request in the EOSC Portal Marketplace has changed to APPROVED",
+         template_name: "approved")
+  end
+
+  def ready_to_use(project_item)
+    load_data(project_item)
+
+    mail(to: @user.email,
+         subject: "Status of your service access request in the EOSC Portal Marketplace has changed to READY TO USE",
+         template_name: "ready_to_use")
+  end
+
+  def rejected(project_item)
+    load_data(project_item)
+
+    mail(to: @user.email,
+         subject: "Status of your service access request in the EOSC Portal Marketplace has changed to REJECTED",
+         template_name: "rejected")
+  end
+
+  def closed(project_item)
+    load_data(project_item)
+
+    mail(to: @user.email,
+         subject: "Status of your service access request in the EOSC Portal Marketplace has changed to Closed",
+         template_name: "closed")
   end
 
   def rate_service(project_item)
@@ -60,4 +93,12 @@ class ProjectItemMailer < ApplicationMailer
          subject: "EGI Applications on Demand service approved",
          template_name: "aod_accepted")
   end
+
+  private
+
+    def load_data(project_item)
+      @project_item = project_item
+      @project = project_item.project
+      @user = project_item.user
+    end
 end

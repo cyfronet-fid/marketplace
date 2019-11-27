@@ -81,8 +81,7 @@ RSpec.describe ProjectItem::Ready do
         project_item.new_status(status: :created, message: "ProjectItem is ready")
 
         expect { described_class.new(project_item).call }.
-            to change { ActionMailer::Base.deliveries.count }.by(2)
-        expect(ActionMailer::Base.deliveries[-2].subject).to start_with("Status of your")
+            to change { ActionMailer::Base.deliveries.count }.by(1)
         expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
       end
     end
