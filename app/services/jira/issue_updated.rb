@@ -18,6 +18,7 @@ class Jira::IssueUpdated
           status = :rejected
         when @jira_client.wf_waiting_for_response_id
           status = :waiting_for_response
+          ProjectItemMailer.waiting_for_response(@project_item).deliver_later if service.orderable?
         when @jira_client.wf_todo_id
           status = :registered
         when @jira_client.wf_in_progress_id
@@ -27,25 +28,27 @@ class Jira::IssueUpdated
           message = service.activate_message || "Service is ready to be used"
         when @jira_client.wf_closed_id
           status = :closed
+          ProjectItemMailer.closed(@project_item).deliver_later
         when @jira_client.wf_approved_id
           status = :approved
+          ProjectItemMailer.approved(@project_item).deliver_later if service.orderable?
         else
           Rails.logger.warn("Unknown issue status (#{change["to"]}")
         end
 
         if status
           @project_item.new_status(status: status, message: message)
-          if status == :ready
-            if aod_voucherable?
-              ProjectItemMailer.aod_voucher_accepted(@project_item).deliver_later
+          if status == :ready && service.orderable?
+            if service.aod?
+              aod_voucherable? ? ProjectItemMailer.aod_voucher_accepted(@project_item).deliver_later :
+                  ProjectItemMailer.aod_accepted(@project_item).deliver_later
             else
-              ProjectItemMailer.aod_accepted(@project_item).deliver_later
+              ProjectItemMailer.ready_to_use(@project_item).deliver_later
             end
           else
-            if aod_voucherable? && status == :rejected
-              ProjectItemMailer.aod_voucher_rejected(@project_item).deliver_later
-            else
-              ProjectItemMailer.status_changed(@project_item).deliver_later
+            if status == :rejected
+              aod_voucherable? ? ProjectItemMailer.aod_voucher_rejected(@project_item).deliver_later :
+                  ProjectItemMailer.rejected(@project_item).deliver_later
             end
           end
         end
