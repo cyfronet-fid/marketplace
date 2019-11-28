@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Remove playground section (@mkasztelnik)
 
 ### Fixed
+- Sending AOD approved e-mail only for AOD services (@goreck888)
 
 ### Security
 

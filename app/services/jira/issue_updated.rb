@@ -36,17 +36,14 @@ class Jira::IssueUpdated
         if status
           @project_item.new_status(status: status, message: message)
           if status == :ready
-            if aod_voucherable?
-              ProjectItemMailer.aod_voucher_accepted(@project_item).deliver_later
-            else
+            if service.aod?
+              aod_voucherable? ? ProjectItemMailer.aod_voucher_accepted(@project_item).deliver_later :
               ProjectItemMailer.aod_accepted(@project_item).deliver_later
             end
+          elsif aod_voucherable? && status == :rejected
+            ProjectItemMailer.aod_voucher_rejected(@project_item).deliver_later
           else
-            if aod_voucherable? && status == :rejected
-              ProjectItemMailer.aod_voucher_rejected(@project_item).deliver_later
-            else
-              ProjectItemMailer.status_changed(@project_item).deliver_later
-            end
+            ProjectItemMailer.status_changed(@project_item).deliver_later
           end
         end
       elsif change["field"] == "CP-VoucherID"
@@ -63,6 +60,6 @@ class Jira::IssueUpdated
     end
 
     def aod_voucherable?
-      service.aod? ? @project_item.voucherable? : false
+      @project_item.voucherable?
     end
 end
