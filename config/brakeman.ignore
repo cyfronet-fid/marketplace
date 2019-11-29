@@ -21,26 +21,6 @@
       "note": ""
     },
     {
-      "warning_type": "Dynamic Render Path",
-      "warning_code": 15,
-      "fingerprint": "a41971a03f7de3a63ba4b1d714fecd10bfe5f5c3013120baa8dd46139e8d994a",
-      "check_name": "Render",
-      "message": "Render path contains parameter value",
-      "file": "app/controllers/playground_controller.rb",
-      "line": 9,
-      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => params.require(:file), {})",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "PlaygroundController",
-        "method": "show"
-      },
-      "user_input": "params.require(:file)",
-      "confidence": "High",
-      "note": ""
-    },
-    {
       "warning_type": "Mass Assignment",
       "warning_code": 70,
       "fingerprint": "adf4c035c781fab7c37fc81076019c3b30cf4cae6afa7caff9163f9cf595bae8",
@@ -184,6 +164,6 @@
       "note": ""
     }
   ],
-  "updated": "2019-11-26 13:39:04 +0100",
+  "updated": "2019-11-29 09:21:33 +0100",
   "brakeman_version": "4.7.2"
 }
