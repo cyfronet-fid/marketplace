@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Hide parameters section when there is not parameters (@martaswiatkowska, @mkasztelnik)
+- Don't register internal messages (@mkasztelnik, @martaswiatkowska)
 
 ### Deprecated
 
