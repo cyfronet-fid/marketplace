@@ -33,6 +33,7 @@ Rails.application.routes.draw do
         scope module: :services do
           resource :opinion, only: [:new, :create]
           resource :conversation, only: [:show, :create]
+          resource :timeline, only: :show
         end
       end
       resource :conversation, only: [:show, :create]
