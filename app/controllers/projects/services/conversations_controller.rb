@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class Projects::Services::ConversationsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :load_and_authorize_project_item!
+  include ProjectItem::Authorize
 
   def show
     @message = Message.new(messageable: @project_item)
@@ -33,16 +32,6 @@ class Projects::Services::ConversationsController < ApplicationController
     end
 
     def load_messages
-      @messages = (@project_item.messages + @project_item.statuses).
-                  sort_by(&:updated_at)
-    end
-
-    def load_and_authorize_project_item!
-      @project_item = ProjectItem.joins(:project).
-                      find_by(iid: params[:service_id],
-                              project_id: params[:project_id])
-      @project = @project_item.project
-
-      authorize(@project_item, :show?)
+      @messages = @project_item.messages.order(:updated_at)
     end
 end
