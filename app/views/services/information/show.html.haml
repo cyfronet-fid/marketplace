@@ -3,7 +3,7 @@
     service_title: wizard_title, faq_url: page_path("help"))
 
 .text-center
-  - unless @offer.orderable? && !@offer.webpage.blank?
+  - unless @offer.orderable? || @offer.webpage.blank?
     = link_to t("service.#{@offer.offer_type}.link"),  @offer.webpage,
       class: "btn btn-primary mb-2", target: "_blank", title: "External link"
 
