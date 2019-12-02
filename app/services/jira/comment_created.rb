@@ -30,7 +30,15 @@ class Jira::CommentCreated
     end
 
     def reject?
-      @comment["author"]["name"] == jira_username
+      owned? || !visible?
+    end
+
+    def owned?
+      @comment.dig("author", "name") == jira_username
+    end
+
+    def visible?
+      (@comment.dig("visibility", "value") || "User") == "User"
     end
 
     def jira_username
