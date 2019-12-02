@@ -41,6 +41,25 @@ RSpec.describe Jira::CommentCreated do
       expect(email.body.encoded).to match(/A new message was added to your service request/)
       expect(email.subject).to eq("Question about your service access request in EOSC Portal Marketplace")
     end
+
+    it "register messages for all and for User" do
+      expect do
+        described_class.new(project_item,
+                            comment(message: "question",
+                                    id: "321", visibility: "User")).call
+        described_class.new(project_item,
+                            comment(message: "question",
+                                    id: "321", visibility: nil)).call
+      end.to change { project_item.messages.count }.by(2)
+    end
+
+    it "does not register internal messages" do
+      expect do
+        described_class.new(project_item,
+                            comment(message: "question",
+                                    id: "321", visibility: "Admin")).call
+      end.to_not change { project_item.messages.count }
+    end
   end
 
   context "for project" do
@@ -78,12 +97,32 @@ RSpec.describe Jira::CommentCreated do
       expect(email.body.encoded).to match(/You have received a message related to your Project/)
       expect(email.subject).to eq("Question about your Project Project in EOSC Portal Marketplace")
     end
+
+    it "register messages for all and for User" do
+      expect do
+        described_class.new(project,
+                            comment(message: "question",
+                                    id: "321", visibility: "User")).call
+        described_class.new(project,
+                            comment(message: "question",
+                                    id: "321", visibility: nil)).call
+      end.to change { project.messages.count }.by(2)
+    end
+
+    it "does not register internal messages" do
+      expect do
+        described_class.new(project,
+                            comment(message: "question",
+                                    id: "321", visibility: "Admin")).call
+      end.to_not change { project.messages.count }
+    end
   end
 
-  def comment(message:, id:, email: "non@existing.pl", name: "nonexisting")
+  def comment(message:, id:, email: "non@existing.pl", name: "nonexisting", visibility: "User")
     {
       "body" => message, "id" => id, "emailAddress" => email,
-      "author" => { "name" => name }
+      "author" => { "name" => name },
+      "visibility" => { "value" => visibility }
     }
   end
 
