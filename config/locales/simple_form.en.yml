@@ -23,6 +23,8 @@ en:
           Origin country
         countries_of_partnership: |
           Collaboration countries
+      project_item:
+        additional_comment: Please enter additional details of your request
     #   defaults:
     #     password: 'Password'
     #   user:
@@ -69,6 +71,11 @@ en:
         webpage: |
           Url should start with http or https [e.g. http://webpage.org].</br>
           This url will be available on service order information step
+      project_item:
+        additional_comment: |
+          Use it to describe your additional comments/questions related to the
+          service. The text is to be sent to the service provider and will be
+          accessible in the "Contact with service provider" tab.
     #     username: 'User name to sign in.'
     #     password: 'No special characters, please.'
     # include_blanks:
