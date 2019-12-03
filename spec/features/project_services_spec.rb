@@ -17,9 +17,9 @@ RSpec.feature "Project services" do
 
     visit project_service_path(project, project_item)
 
-    expect(page).to have_link("Timeline")
+    expect(page).to have_link("Order history")
     expect(page).to have_link("Contact with service provider")
-    expect(page).to have_link("Service Details")
+    expect(page).to have_link("Details")
   end
 
   [:open_access, :external].each do |type|
