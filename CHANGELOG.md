@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Removed
 - Remove playground section (@mkasztelnik)
+- Duplicates of ids and questions in FAQ (@goreck888)
 
 ### Fixed
 
