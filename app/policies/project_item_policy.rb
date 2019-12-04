@@ -17,10 +17,6 @@ class ProjectItemPolicy < ApplicationPolicy
     user && record.project&.user == user
   end
 
-  def conversation?
-    record&.offer.orderable?
-  end
-
   def permitted_attributes
     attributes = record.offer.attributes.map { |a|
       (a.value_schema[:type] == "array" || a.type == "select" ? { a.id => [] } : a.id)
