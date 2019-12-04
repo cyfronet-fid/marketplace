@@ -50,13 +50,13 @@ class ProjectItem < ApplicationRecord
     !(ready? || rejected?)
   end
 
-  def new_status(status: nil, message: nil, author: nil)
+  def new_status(status: nil, author: nil)
     # don't create change when there is not status and message given
-    return unless status || message
+    return unless status
 
     status ||= self.status
 
-    statuses.create(status: status, message: message, author: author).tap do
+    statuses.create(status: status, author: author).tap do
       update_attributes(status: status)
     end
   end

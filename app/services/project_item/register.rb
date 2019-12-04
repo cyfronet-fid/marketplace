@@ -33,8 +33,7 @@ class ProjectItem::Register
     end
 
     def update_status!
-      @project_item.new_status(status: :registered,
-                               message: I18n.t("conversations.status.registered"))
+      @project_item.new_status(status: :registered)
       true
     end
 

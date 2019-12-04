@@ -23,30 +23,18 @@ RSpec.describe ProjectItem do
     it "change project_item status" do
       project_item = create(:project_item, status: :created)
 
-      project_item.new_status(status: :registered, message: "ProjectItem registered")
+      project_item.new_status(status: :registered)
       new_status = project_item.statuses.last
 
       expect(project_item).to be_registered
       expect(new_status).to be_registered
-      expect(new_status.message).to eq("ProjectItem registered")
-    end
-
-    it "does not change status when only message is given" do
-      project_item = create(:project_item, status: :created)
-
-      project_item.new_status(message: "some update")
-      new_status = project_item.statuses.last
-
-      expect(project_item).to be_created
-      expect(new_status).to be_created
-      expect(new_status.message).to eq("some update")
     end
 
     it "set author" do
       project_item = create(:project_item, status: :created)
       author = create(:user)
 
-      project_item.new_status(status: :registered, message: "update", author: author)
+      project_item.new_status(status: :registered, author: author)
       new_status = project_item.statuses.last
 
       expect(new_status.author).to eq(author)
