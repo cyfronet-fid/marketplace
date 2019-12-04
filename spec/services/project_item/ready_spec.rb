@@ -53,6 +53,21 @@ RSpec.describe ProjectItem::Ready do
       expect(project_item).to be_ready
     end
 
+    it "uses activate message when project item status is changed to ready" do
+      service = create(:open_access_service, activate_message: "Welcome!!!")
+      offer = create(:offer, service: service)
+      project_item = create(:project_item, offer: offer)
+
+      project_item.new_status(status: :created)
+
+      expect { described_class.new(project_item).call }.
+          to change { ActionMailer::Base.deliveries.count }.by(3)
+
+      expect(ActionMailer::Base.deliveries[-3].subject).to start_with("Activate message")
+      expect(ActionMailer::Base.deliveries[-2].subject).to start_with("Status of your")
+      expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
+    end
+
     it "creates new JIRA issue and do the transition" do
       jira_client = Jira::Client.new
 
