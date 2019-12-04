@@ -79,7 +79,6 @@ namespace :dev do
                       research_areas: area,
                       providers: providers,
                       service_type: service_type,
-                      connected_url: hash["connected_url"],
                       webpage_url: hash["webpage_url"],
                       manual_url: hash["manual_url"],
                       helpdesk_url: hash["helpdesk_url"],
@@ -121,6 +120,7 @@ namespace :dev do
     offers_hash && offers_hash.each do |_, h|
       service.offers.create!(name: h["name"],
                             description: h["description"],
+                            webpage: h["webpage"],
                             parameters: h["parameters"] || [],
                             offer_type: service.service_type,
                             status: :published)
