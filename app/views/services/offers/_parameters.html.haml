@@ -1,10 +1,11 @@
 - technical_parameters = filter_technical_parameters(parameters.map(&:to_json))
 
 - if technical_parameters.present?
-  %h5.text-uppercase.parameters-title.mb-0= "Technical parameters"
-  %table.offer-params.table.table-hover
-    %tbody
-      - technical_parameters.each do |parameter|
-        %tr
-          %td= parameter["label"]
-          %td.text-right.text-nowrap.font-weight-bold= parse_offer_parameter_value(parameter)
+  .card-body.pt-0.collapse-group
+    %h5.text-uppercase.parameters-title.mb-0= "Technical parameters"
+    %table.offer-params.table.table-hover
+      %tbody
+        - technical_parameters.each do |parameter|
+          %tr
+            %td= parameter["label"]
+            %td.text-right.text-nowrap.font-weight-bold= parse_offer_parameter_value(parameter)
