@@ -204,7 +204,7 @@ private
 
   def encode_order_properties(project_item)
     {
-      "category" => project_item.service.categories.first.name,
+      "category" => project_item.service.categories.first&.name,
       "service" => project_item.service.title,
       "offer" => project_item.offer&.name,
       "attributes" => encode_properties(project_item.properties)

@@ -49,6 +49,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - `dev:prime` task migrations update (@goreck888)
+- Return nil to jira if service doesn't have category (@martaswiatkowska)
 
 ## [2.3.0] 2019-11-25
 
