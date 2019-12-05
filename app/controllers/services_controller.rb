@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class ServicesController < ApplicationController
-  include Service::Filterable
   include Service::Searchable
   include Service::Categorable
   include Service::Autocomplete
@@ -12,7 +11,7 @@ class ServicesController < ApplicationController
     if params["service_id"].present?
       redirect_to Service.find(params["service_id"])
     end
-    @services = search_and_filter(scope)
+    @services = search(scope)
     @highlights = highlights(@services)
   end
 
