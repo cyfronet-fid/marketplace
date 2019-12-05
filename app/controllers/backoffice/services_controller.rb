@@ -20,6 +20,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def show
     @offer = Offer.new(service: @service, status: :draft)
+    @offers = @service.offers.order(:created_at)
   end
 
   def new
@@ -69,7 +70,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       @service.assign_attributes(attributes_from_session)
 
       if @service.valid?
-        @offers = @service.offers.where(status: :published)
+        @offers = @service.offers.where(status: :published).order(:created_at)
         @related_services = @service.related_services
 
         render :preview
