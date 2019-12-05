@@ -1,0 +1,9 @@
+%p Dear #{@user.full_name},
+%p
+  You have received a message from a customer service expert related to your service order
+  #{link_to @project_item.service.title, project_service_url(@project, @project_item)}.
+  Kindly give your reply using this #{link_to "link", project_service_conversation_url(@project, @project_item)}.
+%p
+  Please note that without your response, a service provider would not be able to proceed further with your order.
+  It is important to have your reply as soon as possible.
+%em Please note that you can’t reply to this message.

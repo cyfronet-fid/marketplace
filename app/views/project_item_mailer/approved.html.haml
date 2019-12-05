@@ -1,0 +1,17 @@
+%p Dear #{@user.full_name},
+%p
+  Your order #{link_to @project_item.service.title, service_url(@project_item.service)} is
+  %strong approved.
+%p
+  This is to inform you that the service order #{@project_item.service.title}
+  has been accepted and is currently being processed.
+  We will notify you when the service order is ready.
+%p
+  You can always track your order details using this
+  #{link_to "link", project_service_url(@project, @project_item)}.
+%p
+  In the meantime, if you have any questions, you can send a message via Marketplace platform
+  to a service provider using this
+  #{link_to "link", project_service_conversation_url(@project, @project_item)}.
+
+%em Please note that you can’t reply to this message.

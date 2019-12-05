@@ -31,24 +31,24 @@ RSpec.describe ProjectItem::Create do
   end
 
   context "when open_access service has been added to Project" do
-    it "not sends email to project_item owner" do
+    it "sends email to project_item owner - added to the project" do
       service = create(:open_access_service)
       offer = create(:open_access_offer, service: service)
       project_item_template = build(:project_item, project: project, offer: offer)
 
       expect { described_class.new(project_item_template).call }.
-        to_not change { ActionMailer::Base.deliveries.count }
+        to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
 
   context "when external service has been added to Project" do
-    it "not sends email to project_item owner" do
+    it "sends email to project_item owner - added to the project" do
       service = create(:external_service)
       offer = create(:external_offer, service: service)
       project_item_template = build(:project_item, project: project, offer: offer)
 
       expect { described_class.new(project_item_template).call }.
-        to_not change { ActionMailer::Base.deliveries.count }
+        to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
 

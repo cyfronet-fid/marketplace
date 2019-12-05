@@ -1,0 +1,12 @@
+%p Dear #{@user.full_name},
+%p
+  This is to confirm that the #{link_to @project_item.service.title, service_url(@project_item.service)}
+  service was added to your project #{@project.name}.
+  In case you want to access the Project details or add another service, please use this
+  #{link_to "link", project_url(@project)}.
+%p
+  In the meantime, if you have any questions, you can send a message
+  via Marketplace platform to service provider using this
+  #{link_to "link", project_service_conversation_url(@project, @project_item)}.
+
+%em Please note that you can’t reply to this message.
