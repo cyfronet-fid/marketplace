@@ -15,6 +15,6 @@ class Projects::Services::TimelinesController < ApplicationController
     end
 
     def load_timeline
-      @statuses = @project_item.statuses.order(:updated_at)
+      @statuses = @project_item.public_statuses.order(:updated_at)
     end
 end

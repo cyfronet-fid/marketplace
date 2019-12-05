@@ -99,7 +99,7 @@ class ProjectItemMailer < ApplicationMailer
     @activate_message = service.activate_message
 
     mail(to: @user.email,
-         subject: "Activate message",
+         subject: "[EOSC merketplace] #{service.title} is ready - usage instructions",
          template_name: "activate_message")
   end
 

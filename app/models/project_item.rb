@@ -46,6 +46,10 @@ class ProjectItem < ApplicationRecord
     offer.service unless offer.nil?
   end
 
+  def public_statuses
+    statuses.where.not(status: "registered")
+  end
+
   def active?
     !(ready? || rejected?)
   end

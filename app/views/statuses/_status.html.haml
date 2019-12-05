@@ -1,11 +1,9 @@
 %li.step-progress-item.current.ml-5
   .time.x-small
-    = time_ago_in_words(current.created_at) + " ago"
+    = time_ago_in_words(status.created_at) + " ago"
 
   .ml-4
-    %p.frame= t("conversations.status.info.#{current.status}")
-    .d-block.message-info= label_message(current)
-
-
+    %p.frame= t("conversations.status.info.#{status.status}")
+    .d-block.message-info Service request status: #{status.status}
 
 
