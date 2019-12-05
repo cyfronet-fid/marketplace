@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Hide parameters section when there is not parameters (@martaswiatkowska, @mkasztelnik)
 - Don't register internal messages (@mkasztelnik, @martaswiatkowska)
 - Move test services generation from `db:seed` to `dev:prime` (@mkasztelnik)
+- Merge Filterable and Searchable into one module Searchable (@goreck888)
 
 ### Deprecated
 
@@ -23,7 +24,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Duplicates of ids and questions in FAQ (@goreck888)
 
 ### Fixed
-- dev:prime task migrations update (@goreck888)
+- `dev:prime` task migrations update (@goreck888)
 
 ### Security
 
