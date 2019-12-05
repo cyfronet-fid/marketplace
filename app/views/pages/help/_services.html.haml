@@ -50,7 +50,8 @@
 
   = render "pages/help_card", parent: "help-services", name: "service-types",
     title: "What type of service accesses do we have?" do
-    We have 3 types of services access:  Open access, Catalogue type, Normal type.
+    We have 3 types of services access: 
+    %i Open access, Catalogue type, Normal type.
 
     %ul.list-unstyled
       %li
@@ -71,32 +72,6 @@
         service request with filled in information relevant from provider’s
         perspective. Access has to be granted manually after analysis of
         the request.
-
-
-  = render "pages/help_card", parent: "help-services", name: "what-do-we-have",
-    title: "What type of service accesses do we have ?" do
-    We have 3 types of services access:
-    %i Open access, Catalogue type, Normal type.
-
-
-    %ul.list-unstyled
-      %li
-        %strong Open access -
-        services is open to everyone, no login required. The user is
-        immediately redirected to the services and no orders are created.
-        The access ‘requests’ are tracked for accounting aim. 
-      %li
-        %strong External ordering -
-        service orders are handled externally, but access requests coming
-        from EOSC-hub can be tracked and reflected in the Management Back
-        Office. Access to the service can be granted automatically after
-        sending the request.
-      %li
-        %strong Internal ordering - identity of a user is required (user has
-        to be logged in in the EOSC Portal to get access to the service).
-        Service requires submitting a service request with filled in
-        information relevant from provider’s perspective. Access has to be
-        granted manually after analysis of the request.
 
 
   = render "pages/help_card", parent: "help-services", name: "trl",

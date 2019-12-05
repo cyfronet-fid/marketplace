@@ -1,0 +1,9 @@
+Dear #{@user.full_name},
+\
+This is to inform you that you request for the  service #{@project_item.service.title} has been rejected.
+\
+If you have any questions or need additional information about the reason,
+you can send a message via Marketplace platform to a service provider
+using this link - #{project_service_conversation_url(@project, @project_item)}.
+\
+Please note that you can’t reply to this message.

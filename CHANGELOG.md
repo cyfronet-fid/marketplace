@@ -13,13 +13,16 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - Hide parameters section when there is not parameters (@martaswiatkowska, @mkasztelnik)
 - Don't register internal messages (@mkasztelnik, @martaswiatkowska)
+- Move test services generation from `db:seed` to `dev:prime` (@mkasztelnik)
 
 ### Deprecated
 
 ### Removed
 - Remove playground section (@mkasztelnik)
+- Duplicates of ids and questions in FAQ (@goreck888)
 
 ### Fixed
+- dev:prime task migrations update (@goreck888)
 
 ### Security
 

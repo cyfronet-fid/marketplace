@@ -1,0 +1,13 @@
+Dear #{@user.full_name},
+\
+Your order #{@project_item.service.title} is approved.
+\
+This is to inform you that the service order #{@project_item.service.title}
+has been accepted and is currently being processed. We will notify you when the service order is ready.
+\
+You can always track your order details using this link - #{project_service_url(@project, @project_item)}.
+\
+In the meantime, if you have any questions, you can send a message via Marketplace platform
+to a service provider using this link - #{project_service_conversation_url(@project, @project_item)}.
+\
+Please note that you can’t reply to this message.

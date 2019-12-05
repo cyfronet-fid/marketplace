@@ -8,12 +8,28 @@ class ProjectItemPreview < ActionMailer::Preview
     ProjectItemMailer.created(ProjectItem.last)
   end
 
-  def status_changed
-    ProjectItemMailer.status_changed(ProjectItem.last)
+  def waiting_for_response
+    ProjectItemMailer.waiting_for_response(ProjectItem.last)
   end
 
-  def new_message
-    ProjectItemMailer.new_message(ProjectItem.last)
+  def added_to_project
+    ProjectItemMailer.added_to_project(ProjectItem.last)
+  end
+
+  def approved
+    ProjectItemMailer.approved(ProjectItem.last)
+  end
+
+  def ready_to_use
+    ProjectItemMailer.ready_to_use(ProjectItem.last)
+  end
+
+  def rejected
+    ProjectItemMailer.rejected(ProjectItem.last)
+  end
+
+  def closed
+    ProjectItemMailer.closed(ProjectItem.last)
   end
 
   def aod_voucher_accepted
