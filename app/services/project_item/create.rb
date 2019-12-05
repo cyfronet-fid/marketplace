@@ -15,6 +15,7 @@ class ProjectItem::Create
 
       unless orderable?
         ProjectItem::ReadyJob.perform_later(@project_item, @message)
+        ProjectItemMailer.added_to_project(@project_item).deliver_later
       else
         ProjectItemMailer.created(@project_item).deliver_later
         ProjectItem::RegisterJob.perform_later(@project_item, @message)

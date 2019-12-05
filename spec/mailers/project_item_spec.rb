@@ -26,16 +26,64 @@ RSpec.describe ProjectItemMailer, type: :mailer do
   end
 
   context "project_item change" do
-    it "notifies about project_item status change" do
-      project_item = create(:project_item, project: project)
+    let(:project_item) { create(:project_item, project: project) }
+    before(:each) do
       project_item.new_status(status: :created, message: "ProjectItem created")
       project_item.new_status(status: :registered, message: "ProjectItem registered")
+    end
 
-      mail = described_class.status_changed(project_item).deliver_now
+    it "notifies about project_item status change to waiting_for_response" do
+      project_item.new_status(status: :waiting_for_response)
+
+      mail = described_class.waiting_for_response(project_item).deliver_now
       encoded_body = mail.body.encoded
 
-      expect(mail.subject).to match(/has changed/)
-      expect(encoded_body).to match(/from "created" to "registered"/)
+      expect(mail.subject)
+          .to match("Status of your service access request " \
+                    "in the EOSC Portal Marketplace has changed to WAITING FOR RESPONSE")
+      expect(encoded_body).to match(/You have received a message from a customer service expert related/)
+      expect(encoded_body).to match(/#{project_services_url(project)}/)
+      expect(mail.to).to contain_exactly(user.email)
+    end
+
+    it "notifies about project_item status change to rejected" do
+      project_item.new_status(status: :rejected)
+
+      mail = described_class.rejected(project_item).deliver_now
+      encoded_body = mail.body.encoded
+
+      expect(mail.subject)
+          .to match("Status of your service access request in the EOSC Portal Marketplace " \
+                    "has changed to REJECTED")
+      expect(encoded_body).to match("n rejected.=0D")
+      expect(encoded_body).to match(/#{project_service_conversation_url(project, project_item)}/)
+      expect(mail.to).to contain_exactly(user.email)
+    end
+
+    it "notifies about project_item status change to closed" do
+      project_item.new_status(status: :closed)
+
+      mail = described_class.closed(project_item).deliver_now
+      encoded_body = mail.body.encoded
+
+      expect(mail.subject)
+          .to match("Status of your service access request in the EOSC Portal Marketplace " \
+                    "has changed to Closed")
+      expect(encoded_body).to match(/has been closed/)
+      expect(encoded_body).to match(/#{project_service_conversation_url(project, project_item)}/)
+      expect(mail.to).to contain_exactly(user.email)
+    end
+
+    it "notifies about project_item status change to approved" do
+      project_item.new_status(status: :approved)
+
+      mail = described_class.approved(project_item).deliver_now
+      encoded_body = mail.body.encoded
+
+      expect(mail.subject)
+          .to match("Status of your service access request in the EOSC Portal Marketplace " \
+                    "has changed to APPROVED")
+      expect(encoded_body).to match(/is approved/)
       expect(encoded_body).to match(/#{project_service_url(project, project_item)}/)
       expect(mail.to).to contain_exactly(user.email)
     end
