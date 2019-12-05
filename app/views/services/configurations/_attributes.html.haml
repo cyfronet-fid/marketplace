@@ -1,9 +1,11 @@
 - unless project_item.property_values.blank?
-  %h5.mb-4.mt-5.font-weight-bold.configuration-title.text-uppercase Technical parameters
-  .col-12.col-lg-7
-    - project_item.property_values.each do |attr|
-      = form.simple_fields_for :property_values, attr do |field|
-        = render "services/configurations/attributes/#{attr.type}", attr: attr, field: field
-      - rescue
-        = e.message
+  .card.offer-description.mb-4
+    .card-body.p-4
+      %h4.card-title.mb-4 Technical parameters
+      .col-12.col-lg-12.pl-0.additional-information.technical
+        - project_item.property_values.each do |attr|
+          = form.simple_fields_for :property_values, attr do |field|
+            = render "services/configurations/attributes/#{attr.type}", attr: attr, field: field
+          - rescue
+            = e.message
 

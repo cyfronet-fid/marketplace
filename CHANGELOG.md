@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- Changes styling on checkout - Technical configuration tab (@jarekzet)
 - Hide parameters section when there is not parameters (@martaswiatkowska, @mkasztelnik)
 - Don't register internal messages (@mkasztelnik, @martaswiatkowska)
 - Move test services generation from `db:seed` to `dev:prime` (@mkasztelnik)

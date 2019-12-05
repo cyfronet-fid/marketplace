@@ -1173,10 +1173,6 @@ h5 {
     width: 33%;
   }
 
-  textarea {
-    width: 70%;
-  }
-
   table {
     margin-bottom: 0;
   }
@@ -3014,10 +3010,28 @@ textarea.form-control.is-invalid {
 .additional-information {
   .offer-description {
     h4 {
-      border-bottom: 2px solid $palette-orange;
+      border-bottom: 2px solid $palette-yellow;
       margin-top: 0;
       font-size: 0.875rem;
       padding-bottom: 0.65rem;
     }
   }
+
+  &.technical {
+    .col-form-label,
+    .form-control-label {
+      border-bottom: 2px solid $palette-yellow;
+      font-size: 0.875rem;
+      padding-bottom: 0.35rem;
+      text-transform: uppercase;
+      margin-bottom: 17px;
+      font-weight: bold;
+      width: 100%;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 2rem;
+  }
 }
+
