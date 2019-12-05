@@ -76,8 +76,8 @@ RSpec.feature "My Services" do
 
       expect(page).to have_text("ready")
 
-      expect(page).to have_text(I18n.t("conversations.status.registered"))
-      expect(page).to have_text(I18n.t("conversations.status.ready"))
+      expect(page).to have_text(I18n.t("conversations.status.info.created"))
+      expect(page).to have_text(I18n.t("conversations.status.info.ready"))
     end
 
     scenario "I can see voucher id" do

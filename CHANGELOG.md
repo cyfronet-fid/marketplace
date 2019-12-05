@@ -19,6 +19,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Merge Filterable and Searchable into one module Searchable (@goreck888)
 - ProjectItem rating questions customization by offer type (@goreck888)
 - Offer view unification (@jarekzet)
+- New statuses labels displayed on timeline (@martaswiatkowska)
+- Activate_message are send in mail (@martaswiatkowska)
 
 ### Deprecated
 
