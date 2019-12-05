@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Sort offers by creation date (@mkasztelnik)
 
 ### Changed
 - Changes styling on checkout - Technical configuration tab (@jarekzet)

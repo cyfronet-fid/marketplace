@@ -43,7 +43,7 @@ class Services::OffersController < Services::ApplicationController
     end
 
     def init_step_data
-      @offers = @service.offers.reject { |o| o.draft? }
+      @offers = policy_scope(@service.offers).order(:created_at)
       @step = step(session[session_key])
     end
 end

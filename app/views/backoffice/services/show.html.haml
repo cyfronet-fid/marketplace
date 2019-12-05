@@ -56,7 +56,7 @@
           - if policy([:backoffice, @offer]).new?
             = link_to "Add new offer", new_backoffice_service_offer_path(@service),
               class: "btn btn-primary btn-sm float-right"
-      = render "backoffice/services/offers/offers", service: @service
+      = render "backoffice/services/offers/offers", service: @service, offers: @offers
     .col-1.separator.d-none.d-xl-block
     .col-12.col-sm-3.info-col
       %h5 Category
