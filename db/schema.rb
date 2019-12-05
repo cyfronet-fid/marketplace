@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_21_084235) do
+ActiveRecord::Schema.define(version: 2019_12_05_113156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -303,7 +303,6 @@ ActiveRecord::Schema.define(version: 2019_11_21_084235) do
     t.integer "upstream_id"
     t.string "order_target", default: "", null: false
     t.string "helpdesk_email", default: ""
-    t.index ["description"], name: "index_services_on_description"
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["title"], name: "index_services_on_title"
   end

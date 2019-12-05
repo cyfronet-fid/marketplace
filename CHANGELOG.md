@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 - Remove playground section (@mkasztelnik)
 - Duplicates of ids and questions in FAQ (@goreck888)
+- Remove service description index from DB (@mkasztelnik)
 
 ### Fixed
 - dev:prime task migrations update (@goreck888)
