@@ -1,0 +1,10 @@
+Dear #{@user.full_name},
+\
+Your order #{@project_item.service.title} is ready.
+\
+This is to inform you that you service #{@project_item.service.title} is ready to be used.
+\
+If you have any questions on how to use it, please send a message via Marketplace platform
+to a service provider using this link - #{project_service_conversation_url(@project, @project_item)}.
+\
+Please note that you can’t reply to this message.

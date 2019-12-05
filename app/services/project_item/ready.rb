@@ -18,7 +18,7 @@ class ProjectItem::Ready
     ready_in_jira! &&
     update_status! &&
     create_message &&
-    notify!
+    enqueue_rate_service!
   end
 
   private
@@ -58,8 +58,7 @@ class ProjectItem::Ready
       service.activate_message || "Your service request is ready"
     end
 
-    def notify!
-      ProjectItemMailer.status_changed(@project_item).deliver_later if @project_item.orderable?
+    def enqueue_rate_service!
       ProjectItemMailer.rate_service(@project_item).deliver_later(wait_until: RATE_AFTER_PERIOD.from_now)
     end
 

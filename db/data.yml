@@ -1827,7 +1827,6 @@ services:
         providers: [*esa]
         logo: geoss-portal.png
         external: true
-        connected_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
         webpage_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
         manual_url:
         helpdesk_url:
@@ -1853,13 +1852,13 @@ services:
           1:
             name: GEOSS Portal
             description: *notSpecified
+            webpage: http://geosspublish.uat.esaportal.eu/knowledge-producer
     GEO DAB:
         title: &geossDab GEO DAB
         parents: *sharingAndDicoveryParent
         providers: [*cnr]
         logo: geo-dab.jpg
         open_access: true
-        connected_url: http://www.geodab.net
         webpage_url: http://www.geodab.net
         manual_url: http://api.geodab.eu/index.html
         helpdesk_url: http://api.geodab.eu/index.html
@@ -1894,6 +1893,7 @@ services:
           1:
             name: GEOSS DAB
             description: *notSpecified
+            webpage: http://www.geodab.net
     VLO:
         title: &vloService Virtual Language Observatory
         parents: *sharingAndDicoveryParent
@@ -1947,7 +1947,6 @@ services:
         providers: [*clarin]
         logo: lrs-logo.png #component-metadata-infrastructure.png
         open_access: true
-        connected_url: https://switchboard.clarin.eu/
         webpage_url: https://switchboard.clarin.eu/ #https://clarin.eu/
         manual_url: https://vlo.clarin.eu/help
         helpdesk_url: https://www.egi.eu/more-information/
@@ -2006,6 +2005,7 @@ services:
             name: LRS
             description: |
               A web application that suggests language analysis tools for specific data sets.
+            webpage: https://switchboard.clarin.eu/
     VCR:
         title: &vcrService Virtual Collection Registry
         parents: *sharingAndDicoveryParent
@@ -2939,7 +2939,6 @@ services:
         providers: [*d4science, *egi, *smartSmear]
         logo: vre.png
         open_access: true
-        connected_url: https://services.d4science.org/web/particleformation/
         webpage_url: https://services.d4science.org/web/particleformation/
         manual_url: https://github.com/markusstocker/pynpf-d4science
         helpdesk_url: https://github.com/markusstocker/pynpf-d4science
@@ -2965,6 +2964,7 @@ services:
           1:
             name: New Particle Formation Event Analysis
             description: *notSpecified
+            webpage: https://services.d4science.org/web/particleformation/
     ENES Climate Analytics Service:
         title: &enes ENES Climate Analytics Service
         parents: *processingAndAnalysisParent
@@ -3308,7 +3308,6 @@ services:
         providers: [*uou]
         logo: haddock.png
         open_access: true
-        connected_url: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
         webpage_url: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
         manual_url: http://www.bonvinlab.org/software/haddock2.2/manual/
         helpdesk_url: http://ask.bioexcel.eu/c/haddock
@@ -3331,8 +3330,8 @@ services:
           to place on their models.
           HADDOCK is prepared to deal with several classes of problems,
           including protein-protein, protein-nucleic acids and protein-ligand complexes.
-        offers: &wenMRService
-          1:
+        offers:
+          1: &wenMRService
             name: WeNMR Suite for Structural Biology
             description: |
               WeNMR is a Virtual Research Community supported by EGI.
@@ -3340,13 +3339,13 @@ services:
               and life science area into a virtual research community at a worldwide level and provide them
               with a platform integrating and streamlining the computational approaches
               necessary for data analysis and modelling.
+            webpage: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
     PowerFit:
         title: &powerFit PowerFit
         parents: *processingAndAnalysisParent
         providers: [*uou]
         logo: powerfit.png
         open_access: true
-        connected_url: http://haddock.science.uu.nl/enmr/services/POWERFIT
         webpage_url: http://haddock.science.uu.nl/enmr/services/POWERFIT
         manual_url: http://haddock.science.uu.nl/cgi/enmr/services/POWERFIT/powerfit/help
         helpdesk_url: http://ask.bioexcel.eu/c/powerfit
@@ -3365,14 +3364,16 @@ services:
         description: |
           PowerFit is a software designed to fit atomic structures into cryo-EM density maps,
           using an exhaustive 6-dimensional cross-correlation search.
-        offers: *wenMRService
+        offers:
+          1:
+            <<: *wenMRService
+            webpage: http://haddock.science.uu.nl/enmr/services/POWERFIT
     DisVis:
         title: &disVis DisVis
         parents: *processingAndAnalysisParent
         providers: [*uou]
         logo: disvis.png
         open_access: true
-        connected_url: http://haddock.science.uu.nl/enmr/services/DISVIS
         webpage_url: http://haddock.science.uu.nl/enmr/services/DISVIS
         manual_url: http://haddock.science.uu.nl/cgi/enmr/services/DISVIS/disvis/help
         helpdesk_url: http://ask.bioexcel.eu/c/disvis
@@ -3393,14 +3394,16 @@ services:
         description: |
           DisVis is a software designed to visualize and quantify the accessible interaction space
           defined by distance restraints between biomolecules.
-        offers: *wenMRService
+        offers:
+          1:
+            <<: *wenMRService
+            webpage: http://haddock.science.uu.nl/enmr/services/DISVIS
     CS-ROSETTA:
         title: &csRoseta CS-ROSETTA
         parents: *processingAndAnalysisParent
         providers: [*uou]
         logo: cs-rosetta.png
         open_access: true
-        connected_url: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
         webpage_url: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
         manual_url: https://www.wenmr.eu/tutorials/#cs-rosetta
         helpdesk_url:
@@ -3420,14 +3423,16 @@ services:
           The CS-ROSETTA3 web portal allows structural biologists to model the 3D structure of proteins
           using only the 13CA, 13CB, 13C’, 15N, 1HA and 1HN NMR chemical shifts as input.
 
-        offers: *wenMRService
+        offers:
+          1:
+            <<: *wenMRService
+            webpage: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
     AMBER:
         title: &amber AMBER
         parents: *processingAndAnalysisParent
         providers: [*cerm, *cirmmp]
         logo: amber.png
         open_access: true
-        connected_url: http://py-enmr.cerm.unifi.it/access/index
         webpage_url: http://py-enmr.cerm.unifi.it/access/index
         manual_url: https://www.wenmr.eu/tutorials
         helpdesk_url: http://py-enmr.cerm.unifi.it/feedback/index?type=amps-nmr
@@ -3451,14 +3456,16 @@ services:
 
           The portal was developed with the help of the WestLife and INDIGO-DataCloud projects
           and supported by the MoBrain Competence Centre, under the EGI-Engage project.
-        offers: *wenMRService
+        offers:
+          1:
+            <<: *wenMRService
+            webpage: http://py-enmr.cerm.unifi.it/access/index
     FANTEN:
         title: &fanten FANTEN
         parents: *processingAndAnalysisParent
         providers: [*cerm, *cirmmp]
         logo: fanten.png
         open_access: true
-        connected_url: http://abs.cerm.unifi.it:8080
         webpage_url: http://abs.cerm.unifi.it:8080
         manual_url: http://abs.cerm.unifi.it:8080/manual/FANTEN_manual.pdf
         helpdesk_url:
@@ -3480,14 +3487,16 @@ services:
 
           The portal was developed with the help of the WestLife and INDIGO-DataCloud projects
           and supported by the MoBrain Competence Centre, under the EGI-Engage project.
-        offers: *wenMRService
+        offers:
+          1:
+            <<: *wenMRService
+            webpage: http://abs.cerm.unifi.it:8080
     SpotOn:
         title: &spotOn SpotOn
         parents: *processingAndAnalysisParent
         providers: [*uou]
         logo: SpotOn-logo.png
         open_access: true
-        connected_url: https://haddock.science.uu.nl/enmr/services/SPOTON
         webpage_url: https://haddock.science.uu.nl/enmr/services/SPOTON
         manual_url: https://haddock.science.uu.nl/cgi/enmr/services/SPOTON/spoton/help
         helpdesk_url: http://ask.bioexcel.eu/c/spoton
@@ -3507,14 +3516,16 @@ services:
           SpotOn is a robust algorithm developed to identify and classify the interfacial residues
           as Hot-Spots (HS) and Null-Spots (NS) with a final accuracy of 0.95
           and a sensitivity of 0.95 on an independent test set.
-        offers: *wenMRService
+        offers:
+          1:
+            <<: *wenMRService
+            webpage: https://haddock.science.uu.nl/enmr/services/SPOTON
     GEP - HRCM:
         title: &gepHRCM GEP - High-Resolution Change Monitoring for the Alpine Region
         parents: *processingAndAnalysisParent
         providers: [*terradue]
         logo: gep-alpine.png
         open_access: false
-        connected_url: https://geohazards-tep.eo.esa.int/
         webpage_url: https://geohazards-tep.eo.esa.int/#!communities/details/eoschub
         manual_url: https://terradue.github.io/doc-tep-geohazards/
         helpdesk_url: https://helpdesk.terradue.com
@@ -3541,13 +3552,13 @@ services:
             1:
                 name: GEP Portal
                 description: description
+                webpage: https://geohazards-tep.eo.esa.int/
     GEP - EO:
         title: &gepEO GEP - EO Services for Earthquake Response and Landslides Analysis
         parents: *sharingAndDicoveryParent
         providers: [*terradue]
         logo: gep-eo.png
         open_access: false
-        connected_url: https://geohazards-tep.eo.esa.int/#!
         webpage_url: https://geohazards-tep.eo.esa.int/#!communities/details/eoschub
         manual_url: https://terradue.github.io/doc-tep-geohazards/
         helpdesk_url: https://helpdesk.terradue.com
@@ -3572,6 +3583,7 @@ services:
             1:
                 name: GEP Portal
                 description: description
+                webpage: https://geohazards-tep.eo.esa.int/#!
 
     EODC JupyterHub for global Copernicus data:
         title: &eodcJH EODC JupyterHub for global Copernicus data
@@ -3581,7 +3593,6 @@ services:
         open_access: false
         #contact: support@eodc.eu
         webpage_url: https://jupyterhub.eodc.eu
-        connected_url: https://jupyterhub.eodc.eu
         manual_url: https://github.com/jupyterhub/jupyterhub
         helpdesk_url: https://www.eodc.eu/support-request/
         tutorial_url:
@@ -3606,6 +3617,7 @@ services:
             name: JupyterHub
             description: |
               EODC JupyterHub provides access to the global EODC Copernicus Data Archive.
+            webpage: https://jupyterhub.eodc.eu
 #              Eliminate the barrier to get access to and to start to develop algorithms in view of remote sensing data.
 #              Full access to EODC Copernicus satellite data archive.
 #              No need to setup a VM to access data archive.Simple python dev. environment.
@@ -3637,7 +3649,6 @@ services:
         logo: eodc-jupyter.png
         open_access: true
         webpage_url: https://www.eodc.eu/support-request/
-        connected_url: https://csw.eodc.eu
         manual_url: https://csw.eodc.eu
         helpdesk_url: https://www.eodc.eu/support-request/
         #contact: support@eodc.eu
@@ -3669,6 +3680,7 @@ services:
             name: EODC Data Catalogue Service
             description: |
               Catalog Service for the Web (CSW)
+            webpage: https://csw.eodc.eu
     Sentinel hub:
         title: &sentinelHub Sentinel Hub
         parents: *sharingAndDicoveryParent
@@ -3782,7 +3794,6 @@ services:
         open_access: true
         webpage_url: https://discovery.creodias.eu/dataset
         #contact: support@creodias.eu
-        connected_url: https://discovery.creodias.eu/dataset
         manual_url: https://creodias.eu/data-related-services
         helpdesk_url:
         tutorial_url: https://creodias.eu/knowledgebase
@@ -3817,6 +3828,7 @@ services:
                 name: Cloudferro
                 description: |
                     cloudferro
+                webpage: https://discovery.creodias.eu/dataset
     CloudFerro Infrastructure:
         title: &cfi CloudFerro Infrastructure
         parents: [*computeParent, *storageParent, *processingAndAnalysisParent]
@@ -3825,7 +3837,6 @@ services:
         open_access: true
         webpage_url: https://creodias.eu
         #contact: support@creodias.eu
-        connected_url: https://creodias.eu
         manual_url: https://creodias.eu/your-processing-environment
         helpdesk_url:
         tutorial_url: https://creodias.eu/knowledgebase
@@ -3856,6 +3867,7 @@ services:
                 name: Cloudferro2
                 description: |
                     cloudferro
+                webpage: https://creodias.eu
     Cloudferro Data related Services - EO Finder:
         title: &cfdrsEOF Cloudferro Data related Services - EO Finder
         parents: [*dataManagementParent]
@@ -3864,7 +3876,6 @@ services:
         open_access: true
         webpage_url: https://finder.creodias.eu/www
         #contact: support@creodias.eu
-        connected_url: https://finder.creodias.eu/www
         manual_url: https://creodias.eu/eo-data-finder-api-manual
         helpdesk_url:
         tutorial_url: https://creodias.eu/knowledgebase
@@ -3887,6 +3898,7 @@ services:
                 name: Cloudferro3
                 description: |
                     cloudferro
+                webpage: https://finder.creodias.eu/www
     Cloudferro Data related Services - EO browser:
         title: &cfdrsEOB Cloudferro Data related Services - EO browser
         parents: *dataManagementParent
@@ -3895,7 +3907,6 @@ services:
         open_access: true
         webpage_url: https://browser.creodias.eu
         #contact: support@creodias.eu
-        connected_url: https://browser.creodias.eu
         manual_url: https://creodias.eu/using-the-eo-browser
         helpdesk_url:
         tutorial_url: https://creodias.eu/knowledgebase
@@ -3929,6 +3940,7 @@ services:
                 name: Cloudferro4
                 description: |
                     cloudferro
+                webpage: https://browser.creodias.eu
     Check-in:
         title: &checkIn EGI Check-in
         parents: *securityAndOperationsParent
@@ -4226,7 +4238,6 @@ services:
       providers: [*d4science]
       logo: alien.png
       open_access: true
-      connected_url: https://services.d4science.org/web/alienandinvasivespecies
       webpage_url: https://services.d4science.org/web/alienandinvasivespecies
       manual_url: https://services.d4science.org/web/alienandinvasivespecies
       helpdesk_url: https://support.d4science.org/
@@ -4266,6 +4277,7 @@ services:
         1:
           name: General access
           description: "a"
+          webpage: https://services.d4science.org/web/alienandinvasivespecies
 
 #    OpenAIRE:
 #      title: &openAIRE OpenAIRE

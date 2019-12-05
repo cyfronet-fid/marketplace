@@ -48,7 +48,7 @@ RSpec.describe ProjectItem::Register do
       project_item.new_status(status: :created, message: "ProjectItem created")
 
       expect { described_class.new(project_item).call }.
-          to change { ActionMailer::Base.deliveries.count }.by(1)
+          to_not change { ActionMailer::Base.deliveries.count }
     end
 
     context "With message text" do
