@@ -1,7 +1,8 @@
-.col-md-6.d-flex.align-items-stretch.mb-5{ "data-controller" => "service-offer" }
-  .card.offers
+.col-md-6
+  .card.m-0.mb-5
     = render "services/offers/description", offer: offer
     = render "services/offers/parameters", parameters: offer.attributes
+
     .card-button.text-center
       %label
         = link_to service_offers_path(offer.service, project_item: { offer_id: offer.iid }), method: :put do
