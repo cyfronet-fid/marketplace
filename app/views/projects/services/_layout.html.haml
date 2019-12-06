@@ -15,7 +15,7 @@
         - if project_item.orderable?
           %p.text-uppercase.text-right.font-weight-bold.text-secondary.mb-0
             %span{ class: "status-#{project_item.status}" }= project_item.status
-        - elsif !project_item.offer.webpage.blank?
+        - elsif project_item.offer.webpage.present?
           = link_to t("service.#{project_item.offer.offer_type}.link"), project_item.offer.webpage,
           class: "btn btn-primary float-right pl-3 pr-3", target: "_blank", title: "External link"
     %ul.nav.nav-tabs.mt-4.pl-3.row.services-menu
