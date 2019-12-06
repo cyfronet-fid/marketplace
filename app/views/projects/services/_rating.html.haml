@@ -4,8 +4,8 @@
   .blue-row.form-inline.mb-3
     .d-inline.mr-4
       %i.fas.fa-star.fa-pull-left
-      You have been using this service for #{distance_of_time_in_words(project_item.created_at, DateTime.now)}.
-      Please share your opinion with others EOSC Marketplace users.
+      Thank you for using EOSC marketplace.
+      To help us to improve, please share your experience so far.
   = link_to "Review service",
       new_project_service_opinion_path(project, project_item),
       class: "btn btn-primary btn-sm"
