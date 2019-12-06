@@ -10,8 +10,10 @@
   %dd= l project_item.created_at, format: :short
 %dl
   %dt Service access:
-  %dd= link_to t("project_item.offer_type.#{project_item.offer.offer_type}"),
-  "#{page_path("help")}#help-services-service-types"
+  %dd{ "data-toggle" => "tootltip",
+  "title" => "#{t("project_item.offer_type.#{project_item.offer.offer_type}.tooltip")}" }
+    = t("project_item.offer_type.#{project_item.offer.offer_type}.title")
+
 %dl
   %dt
     Project name:
@@ -19,7 +21,7 @@
 - if project_item.service.sla_url.present?
   %dl
     %dt SLA:
-    %dd= link_to "URL", project_item.service.sla_url
+    %dd= link_to "Service Level Agreement", project_item.service.sla_url
 %dl
   %dt Providers:
   %dd= service_providers_list(project_item)
