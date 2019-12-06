@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Don't register internal messages (@mkasztelnik, @martaswiatkowska)
 - Move test services generation from `db:seed` to `dev:prime` (@mkasztelnik)
 - Merge Filterable and Searchable into one module Searchable (@goreck888)
+- ProjectItem rating questions customization by offer type (@goreck888)
 
 ### Deprecated
 

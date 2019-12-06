@@ -127,7 +127,7 @@ RSpec.feature "My Services" do
       visit project_service_path(project, project_item)
 
       expect(page).to have_text("Your review")
-      expect(page).to have_text("You have been using this service for 1 day.")
+      expect(page).to have_text("please share your experience so far")
     end
 
     scenario "I can ask question about my project_item" do
