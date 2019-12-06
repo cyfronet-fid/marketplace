@@ -20,7 +20,7 @@ class ServicesController < ApplicationController
                includes(:offers, related_services: :providers).
                friendly.find(params[:id])
     authorize @service
-    @offers = policy_scope(@service.offers)
+    @offers = policy_scope(@service.offers).order(:created_at)
     @related_services = @service.related_services
 
     @service_opinions = ServiceOpinion.joins(project_item: :offer).
