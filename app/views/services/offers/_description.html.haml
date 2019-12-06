@@ -6,12 +6,12 @@
   %span.text-sm-right.fa-pull-right.badge= t("service.type.#{offer.offer_type}")
   %h4.card-title= offer.name
   %p
-    .card-text.mb-2
+    .card-text.mb-2{ "data-controller" => "paragraph" }
       - if offer.description.size > 200
         = markdown(offer.description.truncate(200, separator: " "))
         = link_to "Show more", "#", class: "show-more-#{offer.id}",
-                                  data: { "target" => "service-offer.showMore",
-                                          "action" => "click->service-offer#showMore",
+                                  data: { "target" => "paragraph.showMore",
+                                          "action" => "click->paragraph#showMore",
                                           "text": markdown(offer.description) }
       - else
         = markdown(offer.description)
