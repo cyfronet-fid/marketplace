@@ -3035,3 +3035,52 @@ textarea.form-control.is-invalid {
   }
 }
 
+.access-information {
+  font-size: 16px;
+  line-height: 26px;
+
+  .btn-outline-primary {
+    max-width: 255px;
+    font-weight: bold;
+  }
+}
+
+@media (max-width: 992px) {
+  .access-information {
+    margin-top: 0;
+    padding-top: 0 !important;
+  }
+}
+
+// scss-lint:disable all
+.open_access {
+  .access-image {
+    width: 100%;
+    height: 390px;
+    background: url('../../assets/images/globe.svg') center center no-repeat;
+    background-size: contain;
+  }
+}
+// scss-lint:enable all
+.orderable {
+  .access-image {
+    width: 100%;
+    height: 390px;
+    background: url('../../assets/images/check_affiliation.svg') center center no-repeat;
+    background-size: contain;
+  }
+}
+
+.external {
+  .access-image {
+    width: 100%;
+    height: 390px;
+    background: url('../../assets/images/rocket.svg') center center no-repeat;
+    background-size: contain;
+  }
+}
+
+.btn-outline-primary {
+  border-width: 1px;
+  border-style: solid;
+}

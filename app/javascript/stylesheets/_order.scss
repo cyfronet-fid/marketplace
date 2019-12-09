@@ -69,6 +69,7 @@
       width: 100%;
 
       a {
+        &::after,
         &.active::after,
         &.active::before {
           display: none;
