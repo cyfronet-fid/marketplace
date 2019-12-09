@@ -33,8 +33,7 @@ class ProjectItem::Register
     end
 
     def update_status!
-      @project_item.new_status(status: :registered,
-                        message: "Your service request was registered in the order handling system")
+      @project_item.new_status(status: :registered)
       true
     end
 

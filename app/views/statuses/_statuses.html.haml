@@ -1,8 +1,8 @@
 #scrollbar.progress-box.mt-4
   %ul.step-progress.pl-5.pb-4
-    - if messages.count.positive?
-      - messages.each do |message|
-        = render "messages/message", message: message
+    - if statuses.count.positive?
+      - statuses.each do |status|
+        = render "statuses/status", status: status
     - else
       %p Conversation not started yet.
 

@@ -94,6 +94,15 @@ class ProjectItemMailer < ApplicationMailer
          template_name: "aod_accepted")
   end
 
+  def activate_message(project_item, service)
+    @user = project_item.user
+    @activate_message = service.activate_message
+
+    mail(to: @user.email,
+         subject: "[EOSC merketplace] #{service.title} is ready - usage instructions",
+         template_name: "activate_message")
+  end
+
   private
 
     def load_data(project_item)

@@ -53,15 +53,31 @@ RSpec.describe ProjectItem::Ready do
       expect(project_item).to be_ready
     end
 
-    it "uses activate message when project item status is changed to ready" do
+    it "send email with activate message" do
       service = create(:open_access_service, activate_message: "Welcome!!!")
       offer = create(:offer, service: service)
       project_item = create(:project_item, offer: offer)
 
-      described_class.new(project_item).call
-      last_change = project_item.statuses.last
+      project_item.new_status(status: :created)
 
-      expect(last_change.message).to eq("Welcome!!!")
+      expect { described_class.new(project_item).call }.
+          to change { ActionMailer::Base.deliveries.count }.by(2)
+
+      expect(ActionMailer::Base.deliveries[-2].subject).to start_with("[EOSC merketplace]")
+      expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
+    end
+
+    it "do not send  email with activate message if not present" do
+      service = create(:open_access_service, activate_message: " ")
+      offer = create(:offer, service: service)
+      project_item = create(:project_item, offer: offer)
+
+      project_item.new_status(status: :created)
+
+      expect { described_class.new(project_item).call }.
+          to change { ActionMailer::Base.deliveries.count }.by(1)
+
+      expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
     end
 
     it "creates new JIRA issue and do the transition" do
@@ -78,7 +94,7 @@ RSpec.describe ProjectItem::Ready do
     context "Normal service project item" do
       it "sents ready and rate service emails to owner" do
         # project_item change email is sent only when there is more than 1 change
-        project_item.new_status(status: :created, message: "ProjectItem is ready")
+        project_item.new_status(status: :created)
 
         expect { described_class.new(project_item).call }.
             to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -103,7 +119,7 @@ RSpec.describe ProjectItem::Ready do
       end
 
       it "sends only rate service email to owner" do
-        project_item.new_status(status: :ready, message: "ProjectItem is ready")
+        project_item.new_status(status: :ready)
 
         expect { described_class.new(project_item).call }.
             to change { ActionMailer::Base.deliveries.count }.by(1)

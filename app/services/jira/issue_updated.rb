@@ -10,7 +10,6 @@ class Jira::IssueUpdated
   def call
     @changelog.fetch("items", []).each do |change|
       status = nil
-      message = "Status changed"
 
       if change["field"] == "status"
         case change["to"].to_i
@@ -25,7 +24,6 @@ class Jira::IssueUpdated
           status = :in_progress
         when @jira_client.wf_ready_id
           status = :ready
-          message = service.activate_message || "Service is ready to be used"
         when @jira_client.wf_closed_id
           status = :closed
           ProjectItemMailer.closed(@project_item).deliver_later
@@ -37,7 +35,7 @@ class Jira::IssueUpdated
         end
 
         if status
-          @project_item.new_status(status: status, message: message)
+          @project_item.new_status(status: status)
           if status == :ready && service.orderable?
             if service.aod?
               aod_voucherable? ? ProjectItemMailer.aod_voucher_accepted(@project_item).deliver_later :

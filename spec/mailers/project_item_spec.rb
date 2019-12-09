@@ -28,8 +28,8 @@ RSpec.describe ProjectItemMailer, type: :mailer do
   context "project_item change" do
     let(:project_item) { create(:project_item, project: project) }
     before(:each) do
-      project_item.new_status(status: :created, message: "ProjectItem created")
-      project_item.new_status(status: :registered, message: "ProjectItem registered")
+      project_item.new_status(status: :created)
+      project_item.new_status(status: :registered)
     end
 
     it "notifies about project_item status change to waiting_for_response" do
