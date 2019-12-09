@@ -3035,3 +3035,19 @@ textarea.form-control.is-invalid {
   }
 }
 
+.access-information {
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.access-image {
+  width: 100%;
+  height: 390px;
+  background: url('../../assets/images/globe.svg') 100% 25px no-repeat;
+  background-size: contain;
+}
+
+.btn-outline-primary {
+  border-width: 1px;
+  border-style: solid;
+}
