@@ -310,7 +310,6 @@ ActiveRecord::Schema.define(version: 2019_12_05_113156) do
   create_table "statuses", force: :cascade do |t|
     t.bigint "author_id"
     t.string "status"
-    t.text "message"
     t.string "status_holder_type"
     t.bigint "status_holder_id"
     t.datetime "created_at", null: false

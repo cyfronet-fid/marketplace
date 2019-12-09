@@ -165,12 +165,17 @@ en:
         Question about your service access request in EOSC Portal Marketplace
   conversations:
     message:
-      question: "Your question to the customer service"
-      answer: "Customer service message"
-  project_items:
-    message:
-      question: "Your question to the service provider"
-      answer: "Service provider message"
+      question: "Your message to the service provider"
+      answer: "Message from the service provider"
+    status:
+      info:
+        created: "Your service request has been created"
+        in_progress: "Your service request is under review by service provider"
+        waiting_for_response: "Service provider is waiting for your response"
+        approved: "You service request has been accepted and is currently being processed by service provider"
+        ready: "Your service is now ready to be used"
+        rejected: " Your service request has been rejected. Please contact service provider if you have any questions"
+        closed: "Your service request is closed. If you want to use the service again, please contact service provider"
   backoffice:
     category:
       new: Add new Category

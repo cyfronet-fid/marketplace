@@ -1,15 +1,11 @@
 # frozen_string_literal: true
 
 module ProjectItemsHelper
-  def label_message(previous)
-    if previous.is_a?(Message)
-      if previous.question?
-        t("#{controller_name}.message.question")
-      else
-        t("#{controller_name}.message.answer")
-      end
+  def label_message(message)
+    if message.question?
+      t("conversations.message.question")
     else
-      "Service request #{previous.status}"
+      t("conversations.message.answer")
     end
   end
 

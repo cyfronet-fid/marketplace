@@ -45,7 +45,7 @@ RSpec.describe ProjectItem::Register do
 
     it "sent email to project_item owner" do
       # project_item change email is sent only when there is more than 1 change
-      project_item.new_status(status: :created, message: "ProjectItem created")
+      project_item.new_status(status: :created)
 
       expect { described_class.new(project_item).call }.
           to_not change { ActionMailer::Base.deliveries.count }
