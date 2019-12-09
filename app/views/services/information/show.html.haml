@@ -1,5 +1,5 @@
-.row
-  .col-md-6.access-information.pt-5
+.row{ class: "#{@offer.offer_type}" }
+  .col-md-6.access-information.pt-5.vertical-center
     = t("service.#{@offer.offer_type}.description_html",
         service_title: wizard_title, faq_url: page_path("help"))
 
