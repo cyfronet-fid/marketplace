@@ -81,7 +81,7 @@ RSpec.feature "Service browsing" do
     expect(page).not_to have_content("unpublished offer")
   end
 
-  scenario "show technical parameters" do
+  scenario "show parameters" do
     offer = create(:offer, parameters: [{ "id": "id1",
                                           "type": "select",
                                           "label": "Number of CPU Cores",

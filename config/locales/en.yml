@@ -45,7 +45,7 @@ en:
     information:
       title: Access instructions
     configuration:
-      title: Technical configuration
+      title: Configuration
     summary:
       title: Final details
     type:
@@ -88,7 +88,7 @@ en:
         cancel: Cancel order and quit
         configuration:
           description: |
-            Please specify technical parameters. It is necessary to handle your request.
+            Please specify parameters. It is necessary to handle your request.
         summary:
           description_html: |
             Please select a Project and review the summary below. Once you

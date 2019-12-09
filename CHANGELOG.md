@@ -64,6 +64,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Move `Service.connected_url` to `Offer.webpage` (@mkasztelnik)
 - Order path styling (@jarekzet)
 - Offer type required (@martaswiatkowska)
+- "Technical parameters" label to "Parameters" (@goreck888)
 
 ### Fixed
 - Active Order button in service preview (@goreck888)
