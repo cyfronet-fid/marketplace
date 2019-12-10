@@ -439,7 +439,7 @@ RSpec.feature "Service ordering" do
 
       # Step 3
       expect(current_path).to eq service_summary_path(service)
-      click_on "Back to previous step - Technical configuration"
+      click_on "Back to previous step - Configuration"
 
       # Step 2 - again
       expect(current_path).to eq service_configuration_path(service)
@@ -451,7 +451,7 @@ RSpec.feature "Service ordering" do
       # Step 3
       expect(current_path).to eq service_summary_path(service)
       expect(page).to have_text("11111-22222-33333-44444")
-      click_on "Back to previous step - Technical configuration"
+      click_on "Back to previous step - Configuration"
 
       # Step 2 - again
       expect(current_path).to eq service_configuration_path(service)

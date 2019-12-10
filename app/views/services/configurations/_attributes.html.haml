@@ -1,7 +1,7 @@
 - unless project_item.property_values.blank?
   .card.offer-description.mb-4
     .card-body.p-4
-      %h4.card-title.mb-4 Technical parameters
+      %h4.card-title.mb-4 Parameters
       .col-12.col-lg-12.pl-0.additional-information.technical
         - project_item.property_values.each do |attr|
           = form.simple_fields_for :property_values, attr do |field|
