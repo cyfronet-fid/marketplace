@@ -6,5 +6,5 @@
   .question-box.mt-5.pt-4
     = simple_form_for @message,
       url: project_service_conversation_path(@project, @project_item) do |f|
-      = f.input :message, label: "Message to customer service about your order"
+      = f.input :message, label: t("conversations.message.question")
       %button.btn.btn-primary.btn-sm.mt-4{ type: "submit" } Send message
