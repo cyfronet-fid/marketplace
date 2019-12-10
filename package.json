@@ -26,7 +26,10 @@
     "webpack-dev-server": "^3.7.2"
   },
   "jest": {
-    "testPathIgnorePatterns": ["/node_modules/", "/config/"],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/config/"
+    ],
     "setupFiles": [
       "./spec/javascript/setup.js"
     ],
@@ -34,10 +37,9 @@
     "roots": [
       "spec/javascript"
     ],
-
     "moduleDirectories": [
       "node_modules",
-        "app/javascript/controllers"
+      "app/javascript/controllers"
     ]
   },
   "scripts": {
