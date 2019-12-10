@@ -21,6 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Offer view unification (@jarekzet)
 - New statuses labels displayed on timeline (@martaswiatkowska)
 - Activate_message are send in mail (@martaswiatkowska)
+- FAQ section content (@goreck888)
 
 ### Deprecated
 
