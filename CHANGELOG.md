@@ -22,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - New statuses labels displayed on timeline (@martaswiatkowska)
 - Activate_message are send in mail (@martaswiatkowska)
 - FAQ section content (@goreck888)
+- Children research areas view in backoffice (@goreck888)
 
 ### Deprecated
 
