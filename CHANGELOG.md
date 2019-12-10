@@ -23,6 +23,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Activate_message are send in mail (@martaswiatkowska)
 - FAQ section content (@goreck888)
 - Children research areas view in backoffice (@goreck888)
+- Content and naming of service details in the project items view (@goreck888)
 
 ### Deprecated
 

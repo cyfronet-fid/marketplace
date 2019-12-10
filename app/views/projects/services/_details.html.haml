@@ -1,18 +1,27 @@
 %dl
-  %dt Ordered service:
+  %dt Service name:
   %dd= link_to project_item.service.title, project_item.service
+- if project_item.service.offers_count > 1
+  %dl
+    %dt Service offer:
+    %dd= project_item.offer.name
 %dl
   %dt Order date:
   %dd= l project_item.created_at, format: :short
 %dl
-  %dt Providers:
-  %dd= service_providers_list(project_item)
-%dl
-  %dt Status:
-  %dd
-    %span.text-uppercase{ class: "status-#{project_item.status}" }
-      = project_item.status
+  %dt Service access:
+  %dd{ "data-toggle" => "tootltip",
+  "title" => "#{t("project_item.offer_type.#{project_item.offer.offer_type}.tooltip")}" }
+    = t("project_item.offer_type.#{project_item.offer.offer_type}.title")
+
 %dl
   %dt
-    Project:
+    Project name:
   %dd= link_to project.name, project
+- if project_item.service.sla_url.present?
+  %dl
+    %dt SLA:
+    %dd= link_to "Service Level Agreement", project_item.service.sla_url
+%dl
+  %dt Providers:
+  %dd= service_providers_list(project_item)
