@@ -1686,9 +1686,43 @@ h5 {
   overflow-y: auto;
 }
 
+// scss-lint:disable all
 .question-box {
   border-top: 1px solid $palette-gray-10;
+
+  .btn-primary {
+    margin-left: 70px;
+  }
+
+  .message_message {
+    width: 91%;
+    padding-left: 70px;
+
+    textarea {
+      height: 150px;
+    }
+  }
 }
+
+@media (max-width: 768px) {
+  .question-box {
+    padding-left: 0 !important;
+
+    .btn-primary {
+      margin-left: 0;
+    }
+
+    .message_message {
+      width: 100%;
+      padding-left: 0;
+
+      textarea {
+        height: 110px;
+      }
+    }
+  }
+}
+// scss-lint:enable all
 
 .blue-row {
   background: $palette-light-blue;

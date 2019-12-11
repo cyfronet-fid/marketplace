@@ -4,7 +4,9 @@
       - messages.each do |message|
         = render "messages/message", message: message
     - else
-      %p Conversation not started yet.
+      .blue-row.form-inline.col-12.col-md-6
+        %i.fas.fa-comments.fa-pull-left
+        Conversation not started yet.
 
 :javascript
   window.onload = function () {
