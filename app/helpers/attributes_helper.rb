@@ -3,7 +3,7 @@
 # Used to convert Postgres JSON to list of elements, which can be rendered
 # in views
 module AttributesHelper
-  EXCLUDED_TYPES = ["date"]
+  EXCLUDED_TYPES = ["date", "input"]
 
   def filter_technical_parameters(parameters)
     parameters.select do |parameter|
@@ -35,7 +35,6 @@ module AttributesHelper
   end
 
   private
-
     def from_to(from, to)
       "#{from || "?"} - #{to || "?"}"
     end
