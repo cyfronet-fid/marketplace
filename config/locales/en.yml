@@ -175,6 +175,15 @@ en:
         tooltip: |
           Service orders are handled externally, but access requests coming from EOSC-hub can be tracked
           and reflected in the Management Back Office.
+    status:
+      created: New
+      registered: New
+      in_progress: Under review
+      ready: Ready to use
+      rejected: Rejected
+      closed: Closed
+      waiting_for_response: Provide additional information
+      approved: Being processed
     mail:
       new_message: |
         Question about your service access request in EOSC Portal Marketplace

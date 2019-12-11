@@ -7,7 +7,7 @@
             = project.name
           .details-row
             - if project.archived?
-              .details-box.text-uppercase= project.status
+              .details-box.text-uppercase= t("project_item.status.#{project_item.status}")
               .separator
             .details-box Created at #{l(project.created_at, format: :short)}
             .separator
