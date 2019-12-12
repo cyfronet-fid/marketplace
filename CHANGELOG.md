@@ -9,6 +9,20 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [2.4.0] 2019-12-12
+
+### Added
 - Sort offers by creation date (@mkasztelnik)
 - Tooltips in the project view in project items status dot (@goreck888) 
 
@@ -26,8 +40,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Children research areas view in backoffice (@goreck888)
 - Content and naming of service details in the project items view (@goreck888)
 
-### Deprecated
-
 ### Removed
 - Remove playground section (@mkasztelnik)
 - Duplicates of ids and questions in FAQ (@goreck888)
@@ -35,9 +47,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - `dev:prime` task migrations update (@goreck888)
-
-### Security
-
 
 ## [2.3.0] 2019-11-25
 
