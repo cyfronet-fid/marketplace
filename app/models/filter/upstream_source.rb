@@ -8,7 +8,6 @@ class Filter::UpstreamSource < Filter
   end
 
   private
-
     def fetch_options
       [
           { name: "Any", id: "" },

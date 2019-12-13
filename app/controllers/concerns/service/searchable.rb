@@ -49,7 +49,6 @@ module Service::Searchable
   end
 
   private
-
     def query_present?
       params[:q].present?
     end

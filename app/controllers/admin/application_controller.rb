@@ -19,7 +19,6 @@ class Admin::ApplicationController < ApplicationController
   end
 
   private
-
     def admin_authorization!
       authorize :admin, :show?
     end

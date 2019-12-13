@@ -25,7 +25,6 @@ class ProjectItem::Create
   end
 
   private
-
     def orderable?
       @project_item.offer.orderable?
     end

@@ -104,7 +104,6 @@ class ProjectItemMailer < ApplicationMailer
   end
 
   private
-
     def load_data(project_item)
       @project_item = project_item
       @project = project_item.project

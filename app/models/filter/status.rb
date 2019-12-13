@@ -8,7 +8,6 @@ class Filter::Status < Filter
   end
 
   private
-
     def fetch_options
       [ { name: "Any", id: nil } ] +
       Service.statuses.map do |key, value|

@@ -248,7 +248,6 @@ module Import
     end
 
     private
-
       def log(msg)
         @logger.call(msg)
       end

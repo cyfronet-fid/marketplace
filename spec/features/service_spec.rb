@@ -165,6 +165,7 @@ RSpec.feature "Service browsing" do
     create(:service, title: "DDDD Something 3", rating: 3.9)
 
     visit services_path(q: "DDDD Something", sort: "rating")
+    puts page.html
 
     expect(page.text.index("DDDD Something 3")).to be < page.text.index("DDDD Something 2")
     expect(page.text.index("DDDD Something 2")).to be < page.text.index("DDDD Something 1")

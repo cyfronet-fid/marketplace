@@ -32,7 +32,6 @@ class Api::Webhooks::JirasController < ActionController::API
   end
 
   private
-
     def find_jira_item(clazz)
       clazz.where.not(issue_id: nil).
         find_by(issue_id: params["issue_id"])

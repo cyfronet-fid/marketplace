@@ -71,7 +71,6 @@ module NavHelper
   end
 
   private
-
     def html_options(options)
       klass = extract_klass(options)
       # Add our custom class into the html_options, which may or may not exist

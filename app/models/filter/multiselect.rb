@@ -13,7 +13,6 @@ class Filter::Multiselect < Filter
   end
 
   protected
-
     def fetch_options
       @model.distinct
           .map { |e| { name: e.name, id: e.id, count: @counters[e.id] || 0 } }

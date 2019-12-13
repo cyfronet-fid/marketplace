@@ -11,7 +11,6 @@ module AncestryHelper
   end
 
   private
-
     def create_ancestry_tree(records, parent, level)
       records.select { |r| r.ancestry_depth == level && r.child_of?(parent) }.
               flat_map do |r|

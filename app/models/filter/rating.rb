@@ -8,7 +8,6 @@ class Filter::Rating < Filter
   end
 
   private
-
     def fetch_options
       [
         { name: "Any", id: "" },

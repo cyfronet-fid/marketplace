@@ -32,7 +32,6 @@ class Services::QuestionsController < ApplicationController
   end
 
   private
-
     def render_modal_form
       render "services/question_modal",
              content_type: "text/javascript",

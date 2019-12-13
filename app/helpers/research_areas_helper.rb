@@ -15,7 +15,6 @@ module ResearchAreasHelper
   end
 
   private
-
     def group_research_areas!(result, current_path, key, values)
       if values.size > 0
         new_current_path = "#{current_path}#{key.name}/"
