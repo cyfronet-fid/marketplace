@@ -1,0 +1,31 @@
+%h1 Statistics
+
+.card-deck.text-center
+  = render "statistic", title: t(".orderable.title"), amount: @orderable_count,
+    description: t(".orderable.description")
+  = render "statistic", title: t(".not_orderable.title"), amount: @not_orderable_count,
+    description: t(".not_orderable.description")
+  = render "statistic", title: t(".all_services.title"), amount: @all_services_count,
+    description: t(".all_services.description")
+
+#statistics.accordion
+  = render "pages/help_card", parent: "statistics",
+    name: "providers", title: t(".providers.title", count: @providers_count) do
+    %p= t(".providers.description")
+    %ul
+      - @providers.each do |provider|
+        %li= provider
+
+  = render "pages/help_card", parent: "statistics",
+    name: "discriplines", title: t(".disciplines.title", count: @disciplines_count) do
+    %p= t(".disciplines.description")
+    %ul
+      - @disciplines.each do |discipline|
+        %li= discipline
+  = render "pages/help_card", parent: "statistics",
+    name: "origin", title: t(".countries.title", count: @countries_count) do
+    %p= t(".countries.description")
+    %ul
+      - @countries.each do |country|
+        %li= country
+
