@@ -18,7 +18,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
     def load_root_categories!
       @root_categories = Category.roots.order(:name)
     end

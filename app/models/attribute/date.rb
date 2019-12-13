@@ -34,7 +34,6 @@ class Attribute::Date < Attribute
   end
 
   protected
-
     TYPE = "date"
 
   private

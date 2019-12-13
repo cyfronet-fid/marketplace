@@ -7,7 +7,6 @@ class HomeController < ApplicationController
   end
 
   private
-
     def load_services
       @providers_number = Provider.count
       @services_number = Service.count

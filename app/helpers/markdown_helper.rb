@@ -21,7 +21,6 @@ module MarkdownHelper
   end
 
   private
-
     def renderer
       Redcarpet::Render::HTML.new(filter_html: true)
     end

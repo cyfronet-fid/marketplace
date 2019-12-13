@@ -56,11 +56,9 @@ class Attribute::QuantityPrice < Attribute
   end
 
   protected
-
     TYPE = "quantity-price"
 
   private
-
     def to_small?
       value && value < 0
     end

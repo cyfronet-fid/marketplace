@@ -58,7 +58,6 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   private
-
     def preview_session_key
       @preview_session_key ||= "service-#{@service&.id}-preview"
     end

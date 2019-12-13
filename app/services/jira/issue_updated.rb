@@ -57,7 +57,6 @@ class Jira::IssueUpdated
   end
 
   private
-
     def service
       @service ||= Service.joins(offers: :project_items).
                    find_by(offers: { project_items: @project_item })

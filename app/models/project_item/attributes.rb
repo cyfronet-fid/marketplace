@@ -20,7 +20,6 @@ class ProjectItem::Attributes
   end
 
   private
-
     def attributes_from_params(parameters)
       parameters.map { |p| Attribute.from_json(p) }
     end

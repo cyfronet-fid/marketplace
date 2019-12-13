@@ -14,7 +14,6 @@ class Filter::AncestryMultiselect < Filter
   end
 
   private
-
     def fetch_options
       arranged = @model.arrange
       @ancestry_counters = count(arranged)

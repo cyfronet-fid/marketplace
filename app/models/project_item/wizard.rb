@@ -31,7 +31,6 @@ class ProjectItem::Wizard
   class InvalidStep < StandardError; end
 
   private
-
     class Base
       include ActiveModel::Model
       attr_accessor :project_item, :service

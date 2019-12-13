@@ -22,7 +22,6 @@ module ProjectItem::Customization
   end
 
   private
-
     def part
       @part ||= ProjectItem::Attributes.new(offer: offer, parameters: properties)
     end

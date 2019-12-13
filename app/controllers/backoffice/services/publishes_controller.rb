@@ -9,7 +9,6 @@ class Backoffice::Services::PublishesController < Backoffice::ApplicationControl
   end
 
   private
-
     def find_and_authorize
       @service = Service.friendly.find(params[:service_id])
 
