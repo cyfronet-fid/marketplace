@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: %i[checkin]
 
   include RoleModel
-  roles :admin, :service_portfolio_manager
+  roles :admin, :service_portfolio_manager, :executive
 
   has_many :projects, dependent: :destroy
 
