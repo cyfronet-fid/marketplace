@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Statistics for executive user group (@mkasztelnik)
 
 ### Changed
 
@@ -24,7 +25,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Sort offers by creation date (@mkasztelnik)
-- Tooltips in the project view in project items status dot (@goreck888) 
+- Tooltips in the project view in project items status dot (@goreck888)
 
 ### Changed
 - Changes styling on checkout - Technical configuration tab (@jarekzet)

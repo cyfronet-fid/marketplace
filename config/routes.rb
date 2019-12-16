@@ -66,6 +66,11 @@ Rails.application.routes.draw do
     resources :platforms
   end
 
+  resource :executive, only: :show
+  namespace :executive do
+    resources :statistics, only: :index
+  end
+
   namespace :api do
     namespace :webhooks do
       post "/jira" => "jiras#create", as: :jira
