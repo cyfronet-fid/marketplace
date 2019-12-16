@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 class Offer < ApplicationRecord
-  enum offer_type: {
-    orderable: "orderable",
-    open_access: "open_access",
-    external: "external"
-  }
+  include Offerable
 
   STATUSES = {
     published: "published",
@@ -24,8 +20,6 @@ class Offer < ApplicationRecord
            dependent: :restrict_with_error
 
   validate :set_iid, on: :create
-  validates :name, presence: true
-  validates :description, presence: true
   validates :service, presence: true
   validates :iid, presence: true, numericality: true
   validates :status, presence: true
@@ -33,7 +27,6 @@ class Offer < ApplicationRecord
   validates :parameters_as_string, attribute_id_unique: true
   validate :parameters_not_nil
   validates :webpage, presence: true, mp_url: true, unless: :orderable?
-  validates :offer_type, presence: true
 
   attr_writer :parameters_as_string
 

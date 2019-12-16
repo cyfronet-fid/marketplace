@@ -26,12 +26,12 @@
             %h3.mt-5 Answer two questions and share your opinion with other EOSC Marketplace users.
           %li.mt-4
             %strong
-              = t("project_item.opinion.#{@project_item.offer.offer_type}.question1",
+              = t("project_item.opinion.#{@project_item.offer_type}.question1",
               title: @project_item.service.title)
             = render "stars", field: "service_opinion_service_rating"
           %li.mt-4
             %strong
-              = t("project_item.opinion.#{@project_item.offer.offer_type}.question2")
+              = t("project_item.opinion.#{@project_item.offer_type}.question2")
             = render "stars", field: "service_opinion_order_rating"
           %li.mt-5
             %p.pt-3

@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Statistics for executive user group (@mkasztelnik)
+- Copy offer details to project item while placing order (@mkasztelnik)
 
 ### Changed
 - Disable visibility of `input` type attribute on the offer view (@goreck888)
