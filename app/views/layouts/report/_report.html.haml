@@ -1,0 +1,6 @@
+%a.report-link{ id: "report-show", "data-toggle": "modal", "data-target": "#report-modal", remote: true }
+  .text-color-solid-5
+    %i.fas.fa-exclamation-circle
+    %span
+    Report technical problem
+= render "layouts/report/report_form", report: report

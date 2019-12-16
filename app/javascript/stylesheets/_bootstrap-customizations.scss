@@ -2967,7 +2967,8 @@ textarea.form-control.is-invalid {
   }
 }
 
-.question-modal {
+.question-modal,
+.report-modal {
   .modal-dialog {
     max-width: 570px;
   }
@@ -3005,7 +3006,8 @@ textarea.form-control.is-invalid {
     }
   }
   // scss-lint:disable all
-  .new_service_question {
+  .new_service_question,
+  .new_report {
     text-align: left;
 
     label {

@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   include Devise::StoreLocation
 
-  before_action :load_main_research_areas!, :load_root_categories!
+  before_action :load_main_research_areas!, :load_root_categories!, :report
 
   protect_from_forgery
 
@@ -18,6 +18,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+    def report
+      @report = Report.new
+    end
+
     def load_root_categories!
       @root_categories = Category.roots.order(:name)
     end
