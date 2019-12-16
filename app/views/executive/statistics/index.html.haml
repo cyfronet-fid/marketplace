@@ -9,20 +9,20 @@
     description: t(".all_services.description")
 
 #statistics.accordion
-  = render "pages/help_card", parent: "statistics",
+  = render "pages/card", parent: "statistics",
     name: "providers", title: t(".providers.title", count: @providers_count) do
     %p= t(".providers.description")
     %ul
       - @providers.each do |provider|
         %li= provider
 
-  = render "pages/help_card", parent: "statistics",
+  = render "pages/card", parent: "statistics",
     name: "discriplines", title: t(".disciplines.title", count: @disciplines_count) do
     %p= t(".disciplines.description")
     %ul
       - @disciplines.each do |discipline|
         %li= discipline
-  = render "pages/help_card", parent: "statistics",
+  = render "pages/card", parent: "statistics",
     name: "origin", title: t(".countries.title", count: @countries_count) do
     %p= t(".countries.description")
     %ul
