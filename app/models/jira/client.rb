@@ -206,7 +206,7 @@ private
     {
       "category" => project_item.service.categories.first&.name,
       "service" => project_item.service.title,
-      "offer" => project_item.offer&.name,
+      "offer" => project_item.name,
       "attributes" => encode_properties(project_item.properties)
     }.to_json
   end
@@ -284,7 +284,7 @@ private
     when "SO-ServiceOrderTarget"
       project_item.service.order_target
     when "SO-OfferType"
-      { "id" => @jira_config["custom_fields"]["select_values"]["SO-OfferType"][project_item.offer.offer_type] }
+      { "id" => @jira_config["custom_fields"]["select_values"]["SO-OfferType"][project_item.offer_type] }
     else
       nil
     end

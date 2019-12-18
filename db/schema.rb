@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_05_113156) do
+ActiveRecord::Schema.define(version: 2019_12_16_141227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,6 +131,11 @@ ActiveRecord::Schema.define(version: 2019_12_05_113156) do
     t.boolean "request_voucher", default: false, null: false
     t.string "voucher_id", default: "", null: false
     t.integer "iid"
+    t.string "name", null: false
+    t.text "description", null: false
+    t.string "offer_type", null: false
+    t.string "webpage"
+    t.boolean "voucherable", default: false, null: false
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
   end
