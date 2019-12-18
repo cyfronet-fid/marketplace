@@ -32,4 +32,20 @@ RSpec.feature "Project services" do
       expect(page).to_not have_link("Timeline")
     end
   end
+
+  scenario "Project service is immute to the offer change" do
+    offer = create(:offer, service: service,
+                   offer_type: :open_access,
+                   webpage: "http://old.pl",
+                   voucherable: false)
+    project_item = create(:project_item, offer: offer, project: project)
+    offer.update(offer_type: :orderable, voucherable: true, webpage: "http://new.pl")
+
+    visit project_service_path(project, project_item)
+
+    expect(page).to have_text("Open")
+    expect(page).to_not have_text("Internal ordering")
+    expect(page).to have_link("Go to the service", href: "http://old.pl")
+    expect(page).to_not have_link("Go to the service", href: "http://new.pl")
+  end
 end

@@ -4,15 +4,15 @@
 - if project_item.service.offers_count > 1
   %dl
     %dt Service offer:
-    %dd= project_item.offer.name
+    %dd= project_item.name
 %dl
   %dt Order date:
   %dd= l project_item.created_at, format: :short
 %dl
   %dt Service access:
   %dd{ "data-toggle" => "tootltip",
-  "title" => "#{t("project_item.offer_type.#{project_item.offer.offer_type}.tooltip")}" }
-    = t("project_item.offer_type.#{project_item.offer.offer_type}.title")
+  "title" => "#{t("project_item.offer_type.#{project_item.offer_type}.tooltip")}" }
+    = t("project_item.offer_type.#{project_item.offer_type}.title")
 %dl
   %dt
     Project name:

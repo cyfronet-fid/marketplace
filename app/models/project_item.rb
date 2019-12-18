@@ -5,6 +5,7 @@ class ProjectItem < ApplicationRecord
   include ProjectValidation
   include VoucherValidation
   include Iid
+  include Offerable
 
   STATUSES = {
     created: "created",
@@ -40,7 +41,8 @@ class ProjectItem < ApplicationRecord
   validate :properties_not_nil
 
   delegate :user, to: :project
-  delegate :orderable?, to: :offer, allow_nil: true
+
+  before_validation :copy_offer_fields, on: :create
 
   def service
     offer.service unless offer.nil?
@@ -96,4 +98,13 @@ class ProjectItem < ApplicationRecord
       errors.add :properties, "cannot be nil"
     end
   end
+
+  private
+    def copy_offer_fields
+      self.offer_type = offer&.offer_type
+      self.name = offer&.name
+      self.description = offer&.description
+      self.webpage = offer&.webpage
+      self.voucherable = offer&.voucherable
+    end
 end
