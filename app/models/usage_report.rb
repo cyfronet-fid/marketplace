@@ -24,7 +24,10 @@ class UsageReport
   end
 
   def countries
-    used_projects.map { |p| p.country_of_origin.name }.uniq
+    used_projects
+      .reject { |p| p.country_of_origin.nil? }
+      .map { |p| p.country_of_origin.name }
+      .uniq
   end
 
   private
