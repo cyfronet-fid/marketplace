@@ -142,6 +142,14 @@ en:
       tip: |
         The archived project will be read only or for copying
   project_item:
+    service:
+      label:
+        open_access:
+          "Added to the project:"
+        external:
+          "Added to the project:"
+        orderable:
+          "Order date:"
     opinion:
       orderable:
         question1: |
