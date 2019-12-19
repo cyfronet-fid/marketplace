@@ -12,6 +12,7 @@ export default class extends Controller {
 
   reload(event) {
     this.formTarget.submit();
+    document.getElementsByClassName("spinner-background")[0].style.display = 'block';
   }
 
   expireAtString() {
