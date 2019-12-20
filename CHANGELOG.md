@@ -14,6 +14,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Disable visibility of `input` type attribute on the offer view (@goreck888)
+- Displaying label on project_item view Orderable date (@martaswiatkowska)
 
 ### Deprecated
 
