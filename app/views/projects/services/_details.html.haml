@@ -6,7 +6,7 @@
     %dt Service offer:
     %dd= project_item.name
 %dl
-  %dt Order date:
+  %dt= t("project_item.service.label.#{project_item.offer_type}")
   %dd= l project_item.created_at, format: :short
 %dl
   %dt Service access:
