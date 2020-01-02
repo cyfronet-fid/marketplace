@@ -5,6 +5,7 @@ FactoryBot.define do
     sequence(:message) { |n| "text message #{n}" }
     sequence(:author) { |n| create(:user) }
     sequence(:messageable) { association(:project_item) }
+    sequence(:edited) { false }
     sequence(:iid) { |n| "n" }
   end
 end

@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Add static pages for design system and UI documentation (@mkasztelnik)
+- Comment changes in jira propagate to mp (@martaswiatkowska)
 
 ### Changed
 - Move research area and category logos to active storage (@mkasztelnik)

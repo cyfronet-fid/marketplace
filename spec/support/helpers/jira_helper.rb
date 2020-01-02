@@ -12,6 +12,7 @@ module JiraHelper
                          wf_waiting_for_response_id: 9,
                          wf_closed_id: 10,
                          wf_ready_id: 11,
+                         options: { username: "" },
                          wf_approved_id: 12,
                          wf_archived_id: 13)
     jira_class_stub = class_double(Jira::Client).

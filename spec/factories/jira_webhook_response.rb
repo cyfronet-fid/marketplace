@@ -11,6 +11,39 @@ FactoryBot.define do
       issue_status { 4 }
       voucher_id_from { nil }
       voucher_id_to { nil }
+      message { "Just in time for AtlasCamp!" }
+      request_type { "jira:issue_updated" }
+      comment do
+        {
+            "self":         "https://jira.atlassian.com/rest/api/2/issue/10148/comment/252789",
+            "id":           "252789",
+            "author":       {
+                "self":         "https://jira.atlassian.com/rest/api/2/user?username=brollins",
+                "name":         "brollins",
+                "emailAddress": "bryansemail@atlassian.com",
+                "avatarUrls":   {
+                    "16x16": "https://jira.atlassian.com/secure/useravatar?size=small&avatarId=10605",
+                    "48x48": "https://jira.atlassian.com/secure/useravatar?avatarId=10605"
+                },
+                "displayName":  "Bryan Rollins [Atlassian]",
+                "active":       true
+            },
+            "body":         "Just in time for AtlasCamp!",
+            "updateAuthor": {
+                "self":         "https://jira.atlassian.com/rest/api/2/user?username=brollins",
+                "name":         "brollins",
+                "emailAddress": "brollins@atlassian.com",
+                "avatarUrls":   {
+                    "16x16": "https://jira.atlassian.com/secure/useravatar?size=small&avatarId=10605",
+                    "48x48": "https://jira.atlassian.com/secure/useravatar?avatarId=10605"
+                },
+                "displayName":  "Bryan Rollins [Atlassian]",
+                "active":       true
+            },
+            "created":      "2011-06-07T10:31:26.805-0500",
+            "updated":      "2011-06-07T10:31:26.805-0500"
+        }
+      end
 
       changelog do
         {
@@ -35,6 +68,43 @@ FactoryBot.define do
               "fieldtype":  "custom",
               "field":      "CP-VoucherID"
           }
+        end
+      end
+    end
+
+    trait :comment_update do
+      transient do
+        request_type { "comment_updated" }
+        comment do
+          {
+            "self":         "https://jira.atlassian.com/rest/api/2/issue/10148/comment/252789",
+            "id":           id,
+            "author":       {
+                "self":         "https://jira.atlassian.com/rest/api/2/user?username=brollins",
+                "name":         "brollins",
+                "emailAddress": "bryansemail@atlassian.com",
+                "avatarUrls":   {
+                    "16x16": "https://jira.atlassian.com/secure/useravatar?size=small&avatarId=10605",
+                    "48x48": "https://jira.atlassian.com/secure/useravatar?avatarId=10605"
+                },
+                "displayName":  "Bryan Rollins [Atlassian]",
+                "active":       true
+            },
+            "body":         message,
+            "updateAuthor": {
+                "self":         "https://jira.atlassian.com/rest/api/2/user?username=brollins",
+                "name":         "brollins",
+                "emailAddress": "brollins@atlassian.com",
+                "avatarUrls":   {
+                    "16x16": "https://jira.atlassian.com/secure/useravatar?size=small&avatarId=10605",
+                    "48x48": "https://jira.atlassian.com/secure/useravatar?avatarId=10605"
+                },
+                "displayName":  "Bryan Rollins [Atlassian]",
+                "active":       true
+            },
+            "created":      "2011-06-07T10:31:26.805-0500",
+            "updated":      "2011-06-07T10:31:26.805-0500"
+        }
         end
       end
     end
@@ -73,36 +143,8 @@ FactoryBot.define do
                      ],
             "id":    10124
         },
-        "comment":      {
-            "self":         "https://jira.atlassian.com/rest/api/2/issue/10148/comment/252789",
-            "id":           "252789",
-            "author":       {
-                "self":         "https://jira.atlassian.com/rest/api/2/user?username=brollins",
-                "name":         "brollins",
-                "emailAddress": "bryansemail@atlassian.com",
-                "avatarUrls":   {
-                    "16x16": "https://jira.atlassian.com/secure/useravatar?size=small&avatarId=10605",
-                    "48x48": "https://jira.atlassian.com/secure/useravatar?avatarId=10605"
-                },
-                "displayName":  "Bryan Rollins [Atlassian]",
-                "active":       true
-            },
-            "body":         "Just in time for AtlasCamp!",
-            "updateAuthor": {
-                "self":         "https://jira.atlassian.com/rest/api/2/user?username=brollins",
-                "name":         "brollins",
-                "emailAddress": "brollins@atlassian.com",
-                "avatarUrls":   {
-                    "16x16": "https://jira.atlassian.com/secure/useravatar?size=small&avatarId=10605",
-                    "48x48": "https://jira.atlassian.com/secure/useravatar?avatarId=10605"
-                },
-                "displayName":  "Bryan Rollins [Atlassian]",
-                "active":       true
-            },
-            "created":      "2011-06-07T10:31:26.805-0500",
-            "updated":      "2011-06-07T10:31:26.805-0500"
-        },
-        "webhookEvent": "jira:issue_updated"
+        "comment":     comment,
+        "webhookEvent": request_type
       }
     end
   end

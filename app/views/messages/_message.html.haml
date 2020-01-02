@@ -3,8 +3,9 @@
     = time_ago_in_words(message.created_at) + " ago"
 
   .ml-4
-    %p.frame= message.message
+    %p.frame{ class: ("edited" if message.edited?) }= message.message
     .d-block.message-info= label_message(message)
+
 
 
 
