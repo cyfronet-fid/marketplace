@@ -275,7 +275,7 @@ private
     when "CP-Platforms"
       project_item.offer.service.platforms.pluck(:name).join(", ")
     when "CP-INeedAVoucher"
-      { "id" => @jira_config["custom_fields"]["select_values"]["CP-INeedAVoucher"][project_item.request_voucher] }
+      { "id" => @jira_config["custom_fields"]["select_values"]["CP-INeedAVoucher"][project_item.request_voucher ? "yes" : "no"] }
     when "CP-VoucherID"
       project_item.voucher_id || nil
     when "SO-1"

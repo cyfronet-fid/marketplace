@@ -10,7 +10,7 @@ class Offer < ApplicationRecord
 
   enum status: STATUSES
 
-  before_save :convert_parameters_to_json, on: [:create, :update]
+  before_save :convert_parameters_to_json
 
   belongs_to :service
 
