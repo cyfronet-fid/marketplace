@@ -16,7 +16,6 @@ class ResearchArea < ApplicationRecord
 
 
   private
-
     def self.child_names(records = ResearchArea.arrange, parent_name = "", result = [])
       records.each do |r, sub_r|
         result << [name_with_path(parent_name, r.name), r]

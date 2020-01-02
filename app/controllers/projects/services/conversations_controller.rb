@@ -26,7 +26,6 @@ class Projects::Services::ConversationsController < ApplicationController
   end
 
   private
-
     def load_projects
       @projects = policy_scope(Project).order(:name)
     end

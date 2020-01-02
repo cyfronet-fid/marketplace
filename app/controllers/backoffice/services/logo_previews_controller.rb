@@ -15,7 +15,6 @@ class Backoffice::Services::LogoPreviewsController < Backoffice::ApplicationCont
   end
 
   private
-
     def show_logo_preview
       logo = logo_from_session
 

@@ -39,7 +39,6 @@ class Filter
   end
 
   protected
-
     def fetch_options
       raise "Need to be implemented in descendent class!!!"
     end
@@ -57,7 +56,6 @@ class Filter
     end
 
   private
-
     def name(val)
       options.find { |option| val == option[:id].to_s }&.[](:name)
     end

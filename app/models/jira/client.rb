@@ -197,7 +197,6 @@ class Jira::Client < JIRA::Client
   end
 
 private
-
   def encode_properties(properties)
     properties.map { |p| [ p["label"],  p["value"] ] }.to_h
   end

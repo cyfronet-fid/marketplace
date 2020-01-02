@@ -44,6 +44,5 @@ class Attribute::Multiselect < Attribute::Select
   end
 
   protected
-
     TYPE = "multiselect"
 end

@@ -24,7 +24,6 @@ class ServiceOpinionPolicy < ApplicationPolicy
   end
 
   private
-
     def owner?
       record.user == user
     end

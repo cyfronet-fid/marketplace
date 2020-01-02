@@ -132,7 +132,6 @@ class Attribute
   end
 
   protected
-
     ATTRIBUTE_SCHEMA = {
       "type": "object",
       "required": ["id", "label", "type", "value_type"],

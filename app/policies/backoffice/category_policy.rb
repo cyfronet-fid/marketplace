@@ -38,7 +38,6 @@ class Backoffice::CategoryPolicy < ApplicationPolicy
   end
 
   private
-
     def service_portfolio_manager?
       user&.service_portfolio_manager?
     end

@@ -53,6 +53,5 @@ class Attribute::Range < Attribute
   end
 
   protected
-
     TYPE = "range"
 end

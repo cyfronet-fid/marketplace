@@ -23,6 +23,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 
 ### Security
+- Updated dependencies (@martaswiatkowska)
+- Fixed security vulnerabilities in gemfile (@martaswiatkowska)
 
 ## [2.4.0] 2019-12-12
 

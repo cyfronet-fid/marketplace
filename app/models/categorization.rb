@@ -10,7 +10,6 @@ class Categorization < ApplicationRecord
   after_save :guarantee_only_one_main, if: :main?
 
   private
-
     def guarantee_only_one_main
       Categorization.where(service: service).
                       where.not(id: id).

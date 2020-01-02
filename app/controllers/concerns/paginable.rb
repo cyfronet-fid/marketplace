@@ -4,7 +4,6 @@ module Paginable
   extend ActiveSupport::Concern
 
   private
-
     def paginate(records)
       records.paginate(page: params[:page], per_page: per_page)
     end

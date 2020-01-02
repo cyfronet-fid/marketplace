@@ -12,7 +12,6 @@ class Filter::Tag < Filter
   end
 
   private
-
     def fetch_options
       ActsAsTaggableOn::Tag.all.
         map { |t| { name: t.name, id: t.name } }.

@@ -14,7 +14,6 @@ module ProjectItem::Iid
   end
 
   private
-
     def set_iid
       if project && iid.blank?
         self.iid = project.project_items.maximum(:iid).to_i + 1

@@ -16,7 +16,6 @@ class Jira::CommentCreated
   end
 
   private
-
     def body
       @comment["body"]
     end
