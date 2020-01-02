@@ -5,17 +5,17 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "2.6.5"
 
-gem "rails", "~> 5.2.0"
+gem "rails", "~> 6.0.0"
 gem "pg", ">= 0.18", "< 2.0"
-gem "puma", "~> 3.12"
+gem "puma", "~> 4.1"
 
-gem "sass-rails", "~> 5.0"
+gem "sass-rails", ">= 6"
 gem "uglifier", ">= 1.3.0"
-gem "webpacker", "~>4.x"
+gem "webpacker", "~> 4.0"
 gem "haml-rails"
 gem "turbolinks", "~> 5", require: false
 
-gem "bootsnap", ">= 1.1.0", require: false
+gem "bootsnap", ">= 1.4.2", require: false
 gem "colorize", ">= 0.8.1", require: false
 
 gem "ancestry"
@@ -71,9 +71,6 @@ group :development, :test do
   gem "pry-nav"
 
   gem "dotenv-rails"
-
-  gem "selenium-webdriver"
-  gem "webdrivers", "~> 3.0"
 end
 
 group :development do
@@ -93,6 +90,8 @@ group :test do
   gem "capybara"
   gem "database_cleaner"
   gem "rack_session_access"
+  gem "selenium-webdriver"
+  gem "webdrivers"
 end
 
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
