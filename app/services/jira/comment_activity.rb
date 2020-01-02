@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Jira::CommentCreated
+class Jira::CommentActivity
   def initialize(messageable, comment)
     @messageable = messageable
     @comment = comment
@@ -8,9 +8,11 @@ class Jira::CommentCreated
 
   def call
     return if body.blank? || reject?
-    message = @messageable.messages.create(message: body, author: author, iid: id)
-
-    if message.persisted?
+    message = Message.find_or_initialize_by(messageable: @messageable, iid: id)
+    message.update(message: body, edited: message.persisted?)
+    if message.edited?
+      WebhookJiraMailer.message_edited(message).deliver_later
+    else
       WebhookJiraMailer.new_message(message).deliver_later
     end
   end
