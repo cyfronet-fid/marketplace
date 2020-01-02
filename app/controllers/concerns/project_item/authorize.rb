@@ -9,7 +9,6 @@ module ProjectItem::Authorize
   end
 
   private
-
     def load_and_authorize_project_item!
       @project_item = ProjectItem.joins(:project).
                       find_by(iid: params[:service_id],

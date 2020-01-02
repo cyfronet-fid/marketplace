@@ -20,7 +20,6 @@ class ServiceOpinion < ApplicationRecord
   after_save :update_service_rating
 
   private
-
     def update_service_rating
       ServiceOpinion::UpdateService.new(project_item).call
     end

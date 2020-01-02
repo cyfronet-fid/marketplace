@@ -26,7 +26,6 @@ class Services::OffersController < Services::ApplicationController
   end
 
   private
-
     def step_key
       :offers
     end

@@ -27,7 +27,6 @@ class Services::InformationController < Services::ApplicationController
   end
 
   private
-
     def step_key
       :information
     end

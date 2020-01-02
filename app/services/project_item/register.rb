@@ -13,7 +13,6 @@ class ProjectItem::Register
   end
 
   private
-
     def register_in_jira!
       client = Jira::Client.new
       @project_item.save

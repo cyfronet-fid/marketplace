@@ -20,7 +20,6 @@ class Category < ApplicationRecord
   after_destroy :update_main_categories!
 
   private
-
     def store_affected_services
       # neet do store results in array since relation is lazy evaluated
       @main_services = Service.joins(:categorizations).

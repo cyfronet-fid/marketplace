@@ -62,7 +62,6 @@ class ProjectsController < ApplicationController
   end
 
   private
-
     def new_record
       Project.new(attributes.merge(status: :active))
     end

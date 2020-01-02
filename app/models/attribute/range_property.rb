@@ -23,6 +23,5 @@ class Attribute::RangeProperty < Attribute
   end
 
   protected
-
     TYPE = "range-property"
 end

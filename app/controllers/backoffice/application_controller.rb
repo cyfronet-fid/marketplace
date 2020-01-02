@@ -19,7 +19,6 @@ class Backoffice::ApplicationController < ApplicationController
   end
 
   private
-
     def backoffice_authorization!
       authorize :backoffice, :show?
     end

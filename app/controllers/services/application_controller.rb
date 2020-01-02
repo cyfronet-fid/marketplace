@@ -13,7 +13,6 @@ class Services::ApplicationController < ApplicationController
   helper_method :step_title, :prev_title, :next_title
 
   private
-
     def session_key
       @service.id.to_s
     end

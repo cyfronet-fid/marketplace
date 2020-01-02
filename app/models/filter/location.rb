@@ -10,7 +10,6 @@ class Filter::Location < Filter
   end
 
   private
-
     def fetch_options
       [{ name: "Any", id: "" }, { name: "EU", id: "EU" }]
     end
