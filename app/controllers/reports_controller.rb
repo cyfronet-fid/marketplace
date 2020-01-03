@@ -19,7 +19,7 @@ class ReportsController < ApplicationController
       if @report.valid? && verify_recaptcha
         Report::Create.new(@report).call
         format.html
-        format.js { render inline: "location.reload();" }
+        format.js { render js: "window.top.location.reload(true);" }
         flash[:notice] = "Your report was successfully sent"
       else
         format.html
@@ -33,7 +33,7 @@ class ReportsController < ApplicationController
       render "layouts/report_modal",
              content_type: "text/javascript",
              locals: {
-                 title: "Report technical issue",
+                 title: "Report a technical issue",
                  action_btn: t("simple_form.labels.question.new"),
                  form: "layouts/report/form"
              }

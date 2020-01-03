@@ -1,6 +1,4 @@
 {
-    document.getElementById("modal-title").innerText = ("<%= title %>");
-    document.getElementById("report-modal-action-btn").innerText = ("<%= action_btn %>");
     document.getElementById("report-modal-body").innerHTML = ("<%= j render(form, report: @report) %>");
     let target = document.getElementById("recaptcha");
     let scripts = target.getElementsByTagName("script");
