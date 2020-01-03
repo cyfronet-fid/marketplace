@@ -23,12 +23,13 @@ class Report
   class << self
     def load(json)
       return nil if json.blank?
-      self.new(json)
+      sliced = JSON.parse(json).slice("author", "email", "text")
+      self.new(sliced)
     end
 
     def dump(obj)
       return nil if obj.blank?
-      obj.as_json
+      obj.to_json
     end
   end
 end
