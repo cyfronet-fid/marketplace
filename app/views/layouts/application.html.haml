@@ -3,9 +3,10 @@
   = render "layouts/head"
   .spinner-background
     .spinner
-      .bounce1
-      .bounce2
-      .bounce3
+      %div
+      %div
+      %div
+      %div
   %body{ class: ("main" if current_page?("/")) }
     - if current_page?("/")
       .main-elements
