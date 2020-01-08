@@ -44,54 +44,53 @@ h1 {
 
 .spinner-background {
   position: fixed;
-  background: $spinner-color;
-  opacity: 0.2;
+  background: $spinner-background-rgba;
   height: 100%;
   width: 100%;
   z-index: 999999;
   display: none;
+  justify-content: center;
 }
 
 .spinner {
-  margin: 100px auto 0;
-  width: 70px;
-  text-align: center;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-self: center;
 
   div {
-    width: 18px;
-    height: 18px;
-    background-color: $spinner-background-color;
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid $primary;
+    border-radius: 50%;
+    animation: spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: $primary transparent transparent;
 
-    border-radius: 100%;
-    display: inline-block;
-    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-  }
+    &:nth-child(1) {
+      animation-delay: -0.45s;
+    }
 
-  .bounce1 {
-    -webkit-animation-delay: -0.32s;
-    animation-delay: -0.32s;
-  }
+    &:nth-child(2) {
+      animation-delay: -0.3s;
+    }
 
-  .bounce2 {
-    -webkit-animation-delay: -0.16s;
-    animation-delay: -0.16s;
+    &:nth-child(3) {
+      animation-delay: -0.15s;
+    }
   }
 }
 
-@-webkit-keyframes sk-bouncedelay {
-  0%, 80%, 100% { -webkit-transform: scale(0); }
-  40% { -webkit-transform: scale(1); }
-}
-
-@keyframes sk-bouncedelay {
-  0%, 80%, 100% {
-    -webkit-transform: scale(0);
-    transform: scale(0);
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
   }
 
-  40% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
+  100% {
+    transform: rotate(360deg);
   }
 }
