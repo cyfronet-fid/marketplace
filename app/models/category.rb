@@ -12,6 +12,8 @@ class Category < ApplicationRecord
   # services.
   before_destroy :store_affected_services
 
+  has_one_attached :logo
+
   has_many :categorizations, autosave: true, dependent: :destroy
   has_many :services, through: :categorizations
 

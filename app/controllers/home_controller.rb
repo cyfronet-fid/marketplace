@@ -4,6 +4,7 @@ class HomeController < ApplicationController
   before_action :load_services, :load_platforms, :load_providers, :load_target_groups, :load_opinion
 
   def index
+    @root_categories = @root_categories.with_attached_logo
   end
 
   private
