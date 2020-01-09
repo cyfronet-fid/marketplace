@@ -3,6 +3,8 @@
 class ResearchArea < ApplicationRecord
   include Parentable
 
+  has_one_attached :logo
+
   has_many :service_research_areas, autosave: true, dependent: :destroy
   has_many :services, through: :service_research_areas
   has_many :project_research_areas, autosave: true, dependent: :destroy

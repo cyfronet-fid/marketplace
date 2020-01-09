@@ -12,7 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add static pages for design system and UI documentation (@mkasztelnik)
 
 ### Changed
-- Move categories logos to active storage (@mkasztelnik)
+- Move research area and category logos to active storage (@mkasztelnik)
 
 ### Deprecated
 
