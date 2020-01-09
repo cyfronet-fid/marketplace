@@ -63,8 +63,8 @@
             .branch-box
               = link_to root_category do
                 .branch-icon
-                  - if File.exist?("app/assets/images/ico_#{root_category.name.split.first}.png".underscore)
-                    = image_tag("ico_#{root_category.name.split.first}.png".underscore, alt: "#{root_category.name}")
+                  - if root_category.logo.attached?
+                    = image_tag root_category.logo, alt: root_category.name
                   - else
                     = image_tag("ico_default.png", alt: "#{root_category.name}")
                 .branch-name

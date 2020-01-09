@@ -2,7 +2,10 @@
 
 %h1= @category.name
 %h2= @category.parent ? "Parent: #{@category.parent.name}" : "Root element"
+- if @category.logo.attached?
+  = image_tag @category.logo
 
+%hr
 .btn-group
   - if policy([:backoffice, @category]).edit?
     = link_to "Edit",
