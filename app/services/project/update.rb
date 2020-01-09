@@ -7,7 +7,7 @@ class Project::Update
   end
 
   def call
-    if @project.update_attributes(@params)
+    if @project.update(@params)
       Project::JiraUpdateJob.perform_later(@project)
     end
   end

@@ -23,7 +23,7 @@ class ProjectItem::Register
         end
 
         issue = client.create_service_issue(@project_item)
-        @project_item.update_attributes(issue_id: issue.id, issue_status: :jira_active)
+        @project_item.update(issue_id: issue.id, issue_status: :jira_active)
         @project_item.save
       rescue Jira::Client::JIRAIssueCreateError => e
         @project_item.jira_errored!

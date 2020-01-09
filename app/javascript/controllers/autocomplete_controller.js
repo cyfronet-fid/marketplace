@@ -185,16 +185,15 @@ export default class extends Controller {
     url.search = params.toString()
 
     this.element.dispatchEvent(new CustomEvent('loadstart'))
-    Rails.ajax({
-      type: "GET",
-      url: url.toString(),
-      success: this.success.bind(this),
-      error: this.error.bind(this)
-    })
+    fetch(url.toString(),
+          { headers: { "X-Requested-With": "XMLHttpRequest" }})
+      .then(response => response.text())
+      .then(body => this.success(body))
+      .catch(response => this.error(response));
   }
 
-  success(response) {
-    this.resultsTarget.innerHTML  = response.body.innerHTML
+  success(body) {
+    this.resultsTarget.innerHTML  = body
     this.identifyOptions()
     const hasResults = !!this.resultsTarget.querySelector('[role="option"]')
     this.resultsTarget.hidden = !hasResults

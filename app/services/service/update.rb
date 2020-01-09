@@ -7,6 +7,6 @@ class Service::Update
   end
 
   def call
-    @service.update_attributes(@params)
+    @service.update(@params)
   end
 end

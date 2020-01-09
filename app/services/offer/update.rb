@@ -7,6 +7,6 @@ class Offer::Update
   end
 
   def call
-    @offer.update_attributes(@params)
+    @offer.update(@params)
   end
 end

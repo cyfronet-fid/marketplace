@@ -124,7 +124,7 @@ class Service < ApplicationRecord
   end
 
   def set_first_category_as_main!
-    categorizations.first&.update_attributes(main: true)
+    categorizations.first&.update(main: true)
   end
 
   def offers?

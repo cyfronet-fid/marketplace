@@ -63,7 +63,7 @@ class ProjectItem < ApplicationRecord
     status ||= self.status
 
     statuses.create(status: status, author: author).tap do
-      update_attributes(status: status)
+      update(status: status)
     end
   end
 
@@ -81,7 +81,7 @@ class ProjectItem < ApplicationRecord
     end
 
     messages.create(message: message, author: author, iid: iid).tap do
-      update_attributes(voucher_id: voucher_id)
+      update(voucher_id: voucher_id)
     end
   end
 
