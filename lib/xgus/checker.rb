@@ -9,7 +9,7 @@ module Xgus
                  email: "marketplace@eosc-portal.eu",
                  text: "Integration test check")
       client = Report::Client.new
-      response = client.create_xgus_issue(report)
+      response = client.create!(report)
       if response.success?
         print "SUCCESS: ".green << "Ticket created" << "\n"
       else

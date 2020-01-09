@@ -1,15 +1,6 @@
 # frozen_string_literal: true
 
 class ReportsController < ApplicationController
-  def new
-    @report = Report.new
-
-    respond_to do |format|
-      format.html
-      format.js { render_modal_form }
-    end
-  end
-
   def create
     user = current_user
     @report = Report.new(author: user&.full_name || params[:report][:author],

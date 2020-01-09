@@ -19,7 +19,7 @@ en:
         author: Name and surname
         text: Your question to provider about %{title}
       report:
-        text: Describe the problem as accurately as possible
+        text: Describe problem precisely
       project:
         country_of_origin: |
           Origin country
