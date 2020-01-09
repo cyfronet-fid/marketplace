@@ -4,9 +4,6 @@ class Report::ReportCreateJob < ApplicationJob
   queue_as :reports
 
   rescue_from(Report::Client::XGUSIssueCreateError) do |exception|
-    # TODO: we need to define what to do when question registration in e.g.
-    #       JIRA fails. Maybe we should report this problem to Sentry and
-    #       do some manual intervantion?
     raise exception
   end
 
@@ -17,6 +14,6 @@ class Report::ReportCreateJob < ApplicationJob
   end
 
   def perform(report)
-    Report::Register.new(Report.load(report)).call
+    Report::Register.new(report).call
   end
 end

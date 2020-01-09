@@ -6,6 +6,6 @@ class Report::Create
   end
 
   def call
-    Report::ReportCreateJob.perform_later(Report.dump(@report))
+    Report::ReportCreateJob.perform_later(@report)
   end
 end

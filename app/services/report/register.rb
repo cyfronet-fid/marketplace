@@ -7,7 +7,7 @@ class Report::Register
 
   def call
     client = Report::Client.new
-    client.create_xgus_issue(@report)
+    client.create!(@report)
     true
     rescue Report::Client::XGUSIssueCreateError => e
       raise e

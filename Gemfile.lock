@@ -179,10 +179,11 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     httpclient (2.8.3)
-    i18n (1.7.1)
     httpi (2.4.4)
       rack
       socksify
+    i18n (1.7.1)
+      concurrent-ruby (~> 1.0)
     i18n_data (0.8.0)
     image_processing (1.9.3)
       mini_magick (>= 4.9.5, < 5)
@@ -441,7 +442,6 @@ GEM
       actionpack (>= 5.0)
       activemodel (>= 5.0)
     sixarm_ruby_unaccent (1.2.0)
-    slop (3.6.0)
     socksify (1.7.1)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
