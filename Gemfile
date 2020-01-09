@@ -55,6 +55,10 @@ gem "high_voltage", "~> 3.1"
 gem "jira-ruby"
 
 gem "redis-rails"
+# Remove after https://github.com/redis-store/redis-rack/pull/50 is merged and
+# released.
+gem "redis-rack", github: "le0pard/redis-rack", ref: "5a297ce"
+
 gem "sidekiq"
 
 gem "custom_error_message", git: "https://github.com/thethanghn/custom-err-msg.git"
