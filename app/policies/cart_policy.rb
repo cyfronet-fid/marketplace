@@ -1,7 +1,7 @@
 
 # frozen_string_literal: true
 
-class CartsPolicy < ApplicationPolicy
+class CartPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope.where(user: user)

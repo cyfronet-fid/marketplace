@@ -3,7 +3,7 @@
 require "mini_magick"
 
 module Import
-  class EIC
+  class Eic
     def initialize(eic_base_url,
                    dry_run: true,
                    dont_create_providers: true,

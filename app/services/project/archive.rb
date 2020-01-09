@@ -25,7 +25,7 @@ class Project::Archive
     if trs.length > 0
       transition = issue.transitions.build
       transition.save!("transition" => { "id" => trs.first.id })
-      @project.update_attributes(issue_id: issue.id, issue_status: :jira_active)
+      @project.update(issue_id: issue.id, issue_status: :jira_active)
     else
       @project.jira_errored!
       raise JIRATransitionSaveError.new(@project)
@@ -33,6 +33,6 @@ class Project::Archive
   end
 
   def archive!
-    @project.update_attributes(status: :archived)
+    @project.update(status: :archived)
   end
 end

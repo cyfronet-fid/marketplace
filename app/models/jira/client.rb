@@ -47,61 +47,61 @@ class Jira::Client < JIRA::Client
   def initialize
     # read required options and initialize jira client
     @jira_config = Mp::Application.config_for(:jira)
-    @webhook_secret = @jira_config["webhook_secret"]
+    @webhook_secret = @jira_config[:webhook_secret]
 
     options = {
-        username: @jira_config["username"],
-        password: @jira_config["password"],
-        site: @jira_config["url"],
-        context_path: @jira_config["context_path"],
+        username: @jira_config[:username],
+        password: @jira_config[:password],
+        site: @jira_config[:url],
+        context_path: @jira_config[:context_path],
         auth_type: :basic,
-        use_ssl: (/^https\:\/\// =~ @jira_config["url"])
+        use_ssl: (/^https\:\/\// =~ @jira_config[:url])
     }
 
-    @jira_project_key = @jira_config["project"]
-    @jira_issue_type_id = @jira_config["issue_type_id"]
-    @jira_project_issue_type_id = @jira_config["project_issue_type_id"]
+    @jira_project_key = @jira_config[:project]
+    @jira_issue_type_id = @jira_config[:issue_type_id]
+    @jira_project_issue_type_id = @jira_config[:project_issue_type_id]
 
-    @wf_todo_id = @jira_config["workflow"]["todo"]
-    @wf_in_progress_id = @jira_config["workflow"]["in_progress"]
-    @wf_rejected_id = @jira_config["workflow"]["rejected"]
-    @wf_waiting_for_response_id = @jira_config["workflow"]["waiting_for_response"]
-    @wf_closed_id = @jira_config["workflow"]["closed"]
-    @wf_ready_id = @jira_config["workflow"]["ready"]
-    @wf_approved_id = @jira_config["workflow"]["approved"]
-    @wf_archived_id = @jira_config["workflow"]["archived"]
+    @wf_todo_id = @jira_config[:workflow][:todo]
+    @wf_in_progress_id = @jira_config[:workflow][:in_progress]
+    @wf_rejected_id = @jira_config[:workflow][:rejected]
+    @wf_waiting_for_response_id = @jira_config[:workflow][:waiting_for_response]
+    @wf_closed_id = @jira_config[:workflow][:closed]
+    @wf_ready_id = @jira_config[:workflow][:ready]
+    @wf_approved_id = @jira_config[:workflow][:approved]
+    @wf_archived_id = @jira_config[:workflow][:archived]
 
-    fields_config = @jira_config["custom_fields"]
+    fields_config = @jira_config[:custom_fields]
 
     @custom_fields = {
-      "Epic Link": fields_config["Epic Link"],
-      "Epic Name": fields_config["Epic Name"],
-      "Order reference": fields_config["Order reference"],
-      "CI-Name": fields_config["CI-Name"],
-      "CI-Surname": fields_config["CI-Surname"],
-      "CI-Email": fields_config["CI-Email"],
-      "CI-DisplayName": fields_config["CI-DisplayName"],
-      "CI-EOSC-UniqueID": fields_config["CI-EOSC-UniqueID"],
-      "CI-Institution": fields_config["CI-Institution"],
-      "CI-Department": fields_config["CI-Department"],
-      "CI-DepartmentalWebPage": fields_config["CI-DepartmentalWebPage"],
-      "CI-SupervisorName": fields_config["CI-SupervisorName"],
-      "CI-SupervisorProfile": fields_config["CI-SupervisorProfile"],
-      "CP-CustomerCountry": fields_config["CP-CustomerCountry"],
-      "CP-CustomerTypology": fields_config["CP-CustomerTypology"],
-      "CP-CollaborationCountry": fields_config["CP-CollaborationCountry"],
-      "CP-ReasonForAccess": fields_config["CP-ReasonForAccess"],
-      "CP-UserGroupName": fields_config["CP-UserGroupName"],
-      "CP-ProjectInformation": fields_config["CP-ProjectInformation"],
-      "CP-ScientificDiscipline": fields_config["CP-ScientificDiscipline"],
-      "CP-Platforms": fields_config["CP-Platforms"],
-      "CP-INeedAVoucher": fields_config["CP-INeedAVoucher"],
-      "CP-VoucherID": fields_config["CP-VoucherID"],
+      "Epic Link": fields_config["Epic Link".to_sym],
+      "Epic Name": fields_config["Epic Name".to_sym],
+      "Order reference": fields_config["Order reference".to_sym],
+      "CI-Name": fields_config["CI-Name".to_sym],
+      "CI-Surname": fields_config["CI-Surname".to_sym],
+      "CI-Email": fields_config["CI-Email".to_sym],
+      "CI-DisplayName": fields_config["CI-DisplayName".to_sym],
+      "CI-EOSC-UniqueID": fields_config["CI-EOSC-UniqueID".to_sym],
+      "CI-Institution": fields_config["CI-Institution".to_sym],
+      "CI-Department": fields_config["CI-Department".to_sym],
+      "CI-DepartmentalWebPage": fields_config["CI-DepartmentalWebPage".to_sym],
+      "CI-SupervisorName": fields_config["CI-SupervisorName".to_sym],
+      "CI-SupervisorProfile": fields_config["CI-SupervisorProfile".to_sym],
+      "CP-CustomerCountry": fields_config["CP-CustomerCountry".to_sym],
+      "CP-CustomerTypology": fields_config["CP-CustomerTypology".to_sym],
+      "CP-CollaborationCountry": fields_config["CP-CollaborationCountry".to_sym],
+      "CP-ReasonForAccess": fields_config["CP-ReasonForAccess".to_sym],
+      "CP-UserGroupName": fields_config["CP-UserGroupName".to_sym],
+      "CP-ProjectInformation": fields_config["CP-ProjectInformation".to_sym],
+      "CP-ScientificDiscipline": fields_config["CP-ScientificDiscipline".to_sym],
+      "CP-Platforms": fields_config["CP-Platforms".to_sym],
+      "CP-INeedAVoucher": fields_config["CP-INeedAVoucher".to_sym],
+      "CP-VoucherID": fields_config["CP-VoucherID".to_sym],
       # For now only single Service Offer is supported
-      "SO-ProjectName": fields_config["SO-ProjectName"],
-      "SO-1": fields_config["SO-1"],
-      "SO-ServiceOrderTarget": fields_config["SO-ServiceOrderTarget"],
-      "SO-OfferType": fields_config["SO-OfferType"]
+      "SO-ProjectName": fields_config["SO-ProjectName".to_sym],
+      "SO-1": fields_config["SO-1".to_sym],
+      "SO-ServiceOrderTarget": fields_config["SO-ServiceOrderTarget".to_sym],
+      "SO-OfferType": fields_config["SO-OfferType".to_sym]
     }
 
     super(options)
@@ -234,7 +234,7 @@ private
       project.user.uid
     when "CP-CustomerTypology"
       if project.customer_typology
-        { "id" => @jira_config["custom_fields"]["select_values"]["CP-CustomerTypology"][project.customer_typology] }
+        { "id" => @jira_config[:custom_fields][:select_values]["CP-CustomerTypology".to_sym][project.customer_typology.to_sym] }
       else
         nil
       end
@@ -275,7 +275,7 @@ private
     when "CP-Platforms"
       project_item.offer.service.platforms.pluck(:name).join(", ")
     when "CP-INeedAVoucher"
-      { "id" => @jira_config["custom_fields"]["select_values"]["CP-INeedAVoucher"][project_item.request_voucher] }
+      { "id" => @jira_config[:custom_fields][:select_values]["CP-INeedAVoucher".to_sym][project_item.request_voucher ? :yes : :no] }
     when "CP-VoucherID"
       project_item.voucher_id || nil
     when "SO-1"
@@ -283,7 +283,7 @@ private
     when "SO-ServiceOrderTarget"
       project_item.service.order_target
     when "SO-OfferType"
-      { "id" => @jira_config["custom_fields"]["select_values"]["SO-OfferType"][project_item.offer_type] }
+      { "id" => @jira_config[:custom_fields][:select_values]["SO-OfferType".to_sym][project_item.offer_type.to_sym] }
     else
       nil
     end

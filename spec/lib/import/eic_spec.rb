@@ -3,7 +3,7 @@
 require "rails_helper"
 require "jira/setup"
 
-describe Import::EIC do
+describe Import::Eic do
   let(:test_url) { "https://localhost" }
   let(:unirest) { double(Unirest) }
 
@@ -25,7 +25,7 @@ describe Import::EIC do
       options[:default_upstream] = default_upstream
     end
 
-    eic = Import::EIC.new(test_url, options)
+    eic = Import::Eic.new(test_url, options)
 
     def stub_http_file(eic, file_fixture_name, url, content_type: "image/png")
       r = open(file_fixture(file_fixture_name))

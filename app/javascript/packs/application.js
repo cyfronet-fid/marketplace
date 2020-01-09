@@ -10,8 +10,9 @@
 import 'bootstrap/dist/js/bootstrap';
 import 'stylesheets/application';
 
-import Turbolinks from 'turbolinks';
-Turbolinks.start();
+require("@rails/ujs").start()
+require("turbolinks").start()
+require("@rails/activestorage").start()
 
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
 import { far } from '@fortawesome/free-regular-svg-icons';

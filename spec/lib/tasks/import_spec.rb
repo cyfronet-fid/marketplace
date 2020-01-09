@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe "import:eic", type: :task do
-  let(:importer) { double("Import::EIC") }
+  let(:importer) { double("Import::Eic") }
 
   it "preloads the Rails environment" do
     expect(task.prerequisites).to include "environment"
@@ -18,7 +18,7 @@ describe "import:eic", type: :task do
     allow(ENV).to receive(:[]).with("UPSTREAM").and_return("eic")
 
     allow(importer).to receive(:call)
-    import_class_stub = class_double(Import::EIC).as_stubbed_const(transfer_nested_constants: true)
+    import_class_stub = class_double(Import::Eic).as_stubbed_const(transfer_nested_constants: true)
     allow(import_class_stub).to receive(:new).with("https://api.custom",
                                                    dry_run: "1",
                                                    dont_create_providers: "1",
@@ -32,7 +32,7 @@ describe "import:eic", type: :task do
 
   it "should call Import::EIC.call" do
     allow(importer).to receive(:call)
-    import_class_stub = class_double(Import::EIC).as_stubbed_const(transfer_nested_constants: true)
+    import_class_stub = class_double(Import::Eic).as_stubbed_const(transfer_nested_constants: true)
     allow(import_class_stub).
       to receive(:new).
       with("https://catalogue.eosc-portal.eu",
