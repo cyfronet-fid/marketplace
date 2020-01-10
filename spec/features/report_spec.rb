@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Reports" do
+RSpec.feature "Reports", js: true do
   include ActiveJob::TestHelper
   include OmniauthHelper
 
@@ -17,10 +17,9 @@ RSpec.feature "Reports" do
         fill_in "Describe problem precisely", with: report.text
       end
 
-      expect do
-        find("#report-modal-action-btn").click
-        expect(page).to have_content("Your report was successfully sent")
-      end.to have_received(Report::Register.new(report).call).with(true)
+
+      find("#report-modal-action-btn").click
+      expect(page).to have_content("Your report was successfully sent")
     end
 
     context "as logged in user" do
