@@ -1,0 +1,6 @@
+.card.learn-more.first
+  = link_to url, class: "card-body" do
+    %h5.card-title= title
+    .card-description= yield
+    .card-icon
+      = image_tag(icon)
