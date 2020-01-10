@@ -1,45 +1,18 @@
 .container.p-0
   .home-communities.p-4
     .row
-      .col-12.col-lg-6.col-sm-5.communities-wrapper
-        .h3.mt-2.mb-3 Communities and infrastructures
-        %ul.row
-          - @home_platforms.each do |platform|
-            %li.col-lg-6
-              = link_to platform.name, services_path(related_platforms: platform.to_param)
-        .row
-          - if home_platforms_counter > 0
-            .col-12
-              %a.more-link.d-block{ href: "#{root_path}communities" }
-                %i.fas.fa-arrow-right
-                We have
-                %strong #{home_platforms_counter} more
-                Communities and infrastructures
-      .col-12.col-lg-3.col-sm-3.communities-wrapper
-        .h3.mt-2.mb-3 Providers
-        %ul
-          - @home_providers.each do |provider|
-            %li
-              = link_to provider.name, services_path(providers: provider.to_param)
-        .row
-          - if home_platforms_counter > 0
-            .col-12
-              %a.more-link.d-block{ href: "#{root_path}providers" }
-                %i.fas.fa-arrow-right
-                You can find
-                %strong #{home_providers_counter} more
-                providers
+      .col-12.col-lg-6.col-sm-5
+        = render "home/communities/card",
+          key: :related_platforms, records: platforms,
+          more_path: communities_path, remaining_count: more_platforms_count,
+          cols: 2
+
+      .col-12.col-lg-3.col-sm-3
+        = render "home/communities/card",
+          key: :providers, records: providers,
+          more_path: providers_path, remaining_count: more_providers_count
+
       .col-12.col-lg-3.col-sm-4
-        .h3.mt-2.mb-3 Dedicated for
-        %ul
-          - @home_target_groups.each do |tg|
-            %li
-              = link_to tg.name, services_path(target_groups: tg.to_param)
-        .row
-          - if home_target_groups_counter > 0
-            .col-12
-              %a.more-link.d-block
-                %i.fas.fa-arrow-right
-                And for
-                %strong #{home_target_groups_counter} more
-                other target groups
+        = render "home/communities/card",
+          key: :target_groups, records: target_groups,
+          more_path: providers_path, remaining_count: more_target_groups_count

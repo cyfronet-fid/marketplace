@@ -1,73 +1,27 @@
-%a.home-anchor{ "href": "#find-eosc", data: { "controller" => "home-page",
-                                              "target" => "scrollArrow",
-                                              "action" => "scroll@window->home-page#onScroll" } }
-  = image_tag("main-link.png")
-
-.container.home-intro.pt-5.pb-4
-  .row.pt-2.d-flex
-    .col-12.col-lg-5.right-column.order-lg-last
-      .home-image
-    .col-12.col-lg-7.left-column
-      %p.title
-        Welcome to the EOSC Portal Catalogue and Marketplace
-
-      %p.home-lead.pr-5.mr-5
-        Integrated platform that allows easy access to lots of services and resources for various
-        research domains along with integrated data analytics tools. Browse by scientific domain,
-        service category or provider and, if you need help, we are here for you!
-      .row.mt-2.intro-box-wrapper
-        %a#find-eosc
-        .col-11.col-lg-5.intro-box.pt-5.pb-5
-          Find EOSC Services that suit your use case yourself
-          %a{ href: "/services" }
-            %i.fas.fa-arrow-right
-            Browse through catalogue
-
-        .col-11.col-lg-5.intro-box.second.pt-5.pb-5
-          Describe your use case and get support from our experts
-          %a{ href: "/projects" }
-            %i.fas.fa-arrow-right
-            Go to your projects
-
 #tab-anchor.home-tabs.container.p-0.mt-5{ "data-controller" => "home-page" }
   %ul.tabs
     %li.tab-link.current{ data: { "target" => "home-page.changeTab",
                   "action" => "click->home-page#changeTab", "tab" => "tab-1" },
-                  href: "#" }Branch of science
+                  href: "#" } Branch of science
     %li.tab-link{ data: { "target" => "home-page.changeTab",
                   "action" => "click->home-page#changeTab", "tab" => "tab-2" },
-                  href: "#" }Categories
+                  href: "#" } Categories
 
   #tab-1.tab-content-home.current{ "data-target" => "home-page.tab" }
     .container
       .row
-        - @main_research_areas.each do |ra|
-          .col-6.col-lg-4.pl-1.pr-1
-            .branch-box
-              = link_to services_path(research_areas: ra.to_param) do
-                .branch-icon
-                  - if ra.logo.attached?
-                    = image_tag ra.logo, alt: ra.name
-                  - else
-                    = image_tag("ico_ra_default.png", alt: "#{ra.name}")
-                .branch-name
-                  = ra.name
-      .row.d-flex.justify-content-center.mt-4
-        = link_to "Browse all services", services_path, class: "btn btn-primary font-weight-bold mt-3 services-link"
+        = render "home/products/cards",
+          cards: research_areas,
+          url: -> (ra) { services_path(research_areas: ra.to_param) },
+          default_logo: "ico_ra_default.png"
 
   #tab-2.tab-content-home{ "data-target" => "home-page.tab" }
     .container
       .row
-        - @root_categories.each do |root_category|
-          .col-6.col-lg-4
-            .branch-box
-              = link_to root_category do
-                .branch-icon
-                  - if root_category.logo.attached?
-                    = image_tag root_category.logo, alt: root_category.name
-                  - else
-                    = image_tag("ico_default.png", alt: "#{root_category.name}")
-                .branch-name
-                  = root_category.name
-      .row.d-flex.justify-content-center.mt-4
-        = link_to "Browse all services", services_path, class: "btn btn-primary font-weight-bold mt-3"
+        = render "home/products/cards",
+          cards: categories,
+          url: -> (category) { category },
+          default_logo: "ico_default.png"
+
+.row.d-flex.justify-content-center.mt-4
+  = link_to "Browse all services", services_path, class: "btn btn-primary font-weight-bold mt-3"
