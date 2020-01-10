@@ -39,6 +39,7 @@ document.addEventListener("turbolinks:before-render", function(event) {
     dom.i2svg({
         node: event.data.newBody
     });
+
     initSorting(event.data.newBody);
     dom.watch();
 });
@@ -51,7 +52,6 @@ document.addEventListener("turbolinks:load", function(event) {
 document.addEventListener("ajax:success", function(event) {
     initChoises();
 });
-
 
 /**
  * Apart from turbolinks we need to replace FA for the first page load
