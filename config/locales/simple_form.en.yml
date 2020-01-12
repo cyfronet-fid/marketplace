@@ -18,6 +18,8 @@ en:
         new: SEND
         author: Name and surname
         text: Your question to provider about %{title}
+      report:
+        text: Describe problem precisely
       project:
         country_of_origin: |
           Origin country
@@ -33,6 +35,10 @@ en:
     #     edit:
     #       email: 'E-mail.'
     hints:
+      report:
+        text: |
+          We will send your report to our customer service.
+          You will receive an answer to %{email} email address.
       question:
         text: |
           We will send your question to the Service provider.

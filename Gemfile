@@ -54,6 +54,9 @@ gem "high_voltage", "~> 3.1"
 # jira
 gem "jira-ruby"
 
+# soap
+gem "savon", "~> 2.12.0"
+
 gem "redis-rails"
 gem "sidekiq"
 
