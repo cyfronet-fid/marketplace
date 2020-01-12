@@ -1,0 +1,20 @@
+{
+    document.getElementById("report-modal-body").innerHTML = ("<%= j render(form, report: @report) %>");
+    let target = document.getElementById("recaptcha");
+    let scripts = target.getElementsByTagName("script");
+    while (scripts.length) {
+        var script = scripts[0];
+        script.parentNode.removeChild(script);
+        var newScript = document.createElement("script");
+        if (script.src) {
+            newScript.src = script.src;
+        } else if (script.textContent) {
+            newScript.textContent = script.textContent;
+        } else if (script.innerText) {
+            newScript.innerText = script.innerText;
+        }
+        document.body.appendChild(newScript);
+    }
+    document.getElementById("report-modal").classList.add("show");
+
+}

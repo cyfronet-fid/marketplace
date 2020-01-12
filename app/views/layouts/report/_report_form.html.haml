@@ -1,0 +1,12 @@
+#report-modal.modal.report-modal{ tabindex: "-1", role: "dialog",
+                            "aria-hidden": true, remote: true }
+  .modal-dialog{ role: "document" }
+    .modal-content
+      .modal-header
+        %h3#modal-title
+          Report a technical issue
+        %button.close{ type: "button", "data-dismiss": "modal", "aria-label": "Close" }
+          %span{ "aria-hidden": true }
+            &times;
+      #report-modal-body.modal-body
+        = render "layouts/report/form", report: report

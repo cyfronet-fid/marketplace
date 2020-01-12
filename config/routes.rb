@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   get "services/c/:category_id" => "services#index", as: :category_services
   resources :categories, only: :show
 
+  resource :reports, only: :create
+
   resources :projects do
     scope module: :projects do
       resource :add, only: :create

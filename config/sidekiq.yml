@@ -11,4 +11,5 @@ staging:
 :queues:
   - orders
   - mailers
+  - reports
   - default

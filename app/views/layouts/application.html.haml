@@ -17,4 +17,5 @@
     %main
       = render "layouts/breadcrumb"
       = yield
+  = render "layouts/report/report", report: @report
   = render "layouts/footer", root_categories: @root_categories

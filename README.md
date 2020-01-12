@@ -98,6 +98,16 @@ ssh -R <port_number - from 9001 to 9015>:localhost:5000 mszostak@docker-fid.grid
 If you can not connect, try different port - it is possible that other developer connected
 to this port and is blocking it
 
+## XGUS 
+
+Marketplace is integrated with xGUS Helpdesk.
+All variables needed to establish a connection to the test instance are stored in encrypted credentials.
+To run integration test there is a need to type `rake xgus:check` in the console.
+To run on different than test instance, there is a need do set environmental variables:
+- `MP_XGUS_USERNAME`
+- `MP_XGUS_PASSWORD`
+- `MP_XGUS_WSDL`
+
 ## ReCaptcha
 
 ReCaptcha is now used in the ask service question form. To work it needs to set 2 environment variables:

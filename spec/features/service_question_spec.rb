@@ -29,7 +29,7 @@ RSpec.feature "Question about service" do
       end
 
       expect do
-        click_on "SEND"
+        find("#question-modal-action-btn").click
         expect(page).to have_content("Your message was successfully sent")
       end.to change { ActionMailer::Base.deliveries.count }.by(2)
     end
