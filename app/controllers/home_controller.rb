@@ -4,6 +4,11 @@ class HomeController < ApplicationController
   before_action :load_services, :load_platforms, :load_providers, :load_target_groups, :load_opinion
 
   def index
+    @root_categories = @root_categories.with_attached_logo
+    @main_research_areas =
+      ResearchArea.with_attached_logo.roots[0...8]
+      .push(ResearchArea.with_attached_logo.find_by(name: "Other"))
+      .reject(&:nil?)
   end
 
   private

@@ -10,13 +10,17 @@
       .clearfix
   %ul.list-group.backoffice-list.mt-5.mb-3
     - ancestry_tree(@research_areas).each do |record|
+      - ra = record[1]
       %li.list-group-item
-        = link_to record.first, backoffice_research_area_path(record.last)
-        - if policy([:backoffice, record[1]]).destroy?
-          = link_to backoffice_research_area_path(record[1]),
+        = link_to backoffice_research_area_path(record.last) do
+          - if ra.logo.attached?
+            = image_tag ra.logo.variant(resize: "32x32")
+          = record.first
+        - if policy([:backoffice, ra]).destroy?
+          = link_to backoffice_research_area_path(ra),
                 method: :delete,
                 data: { confirm: "Are you sure you want to remove this research area?" },
                 class: "delete-icon float-right" do
             %i.far.fa-trash-alt
-        - if policy([:backoffice, record[1]]).edit?
-          = link_to "Edit", edit_backoffice_research_area_path(record[1]), class: "btn-sm btn-warning float-right mr-4"
+        - if policy([:backoffice, ra]).edit?
+          = link_to "Edit", edit_backoffice_research_area_path(ra), class: "btn-sm btn-warning float-right mr-4"

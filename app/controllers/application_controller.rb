@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   include Devise::StoreLocation
 
-  before_action :load_main_research_areas!, :load_root_categories!, :report
+  before_action :load_root_categories!, :report
 
   protect_from_forgery
 
@@ -24,10 +24,6 @@ class ApplicationController < ActionController::Base
 
     def load_root_categories!
       @root_categories = Category.roots.order(:name)
-    end
-
-    def load_main_research_areas!
-      @main_research_areas = ResearchArea.roots[0...8].push(ResearchArea.find_by(name: "Other"))
     end
 
     def not_authorized_message(exception)

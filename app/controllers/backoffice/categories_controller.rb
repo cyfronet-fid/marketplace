@@ -5,7 +5,7 @@ class Backoffice::CategoriesController < Backoffice::ApplicationController
 
   def index
     authorize(Category)
-    @categories = policy_scope(Category)
+    @categories = policy_scope(Category).with_attached_logo
   end
 
   def show
@@ -48,7 +48,7 @@ class Backoffice::CategoriesController < Backoffice::ApplicationController
 
   private
     def find_and_authorize
-      @category = Category.friendly.find(params[:id])
+      @category = Category.with_attached_logo.friendly.find(params[:id])
       authorize(@category)
     end
 end

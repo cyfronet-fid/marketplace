@@ -2,7 +2,10 @@
 
 %h1= @research_area.name
 %h2= @research_area.parent ? "Parent: #{@research_area.parent.name}" : "Root element"
+- if @research_area.logo.attached?
+  = image_tag @research_area.logo
 
+%hr
 .btn-group
   - if policy([:backoffice, @research_area]).edit?
     = link_to "Edit",
