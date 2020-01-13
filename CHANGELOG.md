@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Add static pages for design system and UI documentation (@mkasztelnik)
 
 ### Changed
 
