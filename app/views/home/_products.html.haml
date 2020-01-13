@@ -46,12 +46,12 @@
             .branch-box
               = link_to services_path(research_areas: ra.to_param) do
                 .branch-icon
-                  - if File.exist?("app/assets/images/ico_#{ra&.name&.split&.first}.png".underscore)
-                    = image_tag("ico_#{ra&.name.split.first}.png".underscore, alt: "#{ra&.name}")
+                  - if ra.logo.attached?
+                    = image_tag ra.logo, alt: ra.name
                   - else
-                    = image_tag("ico_ra_default.png", alt: "#{ra&.name}")
+                    = image_tag("ico_ra_default.png", alt: "#{ra.name}")
                 .branch-name
-                  = ra&.name
+                  = ra.name
       .row.d-flex.justify-content-center.mt-4
         = link_to "Browse all services", services_path, class: "btn btn-primary font-weight-bold mt-3 services-link"
 
@@ -63,8 +63,8 @@
             .branch-box
               = link_to root_category do
                 .branch-icon
-                  - if File.exist?("app/assets/images/ico_#{root_category.name.split.first}.png".underscore)
-                    = image_tag("ico_#{root_category.name.split.first}.png".underscore, alt: "#{root_category.name}")
+                  - if root_category.logo.attached?
+                    = image_tag root_category.logo, alt: root_category.name
                   - else
                     = image_tag("ico_default.png", alt: "#{root_category.name}")
                 .branch-name
