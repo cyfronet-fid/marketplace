@@ -7,7 +7,7 @@
       "check_name": "MassAssignment",
       "message": "Parameters should be whitelisted for mass assignment",
       "file": "app/controllers/concerns/sentryable.rb",
-      "line": 18,
+      "line": 17,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.permit!",
       "render_path": null,
@@ -18,6 +18,26 @@
       },
       "user_input": null,
       "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "611ab052f0559e5d4ff26fa4e4168a783af9cf290779b63eddddd8b63aea84bf",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/controllers/designsystem_controller.rb",
+      "line": 10,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => params.require(:file), {})",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "DesignsystemController",
+        "method": "show"
+      },
+      "user_input": "params.require(:file)",
+      "confidence": "High",
       "note": ""
     },
     {
@@ -35,7 +55,7 @@
           "type": "controller",
           "class": "ServicesController",
           "method": "index",
-          "line": 17,
+          "line": 16,
           "file": "app/controllers/services_controller.rb",
           "rendered": {
             "name": "services/index",
@@ -76,7 +96,7 @@
           "type": "controller",
           "class": "ServicesController",
           "method": "index",
-          "line": 17,
+          "line": 16,
           "file": "app/controllers/services_controller.rb",
           "rendered": {
             "name": "services/index",
@@ -137,7 +157,7 @@
           "type": "controller",
           "class": "ServicesController",
           "method": "index",
-          "line": 17,
+          "line": 16,
           "file": "app/controllers/services_controller.rb",
           "rendered": {
             "name": "services/index",
@@ -164,6 +184,6 @@
       "note": ""
     }
   ],
-  "updated": "2019-11-29 09:21:33 +0100",
+  "updated": "2020-01-10 11:20:01 +0100",
   "brakeman_version": "4.7.2"
 }
