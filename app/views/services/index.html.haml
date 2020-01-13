@@ -12,44 +12,5 @@
                            tag_options: @tag_options,
                            active_filters: @active_filters,
                            related_platform_options: @related_platform_options,
-                           highlights: @highlights do
-
-  .col-md-12.mb-2
-    %h1.categories
-      - unless params[:q].blank?
-        %span Looking for:
-        #{params[:q]}
-      - else
-        = @category&.name || "Services"
-    .col-md-12.mb-1
-      - if @category && params[:q].blank?
-        %p.text-muted.mb-4.ml-1= @category.description
-  - if @active_filters.present?
-    .col-md-12.mb-3
-      %p.mb-1 Active filters
-      .active-filters
-        - @active_filters.each do |title, label, p|
-          .filter-tag
-            %span.text-muted
-              #{title}:
-            = label
-            = link_to(p) do
-              .fas.fa-times
-
-        - if @active_filters.present?
-          .filter-tag.clear
-            = link_to controller: controller.controller_name, action: action_name,
-                      per_page: params[:per_page], sort: params[:sort] do
-              %span Clear all filters
-              .fa.fa-times
-
-  .col-md-12
-    %hr.category-separator
-  .col-md-3
-    %i.control-label.search-results
-      = page_entries_info @services
-  .col-md-4
-    = render "services/order", sort_options: @sort_options
-  .col-md-5
-    .float-right
-      = render "services/paginate_simple", services: @services
+                           sort_options: @sort_options,
+                           highlights: @highlights
