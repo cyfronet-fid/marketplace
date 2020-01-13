@@ -9,6 +9,20 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [2.5.0] 2020-01-13
+
+### Added
 - Statistics for executive user group (@mkasztelnik)
 - Copy offer details to project item while placing order (@mkasztelnik)
 - Loader/cog after filter select (@martaswiatkowska)
@@ -18,12 +32,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Disable visibility of `input` type attribute on the offer view (@goreck888)
 - Displaying label on project_item view Orderable date (@martaswiatkowska)
 - Upgrade to rails 6 (@mkasztelnik)
-
-### Deprecated
-
-### Removed
-
-### Fixed
 
 ### Security
 - Updated dependencies (@martaswiatkowska)
