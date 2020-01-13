@@ -15,7 +15,8 @@
 
     .col-lg-9
       .row.mb-4
-        = yield
+        = render "services/active_filters", category: category, active_filters: active_filters
+        = render "services/pagination", sort_options: sort_options, services: services
 
       = render services, highlights: highlights
   = render "services/paginate", services: services

@@ -1,10 +1,4 @@
-.media.border-bottom.pb-4.mb-4
-  .media-body
-    %h2
-      = service_status(service)
-      = link_to [:backoffice, service] do
-        = highlighted_for(:title, service, highlights)
-    %p.mb-3= highlighted_for(:tagline, service, highlights)
-    = render "services/categorization", service: service
-  - if service.logo.attached?
-    = image_tag service.logo.variant(resize: "120x80"), class: "align-self-center mx-2"
+= render "services/service_details", service: service, highlights: highlights do
+  = service_status(service)
+  = link_to [:backoffice, service] do
+    = highlighted_for(:title, service, highlights)
