@@ -1,0 +1,9 @@
+= simple_form_for [:admin, help_item] do |f|
+  = f.input :title
+  = f.association :help_section
+  = f.input :content do
+    = f.rich_text_area :content
+
+  = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5"
+  = link_to "Cancel and back to help preview", admin_help_path,
+    class: "text-left flex-grow-1 text-uppercase"

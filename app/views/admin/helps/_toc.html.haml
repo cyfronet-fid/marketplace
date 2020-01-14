@@ -1,0 +1,8 @@
+%li.list-group-item
+  = link_to section.title, admin_help_path(anchor: section.slug)
+  .float-right
+    = link_to "Edit", edit_admin_help_section_path(section),
+      class: "btn btn-sm btn-warning"
+    = link_to "Remove", admin_help_section_path(section),
+      class: "btn btn-sm btn-danger",
+      method: :delete, data: { confirm: "Are you sure?" }
