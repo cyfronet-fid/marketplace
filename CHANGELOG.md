@@ -20,6 +20,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## [2.5.1] Unreleased
+
+### Fixed
+- Rollback to `rack` 2.0.7. New version is not compatible yet with `redis-rack` (@mkasztelnik)
+
 ## [2.5.0] 2020-01-13
 
 ### Added
