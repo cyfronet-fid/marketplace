@@ -13,6 +13,20 @@ class WebhookJiraMailer < ApplicationMailer
                     template_name: "#{@model_name}_new_message")
   end
 
+  def message_edited(message)
+    @user = message.messageable.user
+    @link = get_link_to_messageable(message)
+
+    mail(to: @user.email,
+         subject: "Message updated",
+         template_name: "message_edited")
+  end
+
+  def get_link_to_messageable(message)
+    elem = message.messageable
+    message.messageable_type == "Project" ? project_conversation_url(elem) : project_service_conversation_url(elem.project, elem)
+  end
+
   def get_project_name(elem)
     elem.has_attribute?("name") ? elem.name : elem.project.name
   end

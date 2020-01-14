@@ -21,12 +21,11 @@ class Api::Webhooks::JirasController < ActionController::API
       case params["webhookEvent"]
       when "jira:issue_updated"
         Jira::IssueUpdated.new(element_updated, params["changelog"]).call
-      when "comment_created"
-        Jira::CommentCreated.new(element_updated, params["comment"]).call
+      when "comment_created", "comment_updated"
+        Jira::CommentActivity.new(element_updated, params["comment"]).call
       else
         logger.warn("Webhook event not supported: #{params["webhookEvent"]}")
       end
-
     end
     render json: { message: "Updated" }
   end

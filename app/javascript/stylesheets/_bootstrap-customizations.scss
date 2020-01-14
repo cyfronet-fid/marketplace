@@ -1748,6 +1748,11 @@ h5 {
 }
 
 .step-progress-item {
+  .edited {
+    background: $edited-comment-background-color;
+    border-color: $edited-comment-border-color !important;
+  }
+
   .frame {
     padding: 14px 15px 12px;
     max-width: 90%;

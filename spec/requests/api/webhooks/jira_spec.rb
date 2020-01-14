@@ -75,5 +75,37 @@ RSpec.describe "JIRA Webhook API", type: :request do
         expect(project_item.messages.last&.message).to eq("Voucher has been revoked")
       end
     end
+
+    describe "update_comment" do
+      issue_id = 123
+      comment_id = 1234
+      let!(:project_item) {  create(:project_item,
+                                   issue_id: issue_id,
+                                   messages: [ create(:message,
+                                                      iid: comment_id,
+                                                      message: "Initial message")])}
+
+      before {
+        data = create(:jira_webhook_response, issue_id: issue_id, issue_status: 6)
+        post(api_webhooks_jira_url + "?secret=secret&issue_id=#{issue_id}", params: data)
+      }
+
+      it "should update comment" do
+        data = create(:jira_webhook_response, :comment_update, id: comment_id, issue_id: issue_id, message: "New message")
+        post(api_webhooks_jira_url + "?secret=secret&issue_id=#{issue_id}", params: data)
+        updated_message = Message.find_by(iid: comment_id)
+        expect(updated_message.message).to eq("New message")
+      end
+
+      it "should create comment" do
+        comment_id = 12345
+        data = create(:jira_webhook_response, :comment_update, id: comment_id, issue_id: issue_id, message: "New message")
+        expect {
+          post(api_webhooks_jira_url + "?secret=secret&issue_id=#{issue_id}", params: data)
+        }.to change { project_item.messages.count }.by(1)
+        updated_message = Message.find_by(iid: comment_id)
+        expect(updated_message.message).to eq("New message")
+      end
+    end
   end
 end
