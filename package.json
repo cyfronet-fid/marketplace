@@ -2,13 +2,13 @@
   "name": "mp",
   "private": true,
   "dependencies": {
-    "@rails/ujs": "^6.0.0",
-    "turbolinks": "^5.2.0",
-    "@rails/activestorage": "^6.0.0",
-    "@rails/actioncable": "^6.0.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.2",
     "@fortawesome/free-regular-svg-icons": "^5.2.0",
     "@fortawesome/free-solid-svg-icons": "^5.2.0",
+    "@rails/actioncable": "^6.0.0",
+    "@rails/actiontext": "^6.0.2",
+    "@rails/activestorage": "^6.0.0",
+    "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "^4.0.7",
     "bootstrap": "^4.1.1",
     "bootstrap-datepicker": "^1.8.0",
@@ -19,7 +19,9 @@
     "jquery": "^3.4.1",
     "lodash.debounce": "^4.0.8",
     "popper.js": "^1.14.3",
-    "stimulus": "^1.0.1"
+    "stimulus": "^1.0.1",
+    "trix": "^1.0.0",
+    "turbolinks": "^5.2.0"
   },
   "devDependencies": {
     "babel-jest": "^24.9.0",

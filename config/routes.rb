@@ -82,7 +82,11 @@ Rails.application.routes.draw do
   resource :admin, only: :show
   namespace :admin do
     resources :jobs, only: :index
+    resource :help, only: :show
+    resources :help_sections, except: [:index, :show]
+    resources :help_items, except: [:index, :show]
   end
+
   # Sidekiq monitoring
   authenticate :user, ->(u) { u.admin? } do
     require "sidekiq/web"
