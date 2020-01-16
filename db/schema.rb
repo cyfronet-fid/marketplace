@@ -46,6 +46,25 @@ ActiveRecord::Schema.define(version: 2020_01_28_142804) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "affiliations", force: :cascade do |t|
+    t.integer "iid", null: false
+    t.string "organization", null: false
+    t.string "department"
+    t.string "email", null: false
+    t.string "phone"
+    t.string "webpage", null: false
+    t.string "token"
+    t.string "status", default: "created", null: false
+    t.string "supervisor"
+    t.string "supervisor_profile"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["iid"], name: "index_affiliations_on_iid"
+    t.index ["token"], name: "index_affiliations_on_token"
+    t.index ["user_id"], name: "index_affiliations_on_user_id"
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
     t.string "description"

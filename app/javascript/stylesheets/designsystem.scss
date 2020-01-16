@@ -1,3 +1,219 @@
+@import 'ref_variables';
+@import 'fonts';
+@import '~bootstrap/scss/bootstrap';
+
 body {
-  margin: 50px;
+  font-family: 'Ubuntu';
+  margin: 0;
+  color: $text;
+  padding: 20px;
 }
+
+.bordered-headline {
+  border-bottom: 1px solid $palette-gray-30;
+  padding-bottom: 10px;
+  margin: 50px 0 25px;
+}
+
+/* BRANCH BOX STYLES */
+.branch-box {
+  border: 3px solid $palette-gray-5;
+  border-radius: 5px;
+  text-align: center;
+  display: block;
+  margin-bottom: 10px;
+  padding: 15px 7px 12px;
+
+  &:hover {
+    border: 3px solid $palette-gray-10;
+    text-decoration: none;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .branch-icon {
+    height: 84px;
+    line-height: 84px;
+    vertical-align: middle;
+  }
+
+  .branch-name {
+    margin-top: 15px;
+    font-size: 20px;
+    min-height: 48px;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $primary-color;
+  }
+}
+/* END OF BRANCH BOX STYLES */
+
+
+
+
+/* LEARN MORE BOX STYLES */
+
+.learn-more {
+  border: none;
+  background: url('../../assets/images/home-card-bg.png') no-repeat right bottom;
+  min-height: 145px;
+  border-radius: 2px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+
+  .body {
+    padding: 1rem 45% 1rem 0;
+    position: relative;
+    font-size: 14px;
+    flex: 1 1 auto;
+    line-height: 18px;
+    font-weight: 300;
+    text-decoration: none;
+    color: $palette-gray-100;
+
+    .title {
+      font-size: 20px;
+      line-height: 1.05;
+      font-weight: 400;
+      padding-top: 0.8rem;
+      margin: 0 0 0.75rem;
+      color: $palette-gray-100;
+    }
+
+    .icon {
+      position: absolute;
+      top: 35px;
+      right: 33px;
+      transition: all 0.3s ease;
+    }
+
+    .description {
+
+      p {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.4;
+        font-weight: 300;
+      }
+    }
+
+    &:hover {
+
+      .title {
+        color: $primary-color;
+      }
+
+      .icon {
+        top: 40px;
+        right: 45px;
+      }
+    }
+  }
+
+  &.first {
+    .icon {
+      right: 40px;
+      top: 17px;
+    }
+
+    &:hover {
+
+      .icon {
+        top: 25px;
+        right: 45px;
+      }
+    }
+  }
+}
+
+/* END OF LEARN MORE BOX STYLES */
+
+
+
+/* SERVICE INFO BOX STYLES */
+
+.service-info-box {
+  display: flex;
+  flex: 1 0;
+  flex-direction: column;
+  margin-bottom: 25px;
+  border-radius: 2px;
+  background: $color-1;
+  box-shadow: 0 0.125rem 0.25rem $palette-gray-30;
+
+  header {
+    align-items: center;
+    padding: 1.4rem 1rem 1.3rem;
+  }
+
+  .title {
+    width: 100%;
+    float: left;
+    display: block;
+    margin-bottom: 15px;
+    font-weight: bold;
+    line-height: 1.4rem;
+    font-size: 1.3em;
+
+    a {
+      text-decoration: none;
+      color: $link-color;
+
+      &:hover {
+        color: $palette-gray-100;
+      }
+    }
+  }
+
+  .description {
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 300;
+    }
+
+    img {
+      float: left;
+      margin-right: 15px;
+      max-width: 100px;
+      height: auto;
+    }
+  }
+
+  footer {
+    background: transparent;
+    padding: 0.4rem 0 0;
+    margin: 0 1.25rem 0.45rem;
+    border-top: 1px solid $palette-gray-10;
+    padding-top: 0.9rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    p,
+    small {
+      margin: 0 0 7px;
+      font-size: 12px;
+      font-weight: 300;
+    }
+
+    .column {
+      max-width: 50%;
+    }
+
+
+
+
+  }
+
+}
+
