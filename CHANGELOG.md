@@ -24,6 +24,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Remove not used `CartPolicy` class (@mkasztelnik)
 
 ### Fixed
+- change html tag to pure conversation URL in text based emails (@martaswiatkowska)
 
 ### Security
 
