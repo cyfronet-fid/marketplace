@@ -1,7 +1,0 @@
-%li.nav-item
-  %a#category-tab.nav-link.text-uppercase{ "aria-controls" => "category#{ category.id } ",
-                                           "aria-selected" => "true",
-                                           "data-toggle" => "tab",
-                                           class: "#{ 'active' if category_counter == 0 } ",
-                                           href: "#category#{ category.id } ",
-                                           role: "tab" }= category.name
