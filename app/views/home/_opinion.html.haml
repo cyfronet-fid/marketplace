@@ -1,9 +1,0 @@
-%a.card-title{ href: "#{service_path(opinion.project_item.service)}" }
-  = opinion.project_item.service.title
-.row.mt-3
-  .col
-    .row.pl-4.pr-4.mb-3
-      .mr-2= print_rating_stars(opinion.service_rating)
-      %span.ml-1.font-weight-bold #{opinion.service_rating}/5
-.card-description
-  = opinion.opinion

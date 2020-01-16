@@ -1,85 +1,22 @@
-- portal_base = Mp::Application.config.portal_base_url
+= render "info"
 
-= render "home/products", providers_number: @providers_number,
-                          services_number: @services_number,
-                          countries_number: @countries_number
-= render "home/communities", home_platforms_counter: @home_platforms_counter,
-                             home_providers_counter: @home_providers_counter,
-                             home_target_groups_counter: @home_target_groups_counter
+= render "products",
+  research_areas: @main_research_areas,
+  categories: @root_categories
 
-.container
-  %h2.home-title Learn more
-  .row
-    .col-12.col-lg-4.col-sm-6
-      .card.learn-more.first
-        %a.card-body{ "href": "#{portal_base}/about/eosc" }
-          %h5.card-title EOSC initiative
-          .card-description
-            Find out more about EOSC and what it can bring you!
-          .card-icon
-            = image_tag "ico_howitworks.png"
-    .col-12.col-lg-4.col-sm-6
-      .card.learn-more
-        %a.card-body{ "href": "#{root_path}about_projects" }
-          %h5.card-title Projects
-          .card-description
-            Through Marketplace Projects you can organise your services and gain support from the EOSC experts.
-          .card-icon
-            = image_tag "ico_projects.png"
-    .col-12.col-lg-4.col-sm-6
-      .card.learn-more
-        %a.card-body{ "href": "#{portal_base}/for-providers" }
-          %h5.card-title For providers
-          .card-description
-            Contribute to develop EOSC into a rich environment with
-            a wide range of services and resources for researchers.
-          .card-icon
-            = image_tag "ico_providers.png"
+= render "communities",
+  platforms: @home_platforms, more_platforms_count: @home_platforms_counter,
+  providers: @home_providers, more_providers_count: @home_providers_counter,
+  target_groups: @home_target_groups, more_target_groups_count: @home_target_groups_counter
 
-.container
-  %h2.home-title Popular services
+= render "learn_more"
 
-  #home-carousel.carousel.slide.home-carousel{ "data-ride" => "carousel" }
-    .carousel-inner
-      .carousel-item.active
-        .card-deck
-          - @services[0..2].each do |service|
-            = render "carousel-card", service: service
-      - if @services.count > 3
-        .carousel-item
-          .card-deck
-            - @services[3..5].each do |service|
-              = render "carousel-card", service: service
+= render "services", services: @services
 
-    %ol.carousel-indicators
-      %li.active{ "data-target" => "#home-carousel", "data-slide-to" => "0" }
-      %li{ "data-target" => "#home-carousel", "data-slide-to" => "1" }
 
 .container
   .row
     .col-12.col-lg-4.col-sm-5
-      %h2.home-title Recent opinions
-      - unless @opinion.nil?
-        = render "opinion", opinion: @opinion
-      - else
-        There are no reviews available.
+      = render "opinions", opinion: @opinion
     .col-12.col-lg-8.col-sm-7
-      %h2.home-title Use Cases
-      .row
-        .col-12.col-lg-6
-          .card.testimonial
-            .card-body
-              .card-author.font-weight-bold.mb-3
-                %a{ "href": "https://eosc-portal.eu/language-data-insight-clarin-demonstrator" }
-                  From language data to insight: the CLARIN demonstrator
-              .card-description
-                How the integration of the CLARIN infrastructure into the EOSC Portal can facilitate the study of
-                language data.
-        .col-12.col-lg-6
-          .card.testimonial
-            .card-body
-              .card-author.font-weight-bold.mb-3
-                %a{ "href": "https://eosc-portal.eu/eosc-scalable-computing-infrastructure-earth-observation" }
-                  The EOSC as a scalable computing infrastructure for Earth Observation
-              .card-description
-                How EOSC could open the way for Earth Observation innovation.
+      = render "use_cases", opinion: @opinion
