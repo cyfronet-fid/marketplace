@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Move research area and category logos to active storage (@mkasztelnik)
 - Refactor homepage partials (@mkasztelnik)
 - Services search view refactoring and unification with backoffice view (@goreck888)
+- Webpack entry structure (@martaswiatkowska)
 
 ### Deprecated
 
