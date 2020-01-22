@@ -1,85 +1,121 @@
-%h1 Desgin system
+.ds-area
+  %aside
+    %h1 MP UI System
+    %ul
+      %li Content box (text + right image)
+      %li Home intro more
+      %li Learn more box
+      %li Service info box
 
-%h3.bordered-headline Learn more box
+    %h2
+      Colors
+    %ul
+      %li
+        %span.color-primary
+        Primary
+      %li
+        %span.color-secondary
+        Secondary
+      %li
+        %span.color-various1
+        Various 1
+      %li
+        %span.color-various2
+        Various 2
+      %li
+        %span.color-link
+        Link
+      %li
+        %span.color-basegray
+        Base for gray palette
 
-.learn-more
-  %a.body{ "href": "#" }
-    .title Sample title
-    .description
-      %p
-        ontribute to develop EOSC into a rich environment with a wide range of services and resources for researchers.
-    .icon
-      = image_tag "refactoring_learn-more-box-default.png"
+  %main
+    %h2.headline Content box (text + right image)
+    .home-intro
+      .left-column
+        %p.title
+          Welcome to the EOSC Portal Catalogue and Marketplace
+
+        %p.home-lead
+          Integrated platform that allows easy access to lots of services and resources for various
+          research domains along with integrated data analytics tools. Browse by scientific domain,
+          service category or provider and, if you need help, we are here for you!
+      = image_tag "gfx_whole_illustation_desktop.png"
 
 
-.row
-  .col-12.col-lg-4.col-sm-6
+    %h2.headline Home intro more
+
+    .intro-box-wrapper
+      .intro-box
+        Find EOSC Services that suit your use case yourself
+        %a{ href: "/services" }
+          %i.fas.fa-arrow-right
+          Browse through catalogue
+
+      .intro-box
+        Find EOSC Services that suit your use case yourself
+        %a{ href: "/services" }
+          %i.fas.fa-arrow-right
+          Browse through catalogue
+
+
+
+    %h2.headline Learn more box
+
     .learn-more
       %a.body{ "href": "#" }
         .title Sample title
         .description
           %p
-            ontribute to develop EOSC into a rich environment with a wide range of services and resources for
-            researchers.
-        .icon
-          = image_tag "refactoring_learn-more-box-default.png"
-  .col-12.col-lg-4.col-sm-6
-    .learn-more
-      %a.body{ "href": "#" }
-        .title Sample title
-        .description
-          %p
-            ontribute to develop EOSC into a rich environment with a wide range of services and resources for
-            researchers.
-        .icon
-          = image_tag "refactoring_learn-more-box-default.png"
-  .col-12.col-lg-4.col-sm-6
-    .learn-more
-      %a.body{ "href": "#" }
-        .title Sample title
-        .description
-          %p
-            ontribute to develop EOSC into a rich environment with a wide range of services and resources for
-            researchers.
+            Contribute to develop EOSC into a rich environment with a wide range of services and resources
+            for researchers.
         .icon
           = image_tag "refactoring_learn-more-box-default.png"
 
 
-%h3.bordered-headline Service info box
+    .row
+      .col-12.col-lg-4.col-sm-6
+        .learn-more
+          %a.body{ "href": "#" }
+            .title Sample title
+            .description
+              %p
+                ontribute to develop EOSC into a rich environment with a wide range of services and resources for
+                researchers.
+            .icon
+              = image_tag "refactoring_learn-more-box-default.png"
+      .col-12.col-lg-4.col-sm-6
+        .learn-more
+          %a.body{ "href": "#" }
+            .title Sample title
+            .description
+              %p
+                ontribute to develop EOSC into a rich environment with a wide range of services and resources for
+                researchers.
+            .icon
+              = image_tag "refactoring_learn-more-box-default.png"
+      .col-12.col-lg-4.col-sm-6
+        .learn-more
+          %a.body{ "href": "#" }
+            .title Sample title
+            .description
+              %p
+                ontribute to develop EOSC into a rich environment with a wide range of services and resources for
+                researchers.
+            .icon
+              = image_tag "refactoring_learn-more-box-default.png"
 
-.service-info-box
-  %header
-    .title
-      %a{ "href": "#" } Sample service name
-    .description
-      %p
-        = image_tag "refactoring_service-info-box-default.png"
-        The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal) is the Liferay-based
-        web p...
-  %footer
-    .column
-      %p
-        %small Provided by:
-        %br
-        EGI Federation
-    .column
-      %p.text-right
-        %small Dedicated for:
-        %br
-        Researchers, Research.
-%p
-%p
-.row
-  .col-12.col-lg-4.col-sm-6
+
+    %h2.headline Service info box
+
     .service-info-box
       %header
         .title
           %a{ "href": "#" } Sample service name
-        .description
-          %p
-            = image_tag "refactoring_service-info-box-default.png"
-            The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal) is the
-            Liferay-based web p...
+        %p
+          = image_tag "refactoring_service-info-box-default.png"
+          The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal)
+          is the Liferay-based web p...
       %footer
         .column
           %p
@@ -91,74 +127,92 @@
             %small Dedicated for:
             %br
             Researchers, Research.
-  .col-12.col-lg-4.col-sm-6
-    .service-info-box
-      %header
-        .title
-          %a{ "href": "#" } Sample service name
-        .description
-          %p
-            = image_tag "refactoring_service-info-box-default.png"
-            The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal) is the
-            Liferay-based web p...
-      %footer
-        .column
-          %p
-            %small Provided by:
-            %br
-            EGI Federation
-        .column
-          %p.text-right
-            %small Dedicated for:
-            %br
-            Researchers, Research.
-  .col-12.col-lg-4.col-sm-6
-    .service-info-box
-      %header
-        .title
-          %a{ "href": "#" } Sample service name
-        .description
-          %p
-            = image_tag "refactoring_service-info-box-default.png"
-            The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal) is the
-            Liferay-based web p...
-      %footer
-        .column
-          %p
-            %small Provided by:
-            %br
-            EGI Federation
-        .column
-          %p.text-right
-            %small Dedicated for:
-            %br
-            Researchers, Research.
+    %p
+    %p
+    .row
+      .col-12.col-lg-4.col-sm-6
+        .service-info-box
+          %header
+            %a.title{ "href": "#" } Sample service name
+            %p
+              = image_tag "refactoring_service-info-box-default.png"
+              The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal) is the Liferay-
+              based web p...
+          %footer
+            .column
+              %p
+                %small Provided by:
+                %br
+                EGI Federation
+            .column
+              %p.text-right
+                %small Dedicated for:
+                %br
+                Researchers, Research.
+      .col-12.col-lg-4.col-sm-6
+        .service-info-box
+          %header
+            %a.title{ "href": "#" } Sample service name
+            %p
+              = image_tag "refactoring_service-info-box-default.png"
+              The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal) is the Liferay-
+              based web p...
+          %footer
+            .column
+              %p
+                %small Provided by:
+                %br
+                EGI Federation
+            .column
+              %p.text-right
+                %small Dedicated for:
+                %br
+                Researchers, Research.
+      .col-12.col-lg-4.col-sm-6
+        .service-info-box
+          %header
+            %a.title{ "href": "#" } Sample service name
+            %p
+              = image_tag "refactoring_service-info-box-default.png"
+              The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal) is the Liferay-
+              based web p...
+          %footer
+            .column
+              %p
+                %small Provided by:
+                %br
+                EGI Federation
+            .column
+              %p.text-right
+                %small Dedicated for:
+                %br
+                Researchers, Research.
 
-%h3.bordered-headline Branch box
+    %h2.headline Branch box
 
-%a.branch-box{ href: "#" }
-  .branch-icon
-    = image_tag "refactoring_branch-box-default.png"
-  .branch-name
-    Sample title
-
-.row
-  .col-12.col-lg-4.col-sm-6
     %a.branch-box{ href: "#" }
       .branch-icon
         = image_tag "refactoring_branch-box-default.png"
       .branch-name
         Sample title
-  .col-12.col-lg-4.col-sm-6
-    %a.branch-box{ href: "#" }
-      .branch-icon
-        = image_tag "refactoring_branch-box-default.png"
-      .branch-name
-        Sample title
-  .col-12.col-lg-4.col-sm-6
-    %a.branch-box{ href: "#" }
-      .branch-icon
-        = image_tag "refactoring_branch-box-default.png"
-      .branch-name
-        Sample title
+
+    .row
+      .col-12.col-lg-4.col-sm-6
+        %a.branch-box{ href: "#" }
+          .branch-icon
+            = image_tag "refactoring_branch-box-default.png"
+          .branch-name
+            Sample title
+      .col-12.col-lg-4.col-sm-6
+        %a.branch-box{ href: "#" }
+          .branch-icon
+            = image_tag "refactoring_branch-box-default.png"
+          .branch-name
+            Sample title
+      .col-12.col-lg-4.col-sm-6
+        %a.branch-box{ href: "#" }
+          .branch-icon
+            = image_tag "refactoring_branch-box-default.png"
+          .branch-name
+            Sample title
 
