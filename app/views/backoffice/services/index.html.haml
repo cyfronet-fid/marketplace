@@ -3,6 +3,17 @@
 = content_for :category_view, "backoffice/categories/nav/category"
 = content_for :all_services, backoffice_services_path(category_query_params)
 
+.row.mb-3.d-flex.justify-content-center
+  .col-lg-3
+  .col-lg-6
+    = render "backoffice/services/search"
+  .col-lg-3
+    - if policy([:backoffice, Service]).new?
+      = link_to t("backoffice.service.new"),
+                    new_backoffice_service_path,
+                    class: "btn btn-primary"
+
+
 = render "services/index", services: @services,
                            category: @category,
                            services_count: @services_total,
@@ -15,26 +26,8 @@
                            tag_options: @tag_options,
                            active_filters: @active_filters,
                            related_platform_options: @related_platform_options,
-                           highlights: @highlights do
-
-
-  .col-md-8
-    %h1
-      = @category&.name || "Services"
-      - if policy([:backoffice, Service]).new?
-        = link_to t("backoffice.service.new"),
-                  new_backoffice_service_path,
-                  class: "btn btn-success"
-  .col-md-3.offset-md-1.my-auto
-    = render "services/order", sort_options: @sort_options
-
-  - if @category
-    .row
-      %p.text-muted.mb-4.ml-3= @category.description
-
-  .row
-    .col
-      = render "backoffice/services/search"
+                           sort_options: @sort_options,
+                           highlights: @highlights
 
 
 

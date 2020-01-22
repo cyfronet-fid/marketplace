@@ -1,0 +1,10 @@
+.col-md-12
+  %hr.category-separator
+.col-md-3
+  %i.control-label.search-results
+    = page_entries_info services
+.col-md-4
+  = render "services/order", sort_options: sort_options
+.col-md-5
+  .float-right
+    = render "services/paginate_simple", services: services
