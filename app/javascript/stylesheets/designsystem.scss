@@ -6,6 +6,101 @@
 //@import '~bootstrap/scss/bootstrap';
 
 
+/* TOP ROW */
+
+.top-row {
+  padding: 0.25rem 0;
+  background: $color-3;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: right;
+
+    li {
+      margin: 0 0.5rem;
+      display: inline-block;
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: $palette-gray-80;
+
+      a {
+        color: $palette-gray-80;
+        padding-bottom: 5px;
+        text-decoration: none;
+
+        &.active {
+          border-bottom: 2px solid $color-secondary;
+        }
+
+        &:hover {
+          color: $palette-gray-50;
+        }
+      }
+    }
+  }
+}
+
+/* HEADER ROW */
+
+.header-row {
+  padding: 0.5rem 0;
+
+  .container {
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+
+    .navbar {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      padding: 0.5rem 0;
+
+      .navbar-brand {
+        display: inline-block;
+        position: relative;
+        padding-top: 0.3125rem;
+        padding-bottom: 0.3125rem;
+        margin-right: 1rem;
+        font-size: 1.25rem;
+        line-height: inherit;
+        white-space: nowrap;
+        flex: 0 0 25%;
+        max-width: 25%;
+
+        .logo {
+          position: relative;
+          z-index: 100;
+          width: 95%;
+        }
+      }
+    }
+  }
+}
+
+
+@media (min-width: 992px) {
+  .header-row .navbar-toggler {
+    display: none;
+  }
+
+  .open-menu {
+    display: none;
+  }
+
+  .header-row .dropdown-menu {
+    position: absolute;
+    display: block;
+    visibility: hidden;
+    transform: translate(0, 20px);
+    opacity: 0;
+    transition: opacity 0.5s ease 0s, transform 0.5s ease 0s;
+  }
+}
 
 /* HOME INTRO */
 .home-intro {
@@ -142,12 +237,89 @@
 
 }
 
+/* HOME LIST */
+
+.home-list-wrapper {
+  background: $color-primary;
+  color: $color-white;
+  border-radius: 5px;
+  padding: 1.5rem;
+}
+
+.home-list {
+
+  .more-link {
+    background: url('../../assets/images/link-separator-bg.png') no-repeat;
+    background-size: 190px 2px;
+    padding-top: 12px;
+    text-decoration: none;
+    font-weight: 300;
+    font-size: 15px;
+    color: $color-white;
+
+    svg {
+      color: $color-secondary;
+      font-size: 10px;
+      margin-right: 3px;
+    }
+
+    &:hover {
+      color: $color-secondary;
+    }
+  }
+
+  .title {
+    font-size: 1.125rem;
+    margin: 0 0 0.6rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  ul {
+    list-style-type: disc;
+    padding-left: 0.9em;
+    margin-left: 0.5em;
+    margin-top: 0;
+
+    li {
+      color: $color-secondary;
+      font-size: 21px;
+      padding: 0;
+      line-height: 24px;
+
+      a {
+        font-size: 16px;
+        max-width: 225px;
+        display: block;
+        line-height: 24px;
+        overflow: hidden;
+        font-weight: 300;
+        text-decoration: none;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: $color-white;
+
+        &:hover {
+          color: $color-secondary;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .home-list {
+    margin-bottom: 25px;
+  }
+}
 
 /* BRANCH BOX STYLES */
 .branch-box {
   border: 3px solid $palette-gray-5;
   border-radius: 5px;
   text-align: center;
+  text-decoration: none;
   display: block;
   margin-bottom: 10px;
   padding: 15px 7px 12px;
@@ -338,3 +510,40 @@
 
 }
 
+/* SIMPLE INTRO STYLES */
+
+.simple-intro {
+  overflow: hidden;
+
+  .icon {
+    display: inline;
+    float: left;
+    margin-right: 20px;
+
+    img {
+      max-width: 100px;
+      height: auto;
+    }
+  }
+
+  .title {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: $color-primary;
+    font-weight: 400;
+    text-decoration: none;
+    display: block;
+
+    &:hover {
+      text-decoration: none;
+      color: $color-text;
+    }
+  }
+
+  .description {
+    font-size: 15px;
+    color: $color-text;
+    font-weight: 300;
+    display: block;
+  }
+}

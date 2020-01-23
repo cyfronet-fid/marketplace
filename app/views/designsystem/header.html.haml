@@ -1,0 +1,35 @@
+.header-row
+  .container
+    %nav.navbar
+      %a.navbar-brand{ href: "#" }
+        = image_tag "eosc-logo-color.png", class: "logo"
+      %span.open-menu.col-4{ "onclick": "openNav()" }
+        Menu
+        %i.fas.fa-bars
+      .col-12.col-lg-6
+        .search-box xxxx
+
+      %button.navbar-toggler.col-2{ "aria-controls" => "main-navbar",
+                             "aria-expanded" => "false",
+                             "aria-label" => "Toggle navigation",
+                             "data-target" => "#main-navbar",
+                             "data-toggle" => "collapse",
+                             type: "button" }
+        %i.fas.fa-bars
+
+      #main-navbar.collapse.navbar-collapse.col-3.pl-0.main-nav
+        %ul.navbar-nav.ml-auto.pt-2.d-flex.flex-wrap.d-sm-none.d-xs.none.d-md-none.d-lg-block
+          - if !user_signed_in?
+            %li.nav-item.ml-1
+              = link_to user_checkin_omniauth_authorize_path, class: "nav-link d-block mb-2" do
+                My EOSC Marketplace
+          - else
+            %li.nav-item.ml-1.dropdown
+              %a.nav-link.px-2.py-1.dropdown-toggle{ "data-toggle": "dropdown", "aria-expanded": "false" }
+                %i.fas.fa-chevron-down.d-lg-none.mr-2
+                %i.fas.fa-chevron-up.d-lg-none.mr-2
+                My EOSC Marketplace
+              .dropdown-menu.ml-4.ml-lg-0.shadow
+                %a.dropdown-item{ href: "/projects" } My projects
+                %a.dropdown-item{ href: "/profile" } Profile
+

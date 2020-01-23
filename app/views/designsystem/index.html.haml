@@ -2,10 +2,14 @@
   %aside
     %h1 MP UI System
     %ul
+      %li Top row with links
       %li Content box (text + right image)
       %li Home intro more
       %li Learn more box
+      %li Home list
       %li Service info box
+      %li Branch box
+      %li Simple intro
 
     %h2
       Colors
@@ -23,6 +27,12 @@
         %span.color-various2
         Various 2
       %li
+        %span.color-various3
+        Various 3
+      %li
+        %span.color-white
+        White
+      %li
         %span.color-link
         Link
       %li
@@ -30,6 +40,28 @@
         Base for gray palette
 
   %main
+
+
+    %h2.headline Top row with links
+
+    .top-row
+      .container
+        %ul
+          %li
+            %a{ href: "#" } Info
+          %li
+            %a.active{ href: "#" } Catalogue & Marketplace
+          %li
+            %a{ href: "#" } Providers Dashboard
+          %li
+            %a{ href: "#" } Backoffice
+          %li
+            %i.fas.fa-user.mr-1
+            Jan Nowak
+          %li
+            %strong Logout
+
+
     %h2.headline Content box (text + right image)
     .home-intro
       .left-column
@@ -57,6 +89,64 @@
         %a{ href: "/services" }
           %i.fas.fa-arrow-right
           Browse through catalogue
+
+
+
+    %h2.headline Home list
+
+    .home-list-wrapper
+      .row
+        .home-list.col-sm-12.col-lg-3.col-4
+          .title List title header
+          %ul
+            %li
+              %a{ href: "#" } Lorem ipsum dolor sit amet enim.
+            %li
+              %a{ href: "#" } Etiam ullamcorper.
+            %li
+              %a{ href: "#" } Suspendisse a pellentesque dui
+            %li
+              %a{ href: "#" } Maecenas malesuada elit lectus felis
+            %li
+              %a{ href: "#" } Curabitur et ligula.
+        .home-list.col-sm-12.col-lg-3.col-3
+          .title List title header
+          %ul
+            %li
+              %a{ href: "#" } Lorem ipsum dolor sit amet enim.
+            %li
+              %a{ href: "#" } Etiam ullamcorper.
+            %li
+              %a{ href: "#" } Suspendisse a pellentesque dui
+            %li
+              %a{ href: "#" } Maecenas malesuada elit lectus felis
+            %li
+              %a{ href: "#" } Curabitur et ligula.
+        .home-list.col-sm-12.col-lg-6.col-5
+          .title List title header
+          %ul.row
+            %li.col-lg-6
+              %a{ href: "#" } Lorem ipsum dolor sit amet.
+            %li.col-lg-6
+              %a{ href: "#" } Etiam ullamcorper.
+            %li.col-lg-6
+              %a{ href: "#" } Suspendisse a pellentesque dui
+            %li.col-lg-6
+              %a{ href: "#" } Maecenas malesuada elit lectus
+            %li.col-lg-6
+              %a{ href: "#" } Curabitur et ligula.
+            %li.col-lg-6
+              %a{ href: "#" } Etiam ullamcorper.
+            %li.col-lg-6
+              %a{ href: "#" } Suspendisse a pellentesque dui
+            %li.col-lg-6
+              %a{ href: "#" } Maecenas malesuada elit lectus
+          .row
+            .col-12
+              %a.more-link.d-block{ href: "#" }
+                %i.fas.fa-arrow-right
+                And for
+                %strong more other target groups
 
 
 
@@ -110,8 +200,7 @@
 
     .service-info-box
       %header
-        .title
-          %a{ "href": "#" } Sample service name
+        %a.title{ "href": "#" } Sample service name
         %p
           = image_tag "refactoring_service-info-box-default.png"
           The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal)
@@ -127,9 +216,8 @@
             %small Dedicated for:
             %br
             Researchers, Research.
-    %p
-    %p
-    .row
+
+    .row.mt-5
       .col-12.col-lg-4.col-sm-6
         .service-info-box
           %header
@@ -216,3 +304,40 @@
           .branch-name
             Sample title
 
+
+    %h2.headline Simple intro
+
+    .simple-intro
+      .icon
+        = image_tag "refactoring_learn-more-box-default.png"
+      %a.title{ "href": "#" } From language data to insight: the CLARIN demonstrator
+      .description
+        How the integration of the CLARIN infrastructure into the EOSC Portal can facilitate the study of language data.
+
+    .row.mt-5.mb-4
+      .col-12.col-lg-4.col-sm-6
+        .simple-intro
+          .icon
+            = image_tag "refactoring_learn-more-box-default.png"
+          %a.title{ "href": "#" } From language data to insight: the CLARIN demonstrator
+          .description
+            How the integration of the CLARIN infrastructure into the EOSC Portal can facilitate the study of language
+            data.
+
+      .col-12.col-lg-4.col-sm-6
+        .simple-intro
+          .icon
+            = image_tag "refactoring_learn-more-box-default.png"
+          %a.title{ "href": "#" } From language data to insight: the CLARIN demonstrator
+          .description
+            How the integration of the CLARIN infrastructure into the EOSC Portal can facilitate the study of language
+            data.
+
+      .col-12.col-lg-4.col-sm-6
+        .simple-intro
+          .icon
+            = image_tag "refactoring_learn-more-box-default.png"
+          %a.title{ "href": "#" } From language data to insight: the CLARIN demonstrator
+          .description
+            How the integration of the CLARIN infrastructure into the EOSC Portal can facilitate the study of language
+            data.
