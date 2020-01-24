@@ -1,0 +1,6 @@
+.container
+  %h2.home-title= section.title
+  .row
+    = render partial: "leads/#{section.template}/card",
+      collection: section.leads,
+      locals: { parent: section.slug }

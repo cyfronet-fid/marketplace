@@ -4,6 +4,8 @@ class HomeController < ApplicationController
   before_action :load_services, :load_platforms, :load_providers, :load_target_groups, :load_opinion
 
   def index
+    @learn_more_section = LeadSection.includes(:leads).find_by(slug: "learn-more")
+    @use_cases_section = LeadSection.includes(:leads).find_by(slug: "use-cases")
     @root_categories = @root_categories.with_attached_logo
     @main_research_areas =
       ResearchArea.with_attached_logo.roots[0...8]

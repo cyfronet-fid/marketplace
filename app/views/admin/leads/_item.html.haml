@@ -1,0 +1,13 @@
+
+= content_for :item_bar, flush: true do
+  .group-item
+    = link_to edit_admin_lead_path(item), method: :get,
+      class: "" do
+      %i.fa.fa-pencil-alt
+    = link_to admin_lead_path(item),
+      method: :delete,
+      data: { confirm: "Are you sure you want to remove this lead section?" },
+      class: "delete-icon btn-sm" do
+      %i.far.fa-trash-alt{ id: "delete-lead-#{item.id}" }
+
+= render "leads/#{item.template}/card", card: item

@@ -9,7 +9,8 @@
   providers: @home_providers, more_providers_count: @home_providers_counter,
   target_groups: @home_target_groups, more_target_groups_count: @home_target_groups_counter
 
-= render "learn_more"
+- if @learn_more_section
+  = render "leads/section", section: @learn_more_section
 
 = render "services", services: @services
 
@@ -19,4 +20,5 @@
     .col-12.col-lg-4.col-sm-5
       = render "opinions", opinion: @opinion
     .col-12.col-lg-8.col-sm-7
-      = render "use_cases", opinion: @opinion
+      - if @use_cases_section
+        = render "leads/section", section: @use_cases_section
