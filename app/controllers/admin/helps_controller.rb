@@ -2,6 +2,6 @@
 
 class Admin::HelpsController < Admin::ApplicationController
   def show
-    @sections = HelpSection.includes(:help_items).all
+    @sections = policy_scope(HelpSection).includes(:help_items).order(:position)
   end
 end

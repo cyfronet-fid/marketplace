@@ -25,7 +25,7 @@ class Admin::HelpSectionPolicy < ApplicationPolicy
 
   def permitted_attributes
     [
-      :title
+      :title, :position
     ]
   end
 
