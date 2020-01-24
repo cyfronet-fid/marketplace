@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   end
 
   resource :profile, only: :show
+  resource :help, only: :show
 
   resource :backoffice, only: :show
   namespace :backoffice do
