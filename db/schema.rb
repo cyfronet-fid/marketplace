@@ -82,9 +82,9 @@ ActiveRecord::Schema.define(version: 2020_01_14_134749) do
   end
 
   create_table "help_items", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.string "slug"
-    t.integer "position", default: 0
+    t.integer "position", default: 0, null: false
     t.bigint "help_section_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -92,9 +92,9 @@ ActiveRecord::Schema.define(version: 2020_01_14_134749) do
   end
 
   create_table "help_sections", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.string "slug"
-    t.integer "position", default: 0
+    t.integer "position", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
