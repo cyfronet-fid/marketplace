@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+
   devise_for :users,
              controllers: { omniauth_callbacks: "users/omniauth_callbacks" },
              skip: [:sessions]
@@ -87,6 +88,8 @@ Rails.application.routes.draw do
     resource :help, only: :show
     resources :help_sections, except: [:index, :show]
     resources :help_items, except: [:index, :show]
+    resources :lead_sections, except: :show
+    resources :leads, except: :show
   end
 
   # Sidekiq monitoring

@@ -1,0 +1,10 @@
+.col-12.col-lg-4.col-sm-6
+  - if content_for(:item_bar)
+    = yield :item_bar
+  .card.learn-more.first
+    = link_to card.url, class: "card-body" do
+      %h5.card-title= card.header
+      .card-description= card.body
+      .card-icon
+        = image_tag card.picture.variant(resize: "86x111")
+
