@@ -75,6 +75,7 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
+    get "/services" => "services#index", defaults: { format: :json }, as: :services_api
     namespace :webhooks do
       post "/jira" => "jiras#create", as: :jira
     end
