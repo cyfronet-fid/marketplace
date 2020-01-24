@@ -1,6 +1,7 @@
 = simple_form_for [:admin, help_item] do |f|
   = f.input :title
   = f.association :help_section
+  = f.input :position
   = f.input :content do
     = f.rich_text_area :content
 

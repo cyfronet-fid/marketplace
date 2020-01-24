@@ -4,7 +4,7 @@ class HelpsController < ApplicationController
   before_action :ensure_admin
 
   def show
-    @sections = HelpSection.includes(:help_items)
+    @sections = policy_scope(HelpSection).includes(:help_items).order(:position)
   end
 
   private

@@ -4,7 +4,7 @@ class HelpSection < ApplicationRecord
   extend FriendlyId
   friendly_id :title, use: :slugged
 
-  has_many :help_items, dependent: :destroy
+  has_many :help_items, -> { order(:position) }, dependent: :destroy
 
   validates :title, presence: true
 end
