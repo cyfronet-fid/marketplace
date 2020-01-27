@@ -54,6 +54,26 @@ class Service < ApplicationRecord
     draft: "draft"
   }
 
+  SIDEBAR_FIELDS = [{ name: "places_and_languages",
+                      template: "text",
+                      fields: ["places", "languages"] },
+                    { name: "platforms",
+                      template: "array",
+                      fields: ["platforms"] },
+                    { name: "support",
+                      template: "links",
+                      fields: ["webpage_url", "helpdesk_url", "helpdesk_email",
+                               "manual_url", "tutorial_url"] },
+                    { name: "documents",
+                      template: "links",
+                      fields: ["sla_url", "terms_of_use_url", "access_policies_url"] },
+                    { name: "restrictions",
+                      template: "text",
+                      fields: ["restrictions"] },
+                    { name: "phase",
+                      template: "text",
+                      fields: ["phase"] }]
+
   enum status: STATUSES
 
   has_many :offers, dependent: :restrict_with_error
