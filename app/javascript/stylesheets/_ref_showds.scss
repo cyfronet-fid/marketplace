@@ -34,7 +34,6 @@ aside {
 
   ul {
     margin-bottom: 30px;
-
   }
 
   li {
@@ -52,8 +51,6 @@ aside {
       margin-right: 15px;
       border: 1px solid $colortemplatecolor;
     }
-
-
   }
 }
 
@@ -76,6 +73,12 @@ main {
 
 .headline {
   padding-bottom: 10px;
-  margin: 50px 0 25px;
+  margin: 80px 0 25px;
   font-size: 2rem;
+  opacity: 0.3;
+  font-weight: 500;
+
+  &:first-child {
+    margin-top: 50px;
+  }
 }

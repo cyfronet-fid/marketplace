@@ -2,7 +2,7 @@
   %aside
     %h1 MP UI System
     %ul
-      %li Top row with links
+      %li Main header
       %li Content box (text + right image)
       %li Home intro more
       %li Learn more box
@@ -51,25 +51,47 @@
 
   %main
 
-    %h2.headline Top row with links
+    %h2.headline Main header
 
-    .top-row
-      .container
-        %ul
-          %li
-            %a{ href: "#" } Info
-          %li
-            %a.active{ href: "#" } Catalogue & Marketplace
-          %li
-            %a{ href: "#" } Providers Dashboard
-          %li
-            %a{ href: "#" } Backoffice
-          %li
-            %i.fas.fa-user
-            Jan Nowak
-          %li
-            %strong Logout
+    %nav
+      %ul
+        %li
+          %a{ href: "#" } Info
+        %li
+          %a.active{ href: "#" } Catalogue & Marketplace
+        %li
+          %a{ href: "#" } Providers Dashboard
+        %li
+          %a{ href: "#" } Backoffice
+        %li
+          %i.fas.fa-user
+          Jan Nowak
+        %li
+          %a{ href: "#" } Logout
 
+    %section.header
+      .logo
+        = image_tag "eosc-logo-color.png", class: "logo"
+      .searchbar
+        %input{ :type => "text" }
+        .container-select
+          %span
+            All services
+          %select
+            %option
+              Option 1
+        %button
+          %i.fas.fa-search
+      .menu.dropdown
+        %button#dropdown-menu-button.dropdown-toggle{ "aria-expanded" => "false", "aria-haspopup" => "true",
+        "data-toggle" => "dropdown", :type => "button" }
+          My EOSC Marketplace
+        .dropdown-menu{ "aria-labelledby" => "dropdown-menu-button" }
+          %ul
+            %li
+              %a.dropdown-item{ :href => "#" } My EOSC Marketplace
+            %li
+              %a.dropdown-item{ :href => "#" } Profile
 
     %h2.headline Content box (text + right image)
     .home-intro
