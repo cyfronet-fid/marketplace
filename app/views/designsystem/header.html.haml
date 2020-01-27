@@ -6,8 +6,20 @@
       %span.open-menu.col-4{ "onclick": "openNav()" }
         Menu
         %i.fas.fa-bars
+
       .col-12.col-lg-6
-        .search-box xxxx
+        .search-box
+          .input-group
+            %label.sr-only{ for: "search" } Search
+            %input.autocomplete-input.form-control.w-50{ placeholder: "Find service..." }
+            %select#category-select.custom-select.rounded-0{ "data-action": "change->search#refresh",
+                                                               "data-target": "search.categorySelect" }
+              %option{ value: "", selected: "selected" }
+                All services
+            .input-group-append
+              %button#query-submit.input-group-text.bg-white
+                %i.fas.fa-search
+          %ul.autocomplete-results{ "data-target": "autocomplete.results" }
 
       %button.navbar-toggler.col-2{ "aria-controls" => "main-navbar",
                              "aria-expanded" => "false",

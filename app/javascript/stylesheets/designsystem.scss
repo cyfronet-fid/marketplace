@@ -1,10 +1,15 @@
 @import 'bootstrap-grid.min.css';
+//@import 'bootstrap.min.css';
+//@import 'bootstrap-theme.min.css';
 @import 'ref_variables';
 @import 'fonts';
 @import 'ref_showds';
 
-//@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap';
 
+html {
+  font-size: 16px;
+}
 
 /* TOP ROW */
 
@@ -79,6 +84,34 @@
         }
       }
     }
+
+    .search-box {
+      position: relative;
+
+      .input-group {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        width: 100%;
+
+        .sr-only {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+        }
+
+        .search-box .form-control {
+          border: 1px solid $palette-gray-50;
+        }
+      }
+
+    }
   }
 }
 
@@ -118,7 +151,7 @@
   .left-column {
 
     .title {
-      font-size: 52px;
+      font-size: 3.25rem;
       line-height: 1.12;
       margin-bottom: 70px;
       font-weight: normal;
@@ -127,7 +160,7 @@
     }
 
     .home-lead {
-      font-size: 21px;
+      font-size: 1.313rem;
       font-weight: 300;
       width: 80%;
       line-height: 1.48;
@@ -163,7 +196,7 @@
       order: 13;
 
       .title {
-        font-size: 28px;
+        font-size: 1.75rem;
         line-height: 37px;
         text-align: center;
         margin-bottom: 40px;
@@ -171,7 +204,7 @@
       }
 
       .home-lead {
-        font-size: 18px;
+        font-size: 1.125rem;
         line-height: 1.48;
         width: 100%;
         text-align: center;
@@ -191,7 +224,7 @@
 }
 
 .intro-box {
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 1.44;
   font-weight: normal;
   margin-bottom: 30px;
@@ -216,7 +249,7 @@
 
     svg {
       color: $color-secondary;
-      font-size: 15px;
+      font-size: 0.9375rem;
       margin-right: 4px;
     }
   }
@@ -254,12 +287,12 @@
     padding-top: 12px;
     text-decoration: none;
     font-weight: 300;
-    font-size: 15px;
+    font-size: 0.9375rem;
     color: $color-white;
 
     svg {
       color: $color-secondary;
-      font-size: 10px;
+      font-size: 0.625rem;
       margin-right: 3px;
     }
 
@@ -283,12 +316,12 @@
 
     li {
       color: $color-secondary;
-      font-size: 21px;
+      font-size: 1.313rem;
       padding: 0;
       line-height: 24px;
 
       a {
-        font-size: 16px;
+        font-size: 1rem;
         max-width: 225px;
         display: block;
         line-height: 24px;
@@ -341,7 +374,7 @@
 
   .branch-name {
     margin-top: 15px;
-    font-size: 20px;
+    font-size: 1.25rem;
     min-height: 48px;
     font-weight: 300;
     display: flex;
@@ -371,7 +404,7 @@
   .body {
     padding: 1rem 45% 1rem 0;
     position: relative;
-    font-size: 14px;
+    font-size: 0.875rem;
     flex: 1 1 auto;
     line-height: 18px;
     font-weight: 300;
@@ -379,7 +412,7 @@
     color: $palette-gray-100;
 
     .title {
-      font-size: 20px;
+      font-size: 1.25rem;
       line-height: 1.05;
       font-weight: 400;
       padding-top: 0.8rem;
@@ -398,7 +431,7 @@
 
       p {
         margin: 0;
-        font-size: 14px;
+        font-size: 0.875rem;
         line-height: 1.4;
         font-weight: 300;
       }
@@ -472,7 +505,7 @@
 
   p {
     margin: 0;
-    font-size: 14px;
+    font-size: 0.875rem;
     line-height: 1.4;
     font-weight: 300;
   }
@@ -498,7 +531,7 @@
     p,
     small {
       margin: 0 0 7px;
-      font-size: 12px;
+      font-size: 0.75rem;
       font-weight: 300;
     }
 
@@ -528,7 +561,7 @@
 
   .title {
     margin-bottom: 15px;
-    font-size: 16px;
+    font-size: 1rem;
     color: $color-primary;
     font-weight: 400;
     text-decoration: none;
@@ -541,9 +574,153 @@
   }
 
   .description {
-    font-size: 15px;
+    font-size: 0.9375rem;
     color: $color-text;
     font-weight: 300;
     display: block;
+  }
+}
+
+/* FOOTER */
+
+.footer {
+  width: 100%;
+  background-color: $color-4;
+  font-weight: 300;
+  padding: 1rem 0;
+
+  .logo-one {
+    background: url('../../assets/images/eosc-logo-mono.png') top center no-repeat;
+    width: 203px;
+    height: 79px;
+    display: block;
+  }
+
+  .logo-two {
+    background: url('../../assets/images/eosc-footer-logo.png') center no-repeat;
+    width: 148px;
+    height: 79px;
+    display: block;
+  }
+
+  .copyright {
+    text-align: right;
+    font-size: 0.875rem;
+
+    a {
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      margin-left: 10px;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  ul {
+    line-height: 1.1rem;
+    padding: 0;
+    list-style: none;
+    margin: 0;
+
+    li {
+      margin-bottom: 0.25rem;
+
+      a {
+        font-size: 0.75rem;
+        font-weight: 100;
+        line-height: 1.1;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+
+    }
+  }
+
+  .title {
+    color: $color-6;
+    text-transform: uppercase;
+    font-weight: 600;
+    line-height: 1.2;
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  a {
+    color: $color-white;
+    font-size: 1rem;
+
+    &:hover {
+      color: $color-secondary;
+    }
+  }
+
+  hr {
+    border-color: $color-6;
+  }
+
+  .copy-text {
+    color: $color-6;
+  }
+
+  .social-logo {
+    width: 38px;
+    height: 40px;
+    margin-right: 10px;
+    display: inline-block;
+  }
+
+  .twitter-logo {
+    background: url('../../assets/images/t-icon.svg') top center no-repeat;
+  }
+
+  .yt-logo {
+    background: url('../../assets/images/yt-icon.svg') top center no-repeat;
+  }
+}
+
+.eu-information {
+  font-size: 0.875rem;
+  line-height: 1.2rem;
+  font-weight: 300;
+  color: $color-6;
+  padding: 1.5rem;
+
+  p {
+    margin: 5px 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer {
+    .row {
+      .col-md {
+        width: 50%;
+        margin-bottom: 15px;
+      }
+    }
+
+    .copy-text {
+      font-size: 0.6875rem;
+    }
+
+    .socials {
+      margin-top: 0 !important;
+      text-align: center;
+    }
+  }
+
+  .eosc-logo-mono,
+  .eosc-hub-logo-mono {
+    margin: auto;
+  }
+
+  .eu-information {
+    font-size: 0.6875rem;
+    line-height: 1rem;
+    padding: 12px 0 !important;
   }
 }
