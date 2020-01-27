@@ -1,0 +1,119 @@
+%footer.footer
+  .container
+    .row
+      .col-md-3
+        %a.logo-one{ href: "#" }
+      .col-md-3
+        %a.logo-two{ href: "https://www.eosc-hub.eu" }
+      .col-md-6.my-auto.copyright
+        %span.copy-text
+          Copyright 2018 - All right reserved
+        %a{ href: "https://eosc-portal.eu/privacy-policy-summary" }
+          privacy policy
+    %hr
+    .row
+      .col-md
+        %ul
+          %li
+            .title About
+          %li
+            %a{ href: "#" } EOSC
+          %li
+            %a{ href: "#" } EOSC Doers
+          %li
+            %a{ href: "#" } EOSC Projects
+          %li
+            %a{ href: "#" } Funding Opportunities
+          %li
+            %a{ href: "#" } Marketplace
+          %li
+            %a{ href: "#" } FAQs
+          %li
+            %a{ href: "#" } Contact us
+      .col-md
+        %ul
+          %li
+            .title Governance
+          %li
+            %a{ href: "#" } EOSC Governance
+          %li
+            %a{ href: "#" } Rules of participation
+          %li
+            %a{ href: "#" } Best Practices
+      .col-md
+        %ul
+          %li
+            .title Services & Resources
+          %li
+            %a{ href: "#" } Sharing & Discovery
+          %li
+            %a{ href: "#" } Processing & Analysis
+          %li
+            %a{ href: "#" } Data Management
+          %li
+            %a{ href: "#" } Compute
+          %li
+            %a{ href: "#" } Storage
+          %li
+            %a{ href: "#" } Networking
+          %li
+            %a{ href: "#" } Training & Support
+          %li
+            %a{ href: "#" } Security & Operations
+      .col-md
+        %ul
+          %li
+            .title Policy
+          %li
+            %a{ href: "#" } EC Documents
+          %li
+            %a{ href: "#" } Europe
+          %li
+            %a{ href: "#" } Member States
+      .col-md
+        %ul
+          %li
+            .title EOSC IN PRACTICE
+          %li
+            %a{ href: "#" } Use Cases
+          %li
+            %a{ href: "#" } Open Call
+      .col-md
+        %ul
+          %li
+            .title Media
+          %li
+            %a{ href: "#" } News
+          %li
+            %a{ href: "#" } Forthcoming events
+          %li
+            %a{ href: "#" } Past Events
+      .col-md
+        %ul
+          %li
+            .title MARKETPLACE
+          %li
+            %a{ href: "#" } About
+          %li
+            = link_to "All Services", services_path
+          - @root_categories.each do |root_category|
+            %li
+              = link_to root_category.name, root_category
+          %li
+            %a{ href: "#" } For providers
+          %li
+            = link_to "Help", page_path("help")
+
+
+    .row.socials
+      .col-md-6
+        %a.social-logo.twitter-logo{ href: "https://twitter.com/EoscPortal" }
+        %a.social-logo.yt-logo{ href: "https://www.youtube.com/channel/UCHsaUFy5LJ3rJ28qDg2StGA" }
+
+.eu-information
+  .container
+    %p
+      The EOSC portal is been jointly developed and maintained by the EOSC-hub,
+      eInfraCentral and OpenAIRE-Advance projects funded by the Euopean
+    %p Union’s Horizon 2020 research and innovation programme with contribution of the European Commission
+    %p 2018 EOSC Portal
