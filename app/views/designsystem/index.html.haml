@@ -6,7 +6,7 @@
       %li Content box (text + right image)
       %li Home intro more
       %li Learn more box
-      %li Home list
+      %li Standard list
       %li Service info box
       %li Branch box
       %li Simple intro
@@ -73,7 +73,7 @@
       .logo
         = image_tag "eosc-logo-color.png", class: "logo"
       .searchbar
-        %input{ :type => "text" }
+        %input{ type: "text" }
         .container-select
           %span
             All services
@@ -89,9 +89,9 @@
         .dropdown-menu{ "aria-labelledby" => "dropdown-menu-button" }
           %ul
             %li
-              %a.dropdown-item{ :href => "#" } My EOSC Marketplace
+              %a.dropdown-item{ href: "#" } My EOSC Marketplace
             %li
-              %a.dropdown-item{ :href => "#" } Profile
+              %a.dropdown-item{ href: "#" } Profile
 
     %h2.headline Content box (text + right image)
     .home-intro
@@ -123,61 +123,58 @@
 
 
 
-    %h2.headline Home list
+    %h2.headline Standard list
 
-    .home-list-wrapper
-      .row
-        .home-list.col-sm-12.col-lg-3.col-4
-          .title List title header
-          %ul
-            %li
-              %a{ href: "#" } Lorem ipsum dolor sit amet enim.
-            %li
-              %a{ href: "#" } Etiam ullamcorper.
-            %li
-              %a{ href: "#" } Suspendisse a pellentesque dui
-            %li
-              %a{ href: "#" } Maecenas malesuada elit lectus felis
-            %li
-              %a{ href: "#" } Curabitur et ligula.
-        .home-list.col-sm-12.col-lg-3.col-3
-          .title List title header
-          %ul
-            %li
-              %a{ href: "#" } Lorem ipsum dolor sit amet enim.
-            %li
-              %a{ href: "#" } Etiam ullamcorper.
-            %li
-              %a{ href: "#" } Suspendisse a pellentesque dui
-            %li
-              %a{ href: "#" } Maecenas malesuada elit lectus felis
-            %li
-              %a{ href: "#" } Curabitur et ligula.
-        .home-list.col-sm-12.col-lg-6.col-5
-          .title List title header
-          %ul.row
-            %li.col-lg-6
-              %a{ href: "#" } Lorem ipsum dolor sit amet.
-            %li.col-lg-6
-              %a{ href: "#" } Etiam ullamcorper.
-            %li.col-lg-6
-              %a{ href: "#" } Suspendisse a pellentesque dui
-            %li.col-lg-6
-              %a{ href: "#" } Maecenas malesuada elit lectus
-            %li.col-lg-6
-              %a{ href: "#" } Curabitur et ligula.
-            %li.col-lg-6
-              %a{ href: "#" } Etiam ullamcorper.
-            %li.col-lg-6
-              %a{ href: "#" } Suspendisse a pellentesque dui
-            %li.col-lg-6
-              %a{ href: "#" } Maecenas malesuada elit lectus
-          .row
-            .col-12
-              %a.more-link.d-block{ href: "#" }
-                %i.fas.fa-arrow-right
-                And for
-                %strong more other target groups
+    .standard-list-wrapper
+      .standard-list
+        .title List title header
+        %ul
+          %li
+            %a{ href: "#" } Lorem ipsum dolor sit amet enim.
+          %li
+            %a{ href: "#" } Etiam ullamcorper.
+          %li
+            %a{ href: "#" } Suspendisse a pellentesque dui
+          %li
+            %a{ href: "#" } Maecenas malesuada elit lectus felis
+          %li
+            %a{ href: "#" } Curabitur et ligula.
+      .standard-list
+        .title List title header
+        %ul
+          %li
+            %a{ href: "#" } Lorem ipsum dolor sit amet enim.
+          %li
+            %a{ href: "#" } Etiam ullamcorper.
+          %li
+            %a{ href: "#" } Suspendisse a pellentesque dui
+          %li
+            %a{ href: "#" } Maecenas malesuada elit lectus felis
+          %li
+            %a{ href: "#" } Curabitur et ligula.
+      .standard-list.two-columns
+        .title List title header
+        %ul
+          %li
+            %a{ href: "#" } Lorem ipsum dolor sit amet.
+          %li
+            %a{ href: "#" } Etiam ullamcorper.
+          %li
+            %a{ href: "#" } Suspendisse a pellentesque dui
+          %li
+            %a{ href: "#" } Maecenas malesuada elit lectus
+          %li
+            %a{ href: "#" } Curabitur et ligula.
+          %li
+            %a{ href: "#" } Etiam ullamcorper.
+          %li
+            %a{ href: "#" } Suspendisse a pellentesque dui
+          %li
+            %a{ href: "#" } Maecenas malesuada elit lectus
+        %a.more-link.d-block{ href: "#" }
+          %i.fas.fa-arrow-right
+          And for
+          %strong more other target groups
 
 
 
@@ -372,7 +369,6 @@
           .description
             How the integration of the CLARIN infrastructure into the EOSC Portal can facilitate the study of language
             data.
-
 
     %h2.headline Footer
 
