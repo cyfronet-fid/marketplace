@@ -24,7 +24,7 @@ RSpec.feature "Help" do
 
     before { checkin_sign_in_as(admin) }
 
-    scenario "I can see gemerated help page" do
+    scenario "I can see generated help page" do
       section = create(:help_section)
       item = create(:help_item, help_section: section, content: "Help item content")
 
