@@ -52,3 +52,6 @@ document.addEventListener('DOMContentLoaded', function () {
     initFlash();
     dom.watch();
 });
+
+require("trix")
+require("@rails/actiontext")
