@@ -1,0 +1,6 @@
+%h3.subsection
+  %a{ id: section.slug }
+  = section.title
+.accordion.faq-list{ id: "s-#{section.slug}" }
+  = render partial: "item",
+    collection: section.help_items, locals: { parent: "s-#{section.slug}" }

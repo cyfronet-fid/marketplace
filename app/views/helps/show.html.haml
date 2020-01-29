@@ -1,0 +1,8 @@
+.container
+  %h1
+    Frequently Asked Questions
+
+  %ul.list-group
+    = render partial: "toc", collection: @sections, as: :section
+
+  = render partial: "section", collection: @sections
