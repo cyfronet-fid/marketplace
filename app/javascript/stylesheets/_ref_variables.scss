@@ -1,0 +1,32 @@
+$font-family-sans-serif: 'Ubuntu', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+$font-size-base: 1rem;
+
+$font-weight-light: 100; // Ubuntu light
+$font-weight-normal: 300; // Ubuntu regular
+$font-weight-bold: 400; // Ubuntu medium
+$font-weight-bolder: 600; // Ubuntu bold
+
+$font-size-base: 1rem;
+
+$border-radius-default: 2px;
+
+$color-primary: #0c2bd5;
+$color-secondary: #ffcd00;
+$color-text: #233d4c;
+$color-1: #f9fcfe;
+$color-2: #1c313a;
+$color-3: #f8f9fa;
+$color-4: #52636a;
+$color-5: #f8f9fa;
+$color-6: #a6aeb1;
+$color-link: #3540b6;
+$color-white: #fff;
+
+$palette-gray-100: $color-text;
+$palette-gray-5: rgba($palette-gray-100, 0.05);
+$palette-gray-10: rgba($palette-gray-100, 0.1);
+$palette-gray-30: rgba($palette-gray-100, 0.3);
+$palette-gray-50: rgba($palette-gray-100, 0.5);
+$palette-gray-70: rgba($palette-gray-100, 0.7);
+$palette-gray-80: rgba($palette-gray-100, 0.8);

@@ -2,28 +2,33 @@ $font-family-sans-serif: 'Ubuntu', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
 $font-size-base: 1rem;
 
+$font-size-xs: 0.75 * $font-size-base;
+$font-size-navbar: 1 * $font-size-base;
+$font-size-footer: 0.75 * $font-size-base;
+
 $font-weight-light: 100; // Ubuntu light
 $font-weight-normal: 300; // Ubuntu regular
 $font-weight-bold: 400; // Ubuntu medium
 $font-weight-bolder: 600; // Ubuntu bold
 
+$link-color: #3540b6;
 $font-size-base: 1rem;
 
-$border-radius-default: 2px;
+$headings-font-weight: $font-weight-bolder;
+$h1-font-size: $font-size-base * 2.25;
+$h2-font-size: $font-size-base * 1.375;
+$h3-font-size: $font-size-base * 1.125;
+$h4-font-size: $font-size-base * 0.875;
+$h5-font-size: $font-size-base * 0.75;
+$h6-font-size: $font-size-base * 0.75;
 
-$color-primary: #0c2bd5;
-$color-secondary: #ffcd00;
-$color-text: #233d4c;
-$color-1: #f9fcfe;
-$color-2: #1c313a;
-$color-3: #f8f9fa;
-$color-4: #52636a;
-$color-5: #f8f9fa;
-$color-6: #a6aeb1;
-$color-link: #3540b6;
-$color-white: #fff;
+$display1-size: 2.25rem; // display3
+$display2-size: 1.25rem; // display4
+$display3-size: 1.1rem; // display5
 
-$palette-gray-100: $color-text;
+$display1-weight: $font-weight-light;
+
+$palette-gray-100: #1c313a;
 $palette-gray-5: rgba($palette-gray-100, 0.05);
 $palette-gray-10: rgba($palette-gray-100, 0.1);
 $palette-gray-30: rgba($palette-gray-100, 0.3);
@@ -31,3 +36,78 @@ $palette-gray-50: rgba($palette-gray-100, 0.5);
 $palette-gray-70: rgba($palette-gray-100, 0.7);
 $palette-gray-80: rgba($palette-gray-100, 0.8);
 
+$palette-solid-5: #f3f4f5;
+$palette-solid-10: #e8eaeb;
+$palette-solid-20: #ced4da;
+$palette-solid-30: #bac1c3;
+$palette-solid-50: #8d989c;
+$palette-solid-80: #495a61;
+$palette-solid-100: #1c313a;
+
+$palette-blue: #0c2bd5;
+$palette-light-blue: #e6fafd;
+$palette-yellow: #ffcd00;
+$palette-orange: #ffa900;
+$palette-salmon: #ff715b;
+$palette-gradient-start: #05cae7;
+$palette-gradient-end: $palette-blue;
+$palette-lightblue: #e1f9fb;
+$palette-black: #000;
+$palette-end-opacity: rgba(27, 48, 58, 0.85);
+
+$primary: $palette-blue;
+$secondary: $palette-yellow;
+$info: $palette-gray-30;
+$error: $palette-salmon;
+$body-color: #233d4c;
+$nav-color: #555;
+$text-muted: #a2aab1;
+
+$theme-colors: ("error": $error);
+
+$btn-primary-gradient-start: $palette-gradient-start;
+$btn-primary-gradient-end: $palette-gradient-end;
+$btn-primary-hover: $primary;
+$btn-secondary: $secondary;
+$btn-secondary-hover: $palette-orange;
+$btn-error: $error;
+$btn-error-hover: #ff5557;
+$btn-info: $info;
+$btn-info-hover: #a1acaf;
+
+$btn-focus-width: 0;
+$btn-border-width: 0;
+
+$btn-border-radius: 2rem;
+$btn-border-radius-sm: 2rem;
+$btn-border-radius-lg: 2rem;
+
+$btn-padding-y: 0.375rem;
+$btn-padding-x: 2rem;
+$btn-padding-y-sm: 0.22rem;
+$btn-padding-x-sm: 1.8rem;
+
+$navbar-light-active-color:  #233c4c;
+$navbar-light-color: #233d4c;
+
+$radius-common: 2px;
+$footer-color: #fff;
+$tag-bg-color: #fff5cc;
+$footer-header-color: #a6aeb1;
+$card-header-bg: rgba(255, 192, 69, 0.3);
+$pagination-link-color: #dee2e6;
+$border-color: #dee2e6;
+$border-header: #f7f7f7;
+$collapse-background: #fbfbfb;
+$footer-bg-color: #52636a;
+$eu-information-color: #839295;
+$transparent: transparent;
+$green: #22ab2c;
+$red: #d50c0c;
+$services-list: #f2f9fe;
+$danger: #ff5b5b;
+$branch-box: #f5fbff;
+$home-card-bg: #f9fcfe;
+$spinner-background-rgba: rgba(255, 255, 255, 0.5);
+$edited-comment-background-color: #f9fcfe;
+$edited-comment-border-color: #bbe0f8;
