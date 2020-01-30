@@ -38,24 +38,30 @@
                 class: "#{"active" if local_assigns[:section] == :admin}"
 
 
-.container.pl-0.pr-0
-  %nav.navbar.navbar-expand-lg.pl-0.pr-0
-    = link_to root_path, class: "navbar-brand col-7 col-lg-3 pl-0" do
+%section.header
+  .logo
+    = link_to root_path do
       = image_tag "eosc-logo-color.png", class: "eosc-hub-logo-main"
       .logo-bg
-    %span.open-menu.col-4{ "onclick": "openNav()" }
-      Menu
-      %i.fas.fa-bars
-    .col-12.col-lg-6
-      = render "services/search", categories: categories
 
-    %button.navbar-toggler.col-2{ "aria-controls" => "main-navbar",
-                           "aria-expanded" => "false",
-                           "aria-label" => "Toggle navigation",
-                           "data-target" => "#main-navbar",
-                           "data-toggle" => "collapse",
-                           type: "button" }
-      %i.fas.fa-bars
+  .searchbar
+    = render "services/search", categories: categories
+
+  .menu.dropdown
+    %nav.navbar.navbar-expand-lg.pl-0.pr-0
+
+      %span.open-menu.col-4{ "onclick": "openNav()" }
+        Menu
+        %i.fas.fa-bars
+
+
+      %button.navbar-toggler.col-2{ "aria-controls" => "main-navbar",
+                             "aria-expanded" => "false",
+                             "aria-label" => "Toggle navigation",
+                             "data-target" => "#main-navbar",
+                             "data-toggle" => "collapse",
+                             type: "button" }
+        %i.fas.fa-bars
 
     #main-navbar.collapse.navbar-collapse.col-3.pl-0.main-nav
       %ul.navbar-nav.ml-auto.pt-2.d-flex.flex-wrap.d-sm-none.d-xs.none.d-md-none.d-lg-block

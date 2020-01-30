@@ -1,18 +1,16 @@
-.container.p-0
-  .home-communities.p-4
-    .row
-      .col-12.col-lg-6.col-sm-5
-        = render "home/communities/card",
-          key: :related_platforms, records: platforms,
-          more_path: communities_path, remaining_count: more_platforms_count,
-          cols: 2
+.standard-list-wrapper
+  .standard-list.two-columns
+    = render "home/communities/card",
+      key: :related_platforms, records: platforms,
+      more_path: communities_path, remaining_count: more_platforms_count,
+      cols: 2
 
-      .col-12.col-lg-3.col-sm-3
-        = render "home/communities/card",
-          key: :providers, records: providers,
-          more_path: providers_path, remaining_count: more_providers_count
+  .standard-list
+    = render "home/communities/card",
+      key: :providers, records: providers,
+      more_path: providers_path, remaining_count: more_providers_count
 
-      .col-12.col-lg-3.col-sm-4
-        = render "home/communities/card",
-          key: :target_groups, records: target_groups,
-          more_path: providers_path, remaining_count: more_target_groups_count
+  .standard-list
+    = render "home/communities/card",
+      key: :target_groups, records: target_groups,
+      more_path: providers_path, remaining_count: more_target_groups_count
