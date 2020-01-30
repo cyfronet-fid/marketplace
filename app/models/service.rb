@@ -77,6 +77,7 @@ class Service < ApplicationRecord
   enum status: STATUSES
 
   has_many :offers, dependent: :restrict_with_error
+  has_many :project_items, through: :offers
   has_many :categorizations, dependent: :destroy
   has_many :categories, through: :categorizations
   has_many :service_opinions, through: :project_items
@@ -137,6 +138,10 @@ class Service < ApplicationRecord
   validates :order_target, allow_blank: true, email: true
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
+
+  def self.popular(count)
+    order(project_items_count: :desc, rating: :desc, title: :asc).limit(count)
+  end
 
   def main_category
     @main_category ||= categories.joins(:categorizations).

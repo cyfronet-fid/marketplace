@@ -29,11 +29,13 @@ class ProjectItem < ApplicationRecord
   enum issue_status: ISSUE_STATUSES
 
   belongs_to :offer
+  belongs_to :service, inverse_of: :project_items
   belongs_to :project
   belongs_to :research_area, required: false
   has_one :service_opinion, dependent: :restrict_with_error
   has_many :messages, as: :messageable, dependent: :destroy
   has_many :statuses, as: :status_holder
+  counter_culture [:offer, :service], column_name: "project_items_count"
 
   validates :offer, presence: true
   validates :status, presence: true

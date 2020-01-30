@@ -337,6 +337,7 @@ ActiveRecord::Schema.define(version: 2020_01_14_134749) do
     t.integer "upstream_id"
     t.string "order_target", default: "", null: false
     t.string "helpdesk_email", default: ""
+    t.integer "project_items_count", default: 0, null: false
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["title"], name: "index_services_on_title"
   end
