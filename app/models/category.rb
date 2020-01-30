@@ -21,6 +21,10 @@ class Category < ApplicationRecord
 
   after_destroy :update_main_categories!
 
+  def to_s
+    self.name
+  end
+
   private
     def store_affected_services
       # neet do store results in array since relation is lazy evaluated

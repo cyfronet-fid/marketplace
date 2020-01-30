@@ -16,6 +16,10 @@ class ResearchArea < ApplicationRecord
     all.map(&:name)
   end
 
+  def to_s
+    self.name
+  end
+
 
   private
     def self.child_names(records = ResearchArea.arrange, parent_name = "", result = [])
