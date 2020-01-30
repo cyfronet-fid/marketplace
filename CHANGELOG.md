@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Refactor homepage partials (@mkasztelnik)
 - Services search view refactoring and unification with backoffice view (@goreck888)
 - Webpack entry structure (@martaswiatkowska)
+- Sidebar in the service view generic rendering (@goreck888)
 
 ### Deprecated
 

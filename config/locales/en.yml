@@ -36,6 +36,30 @@ en:
       short: "%e.%m.%Y"
 
   service:
+    sidebar:
+      title:
+        places_and_languages: Places and languages
+        platforms: Related Infrastructures and Platforms
+        support: Support
+        documents: Documents
+        restrictions: Service restrictions
+        phase: Service phase
+      fields:
+        webpage_url: Webpage
+        helpdesk_url: Helpdesk
+        helpdesk_email: Helpdesk e-mail
+        manual_url: Manual
+        tutorial_url: Tutorial
+        sla_url: Corporate SLA
+        terms_of_use_url: Terms of use
+        access_policies_url: Access policies
+        phase:
+          discovery: "Discovery (min. TRL 1)"
+          planned: "Planned (min. TRL 3)"
+          alpha: "Alpha (min. TRL 5)"
+          beta: "Beta (min. TRL 7)"
+          production: "Production (min. TRL 8)"
+          retired: "Retired (n/a)"
     order:
       title: Access the service
     offer_select: Select an offer

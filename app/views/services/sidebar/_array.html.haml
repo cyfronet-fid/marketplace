@@ -1,0 +1,5 @@
+- fields.each do |field|
+  - service.send(field).each do |element|
+    %li.list-group-item
+      %span
+        = element
