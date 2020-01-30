@@ -219,3 +219,13 @@ You can read documentation [here](https://github.com/bkeepers/dotenv).
 
 In shourt you can store your env variables in `.env` file in the root of the project.
 
+## View Customization
+
+View can be customized by adding two env variables:
+  * CUSTOM_VIEWS_PATH="path to external folder" to customize views
+In the folder app/view/custom, add the files you want to overwrite in
+the same structure as they are in app/view/.
+
+
+
+
