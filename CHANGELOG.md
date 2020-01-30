@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Services search view refactoring and unification with backoffice view (@goreck888)
 - Webpack entry structure (@martaswiatkowska)
 - Sidebar in the service view generic rendering (@goreck888)
+- Popular services main page section based on number of orders (@goreck888)
 
 ### Deprecated
 
