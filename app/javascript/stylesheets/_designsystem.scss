@@ -492,9 +492,8 @@ li {
 .service-info-box {
   display: flex;
   flex: 1 0;
-  margin: 0 10px;
   flex-direction: column;
-  margin-bottom: 25px;
+  margin: 0 15px 5px;
   border-radius: 2px;
   background: $color-1;
   box-shadow: 0 0.125rem 0.25rem $palette-gray-30;
@@ -580,6 +579,7 @@ li {
   .title {
     margin-bottom: 15px;
     font-size: 1rem;
+    line-height: 1.25;
     color: $color-primary;
     font-weight: 400;
     text-decoration: none;
@@ -745,10 +745,10 @@ li {
 
 /* TOP ROW */
 
-nav {
+.top-row {
   padding: 5px 0;
-  background: $color-3;
   margin-bottom: 30px;
+  background: $color-3;
 
   ul {
     padding: 0;
@@ -791,6 +791,8 @@ nav {
   display: flex;
   flex-direction: row;
   align-items: center;
+  max-width: 1150px;
+  margin: auto;
   justify-content: space-between;
 
   a {
@@ -817,10 +819,8 @@ nav {
     }
 
     .container-select {
-      font-size: 0.875rem;
       padding-left: 10px;
       width: 150px;
-      border: 1px solid $palette-gray-50;
       position: relative;
 
       span {
@@ -885,7 +885,6 @@ nav {
 
     .dropdown-menu {
       padding: 15px;
-      width: 82%;
 
       li {
         margin-bottom: 10px;
