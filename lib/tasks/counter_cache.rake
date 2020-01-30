@@ -2,8 +2,6 @@
 
 desc "Counter cache for services has many offers"
 task service_counter: :environment do
-  Service.reset_column_information
-  Service.pluck(:id).each do |id|
-    Service.reset_counters(id, :offers)
-  end
+  Offer.counter_culture_fix_counts
+  ProjectItem.counter_culture_fix_counts
 end

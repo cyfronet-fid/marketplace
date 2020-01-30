@@ -16,7 +16,7 @@ class HomeController < ApplicationController
       @providers_number = Provider.count
       @services_number = Service.count
       @countries_number = 32
-      @services = Service.published.includes(:providers).order(rating: :asc, title: :desc).limit(6)
+      @services = Service.published.includes(:providers).popular(6)
     end
 
     def load_platforms
