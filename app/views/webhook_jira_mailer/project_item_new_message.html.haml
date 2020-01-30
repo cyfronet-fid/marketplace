@@ -1,6 +1,6 @@
 %p Dear #{@user.full_name},
 %p
   A new message was added to your service request #{link_to @model, project_service_url(@model.project, @model)}.
-  You can check this message through this #{link_to "link", project_service_url(@model.project, @model)}.
+  You can check this message through this #{link_to "link", project_service_conversation_url(@model.project, @model)}.
 
 
