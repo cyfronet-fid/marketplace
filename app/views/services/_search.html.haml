@@ -18,7 +18,7 @@
       - if params[:q].present? && params.permitted?
         %a.search-clear{ href: url_for(params.except(:q, :sort, :service_id)), title: "Clear search" }
           .fas.fa-times
-      %select#category-select.custom-select.rounded-0{ "data-action": "change->search#refresh",
+      %select#category-select.custom-select.rounded-0.container-select{ "data-action": "change->search#refresh",
                                                        "data-target": "search.categorySelect" }
         %option{ value: "", selected: "selected" }
           All services
