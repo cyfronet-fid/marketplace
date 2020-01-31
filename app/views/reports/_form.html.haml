@@ -3,7 +3,9 @@
     We will send your question to our customer service.
     %br
     You will receive an answer to your email address.
-= simple_form_for report, remote: true, url: reports_path do |f|
+= simple_form_for report, remote: true, url: reports_path,
+  html: { role: "form", id: "modal-form",
+        data: { action: "submit" } }  do |f|
   - unless current_user
     = f.input :author, label: t("simple_form.labels.question.author")
     = f.input :email, as: :email
@@ -11,7 +13,3 @@
                 label: t("simple_form.labels.report.text"),
                 hint: t("simple_form.hints.report.text", email: current_user&.email || "your")
   #recaptcha= recaptcha_tags
-  %hr.bottom-hr.mt-4.mb-4
-  = f.submit "SEND", id: "report-modal-action-btn", class: "btn btn-primary pl-5 pr-5 float-left"
-  %button.close.close-link{ type: "button", "data-dismiss": "modal", "aria-label": "Close" }
-    %span Close

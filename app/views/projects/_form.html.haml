@@ -1,4 +1,4 @@
-= simple_form_for @project, remote: @show_as_modal,
+= simple_form_for project, remote: local_assigns[:show_as_modal],
   html: { role: "form", id: "modal-form",
           "data-controller" => "project",
           data: { action: "submit->project#filterFileds" } } do |f|

@@ -1,3 +1,2 @@
-%a{ id: "modal-show", "data-toggle": "modal", "data-target": "#question-modal", remote: true }
-  Want to ask a question about this service?
-= render "services/question", service: service, question: question
+= link_to "Want to ask a question about this service?", new_service_question_path(service), remote: true
+
