@@ -79,12 +79,12 @@ class ProjectsController < ApplicationController
     end
 
     def render_modal_form
-      @show_as_modal = true
       render "layouts/show_modal",
               locals: {
                 title: "New project",
                 action_btn: t("project.buttons.create"),
-                form: "projects/form"
+                form: "projects/form",
+                form_locals: { project: @project, show_as_modal: true }
               }
     end
 

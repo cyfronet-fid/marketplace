@@ -16,20 +16,20 @@ RSpec.feature "Question about service" do
   context "as logged in user" do
     before { checkin_sign_in_as(create(:user)) }
 
-    scenario "I can send qestion to contact emails" do
+    scenario "I can send question to contact emails", js: true do
       user1, user2 = create_list(:user, 2)
       service = create(:service, contact_emails: [user1.email, user2.email])
 
       visit service_path(service)
 
-      find("#modal-show").click
+      click_on "Want to ask a question about this service?"
 
-      within("#question-modal") do
-        fill_in("service_question_text", with: "my question")
+      within("#ajax-modal") do
+        fill_in("service_question_text", with: "text")
       end
 
       expect do
-        find("#question-modal-action-btn").click
+        click_on "SEND"
         expect(page).to have_content("Your message was successfully sent")
       end.to change { ActionMailer::Base.deliveries.count }.by(2)
     end
@@ -40,7 +40,7 @@ RSpec.feature "Question about service" do
 
       visit service_path(service)
 
-      find("#modal-show").click
+      click_on "Want to ask a question about this service?"
 
       click_on "SEND"
 
@@ -55,9 +55,9 @@ RSpec.feature "Question about service" do
 
       visit service_path(service)
 
-      find("#modal-show").click
+      click_on "Want to ask a question about this service?"
 
-      within("#question-modal") do
+      within("#ajax-modal") do
         fill_in("service_question_author", with: "John Doe")
         fill_in("service_question_email", with: "john.doe@company.com")
         fill_in("service_question_text", with: "text")
@@ -75,7 +75,7 @@ RSpec.feature "Question about service" do
 
       visit service_path(service)
 
-      find("#modal-show").click
+      click_on "Want to ask a question about this service?"
 
       click_on "SEND"
 
