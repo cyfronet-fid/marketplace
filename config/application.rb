@@ -28,7 +28,9 @@ module Mp
     config.redis_url = ENV["REDIS_URL"] || default_redis_url
 
     # View customization
-    config.paths['app/views'].unshift(ENV["CUSTOM_VIEWS_PATH"]) if ENV["CUSTOM_VIEWS_PATH"].present?
+    if ENV["CUSTOMIZATION_PATH"].present?
+      config.paths['app/views'].unshift(File.join(ENV["CUSTOMIZATION_PATH"], "views"))
+    end
 
     config.portal_base_url = "https://eosc-portal.eu"
     config.portal_base_url = ENV["PORTAL_BASE_URL"] if ENV["PORTAL_BASE_URL"].present?

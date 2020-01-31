@@ -31,4 +31,10 @@ environment.loaders.append('expose', {
   }]
 })
 
+// JS and SCSS Customization
+if(process.env.CUSTOMIZATION_PATH) {
+  const customJsPath = require('path').join(process.env.CUSTOMIZATION_PATH, 'javascript');
+  environment.resolvedModules.prepend('customization', customJsPath);
+}
+
 module.exports = environment
