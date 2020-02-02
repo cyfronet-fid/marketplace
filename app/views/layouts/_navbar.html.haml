@@ -47,35 +47,26 @@
 
     = render "services/search", categories: categories
 
-  .menu.dropdown
-    %nav.navbar.navbar-expand-lg.pl-0.pr-0
-
-      %span.open-menu.col-4{ "onclick": "openNav()" }
-        Menu
-        %i.fas.fa-bars
-
-
-      %button.navbar-toggler.col-2{ "aria-controls" => "main-navbar",
-                             "aria-expanded" => "false",
-                             "aria-label" => "Toggle navigation",
-                             "data-target" => "#main-navbar",
-                             "data-toggle" => "collapse",
-                             type: "button" }
-        %i.fas.fa-bars
-
-    #main-navbar.collapse.navbar-collapse.col-3.pl-0.main-nav
-      %ul.navbar-nav.ml-auto.pt-2.d-flex.flex-wrap.d-sm-none.d-xs.none.d-md-none.d-lg-block
+    .menu.dropdown
+      %button#dropdown-menu-button.dropdown-toggle{ "aria-expanded" => "false", "aria-haspopup" => "true",
+          "data-toggle" => "dropdown", :type => "button" }
         - if !user_signed_in?
-          %li.nav-item.ml-1
-            = link_to user_checkin_omniauth_authorize_path, class: "nav-link d-block mb-2" do
-              = t(".nav_widget")
+          = link_to user_checkin_omniauth_authorize_path, class: "menu__label" do
+            My EOSC Marketplace
         - else
-          %li.nav-item.ml-1.dropdown
-            %a.nav-link.px-2.py-1.dropdown-toggle{ "data-toggle": "dropdown", "aria-expanded": "false" }
-              %i.fas.fa-chevron-down.d-lg-none.mr-2
-              %i.fas.fa-chevron-up.d-lg-none.mr-2
-              = t(".nav_widget")
-            .dropdown-menu.ml-4.ml-lg-0.shadow
-              %a.dropdown-item{ href: "/projects" } My projects
-              %a.dropdown-item{ href: "/profile" } Profile
+          .menu__label My EOSC Marketplace
+          .dropdown-menu{ "aria-labelledby" => "dropdown-menu-button" }
+            %ul
+              %li
+                %a.dropdown-item{ href: "/projects" } Projects
+              %li
+                %a.dropdown-item{ href: "/profile" } Profile
+              %li
+                = link_to "Logout", destroy_user_session_path, method: :delete,
+                 class: "dropdown-item"
+
+      .menu__hamburger{ "onclick": "openNav()" }
+        %span
+        %span
+        %span
 
