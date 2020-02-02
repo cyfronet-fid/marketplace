@@ -44,7 +44,7 @@ RSpec.feature "Service searching in top bar", js: true do
   scenario "redirect when selecting service_id by autocomplete controller", js: true, search: true do
     service = create(:service)
     fill_in "q", with: service.title
-    find(:css, "li.dropdown-item[id='-option-0']").click
+    find(:css, "li[id='-option-0']").click
     expect(current_path).to eq(service_path(service))
   end
 
