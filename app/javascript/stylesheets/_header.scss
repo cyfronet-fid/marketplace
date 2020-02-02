@@ -1,40 +1,36 @@
-header {
-  .input-group {
-    &:focus {
-      box-shadow: 0 0 3px $secondary;
-      border-radius: 0.2rem;
-    }
-
-    &:hover {
-      box-shadow: 0 0 3px $secondary;
-    }
-  }
-}
+//header {
+//  .input-group {
+//    &:focus {
+//      box-shadow: 0 0 3px $secondary;
+//      border-radius: 0.2rem;
+//    }
+//
+//    &:hover {
+//      box-shadow: 0 0 3px $secondary;
+//    }
+//  }
+//}
 
 .navbar {
-  &.navbar-expand-lg {
-    .navbar-nav {
-      .nav-link {
-        font-size: $font-size-navbar;
-        font-weight: $font-weight-normal;
-        color: $nav-color;
+  //&.navbar-expand-lg {
+  //  .navbar-nav {
+  //    .nav-link {
+  //      font-size: $font-size-navbar;
+  //      font-weight: $font-weight-normal;
+  //      color: $nav-color;
+  //
+  //      &:hover {
+  //        border: none;
+  //      }
+  //    }
+  //
+  //    .active {
+  //      background-color: $white;
+  //      border-radius: 0.2rem;
+  //    }
+  //  }
+  //}
 
-        &:hover {
-          border: none;
-        }
-      }
-
-      .active {
-        background-color: $white;
-        border-radius: 0.2rem;
-      }
-    }
-  }
-
-  .dropdown-toggle[aria-expanded=true] .fa-chevron-down,
-  .dropdown-toggle[aria-expanded=false] .fa-chevron-up {
-    display: none;
-  }
 
   .dropdown-menu {
     width: 100%;
@@ -114,11 +110,6 @@ header {
 
 .search-box {
   position: relative;
-
-  .list-header {
-    color: $palette-gray-50;
-    margin: 0.5rem;
-  }
 }
 
 .search-box .form-control,
@@ -135,36 +126,9 @@ header {
   color: $palette-black;
 }
 
-
-.autocomplete-results {
-  min-width: 375px;
-  z-index: 10;
-  background-color: $white;
-  position: absolute;
-  border: 1px solid $palette-gray-10;
-  width: 100%;
-
-  li {
-    cursor: pointer;
-  }
-
-  .dropdown-item {
-    .active {
-      color: $palette-blue;
-      background-color: transparent;
-    }
-
-    span {
-      color: $palette-gray-50;
-    }
-  }
-
-  .dropdown-item:hover {
-    color: $palette-blue;
-    background-color: transparent;
-
-  }
-}
+/////////////////////////////////////////////////
+// autocomplete-results for desktop moved to designsystem scss
+/////////////////////////////////////////////////
 
 @media (max-width: 576px) {
   .autocomplete-results {
@@ -177,23 +141,6 @@ header {
   position: relative;
 }
 
-.navbar-brand {
-  position: relative;
-
-  img {
-    position: relative;
-    z-index: 100;
-  }
-
-  .logo-bg {
-    position: absolute;
-    top: -7px;
-    left: -35px;
-    width: 335px;
-    height: 133px;
-    background: url('../../assets/images/logo-bg.png') no-repeat bottom right;
-  }
-}
 
 .open-menu {
   display: none;
@@ -218,10 +165,10 @@ header {
 
   .closebtn {
     position: absolute;
-    top: 22px;
+    top: 12px;
     z-index: 10;
     color: $body-color;
-    right: 10px;
+    right: 20px;
     padding: 0;
     font-size: 45px;
   }

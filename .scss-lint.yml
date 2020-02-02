@@ -32,3 +32,8 @@ linters:
 
   Indentation:
     width: 2
+
+  SelectorFormat:
+    enabled: true
+    convention: hyphenated_BEM
+

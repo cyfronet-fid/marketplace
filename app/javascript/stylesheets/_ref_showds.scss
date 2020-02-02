@@ -12,6 +12,11 @@ body {
   display: flex;
   flex: auto;
   flex-direction: row;
+
+  .showds__container {
+    position: relative;
+  }
+
 }
 
 aside {
@@ -20,6 +25,7 @@ aside {
   flex-basis: 300px;
   flex-grow: 0;
   flex-shrink: 0;
+  display: none;
 
   h2 {
     font-size: 1.1rem;

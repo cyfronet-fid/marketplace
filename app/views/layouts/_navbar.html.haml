@@ -7,7 +7,7 @@
       %ul
         - if !user_signed_in?
           %li
-            = link_to user_checkin_omniauth_authorize_path, class: "btn btn-primary font-weight-bold mt-5" do
+            = link_to user_checkin_omniauth_authorize_path, class: "btn btn-primary" do
               Login to EOSC marketplace
         - else
           %li
@@ -19,7 +19,7 @@
             class: "btn btn-primary font-weight-bold mt-5 logout-link"
 
     .bottom-links
-      .container.text-right.top-row
+      .container
         %ul.list-inline.mb-0
           %li.list-inline-item.ml-2
             %a{ href: Mp::Application.config.portal_base_url } Portal Home
@@ -37,14 +37,14 @@
               = link_to "Admin", admin_path, section: "admin",
                 class: "#{"active" if local_assigns[:section] == :admin}"
 
+.container
+  %section.header
+    .logo
+      = link_to root_path do
+        = image_tag "eosc-logo-color.png", class: "eosc-hub-logo-main"
+        .logo-bg
 
-%section.header
-  .logo
-    = link_to root_path do
-      = image_tag "eosc-logo-color.png", class: "eosc-hub-logo-main"
-      .logo-bg
 
-  .searchbar
     = render "services/search", categories: categories
 
   .menu.dropdown
