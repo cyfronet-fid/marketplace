@@ -347,7 +347,7 @@ li {
 
   header {
     align-items: center;
-    padding: 1.4rem 1rem 0;
+    padding: 1.4rem 1rem 1.3rem;
   }
 
   .title {
@@ -366,10 +366,6 @@ li {
     }
   }
 
-  article {
-    align-items: center;
-    padding: 0 1rem 1.3rem;
-  }
 
   p {
     margin: 0;
@@ -849,6 +845,5 @@ li {
 
   }
 }
-
 
 @import 'ref_mobile';
