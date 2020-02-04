@@ -35,6 +35,10 @@ en:
     #     edit:
     #       email: 'E-mail.'
     hints:
+      lead_section:
+        slug: |
+          You can add sections with slugs: "learn-more" or "use-cases". You will see
+          them on home page
       report:
         text: |
           We will send your report to our customer service.

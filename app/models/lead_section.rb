@@ -13,4 +13,5 @@ class LeadSection < ApplicationRecord
 
   validates :title, presence: true
   validates :slug, presence: true
+  validates :slug, uniqueness: true
 end
