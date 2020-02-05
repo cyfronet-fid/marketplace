@@ -14,7 +14,10 @@ class Offer < ApplicationRecord
 
   belongs_to :service
 
-  counter_culture :service, column_name: proc { |model| model.published? ? "offers_count" : nil }
+  counter_culture :service, column_name: proc { |model| model.published? ? "offers_count" : nil },
+                  column_names: {
+                      ["offers.status = ?", "published"] => "offers_count"
+                  }
 
   has_many :project_items,
            dependent: :restrict_with_error
