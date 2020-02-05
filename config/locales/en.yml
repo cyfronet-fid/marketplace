@@ -246,9 +246,39 @@ en:
       edit: Edit
       offer:
         new: Add new Offer
-
-
-
+  lead:
+    learn_more:
+      title: Learn more
+      slug: learn-more
+      initiative:
+        header: EOSC initiative
+        body: Find out more about EOSC and what it can bring you!
+        url: https://eosc-portal.eu/about/eosc
+      project:
+        header: Projects
+        body: |
+          Through Marketplace Projects you can organise
+          your services and gain support from the EOSC experts.
+        url: https://marketplace.eosc-portal.eu/about_projects
+      providers:
+        header: For providers
+        body: |
+          Contribute to develop EOSC into a rich environment with
+          a wide range of services and resources for researchers.
+        url: https://eosc-portal.eu/for-providers
+    use_cases:
+      title: Use cases
+      slug: use-cases
+      clarin:
+        header: "From language data to insight: the CLARIN demonstrator"
+        body: |
+          How the integration of the CLARIN infrastructure
+          into the EOSC Portal can facilitate the study of language data.
+        url: https://eosc-portal.eu/language-data-insight-clarin-demonstrator
+      earth_observation:
+        header: The EOSC as a scalable computing infrastructure for Earth Observation
+        body: How EOSC could open the way for Earth Observation innovation.
+        url: https://eosc-portal.eu/eosc-scalable-computing-infrastructure-earth-observation
 
 
   will_paginate:
