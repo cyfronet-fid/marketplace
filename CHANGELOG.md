@@ -9,6 +9,20 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [2.6.0] 2020-02-05
+
+### Added
 - Add static pages for design system and UI documentation (@mkasztelnik)
 - Comment changes in jira propagate to mp (@martaswiatkowska)
 - Dynamic help sections visible currently only for admin (@mkasztelnik)
@@ -22,15 +36,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Sidebar in the service view generic rendering (@goreck888)
 - Popular services main page section based on number of orders (@goreck888)
 
-### Deprecated
-
 ### Removed
 - Remove not used `CartPolicy` class (@mkasztelnik)
 
 ### Fixed
 - change html tag to pure conversation URL in text based emails (@martaswiatkowska)
-
-### Security
 
 ## [2.5.1] 2020-01-14
 
