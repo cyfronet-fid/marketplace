@@ -19,7 +19,6 @@ class Admin::LeadsController < Admin::ApplicationController
     authorize(@lead)
 
     if @lead.save
-      debugger
       redirect_to admin_leads_path, notice: "New Lead created sucessfully"
     else
       render :new, status: :bad_request
