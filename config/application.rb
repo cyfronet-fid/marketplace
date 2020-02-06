@@ -30,6 +30,13 @@ module Mp
     # View customization
     config.paths['app/views'].unshift(ENV["CUSTOM_VIEWS_PATH"]) if ENV["CUSTOM_VIEWS_PATH"].present?
 
+    # Locales customization
+    config.i18n.load_path += if ENV["CUSTOM_LOCALES_PATH"].present?
+                               Dir[Pathname.new(ENV["CUSTOM_LOCALES_PATH"]).join('**', '*.{rb,yml}')]
+                             else
+                               Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+                             end
+
     config.portal_base_url = "https://eosc-portal.eu"
     config.portal_base_url = ENV["PORTAL_BASE_URL"] if ENV["PORTAL_BASE_URL"].present?
 
