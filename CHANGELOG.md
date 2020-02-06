@@ -17,9 +17,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- service_counter rake task (@goreck888)
 
 ### Security
+
+## [2.6.1] 2020-02-06
+
+### Fixed
+- service_counter rake task (@goreck888)
 
 ## [2.6.0] 2020-02-05
 
