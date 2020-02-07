@@ -2972,8 +2972,7 @@ textarea.form-control.is-invalid {
   }
 }
 
-.question-modal,
-.report-modal {
+.modal {
   .modal-dialog {
     max-width: 570px;
   }
@@ -2999,17 +2998,22 @@ textarea.form-control.is-invalid {
   .modal-body {
     padding-top: 0;
     padding-bottom: 25px;
-  }
 
-  .modal-info {
-    background: $border-header url('../../assets/images/ico_eosccloud_grey.svg') 20px 50% no-repeat;
-    padding: 15px 0 15px 100px;
-    text-align: left;
+    .modal-info {
+      background: $border-header url('../../assets/images/ico_eosccloud_grey.svg') 20px 50% no-repeat;
+      padding: 15px 0 15px 100px;
+      text-align: left;
 
-    p {
-      margin: 0;
+      p {
+        margin: 0;
+      }
     }
   }
+
+  .modal-footer {
+    justify-content: flex-start;
+  }
+
   // scss-lint:disable all
   .new_service_question,
   .new_report {
@@ -3033,7 +3037,6 @@ textarea.form-control.is-invalid {
     color: $palette-blue;
     float: left;
     opacity: 1;
-    padding: 11px 0 0 25px;
   }
 }
 
