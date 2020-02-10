@@ -1,0 +1,8 @@
+= simple_form_for [:admin, lead_section] do |f|
+  = f.input :slug
+  = f.input :title
+  = f.input :template, collection: LeadSection::TEMPLATES
+
+  = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5"
+  = link_to "Cancel and back to lead manager", admin_leads_path,
+    class: "text-left flex-grow-1 text-uppercase"

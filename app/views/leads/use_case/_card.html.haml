@@ -1,0 +1,7 @@
+.col-12.col-sm-6
+  .card.testimonial
+    - if content_for(:item_bar)
+      = yield :item_bar
+    .card-body
+      .card-author.font-weight-bold.mb-3= link_to card.header, card.url
+      .card-description= card.body

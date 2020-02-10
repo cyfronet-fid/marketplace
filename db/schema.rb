@@ -99,6 +99,25 @@ ActiveRecord::Schema.define(version: 2020_01_28_142804) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "lead_sections", force: :cascade do |t|
+    t.string "slug", null: false
+    t.string "title", null: false
+    t.string "template", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "leads", force: :cascade do |t|
+    t.string "header", null: false
+    t.string "body", null: false
+    t.string "url", null: false
+    t.bigint "lead_section_id", null: false
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lead_section_id"], name: "index_leads_on_lead_section_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.bigint "author_id"
     t.text "message"
