@@ -33,6 +33,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Comment changes in jira propagate to mp (@martaswiatkowska)
 - Dynamic help sections visible currently only for admin (@mkasztelnik)
 - Service information for a monitoring tool through `api/services` (@goreck888)
+- Customization of learn more and use case sections by admin (@martaswiatkowska)
 
 ### Changed
 - Move research area and category logos to active storage (@mkasztelnik)

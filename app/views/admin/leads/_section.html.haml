@@ -1,0 +1,22 @@
+%h2.subsection
+  %a{ id: section.slug }
+    = section.title
+
+  .group-item.float-right
+    = link_to "Edit", edit_admin_lead_section_path(section),
+      class: "btn btn-sm btn-warning"
+    = link_to admin_lead_section_path(section),
+      method: :delete,
+      data: { confirm: "Are you sure you want to remove this lead section?" },
+      class: "delete-icon btn-sm" do
+      %i.far.fa-trash-alt{ id: "delete-lead-section-#{section.id}" }
+
+.row
+  = render partial: "item",
+    collection: section.leads,
+    locals: { parent: section.slug }
+  .col-12.col-lg-4.col-sm-6.my-auto
+    = link_to new_admin_lead_path(section: section.slug),
+      class: "btn btn-success" do
+      %i.fa.fa-plus.mr-0{ id: "add-new-lead-#{section.id}" }
+
