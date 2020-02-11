@@ -1,0 +1,31 @@
+en:
+  home:
+    info:
+      title: Welcome to the EOSC Portal Catalogue and Marketplace
+      description: |
+        Integrated platform that allows easy access to lots of services and
+        resources for various research domains along with integrated data
+        analytics tools. Browse by scientific domain, service category or
+        provider and, if you need help, we are here for you!
+      services:
+        description: Find EOSC Services that suit your use case yourself
+        link: Browse through catalogue
+      projects:
+        description: Describe your use case and get support from our experts
+        link: Go to your projects
+    communities:
+      card:
+        related_platforms:
+          title: Communities and infrastructures
+          more_html: |
+            We have <strong>%{count}</strong> more
+            Communities and infrastructures
+        providers:
+          title: Providers
+          more_html: You can find <strong>%{count}</strong> more providers
+        target_groups:
+          title: Dedicated for
+          more_html: And for <strong>%{count}</strong> more other target groups
+
+
+

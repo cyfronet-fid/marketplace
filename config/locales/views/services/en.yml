@@ -1,0 +1,106 @@
+en:
+  services:
+    header:
+      order: Access the service
+    about:
+      sidebar:
+        title:
+          places_and_languages: Places and languages
+          platforms: Related Infrastructures and Platforms
+          support: Support
+          documents: Documents
+          restrictions: Service restrictions
+          phase: Service phase
+        fields:
+          webpage_url: Webpage
+          helpdesk_url: Helpdesk
+          helpdesk_email: Helpdesk e-mail
+          manual_url: Manual
+          tutorial_url: Tutorial
+          sla_url: Corporate SLA
+          terms_of_use_url: Terms of use
+          access_policies_url: Access policies
+          phase:
+            discovery: "Discovery (min. TRL 1)"
+            planned: "Planned (min. TRL 3)"
+            alpha: "Alpha (min. TRL 5)"
+            beta: "Beta (min. TRL 7)"
+            production: "Production (min. TRL 8)"
+            retired: "Retired (n/a)"
+    order:
+      wizard:
+        previous: Back to previous step - %{step_title}
+        next: Next - %{step_title}
+    offer:
+      offer_select: Select an offer
+    offers:
+      title: Offer selection
+    information:
+      title: Access instructions
+      show:
+        external:
+          link: Order externally
+          description_html: |
+            <p>%{service_title} is accessible by external ordering. You can either use
+            the service by clicking on the button <strong>Order Externally</strong>,
+            where EOSC Portal will redirect you to the website and you can order the
+            service or what is highly recommended to add the service to your
+            <strong>Project</strong> by going to Next steps. It helps you to
+            organise your services and orders into logical blocks related to your
+            use case, gain EOSC experts support and easily access the selected
+            service.</p><p>To find out more about Projects in EOSC Marketplace,
+            please refer to our <a href="%{faq_url}">FAQ</a>.</p>
+        open_access:
+          link: Go to the service
+          description_html: |
+            <p>%{service_title} is open to everyone, any user can reach the service.
+            You can either directly use the service by clicking on the button
+            <strong>Go to the service</strong> , where EOSC Portal will redirect
+            you to the service website or what is highly recommended to add the
+            service to your <strong>Project</strong> by going to Next steps.
+            Project option helps you to organise your services and orders into
+            logical blocks related to your use case, gain EOSC experts support
+            and easily access the selected service.</p><p> To find out more about
+            Projects in EOSC Marketplace, please refer to our
+            <a href="%{faq_url}">FAQ</a>.</p>
+        orderable:
+          description_html: |
+            <p>%{service_title} can be ordered via EOSC marketplace <b>free of charge</b>.
+            The service will be delivered once it is verified that the scientific affiliation
+            (provided in the details of the underpinned project) entitles you to use it.
+            You will be notified by email about the service request status changes or can be tracked
+            in project’s dashboard.</p><p>To find out more about Projects in EOSC
+            Marketplace, please refer to our <a href="%{faq_url}">FAQ</a>.</p>
+    configuration:
+      title: Configuration
+      external:
+        description:
+      open_access:
+        description:
+      orderable:
+        description: Please specify parameters. It is necessary to handle your request.
+    summary:
+      title: Final details
+      external:
+        order:
+          title: Add to a project
+          cancel: Quit
+        description_html: |
+          Please select a Project and review the summary below. Once added to
+          the project, your service ordering page will be accessible via URL
+          at your Project space.
+      open_access:
+        order:
+          title: Add to a project
+          cancel: Quit
+        description_html: |
+          Please select a Project and review the summary below. Once added to
+          the project, your service will be accessible via URL at your Project space.
+      orderable:
+        order:
+          title: Send access request
+          cancel: Cancel order and quit
+        description_html: |
+          Please select a Project and review the summary below. Once you submit the order,
+          your request will be sent to a service provider. </br>
+          The order status will be visible at your Project space.

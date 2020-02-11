@@ -1,43 +1,12 @@
 .row
   .col-lg-6.pt-5.pb-5.pl-5.order-lg-first.order-md-last.order-sm-last.order-last
     %h1.mb-4
-      Welcome to the
-      Marketplace Projects!
+      = t(".header")
     %p.lead.pr-4.order-lg-first.order-md-last.order-sm-last.order-last
-      With Marketplace Projects you can organise your services and service orders into a logical blocks to
-      reflect a common scientific purpose and gain support for the created Marketplace Project.
+      = t(".summary")
     = link_to button_label, new_project_path, class: "btn btn-primary mt-3"
   .col
     .empty-list-img-big.mt-5.pt-5
 .row
-  .col-lg-9.pl-5.mt-4
-    %p.info
-      As the services available in the Marketplace are available for all European researchers you can precise your
-      customer typology. Tell us, whether you want to use available EOSC resources in the scope of:
-    %ul.short-list
-      %li
-        %span your own academic research,
-      %li
-        %span larger community collaboration,
-      %li
-        %span EC project or maybe
-      %li
-        %span R&D work of your company.
-.row
-  .col.pl-5.pb-4
-    %p.info
-      and along with a general description of your scientific work you will be able to get assistance from
-      international technical teams who provide advice on the most suitable solutions to address your digital needs.
-      To get this support, after creating a MP Project please go to ‚CONTACT WITH PROJECT SUPPORT’ tab.
-    %p.info
-      When ready to start using EOSC services, with ‚Services’ tab you can select EOSC resources and solutions
-      suitable for your work. Some of them you will be able to start using right away, some will require you to
-      issue access request (Marketplace order). For the latter, Marketplace Projects will be the place to follow
-      the status of your orders, get all relevant information about the service access when the access is granted
-      and contact the EOSC support if necessary.
-    %p.info
-      So find out how EOSC can support your scientific needs and use our quick creation form to
-      %a{ href: "/projects/new" } add your first Marketplace project!
-    %p.info
-      If you need help with creating a new project, don't hesitate and
-      %a{ href: "http://helpdesk.eosc-hub.eu/" } contact with our support.
+  = t(".details_html")
+

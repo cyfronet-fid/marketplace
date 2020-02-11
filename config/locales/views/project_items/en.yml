@@ -1,0 +1,55 @@
+en:
+  project_items:
+    service:
+      label:
+        open_access:
+          "Added to the project:"
+        external:
+          "Added to the project:"
+        orderable:
+          "Order date:"
+    opinion:
+      prompt:
+        Thank you for using EOSC marketplace.
+        To help us to improve, please share your experience so far.
+      orderable:
+        question1: |
+          1. How satisfied you are with the %{title} service on a scale of 1 - dissatisfied to 5 - very satisfied?
+        question2: |
+          2. How satisfied you are with the ordering process on a scale of 1 - dissatisfied to 5 - very satisfied?
+      open_access:
+        question1: |
+          1. How satisfied you are with the %{title} service on a scale of 1 - dissatisfied to 5 - very satisfied?
+        question2: |
+          2. Was adding the service to the project useful for you on a scale of
+          1 - not useful at all to 5 - very useful?
+      external:
+        question1:
+          1. How satisfied you are with the %{title} service on a scale of 1 - dissatisfied to 5 - very satisfied?
+        question2:
+          2. Was adding the service to the project useful for you on a scale of
+          1 - not useful at all to 5 - very useful?
+    offer_type:
+      orderable:
+        title: Internal ordering
+        tooltip: |
+          Identity of a user is required.
+          Access has to be granted manually after analysis of the request.
+      open_access:
+        title: Open
+        tooltip: |
+          Service is open to everyone, no login required.
+      external:
+        title: External ordering
+        tooltip: |
+          Service orders are handled externally, but access requests coming from EOSC-hub can be tracked
+          and reflected in the Management Back Office.
+    status:
+      created: New
+      registered: New
+      in_progress: Under review
+      ready: Ready to use
+      rejected: Rejected
+      closed: Closed
+      waiting_for_response: Provide additional information
+      approved: Being processed

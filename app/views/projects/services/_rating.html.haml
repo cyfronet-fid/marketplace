@@ -4,8 +4,7 @@
   .blue-row.form-inline.mb-3
     .d-inline.mr-4
       %i.fas.fa-star.fa-pull-left
-      Thank you for using EOSC marketplace.
-      To help us to improve, please share your experience so far.
+      = t("project_items.opinion.prompt")
   = link_to "Review service",
       new_project_service_opinion_path(project, project_item),
       class: "btn btn-primary btn-sm"

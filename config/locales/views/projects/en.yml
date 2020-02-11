@@ -1,0 +1,102 @@
+en:
+  projects:
+    new:
+      title: Create new Project
+    edit:
+      title: Edit Project
+    archive:
+      confirmation: |
+        Are you sure you want to archive this project? It won't be possible to use it any more
+      tip: |
+        The archived project will be read only or for copying
+    empty_project:
+      description_html: |
+        <h3>
+          You have no services </br>
+          in this project yet.
+        </h3>
+        <ul class= "simple-list">
+          <li>
+            <span>
+              Browse our catalogue to find EOSC services that can support your scientific work and add them to your
+              Marketplace Project
+            </span>
+          </li>
+          <li>
+            <span>Follow the status of your service access request and gain all necessary information</span>
+          <li>
+            <span>
+              If you need help with any of these, don't hesitate and contact our customer support in ‘CONTACT WITH
+              PROJECT SUPPORT’ tab
+            </span>
+          </li>
+    project_description:
+      header: Welcome to the Marketplace Projects!
+      summary: |
+        With Marketplace Projects you can organise your services and service orders into a logical blocks to
+        reflect a common scientific purpose and gain support for the created Marketplace Project.
+      details_html: |
+        <div class="row">
+            <div class="col-lg-9 pl-5 mt-4">
+              <p class="info">
+                As the services available in the Marketplace are available for all European researchers
+                you can precise your customer typology.
+                Tell us, whether you want to use available EOSC resources in the scope of: </p>
+              <ul class="short-list">
+                <li>
+                  <span> your own academic research, </span>
+                </li>
+                <li>
+                  <span> larger community collaboration, </span>
+                </li>
+                <li>
+                  <span> EC project or maybe </span>
+                </li>
+                <li>
+                  <span> R&D work of your company. </span>
+                </li>
+              </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col pl-5 pb-4">
+              <p class="info">
+                and along with a general description of your scientific work you will be able
+                to get assistance from international technical teams who provide advice on the most suitable solutions
+                to address your digital needs.
+                To get this support, after creating a MP Project please go to ‚CONTACT WITH PROJECT SUPPORT’ tab.</p>
+              <p class="info">
+                When ready to start using EOSC services, with ‚Services’ tab you can select EOSC resources
+                and solutions suitable for your work. Some of them you will be able to start using right away,
+                some will require you to issue access request (Marketplace order). For the latter,
+                Marketplace Projects will be the place to follow the status of your orders,
+                get all relevant information about the service access when the access is granted
+                and contact the EOSC support if necessary. </p>
+              <p class="info">
+                So find out how EOSC can support your scientific needs and use our quick creation form to
+                <a href="/projects/new">add your first Marketplace project!</a></p>
+              <p class="info">
+                If you need help with creating a new project, don't hesitate and
+                <a href="http://helpdesk.eosc-hub.eu/"> contact with our support.</a></p>
+            </div>
+        </div>
+    select:
+      description: |
+        You can organize your services in projects.
+        Add this service to a specific project or create a new one.
+    buttons:
+      create: Create new project
+      update: Update
+      cancel: Cancel
+    customer_typology:
+      single_user: "Single user"
+      research: "Representing a research community"
+      private_company: "Representing a private company"
+      project: "Representing a project"
+      none: "Customer typology not set"
+    layout:
+      button_label:
+        first: Create your first project
+        other: Create new project
+
+

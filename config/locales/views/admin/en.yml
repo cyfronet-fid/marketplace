@@ -1,0 +1,12 @@
+en:
+  admin:
+    help_items:
+      new:
+        title: New Help Item
+      edit:
+        title: Edit Help Item
+    help_sections:
+      new:
+        title: New Help Section
+      edit:
+        title: Edit Help Section
