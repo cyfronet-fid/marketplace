@@ -9,23 +9,20 @@
       .home-image
     .col-12.col-lg-7.left-column
       %p.title
-        Welcome to the EOSC Portal Catalogue and Marketplace
+        = t(".title")
 
       %p.home-lead.pr-5.mr-5
-        Integrated platform that allows easy access to lots of services and
-        resources for various research domains along with integrated data
-        analytics tools. Browse by scientific domain, service category or
-        provider and, if you need help, we are here for you!
+        = t(".description")
       .row.mt-2.intro-box-wrapper
         %a#find-eosc
         .col-11.col-lg-5.intro-box.pt-5.pb-5
-          Find EOSC Services that suit your use case yourself
+          = t(".services.description")
           = link_to services_path do
             %i.fas.fa-arrow-right
-            Browse through catalogue
+            = t(".services.link")
 
         .col-11.col-lg-5.intro-box.second.pt-5.pb-5
-          Describe your use case and get support from our experts
+          = t(".projects.description")
           = link_to projects_path do
             %i.fas.fa-arrow-right
-            Go to your projects
+            = t(".projects.link")

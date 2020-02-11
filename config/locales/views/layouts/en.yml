@@ -1,0 +1,13 @@
+en:
+  layouts:
+    navbar:
+      nav_widget: My EOSC Marketplace
+    footer:
+      description_html: |
+        <p class="mb-1">
+          The EOSC portal is been jointly developed and maintained by the EOSC-hub,
+          eInfraCentral and OpenAIRE-Advance projects funded by the European</p>
+        <p class="mb-1">
+          Union’s Horizon 2020 research and innovation programme with contribution of the European Commission</p>
+
+        <p class="mt-2">2018 EOSC Portal</p>

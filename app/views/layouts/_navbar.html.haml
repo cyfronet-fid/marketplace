@@ -62,13 +62,13 @@
         - if !user_signed_in?
           %li.nav-item.ml-1
             = link_to user_checkin_omniauth_authorize_path, class: "nav-link d-block mb-2" do
-              My EOSC Marketplace
+              = t(".nav_widget")
         - else
           %li.nav-item.ml-1.dropdown
             %a.nav-link.px-2.py-1.dropdown-toggle{ "data-toggle": "dropdown", "aria-expanded": "false" }
               %i.fas.fa-chevron-down.d-lg-none.mr-2
               %i.fas.fa-chevron-up.d-lg-none.mr-2
-              My EOSC Marketplace
+              = t(".nav_widget")
             .dropdown-menu.ml-4.ml-lg-0.shadow
               %a.dropdown-item{ href: "/projects" } My projects
               %a.dropdown-item{ href: "/profile" } Profile

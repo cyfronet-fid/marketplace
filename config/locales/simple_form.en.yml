@@ -20,13 +20,13 @@ en:
         text: Your question to provider about %{title}
       report:
         text: Describe problem precisely
-      project:
-        country_of_origin: |
-          Origin country
-        countries_of_partnership: |
-          Collaboration countries
       project_item:
         additional_comment: Please enter additional details of your request
+      project:
+        name: Project name
+        reason_for_access: Reason to request access to the EOSC services
+        country_of_origin: Origin country
+        countries_of_partnership: Collaboration countries
     #   defaults:
     #     password: 'Password'
     #   user:

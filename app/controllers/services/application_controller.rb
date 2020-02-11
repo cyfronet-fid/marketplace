@@ -91,19 +91,19 @@ class Services::ApplicationController < ApplicationController
     end
 
     def step_title(step_name = step_key)
-      I18n.t("service.#{step_name}.title")
+      I18n.t("services.#{step_name}.title")
     end
 
     def next_title
       if next_visible_step_key == wizard.step_names.last
-        "#{I18n.t("service.next")} - #{step_title(next_visible_step_key)}"
+        "#{I18n.t("services.order.wizard.next", step_title: step_title(next_visible_step_key))}"
       else
-        I18n.t("service.next")
+        I18n.t("next")
       end
     end
 
     def prev_title
-      "Back to previous step - #{step_title(prev_visible_step_key)}"
+      "#{I18n.t("services.order.wizard.previous", step_title: step_title(prev_visible_step_key))}"
     end
 
     def wizard_title

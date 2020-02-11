@@ -2,4 +2,4 @@
 
 = render "projects/layout", project: @project, projects: @projects do
   .empty-project.container.shadow-sm
-    = render "project_description", button_label: "Create your first project"
+    = render "project_description", button_label: t(".button_label.first")
