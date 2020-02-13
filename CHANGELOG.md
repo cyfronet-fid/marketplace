@@ -20,7 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
-## [2.6.2] Unreleased
+## [2.6.2] 2020-02-13
 
 ### Fixed
 - Show menu on small devices (@mkasztelnik)
