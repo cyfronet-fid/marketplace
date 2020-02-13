@@ -190,9 +190,8 @@ header {
 
 .overlay {
   /* Height & width depends on how you want to reveal the overlay (see JS below) */
-  height: 100%;
+  height: 0%;
   width: 100%;
-  display: none;
   position: fixed; /* Stay in place */
   z-index: 11; /* Sit on top */
   left: 0;
