@@ -5,6 +5,7 @@ import initChoises from "app/choises";
 import initCookiesPolicy from "app/cookies_policy";
 import 'bootstrap/dist/js/bootstrap';
 import 'stylesheets/application';
+import "app/nav";
 
 require("@rails/ujs").start()
 require("turbolinks").start()
