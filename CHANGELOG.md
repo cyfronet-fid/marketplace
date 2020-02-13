@@ -22,6 +22,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## [2.6.2] 2020-02-13
+
+### Fixed
+- Show menu on small devices (@mkasztelnik)
+
 ## [2.6.1] 2020-02-06
 
 ### Fixed
