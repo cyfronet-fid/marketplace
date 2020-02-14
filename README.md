@@ -98,7 +98,7 @@ ssh -R <port_number - from 9001 to 9015>:localhost:5000 mszostak@docker-fid.grid
 If you can not connect, try different port - it is possible that other developer connected
 to this port and is blocking it
 
-## XGUS 
+## XGUS
 
 Marketplace is integrated with xGUS Helpdesk.
 All variables needed to establish a connection to the test instance are stored in encrypted credentials.
@@ -112,7 +112,7 @@ To run on different than test instance, there is a need do set environmental var
 
 ReCaptcha is now used in the ask service question form. To work it needs to set 2 environment variables:
 `RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY`. For test, development and internal docker instances
-values of these variables are stored in encrypted credentials. 
+values of these variables are stored in encrypted credentials.
 
 ## For Admins
 
@@ -193,11 +193,11 @@ For Linux systems modifying `PATH` in `/etc/environment` should do the job.
 ## Designing UI without dedicated controller
 
 If there is no view yet implemented than still designing team can play around
-and create `haml`, `scss`, `js` for this view. For this purpose `playground`
+and create `haml`, `scss`, `js` for this view. For this purpose `designsystem`
 section is created. It is available **ONLY** in development mode. The URL is
-`/playground/:file`, where `:file` is the name of the view created in
-`app/views/playground` directory. For example `/playground/profile` URL will
-render `app/views/playground/profile.html.haml` file.
+`/designsystem/:file`, where `:file` is the name of the view created in
+`app/views/designsystem` directory. For example `/designsystem/profile` URL will
+render `app/views/designsystem/profile.html.haml` file.
 
 Since this is only for development there is no security and template
 existence checks.
