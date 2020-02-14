@@ -98,7 +98,7 @@ ssh -R <port_number - from 9001 to 9015>:localhost:5000 mszostak@docker-fid.grid
 If you can not connect, try different port - it is possible that other developer connected
 to this port and is blocking it
 
-## XGUS 
+## XGUS
 
 Marketplace is integrated with xGUS Helpdesk.
 All variables needed to establish a connection to the test instance are stored in encrypted credentials.
@@ -112,7 +112,7 @@ To run on different than test instance, there is a need do set environmental var
 
 ReCaptcha is now used in the ask service question form. To work it needs to set 2 environment variables:
 `RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY`. For test, development and internal docker instances
-values of these variables are stored in encrypted credentials. 
+values of these variables are stored in encrypted credentials.
 
 ## For Admins
 
@@ -219,13 +219,17 @@ You can read documentation [here](https://github.com/bkeepers/dotenv).
 
 In shourt you can store your env variables in `.env` file in the root of the project.
 
-## View Customization
+## Views, locales and scss customization
 
-View can be customized by adding two env variables:
-  * CUSTOM_VIEWS_PATH="path to external folder" to customize views
-In the folder app/view/custom, add the files you want to overwrite in
-the same structure as they are in app/view/.
+Views, JS and SCSS can be customized by adding `CUSTOMIZATION_PATH` env variable.
+This variable should point to the directory with the following structure:
 
+```
+/my/customization/dir
+  - views
+  - javascript
+  - config/locales
+```
 
-
-
+**Warning**: when new SCSS is added to customization directory rails application
+needs to be restarted.
