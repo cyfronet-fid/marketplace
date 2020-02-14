@@ -27,15 +27,21 @@ module Mp
 
     config.redis_url = ENV["REDIS_URL"] || default_redis_url
 
-    # View customization
-    config.paths['app/views'].unshift(ENV["CUSTOM_VIEWS_PATH"]) if ENV["CUSTOM_VIEWS_PATH"].present?
+    # Hierachical locales file structure
+    # see https://guides.rubyonrails.org/i18n.html#configure-the-i18n-module
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
 
-    # Locales customization
-    config.i18n.load_path += if ENV["CUSTOM_LOCALES_PATH"].present?
-                               Dir[Pathname.new(ENV["CUSTOM_LOCALES_PATH"]).join('**', '*.{rb,yml}')]
-                             else
-                               Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
-                             end
+    # Views and locales customization
+    # The dir structure pointed by `$CUSTOMIZATION_PATH` should looks as follow:
+    #   - views          // custom views
+    #   - javascript     // custom scss files (see `config/webpack/environment.js`)
+    #   - config/locales // custom locales
+    if ENV["CUSTOMIZATION_PATH"].present?
+      config.paths['app/views'].unshift(File.join(ENV["CUSTOMIZATION_PATH"], "views"))
+      config.i18n.load_path +=
+        Dir[Pathname.new(ENV["CUSTOMIZATION_PATH"]).join('config', 'locales', '**', '*.{rb,yml}')]
+    end
+
 
     config.portal_base_url = "https://eosc-portal.eu"
     config.portal_base_url = ENV["PORTAL_BASE_URL"] if ENV["PORTAL_BASE_URL"].present?
