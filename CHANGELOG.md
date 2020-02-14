@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Customization for translation files (@goreck888)
+- Customization for scss files (@michal-szostak, @mkasztelnik)
 
 ### Changed
 - Template unification for all modals (@goreck888)
