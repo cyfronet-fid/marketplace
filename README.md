@@ -193,11 +193,11 @@ For Linux systems modifying `PATH` in `/etc/environment` should do the job.
 ## Designing UI without dedicated controller
 
 If there is no view yet implemented than still designing team can play around
-and create `haml`, `scss`, `js` for this view. For this purpose `playground`
+and create `haml`, `scss`, `js` for this view. For this purpose `designsystem`
 section is created. It is available **ONLY** in development mode. The URL is
-`/playground/:file`, where `:file` is the name of the view created in
-`app/views/playground` directory. For example `/playground/profile` URL will
-render `app/views/playground/profile.html.haml` file.
+`/designsystem/:file`, where `:file` is the name of the view created in
+`app/views/designsystem` directory. For example `/designsystem/profile` URL will
+render `app/views/designsystem/profile.html.haml` file.
 
 Since this is only for development there is no security and template
 existence checks.
