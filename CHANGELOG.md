@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Deprecated
 
 ### Removed
+- Static help removed in favour of help stored in DB (@mkasztelnik)
 
 ### Fixed
 
