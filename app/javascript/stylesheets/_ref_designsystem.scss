@@ -37,14 +37,20 @@ li {
 
 /* CONTENT BOX */
 .contentbox {
-  max-width: 1180px;
   padding-top: 3rem;
   display: flex;
   margin: auto;
   flex-direction: row;
 
+  & > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   img {
     max-width: 100%;
+    min-width: 45%;
     height: auto;
     align-self: center;
   }
@@ -66,6 +72,51 @@ li {
   }
 }
 
+@media (max-width: 992px) {
+
+  .home-intro {
+    flex-direction: column;
+    align-items: normal;
+
+    .right-column {
+      flex: 0 0 100%;
+      max-width: 100%;
+      order: 1;
+
+      .home-image {
+        position: relative;
+        width: 100%;
+        height: 260px;
+        background-image: url('../../assets/images/gfx_whole_illustation_phone.png');
+        background-position: 50% 50%;
+        top: -25px;
+        right: auto;
+      }
+    }
+
+    .left-column {
+      flex: 0 0 100%;
+      max-width: 100%;
+      order: 13;
+
+      .title {
+        font-size: 1.75rem;
+        line-height: 37px;
+        text-align: center;
+        margin-bottom: 40px;
+        width: 100%;
+      }
+
+      .home-lead {
+        font-size: 1.125rem;
+        line-height: 1.48;
+        width: 100%;
+        text-align: center;
+      }
+
+    }
+  }
+}
 
 /* INTRO BOX MORE */
 
@@ -108,6 +159,21 @@ li {
   }
 }
 
+@media (max-width: 992px) {
+
+  .intro-box {
+    min-height: 190px;
+    flex: 0 0 91.66667%;
+    max-width: 91.66667%;
+    margin-bottom: 5px;
+    background-size: contain;
+
+    &.second {
+      float: right;
+    }
+  }
+
+}
 
 /* STANDARD LIST */
 
@@ -203,6 +269,20 @@ li {
       -moz-columns: 2;
     }
   }
+}
+
+@media (max-width: 992px) {
+
+  .standard-list-wrapper {
+    flex-direction: column;
+    align-items: normal;
+    padding: 1.5rem 1.5rem 0;
+
+    .standard-list {
+      margin-bottom: 25px;
+    }
+  }
+
 }
 
 /* BRANCH BOX STYLES */
@@ -449,6 +529,21 @@ li {
   }
 }
 
+@media (max-width: 576px) {
+  .simple-intro {
+    margin-bottom: 30px;
+
+    .title {
+      margin-bottom: 5px;
+      text-align: left;
+    }
+
+    .icon {
+      margin-right: 10px;
+    }
+  }
+}
+
 /* FOOTER */
 
 .footer {
@@ -562,6 +657,36 @@ li {
   }
 }
 
+@media (max-width: 576px) {
+  .footer {
+    .row {
+      .col-md {
+        width: 50%;
+        margin-bottom: 15px;
+      }
+    }
+
+    .copy-text {
+      font-size: 0.6875rem;
+    }
+
+    .socials {
+      margin-top: 0 !important;
+      text-align: center;
+    }
+  }
+
+  .eosc-logo-mono,
+  .eosc-hub-logo-mono {
+    margin: auto;
+  }
+
+  .eu-information {
+    font-size: 0.6875rem;
+    line-height: 1rem;
+    padding: 12px 0 !important;
+  }
+}
 
 /* STANDARD BUTTON */
 
@@ -640,6 +765,25 @@ li {
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
   }
+}
+
+@media (max-width: 992px)  {
+
+  .tabs li {
+    font-size: 12px;
+  }
+
+  .tabs li:first-child {
+    border-top-left-radius: 0;
+    border-left: none;
+    border-bottom-left-radius: 0;
+  }
+
+  .tabs li:last-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
 }
 
 /* END OF STANDARD TAB */
@@ -849,6 +993,5 @@ li {
 
   }
 }
-
 
 @import 'ref_mobile';
