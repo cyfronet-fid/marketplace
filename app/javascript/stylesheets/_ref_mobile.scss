@@ -113,6 +113,13 @@
 
 }
 
+@media (max-width: 768px) {
+  .service-info-box {
+    display: block;
+    flex: unset;
+  }
+}
+
 @media (max-width: 576px) {
 
   .header {
