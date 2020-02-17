@@ -1,6 +1,7 @@
 .service-info-box
   %header
     = link_to service.title.truncate(35), service, class: "title"
+  %article
     %p
       = service_logo(service)
       = truncate(service.description, length: 120)
