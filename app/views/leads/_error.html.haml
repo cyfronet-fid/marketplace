@@ -1,0 +1,10 @@
+.container.lead-error
+  .row.alert.alert-danger
+    %h2 Cannot find lead_section with slug "#{slug}"
+    .col-12
+      .card-title
+        Please add such section using
+        = link_to "link", new_admin_lead_section_path(slug: slug)
+      .card-description
+        This message are displayed only for admin user.
+

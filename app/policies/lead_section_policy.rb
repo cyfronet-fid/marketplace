@@ -6,4 +6,8 @@ class LeadSectionPolicy < ApplicationPolicy
       scope
     end
   end
+
+  def error?
+    user&.admin?
+  end
 end
