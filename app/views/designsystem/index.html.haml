@@ -399,10 +399,12 @@
     %footer.footer
       .container
         .row
-          .col-md-3
-            %a.logo-one{ href: "#" }
-          .col-md-3
-            %a.logo-two{ href: "https://www.eosc-hub.eu" }
+          .col-md-3.my-auto
+            %a.eosc-logo-mono.d-block{ href: "https://www.eosc-hub.eu" }
+              = image_tag "eosc-logo-mono.png"
+          .col-md-3.my-auto
+            %a.eosc-hub-logo-mono.d-block{ href: "https://www.eosc-hub.eu" }
+              = image_tag "eosc-footer-logo.png"
           .col-md-6.my-auto.copyright
             %span.copy-text
               Copyright 2018 - All right reserved
