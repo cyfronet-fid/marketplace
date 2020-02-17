@@ -37,14 +37,20 @@ li {
 
 /* CONTENT BOX */
 .contentbox {
-  max-width: 1180px;
   padding-top: 3rem;
   display: flex;
   margin: auto;
   flex-direction: row;
 
+  & > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   img {
     max-width: 100%;
+    min-width: 45%;
     height: auto;
     align-self: center;
   }
