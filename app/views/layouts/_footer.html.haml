@@ -2,10 +2,12 @@
   - portal_base = Mp::Application.config.portal_base_url
   .container
     .row.h-100
-      .col-md-3
+      .col-md-3.my-auto
         %a.eosc-logo-mono.d-block{ href: portal_base }
-      .col-md-3
+          = image_tag "eosc-logo-mono.png"
+      .col-md-3.my-auto
         %a.eosc-hub-logo-mono.d-block{ href: "https://www.eosc-hub.eu" }
+          = image_tag "eosc-footer-logo.png"
       .col-md-6.my-auto.text-right
         %span.copy-text
           Copyright 2018 - All right reserved
