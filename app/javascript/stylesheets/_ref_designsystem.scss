@@ -347,7 +347,7 @@ li {
 
   header {
     align-items: center;
-    padding: 1.4rem 1rem 1.3rem;
+    padding: 1.4rem 1rem 0;
   }
 
   .title {
@@ -366,6 +366,10 @@ li {
     }
   }
 
+  article {
+    align-items: center;
+    padding: 0 1rem 1.3rem;
+  }
 
   p {
     margin: 0;
