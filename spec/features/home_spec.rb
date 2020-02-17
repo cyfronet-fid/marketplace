@@ -35,4 +35,46 @@ RSpec.feature "Home" do
       expect(descriptions.map(&:text)).to match_array([service1, service2].map(&:description))
     end
   end
+
+  context "lead_sections" do
+    context "admin user" do
+      let(:admin) { create(:user, roles: [:admin]) }
+      before { checkin_sign_in_as(admin) }
+
+      it "should see error" do
+        visit "/"
+        expect(page).to have_text("Cannot find lead_section with slug \"learn-more\"")
+        expect(page).to have_text("Cannot find lead_section with slug \"use-cases\"")
+      end
+
+      it "should see section" do
+        lead_section = create(:lead_section, slug: "learn-more", title: "Learn More Section")
+        create(:lead, lead_section: lead_section)
+        visit "/"
+        expect(page).to_not have_text("Cannot find lead_section with slug \"learn-more\"")
+        expect(page).to have_text("Cannot find lead_section with slug \"use-cases\"")
+        expect(page).to have_text("Learn More Section")
+      end
+    end
+
+    context "user" do
+      let(:admin) { create(:user) }
+      before { checkin_sign_in_as(admin) }
+
+      it "should see error" do
+        visit "/"
+        expect(page).to_not have_text("Cannot find lead_section with slug \"learn-more\"")
+        expect(page).to_not have_text("Cannot find lead_section with slug \"use-cases\"")
+      end
+
+      it "should see section" do
+        lead_section = create(:lead_section, slug: "learn-more", title: "Learn More Section")
+        create(:lead, lead_section: lead_section)
+        visit "/"
+        expect(page).to_not have_text("Cannot find lead_section with slug \"learn-more\"")
+        expect(page).to_not have_text("Cannot find lead_section with slug \"use-cases\"")
+        expect(page).to have_text("Learn More Section")
+      end
+    end
+  end
 end

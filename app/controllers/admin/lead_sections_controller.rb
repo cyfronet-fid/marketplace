@@ -4,7 +4,7 @@ class Admin::LeadSectionsController < Admin::ApplicationController
   before_action :find_and_authorize, only: [:edit, :update, :destroy]
 
   def new
-    @lead_section = LeadSection.new
+    @lead_section = LeadSection.new(slug: params[:slug])
     authorize(@lead_section)
   end
 
