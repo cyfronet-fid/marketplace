@@ -111,6 +111,12 @@
     }
   }
 
+  .footer {
+    .title {
+      text-align: left;
+    }
+  }
+
 }
 
 @media (max-width: 768px) {
@@ -224,6 +230,37 @@
 
   .eu-information {
     font-size: 0.6875rem;
+    line-height: 1rem;
+    padding: 12px 0 !important;
+  }
+
+  .footer {
+    .row {
+      .col-md {
+        width: 50%;
+        margin-bottom: 15px;
+      }
+    }
+
+    .copy-text {
+      font-size: 11px;
+    }
+
+    .socials {
+      margin-top: 0 !important;
+      text-align: center;
+    }
+  }
+
+  .eosc-logo-mono,
+  .eosc-hub-logo-mono {
+    margin: 0 auto 15px;
+    text-align: center;
+
+  }
+
+  .eu-information {
+    font-size: 11px;
     line-height: 1rem;
     padding: 12px 0 !important;
   }
