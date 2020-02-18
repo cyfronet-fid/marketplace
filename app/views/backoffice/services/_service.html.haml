@@ -2,3 +2,5 @@
   = service_status(service)
   = link_to [:backoffice, service] do
     = highlighted_for(:title, service, highlights)
+  %br
+  = offers_status(service)
