@@ -844,24 +844,37 @@ Card style
       display: none;
     }
 
-    span {
-      cursor: pointer;
-    }
-
     svg {
       display: none;
     }
     // scss-lint:disable all
-    input[type="radio"]:checked+span {
-      background: $yellow;
-      color: $white
+    span {
+      cursor: pointer;
+      .unchecked {
+        display: inline-block;
+      }
+
+      .checked {
+        display: none;
+      }
     }
 
     input[type="radio"]:checked+span {
+      background: $yellow;
+      color: $white;
+
       svg {
         display: inline-block;
         margin-left: 5px;
         margin-right: 0;
+      }
+
+      .unchecked {
+        display: none;
+      }
+
+      .checked {
+        display: inline-block;
       }
     }
     // scss-lint:enable all

@@ -33,6 +33,7 @@ en:
         next: Next - %{step_title}
     offer:
       offer_select: Select an offer
+      offer_selected: Selected offer
     offers:
       title: Offer selection
     information:
