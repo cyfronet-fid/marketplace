@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- Text label by offer selection in the first step of service ordering (@goreck888)
 
 ### Deprecated
 
