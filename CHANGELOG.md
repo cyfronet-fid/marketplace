@@ -26,6 +26,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## [2.6.3] 2020-02-18
+
+### Fixed
+- Displaying archived project status (@martaswiatkowska)
+
 ## [2.6.2] 2020-02-13
 
 ### Fixed
