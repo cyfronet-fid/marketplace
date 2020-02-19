@@ -10,6 +10,7 @@ module Service::Searchable
     before_action only: :index do
       @filters = visible_filters
       @active_filters = active_filters
+      store_query_params
     end
   end
 
@@ -93,6 +94,16 @@ module Service::Searchable
 
     def active_filters
       @active_filters ||= all_filters.flat_map { |f| f.active_filters }
+    end
+
+    def store_query_params
+      session[:query] = {}
+      @filters.each do |filter|
+        session[:query][filter.field_name] = params[filter.field_name] unless params[filter.field_name].blank?
+        session[:query]["#{filter.field_name}-all"] =
+            params["#{filter.field_name}-all"] unless params["#{filter.field_name}-all"].blank?
+      end
+      session[:query][:q] = params[:q] unless params[:q].blank?
     end
 
     def filter_classes

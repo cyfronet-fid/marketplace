@@ -22,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- keep filters and query by using breadcrumbs to go back to the services view (@goreck888)
 
 ### Security
 

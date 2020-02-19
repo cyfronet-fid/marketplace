@@ -10,7 +10,7 @@ crumb :profile do
 end
 
 crumb :services do
-  link "Services", services_path
+  link "Services", services_path(params: (session[:query].blank? ? {} : session[:query]))
   parent :marketplace_root
 end
 
@@ -26,7 +26,7 @@ crumb :service do |service|
 end
 
 crumb :category do |category|
-  link category.name, category_path(category)
+  link category.name, category_services_path(category, params: (session[:query].blank? ? {} : session[:query]))
   if category.parent
     parent category.parent
   else
