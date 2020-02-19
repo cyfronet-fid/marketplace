@@ -10,6 +10,7 @@ module Service::Searchable
     before_action only: :index do
       @filters = visible_filters
       @active_filters = active_filters
+      session[:category] = @category&.id
     end
   end
 

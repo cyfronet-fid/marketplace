@@ -16,7 +16,9 @@ end
 
 crumb :service do |service|
   link service.title, service_path(service)
-  if service.main_category
+  if !session[:category].blank?
+    parent :category, Category.find(session[:category])
+  elsif service.main_category
     parent :category, service.main_category
   else
     parent :services

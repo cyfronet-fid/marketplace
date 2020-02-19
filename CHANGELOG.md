@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Breadcrumbs depending on chosen category in service view (@goreck888)
 
 ### Security
 
