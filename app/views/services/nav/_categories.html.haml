@@ -9,7 +9,7 @@
   - view = content_for(:category_view) || "services/nav/category"
   - categories.each do |cid, category|
     = render view, category: category[:category], current: current, counter: category[:counter]
-    - if current == category[:category] && !subcategories.empty?
+    - if current == category[:category] && !subcategories.blank?
       %ul.ml-3
         - subcategories.each do |sid, subcategory|
           = render view, category: subcategory[:category], current: current, counter: subcategory[:counter]
