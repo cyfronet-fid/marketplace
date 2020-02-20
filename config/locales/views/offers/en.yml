@@ -1,0 +1,9 @@
+en:
+  offers:
+    type:
+      open_access:
+        Open Access
+      orderable:
+        Internal ordering
+      external:
+        External ordering

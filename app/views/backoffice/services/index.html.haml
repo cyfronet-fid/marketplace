@@ -9,7 +9,7 @@
     = render "backoffice/services/search"
   .col-lg-3
     - if policy([:backoffice, Service]).new?
-      = link_to t("backoffice.service.new"),
+      = link_to t("backoffice.services.new.link"),
                     new_backoffice_service_path,
                     class: "btn btn-primary"
 

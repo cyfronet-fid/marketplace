@@ -26,7 +26,7 @@ class Services::SummariesController < Services::ApplicationController
 
   private
     def next_title
-      I18n.t("service.#{@offer_type}.order.title")
+      I18n.t("services.summary.#{@offer_type}.order.title")
     end
 
     def do_create(project_item_template, message)

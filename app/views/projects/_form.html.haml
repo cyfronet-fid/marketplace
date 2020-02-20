@@ -3,9 +3,8 @@
           "data-controller" => "project",
           data: { action: "submit->project#filterFileds" } } do |f|
   %h4 Usage
-  = f.input :name, label: "Project name", input_html: { class: "col-lg-6 form-control-lg" }
-  = f.input :reason_for_access, label: "Reason to request access to the EOSC services",
-  input_html: { class: "col-lg-8 form-control-lg textarea-lg" }
+  = f.input :name, input_html: { class: "col-lg-6 form-control-lg" }
+  = f.input :reason_for_access, input_html: { class: "col-lg-8 form-control-lg textarea-lg" }
   = f.association :research_areas, multiple: true, include_hidden: false,
     wrapper_html: { class: "col-lg-8 pl-0 pr-0" }, input_html: { data: { choice: true } }
   = f.input :additional_information,

@@ -2,8 +2,7 @@
 .container
   .mb-4.pb-4.border-header
     %h1.mr-auto.my-auto
-      Edit Project
-      = @project.name
+      "#{t(".title")} #{@project.name}"
   .edit-project
     = render "form", project: @project
   %hr.bottom-hr.mt-5.mb-4
@@ -11,6 +10,6 @@
     .col-12
       %button.btn.btn-primary.pl-5.pr-5{ type: "submit",
         form: "modal-form" }
-        = t("project.buttons.update")
-      = back_link_to t("project.buttons.cancel"), @project,
+        = t("projects.buttons.update")
+      = back_link_to t("projects.buttons.cancel"), @project,
                       class: "btn btn-link text-uppercase"

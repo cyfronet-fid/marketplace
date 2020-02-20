@@ -1,7 +1,7 @@
 %div{ "data-controller" => "details-loader", "data-details-loader-url" => projects_path }
   %h4 My projects
   .details-content
-    %p.mb-4= t("project.select.description")
+    %p.mb-4= t("projects.select.description")
     = f.input :project do
       .input-group.col-12.col-lg-6.pl-0
         = f.input_field :project_id, collection: projects,

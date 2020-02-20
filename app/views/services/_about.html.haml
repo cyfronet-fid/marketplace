@@ -9,6 +9,6 @@
     %sidebar.col-12.col-xl-3.pl-5
       - Service::SIDEBAR_FIELDS.each do |group|
         - if any_present?(service, *group[:fields])
-          %h5= t("service.sidebar.title.#{group[:name]}")
+          %h5= t(".sidebar.title.#{group[:name]}")
           %ul.list-group
             = render "services/sidebar/#{group[:template]}", service: service, fields: group[:fields]
