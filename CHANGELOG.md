@@ -9,6 +9,20 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [2.7.0] 2020-02-20
+
+### Added
 - Customization for translation files (@goreck888)
 - Customization for scss files (@michal-szostak, @mkasztelnik)
 - Lead section error box displayed to admin user (@martaswiatkowska)
@@ -18,14 +32,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Update outdated `playground` description and replace it with `designsystem` section (@mkasztelnik)
 - Refactor translation files (@goreck888)
 
-### Deprecated
-
 ### Removed
 - Static help removed in favour of help stored in DB (@mkasztelnik)
-
-### Fixed
-
-### Security
 
 ## [2.6.3] 2020-02-18
 
