@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - Automatic offer creating by services import (@goreck888)
 - Information about offers statuses in the backoffice (@goreck888)
+- Offers to autocomplete (@martaswiatkowska)
 
 ### Changed
 - Text label by offer selection in the first step of service ordering (@goreck888)

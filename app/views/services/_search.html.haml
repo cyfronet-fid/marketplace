@@ -6,6 +6,7 @@
              "data-search-services-path": services_path,
              "data-search-categories-path": "/services/c" do
     = hidden_field_tag "service_id", nil, "data-target": "autocomplete.hidden"
+    = hidden_field_tag "anchor", nil, "data-target": "autocomplete.anchor"
     = hidden_field_tag "sort", "_score"
     .input-group
 

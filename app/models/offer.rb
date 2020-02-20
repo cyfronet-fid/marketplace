@@ -3,10 +3,25 @@
 class Offer < ApplicationRecord
   include Offerable
 
+  searchkick word_middle: [:name, :description],
+            highlight: [:name, :description]
+
   STATUSES = {
     published: "published",
     draft: "draft"
   }
+
+  def search_data
+    {
+      name: name,
+      description: description,
+      service_id: service_id
+    }
+  end
+
+  def should_index?
+    status == STATUSES[:published] && offers_count > 1
+  end
 
   enum status: STATUSES
 
