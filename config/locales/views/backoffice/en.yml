@@ -1,0 +1,39 @@
+en:
+  backoffice:
+    services:
+      new:
+        link: Create new Service
+        title: New Service
+      edit:
+        link: Edit
+        title: Edit Service
+      offers:
+        new:
+          link: Add new Offer
+          title: New Offer
+        edit:
+          title: Edit Offer
+    categories:
+      new:
+        link: Add new Category
+        title: New Category
+      edit:
+        title: Edit Category
+    platforms:
+      new:
+        link: Add new Platform
+        title: New Platform
+      edit:
+        title: Edit Platform
+    providers:
+      new:
+        link: Add new Provider
+        title: New Provider
+      edit:
+        title: Edit Provider
+    research_areas:
+      new:
+        link: Add new Research Area
+        title: New Research Area
+      edit:
+        title: Edit Research Area

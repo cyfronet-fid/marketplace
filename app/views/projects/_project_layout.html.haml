@@ -7,11 +7,11 @@
             = project.name
           .details-row
             - if project.archived?
-              .details-box.text-uppercase= t("project_item.status.#{project.status}")
+              .details-box.text-uppercase= t("project_items.status.#{project.status}")
               .separator
             .details-box Created at #{l(project.created_at, format: :short)}
             .separator
-            .details-box= t "project.customer_typology.#{project.customer_typology || "none"}"
+            .details-box= t "projects.customer_typology.#{project.customer_typology || "none"}"
             - if project.organization?
               .separator
               .details-box= project.organization
@@ -24,10 +24,10 @@
             data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger btn-sm mb-1 mt-1"
         - if policy(project).archive?
           = link_to "Archive", project_archive_path(project), method: :post,
-            data: { confirm: "#{t "project.archive.confirmation"}" },
+            data: { confirm: "#{t "projects.archive.confirmation"}" },
             class: "btn btn-outline-danger",
             "data-toggle": "tooltip", "data-placement": "bottom",
-            "title": "#{t "project.archive.tip"}"
+            "title": "#{t "projects.archive.tip"}"
           :javascript
             $('a[data-toggle="tooltip"]').tooltip();
     %ul.nav.nav-tabs.mt-4.pl-3.row.services-menu

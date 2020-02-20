@@ -1,4 +1,4 @@
-%p.mb-4= t "service.#{@service.service_type}.order.summary.description_html"
+%p.mb-4= t("services.summary.#{@service.service_type}.description_html")
 
 = render "services/summaries/technical_configuration",
          service: @service, project_item: @step

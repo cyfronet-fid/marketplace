@@ -18,12 +18,10 @@
   wrapper_html: { class: "hidden-fields", "data-target" => "project.privateCompany project.input" },
   input_html: { "data-target" => "project.companyName", class: "col-lg-6 form-control-lg" }
 = f.input :country_of_origin, collection: Country.all.map { |c| [ c.name, "value" => c.alpha2 ] },
-  label: t("simple_form.labels.project.country_of_origin"),
   wrapper_html: { class: "hidden-fields",
   "data-target" => "project.singleUser project.privateCompany project.input" },
   input_html: { "data-target" => "project.originCountry", class: "col-lg-6 form-control-lg" }
 = f.input :countries_of_partnership, as: :select, collection: Country.all.map { |c| [ c.name, "value" => c.alpha2 ] },
-  label: t("simple_form.labels.project.countries_of_partnership"),
   include_blank: false, include_hidden: false,
   wrapper_html: { class: "hidden-fields col-lg-8 pl-0 pr-0",
   "data-target" => "project.partnershipCountries project.input project.research project.project" },
