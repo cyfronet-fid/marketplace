@@ -114,6 +114,11 @@ header {
 
 .search-box {
   position: relative;
+
+  .list-header {
+    color: $palette-gray-50;
+    margin: 0.5rem;
+  }
 }
 
 .search-box .form-control,
@@ -143,9 +148,15 @@ header {
     cursor: pointer;
   }
 
-  .dropdown-item.active {
-    color: $palette-blue;
-    background-color: transparent;
+  .dropdown-item {
+    .active {
+      color: $palette-blue;
+      background-color: transparent;
+    }
+
+    span {
+      color: $palette-gray-50;
+    }
   }
 
   .dropdown-item:hover {
