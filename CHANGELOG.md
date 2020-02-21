@@ -35,6 +35,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Removed
 - Static help removed in favour of help stored in DB (@mkasztelnik)
+- Remove outdated filter variables from service index views (@mkasztelnik)
 
 ## [2.6.3] 2020-02-18
 

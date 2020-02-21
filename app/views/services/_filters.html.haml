@@ -8,5 +8,5 @@
     "data-target": "filter.form" do
     = hidden_field_tag :q, params[:q] if params[:q].present?
     = hidden_field_tag :sort, params[:sort] if params[:sort].present?
-    - @filters.each do |filter|
+    - filters.each do |filter|
       = render "services/filters/#{filter.type}", filter: filter
