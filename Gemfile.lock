@@ -275,14 +275,14 @@ GEM
       nio4r (~> 2.0)
     pundit (2.1.0)
       activesupport (>= 3.0.0)
-    rack (2.0.7)
+    rack (2.2.2)
     rack-oauth2 (1.10.1)
       activesupport
       attr_required
       httpclient
       json-jwt (>= 1.11.0)
       rack
-    rack-protection (2.0.7)
+    rack-protection (2.0.8.1)
       rack
     rack-proxy (0.6.5)
       rack
@@ -326,15 +326,15 @@ GEM
       json
     redcarpet (3.5.0)
     redis (4.1.3)
-    redis-actionpack (5.1.0)
-      actionpack (>= 4.0, < 7)
-      redis-rack (>= 1, < 3)
+    redis-actionpack (5.2.0)
+      actionpack (>= 5, < 7)
+      redis-rack (>= 2.1.0, < 3)
       redis-store (>= 1.1.0, < 2)
     redis-activesupport (5.2.0)
       activesupport (>= 3, < 7)
       redis-store (>= 1.3, < 2)
-    redis-rack (2.0.6)
-      rack (>= 1.5, < 3)
+    redis-rack (2.1.2)
+      rack (>= 2.0.8, < 3)
       redis-store (>= 1.2, < 2)
     redis-rails (5.0.2)
       redis-actionpack (>= 5.0, < 6)
@@ -595,4 +595,4 @@ RUBY VERSION
    ruby 2.6.5p114
 
 BUNDLED WITH
-   2.1.1
+   2.1.2
