@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Truncate long headers and description in homepage sections (@goreck888)
 
 ### Security
 
