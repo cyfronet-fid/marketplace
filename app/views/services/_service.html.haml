@@ -1,2 +1,3 @@
 = render "service_details", service: service, highlights: highlights do
-  = link_to highlighted_for(:title, service, highlights), service
+  = link_to highlighted_for(:title, service, highlights),
+    service_path(service, category.present? ? { fromc: category.slug } : nil)
