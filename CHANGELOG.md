@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Back to the old schema for json services api (@goreck888)
 
 ### Security
 
