@@ -23,6 +23,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## [2.7.1] 2020-02-21
+
+### Fixed
+- Back to the old schema for json services api (@goreck888)
+
 ## [2.7.0] 2020-02-20
 
 ### Added
