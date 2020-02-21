@@ -5,13 +5,7 @@
                                           categories: categories,
                                           subcategories: subcategories,
                                           services_count: services_count
-      = render "services/filters", provider_options: provider_options,
-                                   research_areas: research_areas,
-                                   target_groups_options: target_groups_options,
-                                   rating_options: rating_options,
-                                   tag_options: tag_options,
-                                   active_filters: active_filters,
-                                   related_platform_options: related_platform_options
+      = render "services/filters", filters: filters
 
     .col-lg-9
       .row.mb-4
