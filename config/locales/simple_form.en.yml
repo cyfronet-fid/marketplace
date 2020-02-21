@@ -47,6 +47,11 @@ en:
         text: |
           We will send your question to the Service provider.
           You will receive an answer to %{email} email address.
+      lead:
+        header: |
+          Preferred length of header is up to 20 characters for learn more section
+          and up to 70 characters for use cases section
+        body: Preferred length of description is up to 180 characters
       service:
         tutorial_url: |
           Url should start with http or https [e.g. http://webpage.org]

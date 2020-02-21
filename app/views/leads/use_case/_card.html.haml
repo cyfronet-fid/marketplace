@@ -3,5 +3,7 @@
     - if content_for(:item_bar)
       = yield :item_bar
     .card-body
-      .card-author.font-weight-bold.mb-3= link_to card.header, card.url
-      .card-description= card.body
+      .card-author.font-weight-bold.mb-3= link_to card.header.truncate(70), card.url, "data-toggle": "tooltip",
+        title: (card.header.size > 70 ? card.header : nil)
+      .card-description{ "data-toggle": "tooltip", title: (card.body.size > 180 ? card.body : nil) }
+        = card.body.truncate(180)
