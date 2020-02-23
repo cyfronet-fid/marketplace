@@ -25,6 +25,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - keep filters and query by using breadcrumbs to go back to the services view (@goreck888)
 
 ### Security
+- Update dependencies (@goreck888)
 
 ## [2.7.2] 2020-02-25
 
