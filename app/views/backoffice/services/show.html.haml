@@ -1,5 +1,12 @@
 - breadcrumb :backoffice_service, @service
 .container
+  - if @service.offers.blank?
+    .alert.alert-danger.mb-0.text-center
+      The service has no offers. Add one offer to make possible for a user to Access the service.
+  - elsif @service.published? && @service.offers.published.blank?
+    .alert.alert-warning.mb-0.text-center
+      The service is published but has no published offers.
+      Publish one offer to make possible for a user to Access the service.
   .row
     .col-5.col-md-2
       - if @service.logo.attached?
