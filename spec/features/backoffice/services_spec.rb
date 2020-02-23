@@ -89,6 +89,16 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("Alpha (min. TRL 5)")
     end
 
+    scenario "I can see warning about no offers" do
+      service = create(:service)
+
+      visit backoffice_service_path(service)
+
+      expect(page)
+          .to have_content("The service has no offers." \
+                           " Add one offer to make possible for a user to Access the service.")
+    end
+
     scenario "I can preview service before create" do
       provider = create(:provider)
       research_area = create(:research_area)
@@ -209,6 +219,17 @@ RSpec.feature "Services in backoffice" do
 
       expect(page).to have_content("test offer")
       expect(service.offers.last.name).to eq("new offer 1")
+    end
+
+    scenario "I can see warning about no published offers", js: true do
+      service = create(:service)
+      offer = create(:offer, status: "draft", service: service)
+
+      visit backoffice_service_path(service)
+
+      expect(page).to have_content("The service is published but has no published offers. " \
+                                   "Publish one offer to make possible for a user to Access the service.")
+      expect(service.offers).to eq([offer])
     end
 
     scenario "Offer are converted from markdown to html on service view" do

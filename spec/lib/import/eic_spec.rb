@@ -144,6 +144,23 @@ describe Import::Eic do
       expect(Service.find_by(title: "PDB_REDO server")).to_not be_nil
     end
 
+    it "should create an offer for a new services" do
+      expect { eic.call }.to output(/PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(3).and change { Offer.count }.by(3)
+      service = Service.first
+
+      expect(service.offers).to_not be_nil
+
+      offer = service.offers.first
+
+      expect(offer.name).to eq("Offer")
+      expect(offer.description).to eq("#{service.title} Offer")
+      expect(offer.offer_type).to eq("open_access")
+      expect(offer.status).to eq(service.status)
+
+      expect(Service.find_by(title: "MetalPDB").offers).to_not be_nil
+      expect(Service.find_by(title: "PDB_REDO server").offers).to_not be_nil
+    end
+
     it "should not update service which has upstream to null" do
       service = create(:service)
       create(:service_source, eid: "phenomenal.phenomenal", service_id: service.id, source_type: "eic")
@@ -164,6 +181,36 @@ describe Import::Eic do
       expect { eic.call }.to output(/PROCESSED: 3, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(0)
       expect(Service.first.as_json(except: [:created_at, :updated_at])).to_not eq(service.as_json(except: [:created_at, :updated_at]))
     end
+
+    it "should create an offer for updated services without offers" do
+      service = create(:service, status: :published)
+      source = create(:service_source, eid: "phenomenal.phenomenal", service_id: service.id, source_type: "eic")
+      service.update!(upstream_id: source.id)
+
+      eic = make_and_stub_eic(ids: ["phenomenal.phenomenal"], log: true)
+
+      expect { eic.call }.to output(/PROCESSED: 3, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(0).and change { Offer.count }.by(1)
+
+      offer = service.offers.first
+
+      expect(offer.name).to eq("Offer")
+      expect(offer.description).to eq("PhenoMeNal Offer")
+      expect(offer.offer_type).to eq("open_access")
+      expect(offer.status).to eq(service.status)
+    end
+
+    it "should not create an offer for updated services with offers" do
+      service = create(:service, status: :published)
+      create(:offer, service: service)
+      source = create(:service_source, eid: "phenomenal.phenomenal", service_id: service.id, source_type: "eic")
+      service.update!(upstream_id: source.id)
+
+      eic = make_and_stub_eic(ids: ["phenomenal.phenomenal"], log: true)
+
+      expect { eic.call }.to output(/PROCESSED: 3, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(0).and change { Offer.count }.by(0)
+    end
+
+
 
     it "should not change db if dry_run is set to true" do
       eic = make_and_stub_eic(dry_run: true, dont_create_providers: false, log: true)
