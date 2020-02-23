@@ -34,6 +34,19 @@ RSpec.feature "Service filter" do
     expect(body).to have_text("Funcy search phrase")
   end
 
+  it "stores filter state by breadcrumbs navigation", js: true do
+    research_area = create(:research_area, name: "Science!")
+    provider = create(:provider, name: "Cyfronet provider")
+    create(:service, title: "dd", providers: [provider], research_areas: [research_area])
+
+    visit services_path(q: "dd", providers: [provider.to_param], research_areas: [research_area.to_param])
+    click_on "dd"
+    click_on "Services"
+
+    expect(page).to have_text("Looking for: dd")
+    expect(page).to have_text("Providers: Cyfronet provider")
+  end
+
   it "reset page after filtering", js: true do
     create_list(:service, 5)
 
