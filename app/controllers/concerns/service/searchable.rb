@@ -79,7 +79,7 @@ module Service::Searchable
     end
 
     def highlights(from_search)
-      (from_search.try(:with_highlights) || []).map { |s, h| [s.id, h] }.to_h
+      Hash[(from_search.try(:with_highlights) || [])].transform_keys { |s| s.id }
     end
 
     def visible_filters
