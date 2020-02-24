@@ -3,26 +3,25 @@
                                               "action" => "scroll@window->home-page#onScroll" } }
   = image_tag("main-link.png")
 
-.container.home-intro.pt-5.pb-4
-  .row.pt-2.d-flex
-    .col-12.col-lg-5.right-column.order-lg-last
-      .home-image
-    .col-12.col-lg-7.left-column
-      %p.title
-        = t(".title")
+.contentbox
+  %div
+    %p.contentbox__title
+      = t(".title")
+    %p.contentbox__lead
+      = t(".description")
 
-      %p.home-lead.pr-5.mr-5
-        = t(".description")
-      .row.mt-2.intro-box-wrapper
-        %a#find-eosc
-        .col-11.col-lg-5.intro-box.pt-5.pb-5
-          = t(".services.description")
-          = link_to services_path do
-            %i.fas.fa-arrow-right
-            = t(".services.link")
+    .intro-box-wrapper
+      .intro-box
+        = t(".services.description")
+        = link_to services_path do
+          %i.fas.fa-arrow-right
+          = t(".services.link")
 
-        .col-11.col-lg-5.intro-box.second.pt-5.pb-5
-          = t(".projects.description")
-          = link_to projects_path do
-            %i.fas.fa-arrow-right
-            = t(".projects.link")
+      .intro-box
+        =  t(".projects.description")
+        = link_to projects_path do
+          %i.fas.fa-arrow-right
+          = t(".projects.link")
+
+  = image_tag "gfx_whole_illustation_desktop.png"
+
