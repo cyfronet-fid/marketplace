@@ -361,9 +361,14 @@ li {
 
     .icon {
       position: absolute;
-      top: 35px;
-      right: 33px;
+      top: 10px;
+      right: 0;
       transition: all 0.3s ease;
+      height: 100%;
+      width: 30%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .description {
@@ -380,11 +385,6 @@ li {
 
       .title {
         color: $color-primary;
-      }
-
-      .icon {
-        top: 40px;
-        right: 45px;
       }
     }
   }
