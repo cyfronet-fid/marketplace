@@ -189,7 +189,7 @@ RSpec.feature "Services in backoffice" do
       service = create(:service, title: "my service", owners: [user])
 
       visit backoffice_service_path(service)
-      click_on "Add new offer", match: :first
+      click_on "Add new Offer", match: :first
 
       expect {
         fill_in "Name", with: "new offer 1"
@@ -226,7 +226,7 @@ RSpec.feature "Services in backoffice" do
       service = create(:service, title: "my service", owners: [user])
 
       visit backoffice_service_path(service)
-      click_on "Add new offer", match: :first
+      click_on "Add new Offer", match: :first
 
       expect {
         fill_in "Name", with: "new offer"
@@ -473,7 +473,7 @@ RSpec.feature "Services in backoffice" do
       service = create(:service, owners: [user])
 
       visit backoffice_service_path(service)
-      click_on "Add new offer", match: :first
+      click_on "Add new Offer", match: :first
 
       fill_in "Name", with: "New offer"
       fill_in "Description", with: "New fancy offer"
