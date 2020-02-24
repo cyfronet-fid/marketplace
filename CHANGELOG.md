@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Truncate long headers and description in homepage sections (@goreck888)
+- i18n labels in the backoffice service view (@goreck888)
 
 ### Security
 
