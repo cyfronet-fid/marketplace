@@ -1,4 +1,4 @@
-#scrollbar.progress-box.mt-4
+#scrollbar.progress-box.mt-4{ "data-controller": "scroller" }
   %ul.step-progress.pl-5.pb-4
     - if messages.count.positive?
       - messages.each do |message|
@@ -7,9 +7,3 @@
       .blue-row.form-inline.col-12.col-md-6
         %i.fas.fa-comments.fa-pull-left
         Conversation not started yet.
-
-:javascript
-  window.onload = function () {
-    scrollbar = document.getElementById('scrollbar')
-    scrollbar.scrollTo(0, scrollbar.scrollHeight)
-  }
