@@ -7,6 +7,14 @@ en:
       edit:
         link: Edit
         title: Edit Service
+      destroy:
+        link: Decommission
+      publish:
+        link: Publish
+      publish_as_unverified:
+        link: Publish as unverified service
+      draft:
+        link: Stop showing in the MP
       offers:
         new:
           link: Add new Offer
