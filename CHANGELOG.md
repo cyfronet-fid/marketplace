@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Redirects for modals which don't have html view (@goreck888)
 
 ### Security
 
