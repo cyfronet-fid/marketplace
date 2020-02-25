@@ -17,10 +17,14 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- Truncate long headers and description in homepage sections (@goreck888)
-- i18n labels in the backoffice service view (@goreck888)
 
 ### Security
+
+## [2.7.2] 2020-02-25
+
+### Fixed
+- Truncate long headers and description in homepage sections (@goreck888)
+- i18n labels in the backoffice service view (@goreck888)
 
 ## [2.7.1] 2020-02-21
 
