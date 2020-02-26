@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Text label by offer selection in the first step of service ordering (@goreck888)
 - Rack and linked gems update (@goreck888)
 - Use category user used to enter the service in breadcrumbs (@mkasztelnik)
+- Portal link description from `Info` to `Portal Home` (@goreck888)
 
 ### Deprecated
 
