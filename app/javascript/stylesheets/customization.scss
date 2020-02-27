@@ -1,0 +1,16 @@
+.main {
+  .contentbox {
+    display: block;
+
+    > div {
+      width: 70%;
+    }
+
+    aside {
+      background: transparent;
+      position: absolute;
+      right: 10px;
+      top: 820px;
+    }
+  }
+}
