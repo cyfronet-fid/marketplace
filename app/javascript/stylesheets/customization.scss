@@ -1,16 +1,123 @@
+body {
+  background: url('../../assets/images/home-bg.png') no-repeat;
+  background-position-x: 0%;
+  background-position-y: 0%;
+  background-position: 50% -120px;
+}
+
+.top > .container::after {
+  background: url('../../assets/images/logo-bg.png') no-repeat;
+  position: absolute;
+  background-size: contain;
+  top: 34px;
+  left: 14%;
+  width: 335px;
+  height: 133px;
+  content: '';
+  z-index: 1;
+}
+
+.header {
+  position: relative;
+  z-index: 2;
+  padding-top: 20px;
+}
+
 .main {
+  z-index: 3;
+  position: relative;
+
   .contentbox {
     display: block;
 
     > div {
-      width: 70%;
+      width: 58%;
     }
 
     aside {
       background: transparent;
       position: absolute;
-      right: 10px;
-      top: 820px;
+      top: -36px;
+      right: -100px;
+      width: 68%;
+    }
+  }
+}
+
+
+/* ===============================
+Mobile version only for customization.
+=============================== */
+
+@media (max-width: 1120px) {
+  .main {
+    .contentbox {
+
+      > div {
+        width: 100%;
+      }
+
+      &__title,
+      &__lead {
+        width: 50%;
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .main {
+    .contentbox {
+      &__title {
+        font-size: 3rem;
+      }
+
+      .intro-box {
+        max-width: 45%;
+      }
+
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    .contentbox {
+      &__title {
+        font-size: 2rem;
+      }
+
+      &__lead {
+        font-size: 1rem;
+      }
+
+      .intro-box {
+        max-width: 45%;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .main {
+    .contentbox {
+      display: flex;
+      flex-direction: column-reverse;
+
+      &__title,
+      &__lead {
+        width: 100%;
+      }
+
+      aside {
+        position: relative;
+        width: 100%;
+        right: auto;
+      }
+
+      .intro-box {
+        max-width: 100%;
+      }
     }
   }
 }

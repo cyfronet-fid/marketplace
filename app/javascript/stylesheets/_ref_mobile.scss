@@ -111,19 +111,16 @@
     }
   }
 
+  .simple-intro {
+    margin-bottom: 30px;
+  }
+
   .footer {
     .title {
       text-align: left;
     }
   }
 
-}
-
-@media (max-width: 768px) {
-  .service-info-box {
-    display: block;
-    flex: unset;
-  }
 }
 
 @media (max-width: 768px) {
@@ -180,11 +177,11 @@
   }
 
   .simple-intro {
-    margin-bottom: 30px;
 
     .title {
       margin-bottom: 5px;
       text-align: left;
+      line-height: 1.1rem;
     }
 
     .icon {

@@ -442,6 +442,8 @@ li {
     font-weight: 400;
     text-decoration: none;
     display: block;
+    line-height: 1.35rem;
+    text-align: left;
 
     &:hover {
       text-decoration: none;
@@ -650,24 +652,6 @@ li {
   }
 }
 
-@media (max-width: 992px)  {
-
-  .tabs li {
-    font-size: 12px;
-  }
-
-  .tabs li:first-child {
-    border-top-left-radius: 0;
-    border-left: none;
-    border-bottom-left-radius: 0;
-  }
-
-  .tabs li:last-child {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
-}
 
 /* END OF STANDARD TAB */
 
