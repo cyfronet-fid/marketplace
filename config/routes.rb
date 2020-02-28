@@ -18,14 +18,14 @@ Rails.application.routes.draw do
       resource :information, only: [:show, :update]
       resource :summary, only: [:show, :create]
       resource :cancel, only: :destroy
-      resource :question, only: [:new, :create]
+      resource :question, only: [:new, :create], constraints: lambda { |req| req.format == :js }
       resources :opinions, only: :index
     end
   end
   get "services/c/:category_id" => "services#index", as: :category_services
   resources :categories, only: :show
 
-  resource :reports, only: [:new, :create]
+  resource :reports, only: [:new, :create], constraints: lambda { |req| req.format == :js }
 
   resources :projects do
     scope module: :projects do
