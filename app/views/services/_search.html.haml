@@ -20,7 +20,7 @@
         .fas.fa-times
     %ul.autocomplete-results{ "data-target": "autocomplete.results" }
   .searchbar__select
-    %span
+    %span{ "data-target": "search.selected" }
       All services
     %select#category-select.container-select{ "data-action": "change->search#refresh",
                                                     "data-target": "search.categorySelect" }
