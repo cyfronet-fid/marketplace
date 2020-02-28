@@ -17,9 +17,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- Redirects for modals which don't have html view (@goreck888)
 
 ### Security
+
+## [2.7.3] 2020-02-28
+
+### Fixed
+- Redirects for modals which don't have html view (@goreck888)
 
 ## [2.7.2] 2020-02-25
 
