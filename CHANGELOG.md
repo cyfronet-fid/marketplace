@@ -25,6 +25,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Keep filters and query by using breadcrumbs to go back to the services view (@goreck888)
 - Offence detected by new version of rubocop (@goreck888)
+- Reverse order of statuses and fix automatic scroll in project/service messages (@goreck888)
 
 ### Security
 - Update dependencies (@goreck888)
