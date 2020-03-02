@@ -48,22 +48,24 @@
     = render "services/search", categories: categories
 
     .menu.dropdown
-      %button#dropdown-menu-button.dropdown-toggle{ "aria-expanded" => "false", "aria-haspopup" => "true",
-          "data-toggle" => "dropdown", :type => "button" }
-        - if !user_signed_in?
-          = link_to user_checkin_omniauth_authorize_path, class: "menu__label" do
-            My EOSC Marketplace
-        - else
+
+      - if !user_signed_in?
+        = link_to user_checkin_omniauth_authorize_path, class: "menu__label menu__label--unauth" do
+          My EOSC Marketplace
+
+      - else
+        %a#dropdown-menu-button.dropdown-toggle{ "aria-expanded" => "false",
+                                                      "aria-haspopup" => "true",
+                                                      "data-toggle" => "dropdown",
+                                                      type: "button" }
           .menu__label My EOSC Marketplace
-          .dropdown-menu{ "aria-labelledby" => "dropdown-menu-button" }
-            %ul
-              %li
-                %a.dropdown-item{ href: "/projects" } Projects
-              %li
-                %a.dropdown-item{ href: "/profile" } Profile
-              %li
-                = link_to "Logout", destroy_user_session_path, method: :delete,
-                 class: "dropdown-item"
+        .dropdown-menu
+          %ul
+            %li
+              %a.simple-item{ href: "/projects" } My projects
+            %li
+              %a.dropdown-item{ href: "/profile" } Profile
+
 
       .menu__hamburger{ "onclick": "openNav()" }
         %span

@@ -6,5 +6,5 @@
     .title= card.header
     .description= card.body
     .icon
-      = image_tag card.picture.variant(resize: "86x111")
+      = image_tag card&.picture&.variant(resize: "86x111")
 
