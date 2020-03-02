@@ -5,16 +5,19 @@ body {
   margin-bottom: 0 !important;
   font-weight: $font-weight-normal;
 
-
   > main {
-    padding-bottom: 50px;
+    padding: 0 15px;
+    margin-bottom: 50px;
   }
+
 }
 
 header {
   position: relative;
   z-index: 10;
 }
+
+
 
 .container {
   max-width: 1180px;
@@ -301,6 +304,10 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   svg {
     color: $secondary;
   }
+}
+
+.navbar-brand {
+  z-index: 10;
 }
 
 .nav-tabs {
@@ -1067,6 +1074,7 @@ h5 {
     margin-right: -20px;
     margin-bottom: 3px;
     word-wrap: break-word;
+    font-weight: 300;
   }
 
   .empty {

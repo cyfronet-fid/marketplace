@@ -77,6 +77,8 @@
         .searchbar
           .searchbar__input
             %input{ type: "text" }
+            %a.search-clear
+              .fas.fa-times
             %ul.autocomplete-results
               %li
                 coś tam
@@ -91,7 +93,7 @@
           %button
             %i.fas.fa-search
         .menu.dropdown
-          %button#dropdown-menu-button.dropdown-toggle{ "aria-expanded" => "false", "aria-haspopup" => "true",
+          %a#dropdown-menu-button.dropdown-toggle{ "aria-expanded" => "false", "aria-haspopup" => "true",
           "data-toggle" => "dropdown", :type => "button" }
             .menu__label My EOSC Marketplace
           .menu__hamburger
@@ -149,11 +151,15 @@
           %li
             %a{ href: "#" } Etiam ullamcorper.
           %li
-            %a{ href: "#" } Suspendisse a pellentesque dui
+            %a{ href: "#" } Suspendisse a pellentesque dui  asd asds asd asdsa dasdas d dasdas dasd
           %li
             %a{ href: "#" } Maecenas malesuada elit lectus felis
           %li
             %a{ href: "#" } Curabitur et ligula.
+        %a.more-link.d-block{ href: "#" }
+          %i.fas.fa-arrow-right
+          And for
+          %strong more other target groups
       .standard-list
         .title List title header
         %ul
@@ -167,6 +173,10 @@
             %a{ href: "#" } Maecenas malesuada elit lectus felis
           %li
             %a{ href: "#" } Curabitur et ligula.
+        %a.more-link.d-block{ href: "#" }
+          %i.fas.fa-arrow-right
+          And for
+          %strong more other target groups
       .standard-list.two-columns
         .title List title header
         %ul

@@ -1,17 +1,16 @@
-@import 'bootstrap-grid.min.css';
-@import 'bootstrap.min.css';
-//@import 'bootstrap-theme.min.css';
 @import 'ref_variables';
 @import 'fonts';
-@import 'ref_showds';
-
-//@import '~bootstrap/scss/bootstrap';
 
 html {
   font-size: 16px;
 }
 
-a {
+body > main {
+  padding: 0 15px;
+}
+
+a,
+a:hover {
   text-decoration: none;
 }
 
@@ -122,7 +121,6 @@ li {
   background: $color-primary;
   color: $color-white;
   display: flex;
-  max-width: 1150px;
   margin: 50px auto 0;
   flex-direction: row;
   justify-content: space-between;
@@ -149,7 +147,7 @@ li {
       left: 0;
       opacity: 0.6;
       height: 2px;
-      width: 35%;
+      width: 100px;
     }
 
     svg {
@@ -168,6 +166,7 @@ li {
     margin: 0 0 0.6rem;
     font-weight: 600;
     line-height: 1.2;
+    color: $color-white;
   }
 
   ul {
@@ -175,6 +174,7 @@ li {
     padding-left: 0.9em;
     margin-left: 0.5em;
     margin-top: 0;
+    max-width: 400px;
 
     li {
       color: $color-secondary;
@@ -182,18 +182,18 @@ li {
       padding: 0;
       list-style: disc;
       line-height: 24px;
+      margin-right: 15px;
 
       a {
         font-size: 1rem;
-        max-width: 225px;
         display: block;
         line-height: 24px;
         overflow: hidden;
         font-weight: 300;
         text-decoration: none;
-        white-space: nowrap;
         text-overflow: ellipsis;
         color: $color-white;
+        white-space: nowrap;
 
         &:hover {
           color: $color-secondary;
@@ -205,9 +205,7 @@ li {
 
   &.two-columns {
     ul {
-      columns: 2;
-      -webkit-columns: 2;
-      -moz-columns: 2;
+      columns: 2 auto;
     }
   }
 }
@@ -235,6 +233,7 @@ li {
     height: 84px;
     line-height: 84px;
     vertical-align: middle;
+    overflow: hidden;
   }
 
   .branch-name {
@@ -258,13 +257,13 @@ li {
 .learn-more {
   border: none;
   background: url('../../assets/images/home-card-bg.png') no-repeat right bottom;
-  min-height: 145px;
   border-radius: 2px;
   position: relative;
   display: flex;
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
+  min-height: 145px;
 
   .body {
     padding: 1rem 45% 1rem 0;
@@ -706,7 +705,8 @@ li {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: unset;
+  padding-top: 20px;
 
   a {
     color: $color-text;
@@ -717,88 +717,7 @@ li {
     flex-grow: 1;
   }
 
-  .searchbar {
-    display: flex;
-    flex-direction: row;
-    font-size: 0.875rem;
-    flex-grow: 2;
-    margin: 0 5%;
-
-    &__input {
-      position: relative;
-
-      .autocomplete-results {
-        z-index: 10;
-        background-color: $color-white;
-        position: absolute;
-        border: 1px solid $palette-gray-10;
-        width: 100%;
-
-        li {
-          cursor: pointer;
-          padding: 5px 10px;
-
-          &.active,
-          &:hover {
-            color: $color-primary;
-          }
-        }
-      }
-    }
-
-
-    input {
-      padding: 10px 20px;
-      font-size: 1rem;
-      margin-right: -1px;
-      flex-grow: 2;
-    }
-
-    &__select {
-      font-size: 0.875rem;
-      padding-left: 10px;
-      width: 150px;
-      border: 1px solid $palette-gray-50;
-      position: relative;
-      background: $color-white;
-
-      span {
-        position: absolute;
-        top: 10px;
-        max-width: 100px;
-      }
-
-      select {
-        opacity: 0;
-        width: 100%;
-        height: 100%;
-      }
-
-      &::after {
-        content: '';
-        position: absolute;
-        border-style: solid;
-        border-color: $palette-gray-70;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-        width: 9px;
-        height: 9px;
-        right: 10px;
-        top: 13px;
-      }
-    }
-
-    button {
-      background: transparent;
-      border: 1px solid $palette-gray-50;
-      padding: 0 15px;
-      font-size: 1rem;
-      margin-left: -1px;
-    }
-  }
-
   .menu {
-    flex-grow: 1;
     text-align: right;
     position: relative;
 
@@ -815,21 +734,35 @@ li {
         right: 10px;
         top: 5px;
       }
+
+      &--unauth {
+        &::after {
+          display: none;
+        }
+      }
     }
 
-    button {
+    .dropdown-toggle {
       border: none;
       background: transparent;
       padding-right: 30px;
       position: relative;
       text-align: right;
+      display: block;
+      cursor: pointer;
+
+      &::after {
+        display: none;
+      }
+
     }
 
     &__hamburger {
       display: none;
       position: absolute;
-      top: 3px;
+      top: 17px;
       right: 0;
+      cursor: pointer;
 
       span {
         width: 26px;
@@ -844,21 +777,153 @@ li {
     }
 
     .dropdown-menu {
-      padding: 15px;
-      width: 82%;
+      // need to overwrite bootstrap > !important
+      border-top: 2px solid $color-secondary;
+      padding: 0;
+      width: 100%;
+      transform: none !important;
+      left: 0;
+      top: 28px !important;
+      box-shadow: $box-shadow-default;
 
-      li {
-        margin-bottom: 10px;
+      a {
+        padding: 10px 15px;
+        display: block;
+        font-size: 1rem;
+
+        &:hover,
+        &:active {
+          color: $color-link;
+          background: transparent;
+        }
       }
     }
 
-    .dropdown-toggle {
-      &::after {
-        display: none;
-      }
-    }
 
   }
 }
 
+.searchbar {
+  display: flex;
+  flex-direction: row;
+  font-size: 0.875rem;
+  flex-grow: 2;
+  margin: 0 5%;
+
+
+  &__input {
+    position: relative;
+    width: 100%;
+
+    .autocomplete-results {
+      z-index: 10;
+      background-color: $color-white;
+      position: absolute;
+      border: 1px solid $palette-gray-10;
+      width: 100%;
+      padding: 5px 10px;
+
+      .label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: $palette-gray-50;
+        margin-left: 0;
+        margin-bottom: 0;
+        padding: 0;
+
+        &:hover {
+          cursor: unset;
+          color: $palette-gray-50;
+        }
+      }
+
+      li {
+        cursor: pointer;
+        padding: 2px 10px;
+        margin-left: 10px;
+
+        span {
+          color: $palette-gray-50;
+        }
+
+        &.active,
+        &:hover {
+          color: $color-primary;
+          background: transparent;
+        }
+      }
+    }
+  }
+
+  .search-clear {
+    right: 10px;
+    top: 11px;
+    z-index: 99;
+    color: $color-text;
+    position: absolute;
+  }
+
+  input {
+    padding: 10px;
+    font-size: 1rem;
+    margin-right: -1px;
+    width: 100%;
+    border-radius: $border-radius-default 0 0 $border-radius-default;
+    position: relative;
+    z-index: 20;
+    font-weight: 300;
+  }
+
+  &__select {
+    font-size: 0.875rem;
+    padding-left: 10px;
+    width: 150px;
+    border: 1px solid $palette-gray-50;
+    position: relative;
+    background: $color-white;
+    margin-left: -1px;
+
+    span {
+      position: absolute;
+      top: 10px;
+      max-width: 68%;
+      text-overflow: ellipsis;
+      height: 20px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    select {
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      border-style: solid;
+      border-color: $palette-gray-70;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      width: 9px;
+      height: 9px;
+      right: 10px;
+      top: 13px;
+      z-index: 1;
+    }
+  }
+
+  button {
+    background: transparent;
+    border: 1px solid $palette-gray-50;
+    padding: 0 15px;
+    font-size: 1rem;
+    margin-left: -1px;
+  }
+}
+
 @import 'ref_mobile';
+
