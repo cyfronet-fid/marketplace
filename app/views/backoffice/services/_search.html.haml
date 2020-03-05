@@ -12,7 +12,7 @@
                                        "data-toggle": "dropdown"
       = hidden_field_tag "service_id", nil, "data-target": "autocomplete.hidden"
       = hidden_field_tag "sort", "_score"
-
+      = hidden_field_tag "anchor", nil, "data-target": "autocomplete.anchor"
       .input-group-append
         %button#query-submit.input-group-text.bg-white
           %i.fas.fa-search
