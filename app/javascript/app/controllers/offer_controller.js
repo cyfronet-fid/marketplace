@@ -1,23 +1,20 @@
 import {Controller} from 'stimulus'
 
 export default class extends Controller {
-  static targets = ["parameters", "webpage", "offerType"];
+  static targets = ["parameters", "webpage", "offerType", "attributes"];
 
   initialize() {
     this.showWebpage();
   }
 
-  addField(event) {
-    event.preventDefault();
-    var child = document.createElement("textarea")
+  addAttribute(event) {
+    const frag = document.createRange()
+      .createContextualFragment(event.target.dataset.template);
+    this.attributesTarget.appendChild(frag.firstChild);
+  }
 
-    child.setAttribute("class", "form-control json")
-    child.setAttribute("name", "offer[parameters_as_string][]")
-    child.id = "offer_parameters_as_string_"+(this.parametersTarget.children.length-1)
-    child.setAttribute("type", "text")
-    child.setAttribute("rows", 10)
-
-    this.parametersTarget.appendChild(child)
+  removeAttribute(event) {
+    event.target.closest(".card").remove();
   }
 
   showWebpage(event){
