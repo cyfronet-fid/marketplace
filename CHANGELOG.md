@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Version import (@martaswiatkowska)
+- Service comparison feature (@goreck888)
 
 ### Changed
 - DesignSystem home page implementation(@abacz, @jarekzet)

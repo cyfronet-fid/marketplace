@@ -95,6 +95,15 @@ h1 {
   }
 }
 
+.comparison-bar {
+  z-index: 98 !important;
+
+}
+
+.title-row {
+  width: 300px;
+}
+
 .report-link {
   position: fixed;
   right: 0%;
@@ -103,5 +112,6 @@ h1 {
   padding: 0.5em;
   background-color: $palette-solid-30;
   font-size: 0.8em;
+  z-index: 99 !important;
 }
 

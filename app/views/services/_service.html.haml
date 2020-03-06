@@ -1,4 +1,10 @@
 = render "service_details", service: service, highlights: highlights[service.id],
-  service_offers: offers[service.id] do
+  service_offers: offers[service.id], comparison_enabled: comparison_enabled do
   = link_to highlighted_for(:title, service, highlights[service.id]),
     service_path(service, category.present? ? { fromc: category.slug } : nil)
+  - content_for :checkbox do
+    %p.mb-3
+      = check_box_tag "comparison", service.slug, checked?(service.slug), id: "comparison-#{service.id}",
+              disabled: !checked?(service.slug) && comparison_enabled,
+              data: { "target": "comparison.checkbox", "action": "click->comparison#update" }
+      %label Add to compare
