@@ -2,11 +2,21 @@
 
 class Attribute
   extend ActiveModel::Naming
+  include ActiveModel::Conversion
   include ActiveModel::Validations
 
   attr_accessor :id, :label, :description, :type, :value_type, :unit, :config, :value
 
   validate :value_validity
+
+  #TODO we should have some validation allowed fields here
+  def initialize(attributes = {})
+    attributes.each { |name, value| send("#{name}=", value) }
+  end
+
+  def persisted?
+    false
+  end
 
   def value_validity
     unless value_valid?
