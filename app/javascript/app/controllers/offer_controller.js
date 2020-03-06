@@ -5,12 +5,19 @@ export default class extends Controller {
 
   initialize() {
     this.showWebpage();
+    this.indexCounter = 0;
   }
 
   addAttribute(event) {
-    const frag = document.createRange()
-      .createContextualFragment(event.target.dataset.template);
+    const template = event.target.dataset.template
+      .replace(/js_template_id/g, this.generateId());
+    const frag = document.createRange().createContextualFragment(template);
+
     this.attributesTarget.appendChild(frag.firstChild);
+  }
+
+  generateId() {
+    return new Date().getTime() + this.indexCounter++;
   }
 
   removeAttribute(event) {
