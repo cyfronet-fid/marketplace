@@ -1,1 +1,12 @@
-Range
+= f.input :minimum, as: :integer do
+  .row
+    .input-group.col
+      = f.input_field :minimum, class: "form-control"
+    .input-group.col
+      = f.input :exclusiveMinimum, as: :boolean
+= f.input :maximum, as: :integer do
+  .row
+    .input-group.col
+      = f.input_field :maximum, class: "form-control"
+    .input-group.col
+      = f.input :exclusiveMaximum, as: :boolean

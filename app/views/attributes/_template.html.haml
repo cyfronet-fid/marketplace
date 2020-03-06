@@ -12,6 +12,5 @@
     .card-text
       = form.simple_fields_for :attributes, attribute, index: attribute.id do |f|
         = f.input :label
-        = f.input :description
-        = render "attributes/template/#{attribute.type.underscore}",
-          form: form, attribute: attribute
+        = f.input :description, as: :text
+        = render "attributes/template/#{attribute.type.underscore}", f: f
