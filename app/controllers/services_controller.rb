@@ -14,6 +14,8 @@ class ServicesController < ApplicationController
     end
     @services, @offers = search(scope)
     @highlights = highlights(@services)
+    @compare_services = Service.where(slug: session[:comparison])
+    @comparison_enabled = (session[:comparison]&.size || 0) > 2
   end
 
   def show

@@ -1,3 +1,4 @@
+
 .container
   .row
     .col-lg-3.mb-5
@@ -15,5 +16,7 @@
       = render partial: "service", collection: services,
         locals: { highlights: highlights,
                   category: category,
-                  offers: offers }
+                  offers: offers,
+                  comparison_enabled: comparison_enabled,
+                  remote: true }
   = render "services/paginate", services: services

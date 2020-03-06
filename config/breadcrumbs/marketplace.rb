@@ -16,7 +16,9 @@ end
 
 crumb :service do |service|
   link service.title, service_path(service)
-  if params[:fromc] && category = service.categories.find_by(slug: params[:fromc])
+  if params[:comp_link]
+    parent :comparison
+  elsif params[:fromc] && category = service.categories.find_by(slug: params[:fromc])
     parent :category, category
   elsif service.main_category
     parent :category, service.main_category
@@ -29,6 +31,15 @@ crumb :category do |category|
   link category.name, category_services_path(category, params: (session[:query].blank? ? {} : session[:query]))
   if category.parent
     parent category.parent
+  else
+    parent :services
+  end
+end
+
+crumb :comparison do
+  link "Comparison", comparisons_path
+  if params[:fromc] && category = Category.find_by(slug: params[:fromc])
+    parent :category, category
   else
     parent :services
   end

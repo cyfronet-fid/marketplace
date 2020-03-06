@@ -17,6 +17,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     end
     @services, @offers= search(scope)
     @highlights = highlights(@services)
+    @comparison_enabled = false
   end
 
   def show
