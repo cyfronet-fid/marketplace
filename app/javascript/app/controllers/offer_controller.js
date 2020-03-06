@@ -14,7 +14,25 @@ export default class extends Controller {
   }
 
   removeAttribute(event) {
-    event.target.closest(".card").remove();
+    event.target.closest(".parameter-form").remove();
+  }
+
+  up(event) {
+    const current = event.target.closest(".parameter-form");
+    const previous = current.previousSibling;
+
+    if (previous != undefined) {
+      current.parentNode.insertBefore(current, previous);
+    }
+  }
+
+  down(event) {
+    const current = event.target.closest(".parameter-form");
+    const next = current.nextSibling;
+
+    if (next != undefined) {
+      current.parentNode.insertBefore(next, current);
+    }
   }
 
   showWebpage(event){

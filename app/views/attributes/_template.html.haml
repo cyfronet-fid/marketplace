@@ -1,0 +1,14 @@
+.card.parameter-form.mb-2
+  .card-body
+    .card-title
+      = t(".#{attribute.type.underscore}.title")
+      .float-right
+        %a{ "data-action": "offer#up" }
+          %i.fas.fa-angle-up
+        %a.mr-3{ "data-action": "offer#down" }
+          %i.fas.fa-angle-down
+        %a{ "data-action": "offer#removeAttribute" }
+          %i.fas.fa-times
+    .card-text
+      = render "attributes/template/#{attribute.type.underscore}",
+        form: form, attribute: attribute
