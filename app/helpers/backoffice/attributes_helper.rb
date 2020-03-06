@@ -16,7 +16,8 @@ module Backoffice::AttributesHelper
   def attributes_menu_items(form)
     capture do
       attributes.map do |attr|
-        concat content_tag(:a, attr::TYPE, class: "dropdown-item",
+        concat content_tag(:a, I18n.t("attributes.template.#{attr::TYPE.underscore}.add"),
+                           class: "dropdown-item",
                            "data-template": attribute_template(attr, form),
                            "data-action": "click->offer#addAttribute")
       end
@@ -24,8 +25,8 @@ module Backoffice::AttributesHelper
   end
 
   def attribute_template(attr, form)
-    render(partial: "attributes/template/#{attr::TYPE.underscore}",
-           locals: { form: form, attribute: attr }).html_safe
+    render(partial: "attributes/template",
+           locals: { form: form, attribute: attr.new }).html_safe
   end
 
   def attributes
