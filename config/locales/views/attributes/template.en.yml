@@ -1,0 +1,21 @@
+en:
+  attributes:
+    template:
+      input:
+        title: Input parameter
+        add: Add new input parameter
+      select:
+        title: Select parameter
+        add: Add new select parameter
+      multiselect:
+        title: Multiselect parameter
+        add: Add new multiselect parameter
+      range:
+        title: Range parameter
+        add: Add new range parameter
+      date:
+        title: Date parameter
+        add: Add new date parameter
+      quantity_price:
+        title: Quantity price parameter
+        add: Add new quenatity price parameter
