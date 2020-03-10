@@ -12,5 +12,8 @@
         = render "services/active_filters", category: category, active_filters: active_filters
         = render "services/pagination", sort_options: sort_options, services: services
 
-      = render services, highlights: highlights, category: category
+      = render partial: "service", collection: services,
+        locals: { highlights: highlights,
+                  category: category,
+                  offers: offers }
   = render "services/paginate", services: services

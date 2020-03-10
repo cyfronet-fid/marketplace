@@ -12,7 +12,7 @@ class ServicesController < ApplicationController
       redirect_to service_path(Service.find(params["service_id"]),
                                anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?))
     end
-    @services = search(scope)
+    @services, @offers = search(scope)
     @highlights = highlights(@services)
   end
 

@@ -508,6 +508,7 @@ textarea:-ms-input-placeholder { /* IE 10+ */
     .service-logo {
       margin: 20px 0;
     }
+
   }
 }
 
@@ -2079,6 +2080,23 @@ label[data-multicheckbox].small {
     dd {
       font-weight: 500 !important;
 
+    }
+  }
+
+  .offers-box {
+    padding-top: 0.5em;
+    margin-top: 0.5em;
+    width: 100%;
+    border-top: 1px solid $palette-gray-10;
+
+    span {
+      color: $palette-gray-70;
+      font-size: $font-size-xs;
+      margin-bottom: 0.5em;
+    }
+
+    ul {
+      margin: 0;
     }
   }
 }
