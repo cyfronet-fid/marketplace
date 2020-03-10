@@ -6,7 +6,7 @@ RSpec.describe Service::Draft do
   it "draft service" do
     service = create(:service)
     offer = create(:offer, service: service)
-
+    service.reload
     described_class.new(service).call
 
     expect(service.reload).to be_draft
