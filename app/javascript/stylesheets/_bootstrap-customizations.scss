@@ -2093,6 +2093,11 @@ label[data-multicheckbox].small {
       color: $palette-gray-70;
       font-size: $font-size-xs;
       margin-bottom: 0.5em;
+
+      &:first-child {
+        text-transform: uppercase;
+        font-size: 0.7rem;
+      }
     }
 
     ul {

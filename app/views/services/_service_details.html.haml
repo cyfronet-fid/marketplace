@@ -9,7 +9,7 @@
           - if service_offers.size == 1
             The service has 1 offer that matches your search criteria
           - else
-            = "The service has #{service_offers.size} offers that match your search criteria".upcase
+            The service has #{service_offers.size} offers that match your search criteria
         = render "services/offers_box", service_offers: service_offers,
           service: service
   - if service.logo.attached?
