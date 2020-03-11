@@ -4,29 +4,23 @@ module Service::Autocomplete
   extend ActiveSupport::Concern
 
   def autocomplete
-    query = Service.search(params[:q],
-      fields: ["title"],
-      operator: "or",
-      match: :word_middle,
-      limit: 5,
-      load: false,
-      where: { id: scope.ids },
-      highlight: { tag: "<b>" }
-    )
+    query = Searchkick.search(params[:q],
+                           fields: ["name", "title"],
+                           operator: "or",
+                           match: :word_middle,
+                           limit: 5,
+                           load: false,
+                           where: { service_id: scope.ids },
+                           highlight: { multiple: true, tag: "<b>" },
+                           models: [Service, Offer],
+                           model_includes: { Service => [:offers], Offer => [:service] })
+
+    service_titles = Service.where(id: scope.ids).pluck(:id, :title).to_h
 
     if request.xhr?
-      generate_html(query)
+      render(template: "services/autocomplete/list",
+             locals: { results: query.with_highlights, service_titles: service_titles },
+             layout: false)
     end
   end
-
-  private
-    def generate_html(query)
-      html_results = query.with_highlights.map { |s, h| "<li class=\"dropdown-item\" role=\"option\" data-autocomplete-value=\"#{s[:id]}\">#{h[:title]}</li>" }.join
-
-      respond_to do |format|
-        format.html do
-          render status: :ok, html: html_results.html_safe
-        end
-      end
-    end
 end

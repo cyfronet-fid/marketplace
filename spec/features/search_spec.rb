@@ -65,4 +65,42 @@ RSpec.feature "Service searching in top bar", js: true do
 
     expect(page).to have_selector("li.dropdown-item[role='option']:not([style*=\"display: none\"]", count: 3)
   end
+
+  scenario "After starting searching autocomplete not show draft offers", js: true, search: true do
+    service = create(:service, title: "DDDD Something 1")
+    create(:offer, name: "DDDD Something offer 1", service: service, status: :draft)
+    create(:offer, name: "DDDD Something offer 2", service: service, status: :draft)
+    create(:service, title: "DDDD Something 2")
+    create(:service, title: "DDDD Something 3")
+    Offer.reindex
+
+    visit services_path
+
+    fill_in "q", with: "DDDD Something"
+
+    expect(page).to have_text("DDDD Something 1")
+    expect(page).to have_text("DDDD Something 2")
+    expect(page).to have_text("DDDD Something 3")
+    expect(page).to_not have_text("DDDD Something offer 1")
+    expect(page).to_not have_text("DDDD Something offer 2")
+  end
+
+  scenario "After starting searching autocomplete are shown with published offers", js: true, search: true do
+    service = create(:service, title: "DDDD Something 1")
+    create(:offer, name: "DDDD Something offer 1", service: service)
+    create(:offer, name: "DDDD Something offer 2", service: service)
+    create(:service, title: "DDDD Something 2")
+    create(:service, title: "DDDD Something 3")
+    Offer.reindex
+
+    visit services_path
+
+    fill_in "q", with: "DDDD Something"
+
+    expect(page).to have_text("DDDD Something 1")
+    expect(page).to have_text("DDDD Something 2")
+    expect(page).to have_text("DDDD Something 3")
+    expect(page).to have_text("DDDD Something offer 1")
+    expect(page).to have_text("DDDD Something offer 2")
+  end
 end

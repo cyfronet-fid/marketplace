@@ -12,7 +12,8 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def index
     if params["service_id"].present?
-      redirect_to [:backoffice, Service.find(params["service_id"])]
+      redirect_to backoffice_service_path(Service.find(params["service_id"]),
+                                          anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?))
     end
     @services = search(scope)
     @highlights = highlights(@services)
