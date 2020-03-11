@@ -11,14 +11,10 @@ class Lead < ApplicationRecord
   validates :header, presence: true
   validates :body, presence: true
   validates :picture, blob: { content_type: :image }
-  validates :picture, presence: true, if: :learn_more?
+  validates :picture, presence: true
   validate :picture_variable?, on: [:create, :update]
 
   private
-    def learn_more?
-      template == LeadSection.templates["learn_more"]
-    end
-
     def picture_variable?
       picture.variable? if picture.present?
     end
