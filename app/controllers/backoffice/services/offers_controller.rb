@@ -3,6 +3,7 @@
 class Backoffice::Services::OffersController < Backoffice::ApplicationController
   before_action :find_service
   before_action :find_offer_and_authorize, only: [:destroy, :edit, :update]
+  after_action :reindex_offer, only: [:create, :update, :destroy]
 
   def new
     @documentation_url = documentation_url
@@ -45,6 +46,12 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   end
 
   private
+    def reindex_offer
+      if @service.offers.size == 2
+        @service.offers.reindex
+      end
+    end
+
     def offer_template
       temp = without_blank_parameters(permitted_attributes(Offer))
       Offer.new(temp.merge(service: @service, status: :draft))

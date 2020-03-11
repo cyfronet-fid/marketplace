@@ -11,6 +11,7 @@ class Service < ApplicationRecord
   # fields are mapped to elasticsearch
   def search_data
     {
+      service_id: id,
       title: title,
       tagline: tagline,
       description: description,

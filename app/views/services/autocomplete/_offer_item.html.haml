@@ -1,0 +1,6 @@
+%li.dropdown-item{ "role": "option",
+  "data-autocomplete-value": "#{offer.service_id}",
+  "data-autocomplete-anchor": "#{offer.id}" }
+  %span= service_titles[offer.service_id]
+  >
+  = highlights[:name].html_safe

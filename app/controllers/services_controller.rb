@@ -9,7 +9,8 @@ class ServicesController < ApplicationController
 
   def index
     if params["service_id"].present?
-      redirect_to Service.find(params["service_id"])
+      redirect_to service_path(Service.find(params["service_id"]),
+                               anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?))
     end
     @services = search(scope)
     @highlights = highlights(@services)
