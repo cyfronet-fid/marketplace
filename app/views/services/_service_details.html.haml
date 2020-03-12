@@ -1,13 +1,13 @@
 .media.mb-3.service-box.shadow-sm
   .media-body.pt-4.pb-2
-    .pl-4.pr-4
+    .pl-4.pr-4.mb-3
       %h2.mb-3= yield
       %p.mb-3= highlighted_for(:tagline, service, highlights)
       = render "services/categorization", service: service
     - if service_offers && service_offers.any?
-      .offers-box.clearfix.mt-3
+      .offers-box.clearfix
         .pl-4.pr-4
-          %span.x-small
+          %span.x-small.text-uppercase
             - if service_offers.size == 1
               The service has 1 offer that matches your search criteria
             - else
