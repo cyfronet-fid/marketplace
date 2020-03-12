@@ -5,7 +5,8 @@ class Service < ApplicationRecord
   # ELASTICSEARCH
   # scope :search_import working with should_indexe?
   # and define which services are indexed in elasticsearch
-  searchkick word_middle: [:title, :tagline, :description], highlight: [:title, :tagline]
+  searchkick word_middle: [:title, :tagline, :description, :offer_names],
+    highlight: [:title, :tagline]
 
   # search_data are definition whitch
   # fields are mapped to elasticsearch
@@ -23,7 +24,9 @@ class Service < ApplicationRecord
       platforms: platforms.map(&:id),
       target_groups: target_groups.map(&:id),
       tags: tag_list,
-      source: upstream&.source_type
+      source: upstream&.source_type,
+      offers: offers.ids,
+      offer_names:  offers.map(&:name)
     }
   end
 

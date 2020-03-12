@@ -218,6 +218,7 @@ RSpec.feature "Services in backoffice" do
       }.to change { service.offers.count }.by(1)
 
       expect(page).to have_content("test offer")
+      service.reload
       expect(service.offers.last.name).to eq("new offer 1")
     end
 
@@ -229,6 +230,7 @@ RSpec.feature "Services in backoffice" do
 
       expect(page).to have_content("The service is published but has no published offers. " \
                                    "Publish one offer to make possible for a user to Access the service.")
+      service.reload
       expect(service.offers).to eq([offer])
     end
 

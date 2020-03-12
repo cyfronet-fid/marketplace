@@ -48,8 +48,8 @@ module ServiceHelper
     service.providers.map { |target| target.name }
   end
 
-  def highlighted_for(field, service, highlights)
-    highlights&.dig(service.id, field)&.html_safe || service.send(field)
+  def highlighted_for(field, model, highlights)
+    highlights&.dig(field)&.html_safe || model.send(field)
   end
 
   def service_logo(service)

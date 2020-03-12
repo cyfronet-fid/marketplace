@@ -190,7 +190,7 @@ describe Import::Eic do
       eic = make_and_stub_eic(ids: ["phenomenal.phenomenal"], log: true)
 
       expect { eic.call }.to output(/PROCESSED: 3, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(0).and change { Offer.count }.by(1)
-
+      service.reload
       offer = service.offers.first
 
       expect(offer.name).to eq("Offer")
