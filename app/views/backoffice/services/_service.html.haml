@@ -1,8 +1,8 @@
 = render "services/service_details", service: service,
-          highlights: highlights,
+          highlights: highlights[service.id],
           service_offers: offers[service.id] do
   = service_status(service)
   = link_to [:backoffice, service] do
-    = highlighted_for(:title, service, highlights)
+    = highlighted_for(:title, service, highlights[service.id])
   %br
   = offers_status(service)
