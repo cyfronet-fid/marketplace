@@ -1,0 +1,5 @@
+%ul
+  - service_offers.each do |offer, h|
+    %li
+      %span= link_to highlighted_for(:name, offer, h),
+        service_path(service, anchor: "offer-#{ offer.id }")

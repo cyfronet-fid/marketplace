@@ -1,3 +1,4 @@
-= render "service_details", service: service, highlights: highlights do
-  = link_to highlighted_for(:title, service, highlights),
+= render "service_details", service: service, highlights: highlights[service.id],
+  service_offers: offers[service.id] do
+  = link_to highlighted_for(:title, service, highlights[service.id]),
     service_path(service, category.present? ? { fromc: category.slug } : nil)

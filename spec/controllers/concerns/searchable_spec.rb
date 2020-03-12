@@ -15,6 +15,9 @@ RSpec.describe ApplicationController, type: :controller do
                            categories: [categories.first], tag_list: "tag1, tag2") }
   let!(:service2) { create(:service, title: "very different title", providers: [providers.first],
                            categories: categories, tag_list: "tag2") }
+  let!(:offer1) { create(:offer, service: service1, name: "Offer 1") }
+  let!(:offer2) { create(:offer, service: service1, name: "Offer 2") }
+  let!(:offer3) { create(:offer, service: service1, name: "Offer 3") }
 
   let!(:params) { ActionController::Parameters.new }
   let!(:provider_filter) { Filter::Provider.new(params: params) }
@@ -26,22 +29,38 @@ RSpec.describe ApplicationController, type: :controller do
   end
 
   context "#search " do
+    before(:each) do
+      Offer.reindex
+    end
+
     context "without filters set" do
       let!(:params) { ActionController::Parameters.new }
       it "returns correct service list" do
-        results = controller.search(Service.all, filters).results
-        expect(results.size).to eq(2)
-        expect(results).to contain_exactly(service1, service2)
+        results = controller.search(Service.all, filters)
+        offers = results.second
+        services = results.first.results
+
+        expect(services.size).to eq(2)
+        expect(services).to contain_exactly(service1, service2)
+
+        expect(offers.size).to eq(1)
+        expect(offers[service1.id].size).to eq(3)
       end
     end
 
     context "with filters set" do
       let!(:params) { ActionController::Parameters.new("providers" => providers.second.id) }
       it "returns correct service list" do
-        results = controller.search(Service.all, filters).results
-        expect(results.size).to eq(1)
-        expect(results).to include(service1)
-        expect(results).not_to include(service2)
+        results = controller.search(Service.all, filters)
+        offers = results.second
+        services = results.first.results
+
+        expect(services.size).to eq(1)
+        expect(services).to include(service1)
+        expect(services).not_to include(service2)
+
+        expect(offers.size).to eq(1)
+        expect(offers[service1.id].size).to eq(3)
       end
     end
 
@@ -49,8 +68,12 @@ RSpec.describe ApplicationController, type: :controller do
       let!(:params) { ActionController::Parameters.new("providers" => providers.second.id,
                                                        "category_id" => categories.second.id) }
       it "returns empty service list when category contradicts provider filter" do
-        results = controller.search(Service.all, filters).results
-        expect(results.size).to eq(0)
+        results = controller.search(Service.all, filters)
+        offers = results.second
+        services = results.first.results
+
+        expect(services.size).to eq(0)
+        expect(offers.size).to eq(0)
       end
     end
 
@@ -58,7 +81,7 @@ RSpec.describe ApplicationController, type: :controller do
       let!(:params) { ActionController::Parameters.new("providers" => providers.first.id,
                                                        "category_id" => categories.second.id) }
       it "returns correct service list" do
-        results = controller.search(Service.all, filters).results
+        results = controller.search(Service.all, filters).first.results
         expect(results.size).to eq(1)
         expect(results).to include(service2)
         expect(results).not_to include(service1)
@@ -68,7 +91,7 @@ RSpec.describe ApplicationController, type: :controller do
     context "with query" do
       let!(:params) { ActionController::Parameters.new("q" => "duper super") }
       it "returns correct service list" do
-        results = controller.search(Service.all, filters).results
+        results = controller.search(Service.all, filters).first.results
         expect(results.size).to eq(1)
         expect(results).to include(service1)
         expect(results).not_to include(service2)
@@ -165,7 +188,7 @@ RSpec.describe ApplicationController, type: :controller do
     let!(:filters) { [filter_class.new(params: params)] }
 
     def basic_test
-      results = controller.search(Service.all, filters).results
+      results = controller.search(Service.all, filters).first.results
       expect(results.size).to eq(2)
       expect(results).to include(service1)
       expect(results).to include(service2)

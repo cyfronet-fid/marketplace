@@ -15,13 +15,22 @@ module Service::Searchable
   end
 
   def search(scope, filters = all_filters)
-    Service.search(query, common_params.
-        merge(where: filter_constr(filters, scope_constr(scope, category_constr)),
-             page: params[:page],
-             per_page: per_page,
-             order: ordering,
-             highlight: { fields: [:title, :tagline], tag: "<mark>" },
-             scope_results: ->(r) { r.includes(:research_areas, :providers, :target_groups).with_attached_logo }))
+    services = Service.search(query, common_params.
+                              merge(where: filter_constr(filters, scope_constr(scope, category_constr)),
+                                    page: params[:page],
+                                    per_page: per_page,
+                                    order: ordering,
+                                    highlight: { tag: "<mark>" },
+                                    scope_results: ->(r) { r.includes(:research_areas, :providers, :target_groups, :offers).with_attached_logo }))
+    offers = Offer.search(query,
+                          where: { service_id: services.results.map(&:id) },
+                          load: false,
+                          fields: [:name],
+                          operator: :or,
+                          match: :word_middle,
+                          highlight: { tag: "<mark>" })
+
+    [services, service_offers(services, offers)]
   end
 
   def search_for_filters(scope, filters, current_filter)
@@ -50,6 +59,10 @@ module Service::Searchable
   end
 
   private
+    def service_offers(services, offers)
+      offers.with_highlights.group_by { |o, _| o.service_id }.to_h
+    end
+
     def query_present?
       params[:q].present?
     end
@@ -60,7 +73,7 @@ module Service::Searchable
 
     def common_params
       {
-          fields: [ "title^7", "tagline^3", "description"],
+          fields: [ "title^7", "tagline^3", "description", "offer_names"],
           operator: "or",
           match: :word_middle
       }
