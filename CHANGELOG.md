@@ -9,6 +9,20 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [2.8.0] 2020-03-12
+
+### Added
 - Automatic offer creating by services import (@goreck888)
 - Information about offers statuses in the backoffice (@goreck888)
 - Offers to autocomplete (@martaswiatkowska)
@@ -19,10 +33,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Rack and linked gems update (@goreck888)
 - Use category user used to enter the service in breadcrumbs (@mkasztelnik)
 - Portal link description from `Info` to `Portal Home` (@goreck888)
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Keep filters and query by using breadcrumbs to go back to the services view (@goreck888)
