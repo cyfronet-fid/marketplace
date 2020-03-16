@@ -65,6 +65,7 @@ RSpec.feature "Services in backoffice" do
       # fill_in "service_contact_emails_1", with: "person2@test.ok"
       select category.name, from: "Categories"
       select user.to_s, from: "Owners"
+      fill_in "Version", with: "2.2.2"
 
       fill_in "service_sources_attributes_0_eid", with: "12345a"
 
@@ -87,6 +88,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("Publish")
       expect(page).to have_content("eic: 12345a")
       expect(page).to have_content("Alpha (min. TRL 5)")
+      expect(page).to have_content("2.2.2")
     end
 
     scenario "I can see warning about no offers" do
