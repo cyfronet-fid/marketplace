@@ -28,7 +28,7 @@ RSpec.describe Backoffice::ServicePolicy do
                                                     :activate_message, :logo,
                                                     [contact_emails: []], [research_area_ids: []],
                                                     [platform_ids: []], :tag_list, [category_ids: []],
-                                                    [owner_ids: []], :status, :upstream_id,
+                                                    [owner_ids: []], :status, :upstream_id, :version,
                                                     sources_attributes: [:id, :source_type, :eid, :_destroy]
                                                 ])
     end

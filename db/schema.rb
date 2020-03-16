@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_28_142804) do
+ActiveRecord::Schema.define(version: 2020_03_12_144537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -357,6 +357,7 @@ ActiveRecord::Schema.define(version: 2020_01_28_142804) do
     t.string "order_target", default: "", null: false
     t.string "helpdesk_email", default: ""
     t.integer "project_items_count", default: 0, null: false
+    t.string "version"
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["title"], name: "index_services_on_title"
   end

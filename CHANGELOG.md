@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Version import (@martaswiatkowska)
 
 ### Changed
 - DesignSystem home page implementation(@abacz, @jarekzet)

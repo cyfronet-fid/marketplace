@@ -1,0 +1,4 @@
+- fields.each do |field|
+  - if service.send(field).present?
+    %li.list-group-item
+      %span= service.send(field)
