@@ -3,8 +3,10 @@
   = yield :item_bar
 .learn-more.col-sm-12.col-md-4
   = link_to card.url, class: "body" do
-    .title= card.header
-    .description= card.body
+    .title{ "data-toggle": "tooltip", title: (card.header.size > 20 ? card.header : nil) }
+      = card.header.truncate(20)
+    .description{ "data-toggle": "tooltip", title: (card.body.size > 140 ? card.body : nil) }
+      = card.body.truncate(140)
     .icon
-      = image_tag card&.picture&.variant(resize: "86x111")
+      = image_tag card.picture.variant(resize: "86x111")
 
