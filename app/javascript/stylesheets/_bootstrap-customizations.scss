@@ -17,7 +17,9 @@ header {
   z-index: 10;
 }
 
-
+.navbar {
+  z-index: 2;
+}
 
 .container {
   max-width: 1180px;
@@ -306,10 +308,6 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   }
 }
 
-.navbar-brand {
-  z-index: 10;
-}
-
 .nav-tabs {
   background-color: $palette-gray-5;
   border: none;
@@ -366,14 +364,21 @@ textarea:-ms-input-placeholder { /* IE 10+ */
 .tab-content {
 
   ul {
-    list-style-position: outside;
-    list-style: disc;
     padding-left: 20px;
+    margin-bottom: 1rem;
 
     li {
+      list-style-type: disc;
+
       span {
         color: $body-color;
       }
+    }
+  }
+
+  ol {
+    li {
+      list-style-type: decimal;
     }
   }
 }
@@ -515,7 +520,6 @@ textarea:-ms-input-placeholder { /* IE 10+ */
     .service-logo {
       margin: 20px 0;
     }
-
   }
 }
 
@@ -1398,18 +1402,7 @@ h5 {
 }
 
 .main {
-  //background: url('../../assets/images/home-bg.png') no-repeat;
   background-position: 50% -120px;
-}
-
-.main-elements {
-  //background: url('../../assets/images/home-bg-elements.png') no-repeat;
-  background-position: top center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 302px;
 }
 
 .box {

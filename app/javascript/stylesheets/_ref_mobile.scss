@@ -144,7 +144,6 @@
 @media (max-width: 576px) {
 
   .header {
-    padding: 10px 10px 0;
 
     .logo {
       max-width: 190px;
@@ -162,6 +161,16 @@
         min-width: 115px;
         width: auto;
       }
+    }
+
+    .menu__hamburger {
+      top: 9px;
+    }
+  } // end Header
+
+  .overlay {
+    .closebtn {
+      top: 37px;
     }
   }
 
