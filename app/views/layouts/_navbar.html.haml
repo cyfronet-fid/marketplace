@@ -1,7 +1,7 @@
 = render "layouts/sections"
 
 #mynav.overlay
-  %a.closebtn{ "href": "javascript:void(0)", "onclick": "closeNav()" } &times;
+  %a.closebtn{ "href": "javascript:void(0)", "onclick": "closeNav()" }
   .overlay-content
     .mobile-links
       %ul
@@ -62,7 +62,7 @@
         .dropdown-menu
           %ul
             %li
-              %a.simple-item{ href: "/projects" } My projects
+              %a.dropdown-item{ href: "/projects" } My projects
             %li
               %a.dropdown-item{ href: "/profile" } Profile
 

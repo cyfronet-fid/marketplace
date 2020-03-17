@@ -33,7 +33,6 @@ li {
   padding: 0;
 }
 
-
 /* CONTENT BOX */
 .contentbox {
   padding-top: 3rem;
@@ -257,13 +256,13 @@ li {
 .learn-more {
   border: none;
   background: url('../../assets/images/home-card-bg.png') no-repeat right bottom;
+  min-height: 145px;
   border-radius: 2px;
   position: relative;
   display: flex;
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  min-height: 145px;
 
   .body {
     padding: 1rem 45% 1rem 0;

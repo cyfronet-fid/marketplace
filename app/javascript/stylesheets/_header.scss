@@ -1,37 +1,4 @@
-//header {
-//  .input-group {
-//    &:focus {
-//      box-shadow: 0 0 3px $secondary;
-//      border-radius: 0.2rem;
-//    }
-//
-//    &:hover {
-//      box-shadow: 0 0 3px $secondary;
-//    }
-//  }
-//}
-
 .navbar {
-  //&.navbar-expand-lg {
-  //  .navbar-nav {
-  //    .nav-link {
-  //      font-size: $font-size-navbar;
-  //      font-weight: $font-weight-normal;
-  //      color: $nav-color;
-  //
-  //      &:hover {
-  //        border: none;
-  //      }
-  //    }
-  //
-  //    .active {
-  //      background-color: $white;
-  //      border-radius: 0.2rem;
-  //    }
-  //  }
-  //}
-
-
   .dropdown-menu {
     width: 100%;
     border: 1px solid $palette-gray-10;
@@ -142,7 +109,7 @@
 
 .overlay {
   /* Height & width depends on how you want to reveal the overlay (see JS below) */
-  height: 0%;
+  height: 0;
   width: 100%;
   position: fixed; /* Stay in place */
   z-index: 11; /* Sit on top */
@@ -159,12 +126,34 @@
 
   .closebtn {
     position: absolute;
-    top: 12px;
+    top: 47px;
     z-index: 10;
     color: $body-color;
-    right: 20px;
+    right: 30px;
     padding: 0;
     font-size: 45px;
+    display: block;
+    height: 33px;
+    width: 33px;
+    cursor: pointer;
+
+    &::before,
+    &::after {
+      position: absolute;
+      content: ' ';
+      height: 33px;
+      width: 3px;
+      background-color: $palette-solid-100;
+      right: 16px;
+    }
+
+    &::before {
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      transform: rotate(-45deg);
+    }
   }
 }
 
