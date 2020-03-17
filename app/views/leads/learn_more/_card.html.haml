@@ -1,7 +1,6 @@
-
+- if content_for(:item_bar)
+  = yield :item_bar
 .learn-more.col-sm-12.col-md-4
-  - if content_for(:item_bar)
-    = yield :item_bar
   = link_to card.url, class: "body" do
     .title{ "data-toggle": "tooltip", title: (card.header.size > 20 ? card.header : nil) }
       = card.header.truncate(20)
