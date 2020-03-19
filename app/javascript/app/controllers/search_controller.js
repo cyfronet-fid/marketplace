@@ -1,7 +1,7 @@
 import {Controller} from 'stimulus'
 
 export default class extends Controller {
-    static targets = ['categorySelect', 'form'];
+    static targets = ['categorySelect', 'form', 'selected'];
 
     connect() {
         this.SERVICES_URL = this.data.get("servicesPath");
@@ -21,6 +21,13 @@ export default class extends Controller {
         if(this.categorySelectTarget.value !== "")
             actionURL = `${this.CATEGORIES_URL}/${this.categorySelectTarget.value}`;
 
+        this.selectedTarget.innerHTML = this.getSelectedText();
         this.formTarget.setAttribute("action", actionURL);
+    }
+
+    getSelectedText() {
+        return this.categorySelectTarget
+          .options[this.categorySelectTarget.selectedIndex].text;
+
     }
 }

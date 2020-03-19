@@ -1,4 +1,4 @@
-#tab-anchor.home-tabs.container.p-0.mt-5{ "data-controller" => "home-page" }
+#tab-anchor.home-tabs.container{ "data-controller" => "home-page" }
   %ul.tabs
     %li.tab-link.current{ data: { "target" => "home-page.changeTab",
                   "action" => "click->home-page#changeTab", "tab" => "tab-1" },
@@ -24,4 +24,4 @@
           default_logo: "ico_default.png"
 
 .row.d-flex.justify-content-center.mt-4
-  = link_to "Browse all services", services_path, class: "btn btn-primary font-weight-bold mt-3"
+  = link_to "Browse all services", services_path, class: "button button--primary"

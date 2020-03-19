@@ -1,19 +1,16 @@
-.communities-wrapper
-  .h3.mt-2.mb-3= t(".#{key}.title")
-  - li_class = "col-lg-#{12 / (local_assigns[:cols] || 1)}"
-  %ul.row
-    - records.each do |record|
-      %li{ class: li_class }
-        = link_to record.name, services_path(key => record.to_param)
-  .row
-    - if remaining_count > 0
-      .col-12
-        - if local_assigns[:more_path]
-          = link_to more_path, class: "more-link d-block" do
-            %i.fas.fa-arrow-right
-            = t(".#{key}.more_html", count: remaining_count)
-        - else
-          %a.more-link.d-block
-            %i.fas.fa-arrow-right
-            = t(".#{key}.more_html", count: remaining_count)
+.title= t(".#{key}.title")
+%ul
+  - records.each do |record|
+    %li
+      = link_to record.name, services_path(key => record.to_param)
+
+- if remaining_count > 0
+  - if local_assigns[:more_path]
+    = link_to more_path, class: "more-link d-block" do
+      %i.fas.fa-arrow-right
+      = t(".#{key}.more_html", count: remaining_count)
+  - else
+    %a.more-link.d-block
+      %i.fas.fa-arrow-right
+      = t(".#{key}.more_html", count: remaining_count)
 

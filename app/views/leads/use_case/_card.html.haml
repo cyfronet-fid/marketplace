@@ -1,9 +1,13 @@
-.col-12.col-sm-6
-  .card.testimonial
-    - if content_for(:item_bar)
-      = yield :item_bar
-    .card-body
-      .card-author.font-weight-bold.mb-3= link_to card.header.truncate(60), card.url, "data-toggle": "tooltip",
-        title: (card.header.size > 60 ? card.header : nil)
-      .card-description{ "data-toggle": "tooltip", title: (card.body.size > 140 ? card.body : nil) }
-        = card.body.truncate(140)
+.col-12.col-sm-12.col-md-12.col-lg-6
+  - if content_for(:item_bar)
+    = yield :item_bar
+  .simple-intro
+    .icon
+      - if card.picture.attached?
+        = image_tag card.picture.variant(resize: "86x111")
+      - else
+        = image_tag "learn-more-box-default.png"
+    = link_to card.header.truncate(60), card.url, "data-toggle": "tooltip",
+        title: (card.header.size > 60 ? card.header : nil), class: "title"
+    .description{ "data-toggle": "tooltip", title: (card.body.size > 140 ? card.body : nil) }
+      = card.body.truncate(140)

@@ -20,19 +20,12 @@ RSpec.feature "Home" do
     let!(:service2) { create(:service, description: "published-service-2", status: :published) }
     let!(:service_draft) { create(:service, status: :draft) }
 
-    it "should not show not published service at carousel" do
+    it "should show only published service in Popular services section" do
       visit "/"
-      expect(page).to have_selector("div.card-title", text: service1.title)
-      expect(page).to have_selector("div.card-title", text: service2.title)
-      expect(page).not_to have_selector("div.card-title", text: service_draft.title)
-    end
-
-    it "should show appropriate descriptions for all services" do
-      visit "/"
-      popular = page.find(".home-title", text: "Popular services")
-      parent = popular.find(:xpath, "..")
-      descriptions = parent.all(".card-description")
-      expect(descriptions.map(&:text)).to match_array([service1, service2].map(&:description))
+      expect(page).to have_text "Popular services"
+      expect(page).to have_text(service1.title)
+      expect(page).to have_text(service2.title)
+      expect(page).not_to have_text(service_draft.title)
     end
   end
 

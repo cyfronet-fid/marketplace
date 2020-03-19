@@ -1,41 +1,4 @@
-header {
-  .input-group {
-    &:focus {
-      box-shadow: 0 0 3px $secondary;
-      border-radius: 0.2rem;
-    }
-
-    &:hover {
-      box-shadow: 0 0 3px $secondary;
-    }
-  }
-}
-
 .navbar {
-  &.navbar-expand-lg {
-    .navbar-nav {
-      .nav-link {
-        font-size: $font-size-navbar;
-        font-weight: $font-weight-normal;
-        color: $nav-color;
-
-        &:hover {
-          border: none;
-        }
-      }
-
-      .active {
-        background-color: $white;
-        border-radius: 0.2rem;
-      }
-    }
-  }
-
-  .dropdown-toggle[aria-expanded=true] .fa-chevron-down,
-  .dropdown-toggle[aria-expanded=false] .fa-chevron-up {
-    display: none;
-  }
-
   .dropdown-menu {
     width: 100%;
     border: 1px solid $palette-gray-10;
@@ -114,11 +77,6 @@ header {
 
 .search-box {
   position: relative;
-
-  .list-header {
-    color: $palette-gray-50;
-    margin: 0.5rem;
-  }
 }
 
 .search-box .form-control,
@@ -127,44 +85,11 @@ header {
   border: 1px solid $palette-solid-50;
 }
 
-.search-clear {
-  margin-left: -23px;
-  z-index: 99;
-  margin-right: 13px;
-  padding-top: 9px;
-  color: $palette-black;
-}
 
 
-.autocomplete-results {
-  min-width: 375px;
-  z-index: 10;
-  background-color: $white;
-  position: absolute;
-  border: 1px solid $palette-gray-10;
-  width: 100%;
-
-  li {
-    cursor: pointer;
-  }
-
-  .dropdown-item {
-    .active {
-      color: $palette-blue;
-      background-color: transparent;
-    }
-
-    span {
-      color: $palette-gray-50;
-    }
-  }
-
-  .dropdown-item:hover {
-    color: $palette-blue;
-    background-color: transparent;
-
-  }
-}
+/////////////////////////////////////////////////
+// autocomplete-results for desktop moved to designsystem scss
+/////////////////////////////////////////////////
 
 @media (max-width: 576px) {
   .autocomplete-results {
@@ -177,23 +102,6 @@ header {
   position: relative;
 }
 
-.navbar-brand {
-  position: relative;
-
-  img {
-    position: relative;
-    z-index: 100;
-  }
-
-  .logo-bg {
-    position: absolute;
-    top: -7px;
-    left: -35px;
-    width: 335px;
-    height: 133px;
-    background: url('../../assets/images/logo-bg.png') no-repeat bottom right;
-  }
-}
 
 .open-menu {
   display: none;
@@ -201,7 +109,7 @@ header {
 
 .overlay {
   /* Height & width depends on how you want to reveal the overlay (see JS below) */
-  height: 0%;
+  height: 0;
   width: 100%;
   position: fixed; /* Stay in place */
   z-index: 11; /* Sit on top */
@@ -218,12 +126,34 @@ header {
 
   .closebtn {
     position: absolute;
-    top: 22px;
+    top: 47px;
     z-index: 10;
     color: $body-color;
-    right: 10px;
+    right: 30px;
     padding: 0;
     font-size: 45px;
+    display: block;
+    height: 33px;
+    width: 33px;
+    cursor: pointer;
+
+    &::before,
+    &::after {
+      position: absolute;
+      content: ' ';
+      height: 33px;
+      width: 3px;
+      background-color: $palette-solid-100;
+      right: 16px;
+    }
+
+    &::before {
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      transform: rotate(-45deg);
+    }
   }
 }
 
