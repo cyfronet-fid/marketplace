@@ -5,17 +5,16 @@ module Offer::Parameters
 
   included do
     validates_associated :parameters
+    serialize :parameters, Parameter::Array
   end
 
   def attributes
-    (parameters || []).map { |param| Attribute.from_json(param) }
-  end
-
-  def parameters
-    @parameters || []
+    (parameters || []).map { |param| Attribute.from_json(param.dump) }
   end
 
   def parameters_attributes=(attrs)
-    @parameters = attrs.map { |i, params| AttributeTemplate.build(params) }.reject(&:blank?)
+    self.parameters = attrs.values.each_with_index
+      .map { |params, i| Parameter.for_type(params).new(params.merge(id: i.to_s)) }
+      .compact
   end
 end
