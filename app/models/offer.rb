@@ -2,6 +2,7 @@
 
 class Offer < ApplicationRecord
   include Offerable
+  include Offer::Parameters
 
   STATUSES = {
     published: "published",
@@ -26,28 +27,10 @@ class Offer < ApplicationRecord
   validates :service, presence: true
   validates :iid, presence: true, numericality: true
   validates :status, presence: true
-  validate :parameters_are_valid_attributes, on: [:create, :update]
-  validates :parameters_as_string, attribute_id_unique: true
-  validate :parameters_not_nil
   validates :webpage, presence: true, mp_url: true, unless: :orderable?
-
-  attr_writer :parameters_as_string
-  validates_associated :parameters
 
   def to_param
     iid.to_s
-  end
-
-  def attributes
-    (parameters || []).map { |param| Attribute.from_json(param) }
-  end
-
-  def parameters
-    @parameters || []
-  end
-
-  def parameters_attributes=(attrs)
-    @parameters = attrs.map { |i, params| AttributeTemplate.build(params) }.reject(&:blank?)
   end
 
   def open_access?
@@ -62,47 +45,12 @@ class Offer < ApplicationRecord
     offer_type == "external"
   end
 
-  def parameters_as_string?
-    @parameters_as_string.present?
-  end
-
-  def parameters_as_string
-    if !@parameters_as_string && !parameters.nil?
-      @parameters_as_string = parameters.map(&:to_json)
-    end
-    @parameters_as_string
-  end
-
   private
-    def parameters_are_valid_attributes
-      (parameters_as_string || []).each_with_index.map do |param, i|
-        param = JSON.parse(param)
-        attribute = Attribute.from_json(param)
-        attribute.validate_config!
-      rescue JSON::ParserError
-        errors.add("parameters_as_string_#{i}", "Cannot convert parameters to json")
-      rescue JSON::Schema::ValidationError => e
-        errors.add("parameters_as_string_#{i}", e.message)
-      end
-    end
-
-    def convert_parameters_to_json
-      unless parameters_as_string.nil?
-        self.parameters = parameters_as_string.map { |p| JSON.parse(p) }
-      end
-    end
-
     def set_iid
       self.iid = offers_count + 1 if iid.blank?
     end
 
     def offers_count
       service && service.offers.maximum(:iid).to_i || 0
-    end
-
-    def parameters_not_nil
-      if self.parameters.nil?
-        errors.add :parameters, "cannot be nil"
-      end
     end
 end
