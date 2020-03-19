@@ -19,7 +19,7 @@ module Backoffice::ParametersHelper
         concat content_tag(:a, I18n.t("properties.#{clazz.type}.add"),
                            class: "dropdown-item",
                            "data-template": parameter_template(clazz.new(id: "js_template_id"), form),
-                           "data-action": "click->offer#addAttribute")
+                           "data-action": "click->offer#add")
       end
     end
   end
