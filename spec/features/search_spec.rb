@@ -12,26 +12,25 @@ RSpec.feature "Service searching in top bar", js: true do
 
   scenario "search with 'All Services' selected should submit to /services" do
     visit root_path
-    select "All services", from: "category-select"
     click_on(id: "query-submit")
 
     url = URI.parse(page.current_path)
 
     expect(url.path).to eq(services_path)
 
-    expect(page).to have_select("category-select", selected: "All services")
+    expect(page).to have_text("All services")
   end
 
   scenario "search with any category selected should submit to /categories" do
     visit root_path
-    select category.name, from: "category-select"
+    select category.name, from: "category-select", visible: false
     click_on(id: "query-submit")
 
     url = URI.parse(page.current_path)
 
     expect(url.path).to eq(category_services_path(category_id: category))
 
-    expect(page).to have_select("category-select", selected: category.name)
+    expect(page).to have_text(category.name)
   end
 
   scenario "I can clear search conditions" do
@@ -44,7 +43,7 @@ RSpec.feature "Service searching in top bar", js: true do
   scenario "redirect when selecting service_id by autocomplete controller", js: true, search: true do
     service = create(:service)
     fill_in "q", with: service.title
-    find(:css, "li.dropdown-item[id='-option-0']").click
+    find(:css, "li[id='-option-0']").click
     expect(current_path).to eq(service_path(service))
   end
 
@@ -63,7 +62,9 @@ RSpec.feature "Service searching in top bar", js: true do
 
     fill_in "q", with: "DDDD Something"
 
-    expect(page).to have_selector("li.dropdown-item[role='option']:not([style*=\"display: none\"]", count: 3)
+    expect(page).to have_text("DDDD Something 1")
+    expect(page).to have_text("DDDD Something 2")
+    expect(page).to have_text("DDDD Something 3")
   end
 
   scenario "After starting searching autocomplete not show draft offers", js: true, search: true do

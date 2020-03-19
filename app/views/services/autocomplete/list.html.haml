@@ -1,8 +1,8 @@
-%p.list-header Services
+%li.label Services
 - results.each do |elem, highlights|
   - if highlights[:title]
     = render "services/autocomplete/service_item", service: elem, highlights: highlights
-%p.list-header Offers
+%li.label Offers
 - results.each do |elem, highlights|
   - if highlights[:name]
     = render "services/autocomplete/offer_item", offer: elem,

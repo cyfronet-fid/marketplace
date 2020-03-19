@@ -1,0 +1,294 @@
+@media (max-width: 1225px) {
+  .standard-list-wrapper {
+    flex-wrap: wrap;
+
+    .two-columns {
+      ul {
+        columns: 1;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 1074px) {
+  .standard-list-wrapper {
+    justify-content: normal;
+
+    .standard-list {
+      margin-bottom: 25px;
+    }
+  }
+}
+
+
+@media (max-width: 992px) {
+
+  main {
+    padding: 0 10px;
+  }
+
+  nav {
+    display: none;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: normal;
+
+    .logo {
+      margin-bottom: 15px;
+    }
+
+    .searchbar {
+      margin: 0;
+      width: 100%;
+
+      &__input {
+        width: 80%;
+        margin-right: -1px;
+
+        input {
+          width: 100%;
+        }
+      }
+    }
+
+    .menu {
+      position: absolute;
+      top: 35px;
+      right: 20px;
+      width: auto;
+
+      button {
+        padding-right: 0;
+      }
+
+      &__label {
+        display: none;
+      }
+
+      &__hamburger {
+        display: block;
+      }
+    }
+  }
+
+  .contentbox {
+    flex-direction: column;
+    align-items: normal;
+    padding-top: 2rem;
+
+    &__title {
+      font-size: 1.75rem;
+      line-height: 1.12;
+      margin-bottom: 30px;
+      width: 100%;
+    }
+
+  }
+
+  .intro-box {
+    min-height: 190px;
+    flex: 0 0 91.66667%;
+    max-width: 91.66667%;
+    margin-bottom: 5px;
+    background-size: contain;
+
+    &.second {
+      float: right;
+    }
+  }
+
+  .tabs li {
+    font-size: 0.875rem;
+  }
+
+  .standard-list-wrapper {
+    flex-direction: column;
+    align-items: normal;
+    padding: 1rem 1rem 0;
+
+    .title {
+      text-align: left;
+    }
+
+    .standard-list {
+      margin-bottom: 25px;
+
+      ul {
+        width: 100%;
+      }
+    }
+  }
+
+  .simple-intro {
+    margin-bottom: 30px;
+  }
+
+  .footer {
+    .title {
+      text-align: left;
+    }
+  }
+
+}
+
+@media (max-width: 768px) {
+  .service-info-box {
+    display: block;
+    flex: unset;
+  }
+}
+
+@media (max-width: 576px) {
+
+  .header {
+
+    .logo {
+      max-width: 190px;
+    }
+
+    .searchbar {
+      input {
+        padding: 10px;
+        flex-grow: 1;
+        min-width: 100px;
+        width: 100%;
+      }
+
+      .container-select {
+        min-width: 115px;
+        width: auto;
+      }
+    }
+
+    .menu__hamburger {
+      top: 9px;
+    }
+  } // end Header
+
+  .overlay {
+    .closebtn {
+      top: 37px;
+    }
+  }
+
+  .tab-content-home {
+
+    .col-6:nth-child(even) {
+      padding-right: 0;
+      padding-left: 5px;
+    }
+
+    .col-6:nth-child(odd) {
+      padding-left: 0;
+      padding-right: 5px;
+    }
+  }
+
+  .branch-box {
+
+    .branch-name {
+      margin-top: 15px;
+      font-size: 0.85rem;
+      min-height: 48px;
+    }
+  }
+
+  .simple-intro {
+
+    .title {
+      margin-bottom: 5px;
+      text-align: left;
+      line-height: 1.1rem;
+    }
+
+    .icon {
+      margin-right: 10px;
+    }
+  }
+
+  .home-title {
+    font-size: 1.25rem;
+    margin-top: 2.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .standard-list {
+    ul {
+      li {
+        a {
+          font-size: 0.8rem;
+          white-space: normal;
+        }
+      }
+    }
+
+    .more-link {
+      font-size: 0.8rem;
+    }
+  }
+
+  .footer {
+    .row {
+      .col-md {
+        width: 50%;
+        margin-bottom: 15px;
+      }
+    }
+
+    .copy-text {
+      font-size: 0.6875rem;
+    }
+
+    .socials {
+      margin-top: 0 !important;
+      text-align: center;
+    }
+  }
+
+  .eosc-logo-mono,
+  .eosc-hub-logo-mono {
+    margin: auto;
+  }
+
+  .eu-information {
+    font-size: 0.6875rem;
+    line-height: 1rem;
+    padding: 12px 0 !important;
+  }
+
+  .footer {
+    .row {
+      .col-md {
+        width: 50%;
+        margin-bottom: 15px;
+      }
+    }
+
+    .copy-text {
+      font-size: 11px;
+    }
+
+    .socials {
+      margin-top: 0 !important;
+      text-align: center;
+    }
+  }
+
+  .eosc-logo-mono,
+  .eosc-hub-logo-mono {
+    margin: 0 auto 15px;
+    text-align: center;
+
+  }
+
+  .eu-information {
+    font-size: 11px;
+    line-height: 1rem;
+    padding: 12px 0 !important;
+  }
+
+}
+

@@ -11,7 +11,7 @@
     - if current_page?("/")
       .main-elements
     = render "layouts/flash"
-    %header.pb-2
+    %header
       = render "layouts/navbar",
         categories: @siblings || @root_categories
     %main

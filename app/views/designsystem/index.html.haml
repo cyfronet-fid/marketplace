@@ -1,1 +1,525 @@
-%h1 Desgin system
+.ds-area
+  %aside
+    %h1 MP UI System
+    %ul
+      %li Main header
+      %li Content box (text + right image)
+      %li Home intro more
+      %li Learn more box
+      %li Standard list
+      %li Service info box
+      %li Branch box
+      %li Simple intro
+      %li Footer
+
+    %h2
+      Colors
+    %ul
+      %li
+        %span.color-primary
+        Primary
+      %li
+        %span.color-secondary
+        Secondary
+      %li
+        %span.color-various1
+        Various 1
+      %li
+        %span.color-various2
+        Various 2
+      %li
+        %span.color-various3
+        Various 3
+      %li
+        %span.color-various4
+        Various 4
+      %li
+        %span.color-various5
+        Various 5
+      %li
+        %span.color-various6
+        Various 6
+      %li
+        %span.color-white
+        White
+      %li
+        %span.color-link
+        Link
+      %li
+        %span.color-basegray
+        Base for gray palette
+
+  %main
+
+    %h2.headline Main header
+
+    .showds__container
+
+      %nav.top
+        %ul
+          %li
+            %a{ href: "#" } Info
+          %li
+            %a.active{ href: "#" } Catalogue & Marketplace
+          %li
+            %a{ href: "#" } Providers Dashboard
+          %li
+            %a{ href: "#" } Backoffice
+          %li
+            %i.fas.fa-user
+            Jan Nowak
+          %li
+            %a{ href: "#" } Logout
+
+      %section.header
+        .logo
+          = image_tag "eosc-logo-color.png", class: "logo"
+        .searchbar
+          .searchbar__input
+            %input{ type: "text" }
+            %a.search-clear
+              .fas.fa-times
+            %ul.autocomplete-results
+              %li
+                coś tam
+              %li
+                coś tam
+          .searchbar__select
+            %span
+              All services
+            %select
+              %option
+                Option 1
+          %button
+            %i.fas.fa-search
+        .menu.dropdown
+          %a#dropdown-menu-button.dropdown-toggle{ "aria-expanded" => "false", "aria-haspopup" => "true",
+          "data-toggle" => "dropdown", :type => "button" }
+            .menu__label My EOSC Marketplace
+          .menu__hamburger
+            %span
+            %span
+            %span
+          .dropdown-menu{ "aria-labelledby" => "dropdown-menu-button" }
+            %ul
+              %li
+                %a.dropdown-item{ href: "#" } My EOSC Marketplace
+              %li
+                %a.dropdown-item{ href: "#" } Profile
+
+    %h2.headline Content box (text + right image)
+    .contentbox
+      %div
+        %p.contentbox__title
+          Welcome to the EOSC Portal Catalogue and Marketplace
+
+        %p.contentbox__lead
+          Integrated platform that allows easy access to lots of services and resources for various
+          research domains along with integrated data analytics tools. Browse by scientific domain,
+          service category or provider and, if you need help, we are here for you!
+      = image_tag "gfx_whole_illustation_desktop.png"
+
+
+    %h2.headline Home intro more
+
+    .intro-box-wrapper
+      .intro-box
+        Find EOSC Services that suit your use case yourself
+        %a{ href: "/services" }
+          %i.fas.fa-arrow-right
+          Browse through catalogue
+
+      .intro-box
+        Find EOSC Services that suit your use case yourself
+        %a{ href: "/services" }
+          %i.fas.fa-arrow-right
+          Browse through catalogue
+
+    %h2.headline Buttons
+
+    = link_to "Browse all services", services_path, class: "button button--primary"
+    = link_to "Browse all services", services_path, class: "button button--secondary"
+
+    %h2.headline Standard list
+
+    .standard-list-wrapper
+      .standard-list
+        .title List title header
+        %ul
+          %li
+            %a{ href: "#" } Lorem ipsum dolor sit amet enim.
+          %li
+            %a{ href: "#" } Etiam ullamcorper.
+          %li
+            %a{ href: "#" } Suspendisse a pellentesque dui  asd asds asd asdsa dasdas d dasdas dasd
+          %li
+            %a{ href: "#" } Maecenas malesuada elit lectus felis
+          %li
+            %a{ href: "#" } Curabitur et ligula.
+        %a.more-link.d-block{ href: "#" }
+          %i.fas.fa-arrow-right
+          And for
+          %strong more other target groups
+      .standard-list
+        .title List title header
+        %ul
+          %li
+            %a{ href: "#" } Lorem ipsum dolor sit amet enim.
+          %li
+            %a{ href: "#" } Etiam ullamcorper.
+          %li
+            %a{ href: "#" } Suspendisse a pellentesque dui
+          %li
+            %a{ href: "#" } Maecenas malesuada elit lectus felis
+          %li
+            %a{ href: "#" } Curabitur et ligula.
+        %a.more-link.d-block{ href: "#" }
+          %i.fas.fa-arrow-right
+          And for
+          %strong more other target groups
+      .standard-list.two-columns
+        .title List title header
+        %ul
+          %li
+            %a{ href: "#" } Lorem ipsum dolor sit amet.
+          %li
+            %a{ href: "#" } Etiam ullamcorper.
+          %li
+            %a{ href: "#" } Suspendisse a pellentesque dui
+          %li
+            %a{ href: "#" } Maecenas malesuada elit lectus
+          %li
+            %a{ href: "#" } Curabitur et ligula.
+          %li
+            %a{ href: "#" } Etiam ullamcorper.
+          %li
+            %a{ href: "#" } Suspendisse a pellentesque dui
+          %li
+            %a{ href: "#" } Maecenas malesuada elit lectus
+        %a.more-link.d-block{ href: "#" }
+          %i.fas.fa-arrow-right
+          And for
+          %strong more other target groups
+
+
+
+    %h2.headline Learn more box
+
+    .learn-more
+      %a.body{ "href": "#" }
+        .title Sample title
+        .description
+          %p Contribute to develop EOSC into a rich environment with a wide range of send resources for researchers.
+        .icon
+          -# = image_tag "learn-more-box-default.png"
+
+    .row
+      .col-sm-12.col-md-4
+        .learn-more
+          %a.body{ "href": "#" }
+            .title Sample title
+            .description
+              %p ontribute to develop EOSC into a rich environment with a wide range of sand resources for researchers.
+            .icon
+              -# = image_tag "learn-more-box-default.png"
+      .col-sm-12.col-md-4
+        .learn-more
+          %a.body{ "href": "#" }
+            .title Sample title
+            .description
+              %p ontribute to develop EOSC into a rich environment with a wide range of  and resources for researchers.
+            .icon
+              -# = image_tag "learn-more-box-default.png"
+      .col-sm-12.col-md-4
+        .learn-more
+          %a.body{ "href": "#" }
+            .title Sample title
+            .description
+              %p ontribute to develop EOSC into a rich environment with a wide range of and resources for
+            .icon
+              -# = image_tag "learn-more-box-default.png"
+
+
+    %h2.headline Service info box
+
+    .service-info-box
+      %header
+        %a.title{ "href": "#" } Sample service name
+      %article
+        %p
+          -# = image_tag "refactoring_service-info-box-default.png"
+          The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal)
+          is the Liferay-based web p...
+      %footer
+        .column
+          %p
+            %small Provided by:
+            %br
+            EGI Federation
+        .column
+          %p.text-right
+            %small Dedicated for:
+            %br
+            Researchers, Research.
+
+    .row.mt-5
+      .col-12.col-lg-4.col-sm-6
+        .service-info-box
+          %header
+            %a.title{ "href": "#" } Sample service name
+          %article
+            %p
+              -# = image_tag "refactoring_service-info-box-default.png"
+              The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal) is the
+              Liferay- based web p...
+          %footer
+            .column
+              %p
+                %small Provided by:
+                %br
+                EGI Federation
+            .column
+              %p.text-right
+                %small Dedicated for:
+                %br
+                Researchers, Research.
+      .col-12.col-lg-4.col-sm-6
+        .service-info-box
+          %header
+            %a.title{ "href": "#" } Sample service name
+          %article
+            %p
+              -# = image_tag "refactoring_service-info-box-default.png"
+              The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal)
+              is the Liferay- based web p...
+          %footer
+            .column
+              %p
+                %small Provided by:
+                %br
+                EGI Federation
+            .column
+              %p.text-right
+                %small Dedicated for:
+                %br
+                Researchers, Research.
+      .col-12.col-lg-4.col-sm-6
+        .service-info-box
+          %header
+            %a.title{ "href": "#" } Sample service name
+          %article
+            %p
+              -# = image_tag "refactoring_service-info-box-default.png"
+              The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal) is the
+              Liferay- based web p...
+          %footer
+            .column
+              %p
+                %small Provided by:
+                %br
+                EGI Federation
+            .column
+              %p.text-right
+                %small Dedicated for:
+                %br
+                Researchers, Research.
+
+    %h2.headline Tabs
+
+    %ul.tabs
+      %li.tab-link.current{ data: { "target" => "home-page.changeTab",
+                    "action" => "click->home-page#changeTab", "tab" => "tab-1" },
+                    href: "#" } Branch of science
+      %li.tab-link{ data: { "target" => "home-page.changeTab",
+                    "action" => "click->home-page#changeTab", "tab" => "tab-2" },
+                    href: "#" } Categories
+
+    %h2.headline Branch box
+
+    %a.branch-box{ href: "#" }
+      .branch-icon
+        = image_tag "refactoring_branch-box-default.png"
+      .branch-name
+        Sample title
+
+    .row
+      .col-12.col-lg-4.col-sm-6
+        %a.branch-box{ href: "#" }
+          .branch-icon
+            = image_tag "refactoring_branch-box-default.png"
+          .branch-name
+            Sample title
+      .col-12.col-lg-4.col-sm-6
+        %a.branch-box{ href: "#" }
+          .branch-icon
+            = image_tag "refactoring_branch-box-default.png"
+          .branch-name
+            Sample title
+      .col-12.col-lg-4.col-sm-6
+        %a.branch-box{ href: "#" }
+          .branch-icon
+            = image_tag "refactoring_branch-box-default.png"
+          .branch-name
+            Sample title
+
+
+    %h2.headline Simple intro
+
+    .simple-intro
+      .icon
+        = image_tag "learn-more-box-default.png"
+      %a.title{ "href": "#" } From language data to insight: the CLARIN demonstrator
+      .description
+        How the integration of the CLARIN infrastructure into the EOSC Portal can facilitate the study of language data.
+
+    .row.mt-5.mb-4
+      .col-12.col-lg-4.col-sm-6
+        .simple-intro
+          .icon
+            = image_tag "learn-more-box-default.png"
+          %a.title{ "href": "#" } From language data to insight: the CLARIN demonstrator
+          .description
+            How the integration of the CLARIN infrastructure into the EOSC Portal can facilitate the study of language
+            data.
+
+      .col-12.col-lg-4.col-sm-6
+        .simple-intro
+          .icon
+            = image_tag "learn-more-box-default.png"
+          %a.title{ "href": "#" } From language data to insight: the CLARIN demonstrator
+          .description
+            How the integration of the CLARIN infrastructure into the EOSC Portal can facilitate the study
+            of language data. How the integration of the CLARIN infrastructure into the EOSC Portal can facilitate
+            the study of language data.
+
+      .col-12.col-lg-4.col-sm-6
+        .simple-intro
+          .icon
+            = image_tag "learn-more-box-default.png"
+          %a.title{ "href": "#" } From language data to insight: the CLARIN demonstrator
+          .description
+            How the integration of the CLARIN infrastructure into the EOSC Portal can facilitate the study of language
+            data.
+
+    %h2.headline Footer
+
+    %footer.footer
+      .container
+        .row
+          .col-md-3.my-auto
+            %a.eosc-logo-mono.d-block{ href: "https://www.eosc-hub.eu" }
+              = image_tag "eosc-logo-mono.png"
+          .col-md-3.my-auto
+            %a.eosc-hub-logo-mono.d-block{ href: "https://www.eosc-hub.eu" }
+              = image_tag "eosc-footer-logo.png"
+          .col-md-6.my-auto.copyright
+            %span.copy-text
+              Copyright 2018 - All right reserved
+            %a{ href: "https://eosc-portal.eu/privacy-policy-summary" }
+              privacy policy
+        %hr
+        .row
+          .col-md
+            %ul
+              %li
+                .title About
+              %li
+                %a{ href: "#" } EOSC
+              %li
+                %a{ href: "#" } EOSC Doers
+              %li
+                %a{ href: "#" } EOSC Projects
+              %li
+                %a{ href: "#" } Funding Opportunities
+              %li
+                %a{ href: "#" } Marketplace
+              %li
+                %a{ href: "#" } FAQs
+              %li
+                %a{ href: "#" } Contact us
+          .col-md
+            %ul
+              %li
+                .title Governance
+              %li
+                %a{ href: "#" } EOSC Governance
+              %li
+                %a{ href: "#" } Rules of participation
+              %li
+                %a{ href: "#" } Best Practices
+          .col-md
+            %ul
+              %li
+                .title Services & Resources
+              %li
+                %a{ href: "#" } Sharing & Discovery
+              %li
+                %a{ href: "#" } Processing & Analysis
+              %li
+                %a{ href: "#" } Data Management
+              %li
+                %a{ href: "#" } Compute
+              %li
+                %a{ href: "#" } Storage
+              %li
+                %a{ href: "#" } Networking
+              %li
+                %a{ href: "#" } Training & Support
+              %li
+                %a{ href: "#" } Security & Operations
+          .col-md
+            %ul
+              %li
+                .title Policy
+              %li
+                %a{ href: "#" } EC Documents
+              %li
+                %a{ href: "#" } Europe
+              %li
+                %a{ href: "#" } Member States
+          .col-md
+            %ul
+              %li
+                .title EOSC IN PRACTICE
+              %li
+                %a{ href: "#" } Use Cases
+              %li
+                %a{ href: "#" } Open Call
+          .col-md
+            %ul
+              %li
+                .title Media
+              %li
+                %a{ href: "#" } News
+              %li
+                %a{ href: "#" } Forthcoming events
+              %li
+                %a{ href: "#" } Past Events
+          .col-md
+            %ul
+              %li
+                .title MARKETPLACE
+              %li
+                %a{ href: "#" } About
+              %li
+                = link_to "All Services", services_path
+              - @root_categories.each do |root_category|
+                %li
+                  = link_to root_category.name, root_category
+              %li
+                %a{ href: "#" } For providers
+
+
+        .row.socials
+          .col-md-6
+            %a.social-logo.twitter-logo{ href: "https://twitter.com/EoscPortal" }
+            %a.social-logo.yt-logo{ href: "https://www.youtube.com/channel/UCHsaUFy5LJ3rJ28qDg2StGA" }
+
+    .eu-information
+      .container
+        %p
+          The EOSC portal is been jointly developed and maintained by the EOSC-hub,
+          eInfraCentral and OpenAIRE-Advance projects funded by the Euopean
+        %p Union’s Horizon 2020 research and innovation programme with contribution of the European Commission
+
+        %p 2018 EOSC Portal

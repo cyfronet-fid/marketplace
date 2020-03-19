@@ -1,29 +1,32 @@
-.search-box
-  = form_tag "#{services_path}", method: :get, role: "search",
-             "data-target": "autocomplete.form search.form",
-             "data-controller": "search autocomplete",
-             "data-autocomplete-url": "service_autocomplete",
-             "data-search-services-path": services_path,
-             "data-search-categories-path": "/services/c" do
-    = hidden_field_tag "service_id", nil, "data-target": "autocomplete.hidden"
-    = hidden_field_tag "anchor", nil, "data-target": "autocomplete.anchor"
-    = hidden_field_tag "sort", "_score"
-    .input-group
+= form_tag "#{services_path}", method: :get, role: "search",
+           "data-target": "autocomplete.form search.form",
+           "data-controller": "search autocomplete",
+           "data-autocomplete-url": "service_autocomplete",
+           "data-search-services-path": services_path,
+           "data-search-categories-path": "/services/c", class: "searchbar" do
+  = hidden_field_tag "service_id", nil, "data-target": "autocomplete.hidden"
+  = hidden_field_tag "anchor", nil, "data-target": "autocomplete.anchor"
+  = hidden_field_tag "sort", "_score"
 
-      %label.sr-only{ for: "search" } Search
-      = text_field_tag :q, params[:q],  class: "autocomplete-input form-control w-50",
-                                       placeholder: "Find service...",
-                                       "data-target": "autocomplete.input",
-                                       "data-toggle": "dropdown"
-      - if params[:q].present? && params.permitted?
-        %a.search-clear{ href: url_for(params.except(:q, :sort, :service_id)), title: "Clear search" }
-          .fas.fa-times
-      %select#category-select.custom-select.rounded-0{ "data-action": "change->search#refresh",
-                                                       "data-target": "search.categorySelect" }
-        %option{ value: "", selected: "selected" }
-          All services
-        = options_for_select categories.map { |category| [category.name, category.slug] }, params[:category]
-      .input-group-append
-        %button#query-submit.input-group-text.bg-white
-          %i.fas.fa-search
+  .searchbar__input
+    %label.sr-only{ for: "search" } Search
+    = text_field_tag :q, params[:q],  class: "autocomplete-input",
+                                     placeholder: "Find service...",
+                                     "data-target": "autocomplete.input",
+                                     "data-toggle": "dropdown"
+    - if params[:q].present? && params.permitted?
+      %a.search-clear{ href: url_for(params.except(:q, :sort, :service_id)), title: "Clear search" }
+        .fas.fa-times
     %ul.autocomplete-results{ "data-target": "autocomplete.results" }
+  .searchbar__select
+    %span{ "data-target": "search.selected" }
+      All services
+    %select#category-select.container-select{ "data-action": "change->search#refresh",
+                                                    "data-target": "search.categorySelect" }
+      %option{ value: "", selected: "selected" }
+        All services
+      = options_for_select categories.map { |category| [category.name, category.slug] }, params[:category]
+  .input-group-append
+    %button#query-submit.input-group-text.bg-white
+      %i.fas.fa-search
+

@@ -5,15 +5,20 @@ body {
   margin-bottom: 0 !important;
   font-weight: $font-weight-normal;
 
-
   > main {
-    padding-bottom: 50px;
+    padding: 0 15px;
+    margin-bottom: 50px;
   }
+
 }
 
 header {
   position: relative;
   z-index: 10;
+}
+
+.navbar {
+  z-index: 2;
 }
 
 .container {
@@ -359,14 +364,21 @@ textarea:-ms-input-placeholder { /* IE 10+ */
 .tab-content {
 
   ul {
-    list-style-position: outside;
-    list-style: disc;
     padding-left: 20px;
+    margin-bottom: 1rem;
 
     li {
+      list-style-type: disc;
+
       span {
         color: $body-color;
       }
+    }
+  }
+
+  ol {
+    li {
+      list-style-type: decimal;
     }
   }
 }
@@ -508,7 +520,6 @@ textarea:-ms-input-placeholder { /* IE 10+ */
     .service-logo {
       margin: 20px 0;
     }
-
   }
 }
 
@@ -1067,6 +1078,7 @@ h5 {
     margin-right: -20px;
     margin-bottom: 3px;
     word-wrap: break-word;
+    font-weight: 300;
   }
 
   .empty {
@@ -1390,57 +1402,7 @@ h5 {
 }
 
 .main {
-  background: url('../../assets/images/home-bg.png') no-repeat;
   background-position: 50% -120px;
-}
-
-.main-elements {
-  background: url('../../assets/images/home-bg-elements.png') no-repeat;
-  background-position: top center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 302px;
-}
-
-.intro-box {
-  font-size: 18px;
-  line-height: 1.44;
-  font-weight: normal;
-  background: url('../../assets/images/main-box-bg.png') no-repeat;
-  background-position: top left;
-
-  a {
-    padding-top: 13px;
-    margin-top: 13px;
-    background: url('../../assets/images/main-box-separator.png') no-repeat;
-    float: left;
-    width: 100%;
-
-    svg {
-      color: $palette-yellow;
-      font-size: 15px;
-      margin-right: 4px;
-    }
-  }
-}
-
-@media (max-width: 992px) {
-
-  .intro-box-wrapper {
-    display: block;
-
-    .intro-box {
-      min-height: 190px;
-
-      &.second {
-        float: right;
-      }
-    }
-
-  }
-
 }
 
 .box {
@@ -1473,48 +1435,6 @@ h5 {
     padding-bottom: 1px;
   }
 
-  .card {
-    border: none;
-    background: $home-card-bg;
-  }
-
-  .card-img-top {
-    height: 120px;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    padding: 5px;
-  }
-
-  .card-body {
-    align-items: center;
-    padding: 1.4rem 1rem 1.3rem;
-  }
-
-  .card-title {
-    width: 100%;
-    float: left;
-    display: block;
-    margin-bottom: 15px;
-    font-weight: bold;
-    line-height: 1.4rem;
-  }
-
-  .card-description {
-    font-size: 14px;
-    line-height: 1.4;
-
-    p {
-      margin: 0;
-    }
-
-    img {
-      float: left;
-      margin-right: 15px;
-      max-width: 100px;
-      height: auto;
-    }
-  }
 
 }
 
@@ -2716,7 +2636,6 @@ textarea.form-control.is-invalid {
 
   .tabs li:last-child {
     border-top-right-radius: 0;
-    border-right: none;
     border-bottom-right-radius: 0;
   }
 
@@ -2730,38 +2649,9 @@ textarea.form-control.is-invalid {
   }
 }
 
-.branch-box {
-  border: 3px solid $branch-box;
-  border-radius: 5px;
-  text-align: center;
-  display: block;
-  margin-bottom: 10px;
-  padding: 15px 7px 12px;
-
-  .branch-icon {
-    height: 84px;
-    line-height: 84px;
-    vertical-align: middle;
-  }
-
-  .branch-name {
-    margin-top: 15px;
-    font-size: 20px;
-    min-height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: $palette-blue;
-  }
-}
-
 .services-link {
   padding-left: 4.5rem;
   padding-right: 4.5rem;
-}
-
-.branch-box:hover {
-  border: 3px solid $services-list;
 }
 
 .home-communities {
@@ -2882,61 +2772,6 @@ textarea.form-control.is-invalid {
   font-size: 28px;
   margin-top: 5.2rem;
   margin-bottom: 2rem;
-}
-
-.learn-more {
-  border: none;
-  background: url('../../assets/images/home-card-bg.png') no-repeat right bottom;
-  min-height: 145px;
-
-  .card-body {
-    padding: 1rem 45% 1rem 0;
-    position: relative;
-    font-size: 14px;
-    line-height: 18px;
-    color: $palette-solid-100;
-
-    .card-title {
-      font-size: 20px;
-      line-height: 1.05;
-      font-weight: 400;
-      color: $palette-solid-100;
-    }
-
-    .card-icon {
-      position: absolute;
-      top: 35px;
-      right: 33px;
-      transition: all 0.3s ease;
-    }
-
-    &:hover {
-
-      .card-title {
-        color: $palette-blue;
-      }
-
-      .card-icon {
-        top: 40px;
-        right: 45px;
-      }
-    }
-  }
-
-  &.first {
-    .card-icon {
-      right: 40px;
-      top: 17px;
-    }
-
-    &:hover {
-
-      .card-icon {
-        top: 25px;
-        right: 45px;
-      }
-    }
-  }
 }
 
 .opinion {
