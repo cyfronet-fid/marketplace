@@ -1,12 +1,12 @@
-= f.input :minimum, as: :integer do
+= f.input :min, as: :integer do
   .row
     .input-group.col
-      = f.input_field :minimum, class: "form-control"
+      = f.input_field :min, class: "form-control"
     .input-group.col
-      = f.input :exclusiveMinimum, as: :boolean
+      = f.input :exclusive_min, as: :boolean
 = f.input :maximum, as: :integer do
   .row
     .input-group.col
-      = f.input_field :maximum, class: "form-control"
+      = f.input_field :max, class: "form-control"
     .input-group.col
-      = f.input :exclusiveMaximum, as: :boolean
+      = f.input :exclusive_max, as: :boolean
