@@ -3,8 +3,10 @@
   = link_to highlighted_for(:title, service, highlights[service.id]),
     service_path(service, category.present? ? { fromc: category.slug } : nil)
   - content_for :checkbox do
-    %p.mb-3
-      = check_box_tag "comparison", service.slug, checked?(service.slug), id: "comparison-#{service.id}",
-              disabled: !checked?(service.slug) && comparison_enabled,
-              data: { "target": "comparison.checkbox", "action": "click->comparison#update" }
-      %label Add to compare
+    .mt-3.compare
+      %label
+        = check_box_tag "comparison", service.slug, checked?(service.slug), id: "comparison-#{service.id}",
+                class: "form-check-input",
+                disabled: !checked?(service.slug) && comparison_enabled,
+                data: { "target": "comparison.checkbox", "action": "click->comparison#update" }
+        %span Add to compare

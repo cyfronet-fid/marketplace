@@ -1,10 +1,12 @@
-.col-4
-  .service.border.pb-0
+.col-lg-4.col-12
+  .service.border
     .logo.float-left
+      %span.helper
       - if service.logo.attached?
         = image_tag service.logo.variant(resize: "40x40")
-    %p.float-left
-      = service.title
-    %p.comparison-link
+    .float-left.service-title
+      %span.middle
+        = service.title.truncate(29, separator: " ")
+    .comparison-link.float-right
       %a{ "value": "#{service.slug}", data: { "action": "click->comparison#update" } }
         %i.fas.fa-trash

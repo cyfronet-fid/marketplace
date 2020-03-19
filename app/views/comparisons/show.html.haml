@@ -1,7 +1,7 @@
 - i = 3 - @compare_services&.size
 - breadcrumb :comparison
 .container
-  %table.services-comparison.bordered.shadow-sm.rounded.table-responsive
+  %table.services-comparison.bordered.shadow-sm.table-responsive
     %thead
       %tr
         %th{ colspan: 4 }
@@ -15,16 +15,18 @@
           %th.title-col
             .logo-wrapper
               %span.helper
-                - if service.logo.attached?
-                  = image_tag service.logo.variant(resize: "100x100")
+              - if service.logo.attached?
+                = image_tag service.logo.variant(resize: "100x100")
             = link_to comparisons_services_path(slug: service.slug, fromc: params[:fromc]), method: :delete do
-              %i.fas.fa-trash
+              %i.far.fa-trash-alt
             .service-title
               = link_to service.title.truncate(30, separator: " "),
               service_path(service, fromc: params[:fromc], comp_link: true)
+            .service-description
+              = service.description.truncate(80, separator: " ")
         - i.times do
-          %td.title-col
-            = link_to "ADD NEW SERVICE", services_path
+          %td.title-col.empty
+            = link_to "ADD NEXT SERVICE", services_path
       %tr
         %th Providers
         - @compare_services.each do |service|

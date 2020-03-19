@@ -2004,8 +2004,7 @@ label[data-multicheckbox].small {
   }
 
   .offers-box {
-    padding-top: 0.5em;
-    margin-top: 0.5em;
+    padding: 0.5em 0 0.75em;
     width: 100%;
     border-top: 1px solid $palette-gray-10;
 
@@ -2998,4 +2997,244 @@ textarea.form-control.is-invalid {
 
 .lead-error {
   margin-top: 20px;
+}
+
+// scss-lint:disable all
+.compare {
+
+  label {
+    margin: 0
+  }
+
+  input[type=checkbox] {
+    opacity: 0;
+  }
+
+  input[type=checkbox] + span {
+    position: relative;
+    cursor: pointer;
+    padding-left: 23px;
+    padding-top: 1px;
+    margin-right: 6px;
+  }
+
+  input[type=checkbox] + span::before {
+    content: '';
+    display: block;
+    position: absolute;
+    margin-right: 5px;
+    width: 16px;
+    height: 16px;
+    top: 0;
+    left: 0;
+    border: 1px solid $palette-solid-20;
+    border-radius: 3px;
+    background-color: $white;
+  }
+
+  input[type=checkbox]:checked + span::after {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 10px;
+    border: solid $palette-black;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    position: absolute;
+    top: 2px;
+    left: 6px;
+  }
+
+}
+
+.comparison-bar {
+  box-shadow: 15px 15px 15px 15px RGB(0, 0, 0, 0.2);
+  z-index: 100 !important;
+
+  .action-box {
+    display: flex;
+    justify-items: end;
+    align-items: center;
+
+    a {
+      display: inline-block;
+    }
+  }
+
+  .list-inline {
+    padding: 15px 0;
+
+    .service {
+      padding: 0 5px 0;
+      overflow: hidden;
+
+      .logo {
+        height: 40px;
+
+        .helper {
+          display: inline-block;
+          height: 100%;
+          vertical-align: middle;
+        }
+
+        img {
+          vertical-align: middle;
+        }
+      }
+
+      .service-title {
+        color: $palette-blue;
+        font-weight: bold;
+        margin-left: 10px;
+        height: 100%;
+        line-height: 40px;
+        font-size: 0.73rem;
+
+        .middle {
+          display: inline-block;
+          vertical-align: middle;
+          line-height: normal;
+        }
+      }
+
+      .comparison-link {
+        margin: 10px 5px 0 0;
+      }
+    }
+  }
+
+}
+// scss-lint:enable all
+
+@media (max-width: 992px) {
+  .services-list {
+    margin: 0 0 15px;
+
+    .col-12 {
+      margin-bottom: 5px;
+    }
+  }
+
+  .action-box {
+    text-align: center !important;
+  }
+}
+
+.services-comparison {
+  border-radius: 0.45rem !important;
+  display: table;
+  border: 1px solid $palette-gray-10;
+  border-spacing: 0;
+  border-collapse: unset;
+
+  thead {
+    th {
+      font-weight: 300;
+      font-size: 1rem;
+      border-bottom: 1px solid $palette-gray-10;
+
+      span {
+        font-size: 0.75rem;
+        line-height: 24px;
+      }
+    }
+  }
+
+  td {
+    padding: 12px 25px;
+    border-bottom: 1px solid $palette-gray-10;
+    border-right: 1px solid $palette-gray-10;
+  }
+
+  th {
+    padding: 12px 25px;
+    border-bottom: 1px solid $palette-gray-10;
+    border-right: 1px solid $palette-gray-10;
+  }
+
+  .title-col {
+    width: 27%;
+    position: relative;
+
+    &.empty {
+      text-align: center;
+    }
+
+    &:first-child {
+      width: 19%;
+    }
+
+    .logo-wrapper {
+      height: 70px;
+      width: 100%;
+      float: left;
+
+      .helper {
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+      }
+
+      img {
+        vertical-align: middle;
+        max-height: 45px;
+      }
+    }
+
+    .fa-trash-alt {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: $palette-black;
+    }
+  }
+
+  .lightgrey-row {
+    background: $palette-gray-5;
+  }
+
+  .service-title {
+    font-weight: 300;
+    margin-top: 5px;
+    color: $palette-blue;
+    font-size: 1rem;
+  }
+
+  .service-description {
+    font-weight: 300;
+    margin-top: 5px;
+    line-height: 0.9rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .services-comparison {
+    display: block;
+
+    td,
+    th {
+      padding: 5px;
+    }
+
+    .title-col {
+
+      .fa-trash {
+        float: none;
+        margin: 5px 0;
+      }
+
+      .logo-wrapper {
+        height: 90px;
+        width: 100%;
+
+        img {
+          max-width: 70px;
+          height: auto;
+        }
+      }
+    }
+  }
 }
