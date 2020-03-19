@@ -15,7 +15,7 @@ module Backoffice::AttributesHelper
 
   def attributes_menu_items(form)
     capture do
-      AttributeTemplate.all.map do |clazz|
+      Parameter.all.map do |clazz|
         concat content_tag(:a, I18n.t("attributes.template.#{clazz.type}.add"),
                            class: "dropdown-item",
                            "data-template": attribute_template(clazz.new(id: "js_template_id"), form),
@@ -25,7 +25,7 @@ module Backoffice::AttributesHelper
   end
 
   def attribute_template(attr, form)
-    render(partial: "attributes/template",
+    render(partial: "parameters/template",
            locals: { form: form, attribute: attr }).html_safe
   end
 end
