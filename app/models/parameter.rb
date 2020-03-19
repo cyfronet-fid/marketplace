@@ -10,8 +10,10 @@ class Parameter
   validates :id, presence: true
   validates :name, presence: true
 
-  def initialize(attributes = {})
-    attributes.each { |name, value| send("#{name}=", value) if respond_to?("#{name}=") }
+  def initialize(attrs = {})
+    attrs.each do |name, value|
+      send("#{name}=", value) if respond_to?("#{name}=")
+    end
   end
 
   def type
@@ -27,14 +29,25 @@ class Parameter
       class_name.underscore
     end
 
-    def build(params)
-      clazz = all.find { |c| c.type == params["type"] }
-      clazz.new(params) if clazz
+    def for_type(params)
+      all.find { |c| c.type == params["type"] }
     end
 
     def all
       [Parameter::Input, Parameter::Select, Parameter::Multiselect,
        Parameter::Date, Parameter::Range, Parameter::QuantityPrice]
+    end
+  end
+
+  class Array
+    class << self
+      def load(hsh)
+        hsh&.map { |params| Parameter.for_type(params).load(params) }
+      end
+
+      def dump(list)
+        list&.map { |parameter| parameter.dump }
+      end
     end
   end
 end

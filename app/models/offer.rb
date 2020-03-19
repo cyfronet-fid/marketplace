@@ -11,8 +11,6 @@ class Offer < ApplicationRecord
 
   enum status: STATUSES
 
-  before_save :convert_parameters_to_json
-
   belongs_to :service
 
   counter_culture :service, column_name: proc { |model| model.published? ? "offers_count" : nil },
