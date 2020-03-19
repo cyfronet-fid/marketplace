@@ -47,6 +47,7 @@ class Offer < ApplicationRecord
   validates :webpage, presence: true, mp_url: true, unless: :orderable?
 
   attr_writer :parameters_as_string
+  validates_associated :parameters
 
   def to_param
     iid.to_s
@@ -54,6 +55,14 @@ class Offer < ApplicationRecord
 
   def attributes
     (parameters || []).map { |param| Attribute.from_json(param) }
+  end
+
+  def parameters
+    @parameters || []
+  end
+
+  def parameters_attributes=(attrs)
+    @parameters = attrs.map { |i, params| AttributeTemplate.build(params) }.reject(&:blank?)
   end
 
   def open_access?

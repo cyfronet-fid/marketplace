@@ -1,7 +1,7 @@
 .card.parameter-form.mb-2
   .card-body
     .card-title
-      = t(".#{attribute.type.underscore}.title")
+      = t(".#{attribute.type}.title")
       .float-right
         %a{ "data-action": "offer#up" }
           %i.fas.fa-angle-up
@@ -10,7 +10,8 @@
         %a{ "data-action": "offer#removeAttribute" }
           %i.fas.fa-times
     .card-text
-      = form.simple_fields_for :attributes, attribute, index: attribute.id do |f|
-        = f.input :label
-        = f.input :description, as: :text
-        = render "attributes/template/#{attribute.type.underscore}", f: f
+      = form.simple_fields_for :parameters, attribute, child_index: attribute.id do |f|
+        = f.hidden_field :type
+        = f.input :name
+        = f.input :hint
+        = render "attributes/template/#{attribute.type}", f: f
