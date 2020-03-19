@@ -8,7 +8,7 @@ export default class extends Controller {
     this.indexCounter = 0;
   }
 
-  addAttribute(event) {
+  add(event) {
     const template = event.target.dataset.template
       .replace(/js_template_id/g, this.generateId());
     const frag = document.createRange().createContextualFragment(template);
@@ -20,7 +20,7 @@ export default class extends Controller {
     return new Date().getTime() + this.indexCounter++;
   }
 
-  removeAttribute(event) {
+  remove(event) {
     event.target.closest(".parameter-form").remove();
   }
 
