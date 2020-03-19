@@ -11,11 +11,11 @@
   %h3
     Offer parameters
     .float-right
-      = attribute_templates(f)
+      = parameter_templates(f)
   Here we should add some explanation for offer parameters
   %div{ "data-target": "offer.attributes" }
     - offer.parameters.each do |p|
-      = render "attributes/template", attribute: p, form: f
+      = render "parameters/template", parameter: p, form: f
 
   %hr.bottom-hr.mb-4
   .btn-group
