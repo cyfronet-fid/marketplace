@@ -16,7 +16,7 @@ module Backoffice::ParametersHelper
   def parameter_menu_items(form)
     capture do
       Parameter.all.map do |clazz|
-        concat content_tag(:a, I18n.t("properties.#{clazz.type}.add"),
+        concat content_tag(:a, I18n.t("parameters.#{clazz.type}.add"),
                            class: "dropdown-item",
                            "data-template": parameter_template(clazz.new(id: "js_template_id"), form),
                            "data-action": "click->offer#add")
