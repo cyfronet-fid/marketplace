@@ -9,13 +9,14 @@
     wrapper_html: { "data-target" => "offer.webpage" }
 
   %h3
-    Offer parameters
-    .float-right
+    OFFERS PARAMETERS
+  .row.parameters-section
+    .float-left.parameter-list
       = parameter_templates(f)
-  Here we should add some explanation for offer parameters
-  %div{ "data-target": "offer.attributes" }
-    - offer.parameters.each do |p|
-      = render "parameters/template", parameter: p, form: f
+    .float-right.parameter-cards
+      %div{ "data-target": "offer.attributes" }
+        - offer.parameters.each do |p|
+          = render "parameters/template", parameter: p, form: f
 
   %hr.bottom-hr.mb-4
   .btn-group

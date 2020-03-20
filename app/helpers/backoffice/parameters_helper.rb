@@ -2,24 +2,26 @@
 
 module Backoffice::ParametersHelper
   def parameter_templates(form)
-    content_tag(:div, class: "dropdown") do
-      concat content_tag(:button, "Add new parameter",
-                         class: "btn btn-success dropdown-toggle", type: "button",
-                         "data-toggle": "dropdown", "aria-haspopup": true,
-                         "aria-expanded": false, id: "attributes-list-button")
-      concat content_tag(:div, parameter_menu_items(form),
-                         class: "dropdown-menu",
+    content_tag(:div) do
+      concat content_tag(:ul, parameter_menu_items(form),
+                         class: "float-left list-group", size: 6,
                          "aria-labelledby": "attributes-list-button")
+      concat content_tag(:button, content_tag(:i, "", class: "fas fa-chevron-circle-right fa-5x"),
+                         class: "float-right btn", type: "button",
+                         id: "attributes-list-button",
+                         "disabled": true,
+                         "data-target": "offer.button",
+                         "data-action": "click->offer#add")
     end
   end
 
   def parameter_menu_items(form)
     capture do
       Parameter.all.map do |clazz|
-        concat content_tag(:a, I18n.t("parameters.#{clazz.type}.add"),
-                           class: "dropdown-item",
+        concat content_tag(:li, I18n.t("parameters.#{clazz.type}.add"),
+                           class: "list-group-item",
                            "data-template": parameter_template(clazz.new(id: "js_template_id"), form),
-                           "data-action": "click->offer#add")
+                           "data-action": "click->offer#selectParameterType")
       end
     end
   end
