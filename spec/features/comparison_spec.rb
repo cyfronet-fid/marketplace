@@ -42,7 +42,7 @@ RSpec.feature "Comparison", js: true do
     checkbox2 = find("#comparison-#{service2.id}", visible: false).click
     checkbox3 = find("#comparison-#{service3.id}", visible: false).click
 
-    click_on "CLEAR ALL"
+    click_on "Clear all"
 
     expect(checkbox1.checked?).to eql false
     expect(checkbox2.checked?).to eql false
@@ -77,7 +77,7 @@ RSpec.feature "Comparison", js: true do
   end
 
   it "deletes service from comparison on comparison page" do
-    @compare_services = [service1, service2, service3]
+    @services = [service1, service2, service3]
     visit comparisons_path
 
     expect do
@@ -90,7 +90,7 @@ RSpec.feature "Comparison", js: true do
   end
 
   it "redirects to services path when last service is deleted from comparison" do
-    @compare_services = [service1]
+    @services = [service1]
     visit comparisons_path
 
     expect do

@@ -1,4 +1,4 @@
-- i = 3 - @compare_services&.size
+- i = 3 - @services&.size
 - breadcrumb :comparison
 .container
   %table.services-comparison.bordered.shadow-sm.table-responsive
@@ -6,12 +6,12 @@
       %tr
         %th{ colspan: 4 }
           Comparison
-          %span.float-right.font-weight-light
-            = link_to "CLEAR ALL", comparisons_path, method: :delete
+          %span.float-right.font-weight-light.text-uppercase
+            = link_to "Clear all", comparisons_path, method: :delete
     %tbody
       %tr
         %th.title-col
-        - @compare_services.each do |service|
+        - @services.each do |service|
           %th.title-col
             .logo-wrapper
               %span.helper
@@ -25,43 +25,39 @@
             .service-description
               = service.description.truncate(80, separator: " ")
         - i.times do
-          %td.title-col.empty
-            = link_to "ADD NEXT SERVICE", services_path
+          %td.title-col.empty.text-uppercase
+            = link_to "Add next service", services_path
       %tr
         %th Providers
-        - @compare_services.each do |service|
+        - @services.each do |service|
           %td= service.providers.map { |p| p.name }.join(", ")
       %tr.lightgrey-row
         %th Service access type
-        - @compare_services.each do |service|
+        - @services.each do |service|
           %td{ "data-toggle" => "tootltip",
             "title" => "#{t("project_items.offer_type.#{service.service_type}.tooltip")}" }
             = t("offers.type.#{service.service_type}")
       %tr
         %th Research area
-        - @compare_services.each do |service|
+        - @services.each do |service|
           %td= service.research_areas.map { |ra| ra.name }.join(", ")
       %tr.lightgrey-row
         %th Dedicated for
-        - @compare_services.each do |service|
+        - @services.each do |service|
           %td= service.target_groups.map { |tg| tg.name }.join(", ")
       %tr
         %th Service phase
-        - @compare_services.each do |service|
+        - @services.each do |service|
           %td= t("services.about.sidebar.fields.phase.#{service.phase}")
       %tr.lightgrey-row
         %th Places
-        - @compare_services.each do |service|
+        - @services.each do |service|
           %td= service.places
       %tr
         %th Languages
-        - @compare_services.each do |service|
+        - @services.each do |service|
           %td= service.languages
-      -# %tr
-        -# %td Version
-        -# - @compare_services.each do |service|
-        -# %td= service.version
       %tr.lightgrey-row
         %th Tags
-        - @compare_services.each do |service|
+        - @services.each do |service|
           %td= service.tags.map { |t| t.name }.join(", ")

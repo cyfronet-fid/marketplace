@@ -2,8 +2,15 @@
 
 class ComparisonsController < ApplicationController
   def show
-    @compare_services = Service.where(slug: session[:comparison])
-    redirect_to_services_path
+    @services = Service.where(slug: session[:comparison])
+    if @services.blank?
+      if params[:fromc]
+        category = Category.find_by(slug: params[:fromc])
+        redirect_to category_services_path(category)
+      else
+        redirect_to services_path
+      end
+    end
   end
 
   def destroy
@@ -15,22 +22,11 @@ class ComparisonsController < ApplicationController
   end
 
   private
-    def redirect_to_services_path
-      if @compare_services.blank?
-        if params[:fromc]
-          category = Category.find_by(slug: params[:fromc])
-          redirect_to category_services_path(category)
-        else
-          redirect_to services_path
-        end
-      end
-    end
-
     def render_json
-      render json: { data: session[:comparison], html: render_bottom_bar }
+      render json: { data: session[:comparison], html: bottom_bar }
     end
 
-    def render_bottom_bar
-      render_to_string(partial: "comparisons/service", collection: @compare_services, formats: [:html])
+    def bottom_bar
+      render_to_string(partial: "comparisons/service", collection: @services, formats: [:html])
     end
 end

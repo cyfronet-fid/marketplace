@@ -7,6 +7,7 @@ export default class extends Controller {
     connect() {
         if (this.checkboxTargets) {
             this.updateCheckboxLabels();
+            $('label[data-toggle="tooltip"]').tooltip('enable');
         }
     }
 
@@ -46,9 +47,9 @@ export default class extends Controller {
         const elements = this.checkboxTargets;
         for (const element of elements) {
             if (element.checked) {
-                element.nextElementSibling.innerText = "Added"
+                element.nextElementSibling.innerText = "Remove from comparison"
             } else {
-                element.nextElementSibling.innerText = "Add to compare"
+                element.nextElementSibling.innerText = "Add to comparison"
             }
         }
     }
@@ -100,20 +101,23 @@ export default class extends Controller {
         if (counter > 2) {
             for(const element of elements) {
                 if (!element.checked) {
-                    console.log(element);
                     element.disabled = true;
                     element.parentNode.setAttribute("data-toggle", "tooltip");
-                    element.parentNode.setAttribute("data-delay", '{ "show": 0, "hide": 5000 }');
-                    element.parentNode.setAttribute("data-trigger", "click");
-                    element.parentNode.setAttribute("title", "You have reached the maximum number of items you can compare");
-
+                    element.parentNode.setAttribute("data-trigger", "hover");
+                    element.parentNode.setAttribute("tabindex", "0");
+                    element.parentNode.setAttribute("data-original-title",
+                        "You have reached the maximum number of items you can compare");
+                    $('label[data-toggle="tooltip"]').tooltip('enable');
                 }
             }
         } else {
             for(const element of elements) {
                 element.disabled = false;
                 element.parentNode.removeAttribute("data-toggle");
-                element.parentNode.removeAttribute("title");
+                element.parentNode.removeAttribute("data-original-title");
+                element.parentNode.removeAttribute("data-trigger");
+                element.parentNode.removeAttribute("tabindex");
+                $('label[data-toggle="tooltip"]').tooltip('enable');
             }
         }
     }
