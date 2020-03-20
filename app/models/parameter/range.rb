@@ -5,8 +5,8 @@ class Parameter::Range < Parameter
 
   validates :min, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :max, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  # validates :exclusive_min, inclusion: { in: [ true, false ] }
-  # validates :exclusive_max, inclusion: { in: [ true, false ] }
+  validates :exclusive_min, inclusion: { in: [ true, false ] }
+  validates :exclusive_max, inclusion: { in: [ true, false ] }
 
   validate do
     if min >= max
@@ -20,8 +20,9 @@ class Parameter::Range < Parameter
       id: id, type: "range", label: name, description: hint, unit: unit,
       value_type: "integer",
       config: {
-        minimum: min, maximum: max,
-        exclusiveMinimum: exclusive_min, exclusiveMaximum: exclusive_max
+        minimum: min.to_i, maximum: max.to_i,
+        exclusiveMinimum: ActiveModel::Type::Boolean.new.cast(exclusive_min),
+        exclusiveMaximum: ActiveModel::Type::Boolean.new.cast(exclusive_max)
       }
     )
   end
