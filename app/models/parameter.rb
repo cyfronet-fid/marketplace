@@ -1,19 +1,22 @@
 # frozen_string_literal: true
 
 class Parameter
-  extend ActiveModel::Naming
-  include ActiveModel::Conversion
+  include ActiveModel::Model
+  include ActiveModel::Attributes
   include ActiveModel::Validations
 
-  attr_accessor :id, :name, :hint
+  attribute :id, :string
+  attribute :name, :string
+  attribute :hint, :string
 
   validates :id, presence: true
   validates :name, presence: true
 
-  def initialize(attrs = {})
-    attrs.each do |name, value|
-      send("#{name}=", value) if respond_to?("#{name}=")
-    end
+  def initialize(attrs)
+    attrs = ActiveSupport::HashWithIndifferentAccess.new(attrs)
+    filtered_attrs = self.class.attribute_names.map { |name| [name, attrs[name]] }.to_h
+
+    super(filtered_attrs)
   end
 
   def type

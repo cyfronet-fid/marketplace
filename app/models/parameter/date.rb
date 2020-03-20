@@ -2,11 +2,9 @@
 
 class Parameter::Date < Parameter
   def dump
-    ActiveSupport::HashWithIndifferentAccess.new(id: id,
-                                                 type: "date",
-                                                 label: name,
-                                                 description: hint,
-                                                 value_type: "string")
+    ActiveSupport::HashWithIndifferentAccess.new(
+      id: id, type: "date", label: name,
+      description: hint, value_type: "string")
   end
 
   def self.load(hsh)

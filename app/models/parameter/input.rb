@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Parameter::Input < Parameter
-  attr_accessor :unit, :value_type
+  attribute :unit, :string
+  attribute :value_type, :string
 
   validates :value_type, presence: true, inclusion: %w[string integer]
 
