@@ -1,5 +1,5 @@
 en:
-  properties:
+  parameters:
     input:
       title: Input parameter
       add: Add new input parameter
