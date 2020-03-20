@@ -6,7 +6,7 @@ class Comparisons::ServicesController < ComparisonsController
     session[:comparison] = session[:comparison].blank? ? [] : session[:comparison]
     session[:comparison].include?(new_service_slug) ?
         session[:comparison].delete(new_service_slug) : session[:comparison] << new_service_slug
-    @compare_services = Service.where(slug: session[:comparison])
+    @services = Service.where(slug: session[:comparison])
     respond_to do |format|
       format.json { render_json }
     end

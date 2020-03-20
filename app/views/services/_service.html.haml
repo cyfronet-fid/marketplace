@@ -4,9 +4,9 @@
     service_path(service, category.present? ? { fromc: category.slug } : nil)
   - content_for :checkbox do
     .mt-3.compare
-      %label
+      %label{ options(service.slug, comparison_enabled) }
         = check_box_tag "comparison", service.slug, checked?(service.slug), id: "comparison-#{service.id}",
                 class: "form-check-input",
                 disabled: !checked?(service.slug) && comparison_enabled,
                 data: { "target": "comparison.checkbox", "action": "click->comparison#update" }
-        %span Add to compare
+        %span Add to comparison

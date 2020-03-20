@@ -37,7 +37,7 @@ crumb :category do |category|
 end
 
 crumb :comparison do
-  link "Comparison", comparisons_path
+  link "Comparison", comparisons_path(fromc: params[:fromc])
   if params[:fromc] && category = Category.find_by(slug: params[:fromc])
     parent :category, category
   else
