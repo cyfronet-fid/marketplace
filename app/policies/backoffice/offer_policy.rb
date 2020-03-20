@@ -45,7 +45,7 @@ class Backoffice::OfferPolicy < ApplicationPolicy
   def permitted_attributes
     [:name, :description, :webpage, :offer_type,
      parameters_attributes: [:type, :name, :hint, :min, :max,
-                             :unit, :value_type, :start_price, :step_price,
+                             :unit, :value_type, :start_price, :step_price, :currency,
                              :exclusive_min, :exclusive_max, values: []]]
   end
 
