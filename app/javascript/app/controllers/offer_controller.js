@@ -1,7 +1,8 @@
 import {Controller} from 'stimulus'
 
 export default class extends Controller {
-  static targets = ["parameters", "webpage", "offerType", "attributes"];
+  static targets = ["parameters", "webpage", "offerType",
+                    "attributes", "button"];
 
   initialize() {
     this.showWebpage();
@@ -9,10 +10,9 @@ export default class extends Controller {
   }
 
   add(event) {
-    const template = event.target.dataset.template
+    const template = this.buttonTarget.dataset.template
       .replace(/js_template_id/g, this.generateId());
     const frag = document.createRange().createContextualFragment(template);
-
     this.attributesTarget.appendChild(frag.firstChild);
   }
 
@@ -22,6 +22,25 @@ export default class extends Controller {
 
   remove(event) {
     event.target.closest(".parameter-form").remove();
+  }
+
+  selectParameterType(event){
+    const template = event.target.dataset.template
+    this.buttonTarget.disabled = false
+    this.setSelect(event)
+    this.buttonTarget.dataset.template = template
+  }
+
+  
+
+
+  setSelect(event){
+    Array.from(event.target.parentElement.children).forEach(this.removeSelect)
+    event.target.classList.add("selected")
+  }
+
+  removeSelect(elem, index) {
+    elem.classList.remove("selected")
   }
 
   up(event) {
