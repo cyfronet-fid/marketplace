@@ -824,10 +824,63 @@ Service detail
 Card style
 -------------------------*/
 
+.parameters-section {
+
+  border-top: 1px solid $palette-gray-10;
+  padding: 2rem;
+
+  .parameter-list {
+    width: 40%;
+
+    ul {
+
+      li {
+        margin-bottom: 5px;
+        border-color: $yellow;
+        cursor: pointer;
+
+        &.selected {
+          background: $yellow;
+        }
+      }
+    }
+
+    button {
+      margin-top: 8rem;
+      overflow: visible;
+    }
+  }
+
+  .parameter-cards {
+    width: 60%;
+  }
+
+  .parameter-form {
+    border-color: $palette-gray-30;
+
+    .card-body {
+      padding: 0;
+
+      .card-title {
+        margin: 0;
+        padding: 0.8rem;
+        border-bottom: 1px solid $palette-gray-30;
+      }
+
+      .card-text {
+        padding: 0.8rem;
+        background-color: $palette-light-blue;
+      }
+    }
+
+  }
+}
+
 .card {
 
   border-color: $palette-yellow;
   border-radius: $radius-common;
+
 
   &.offers {
     width: 100%;
@@ -879,6 +932,7 @@ Card style
     }
     // scss-lint:enable all
   }
+
 
 
   .card-img-top {
