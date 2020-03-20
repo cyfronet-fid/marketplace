@@ -120,7 +120,7 @@ class Attribute
       attr = Attribute::Date.new
     when "range-property"
       attr = Attribute::RangeProperty.new
-    when "quantity-price"
+    when "quantity_price"
       attr = Attribute::QuantityPrice.new
     else
       attr = Attribute.new
@@ -154,7 +154,7 @@ class Attribute
             "type": "string",
             "enum": [
               "attribute", "input", "range-property", "select",
-              "multiselect", "range", "date", "quantity-price"]
+              "multiselect", "range", "date", "quantity_price"]
         },
         # maybe value type support should be validated per attribute type
         "value_type": {
