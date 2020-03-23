@@ -1,1 +1,6 @@
-Slect
+.row
+  .col
+    = f.input :values, multiple: true, input_html: { data: { choice: true },
+      value: parameter.values&.join(",") }
+  .col
+    = f.input :mode, collection: %w[dropdown buttons]
