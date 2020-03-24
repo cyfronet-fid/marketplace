@@ -18,7 +18,7 @@ en:
       offers:
         new:
           link: Add new Offer
-          title: New Offer
+          title: Create new offer
         edit:
           title: Edit Offer
     categories:

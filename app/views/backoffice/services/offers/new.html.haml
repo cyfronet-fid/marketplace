@@ -1,5 +1,8 @@
+- breadcrumb :backoffice_service_new
 .container
-  %h2= t(".title")
+  .mb-4.pb-4.border-header
+    %h1= t(".title")
+
   = render "form",
     service: @service,
     offer: @offer,
