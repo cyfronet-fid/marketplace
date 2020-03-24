@@ -6,8 +6,8 @@ module Backoffice::ParametersHelper
       concat content_tag(:ul, parameter_menu_items(form),
                          class: "float-left list-group", size: 6,
                          "aria-labelledby": "attributes-list-button")
-      concat content_tag(:button, content_tag(:i, "", class: "fas fa-chevron-circle-right fa-5x"),
-                         class: "float-right btn", type: "button",
+      concat content_tag(:button, content_tag(:i, "", class: "fas fa-chevron-right"),
+                         class: "float-right btn add-button", type: "button",
                          id: "attributes-list-button",
                          "disabled": true,
                          "data-target": "offer.button",
