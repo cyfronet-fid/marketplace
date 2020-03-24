@@ -84,7 +84,7 @@ en:
           Url should start with http or https [e.g. http://webpage.org]
       offer:
         webpage: |
-          Url should start with http or https [e.g. http://webpage.org].</br>
+          Url should start with http or https [e.g. http://webpage.org].
           This url will be available on service order information step
       project_item:
         additional_comment: |
