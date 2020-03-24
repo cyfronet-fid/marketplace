@@ -836,6 +836,7 @@ Card style
         margin-bottom: 5px;
         border-color: $yellow;
         cursor: pointer;
+        border-radius: 0;
 
         &.selected {
           background: $yellow;
@@ -3193,4 +3194,18 @@ textarea.form-control.is-invalid {
 
 .lead-error {
   margin-top: 20px;
+}
+
+.add-button {
+  border: 2px solid $palette-gray-50;
+  border-radius: 100%;
+  width: 20px !important;
+  height: 46px;
+
+  svg {
+    color: $palette-gray-100;
+    font-size: 17px;
+    margin: 0;
+    width: 10px;
+  }
 }
