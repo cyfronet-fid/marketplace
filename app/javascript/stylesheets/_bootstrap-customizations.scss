@@ -825,9 +825,7 @@ Card style
 -------------------------*/
 
 .parameters-section {
-
-  border-top: 1px solid $palette-gray-10;
-  padding: 2rem;
+  padding: 2rem 0;
 
   .parameter-list {
     width: 40%;
@@ -2409,6 +2407,7 @@ label[data-multicheckbox].small {
 
 // scss-lint:disable all
 .new_project,
+.new_offer,
 .edit-project {
   h4 {
     font-size: 14px;

@@ -1,24 +1,29 @@
 = simple_form_for [:backoffice, service, offer], html: { "data-controller": "offer" } do |f|
-  = f.error_notification
-  = f.input :name
-  = f.input :description, input_html: { rows: 10 }
-  = f.input :offer_type, collection: Offer.offer_types.keys.map(&:to_sym),
-    selected: (offer.offer_type || service.service_type),
-    input_html: { "data-target" => "offer.offerType", "data-action" => "change->offer#showWebpage" }
-  = f.input :webpage, label: "Offer website",
-    wrapper_html: { "data-target" => "offer.webpage" }
+  .col-lg-8.pl-0
+    = f.error_notification
+    = f.input :name, input_html: { class: "form-control-lg" }
+    = f.input :description, input_html: { rows: 10 }
+    = f.input :offer_type, collection: Offer.offer_types.keys.map(&:to_sym),
+      selected: (offer.offer_type || service.service_type),
+      input_html: { "data-target" => "offer.offerType", "data-action" => "change->offer#showWebpage",
+      class: "form-control-lg col-lg-6" }
+    = f.input :webpage, label: "Offer website",
+      wrapper_html: { "data-target" => "offer.webpage" }, input_html: { class: "form-control-lg" }
 
-  %h3
+  %h4.mt-5.mb-0
     OFFERS PARAMETERS
   .row.parameters-section
-    .float-left.parameter-list
-      = parameter_templates(f)
-    .float-right.parameter-cards
-      %div{ "data-target": "offer.attributes" }
-        - offer.parameters.each do |p|
-          = render "parameters/template", parameter: p, form: f
+    .col-12
+      .float-left.parameter-list
+        = parameter_templates(f)
+      .float-right.parameter-cards
+        %div{ "data-target": "offer.attributes" }
+          - offer.parameters.each do |p|
+            = render "parameters/template", parameter: p, form: f
 
   %hr.bottom-hr.mb-4
-  .btn-group
-    = f.button :submit, class: "btn btn-success"
-    = link_to t("cancel"), backoffice_service_path(service), class: "btn btn-secondary"
+  .row
+    .col-12
+      = f.button :submit, class: "btn btn-primary pl-5 pr-5"
+      = link_to t("cancel and back to previous page"), backoffice_service_path(service),
+      class: "btn btn-link text-uppercase"
