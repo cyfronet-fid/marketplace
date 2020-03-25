@@ -27,8 +27,8 @@ RSpec.describe Offer do
   end
 
   context "#parameters" do
-    it "should disallow null" do
-      expect(build(:offer, parameters: nil).valid?).to be_falsey
+    it "should allow null" do
+      expect(build(:offer, parameters: nil).valid?).to be_truthy
     end
 
     it "should defaults to []" do
