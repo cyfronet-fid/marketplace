@@ -1,1 +1,5 @@
-Multiselect
+.row
+  .col
+    = f.input :values, input_html: { data: { choice: true }, value: parameter.values&.join(",") }
+  .col
+    = f.input :min
