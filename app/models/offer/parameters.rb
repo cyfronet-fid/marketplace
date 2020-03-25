@@ -13,8 +13,12 @@ module Offer::Parameters
   end
 
   def parameters_attributes=(attrs)
-    self.parameters = attrs.values.each_with_index
-      .map { |params, i| Parameter.for_type(params)&.new(params.merge(id: i.to_s)) }
-      .compact
+    if attrs.present?
+      self.parameters = attrs.values.each_with_index
+        .map { |params, i| Parameter.for_type(params)&.new(params.merge(id: i.to_s)) }
+        .compact
+    else
+      self.parameters = []
+    end
   end
 end
