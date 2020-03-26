@@ -6,6 +6,6 @@
         - project_item.property_values.each do |attr|
           = form.simple_fields_for :property_values, attr do |field|
             = render "services/configurations/attributes/#{attr.type}", attr: attr, field: field
-          - rescue => e
+          - rescue
             = e.message
 

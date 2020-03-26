@@ -2,26 +2,34 @@
 
 class Parameter::Multiselect < Parameter
   include Parameter::Values
-
+  attribute :values, :string_array
   attribute :min, :integer
+  attribute :max, :integer
 
-  validates :min, presence: true
-  validate do
-    if min && values && min >= values.length
-      errors.add(:min, "must be less than number of items")
-    end
-  end
+  validates :values, presence: true
+  validates :min, numericality: { less_than_or_equal_to: ->(p) { p.max } }
+  validates :min, numericality: { less_than_or_equal_to: ->(p) { p.values&.length || 0 } }
+  validates :max, numericality: { greater_than_or_equal_to: ->(p) { p.min } }
+  validates :max, numericality: { less_than_or_equal_to: ->(p) { p.values&.length || 0 } }
+  validate :duplicates
 
   def dump
     ActiveSupport::HashWithIndifferentAccess.new(
       id: id, type: "multiselect", label: name, description: hint,
-      config: { values: cast(values), minItems: (min || 0) },
+      config: { values: cast(values), minItems: (min || 0), maxItems: (max || values.length) },
       value_type: value_type)
   end
 
   def self.load(hsh)
     new(id: hsh["id"], name: hsh["label"], hint: hsh["description"],
         values: hsh.dig("config", "values"), min: hsh.dig("config", "minItems"),
-        value_type: hsh["value_type"])
+        value_type: hsh["value_type"], max: hsh.dig("config", "maxItems"))
   end
+
+  private
+    def duplicates
+      if values.uniq.length != values.length
+        errors.add(:values, "there are duplicate elements")
+      end
+    end
 end
