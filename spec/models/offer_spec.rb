@@ -27,10 +27,6 @@ RSpec.describe Offer do
   end
 
   context "#parameters" do
-    it "should allow null" do
-      expect(build(:offer, parameters: nil).valid?).to be_truthy
-    end
-
     it "should defaults to []" do
       expect(create(:offer).reload.parameters).to eq([])
     end
