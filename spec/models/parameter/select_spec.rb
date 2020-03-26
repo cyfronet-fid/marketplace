@@ -3,16 +3,33 @@
 require "rails_helper"
 
 RSpec.describe Parameter::Select do
-  subject { build(:select_parameter) }
+  context "with string value type" do
+    subject { build(:select_parameter) }
 
-  it "serializes to attribute schema" do
-    expect(Attribute.from_json(subject.dump)).to be_config_valid
+    it "serializes to attribute schema" do
+      expect(Attribute.from_json(subject.dump)).to be_config_valid
+    end
+
+    it "serializes to valid attribute attribute" do
+      attribute = Attribute.from_json(subject.dump)
+      attribute.value_from_param(["b"])
+
+      expect(attribute).to be_value_valid
+    end
   end
 
-  it "serializes to valid attribute attribute" do
-    attribute = Attribute.from_json(subject.dump)
-    attribute.value_from_param("b")
+  context "with integer value type" do
+    subject { build(:select_parameter, value_type: "integer", values: [1, 2, 3]) }
 
-    expect(attribute).to be_value_valid
+    it "serializes to attribute schema" do
+      expect(Attribute.from_json(subject.dump)).to be_config_valid
+    end
+
+    it "serializes to valid attribute attribute" do
+      attribute = Attribute.from_json(subject.dump)
+      attribute.value_from_param(["2"])
+
+      expect(attribute).to be_value_valid
+    end
   end
 end

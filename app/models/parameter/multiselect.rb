@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class Parameter::Multiselect < Parameter
-  attribute :values, :string_array
-  attribute :min, :integer, default: 2
+  include Parameter::Values
 
-  validates :values, presence: true
+  attribute :min, :integer
+
   validates :min, presence: true
   validate do
     if min && values && min >= values.length
@@ -15,11 +15,13 @@ class Parameter::Multiselect < Parameter
   def dump
     ActiveSupport::HashWithIndifferentAccess.new(
       id: id, type: "multiselect", label: name, description: hint,
-      config: { values: values, minItems: min }, value_type: "string")
+      config: { values: cast(values), minItems: (min || 0) },
+      value_type: value_type)
   end
 
   def self.load(hsh)
     new(id: hsh["id"], name: hsh["label"], hint: hsh["description"],
-        values: hsh.dig("config", "values"), min: hsh.dig("config", "minItems"))
+        values: hsh.dig("config", "values"), min: hsh.dig("config", "minItems"),
+        value_type: hsh["value_type"])
   end
 end
