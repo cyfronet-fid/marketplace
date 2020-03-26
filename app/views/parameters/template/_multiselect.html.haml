@@ -1,5 +1,6 @@
+= f.input :values, input_html: { data: { choice: true }, value: parameter.values&.join(",") }
 .row
   .col
-    = f.input :values, input_html: { data: { choice: true }, value: parameter.values&.join(",") }
+    = f.input :value_type, collection: %w[string integer]
   .col
     = f.input :min

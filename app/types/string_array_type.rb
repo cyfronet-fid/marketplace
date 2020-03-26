@@ -10,7 +10,7 @@ class StringArrayType < ActiveModel::Type::Value
 
   def cast(value)
     if value.is_a?(::String)
-      value = value.split(@delimiter)
+      value = value.split(@delimiter).map { |v| v.strip }
     end
     value
   end
