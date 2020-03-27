@@ -206,7 +206,7 @@ RSpec.feature "Services in backoffice" do
       expect {
         fill_in "Name", with: "new offer 1"
         fill_in "Description", with: "test offer"
-        find("li", text: "Add new input parameter").click
+        find("li", text: "Input").click
         find("#attributes-list-button").first("svg").click
 
         within("div.card-text") do
@@ -290,8 +290,8 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
       click_on(class: "edit-offer")
 
-      first("a[data-action='offer#remove']").first("svg").click
-      first("a[data-action='offer#remove']").first("svg").click
+      first("a[data-action='offer#remove']").first("i").click
+      first("a[data-action='offer#remove']").first("i").click
       click_on "Update Offer"
 
       expect(offer.reload.parameters).to eq([])
