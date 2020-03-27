@@ -16,6 +16,7 @@ FactoryBot.define do
     sequence(:name) { |n| "select parameter #{n}" }
     value_type { "string" }
     values { ["a", "b", "c"] }
+    mode { "buttons" }
   end
 
   factory :multiselect_parameter, class: "Parameter::Multiselect", parent: :parameter do

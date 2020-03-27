@@ -1,4 +1,5 @@
 import {Controller} from 'stimulus'
+import initChoises from "../choises";
 
 export default class extends Controller {
   static targets = ["parameters", "webpage", "offerType",
@@ -12,8 +13,10 @@ export default class extends Controller {
   add(event) {
     const template = this.buttonTarget.dataset.template
       .replace(/js_template_id/g, this.generateId());
-    const frag = document.createRange().createContextualFragment(template);
-    this.attributesTarget.appendChild(frag.firstChild);
+    const newElement = document.createRange().createContextualFragment(template).firstChild;
+
+    this.attributesTarget.appendChild(newElement);
+    initChoises(newElement);
   }
 
   generateId() {
@@ -31,7 +34,7 @@ export default class extends Controller {
     this.buttonTarget.dataset.template = template
   }
 
-  
+
 
 
   setSelect(event){
