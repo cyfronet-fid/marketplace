@@ -1,21 +1,14 @@
 # frozen_string_literal: true
 
 class Parameter::Range < Parameter
-  attribute :min, :integer
-  attribute :max, :integer
+  include Parameter::Minmax
+
   attribute :exclusive_min, :boolean
   attribute :exclusive_max, :boolean
   attribute :unit, :string
 
-  validates :min, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :max, presence: true, numericality: { greater_than_or_equal_to: 0 }
-
-  validate do
-    if min && max && min >= max
-      errors.add(:min, "must be less than maximum value")
-      errors.add(:max, "must be greater than minimum value")
-    end
-  end
+  validates :min, presence: true
+  validates :max, presence: true
 
   def dump
     ActiveSupport::HashWithIndifferentAccess.new(
