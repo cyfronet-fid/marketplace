@@ -837,7 +837,7 @@ Card style
         border-color: $yellow;
         cursor: pointer;
         border-radius: 0;
-        width: 280px;
+        width: 100%;
 
         &.selected {
           background: $yellow;
@@ -865,6 +865,12 @@ Card style
         right: 47px;
         top: 0;
       }
+
+      .list-group {
+        width: -webkit-calc(100% - 100px);
+        width: -moz-calc(100% - 100px);
+        width: calc(100% - 100px);
+      }
     }
   }
 
@@ -872,7 +878,6 @@ Card style
     width: 60%;
     height: 100%;
     position: relative;
-    border: 2px dashed $palette-solid-5;
     background: url('../../assets/images/no_paramters_image.svg') 50% 38% no-repeat;
 
     &::after {
@@ -890,29 +895,103 @@ Card style
       text-align: center;
     }
 
-    .parameter-form {
-      border: none;
-      outline: 1px solid $palette-gray-30;
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      border: 2px dashed $palette-solid-5;
     }
 
   }
 
+  .card-separator {
+    height: 10px;
+    background: $white;
+    width: 100%;
+  }
+
   .parameter-form {
-    border-color: $palette-gray-30;
     z-index: 100;
+    border: none;
 
     .card-body {
       padding: 0;
+      border: 1px solid $palette-solid-20;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
 
       .card-title {
         margin: 0;
         padding: 0.8rem;
-        border-bottom: 1px solid $palette-gray-30;
+        font-size: 1rem;
+        border-bottom: 1px solid $palette-solid-20;
+
+        .card-controls {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+
+          a {
+            padding: 3px 7px;
+            float: right;
+            border-left: 1px solid $palette-gray-10;
+
+            &:last-child {
+              border-left: none;
+            }
+
+            &:hover {
+              opacity: 0.6;
+            }
+
+            .icon-up {
+              width: 19px;
+              float: left;
+              height: 26px;
+              background: url('../../assets/images/ico_chevron_up.svg') no-repeat 50% 50%;
+            }
+
+            .icon-down {
+              width: 19px;
+              height: 26px;
+              float: left;
+              background: url('../../assets/images/ico_chevron_down.svg') no-repeat 50% 50%;
+            }
+
+            .icon-collapse {
+              width: 15px;
+              height: 26px;
+              float: left;
+              background: url('../../assets/images/ico_collapse.svg') no-repeat 50% 50%;
+            }
+
+            .icon-remove {
+              width: 15px;
+              height: 26px;
+              float: left;
+              background: url('../../assets/images/ico_trash.svg') no-repeat 50% 50%;
+            }
+          }
+        }
       }
 
       .card-text {
         padding: 0.8rem;
         background-color: $white;
+
+        input,
+        select {
+          height: 50px;
+        }
+
+        textarea {
+          height: 50px;
+          line-height: 35px;
+        }
       }
     }
 
@@ -920,10 +999,8 @@ Card style
 }
 
 .card {
-
   border-color: $palette-yellow;
   border-radius: $radius-common;
-
 
   &.offers {
     width: 100%;
@@ -3264,3 +3341,4 @@ textarea.form-control.is-invalid {
     margin: 0 0 0 2px;
   }
 }
+
