@@ -2,19 +2,19 @@ en:
   parameters:
     input:
       title: Input parameter
-      add: Add new input parameter
+      add: Input
     select:
       title: Select parameter
-      add: Add new select parameter
+      add: Select
     multiselect:
       title: Multiselect parameter
-      add: Add new multiselect parameter
+      add: Multiselect
     range:
       title: Range parameter
-      add: Add new range parameter
+      add: Range
     date:
       title: Date parameter
-      add: Add new date parameter
+      add: Date
     quantity_price:
       title: Quantity price parameter
-      add: Add new quantity price parameter
+      add: Quantity price
