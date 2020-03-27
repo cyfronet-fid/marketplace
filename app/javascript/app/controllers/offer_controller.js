@@ -1,5 +1,5 @@
 import {Controller} from 'stimulus'
-import initChoises from "app/choises";
+import initChoises from "../choises";
 
 export default class extends Controller {
   static targets = ["parameters", "webpage", "offerType",
