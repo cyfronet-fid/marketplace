@@ -87,6 +87,7 @@ RSpec.feature "Service browsing" do
                                                name: "Number of CPU Cores",
                                                hint: "Select number of cores you want",
                                                mode: "buttons",
+                                               value_type: "integer",
                                                values: [1, 2, 4, 8]),
                                          build(:select_parameter,
                                                unit: "GB",
