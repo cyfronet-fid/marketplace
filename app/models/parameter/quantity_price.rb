@@ -12,12 +12,12 @@ class Parameter::QuantityPrice < Parameter
   validates :currency, presence: true
 
   def dump
-    ActiveSupport::HashWithIndifferentAccess.new(id: id, type: "quantity_price", label: name, description: hint,
-                                                 config: { start_price: start_price,
-                                                           step_price: step_price,
-                                                           max: max,
-                                                           currency: currency },
-                                                 value_type: "integer")
+    ActiveSupport::HashWithIndifferentAccess.new(
+      id: id, type: type, label: name, description: hint, value_type: "integer",
+      config: {
+        start_price: start_price, step_price: step_price,
+        max: max, currency: currency
+      })
   end
 
   def self.load(hsh)

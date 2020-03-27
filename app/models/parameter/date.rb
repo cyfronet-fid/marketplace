@@ -3,7 +3,7 @@
 class Parameter::Date < Parameter
   def dump
     ActiveSupport::HashWithIndifferentAccess.new(
-      id: id, type: "date", label: name,
+      id: id, type: type, label: name,
       description: hint, value_type: "string")
   end
 

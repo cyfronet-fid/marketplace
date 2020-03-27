@@ -15,7 +15,7 @@ class Parameter::Multiselect < Parameter
 
   def dump
     ActiveSupport::HashWithIndifferentAccess.new(
-      id: id, type: "multiselect", label: name, description: hint,
+      id: id, type: type, label: name, description: hint,
       config: { values: cast(values), minItems: (min || 0), maxItems: (max || values.length) },
       value_type: value_type, unit: unit)
   end
