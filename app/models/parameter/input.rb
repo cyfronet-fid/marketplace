@@ -8,7 +8,7 @@ class Parameter::Input < Parameter
 
   def dump
     ActiveSupport::HashWithIndifferentAccess.new(
-      id: id, type: "input", label: name, description: hint,
+      id: id, type: type, label: name, description: hint,
       unit: unit, value_type: value_type)
   end
 

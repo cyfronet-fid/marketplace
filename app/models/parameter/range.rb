@@ -19,7 +19,7 @@ class Parameter::Range < Parameter
 
   def dump
     ActiveSupport::HashWithIndifferentAccess.new(
-      id: id, type: "range", label: name, description: hint, unit: unit,
+      id: id, type: type, label: name, description: hint, unit: unit,
       value_type: "integer",
       config: {
         minimum: min, maximum: max,

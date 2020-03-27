@@ -10,7 +10,7 @@ class Parameter::Select < Parameter
 
   def dump
     ActiveSupport::HashWithIndifferentAccess.new(
-      id: id, type: "select", label: name, description: hint,
+      id: id, type: type, label: name, description: hint,
       config: { values: cast(values), mode: mode }, value_type: value_type,
       unit: unit)
   end
