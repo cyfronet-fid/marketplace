@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class StringArrayType < ActiveModel::Type::Value
+class ArrayType < ActiveModel::Type::Value
   attr_reader :delimiter
 
 

@@ -2,11 +2,10 @@
 
 class Parameter::Multiselect < Parameter
   include Parameter::Values
-  attribute :values, :string_array
+
   attribute :min, :integer
   attribute :max, :integer
 
-  validates :values, presence: true
   validates :min, numericality: { less_than_or_equal_to: ->(p) { p.max } }
   validates :min, numericality: { less_than_or_equal_to: ->(p) { p.values&.length || 0 } }
   validates :max, numericality: { greater_than_or_equal_to: ->(p) { p.min } }
