@@ -2,16 +2,13 @@
 
 class Parameter::Multiselect < Parameter
   include Parameter::Values
+  include Parameter::Minmax
 
-  attribute :min, :integer
-  attribute :max, :integer
   attribute :unit, :string
 
-  validates :min, numericality: { less_than_or_equal_to: ->(p) { p.max } }
   validates :min, numericality: { less_than_or_equal_to: ->(p) { p.values&.length || 0 } }
-  validates :max, numericality: { greater_than_or_equal_to: ->(p) { p.min } }
   validates :max, numericality: { less_than_or_equal_to: ->(p) { p.values&.length || 0 } }
-  validate :duplicates
+  validate :duplicates, if: :values
 
   def dump
     ActiveSupport::HashWithIndifferentAccess.new(
