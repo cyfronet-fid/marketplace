@@ -4,7 +4,7 @@ module Parameter::Values
   extend ActiveSupport::Concern
 
   included do
-    attribute :values, :string_array
+    attribute :values, :array
     attribute :value_type, :string
 
     validates :value_type, presence: true, inclusion: %w[string integer]
