@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Parameter
+  extend ActiveModel::Naming
   include ActiveModel::Model
   include ActiveModel::Attributes
   include ActiveModel::Validations
@@ -29,7 +30,7 @@ class Parameter
 
   class << self
     def type
-      class_name.underscore
+      model_name.element
     end
 
     def for_type(params)
