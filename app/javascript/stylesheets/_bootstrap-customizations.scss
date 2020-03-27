@@ -862,6 +862,14 @@ Card style
       top: 43%;
       right: 25px;
       overflow: visible;
+
+      &.active {
+        border: 2px solid $palette-yellow;
+
+        svg {
+          color: $palette-solid-100;
+        }
+      }
     }
 
     .parameter-wrapper {
@@ -998,6 +1006,10 @@ Card style
         input,
         select {
           height: 50px;
+        }
+
+        .form-check-input {
+          height: auto;
         }
 
         textarea {
@@ -3440,7 +3452,7 @@ textarea.form-control.is-invalid {
   svg {
     color: $palette-solid-5;
     font-size: 21px;
-    margin: 0 0 0 2px;
+    margin: 0 0 0 4px;
   }
 }
 
