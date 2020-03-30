@@ -1,12 +1,16 @@
-- @category ? breadcrumb(:category, @category) : breadcrumb(:services)
-
-= render "services/index", services: @services,
-                           category: @category,
-                           services_count: @services_total,
-                           categories: @siblings_with_counters,
-                           subcategories: @subcategories_with_counters,
-                           sort_options: @sort_options,
-                           highlights: @highlights,
-                           filters: @filters,
-                           active_filters: @active_filters,
-                           offers: @offers
+.container{ "data-controller": "comparison" }
+  - @category ? breadcrumb(:category, @category) : breadcrumb(:services)
+  = render "services/index", services: @services,
+                             category: @category,
+                             services_count: @services_total,
+                             categories: @siblings_with_counters,
+                             subcategories: @subcategories_with_counters,
+                             sort_options: @sort_options,
+                             highlights: @highlights,
+                             filters: @filters,
+                             active_filters: @active_filters,
+                             offers: @offers,
+                             comparison_enabled: @comparison_enabled
+  #comparison-bar.comparison-bar.fixed-bottom{ class: (session[:comparison]&.size || 0) > 0 ? "d-block" : "d-none",
+  "data-target": "comparison.bar" }
+    = render "comparisons/bar", services: @compare_services, category: @category

@@ -1,0 +1,63 @@
+- i = 3 - @services&.size
+- breadcrumb :comparison
+.container
+  %table.services-comparison.bordered.shadow-sm.table-responsive
+    %thead
+      %tr
+        %th{ colspan: 4 }
+          Comparison
+          %span.float-right.font-weight-light.text-uppercase
+            = link_to "Clear all", comparisons_path, method: :delete
+    %tbody
+      %tr
+        %th.title-col
+        - @services.each do |service|
+          %th.title-col
+            .logo-wrapper
+              %span.helper
+              - if service.logo.attached?
+                = image_tag service.logo.variant(resize: "100x100")
+            = link_to comparisons_services_path(slug: service.slug, fromc: params[:fromc]), method: :delete do
+              %i.far.fa-trash-alt
+            .service-title
+              = link_to service.title.truncate(30, separator: " "),
+              service_path(service, fromc: params[:fromc], comp_link: true)
+            .service-description
+              = service.description.truncate(80, separator: " ")
+        - i.times do
+          %td.title-col.empty.text-uppercase
+            = link_to "Add next service", services_path
+      %tr
+        %th Providers
+        - @services.each do |service|
+          %td= service.providers.map { |p| p.name }.join(", ")
+      %tr.lightgrey-row
+        %th Service access type
+        - @services.each do |service|
+          %td{ "data-toggle" => "tootltip",
+            "title" => "#{t("project_items.offer_type.#{service.service_type}.tooltip")}" }
+            = t("offers.type.#{service.service_type}")
+      %tr
+        %th Research area
+        - @services.each do |service|
+          %td= service.research_areas.map { |ra| ra.name }.join(", ")
+      %tr.lightgrey-row
+        %th Dedicated for
+        - @services.each do |service|
+          %td= service.target_groups.map { |tg| tg.name }.join(", ")
+      %tr
+        %th Service phase
+        - @services.each do |service|
+          %td= t("services.about.sidebar.fields.phase.#{service.phase}")
+      %tr.lightgrey-row
+        %th Places
+        - @services.each do |service|
+          %td= service.places
+      %tr
+        %th Languages
+        - @services.each do |service|
+          %td= service.languages
+      %tr.lightgrey-row
+        %th Tags
+        - @services.each do |service|
+          %td= service.tags.map { |t| t.name }.join(", ")

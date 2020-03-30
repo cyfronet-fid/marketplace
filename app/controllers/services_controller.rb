@@ -4,6 +4,7 @@ class ServicesController < ApplicationController
   include Service::Searchable
   include Service::Categorable
   include Service::Autocomplete
+  include Service::Comparison
 
   before_action :sort_options
 

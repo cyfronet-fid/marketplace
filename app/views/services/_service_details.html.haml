@@ -1,9 +1,11 @@
 .media.mb-3.service-box.shadow-sm
-  .media-body.pt-4.pb-2
+  .media-body.pt-4
     .pl-4.pr-4.mb-3
       %h2.mb-3= yield
       %p.mb-3= highlighted_for(:tagline, service, highlights)
       = render "services/categorization", service: service
+      - if content_for(:checkbox)
+        = yield_content!(:checkbox)
     - if service_offers && service_offers.any?
       .offers-box.clearfix
         .pl-4.pr-4
@@ -16,4 +18,3 @@
             service: service
   - if service.logo.attached?
     = image_tag service.logo.variant(resize: "120x120"), class: "align-self-center mx-4 service-logo"
-
