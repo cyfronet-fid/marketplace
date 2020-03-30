@@ -6,7 +6,7 @@ export default function initChoises(scope = document) {
     new Choices(element, {
       removeItems: true,
       placeholder: true,
-      placeholderValue: '+ Add',
+      placeholderValue: '+ start typing to add',
       removeItemButton: true,
     });
   });

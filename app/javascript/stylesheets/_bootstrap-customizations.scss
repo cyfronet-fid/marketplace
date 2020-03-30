@@ -843,7 +843,7 @@ Card style
     width: 25%;
     position: -webkit-sticky;
     position: sticky;
-    top: 0;
+    top: 10px;
 
     ul {
 
@@ -3474,7 +3474,7 @@ textarea.form-control.is-invalid {
   svg {
     color: $palette-solid-5;
     font-size: 21px;
-    margin: 0 0 0 4px;
+    margin: 10px 0 0 4px;
   }
 }
 
