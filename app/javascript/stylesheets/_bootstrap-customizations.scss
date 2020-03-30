@@ -841,6 +841,9 @@ Card style
 
   .parameter-list {
     width: 25%;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
 
     ul {
 
@@ -890,8 +893,9 @@ Card style
         width: -webkit-calc(100% - 100px);
         width: -moz-calc(100% - 100px);
         width: calc(100% - 100px);
+        }
       }
-    }
+
   }
 
   .parameter-cards {
