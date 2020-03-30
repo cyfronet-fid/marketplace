@@ -898,33 +898,46 @@ Card style
     width: 75%;
     height: 100%;
     position: relative;
-    background: url('../../assets/images/no_paramters_image.svg') 50% 38% no-repeat;
 
-    &::after {
-      content: 'You have no parameters yet. \A Choose any from the left column and add.';
-      white-space: pre;
-      position: absolute;
-      top: 55%;
-      left: 0;
+    .offer-attributes {
       width: 100%;
-      font-size: 18px;
-      font-style: italic;
-      letter-spacing: 0;
-      color: $palette-solid-80;
-      line-height: 26px;
-      text-align: center;
-    }
-
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
       height: 100%;
-      width: 100%;
-      border: 2px dashed $palette-solid-5;
-    }
+      background: url('../../assets/images/no_paramters_image.svg') 50% 38% no-repeat;
 
+      &::before {
+        content: 'You have no parameters yet. \A Choose any from the left column and add.';
+        white-space: pre;
+        position: absolute;
+        top: 55%;
+        left: 0;
+        width: 100%;
+        font-size: 18px;
+        font-style: italic;
+        letter-spacing: 0;
+        color: $palette-solid-80;
+        line-height: 26px;
+        text-align: center;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        border: 2px dashed $palette-solid-5;
+      }
+
+      &.active {
+        background: none;
+
+        &::after,
+        &::before {
+          display: none;
+        }
+      }
+    }
   }
 
   .card-separator {
@@ -958,6 +971,7 @@ Card style
           a {
             padding: 3px 7px;
             float: right;
+            display: block;
             border-left: 1px solid $palette-gray-10;
 
             &:last-child {

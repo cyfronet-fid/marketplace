@@ -17,6 +17,8 @@ export default class extends Controller {
 
     this.attributesTarget.appendChild(newElement);
     initChoises(newElement);
+
+    this.attributesTarget.classList.add("active");
   }
 
   generateId() {
@@ -25,6 +27,7 @@ export default class extends Controller {
 
   remove(event) {
     event.target.closest(".parameter-form").remove();
+      this.attributesTarget.classList.remove("active");
   }
 
   selectParameterType(event){

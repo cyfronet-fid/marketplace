@@ -17,7 +17,7 @@
       .float-left.parameter-list
         = parameter_templates(f)
       .float-right.parameter-cards
-        %div{ "data-target": "offer.attributes" }
+        .offer-attributes{ "data-target": "offer.attributes" }
           - offer.parameters.each do |p|
             = render "parameters/template", parameter: p, form: f
 
