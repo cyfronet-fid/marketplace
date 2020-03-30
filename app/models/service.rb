@@ -76,7 +76,13 @@ class Service < ApplicationRecord
                       fields: ["restrictions"] },
                     { name: "phase",
                       template: "text",
-                      fields: ["phase"] }]
+                      fields: ["phase"] },
+                    { name: "version",
+                      template: "plain_text",
+                      fields: ["version"] },
+                    { name: "last_update",
+                      template: "date",
+                      fields: ["updated_at"] }]
 
   enum status: STATUSES
 

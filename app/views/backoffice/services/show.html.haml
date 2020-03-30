@@ -110,3 +110,9 @@
           - if @service.upstream_id == source.id
             %i.fas.fa-check
           = source
+
+      %h5 Version
+      %p= @service&.version
+
+      %h5 Last update
+      %p= l @service.updated_at, format: :short

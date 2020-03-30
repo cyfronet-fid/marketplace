@@ -1,0 +1,4 @@
+- fields.each do |field|
+  - if service.send(field).present?
+    %li.list-group-item
+      %span= l service.send(field), format: :short

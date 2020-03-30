@@ -139,6 +139,7 @@ describe Import::Eic do
       expect(service.logo.download).to eq(file_fixture("PhenoMeNal_logo.png").read.b)
       expect(service.sources.first.eid).to eq("phenomenal.phenomenal")
       expect(service.upstream_id).to eq(nil)
+      expect(service.version).to eq("2018.08")
 
       expect(Service.find_by(title: "MetalPDB")).to_not be_nil
       expect(Service.find_by(title: "PDB_REDO server")).to_not be_nil
