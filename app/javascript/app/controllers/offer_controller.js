@@ -20,6 +20,7 @@ export default class extends Controller {
 
     this.buttonTarget.disabled = true;
     this.fromArrayRemoveSelect();
+    this.buttonTarget.classList.remove("active");
   }
 
   generateId() {
