@@ -1019,7 +1019,7 @@ Card style
 
       .card-text {
         padding: 0.8rem;
-        background-color: $white;
+        background-color: $home-card-bg;
 
         input,
         select {
@@ -1033,6 +1033,10 @@ Card style
         textarea {
           height: 50px;
           line-height: 35px;
+        }
+
+        .is-invalid {
+          background-position: right 15px center !important;
         }
       }
     }
@@ -2758,7 +2762,7 @@ abbr[title] {
 
 textarea.form-control.is-valid,
 textarea.form-control.is-invalid {
-  background-position: right 2% top 15px !important;
+  background-position: right 4% top 15px !important;
 }
 
 // scss-lint:enable all
