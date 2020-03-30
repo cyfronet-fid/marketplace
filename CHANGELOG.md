@@ -11,7 +11,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
-- Description of ordered services (@martaswiatkowska)
 
 ### Deprecated
 
@@ -20,6 +19,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 
 ### Security
+
+## [2.8.1] 2020-03-30
+
+### Changed
+- Description of ordered services (@martaswiatkowska)
 
 ## [2.8.0] 2020-03-12
 
