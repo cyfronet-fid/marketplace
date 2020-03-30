@@ -22,6 +22,13 @@ Rails.application.routes.draw do
       resources :opinions, only: :index
     end
   end
+
+  resource :comparisons, only: [:show, :destroy] do
+    scope module: :comparisons do
+      resource :services, only: [:create, :destroy]
+    end
+  end
+
   get "services/c/:category_id" => "services#index", as: :category_services
   resources :categories, only: :show
 

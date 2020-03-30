@@ -1,0 +1,13 @@
+.list-inline.border.bg-light
+  .row
+    .container
+      .row
+        .col-lg-9.col-12.row.services-list{ "data-target": "comparison.box" }
+          - unless services.blank? || current_page?(backoffice_services_path)
+            = render partial: "comparisons/service", collection: services
+        .col-lg-3.col-12.text-right.action-box
+          = link_to "Clear all", comparisons_path, method: :delete, remote: true,
+            "data-action": "click->comparison#clearAll", class: "text-uppercase"
+          = link_to "Compare", comparisons_path(category.present? ? { fromc: category.slug } : nil),
+          class: "btn btn-primary ml-3"
+
