@@ -3032,6 +3032,11 @@ textarea.form-control.is-invalid {
     background-color: $white;
   }
 
+  input[type=checkbox]:disabled + span {
+    opacity: .70;
+    color: $palette-solid-50;
+  }
+
   input[type=checkbox]:checked + span::after {
     content: '';
     display: block;
