@@ -21,6 +21,16 @@ RSpec.feature "Comparison", js: true do
     expect(page).to have_selector("#comparison-bar")
   end
 
+  it "shows comparison bar on services view" do
+    visit services_path
+
+    find("#comparison-#{service1.id}", visible: false).click
+
+    click_on "#{service1.title}"
+
+    expect(page).to have_selector("#comparison-bar")
+  end
+
   it "blocks other services checkboxes when 3 are checked" do
     service4 = create(:service)
     service5 = create(:service)
@@ -33,6 +43,10 @@ RSpec.feature "Comparison", js: true do
 
     expect(find("#comparison-#{service4.id}", visible: false).disabled?).to eql true
     expect(find("#comparison-#{service5.id}", visible: false).disabled?).to eql true
+
+    click_on service4.title
+
+    expect(find("#comparison-#{service4.id}", visible: false).disabled?).to eql true
   end
 
   it "clears all elements when click on CLEAR ALL" do

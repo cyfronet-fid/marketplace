@@ -6,7 +6,7 @@
         = image_tag service.logo.variant(resize: "40x40")
     .float-left.service-title
       %span.middle
-        = service.title.truncate(28, separator: " ")
+        = service.title.truncate(25, separator: " ")
     .comparison-link.float-right
       %a{ "value": "#{service.slug}", data: { "action": "click->comparison#update" } }
         %i.far.fa-trash-alt
