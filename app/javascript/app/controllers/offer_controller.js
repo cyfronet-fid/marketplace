@@ -3,7 +3,7 @@ import initChoises from "../choises";
 
 export default class extends Controller {
   static targets = ["parameters", "webpage", "offerType",
-                    "attributes", "button"];
+                    "attributes", "button", "attributeType"];
 
   initialize() {
     this.showWebpage();
@@ -18,7 +18,8 @@ export default class extends Controller {
     this.attributesTarget.appendChild(newElement);
     initChoises(newElement);
 
-    this.attributesTarget.classList.add("active");
+    this.buttonTarget.disabled = true;
+    this.fromArrayRemoveSelect();
   }
 
   generateId() {
@@ -27,7 +28,7 @@ export default class extends Controller {
 
   remove(event) {
     event.target.closest(".parameter-form").remove();
-      this.attributesTarget.classList.remove("active");
+    this.attributesTarget.classList.remove("active");
   }
 
   selectParameterType(event){
@@ -36,14 +37,16 @@ export default class extends Controller {
     this.setSelect(event)
     this.buttonTarget.dataset.template = template
     this.buttonTarget.classList.add("active");
+    this.attributesTarget.classList.add("active");
   }
 
-
-
-
   setSelect(event){
-    Array.from(event.target.parentElement.children).forEach(this.removeSelect)
+    this.fromArrayRemoveSelect();
     event.target.classList.add("selected")
+  }
+
+  fromArrayRemoveSelect() {
+    this.attributeTypeTargets.forEach(this.removeSelect)
   }
 
   removeSelect(elem, index) {

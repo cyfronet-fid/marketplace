@@ -22,7 +22,8 @@ module Backoffice::ParametersHelper
         concat content_tag(:li, I18n.t("parameters.#{clazz.type}.add"),
                            class: "list-group-item",
                            "data-template": parameter_template(clazz.new(id: "js_template_id"), form),
-                           "data-action": "click->offer#selectParameterType")
+                           "data-action": "click->offer#selectParameterType",
+                           "data-target": "offer.attributeType")
       end
     end
   end
