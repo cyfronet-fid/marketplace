@@ -104,6 +104,7 @@ module Import
         # subcategory_name = service["subCategoryName"]
         phase = service["trl"]
         provider_eid = service["providers"][0]
+        version = service["version"]
 
         logo = nil
 
@@ -175,7 +176,8 @@ module Import
             status: "draft",
             providers: [mapped_provider],
             categories: map_category(category),
-            research_areas: [@research_area_other]
+            research_areas: [@research_area_other],
+            version: version || ""
         }
 
         begin

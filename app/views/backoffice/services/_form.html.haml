@@ -2,6 +2,7 @@
   = f.error_notification
   .row
     .col-12.col-md-10
+      = f.input :version, disabled: cant_edit(:version)
       = f.input :logo, disabled: cant_edit(:logo)
       = f.input :title, disabled: cant_edit(:title)
       = f.input :tagline, disabled: cant_edit(:tagline)
