@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- Description of ordered services (@martaswiatkowska)
 
 ### Deprecated
 
