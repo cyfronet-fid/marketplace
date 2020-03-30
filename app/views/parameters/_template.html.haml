@@ -5,7 +5,7 @@
       .card-controls
         %a{ "data-action": "offer#remove" }
           %i.icon-remove
-        %a.multi-collapse{ "data-toggle": "collapse", "data-target": ".multi-collapse",
+        %a.multi-collapse{ "data-toggle": "collapse", "data-target": ".parameter-#{parameter.id}-collapse",
         "aria-expanded": "true" }
           %i.icon-collapse
         %a{ "data-action": "offer#down" }
@@ -13,7 +13,7 @@
         %a{ "data-action": "offer#up" }
           %i.icon-up
 
-    .card-text.multi-collapse.show
+    .card-text.show{ class: "parameter-#{parameter.id}-collapse" }
       = form.simple_fields_for :parameters, parameter, child_index: parameter.id do |f|
         = f.hidden_field :type
         .row
