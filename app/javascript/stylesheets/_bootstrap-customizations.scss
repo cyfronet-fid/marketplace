@@ -3469,12 +3469,9 @@ textarea.form-control.is-invalid {
   line-height: 46px;
   text-align: center;
 
-  &:hover {
+  &.active:hover {
     border: 2px solid $palette-yellow;
-
-    svg {
-      color: $palette-solid-100;
-    }
+    background: $palette-yellow;
   }
 
   svg {
