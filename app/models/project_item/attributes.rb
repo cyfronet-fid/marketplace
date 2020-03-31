@@ -6,7 +6,7 @@ class ProjectItem::Attributes
   def initialize(offer:, parameters: nil)
     @offer = offer
     if parameters.blank?
-      parameters = offer.parameters.dup
+      parameters = offer.parameters.map { |p| p.dump }
     end
     @attributes = attributes_from_params(parameters)
   end

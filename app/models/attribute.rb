@@ -2,11 +2,16 @@
 
 class Attribute
   extend ActiveModel::Naming
+  include ActiveModel::Conversion
   include ActiveModel::Validations
 
   attr_accessor :id, :label, :description, :type, :value_type, :unit, :config, :value
 
   validate :value_validity
+
+  def persisted?
+    false
+  end
 
   def value_validity
     unless value_valid?
@@ -115,7 +120,7 @@ class Attribute
       attr = Attribute::Date.new
     when "range-property"
       attr = Attribute::RangeProperty.new
-    when "quantity-price"
+    when "quantity_price"
       attr = Attribute::QuantityPrice.new
     else
       attr = Attribute.new
@@ -149,7 +154,7 @@ class Attribute
             "type": "string",
             "enum": [
               "attribute", "input", "range-property", "select",
-              "multiselect", "range", "date", "quantity-price"]
+              "multiselect", "range", "date", "quantity_price"]
         },
         # maybe value type support should be validated per attribute type
         "value_type": {

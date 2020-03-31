@@ -1,0 +1,20 @@
+en:
+  parameters:
+    input:
+      title: Input parameter
+      add: Input
+    select:
+      title: Select parameter
+      add: Select
+    multiselect:
+      title: Multiselect parameter
+      add: Multiselect
+    range:
+      title: Range parameter
+      add: Range
+    date:
+      title: Date parameter
+      add: Date
+    quantity_price:
+      title: Quantity price parameter
+      add: Quantity price

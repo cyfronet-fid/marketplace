@@ -1,0 +1,12 @@
+= f.input :values, multiple: true,
+  input_html: { data: { choice: true },
+  value: parameter.values&.join(",") }
+
+.row
+  .col
+    = f.input :value_type, collection: %w[string integer]
+  .col
+    = f.input :mode, collection: %w[dropdown buttons]
+.row
+  .col
+    = f.input :unit

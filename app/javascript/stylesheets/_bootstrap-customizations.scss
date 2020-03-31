@@ -836,8 +836,221 @@ Service detail
 Card style
 -------------------------*/
 
-.card {
+.parameters-section {
+  padding: 2rem 0;
 
+  .parameter-list {
+    width: 25%;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 10px;
+
+    ul {
+
+      li {
+        margin-bottom: 5px;
+        border-color: $yellow;
+        cursor: pointer;
+        border-radius: 0;
+        width: 100%;
+
+        &.selected {
+          background: $yellow;
+        }
+      }
+    }
+
+    button {
+      position: absolute;
+      top: 43%;
+      right: 25px;
+      overflow: visible;
+
+      &.active {
+        border: 2px solid $palette-yellow;
+
+        svg {
+          color: $palette-solid-100;
+        }
+      }
+    }
+
+    .parameter-wrapper {
+      position: relative;
+      overflow: hidden;
+
+      span {
+        position: absolute;
+        width: 3px;
+        display: block;
+        background: $palette-solid-5;
+        height: 100%;
+        right: 47px;
+        top: 0;
+      }
+
+      .list-group {
+        width: -webkit-calc(100% - 100px);
+        width: -moz-calc(100% - 100px);
+        width: calc(100% - 100px);
+        }
+      }
+
+  }
+
+  .parameter-cards {
+    width: 75%;
+    height: 100%;
+    position: relative;
+
+    .offer-attributes {
+      width: 100%;
+      height: 100%;
+      background: url('../../assets/images/no_paramters_image.svg') 50% 38% no-repeat;
+
+      &::before {
+        content: 'You have no parameters yet. \A Choose any from the left column and add.';
+        white-space: pre;
+        position: absolute;
+        top: 55%;
+        left: 0;
+        width: 100%;
+        font-size: 18px;
+        font-style: italic;
+        letter-spacing: 0;
+        color: $palette-solid-80;
+        line-height: 26px;
+        text-align: center;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        border: 2px dashed $palette-solid-5;
+      }
+
+      &.active {
+        background: none;
+
+        &::after,
+        &::before {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .card-separator {
+    height: 10px;
+    background: $white;
+    width: 100%;
+  }
+
+  .parameter-form {
+    z-index: 100;
+    border: none;
+
+    .card-body {
+      padding: 0;
+      border: 1px solid $palette-solid-20;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
+
+      .card-title {
+        margin: 0;
+        padding: 0.8rem;
+        font-size: 1rem;
+        border-bottom: 1px solid $palette-solid-20;
+
+        .card-controls {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+
+          a {
+            padding: 3px 7px;
+            float: right;
+            display: block;
+            border-left: 1px solid $palette-gray-10;
+
+            &:last-child {
+              border-left: none;
+            }
+
+            &:hover {
+              opacity: 0.6;
+            }
+
+            .icon-up {
+              width: 19px;
+              float: left;
+              height: 26px;
+              background: url('../../assets/images/ico_chevron_up.svg') no-repeat 50% 50%;
+            }
+
+            .icon-down {
+              width: 19px;
+              height: 26px;
+              float: left;
+              background: url('../../assets/images/ico_chevron_down.svg') no-repeat 50% 50%;
+            }
+
+            .icon-collapse {
+              width: 15px;
+              height: 26px;
+              float: left;
+              background: url('../../assets/images/ico_collapse.svg') no-repeat 50% 50%;
+            }
+
+            &.collapsed {
+              .icon-collapse {
+                background: url('../../assets/images/ico_expand.svg') no-repeat 50% 50%;
+              }
+            }
+
+            .icon-remove {
+              width: 15px;
+              height: 26px;
+              float: left;
+              background: url('../../assets/images/ico_trash.svg') no-repeat 50% 50%;
+            }
+          }
+        }
+      }
+
+      .card-text {
+        padding: 0.8rem;
+        background-color: $home-card-bg;
+
+        input,
+        select {
+          height: 50px;
+        }
+
+        .form-check-input {
+          height: auto;
+        }
+
+        textarea {
+          height: 50px;
+          line-height: 35px;
+        }
+
+        .is-invalid {
+          background-position: right 15px center !important;
+        }
+      }
+    }
+
+  }
+}
+
+.card {
   border-color: $palette-yellow;
   border-radius: $radius-common;
 
@@ -891,6 +1104,7 @@ Card style
     }
     // scss-lint:enable all
   }
+
 
 
   .card-img-top {
@@ -2297,6 +2511,7 @@ label[data-multicheckbox].small {
 
 // scss-lint:disable all
 .new_project,
+.new_offer,
 .edit-project {
   h4 {
     font-size: 14px;
@@ -2553,7 +2768,7 @@ abbr[title] {
 
 textarea.form-control.is-valid,
 textarea.form-control.is-invalid {
-  background-position: right 2% top 15px !important;
+  background-position: right 4% top 15px !important;
 }
 
 // scss-lint:enable all
@@ -3243,3 +3458,26 @@ textarea.form-control.is-invalid {
     }
   }
 }
+
+.add-button {
+  border: 2px solid $palette-solid-5;
+  border-radius: 100%;
+  background: $white;
+  width: 46px;
+  z-index: 100;
+  height: 46px;
+  line-height: 46px;
+  text-align: center;
+
+  &.active:hover {
+    border: 2px solid $palette-yellow;
+    background: $palette-yellow;
+  }
+
+  svg {
+    color: $palette-solid-5;
+    font-size: 21px;
+    margin: 10px 0 0 4px;
+  }
+}
+

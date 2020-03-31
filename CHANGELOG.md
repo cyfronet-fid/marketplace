@@ -42,6 +42,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Rack and linked gems update (@goreck888)
 - Use category user used to enter the service in breadcrumbs (@mkasztelnik)
 - Portal link description from `Info` to `Portal Home` (@goreck888)
+- User interface for defining offer parameters insead of pure JSON
+  (@mkasztelnik, @martaswiatkowska, @goreck888)
 
 ### Fixed
 - Keep filters and query by using breadcrumbs to go back to the services view (@goreck888)

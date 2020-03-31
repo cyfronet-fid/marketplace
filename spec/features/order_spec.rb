@@ -74,16 +74,9 @@ RSpec.feature "Service ordering" do
     end
 
     scenario "I can order service with offert containing range" do
+      parameter = build(:range_parameter, name: "Attribute 1", max: 100)
       offer = create(:offer, service: service,
-                          parameters: [{ "id": "id1",
-                                         "label": "Attribute 1",
-                                         "type": "range",
-                                         "value_type": "integer",
-                                         "value": 1,
-                                         "config": {
-                                           "minimum": 1,
-                                           "maximum": 100,
-                                         } }])
+                          parameters: [parameter])
 
 
       visit service_path(service)

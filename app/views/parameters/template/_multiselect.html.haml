@@ -1,0 +1,12 @@
+= f.input :values, input_html: { data: { choice: true }, value: parameter.values&.join(",") }
+.row
+  .col
+    = f.input :value_type, collection: %w[string integer]
+  .col
+    = f.input :unit
+.row
+  .col
+    = f.input :min
+  .col
+    = f.input :max
+
