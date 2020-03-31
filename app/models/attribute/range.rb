@@ -3,10 +3,6 @@
 require "json-schema"
 
 class Attribute::Range < Attribute
-  include ActiveModel::Attributes
-
-  attr_reader :minimum, :maximum, :exclusiveMinimum, :exclusiveMaximum
-
   def value_type_schema
     {
         "type": "string",
