@@ -38,8 +38,9 @@ class Parameter
     end
 
     def all
-      [Parameter::Input, Parameter::Select, Parameter::Multiselect,
-       Parameter::Date, Parameter::Range, Parameter::QuantityPrice]
+      [Parameter::Constant, Parameter::Input, Parameter::Select,
+       Parameter::Multiselect, Parameter::Date, Parameter::Range,
+       Parameter::QuantityPrice]
     end
   end
 

@@ -1,5 +1,8 @@
 en:
   parameters:
+    attribute:
+      title: Constant parameter
+      add: Constant
     input:
       title: Input parameter
       add: Input

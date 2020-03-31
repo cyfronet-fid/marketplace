@@ -46,7 +46,7 @@ class Backoffice::OfferPolicy < ApplicationPolicy
     [:name, :description, :webpage, :offer_type,
      parameters_attributes: [:type, :name, :hint, :min, :max,
                              :unit, :value_type, :start_price, :step_price, :currency,
-                             :exclusive_min, :exclusive_max, :mode, :values]]
+                             :exclusive_min, :exclusive_max, :mode, :values, :value]]
   end
 
   private
