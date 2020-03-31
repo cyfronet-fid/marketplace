@@ -9,12 +9,7 @@ FactoryBot.define do
     sequence(:webpage) { |n| "http://webpage#{n}.invalid" }
     sequence(:offer_type) { :orderable }
     factory :offer_with_parameters do
-      sequence(:parameters) { [{ "id": "id1",
-                                "type": "input",
-                                "label": "Test input",
-                                "value_type": "string",
-                                "description": "Write sth"
-                              }] }
+      sequence(:parameters) { [build(:input_parameter)] }
     end
 
     factory :open_access_offer do

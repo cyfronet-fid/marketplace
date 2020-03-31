@@ -1,23 +1,80 @@
 import {Controller} from 'stimulus'
+import initChoises from "../choises";
 
 export default class extends Controller {
-  static targets = ["parameters", "webpage", "offerType"];
+  static targets = ["parameters", "webpage", "offerType",
+                    "attributes", "button", "attributeType"];
 
   initialize() {
     this.showWebpage();
+    this.indexCounter = 0;
+    if (this.attributesTarget.firstElementChild) {
+      this.attributesTarget.classList.add("active");
+    }
   }
 
-  addField(event) {
-    event.preventDefault();
-    var child = document.createElement("textarea")
+  add(event) {
+    const template = this.buttonTarget.dataset.template
+      .replace(/js_template_id/g, this.generateId());
+    const newElement = document.createRange().createContextualFragment(template).firstChild;
 
-    child.setAttribute("class", "form-control json")
-    child.setAttribute("name", "offer[parameters_as_string][]")
-    child.id = "offer_parameters_as_string_"+(this.parametersTarget.children.length-1)
-    child.setAttribute("type", "text")
-    child.setAttribute("rows", 10)
+    this.attributesTarget.appendChild(newElement);
+    initChoises(newElement);
 
-    this.parametersTarget.appendChild(child)
+    this.buttonTarget.disabled = true;
+    this.fromArrayRemoveSelect();
+    this.attributesTarget.classList.add("active");
+    this.buttonTarget.classList.remove("active");
+  }
+
+  generateId() {
+    return new Date().getTime() + this.indexCounter++;
+  }
+
+  remove(event) {
+    event.target.closest(".parameter-form").remove();
+    if (!this.attributesTarget.firstElementChild) {
+      this.attributesTarget.classList.remove("active");
+    }
+  }
+
+  selectParameterType(event){
+    const template = event.target.dataset.template
+    this.buttonTarget.disabled = false
+    this.setSelect(event)
+    this.buttonTarget.dataset.template = template
+    this.buttonTarget.classList.add("active");
+  }
+
+  setSelect(event){
+    this.fromArrayRemoveSelect();
+    event.target.classList.add("selected")
+  }
+
+  fromArrayRemoveSelect() {
+    this.attributeTypeTargets.forEach(this.removeSelect)
+  }
+
+  removeSelect(elem, index) {
+    elem.classList.remove("selected")
+  }
+
+  up(event) {
+    const current = event.target.closest(".parameter-form");
+    const previous = current.previousSibling;
+
+    if (previous != undefined) {
+      current.parentNode.insertBefore(current, previous);
+    }
+  }
+
+  down(event) {
+    const current = event.target.closest(".parameter-form");
+    const next = current.nextSibling;
+
+    if (next != undefined) {
+      current.parentNode.insertBefore(next, current);
+    }
   }
 
   showWebpage(event){

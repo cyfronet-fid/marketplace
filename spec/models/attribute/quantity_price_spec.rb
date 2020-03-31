@@ -8,7 +8,7 @@ RSpec.describe Attribute::QuantityPrice do
       "id" => "id6",
       "label" => "Label",
       "description" => "Description",
-      "type" => "quantity-price",
+      "type" => "quantity_price",
       "value_type" => "integer",
       "config" => { "start_price" => 100, "step_price" => 1, "currency" => "EUR", "max" => 3 }
     )

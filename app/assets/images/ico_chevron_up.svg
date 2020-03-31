@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="11px" viewBox="0 0 19 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>ico_chevron_up</title>
+    <desc>Created with Sketch.</desc>
+    <g id="--Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="parameter-box-/-expand" transform="translate(-633.000000, -22.000000)" fill="#1C313A" fill-rule="nonzero">
+            <g id="parameter-box">
+                <g id="param_actions" transform="translate(633.000000, 17.000000)">
+                    <path d="M5.16074856,2.10080203 C5.62425433,1.66819664 6.3331669,1.66273601 6.80247591,2.06769565 L6.89919797,2.16074856 L13.899198,9.66074856 L13.899198,11.3392514 L6.89919797,18.8392514 C6.4356922,19.3358648 5.65736189,19.3627037 5.16074856,18.899198 C4.69724279,18.4665926 4.64296267,17.75974 5.01463271,17.2636507 L5.10080203,17.1607486 L11.316,10.5 L5.10080203,3.83925144 C4.66819664,3.37574567 4.66273601,2.6668331 5.06769565,2.19752409 L5.16074856,2.10080203 Z" id="ico_chevron_up" transform="translate(9.334597, 10.500000) scale(1, -1) rotate(-270.000000) translate(-9.334597, -10.500000) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

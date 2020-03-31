@@ -3,12 +3,12 @@
   .details-content
     %p.mb-4= t("projects.select.description")
     = f.input :project do
-      .input-group.col-12.col-lg-6.pl-0
+      .input-group.col
         = f.input_field :project_id, collection: projects,
           class: "form-control custom-select #{"is-invalid" unless project_item.errors[:project].empty?}",
           "data-action" => "change->details-loader#changed",
           "data-target" => "details-loader.idSource"
-        .input-group-append
+        .input-group-append.ml-4
           = link_to "Add new project", new_project_path,
             class: "btn btn-primary", remote: true
 
