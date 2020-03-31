@@ -7,6 +7,11 @@ FactoryBot.define do
     initialize_with { new(attributes) }
   end
 
+  factory :constant_parameter, class: "Parameter::Input", parent: :parameter do
+    sequence(:name) { |n| "constant parameter #{n}" }
+    sequence(:value) { |n| "value #{n}" }
+  end
+
   factory :input_parameter, class: "Parameter::Input", parent: :parameter do
     sequence(:name) { |n| "input parameter #{n}" }
     value_type { "string" }
