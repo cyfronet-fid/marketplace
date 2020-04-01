@@ -212,7 +212,7 @@ module Import
           end
         rescue ActiveRecord::RecordInvalid => invalid
           log "ERROR - #{invalid}! #{service.title} (eid: #{eid}) will NOT be created (please contact catalog manager)"
-        rescue error
+        rescue StandardError => error
           log "ERROR - Unexpected #{error}! #{service.title} (eid: #{eid}) will NOT be created!"
         end
       end
@@ -235,7 +235,7 @@ module Import
       end
     rescue ActiveRecord::RecordInvalid => reason
       log "ERROR - Default offer for #{service.title} (eid: #{eid}) cannot be created. #{reason}"
-    rescue error
+    rescue StandardError => error
       log "ERROR - Default offer for #{service.title} (eid: #{eid}) cannot be created. Unexpected #{error}!"
     end
 
