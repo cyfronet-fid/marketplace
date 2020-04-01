@@ -9,21 +9,29 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
-- Version import (@martaswiatkowska)
-- Service comparison feature (@goreck888)
 
 ### Changed
-- DesignSystem home page implementation(@abacz, @jarekzet)
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
-- Displaying empty links in service details (@goreck888)
-- Autocomplete element styles (@martaswiatkowska)
 
 ### Security
+
+## [2.9.0] 2020-04-01
+
+### Added
+- Version import (@martaswiatkowska)
+- Service comparison feature (@goreck888)
+
+### Changed
+- DesignSystem home page implementation(@abacz, @jarekzet)
+
+### Fixed
+- Displaying empty links in service details (@goreck888)
+- Autocomplete element styles (@martaswiatkowska)
 
 ## [2.8.1] 2020-03-30
 
