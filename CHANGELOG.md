@@ -17,9 +17,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- eIC import error handling (@goreck888)
 
 ### Security
+
+## [2.9.1] 2020-04-02
+
+### Fixed
+- eIC import error handling (@goreck888)
 
 ## [2.9.0] 2020-04-01
 
