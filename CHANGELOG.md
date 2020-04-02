@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- eIC import error handling (@goreck888)
 
 ### Security
 
@@ -32,7 +33,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Displaying empty links in service details (@goreck888)
 - Autocomplete element styles (@martaswiatkowska)
-- eIC import error handling (@goreck888)
 
 ## [2.8.1] 2020-03-30
 
