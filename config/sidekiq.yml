@@ -12,4 +12,5 @@ staging:
   - orders
   - mailers
   - reports
+  - matomo
   - default

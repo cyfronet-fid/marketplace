@@ -9,5 +9,7 @@
   = favicon_pack_tag "favicon-180x180.png", rel: "apple-touch-icon", type: "image/png"
   = stylesheet_pack_tag "application"
   = javascript_pack_tag "application"
-  = render "layouts/google_analytics"
-  = render "layouts/hotjar_trackingcode"
+  - if Rails.env.production?
+    = render "layouts/matomo"
+    = render "layouts/google_analytics"
+    = render "layouts/hotjar_trackingcode"
