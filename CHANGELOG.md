@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Research areas and categories of user interests (@goreck888)
 - Subscription mechanism for new added services (@goreck888)
 - Subscriber for eic messages (@martaswiatkowska)
+- Use overmind instead of foreman if present in the classpath (@mkasztelnik)
 
 ### Changed
 - Updated nodejs to version 10.19.0
