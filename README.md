@@ -132,6 +132,14 @@ css/js files change) use following command:
 ```
 ./bin/server
 ```
+It uses foremant and start processes defined in `Procfile.dev`.
+Script also checks if [overmind](https://github.com/DarthSim/overmind)
+is present in the classpath and uses it instead of `foreman`.
+`overmind` is more advanced than `foreman` and plays nicely with e.g. `byebug`.
+
+> Currently there is a problem with stopping overmind process when sidekiq is
+> used in versions [2.1.1 and 2.1.0](https://github.com/DarthSim/overmind/issues/76) -
+> use `2.0.3` instead.
 
 By default application should start on [http://localhost:5000](). You can change
 port by setting ENV variable `PORT`.
