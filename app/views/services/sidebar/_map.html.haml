@@ -1,0 +1,5 @@
+- fields.each do |field|
+  - field_value = service.send(field)
+  - if field_value.present?
+    .places-map{ "data-controller": "map", "data-places": data_for_map(field_value),
+                 "data-region": field_value }
