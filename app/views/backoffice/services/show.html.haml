@@ -66,6 +66,7 @@
       = render "backoffice/services/offers/offers", service: @service, offers: @offers
     .col-1.separator.d-none.d-xl-block
     .col-12.col-sm-3.info-col
+
       %h5 Category
       - @service.categories.each do |category|
         %p= category.name
@@ -77,6 +78,11 @@
       %ul
         - @service.target_groups.each do |group|
           %li= group.name
+
+      %h5 Service Availability
+      - if @service.places.present?
+        .places-map{ "data-controller": "map", "data-places": data_for_map(@service.places),
+                     "data-region": @service.places }
 
       %hr
 
@@ -116,3 +122,4 @@
 
       %h5 Last update
       %p= l @service.updated_at, format: :short
+
