@@ -950,6 +950,14 @@ Card style
     width: 100%;
   }
 
+  .parameter-form:first-child .icon-up,
+  .parameter-form:last-child .icon-down {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+  }
+
   .parameter-form {
     z-index: 100;
     border: none;
