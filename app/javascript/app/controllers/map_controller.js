@@ -1,7 +1,6 @@
 import { Controller } from "stimulus"
 import Highcharts from "highcharts"
 import maps from 'highcharts/modules/map'
-//possibility to export map
 maps(Highcharts)
 
 import europe from "@highcharts/map-collection/custom/europe.geo.json"

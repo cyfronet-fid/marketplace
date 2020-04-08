@@ -66,7 +66,6 @@
       = render "backoffice/services/offers/offers", service: @service, offers: @offers
     .col-1.separator.d-none.d-xl-block
     .col-12.col-sm-3.info-col
-
       %h5 Category
       - @service.categories.each do |category|
         %p= category.name
@@ -122,4 +121,3 @@
 
       %h5 Last update
       %p= l @service.updated_at, format: :short
-
