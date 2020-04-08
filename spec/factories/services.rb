@@ -18,7 +18,7 @@ FactoryBot.define do
     sequence(:sla_url) { "https://corporate.sla.url"  }
     sequence(:access_policies_url) { "https://access.policies.url"  }
 
-    sequence(:places) { |n| "service #{n} place" }
+    sequence(:places) { |n| "Europe" }
     sequence(:languages) { |n| "service #{n} lanuage" }
     sequence(:dedicated_for) { |n| ["service #{n} dedicated for"] }
     sequence(:restrictions) { |n| "service #{n} restrictions" }
