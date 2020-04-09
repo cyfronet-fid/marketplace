@@ -61,7 +61,7 @@ export default class extends Controller {
 
   up(event) {
     const current = event.target.closest(".parameter-form");
-    const previous = current.previousSibling;
+    const previous = current.previousElementSibling;
 
     if (previous != undefined) {
       current.parentNode.insertBefore(current, previous);
@@ -70,7 +70,7 @@ export default class extends Controller {
 
   down(event) {
     const current = event.target.closest(".parameter-form");
-    const next = current.nextSibling;
+    const next = current.nextElementSibling;
 
     if (next != undefined) {
       current.parentNode.insertBefore(next, current);
