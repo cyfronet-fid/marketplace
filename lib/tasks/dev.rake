@@ -121,7 +121,7 @@ namespace :dev do
       service.offers.create!(name: h["name"],
                             description: h["description"],
                             webpage: h["webpage"],
-                            parameters: h["parameters"] || [],
+                            parameters: Parameter::Array.load(h["parameters"] || []),
                             offer_type: service.service_type,
                             status: :published)
       puts "    - #{h["name"]} offer generated"
