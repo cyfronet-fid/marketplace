@@ -62,8 +62,8 @@ class Service::PcCreateOrUpdate
                       data["userValue"],
                       data["userBase"]].join("\n"),
         tagline: data["tagline"].blank? ? "NO IMPORTED TAGLINE" : data["tagline"],
-        places: map_places(data["places"]["place"]) || "World",
         language_availability: Array(data["languages"]["language"] || "EN"),
+        places: Array(data["places"]["place"] || "WW"),
         dedicated_for: [],
         terms_of_use_url: data["termsOfUse"]["termOfUse"] || "",
         access_policies_url: data["price"],
@@ -164,16 +164,6 @@ class Service::PcCreateOrUpdate
 
     def scientific_domain_other
       ScientificDomain.find_by!(name: "Other")
-    end
-
-    def map_places(place)
-      if place == "WW"
-        "World"
-      elsif place == "EU"
-        "Europe"
-      else
-        ISO3166::Country.search(place).name
-      end
     end
 
     def log(msg)
