@@ -8,6 +8,20 @@ class Country
         "en" => "non-European"
     })
 
+  ISO3166::Data.register(
+    alpha2: "EU",
+    name: "European Union",
+    translations: {
+        "en" => "European-union"
+    })
+
+  ISO3166::Data.register(
+    alpha2: "WW",
+    name: "World",
+    translations: {
+        "en" => "World"
+    })
+
   class << self
     def for(value)
       return value if value.is_a?(ISO3166::Country)
@@ -26,7 +40,7 @@ class Country
 
     def all
       @all ||= (ISO3166::Country.find_all_countries_by_region("Europe") +
-                [ISO3166::Country.new("N/E")]).sort
+                [ISO3166::Country.new("N/E"), ISO3166::Country.new("WW"), ISO3166::Country.new("EU")]).sort
     end
 
     def where(opts)

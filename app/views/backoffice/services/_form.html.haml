@@ -53,9 +53,11 @@
 
   .row.mt-5
     .col-12.col-md-5
-      = f.input :places, disabled: cant_edit(:places)
       = f.input :language_availability, input_html: { multiple: true, data: { choice: true } }, include_hidden: false,
       collection: I18nData.languages.map { |k, v| [v, k] }, disabled: cant_edit([language_availability: []])
+      = f.input :places, as: :select,
+        collection: Country.all.map { |c| [ c.name, "value" => c.alpha2 ] },
+        disabled: cant_edit([places: []]), input_html: { data: { choice: true },  "multiple" => "true" }
   .row
     .col-12.col-md-10
       = f.input :terms_of_use_url, disabled: cant_edit(:terms_of_use_url)

@@ -18,8 +18,8 @@ FactoryBot.define do
     sequence(:sla_url) { "https://corporate.sla.url"  }
     sequence(:access_policies_url) { "https://access.policies.url"  }
 
-    sequence(:places) { |n| "Europe" }
     sequence(:language_availability) { [I18nData.languages.values.sample] }
+    sequence(:places) { |n| ["Europe"] }
     sequence(:dedicated_for) { |n| ["service #{n} dedicated for"] }
     sequence(:restrictions) { |n| "service #{n} restrictions" }
     sequence(:scientific_domains) { |n| [create(:scientific_domain)] }
