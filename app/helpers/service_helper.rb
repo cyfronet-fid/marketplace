@@ -61,8 +61,12 @@ module ServiceHelper
   end
 
   def data_for_map(places)
-    countries = Country.where(region: places)
-    countries = Country.where(name: places) if countries.blank?
+    countries = []
+    places.each { |place|
+      c = Country.where(region: place.name)
+      c = Country.where(name: place.name) if c.blank?
+      countries = countries | c
+    }
     countries.map(&:alpha2).map { |c| [c.downcase, 1] }
   end
 end

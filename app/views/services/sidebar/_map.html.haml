@@ -3,4 +3,4 @@
   - map_data = data_for_map(field_value)
   - if map_data.present?
     .places-map{ "data-controller": "map", "data-places": map_data,
-                 "data-region": field_value }
+                 "data-region": field_value.map(&:alpha2) }

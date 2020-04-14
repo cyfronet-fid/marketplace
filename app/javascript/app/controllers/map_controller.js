@@ -14,11 +14,10 @@ export default class extends Controller {
   }
 
   generateChart(element) {
+
     const region = element.dataset.region;
-    var map = europe;
-    if(region == "World") {
-      map = world;
-    }
+    var map = this.returnRegion(region);
+
 
     Highcharts.mapChart(element, {
       chart: {
@@ -44,6 +43,17 @@ export default class extends Controller {
         }
       }]
     })
+  }
 
+  returnRegion(places) {
+    if(places.indexOf("WW") > -1) {
+      return world
+    }
+    else if(places.indexOf("EU") > -1) {
+      return europe
+    }
+    else {
+      return europe
+    }
   }
 }

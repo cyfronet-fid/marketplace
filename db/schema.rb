@@ -347,7 +347,7 @@ ActiveRecord::Schema.define(version: 2020_07_03_124752) do
     t.bigint "provider_id"
     t.integer "service_opinion_count", default: 0
     t.text "contact_emails", default: [], array: true
-    t.string "places"
+    t.string "places", array: true
     t.string "language_availability", default: [], array: true
     t.string "dedicated_for", array: true
     t.string "terms_of_use_url"
