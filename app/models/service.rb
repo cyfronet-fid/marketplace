@@ -110,6 +110,8 @@ class Service < ApplicationRecord
 
   belongs_to :upstream, foreign_key: "upstream_id", class_name: "ServiceSource", optional: true
 
+  serialize :places, Country::Array
+
   validates :name, presence: true
   validates :description, presence: true
   validates :tagline, presence: true
@@ -169,6 +171,10 @@ class Service < ApplicationRecord
     service_user_relationships.where(user: user).count.positive?
   end
 
+  def places=(value)
+    super(value&.map { |v| Country.for(v) })
+  end
+
   private
     def open_access_or_external?
       open_access? || external?
@@ -181,6 +187,7 @@ class Service < ApplicationRecord
                           pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon format.")
       end
     end
+
 
     def main_category_missing?
       categorizations.where(main: true).count.zero?
