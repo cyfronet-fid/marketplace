@@ -24,8 +24,8 @@
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
-    "babel-jest": "^24.9.0",
-    "jest": "^24.9.0",
+    "babel-jest": "^25.3.0",
+    "jest": "^25.3.0",
     "mutationobserver-shim": "^0.3.3",
     "postcss-custom-properties": "^9.0.2",
     "webpack-dev-server": "^3.7.2"
