@@ -37,7 +37,7 @@ en:
         reflect a common scientific purpose and gain support for the created Marketplace Project.
       details_html: |
         <div class="row">
-            <div class="col-lg-9 pl-5 mt-4">
+            <div class="col-lg-9 pl-5 pr-5 mt-4">
               <p class="info">
                 As the services available in the Marketplace are available for all European researchers
                 you can precise your customer typology.
@@ -59,7 +59,7 @@ en:
             </div>
         </div>
         <div class="row">
-            <div class="col pl-5 pb-4">
+            <div class="col pl-5 pr-5 pb-4">
               <p class="info">
                 and along with a general description of your scientific work you will be able
                 to get assistance from international technical teams who provide advice on the most suitable solutions
@@ -77,7 +77,7 @@ en:
                 <a href="/projects/new">add your first Marketplace project!</a></p>
               <p class="info">
                 If you need help with creating a new project, don't hesitate and
-                <a href="http://helpdesk.eosc-hub.eu/"> contact with our support.</a></p>
+                <a href="https://eosc-portal.eu/contact-us"> contact with our support.</a></p>
             </div>
         </div>
     select:
