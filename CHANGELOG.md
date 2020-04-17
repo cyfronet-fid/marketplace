@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Fix moving offer parameter up and down (@mkasztelnik)
 - Fix `dev:prime` after introducing offer parameters (@mkasztelnik)
+- Fix counter for research area filter (@mkasztelnik)
 
 ### Security
 
