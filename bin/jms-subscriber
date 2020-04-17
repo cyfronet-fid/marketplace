@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+APP_ROOT = File.expand_path("..", __dir__)
+
+require_relative "../config/boot"
+require_relative "../config/environment"
+ENV["EIC_BASE_URL"] = "https://beta.providers.eosc-portal.eu"
+Jms::Subscriber.new(ENV["EIC_DESTINATION"],
+                    ENV["EIC_ACTIVEMQ_LOGIN"],
+                    ENV["EIC_ACTIVEMQ_PASS"],
+                    ENV["EIC_HOST"]
+                    ENV["EIV_BASE_URL"]).run
