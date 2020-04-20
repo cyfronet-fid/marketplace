@@ -43,10 +43,10 @@ module Mp
     end
 
 
-    config.portal_base_url = "https://eosc-portal.eu"
-    config.portal_base_url = ENV["PORTAL_BASE_URL"] if ENV["PORTAL_BASE_URL"].present?
+    config.portal_base_url = ENV["PORTAL_BASE_URL"].present? ?
+                                 ENV["PORTAL_BASE_URL"] : "https://eosc-portal.eu"
 
-    config.providers_dashboard_url = "https://catalogue.eosc-portal.eu"
-    config.providers_dashboard_url = ENV["PROVIDERS_DASHBOARD_URL"] if ENV["PROVIDERS_DASHBOARD_URL"].present?
+    config.providers_dashboard_url = ENV["PROVIDERS_DASHBOARD_URL"].present? ?
+      ENV["PROVIDERS_DASHBOARD_URL"] : " https://catalogue.eosc-portal.eu/myServiceProviders"
   end
 end
