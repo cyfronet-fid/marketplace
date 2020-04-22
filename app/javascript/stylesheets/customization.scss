@@ -1,5 +1,5 @@
 .top > .container::after {
-  background: url('../../assets/images/logo-bg.png') no-repeat;
+  background: url('../images/logo-bg.png') no-repeat;
   position: absolute;
   background-size: contain;
   top: 34px;
@@ -17,7 +17,7 @@
 }
 
 .main {
-  background: url('../../assets/images/home-bg.png') no-repeat;
+  background: url('../images/home-bg.png') no-repeat;
   background-position: 50% -120px;
   z-index: 3;
   position: relative;

@@ -6,5 +6,13 @@
 //
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
+if(process.env.CUSTOMIZATION_PATH) {
+    // try catch is to handle situation where there is no /javascript/images in customization path
+    try {
+        require.context(process.env.CUSTOMIZATION_PATH + '/javascript/images');
+    } catch (e) {}
+}
+
+require.context('../images');
 
 import "app"
