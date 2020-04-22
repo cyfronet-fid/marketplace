@@ -91,7 +91,7 @@ li {
   font-weight: normal;
   margin-bottom: 30px;
   padding: 3rem 15px;
-  background: url('../../assets/images/main-box-bg.png') no-repeat top left;
+  background: url('../images/main-box-bg.png') no-repeat top left;
   background-size: auto 100%;
   flex: 0 0 41.66667%;
   max-width: 41.66667%;
@@ -100,7 +100,7 @@ li {
     padding-top: 13px;
     color: $color-primary;
     margin-top: 13px;
-    background: url('../../assets/images/main-box-separator.png') no-repeat;
+    background: url('../images/main-box-separator.png') no-repeat;
     float: left;
     width: 100%;
 
@@ -259,7 +259,7 @@ li {
 
 .learn-more {
   border: none;
-  background: url('../../assets/images/home-card-bg.png') no-repeat right bottom;
+  background: url('../images/home-card-bg.png') no-repeat right bottom;
   border-radius: 2px;
   position: relative;
   display: flex;
@@ -470,14 +470,14 @@ li {
   padding: 1rem 0;
 
   .logo-one {
-    background: url('../../assets/images/eosc-logo-mono.png') top center no-repeat;
+    background: url('../images/eosc-logo-mono.png') top center no-repeat;
     width: 203px;
     height: 79px;
     display: block;
   }
 
   .logo-two {
-    background: url('../../assets/images/eosc-footer-logo.png') center no-repeat;
+    background: url('../images/eosc-footer-logo.png') center no-repeat;
     width: 148px;
     height: 79px;
     display: block;
@@ -554,11 +554,11 @@ li {
   }
 
   .twitter-logo {
-    background: url('../../assets/images/t-icon.svg') top center no-repeat;
+    background: url('../images/t-icon.svg') top center no-repeat;
   }
 
   .yt-logo {
-    background: url('../../assets/images/yt-icon.svg') top center no-repeat;
+    background: url('../images/yt-icon.svg') top center no-repeat;
   }
 }
 
