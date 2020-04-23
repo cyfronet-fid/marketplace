@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - White label customization for development (@michal-szostak)
 - Send analytics to PC component by matomo (@goreck888)
 - Visualization of places (@martaswiatkowska)
+- Views counter taken from Google Analytics (@goreck888)
 
 ### Changed
 - Unification of top links comparing with Portal (@goreck888)

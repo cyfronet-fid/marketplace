@@ -108,6 +108,11 @@ To run on different than test instance, there is a need do set environmental var
 - `MP_XGUS_PASSWORD`
 - `MP_XGUS_WSDL`
 
+## Google Analytics API
+
+Marketplace has integration with Google Analytics and shows users with executive role services unique visits counter.
+Default period is 1 month,
+
 ## ReCaptcha
 
 ReCaptcha is now used in the ask service question form. To work it needs to set 2 environment variables:
