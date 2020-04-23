@@ -12,3 +12,19 @@
           %h5= t(".sidebar.title.#{group[:name]}")
           %ul.list-group
             = render "services/sidebar/#{group[:template]}", service: service, fields: group[:fields]
+      - if current_user&.executive?
+        %h5 Statistics
+        %ul.list-group
+          %li.list-group-item
+            %span Total visits:
+            %strong.text-dark= analytics[:views]
+          %li.list-group-item
+            %span Total redirections:
+            %strong.text-dark= analytics[:redirects]
+          %li.list-group-item
+            %span Total occurrences in project:
+            %strong.text-dark= service.project_items.size
+          - if service.offers.orderable.present?
+            %li.list-group-item
+              %span Total orders:
+              %strong.text-dark= service.project_items.orderable.size

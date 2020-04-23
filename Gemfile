@@ -56,6 +56,8 @@ gem "jira-ruby"
 # soap
 gem "savon", "~> 2.12.0"
 
+gem "google-api-client", "~> 0.34", require: "google/apis/analyticsreporting_v4"
+
 gem "redis-rails"
 gem "sidekiq"
 
