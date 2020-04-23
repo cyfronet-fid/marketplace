@@ -231,5 +231,5 @@ This variable should point to the directory with the following structure:
   - config/locales
 ```
 
-**Warning**: when new SCSS is added to customization directory rails application
+**Warning**: when new SCSS / image / asset is added to customization directory rails application
 needs to be restarted.

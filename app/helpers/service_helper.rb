@@ -56,7 +56,7 @@ module ServiceHelper
     if service.logo.attached?
       image_tag service.logo.variant(resize: "100x70")
     else
-      image_tag "eosc-img.png"
+      image_pack_tag "eosc-img.png"
     end
   end
 end

@@ -6,6 +6,6 @@
           - if card.logo.attached?
             = image_tag card.logo, alt: card.name
           - else
-            = image_tag(default_logo, alt: "#{card.name}")
+            = image_pack_tag(default_logo, alt: "#{card.name}")
         .branch-name
           = card.name
