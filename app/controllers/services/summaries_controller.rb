@@ -37,8 +37,9 @@ class Services::SummariesController < Services::ApplicationController
       if @project_item.persisted?
         session.delete(session_key)
         session.delete(:selected_project)
+        Matomo::SendRequestJob.perform_later(@project_item, "AddToProject")
         redirect_to project_service_path(@project_item.project, @project_item),
-                    notice: "Service ordered sucessfully"
+                                  notice: "Service ordered sucessfully"
       else
         redirect_to url_for([@service, prev_visible_step_key]),
                     alert: "Service request configuration is invalid"
