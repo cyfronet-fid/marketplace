@@ -1,0 +1,28 @@
+%script
+:javascript
+  let _paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    let u="#{Mp::Application.config.matomo_url}";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+  (function() {
+    let previousPageUrl = null;
+    addEventListener('turbolinks:load', function(event) {
+      if (previousPageUrl) {
+        _paq.push(['setReferrerUrl', previousPageUrl]);
+        _paq.push(['setCustomUrl', window.location.href]);
+        _paq.push(['setDocumentTitle', document.title]);
+        if (event.data && event.data.timing) {
+          _paq.push(['setGenerationTimeMs', event.data.timing.visitEnd - event.data.timing.visitStart]);
+        }
+        _paq.push(['trackPageView']);
+      }
+      previousPageUrl = window.location.href;
+  });
+  })();
