@@ -18,7 +18,7 @@
     "expose-loader": "^0.7.5",
     "fuse.js": "^3.4.5",
     "highcharts": "^8.0.4",
-    "jquery": "^3.4.1",
+    "jquery": "3.4.1",
     "lodash.debounce": "^4.0.8",
     "popper.js": "^1.14.3",
     "stimulus": "^1.0.1",
