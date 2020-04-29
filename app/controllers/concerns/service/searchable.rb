@@ -92,7 +92,10 @@ module Service::Searchable
     end
 
     def highlights(from_search)
-      Hash[(from_search.try(:with_highlights) || [])].transform_keys { |s| s.id }
+      result = from_search
+      result = result.try(:with_highlights) if (params[:q]&.size || 0) > 2
+
+      Hash[(result || [])].transform_keys { |s| s.id }
     end
 
     def visible_filters
