@@ -8,6 +8,6 @@ class DateTimePickerInput < SimpleForm::Inputs::Base
 
   def custom_input_options(merged_input_options)
     merge_wrapper_options(merged_input_options, class: "form-control",
-                                readonly: true, "data-provide": "datepicker")
+                                readonly: true, "data-provide": "datepicker", "data-date-autoclose": "true")
   end
 end

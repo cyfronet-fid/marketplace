@@ -55,6 +55,35 @@
   }
 }
 
+.datepicker {
+  padding: 5px;
+  text-align: center;
+
+  &:hover,
+  &:active,
+  &:focus {
+    cursor: pointer;
+  }
+
+  th,
+  td {
+    padding: 2px 5px;
+    font-size: 0.8em;
+    border-radius: 20%;
+    width: calc(100% /7);
+
+    &.new.day,
+    &.old.day {
+      color: $palette-solid-30;
+    }
+
+    &.active {
+      background-color: $link-color;
+      color: $palette-solid-5;
+    }
+  }
+}
+
 @media (max-width: 576px) {
 
   h1 {
