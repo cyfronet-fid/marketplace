@@ -59,4 +59,10 @@ module ServiceHelper
       image_pack_tag "eosc-img.png"
     end
   end
+
+  def data_for_map(places)
+    countries = Country.where(region: places)
+    countries = Country.where(name: places) if countries.blank?
+    countries.map(&:alpha2).map { |c| [c.downcase, 1] }
+  end
 end
