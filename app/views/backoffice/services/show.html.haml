@@ -78,6 +78,11 @@
         - @service.target_groups.each do |group|
           %li= group.name
 
+      %h5 Service Availability
+      - if @service.places.present?
+        .places-map{ "data-controller": "map", "data-places": data_for_map(@service.places),
+                     "data-region": @service.places }
+
       %hr
 
       %h5 Phase
