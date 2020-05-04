@@ -24,6 +24,7 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+/config/google_api_key.json
 /public/packs
 /public/packs-test
 /node_modules
