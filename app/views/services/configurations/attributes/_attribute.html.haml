@@ -1,4 +1,5 @@
 = field.input :id,
+  id: "parameter_#{attr.id}",
   label: attr.label,
   readonly: true,
   input_html: { value: "#{attr.value}", name: "#{field.object_name}[#{attr.id}]" },
