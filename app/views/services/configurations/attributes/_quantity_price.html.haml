@@ -5,6 +5,7 @@
     - has_errors = attr.errors[:id].present?
     - valid = !has_errors && attr.value
     = field.input_field attr.id,
+      id: "parameter_#{attr.id}",
       class: "form-control #{"is-invalid" if has_errors} #{"is-valid" if valid}",
       value: attr.value, step: 1,
       min: 0, max: attr.max,
