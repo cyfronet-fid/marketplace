@@ -165,6 +165,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Disable visibility of `input` type attribute on the offer view (@goreck888)
 - Displaying label on project_item view Orderable date (@martaswiatkowska)
 - Upgrade to rails 6 (@mkasztelnik)
+- Report technical problem button styling (@jarekzet)
 
 ### Security
 - Updated dependencies (@martaswiatkowska)
