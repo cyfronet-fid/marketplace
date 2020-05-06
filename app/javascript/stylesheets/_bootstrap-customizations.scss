@@ -164,6 +164,27 @@ a {
   border-bottom-left-radius: 0.2rem;
 }
 
+.input-group {
+  .input-group-addon {
+    float: right;
+    top: 8px;
+    right: 12%;
+    position: relative;
+    z-index: 99;
+    pointer-events: none;
+  }
+
+  &.date-select {
+    width: 33%;
+    pointer-events: all;
+
+    .form-control {
+      cursor: pointer;
+      background-color: transparent;
+    }
+  }
+}
+
 .form-control {
   border-radius: 0.2rem;
   outline: none !important;
@@ -2771,12 +2792,16 @@ abbr[title] {
 
 .form-control.is-valid,
 .form-control.is-invalid {
-  background-position: right 4% center !important;
+  background-position: right 8px center !important;
+}
+
+.form-control.select {
+  background-position: right 8% center !important;
 }
 
 textarea.form-control.is-valid,
 textarea.form-control.is-invalid {
-  background-position: right 4% top 15px !important;
+  background-position: right 8px top 15px !important;
 }
 
 // scss-lint:enable all
