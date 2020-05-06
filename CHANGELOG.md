@@ -27,6 +27,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Fix `dev:prime` after introducing offer parameters (@mkasztelnik)
 - Fix counter for research area filter (@mkasztelnik)
 - Highlights show when at least 3 signs in query (@goreck888)
+- Fix datepicker styling (@goreck888)
 
 ### Security
 
