@@ -17,9 +17,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- Places visualisation (@martaswiatkowska)
 
 ### Security
+
+## [2.10.1] 2020-05-12
+
+### Fixed
+- Places visualisation (@martaswiatkowska)
 
 ## [2.10.0] 2020-05-12
 
