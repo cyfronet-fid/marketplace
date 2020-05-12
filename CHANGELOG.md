@@ -9,6 +9,20 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [2.10.0] 2020-05-12
+
+### Added
 - White label customization for development (@michal-szostak)
 - Send analytics to PC component by matomo (@goreck888)
 - Visualization of places (@martaswiatkowska)
@@ -18,18 +32,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Unification of top links comparing with Portal (@goreck888)
 - Updated JEST version (@martaswiatkowska)
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 - Fix moving offer parameter up and down (@mkasztelnik)
 - Fix `dev:prime` after introducing offer parameters (@mkasztelnik)
 - Fix counter for research area filter (@mkasztelnik)
 - Highlights show when at least 3 signs in query (@goreck888)
 - Fix datepicker styling (@goreck888)
-
-### Security
 
 ## [2.9.1] 2020-04-02
 
