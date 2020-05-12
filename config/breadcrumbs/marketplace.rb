@@ -5,7 +5,7 @@ crumb :marketplace_root do
 end
 
 crumb :profile do
-  link "My profile", profile_path
+  link "My profile", user_path
   parent :marketplace_root
 end
 
