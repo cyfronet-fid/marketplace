@@ -1,6 +1,8 @@
 en:
   backoffice:
     services:
+      index:
+        title: Owned services
       new:
         link: Create new Service
         title: New Service
@@ -22,24 +24,33 @@ en:
         edit:
           title: Edit Offer
     categories:
+      index:
+        title:
+          Categories
       new:
         link: Add new Category
         title: New Category
       edit:
         title: Edit Category
     platforms:
+      index:
+        title: Platforms
       new:
         link: Add new Platform
         title: New Platform
       edit:
         title: Edit Platform
     providers:
+      index:
+        title: Providers
       new:
         link: Add new Provider
         title: New Provider
       edit:
         title: Edit Provider
     research_areas:
+      index:
+        title: Research Areas
       new:
         link: Add new Research Area
         title: New Research Area

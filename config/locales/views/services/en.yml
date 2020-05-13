@@ -35,10 +35,13 @@ en:
       offer_select: Select an offer
       offer_selected: Selected offer
     offers:
+      show:
+        title: Offer selection
       title: Offer selection
     information:
       title: Access instructions
       show:
+        title: Information
         external:
           link: Order externally
           description_html: |
@@ -72,6 +75,9 @@ en:
             You will be notified by email about the service request status changes or can be tracked
             in project’s dashboard.</p><p>To find out more about Projects in EOSC
             Marketplace, please refer to our <a href="%{faq_url}">FAQ</a>.</p>
+    configurations:
+      show:
+        title: Configuration
     configuration:
       title: Configuration
       external:
@@ -80,6 +86,9 @@ en:
         description:
       orderable:
         description: Please specify parameters. It is necessary to handle your request.
+    summaries:
+      show:
+        title: Final details
     summary:
       title: Final details
       external:

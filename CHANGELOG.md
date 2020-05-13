@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Empty service phase and service type in comparison view (@goreck888)
+- Custom page titles in MP pages (@goreck888)
 
 ### Security
 

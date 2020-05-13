@@ -1,3 +1,4 @@
+- content_for :title, t(".title")
 %p.mb-4= t("services.summary.#{@service.service_type}.description_html")
 
 = render "services/summaries/technical_configuration",
