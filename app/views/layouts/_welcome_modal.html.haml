@@ -1,0 +1,17 @@
+#welcome-modal.modal{ tabindex: "-1", role: "dialog", aria: { hidden: "true" } }
+  .modal-dialog{ role: "document" }
+    .modal-content
+      .row
+        .col
+          = image_pack_tag "new-feature.png"
+      .col
+        .modal-header
+          %h1#welcome-modal-title.modal-title New functionality arrived!
+        #welcome-modal-body.modal-body
+          = render "layouts/profile_manipulation_body"
+        .modal-footer
+          .btn.btn-primary.pl-5.pr-5.float-left
+            = link_to "Upgrade your profile now", user_path
+          %button#dismiss-btn.close.close-link.pl-3.pr-3{ type: "button", data: { dismiss: "modal" } }
+            %span I'll do it later
+
