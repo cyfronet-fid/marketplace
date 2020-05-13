@@ -33,7 +33,7 @@ class Country
       if opts[:region]
         for_region(opts[:region])
       elsif opts[:name]
-        [Country.find_by_name(opts[:name])]
+        [Country.find_by_name(opts[:name])].reject(&:blank?)
       end
     end
 

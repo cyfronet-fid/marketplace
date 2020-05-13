@@ -80,8 +80,10 @@
 
       %h5 Service Availability
       - if @service.places.present?
-        .places-map{ "data-controller": "map", "data-places": data_for_map(@service.places),
-                     "data-region": @service.places }
+        - map_data = data_for_map(@service.places)
+        - if map_data.present?
+          .places-map{ "data-controller": "map", "data-places": map_data,
+                       "data-region": @service.places }
 
       %hr
 
