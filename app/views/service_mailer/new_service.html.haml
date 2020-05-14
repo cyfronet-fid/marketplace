@@ -1,0 +1,25 @@
+%h2 What's new?
+%p
+  New service is now available.
+%p
+  You are receiving this message because
+  you have opted up for updates in
+  - if @common_categories.present?
+    category
+    = @common_categories.map { |cc| cc.name }.join(", ")
+  = "and " if @common_categories.present? && @common_research_areas.present?
+  - if @common_research_areas.present?
+    research area
+    = @common_research_areas.map { |cra| cra.name }.join(", ")
+    %br
+  %br
+  %table
+    %tr
+      %td
+        - if attachments["logo.png"].present?
+          = image_tag attachments["logo.png"].url
+      %td
+        %h5
+        = @service.title
+  %p
+  = link_to "Check now", service_url(@service), class: "btn"
