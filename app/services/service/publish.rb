@@ -8,5 +8,6 @@ class Service::Publish
 
   def call
     @service.update(status: @status)
+    Service::Mailer::SendToSubscribers.new(@service).call
   end
 end
