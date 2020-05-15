@@ -24,7 +24,8 @@
       = link_to "Cancel and back to previous page", user_path, prefix: :backoffice,
         class: "text-left flex-grow-1 text-uppercase"
     .col-12.col-md-5.delete-info
-      %span If you're no longer interested in using EOSC Catalogue & Marketplace,
-      you can delete your account here including all your data.
-      = link_to "Delete", user_path(user), method: :delete, class: "btn btn-danger",
+      .delete-text
+        If you're no longer interested in using EOSC Catalogue & Marketplace, you can delete your account
+        here including all your data.
+      = link_to "Delete", user_path(user), method: :delete, class: "btn-sm btn-danger",
       data: { confirm: "Are you sure?" }
