@@ -139,6 +139,27 @@
     display: block;
     flex: unset;
   }
+
+  .profile {
+    padding: 10px 0 !important;
+
+    svg {
+      font-size: 30px;
+      margin-right: 10px;
+    }
+
+    .display-1 {
+      font-size: 1.45rem;
+    }
+
+    .display-2 {
+      font-size: 1.1rem;
+    }
+
+    .profile-info {
+      margin-top: 15px;
+    }
+  }
 }
 
 @media (max-width: 576px) {
@@ -288,6 +309,33 @@
     font-size: 11px;
     line-height: 1rem;
     padding: 12px 0 !important;
+  }
+
+  .modal {
+    .modal-header,
+    .modal-body {
+      padding: 0;
+    }
+
+    .modal-footer {
+      padding: 20px 0 0;
+
+      .btn-primary {
+        float: none;
+        margin: auto;
+      }
+
+      .close-link {
+        float: none;
+        margin: 20px auto 0;
+      }
+    }
+
+    .modal-dialog.new-feature {
+      .modal-content {
+        padding: 20px 15px;
+      }
+    }
   }
 
 }
