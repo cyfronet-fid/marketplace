@@ -6,29 +6,33 @@
   = render "basic_information"
 
   .row
-    .col-6
-      %h2
-        %span Additional information
-        %span= link_to "Edit", edit_user_path, class: "btn btn-secondary"
+    .col-12.col-md-5.profile-edit
+      .bordered-header
+        %h3 Additional information
+        %span= link_to "Edit", edit_user_path, class: "btn-sm btn-warning"
       %h5 Categories of interests
       %ul
         - current_user.categories.each do |category|
-          %li= category.name
+          %li
+            %span= category.name
 
       %h5 Research areas of interests
       %ul
         - current_user.research_areas.each do |ra|
-          %li= ra.name
-    .col-6
-      %h2
-        %span Email notifications
-        %span= link_to "Edit", edit_user_path, class: "btn btn-secondary"
+          %li
+            %span= ra.name
+    .col-12.col-md-5.profile-edit.ml-auto
+      .bordered-header
+        %h3 Email notifications
+        %span= link_to "Edit", edit_user_path, class: "btn-sm btn-warning"
       %h5 You are signed up to receive an updates about new EOSC Services in your:
       %ul
         - if current_user.categories_updates
-          %li Category of interests
+          %li
+            %span Category of interests
         - if current_user.research_areas_updates
-          %li Research area of interests
+          %li
+            %span Research area of interests
       %p.small
         You can add or remove notification channel
         at any time by editing your subscribe preferences.

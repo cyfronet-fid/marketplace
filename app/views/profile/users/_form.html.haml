@@ -1,30 +1,29 @@
 = simple_form_for user, url: edit_user_path(user)  do |f|
   .row
-    .col-6
-      %h2 Additional information
-      %hr
+    .col-12.col-md-5.profile-edit
+      .bordered-header
+        %h3 Additional information
+
       = f.association :categories, multiple: true, include_hidden: false,
       input_html: { data: { choice: true } }
       = f.association :research_areas, multiple: true, include_hidden: false,
       input_html: { data: { choice: true } }
-    .col-6
-      %h2 Email notifications
-      %hr
-      %h5 Keep regularly informed on all our updates.
+    .col-12.col-md-5.profile-edit.ml-auto
+      .bordered-header
+        %h3 Email notifications
+
+      %h5.mb-4 Keep regularly informed on all our updates.
       = f.input :categories_updates, as: :boolean, include_hidden: false
       = f.input :research_areas_updates, as: :boolean, include_hidden: false
 
-      %p.small
-        You can add or remove notification channel
-        at any time by editing your subscribe preferences.
 
   %hr.bottom-hr.mt-5.mb-4
   .row.mt-5
-    .col-9
+    .col-12.col-md-7
       = f.button :submit, method: :patch, class: "btn btn-primary pl-5 pr-5 mr-5"
       = link_to "Cancel and back to previous page", user_path, prefix: :backoffice,
         class: "text-left flex-grow-1 text-uppercase"
-    .col-3
+    .col-12.col-md-5.delete-info
       %span If you're no longer interested in using EOSC Catalogue & Marketplace,
       you can delete your account here including all your data.
       = link_to "Delete", user_path(user), method: :delete, class: "btn btn-danger",
