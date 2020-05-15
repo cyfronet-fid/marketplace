@@ -29,7 +29,8 @@ class ServicesController < ApplicationController
                         where(offers: { service_id: @service })
     @question = Service::Question.new(service: @service)
     if current_user&.executive?
-      @analytics = Google::Analytics.new.views(request.path)
+      @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
+      @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
     end
   end
 
