@@ -127,7 +127,7 @@ class Service < ApplicationRecord
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
   def self.popular(count)
-    order(project_items_count: :desc, rating: :desc, title: :asc).limit(count)
+    order(popularity_ratio: :desc, title: :asc).limit(count)
   end
 
   def main_category
