@@ -131,3 +131,8 @@ en:
           in_progress: In progress
           ready: Active
           rejected: Rejected
+  helpers:
+    submit:
+      user:
+        update: Save changes
+        delete: Delete
