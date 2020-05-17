@@ -71,7 +71,7 @@
         %p= category.name
 
       %h5 Service type
-      %p= @service.service_type
+      %p= t("offers.type.#{@service.service_type}") if @service.service_type.present?
 
       %h5 Dedicated For
       %ul
@@ -88,10 +88,7 @@
       %hr
 
       %h5 Phase
-      %p= t "simple_form.options.service.phase.#{@service.phase}"
-
-      %h5 Service type
-      %p= @service.service_type
+      %p= t "simple_form.options.service.phase.#{@service.phase}" if @service.phase.present?
 
       %h5 Activate message
       %p= @service.activate_message
