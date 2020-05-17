@@ -36,7 +36,7 @@
         - @services.each do |service|
           %td{ "data-toggle" => "tootltip",
             "title" => "#{t("project_items.offer_type.#{service.service_type}.tooltip")}" }
-            = t("offers.type.#{service.service_type}")
+            = t("offers.type.#{service.service_type}") if service.service_type.present?
       %tr
         %th Research area
         - @services.each do |service|
@@ -48,7 +48,7 @@
       %tr
         %th Service phase
         - @services.each do |service|
-          %td= t("services.about.sidebar.fields.phase.#{service.phase}")
+          %td= t("services.about.sidebar.fields.phase.#{service.phase}") if service.phase.present?
       %tr.lightgrey-row
         %th Places
         - @services.each do |service|
