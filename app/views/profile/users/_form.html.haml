@@ -12,7 +12,7 @@
       .bordered-header
         %h3 Email notifications
 
-      %h5.mb-4 Keep regularly informed on all our updates.
+      %h5.mb-4 Keep me regularly informed on all our updates.
       = f.input :categories_updates, as: :boolean, include_hidden: false
       = f.input :research_areas_updates, as: :boolean, include_hidden: false
 
@@ -25,7 +25,7 @@
         class: "text-left flex-grow-1 text-uppercase"
     .col-12.col-md-5.delete-info
       .delete-text
-        If you're no longer interested in using EOSC Catalogue & Marketplace, you can delete your account
-        here including all your data.
+        If you're no longer interested in sharing with us your data,
+        you can delete information connected to your profile by clicking the button
       = link_to "Delete", user_path(user), method: :delete, class: "btn-sm btn-danger",
       data: { confirm: "Are you sure?" }
