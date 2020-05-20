@@ -9,7 +9,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
-- Recaptcha in project form and service ordering (@goreck888)
 
 ### Changed
 
@@ -18,9 +17,16 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- Display empty offer parameters as not correctly validated (@goreck888)
 
 ### Security
+
+## [2.10.2] 2020-05-20
+
+### Added
+- Recaptcha in project form and service ordering (@goreck888)
+
+### Fixed
+- Display empty offer parameters as not correctly validated (@goreck888)
 
 ## [2.10.1] 2020-05-12
 
