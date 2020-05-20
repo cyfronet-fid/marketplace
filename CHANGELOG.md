@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Recaptcha in project form and service ordering (@goreck888)
 
 ### Changed
 
