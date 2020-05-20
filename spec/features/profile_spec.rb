@@ -50,15 +50,35 @@ RSpec.feature "Profile page" do
       expect(page).to_not have_text("Research area of interests")
     end
 
-    scenario "I can delete my profile" do
+    scenario "I can delete my profile information" do
+      c = create(:category)
+      ra = create(:research_area)
+      user.update(categories: [c], research_areas: [ra],
+                  categories_updates: true, research_areas_updates: true)
+
       visit profile_path
+
+      within "#profile-information" do
+        expect(page).to have_text(c.name)
+        expect(page).to have_text(ra.name)
+
+        expect(page).to have_text("Category of interests")
+        expect(page).to have_text("Research area of interests")
+      end
 
       click_link("Edit", match: :first)
 
       click_on "Delete"
 
-      expect(page).to have_text("Profile deleted successfully")
-      expect(page).to have_text("Login")
+      expect(page).to have_text("Profile information deleted successfully")
+
+      within "#profile-information" do
+        expect(page).to_not have_text(c.name)
+        expect(page).to_not have_text(ra.name)
+
+        expect(page).to_not have_text("Category of interests")
+        expect(page).to_not have_text("Research area of interests")
+      end
     end
   end
 

@@ -6,6 +6,7 @@ class Profile::Destroy
   end
 
   def call
-    @profile.destroy
+    @profile.update(categories: [], research_areas: [],
+                    categories_updates: false, research_areas_updates: false)
   end
 end
