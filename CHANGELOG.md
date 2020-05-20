@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Display empty offer parameters as not correctly validated (@goreck888)
 
 ### Security
 
@@ -160,7 +161,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - change html tag to pure conversation URL in text based emails (@martaswiatkowska)
-- Display empty offer parameters as not correctly validated (@goreck888)
 
 ## [2.5.1] 2020-01-14
 
