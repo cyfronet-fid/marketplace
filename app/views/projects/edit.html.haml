@@ -4,7 +4,7 @@
     %h1.mr-auto.my-auto
       "#{t(".title")} #{@project.name}"
   .edit-project
-    = render "form", project: @project
+    = render "form", project: @project, show_recaptcha: false
   %hr.bottom-hr.mt-5.mb-4
   .row
     .col-12
