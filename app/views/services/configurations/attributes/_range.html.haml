@@ -1,8 +1,10 @@
-- if attr.value_type == "integer"
-  = field.input :id,
-    input_html: { value: "#{field.object.value}", name: "#{field.object_name}[#{attr.id}]" },
-    label: attr.label,
-    error: attr.errors.messages[:id].join(" "),
-    hint: attr.description,
-    as: :integer
-
+= field.input :id, label: attr.label, hint: attr.description,
+  error: attr.errors.messages[:id].join(" ") do
+  - has_errors = attr.errors[:id].present?
+  - valid = !has_errors && attr.value
+  - if attr.value_type == "integer"
+    = field.input_field attr.id,
+      id: "parameter_#{attr.id}",
+      class: "form-control #{"is-invalid" if has_errors} #{"is-valid" if valid}",
+      value: "#{field.object.value}", name: "#{field.object_name}[#{attr.id}]",
+      as: :integer
