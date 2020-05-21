@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Empty service phase and service type in comparison view (@goreck888)
 - Custom page titles in MP pages (@goreck888)
 - Popular services section based on popularity ratio (@goreck888)
+- Data of project creation (@martaswiatkowska)
 
 ### Security
 
