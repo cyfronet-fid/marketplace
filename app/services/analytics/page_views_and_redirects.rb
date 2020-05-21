@@ -2,17 +2,13 @@
 
 require "google/api_client/auth/key_utils"
 
-class Google::Analytics
-  def initialize
-    @client = auth
-    @client.fetch_access_token!
-    @analytics = Google::Apis::AnalyticsreportingV4::AnalyticsReportingService.new
-    @analytics.authorization = @client
-  rescue StandardError => e
-    print e
+class Analytics::PageViewsAndRedirects
+  def initialize(analytics)
+    analytics.login
+    @analytics = analytics
   end
 
-  def views(page_path, start_date = Date.new(2018, 11, 1), end_date = Date.today)
+  def call(page_path, start_date = Date.new(2018, 11, 1), end_date = Date.today)
     date_range = Google::Apis::AnalyticsreportingV4::DateRange.new(start_date: start_date, end_date: end_date)
     dimension = Google::Apis::AnalyticsreportingV4::Dimension.new(name: "ga:pagePath")
     metrics = []
@@ -20,7 +16,7 @@ class Google::Analytics
     metrics << Google::Apis::AnalyticsreportingV4::Metric.new(expression: "ga:exits")
 
     request = Google::Apis::AnalyticsreportingV4::GetReportsRequest.new(report_requests: [
-        Google::Apis::AnalyticsreportingV4::ReportRequest.new(view_id: view_id.to_s,
+        Google::Apis::AnalyticsreportingV4::ReportRequest.new(view_id: @analytics.view_id.to_s,
                                                               dimensions: [dimension],
                                                               metrics: metrics,
                                                               date_ranges: [date_range],
@@ -28,26 +24,12 @@ class Google::Analytics
         )]
     )
 
-    response = @analytics.batch_get_reports(request)
+    response = @analytics.service.batch_get_reports(request)
     { views: response.reports.first.data.totals.first.values.first,
       redirects: response.reports.first.data.totals.first.values.second }
-  rescue StandardError
+  rescue StandardError => e
+    puts e
     { views: "GA not initialized",
       redirects: "GA not initialized" }
   end
-
-  private
-    def auth
-      Google::Auth::ServiceAccountCredentials.make_creds(json_key_io: key,
-                                                         scope: "https://www.googleapis.com/auth/analytics.readonly")
-      rescue []
-    end
-
-    def key
-      File.open(ENV["GOOGLE_AUTH_KEY_FILEPATH"] || "config/google_api_key.json") rescue nil
-    end
-
-    def view_id
-      ENV["GOOGLE_VIEW_ID"] || Rails.application.credentials.google[:view_id]
-    end
 end
