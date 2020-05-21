@@ -1,3 +1,12 @@
+- content_for :title do
+  :ruby
+    if params[:q]
+      params[:q]
+    elsif @category
+      @category.name
+    else
+      "All services"
+    end
 .container{ "data-controller": "comparison" }
   - @category ? breadcrumb(:category, @category) : breadcrumb(:services)
   = render "services/index", services: @services,

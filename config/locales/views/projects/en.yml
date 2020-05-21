@@ -1,5 +1,7 @@
 en:
   projects:
+    index:
+      title: My projects
     new:
       title: Create new Project
     edit:
