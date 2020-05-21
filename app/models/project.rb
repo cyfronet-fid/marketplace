@@ -25,8 +25,6 @@ class Project < ApplicationRecord
   enum customer_typology: CUSTOMER_TYPOLOGIES
   enum issue_status: ISSUE_STATUSES
 
-  before_create :change_timestamp
-
   belongs_to :user
   has_many :project_items, dependent: :destroy
   has_many :project_research_areas, dependent: :destroy
@@ -83,11 +81,6 @@ class Project < ApplicationRecord
   end
 
   private
-    def change_timestamp
-      self.created_at = Time.now
-      self.updated_at = Time.now
-    end
-
     def require_jira_issue?
       jira_active? || jira_deleted?
     end
