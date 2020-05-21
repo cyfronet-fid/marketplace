@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Recaptcha error if not validated (@martaswiatkowska)
 
 ### Changed
 
@@ -20,11 +21,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Empty service phase and service type in comparison view (@goreck888)
 - Custom page titles in MP pages (@goreck888)
 - Popular services section based on popularity ratio (@goreck888)
-<<<<<<< e658076c775839896eede0773a6382486304843d
 - Data of project creation (@martaswiatkowska)
-=======
 - Project fields length validation (@martaswiatkowska)
->>>>>>> Added length validation form project fields
 
 ### Security
 

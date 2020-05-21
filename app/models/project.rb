@@ -24,6 +24,7 @@ class Project < ApplicationRecord
   enum status: PROJECT_STATUSES
   enum customer_typology: CUSTOMER_TYPOLOGIES
   enum issue_status: ISSUE_STATUSES
+  attr_accessor :verified_recaptcha
 
   belongs_to :user
   has_many :project_items, dependent: :destroy
