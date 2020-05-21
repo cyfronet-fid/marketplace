@@ -1,5 +1,7 @@
-- i = 3 - @services&.size
-- breadcrumb :comparison
+:ruby
+  content_for :title, "Service comparison"
+  i = 3 - @services&.size
+  breadcrumb :comparison
 .container
   %table.services-comparison.bordered.shadow-sm.table-responsive
     %thead
