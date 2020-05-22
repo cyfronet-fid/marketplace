@@ -8,58 +8,64 @@ require "raven"
 module Jms
   class Subscriber
     class ResourceParseError < StandardError; end
+    class ConnectionError < StandardError
+      def initialize(msg)
+        Raven.capture_exception(msg)
+        super(msg)
+      end
+    end
 
-    def initialize(topic, login, pass,  host, eic_base_url)
+    def initialize(topic, login, pass,  host, eic_base_url,
+                   client: Stomp::Client,
+                   logger: Logger.new("#{Rails.root}/log/jms.log"))
       $stdout.sync = true
-      @client = Stomp::Client.new(conf_hash(login, pass, host))
+      @client = client.new(conf_hash(login, pass, host))
       @destination = topic
       @eic_base_url = eic_base_url
+      @logger = logger
     end
 
     def run
-      puts "Start subscriber on destination: #{@destination}"
+      log "Start subscriber on destination: #{@destination}"
       parser = Nori.new(strip_namespaces: true)
 
-      begin
-        @client.subscribe("/topic/#{@destination}.>", { "ack": "client-individual", "activemq.subscriptionName": "mpSubscription" }) do |msg|
-          puts "Arrived message"
+      @client.subscribe("/topic/#{@destination}.>", { "ack": "client-individual", "activemq.subscriptionName": "mpSubscription" }) do |msg|
+        log "Arrived message"
+        body = JSON.parse(msg.body)
+        resource = parser.parse(body["resource"])
+        log "rerource:\n #{resource}"
 
-          body = JSON.parse(msg.body)
-          resource = parser.parse(body["resource"])
-          puts "rerource: ", resource
+        raise ResourceParseError.new("Cannot parse resource") if resource.empty?
 
-          raise ResourceParseError.new("Cannot parse resource") if resource.empty?
-
-          case body["resourceType"]
-          when "infra_service"
-            if resource["infraService"]["latest"]
-              Service::PcCreateOrUpdate.new(resource["infraService"], @eic_base_url).call
-            end
-          when "provider"
-            if resource["provider"]["active"]
-              Provider::PcCreateOrUpdate.new(resource).call
-            end
-          else
-            puts msg
+        case body["resourceType"]
+        when "infra_service"
+          if resource["infraService"]["latest"]
+            Service::PcCreateOrUpdate.new(resource["infraService"], @eic_base_url).call
           end
-          @client.ack(msg)
+        when "provider"
+          if resource["provider"]["active"]
+            Provider::PcCreateOrUpdate.new(resource["provider"]).call
+          end
+        else
+          log msg
         end
-        raise "Connection failed!!" unless @client.open?()
-        raise "Connect error: #{@client.connection_frame().body}" if @client.connection_frame().command == Stomp::CMD_ERROR
-
-        @client.join
+        @client.ack(msg)
       rescue StandardError => e
         @client.unreceive(msg)
         error_block(msg, e)
       end
+      raise ConnectionError.new("Connection failed!!") unless @client.open?()
+      raise ConnectionError.new("Connect error: #{@client.connection_frame().body}") if @client.connection_frame().command == Stomp::CMD_ERROR
+
+      @client.join
     end
 
     private
       def error_block(msg, e)
-        puts "#{Time.now.strftime("%c")}: Error occured while processing message:\n #{msg}"
-        puts e
+        log "Error occured while processing message:\n #{msg}"
+        log e
         Raven.capture_exception(e)
-        abort(e)
+        abort(e.full_message)
       end
 
       def conf_hash(login, pass, host_des)
@@ -74,13 +80,17 @@ module Jms
             }
           ],
           connect_headers: {
-            "client-id": "MPClient",
+            "client-id": "MPClientTest",
             "heart-beat": "0,20000",
             "accept-version": "1.2",
             "host": "localhost"
-          },
-          logger: -> (msg) { puts msg }
+          }
         }
+      end
+
+      def log(msg)
+        puts msg
+        @logger.info(msg)
       end
   end
 end

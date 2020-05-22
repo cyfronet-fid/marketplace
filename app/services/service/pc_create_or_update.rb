@@ -29,13 +29,13 @@ class Service::PcCreateOrUpdate
     service = map_service(@eic_service)
 
     mapped_service = Service.joins(:sources).find_by("service_sources.source_type": "eic",
-                                                    "service_sources.eid": @eid)
+                                                     "service_sources.eid": @eid)
     if mapped_service.nil? && @is_active
       service = Service.new(service)
       save_logo(service, @eic_service["symbol"])
 
       if service.save!
-        puts "Created new service: #{service}"
+        puts "Created new service: #{service.id}"
         ServiceSource.new(service_id: service.id, source_type: "eic", eid: @eid).save!
         service.offers.create(name: "Offer", description: "#{service.title} Offer",
                                offer_type: "open_access",
@@ -44,7 +44,7 @@ class Service::PcCreateOrUpdate
       service
     elsif mapped_service && !@is_active
       Service::Draft.new(mapped_service).call
-      puts "Draft service: #{mapped_service}"
+      puts "Draft service: #{mapped_service.id}"
       mapped_service
     else
       save_logo(mapped_service, @eic_service["symbol"])
@@ -74,13 +74,14 @@ class Service::PcCreateOrUpdate
                             manual_url: data["userManual"] || "",
                             helpdesk_url: data["helpdesk"] || "",
                             tutorial_url: data["trainingInformation"] || "",
-                            phase: map_phase(data["trl"]), # lifeCycleStatus
+                            phase: map_phase(data["trl"]),
                             service_type: "open_access",
                             status: "published",
                             providers: [map_provider(data["providers"]["provider"])],
                             categories: map_category(data["category"]),
                             research_areas: [research_area_other],
-                            version: data["version"] || "" }
+                            version: data["version"] || ""
+                }
       service
     end
 
@@ -95,6 +96,7 @@ class Service::PcCreateOrUpdate
         rescue Errno::ECONNREFUSED
           abort("\n Exited with errors - could not connect to #{@eic_base_url}\n")
         end
+
         if prov.code != 200
           abort("\n Exited with errors - could not fetch data (code: #{prov.code})\n")
         end
