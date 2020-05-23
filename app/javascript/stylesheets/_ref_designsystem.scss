@@ -656,6 +656,72 @@ li {
 
 
 /* TOP ROW */
+.instance-badge {
+  @-webkit-keyframes fadeIn {
+    0% { display: none; opacity: 0; }
+    20% { display: none; opacity: 0; }
+    40% { display: inline; opacity: 0.3; }
+    60% { display: inline; opacity: 0.5; }
+    80% { display: inline; opacity: 0.9; }
+    100% { display: inline; opacity: 1; }
+  }
+
+  @keyframes fadeIn {
+    0% { display: none; opacity: 0; }
+    20% { display: none; opacity: 0; }
+    40% { display: inline; opacity: 0.3; }
+    60% { display: inline; opacity: 0.5; }
+    80% { display: inline; opacity: 0.9; }
+    100% { display: inline; opacity: 1; }
+  }
+
+  .badge.badge-danger {
+    padding: 7px;
+    padding-top: 10px;
+    margin-top: -5px;
+    margin-left: 0;
+    position: fixed;
+    z-index: 99;
+    height: auto;
+    text-align: left;
+    font-size: 90%;
+    font-weight: 300;
+    border-radius: 0 0 0.25em;
+    background-color: $instance-badge;
+
+    a {
+      color: $palette-solid-5;
+
+      .collapse.show,
+      .collapsing {
+        padding-right: 5px;
+
+        + .fa-chevron-left {
+          display: inline-block;
+
+          + .fa-chevron-right {
+            display: none;
+          }
+        }
+      }
+
+      .collapse {
+
+        + .fa-chevron-left {
+          display: none;
+
+          + .fa-chevron-right {
+            display: inline;
+            -webkit-animation-name: fadeIn;
+            -webkit-animation-duration: 0.5s;
+            animation-name: fadeIn;
+            animation-duration: 0.5s;
+          }
+        }
+      }
+    }
+  }
+}
 
 .top {
   padding: 5px 0;
