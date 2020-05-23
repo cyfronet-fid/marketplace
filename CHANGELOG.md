@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Recaptcha error if not validated (@martaswiatkowska)
+- instance badges (@goreck888)
 
 ### Changed
 

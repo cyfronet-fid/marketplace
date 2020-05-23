@@ -1,0 +1,11 @@
+.row
+  .col-3
+    .instance-badge
+      - collapsed = cookies["badge-text"] == "true"
+      %span.badge.badge-danger
+        %a{ href: "#badge-text", "data-toggle": "collapse",
+              role: "button", "aria-expanded": "true" }
+          %span#badge-text.collapse{ class: ("show" unless collapsed), "data-target": "form" }
+            = t("badge.#{ENV["MP_INSTANCE"]}")
+          .fas.fa-chevron-left
+          .fas.fa-chevron-right
