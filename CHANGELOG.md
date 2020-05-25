@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Recaptcha error if not validated (@martaswiatkowska)
 
 ### Changed
 
@@ -21,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Custom page titles in MP pages (@goreck888)
 - Popular services section based on popularity ratio (@goreck888)
 - Data of project creation (@martaswiatkowska)
+- Project fields length validation (@martaswiatkowska)
 
 ### Security
 
