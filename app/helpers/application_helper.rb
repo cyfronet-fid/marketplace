@@ -36,6 +36,14 @@ module ApplicationHelper
     link_to(title, to, options)
   end
 
+  def meta_robots
+    if ENV["MP_INSTANCE"].present? || Rails.env.development?
+      '<meta name="robots" content="noindex, nofollow">'.html_safe
+    else
+      '<meta name="robots" content="index, follow">'.html_safe
+    end
+  end
+
   def yield_content!(content_key)
     view_flow.content.delete(content_key)
   end
