@@ -135,4 +135,6 @@ Rails.application.configure do
 
   # custom error pages with webpage layout
   config.exceptions_app = self.routes
+
+  config.robots = ENV["MP_INSTANCE"].present? ? "development" : "production"
 end
