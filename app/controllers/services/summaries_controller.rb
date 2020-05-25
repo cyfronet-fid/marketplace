@@ -15,7 +15,7 @@ class Services::SummariesController < Services::ApplicationController
   def create
     @step = step(summary_params)
 
-    if @step.valid? && verify_recaptcha
+    if @step.valid? & verify_recaptcha(model: @step, attribute: :verified_recapcha)
       do_create(@step.project_item, message_text)
     else
       setup_show_variables!

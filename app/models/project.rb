@@ -24,6 +24,7 @@ class Project < ApplicationRecord
   enum status: PROJECT_STATUSES
   enum customer_typology: CUSTOMER_TYPOLOGIES
   enum issue_status: ISSUE_STATUSES
+  attr_accessor :verified_recaptcha
 
   belongs_to :user
   has_many :project_items, dependent: :destroy
@@ -36,29 +37,32 @@ class Project < ApplicationRecord
 
   validates :name,
             presence: true,
+            length: { maximum: 255 },
             uniqueness: { scope: :user, message: "Project name need to be unique" }
-  validates :email, presence: true
+  validates :email, email: true, presence: true
   validates :reason_for_access, presence: true
   validates :country_of_origin, presence: true, if: :single_user_or_private_company?,
             inclusion: { in: Country.all }
   validates :customer_typology, presence: true
 
-  validates :organization, presence: true, if: :single_user_or_community?
-  validates :webpage, presence: true, mp_url: true, if: :single_user_or_community?
+  validates :organization, length: { maximum: 255 }, presence: true, if: :single_user_or_community?
+  validates :webpage, presence: true, mp_url: true, length: { maximum: 255 }, if: :single_user_or_community?
 
-  validates :user_group_name, presence: true, if: :research?
+  validates :user_group_name, length: { maximum: 255 }, presence: true, if: :research?
 
-  validates :project_name, presence: true, if: :project?
-  validates :project_website_url, mp_url: true, presence: true, if: :project?
+  validates :project_name, length: { maximum: 255 }, presence: true, if: :project?
+  validates :project_website_url, mp_url: true, length: { maximum: 255 }, presence: true, if: :project?
 
-  validates :company_name, presence: true, if: :private_company?
+  validates :company_name, presence: true, length: { maximum: 255 }, if: :private_company?
   validates :countries_of_partnership, presence: true, if: :research_or_project?,
             multiselect_choices: { collection: Country.all }
-  validates :company_website_url, mp_url: true, presence: true, if: :private_company?
+  validates :company_website_url, mp_url: true, length: { maximum: 255 }, presence: true, if: :private_company?
 
   validates :issue_id, presence: true, if: :require_jira_issue?
   validates :issue_key, presence: true, if: :require_jira_issue?
   validates :status, presence: true
+
+  validates :department, length: { maximum: 255 }
 
   def single_user_or_community?
     single_user? || research?
