@@ -23,6 +23,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Popular services section based on popularity ratio (@goreck888)
 - Data of project creation (@martaswiatkowska)
 - Project fields length validation (@martaswiatkowska)
+- Links to categories in footer (@goreck888)
 
 ### Security
 
