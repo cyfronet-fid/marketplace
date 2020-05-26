@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   end
 
   get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
+  get "/robots.txt" => "home#robots"
 
   resources :services, only: [:index, :show] do
     scope module: :services do
