@@ -12,6 +12,32 @@ RSpec.describe Project do
   it { should validate_presence_of(:email) }
   it { should have_many(:project_items) }
   it { should validate_presence_of(:status) }
+  it { should validate_length_of(:department).is_at_most(255) }
+  it { should validate_length_of(:webpage).is_at_most(255) }
+  it { should validate_length_of(:name).is_at_most(255) }
+  it { should validate_length_of(:organization).is_at_most(255) }
+  it { should_not allow_value("blah").for(:email) }
+
+  describe "#department" do
+    before { subject.department = "a" *256 }
+    it { should_not be_valid }
+  end
+
+  describe "#webpage" do
+    before { subject.webpage = "a" *256 }
+    it { should_not be_valid }
+  end
+
+  describe "#organization" do
+    before { subject.organization = "a" *256 }
+    it { should_not be_valid }
+  end
+
+  describe "#name" do
+    before { subject.name = "a" *256 }
+    it { should_not be_valid }
+  end
+
 
   describe "single user" do
     subject { build(:project, customer_typology: "single_user") }
@@ -26,6 +52,11 @@ RSpec.describe Project do
     it { is_expected.to validate_presence_of(:user_group_name) }
     it { is_expected.to validate_presence_of(:organization) }
     it { is_expected.to validate_presence_of(:webpage) }
+
+    describe "#organization" do
+      before { subject.organization = "a" *256 }
+      it { should_not be_valid }
+    end
   end
 
   describe "project typology" do
@@ -33,6 +64,11 @@ RSpec.describe Project do
 
     it { is_expected.to validate_presence_of(:project_name) }
     it { is_expected.to validate_presence_of(:project_website_url) }
+
+    describe "#project_website_url" do
+      before { subject.project_website_url = "a" * 256 }
+      it { should_not be_valid }
+    end
   end
 
   describe "private_company typology" do
@@ -40,6 +76,16 @@ RSpec.describe Project do
 
     it { is_expected.to validate_presence_of(:company_name) }
     it { is_expected.to validate_presence_of(:company_website_url) }
+
+    describe "#company_name" do
+      before { subject.company_name = "a" *256 }
+      it { should_not be_valid }
+    end
+
+    describe "#company_website_url" do
+      before { subject.company_website_url = "a" *256 }
+      it { should_not be_valid }
+    end
   end
 
   describe "#countries_of_partnership" do

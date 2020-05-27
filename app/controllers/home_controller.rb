@@ -13,6 +13,11 @@ class HomeController < ApplicationController
       .reject(&:nil?)
   end
 
+  def robots
+    robots = File.read(Rails.root + "config/robots.#{Rails.application.config.robots}.txt")
+    render plain: robots, layout: false, content_type: "text/plain"
+  end
+
   private
     def load_services
       @providers_number = Provider.count

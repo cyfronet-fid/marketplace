@@ -1,14 +1,12 @@
-= field.input :id,
-  collection: attr.config["values"].map { |e| ["#{e} #{attr.unit}", e] },
-  checked: attr.value,
-  input_html: { name: "#{field.object_name}[#{attr.id}][]",
-    id: "#{field.object_name}[#{attr.id}]" },
-  label: attr.label,
-  hint: attr.description,
-  error: attr.errors.messages[:id].join(" "),
-  as: :check_boxes
-
-
-
-
-
+= field.input :id, label: attr.label, hint: attr.description,
+  error: attr.errors.messages[:id].join(" ") do
+  - has_errors = attr.errors[:id].present?
+  - valid = !has_errors && attr.value
+  = field.input_field attr.id,
+    id: "parameter_#{attr.id}",
+    class: "form-check-input #{"is-invalid" if has_errors} #{"is-valid" if valid}",
+    collection: attr.config["values"].map { |e| ["#{e} #{attr.unit}", e] },
+    checked: attr.value,
+    name: "#{field.object_name}[#{attr.id}][]",
+    id: "#{field.object_name}[#{attr.id}]",
+    as: :check_boxes

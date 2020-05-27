@@ -78,7 +78,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("service title")
       expect(page).to have_content("service description")
       expect(page).to have_content("service tagline")
-      expect(page).to have_content("open_access")
+      expect(page).to have_content("Open Access")
       expect(page).to have_content("person1@test.ok")
       # expect(page).to have_content("person2@test.ok")
       expect(page).to have_content("Welcome!!!")

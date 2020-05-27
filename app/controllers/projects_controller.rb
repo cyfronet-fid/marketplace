@@ -31,7 +31,8 @@ class ProjectsController < ApplicationController
                            merge(user: current_user, status: :active))
 
     respond_to do |format|
-      if Project::Create.new(@project).call
+      form_valid = @project.valid? & verify_recaptcha(model: @project, attribute: :verified_recapcha)
+      if form_valid && Project::Create.new(@project).call
         format.html { redirect_to project_path(@project) }
         format.js { render :show }
       else
@@ -84,7 +85,7 @@ class ProjectsController < ApplicationController
                 title: "New project",
                 action_btn: t("projects.buttons.create"),
                 form: "projects/form",
-                form_locals: { project: @project, show_as_modal: true }
+                form_locals: { project: @project, show_as_modal: true, show_recaptcha: true }
               }
     end
 

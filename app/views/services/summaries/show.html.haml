@@ -1,3 +1,4 @@
+- content_for :title, t(".title")
 %p.mb-4= t("services.summary.#{@service.service_type}.description_html")
 
 = render "services/summaries/technical_configuration",
@@ -21,3 +22,5 @@
       .card-body.pb-2.pt-4.pl-4.pr-4
         %h4 Additional information
         = f.input :additional_comment, as: :text, class: "form-control"
+        #recaptcha= recaptcha_tags
+        = f.error :verified_recapcha, class: "invalid-feedback d-block"
