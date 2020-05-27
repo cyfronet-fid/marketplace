@@ -20,6 +20,29 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## [2.10.3] 2020-05-27
+
+### Added
+- Recaptcha error if not validated (@martaswiatkowska)
+- instance badges (@goreck888)
+- `robots.txt` depending on instance (@goreck888)
+
+### Fixed
+- Empty service phase and service type in comparison view (@goreck888)
+- Custom page titles in MP pages (@goreck888)
+- Popular services section based on popularity ratio (@goreck888)
+- Data of project creation (@martaswiatkowska)
+- Project fields length validation (@martaswiatkowska)
+- Links to categories in footer (@goreck888)
+
+## [2.10.2] 2020-05-20
+
+### Added
+- Recaptcha in project form and service ordering (@goreck888)
+
+### Fixed
+- Display empty offer parameters as not correctly validated (@goreck888)
+
 ## [2.10.1] 2020-05-12
 
 ### Fixed

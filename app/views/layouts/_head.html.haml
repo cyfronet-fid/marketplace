@@ -2,7 +2,10 @@
   %meta{ content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }/
   %meta{ charset: "utf-8" }/
   %meta{ content: "width=device-width, initial-scale=1, shrink-to-fit=no", name: "viewport" }/
-  %title EOSC Marketplace
+  = meta_robots
+  %title
+    = "#{yield :title} - " if content_for?(:title)
+    EOSC Marketplace
   = csrf_meta_tags
   = csp_meta_tag
   = favicon_pack_tag "favicon.ico"

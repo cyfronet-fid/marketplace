@@ -1,3 +1,4 @@
+- content_for :title, @project.name
 - breadcrumb :project, @project
 
 = render "projects/project_layout", project: @project, projects: @projects do

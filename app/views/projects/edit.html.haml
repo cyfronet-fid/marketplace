@@ -1,10 +1,11 @@
+- content_for :title, "#{t(".title")} #{@project.name}"
 - breadcrumb :project_edit, @project
 .container
   .mb-4.pb-4.border-header
     %h1.mr-auto.my-auto
       "#{t(".title")} #{@project.name}"
   .edit-project
-    = render "form", project: @project
+    = render "form", project: @project, show_recaptcha: false
   %hr.bottom-hr.mt-5.mb-4
   .row
     .col-12

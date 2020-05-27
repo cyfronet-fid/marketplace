@@ -1,3 +1,4 @@
+- content_for :title, @service.title
 - id = @service.sources&.first&.eid || @service.slug
 :javascript
   _paq.push(['trackEvent', 'Service', 'Visit', '#{id}']);

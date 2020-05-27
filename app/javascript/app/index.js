@@ -1,4 +1,5 @@
 import "app/sort_filter"
+import initBadgeState from "app/badge";
 import initSorting from "app/sort_filter";
 import initFlash from "app/flash";
 import initChoises from "app/choises";
@@ -38,6 +39,7 @@ document.addEventListener("turbolinks:before-render", function(event) {
 document.addEventListener("turbolinks:load", function(event) {
     initChoises();
     initCookiesPolicy();
+    initBadgeState();
 });
 
 document.addEventListener("ajax:success", function(event) {
@@ -51,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
     dom.i2svg();
     initSorting();
     initFlash();
+    initBadgeState();
     dom.watch();
 });
 

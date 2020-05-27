@@ -1,8 +1,9 @@
+- content_for :title, t(".title")
 - breadcrumb :project_new
 .container
   .mb-4.pb-4.border-header
     %h1.mr-auto.my-auto= t(".title")
-  = render "form", project: @project
+  = render "form", project: @project, show_recaptcha: true
 
   %hr.bottom-hr.mt-5.mb-4
   .row

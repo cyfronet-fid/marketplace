@@ -14,4 +14,6 @@
     input_html: { "data-target" => "project.customer",
                   "data-action" => "change->project#showSelectedSection", class: "col-lg-5 form-control-lg" }
   = render "customer_typology_fields", f: f
-
+  - if show_recaptcha
+    #recaptcha= recaptcha_tags
+  = f.error :verified_recapcha, class: "invalid-feedback d-block"

@@ -1,4 +1,11 @@
 en:
+  badge:
+    master: Development instance
+    pr: Test instance
+    staging: Beta instance
+  helps:
+    show:
+      title: FAQ
   executive:
     statistics:
       index:
