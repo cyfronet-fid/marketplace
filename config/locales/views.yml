@@ -9,6 +9,7 @@ en:
   executive:
     statistics:
       index:
+        title: Executive
         orderable:
           title: Orderable
           description: |

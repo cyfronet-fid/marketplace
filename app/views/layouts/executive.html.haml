@@ -3,6 +3,8 @@
   = render "layouts/head"
   %body
     %header.pb-2
+      - if ENV["MP_INSTANCE"]
+        = render "layouts/badge"
       = render "layouts/executive/navbar"
       = render "layouts/flash"
     %main
