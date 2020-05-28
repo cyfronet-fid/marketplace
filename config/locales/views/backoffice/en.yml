@@ -1,4 +1,7 @@
 en:
+  backoffices:
+    show:
+      title: Backoffice
   backoffice:
     services:
       index:
