@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class Provider::PcCreateOrUpdate
-  def initialize(eic_provider)
+  def initialize(eic_provider, logger)
     @eic_provider =  eic_provider
     @eid = eic_provider["id"]
+    @logger = logger
   end
 
   def call
@@ -13,13 +14,13 @@ class Provider::PcCreateOrUpdate
     if mapped_provider.nil?
       provider = Provider.new(prov)
       if provider.save!
-        ProviderSource.new(provider_id: provider.id, source_type: "eic", eid: @eid).save!
+        ProviderSource.create!(provider_id: provider.id, source_type: "eic", eid: @eid)
+        log "Provider created successfully #{provider.id}"
       end
-      puts "Provider created with id #{provider.id}"
       provider
     else
       mapped_provider.update(prov)
-      puts "Provider updated successfully #{mapped_provider.id}"
+      log "Provider updated successfully #{mapped_provider.id}"
       mapped_provider
     end
   end
@@ -27,7 +28,11 @@ class Provider::PcCreateOrUpdate
   private
     def map_provider(data)
       {
-        "name": data["name"],
+        "name": data["name"]
       }
+    end
+
+    def log(msg)
+      @logger.info(msg)
     end
 end

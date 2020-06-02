@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe Service::PcCreateOrUpdate do
   let(:test_url) { "https://localhost" }
+  let(:logger) { double("Logger").as_null_object }
   let!(:storage) { create(:category, name: "Storage") }
   let!(:training) { create(:category, name: "Training & Support") }
   let!(:security) { create(:category, name: "Security & Operations") }
@@ -162,7 +163,7 @@ RSpec.describe Service::PcCreateOrUpdate do
 
   private
     def stub_described_class(jms_service, unirest: Unirest)
-      described_service = Service::PcCreateOrUpdate.new(jms_service, test_url, unirest: unirest)
+      described_service = Service::PcCreateOrUpdate.new(jms_service, test_url, logger, unirest: unirest)
 
       stub_http_file(described_service, "PhenoMeNal_logo.png",
                      "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png")
