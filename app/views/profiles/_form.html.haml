@@ -1,0 +1,31 @@
+= simple_form_for user, url: profile_path(user)  do |f|
+  .row
+    .col-12.col-md-5.profile-edit
+      .bordered-header
+        %h3 Additional information
+
+      = f.association :categories, multiple: true, include_hidden: false,
+      input_html: { data: { choice: true } }
+      = f.association :research_areas, multiple: true, include_hidden: false,
+      input_html: { data: { choice: true } }
+    .col-12.col-md-5.profile-edit.ml-auto
+      .bordered-header
+        %h3 Email notifications
+
+      %h5.mb-4 Keep me regularly informed on all our updates.
+      = f.input :categories_updates, as: :boolean, include_hidden: false
+      = f.input :research_areas_updates, as: :boolean, include_hidden: false
+
+
+  %hr.bottom-hr.mt-5.mb-4
+  .row.mt-5
+    .col-12.col-md-7
+      = f.button :submit, method: :patch, class: "btn btn-primary pl-5 pr-5 mr-5"
+      = link_to "Cancel and back to previous page", profile_path,
+        class: "text-left flex-grow-1 text-uppercase"
+    .col-12.col-md-5.delete-info
+      .delete-text
+        If you're no longer interested in sharing with us your data,
+        you can delete information connected to your profile by clicking the button
+      = link_to "Delete", profile_path(user), method: :delete, class: "btn-sm btn-danger",
+      data: { confirm: "Are you sure?" }

@@ -3093,6 +3093,34 @@ textarea.form-control.is-invalid {
 .modal {
   .modal-dialog {
     max-width: 570px;
+
+    &.new-feature {
+      max-width: 885px;
+
+      .modal-content {
+        padding: 40px 30px 40px 0;
+        width: auto;
+
+        .modal-header {
+          h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+          }
+        }
+
+        .modal-body {
+          p {
+            font-size: 16px;
+            margin: 0;
+            line-height: 24px;
+          }
+        }
+
+        .image-col {
+          text-align: left;
+        }
+      }
+    }
   }
 
   .modal-header {
@@ -3514,3 +3542,118 @@ textarea.form-control.is-invalid {
   }
 }
 
+.profile {
+  svg {
+    color: $palette-solid-10;
+    float: left;
+    margin-right: 25px;
+  }
+
+  .profile-info {
+    font-size: 12px;
+    line-height: 17px;
+    margin-top: 35px;
+    color: $palette-gray-70;
+  }
+}
+
+// scss-lint:disable all
+
+.profile-edit {
+
+  .bordered-header {
+    border-bottom: 1px solid $palette-solid-10;
+    margin-bottom: 30px;
+    float: left;
+    width: 100%;
+
+    h3 {
+      font-size: 14px;
+      text-transform: uppercase;
+      line-height: 19px;
+      font-weight: bold;
+      float:left;
+    }
+
+    span {
+      float: right;
+
+      .btn-warning {
+        color: $black;
+        border: 1px solid $secondary;
+        background: none;
+        text-transform: uppercase;
+
+        &:hover {
+          background: $secondary;
+        }
+      }
+    }
+  }
+
+  h5 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom:7px;
+  }
+
+  ul {
+    margin-bottom: 25px;
+    padding-left: 22px;
+
+    li {
+      list-style: disc;
+      color: $secondary;
+      font-size: 21px;
+      line-height: 25px;
+
+      span {
+        color: $palette-solid-100;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .form-group {
+    margin-bottom: 25px;
+
+    .form-control-label {
+      font-weight: 500;
+    }
+  }
+
+  .user_categories_updates,
+  .user_research_areas_updates {
+    font-size: 1rem;
+    margin: 0 0 20px;
+
+    label {
+      color: $palette-solid-100 !important;
+    }
+  }
+}
+
+// scss-lint:enable all
+
+.delete-info {
+  background: $border-header;
+  padding: 15px;
+  display: inline-flex;
+
+  .delete-text {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .btn-danger {
+    background: none;
+    height: 28px;
+    border: 1px solid $danger;
+    color: $palette-solid-100;
+
+    &:hover {
+      background: $danger;
+      color: $white;
+    }
+  }
+}

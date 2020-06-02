@@ -51,7 +51,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :profile, only: :show
+  resource :profile, only: [:show, :edit, :update, :destroy]
+
   resource :help, only: :show
 
   resource :backoffice, only: :show

@@ -1,0 +1,15 @@
+.container
+  .row.media.mb-5.service-box.shadow-sm.p-4.mt-4.profile
+
+    .col-12.col-md-7
+      %i.fas.fa-user-circle.fa-7x
+      .mt-2
+        %p.display-1.mb-1
+          = current_user.first_name
+          = current_user.last_name
+        %p.display-2.font-weight-light
+          = current_user.email
+    .col-12.col-md-5.profile-info
+      %p
+        By default,  system use the e-mail your signed up via EOSC AAI.
+        If you would like those to use other e-mail address, you may modify it using this link.
