@@ -51,12 +51,8 @@ Rails.application.routes.draw do
     end
   end
 
-  patch "/profile", to: "users#update"
-  scope module: :profile do
-    resource :user, except: [:new, :create], path: "/profile"
-    patch "/profile/:id", to: "users#update"
-    delete "/profile/:id", to: "users#destroy"
-  end
+  resource :profile, only: [:show, :edit, :update, :destroy]
+
   resource :help, only: :show
 
   resource :backoffice, only: :show

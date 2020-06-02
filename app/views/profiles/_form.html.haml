@@ -1,4 +1,4 @@
-= simple_form_for user, url: edit_user_path(user)  do |f|
+= simple_form_for user, url: profile_path(user)  do |f|
   .row
     .col-12.col-md-5.profile-edit
       .bordered-header
@@ -21,11 +21,11 @@
   .row.mt-5
     .col-12.col-md-7
       = f.button :submit, method: :patch, class: "btn btn-primary pl-5 pr-5 mr-5"
-      = link_to "Cancel and back to previous page", user_path, prefix: :backoffice,
+      = link_to "Cancel and back to previous page", profile_path,
         class: "text-left flex-grow-1 text-uppercase"
     .col-12.col-md-5.delete-info
       .delete-text
         If you're no longer interested in sharing with us your data,
         you can delete information connected to your profile by clicking the button
-      = link_to "Delete", user_path(user), method: :delete, class: "btn-sm btn-danger",
+      = link_to "Delete", profile_path(user), method: :delete, class: "btn-sm btn-danger",
       data: { confirm: "Are you sure?" }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Profile::UsersController < ApplicationController
+class ProfilesController < ApplicationController
   before_action :authenticate_user!
 
   def show
@@ -24,7 +24,7 @@ class Profile::UsersController < ApplicationController
   def destroy
     @user = current_user
     if Profile::Destroy.new(@user).call
-      redirect_to user_path,
+      redirect_to profile_path,
                   notice: "Profile information deleted successfully"
     end
   end
