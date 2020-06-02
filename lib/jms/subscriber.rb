@@ -2,7 +2,6 @@
 
 require "stomp"
 require "json"
-require "nori"
 require "raven"
 
 module Jms
@@ -27,33 +26,16 @@ module Jms
 
     def run
       log "Start subscriber on destination: #{@destination}"
-      parser = Nori.new(strip_namespaces: true)
 
       @client.subscribe("/topic/#{@destination}.>", { "ack": "client-individual", "activemq.subscriptionName": "mpSubscription" }) do |msg|
         log "Arrived message"
-        body = JSON.parse(msg.body)
-        resource = parser.parse(body["resource"])
-        log "rerource:\n #{resource}"
-
-        raise ResourceParseError.new("Cannot parse resource") if resource.empty?
-
-        case body["resourceType"]
-        when "infra_service"
-          if resource["infraService"]["latest"]
-            Service::PcCreateOrUpdate.new(resource["infraService"], @eic_base_url).call
-          end
-        when "provider"
-          if resource["provider"]["active"]
-            Provider::PcCreateOrUpdate.new(resource["provider"]).call
-          end
-        else
-          log msg
-        end
+        Jms::ManageMessage.new(msg, @eic_base_url, @logger).call
         @client.ack(msg)
       rescue StandardError => e
         @client.unreceive(msg)
         error_block(msg, e)
       end
+
       raise ConnectionError.new("Connection failed!!") unless @client.open?()
       raise ConnectionError.new("Connect error: #{@client.connection_frame().body}") if @client.connection_frame().command == Stomp::CMD_ERROR
 
@@ -62,8 +44,8 @@ module Jms
 
     private
       def error_block(msg, e)
-        log "Error occured while processing message:\n #{msg}"
-        log e
+        @logger.error("Error occured while processing message:\n #{msg}")
+        @logger.error(e)
         Raven.capture_exception(e)
         abort(e.full_message)
       end
@@ -89,7 +71,6 @@ module Jms
       end
 
       def log(msg)
-        puts msg
         @logger.info(msg)
       end
   end

@@ -3,7 +3,11 @@
 require "mini_magick"
 
 class Service::PcCreateOrUpdate
-  def initialize(eic_service, eic_base_url, unirest: Unirest)
+  def initialize(eic_service,
+                 eic_base_url,
+                 logger,
+                 unirest: Unirest)
+    @logger = logger
     @unirest = unirest
     @eic_base_url = eic_base_url
     @eid = eic_service["id"]
@@ -35,54 +39,53 @@ class Service::PcCreateOrUpdate
       save_logo(service, @eic_service["symbol"])
 
       if service.save!
-        puts "Created new service: #{service.id}"
-        ServiceSource.new(service_id: service.id, source_type: "eic", eid: @eid).save!
-        service.offers.create(name: "Offer", description: "#{service.title} Offer",
+        log "Created new service: #{service.id}"
+        ServiceSource.create!(service_id: service.id, source_type: "eic", eid: @eid)
+        service.offers.create!(name: "Offer", description: "#{service.title} Offer",
                                offer_type: "open_access",
                                webpage: service.webpage_url, status: service.status)
       end
       service
     elsif mapped_service && !@is_active
       Service::Draft.new(mapped_service).call
-      puts "Draft service: #{mapped_service.id}"
+      log "Draft service: #{mapped_service.id}"
       mapped_service
     else
       save_logo(mapped_service, @eic_service["symbol"])
       mapped_service.update!(service)
-      puts "Service with id: #{mapped_service.id} successfully updated"
+      log "Service with id: #{mapped_service.id} successfully updated"
       mapped_service
     end
   end
 
   private
     def map_service(data)
-      service = { title: data["name"],
-                            description: [ReverseMarkdown.convert(data["description"],
-                                                                 unknown_tags: :bypass,
-                                                                 github_flavored: false),
-                                          data["options"],
-                                          data["userValue"],
-                                          data["userBase"]].join("\n"),
-                            tagline: data["tagline"].blank? ? "NO IMPORTED TAGLINE" : data["tagline"],
-                            places: map_places(data["places"]["place"]) || "World",
-                            languages: data["languages"]["language"] || "English",
-                            dedicated_for: [],
-                            terms_of_use_url: data["termsOfUse"]["termOfUse"] || "",
-                            access_policies_url: data["price"],
-                            sla_url: data["serviceLevelAgreement"] || "",
-                            webpage_url: data["url"] || "",
-                            manual_url: data["userManual"] || "",
-                            helpdesk_url: data["helpdesk"] || "",
-                            tutorial_url: data["trainingInformation"] || "",
-                            phase: map_phase(data["trl"]),
-                            service_type: "open_access",
-                            status: "published",
-                            providers: [map_provider(data["providers"]["provider"])],
-                            categories: map_category(data["category"]),
-                            research_areas: [research_area_other],
-                            version: data["version"] || ""
-                }
-      service
+      { title: data["name"],
+        description: [ReverseMarkdown.convert(data["description"],
+                                             unknown_tags: :bypass,
+                                             github_flavored: false),
+                      data["options"],
+                      data["userValue"],
+                      data["userBase"]].join("\n"),
+        tagline: data["tagline"].blank? ? "NO IMPORTED TAGLINE" : data["tagline"],
+        places: map_places(data["places"]["place"]) || "World",
+        languages: data["languages"]["language"] || "English",
+        dedicated_for: [],
+        terms_of_use_url: data["termsOfUse"]["termOfUse"] || "",
+        access_policies_url: data["price"],
+        sla_url: data["serviceLevelAgreement"] || "",
+        webpage_url: data["url"] || "",
+        manual_url: data["userManual"] || "",
+        helpdesk_url: data["helpdesk"] || "",
+        tutorial_url: data["trainingInformation"] || "",
+        phase: map_phase(data["trl"]),
+        service_type: "open_access",
+        status: "published",
+        providers: [map_provider(data["providers"]["provider"])],
+        categories: map_category(data["category"]),
+        research_areas: [research_area_other],
+        version: data["version"] || ""
+      }
     end
 
     def map_provider(prov_eid)
@@ -102,7 +105,6 @@ class Service::PcCreateOrUpdate
         end
         provider  = Provider.create!(name: prov.body["name"])
         ProviderSource.create!(provider_id: provider.id, source_type: "eic", eid: prov_eid)
-        puts "Created new provider with id #{provider.id}"
         provider
       else
         mapped_provider
@@ -132,9 +134,9 @@ class Service::PcCreateOrUpdate
           logo
         end
       rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, SocketError => e
-        puts "\nERROR - there was a problem processing image for #{@eid} #{image_url}: #{e}\n"
+        log "\nERROR - there was a problem processing image for #{@eid} #{image_url}: #{e}\n"
       rescue => e
-        puts "\nERROR - there was a unexpected problem processing image for #{@eid} #{image_url}: #{e}\n"
+        log "\nERROR - there was a unexpected problem processing image for #{@eid} #{image_url}: #{e}\n"
       end
 
       unless logo.nil?
@@ -166,5 +168,9 @@ class Service::PcCreateOrUpdate
       else
         ISO3166::Country.search(place).name
       end
+    end
+
+    def log(msg)
+      @logger.info(msg)
     end
 end
