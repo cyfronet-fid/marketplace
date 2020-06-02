@@ -22,6 +22,11 @@ en:
         text: Describe problem precisely
       project_item:
         additional_comment: Please enter additional details of your request
+      user:
+        categories: Categories of interests
+        research_areas: Research areas of interests
+        categories_updates: New service in Category of interest
+        research_areas_updates: New service in Research area of interest
       project:
         name: Project name
         reason_for_access: Reason to request access to the EOSC services
@@ -126,3 +131,8 @@ en:
           in_progress: In progress
           ready: Active
           rejected: Rejected
+  helpers:
+    submit:
+      user:
+        update: Save changes
+        delete: Delete

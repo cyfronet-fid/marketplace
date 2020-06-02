@@ -1,3 +1,4 @@
+= render "layouts/welcome_modal"
 .container
   = render "info"
 
@@ -19,3 +20,8 @@
       = render "opinions", opinion: @opinion
     .col-12.col-lg-8.col-sm-7
       = render_sections("use-cases")
+
+- if current_user && !cookies[:disable_welcome_modal]
+  :javascript
+    $("#welcome-modal").modal("show")
+  - cookies[:disable_welcome_modal] = true

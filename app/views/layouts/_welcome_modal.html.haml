@@ -1,0 +1,16 @@
+#welcome-modal.modal{ tabindex: "-1", role: "dialog", aria: { hidden: "false" } }
+  .modal-dialog.new-feature{ role: "document" }
+    .modal-content
+      .row
+        .col-12.col-sm-4.image-col
+          = image_pack_tag "new-feature.png", class: "img-fluid"
+        .col-12.col-sm-8
+          .modal-header
+            %h2#welcome-modal-title.modal-title New functionality arrived!
+          #welcome-modal-body.modal-body
+            = render "layouts/profile_manipulation_body"
+          .modal-footer.border-top-0
+            = link_to "Upgrade your profile now", profile_path, class: "btn btn-primary pl-5 pr-5 float-left"
+            %button#dismiss-btn.close.close-link.pl-3.pr-3{ type: "button", data: { dismiss: "modal" } }
+              %span I'll do it later
+

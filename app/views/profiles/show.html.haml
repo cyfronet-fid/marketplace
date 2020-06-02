@@ -1,15 +1,38 @@
-- content_for :title, t(".title")
 .container
   - breadcrumb :profile
 
   %h1 Profile
 
-  .row.h-100.justify-content-center.bg-gray-5.pt-4.pb-4
-    %i.fas.fa-user-circle.fa-10x.text-color-solid-10
-    .ml-5.my-auto
-      %p.display-1.mb-1
-        = current_user.first_name
-        = current_user.last_name
-      %p.display-2.font-weight-light
-        = current_user.email
+  = render "basic_information"
 
+  #profile-information.row
+    .col-12.col-md-5.profile-edit
+      .bordered-header
+        %h3 Additional information
+        %span= link_to "Edit", edit_profile_path, class: "btn-sm btn-warning"
+      %h5 Categories of interests
+      %ul
+        - current_user.categories.each do |category|
+          %li
+            %span= category.name
+
+      %h5 Research areas of interests
+      %ul
+        - current_user.research_areas.each do |ra|
+          %li
+            %span= ra.name
+    .col-12.col-md-5.profile-edit.ml-auto
+      .bordered-header
+        %h3 Email notifications
+        %span= link_to "Edit", edit_profile_path, class: "btn-sm btn-warning"
+      %h5 You are signed up to receive updates about new EOSC Services in your:
+      %ul
+        - if current_user.categories_updates
+          %li
+            %span Category of interests
+        - if current_user.research_areas_updates
+          %li
+            %span Research area of interests
+      %p.small
+        You can add or remove notification channel
+        at any time by editing your subscribe preferences.

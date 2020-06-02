@@ -405,6 +405,26 @@ ActiveRecord::Schema.define(version: 2020_05_21_150023) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_categories", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "category_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_user_categories_on_category_id"
+    t.index ["user_id", "category_id"], name: "index_user_categories_on_user_id_and_category_id", unique: true
+    t.index ["user_id"], name: "index_user_categories_on_user_id"
+  end
+
+  create_table "user_research_areas", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "research_area_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["research_area_id"], name: "index_user_research_areas_on_research_area_id"
+    t.index ["user_id", "research_area_id"], name: "index_user_research_areas_on_user_id_and_research_area_id", unique: true
+    t.index ["user_id"], name: "index_user_research_areas_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -421,6 +441,8 @@ ActiveRecord::Schema.define(version: 2020_05_21_150023) do
     t.string "last_name", null: false
     t.integer "roles_mask"
     t.integer "owned_services_count", default: 0, null: false
+    t.boolean "categories_updates", default: false, null: false
+    t.boolean "research_areas_updates", default: false, null: false
     t.index ["email"], name: "index_users_on_email"
   end
 
@@ -444,4 +466,8 @@ ActiveRecord::Schema.define(version: 2020_05_21_150023) do
   add_foreign_key "service_user_relationships", "users"
   add_foreign_key "services", "providers"
   add_foreign_key "services", "service_sources", column: "upstream_id", on_delete: :nullify
+  add_foreign_key "user_categories", "categories"
+  add_foreign_key "user_categories", "users"
+  add_foreign_key "user_research_areas", "research_areas"
+  add_foreign_key "user_research_areas", "users"
 end

@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Research areas and categories of user interests (@goreck888)
 
 ### Changed
 
