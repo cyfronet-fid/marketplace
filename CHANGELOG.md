@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 
 ### Security
+- Updated jquery to version 3.5.1
 
 ## [2.10.3] 2020-05-27
 
