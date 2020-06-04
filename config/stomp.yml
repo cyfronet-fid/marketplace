@@ -1,4 +1,5 @@
 default: &default
+  client-name: <%= ENV["MP_STOMP_CLIENT_NAME"] || "'MPClient'" %>
   login: <%= ENV["MP_STOMP_LOGIN"] || Rails.application.credentials.stomp.dig(:login) || "''" %>
   password: <%= ENV["MP_STOMP_PASS"] || Rails.application.credentials.stomp.dig(:password) || "''" %>
   host: <%= ENV["MP_STOMP_HOST"] || Rails.application.credentials.stomp.dig(:host) || "''" %>
