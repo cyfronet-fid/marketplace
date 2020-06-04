@@ -28,7 +28,7 @@ describe Jms::Subscriber do
 
   def mock_subscriber
     allow_any_instance_of(Jms::Subscriber).to receive(:conf_hash)
-                                              .with("dummy_login", "dummy_pass", "dummy_host")
+                                              .with("dummy_login", "dummy_pass", "dummy_host", "MPClientTest")
                                               .and_return(config_hash)
 
     allow(client_stub).to receive(:new).and_return(client)
@@ -36,6 +36,7 @@ describe Jms::Subscriber do
                               "dummy_login",
                               "dummy_pass",
                               "dummy_host",
+                              "MPClientTest",
                               "localhost",
                               client: client_stub,
                               logger: logger)

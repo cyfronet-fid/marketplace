@@ -14,19 +14,20 @@ module Jms
       end
     end
 
-    def initialize(topic, login, pass,  host, eic_base_url,
+    def initialize(topic, login, pass,  host,
+                   client_name, eic_base_url,
                    client: Stomp::Client,
                    logger: Logger.new("#{Rails.root}/log/jms.log"))
+      @logger = logger
       $stdout.sync = true
-      @client = client.new(conf_hash(login, pass, host))
+      @client = client.new(conf_hash(login, pass, host, client_name))
+      log "Parameters: #{conf_hash(login, pass, host, client_name)}"
       @destination = topic
       @eic_base_url = eic_base_url
-      @logger = logger
     end
 
     def run
       log "Start subscriber on destination: #{@destination}"
-
       @client.subscribe("/topic/#{@destination}.>", { "ack": "client-individual", "activemq.subscriptionName": "mpSubscription" }) do |msg|
         log "Arrived message"
         Jms::ManageMessage.new(msg, @eic_base_url, @logger).call
@@ -50,7 +51,7 @@ module Jms
         abort(e.full_message)
       end
 
-      def conf_hash(login, pass, host_des)
+      def conf_hash(login, pass, host_des, client_name)
         {
           hosts: [
             {
@@ -62,7 +63,7 @@ module Jms
             }
           ],
           connect_headers: {
-            "client-id": "MPClientTest",
+            "client-id": client_name,
             "heart-beat": "0,20000",
             "accept-version": "1.2",
             "host": "localhost"
