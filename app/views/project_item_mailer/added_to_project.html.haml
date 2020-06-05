@@ -1,6 +1,6 @@
 %p Dear #{@user.full_name},
 %p
-  This is to confirm that the #{link_to @project_item.service.title, service_url(@project_item.service)}
+  This is to confirm that the #{link_to @project_item.service.name, service_url(@project_item.service)}
   service was added to your project #{@project.name}.
   In case you want to access the Project details or add another service, please use this
   #{link_to "link", project_url(@project)}.

@@ -4,7 +4,7 @@
     .col-12.col-md-10
       = f.input :version, disabled: cant_edit(:version)
       = f.input :logo, disabled: cant_edit(:logo)
-      = f.input :title, disabled: cant_edit(:title)
+      = f.input :name, disabled: cant_edit(:name)
       = f.input :tagline, disabled: cant_edit(:tagline)
       = f.input :tag_list, input_html: { value: service.tag_list.to_s }, disabled: cant_edit(:tag_list)
       .service-description

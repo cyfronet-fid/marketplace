@@ -40,7 +40,7 @@ RSpec.feature "Service ordering" do
 
       # Step 1
       expect(page).to have_current_path(service_offers_path(service))
-      expect(page).to have_text(service.title)
+      expect(page).to have_text(service.name)
       expect(page).to have_selector(:link_or_button,
                                     "Next", exact: true)
 
@@ -70,7 +70,7 @@ RSpec.feature "Service ordering" do
 
       # Project item page
       expect(page).to have_current_path(project_service_path(project_item.project, project_item))
-      expect(page).to have_content(service.title)
+      expect(page).to have_content(service.name)
     end
 
     scenario "I can order service with offert containing range" do
@@ -112,7 +112,7 @@ RSpec.feature "Service ordering" do
 
       # Project item page
       expect(page).to have_current_path(project_service_path(project_item.project, project_item))
-      expect(page).to have_content(service.title)
+      expect(page).to have_content(service.name)
     end
 
     [:open_access_service, :external_service].each do |type|
@@ -506,7 +506,7 @@ RSpec.feature "Service ordering" do
 
       click_on "Access the service", match: :first
 
-      expect(page).to have_text(service.title)
+      expect(page).to have_text(service.name)
       expect(page).to have_text(o1.name)
       expect(page).to have_text(o2.name)
     end

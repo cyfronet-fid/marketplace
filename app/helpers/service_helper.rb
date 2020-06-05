@@ -24,8 +24,8 @@ module ServiceHelper
   end
 
   def get_terms_and_condition_hint_text(service)
-    "You are about to order #{service.title} service. Please accept " \
-      "#{link_to service.title, service.terms_of_use_url} terms and conditions to proceed.".html_safe
+    "You are about to order #{service.name} service. Please accept " \
+      "#{link_to service.name, service.terms_of_use_url} terms and conditions to proceed.".html_safe
   end
 
   def dedicated_for_links(service)

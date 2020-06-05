@@ -1,4 +1,4 @@
-- content_for :title, "#{@project_item.service.title} - #{@project.name}"
+- content_for :title, "#{@project_item.service.name} - #{@project.name}"
 = render "projects/services/layout",
   project: @project, projects: @projects, project_item: @project_item do
 
