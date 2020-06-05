@@ -29,4 +29,17 @@ RSpec.describe ServiceMailer, type: :mailer do
       expect(encoded_body).to have_content("text message")
     end
   end
+
+  context "publish" do
+    let(:user) { create(:user_with_interests) }
+    let(:service1) { create(:service, research_areas: user.research_areas) }
+    let(:service2) { create(:service, categories: user.categories) }
+    let(:new_service_mail) { described_class.new_service(service1, user.categories,
+                                                     user.research_areas, user.email).deliver_now }
+
+
+    it "sends email to interested users" do
+      expect { new_service_mail }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+  end
 end
