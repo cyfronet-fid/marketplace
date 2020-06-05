@@ -7,8 +7,8 @@ module Service::Search
     # ELASTICSEARCH
     # scope :search_import working with should_indexe?
     # and define which services are indexed in elasticsearch
-    searchkick word_middle: [:title, :tagline, :description, :offer_names],
-      highlight: [:title, :tagline]
+    searchkick word_middle: [:name, :tagline, :description, :offer_names],
+      highlight: [:name, :tagline]
   end
 
   # search_data are definition whitch
@@ -16,7 +16,7 @@ module Service::Search
   def search_data
     {
       service_id: id,
-      title: title,
+      name: name,
       tagline: tagline,
       description: description,
       status: status,

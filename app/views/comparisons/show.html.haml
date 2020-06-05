@@ -22,7 +22,7 @@
             = link_to comparisons_services_path(slug: service.slug, fromc: params[:fromc]), method: :delete do
               %i.far.fa-trash-alt
             .service-title
-              = link_to service.title.truncate(30, separator: " "),
+              = link_to service.name.truncate(30, separator: " "),
               service_path(service, fromc: params[:fromc], comp_link: true)
             .service-description
               = service.description.truncate(80, separator: " ")

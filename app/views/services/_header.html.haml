@@ -7,7 +7,7 @@
       - elsif service.logo.attached?
         = image_tag service.logo.variant(resize: "180x120"), class: "align-self-center img-fluid"
     .col-12.col-sm-9
-      %h2.font-weight-bolder= service.title
+      %h2.font-weight-bolder= service.name
       %p.mb-2= service.tagline
       = render "services/categorization", service: service
       .row.mt-2

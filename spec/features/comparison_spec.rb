@@ -26,7 +26,7 @@ RSpec.feature "Comparison", js: true do
 
     find("#comparison-#{service1.id}", visible: false).click
 
-    click_on "#{service1.title}"
+    click_on "#{service1.name}"
 
     expect(page).to have_selector("#comparison-bar")
   end
@@ -44,7 +44,7 @@ RSpec.feature "Comparison", js: true do
     expect(find("#comparison-#{service4.id}", visible: false).disabled?).to eql true
     expect(find("#comparison-#{service5.id}", visible: false).disabled?).to eql true
 
-    click_on service4.title
+    click_on service4.name
 
     expect(find("#comparison-#{service4.id}", visible: false).disabled?).to eql true
   end

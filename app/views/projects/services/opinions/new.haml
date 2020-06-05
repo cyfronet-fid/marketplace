@@ -11,7 +11,7 @@
           = image_pack_tag "eosc-img.png"
     .col-md-9.pl-5.vertical-center
       %h2
-        = @project_item.service.title
+        = @project_item.service.name
       %span
         = @project_item.service.tagline
   .row
@@ -27,7 +27,7 @@
           %li.mt-4
             %strong
               = t("project_items.opinion.#{@project_item.order_type}.question1",
-              title: @project_item.service.title)
+              title: @project_item.service.name)
             = render "stars", field: "service_opinion_service_rating"
           %li.mt-4
             %strong

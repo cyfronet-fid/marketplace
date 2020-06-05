@@ -10,6 +10,6 @@
     = f.input :author, label: t("simple_form.labels.question.author")
     = f.input :email, as: :email
   = f.input :text, as: :text, input_html: { rows: 6 },
-                label: t("simple_form.labels.question.text", title: service.title),
+                label: t("simple_form.labels.question.text", name: service.name),
                 hint: t("simple_form.hints.question.text", email: current_user&.email || "your")
   #recaptcha= recaptcha_tags
