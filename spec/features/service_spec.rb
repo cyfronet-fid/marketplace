@@ -10,7 +10,7 @@ RSpec.feature "Service browsing" do
 
     visit service_path(service)
 
-    expect(body).to have_content service.title
+    expect(body).to have_content service.name
     expect(body).to have_content service.description
     expect(body).to have_content service.tagline
     expect(body).to have_content "my-tag"
@@ -33,7 +33,7 @@ RSpec.feature "Service browsing" do
     visit service_path(service)
 
     expect(page.body).to have_content "Suggested compatible services"
-    expect(page.body).to have_content related.title
+    expect(page.body).to have_content related.name
   end
 
   scenario "does not show related services section when no related services" do
@@ -147,9 +147,9 @@ RSpec.feature "Service browsing" do
   end
 
   scenario "should by default sort services by name, ascending" do
-    create(:service, title: "Service c")
-    create(:service, title: "Service b")
-    create(:service, title: "Service a")
+    create(:service, name: "Service c")
+    create(:service, name: "Service b")
+    create(:service, name: "Service a")
 
     visit services_path
 
@@ -158,9 +158,9 @@ RSpec.feature "Service browsing" do
   end
 
   scenario "sorting will set query param and preserve existing ones", js: true do
-    create(:service, title: "DDDD Something 1", rating: 4.1)
-    create(:service, title: "DDDD Something 2", rating: 4.0)
-    create(:service, title: "DDDD Something 3", rating: 3.9)
+    create(:service, name: "DDDD Something 1", rating: 4.1)
+    create(:service, name: "DDDD Something 2", rating: 4.0)
+    create(:service, name: "DDDD Something 3", rating: 3.9)
 
     visit services_path(q: "DDDD Something", sort: "rating")
 
@@ -169,8 +169,8 @@ RSpec.feature "Service browsing" do
   end
 
   scenario "limit number of services per page" do
-    create(:service, title: "Service a")
-    create(:service, title: "Service b")
+    create(:service, name: "Service a")
+    create(:service, name: "Service b")
 
     visit services_path(per_page: "1")
 

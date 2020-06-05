@@ -1,6 +1,6 @@
 .card.bg-gray-5.border-0
   .card-body
-    %h3.card-title= link_to service.title.truncate(35, separator: " "), service, title: service.title
+    %h3.card-title= link_to service.name.truncate(35, separator: " "), service, name: service.name
     .row.card-description
       - if service.logo.attached?
         .col-4

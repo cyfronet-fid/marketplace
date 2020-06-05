@@ -3,7 +3,7 @@
 
 EIC_SOURCE_FIELDS = [
   :logo,
-  :title,
+  :name,
   :description,
   :tagline,
   :places,
@@ -90,7 +90,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
 
   def permitted_attributes
     attrs = [
-      :title, :description,
+      :name, :description,
       :tagline, :order_type,
       [provider_ids: []], :places, :languages,
       [target_group_ids: []], :terms_of_use_url,

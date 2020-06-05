@@ -11,9 +11,9 @@ RSpec.describe ApplicationController, type: :controller do
   let!(:providers) { create_list(:provider, 2) }
   let!(:categories) { create_list(:category, 2) }
 
-  let!(:service1) { create(:service, title: "duper super name", providers: providers,
+  let!(:service1) { create(:service, name: "duper super name", providers: providers,
                            categories: [categories.first], tag_list: "tag1, tag2") }
-  let!(:service2) { create(:service, title: "very different title", providers: [providers.first],
+  let!(:service2) { create(:service, name: "very different title", providers: [providers.first],
                            categories: categories, tag_list: "tag2") }
   let!(:offer1) { create(:offer, service: service1, name: "Offer 1") }
   let!(:offer2) { create(:offer, service: service1, name: "Offer 2") }

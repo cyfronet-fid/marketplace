@@ -33,7 +33,7 @@ RSpec.feature "Project" do
 
     scenario "I can see first project services when entering My projects" do
       project = create(:project, user: user)
-      service = create(:service, title: "The best service ever")
+      service = create(:service, name: "The best service ever")
       offer = create(:offer, service: service)
       create(:project_item, offer: offer, project: project)
 

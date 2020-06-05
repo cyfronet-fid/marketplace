@@ -141,7 +141,7 @@ class Jira::Client < JIRA::Client
 
     fields = { summary: "Service order, #{project_item.project.user.first_name} " +
                        "#{project_item.project.user.last_name}, " +
-                       "#{project_item.service.title}",
+                       "#{project_item.service.name}",
               project: { key: @jira_project_key },
               issuetype: { id: @jira_issue_type_id },
     }
@@ -204,7 +204,7 @@ private
   def encode_order_properties(project_item)
     {
       "category" => project_item.service.categories.first&.name,
-      "service" => project_item.service.title,
+      "service" => project_item.service.name,
       "offer" => project_item.name,
       "attributes" => encode_properties(project_item.properties)
     }.to_json

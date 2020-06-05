@@ -8,7 +8,7 @@ class ServiceMailer < ApplicationMailer
     @email = email
 
     mail(to: recipient_email,
-         subject: "Question about #{@service.title} service",
+         subject: "Question about #{@service.name} service",
          template_name: "new_question")
   end
 

@@ -5,7 +5,7 @@ module Service::Autocomplete
 
   def autocomplete
     query = Searchkick.search(params[:q],
-                           fields: ["name", "title"],
+                           fields: ["name", "name"],
                            operator: "or",
                            match: :word_middle,
                            limit: 5,
@@ -15,7 +15,7 @@ module Service::Autocomplete
                            models: [Service, Offer],
                            model_includes: { Service => [:offers], Offer => [:service] })
 
-    service_titles = Service.where(id: scope.ids).pluck(:id, :title).to_h
+    service_titles = Service.where(id: scope.ids).pluck(:id, :name).to_h
 
     if request.xhr?
       render(template: "services/autocomplete/list",
