@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Subscription mechanism for new added services (@goreck888)
 
 ### Changed
+- Updated nodejs to version 10.19.0
 
 ### Deprecated
 
@@ -22,6 +23,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 - Updated jquery to version 3.5.1
+- Updated puma to version 4.3.5
 
 ## [2.10.3] 2020-05-27
 
