@@ -5,7 +5,7 @@ class Service < ApplicationRecord
   include Service::Search
 
   extend FriendlyId
-  friendly_id :title, use: :slugged
+  friendly_id :name, use: :slugged
 
   acts_as_taggable
 
@@ -104,7 +104,7 @@ class Service < ApplicationRecord
 
   belongs_to :upstream, foreign_key: "upstream_id", class_name: "ServiceSource", optional: true
 
-  validates :title, presence: true
+  validates :name, presence: true
   validates :description, presence: true
   validates :tagline, presence: true
   validates :rating, presence: true
@@ -132,7 +132,7 @@ class Service < ApplicationRecord
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
   def self.popular(count)
-    order(popularity_ratio: :desc, title: :asc).limit(count)
+    order(popularity_ratio: :desc, name: :asc).limit(count)
   end
 
   def main_category

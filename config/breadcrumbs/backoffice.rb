@@ -15,7 +15,7 @@ crumb :backoffice_services do |category|
 end
 
 crumb :backoffice_service do |service|
-  link service.title, backoffice_service_path(service)
+  link service.name, backoffice_service_path(service)
   parent :backoffice_services
 end
 

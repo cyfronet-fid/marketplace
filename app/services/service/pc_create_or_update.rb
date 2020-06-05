@@ -40,7 +40,7 @@ class Service::PcCreateOrUpdate
       if service.save!
         log "Created new service: #{service.id}"
         ServiceSource.create!(service_id: service.id, source_type: "eic", eid: @eid)
-        service.offers.create!(name: "Offer", description: "#{service.title} Offer",
+        service.offers.create!(name: "Offer", description: "#{service.name} Offer",
                                order_type: "open_access",
                                webpage: service.webpage_url, status: service.status)
       end
@@ -59,7 +59,7 @@ class Service::PcCreateOrUpdate
 
   private
     def map_service(data)
-      { title: data["name"],
+      { name: data["name"],
         description: [ReverseMarkdown.convert(data["description"],
                                              unknown_tags: :bypass,
                                              github_flavored: false),

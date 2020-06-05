@@ -1,6 +1,6 @@
 .service-info-box
   %header
-    = link_to service.title.truncate(35), service, class: "title"
+    = link_to service.name.truncate(35), service, class: "title"
   %article
     %p
       = service_logo(service)

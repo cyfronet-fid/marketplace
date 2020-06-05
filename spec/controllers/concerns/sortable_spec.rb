@@ -17,7 +17,7 @@ RSpec.describe SortableFakeController do
 
   context "ordering" do
     it "should by default sort by name" do
-      expect(controller.send(:ordering)).to eq(title: :asc)
+      expect(controller.send(:ordering)).to eq(name: :asc)
     end
 
     it "should return ascending ordering by rating" do

@@ -27,7 +27,7 @@ RSpec.describe Service::PcCreateOrUpdate do
 
       service = stub_described_class(create(:jms_service, prov_eid: provider_eid), unirest: unirest)
 
-      expect(service.title).to eq("Title")
+      expect(service.name).to eq("Title")
       expect(service.description).to eq("A catalogue of corpora (datasets) made up of mainly " +
                                         "Open Access scholarly publications. Users can view publicly available corpora that " +
                                         "have been created with the OpenMinTeD Corpus Builder for Scholarly Works, or manually uploaded " +
@@ -85,16 +85,16 @@ RSpec.describe Service::PcCreateOrUpdate do
       provider = create(:provider, name: "Test Provider 3")
       create(:provider_source, source_type: "eic", eid: "new.prov", provider: provider)
 
-      service = stub_described_class(create(:jms_service, prov_eid: "new.prov", title: "New supper service"), unirest: unirest)
+      service = stub_described_class(create(:jms_service, prov_eid: "new.prov", name: "New supper service"), unirest: unirest)
       last_service = Service.last
-      expect(last_service.title).to eq("New supper service")
+      expect(last_service.name).to eq("New supper service")
       expect(service.providers[0].name).to eq("Test Provider 3")
     end
 
     it "should create new service with new default offer" do
       provider = create(:provider, name: "Test Provider 3")
       create(:provider_source, source_type: "eic", eid: "new.prov", provider: provider)
-      service = create(:jms_service, prov_eid: "new.prov", title: "New supper service")
+      service = create(:jms_service, prov_eid: "new.prov", name: "New supper service")
       expect {
         stub_described_class(service, unirest: unirest)
       }.to change { Offer.count }.by(1)
@@ -102,7 +102,7 @@ RSpec.describe Service::PcCreateOrUpdate do
       service = Service.last
 
       expect(offer.name).to eq("Offer")
-      expect(offer.description).to eq("#{service.title} Offer")
+      expect(offer.description).to eq("#{service.name} Offer")
       expect(offer.order_type).to eq("open_access")
       expect(offer.status).to eq(service.status)
       expect(offer.service.id).to eq(service.id)
@@ -116,10 +116,10 @@ RSpec.describe Service::PcCreateOrUpdate do
 
       create(:service_source, source_type: "eic", eid: "first.service", service: service)
 
-      service = stub_described_class(create(:jms_service, title: "New title",
+      service = stub_described_class(create(:jms_service, name: "New title",
                                             logo: "http://metalweb.cerm.unifi.it/global/images/MetalPDB.png",
                                             prov_eid: provider_eid))
-      expect(service.title).to eq("New title")
+      expect(service.name).to eq("New title")
       expect(service.logo.download).to eq(file_fixture("MetalPDB.png").read.b)
     end
 
@@ -130,8 +130,8 @@ RSpec.describe Service::PcCreateOrUpdate do
 
       create(:service_source, source_type: "eic", eid: "first.service", service: service)
 
-      service = stub_described_class(create(:jms_service, title: "New title", prov_eid: provider_eid))
-      expect(service.title).to eq("New title")
+      service = stub_described_class(create(:jms_service, name: "New title", prov_eid: provider_eid))
+      expect(service.name).to eq("New title")
     end
   end
 

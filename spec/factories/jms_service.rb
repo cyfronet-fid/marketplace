@@ -6,7 +6,7 @@ FactoryBot.define do
     skip_create
     transient do
       eid { "first.service" }
-      title { "Title" }
+      name { "Title" }
       prov_eid { "new" }
       logo { "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png" }
     end
@@ -24,7 +24,7 @@ FactoryBot.define do
         "languages" => { "language"=>"english" },
         "lastUpdate" => "Wed, 05 Sep 2018 00:00:00 +0000".to_date,
         "lifeCycleStatus" => "production",
-        "name" => title,
+        "name" => name,
         "options" => "Standard",
         "order" => "http://openminted.eu/omtd-services/catalogue-of-scholarly-datasets/",
         "otherProducts" => "0",
