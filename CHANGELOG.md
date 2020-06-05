@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Research areas and categories of user interests (@goreck888)
+- Subscription mechanism for new added services (@goreck888)
 
 ### Changed
 

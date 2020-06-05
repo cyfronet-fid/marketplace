@@ -7,5 +7,19 @@ FactoryBot.define do
     sequence(:last_name) { |n| "Doe#{n}" }
     password { "12345678" }
     sequence(:uid) { |n| "uid#{n}" }
+    factory :user_with_interests do
+      sequence(:research_areas) { |n| [create(:research_area)] }
+      sequence(:categories) { |n| [create(:category)] }
+      sequence(:categories_updates) { true }
+      sequence(:research_areas_updates) { true }
+    end
+    factory :user_with_research_areas do
+      sequence(:research_areas) { |n| [create(:research_area)] }
+      sequence(:research_areas_updates) { true }
+    end
+    factory :user_with_categories do
+      sequence(:categories) { |n| [create(:category)] }
+      sequence(:categories_updates) { true }
+    end
   end
 end
