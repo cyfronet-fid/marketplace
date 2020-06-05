@@ -37,7 +37,7 @@ RSpec.feature "Service filter" do
   it "stores filter state by breadcrumbs navigation", js: true do
     research_area = create(:research_area, name: "Science!")
     provider = create(:provider, name: "Cyfronet provider")
-    create(:service, title: "dd", providers: [provider], research_areas: [research_area])
+    create(:service, name: "dd", providers: [provider], research_areas: [research_area])
 
     visit services_path(q: "dd", providers: [provider.to_param], research_areas: [research_area.to_param])
     click_on "dd"
@@ -58,8 +58,8 @@ RSpec.feature "Service filter" do
 
   it "allows to clear all filters" do
     cyfronet = create(:provider, name: "Cyfronet provider")
-    create(:service, title: "Other service")
-    create(:service, title: "Cyfronet service", providers: [cyfronet])
+    create(:service, name: "Other service")
+    create(:service, name: "Cyfronet service", providers: [cyfronet])
 
     visit services_path(providers: [cyfronet.to_param])
     expect(page).to_not have_text("Other service")
@@ -94,10 +94,10 @@ RSpec.feature "Service filter" do
       sub = create(:research_area, parent: root)
       subsub = create(:research_area, parent: sub)
 
-      create(:service, research_areas: [root], title: "Root service")
-      create(:service, research_areas: [sub], title: "Sub service")
-      create(:service, research_areas: [subsub], title: "Subsub service")
-      create(:service, title: "Other service")
+      create(:service, research_areas: [root], name: "Root service")
+      create(:service, research_areas: [sub], name: "Sub service")
+      create(:service, research_areas: [subsub], name: "Subsub service")
+      create(:service, name: "Other service")
 
       visit services_path(research_areas: [root.id])
       expect(page).to have_text("Root service")
@@ -215,9 +215,9 @@ RSpec.feature "Service filter" do
 
   context "invisible filters" do
     it "shows services with tag" do
-      create(:service, tag_list: ["a"], title: "ATag")
-      create(:service, tag_list: ["a", "b"], title: "ABTag")
-      create(:service, tag_list: ["c"], title: "CTag")
+      create(:service, tag_list: ["a"], name: "ATag")
+      create(:service, tag_list: ["a", "b"], name: "ABTag")
+      create(:service, tag_list: ["c"], name: "CTag")
 
       visit services_path(tag: "a")
       expect(page).to have_text("ATag")

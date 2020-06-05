@@ -15,7 +15,7 @@ crumb :services do
 end
 
 crumb :service do |service|
-  link service.title, service_path(service)
+  link service.name, service_path(service)
   if params[:comp_link]
     parent :comparison
   elsif params[:fromc] && category = service.categories.find_by(slug: params[:fromc])
@@ -46,7 +46,7 @@ crumb :comparison do
 end
 
 crumb :project_item do |project_item|
-  link "Service (#{project_item.service.title})",
+  link "Service (#{project_item.service.name})",
     project_service_path(project_item.project, project_item)
   parent :project, project_item.project
 end

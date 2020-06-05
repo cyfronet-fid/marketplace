@@ -49,7 +49,7 @@ If you want to update informations, or add new services/categories you can add n
 but very imporant is, when some records are parent for other they must be written above their children.
 But if it's necessary, there is other option to fill the database:
 To simplify development `dev:prime` rake task is created. Right now it generates
-services with random title and description (this generation is done using
+services with random name and description (this generation is done using
 `faker` gem). In the future this task will be extended with additional data.
 
 ```

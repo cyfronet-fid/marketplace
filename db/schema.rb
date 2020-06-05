@@ -327,7 +327,7 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
   end
 
   create_table "services", force: :cascade do |t|
-    t.string "title", null: false
+    t.string "name", null: false
     t.text "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -364,8 +364,8 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.string "order_url"
     t.string "payment_model_url"
     t.string "pricing_url"
+    t.index ["name"], name: "index_services_on_name"
     t.index ["provider_id"], name: "index_services_on_provider_id"
-    t.index ["title"], name: "index_services_on_title"
   end
 
   create_table "statuses", force: :cascade do |t|

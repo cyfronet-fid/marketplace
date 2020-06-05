@@ -56,10 +56,10 @@ RSpec.feature "Service categories" do
 
     visit category_path(root1)
 
-    expect(page.body).to have_content s1.title
-    expect(page.body).to have_content s2.title
-    expect(page.body).to have_content s3.title
-    expect(page.body).to_not have_content other_service.title
+    expect(page.body).to have_content s1.name
+    expect(page.body).to have_content s2.name
+    expect(page.body).to have_content s3.name
+    expect(page.body).to_not have_content other_service.name
   end
 
   scenario "limit number of services per page" do
