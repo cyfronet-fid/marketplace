@@ -11,15 +11,14 @@
   - if @common_research_areas.present?
     research area
     = @common_research_areas.map { |cra| cra.name }.join(", ")
-    %br
-  %br
-  %table
+
+  %table.service-table
     %tr
-      %td
+      %td{ width: "125" }
         - if attachments["logo.png"].present?
           = image_tag attachments["logo.png"].url
       %td
         %h5
-        = @service.title
-  %p
-  = link_to "Check now", service_url(@service), class: "btn"
+          = @service.title
+  %p.center
+    = link_to "Check now", service_url(@service), class: "button"
