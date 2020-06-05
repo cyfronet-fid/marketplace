@@ -2,12 +2,12 @@ What's new?
 \
 New service is now available.
 \
+= @service.title
+Check now at:
+= service_url(@service)
+\
 You are receiving this message because
 you have opted up for updates in
 #{"category #{@common_categories.map { |cc| cc.name }.join(", ")}" if @common_categories.present?}
 #{"and " if @common_categories.present? && @common_research_areas.present?}
 #{"research area #{@common_research_areas.map { |cra| cra.name }.join(", ")}" if @common_research_areas.present? }
-\
-= @service.title
-Check now at:
-= service_url(@service)
