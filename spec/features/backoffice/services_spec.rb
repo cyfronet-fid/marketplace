@@ -11,8 +11,8 @@ RSpec.feature "Services in backoffice" do
     before { checkin_sign_in_as(user) }
 
     scenario "I can see all services" do
-      create(:service, title: "service1")
-      create(:service, title: "service2")
+      create(:service, name: "service1")
+      create(:service, name: "service2")
 
       visit backoffice_services_path
 
@@ -21,7 +21,7 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "I can see any service" do
-      service = create(:service, title: "service1")
+      service = create(:service, name: "service1")
 
       visit backoffice_service_path(service)
 
@@ -38,7 +38,7 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_services_path
       click_on "Create new Service"
 
-      fill_in "Title", with: "service title"
+      fill_in "Name", with: "service name"
       fill_in "Description", with: "service description"
       fill_in "Terms of use", with: "service terms of use"
       fill_in "Tagline", with: "service tagline"
@@ -75,7 +75,7 @@ RSpec.feature "Services in backoffice" do
 
       expect(user.owned_services.last.order_target).to eq("email@domain.com")
 
-      expect(page).to have_content("service title")
+      expect(page).to have_content("service name")
       expect(page).to have_content("service description")
       expect(page).to have_content("service tagline")
       expect(page).to have_content("Open Access")
@@ -108,7 +108,7 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_services_path
       click_on "Create new Service"
 
-      fill_in "Title", with: "service title"
+      fill_in "Name", with: "service name"
       fill_in "Tagline", with: "tagline"
       fill_in "Description", with: "description"
       select research_area.name, from: "Research areas"
@@ -116,11 +116,11 @@ RSpec.feature "Services in backoffice" do
 
       click_on "Preview"
 
-      expect(page).to have_content("service title")
+      expect(page).to have_content("service name")
 
       expect { click_on "Confirm changes" }.
         to change { Service.count }.by(1)
-      expect(page).to have_content("service title")
+      expect(page).to have_content("service name")
     end
 
     scenario "I cannot create service with wrong logo file" do
@@ -131,7 +131,7 @@ RSpec.feature "Services in backoffice" do
       click_on "Create new Service"
 
       attach_file("service_logo", "spec/lib/images/invalid-logo.svg")
-      fill_in "Title", with: "service title"
+      fill_in "Name", with: "service name"
       fill_in "Description", with: "service description"
       fill_in "Tagline", with: "service tagline"
       select research_area.name, from: "Research areas"
@@ -171,34 +171,34 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "I can edit any service" do
-      service = create(:service, title: "my service")
+      service = create(:service, name: "my service")
 
       visit backoffice_service_path(service)
       click_on "Edit"
 
-      fill_in "Title", with: "updated title"
+      fill_in "Name", with: "updated name"
       click_on "Update Service"
 
-      expect(page).to have_content("updated title")
+      expect(page).to have_content("updated name")
     end
 
     scenario "I can see service preview" do
-      service = create(:service, title: "my service")
+      service = create(:service, name: "my service")
 
       visit backoffice_service_path(service)
       click_on "Edit"
 
-      fill_in "Title", with: "updated title"
+      fill_in "Name", with: "updated name"
       click_on "Preview"
 
-      expect(page).to have_content("updated title")
+      expect(page).to have_content("updated name")
 
       click_on "Confirm changes"
-      expect(page).to have_content("updated title")
+      expect(page).to have_content("updated name")
     end
 
     scenario "I can add new offer", js: true do
-      service = create(:service, title: "my service", owners: [user])
+      service = create(:service, name: "my service", owners: [user])
 
       visit backoffice_service_path(service)
       click_on "Add new Offer", match: :first
@@ -247,7 +247,7 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "I cannot add invalid offer", js: true do
-      service = create(:service, title: "my service", owners: [user])
+      service = create(:service, name: "my service", owners: [user])
 
       visit backoffice_service_path(service)
       click_on "Add new Offer", match: :first
@@ -259,7 +259,7 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "I can edit offer", js: true do
-      service = create(:service, title: "my service", status: :draft)
+      service = create(:service, name: "my service", status: :draft)
       parameter = build(:input_parameter,
                          name: "Number of CPU Cores",
                          hint: "Select number of cores you want",
@@ -279,7 +279,7 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I can delete existed parameters", js: true do
       # Need to fix remove parameters
-      service = create(:service, title: "my service", status: :draft)
+      service = create(:service, name: "my service", status: :draft)
       parameter = build(:input_parameter,
                          name: "Number of CPU Cores",
                          hint: "Select number of cores you want",
@@ -299,7 +299,7 @@ RSpec.feature "Services in backoffice" do
 
 
     scenario "I can delete offer" do
-      service = create(:service, title: "my service", status: :draft)
+      service = create(:service, name: "my service", status: :draft)
       _offer = create(:offer, name: "offer1", description: "desc", service: service)
 
       visit backoffice_service_path(service)
@@ -309,7 +309,7 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "I can see info if service has no offer" do
-      service = create(:service, title: "my service")
+      service = create(:service, name: "my service")
 
       visit backoffice_service_path(service)
 
@@ -335,7 +335,7 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "I can change service status from publish to draft" do
-      service = create(:service, title: "my service")
+      service = create(:service, name: "my service")
 
       visit backoffice_service_path(service)
       click_on("Stop showing in the MP")
@@ -344,7 +344,7 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "I can change external id of the service" do
-      service = create(:service, title: "my service")
+      service = create(:service, name: "my service")
       _external_source = create(:service_source, eid: "777", source_type: "eic", service: service)
 
       visit backoffice_service_path(service)
@@ -357,7 +357,7 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "I can change upstream" do
-      service = create(:service, title: "my service")
+      service = create(:service, name: "my service")
       external_source = create(:service_source, service: service)
 
       visit backoffice_service_path(service)
@@ -369,14 +369,14 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "if upstream is set to MP (nil) all fields should be enabled" do
-      service = create(:service, title: "my service", upstream: nil)
+      service = create(:service, name: "my service", upstream: nil)
       create(:service_source, service: service, source_type: :eic)
 
       visit backoffice_service_path(service)
       click_on "Edit"
 
       expect(page).to have_field "Logo", disabled: false
-      expect(page).to have_field "Title", disabled: false
+      expect(page).to have_field "Name", disabled: false
       expect(page).to have_field "Tag list", disabled: false
       expect(page).to have_field "Description", disabled: false
       expect(page).to have_field "Order type", disabled: false
@@ -404,7 +404,7 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "If EIC is selected as upstream fields imported from there should be disabled" do
-      service = create(:service, title: "my service")
+      service = create(:service, name: "my service")
       external_source = create(:service_source, service: service, source_type: :eic)
       service.upstream = external_source
       service.save!
@@ -413,7 +413,7 @@ RSpec.feature "Services in backoffice" do
       click_on "Edit"
 
       expect(page).to have_field "Logo", disabled: true
-      expect(page).to have_field "Title", disabled: true
+      expect(page).to have_field "Name", disabled: true
       expect(page).to have_field "Tag list", disabled: false
       expect(page).to have_field "Description", disabled: true
       expect(page).to have_field "Order type", disabled: true
@@ -452,7 +452,7 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
       click_on "Edit"
 
-      fill_in "Title", with: "Owner can edit service draft"
+      fill_in "Name", with: "Owner can edit service draft"
       click_on "Update Service"
       expect(page).to have_content("Owner can edit service draft")
     end

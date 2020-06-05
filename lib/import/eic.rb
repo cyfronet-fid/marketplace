@@ -160,7 +160,7 @@ module Import
         end
 
         updated_service_data = {
-            title: name,
+            name: name,
             description: aggregated_description,
             tagline: tagline.blank? ? "NO IMPORTED TAGLINE" : tagline,
             # provider_id: ?
@@ -209,20 +209,20 @@ module Import
             service = Service.find_by(id: service_source.service_id)
             if service.upstream_id == service_source.id
               updated += 1
-              log "Updating [EXISTING] service #{service.title}, id: #{service_source.id}, eid: #{eid}"
+              log "Updating [EXISTING] service #{service.name}, id: #{service_source.id}, eid: #{eid}"
               unless @dry_run
                 service.update!(updated_service_data.except(:research_areas, :categories, :status))
                 create_default_offer!(service, name, eid, url)
               end
             else
               not_modified += 1
-              log "Service's upstream is not set to EIC, not updating #{service.title}, id: #{service_source.id}"
+              log "Service's upstream is not set to EIC, not updating #{service.name}, id: #{service_source.id}"
             end
           end
         rescue ActiveRecord::RecordInvalid => invalid
-          log "ERROR - #{invalid}! #{service.title} (eid: #{eid}) will NOT be created (please contact catalog manager)"
+          log "ERROR - #{invalid}! #{service.name} (eid: #{eid}) will NOT be created (please contact catalog manager)"
         rescue StandardError => error
-          log "ERROR - Unexpected #{error}! #{service.title} (eid: #{eid}) will NOT be created!"
+          log "ERROR - Unexpected #{error}! #{service.name} (eid: #{eid}) will NOT be created!"
         end
       end
       log "PROCESSED: #{total_service_count}, CREATED: #{created}, UPDATED: #{updated}, NOT MODIFIED: #{not_modified}"
@@ -243,9 +243,9 @@ module Import
         log "[WARNING] Offer cannot be created, because url is empty"
       end
     rescue ActiveRecord::RecordInvalid => reason
-      log "ERROR - Default offer for #{service.title} (eid: #{eid}) cannot be created. #{reason}"
+      log "ERROR - Default offer for #{service.name} (eid: #{eid}) cannot be created. #{reason}"
     rescue StandardError => error
-      log "ERROR - Default offer for #{service.title} (eid: #{eid}) cannot be created. Unexpected #{error}!"
+      log "ERROR - Default offer for #{service.name} (eid: #{eid}) cannot be created. Unexpected #{error}!"
     end
 
     def map_category(category)
