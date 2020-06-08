@@ -17,13 +17,13 @@ class Service::PcCreateOrUpdate
         "trl-9" => "production"
     }
     @best_effort_category_mapping = {
-        "storage":  Category.find_by!(name: "Storage"),
-        "training": Category.find_by!(name: "Training & Support"),
-        "security": Category.find_by!(name: "Security & Operations"),
-        "analytics": Category.find_by!(name: "Processing & Analysis"),
-        "data": Category.find_by!(name: "Data management"),
-        "compute": Category.find_by!(name: "Compute"),
-        "networking": Category.find_by!(name: "Networking"),
+        "storage": "Storage",
+        "training": "Training & Support",
+        "security": "Security & Operations",
+        "analytics": "Processing & Analysis",
+        "data": "Data management",
+        "compute": "Compute",
+        "networking": "Networking",
     }.stringify_keys
     @eic_service =  eic_service
     @is_active = @eic_service["active"]
@@ -31,7 +31,6 @@ class Service::PcCreateOrUpdate
 
   def call
     service = map_service(@eic_service)
-
     mapped_service = Service.joins(:sources).find_by("service_sources.source_type": "eic",
                                                      "service_sources.eid": @eid)
     if mapped_service.nil? && @is_active
@@ -150,7 +149,7 @@ class Service::PcCreateOrUpdate
 
     def map_category(category)
       if @best_effort_category_mapping[category]
-        [@best_effort_category_mapping[category]]
+        [Category.find_by!(name: @best_effort_category_mapping[category])]
       else
         []
       end
