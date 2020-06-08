@@ -66,4 +66,26 @@ FactoryBot.define do
       }
     end
   end
+  factory :eic_provider_response, class: Hash do
+    skip_create
+    transient do
+      eid { "tp" }
+      name { "Test Provider 2" }
+    end
+    initialize_with do
+      {
+        "id"=> eid,
+        "name"=> name,
+        "website"=> "http://beta.providers.eosc-portal.eu",
+        "catalogueOfResources"=> "http://no.i.dont",
+        "publicDescOfResources"=> "http://no.i.dont",
+        "logo"=> "https://cdn.shopify.com/s/files/1/0553/3925/products/logo_developers_grande.png?v=1432756867",
+        "additionalInfo"=> "no",
+        "contactInformation"=> "test phone number",
+        "users"=> nil,
+        "active"=> true,
+        "status"=> "approved"
+      }
+    end
+  end
 end

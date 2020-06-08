@@ -56,7 +56,6 @@ module Import
       end
 
       @providers = rp.body["results"].index_by { |provider| provider["id"] }
-
       updated = 0
       created = 0
       not_modified = 0
