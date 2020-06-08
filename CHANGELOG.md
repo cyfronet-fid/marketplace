@@ -25,6 +25,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Security
 - Updated jquery to version 3.5.1
 - Updated puma to version 4.3.5
+- Updated wbesocket-extensions (ruby) to version 0.1.5
 
 ## [2.10.3] 2020-05-27
 
