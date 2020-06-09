@@ -6,7 +6,7 @@
 
       = f.association :categories, multiple: true, include_hidden: false,
       input_html: { data: { choice: true } }
-      = f.association :research_areas, multiple: true, include_hidden: false,
+      = f.association :scientific_domains, multiple: true, include_hidden: false,
       input_html: { data: { choice: true } }
     .col-12.col-md-5.profile-edit.ml-auto
       .bordered-header
@@ -14,7 +14,7 @@
 
       %h5.mb-4 Keep me regularly informed on all our updates.
       = f.input :categories_updates, as: :boolean, include_hidden: false
-      = f.input :research_areas_updates, as: :boolean, include_hidden: false
+      = f.input :scientific_domains_updates, as: :boolean, include_hidden: false
 
 
   %hr.bottom-hr.mt-5.mb-4

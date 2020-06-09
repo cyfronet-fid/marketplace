@@ -40,9 +40,9 @@
             "title" => "#{t("project_items.order_type.#{service.order_type}.tooltip")}" }
             = t("offers.type.#{service.order_type}") if service.order_type.present?
       %tr
-        %th Research area
+        %th Scientific domain
         - @services.each do |service|
-          %td= service.research_areas.map { |ra| ra.name }.join(", ")
+          %td= service.scientific_domains .map { |sd| sd.name }.join(", ")
       %tr.lightgrey-row
         %th Dedicated for
         - @services.each do |service|
