@@ -58,12 +58,12 @@ RSpec.describe UsageReport do
 
   context ".disciplines" do
     it "returns disciplines from projects with services" do
-      ra1, ra2, ra3 = create_list(:research_area, 3)
-      create(:project, research_areas: [ra1])
-      p = create(:project, research_areas: [ra2, ra3])
+      sd1, sd2, sd3 = create_list(:scientific_domain, 3)
+      create(:project, scientific_domains: [sd1])
+      p = create(:project, scientific_domains: [sd2, sd3])
       create(:project_item, project: p)
 
-      expect(subject.disciplines).to contain_exactly(ra2.name, ra3.name)
+      expect(subject.domains).to contain_exactly(sd2.name, sd3.name)
     end
   end
 

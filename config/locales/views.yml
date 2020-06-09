@@ -28,8 +28,8 @@ en:
           title: Providers (%{count})
           description: "Providers in the Marketplace:"
         disciplines:
-          title: Disciplines (%{count})
-          description: "Thematic disciplines ordered services are used for:"
+          title: Domains (%{count})
+          description: "Scientific domains ordered services are used for:"
         countries:
           title: Origins (%{count})
           description: "Countries of users ordering services:"

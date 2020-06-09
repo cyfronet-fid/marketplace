@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :research_area do
-    sequence(:name) { |n| "research area %05d" % n }
+  factory :scientific_domain do
+    sequence(:name) { |n| "scientific domain %05d" % n }
   end
 end

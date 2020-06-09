@@ -48,7 +48,7 @@ describe Import::Eic do
 
   let(:eic) { make_and_stub_eic(log: true) }
   let(:log_less_eic) { make_and_stub_eic(log: false) }
-  let!(:research_area_other) { create(:research_area, name: "Other") }
+  let!(:scientific_domain_other) { create(:scientific_domain, name: "Other") }
   let!(:storage) { create(:category, name: "Storage") }
   let!(:training) { create(:category, name: "Training & Support") }
   let!(:security) { create(:category, name: "Security & Operations") }
@@ -134,7 +134,7 @@ describe Import::Eic do
       expect(service.status).to eq("draft")
       expect(service.providers).to eq([Provider.first])
       expect(service.categories).to eq([])
-      expect(service.research_areas).to eq([research_area_other])
+      expect(service.scientific_domains).to eq([scientific_domain_other])
       expect(service.sources.count).to eq(1)
       expect(service.logo.download).to eq(file_fixture("PhenoMeNal_logo.png").read.b)
       expect(service.sources.first.eid).to eq("phenomenal.phenomenal")
@@ -218,17 +218,17 @@ describe Import::Eic do
       expect { eic.call }.to output(/PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(0).and change { Provider.count }.by(0)
     end
 
-    it "should not update research_areas and categories" do
-      research_area_something = create(:research_area, name: "Something")
+    it "should not update scientific_domains and categories" do
+      scientific_domain_something = create(:scientific_domain, name: "Something")
 
-      service = create(:service, categories: [Category.find_by(name: "Networking")], research_areas: [research_area_something])
+      service = create(:service, categories: [Category.find_by(name: "Networking")], scientific_domains: [scientific_domain_something])
       source = create(:service_source, eid: "phenomenal.phenomenal", service_id: service.id, source_type: "eic")
       service.update!(upstream_id: source.id)
 
       log_less_eic.call
 
       expect(Service.first.categories).to eq(service.categories)
-      expect(Service.first.research_areas).to eq(service.research_areas)
+      expect(Service.first.scientific_domains).to eq(service.scientific_domains)
     end
 
     it "should filter by ids if they are provided" do
@@ -308,16 +308,16 @@ describe Import::Eic do
 
     make_and_stub_eic(ids: [], dry_run: false, default_upstream: :eic).call
 
-    research_area = create(:research_area)
+    scientific_domain = create(:scientific_domain)
     service = Service.first
-    service.update!(status: "published", research_areas: [research_area], categories: [])
+    service.update!(status: "published", scientific_domains: [scientific_domain], categories: [])
 
     expect_responses(unirest, test_url, response, provider_response)
 
     make_and_stub_eic(ids: [], dry_run: false, default_upstream: :eic).call
     service.reload
     expect(service.status).to eq("published")
-    expect(service.research_areas).to eq([research_area])
+    expect(service.scientific_domains).to eq([scientific_domain])
     expect(service.categories).to eq([])
   end
 
