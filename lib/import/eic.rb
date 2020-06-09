@@ -185,7 +185,7 @@ module Import
             status: "draft",
             providers: [mapped_provider],
             categories: map_category(category),
-            research_areas: [@research_area_other],
+            scientific_domains: [@scientific_domain_other],
             version: version || ""
         }
 
@@ -211,7 +211,7 @@ module Import
               updated += 1
               log "Updating [EXISTING] service #{service.name}, id: #{service_source.id}, eid: #{eid}"
               unless @dry_run
-                service.update!(updated_service_data.except(:research_areas, :categories, :status))
+                service.update!(updated_service_data.except(:scientific_domains, :categories, :status))
                 create_default_offer!(service, name, eid, url)
               end
             else
@@ -257,7 +257,7 @@ module Import
     end
 
     def get_db_dependencies
-      @research_area_other = ResearchArea.find_by!(name: "Other")
+      @scientific_domain_other = ScientificDomain.find_by!(name: "Other")
 
       @best_effort_category_mapping = {
           "storage":  Category.find_by!(name: "Storage"),

@@ -73,7 +73,7 @@ Rails.application.routes.draw do
     end
     get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
     get "services/c/:category_id" => "services#index", as: :category_services
-    resources :research_areas
+    resources :scientific_domains
     resources :categories
     resources :providers
     resources :platforms

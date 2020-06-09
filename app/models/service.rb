@@ -68,8 +68,8 @@ class Service < ApplicationRecord
   has_many :categorizations, dependent: :destroy
   has_many :categories, through: :categorizations
   has_many :service_opinions, through: :project_items
-  has_many :service_research_areas, dependent: :destroy
-  has_many :research_areas, through: :service_research_areas
+  has_many :service_scientific_domains, dependent: :destroy
+  has_many :scientific_domains, through: :service_scientific_domains
   has_many :service_providers, dependent: :destroy
   has_many :providers, through: :service_providers
   has_many :service_related_platforms, dependent: :destroy
@@ -124,7 +124,7 @@ class Service < ApplicationRecord
   validates :training_information_url, mp_url: true, if: :training_information_url?
   validates :logo, blob: { content_type: :image }
   validate :logo_variable, on: [:create, :update]
-  validates :research_areas, presence: true
+  validates :scientific_domains, presence: true
   validates :providers, presence: true
   validates :status, presence: true
   validates :order_target, allow_blank: true, email: true

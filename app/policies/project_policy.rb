@@ -35,7 +35,7 @@ class ProjectPolicy < ApplicationPolicy
      :organization, :department, :webpage,
      :project_name, :project_website_url,
      :company_name, :company_website_url,
-     [research_area_ids: []], :additional_information]
+     [scientific_domain_ids: []], :additional_information]
   end
 
   private
