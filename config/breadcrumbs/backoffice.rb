@@ -38,24 +38,24 @@ crumb :backoffice_service_preview do |service|
   end
 end
 
-crumb :backoffice_research_areas do
-  link "Research Areas", backoffice_research_areas_path
+crumb :backoffice_scientific_domains  do
+  link "Scientific Domains", backoffice_scientific_domains_path
   parent :backoffice_root
 end
 
-crumb :backoffice_research_area do |research_area|
-  link research_area.name, backoffice_research_area_path(research_area)
-  parent :backoffice_research_areas
+crumb :backoffice_scientific_domain do |scientific_domain|
+  link scientific_domain.name, backoffice_scientific_domain_path(scientific_domain)
+  parent :backoffice_scientific_domains
 end
 
-crumb :backoffice_research_area_new do |research_area|
-  link "New", new_backoffice_research_area_path(research_area)
-  parent :backoffice_research_areas
+crumb :backoffice_scientific_domain_new do |scientific_domain|
+  link "New", new_backoffice_scientific_domain_path(scientific_domain)
+  parent :backoffice_scientific_domains
 end
 
-crumb :backoffice_research_area_edit do |research_area|
-  link "Edit", edit_backoffice_research_area_path(research_area)
-  parent :backoffice_research_area, research_area
+crumb :backoffice_scientific_domain_edit do |scientific_domain|
+  link "Edit", edit_backoffice_scientific_domain_path(scientific_domain)
+  parent :backoffice_scientific_domain, scientific_domain
 end
 
 crumb :backoffice_categories do

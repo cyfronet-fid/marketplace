@@ -15,13 +15,13 @@ class ServiceMailer < ApplicationMailer
   def new_service(service, common_categories, common_scientific_domains, subscriber_email)
     @service = service
     @common_categories = common_categories
-    @common_scientific_domains  = common_scientific_domains
+    @common_scientific_domains = common_scientific_domains
     if @service.logo.attached?
       attachments.inline["logo.png"] = File.read(ActiveStorage::Blob.service.send(:path_for, @service.logo.key))
     end
     interests = []
     interests << ("categories" if @common_categories.present?) <<
-        ("Scientific domains" if @common_scientific_domains .present?)
+        ("Scientific domains" if @common_scientific_domains.present?)
     subject = "New service in your #{interests.join(" and ")} of interests"
     mail(to: subscriber_email,
          subject: subject,
