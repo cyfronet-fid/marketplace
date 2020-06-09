@@ -87,7 +87,7 @@ class Service::PcCreateOrUpdate
         status: "published",
         providers: [map_provider(data["providers"]["provider"])],
         categories: map_category(data["category"]),
-        research_areas: [research_area_other],
+        scientific_domains: [scientific_domain_other],
         version: data["version"] || ""
       }
     end
@@ -160,8 +160,8 @@ class Service::PcCreateOrUpdate
       end
     end
 
-    def research_area_other
-      ResearchArea.find_by!(name: "Other")
+    def scientific_domain_other
+      ScientificDomain.find_by!(name: "Other")
     end
 
     def map_places(place)

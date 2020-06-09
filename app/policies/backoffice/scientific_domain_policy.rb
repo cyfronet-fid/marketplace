@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Backoffice::ResearchAreaPolicy < ApplicationPolicy
+class Backoffice::ScientificDomainPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope

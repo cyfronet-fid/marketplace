@@ -5,8 +5,8 @@ namespace :whitelabel do
     attach_logos(Category.all)
   end
 
-  task migrate_research_area_logos: :environment do
-    attach_logos(ResearchArea.all)
+  task migrate_scientific_domain_logos: :environment do
+    attach_logos(ScientificDomain.all)
   end
 
   task migrate_learn_more: :environment do

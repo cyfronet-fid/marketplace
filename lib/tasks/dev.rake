@@ -7,7 +7,7 @@ namespace :dev do
 
     create_categories(yaml_hash["categories"])
     create_providers(yaml_hash["providers"])
-    create_research_areas(yaml_hash["area"])
+    create_scientific_domains(yaml_hash["domain"])
     create_platforms(yaml_hash["platforms"])
     create_target_groups(yaml_hash["target_groups"])
     create_services(yaml_hash["services"])
@@ -35,15 +35,15 @@ namespace :dev do
     end
   end
 
-  def create_research_areas(research_areas_hash)
-    puts "Generating research areas:"
-    research_areas_hash.each do |_, hash|
+  def create_scientific_domains(scientific_domains_hash)
+    puts "Generating scientific domains:"
+    scientific_domains_hash.each do |_, hash|
       # !!! Warning: parent need to be defined before child in yaml !!!
-      parent = ResearchArea.find_by(name: hash["parent"])
-      ResearchArea.find_or_initialize_by(name: hash["name"]) do |ra|
-        ra.update!(parent: parent)
+      parent = ScientificDomain.find_by(name: hash["parent"])
+      ScientificDomain.find_or_initialize_by(name: hash["name"]) do |sd|
+        sd.update!(parent: parent)
       end
-      puts "  - #{hash["name"]} research area generated"
+      puts "  - #{hash["name"]} scientific domain generated"
     end
   end
 
@@ -68,7 +68,7 @@ namespace :dev do
     services_hash.each do |_, hash|
       categories = Category.where(name: hash["parents"])
       providers = Provider.where(name: hash["providers"])
-      area = ResearchArea.where(name: hash["area"])
+      domain = ScientificDomain.where(name: hash["domain"])
       platforms = Platform.where(name: hash["platforms"])
       target_groups = TargetGroup.where(name: hash["target_groups"])
       service = Service.find_or_initialize_by(name: hash["name"])
@@ -76,7 +76,7 @@ namespace :dev do
 
       service.update!(tagline: hash["tagline"],
                       description: hash["description"],
-                      research_areas: area,
+                      scientific_domains: domain,
                       providers: providers,
                       order_type: order_type,
                       webpage_url: hash["webpage_url"],

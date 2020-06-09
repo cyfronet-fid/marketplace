@@ -194,7 +194,7 @@ providers:
     Not specified:
         name: &not "not specified yet"
 
-area:
+domain:
 
     Interdisciplinary:
       name: &interdisciplinary "Interdisciplinary"
@@ -313,7 +313,7 @@ services:
         places: &europe Europe
         languages: &english English
         target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        domain: *interdisciplinary
         restrictions: &notSpecified not yet specified
         phase: production
         tagline: Run virtual machines on-demand with complete control over computing resources
@@ -615,7 +615,7 @@ services:
         places: *europe
         languages: *english
         target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
         tagline: Execute thousands of computational tasks to analyse large datasets
@@ -781,7 +781,7 @@ services:
         places: *europe
         languages: *english
         target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: beta
         tagline: Run Docker containers in a lightweight virtualised environment
@@ -815,7 +815,7 @@ services:
         places: *europe
         languages: *english
         target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
         tagline: Secure and trusted data exchange service for researchers
@@ -947,7 +947,7 @@ services:
         places: *europe
         languages: *english
         target_groups: [*researchers, *providers, *research_organisations]
-        area: *interdisciplinary
+        domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
         tagline: Metadata based data-discovery
@@ -1074,7 +1074,7 @@ services:
         places: *europe
         languages: *english
         target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
         tagline: Secure and trusted data exchange service for researchers
@@ -1195,7 +1195,7 @@ services:
         places: *europe
         languages: *english
         target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
         tagline: Data annotation service to create annotations on research data
@@ -1282,7 +1282,7 @@ services:
         places: *europe
         languages: *english
         target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
         tagline: Distribute and store large volumes of data based on data policies
@@ -1336,7 +1336,7 @@ services:
         places: *europe
         languages: *english
         target_groups: [*researchers, *providers, *research_organisations]
-        area: *interdisciplinary
+        domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
         tagline: Store and publish research data
@@ -1464,7 +1464,7 @@ services:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        domain: *interdisciplinary
         target_groups: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
         phase: production
@@ -1527,7 +1527,7 @@ services:
         access_policies_url: https://eudat.eu/policy
         places: *europe
         languages: *english
-        area: *interdisciplinary
+        domain: *interdisciplinary
         target_groups: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
         phase: production
@@ -1571,7 +1571,7 @@ services:
         places: *europe
         languages: *english
         target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
         tagline: Back-up your data for the long term and future use in a secure environment.
@@ -1639,7 +1639,7 @@ services:
         places: *europe
         languages: *english
         target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
         tagline: Store, share and access your files and their metadata on a global scale.
@@ -1811,7 +1811,7 @@ services:
 #        places: *europe
 #        dedicated_for: ["Researchers"] #TODO: but not specified
 #        languages: *english
-#        area: *earthScience
+#        domain: *earthScience
 ##        #restrictions: *notSpecified
 #        phase: production
 #        tagline: Store, share and access your files and their metadata on a global scale.
@@ -1837,7 +1837,7 @@ services:
         places: *europe
         target_groups: [*researchers] #TODO: but not specified
         languages: *english
-        area: *earthScience
+        domain: *earthScience
 #        #restrictions: *notSpecified
         phase: production
         tagline: Access to resources from the Global Earth Observation System of Systems
@@ -1869,7 +1869,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_groups, *research_organisations]
         languages: *english
-        area: [*earthScience, *lifeSciences, *interdisciplinary]
+        domain: [*earthScience, *lifeSciences, *interdisciplinary]
         restrictions:
         phase: production
         tagline: Multi-disciplinary discovery, access, and use of resources from the Global Earth Observation System of Systems
@@ -1909,7 +1909,7 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
-        area: [*socialSciences, *humanities]
+        domain: [*socialSciences, *humanities]
         target_groups: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
         phase: production
@@ -1956,7 +1956,7 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         languages: *english
-        area: [*socialSciences, *humanities]
+        domain: [*socialSciences, *humanities]
         target_groups: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
         phase: production
@@ -2022,7 +2022,7 @@ services:
         places: *europe
         languages: *english
         target_groups: [*researchers] #TODO: but not specified
-        area: *humanities
+        domain: *humanities
 #        #restrictions: *notSpecified
         phase: production
         tagline: A service that allows researchers to create their own citable digital bookmarks.
@@ -2082,7 +2082,7 @@ services:
 #        target_groups: ["Reaserchers"] #TODO: but not specified
 #        places: *europe
 #        languages: *english
-#        area: *earthScience
+#        domain: *earthScience
 ##        #restrictions: *notSpecified
 #        phase: production
 #        tagline: *notSpecified
@@ -2105,7 +2105,7 @@ services:
 #        places: *europe
 #        languages: *english
 #        target_groups: ["Researchers", "Research organisations"]
-#        area: *interdisciplinary
+#        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2140,7 +2140,7 @@ services:
 #        places: *europe
 #        languages: *english
 #        target_groups: ["Researchers", "Research organisations"]
-#        area: *mathematics
+#        domain: *mathematics
 #        #restrictions: *notSpecified
 #        phase: production
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2215,7 +2215,7 @@ services:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
-#        area: *lifeSciences
+#        domain: *lifeSciences
 #        #restrictions: *notSpecified
 #        phase: production
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2243,7 +2243,7 @@ services:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
-#        area: *lifeSciences
+#        domain: *lifeSciences
 ##        #restrictions: *notSpecified
 #        phase: production
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2314,7 +2314,7 @@ services:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
-#        area: *earthScience
+#        domain: *earthScience
 #        #restrictions: *notSpecified
 #        phase: production
 #        tagline: |
@@ -2347,7 +2347,7 @@ services:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
-#        area: *lifeSciences
+#        domain: *lifeSciences
 ##        #restrictions: *notSpecified
 #        phase: production
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2378,7 +2378,7 @@ services:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
-#        area: *applicationFrameworks
+#        domain: *applicationFrameworks
 #        #restrictions: *notSpecified
 #        phase: production
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2408,7 +2408,7 @@ services:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
-#        area: *applicationFrameworks
+#        domain: *applicationFrameworks
 ##        #restrictions: *notSpecified
 #        phase: production
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2439,7 +2439,7 @@ services:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
-#        area: *applicationFrameworks
+#        domain: *applicationFrameworks
 ##        #restrictions: *notSpecified
 #        phase: production
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2470,7 +2470,7 @@ services:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
-#        area: *applicationFrameworks
+#        domain: *applicationFrameworks
 #        #restrictions: *notSpecified
 #        phase: production
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2503,7 +2503,7 @@ services:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
-#        area: *dataAnalysis
+#        domain: *dataAnalysis
 #        #restrictions: *notSpecified
 #        phase: production
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2534,7 +2534,7 @@ services:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
-#        area: *humanities
+#        domain: *humanities
 #        #restrictions: *notSpecified
 #        phase: production
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2566,7 +2566,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations, *business]
         languages: *english
-        area: *lifeSciences
+        domain: *lifeSciences
         restrictions: "Research affiliation needed"
         phase: production
         tagline: NGS and microarray analysis in the cloud.
@@ -2613,7 +2613,7 @@ services:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
-#        area: *lifeSciences
+#        domain: *lifeSciences
 #        #restrictions: *notSpecified
 #        phase: production
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2641,7 +2641,7 @@ services:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
 #        languages: *english
-#        area: *lifeSciences
+#        domain: *lifeSciences
 #        #restrictions: *notSpecified
 #        phase: production
 #        tagline: |
@@ -2670,7 +2670,7 @@ services:
       target_groups: [*researchers, *research_organisations]
       places: *europe
       languages: *english
-      area: *lifeSciences
+      domain: *lifeSciences
       #restrictions: *notSpecified
       phase: beta
       tagline: Create interactive documents with live code, visualisations and narrative text powered by the Jupyter technology
@@ -2769,7 +2769,7 @@ services:
 #        places: *europe
 #        target_groups: ["Researchers"] #TODO: but not specified
 #        languages: *english
-#        area: *interdisciplinary
+#        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
 #        tagline: Services for Social Sciences and Humanities provided via the national CLARIN centres
@@ -2810,7 +2810,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations]
         languages: *english
-        area: *humanities
+        domain: *humanities
         #restrictions: *notSpecified
         phase: production
         tagline: The DARIAH Science Gateway is a platform that provides access to various digital applications and services for the Arts & Humanities researchers
@@ -2870,7 +2870,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations]
         languages: *english
-        area: &highEnergyPhysics High-Energy Physics
+        domain: &highEnergyPhysics High-Energy Physics
         #restrictions: *notSpecified
         phase: production
         tagline: Simplify the access and management of computing resources
@@ -2949,7 +2949,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations]
         languages: *english
-        area: *physicalScienceEarth
+        domain: *physicalScienceEarth
         #restrictions: *notSpecified
         phase: beta
         tagline: D4Science Service
@@ -2981,7 +2981,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations]
         languages: *english
-        area: *climateScience
+        domain: *climateScience
         #restrictions: *notSpecified
         phase: production
         tagline: Analyze and process data from multiple communities with the Ophidia Big Data Analytics framework
@@ -3053,7 +3053,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations]
         languages: *english
-        area: *environmentalScience
+        domain: *environmentalScience
         #restrictions: *notSpecified
         phase: production
         tagline: Web service to classify plant pictures based on convolutional neural networks
@@ -3115,7 +3115,7 @@ services:
 #        places: *europe
 #        target_groups: ["Researchers"] #TODO: but not specified
 #        languages: *english
-#        area: *interdisciplinary
+#        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
 #        tagline: *notSpecified
@@ -3136,7 +3136,7 @@ services:
 #        places: *europe
 #        target_groups: ["Researchers"] #TODO: but not specified
 #        languages: *english
-#        area: *interdisciplinary
+#        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
 #        tagline: *notSpecified
@@ -3157,7 +3157,7 @@ services:
 #        places: *europe
 #        target_groups: ["Researchers"] #TODO: but not specified
 #        languages: *english
-#        area: *interdisciplinary
+#        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
 #        tagline: *notSpecified
@@ -3179,7 +3179,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations]
         languages: *english
-        area: *environmentalScience
+        domain: *environmentalScience
         #restrictions: *notSpecified
         phase: production
         tagline: On-demand operational coastal circulation forecast service
@@ -3267,7 +3267,7 @@ services:
 #        access_policies_url:
 #        places: *europe
 #        languages: *english
-#        area: *interdisciplinary
+#        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
 #        tagline: A suite of computational tools for structural biology
@@ -3318,7 +3318,7 @@ services:
         places: *europe
         target_groups: [*researchers]
         languages: *english
-        area: *biologicalSciences
+        domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
         tagline: Integrative modeling of biomolecular complexes with the user-friendly, EGI HTC-enabled HADDOCK portal
@@ -3356,7 +3356,7 @@ services:
         places: *europe
         target_groups: [*researchers]
         languages: *english
-        area: *biologicalSciences
+        domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
         tagline: The PowerFit server allows you to fit your 3D structures in any map!
@@ -3384,7 +3384,7 @@ services:
         places: *europe
         target_groups: [*researchers]
         languages: *english
-        area: *biologicalSciences
+        domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
         tagline: |
@@ -3414,7 +3414,7 @@ services:
         places: *europe
         target_groups: [*researchers]
         languages: *english
-        area: *biologicalSciences
+        domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
         tagline: NMR protein structure prediction using the EGI HTC-enabled CS-ROSETTA portal
@@ -3443,7 +3443,7 @@ services:
         places: *europe
         target_groups: [*researchers]
         languages: *english
-        area: *biologicalSciences
+        domain: *biologicalSciences
         restrictions: "Limited to non-profit users, For-profit users can use the service if they a license agreement with the University of California for the AMBER toolkit"
         phase: production
         tagline: Web portal for Nuclear Magnetic Resonance (NMR) structure refinement
@@ -3476,7 +3476,7 @@ services:
         places: *europe
         target_groups: [*researchers]
         languages: *english
-        area: *biologicalSciences
+        domain: *biologicalSciences
         restrictions: "Limited to non-profit users"
         phase: production
         tagline: FANTEN for the analysis of magnetic anisotropy-induced NMR data
@@ -3507,7 +3507,7 @@ services:
         places: *europe
         target_groups: [*researchers]
         languages: *english
-        area: [*biologicalSciences, *lifeSciences]
+        domain: [*biologicalSciences, *lifeSciences]
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
         tagline: "SpotOn: determination of Hot-Spots at protein-protein interfaces"
@@ -3537,7 +3537,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations, *business]
         languages: *english
-        area: [*earthScience, *appliedScience, *interdisciplinary]
+        domain: [*earthScience, *appliedScience, *interdisciplinary]
         restrictions: " Research affiliation needed, user account registration needed."
         phase: production
         tagline: "Continuous systematic interferogram generation with Sentinel-1 data over the Alpine Region."
@@ -3570,7 +3570,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations, *business]
         languages: *english
-        area: [*earthScience, *appliedScience, *interdisciplinary]
+        domain: [*earthScience, *appliedScience, *interdisciplinary]
         restrictions: " Research affiliation needed, user account registration needed."
         phase: production
         tagline: "On-demand EO processing services for Earthquake Response and Landslides Analysis."
@@ -3602,7 +3602,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups]
         languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
+        domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
         restrictions: "Research affiliation needed"
         phase: alpha
         tagline: "EODC JupyterHub provides access to the global EODC Copernicus Data Archive."
@@ -3659,7 +3659,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers]
         languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
+        domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
         tagline: "Catalog Service for the Web (CSW), OGC compliant catalogue service to expose metadata of geospatial records hosted at EODC"
@@ -3696,7 +3696,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations]
         languages: *english
-        area: *earthScience
+        domain: *earthScience
         #restrictions: *notSpecified
         phase: production
         tagline: Big data satellite imagery service
@@ -3723,7 +3723,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations]
         languages: *english
-        area: *earthScience
+        domain: *earthScience
         #restrictions: *notSpecified
         phase: production
         tagline: Cross-domain application supporting various application fields
@@ -3750,7 +3750,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations]
         languages: *english
-        area: *earthScience
+        domain: *earthScience
         #restrictions: *notSpecified
         phase: production
         tagline: Service providing analysis-ready EO data
@@ -3803,7 +3803,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
         languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
+        domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
         tagline: "Data Collections Catalog is based on two solutions  – CKAN - comprehensive frontend catalogue application for information discovery and EO Browser – specialized catalogue application for robust satellite imagery discovery and quick georeferenced preview"
@@ -3846,7 +3846,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
         languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
+        domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
         tagline: "CREODIAS platform is a cloud infrastructure adapted to the processing of big amounts of EO data, including an EO Data storage cluster and a dedicated IaaS cloud infrastructure for the platform’s Users"
@@ -3885,7 +3885,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
         languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
+        domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
         tagline: "Manage your data products"
@@ -3916,7 +3916,7 @@ services:
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
         languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
+        domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
         tagline: "The EO Browser allows visualization and basic processing of selected data collections (like Sentinel-1 L1 GRD or Sentinel-2 L1C)"
@@ -3956,7 +3956,7 @@ services:
         places: *europe
         target_groups: [*research_organisations]
         languages: *english
-        area: *security
+        domain: *security
         #restrictions: *notSpecified
         phase: beta
         tagline: Handle transparent Single Sign-On from multiple heterogeneous identity providers
@@ -4011,7 +4011,7 @@ services:
 #        places: *europe
 #        target_groups: ["Research organisations"]
 #        languages: *english
-#        area: *interdisciplinary
+#        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
 #        tagline: ToFill
@@ -4042,7 +4042,7 @@ services:
         places: *europe
         target_groups: [*research_groups, *research_organisations]
         languages: *english
-        area: *interdisciplinary
+        domain: *interdisciplinary
         #restrictions: *notSpecified
         phase: production
         tagline: Dedicated computing and storage for training and education
@@ -4156,7 +4156,7 @@ services:
         places: *europe
         target_groups: [*research_organisations]
         languages: *english
-        area: *interdisciplinary
+        domain: *interdisciplinary
         #restrictions: *notSpecified
         phase: production
         tagline: Learn how to manage IT services with a pragmatic and lightweight standard
@@ -4250,7 +4250,7 @@ services:
       target_groups: [*research_groups]
       restrictions: No restrictions
       languages: *english
-      area: *interdisciplinary
+      domain: *interdisciplinary
       phase: production
       tagline: |
         A web-based, collaborative working environment enacting to predict the spread of an invasive species
@@ -4296,7 +4296,7 @@ services:
 #      places: *europe
 #      target_groups: ["Research groups", "Research organisations"]
 #      languages: *english
-#      area: *interdisciplinary
+#      domain: *interdisciplinary
 #      #restrictions: *notSpecified
 #      phase: production
 #      tagline: *notSpecified
@@ -4322,7 +4322,7 @@ services:
       places: *europe
       target_groups: [*research_groups, *research_organisations]
       languages: *english
-      area: *interdisciplinary
+      domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: alpha
       tagline: Enabling HTC & HPC applications opportunistically across private, academic and public clouds
@@ -4362,7 +4362,7 @@ services:
       places: *europe
       target_groups: [*researchers]
       languages: *english
-      area: *interdisciplinary
+      domain: *interdisciplinary
       restrictions: |
         Access to the platform is granted based on motivation / proposal,
         In the pilot phase, usage is only supported for  photon and neutron science use-cases
@@ -4399,7 +4399,7 @@ services:
       places: *europe
       target_groups: [*researchers]
       languages: *english
-      area: *interdisciplinary
+      domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: beta
       tagline: OpenWhisk, cloud functions for the EOSC PAN Science Demonstrator
@@ -4433,7 +4433,7 @@ services:
       places: *europe
       target_groups: [*researchers]
       languages: *english
-      area: *interdisciplinary
+      domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: beta
       tagline: JupyterHub for the EOSC PAN Science Demonstrator
@@ -4467,7 +4467,7 @@ services:
       places: *europe
       target_groups: [*researchers]
       languages: *english
-      area: *interdisciplinary
+      domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: beta
       tagline: GitLab for the EOSC PAN Science Demonstrator
@@ -4502,7 +4502,7 @@ services:
       places: *europe
       target_groups: [*researchers, *research_organisations, *business]
       languages: *english
-      area: *interdisciplinary
+      domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: production
       tagline: Setup and run parameter studies in the cloud with a few clicks.
@@ -4547,7 +4547,7 @@ services:
       places: *europe
       target_groups: [*researchers, *research_organisations, *research_groups, *providers]
       languages: *english
-      area: [*interdisciplinary, *lifeSciences, *socialSciences, *humanities, *appliedScience, *philosophy]
+      domain: [*interdisciplinary, *lifeSciences, *socialSciences, *humanities, *appliedScience, *philosophy]
       #restrictions: *notSpecified
       phase: production
       tagline: Secure and cost-effective cloud computing for processing sensitive data
@@ -4579,7 +4579,7 @@ services:
       places: *europe
       target_groups: [*researchers]
       languages: *english
-      area: *interdisciplinary
+      domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: production
       tagline: Services for sensitive data
@@ -4612,7 +4612,7 @@ services:
       places: *europe
       target_groups: [*researchers, *research_organisations, *business]
       languages: *english
-      area: *interdisciplinary
+      domain: *interdisciplinary
       restrictions: Research affiliation needed
       phase: production
       tagline: Deploy a virtual cluster on top of IaaS infrastructures with a few clicks.
