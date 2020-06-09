@@ -16,8 +16,8 @@ class User < ApplicationRecord
            class_name: "Service"
   has_many :user_categories, dependent: :destroy
   has_many :categories, through: :user_categories
-  has_many :user_research_areas, dependent: :destroy
-  has_many :research_areas, through: :user_research_areas
+  has_many :user_scientific_domains, dependent: :destroy
+  has_many :scientific_domains, through: :user_scientific_domains
 
   validates :first_name, presence: true
   validates :last_name, presence: true
