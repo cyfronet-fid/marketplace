@@ -109,6 +109,7 @@ class Service < ApplicationRecord
                                 allow_destroy: true
 
   belongs_to :upstream, foreign_key: "upstream_id", class_name: "ServiceSource", optional: true
+  belongs_to :resource_organisation, class_name: "Provider"
 
   serialize :geographical_availabilities, Country::Array
 

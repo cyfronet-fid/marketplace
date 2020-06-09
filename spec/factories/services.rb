@@ -23,6 +23,7 @@ FactoryBot.define do
     sequence(:dedicated_for) { |n| ["service #{n} dedicated for"] }
     sequence(:restrictions) { |n| "service #{n} restrictions" }
     sequence(:scientific_domains) { |n| [create(:scientific_domain)] }
+    sequence(:resource_organisation) { |n| create(:provider) }
     sequence(:providers) { |n| [create(:provider)] }
     sequence(:categories) { |n| [create(:category)] }
     sequence(:status) { :published }
