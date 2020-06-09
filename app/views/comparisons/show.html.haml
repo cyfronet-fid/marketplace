@@ -44,9 +44,9 @@
                 - unless service.offers.length == idx+1
                   %br
       %tr
-        %th Research area
+        %th Scientific domain
         - @services.each do |service|
-          %td= service.research_areas.map { |ra| ra.name }.join(", ")
+          %td= service.scientific_domains .map { |sd| sd.name }.join(", ")
       %tr.lightgrey-row
         %th Dedicated for
         - @services.each do |service|
