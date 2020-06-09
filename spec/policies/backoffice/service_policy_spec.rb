@@ -33,6 +33,7 @@ RSpec.describe Backoffice::ServicePolicy do
                                                     [contact_emails: []], [scientific_domain_ids: []],
                                                     [platform_ids: []], :tag_list, [category_ids: []],
                                                     [owner_ids: []], :status, :upstream_id, :version,
+                                                    :resource_organisation_id,
                                                     sources_attributes: [:id, :source_type, :eid, :_destroy]
                                                 ])
     end

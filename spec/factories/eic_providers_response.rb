@@ -16,7 +16,7 @@ FactoryBot.define do
                   "website" => "https://www.bluebridge-vres.eu/",
                   "catalogueOfResources" => nil,
                   "publicDescOfResources" => nil,
-                  "logo" => nil,
+                  "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
                   "additionalInfo" => "-",
                   "contactInformation" => nil,
                   "users" => nil,
@@ -70,7 +70,7 @@ FactoryBot.define do
     skip_create
     transient do
       eid { "tp" }
-      name { "Test Provider 2" }
+      name { "Test Provider #{eid}" }
     end
     initialize_with do
       {

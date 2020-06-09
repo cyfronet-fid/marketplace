@@ -102,6 +102,7 @@ module Import
         # subcategory_name = service["subCategoryName"]
         trl = service["trl"]
         life_cycle_status = service["lifeCycleStatus"]
+        resource_organisation_eid = service["resource_organisation"]
         provider_eid = service["providers"][0]
         version = service["version"]
         target_users = service["targetUsers"]
@@ -134,6 +135,16 @@ module Import
           log "ERROR - there was a unexpected problem processing image for #{eid} #{image_url}: #{e}"
         end
         aggregated_description = [description, options, user_value, user_base].join("\n")
+
+
+        if @dont_create_providers
+          log "[WARNING] No mapping for eic provider/resource_organisation '#{resource_organisation_eid}', skipping service #{service_name}, #{service_eid}"
+          next
+        else
+          mapped_resource_organisation =  map_rsource_organisation(resource_organisation_eid,
+                                                                   @providers[provider_eid]["name"],
+                                                                   eid, name)
+        end
 
         # Get Provider or create new
         mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eic",
@@ -182,6 +193,7 @@ module Import
             status: "draft",
             funding_bodies: map_funding_bodies(funding_bodies),
             funding_programs: map_funding_programs(funding_programs),
+            resource_organisation: mapped_resource_organisation,
             providers: [mapped_provider],
             categories: map_category(category),
             scientific_domains: [@scientific_domain_other],
@@ -236,6 +248,21 @@ module Import
 
     def map_target_users(target_users)
       TargetUser.where(eid: target_users)
+    end
+
+    def map_research_organisation(provider_eid, provider_name, service_eid, service_name)
+      mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eic",
+                                                         "provider_sources.eid": provider_eid)
+      log "No mapped provider '#{provider_eid}', creating..."
+      unless @dry_run
+        if (mapped_provider = Provider.find_by(name: provider_name)).nil?
+          mapped_provider = Provider.create!(name: provider_name)
+        else
+          log "Provider with name '#{provider_name}' already exists, using existing provider"
+        end
+        ProviderSource.new(provider_id: mapped_provider.id, source_type: "eic", eid: provider_eid).save!
+      end
+      mapped_provider
     end
 
     def create_default_offer!(service, name, eid, url)

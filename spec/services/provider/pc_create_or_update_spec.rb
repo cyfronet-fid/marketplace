@@ -15,7 +15,7 @@ RSpec.describe Provider::PcCreateOrUpdate do
 
     provider = Provider.last
 
-    expect(provider.name).to eq("Test Provider 2")
+    expect(provider.name).to eq("Test Provider tp")
     expect(provider.sources.length).to eq(1)
     expect(provider.sources[0].eid).to eq("tp")
     $stdout = original_stdout
