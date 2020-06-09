@@ -24,9 +24,9 @@ en:
         additional_comment: Please enter additional details of your request
       user:
         categories: Categories of interests
-        research_areas: Research areas of interests
+        scientific_domains: Scientific domains of interests
         categories_updates: New service in Category of interest
-        research_areas_updates: New service in Research area of interest
+        scientific_domains_updates: New service in Scientific domain of interest
       project:
         name: Project name
         reason_for_access: Reason to request access to the EOSC services

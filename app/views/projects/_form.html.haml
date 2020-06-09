@@ -5,7 +5,7 @@
   %h4 Usage
   = f.input :name, input_html: { class: "col-lg-6 form-control-lg" }
   = f.input :reason_for_access, input_html: { class: "col-lg-8 form-control-lg textarea-lg" }
-  = f.association :research_areas, multiple: true, include_hidden: false,
+  = f.association :scientific_domains, multiple: true, include_hidden: false,
     wrapper_html: { class: "col-lg-8 pl-0 pr-0" }, input_html: { data: { choice: true } }
   = f.input :additional_information,
   input_html: { class: "col-lg-8 form-control-lg textarea-md" }

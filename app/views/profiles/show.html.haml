@@ -16,11 +16,11 @@
           %li
             %span= category.name
 
-      %h5 Research areas of interests
+      %h5 Scientific domains of interests
       %ul
-        - current_user.research_areas.each do |ra|
+        - current_user.scientific_domains.each do |sd|
           %li
-            %span= ra.name
+            %span= sd.name
     .col-12.col-md-5.profile-edit.ml-auto
       .bordered-header
         %h3 Email notifications
@@ -30,9 +30,9 @@
         - if current_user.categories_updates
           %li
             %span Category of interests
-        - if current_user.research_areas_updates
+        - if current_user.scientific_domains_updates
           %li
-            %span Research area of interests
+            %span Scientific domain of interests
       %p.small
         You can add or remove notification channel
         at any time by editing your subscribe preferences.
