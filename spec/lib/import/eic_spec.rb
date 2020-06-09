@@ -97,11 +97,11 @@ describe Import::Eic do
     end
 
     it "should create provider if it didn't exist and add external source for it" do
-      expect { log_less_eic.call }.to change { Provider.count }.by(2)
+      expect { log_less_eic.call }.to change { Provider.count }.by(3)
       provider = Provider.first
 
       expect(provider.sources.count).to eq(1)
-      expect(provider.sources.first.eid).to eq("phenomenal")
+      expect(provider.sources.first.eid).to eq("bluebridge")
       expect(provider.sources.first.source_type).to eq("eic")
     end
 
@@ -109,6 +109,7 @@ describe Import::Eic do
       trl_7 = create(:trl, name: "trl 7", eid: "trl-7")
       life_cycle_status = create(:life_cycle_status, name: "prod", eid: "production")
       expect { eic.call }.to output(/PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(3)
+
 
       service = Service.first
 
@@ -133,7 +134,8 @@ describe Import::Eic do
       expect(service.training_information_url).to eq("http://phenomenal-h2020.eu/home/training-online")
       expect(service.order_type).to eq("open_access")
       expect(service.status).to eq("draft")
-      expect(service.providers).to eq([Provider.first])
+      expect(service.providers).to eq([Provider.find_by(name: "Phenomenal")])
+      expect(service.resource_organisation).to eq(Provider.find_by(name: "BlueBRIDGE"))
       expect(service.categories).to eq([])
       expect(service.scientific_domains).to eq([scientific_domain_other])
       expect(service.sources.count).to eq(1)

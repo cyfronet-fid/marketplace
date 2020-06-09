@@ -369,6 +369,7 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.integer "project_items_count", default: 0, null: false
     t.string "version"
     t.float "popularity_ratio"
+    t.bigint "resource_organisation_id"
     t.string "status_monitoring_url"
     t.string "maintenance_url"
     t.string "order_url"
@@ -376,6 +377,7 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.string "pricing_url"
     t.index ["name"], name: "index_services_on_name"
     t.index ["provider_id"], name: "index_services_on_provider_id"
+    t.index ["resource_organisation_id"], name: "index_services_on_resource_organisation_id"
   end
 
   create_table "statuses", force: :cascade do |t|
@@ -498,6 +500,7 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
   add_foreign_key "service_vocabularies", "services"
   add_foreign_key "service_vocabularies", "vocabularies"
   add_foreign_key "services", "providers"
+  add_foreign_key "services", "providers", column: "resource_organisation_id"
   add_foreign_key "services", "service_sources", column: "upstream_id", on_delete: :nullify
   add_foreign_key "user_categories", "categories"
   add_foreign_key "user_categories", "users"
