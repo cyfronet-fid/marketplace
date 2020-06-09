@@ -31,7 +31,7 @@ RSpec.feature "Services in backoffice" do
     scenario "I can create new service" do
       category = create(:category)
       provider = create(:provider)
-      research_area = create(:research_area)
+      scientific_domain = create(:scientific_domain)
       platform = create(:platform)
       target_group = create(:target_group)
 
@@ -56,7 +56,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Activate message", with: "Welcome!!!"
       fill_in "Service Order Target", with: "email@domain.com"
       select "Alpha (min. TRL 5)", from: "Phase"
-      select research_area.name, from: "Research areas"
+      select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
       select "open_access", from: "Order type"
       select platform.name, from: "Platforms"
@@ -82,7 +82,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("person1@test.ok")
       # expect(page).to have_content("person2@test.ok")
       expect(page).to have_content("Welcome!!!")
-      expect(page).to have_content(research_area.name)
+      expect(page).to have_content(scientific_domain.name)
       expect(page).to have_content(target_group.name)
       expect(page).to have_content(category.name)
       expect(page).to have_content("Publish")
@@ -103,7 +103,7 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I can preview service before create" do
       provider = create(:provider)
-      research_area = create(:research_area)
+      scientific_domain = create(:scientific_domain)
 
       visit backoffice_services_path
       click_on "Create new Service"
@@ -111,7 +111,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Name", with: "service name"
       fill_in "Tagline", with: "tagline"
       fill_in "Description", with: "description"
-      select research_area.name, from: "Research areas"
+      select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
 
       click_on "Preview"
@@ -125,7 +125,7 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I cannot create service with wrong logo file" do
       provider = create(:provider)
-      research_area = create(:research_area)
+      scientific_domain = create(:scientific_domain)
 
       visit backoffice_services_path
       click_on "Create new Service"
@@ -134,7 +134,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Name", with: "service name"
       fill_in "Description", with: "service description"
       fill_in "Tagline", with: "service tagline"
-      select research_area.name, from: "Research areas"
+      select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
 
       expect { click_on "Create Service" }.
@@ -383,7 +383,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Categories", disabled: false
       expect(page).to have_field "Providers", disabled: false
       expect(page).to have_field "Platforms", disabled: false
-      expect(page).to have_field "Research areas", disabled: false
+      expect(page).to have_field "Scientific domains", disabled: false
       expect(page).to have_field "Dedicated For", disabled: false
       expect(page).to have_field "Owners", disabled: false
       expect(page).to have_field "service_contact_emails_0", disabled: false
@@ -420,7 +420,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Categories", disabled: false
       expect(page).to have_field "Providers", disabled: true
       expect(page).to have_field "Platforms", disabled: false
-      expect(page).to have_field "Research areas", disabled: false
+      expect(page).to have_field "Scientific domains", disabled: false
       expect(page).to have_field "Dedicated For", disabled: false
       expect(page).to have_field "Owners", disabled: false
       expect(page).to have_field "service_contact_emails_0", disabled: false
