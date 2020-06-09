@@ -28,8 +28,8 @@ class Project < ApplicationRecord
 
   belongs_to :user
   has_many :project_items, dependent: :destroy
-  has_many :project_research_areas, dependent: :destroy
-  has_many :research_areas, through: :project_research_areas
+  has_many :project_scientific_domains, dependent: :destroy
+  has_many :scientific_domains, through: :project_scientific_domains
   has_many :messages, as: :messageable, dependent: :destroy
 
   serialize :country_of_origin, Country

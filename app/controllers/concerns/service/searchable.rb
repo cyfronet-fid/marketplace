@@ -21,7 +21,7 @@ module Service::Searchable
                                     per_page: per_page,
                                     order: ordering,
                                     highlight: { tag: "<mark>" },
-                                    scope_results: ->(r) { r.includes(:research_areas, :providers, :target_groups, :offers).with_attached_logo }))
+                                    scope_results: ->(r) { r.includes(:scientific_domains, :providers, :target_groups, :offers).with_attached_logo }))
     offers = Offer.search(query,
                           where: { service_id: services.results.map(&:id) },
                           load: false,
@@ -124,7 +124,7 @@ module Service::Searchable
 
     def filter_classes
       [
-          Filter::ResearchArea,
+          Filter::ScientificDomain,
           Filter::Provider,
           Filter::TargetGroup,
           Filter::Platform,

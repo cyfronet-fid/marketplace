@@ -22,7 +22,7 @@ module Service::Search
       status: status,
       rating: rating,
       categories: categories.map(&:id),
-      research_areas: search_research_area_ids,
+      scientific_domains: search_scientific_domains_ids,
       providers: providers.map(&:id),
       platforms: platforms.map(&:id),
       target_groups: target_groups.map(&:id),
@@ -34,8 +34,8 @@ module Service::Search
   end
 
   private
-    def search_research_area_ids
-      (research_areas.map(&:ancestor_ids) + research_areas.map(&:id))
+    def search_scientific_domains_ids
+      (scientific_domains.map(&:ancestor_ids) + scientific_domains.map(&:id))
         .flatten.uniq
     end
 end

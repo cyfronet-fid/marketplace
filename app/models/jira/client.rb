@@ -229,7 +229,7 @@ private
     when "CI-DisplayName"
       "#{project.user.first_name} #{project.user.last_name}"
     when "CP-ScientificDiscipline"
-      project.research_areas.names.join(", ")
+      project.scientific_domains .names.join(", ")
     when "CI-EOSC-UniqueID"
       project.user.uid
     when "CP-CustomerTypology"
@@ -256,7 +256,7 @@ private
       "#{project&.name} (#{project&.id})"
     # this is not a property of project
     # when "CP-ScientificDiscipline"
-    #   project.research_area&.name
+    #   project.scientific_domain&.name
     else
       nil
     end
