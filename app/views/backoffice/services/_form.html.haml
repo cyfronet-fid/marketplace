@@ -16,6 +16,7 @@
 
   = f.association :categories, multiple: true, input_html: { data: { choice: true } },
                   disabled: cant_edit([category_ids: []])
+  = f.association :resource_organisation, disabled: cant_edit(:resource_organisation_id)
   = f.association :providers, multiple: true, input_html: { data: { choice: true } },
                   disabled: cant_edit([provider_ids: []])
   = f.association :platforms, multiple: true, input_html: { data: { choice: true } },
