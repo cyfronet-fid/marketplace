@@ -9,6 +9,20 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [2.11.0] 2020-06-09
+
+### Added
 - Research areas and categories of user interests (@goreck888)
 - Subscription mechanism for new added services (@goreck888)
 - Subscriber for eic messages (@martaswiatkowska)
@@ -16,12 +30,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Updated nodejs to version 10.19.0
-
-### Deprecated
-
-### Removed
-
-### Fixed
 
 ### Security
 - Updated jquery to version 3.5.1
