@@ -17,11 +17,11 @@ RSpec.feature "Service filter" do
     end
 
     it "stores collapsable state", js: true do
-      create(:research_area, name: "Science!")
+      create(:scientific_domain, name: "Science!")
 
       visit services_path
       expect(page).to have_text("Science!")
-      click_on "Research Area"
+      click_on "Scientific Domain"
       visit services_path
       expect(page).to_not have_text("Science!")
     end
@@ -35,11 +35,11 @@ RSpec.feature "Service filter" do
   end
 
   it "stores filter state by breadcrumbs navigation", js: true do
-    research_area = create(:research_area, name: "Science!")
+    scientific_domain = create(:scientific_domain, name: "Science!")
     provider = create(:provider, name: "Cyfronet provider")
-    create(:service, name: "dd", providers: [provider], research_areas: [research_area])
+    create(:service, name: "dd", providers: [provider], scientific_domains: [scientific_domain])
 
-    visit services_path(q: "dd", providers: [provider.to_param], research_areas: [research_area.to_param])
+    visit services_path(q: "dd", providers: [provider.to_param], scientific_domains: [scientific_domain.to_param])
     click_on "dd"
     click_on "Services"
 
@@ -78,9 +78,9 @@ RSpec.feature "Service filter" do
 
   context "multicheckbox" do
     it "can be hierarchical" do
-      root = create(:research_area)
-      sub = create(:research_area, parent: root)
-      subsub = create(:research_area, parent: sub)
+      root = create(:scientific_domain)
+      sub = create(:scientific_domain, parent: root)
+      subsub = create(:scientific_domain, parent: sub)
 
       visit services_path
 
@@ -90,28 +90,28 @@ RSpec.feature "Service filter" do
     end
 
     it "show services from root and children when hierarchical" do
-      root = create(:research_area)
-      sub = create(:research_area, parent: root)
-      subsub = create(:research_area, parent: sub)
+      root = create(:scientific_domain)
+      sub = create(:scientific_domain, parent: root)
+      subsub = create(:scientific_domain, parent: sub)
 
-      create(:service, research_areas: [root], name: "Root service")
-      create(:service, research_areas: [sub], name: "Sub service")
-      create(:service, research_areas: [subsub], name: "Subsub service")
+      create(:service, scientific_domains: [root], name: "Root service")
+      create(:service, scientific_domains: [sub], name: "Sub service")
+      create(:service, scientific_domains: [subsub], name: "Subsub service")
       create(:service, name: "Other service")
 
-      visit services_path(research_areas: [root.id])
+      visit services_path(scientific_domains: [root.id])
       expect(page).to have_text("Root service")
       expect(page).to have_text("Sub service")
       expect(page).to have_text("Subsub service")
       expect(page).to_not have_text("Other service")
 
-      visit services_path(research_areas: [sub.id])
+      visit services_path(scientific_domains: [sub.id])
       expect(page).to_not have_text("Root service")
       expect(page).to have_text("Sub service")
       expect(page).to have_text("Subsub service")
       expect(page).to_not have_text("Other service")
 
-      visit services_path(research_areas: [subsub.id])
+      visit services_path(scientific_domains: [subsub.id])
       expect(page).to_not have_text("Root service")
       expect(page).to_not have_text("Sub service")
       expect(page).to have_text("Subsub service")
@@ -155,13 +155,13 @@ RSpec.feature "Service filter" do
     end
 
     it "respect selected child", js: true do
-      research_areas = create_list(:research_area, 7)
-      child = create(:research_area, parent: research_areas[6])
+      scientific_domains = create_list(:scientific_domain, 7)
+      child = create(:scientific_domain, parent: scientific_domains[6])
 
-      visit services_path(research_areas: [child.id])
+      visit services_path(scientific_domains: [child.id])
 
-      expect(page).to_not have_text(research_areas[5].name)
-      expect(page).to have_text(research_areas[6].name)
+      expect(page).to_not have_text(scientific_domains[5].name)
+      expect(page).to have_text(scientific_domains[6].name)
       expect(page).to have_text(child.name)
       expect(page).to have_text("Show 1 more")
     end
@@ -181,15 +181,15 @@ RSpec.feature "Service filter" do
     end
 
     it "show query result, parent and selected" do
-      parent_a = create(:research_area, name: "Z1")
-      parent_c = create(:research_area, name: "Z2")
-      parent_z = create(:research_area, name: "Z3")
+      parent_a = create(:scientific_domain, name: "Z1")
+      parent_c = create(:scientific_domain, name: "Z2")
+      parent_z = create(:scientific_domain, name: "Z3")
 
-      a = create(:research_area, parent: parent_a, name: "AAAA")
-      c = create(:research_area, parent: parent_c, name: "CCCC")
-      z = create(:research_area, parent: parent_z, name: "ZZZZ")
+      a = create(:scientific_domain, parent: parent_a, name: "AAAA")
+      c = create(:scientific_domain, parent: parent_c, name: "CCCC")
+      z = create(:scientific_domain, parent: parent_z, name: "ZZZZ")
 
-      visit services_path(research_areas: [c.id], "research_areas-filter": "AAA")
+      visit services_path(scientific_domains: [c.id], "scientific_domains-filter": "AAA")
 
       expect(page).to have_text(a.name)
       expect(page).to have_text(parent_a.name)

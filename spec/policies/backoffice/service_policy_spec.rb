@@ -28,7 +28,7 @@ RSpec.describe Backoffice::ServicePolicy do
                                                     :status_monitoring_url, :maintenance_url,
                                                     :order_url, :payment_model_url, :pricing_url,
                                                     :activate_message, :logo,
-                                                    [contact_emails: []], [research_area_ids: []],
+                                                    [contact_emails: []], [scientific_domain_ids: []],
                                                     [platform_ids: []], :tag_list, [category_ids: []],
                                                     [owner_ids: []], :status, :upstream_id, :version,
                                                     sources_attributes: [:id, :source_type, :eid, :_destroy]
@@ -43,7 +43,7 @@ RSpec.describe Backoffice::ServicePolicy do
       expect(policy.permitted_attributes).to eq([
                                                     [target_group_ids: []], :helpdesk_email, :restrictions,
                                                     :order_target, :activate_message,
-                                                    [contact_emails: []], [research_area_ids: []],
+                                                    [contact_emails: []], [scientific_domain_ids: []],
                                                     [platform_ids: []], :tag_list, [category_ids: []],
                                                     [owner_ids: []], :status, :upstream_id,
                                                     sources_attributes: [:id, :source_type, :eid, :_destroy]

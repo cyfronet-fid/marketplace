@@ -2,9 +2,9 @@
 
 require "rails_helper"
 
-RSpec.describe ServiceResearchArea, type: :model do
+RSpec.describe ServiceScientificDomain, type: :model do
   it { should belong_to(:service) }
-  it { should belong_to(:research_area) }
+  it { should belong_to(:scientific_domain) }
   it { should validate_presence_of(:service) }
-  it { should validate_presence_of(:research_area) }
+  it { should validate_presence_of(:scientific_domain) }
 end

@@ -12,7 +12,7 @@ RSpec.describe Service::PcCreateOrUpdate do
   let!(:data) { create(:category, name: "Data management") }
   let!(:compute) { create(:category, name: "Compute") }
   let!(:networking) { create(:category, name: "Networking") }
-  let!(:research_area_other) { create(:research_area, name: "Other") }
+  let!(:scientific_domain_other) { create(:scientific_domain, name: "Other") }
 
   let(:unirest) { double(Unirest) }
   let(:provider_eid) { "ten" }
@@ -58,7 +58,7 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.status).to eq("published")
       expect(service.providers).to eq([Provider.first])
       expect(service.categories).to eq([])
-      expect(service.research_areas).to eq([research_area_other])
+      expect(service.scientific_domains).to eq([scientific_domain_other])
       expect(service.sources.count).to eq(1)
       expect(service.logo.download).to eq(file_fixture("PhenoMeNal_logo.png").read.b)
       expect(service.sources.first.eid).to eq("first.service")
