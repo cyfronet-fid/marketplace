@@ -17,7 +17,7 @@ class UsageReport
     Provider.pluck(:name)
   end
 
-  def disciplines
+  def domains
     ScientificDomain.joins(:projects)
       .where(projects: { id: used_projects.map { |p| p.id } }).uniq
       .pluck(:name)

@@ -26,7 +26,7 @@ RSpec.feature "Executive stistics" do
                                not_orderable_count: 2,
                                all_services_count: 3,
                                providers: ["p_a", "p_b", "p_c"],
-                               disciplines: ["d_a", "d_b", "d_c", "d_d"],
+                               domains: ["d_a", "d_b", "d_c", "d_d"],
                                countries: ["c_a", "c_b", "c_c", "c_d", "c_e"])
       allow(UsageReport).to receive(:new).and_return(report)
 
@@ -37,7 +37,7 @@ RSpec.feature "Executive stistics" do
       expect(page.body).to have_text("2\nNumber of services not orderable")
       expect(page.body).to have_text("3\nAll services")
       expect(page.body).to have_text("Providers (3)")
-      expect(page.body).to have_text("Disciplines (4)")
+      expect(page.body).to have_text("Domains (4)")
       expect(page.body).to have_text("Origins (5)")
 
       click_on "Providers (3)"
@@ -45,7 +45,7 @@ RSpec.feature "Executive stistics" do
       expect(page.body).to have_text("p_b")
       expect(page.body).to have_text("p_c")
 
-      click_on "Disciplines (4)"
+      click_on "Domains (4)"
       expect(page.body).to have_text("d_a")
       expect(page.body).to have_text("d_b")
       expect(page.body).to have_text("d_c")

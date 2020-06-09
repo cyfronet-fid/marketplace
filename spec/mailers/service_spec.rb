@@ -32,10 +32,10 @@ RSpec.describe ServiceMailer, type: :mailer do
 
   context "publish" do
     let(:user) { create(:user_with_interests) }
-    let(:service1) { create(:service, research_areas: user.research_areas) }
+    let(:service1) { create(:service, scientific_domains: user.scientific_domains) }
     let(:service2) { create(:service, categories: user.categories) }
     let(:new_service_mail) { described_class.new_service(service1, user.categories,
-                                                     user.research_areas, user.email).deliver_now }
+                                                     user.scientific_domains, user.email).deliver_now }
 
 
     it "sends email to interested users" do

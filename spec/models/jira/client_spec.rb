@@ -228,7 +228,7 @@ describe Jira::Client do
                      department: "dep",
                      webpage: "http://dep-wwww.pl",
                      organization: "org",
-                     research_areas: [create(:research_area, name: "My RA")])
+                     scientific_domains: [create(:scientific_domain, name: "My RA")])
 
     expected_fields = { summary: "Project, John Doe, My Secret Project",
                         project: { key: "MP" },
@@ -274,7 +274,7 @@ describe Jira::Client do
                      webpage: "http://dep-wwww.pl",
                      organization: "org",
                      issue_id: "1234",
-                     research_areas: [create(:research_area, name: "My RA")])
+                     scientific_domains: [create(:scientific_domain, name: "My RA")])
 
     issue = double(:Issue)
     expected_updated_fields = { summary: "Project, John Doe, My Updated Project Name",
