@@ -13,7 +13,7 @@ RSpec.describe Service do
   it { should have_many(:categorizations).dependent(:destroy) }
   it { should have_many(:offers).dependent(:restrict_with_error) }
   it { should have_many(:categories) }
-  it { should have_many(:service_research_areas).dependent(:destroy) }
+  it { should have_many(:service_scientific_domains).dependent(:destroy) }
 
   it { should belong_to(:upstream).required(false) }
 

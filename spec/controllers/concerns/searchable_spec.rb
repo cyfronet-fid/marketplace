@@ -221,12 +221,12 @@ RSpec.describe ApplicationController, type: :controller do
       end
     end
 
-    context Filter::ResearchArea do
-      let!(:collection) { create_list(:research_area, 3) }
-      let!(:field_name) { :research_areas }
-      let!(:param_name) { :research_areas }
-      let!(:filter_class) { Filter::ResearchArea }
-      it "checks if research area filter works" do
+    context Filter::ScientificDomain do
+      let!(:collection) { create_list(:scientific_domain, 3) }
+      let!(:field_name) { :scientific_domains }
+      let!(:param_name) { :scientific_domains }
+      let!(:filter_class) { Filter::ScientificDomain }
+      it "checks if scientific domain filter works" do
         basic_test
       end
     end
