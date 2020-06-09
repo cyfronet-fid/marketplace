@@ -48,11 +48,11 @@ en:
         title: New Provider
       edit:
         title: Edit Provider
-    research_areas:
+    scientific_domains :
       index:
-        title: Research Areas
+        title: Scientific Domains
       new:
-        link: Add new Research Area
-        title: New Research Area
+        link: Add new Scientific Domain
+        title: New Scientific Domain
       edit:
-        title: Edit Research Area
+        title: Edit Scientific Domain
