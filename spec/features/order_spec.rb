@@ -340,7 +340,7 @@ RSpec.feature "Service ordering" do
 
     scenario "I can create new project for private company typology", js: true do
       service = create(:service)
-      research_area = create(:research_area)
+      scientific_domain = create(:scientific_domain)
       create(:offer, service: service)
 
       visit service_path(service)
@@ -351,9 +351,9 @@ RSpec.feature "Service ordering" do
       within("#ajax-modal") do
         fill_in "Project name", with: "New project"
         fill_in "Reason to request access to the EOSC services", with: "To pass test"
-        within ".project_research_areas" do
-          find("label", text: "Research areas").click
-          find("div", class: "choices__item", text: research_area.name).click
+        within ".project_scientific_domains" do
+          find("label", text: "Scientific domains").click
+          find("div", class: "choices__item", text: scientific_domain.name).click
         end
 
 
@@ -370,7 +370,7 @@ RSpec.feature "Service ordering" do
         click_on "Create new project"
       end
       expect(page).to have_select("project_item_project_id", selected: "New project")
-      expect(page).to have_text(research_area.name)
+      expect(page).to have_text(scientific_domain.name)
       expect(page).to have_text("New company name")
       expect(page).to have_text("https://www.company.name")
       expect(page).to have_text("non-European")

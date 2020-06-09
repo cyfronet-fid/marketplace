@@ -98,9 +98,9 @@
       - @service.contact_emails.each do |email|
         %p= email
 
-      %h5 Areas
-      - @service.scientific_domains .each do |area|
-        %p= area.name
+      %h5 Domains
+      - @service.scientific_domains.each do |domain|
+        %p= domain.name
 
       %h5 Providers
       - @service.providers.each do |provider|

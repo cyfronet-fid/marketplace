@@ -42,8 +42,8 @@ RSpec.describe Filter::ScientificDomain do
       filter.counters = { child2.id => 1 }
 
       expect(filter.active_filters).
-          to include(["Scientific Domain", parent.name, "scientific_domains" => [child1.id.to_s]],
-                     ["Scientific Domain", child1.name, "scientific_domains" => [parent.id.to_s]])
+          to include(["Scientific Domains", parent.name, "scientific_domains" => [child1.id.to_s]],
+                     ["Scientific Domains", child1.name, "scientific_domains" => [parent.id.to_s]])
     end
   end
 
