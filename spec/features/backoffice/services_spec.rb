@@ -32,6 +32,7 @@ RSpec.feature "Services in backoffice" do
       category = create(:category)
       provider = create(:provider)
       scientific_domain = create(:scientific_domain)
+      resource_organisation = create(:provider)
       platform = create(:platform)
       funding_body = create(:funding_body)
       funding_program = create(:funding_program)
@@ -66,6 +67,7 @@ RSpec.feature "Services in backoffice" do
       select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
       select "open_access", from: "Order type"
+      select resource_organisation.name, from: "Resource organisation"
       select platform.name, from: "Platforms"
       fill_in "service_contact_emails_0", with: "person1@test.ok"
       # page.find("#add-email-field").click
@@ -114,6 +116,7 @@ RSpec.feature "Services in backoffice" do
     scenario "I can preview service before create" do
       provider = create(:provider)
       scientific_domain = create(:scientific_domain)
+      resource_organisation = create(:provider)
 
       visit backoffice_services_path
       click_on "Create new Service"
@@ -124,6 +127,7 @@ RSpec.feature "Services in backoffice" do
       select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
       select "Poland", from: "Geographical availabilities"
+      select resource_organisation.name, from: "Resource organisation"
 
       click_on "Preview"
 

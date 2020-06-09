@@ -27,6 +27,7 @@ FactoryBot.define do
                   "userBase" => "Worldwide, individual researchers and larger labs with either commercial cloud-based or in-house deployments.",
                   "symbol" => "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
                   "multimediaURL" => "https://www.youtube.com/watch?v=-_F8NZwWXew",
+                  "resource_organisation" => "bluebridge",
                   "providers" => [
                       "phenomenal"
                   ],
@@ -89,6 +90,7 @@ FactoryBot.define do
                   "userBase" => "",
                   "symbol" => "http://metalweb.cerm.unifi.it/global/images/MetalPDB.png",
                   "multimediaURL" => nil,
+                  "resource_organisation" => "bluebridge",
                   "providers" => [
                       "West-Life"
                   ],
@@ -152,6 +154,7 @@ FactoryBot.define do
                   "userBase" => "",
                   "symbol" => "https://pdb-redo.eu/images/PDB_logo_rect_medium.svg",
                   "multimediaURL" => nil,
+                  "resource_organisation" => "bluebridge",
                   "providers" => [
                       "West-Life"
                   ],

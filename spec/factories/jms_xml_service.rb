@@ -74,6 +74,7 @@ FactoryBot.define do
             <tns:modifiedBy>Marta Swiatkowska</tns:modifiedBy>
             <tns:registeredAt>1588598332654</tns:registeredAt>
             <tns:registeredBy>Marta Swiatkowska</tns:registeredBy>
+            <tns:resourceOrganisation>new</tns:resourceOrganisation>
           </tns:serviceMetadata>
         </tns:infraService>",
         "payloadFormat" =>  "xml"

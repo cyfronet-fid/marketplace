@@ -70,6 +70,7 @@ namespace :dev do
       categories = Category.where(name: hash["parents"])
       providers = Provider.where(name: hash["providers"])
       domain = ScientificDomain.where(name: hash["domain"])
+      resource_organisation = Provider.find_by(name: "not specified yet")
       platforms = Platform.where(name: hash["platforms"])
       funding_bodies = FundingBody.where(eid: hash["funding_bodies"])
       funding_programs = FundingProgram.where(eid: hash["funding_programs"])
@@ -84,6 +85,8 @@ namespace :dev do
                       scientific_domains: domain,
                       providers: providers,
                       order_type: order_type,
+                      resource_organisation: resource_organisation,
+                      service_type: service_type,
                       webpage_url: hash["webpage_url"],
                       manual_url: hash["manual_url"],
                       helpdesk_url: hash["helpdesk_url"],
