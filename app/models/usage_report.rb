@@ -18,7 +18,7 @@ class UsageReport
   end
 
   def disciplines
-    ResearchArea.joins(:projects)
+    ScientificDomain.joins(:projects)
       .where(projects: { id: used_projects.map { |p| p.id } }).uniq
       .pluck(:name)
   end
