@@ -71,7 +71,7 @@ namespace :dev do
       area = ResearchArea.where(name: hash["area"])
       platforms = Platform.where(name: hash["platforms"])
       target_groups = TargetGroup.where(name: hash["target_groups"])
-      service = Service.find_or_initialize_by(title: hash["title"])
+      service = Service.find_or_initialize_by(name: hash["name"])
       order_type = order_type_from(hash)
 
       service.update!(tagline: hash["tagline"],
@@ -98,7 +98,7 @@ namespace :dev do
 
       service.logo.attached? && service.logo.purge_later
       hash["logo"] && service.logo.attach(io: File.open("db/logos/#{hash["logo"]}"), filename: hash["logo"])
-      puts "  - #{hash["title"]} service generated"
+      puts "  - #{hash["name"]} service generated"
 
       create_offers(service, hash["offers"])
     end
@@ -133,14 +133,14 @@ namespace :dev do
     ServiceRelationship.delete_all
 
     relations_hash && relations_hash.each do |_, hash|
-      source = Service.find_by(title: hash["source"])
-      target = Service.find_by(title: hash["target"])
+      source = Service.find_by(name: hash["source"])
+      target = Service.find_by(name: hash["target"])
       ServiceRelationship.create!(source: source, target: target)
       if hash["both"]
         ServiceRelationship.create!(source: target, target: source)
-        puts "  - Relation from #{target.title} to #{source.title} generated"
+        puts "  - Relation from #{target.name} to #{source.name} generated"
       end
-      puts "  - Relation from #{source.title} to #{target.title} generated"
+      puts "  - Relation from #{source.name} to #{target.name} generated"
     end
   end
 end
