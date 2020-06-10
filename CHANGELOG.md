@@ -18,7 +18,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - instance badge display on backoffice section (@goreck888)
-
+- Added missing homepage graphics (@jarekzet)
+ 
 ### Security
 
 ## [2.11.0] 2020-06-09
