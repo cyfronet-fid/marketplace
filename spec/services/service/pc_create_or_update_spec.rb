@@ -91,6 +91,17 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.providers[0].name).to eq("Test Provider 3")
     end
 
+    it "should create new service first element of places" do
+      provider = create(:provider, name: "Test Provider 3")
+      create(:provider_source, source_type: "eic", eid: "new.prov", provider: provider)
+
+      service = stub_described_class(create(:jms_service, prov_eid: "new.prov", title: "New supper service", places: ["WW", "BR"]), unirest: unirest)
+      last_service = Service.last
+      expect(last_service.title).to eq("New supper service")
+      expect(service.providers[0].name).to eq("Test Provider 3")
+      expect(service.places).to eq("World")
+    end
+
     it "should create new service with new default offer" do
       provider = create(:provider, name: "Test Provider 3")
       create(:provider_source, source_type: "eic", eid: "new.prov", provider: provider)

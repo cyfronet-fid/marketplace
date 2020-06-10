@@ -9,6 +9,7 @@ FactoryBot.define do
       title { "Title" }
       prov_eid { "new" }
       logo { "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png" }
+      places { "WW" }
     end
     initialize_with do
       next {
@@ -28,7 +29,7 @@ FactoryBot.define do
         "options" => "Standard",
         "order" => "http://openminted.eu/omtd-services/catalogue-of-scholarly-datasets/",
         "otherProducts" => "0",
-        "places" => { "place" => "WW" },
+        "places" => { "place" => places },
         "price" => "http://openminted.eu/pricing/",
         "providers" => {
           "provider" => prov_eid
