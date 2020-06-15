@@ -47,7 +47,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Terms of use", with: "service terms of use"
       fill_in "Tagline", with: "service tagline"
       select "English", from: "Language availability"
-      select "Poland", from: "Places"
+      select "Poland", from: "Geographical availabilities"
       select target_group.name, from: "Dedicated For"
       select funding_body.name, from: "Funding bodies"
       select funding_program.name, from: "Funding programs"
@@ -400,8 +400,8 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Funding programs", disabled: false
       expect(page).to have_field "service_contact_emails_0", disabled: false
       expect(page).to have_field "Service Order Target", disabled: false
-      expect(page).to have_field "Places", disabled: false
       expect(page).to have_field "Language availability", disabled: false
+      expect(page).to have_field "Geographical availabilities", disabled: false
       expect(page).to have_field "Terms of use url", disabled: false
       expect(page).to have_field "Access policies url", disabled: false
       expect(page).to have_field "Sla url", disabled: false
@@ -438,8 +438,8 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Owners", disabled: false
       expect(page).to have_field "service_contact_emails_0", disabled: false
       expect(page).to have_field "Service Order Target", disabled: false
-      expect(page).to have_field "Places", disabled: true
       expect(page).to have_field "Language availability", disabled: true
+      expect(page).to have_field "Geographical availabilities", disabled: true
       expect(page).to have_field "Terms of use url", disabled: true
       expect(page).to have_field "Access policies url", disabled: true
       expect(page).to have_field "Sla url", disabled: true

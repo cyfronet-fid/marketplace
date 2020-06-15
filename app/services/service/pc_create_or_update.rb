@@ -63,7 +63,7 @@ class Service::PcCreateOrUpdate
                       data["userBase"]].join("\n"),
         tagline: data["tagline"].blank? ? "NO IMPORTED TAGLINE" : data["tagline"],
         language_availability: Array(data["languages"]["language"] || "EN"),
-        places: Array(data["places"]["place"] || "WW"),
+        geographical_availabilities: Array(data["geographicalAvailabilities"]["geographicalAvailability"] || "WW"),
         dedicated_for: [],
         terms_of_use_url: data["termsOfUse"]["termOfUse"] || "",
         access_policies_url: data["price"],
