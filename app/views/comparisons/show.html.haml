@@ -57,9 +57,9 @@
           - if service.life_cycle_status.present?
             %td= t("services.about.sidebar.fields.life_cycle_status.#{service.life_cycle_status.name}")
       %tr.lightgrey-row
-        %th Places
+        %th Geographical availabilities
         - @services.each do |service|
-          %td= service.places
+          %td= service.geographical_availabilities.join(", ")
       %tr
         %th Languages
         - @services.each do |service|

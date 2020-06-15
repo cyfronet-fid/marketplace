@@ -48,7 +48,7 @@ RSpec.describe Service::PcCreateOrUpdate do
 
       expect(service.tagline).to eq("Find easily accessible corpora of scholarly content and mine them!")
       expect(service.language_availability).to eq(["english"])
-      expect(service.places.first.name).to eq("World")
+      expect(service.geographical_availabilities.first.name).to eq("World")
       expect(service.dedicated_for).to eq([])
       expect(service.terms_of_use_url).to eq("https://services.openminted.eu/support/termsAndConditions")
       expect(service.access_policies_url).to eq("http://openminted.eu/pricing/")

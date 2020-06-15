@@ -33,7 +33,7 @@ export default class extends Controller {
       },
       series: [{
         name: 'Country',
-        data: JSON.parse(element.dataset.places),
+        data: JSON.parse(element.dataset.geographical_availabilities),
         dataLabels: {
           enabled: false
         },
@@ -45,12 +45,9 @@ export default class extends Controller {
     })
   }
 
-  returnRegion(places) {
-    if(places.indexOf("WW") > -1) {
+  returnRegion(geographical_availabilities) {
+    if(geographical_availabilities.indexOf("WW") > -1) {
       return world
-    }
-    else if(places.indexOf("EU") > -1) {
-      return europe
     }
     else {
       return europe

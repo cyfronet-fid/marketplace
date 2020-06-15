@@ -6,7 +6,7 @@ class Api::ServicesController < ActionController::API
                                                                          "SERVICE_TYPE": "eu.eosc.portal.services.url",
                                                                          "CONTACT_EMAIL": s.contact_emails,
                                                                          "SITENAME-SERVICEGROUP": s.title,
-                                                                         "COUNTRY_NAME": s.places,
+                                                                         "COUNTRY_NAME": s.geographical_availabilities,
                                                                          "URL": s.webpage_url } }
     render json: @json
   end

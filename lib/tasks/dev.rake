@@ -94,7 +94,7 @@ namespace :dev do
                       sla_url: hash["sla_url"],
                       access_policies_url: hash["access_policies_url"],
                       language_availability: hash["language_availability"],
-                      places: [hash["places"]],
+                      geographical_availabilities: [hash["geographical_availabilities"]],
                       target_groups: target_groups,
                       restrictions: hash["restrictions"],
                       trl: trl,
