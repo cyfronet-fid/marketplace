@@ -38,7 +38,7 @@ FactoryBot.define do
                   "trl" => trl,
                   "category" => category,
                   "subcategory" => "data-applications-software",
-                  "places" => [
+                  "geographicalAvailabilities" => [
                       "WW"
                   ],
                   "language_availability" => [
@@ -100,7 +100,7 @@ FactoryBot.define do
                   "trl" => "trl-9",
                   "category" => "software",
                   "subcategory" => "tool",
-                  "places" => [
+                  "geographicalAvailabilities" => [
                       "WW"
                   ],
                   "language_availability" => [
@@ -163,7 +163,7 @@ FactoryBot.define do
                   "trl" => "trl-9",
                   "category" => "software",
                   "subcategory" => "tool",
-                  "places" => [
+                  "geographicalAvailabilities" => [
                       "WW"
                   ],
                   "language_availability" => [

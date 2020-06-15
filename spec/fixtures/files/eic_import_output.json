@@ -22,7 +22,7 @@
     "trl": "trl-7",
     "category": "aggregator",
     "subcategory": "data-applications-software",
-    "places": [
+    "geographicalAvailabilities": [
       "WW"
     ],
     "language_availability": [

@@ -32,12 +32,12 @@ class Service < ApplicationRecord
     draft: "draft"
   }
 
-  SIDEBAR_FIELDS = [{ name: "places_and_languages",
+  SIDEBAR_FIELDS = [{ name: "geographical_availabilities_and_languages",
                       template: "array",
                       fields: ["languages"] },
                     { name: "service_availability",
                       template: "map",
-                      fields: ["places"] },
+                      fields: ["geographical_availabilities"] },
                     { name: "platforms",
                       template: "array",
                       fields: ["platforms"] },
@@ -110,7 +110,7 @@ class Service < ApplicationRecord
 
   belongs_to :upstream, foreign_key: "upstream_id", class_name: "ServiceSource", optional: true
 
-  serialize :places, Country::Array
+  serialize :geographical_availabilities, Country::Array
 
   validates :name, presence: true
   validates :description, presence: true
@@ -171,7 +171,7 @@ class Service < ApplicationRecord
     service_user_relationships.where(user: user).count.positive?
   end
 
-  def places=(value)
+  def geographical_availabilities=(value)
     super(value&.map { |v| Country.for(v) })
   end
 
