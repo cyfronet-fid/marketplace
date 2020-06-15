@@ -19,7 +19,7 @@ RSpec.describe Backoffice::ServicePolicy do
       expect(policy.permitted_attributes).to eq([
                                                     :name, :description,
                                                     :tagline, :order_type,
-                                                    [provider_ids: []], :places, :languages,
+                                                    [provider_ids: []], :places, :language_availability,
                                                     [target_group_ids: []], :terms_of_use_url,
                                                     :access_policies_url, :sla_url,
                                                     :webpage_url, :manual_url, :helpdesk_url,

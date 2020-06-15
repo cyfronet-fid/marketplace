@@ -101,7 +101,7 @@ module Import
         # tags = service["tags"]
         # places = service["places"]
         place_names = service["placeNames"]
-        # languages = service["languages"]
+        # language_availability = service["languages"]
         language_names = service["languageNames"]
         category = service["category"]
         # category_name = service["categoryName"]
@@ -166,7 +166,7 @@ module Import
             # provider_id: ?
             # contact_emails: ?
             places: place_names[0] || "World",
-            languages: language_names[0] || "English",
+            language_availability: language_names || ["English"],
             dedicated_for: [],
             terms_of_use_url: terms_of_use[0] || "",
             access_policies_url: price_url,

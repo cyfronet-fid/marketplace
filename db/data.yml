@@ -311,7 +311,7 @@ services:
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: &europe Europe
-        languages: &english English
+        language_availability: &english English
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
         restrictions: &notSpecified not yet specified
@@ -613,7 +613,7 @@ services:
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
-        languages: *english
+        language_availability: *english
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
@@ -779,7 +779,7 @@ services:
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
-        languages: *english
+        language_availability: *english
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
@@ -813,7 +813,7 @@ services:
         sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
-        languages: *english
+        language_availability: *english
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
@@ -945,7 +945,7 @@ services:
         sla_url:
         access_policies_url: http://eudat.eu/policy
         places: *europe
-        languages: *english
+        language_availability: *english
         target_groups: [*researchers, *providers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
@@ -1072,7 +1072,7 @@ services:
         sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
-        languages: *english
+        language_availability: *english
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
@@ -1193,7 +1193,7 @@ services:
         sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
-        languages: *english
+        language_availability: *english
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
@@ -1280,7 +1280,7 @@ services:
         sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
-        languages: *english
+        language_availability: *english
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
@@ -1334,7 +1334,7 @@ services:
         sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
-        languages: *english
+        language_availability: *english
         target_groups: [*researchers, *providers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
@@ -1463,7 +1463,7 @@ services:
         sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
-        languages: *english
+        language_availability: *english
         domain: *interdisciplinary
         target_groups: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
@@ -1526,7 +1526,7 @@ services:
         sla_url: http://hdl.handle.net/11304/e43b2e3f-83c5-4e3f-b8b7-18d38d37a6cd
         access_policies_url: https://eudat.eu/policy
         places: *europe
-        languages: *english
+        language_availability: *english
         domain: *interdisciplinary
         target_groups: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
@@ -1569,7 +1569,7 @@ services:
         sla_url:
         access_policies_url: https://eudat.eu/policy
         places: *europe
-        languages: *english
+        language_availability: *english
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
@@ -1637,7 +1637,7 @@ services:
         sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
-        languages: *english
+        language_availability: *english
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
@@ -1810,7 +1810,7 @@ services:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        places: *europe
 #        dedicated_for: ["Researchers"] #TODO: but not specified
-#        languages: *english
+#        language_availability: *english
 #        domain: *earthScience
 ##        #restrictions: *notSpecified
 #        phase: production
@@ -1836,7 +1836,7 @@ services:
         access_policies_url:
         places: *europe
         target_groups: [*researchers] #TODO: but not specified
-        languages: *english
+        language_availability: *english
         domain: *earthScience
 #        #restrictions: *notSpecified
         phase: production
@@ -1868,7 +1868,7 @@ services:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_groups, *research_organisations]
-        languages: *english
+        language_availability: *english
         domain: [*earthScience, *lifeSciences, *interdisciplinary]
         restrictions:
         phase: production
@@ -1908,7 +1908,7 @@ services:
         sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
-        languages: *english
+        language_availability: *english
         domain: [*socialSciences, *humanities]
         target_groups: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
@@ -1955,7 +1955,7 @@ services:
         sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
-        languages: *english
+        language_availability: *english
         domain: [*socialSciences, *humanities]
         target_groups: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
@@ -2020,7 +2020,7 @@ services:
         sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
-        languages: *english
+        language_availability: *english
         target_groups: [*researchers] #TODO: but not specified
         domain: *humanities
 #        #restrictions: *notSpecified
@@ -2081,7 +2081,7 @@ services:
 #        access_policies_url:
 #        target_groups: ["Reaserchers"] #TODO: but not specified
 #        places: *europe
-#        languages: *english
+#        language_availability: *english
 #        domain: *earthScience
 ##        #restrictions: *notSpecified
 #        phase: production
@@ -2103,7 +2103,7 @@ services:
 #        sla_url:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        places: *europe
-#        languages: *english
+#        language_availability: *english
 #        target_groups: ["Researchers", "Research organisations"]
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
@@ -2138,7 +2138,7 @@ services:
 #        sla_url:
 #        access_policies_url:
 #        places: *europe
-#        languages: *english
+#        language_availability: *english
 #        target_groups: ["Researchers", "Research organisations"]
 #        domain: *mathematics
 #        #restrictions: *notSpecified
@@ -2214,7 +2214,7 @@ services:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
+#        language_availability: *english
 #        domain: *lifeSciences
 #        #restrictions: *notSpecified
 #        phase: production
@@ -2242,7 +2242,7 @@ services:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
+#        language_availability: *english
 #        domain: *lifeSciences
 ##        #restrictions: *notSpecified
 #        phase: production
@@ -2313,7 +2313,7 @@ services:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
+#        language_availability: *english
 #        domain: *earthScience
 #        #restrictions: *notSpecified
 #        phase: production
@@ -2346,7 +2346,7 @@ services:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
+#        language_availability: *english
 #        domain: *lifeSciences
 ##        #restrictions: *notSpecified
 #        phase: production
@@ -2377,7 +2377,7 @@ services:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
+#        language_availability: *english
 #        domain: *applicationFrameworks
 #        #restrictions: *notSpecified
 #        phase: production
@@ -2407,7 +2407,7 @@ services:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
+#        language_availability: *english
 #        domain: *applicationFrameworks
 ##        #restrictions: *notSpecified
 #        phase: production
@@ -2438,7 +2438,7 @@ services:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
+#        language_availability: *english
 #        domain: *applicationFrameworks
 ##        #restrictions: *notSpecified
 #        phase: production
@@ -2469,7 +2469,7 @@ services:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
+#        language_availability: *english
 #        domain: *applicationFrameworks
 #        #restrictions: *notSpecified
 #        phase: production
@@ -2502,7 +2502,7 @@ services:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
+#        language_availability: *english
 #        domain: *dataAnalysis
 #        #restrictions: *notSpecified
 #        phase: production
@@ -2533,7 +2533,7 @@ services:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
+#        language_availability: *english
 #        domain: *humanities
 #        #restrictions: *notSpecified
 #        phase: production
@@ -2565,7 +2565,7 @@ services:
         access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
         places: *europe
         target_groups: [*researchers, *research_organisations, *business]
-        languages: *english
+        language_availability: *english
         domain: *lifeSciences
         restrictions: "Research affiliation needed"
         phase: production
@@ -2612,7 +2612,7 @@ services:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
+#        language_availability: *english
 #        domain: *lifeSciences
 #        #restrictions: *notSpecified
 #        phase: production
@@ -2640,7 +2640,7 @@ services:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
+#        language_availability: *english
 #        domain: *lifeSciences
 #        #restrictions: *notSpecified
 #        phase: production
@@ -2669,7 +2669,7 @@ services:
       access_policies_url:
       target_groups: [*researchers, *research_organisations]
       places: *europe
-      languages: *english
+      language_availability: *english
       domain: *lifeSciences
       #restrictions: *notSpecified
       phase: beta
@@ -2768,7 +2768,7 @@ services:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        places: *europe
 #        target_groups: ["Researchers"] #TODO: but not specified
-#        languages: *english
+#        language_availability: *english
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
@@ -2809,7 +2809,7 @@ services:
         access_policies_url: https://www.dariah.eu/privacy-notice/
         places: *europe
         target_groups: [*researchers, *research_organisations]
-        languages: *english
+        language_availability: *english
         domain: *humanities
         #restrictions: *notSpecified
         phase: production
@@ -2869,7 +2869,7 @@ services:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations]
-        languages: *english
+        language_availability: *english
         domain: &highEnergyPhysics High-Energy Physics
         #restrictions: *notSpecified
         phase: production
@@ -2948,7 +2948,7 @@ services:
         access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
         places: *europe
         target_groups: [*researchers, *research_organisations]
-        languages: *english
+        language_availability: *english
         domain: *physicalScienceEarth
         #restrictions: *notSpecified
         phase: beta
@@ -2980,7 +2980,7 @@ services:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations]
-        languages: *english
+        language_availability: *english
         domain: *climateScience
         #restrictions: *notSpecified
         phase: production
@@ -3052,7 +3052,7 @@ services:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations]
-        languages: *english
+        language_availability: *english
         domain: *environmentalScience
         #restrictions: *notSpecified
         phase: production
@@ -3114,7 +3114,7 @@ services:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers"] #TODO: but not specified
-#        languages: *english
+#        language_availability: *english
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
@@ -3135,7 +3135,7 @@ services:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers"] #TODO: but not specified
-#        languages: *english
+#        language_availability: *english
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
@@ -3156,7 +3156,7 @@ services:
 #        access_policies_url:
 #        places: *europe
 #        target_groups: ["Researchers"] #TODO: but not specified
-#        languages: *english
+#        language_availability: *english
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
@@ -3178,7 +3178,7 @@ services:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations]
-        languages: *english
+        language_availability: *english
         domain: *environmentalScience
         #restrictions: *notSpecified
         phase: production
@@ -3266,7 +3266,7 @@ services:
 #        sla_url:
 #        access_policies_url:
 #        places: *europe
-#        languages: *english
+#        language_availability: *english
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
@@ -3317,7 +3317,7 @@ services:
         access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
         target_groups: [*researchers]
-        languages: *english
+        language_availability: *english
         domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
@@ -3355,7 +3355,7 @@ services:
         access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
         target_groups: [*researchers]
-        languages: *english
+        language_availability: *english
         domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
@@ -3383,7 +3383,7 @@ services:
         access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
         target_groups: [*researchers]
-        languages: *english
+        language_availability: *english
         domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
@@ -3413,7 +3413,7 @@ services:
         access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
         target_groups: [*researchers]
-        languages: *english
+        language_availability: *english
         domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
@@ -3442,7 +3442,7 @@ services:
         access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         places: *europe
         target_groups: [*researchers]
-        languages: *english
+        language_availability: *english
         domain: *biologicalSciences
         restrictions: "Limited to non-profit users, For-profit users can use the service if they a license agreement with the University of California for the AMBER toolkit"
         phase: production
@@ -3475,7 +3475,7 @@ services:
         access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         places: *europe
         target_groups: [*researchers]
-        languages: *english
+        language_availability: *english
         domain: *biologicalSciences
         restrictions: "Limited to non-profit users"
         phase: production
@@ -3506,7 +3506,7 @@ services:
         access_policies_url: https://wenmr.science.uu.nl/conditions
         places: *europe
         target_groups: [*researchers]
-        languages: *english
+        language_availability: *english
         domain: [*biologicalSciences, *lifeSciences]
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
@@ -3536,7 +3536,7 @@ services:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations, *business]
-        languages: *english
+        language_availability: *english
         domain: [*earthScience, *appliedScience, *interdisciplinary]
         restrictions: " Research affiliation needed, user account registration needed."
         phase: production
@@ -3569,7 +3569,7 @@ services:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations, *business]
-        languages: *english
+        language_availability: *english
         domain: [*earthScience, *appliedScience, *interdisciplinary]
         restrictions: " Research affiliation needed, user account registration needed."
         phase: production
@@ -3601,7 +3601,7 @@ services:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups]
-        languages: *english
+        language_availability: *english
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
         restrictions: "Research affiliation needed"
         phase: alpha
@@ -3658,7 +3658,7 @@ services:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers]
-        languages: *english
+        language_availability: *english
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
@@ -3695,7 +3695,7 @@ services:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations]
-        languages: *english
+        language_availability: *english
         domain: *earthScience
         #restrictions: *notSpecified
         phase: production
@@ -3722,7 +3722,7 @@ services:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations]
-        languages: *english
+        language_availability: *english
         domain: *earthScience
         #restrictions: *notSpecified
         phase: production
@@ -3749,7 +3749,7 @@ services:
         access_policies_url:
         places: *europe
         target_groups: [*researchers, *research_organisations]
-        languages: *english
+        language_availability: *english
         domain: *earthScience
         #restrictions: *notSpecified
         phase: production
@@ -3802,7 +3802,7 @@ services:
         access_policies_url: https://creodias.eu/legal-matters
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
-        languages: *english
+        language_availability: *english
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
@@ -3845,7 +3845,7 @@ services:
         access_policies_url: https://creodias.eu/legal-matters
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
-        languages: *english
+        language_availability: *english
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
@@ -3884,7 +3884,7 @@ services:
         access_policies_url: https://creodias.eu/legal-matters
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
-        languages: *english
+        language_availability: *english
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
@@ -3915,7 +3915,7 @@ services:
         access_policies_url: https://creodias.eu/legal-matters
         places: *europe
         target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
-        languages: *english
+        language_availability: *english
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
@@ -3955,7 +3955,7 @@ services:
         access_policies_url:
         places: *europe
         target_groups: [*research_organisations]
-        languages: *english
+        language_availability: *english
         domain: *security
         #restrictions: *notSpecified
         phase: beta
@@ -4010,7 +4010,7 @@ services:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        places: *europe
 #        target_groups: ["Research organisations"]
-#        languages: *english
+#        language_availability: *english
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
@@ -4041,7 +4041,7 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         target_groups: [*research_groups, *research_organisations]
-        languages: *english
+        language_availability: *english
         domain: *interdisciplinary
         #restrictions: *notSpecified
         phase: production
@@ -4155,7 +4155,7 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: *europe
         target_groups: [*research_organisations]
-        languages: *english
+        language_availability: *english
         domain: *interdisciplinary
         #restrictions: *notSpecified
         phase: production
@@ -4249,7 +4249,7 @@ services:
       places: *europe
       target_groups: [*research_groups]
       restrictions: No restrictions
-      languages: *english
+      language_availability: *english
       domain: *interdisciplinary
       phase: production
       tagline: |
@@ -4295,7 +4295,7 @@ services:
 #      access_policies_url:
 #      places: *europe
 #      target_groups: ["Research groups", "Research organisations"]
-#      languages: *english
+#      language_availability: *english
 #      domain: *interdisciplinary
 #      #restrictions: *notSpecified
 #      phase: production
