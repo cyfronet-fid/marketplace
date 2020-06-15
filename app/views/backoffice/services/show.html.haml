@@ -80,11 +80,11 @@
           %li= group.name
 
       %h5 Service Availability
-      - if @service.places.present?
-        - map_data = data_for_map(@service.places)
+      - if @service.geographical_availabilities.present?
+        - map_data = data_for_map(@service.geographical_availabilities)
         - if map_data.present?
-          .places-map{ "data-controller": "map", "data-places": map_data,
-                       "data-region": @service.places }
+          .geographical_availabilities-map{ "data-controller": "map", "data-geographical-availabilities": map_data,
+                       "data-region": @service.geographical_availabilities }
 
       %hr
 

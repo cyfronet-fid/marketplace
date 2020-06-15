@@ -95,7 +95,7 @@ module Import
         # subcategory = service["subcategory"]
         # tags = service["tags"]
         language_availability = Array(service["languages"] || "EN")
-        places = service["places"]
+        geographical_availabilities = service["geographicalAvailabilities"]
         category = service["category"]
         funding_bodies = service["fundingBody"]
         funding_programs = service["fundingPrograms"]
@@ -162,7 +162,7 @@ module Import
             # provider_id: ?
             # contact_emails: ?
             language_availability: language_availability || ["EN"],
-            places: places || [],
+            geographical_availabilities: geographical_availabilities || [],
             dedicated_for: [],
             terms_of_use_url: terms_of_use[0] || "",
             access_policies_url: price_url,
