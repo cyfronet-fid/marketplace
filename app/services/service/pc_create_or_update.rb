@@ -68,7 +68,7 @@ class Service::PcCreateOrUpdate
                       data["userBase"]].join("\n"),
         tagline: data["tagline"].blank? ? "NO IMPORTED TAGLINE" : data["tagline"],
         places: map_places(data["places"]["place"]) || "World",
-        languages: data["languages"] || ["English"],
+        language_availability: [data["languages"]["language"]] || ["English"],
         dedicated_for: [],
         terms_of_use_url: data["termsOfUse"]["termOfUse"] || "",
         access_policies_url: data["price"],

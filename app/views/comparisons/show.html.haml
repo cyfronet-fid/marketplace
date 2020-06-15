@@ -62,7 +62,11 @@
       %tr
         %th Languages
         - @services.each do |service|
-          %td= service.languages
+          %td
+            %ul
+            - service.language_availability.each do |language|
+              %li= language
+
       %tr.lightgrey-row
         %th Tags
         - @services.each do |service|
