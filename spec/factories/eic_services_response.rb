@@ -41,7 +41,7 @@ FactoryBot.define do
                   "places" => [
                       "WW"
                   ],
-                  "languages" => [
+                  "language_availability" => [
                       "english"
                   ],
                   "tags" => [
@@ -103,7 +103,7 @@ FactoryBot.define do
                   "places" => [
                       "WW"
                   ],
-                  "languages" => [
+                  "language_availability" => [
                       "english"
                   ],
                   "tags" => [
@@ -166,7 +166,7 @@ FactoryBot.define do
                   "places" => [
                       "WW"
                   ],
-                  "languages" => [
+                  "language_availability" => [
                       "english"
                   ],
                   "tags" => [

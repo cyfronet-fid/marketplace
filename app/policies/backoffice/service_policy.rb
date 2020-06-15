@@ -7,7 +7,7 @@ EIC_SOURCE_FIELDS = [
   :description,
   :tagline,
   :places,
-  :languages,
+  :language_availability,
   :dedicated_for,
   :terms_of_use_url,
   :access_policies_url,
@@ -92,7 +92,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
     attrs = [
       :name, :description,
       :tagline, :order_type,
-      [provider_ids: []], :places, :languages,
+      [provider_ids: []], :places, :language_availability,
       [target_group_ids: []], :terms_of_use_url,
       :access_policies_url, :sla_url,
       :webpage_url, :manual_url, :helpdesk_url,
