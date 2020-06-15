@@ -120,7 +120,7 @@ describe Import::Eic do
                                             "and maintenance\nWorldwide, individual researchers and larger labs with either commercial cloud-based or in-house deployments.")
       expect(service.tagline).to eq("Large-Scale computing for medical metabolomics")
       expect(service.places).to eq("World")
-      expect(service.languages).to eq("English")
+      expect(service.language_availability).to eq(["English"])
       expect(service.dedicated_for).to eq([])
       expect(service.terms_of_use_url).to eq("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/09/Phenomenal-Terms-of-Use-version-11.pdf")
       expect(service.access_policies_url).to eq("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/09/Phenomenal-Terms-of-Use-version-11.pdf")
