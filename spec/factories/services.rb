@@ -19,7 +19,7 @@ FactoryBot.define do
     sequence(:access_policies_url) { "https://access.policies.url"  }
 
     sequence(:places) { |n| "Europe" }
-    sequence(:language_availability) { |n| ["service #{n} lanuage"] }
+    sequence(:language_availability) { [I18nData.languages.values.sample] }
     sequence(:dedicated_for) { |n| ["service #{n} dedicated for"] }
     sequence(:restrictions) { |n| "service #{n} restrictions" }
     sequence(:phase) { :alpha }

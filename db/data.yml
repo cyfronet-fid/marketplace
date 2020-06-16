@@ -311,7 +311,7 @@ services:
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         places: &europe Europe
-        language_availability: &english English
+        language_availability: &english EN
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
         restrictions: &notSpecified not yet specified
@@ -4321,7 +4321,7 @@ services:
       access_policies_url:
       places: *europe
       target_groups: [*research_groups, *research_organisations]
-      languages: *english
+      language_availability: *english
       domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: alpha
@@ -4361,7 +4361,7 @@ services:
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       places: *europe
       target_groups: [*researchers]
-      languages: *english
+      language_availability: *english
       domain: *interdisciplinary
       restrictions: |
         Access to the platform is granted based on motivation / proposal,
@@ -4398,7 +4398,7 @@ services:
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       places: *europe
       target_groups: [*researchers]
-      languages: *english
+      language_availability: *english
       domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: beta
@@ -4432,7 +4432,7 @@ services:
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       places: *europe
       target_groups: [*researchers]
-      languages: *english
+      language_availability: *english
       domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: beta
@@ -4466,7 +4466,7 @@ services:
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       places: *europe
       target_groups: [*researchers]
-      languages: *english
+      language_availability: *english
       domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: beta
@@ -4501,7 +4501,7 @@ services:
       access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
       places: *europe
       target_groups: [*researchers, *research_organisations, *business]
-      languages: *english
+      language_availability: *english
       domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: production
@@ -4546,7 +4546,7 @@ services:
       access_policies_url: https://research.csc.fi/pricing-of-computing-services
       places: *europe
       target_groups: [*researchers, *research_organisations, *research_groups, *providers]
-      languages: *english
+      language_availability: *english
       domain: [*interdisciplinary, *lifeSciences, *socialSciences, *humanities, *appliedScience, *philosophy]
       #restrictions: *notSpecified
       phase: production
@@ -4578,7 +4578,7 @@ services:
       access_policies_url:
       places: *europe
       target_groups: [*researchers]
-      languages: *english
+      language_availability: *english
       domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: production
@@ -4611,7 +4611,7 @@ services:
       access_policies_url:  https://documents.egi.eu/public/ShowDocument?docid=2635
       places: *europe
       target_groups: [*researchers, *research_organisations, *business]
-      languages: *english
+      language_availability: *english
       domain: *interdisciplinary
       restrictions: Research affiliation needed
       phase: production
