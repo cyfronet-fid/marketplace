@@ -21,6 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - `tutorial_url` to `training_information_url` in service model (@goreck888)
 - Service `title` to `name` (@goreck888)
 - name of research area model to scientific domain (@goreck888)
+- `languages` to `language_availability` in service model (@goreck888)
 
 ### Deprecated
 

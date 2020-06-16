@@ -42,7 +42,7 @@ FactoryBot.define do
                       "WW"
                   ],
                   "language_availability" => [
-                      "english"
+                      "EN"
                   ],
                   "tags" => [
                       "Metabolomics, Galaxy, Workflows, Cloud Research Environment, Analytics"
@@ -104,7 +104,7 @@ FactoryBot.define do
                       "WW"
                   ],
                   "language_availability" => [
-                      "english"
+                      "EN"
                   ],
                   "tags" => [
                       "Data management",
@@ -167,7 +167,7 @@ FactoryBot.define do
                       "WW"
                   ],
                   "language_availability" => [
-                      "english"
+                      "EN"
                   ],
                   "tags" => [
                       "X-ray diffraction",
