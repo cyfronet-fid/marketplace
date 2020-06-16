@@ -43,7 +43,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Terms of use", with: "service terms of use"
       fill_in "Tagline", with: "service tagline"
       fill_in "Places", with: "Europe"
-      fill_in "Language availability", with: "English"
+      select "English", from: "Language availability"
       select target_group.name, from: "Dedicated For"
       fill_in "Terms of use url", with: "https://sample.url"
       fill_in "Access policies url", with: "https://sample.url"

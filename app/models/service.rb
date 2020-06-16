@@ -33,8 +33,8 @@ class Service < ApplicationRecord
   }
 
   SIDEBAR_FIELDS = [{ name: "places_and_languages",
-                      template: "text",
-                      fields: ["places", "language_availability"] },
+                      template: "array",
+                      fields: ["languages"] },
                     { name: "service_availability",
                       template: "map",
                       fields: ["places"] },
@@ -122,6 +122,7 @@ class Service < ApplicationRecord
   validates :helpdesk_email, allow_blank: true, email: true
   validates :contact_emails, array: { email: true }
   validates :training_information_url, mp_url: true, if: :training_information_url?
+  validates :language_availability, array: true
   validates :logo, blob: { content_type: :image }
   validate :logo_variable, on: [:create, :update]
   validates :scientific_domains, presence: true
@@ -146,6 +147,10 @@ class Service < ApplicationRecord
 
   def offers?
     offers_count.positive?
+  end
+
+  def languages
+    language_availability.map { |l| I18nData.languages[l] }
   end
 
   def aod?
