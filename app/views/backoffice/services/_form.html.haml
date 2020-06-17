@@ -56,7 +56,7 @@
       = f.input :language_availability, input_html: { multiple: true, data: { choice: true } }, include_hidden: false,
       collection: I18nData.languages.map { |k, v| [v, k] }, disabled: cant_edit([language_availability: []])
       = f.input :geographical_availabilities, as: :select,
-        collection: Country.all.map { |c| [ c.name, "value" => c.alpha2 ] },
+        collection: Country.options.map { |c| [ c.name, "value" => c.alpha2 ] },
         disabled: cant_edit([geographical_availabilities: []]),
         input_html: { data: { choice: true },  "multiple" => "true" }
   .row
