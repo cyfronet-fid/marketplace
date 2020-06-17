@@ -48,15 +48,15 @@ class Offer < ApplicationRecord
   end
 
   def open_access?
-    offer_type == "open_access"
+    order_type == "open_access"
   end
 
   def orderable?
-    offer_type == "orderable"
+    order_type == "orderable"
   end
 
   def external?
-    offer_type == "external"
+    order_type == "external"
   end
 
   private
