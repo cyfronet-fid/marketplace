@@ -139,6 +139,7 @@ class Service < ApplicationRecord
   validates :order_target, allow_blank: true, email: true
   validates :trl, length: { maximum: 1 }
   validates :life_cycle_status, length: { maximum: 1 }
+  validates :geographical_availabilities, presence: true
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
