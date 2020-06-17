@@ -171,7 +171,7 @@ module Import
             helpdesk_url: helpdesk_url || "",
             tutorial_url: training_information_url || "",
             phase: map_phase(phase),
-            service_type: "open_access",
+            order_type: "open_access",
             status: "draft",
             providers: [mapped_provider],
             categories: map_category(category),

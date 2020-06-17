@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - Sidebar links section name change from 'support' to 'links' (@goreck888)
 - information texts in service ordering page (@goreck888)
+- `service_type` to `order_type` in service and offer (@goreck888)
 
 ### Deprecated
 

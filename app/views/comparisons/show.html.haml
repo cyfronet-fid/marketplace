@@ -39,8 +39,8 @@
           %td
             - service.offers.each_with_index do |offer, idx|
               %span{ "data-toggle": "tootltip",
-                     "title": "#{t("project_items.offer_type.#{offer.offer_type}.tooltip")}" }
-                = t("offers.type.#{offer.offer_type}")
+                     "title": "#{t("project_items.offer_type.#{offer.order_type}.tooltip")}" }
+                = t("offers.type.#{offer.order_type}")
                 - unless service.offers.length == idx+1
                   %br
       %tr
