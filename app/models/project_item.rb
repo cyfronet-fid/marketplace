@@ -103,7 +103,7 @@ class ProjectItem < ApplicationRecord
 
   private
     def copy_offer_fields
-      self.offer_type = offer&.offer_type
+      self.order_type = offer&.order_type
       self.name = offer&.name
       self.description = offer&.description
       self.webpage = offer&.webpage

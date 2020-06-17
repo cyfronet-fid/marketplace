@@ -2,11 +2,11 @@
 
 class UsageReport
   def orderable_count
-    service_count_by_offer_type(:orderable)
+    service_count_by_order_type(:orderable)
   end
 
   def not_orderable_count
-    service_count_by_offer_type(:open_access, :external)
+    service_count_by_order_type(:open_access, :external)
   end
 
   def all_services_count
@@ -37,9 +37,9 @@ class UsageReport
         .group("projects.id")
     end
 
-    def service_count_by_offer_type(*types)
+    def service_count_by_order_type(*types)
       Service.joins(:offers)
-        .where(offers: { offer_type: types, status: :published },
+        .where(offers: { order_type: types, status: :published },
                status: [:published, :unverified])
         .uniq.count
     end
