@@ -86,7 +86,6 @@ namespace :dev do
                       providers: providers,
                       order_type: order_type,
                       resource_organisation: resource_organisation,
-                      service_type: service_type,
                       webpage_url: hash["webpage_url"],
                       manual_url: hash["manual_url"],
                       helpdesk_url: hash["helpdesk_url"],

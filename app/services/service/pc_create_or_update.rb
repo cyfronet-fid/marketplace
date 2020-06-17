@@ -54,6 +54,8 @@ class Service::PcCreateOrUpdate
 
   private
     def map_service(data)
+      main_contact = MainContact.new(map_contact(data["mainContact"])) if data["mainContact"] || nil
+
       { name: data["name"],
         description: [ReverseMarkdown.convert(data["description"],
                                              unknown_tags: :bypass,
@@ -65,6 +67,9 @@ class Service::PcCreateOrUpdate
         language_availability: Array(data["languages"]["language"] || "EN"),
         geographical_availabilities: Array(data["geographicalAvailabilities"]["geographicalAvailability"] || "WW"),
         dedicated_for: [],
+        main_contact: main_contact,
+        public_contacts: Array(data["publicContacts"]["publicContact"])&.
+            map { |c| PublicContact.new(map_contact(c)) } || [],
         terms_of_use_url: data["termsOfUse"]["termOfUse"] || "",
         access_policies_url: data["price"],
         sla_url: data["serviceLevelAgreement"] || "",
@@ -158,6 +163,10 @@ class Service::PcCreateOrUpdate
       else
         []
       end
+    end
+
+    def map_contact(contact)
+      contact&.transform_keys { |k| k.to_s.underscore } || nil
     end
 
     def map_funding_bodies(funding_bodies)
