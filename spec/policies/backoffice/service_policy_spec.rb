@@ -23,7 +23,7 @@ RSpec.describe Backoffice::ServicePolicy do
                                                     [target_group_ids: []], :terms_of_use_url,
                                                     :access_policies_url, :sla_url,
                                                     :webpage_url, :manual_url, :helpdesk_url,
-                                                    :helpdesk_email, :tutorial_url, :restrictions,
+                                                    :helpdesk_email, :training_information_url, :restrictions,
                                                     :phase, :order_target,
                                                     :activate_message, :logo,
                                                     [contact_emails: []], [research_area_ids: []],

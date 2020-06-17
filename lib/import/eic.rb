@@ -169,7 +169,7 @@ module Import
             webpage_url: url || "",
             manual_url: user_manual_url || "",
             helpdesk_url: helpdesk_url || "",
-            tutorial_url: training_information_url || "",
+            training_information_url: training_information_url || "",
             phase: map_phase(phase),
             order_type: "open_access",
             status: "draft",
