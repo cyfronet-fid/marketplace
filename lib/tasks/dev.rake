@@ -82,7 +82,7 @@ namespace :dev do
                       webpage_url: hash["webpage_url"],
                       manual_url: hash["manual_url"],
                       helpdesk_url: hash["helpdesk_url"],
-                      tutorial_url: hash["tutorial_url"],
+                      training_information_url: hash["training_information_url"],
                       terms_of_use_url: hash["terms_of_use_url"],
                       sla_url: hash["sla_url"],
                       access_policies_url: hash["access_policies_url"],

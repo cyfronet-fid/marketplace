@@ -51,7 +51,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Webpage url", with: "https://sample.url"
       fill_in "Manual url", with: "https://sample.url"
       fill_in "Helpdesk url", with: "https://sample.url"
-      fill_in "Tutorial url", with: "https://sample.url"
+      fill_in "Training information url", with: "https://sample.url"
       fill_in "Restrictions", with: "Reaserch affiliation needed"
       fill_in "Activate message", with: "Welcome!!!"
       fill_in "Service Order Target", with: "email@domain.com"
@@ -397,7 +397,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Manual url", disabled: false
       expect(page).to have_field "Helpdesk url", disabled: false
       expect(page).to have_field "Helpdesk email", disabled: false
-      expect(page).to have_field "Tutorial url", disabled: false
+      expect(page).to have_field "Training information url", disabled: false
       expect(page).to have_field "Phase", disabled: false
       expect(page).to have_field "Restrictions", disabled: false
       expect(page).to have_field "Activate message", disabled: false
@@ -434,7 +434,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Manual url", disabled: true
       expect(page).to have_field "Helpdesk url", disabled: true
       expect(page).to have_field "Helpdesk email", disabled: false
-      expect(page).to have_field "Tutorial url", disabled: true
+      expect(page).to have_field "Training information url", disabled: true
       expect(page).to have_field "Phase", disabled: true
       expect(page).to have_field "Restrictions", disabled: false
       expect(page).to have_field "Activate message", disabled: false

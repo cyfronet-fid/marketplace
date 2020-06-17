@@ -76,7 +76,7 @@ class Service::PcCreateOrUpdate
         webpage_url: data["url"] || "",
         manual_url: data["userManual"] || "",
         helpdesk_url: data["helpdesk"] || "",
-        tutorial_url: data["trainingInformation"] || "",
+        training_information_url: data["trainingInformation"] || "",
         phase: map_phase(data["trl"]),
         order_type: "open_access",
         status: "published",
