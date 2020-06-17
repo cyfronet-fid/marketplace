@@ -11,7 +11,7 @@ class Service < ApplicationRecord
 
   has_one_attached :logo
 
-  enum service_type: {
+  enum order_type: {
     orderable: "orderable",
     open_access: "open_access",
     external: "external"

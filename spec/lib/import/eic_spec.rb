@@ -130,7 +130,7 @@ describe Import::Eic do
       expect(service.helpdesk_url).to eq("http://phenomenal-h2020.eu/home/help")
       expect(service.tutorial_url).to eq("http://phenomenal-h2020.eu/home/training-online")
       expect(service.phase).to eq("beta")
-      expect(service.service_type).to eq("open_access")
+      expect(service.order_type).to eq("open_access")
       expect(service.status).to eq("draft")
       expect(service.providers).to eq([Provider.first])
       expect(service.categories).to eq([])

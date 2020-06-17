@@ -4,7 +4,7 @@
     = f.input :name, input_html: { class: "form-control-lg" }
     = f.input :description, input_html: { rows: 10 }
     = f.input :offer_type, collection: Offer.offer_types.keys.map(&:to_sym),
-      selected: (offer.offer_type || service.service_type),
+      selected: (offer.offer_type || service.order_type),
       input_html: { "data-target" => "offer.offerType", "data-action" => "change->offer#showWebpage",
       class: "form-control-lg col-lg-6" }
     = f.input :webpage, label: "Offer website",

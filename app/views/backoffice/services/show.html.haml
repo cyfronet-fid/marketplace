@@ -71,8 +71,8 @@
       - @service.categories.each do |category|
         %p= category.name
 
-      %h5 Service type
-      %p= t("offers.type.#{@service.service_type}") if @service.service_type.present?
+      %h5 Order type
+      %p= t("offers.type.#{@service.order_type}") if @service.order_type.present?
 
       %h5 Dedicated For
       %ul
