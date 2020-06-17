@@ -17,8 +17,8 @@ RSpec.feature "Question about service" do
     before { checkin_sign_in_as(create(:user)) }
 
     scenario "I can send question to contact emails", js: true do
-      user1, user2 = create_list(:user, 2)
-      service = create(:service, contact_emails: [user1.email, user2.email])
+      service = create(:service)
+      create_list(:public_contact, 2, contactable: service)
 
       visit service_path(service)
 
@@ -35,8 +35,8 @@ RSpec.feature "Question about service" do
     end
 
     scenario "I cannot send message about service with empty message", js: true do
-      user1, user2 = create_list(:user, 2)
-      service = create(:service, contact_emails: [user1.email, user2.email])
+      service = create(:service)
+      create_list(:public_contact, 2, contactable: service)
 
       visit service_path(service)
 
@@ -50,8 +50,8 @@ RSpec.feature "Question about service" do
 
   context "as not logged in user" do
     scenario "I can send message about service", js: true do
-      user1, user2 = create_list(:user, 2)
-      service = create(:service, contact_emails: [user1.email, user2.email])
+      service = create(:service)
+      create_list(:public_contact, 2, contactable: service)
 
       visit service_path(service)
 
@@ -70,8 +70,8 @@ RSpec.feature "Question about service" do
     end
 
     scenario "I cannot send message about service with empty fields", js: true do
-      user1, user2 = create_list(:user, 2)
-      service = create(:service, contact_emails: [user1.email, user2.email])
+      service = create(:service)
+      create_list(:public_contact, 2, contactable: service)
 
       visit service_path(service)
 

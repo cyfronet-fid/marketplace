@@ -99,16 +99,19 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       [target_user_ids: []], :terms_of_use_url,
       :access_policies_url, :sla_url,
       :webpage_url, :manual_url, :helpdesk_url,
-      :helpdesk_email, :training_information_url, :restrictions,
+      :helpdesk_email, :security_contact_email,
+      :training_information_url, :restrictions,
       :order_target, :status_monitoring_url, :maintenance_url,
       :order_url, :payment_model_url, :pricing_url,
       [funding_body_ids: []], [funding_program_ids: []],
       :activate_message, :logo, [trl_ids: []],
-      [contact_emails: []], [scientific_domain_ids: []],
+      [scientific_domain_ids: []],
       [platform_ids: []], :tag_list, [category_ids: []],
       [owner_ids: []], :status, :upstream_id, :version,
       [life_cycle_status_ids: []], :resource_organisation_id,
-      sources_attributes: [:id, :source_type, :eid, :_destroy]
+      main_contact_attributes: [:id, :first_name, :last_name, :email, :organisation, :position],
+      sources_attributes: [:id, :source_type, :eid, :_destroy],
+      public_contacts_attributes: [:id, :first_name, :last_name, :email, :organisation, :position, :_destroy]
     ]
 
     if !@record.is_a?(Service) || @record.upstream.nil?

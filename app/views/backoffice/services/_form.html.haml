@@ -43,11 +43,29 @@
     .col-12.col-md-5
       = f.association :owners, multiple: true, input_html: { data: { choice: true } },
                       disabled: cant_edit([owner_ids: []])
-  .row.service-contact-emails
+  .row.mt-5
     .col-12.col-md-6
-      = f.input :contact_emails, multiple: true, as: :array, wrapper_html: { "data-target" => "service.contactEmails" },
-        disabled: cant_edit([contact_emails: []])
-      %a.text-primary{ "data-action" => "click->service#addNewEmailField" } Add additional email
+      %h3 Main Contact
+      = f.fields_for :main_contact do |main_contact_form|
+        = main_contact_form.hidden_field :id
+        = main_contact_form.input :first_name
+        = main_contact_form.input :last_name
+        = main_contact_form.input :email
+        = main_contact_form.input :organisation
+        = main_contact_form.input :position
+  .row.service-contact-emails{ "data-target": "service.publicContacts" }
+    .col-12.col-md-6
+      %h3 Public contacts
+      = f.fields_for :public_contacts, multiple: true, as: :array,
+        wrapper_html: { "data-target" => "service.publicContact" },
+        disabled: cant_edit([public_contacts: []]) do |public_contact_form|
+        = render "public_contact_fields", public_contact_form: public_contact_form
+      = link_to "Add additional public contact", "#", class: "btn btn-primary",
+        data: { "target": "service.addContact",
+        "action": "click->service#addContact",
+        "fields": f.fields_for(:public_contacts, PublicContact.new,
+        child_index: "new_field") { |public_contact_form| render "public_contact_fields",
+        public_contact_form: public_contact_form } }
   .row.mt-5
     .col-12.col-md-10
       = f.input :order_target, label: "Service Order Target", disabled: cant_edit(:order_target)
@@ -69,6 +87,7 @@
       = f.input :manual_url, disabled: cant_edit(:manual_url)
       = f.input :helpdesk_url, disabled: cant_edit(:helpdesk_url)
       = f.input :helpdesk_email, input_html: { type: "text" }, disabled: cant_edit(:helpdesk_email)
+      = f.input :security_contact_email, input_html: { type: "text" }, disabled: cant_edit(:security_contact_email)
       = f.input :training_information_url, disabled: cant_edit(:training_information_url)
       = f.input :status_monitoring_url, disabled: cant_edit(:status_monitoring_url)
       = f.input :maintenance_url, disabled: cant_edit(:maintenance_url)
@@ -107,7 +126,6 @@
         name: "commit",
         value: "Preview",
         class: "btn btn-primary pl-5 pr-5 mr-5"
-      = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5",
-        "data-action": "click->service#clearEmptyEmails"
+      = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5"
       = back_link_to "Cancel and back to previous page", service, prefix: :backoffice,
         class: "text-left flex-grow-1 text-uppercase"

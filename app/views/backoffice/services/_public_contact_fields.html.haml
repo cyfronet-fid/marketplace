@@ -1,0 +1,12 @@
+%div{ "data-target": "service.publicContact" }
+  .contact
+    = public_contact_form.hidden_field :id
+    = public_contact_form.input :first_name
+    = public_contact_form.input :last_name
+    = public_contact_form.input :email
+    = public_contact_form.input :organisation
+    = public_contact_form.input :position
+    = public_contact_form.hidden_field :_destroy, "data-target": "service.destroy"
+    .text-right
+      = link_to "Delete contact", "#", id: "public-contact-delete-#{public_contact_form.index}",
+      class: "btn btn-danger", "data-action": "click->service#removeContact"
