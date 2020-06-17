@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - `service_type` to `order_type` in service and offer (@goreck888)
+- `tutorial_url` to `training_information_url` in service model (@goreck888)
 
 ### Deprecated
 
