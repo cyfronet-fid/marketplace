@@ -119,6 +119,24 @@ ReCaptcha is now used in the ask service question form. To work it needs to set 
 `RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY`. For test, development and internal docker instances
 values of these variables are stored in encrypted credentials.
 
+## EIC integration
+
+JMS Subscriber - It is an api that runs separately from the marketplace.
+By default subscriber is connecting to beta EIC instance with client name 'MPClient.
+To customize connection please set env:
+  - 'ENV["MP_STOMP_DESTINATION"]' - name of topic
+  - 'ENV["MP_STOMP_HOST"]'
+  - 'ENV["MP_STOMP_PASS"]'
+  - 'ENV["MP_STOMP_LOGIN"]'
+  - 'ENV["MP_IMPORT_CLIENT_NAME"]' - client name for connection be up to date 
+  in case of subscriber down.
+  - 'ENV["MP_IMPORT_EIC_URL"]' - EIC domain. It's used to downloading additional
+  information from EIC eq. Providers. This variable is used in importer.
+
+To start subscriber run commend ./bin/jms-subscriber
+Logs are saved in /log/jms.log
+
+
 ## For Admins
 
 If you are an admin, who wants to integrate production instance of JIRA go to
