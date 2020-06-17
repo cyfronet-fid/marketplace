@@ -123,6 +123,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Description", with: "description"
       select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
+      select "Poland", from: "Geographical availabilities"
 
       click_on "Preview"
 
