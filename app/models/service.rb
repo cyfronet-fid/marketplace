@@ -44,7 +44,7 @@ class Service < ApplicationRecord
                     { name: "support",
                       template: "links",
                       fields: ["webpage_url", "helpdesk_url", "helpdesk_email",
-                               "manual_url", "tutorial_url"] },
+                               "manual_url", "training_information_url"] },
                     { name: "documents",
                       template: "links",
                       fields: ["sla_url", "terms_of_use_url", "access_policies_url"] },
@@ -116,7 +116,7 @@ class Service < ApplicationRecord
   validates :helpdesk_url, mp_url: true, if: :helpdesk_url?
   validates :helpdesk_email, allow_blank: true, email: true
   validates :contact_emails, array: { email: true }
-  validates :tutorial_url, mp_url: true, if: :tutorial_url?
+  validates :training_information_url, mp_url: true, if: :training_information_url?
   validates :logo, blob: { content_type: :image }
   validate :logo_variable, on: [:create, :update]
   validates :research_areas, presence: true

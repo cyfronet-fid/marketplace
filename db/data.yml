@@ -306,7 +306,7 @@ services:
         webpage_url: https://www.egi.eu/services/cloud-compute/
         manual_url: https://wiki.egi.eu/wiki/Federated_Cloud_user_support
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
+        training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
@@ -608,7 +608,7 @@ services:
         webpage_url: https://www.egi.eu/services/high-throughput-compute/
         manual_url: https://wiki.egi.eu/wiki/Federated_Cloud_user_support
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
+        training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
@@ -774,7 +774,7 @@ services:
         webpage_url: https://www.egi.eu/services/cloud-compute/
         manual_url: https://wiki.egi.eu/wiki/Federated_Cloud_user_support
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-container-compute-training-material
+        training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-container-compute-training-material
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
@@ -808,7 +808,7 @@ services:
         webpage_url: https://b2drop.eudat.eu
         manual_url: https://eudat.eu/services/userdoc/b2drop
         helpdesk_url: https://www.eudat.eu/support-request?service=B2DROP
-        tutorial_url: https://eudat.eu/services/userdoc/b2drop
+        training_information_url: https://eudat.eu/services/userdoc/b2drop
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://eudat.eu/policy
@@ -940,7 +940,7 @@ services:
         webpage_url: http://b2find.eudat.eu/
         manual_url: http://eudat.eu/services/userdoc/b2find
         helpdesk_url: http://www.egi.eu/more-information/
-        tutorial_url: http://eudat.eu/services/userdoc/b2find
+        training_information_url: http://eudat.eu/services/userdoc/b2find
         terms_of_use_url: http://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: http://eudat.eu/policy
@@ -1067,7 +1067,7 @@ services:
         webpage_url: https://www.eudat.eu/services/b2handle
         manual_url: https://eudat.eu/services/userdoc/b2handle
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://eudat.eu/services/userdoc/b2handle
+        training_information_url: https://eudat.eu/services/userdoc/b2handle
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://eudat.eu/policy
@@ -1188,7 +1188,7 @@ services:
         webpage_url: https://www.eudat.eu/catalogue/B2NOTE
         manual_url:
         helpdesk_url: https://www.eudat.eu/contact-support-request?service=B2NOTE
-        tutorial_url:
+        training_information_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://eudat.eu/policy
@@ -1275,7 +1275,7 @@ services:
         webpage_url: https://www.eudat.eu/services/b2safe
         manual_url: https://eudat.eu/services/userdoc/configure-b2safe
         helpdesk_url: https://eudat.eu/contact-support-request
-        tutorial_url:
+        training_information_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://eudat.eu/policy
@@ -1329,7 +1329,7 @@ services:
         webpage_url: https://www.eudat.eu/services/b2share
         manual_url: https://eudat.eu/services/userdoc/b2share
         helpdesk_url: https://eudat.eu/contact-support-request
-        tutorial_url:
+        training_information_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://eudat.eu/policy
@@ -1458,7 +1458,7 @@ services:
         webpage_url: https://www.eudat.eu/services/b2stage
         manual_url: https://eudat.eu/services/userdoc/b2stage
         helpdesk_url: https://eudat.eu/contact-support-request
-        tutorial_url:
+        training_information_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://eudat.eu/policy
@@ -1521,7 +1521,7 @@ services:
         webpage_url: https://b2access.eudat.eu
         manual_url: https://eudat.eu/services/userdoc/b2stage
         helpdesk_url: https://eudat.eu/contact-support-request
-        tutorial_url:
+        training_information_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url: http://hdl.handle.net/11304/e43b2e3f-83c5-4e3f-b8b7-18d38d37a6cd
         access_policies_url: https://eudat.eu/policy
@@ -1564,7 +1564,7 @@ services:
         webpage_url: https://www.egi.eu/services/archive-storage/
         manual_url: https://wiki.egi.eu/wiki/Online_Storage
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://wiki.egi.eu/wiki/Online_Storage
+        training_information_url: https://wiki.egi.eu/wiki/Online_Storage
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://eudat.eu/policy
@@ -1632,7 +1632,7 @@ services:
         webpage_url: https://www.egi.eu/services/online-storage/
         manual_url: https://wiki.egi.eu/wiki/Online_Storage
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://wiki.egi.eu/wiki/Online_Storage
+        training_information_url: https://wiki.egi.eu/wiki/Online_Storage
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
@@ -1804,7 +1804,7 @@ services:
 #        webpage_url: http://www.euro-argo.eu/Activities/Data-Management
 #        manual_url: http://www.argo.ucsd.edu/Argo_date_guide.html
 #        helpdesk_url: https://www.egi.eu/more-information/
-#        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
+#        training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
 #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
 #        sla_url:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
@@ -1830,7 +1830,7 @@ services:
         webpage_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
         manual_url:
         helpdesk_url:
-        tutorial_url:
+        training_information_url:
         terms_of_use_url: http://geosspublish.uat.esaportal.eu/community/guest/terms-conditions
         sla_url:
         access_policies_url:
@@ -1862,7 +1862,7 @@ services:
         webpage_url: http://www.geodab.net
         manual_url: http://api.geodab.eu/index.html
         helpdesk_url: http://api.geodab.eu/index.html
-        tutorial_url: http://eosc.geodab.eu/gi-cat-StP/
+        training_information_url: http://eosc.geodab.eu/gi-cat-StP/
         terms_of_use_url:
         sla_url:
         access_policies_url:
@@ -1903,7 +1903,7 @@ services:
         webpage_url: https://vlo.clarin.eu
         manual_url: https://vlo.clarin.eu/help
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
+        training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
@@ -1950,7 +1950,7 @@ services:
         webpage_url: https://switchboard.clarin.eu/ #https://clarin.eu/
         manual_url: https://vlo.clarin.eu/help
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
+        training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
@@ -2015,7 +2015,7 @@ services:
         webpage_url: https://www.clarin.eu/content/virtual-collections
         manual_url: https://vlo.clarin.eu/help
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
+        training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
@@ -2075,7 +2075,7 @@ services:
 #        webpage_url: https://www.orfeus-eu.org/data/eida/
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -2098,7 +2098,7 @@ services:
 #        webpage_url: https://www.egi.eu/services/applications-on-demand/
 #        manual_url: https://wiki.egi.eu/wiki/AoD
 #        helpdesk_url: https://www.egi.eu/more-information/
-#        tutorial_url: https://wiki.egi.eu/wiki/HowToAccessTheEGIMarketPlace
+#        training_information_url: https://wiki.egi.eu/wiki/HowToAccessTheEGIMarketPlace
 #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
 #        sla_url:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
@@ -2133,7 +2133,7 @@ services:
 #        webpage_url: https://www.gnu.org/software/octave/
 #        manual_url: https://octave.org/doc/interpreter/
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -2208,7 +2208,7 @@ services:
 #        webpage_url:
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -2236,7 +2236,7 @@ services:
 #        webpage_url:
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -2307,7 +2307,7 @@ services:
 #        webpage_url:
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -2340,7 +2340,7 @@ services:
 #        webpage_url: http://gnuplot.sourceforge.net
 #        manual_url: http://gnuplot.sourceforge.net/documentation.html
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -2371,7 +2371,7 @@ services:
 #        webpage_url: https://www.docker.com/
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -2401,7 +2401,7 @@ services:
 #        webpage_url: http://hadoop.apache.org/
 #        manual_url: http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -2432,7 +2432,7 @@ services:
 #        webpage_url: https://mesosphere.github.io/marathon/
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -2463,7 +2463,7 @@ services:
 #        webpage_url: https://github.com/mesos/chronos
 #        manual_url: https://mesos.github.io/chronos/
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -2496,7 +2496,7 @@ services:
 #        webpage_url: https://www.r-project.org
 #        manual_url: https://cran.r-project.org/manuals.html
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -2527,7 +2527,7 @@ services:
 #        webpage_url:
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -2558,7 +2558,7 @@ services:
         webpage_url: https://csgf.egi.eu/
         manual_url: https://csgf.egi.eu/documents/620030/0/csg_manual_for_ltos.pdf/be218ad7-8a0d-42b7-b932-4b7667524c09
         helpdesk_url:
-        tutorial_url:
+        training_information_url:
         #contact: applications-platform-info@mailman.egi.eu
         terms_of_use_url: https://csgf.egi.eu/terms-of-use
         sla_url: https://documents.egi.eu/document/2733
@@ -2606,7 +2606,7 @@ services:
 #        webpage_url: http://www.clustal.org/clustal2/
 #        manual_url: http://www.clustal.org/clustal2/#Documentation
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -2634,7 +2634,7 @@ services:
 #        webpage_url:
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -2663,7 +2663,7 @@ services:
       webpage_url: https://www.egi.eu/services/notebooks/
       manual_url: https://wiki.egi.eu/wiki/EGI_Notebooks
       helpdesk_url:
-      tutorial_url:
+      training_information_url:
       terms_of_use_url:
       sla_url:
       access_policies_url:
@@ -2762,7 +2762,7 @@ services:
 #        webpage_url: https://www.clarin.eu/content/component-metadata
 #        manual_url: https://www.clarin.eu/content/component-metadata
 #        helpdesk_url: https://www.clarin.eu/content/support
-#        tutorial_url: https://www.eosc-hub.eu/training-material/component-metadata-infrastructure-services
+#        training_information_url: https://www.eosc-hub.eu/training-material/component-metadata-infrastructure-services
 #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
 #        sla_url:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
@@ -2803,7 +2803,7 @@ services:
         webpage_url: https://dariah-gateway.lpds.sztaki.hu/
         manual_url: https://dariah-gateway.lpds.sztaki.hu/help2
         helpdesk_url: https://www.dariah.eu/contact
-        tutorial_url: https://www.dariah.eu/tools-services/dariah-training/
+        training_information_url: https://www.dariah.eu/tools-services/dariah-training/
         terms_of_use_url:
         sla_url:
         access_policies_url: https://www.dariah.eu/privacy-notice/
@@ -2863,7 +2863,7 @@ services:
         webpage_url: https://dodas-iam.cloud.cnaf.infn.it/login
         manual_url: https://dodas-ts.github.io/dodas-doc/
         helpdesk_url:
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
@@ -2942,7 +2942,7 @@ services:
         webpage_url: https://services.d4science.org/web/particleformation/
         manual_url: https://github.com/markusstocker/pynpf-d4science
         helpdesk_url: https://github.com/markusstocker/pynpf-d4science
-        tutorial_url: https://youtu.be/ra9W7b5DbgI
+        training_information_url: https://youtu.be/ra9W7b5DbgI
         terms_of_use_url: https://documents.egi.eu/public/ShowDocument?docid=2623
         sla_url: https://documents.egi.eu/document/2875
         access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
@@ -2974,7 +2974,7 @@ services:
         webpage_url: https://portal.enes.org/data/data-metadata-service/processing/ecas
         manual_url:
         helpdesk_url: https://portal.enes.org/contact
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
@@ -3046,7 +3046,7 @@ services:
         webpage_url: https://www.lifewatch.eu/
         manual_url: https://github.com/IgnacioHeredia/plant_classification/blob/master/webpage/README.md#using-the-api%20
         helpdesk_url:
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
@@ -3108,7 +3108,7 @@ services:
 #        webpage_url:
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -3129,7 +3129,7 @@ services:
 #        webpage_url:
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -3150,7 +3150,7 @@ services:
 #        webpage_url:
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -3172,7 +3172,7 @@ services:
         webpage_url: https://opencoasts.ncg.ingrid.pt/
         manual_url: https://opencoasts.ncg.ingrid.pt/static/OPENCoastS_manual.pdf
         helpdesk_url:
-        tutorial_url: https://www.eosc-hub.eu/training-material/opencoasts-service
+        training_information_url: https://www.eosc-hub.eu/training-material/opencoasts-service
         terms_of_use_url:
         sla_url:
         access_policies_url:
@@ -3261,7 +3261,7 @@ services:
 #        webpage_url: https://www.wenmr.eu/
 #        manual_url: https://www.wenmr.eu/tutorials/
 #        helpdesk_url: https://www.wenmr.eu/support/
-#        tutorial_url: https://www.wenmr.eu/tutorials/
+#        training_information_url: https://www.wenmr.eu/tutorials/
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
@@ -3311,7 +3311,7 @@ services:
         webpage_url: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
         manual_url: http://www.bonvinlab.org/software/haddock2.2/manual/
         helpdesk_url: http://ask.bioexcel.eu/c/haddock
-        tutorial_url: https://www.wenmr.eu/tutorials/#haddock
+        training_information_url: https://www.wenmr.eu/tutorials/#haddock
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
@@ -3349,7 +3349,7 @@ services:
         webpage_url: http://haddock.science.uu.nl/enmr/services/POWERFIT
         manual_url: http://haddock.science.uu.nl/cgi/enmr/services/POWERFIT/powerfit/help
         helpdesk_url: http://ask.bioexcel.eu/c/powerfit
-        tutorial_url: https://www.wenmr.eu/tutorials/#powerfit
+        training_information_url: https://www.wenmr.eu/tutorials/#powerfit
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
@@ -3377,7 +3377,7 @@ services:
         webpage_url: http://haddock.science.uu.nl/enmr/services/DISVIS
         manual_url: http://haddock.science.uu.nl/cgi/enmr/services/DISVIS/disvis/help
         helpdesk_url: http://ask.bioexcel.eu/c/disvis
-        tutorial_url: https://www.wenmr.eu/tutorials/#disvis
+        training_information_url: https://www.wenmr.eu/tutorials/#disvis
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
@@ -3407,7 +3407,7 @@ services:
         webpage_url: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
         manual_url: https://www.wenmr.eu/tutorials/#cs-rosetta
         helpdesk_url:
-        tutorial_url: https://www.wenmr.eu/tutorials/
+        training_information_url: https://www.wenmr.eu/tutorials/
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
@@ -3436,7 +3436,7 @@ services:
         webpage_url: http://py-enmr.cerm.unifi.it/access/index
         manual_url: https://www.wenmr.eu/tutorials
         helpdesk_url: http://py-enmr.cerm.unifi.it/feedback/index?type=amps-nmr
-        tutorial_url: https://www.wenmr.eu/tutorials/
+        training_information_url: https://www.wenmr.eu/tutorials/
         terms_of_use_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
@@ -3469,7 +3469,7 @@ services:
         webpage_url: http://abs.cerm.unifi.it:8080
         manual_url: http://abs.cerm.unifi.it:8080/manual/FANTEN_manual.pdf
         helpdesk_url:
-        tutorial_url: https://www.wenmr.eu/tutorials/
+        training_information_url: https://www.wenmr.eu/tutorials/
         terms_of_use_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
@@ -3500,7 +3500,7 @@ services:
         webpage_url: https://haddock.science.uu.nl/enmr/services/SPOTON
         manual_url: https://haddock.science.uu.nl/cgi/enmr/services/SPOTON/spoton/help
         helpdesk_url: http://ask.bioexcel.eu/c/spoton
-        tutorial_url: https://www.wenmr.eu/tutorials/#spoton
+        training_information_url: https://www.wenmr.eu/tutorials/#spoton
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
@@ -3530,7 +3530,7 @@ services:
         manual_url: https://terradue.github.io/doc-tep-geohazards/
         helpdesk_url: https://helpdesk.terradue.com
         #contect: support@terradue.com
-        tutorial_url: https://discuss.terradue.com/t/interpreting-the-layers-of-dlr-s-insar-browse-service/216 #TODO: should be able to link several urls
+        training_information_url: https://discuss.terradue.com/t/interpreting-the-layers-of-dlr-s-insar-browse-service/216 #TODO: should be able to link several urls
         terms_of_use_url:
         sla_url:
         access_policies_url:
@@ -3563,7 +3563,7 @@ services:
         manual_url: https://terradue.github.io/doc-tep-geohazards/
         helpdesk_url: https://helpdesk.terradue.com
         #contect: support@terradue.com
-        tutorial_url: https://terradue.github.io/doc-tep-geohazards/tutorials/index.html
+        training_information_url: https://terradue.github.io/doc-tep-geohazards/tutorials/index.html
         terms_of_use_url:
         sla_url:
         access_policies_url:
@@ -3595,7 +3595,7 @@ services:
         webpage_url: https://jupyterhub.eodc.eu
         manual_url: https://github.com/jupyterhub/jupyterhub
         helpdesk_url: https://www.eodc.eu/support-request/
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
@@ -3652,7 +3652,7 @@ services:
         manual_url: https://csw.eodc.eu
         helpdesk_url: https://www.eodc.eu/support-request/
         #contact: support@eodc.eu
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
@@ -3689,7 +3689,7 @@ services:
         webpage_url: http://sentinel-hub.com/
         manual_url: https://www.sentinel-hub.com/develop/documentation
         helpdesk_url:
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
@@ -3716,7 +3716,7 @@ services:
         webpage_url: https://eodataservice.org
         manual_url: https://www.youtube.com/channel/UCqy-bd6CpXMOlRqfHmBqlZw
         helpdesk_url:
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
@@ -3743,7 +3743,7 @@ services:
         webpage_url: http://eoschub.rasdaman.com:8080/rasdaman/ows
         manual_url: http://doc.rasdaman.org/05_geo-services-guide.html#ogc-web-services
         helpdesk_url:
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
@@ -3796,7 +3796,7 @@ services:
         #contact: support@creodias.eu
         manual_url: https://creodias.eu/data-related-services
         helpdesk_url:
-        tutorial_url: https://creodias.eu/knowledgebase
+        training_information_url: https://creodias.eu/knowledgebase
         terms_of_use_url: https://creodias.eu/terms-of-service
         sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
@@ -3839,7 +3839,7 @@ services:
         #contact: support@creodias.eu
         manual_url: https://creodias.eu/your-processing-environment
         helpdesk_url:
-        tutorial_url: https://creodias.eu/knowledgebase
+        training_information_url: https://creodias.eu/knowledgebase
         terms_of_use_url: https://creodias.eu/terms-of-service
         sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
@@ -3878,7 +3878,7 @@ services:
         #contact: support@creodias.eu
         manual_url: https://creodias.eu/eo-data-finder-api-manual
         helpdesk_url:
-        tutorial_url: https://creodias.eu/knowledgebase
+        training_information_url: https://creodias.eu/knowledgebase
         terms_of_use_url: https://creodias.eu/terms-of-service
         sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
@@ -3909,7 +3909,7 @@ services:
         #contact: support@creodias.eu
         manual_url: https://creodias.eu/using-the-eo-browser
         helpdesk_url:
-        tutorial_url: https://creodias.eu/knowledgebase
+        training_information_url: https://creodias.eu/knowledgebase
         terms_of_use_url: https://creodias.eu/terms-of-service
         sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
@@ -3949,7 +3949,7 @@ services:
         webpage_url: https://www.egi.eu/services/check-in/
         manual_url:
         helpdesk_url:
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
@@ -4004,7 +4004,7 @@ services:
 #        webpage_url: https://www.egi.eu/internal-services/attribute-management/
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
 #        sla_url: https://documents.egi.eu/document/2733
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
@@ -4035,7 +4035,7 @@ services:
         webpage_url: https://www.egi.eu/services/training-infrastructure/
         manual_url: https://wiki.egi.eu/wiki/Training_infrastructure
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://wiki.egi.eu/wiki/Training_infrastructure
+        training_information_url: https://wiki.egi.eu/wiki/Training_infrastructure
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
@@ -4149,7 +4149,7 @@ services:
         webpage_url: https://www.egi.eu/services/fitsm-training/
         manual_url: https://www.egi.eu/services/fitsm-training/
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://www.egi.eu/services/fitsm-training/
+        training_information_url: https://www.egi.eu/services/fitsm-training/
         terms_of_use_url: https://www.egi.eu/services/fitsm-training/terms-and-conditions/
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
@@ -4242,7 +4242,7 @@ services:
       webpage_url: https://services.d4science.org/web/alienandinvasivespecies
       manual_url: https://services.d4science.org/web/alienandinvasivespecies
       helpdesk_url: https://support.d4science.org/
-      tutorial_url: https://dev.d4science.org/
+      training_information_url: https://dev.d4science.org/
       terms_of_use_url:  https://services.d4science.org/terms-of-use
       sla_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies#Service_Level_Agreement
       access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
@@ -4289,7 +4289,7 @@ services:
 #      webpage_url:
 #      manual_url:
 #      helpdesk_url:
-#      tutorial_url:
+#      training_information_url:
 #      terms_of_use_url:
 #      sla_url:
 #      access_policies_url:
@@ -4315,7 +4315,7 @@ services:
       webpage_url: https://alahiff.github.io/prominence/
       manual_url:
       helpdesk_url:
-      tutorial_url:
+      training_information_url:
       terms_of_use_url:
       sla_url:
       access_policies_url:
@@ -4355,7 +4355,7 @@ services:
       webpage_url: https://dcache-xdc.desy.de
       manual_url: https://eosc-pan-git.desy.de/support
       helpdesk_url: https://eosc-pan-git.desy.de/support
-      tutorial_url: https://eosc-pan-git.desy.de
+      training_information_url: https://eosc-pan-git.desy.de
       terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
@@ -4392,7 +4392,7 @@ services:
       webpage_url: https://eosc-pan-git.desy.de/pan/support/
       manual_url: https://eosc-pan-git.desy.de/support
       helpdesk_url: https://eosc-pan-git.desy.de/support
-      tutorial_url: https://eosc-pan-git.desy.de
+      training_information_url: https://eosc-pan-git.desy.de
       terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
@@ -4426,7 +4426,7 @@ services:
       webpage_url: https://eosc-pan-jhub.desy.de
       manual_url: https://eosc-pan-git.desy.de/support
       helpdesk_url: https://eosc-pan-git.desy.de/support
-      tutorial_url: https://eosc-pan-git.desy.de
+      training_information_url: https://eosc-pan-git.desy.de
       terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
@@ -4460,7 +4460,7 @@ services:
       webpage_url: https://eosc-pan-git.desy.de
       manual_url: https://eosc-pan-git.desy.de/support
       helpdesk_url: https://eosc-pan-git.desy.de/support
-      tutorial_url: https://eosc-pan-git.desy.de
+      training_information_url: https://eosc-pan-git.desy.de
       terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
@@ -4495,7 +4495,7 @@ services:
       webpage_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard
       manual_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/help
       helpdesk_url: https://wiki.egi.eu/wiki/GGUS:WS-PGRADE/gUSE_FAQ
-      tutorial_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/help
+      training_information_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/help
       terms_of_use_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/terms-of-use
       sla_url: https://documents.egi.eu/document/2733
       access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
@@ -4540,7 +4540,7 @@ services:
       webpage_url: https://research.csc.fi/epouta
       manual_url: https://research.csc.fi/pouta-user-guide
       helpdesk_url:
-      tutorial_url:
+      training_information_url:
       terms_of_use_url: https://research.csc.fi/pouta-user-policy
       sla_url: https://research.csc.fi/documents/48467/0/ePouta+SLA/cbac49af-f069-4a8b-9636-e519b1ee331d
       access_policies_url: https://research.csc.fi/pricing-of-computing-services
@@ -4572,7 +4572,7 @@ services:
       webpage_url: https://www.uio.no/english/services/it/research/sensitive-data/
       manual_url:
       helpdesk_url: https://www.uio.no/english/services/it/research/sensitive-data/
-      tutorial_url:
+      training_information_url:
       terms_of_use_url:
       sla_url:
       access_policies_url:
@@ -4605,7 +4605,7 @@ services:
       webpage_url: https://servproject.i3m.upv.es/ec3-ltos/index.php
       manual_url: https://ec3.readthedocs.io/en/devel/
       helpdesk_url: https://wiki.egi.eu/wiki/GGUS:EC3_FAQ
-      tutorial_url: https://github.com/grycap/ec3
+      training_information_url: https://github.com/grycap/ec3
       terms_of_use_url: https://servproject.i3m.upv.es/ec3-ltos/terms.html
       sla_url: https://documents.egi.eu/document/2733
       access_policies_url:  https://documents.egi.eu/public/ShowDocument?docid=2635
