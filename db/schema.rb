@@ -345,7 +345,7 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.string "webpage_url"
     t.string "manual_url"
     t.string "helpdesk_url"
-    t.string "tutorial_url"
+    t.string "training_information_url"
     t.string "restrictions"
     t.string "phase"
     t.integer "offers_count", default: 0

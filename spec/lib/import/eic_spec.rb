@@ -128,7 +128,7 @@ describe Import::Eic do
       expect(service.webpage_url).to eq("https://portal.phenomenal-h2020.eu/home")
       expect(service.manual_url).to eq("https://github.com/phnmnl/phenomenal-h2020/wiki")
       expect(service.helpdesk_url).to eq("http://phenomenal-h2020.eu/home/help")
-      expect(service.tutorial_url).to eq("http://phenomenal-h2020.eu/home/training-online")
+      expect(service.training_information_url).to eq("http://phenomenal-h2020.eu/home/training-online")
       expect(service.phase).to eq("beta")
       expect(service.order_type).to eq("open_access")
       expect(service.status).to eq("draft")
