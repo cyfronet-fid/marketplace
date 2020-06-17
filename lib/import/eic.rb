@@ -227,7 +227,7 @@ module Import
     def create_default_offer!(service, name, eid, url)
       if service&.offers.blank? && !url.blank?
         log "Adding [NEW] default offer for service: #{name}, eid: #{eid}"
-        Offer.create!(name: "Offer", description: "#{name} Offer", offer_type: "open_access",
+        Offer.create!(name: "Offer", description: "#{name} Offer", order_type: "open_access",
                       webpage: url, status: service.status, service: service)
       elsif url.blank?
         log "[WARNING] Offer cannot be created, because url is empty"

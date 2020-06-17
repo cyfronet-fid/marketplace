@@ -283,7 +283,7 @@ private
     when "SO-ServiceOrderTarget"
       project_item.service.order_target
     when "SO-OfferType"
-      { "id" => @jira_config[:custom_fields][:select_values]["SO-OfferType".to_sym][project_item.offer_type.to_sym] }
+      { "id" => @jira_config[:custom_fields][:select_values]["SO-OfferType".to_sym][project_item.order_type.to_sym] }
     else
       nil
     end
