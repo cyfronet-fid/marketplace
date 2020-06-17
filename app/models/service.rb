@@ -112,6 +112,11 @@ class Service < ApplicationRecord
   validates :access_policies_url, mp_url: true, if: :access_policies_url?
   validates :sla_url, mp_url: true, if: :sla_url?
   validates :webpage_url, mp_url: true, if: :webpage_url?
+  validates :status_monitoring_url, mp_url: true, if: :status_monitoring_url?
+  validates :maintenance_url, mp_url: true, if: :maintenance_url?
+  validates :order_url, mp_url: true, if: :order_url?
+  validates :payment_model_url, mp_url: true, if: :payment_model_url?
+  validates :pricing_url, mp_url: true, if: :pricing_url?
   validates :manual_url, mp_url: true, if: :manual_url?
   validates :helpdesk_url, mp_url: true, if: :helpdesk_url?
   validates :helpdesk_email, allow_blank: true, email: true
