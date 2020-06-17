@@ -5,10 +5,10 @@ FactoryBot.define do
     sequence(:title) { |n| "service #{n}" }
     sequence(:description) { |n| "service #{n} description" }
     sequence(:tagline) { |n| "service #{n} tagline" }
-    sequence(:service_type) { :orderable }
+    sequence(:order_type) { :orderable }
 
     factory :open_access_service do
-      sequence(:service_type) { :open_access }
+      sequence(:order_type) { :open_access }
     end
     sequence(:webpage_url) { "https://wabpage.url"  }
     sequence(:manual_url) { "https://manual.url"  }
@@ -35,7 +35,7 @@ FactoryBot.define do
       service.reindex(refresh: true)
     end
     factory :external_service do
-      sequence(:service_type) { :external }
+      sequence(:order_type) { :external }
     end
   end
 end

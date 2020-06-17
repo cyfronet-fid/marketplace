@@ -17,7 +17,7 @@ EIC_SOURCE_FIELDS = [
   :helpdesk_url,
   :tutorial_url,
   :phase,
-  :service_type,
+  :order_type,
   [provider_ids: []],
   :version
 ]
@@ -86,7 +86,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   def permitted_attributes
     attrs = [
       :title, :description,
-      :tagline, :service_type,
+      :tagline, :order_type,
       [provider_ids: []], :places, :languages,
       [target_group_ids: []], :terms_of_use_url,
       :access_policies_url, :sla_url,
