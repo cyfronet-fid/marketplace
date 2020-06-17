@@ -75,6 +75,11 @@ module Import
         # order_url = service["order"]
         user_manual_url = service["userManual"]
         training_information_url = service["trainingInformation"]
+        status_monitoring_url = service["statusMonitoring"]
+        maintenance_url = service["maintenance"]
+        order_url = service["order"]
+        payment_model_url = service["paymentModel"]
+        pricing_url = service["pricing"]
         helpdesk_url = service["helpdesk"]
         # feedback_url = service["feedback"]
         price_url = service["price"]
@@ -170,6 +175,11 @@ module Import
             manual_url: user_manual_url || "",
             helpdesk_url: helpdesk_url || "",
             training_information_url: training_information_url || "",
+            status_monitoring_url: status_monitoring_url || "",
+            maintenance_url: maintenance_url || "",
+            order_url: order_url || "",
+            payment_model_url: payment_model_url || "",
+            pricing_url: pricing_url || "",
             phase: map_phase(phase),
             order_type: "open_access",
             status: "draft",
