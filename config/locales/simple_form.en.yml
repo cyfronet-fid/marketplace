@@ -58,7 +58,7 @@ en:
           and up to 60 characters for use cases section
         body: Preferred length of description is up to 140 characters
       service:
-        tutorial_url: |
+        training_information_url: |
           Url should start with http or https [e.g. http://webpage.org]
         helpdesk_url: |
           Url should start with http or https [e.g. http://webpage.org]
