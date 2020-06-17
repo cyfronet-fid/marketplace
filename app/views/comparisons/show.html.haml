@@ -37,8 +37,8 @@
         %th Service access type
         - @services.each do |service|
           %td{ "data-toggle" => "tootltip",
-            "title" => "#{t("project_items.offer_type.#{service.service_type}.tooltip")}" }
-            = t("offers.type.#{service.service_type}") if service.service_type.present?
+            "title" => "#{t("project_items.offer_type.#{service.order_type}.tooltip")}" }
+            = t("offers.type.#{service.order_type}") if service.order_type.present?
       %tr
         %th Research area
         - @services.each do |service|

@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- `service_type` to `order_type` in service and offer (@goreck888)
 
 ### Deprecated
 

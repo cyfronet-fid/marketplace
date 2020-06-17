@@ -78,7 +78,7 @@ class Service::PcCreateOrUpdate
         helpdesk_url: data["helpdesk"] || "",
         tutorial_url: data["trainingInformation"] || "",
         phase: map_phase(data["trl"]),
-        service_type: "open_access",
+        order_type: "open_access",
         status: "published",
         providers: [map_provider(data["providers"]["provider"])],
         categories: map_category(data["category"]),

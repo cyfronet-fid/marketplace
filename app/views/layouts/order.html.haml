@@ -9,7 +9,7 @@
         = link_to root_path, class: "navbar-brand mt-3 col-7 col-lg-3 pl-0" do
           = image_pack_tag "eosc-logo-color.png", class: "eosc-hub-logo-main"
         .text-right.flex-grow-1.order-top-nav
-          = link_to t("service.#{@service.service_type}.order.cancel"),
+          = link_to t("service.#{@service.order_type}.order.cancel"),
             service_cancel_path(@service),
             method: :delete, class: "text-uppercase align-middle"
           .ml-3.d-inline
