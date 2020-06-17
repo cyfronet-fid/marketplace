@@ -3,7 +3,7 @@
     .card-label
       %i.fas.fa-ticket-alt
       %span Voucher
-  %span.text-sm-right.fa-pull-right.badge= t("offers.type.#{offer.offer_type}")
+  %span.text-sm-right.fa-pull-right.badge= t("offers.type.#{offer.order_type}")
   %h4.card-title= offer.name
   %p
     .card-text.mb-2{ "data-controller" => "paragraph" }

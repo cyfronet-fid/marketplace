@@ -26,7 +26,7 @@ class Services::SummariesController < Services::ApplicationController
 
   private
     def next_title
-      I18n.t("services.summary.#{@offer_type}.order.title")
+      I18n.t("services.summary.#{@order_type}.order.title")
     end
 
     def do_create(project_item_template, message)
@@ -56,7 +56,7 @@ class Services::SummariesController < Services::ApplicationController
 
     def setup_show_variables!
       @projects = policy_scope(current_user.projects.active)
-      @offer_type = @step.offer.offer_type
+      @order_type = @step.offer.order_type
     end
 
     def message_text

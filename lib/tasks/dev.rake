@@ -122,7 +122,7 @@ namespace :dev do
                             description: h["description"],
                             webpage: h["webpage"],
                             parameters: Parameter::Array.load(h["parameters"] || []),
-                            offer_type: service.order_type,
+                            order_type: service.order_type,
                             status: :published)
       puts "    - #{h["name"]} offer generated"
     end

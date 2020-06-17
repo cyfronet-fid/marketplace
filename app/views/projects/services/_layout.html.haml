@@ -17,7 +17,7 @@
             %span{ class: "status-#{project_item.status}" }= t("project_items.status.#{project_item.status}")
 
         - elsif project_item.webpage.present?
-          = link_to t("common.#{project_item.offer_type}.link"), project_item.webpage,
+          = link_to t("common.#{project_item.order_type}.link"), project_item.webpage,
           class: "btn btn-primary float-right pl-3 pr-3", target: "_blank", title: "External link"
     %ul.nav.nav-tabs.mt-4.pl-3.row.services-menu
       %li.nav-item

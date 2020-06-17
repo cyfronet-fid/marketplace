@@ -6,23 +6,23 @@ RSpec.describe Offer do
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:description) }
   it { should validate_presence_of(:service) }
-  it { should validate_presence_of(:offer_type) }
+  it { should validate_presence_of(:order_type) }
   it { should belong_to(:service) }
 
   it { should have_many(:project_items).dependent(:restrict_with_error) }
 
   context "is open access" do
-    subject { build(:offer, offer_type: :open_access) }
+    subject { build(:offer, order_type: :open_access) }
     it { should validate_presence_of(:webpage) }
   end
 
   context "is external" do
-    subject { build(:offer, offer_type: :external) }
+    subject { build(:offer, order_type: :external) }
     it { should validate_presence_of(:webpage) }
   end
 
   context "is orderable" do
-    subject { build(:offer, offer_type: :orderable) }
+    subject { build(:offer, order_type: :orderable) }
     it { should_not validate_presence_of(:webpage) }
   end
 
