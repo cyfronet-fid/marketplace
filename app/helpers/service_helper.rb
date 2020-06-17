@@ -63,8 +63,8 @@ module ServiceHelper
   def data_for_map(geographical_availabilities)
     countries = []
     geographical_availabilities.each { |place|
-      c = Country.where(region: place.name)
-      c = Country.where(name: place.name) if c.blank?
+      c = Country.countries_for_region(place&.name)
+      c = [place] if c.blank?
       countries = countries | c
     }
     countries.map(&:alpha2).map { |c| [c.downcase, 1] }
