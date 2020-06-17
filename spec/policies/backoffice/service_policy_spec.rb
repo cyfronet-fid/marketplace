@@ -26,15 +26,21 @@ RSpec.describe Backoffice::ServicePolicy do
                                                     :webpage_url, :manual_url, :helpdesk_url,
                                                     [funding_body_ids: []],
                                                     [funding_program_ids: []],
-                                                    :helpdesk_email, :training_information_url, :restrictions,
+                                                    :helpdesk_email, :security_contact_email,
+                                                    :training_information_url, :restrictions,
                                                     :order_target, :status_monitoring_url, :maintenance_url,
                                                     :order_url, :payment_model_url, :pricing_url,
                                                     :activate_message, :logo, [trl_ids: []], [life_cycle_status_ids: []],
-                                                    [contact_emails: []], [scientific_domain_ids: []],
+                                                    [scientific_domain_ids: []],
                                                     [platform_ids: []], :tag_list, [category_ids: []],
                                                     [owner_ids: []], :status, :upstream_id, :version,
                                                     :resource_organisation_id,
-                                                    sources_attributes: [:id, :source_type, :eid, :_destroy]
+                                                    main_contact_attributes: [:id, :first_name, :last_name,
+                                                                              :email, :organisation, :position],
+                                                    sources_attributes: [:id, :source_type, :eid, :_destroy],
+                                                    public_contacts_attributes: [:id, :first_name, :last_name,
+                                                                                 :email, :organisation,
+                                                                                 :position, :_destroy]
                                                 ])
     end
 
@@ -48,10 +54,16 @@ RSpec.describe Backoffice::ServicePolicy do
                                                     :order_target, :activate_message,
                                                     [funding_body_ids: []],
                                                     [funding_program_ids: []],
-                                                    [contact_emails: []], [scientific_domain_ids: []],
+                                                    [scientific_domain_ids: []],
+                                                    :security_contact_email,
                                                     [platform_ids: []], :tag_list, [category_ids: []],
                                                     [owner_ids: []], :status, :upstream_id,
-                                                    sources_attributes: [:id, :source_type, :eid, :_destroy]
+                                                    main_contact_attributes: [:id, :first_name, :last_name,
+                                                                              :email, :organisation, :position],
+                                                    sources_attributes: [:id, :source_type, :eid, :_destroy],
+                                                    public_contacts_attributes: [:id, :first_name, :last_name,
+                                                                                 :email, :organisation,
+                                                                                 :position, :_destroy]
                                                 ])
     end
   end
