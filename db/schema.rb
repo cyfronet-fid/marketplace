@@ -141,7 +141,7 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.jsonb "parameters", default: [], null: false
     t.boolean "voucherable", default: false, null: false
     t.string "status"
-    t.string "offer_type", null: false
+    t.string "order_type", null: false
     t.string "webpage"
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
@@ -181,7 +181,7 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.integer "iid"
     t.string "name", null: false
     t.text "description", null: false
-    t.string "offer_type", null: false
+    t.string "order_type", null: false
     t.string "webpage"
     t.boolean "voucherable", default: false, null: false
     t.index ["offer_id"], name: "index_project_items_on_offer_id"

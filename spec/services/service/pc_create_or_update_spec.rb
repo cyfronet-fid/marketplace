@@ -103,7 +103,7 @@ RSpec.describe Service::PcCreateOrUpdate do
 
       expect(offer.name).to eq("Offer")
       expect(offer.description).to eq("#{service.title} Offer")
-      expect(offer.offer_type).to eq("open_access")
+      expect(offer.order_type).to eq("open_access")
       expect(offer.status).to eq(service.status)
       expect(offer.service.id).to eq(service.id)
     end

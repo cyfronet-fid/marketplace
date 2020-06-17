@@ -41,7 +41,7 @@ class Service::PcCreateOrUpdate
         log "Created new service: #{service.id}"
         ServiceSource.create!(service_id: service.id, source_type: "eic", eid: @eid)
         service.offers.create!(name: "Offer", description: "#{service.title} Offer",
-                               offer_type: "open_access",
+                               order_type: "open_access",
                                webpage: service.webpage_url, status: service.status)
       end
       service
