@@ -25,6 +25,8 @@ RSpec.describe Backoffice::ServicePolicy do
                                                     :webpage_url, :manual_url, :helpdesk_url,
                                                     :helpdesk_email, :training_information_url, :restrictions,
                                                     :phase, :order_target,
+                                                    :status_monitoring_url, :maintenance_url,
+                                                    :order_url, :payment_model_url, :pricing_url,
                                                     :activate_message, :logo,
                                                     [contact_emails: []], [research_area_ids: []],
                                                     [platform_ids: []], :tag_list, [category_ids: []],

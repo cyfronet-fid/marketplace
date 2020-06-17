@@ -56,6 +56,11 @@
       = f.input :helpdesk_url, disabled: cant_edit(:helpdesk_url)
       = f.input :helpdesk_email, input_html: { type: "text" }, disabled: cant_edit(:helpdesk_email)
       = f.input :training_information_url, disabled: cant_edit(:training_information_url)
+      = f.input :status_monitoring_url, disabled: cant_edit(:status_monitoring_url)
+      = f.input :maintenance_url, disabled: cant_edit(:maintenance_url)
+      = f.input :order_url, disabled: cant_edit(:order_url)
+      = f.input :payment_model_url, disabled: cant_edit(:payment_model_url)
+      = f.input :pricing_url, disabled: cant_edit(:pricing_url)
   .row
     .col-12.col-md-5
       = f.input :phase, collection: Service.phases.values.map(&:to_sym), disabled: cant_edit(:phase)

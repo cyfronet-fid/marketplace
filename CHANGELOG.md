@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Links for EOSC Portal social media (@goreck888)
 - Service order type visibility and filter (@goreck888)
 - Missing breadcrumbs and page titles (@goreck888)
+- new url fields in service model (@goreck888)
 
 ### Changed
 - Sidebar links section name change from 'support' to 'links' (@goreck888)
