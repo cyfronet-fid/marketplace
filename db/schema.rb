@@ -351,7 +351,7 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.integer "offers_count", default: 0
     t.text "activate_message"
     t.string "slug"
-    t.string "service_type"
+    t.string "order_type"
     t.string "status"
     t.integer "upstream_id"
     t.string "order_target", default: "", null: false

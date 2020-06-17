@@ -58,7 +58,7 @@ RSpec.feature "Services in backoffice" do
       select "Alpha (min. TRL 5)", from: "Phase"
       select research_area.name, from: "Research areas"
       select provider.name, from: "Providers"
-      select "open_access", from: "Service type"
+      select "open_access", from: "Order type"
       select platform.name, from: "Platforms"
       fill_in "service_contact_emails_0", with: "person1@test.ok"
       # page.find("#add-email-field").click
@@ -379,7 +379,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Title", disabled: false
       expect(page).to have_field "Tag list", disabled: false
       expect(page).to have_field "Description", disabled: false
-      expect(page).to have_field "Service type", disabled: false
+      expect(page).to have_field "Order type", disabled: false
       expect(page).to have_field "Categories", disabled: false
       expect(page).to have_field "Providers", disabled: false
       expect(page).to have_field "Platforms", disabled: false
@@ -416,7 +416,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Title", disabled: true
       expect(page).to have_field "Tag list", disabled: false
       expect(page).to have_field "Description", disabled: true
-      expect(page).to have_field "Service type", disabled: true
+      expect(page).to have_field "Order type", disabled: true
       expect(page).to have_field "Categories", disabled: false
       expect(page).to have_field "Providers", disabled: true
       expect(page).to have_field "Platforms", disabled: false
