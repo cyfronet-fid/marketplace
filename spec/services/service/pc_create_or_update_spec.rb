@@ -15,6 +15,17 @@ RSpec.describe Service::PcCreateOrUpdate do
   let!(:scientific_domain_other) { create(:scientific_domain, name: "Other") }
   let!(:funding_body) { create(:funding_body, name: "FundingBody", eid: "funding_body-fb") }
   let!(:funding_program) { create(:funding_program, name: "FundingProgram", eid: "funding_program-fp") }
+  let!(:main_contact) { build(:main_contact, first_name: "John", last_name: "Doe",
+                               email: "john@doe.com",
+                               phone: "+41 678 888 123",
+                               position: "Developer",
+                               organisation: "JD company") }
+  let!(:public_contacts) { build_list(:public_contact, 2) do |contact, i|
+    contact.first_name= "Jane #{i}"
+    contact.last_name= "Doe"
+    contact.email= "jane#{i}@doe.com"
+  end
+  }
 
   let(:unirest) { double(Unirest) }
   let(:provider_eid) { "ten" }

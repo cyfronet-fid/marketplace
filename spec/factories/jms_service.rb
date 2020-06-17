@@ -21,6 +21,26 @@ FactoryBot.define do
         "funding" => "EC funds (H2020 grant 654021 for the OpenMinTeD project) & National funds for the GRNET cloud infrastructure on which the platform operates",
         "fundingBody" => ["funding_body-fb"],
         "fundingPrograms" => ["funding_program-fp"],
+        "mainContact" => {
+            "firstName" => "John",
+            "lastName" => "Doe",
+            "email" => "john@doe.com",
+            "phone" => "+41 678 888 123",
+            "position" => "Developer",
+            "organisation" => "JD company"
+        },
+        "publicContacts" => { "publicContact" => [
+            {
+                "firstName" => "Jane 1",
+                "lastName" => "Doe",
+                "email" => "john1@doe.com"
+            },
+            {
+                "firstName" => "Jane 2",
+                "lastName" => "Doe",
+                "email" => "jane2@doe.com"
+            }
+        ] },
         "helpdesk" => "https://services.openminted.eu/support",
         "id" => eid,
         "languages" => { "language"=>"english" },

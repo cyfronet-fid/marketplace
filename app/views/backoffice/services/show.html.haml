@@ -98,9 +98,16 @@
       %h5 Activate message
       %p= @service.activate_message
 
-      %h5 Contact emails
-      - @service.contact_emails.each do |email|
-        %p= email
+      - unless @service.main_contact.blank?
+        %h5 Main contact
+        %p
+          = @service.main_contact.first_name
+          = @service.main_contact.last_name
+        %p= @service.main_contact.email
+
+      %h5 Public contacts
+      - @service.public_contacts.each do |contact|
+        %p= contact.email
 
       %h5 Domains
       - @service.scientific_domains.each do |domain|

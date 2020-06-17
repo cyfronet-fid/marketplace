@@ -2,27 +2,20 @@ import { Controller } from "stimulus"
 
 
 export default class extends Controller {
-  static targets = ["contactEmails"]
+  static targets = ["publicContacts", "publicContact", "destroy", "addContact"]
 
   initialize(){
   }
 
-  addNewEmailField(event) {
-    event.preventDefault()
-    var lastEmailField = document.createElement("input")
-    var parent = this.contactEmailsTarget
-    lastEmailField.type = "email"
-    lastEmailField.name = "service[contact_emails][]"
-    lastEmailField.id = "service_contact_emails_"+(parent.children.length - 1)
-
-    parent.appendChild(lastEmailField)
+  addContact(event){
+    event.preventDefault();
+    event.target.insertAdjacentHTML('beforebegin',
+        event.target.dataset.fields.replace(/new_field/g, this.publicContactTargets.length));
   }
 
-  clearEmptyEmails(event){
-    for (let i = 0; i < this.contactEmailsTarget.childElementCount; i++) {
-      var el = this.contactEmailsTarget.children[i]
-      if(el.type === "email" && !el.value)
-        this.contactEmailsTarget.children[i].remove()
-    }
+  removeContact(event){
+    event.preventDefault();
+    event.target.parentElement.previousElementSibling.value = "true";
+    event.target.closest(".contact").classList.add("d-none");
   }
 }

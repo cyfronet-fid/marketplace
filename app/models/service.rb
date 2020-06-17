@@ -83,6 +83,19 @@ class Service < ApplicationRecord
   has_many :service_target_users, dependent: :destroy
   has_many :target_users, through: :service_target_users
 
+  has_one :main_contact, as: :contactable, class_name: "MainContact", dependent: :destroy, autosave: true
+  has_many :public_contacts, as: :contactable, source: :service_contacts, class_name: "PublicContact",
+           dependent: :destroy, autosave: true
+
+  accepts_nested_attributes_for :main_contact,
+                                reject_if: lambda { |attributes| attributes["email"].blank? },
+                                allow_destroy: true
+
+  accepts_nested_attributes_for :public_contacts,
+                                reject_if: lambda { |attributes| attributes["email"].blank? },
+                                allow_destroy: true
+
+
   has_many :service_user_relationships, dependent: :destroy
   has_many :owners,
            through: :service_user_relationships,
@@ -129,7 +142,7 @@ class Service < ApplicationRecord
   validates :manual_url, mp_url: true, if: :manual_url?
   validates :helpdesk_url, mp_url: true, if: :helpdesk_url?
   validates :helpdesk_email, allow_blank: true, email: true
-  validates :contact_emails, array: { email: true }
+  validates :security_contact_email, allow_blank: true, email: true
   validates :training_information_url, mp_url: true, if: :training_information_url?
   validates :language_availability, array: true
   validates :logo, blob: { content_type: :image }
