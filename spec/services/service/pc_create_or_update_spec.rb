@@ -28,13 +28,16 @@ RSpec.describe Service::PcCreateOrUpdate do
       create(:target_user, name: "Risk assessors", eid: "risk-assessors")
       provider_response_ten = double(code: 200, body: create(:eic_provider_response, eid: provider_eid))
       provider_response_tp = double(code: 200, body: create(:eic_provider_response, eid: "tp"))
+      provider_response_awesome = double(code: 200, body: create(:eic_provider_response, eid: "awesome"))
 
       expect(unirest).to receive(:get).with("#{test_url}/api/provider/#{provider_eid}",
                                             headers: { "Accept" => "application/json" }).and_return(provider_response_ten)
       expect(unirest).to receive(:get).with("#{test_url}/api/provider/tp",
                                             headers: { "Accept" => "application/json" }).and_return(provider_response_tp)
+      expect(unirest).to receive(:get).with("#{test_url}/api/provider/awesome",
+                                            headers: { "Accept" => "application/json" }).and_return(provider_response_awesome)
 
-      service = stub_described_class(create(:jms_service, prov_eid: provider_eid), unirest: unirest)
+      service = stub_described_class(create(:jms_service, prov_eid: [provider_eid, "awesome"]), unirest: unirest)
 
       expect(service.name).to eq("Title")
       expect(service.description).to eq("A catalogue of corpora (datasets) made up of mainly " +
@@ -66,7 +69,7 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.funding_bodies).to eq([funding_body])
       expect(service.funding_programs).to eq([funding_program])
       expect(service.status).to eq("published")
-      expect(service.providers).to eq([Provider.find_by(name: "Test Provider ten")])
+      expect(service.providers).to eq([Provider.find_by(name: "Test Provider ten"), Provider.find_by(name: "Test Provider awesome") ])
       expect(service.resource_organisation).to eq(Provider.find_by(name: "Test Provider tp"))
       expect(service.categories).to eq([])
       expect(service.scientific_domains).to eq([scientific_domain_other])
