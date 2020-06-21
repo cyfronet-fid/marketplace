@@ -48,7 +48,20 @@ FactoryBot.define do
                   "users" => nil,
                   "active" => true,
                   "status" => "approved"
-              }
+              },
+              {
+                  "id" => "awesome",
+                  "name" => "Awesome provider",
+                  "website" => "https://www.osom-prov.eu/",
+                  "catalogueOfResources" => nil,
+                  "publicDescOfResources" => nil,
+                  "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
+                  "additionalInfo" => "Nothing, cause I'm avesome",
+                  "contactInformation" => nil,
+                  "users" => nil,
+                  "active" => true,
+                  "status" => "approved"
+              },
           ],
           "facets" => [
               {
