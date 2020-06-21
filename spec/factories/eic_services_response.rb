@@ -29,7 +29,8 @@ FactoryBot.define do
                   "multimediaURL" => "https://www.youtube.com/watch?v=-_F8NZwWXew",
                   "resource_organisation" => "bluebridge",
                   "providers" => [
-                      "phenomenal"
+                      "phenomenal",
+                      "awesome"
                   ],
                   "version" => "2018.08",
                   "lastUpdate" => 1533513600000,
