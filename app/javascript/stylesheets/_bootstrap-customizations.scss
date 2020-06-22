@@ -1869,6 +1869,10 @@ h5 {
 
   .message_message {
 
+    abbr {
+      display: none;
+    }
+
     label {
       font-weight: bold;
     }
