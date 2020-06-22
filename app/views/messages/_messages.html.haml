@@ -1,9 +1,9 @@
-#scrollbar.progress-box.mt-4{ "data-controller": "scroller" }
-  %ul.step-progress.pl-5.pb-4
-    - if messages.count.positive?
-      - messages.each do |message|
-        = render "messages/message", message: message
-    - else
-      .blue-row.form-inline.col-12.col-md-6
-        %i.fas.fa-comments.fa-pull-left
-        Conversation not started yet.
+.col-12.col-md-9.mx-auto
+  #scrollbar.progress-box.mt-4{ "data-controller": "scroller" }
+    %ul.step-progress
+      - if messages.count.positive?
+        - messages.each do |message|
+          = render "messages/message", message: message
+      - else
+        .contact-row.form-inline
+          Conversation not started yet.
