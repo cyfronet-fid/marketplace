@@ -80,7 +80,7 @@ class Service::PcCreateOrUpdate
         phase: map_phase(data["trl"]),
         service_type: "open_access",
         status: "published",
-        providers: [map_provider(data["providers"]["provider"])],
+        providers: Array(map_provider(data["providers"]["provider"])),
         categories: map_category(data["category"]),
         research_areas: [research_area_other],
         version: data["version"] || ""
