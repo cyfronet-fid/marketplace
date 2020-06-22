@@ -1872,15 +1872,17 @@ h5 {
 
 // scss-lint:disable all
 .question-box {
-  border-top: 1px solid $palette-gray-10;
-
-  .btn-primary {
-    margin-left: 70px;
-  }
+  border-top: 1px solid $border-header;
 
   .message_message {
-    width: 91%;
-    padding-left: 70px;
+
+    abbr {
+      display: none;
+    }
+
+    label {
+      font-weight: bold;
+    }
 
     textarea {
       height: 150px;
@@ -1929,6 +1931,18 @@ h5 {
     font-size: 22px;
     font-weight: bold;
   }
+}
+
+.contact-row {
+  background: $home-card-bg;
+  border: 1px solid $edited-comment-border-color;
+  padding: 17px 15px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  font-size: 14px;
+  margin: 20px 0 5px;
+  line-height: 22px;
 }
 
 .step-progress-item {
