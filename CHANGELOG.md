@@ -17,11 +17,15 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+ 
+### Security
+
+## [2.10.4] 2020-06-22
+
+### Fixed
 - instance badge display on backoffice section (@goreck888)
 - Added missing homepage graphics (@jarekzet)
 - contact form tab layout modifications (@jarekzet)
- 
-### Security
 
 ## [2.10.3] 2020-05-27
 
