@@ -171,7 +171,7 @@ module Import
             helpdesk_url: helpdesk_url || "",
             tutorial_url: training_information_url || "",
             phase: map_phase(phase),
-            service_type: "open_access",
+            order_type: "open_access",
             status: "draft",
             providers: [mapped_provider],
             categories: map_category(category),
@@ -227,7 +227,7 @@ module Import
     def create_default_offer!(service, name, eid, url)
       if service&.offers.blank? && !url.blank?
         log "Adding [NEW] default offer for service: #{name}, eid: #{eid}"
-        Offer.create!(name: "Offer", description: "#{name} Offer", offer_type: "open_access",
+        Offer.create!(name: "Offer", description: "#{name} Offer", order_type: "open_access",
                       webpage: url, status: service.status, service: service)
       elsif url.blank?
         log "[WARNING] Offer cannot be created, because url is empty"

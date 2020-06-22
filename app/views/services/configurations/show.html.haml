@@ -1,5 +1,5 @@
 - content_for :title, t(".title")
-%p.mb-4= t("services.configuration.#{@service.service_type}.description")
+%p.mb-4= t("services.configuration.#{@service.order_type}.description")
 
 
 = simple_form_for @step, url: service_configuration_path(@service), method: :put,

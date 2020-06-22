@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_21_150023) do
+ActiveRecord::Schema.define(version: 2020_06_17_114136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,7 +141,7 @@ ActiveRecord::Schema.define(version: 2020_05_21_150023) do
     t.jsonb "parameters", default: [], null: false
     t.boolean "voucherable", default: false, null: false
     t.string "status"
-    t.string "offer_type", null: false
+    t.string "order_type", null: false
     t.string "webpage"
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
@@ -181,7 +181,7 @@ ActiveRecord::Schema.define(version: 2020_05_21_150023) do
     t.integer "iid"
     t.string "name", null: false
     t.text "description", null: false
-    t.string "offer_type", null: false
+    t.string "order_type", null: false
     t.string "webpage"
     t.boolean "voucherable", default: false, null: false
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
@@ -351,7 +351,7 @@ ActiveRecord::Schema.define(version: 2020_05_21_150023) do
     t.integer "offers_count", default: 0
     t.text "activate_message"
     t.string "slug"
-    t.string "service_type"
+    t.string "order_type"
     t.string "status"
     t.integer "upstream_id"
     t.string "order_target", default: "", null: false

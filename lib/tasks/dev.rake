@@ -72,13 +72,13 @@ namespace :dev do
       platforms = Platform.where(name: hash["platforms"])
       target_groups = TargetGroup.where(name: hash["target_groups"])
       service = Service.find_or_initialize_by(title: hash["title"])
-      service_type = service_type_from(hash)
+      order_type = order_type_from(hash)
 
       service.update!(tagline: hash["tagline"],
                       description: hash["description"],
                       research_areas: area,
                       providers: providers,
-                      service_type: service_type,
+                      order_type: order_type,
                       webpage_url: hash["webpage_url"],
                       manual_url: hash["manual_url"],
                       helpdesk_url: hash["helpdesk_url"],
@@ -104,7 +104,7 @@ namespace :dev do
     end
   end
 
-  def service_type_from(hash)
+  def order_type_from(hash)
     if hash["offers"].blank?
       hash["open_access"] ? "external" : "orderable"
     else
@@ -122,7 +122,7 @@ namespace :dev do
                             description: h["description"],
                             webpage: h["webpage"],
                             parameters: Parameter::Array.load(h["parameters"] || []),
-                            offer_type: service.service_type,
+                            order_type: service.order_type,
                             status: :published)
       puts "    - #{h["name"]} offer generated"
     end

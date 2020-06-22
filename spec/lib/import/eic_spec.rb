@@ -130,7 +130,7 @@ describe Import::Eic do
       expect(service.helpdesk_url).to eq("http://phenomenal-h2020.eu/home/help")
       expect(service.tutorial_url).to eq("http://phenomenal-h2020.eu/home/training-online")
       expect(service.phase).to eq("beta")
-      expect(service.service_type).to eq("open_access")
+      expect(service.order_type).to eq("open_access")
       expect(service.status).to eq("draft")
       expect(service.providers).to eq([Provider.first])
       expect(service.categories).to eq([])
@@ -155,7 +155,7 @@ describe Import::Eic do
 
       expect(offer.name).to eq("Offer")
       expect(offer.description).to eq("#{service.title} Offer")
-      expect(offer.offer_type).to eq("open_access")
+      expect(offer.order_type).to eq("open_access")
       expect(offer.status).to eq(service.status)
 
       expect(Service.find_by(title: "MetalPDB").offers).to_not be_nil
@@ -196,7 +196,7 @@ describe Import::Eic do
 
       expect(offer.name).to eq("Offer")
       expect(offer.description).to eq("PhenoMeNal Offer")
-      expect(offer.offer_type).to eq("open_access")
+      expect(offer.order_type).to eq("open_access")
       expect(offer.status).to eq(service.status)
     end
 

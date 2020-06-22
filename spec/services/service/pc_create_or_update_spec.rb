@@ -54,7 +54,7 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.helpdesk_url).to eq("https://services.openminted.eu/support")
       expect(service.tutorial_url).to eq("http://openminted.eu/support-training/")
       expect(service.phase).to eq("production")
-      expect(service.service_type).to eq("open_access")
+      expect(service.order_type).to eq("open_access")
       expect(service.status).to eq("published")
       expect(service.providers).to eq([Provider.first])
       expect(service.categories).to eq([])
@@ -103,7 +103,7 @@ RSpec.describe Service::PcCreateOrUpdate do
 
       expect(offer.name).to eq("Offer")
       expect(offer.description).to eq("#{service.title} Offer")
-      expect(offer.offer_type).to eq("open_access")
+      expect(offer.order_type).to eq("open_access")
       expect(offer.status).to eq(service.status)
       expect(offer.service.id).to eq(service.id)
     end
