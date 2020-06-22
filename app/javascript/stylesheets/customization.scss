@@ -1,14 +1,3 @@
-.top > .container::after {
-  background: url('../images/logo-bg.png') no-repeat;
-  position: absolute;
-  background-size: contain;
-  top: 34px;
-  left: 14%;
-  width: 335px;
-  height: 133px;
-  content: '';
-  z-index: 1;
-}
 
 .header {
   position: relative;
