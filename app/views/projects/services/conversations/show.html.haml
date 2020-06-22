@@ -4,8 +4,8 @@
 
   = render "messages/messages", messages: @messages
 
-  .question-box.mt-3.pt-4.pl-5
+  .question-box.col-9.mx-auto.mt-4.pt-4
     = simple_form_for @message,
       url: project_service_conversation_path(@project, @project_item) do |f|
       = f.input :message, label: t("conversations.message.question")
-      %button.btn.btn-primary.btn-sm.mt-3{ type: "submit" } Send message
+      %button.btn.btn-primary.btn-sm.mt-2{ type: "submit" } Send message
