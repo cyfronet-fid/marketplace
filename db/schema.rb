@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_17_114136) do
+ActiveRecord::Schema.define(version: 2020_06_17_140143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -345,7 +345,7 @@ ActiveRecord::Schema.define(version: 2020_06_17_114136) do
     t.string "webpage_url"
     t.string "manual_url"
     t.string "helpdesk_url"
-    t.string "tutorial_url"
+    t.string "training_information_url"
     t.string "restrictions"
     t.string "phase"
     t.integer "offers_count", default: 0

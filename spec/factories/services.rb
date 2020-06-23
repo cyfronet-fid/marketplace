@@ -13,7 +13,7 @@ FactoryBot.define do
     sequence(:webpage_url) { "https://wabpage.url"  }
     sequence(:manual_url) { "https://manual.url"  }
     sequence(:helpdesk_url) { "https://helpdesk.url"  }
-    sequence(:tutorial_url) { "https://tutorial.url"  }
+    sequence(:training_information_url) { "https://tutorial.url"  }
     sequence(:terms_of_use_url) { "https://terms.of.use.url"  }
     sequence(:sla_url) { "https://corporate.sla.url"  }
     sequence(:access_policies_url) { "https://access.policies.url"  }
