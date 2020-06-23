@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_17_140143) do
+ActiveRecord::Schema.define(version: 2020_06_17_145432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -359,6 +359,11 @@ ActiveRecord::Schema.define(version: 2020_06_17_140143) do
     t.integer "project_items_count", default: 0, null: false
     t.string "version"
     t.float "popularity_ratio"
+    t.string "status_monitoring_url"
+    t.string "maintenance_url"
+    t.string "order_url"
+    t.string "payment_model_url"
+    t.string "pricing_url"
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["title"], name: "index_services_on_title"
   end
