@@ -62,8 +62,9 @@ module ServiceHelper
 
   def data_for_map(geographical_availabilities)
     countries = []
+
     geographical_availabilities.each { |place|
-      c = Country.countries_for_region(place&.name)
+      c = Country.countries_for_region(place.name) if place
       c = [place] if c.blank?
       countries = countries | c
     }
