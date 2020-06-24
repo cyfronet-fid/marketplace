@@ -5,12 +5,10 @@
   = render "messages/messages",
     messages: @messages
   - unless @project.archived?
-    .question-box.col-12.mt-5.pt-4
-      .h3
-        Contact with customer service
+    .question-box.col-9.mx-auto.mt-4.pt-4
       = simple_form_for @message, url: project_conversation_path(@project) do |f|
         = f.input :message,
-          label: "Message to customer service about your project",
+          label: "Message to project support",
           input_html: { class: "textarea-md" }
-        %button.btn.btn-primary.btn-sm.mt-4{ type: "submit",
+        %button.btn.btn-primary.btn-sm.mt-2{ type: "submit",
                                              class: ("disabled" if @project.archived?) } Send message
