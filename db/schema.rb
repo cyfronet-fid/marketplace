@@ -307,14 +307,14 @@ ActiveRecord::Schema.define(version: 2020_07_03_124752) do
     t.index ["service_id"], name: "index_service_sources_on_service_id"
   end
 
-  create_table "service_target_groups", force: :cascade do |t|
+  create_table "service_target_users", force: :cascade do |t|
     t.bigint "service_id"
-    t.bigint "target_group_id"
+    t.bigint "target_user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["service_id", "target_group_id"], name: "index_service_target_groups_on_service_id_and_target_group_id", unique: true
-    t.index ["service_id"], name: "index_service_target_groups_on_service_id"
-    t.index ["target_group_id"], name: "index_service_target_groups_on_target_group_id"
+    t.index ["service_id", "target_user_id"], name: "index_service_target_users_on_service_id_and_target_user_id", unique: true
+    t.index ["service_id"], name: "index_service_target_users_on_service_id"
+    t.index ["target_user_id"], name: "index_service_target_users_on_target_user_id"
   end
 
   create_table "service_user_relationships", force: :cascade do |t|
@@ -414,10 +414,11 @@ ActiveRecord::Schema.define(version: 2020_07_03_124752) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "target_groups", force: :cascade do |t|
+  create_table "target_users", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
   end
 
   create_table "user_categories", force: :cascade do |t|
@@ -488,8 +489,8 @@ ActiveRecord::Schema.define(version: 2020_07_03_124752) do
   add_foreign_key "service_relationships", "services", column: "target_id"
   add_foreign_key "service_scientific_domains", "scientific_domains"
   add_foreign_key "service_scientific_domains", "services"
-  add_foreign_key "service_target_groups", "services"
-  add_foreign_key "service_target_groups", "target_groups"
+  add_foreign_key "service_target_users", "services"
+  add_foreign_key "service_target_users", "target_users"
   add_foreign_key "service_user_relationships", "services"
   add_foreign_key "service_user_relationships", "users"
   add_foreign_key "service_vocabularies", "services"

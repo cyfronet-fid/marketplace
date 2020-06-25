@@ -25,7 +25,7 @@ module Service::Search
       scientific_domains: search_scientific_domains_ids,
       providers: providers.map(&:id),
       platforms: platforms.map(&:id),
-      target_groups: target_groups.map(&:id),
+      target_users: target_users.map(&:id),
       tags: tag_list,
       source: upstream&.source_type,
       offers: offers.ids,

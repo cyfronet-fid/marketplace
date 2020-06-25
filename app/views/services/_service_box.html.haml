@@ -19,5 +19,5 @@
       %span.text-right
         Dedicated for:
       %strong.text-right{ "data-toggle" => "tooltip",
-                          "title" => "#{ service.target_groups.map { |p| p.name }.join(", ")}" }
-        #{service.target_groups.map { |x| x.name }.join(", ").truncate(26, separator: " ")}
+                          "title" => "#{ service.target_users.map { |p| p.name }.join(", ")}" }
+        #{service.target_users.map { |x| x.name }.join(", ").truncate(26, separator: " ")}
