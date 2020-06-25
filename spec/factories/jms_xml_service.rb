@@ -54,7 +54,7 @@ FactoryBot.define do
               <tns:tag>Scientific publications</tns:tag>
               <tns:tag>Scholarly content</tns:tag>
             </tns:tags>
-            <tns:targetUsers>Researchers, SMEs, citizen scientists, anyone interested in TDM</tns:targetUsers>
+            <tns:targetUsers>Researchers, Risk assessors</tns:targetUsers>
             <tns:termsOfUse>
             <tns:termOfUse>https://services.openminted.eu/support/termsAndConditions</tns:termOfUse></tns:termsOfUse>
             <tns:trainingInformation>http://openminted.eu/support-training/</tns:trainingInformation>
