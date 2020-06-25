@@ -315,6 +315,8 @@ services:
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
         restrictions: &notSpecified not yet specified
+        funding_bodies: ["funding_body-innoviris","funding_body-ec"]
+        funding_programs: ["funding_program-icfs", "funding_program-insc2020", "funding_program-isf"]
         phase: production
         tagline: Run virtual machines on-demand with complete control over computing resources
         platforms: [*egiPlatform]
@@ -952,6 +954,8 @@ services:
         phase: production
         tagline: Metadata based data-discovery
         platforms: [*eudatPlatform]
+        funding_bodies: ["funding_body-fapesp","funding_body-rpf"]
+        funding_programs: ["funding_program-icfs", "funding_program-insc2020", "funding_program-iter"]
         description: |
           B2FIND is the EUDAT metadata service and provides a discovery portal which allows users
           to find data collections within an international and inter-disciplinary scope.
@@ -3448,6 +3452,8 @@ services:
         phase: production
         tagline: Web portal for Nuclear Magnetic Resonance (NMR) structure refinement
         platforms: [*wenmr, *egiPlatform, *instruct]
+        funding_bodies: ["funding_body-esa", "funding_body-epsrc"]
+        funding_programs: ["funding_program-h2020","funding_program-health"]
         description: |
           Simple and user-friendly NMR-based refinement of the 3D structures of biological macromolecules
           thought the AMPS-NMR portal. Amber (Assisted Model Building with Energy Refinement) is a suite

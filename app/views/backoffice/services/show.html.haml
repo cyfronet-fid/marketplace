@@ -106,6 +106,14 @@
       - @service.providers.each do |provider|
         %p= provider.name
 
+      %h5 Funding Bodies:
+      - @service.funding_bodies.each do |body|
+        %p= body.name
+
+      %h5 Funding Programs:
+      - @service.funding_programs.each do |program|
+        %p= program.name
+
       %h5 Upstream External Source
       %p= @service.upstream || "MP"
 
