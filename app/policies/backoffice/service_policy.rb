@@ -100,6 +100,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       :phase, :order_target,
       :status_monitoring_url, :maintenance_url,
       :order_url, :payment_model_url, :pricing_url,
+      [funding_body_ids: []], [funding_program_ids: []],
       :activate_message, :logo,
       [contact_emails: []], [scientific_domain_ids: []],
       [platform_ids: []], :tag_list, [category_ids: []],

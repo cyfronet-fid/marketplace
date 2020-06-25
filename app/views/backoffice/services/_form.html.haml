@@ -29,6 +29,11 @@
                   input_html: { data: { choice: true }, class: "target_groups" },
                   include_hidden: false,
                   disabled: cant_edit([target_group_ids: []])
+  = f.association :funding_bodies, input_html: { data: { choice: true } },
+                  disabled: cant_edit([funding_body_ids: []])
+  = f.association :funding_programs, input_html: { data: { choice: true } },
+                  disabled: cant_edit([funding_program_ids: []])
+
   .row.mt-5
     .col-12.col-md-5
       = f.association :owners, multiple: true, input_html: { data: { choice: true } },
