@@ -104,6 +104,8 @@ module Import
         language_availability = Array(service["languages"] || "EN")
         # language_names = service["languageNames"]
         category = service["category"]
+        funding_bodies = service["fundingBody"]
+        funding_programs = service["fundingPrograms"]
         # category_name = service["categoryName"]
         # subcategory_name = service["subCategoryName"]
         phase = service["trl"]
@@ -183,6 +185,8 @@ module Import
             phase: map_phase(phase),
             order_type: "open_access",
             status: "draft",
+            funding_bodies: map_funding_bodies(funding_bodies),
+            funding_programs: map_funding_programs(funding_programs),
             providers: [mapped_provider],
             categories: map_category(category),
             scientific_domains: [@scientific_domain_other],
@@ -272,6 +276,14 @@ module Import
 
     def map_phase(phase)
       @phase_mapping[phase] || "discovery"
+    end
+
+    def map_funding_bodies(funding_bodies)
+      FundingBody.where(eid: funding_bodies)
+    end
+
+    def map_funding_programs(funding_programs)
+      FundingProgram.where(eid: funding_programs)
     end
 
     private
