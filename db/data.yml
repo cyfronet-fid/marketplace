@@ -284,15 +284,72 @@ target_users:
 
     Researchers:
         name: &researchers "Researchers"
+        description: "Someone who conducts scientific research, i.e., an organized and systematic investigation by using scientific methods."
+        eid: "target_user-researchers"
     Research organisations:
         name: &research_organisations "Research organisations"
-    Business:
-        name: &business "Business"
+        description: "A public or private legal entity (e.g. academia, business, industry, public services, etc.) representing the User."
+        eid: "target_user-research_organisations"
+    Businesses:
+        name: &business "Businesses"
+        description: "An organization or economic system where goods and services are exchanged for one another or for money. Businesses can be privately owned, not-for-profit or state-owned."
+        eid: "target_user-businesses"
     Research group:
-        name: &research_groups "Research group"
+        name: &research_groups "Research groups"
+        description: "A research group is a group of researchers working together on a particular issue or topic. Research groups may be composed of researchers all from the same subject/discipline or from different subjects/disciplines."
+        eid: "target_user-research_groups"
     Providers:
         name: &providers "Providers"
-
+        description: "A Provider is an organisation that provides different kind of solutions and/or services or other Resources to end users and other organizations. This broad term incorporates all businesses and organisations that provide products and solutions that are offered for free, on-demand, pay per use or a hybrid delivery model."
+        eid: "target_user-providers"
+    Research communities:
+        name: &research_communities "Research communities"
+        description: "Research communities provide an infrastructure through which scientists of discipline-specific scientific areas are able to advance their research goals, reaching out to other researchers."
+        eid: "target_user-research_communities"
+    Research projects:
+        name: &research_projects "Research projects"
+        description: "A privately or publicly funded project on a research topic."
+        eid: "target_user-research_projects"
+    Research networks:
+        name: &research_network "Research networks"
+        desctiption: "Research networks aim to stimulate interaction between researchers and promote information exchange."
+        eid: "target_user-research_networks"
+    Research managers:
+        name: &research_manager "Research managers"
+        description: "Someone in an organization whose job is to manage a research initiative aiming to the development of new scientific results, products or ideas."
+        eid: "target_user-research_managers"
+    Students:
+        name: &students "Students"
+        desctiption: "A person who is studying at a university or other place of higher education."
+        eid: "target_user-students"
+    Innowators:
+        name: &innowators "Innovators"
+        description: "The group or individual which is the first to try new ideas, processes, goods and services. Innovators are followed by early adopters, early majority, late majority, and laggards, in that order."
+        eid: "target_user-innovators"
+    Funders:
+        name: &funders "Funders"
+        description: "Individual or organization financing a part or all of a project's cost as a grant, investment, or loan."
+        eid: "target_user-funders"
+    Policy Makers:
+        name: &policy_makers "Policy Makers"
+        description: "Individuals (usually members of the board of directors) who have the authority to set the policy framework of an organization."
+        eid: "target_user-policy_makers"
+    Research Infrastructure Managers:
+        name: &research_infrastructure_managers "Research Infrastructure Managers"
+        description: "A RI Manager is a type of Project Coordinator who specializes in research infrastructures. They are responsible for things like managing researchers, making sure costs are on budget and serving as a liaison between reserach staff and project stakeholders."
+        eid: "target_user-research_infrastructure_managers"
+    Provider Managers:
+        name: &provider_managers "Provider Managers"
+        description: "A Provider Manager is an individual within an organisation that is responsible for the quality of the Resources provided and monitors the delivery of the Resource."
+        eid: "target_user-provider_managers"
+    Resource Managers:
+        name: &resource_manager "Resource Managers"
+        description: "Resource Managers are typically responsible for managing Service level agreements with customers and external Providers."
+        eid: "target_user-resource_managers"
+    Other:
+        name: &other "Other"
+        description: ""
+        eid: "target_user-other"
 
 services:
 
