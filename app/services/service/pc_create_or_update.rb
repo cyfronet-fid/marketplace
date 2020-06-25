@@ -85,6 +85,8 @@ class Service::PcCreateOrUpdate
         phase: map_phase(data["trl"]),
         order_type: "open_access",
         status: "published",
+        funding_bodies: map_funding_bodies(data["fundingBody"]),
+        funding_programs: map_funding_programs(data["fundingPrograms"]),
         providers: [map_provider(data["providers"]["provider"])],
         categories: map_category(data["category"]),
         scientific_domains: [scientific_domain_other],
@@ -158,6 +160,14 @@ class Service::PcCreateOrUpdate
       else
         []
       end
+    end
+
+    def map_funding_bodies(funding_bodies)
+      FundingBody.where(eid: funding_bodies)
+    end
+
+    def map_funding_programs(funding_programs)
+      FundingProgram.where(eid: funding_programs)
     end
 
     def scientific_domain_other

@@ -19,4 +19,35 @@ namespace :rdt do
       end
     end
   end
+
+  desc "Create new Vocabularies"
+
+  task add_vocabularies: :environment do
+    require "yaml"
+    puts "Creating funding bodies from yaml"
+    yaml_hash = YAML.load_file("db/vocabulary.yml")
+
+    yaml_hash["funding_body"].each do |_, hash|
+      FundingBody.find_or_initialize_by(eid: hash["eid"]) do |funding_body|
+        funding_body.update!(name: hash["name"],
+                             eid: hash["eid"],
+                             description: hash["description"],
+                             parent: FundingBody.find_by(id: hash["parentId"]),
+                             extras: hash["extras"])
+      end
+      puts "Created funding body: #{hash["name"]}"
+    end
+
+    puts "Creating funding programs from yaml"
+    yaml_hash["funding_program"].each do |_, hash|
+      FundingProgram.find_or_initialize_by(eid: hash["eid"]) do |funding_program|
+        funding_program.update!(name: hash["name"],
+                                eid: hash["eid"],
+                                description: hash["description"],
+                                parent: FundingProgram.find_by(id: hash["parentId"]),
+                                extras: hash["extras"])
+      end
+      puts "Created funding program: #{hash["name"]}"
+    end
+  end
 end

@@ -5,6 +5,7 @@ namespace :dev do
   task prime: "db:setup" do
     yaml_hash = YAML.load_file("db/data.yml")
 
+    create_vocabularies
     create_categories(yaml_hash["categories"])
     create_providers(yaml_hash["providers"])
     create_scientific_domains(yaml_hash["domain"])
@@ -71,6 +72,8 @@ namespace :dev do
       domain = ScientificDomain.where(name: hash["domain"])
       platforms = Platform.where(name: hash["platforms"])
       target_groups = TargetGroup.where(name: hash["target_groups"])
+      funding_bodies = FundingBody.where(eid: hash["funding_bodies"])
+      funding_programs = FundingProgram.where(eid: hash["funding_programs"])
       service = Service.find_or_initialize_by(name: hash["name"])
       order_type = order_type_from(hash)
 
@@ -83,6 +86,8 @@ namespace :dev do
                       manual_url: hash["manual_url"],
                       helpdesk_url: hash["helpdesk_url"],
                       training_information_url: hash["training_information_url"],
+                      funding_bodies: funding_bodies,
+                      funding_programs: funding_programs,
                       terms_of_use_url: hash["terms_of_use_url"],
                       sla_url: hash["sla_url"],
                       access_policies_url: hash["access_policies_url"],
@@ -142,5 +147,9 @@ namespace :dev do
       end
       puts "  - Relation from #{source.name} to #{target.name} generated"
     end
+  end
+
+  def create_vocabularies
+    Rake::Task["rdt:add_vocabularies"].invoke
   end
 end

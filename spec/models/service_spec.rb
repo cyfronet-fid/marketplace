@@ -14,6 +14,9 @@ RSpec.describe Service do
   it { should have_many(:offers).dependent(:restrict_with_error) }
   it { should have_many(:categories) }
   it { should have_many(:service_scientific_domains).dependent(:destroy) }
+  it { should have_many(:funding_bodies) }
+  it { should have_many(:funding_programs) }
+  it { should have_many(:service_vocabularies).dependent(:destroy) }
 
   it { should belong_to(:upstream).required(false) }
 

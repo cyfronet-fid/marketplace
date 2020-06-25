@@ -76,6 +76,9 @@ class Service < ApplicationRecord
   has_many :platforms, through: :service_related_platforms
   has_many :service_target_groups, dependent: :destroy
   has_many :target_groups, through: :service_target_groups
+  has_many :service_vocabularies, dependent: :destroy
+  has_many :funding_bodies, through: :service_vocabularies, source: :vocabulary, source_type: "FundingBody"
+  has_many :funding_programs, through: :service_vocabularies, source: :vocabulary, source_type: "FundingProgram"
 
   has_many :service_user_relationships, dependent: :destroy
   has_many :owners,

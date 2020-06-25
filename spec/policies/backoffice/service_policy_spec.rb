@@ -16,13 +16,15 @@ RSpec.describe Backoffice::ServicePolicy do
   context "permitted_attributes" do
     it "should return attrs if service has no upstream or is not persisted" do
       policy = described_class.new(service_owner, create(:service))
-      expect(policy.permitted_attributes).to eq([
+      expect(policy.permitted_attributes).to match_array([
                                                     :name, :description,
                                                     :tagline, :order_type,
                                                     [provider_ids: []], :places, [language_availability: []],
                                                     [target_group_ids: []], :terms_of_use_url,
                                                     :access_policies_url, :sla_url,
                                                     :webpage_url, :manual_url, :helpdesk_url,
+                                                    [funding_body_ids: []],
+                                                    [funding_program_ids: []],
                                                     :helpdesk_email, :training_information_url, :restrictions,
                                                     :phase, :order_target,
                                                     :status_monitoring_url, :maintenance_url,
@@ -40,9 +42,11 @@ RSpec.describe Backoffice::ServicePolicy do
       source = create(:service_source, source_type: :eic, service: service)
       service.update!(upstream: source)
       policy = described_class.new(service_owner, service)
-      expect(policy.permitted_attributes).to eq([
+      expect(policy.permitted_attributes).to match_array([
                                                     [target_group_ids: []], :helpdesk_email, :restrictions,
                                                     :order_target, :activate_message,
+                                                    [funding_body_ids: []],
+                                                    [funding_program_ids: []],
                                                     [contact_emails: []], [scientific_domain_ids: []],
                                                     [platform_ids: []], :tag_list, [category_ids: []],
                                                     [owner_ids: []], :status, :upstream_id,

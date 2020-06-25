@@ -13,6 +13,8 @@ RSpec.describe Service::PcCreateOrUpdate do
   let!(:compute) { create(:category, name: "Compute") }
   let!(:networking) { create(:category, name: "Networking") }
   let!(:scientific_domain_other) { create(:scientific_domain, name: "Other") }
+  let!(:funding_body) { create(:funding_body, name: "FundingBody", eid: "funding_body-fb") }
+  let!(:funding_program) { create(:funding_program, name: "FundingProgram", eid: "funding_program-fp") }
 
   let(:unirest) { double(Unirest) }
   let(:provider_eid) { "ten" }
@@ -55,6 +57,8 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.training_information_url).to eq("http://openminted.eu/support-training/")
       expect(service.phase).to eq("production")
       expect(service.order_type).to eq("open_access")
+      expect(service.funding_bodies).to eq([funding_body])
+      expect(service.funding_programs).to eq([funding_program])
       expect(service.status).to eq("published")
       expect(service.providers).to eq([Provider.first])
       expect(service.categories).to eq([])

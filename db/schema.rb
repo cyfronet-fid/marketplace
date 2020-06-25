@@ -326,6 +326,17 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.index ["user_id"], name: "index_service_user_relationships_on_user_id"
   end
 
+  create_table "service_vocabularies", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "vocabulary_id"
+    t.string "vocabulary_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["service_id", "vocabulary_id"], name: "index_service_vocabularies_on_service_id_and_vocabulary_id", unique: true
+    t.index ["service_id"], name: "index_service_vocabularies_on_service_id"
+    t.index ["vocabulary_id"], name: "index_service_vocabularies_on_vocabulary_id"
+  end
+
   create_table "services", force: :cascade do |t|
     t.string "name", null: false
     t.text "description", null: false
@@ -452,6 +463,19 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.index ["email"], name: "index_users_on_email"
   end
 
+  create_table "vocabularies", force: :cascade do |t|
+    t.string "eid", null: false
+    t.string "name", null: false
+    t.string "description"
+    t.string "type", null: false
+    t.string "ancestry"
+    t.integer "ancestry_depth", default: 0
+    t.jsonb "extras"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ancestry"], name: "index_vocabularies_on_ancestry"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "project_item_changes", "users", column: "author_id"
   add_foreign_key "project_items", "offers"
@@ -470,6 +494,8 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
   add_foreign_key "service_target_groups", "target_groups"
   add_foreign_key "service_user_relationships", "services"
   add_foreign_key "service_user_relationships", "users"
+  add_foreign_key "service_vocabularies", "services"
+  add_foreign_key "service_vocabularies", "vocabularies"
   add_foreign_key "services", "providers"
   add_foreign_key "services", "service_sources", column: "upstream_id", on_delete: :nullify
   add_foreign_key "user_categories", "categories"
