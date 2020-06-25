@@ -10,7 +10,7 @@ namespace :dev do
     create_providers(yaml_hash["providers"])
     create_scientific_domains(yaml_hash["domain"])
     create_platforms(yaml_hash["platforms"])
-    create_target_groups(yaml_hash["target_groups"])
+    create_target_users(yaml_hash["target_users"])
     create_services(yaml_hash["services"])
     create_relations(yaml_hash["relations"])
 
@@ -56,10 +56,10 @@ namespace :dev do
     end
   end
 
-  def create_target_groups(target_groups_hash)
+  def create_target_users(target_users_hash)
     puts "Generating target groups:"
-    target_groups_hash.each do |_, hash|
-      TargetGroup.find_or_create_by(name: hash["name"])
+    target_users_hash.each do |_, hash|
+      TargetUser.find_or_create_by(name: hash["name"])
       puts "  - #{hash["name"]} target group generated"
     end
   end
@@ -71,12 +71,12 @@ namespace :dev do
       providers = Provider.where(name: hash["providers"])
       domain = ScientificDomain.where(name: hash["domain"])
       platforms = Platform.where(name: hash["platforms"])
-      target_groups = TargetGroup.where(name: hash["target_groups"])
       funding_bodies = FundingBody.where(eid: hash["funding_bodies"])
       funding_programs = FundingProgram.where(eid: hash["funding_programs"])
       service = Service.find_or_initialize_by(name: hash["name"])
       trl = Trl.where(eid: hash["trl"])
       life_cycle_status = LifeCycleStatus.where(eid: hash["life_cycle_status"])
+      target_users = TargetUser.where(name: hash["target_users"])
       order_type = order_type_from(hash)
 
       service.update!(tagline: hash["tagline"],
@@ -95,7 +95,7 @@ namespace :dev do
                       access_policies_url: hash["access_policies_url"],
                       language_availability: hash["language_availability"],
                       geographical_availabilities: [hash["geographical_availabilities"]],
-                      target_groups: target_groups,
+                      target_users: target_users,
                       restrictions: hash["restrictions"],
                       trl: trl,
                       life_cycle_status: life_cycle_status,

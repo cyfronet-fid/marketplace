@@ -21,7 +21,7 @@ RSpec.describe Backoffice::ServicePolicy do
                                                     :tagline, :order_type,
                                                     [provider_ids: []], [geographical_availabilities: []],
                                                     [language_availability: []],
-                                                    [target_group_ids: []], :terms_of_use_url,
+                                                    [target_user_ids: []], :terms_of_use_url,
                                                     :access_policies_url, :sla_url,
                                                     :webpage_url, :manual_url, :helpdesk_url,
                                                     [funding_body_ids: []],
@@ -43,7 +43,7 @@ RSpec.describe Backoffice::ServicePolicy do
       service.update!(upstream: source)
       policy = described_class.new(service_owner, service)
       expect(policy.permitted_attributes).to match_array([
-                                                    [target_group_ids: []], :helpdesk_email, :restrictions,
+                                                    [target_user_ids: []], :helpdesk_email, :restrictions,
                                                     :order_target, :activate_message,
                                                     [funding_body_ids: []],
                                                     [funding_program_ids: []],
