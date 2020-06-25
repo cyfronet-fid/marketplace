@@ -70,4 +70,49 @@ namespace :rdt do
       puts "Created trl: #{hash["name"]}"
     end
   end
+
+  desc "Create new targetGroups"
+
+  task add_target_users: :environment do
+    research_group = TargetUser.find_or_create_by(name: "Research group")
+    research_group.update!(name: "Research groups", description: "A research group is a group of researchers working together on a particular issue or topic. Research groups may be composed of researchers all from the same subject/discipline or from different subjects/disciplines.")
+    business = TargetUser.find_or_create_by(name: "Business")
+    business.update!(name: "Businesses", description: "An organization or economic system where goods and services are exchanged for one another or for money. Businesses can be privately owned, not-for-profit or state-owned.")
+
+    create_or_update_target_user("Researchers",
+                                 "Someone who conducts scientific research, i.e., an organized and systematic investigation by using scientific methods.")
+    create_or_update_target_user("Providers",
+                                 "A Provider is an organisation that provides different kind of solutions and/or services or other Resources to end users and other organizations. This broad term incorporates all businesses and organisations that provide products and solutions that are offered for free, on-demand, pay per use or a hybrid delivery model.")
+    create_or_update_target_user("Research organisations",
+                                 "A public or private legal entity (e.g. academia, business, industry, public services, etc.) representing the User.")
+    create_or_update_target_user("Research communities",
+                                 "Research communities provide an infrastructure through which scientists of discipline-specific scientific areas are able to advance their research goals, reaching out to other researchers.")
+    create_or_update_target_user("Research projects",
+                                 "A privately or publicly funded project on a research topic.")
+    create_or_update_target_user("Research networks",
+                                 "Research networks aim to stimulate interaction between researchers and promote information exchange.")
+    create_or_update_target_user("Research managers",
+                                 "Someone in an organization whose job is to manage a research initiative aiming to the development of new scientific results, products or ideas.")
+    create_or_update_target_user("Students",
+                                 "A person who is studying at a university or other place of higher education.")
+    create_or_update_target_user("Innovators",
+                                 "The group or individual which is the first to try new ideas, processes, goods and services. Innovators are followed by early adopters, early majority, late majority, and laggards, in that order.")
+    create_or_update_target_user("Funders",
+                                 "Individual or organization financing a part or all of a project's cost as a grant, investment, or loan.")
+    create_or_update_target_user("Policy Makers",
+                                 "Individuals (usually members of the board of directors) who have the authority to set the policy framework of an organization.")
+    create_or_update_target_user("Research Infrastructure Managers",
+                                 "A RI Manager is a type of Project Coordinator who specializes in research infrastructures. They are responsible for things like managing researchers, making sure costs are on budget and serving as a liaison between reserach staff and project stakeholders.")
+    create_or_update_target_user("Provider Managers",
+                                 "A Provider Manager is an individual within an organisation that is responsible for the quality of the Resources provided and monitors the delivery of the Resource.")
+    create_or_update_target_user("Resource Managers",
+                                 "Resource Managers are typically responsible for managing Service level agreements with customers and external Providers.")
+    create_or_update_target_user("Other",
+                                 "")
+  end
+
+  def create_or_update_target_user(name, desc)
+    target = TargetUser.find_or_create_by(name: name)
+    target.update!(description: desc)
+  end
 end

@@ -85,7 +85,6 @@ module Import
         tagline = service["tagline"]
         description = ReverseMarkdown.convert(service["description"], unknown_tags: :bypass, github_flavored: false)
         options = service["options"]
-        # target_users = service["targetUsers"]
         user_value = service["userValue"]
         user_base = service["userBase"]
         image_url = service["symbol"]
@@ -105,6 +104,7 @@ module Import
         life_cycle_status = service["lifeCycleStatus"]
         provider_eid = service["providers"][0]
         version = service["version"]
+        target_users = service["targetUsers"]
 
         logo = nil
 
@@ -185,7 +185,8 @@ module Import
             providers: [mapped_provider],
             categories: map_category(category),
             scientific_domains: [@scientific_domain_other],
-            version: version || ""
+            version: version || "",
+            target_users: map_target_users(target_users)
         }
 
         begin
@@ -231,6 +232,10 @@ module Import
           file << JSON.pretty_generate(output)
         end
       end
+    end
+
+    def map_target_users(target_users)
+      TargetUser.where(name: target_users.split(", "))
     end
 
     def create_default_offer!(service, name, eid, url)
