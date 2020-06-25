@@ -23,15 +23,10 @@ en:
         providers:
           title: Providers
           more_html: You can find <strong>%{count}</strong> more providers
-        target_groups:
+        target_users:
           title: Dedicated for
           more_html: And for <strong>%{count}</strong> more other target groups
     welcome_modal:
       title: New functionality arrived!
       action_btn: Upgrade your profile now
       dismiss_btn: I'll do it later
-
-
-
-
-

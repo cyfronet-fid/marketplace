@@ -33,11 +33,11 @@ RSpec.feature "Services in backoffice" do
       provider = create(:provider)
       scientific_domain = create(:scientific_domain)
       platform = create(:platform)
-      target_group = create(:target_group)
       funding_body = create(:funding_body)
       funding_program = create(:funding_program)
       trl = create(:trl)
       life_cycle_status = create(:life_cycle_status)
+      target_user = create(:target_user)
 
       visit backoffice_services_path
       click_on "Create new Service"
@@ -48,11 +48,11 @@ RSpec.feature "Services in backoffice" do
       fill_in "Tagline", with: "service tagline"
       select "English", from: "Language availability"
       select "Poland", from: "Geographical availabilities"
-      select target_group.name, from: "Dedicated For"
-      select funding_body.name, from: "Funding bodies"
-      select funding_program.name, from: "Funding programs"
       select trl.name, from: "Trl"
       select life_cycle_status.name, from: "Life cycle status"
+      select funding_body.name, from: "Funding bodies"
+      select funding_program.name, from: "Funding programs"
+      select target_user.name, from: "Dedicated For"
       fill_in "Terms of use url", with: "https://sample.url"
       fill_in "Access policies url", with: "https://sample.url"
       fill_in "Sla url", with: "https://sample.url"
@@ -90,7 +90,7 @@ RSpec.feature "Services in backoffice" do
       # expect(page).to have_content("person2@test.ok")
       expect(page).to have_content("Welcome!!!")
       expect(page).to have_content(scientific_domain.name)
-      expect(page).to have_content(target_group.name)
+      expect(page).to have_content(target_user.name)
       expect(page).to have_content(category.name)
       expect(page).to have_content(funding_body.name)
       expect(page).to have_content(funding_program.name)

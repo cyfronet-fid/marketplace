@@ -76,7 +76,7 @@
 
       %h5 Dedicated For
       %ul
-        - @service.target_groups.each do |group|
+        - @service.target_users.each do |group|
           %li= group.name
 
       %h5 Service Availability

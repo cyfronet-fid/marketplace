@@ -50,7 +50,7 @@
       %tr.lightgrey-row
         %th Dedicated for
         - @services.each do |service|
-          %td= service.target_groups.map { |tg| tg.name }.join(", ")
+          %td= service.target_users.map { |tg| tg.name }.join(", ")
       %tr
         %th Service life cycle status
         - @services.each do |service|

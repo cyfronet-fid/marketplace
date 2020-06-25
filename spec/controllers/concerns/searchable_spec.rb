@@ -231,11 +231,11 @@ RSpec.describe ApplicationController, type: :controller do
       end
     end
 
-    context Filter::TargetGroup do
-      let!(:collection) { create_list(:target_group, 3) }
-      let!(:field_name) { :target_groups }
-      let!(:param_name) { :target_groups }
-      let!(:filter_class) { Filter::TargetGroup }
+    context Filter::TargetUser do
+      let!(:collection) { create_list(:target_user, 3) }
+      let!(:field_name) { :target_users }
+      let!(:param_name) { :target_users }
+      let!(:filter_class) { Filter::TargetUser }
       it "checks if target group filter works" do
         basic_test
       end
