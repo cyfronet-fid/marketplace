@@ -34,6 +34,8 @@ RSpec.feature "Services in backoffice" do
       scientific_domain = create(:scientific_domain)
       platform = create(:platform)
       target_group = create(:target_group)
+      funding_body = create(:funding_body)
+      funding_program = create(:funding_program)
 
       visit backoffice_services_path
       click_on "Create new Service"
@@ -45,6 +47,8 @@ RSpec.feature "Services in backoffice" do
       fill_in "Places", with: "Europe"
       select "English", from: "Language availability"
       select target_group.name, from: "Dedicated For"
+      select funding_body.name, from: "Funding bodies"
+      select funding_program.name, from: "Funding programs"
       fill_in "Terms of use url", with: "https://sample.url"
       fill_in "Access policies url", with: "https://sample.url"
       fill_in "Sla url", with: "https://sample.url"
@@ -85,6 +89,8 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content(scientific_domain.name)
       expect(page).to have_content(target_group.name)
       expect(page).to have_content(category.name)
+      expect(page).to have_content(funding_body.name)
+      expect(page).to have_content(funding_program.name)
       expect(page).to have_content("Publish")
       expect(page).to have_content("eic: 12345a")
       expect(page).to have_content("Alpha (min. TRL 5)")
@@ -386,6 +392,8 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Scientific domains", disabled: false
       expect(page).to have_field "Dedicated For", disabled: false
       expect(page).to have_field "Owners", disabled: false
+      expect(page).to have_field "Funding bodies", disabled: false
+      expect(page).to have_field "Funding programs", disabled: false
       expect(page).to have_field "service_contact_emails_0", disabled: false
       expect(page).to have_field "Service Order Target", disabled: false
       expect(page).to have_field "Places", disabled: false
@@ -422,6 +430,8 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Platforms", disabled: false
       expect(page).to have_field "Scientific domains", disabled: false
       expect(page).to have_field "Dedicated For", disabled: false
+      expect(page).to have_field "Funding bodies", disabled: false
+      expect(page).to have_field "Funding programs", disabled: false
       expect(page).to have_field "Owners", disabled: false
       expect(page).to have_field "service_contact_emails_0", disabled: false
       expect(page).to have_field "Service Order Target", disabled: false

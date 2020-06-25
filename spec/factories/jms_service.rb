@@ -19,6 +19,8 @@ FactoryBot.define do
         "description"=> "A catalogue of corpora (datasets) made up of mainly Open Access scholarly publications. Users can view publicly available corpora that have been created with the OpenMinTeD Corpus Builder for Scholarly Works, or manually uploaded to the OpenMinTeD platform.&nbsp; The catalogue can be browsed and searched via the faceted navigation facility or a google-like free text search query. All users can view the descriptions of the corpora (with administrative and technical information, such as language, domain, keywords, licence, resource creator, etc.), as well as the contents and, when available, the metadata descriptions of the individual files that compose them.&nbsp; In addition, registered users can process them with the TDM applications offered by OpenMinTeD and download them in accordance with their licensing conditions.",
         "feedback" => "http://openminted.eu/support/",
         "funding" => "EC funds (H2020 grant 654021 for the OpenMinTeD project) & National funds for the GRNET cloud infrastructure on which the platform operates",
+        "fundingBody" => ["funding_body-fb"],
+        "fundingPrograms" => ["funding_program-fp"],
         "helpdesk" => "https://services.openminted.eu/support",
         "id" => eid,
         "languages" => { "language"=>"english" },
