@@ -1,0 +1,1172 @@
+funding_body:
+  aka:
+    eid: funding_body-aka
+    name: Academy of Finland (AKA)
+    description: Finland
+    type: FUNDING_BODY
+    
+  ademe:
+    eid: funding_body-ademe
+    name: Agency for Environment and Energy Management (ADEME)
+    description: France
+    type: FUNDING_BODY
+    
+  iwt:
+    eid: funding_body-iwt
+    name: Agency for Innovation by Science and Technology (IWT)
+    description: Belgium
+    type: FUNDING_BODY
+    
+  mita:
+    eid: funding_body-mita
+    name: Agency for Science Innovation and Technology (MITA)
+    description: Lithuania
+    type: FUNDING_BODY
+    
+  awi:
+    eid: funding_body-awi
+    name: Alfred Wegener Institute for Polar and Marine Research (AWI)
+    description: Germany
+    type: FUNDING_BODY
+    
+  cea:
+    eid: funding_body-cea
+    name: Alternative Energies and Atomic Energy Commission (CEA)
+    description: France
+    type: FUNDING_BODY
+    
+  ahrc:
+    eid: funding_body-ahrc
+    name: Arts and Humanities Research Council (AHRC)
+    description: United Kingdom
+    type: FUNDING_BODY
+    
+  arc:
+    eid: funding_body-arc
+    name: Australian Research Council (ARC)
+    description: Australia
+    type: FUNDING_BODY
+    
+  oeaw:
+    eid: funding_body-oeaw
+    name: Austrian Academy of Sciences (OeAW)
+    description: Austria
+    type: FUNDING_BODY
+    
+  ffg:
+    eid: funding_body-ffg
+    name: Austrian Research Promotion Agency (FFG)
+    description: Austria
+    type: FUNDING_BODY
+    
+  fwf:
+    eid: funding_body-fwf
+    name: Austrian Science Fund (FWF)
+    description: Austria
+    type: FUNDING_BODY
+    
+  bf:
+    eid: funding_body-bf
+    name: Belmont Forum (BF)
+    description: null
+    type: FUNDING_BODY
+    
+  bbsrc:
+    eid: funding_body-bbsrc
+    name: Biotechnology and Biological Sciences Research Council (BBSRC)
+    description: United Kingdom
+    type: FUNDING_BODY
+    
+  innoviris:
+    eid: funding_body-innoviris
+    name: Brussels Institute for Research and Innovation (INNOVIRIS)
+    description: Belgium
+    type: FUNDING_BODY
+    
+  cihr:
+    eid: funding_body-cihr
+    name: Canadian Institutes of Health Research (CIHR)
+    description: Canada
+    type: FUNDING_BODY
+    
+  isciii:
+    eid: funding_body-isciii
+    name: Carlos III Health Institute (ISCIII)
+    description: Spain
+    type: FUNDING_BODY
+    
+  cdti:
+    eid: funding_body-cdti
+    name: Center for Industrial Technological Development (CDTI)
+    description: Spain
+    type: FUNDING_BODY
+    
+  csf:
+    eid: funding_body-csf
+    name: Croatian Science Foundation (CSF)
+    description: Croatia
+    type: FUNDING_BODY
+    
+  gacr:
+    eid: funding_body-gacr
+    name: Czech Science Foundation (GACR)
+    description: Czechia
+    type: FUNDING_BODY
+    
+  dashe:
+    eid: funding_body-dashe
+    name: Danish Agency for Science and Higher Education (DASHE)
+    description: Denmark
+    type: FUNDING_BODY
+    
+  dasti:
+    eid: funding_body-dasti
+    name: Danish Agency for Science Technology and Innovation (DASTI)
+    description: Denmark
+    type: FUNDING_BODY
+    
+  dff:
+    eid: funding_body-dff
+    name: Danish Council for Independent Research (DFF)
+    description: Denmark
+    type: FUNDING_BODY
+    
+  dnrf:
+    eid: funding_body-dnrf
+    name: Danish National Research Foundation (DNRF)
+    description: Denmark
+    type: FUNDING_BODY
+    
+  dfg:
+    eid: funding_body-dfg
+    name: German Research Foundation (DFG)
+    description: Germany
+    type: FUNDING_BODY
+    
+  esrc:
+    eid: funding_body-esrc
+    name: Economic and Social Research Council (ESRC)
+    description: United Kingdom
+    type: FUNDING_BODY
+    
+  epsrc:
+    eid: funding_body-epsrc
+    name: Engineering and Physical Sciences Research Council (EPSRC)
+    description: United Kingdom
+    type: FUNDING_BODY
+    
+  etag:
+    eid: funding_body-etag
+    name: Estonian Research Council (ETAG)
+    description: Estonia
+    type: FUNDING_BODY
+    
+  ec:
+    eid: funding_body-ec
+    name: European Comission (EC)
+    description: null
+    type: FUNDING_BODY
+    
+  esa:
+    eid: funding_body-esa
+    name: European Space Agency (ESA)
+    description: null
+    type: FUNDING_BODY
+    
+  cncs:
+    eid: funding_body-uefiscdi_cncs
+    name: Executive Agency for Higher Education Research Development and Innovation Funding (UEFISCDI - CNCS)
+    description: Romania
+    type: FUNDING_BODY
+    
+  eaer:
+    eid: funding_body-eaer
+    name: Federal Department of Economic Affairs Education and Research (EAER)
+    description: Switzerland
+    type: FUNDING_BODY
+    
+  bmbf:
+    eid: funding_body-bmbf
+    name: Federal Ministry of Education and Research (BMBF)
+    description: Germany
+    type: FUNDING_BODY
+    
+  tekes:
+    eid: funding_body-tekes
+    name: Finnish Funding Agency for Technology and Innovation (TEKES)
+    description: Finland
+    type: FUNDING_BODY
+    
+  vlaio:
+    eid: funding_body-vlaio
+    name: Flanders Innovation & Entrepeneurship (VLAIO)
+    description: Belgium
+    type: FUNDING_BODY
+    
+  fnrs:
+    eid: funding_body-fnrs
+    name: Fonds National de la Recherche Scientifique (FNRS)
+    description: Belgium
+    type: FUNDING_BODY
+    
+  fom:
+    eid: funding_body-fom
+    name: Foundation for Fundamental Research on Matter (FOM)
+    description: Netherlands
+    type: FUNDING_BODY
+    
+  fnp:
+    eid: funding_body-fnp
+    name: Foundation for Polish Science (FNP)
+    description: Poland
+    type: FUNDING_BODY
+    
+  gsrt:
+    eid: funding_body-gsrt
+    name: General Secretariat for Research and Technology (GSRT)
+    description: Greece
+    type: FUNDING_BODY
+    
+  fct:
+    eid: funding_body-fct
+    name: Foundation for Science and Technology (FCT)
+    description: Portugal
+    type: FUNDING_BODY
+    
+  onera:
+    eid: funding_body-onera
+    name: French National Aerospace Research Center (ONERA)
+    description: France
+    type: FUNDING_BODY
+    
+  anr:
+    eid: funding_body-anr
+    name: French National Research Agency (ANR)
+    description: France
+    type: FUNDING_BODY
+    
+  ipev:
+    eid: funding_body-ipev
+    name: French Polar Institute (IPEV)
+    description: France
+    type: FUNDING_BODY
+    
+  ifremer:
+    eid: funding_body-ifremer
+    name: French Research Institute for Exploitation of the Sea (IFREMER)
+    description: France
+    type: FUNDING_BODY
+    
+  fts:
+    eid: funding_body-fts
+    name: Fritz Thyssen Foundation (FTS)
+    description: Germany
+    type: FUNDING_BODY
+    
+  dgo6:
+    eid: funding_body-dgo6
+    name: General Operational Directorate for Economy Employment and Research (DGO6)
+    description: Belgium
+    type: FUNDING_BODY
+    
+  dlr:
+    eid: funding_body-dlr
+    name: German Aerospace Center (DLR)
+    description: Germany
+    type: FUNDING_BODY
+    
+  rannis:
+    eid: funding_body-rannis
+    name: Icelandic Centre for Research (RANNIS)
+    description: Iceland
+    type: FUNDING_BODY
+    
+  ifd:
+    eid: funding_body-ifd
+    name: Innovation Fund Denmark (IFD)
+    description: Denmark
+    type: FUNDING_BODY
+    
+  imsr:
+    eid: funding_body-imsr
+    name: Innovation Fund of the Ministry of Economy of the Slovak Republic (IMSR)
+    description: Slovakia
+    type: FUNDING_BODY
+    
+  isc:
+    eid: funding_body-isc
+    name: International Science Council (ISC)
+    description: null
+    type: FUNDING_BODY
+    
+  irc:
+    eid: funding_body-irc
+    name: Irish Research Council (IRC)
+    description: Ireland
+    type: FUNDING_BODY
+    
+  isf:
+    eid: funding_body-isf
+    name: Israel Science Foundation (ISF)
+    description: Israel
+    type: FUNDING_BODY
+    
+  jst:
+    eid: funding_body-jst
+    name: Japanese Science and Technology Agency (JST)
+    description: Japan
+    type: FUNDING_BODY
+    
+  jsps:
+    eid: funding_body-jsps
+    name: Japanese Society for the Promotion of Science (JSPS)
+    description: Japan
+    type: FUNDING_BODY
+    
+  kks:
+    eid: funding_body-kks
+    name: Knowledge Foundation (KKS)
+    description: Sweden
+    type: FUNDING_BODY
+    
+  kaws:
+    eid: funding_body-kaws
+    name: Knut and Alice Wallenberg Foundation (KAWS)
+    description: Sweden
+    type: FUNDING_BODY
+    
+  caixa:
+    eid: funding_body-caixa
+    name: La Caixa Foundation (CAIXA)
+    description: Spain
+    type: FUNDING_BODY
+    
+  mcst:
+    eid: funding_body-mcst
+    name: Malta Council for Science and Technology (MCST)
+    description: Malta
+    type: FUNDING_BODY
+    
+  mpg:
+    eid: funding_body-mpg
+    name: Max Planck Society for the Advancement of Science (MPG)
+    description: Germany
+    type: FUNDING_BODY
+    
+  mrc:
+    eid: funding_body-mrc
+    name: Medical Research Council (MRC)
+    description: United Kingdom
+    type: FUNDING_BODY
+    
+  mgrt:
+    eid: funding_body-mgrt
+    name: Ministry for Economic Development and Technology (MGRT)
+    description: Slovenia
+    type: FUNDING_BODY
+    
+  mineco:
+    eid: funding_body-mineco
+    name: Ministry for Economy and Competitveness (MINECO)
+    description: Spain
+    type: FUNDING_BODY
+    
+  mecr:
+    eid: funding_body-mecr
+    name: Ministry for Education and Scientific Research (MECR)
+    description: Romania
+    type: FUNDING_BODY
+    
+  miur:
+    eid: funding_body-miur
+    name: Ministry for Education University and Research (MIUR)
+    description: Italy
+    type: FUNDING_BODY
+    
+  mestd:
+    eid: funding_body-mestd
+    name: Ministry of Education Science and Technological Development of Republic of Serbia (MESTD)
+    description: Serbia
+    type: FUNDING_BODY
+    
+  mesr:
+    eid: funding_body-mesr
+    name: Ministry of Higher Education and Research (MESR)
+    description: France
+    type: FUNDING_BODY
+    
+  mse:
+    eid: funding_body-mse
+    name: Ministry of Science and Education Republic of Croatia (MSE)
+    description: Croatia
+    type: FUNDING_BODY
+    
+  most:
+    eid: funding_body-most
+    name: Ministry of Science and Technology of the People's Republic of China (MOST)
+    description: China
+    type: FUNDING_BODY
+    
+  nasa:
+    eid: funding_body-nasa
+    name: National Aeronautics and Space Administration (NASA)
+    description: United States
+    type: FUNDING_BODY
+    
+  ancs:
+    eid: funding_body-ancs
+    name: National Authority for Scientific Research (ANCS)
+    description: Romania
+    type: FUNDING_BODY
+    
+  ncbir:
+    eid: funding_body-ncbir
+    name: National Centre for Research and Development (NCBiR)
+    description: Poland
+    type: FUNDING_BODY
+    
+  cnrs:
+    eid: funding_body-cnrs
+    name: National Centre for Scientific Research (CNRS)
+    description: France
+    type: FUNDING_BODY
+    
+  cnes:
+    eid: funding_body-cnes
+    name: National Centre for Space Studies (CNES)
+    description: France
+    type: FUNDING_BODY
+    
+  cnpq:
+    eid: funding_body-cnpq
+    name: National Council for Scientific and Technological Development (CNPq)
+    description: Brazil
+    type: FUNDING_BODY
+    
+  oenfte:
+    eid: funding_body-oenfte
+    name: National Foundation for Research Technology and Development (OeNFTE)
+    description: Austria
+    type: FUNDING_BODY
+    
+  nhmrc:
+    eid: funding_body-nhmrc
+    name: National Health and Medical Research Council (NHMRC)
+    description: Australia
+    type: FUNDING_BODY
+    
+  inra:
+    eid: funding_body-inra
+    name: National institute of Agricultural Research (INRA)
+    description: France
+    type: FUNDING_BODY
+    
+  inserm:
+    eid: funding_body-inserm
+    name: National Institute of Health and Medical Research (INSERM)
+    description: France
+    type: FUNDING_BODY
+    
+  nig:
+    eid: funding_body-nig
+    name: National Institutes of Health (NIG)
+    description: United States
+    type: FUNDING_BODY
+    
+  cnr:
+    eid: funding_body-cnr
+    name: National Research Council (CNR)
+    description: Italy
+    type: FUNDING_BODY
+    
+  nrf:
+    eid: funding_body-nrf
+    name: National Research Foundation (NRF)
+    description: South Africa
+    type: FUNDING_BODY
+    
+  fnr:
+    eid: funding_body-fnr
+    name: National Research Fund (FNR)
+    description: Luxembourg
+    type: FUNDING_BODY
+    
+  nkfia:
+    eid: funding_body-nkfia
+    name: National Research Development and Innovation Fund (NKFIA)
+    description: Hungary
+    type: FUNDING_BODY
+    
+  ncn:
+    eid: funding_body-ncn
+    name: National Science Center (NCN)
+    description: Poland
+    type: FUNDING_BODY
+    
+  nsf:
+    eid: funding_body-nsf
+    name: National Science Foundation (NSF)
+    description: United States
+    type: FUNDING_BODY
+    
+  cncsis:
+    eid: funding_body-cncsis
+    name: National University Research Council (CNCSIS) - Romania
+    description: Romania
+    type: FUNDING_BODY
+    
+  nerc:
+    eid: funding_body-nerc
+    name: Natural Environment Research Council (NERC)
+    description: United Kingdom
+    type: FUNDING_BODY
+    
+  nserc:
+    eid: funding_body-nserc
+    name: Natural Sciences and Engineering Research Council of Canada (NSERC)
+    description: Canada
+    type: FUNDING_BODY
+    
+  nwo:
+    eid: funding_body-nwo
+    name: Netherlands Organisation for Scientific Research (NWO)
+    description: Netherlands
+    type: FUNDING_BODY
+    
+  rcuk:
+    eid: funding_body-rcuk
+    name: Research Council UK (RCUK)
+    description: United Kingdom
+    type: FUNDING_BODY
+    
+  apvv:
+    eid: funding_body-apvv
+    name: Research and Development Agency (APVV)
+    description: Slovakia
+    type: FUNDING_BODY
+    
+  lmt:
+    eid: funding_body-lmt
+    name: Research Council of Lithuania (LMT)
+    description: Lithuania
+    type: FUNDING_BODY
+    
+  rcn:
+    eid: funding_body-rcn
+    name: Research Council of Norway (RCN)
+    description: Norway
+    type: FUNDING_BODY
+    
+  fwo:
+    eid: funding_body-fwo
+    name: Research Foundation Flanders (FWO)
+    description: Belgium
+    type: FUNDING_BODY
+    
+  rpf:
+    eid: funding_body-rpf
+    name: Research Promotion Foundation (RPF)
+    description: Cyprus
+    type: FUNDING_BODY
+    
+  fapesp:
+    eid: funding_body-fapesp
+    name: São Paulo Research Foundation (FAPESP)
+    description: Brazil
+    type: FUNDING_BODY
+    
+  stfc:
+    eid: funding_body-stfc
+    name: Science and Technology Facilities Council (STFC)
+    description: United Kingdom
+    type: FUNDING_BODY
+    
+  sfi:
+    eid: funding_body-sfi
+    name: Science Foundation Ireland (SFI)
+    description: Ireland
+    type: FUNDING_BODY
+    
+  tubitak:
+    eid: funding_body-tubitak
+    name: Scientific and Technological Research Council of Turkey (TUBITAK)
+    description: Turkey
+    type: FUNDING_BODY
+    
+  vega:
+    eid: funding_body-vega
+    name: Scientific Grant Agency (VEGA)
+    description: Slovakia
+    type: FUNDING_BODY
+    
+  sgpi:
+    eid: funding_body-sgpi
+    name: Secretariat-General for Investment (SGPI)
+    description: France
+    type: FUNDING_BODY
+    
+  arrs:
+    eid: funding_body-arrs
+    name: Slovenian Research Agency (ARRS)
+    description: Slovenia
+    type: FUNDING_BODY
+    
+  sshrc:
+    eid: funding_body-sshrc
+    name: Social Sciences and Humanities Research Council (SSHRC)
+    description: Canada
+    type: FUNDING_BODY
+    
+  csic:
+    eid: funding_body-csic
+    name: Spanish National Research Council (CSIC)
+    description: Spain
+    type: FUNDING_BODY
+    
+  viaa:
+    eid: funding_body-viaa
+    name: State Education Development Agency (VIAA)
+    description: Latvia
+    type: FUNDING_BODY
+    
+  sea:
+    eid: funding_body-sea
+    name: Swedish Energy Agency (SEA)
+    description: Sweden
+    type: FUNDING_BODY
+    
+  sepa:
+    eid: funding_body-sepa
+    name: Swedish Environmental Protection Agency (SEPA)
+    description: Sweden
+    type: FUNDING_BODY
+    
+  mistra:
+    eid: funding_body-mistra
+    name: Swedish Foundation for Strategic Environmental Research (MISTRA)
+    description: Sweden
+    type: FUNDING_BODY
+    
+  ssf:
+    eid: funding_body-ssf
+    name: Swedish Foundation for Strategic Research (SSF)
+    description: Sweden
+    type: FUNDING_BODY
+    
+  vinnova:
+    eid: funding_body-vinnova
+    name: Swedish Governmental Agency for Innovation Systems (VINNOVA)
+    description: Sweden
+    type: FUNDING_BODY
+    
+  snsb:
+    eid: funding_body-snsb
+    name: Swedish National Space Board (SNSB)
+    description: Sweden
+    type: FUNDING_BODY
+    
+  srsa:
+    eid: funding_body-srsa
+    name: Swedish Radiation Safety Authority (SRSA)
+    description: Sweden
+    type: FUNDING_BODY
+    
+  srcf:
+    eid: funding_body-srcf
+    name: Swedish Reseach Council Formas (SRCF)
+    description: Sweden
+    type: FUNDING_BODY
+    
+  vr:
+    eid: funding_body-vr
+    name: Swedish Research Council (VR)
+    description: Sweden
+    type: FUNDING_BODY
+    
+  forte:
+    eid: funding_body-forte
+    name: Swedish Research Council for Health Working Life and Welfare (FORTE)
+    description: Sweden
+    type: FUNDING_BODY
+    
+  snf:
+    eid: funding_body-snf
+    name: Swiss National Science Foundation (SNF)
+    description: Switzerland
+    type: FUNDING_BODY
+    
+  tara:
+    eid: funding_body-tara
+    name: Tara Expeditions Foundation (TARA)
+    description: France
+    type: FUNDING_BODY
+    
+  tacr:
+    eid: funding_body-tacr
+    name: Technology Agency of the Czech Republic (TACR)
+    description: Czechia
+    type: FUNDING_BODY
+    
+  stw:
+    eid: funding_body-stw
+    name: Technology Foundation (STW)
+    description: Netherlands
+    type: FUNDING_BODY
+    
+  ddf:
+    eid: funding_body-ddf
+    name: The Danish Council for Independent Research (DDF)
+    description: Denmark
+    type: FUNDING_BODY
+    
+  sr:
+    eid: funding_body-msvvas_sr
+    name: The Ministry of Education Science Research and Sports of the Slovak Republic (MSVVaS SR)
+    description: Slovakia
+    type: FUNDING_BODY
+    
+  rj:
+    eid: funding_body-rj
+    name: The Swedish Foundation for Humanities and Social Sciences (RJ)
+    description: Sweden
+    type: FUNDING_BODY
+    
+  ukri:
+    eid: funding_body-ukri
+    name: UK Research and Innovation (UKRI)
+    description: United Kingdom
+    type: FUNDING_BODY
+    
+  wwtf:
+    eid: funding_body-wwtf
+    name: Vienna Science and Technology Fund (WWTF)
+    description: Austria
+    type: FUNDING_BODY
+    
+  vs:
+    eid: funding_body-vs
+    name: Volkswagen Foundation (VS)
+    description: Germany
+    type: FUNDING_BODY
+    
+  wt:
+    eid: funding_body-wt
+    name: Wellcome trust (WT)
+    description: United Kingdom
+    type: FUNDING_BODY
+    
+  other:
+    eid: funding_body-other
+    name: Other
+    type: FUNDING_BODY
+
+funding_program:
+  afis2020:
+    eid: funding_program-afis2020
+    name: Anti Fraud Information System (AFIS2020)
+    type: FUNDING_PROGRAM
+
+  agr:
+    eid: funding_program-agr
+    name: European Agricultural Guarantee Fund (after transfers between EAGF and EAFRD) (AGR)
+    type: FUNDING_PROGRAM
+
+  agrnet:
+    eid: funding_program-agrnet
+    name: Net transfer between EAGF and EAFRD (AGRNET)
+    type: FUNDING_PROGRAM
+
+  amf:
+    eid: funding_program-amf
+    name: Asylum Migration and Integration Fund (AMF)
+    type: FUNDING_PROGRAM
+
+  cdf2020:
+    eid: funding_program-cdf2020
+    name: Rights equality and citizenship programme (CDF2020)
+    type: FUNDING_PROGRAM
+
+  cef:
+    eid: funding_program-cef
+    name: Connecting Europe Facility (CEF)
+    type: FUNDING_PROGRAM
+
+  cf:
+    eid: funding_program-cf
+    name: Cohesion Fund (CF)
+    type: FUNDING_PROGRAM
+
+  cfsp:
+    eid: funding_program-cfsp
+    name: Common foreign and security policy (CFSP2020)
+    type: FUNDING_PROGRAM
+
+  cf_det:
+    eid: funding_program-cf_det
+    name: Contribution from the Cohesion Fund to the CEF programme (CF_DET)
+    type: FUNDING_PROGRAM
+
+  cit2020:
+    eid: funding_program-cit2020
+    name: Europe for Citizens (CIT2020)
+    type: FUNDING_PROGRAM
+
+  compreg:
+    eid: funding_program-compreg
+    name: Competitiveness (more developed regions) (COMPREG)
+    type: FUNDING_PROGRAM
+
+  cons:
+    eid: funding_program-cons
+    name: Consumer programme (CONS)
+    type: FUNDING_PROGRAM
+
+  copernicus:
+    eid: funding_program-copernicus
+    name: European Earth Observation Programme (COPERNICUS)
+    type: FUNDING_PROGRAM
+
+  cosme:
+    eid: funding_program-cosme
+    name: Programme for the competitiveness of enterprises and small and medium-sized enterprises (COSME)
+    type: FUNDING_PROGRAM
+
+  cpm_h3:
+    eid: funding_program-cpm_h3
+    name: Union Civil Protection Mechanism — Member States (CPM_H3)
+    type: FUNDING_PROGRAM
+
+  cpm_h4:
+    eid: funding_program-cpm_h4
+    name: Union Civil Protection Mechanism — Outside EU (CPM_H4)
+    type: FUNDING_PROGRAM
+
+  crea:
+    eid: funding_program-crea
+    name: Creative Europe programme (CREA)
+    type: FUNDING_PROGRAM
+
+  cust2020:
+    eid: funding_program-cust2020
+    name: Action programme for customs in the European Union (CUST 2020)
+    type: FUNDING_PROGRAM
+
+  dci2020:
+    eid: funding_program-dci2020
+    name: Development Cooperation Instrument (DCI2020)
+    type: FUNDING_PROGRAM
+
+  e4a:
+    eid: funding_program-e4a
+    name: The Union programme for education training youth and sport (Erasmus+) (E4A)
+    type: FUNDING_PROGRAM
+
+  eafrd:
+    eid: funding_program-eafrd
+    name: European Agricultural Fund for Rural Development (after transfers between EAGF and EAFRD) (EAFRD)
+    type: FUNDING_PROGRAM
+
+  eafrd2020:
+    eid: funding_program-eafrd2020
+    name: European Agricultural Fund for Rural Development (EAFRD2020)
+    type: FUNDING_PROGRAM
+
+  eagf2020:
+    eid: funding_program-eagf2020
+    name: European Agricultural Guarantee Fund (EAGF2020)
+    type: FUNDING_PROGRAM
+
+  ear2020:
+    eid: funding_program-ear2020
+    name: Emergency Aid Reserve (EAR2020)
+    type: FUNDING_PROGRAM
+
+  eerp:
+    eid: funding_program-eerp
+    name: Energy projects to aid economic recovery (EERP)
+    type: FUNDING_PROGRAM
+
+  efsd:
+    eid: funding_program-efsd
+    name: European Fund for Sustainable Development (EFSD)
+    type: FUNDING_PROGRAM
+
+  efsi:
+    eid: funding_program-efsi
+    name: European Fund for Strategic Investments (EFSI)
+    type: FUNDING_PROGRAM
+
+  egf2020:
+    eid: funding_program-egf2020
+    name: European Globalisation Adjustment Fund (EGF2020)
+    type: FUNDING_PROGRAM
+
+  eidhr2020:
+    eid: funding_program-eidhr2020
+    name: European Instrument for Democracy and Human Rights (EIDHR2020)
+    type: FUNDING_PROGRAM
+
+  emff2020:
+    eid: funding_program-emff2020
+    name: European Maritime and Fisheries Fund (EMFF2020)
+    type: FUNDING_PROGRAM
+
+  eni:
+    eid: funding_program-eni
+    name: European Neighbourhood Instrument (ENI)
+    type: FUNDING_PROGRAM
+
+  erdf:
+    eid: funding_program-erdf
+    name: European Regional Development Fund (ERDF)
+    type: FUNDING_PROGRAM
+
+  esc:
+    eid: funding_program-esc
+    name: European Solidarity Corps (ESC)
+    type: FUNDING_PROGRAM
+
+  esf:
+    eid: funding_program-esf
+    name: European Social Fund (ESF)
+    type: FUNDING_PROGRAM
+
+  esp2017:
+    eid: funding_program-esp2017
+    name: European statistical programme (ESP2017)
+    type: FUNDING_PROGRAM
+
+  esp2020:
+    eid: funding_program-esp2020
+    name: European statistical programme (ESP2020)
+    type: FUNDING_PROGRAM
+
+  euav:
+    eid: funding_program-euav
+    name: EU Aid Volunteers initiative (EUAV)
+    type: FUNDING_PROGRAM
+
+  euratom:
+    eid: funding_program-euratom
+    name: Euratom research and training programme (EURATOM)
+    type: FUNDING_PROGRAM
+
+  eurodac2020:
+    eid: funding_program-eurodac2020
+    name: Comparison of fingerprints for the effective application of the Dublin Convention (EURODAC2020)
+    type: FUNDING_PROGRAM
+
+  eusf2020:
+    eid: funding_program-eusf2020
+    name: European Union Solidarity Fund (EUSF2020)
+    type: FUNDING_PROGRAM
+
+  eusf_h3:
+    eid: funding_program-eusf_h3
+    name: European Union Solidarity Fund (EUSF) — Member States (EUSF_H3)
+    type: FUNDING_PROGRAM
+
+  eusf_h4:
+    eid: funding_program-eusf_h4
+    name: European Union Solidarity Fund (EUSF) — Countries negotiating for accession (EUSF_H4)
+    type: FUNDING_PROGRAM
+
+  fead:
+    eid: funding_program-fead
+    name: Fund for European Aid to the Most Deprived (FEAD)
+    type: FUNDING_PROGRAM
+
+  ff2020:
+    eid: funding_program-ff2020
+    name: Food and feed (FF2020)
+    type: FUNDING_PROGRAM
+
+  finser2020:
+    eid: funding_program-finser2020
+    name: Specific activities in the field of financial reporting and auditing (FINSER2020)
+    type: FUNDING_PROGRAM
+
+  fisc2020:
+    eid: funding_program-fisc2020
+    name: Action programme for taxation in the European Union (FISC2020)
+    type: FUNDING_PROGRAM
+
+  gal2014:
+    eid: funding_program-gal2014
+    name: Implementation and exploitation of European satellite navigation systems (EGNOS and Galileo) (GAL2014)
+    type: FUNDING_PROGRAM
+
+  grld2020:
+    eid: funding_program-grld2020
+    name: EU cooperation with Greenland (GRLD2020)
+    type: FUNDING_PROGRAM
+
+  h2020:
+    eid: funding_program-h2020
+    name: The framework programme for research and innovation (H2020)
+    type: FUNDING_PROGRAM
+
+  health:
+    eid: funding_program-health
+    name: Union's action in the field of health (Health programme) (HEALTH)
+    type: FUNDING_PROGRAM
+
+  herc3:
+    eid: funding_program-herc3
+    name: Programme to promote activities in the field of the protection of the European Union's financial interests (HERC3)
+    type: FUNDING_PROGRAM
+
+  hfr2015:
+    eid: funding_program-hfr2015
+    name: Supplementary high flux reactor (HFR) programmes (HFR2015)
+    type: FUNDING_PROGRAM
+
+  huma2020:
+    eid: funding_program-huma2020
+    name: Humanitarian aid (HUMA2020)
+    type: FUNDING_PROGRAM
+
+  icfs:
+    eid: funding_program-icfs
+    name: Enhancing consumers involvement in EU policy making in the field of financial services (ICFS)
+    type: FUNDING_PROGRAM
+
+  ies:
+    eid: funding_program-ies
+    name: Instrument for emergency support within the Union (IES)
+    type: FUNDING_PROGRAM
+
+  ifs2020:
+    eid: funding_program-ifs2020
+    name: Instrument contributing to Stability and Peace (IFS2020)
+    type: FUNDING_PROGRAM
+
+  insc2020:
+    eid: funding_program-insc2020
+    name: Instrument for Nuclear Safety Cooperation (INSC2020)
+    type: FUNDING_PROGRAM
+
+  ipa2:
+    eid: funding_program-ipa2
+    name: Instrument for Pre-accession Assistance (IPA2)
+    type: FUNDING_PROGRAM
+
+  isa2015:
+    eid: funding_program-isa2015
+    name: Interoperability Solutions for European Public Administrations (ISA2015)
+    type: FUNDING_PROGRAM
+
+  isa2020:
+    eid: funding_program-isa2020
+    name: Interoperability Solutions for European public administrations businesses and citizens (ISA2020)
+    type: FUNDING_PROGRAM
+
+  isf:
+    eid: funding_program-isf
+    name: Internal Security Fund (ISF)
+    type: FUNDING_PROGRAM
+
+  iter:
+    eid: funding_program-iter
+    name: International thermonuclear experimental reactor (ITER)
+    type: FUNDING_PROGRAM
+
+  just:
+    eid: funding_program-just
+    name: Justice programme (JUST)
+    type: FUNDING_PROGRAM
+
+  life2020:
+    eid: funding_program-life2020
+    name: Programme for the Environment and Climate Action (LIFE2020)
+    type: FUNDING_PROGRAM
+
+  loan2020:
+    eid: funding_program-loan2020
+    name: Guarantee Fund for external actions (LOAN2020)
+    type: FUNDING_PROGRAM
+
+  mfa:
+    eid: funding_program-mfa
+    name: Macro financial assistance (MFA)
+    type: FUNDING_PROGRAM
+
+  nd:
+    eid: funding_program-nd
+    name: Nuclear decommissioning assistance programmes in Bulgaria Lithuania and Slovakia (ND)
+    type: FUNDING_PROGRAM
+
+  outreg:
+    eid: funding_program-outreg
+    name: Outermost and sparsely populated regions (OUTREG)
+    type: FUNDING_PROGRAM
+
+  peri2020:
+    eid: funding_program-peri2020
+    name: Exchange assistance and training programme for the protection of the euro against counterfeiting (PERI2020)
+    type: FUNDING_PROGRAM
+
+  pi:
+    eid: funding_program-pi
+    name: Partnership instrument for cooperation with third countries (PI)
+    type: FUNDING_PROGRAM
+
+  psci:
+    eid: funding_program-psci
+    name: European Union programme for employment and social innovation (PSCI)
+    type: FUNDING_PROGRAM
+
+  regconv:
+    eid: funding_program-regconv
+    name: Regional convergence (REGCONV)
+    type: FUNDING_PROGRAM
+
+  rfmos:
+    eid: funding_program-rfmos
+    name: Compulsory contributions to regional fisheries management organisations (RFMOs) and to other international organisations
+    type: FUNDING_PROGRAM
+
+  sfpas:
+    eid: funding_program-sfpas
+    name: Sustainable Fisheries Partnership Agreements (SFPAs)
+    type: FUNDING_PROGRAM
+
+  sis2020:
+    eid: funding_program-sis2020
+    name: Schengen Information System (SIS2020)
+    type: FUNDING_PROGRAM
+
+  ta_ia:
+    eid: funding_program-ta_ia
+    name: Technical assistance and innovative actions (TA_IA)
+    type: FUNDING_PROGRAM
+
+  tcc:
+    eid: funding_program-tcc
+    name: Instrument of financial support for encouraging the economic development of the Turkish Cypriot community (TCC)
+    type: FUNDING_PROGRAM
+
+  terrcoop:
+    eid: funding_program-terrcoop
+    name: European territorial cooperation (TERRCOOP)
+    type: FUNDING_PROGRAM
+
+  transreg:
+    eid: funding_program-transreg
+    name: Transition regions (TRANSREG)
+    type: FUNDING_PROGRAM
+
+  vis2020:
+    eid: funding_program-vis2020
+    name: Visa Information System (VIS2020)
+    type: FUNDING_PROGRAM
+
+  yei:
+    eid: funding_program-yei
+    name: Youth employment initiative (specific top-up allocation) (YEI))
+    type: FUNDING_PROGRAM
+
+  other:
+    eid: funding_program-other
+    name: Other
+    type: FUNDING_PROGRAM
