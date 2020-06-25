@@ -56,7 +56,7 @@ FactoryBot.define do
            "Scientific publications",
            "Scholarly content"]
         },
-        "targetUsers" => "Researchers, SMEs, citizen scientists, anyone interested in TDM",
+        "targetUsers" => "Researchers, Risk assessors",
         "termsOfUse" => { "termOfUse" => "https://services.openminted.eu/support/termsAndConditions" },
         "trainingInformation" => "http://openminted.eu/support-training/",
         "trl" => "trl-8",

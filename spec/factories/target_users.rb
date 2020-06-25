@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :target_user do
-    sequence(:name) { |n| "target group #{n}" }
+    sequence(:name) { |n| "target user #{n}" }
   end
 end

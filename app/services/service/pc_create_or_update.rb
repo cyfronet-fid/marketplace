@@ -86,8 +86,13 @@ class Service::PcCreateOrUpdate
         providers: [map_provider(data["providers"]["provider"])],
         categories: map_category(data["category"]),
         scientific_domains: [scientific_domain_other],
-        version: data["version"] || ""
+        version: data["version"] || "",
+        target_users: map_target_users(data["targetUsers"])
       }
+    end
+
+    def map_target_users(target_users)
+      TargetUser.where(name: target_users.split(", "))
     end
 
     def map_provider(prov_eid)

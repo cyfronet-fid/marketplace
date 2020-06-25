@@ -24,6 +24,8 @@ RSpec.describe Service::PcCreateOrUpdate do
       trl_8 = create(:trl, name: "trl 7", eid: "trl-8")
       life_cycle_status = create(:life_cycle_status, name: "prod", eid: "production")
       unirest = Unirest
+      create(:target_user, name: "Researchers")
+      create(:target_user, name: "Risk assessors")
       provider_response = double(code: 200, body: create(:eic_provider_response))
 
       expect(unirest).to receive(:get).with("#{test_url}/api/provider/#{provider_eid}",
@@ -71,6 +73,7 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.version).to eq("1.0")
       expect(service.trl).to eq([trl_8])
       expect(service.life_cycle_status).to eq([life_cycle_status])
+      expect(service.target_users.count).to eq(2)
     end
 
     it "should create new service with new provider" do
