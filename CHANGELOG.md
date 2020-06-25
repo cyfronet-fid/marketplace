@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service `title` to `name` (@goreck888)
 - name of research area model to scientific domain (@goreck888)
 - `languages` to `language_availability` in service model (@goreck888)
+- `target_group` to `target_user` in service model (@martaswiatkowska)
 
 ### Deprecated
 
