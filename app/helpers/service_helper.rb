@@ -29,11 +29,11 @@ module ServiceHelper
   end
 
   def dedicated_for_links(service)
-    service.target_groups.map { |target| link_to(target.name, services_path(target_groups: target)) }
+    service.target_users.map { |target| link_to(target.name, services_path(target_users: target)) }
   end
 
   def dedicated_for_text(service)
-    service.target_groups.map { |target| target.name }
+    service.target_users.map { |target| target.name }
   end
 
   def scientific_domains(service)

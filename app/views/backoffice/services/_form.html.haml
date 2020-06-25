@@ -24,11 +24,11 @@
                   disabled: cant_edit([scientific_domain_ids: []]),
                   collection: ScientificDomain.child_names.map { |name, sd| [name, sd.id] },
                   label_method: :first, value_method: :second
-  = f.association :target_groups,
+  = f.association :target_users,
                   label: "Dedicated For",
-                  input_html: { data: { choice: true }, class: "target_groups" },
+                  input_html: { data: { choice: true }, class: "target_users" },
                   include_hidden: false,
-                  disabled: cant_edit([target_group_ids: []])
+                  disabled: cant_edit([target_user_ids: []])
   = f.association :funding_bodies, input_html: { data: { choice: true } },
                   disabled: cant_edit([funding_body_ids: []])
   = f.association :funding_programs, input_html: { data: { choice: true } },
@@ -110,4 +110,3 @@
         "data-action": "click->service#clearEmptyEmails"
       = back_link_to "Cancel and back to previous page", service, prefix: :backoffice,
         class: "text-left flex-grow-1 text-uppercase"
-
