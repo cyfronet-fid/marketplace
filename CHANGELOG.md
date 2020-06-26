@@ -17,9 +17,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
- - Added missing homepage graphics (@jarekzet)
  
 ### Security
+
+## [2.10.5] 2020-06-26
+
+### Fixed
+ - Added missing homepage graphics (@jarekzet)
 
 ## [2.10.4] 2020-06-22
 
