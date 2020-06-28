@@ -18,7 +18,6 @@ export default class extends Controller {
     const region = element.dataset.region;
     var map = this.returnRegion(region);
 
-
     Highcharts.mapChart(element, {
       chart: {
         map: map,
