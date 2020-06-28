@@ -81,10 +81,11 @@
 
       %h5 Service Availability
       - if @service.geographical_availabilities.present?
-        - map_data = data_for_map(@service.geographical_availabilities)
+        - map_data = data_for_map(@service.geographical_availabilities) if @service.geographical_availabilities.any?
         - if map_data.present?
-          .geographical_availabilities-map{ "data-controller": "map", "data-geographical-availabilities": map_data,
-                       "data-region": @service.geographical_availabilities }
+          .geographical_availabilities-map{ "data-controller": "map",
+                                            "data-geographical_availabilities": map_data,
+                                            "data-region": @service.geographical_availabilities.map(&:alpha2) }
 
       %hr
 

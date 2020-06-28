@@ -34,7 +34,7 @@ class Service < ApplicationRecord
 
   SIDEBAR_FIELDS = [{ name: "geographical_availabilities_and_languages",
                       template: "array",
-                      fields: ["languages"] },
+                      fields: ["geographical_availabilities"] },
                     { name: "service_availability",
                       template: "map",
                       fields: ["geographical_availabilities"] },
