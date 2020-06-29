@@ -2780,7 +2780,7 @@ label[data-multicheckbox].small {
 // scss-lint:disable all
 .modal-content {
   .form-control,
-  .project_research_areas {
+  .project_scientific_domains  {
     width: 100%;
     max-width: 100%;
   }
@@ -3623,7 +3623,7 @@ textarea.form-control.is-invalid {
   }
 
   .user_categories_updates,
-  .user_research_areas_updates {
+  .user_scientific_domains_updates {
     font-size: 1rem;
     margin: 0 0 20px;
 

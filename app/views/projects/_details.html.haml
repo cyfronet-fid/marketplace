@@ -42,9 +42,9 @@
     %dt Webpage
     %dd= project.webpage
 
-  - if project.research_areas.present?
-    %dt Research Areas
-  - project.research_areas.each do |area|
+  - if project.scientific_domains .present?
+    %dt Scientific Domains
+  - project.scientific_domains .each do |area|
     %dd= area.name
 
   - if project.research?

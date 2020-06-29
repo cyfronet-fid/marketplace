@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_05_135702) do
+ActiveRecord::Schema.define(version: 2020_06_17_145432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -188,14 +188,14 @@ ActiveRecord::Schema.define(version: 2020_06_05_135702) do
     t.index ["project_id"], name: "index_project_items_on_project_id"
   end
 
-  create_table "project_research_areas", force: :cascade do |t|
+  create_table "project_scientific_domains", force: :cascade do |t|
     t.bigint "project_id"
-    t.bigint "research_area_id"
+    t.bigint "scientific_domain_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["project_id", "research_area_id"], name: "index_project_research_areas_on_project_id_and_research_area_id", unique: true
-    t.index ["project_id"], name: "index_project_research_areas_on_project_id"
-    t.index ["research_area_id"], name: "index_project_research_areas_on_research_area_id"
+    t.index ["project_id", "scientific_domain_id"], name: "index_psd_on_service_id_and_sd_id", unique: true
+    t.index ["project_id"], name: "index_project_scientific_domains_on_project_id"
+    t.index ["scientific_domain_id"], name: "index_project_scientific_domains_on_scientific_domain_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -242,11 +242,11 @@ ActiveRecord::Schema.define(version: 2020_06_05_135702) do
     t.index ["name"], name: "index_providers_on_name", unique: true
   end
 
-  create_table "research_areas", force: :cascade do |t|
+  create_table "scientific_domains", force: :cascade do |t|
     t.text "name", null: false
     t.string "ancestry"
     t.integer "ancestry_depth", default: 0
-    t.index ["name", "ancestry"], name: "index_research_areas_on_name_and_ancestry", unique: true
+    t.index ["name", "ancestry"], name: "index_scientific_domains_on_name_and_ancestry", unique: true
   end
 
   create_table "service_opinions", force: :cascade do |t|
@@ -287,14 +287,14 @@ ActiveRecord::Schema.define(version: 2020_06_05_135702) do
     t.index ["target_id"], name: "index_service_relationships_on_target_id"
   end
 
-  create_table "service_research_areas", force: :cascade do |t|
+  create_table "service_scientific_domains", force: :cascade do |t|
     t.bigint "service_id"
-    t.bigint "research_area_id"
+    t.bigint "scientific_domain_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["research_area_id"], name: "index_service_research_areas_on_research_area_id"
-    t.index ["service_id", "research_area_id"], name: "index_service_research_areas_on_service_id_and_research_area_id", unique: true
-    t.index ["service_id"], name: "index_service_research_areas_on_service_id"
+    t.index ["scientific_domain_id"], name: "index_service_scientific_domains_on_scientific_domain_id"
+    t.index ["service_id", "scientific_domain_id"], name: "index_ssd_on_service_id_and_sd_id", unique: true
+    t.index ["service_id"], name: "index_service_scientific_domains_on_service_id"
   end
 
   create_table "service_sources", force: :cascade do |t|
@@ -420,14 +420,14 @@ ActiveRecord::Schema.define(version: 2020_06_05_135702) do
     t.index ["user_id"], name: "index_user_categories_on_user_id"
   end
 
-  create_table "user_research_areas", force: :cascade do |t|
+  create_table "user_scientific_domains", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "research_area_id"
+    t.bigint "scientific_domain_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["research_area_id"], name: "index_user_research_areas_on_research_area_id"
-    t.index ["user_id", "research_area_id"], name: "index_user_research_areas_on_user_id_and_research_area_id", unique: true
-    t.index ["user_id"], name: "index_user_research_areas_on_user_id"
+    t.index ["scientific_domain_id"], name: "index_user_scientific_domains_on_scientific_domain_id"
+    t.index ["user_id", "scientific_domain_id"], name: "index_usd_on_service_id_and_sd_id", unique: true
+    t.index ["user_id"], name: "index_user_scientific_domains_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -447,7 +447,7 @@ ActiveRecord::Schema.define(version: 2020_06_05_135702) do
     t.integer "roles_mask"
     t.integer "owned_services_count", default: 0, null: false
     t.boolean "categories_updates", default: false, null: false
-    t.boolean "research_areas_updates", default: false, null: false
+    t.boolean "scientific_domains_updates", default: false, null: false
     t.index ["email"], name: "index_users_on_email"
   end
 
@@ -455,16 +455,16 @@ ActiveRecord::Schema.define(version: 2020_06_05_135702) do
   add_foreign_key "project_item_changes", "users", column: "author_id"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
-  add_foreign_key "project_research_areas", "projects"
-  add_foreign_key "project_research_areas", "research_areas"
+  add_foreign_key "project_scientific_domains", "projects"
+  add_foreign_key "project_scientific_domains", "scientific_domains"
   add_foreign_key "service_providers", "providers"
   add_foreign_key "service_providers", "services"
   add_foreign_key "service_related_platforms", "platforms"
   add_foreign_key "service_related_platforms", "services"
   add_foreign_key "service_relationships", "services", column: "source_id"
   add_foreign_key "service_relationships", "services", column: "target_id"
-  add_foreign_key "service_research_areas", "research_areas"
-  add_foreign_key "service_research_areas", "services"
+  add_foreign_key "service_scientific_domains", "scientific_domains"
+  add_foreign_key "service_scientific_domains", "services"
   add_foreign_key "service_target_groups", "services"
   add_foreign_key "service_target_groups", "target_groups"
   add_foreign_key "service_user_relationships", "services"
@@ -473,6 +473,6 @@ ActiveRecord::Schema.define(version: 2020_06_05_135702) do
   add_foreign_key "services", "service_sources", column: "upstream_id", on_delete: :nullify
   add_foreign_key "user_categories", "categories"
   add_foreign_key "user_categories", "users"
-  add_foreign_key "user_research_areas", "research_areas"
-  add_foreign_key "user_research_areas", "users"
+  add_foreign_key "user_scientific_domains", "scientific_domains"
+  add_foreign_key "user_scientific_domains", "users"
 end

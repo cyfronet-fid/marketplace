@@ -7,9 +7,9 @@ class HomeController < ApplicationController
     @learn_more_section = LeadSection.includes(:leads).find_by(slug: "learn-more")
     @use_cases_section = LeadSection.includes(:leads).find_by(slug: "use-cases")
     @root_categories = @root_categories.with_attached_logo
-    @main_research_areas =
-      ResearchArea.with_attached_logo.roots[0...8]
-      .push(ResearchArea.with_attached_logo.find_by(name: "Other"))
+    @main_scientific_domains =
+      ScientificDomain.with_attached_logo.roots[0...8]
+      .push(ScientificDomain.with_attached_logo.find_by(name: "Other"))
       .reject(&:nil?)
   end
 

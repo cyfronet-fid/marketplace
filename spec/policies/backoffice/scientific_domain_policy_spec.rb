@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Backoffice::ResearchAreaPolicy do
+RSpec.describe Backoffice::ScientificDomainPolicy do
   subject { described_class }
 
   permissions :index?, :show?, :new?, :create?, :edit?, :destroy? do

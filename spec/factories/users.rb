@@ -8,14 +8,14 @@ FactoryBot.define do
     password { "12345678" }
     sequence(:uid) { |n| "uid#{n}" }
     factory :user_with_interests do
-      sequence(:research_areas) { |n| [create(:research_area)] }
+      sequence(:scientific_domains) { |n| [create(:scientific_domain)] }
       sequence(:categories) { |n| [create(:category)] }
       sequence(:categories_updates) { true }
-      sequence(:research_areas_updates) { true }
+      sequence(:scientific_domains_updates) { true }
     end
-    factory :user_with_research_areas do
-      sequence(:research_areas) { |n| [create(:research_area)] }
-      sequence(:research_areas_updates) { true }
+    factory :user_with_scientific_domains do
+      sequence(:scientific_domains) { |n| [create(:scientific_domain)] }
+      sequence(:scientific_domains_updates) { true }
     end
     factory :user_with_categories do
       sequence(:categories) { |n| [create(:category)] }

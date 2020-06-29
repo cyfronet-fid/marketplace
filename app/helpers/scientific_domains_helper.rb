@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module ResearchAreasHelper
-  def grouped_research_areas
+module ScientificDomainsHelper
+  def grouped_scientific_domains
     result = []
-    ResearchArea.arrange.
-      each { |k, v| group_research_areas!(result, "/", k, v) }
+    ScientificDomain.arrange.
+      each { |k, v| group_scientific_domains!(result, "/", k, v) }
 
     result.inject({}) do |acc, record|
       k, v = record
@@ -15,11 +15,11 @@ module ResearchAreasHelper
   end
 
   private
-    def group_research_areas!(result, current_path, key, values)
+    def group_scientific_domains!(result, current_path, key, values)
       if values.size > 0
         new_current_path = "#{current_path}#{key.name}/"
         values.
-          each { |k, v| group_research_areas!(result, new_current_path, k, v) }
+          each { |k, v| group_scientific_domains!(result, new_current_path, k, v) }
       else
         result << [current_path, key]
       end
