@@ -1,4 +1,4 @@
 %p Dear #{@user.full_name},
 %p
-  Rate your service: #{link_to @project_item.service.title, service_url(@project_item.service)} using this
+  Rate your service: #{link_to @project_item.service.name, service_url(@project_item.service)} using this
   #{link_to "link", project_service_url(@project, @project_item)}.

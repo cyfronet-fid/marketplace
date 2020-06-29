@@ -108,9 +108,9 @@ class Services::ApplicationController < ApplicationController
 
     def wizard_title
       if step.offer
-        "#{@service.title} - #{step.offer.name}"
+        "#{@service.name} - #{step.offer.name}"
       else
-        @service.title
+        @service.name
       end
     end
 end

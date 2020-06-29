@@ -17,7 +17,7 @@ en:
       question:
         new: SEND
         author: Name and surname
-        text: Your question to provider about %{title}
+        text: Your question to provider about %{name}
       report:
         text: Describe problem precisely
       project_item:

@@ -1,5 +1,5 @@
 %li.projects-list
-  = link_to project_item.service.title, project_service_path(project, project_item)
+  = link_to project_item.service.name, project_service_path(project, project_item)
   .float-right.status
     - if project_item.closed?
       = t("project_items.status.#{project_item.status}")

@@ -73,7 +73,7 @@ module Service::Searchable
 
     def common_params
       {
-          fields: [ "title^7", "tagline^3", "description", "offer_names"],
+          fields: [ "name^7", "tagline^3", "description", "offer_names"],
           operator: "or",
           match: :word_middle
       }

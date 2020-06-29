@@ -1,6 +1,6 @@
 %p Dear #{@user.full_name},
 %p
-  Your request for the #{link_to @project_item.service.title, service_url(@project_item.service)} service was created.
+  Your request for the #{link_to @project_item.service.name, service_url(@project_item.service)} service was created.
   Your order information has been shared and currently under review.
   You can check the details of your order using this #{link_to "link", project_service_url(@project, @project_item)}.
 %p
