@@ -87,7 +87,7 @@ namespace :dev do
                       sla_url: hash["sla_url"],
                       access_policies_url: hash["access_policies_url"],
                       places: hash["places"],
-                      languages: hash["languages"],
+                      language_availability: hash["language_availability"],
                       target_groups: target_groups,
                       restrictions: hash["restrictions"],
                       phase: hash["phase"],

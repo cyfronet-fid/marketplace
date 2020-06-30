@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_17_145432) do
+ActiveRecord::Schema.define(version: 2020_06_19_153511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -337,7 +337,7 @@ ActiveRecord::Schema.define(version: 2020_06_17_145432) do
     t.integer "service_opinion_count", default: 0
     t.text "contact_emails", default: [], array: true
     t.string "places"
-    t.string "languages"
+    t.string "language_availability", default: [], array: true
     t.string "dedicated_for", array: true
     t.string "terms_of_use_url"
     t.string "access_policies_url"
