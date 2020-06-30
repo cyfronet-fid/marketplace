@@ -24,7 +24,8 @@ EIC_SOURCE_FIELDS = [
   :phase,
   :order_type,
   [provider_ids: []],
-  :version
+  :version,
+  [trl_ids: []]
 ]
 
 
@@ -101,7 +102,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       :status_monitoring_url, :maintenance_url,
       :order_url, :payment_model_url, :pricing_url,
       [funding_body_ids: []], [funding_program_ids: []],
-      :activate_message, :logo,
+      :activate_message, :logo, [trl_ids: []],
       [contact_emails: []], [scientific_domain_ids: []],
       [platform_ids: []], :tag_list, [category_ids: []],
       [owner_ids: []], :status, :upstream_id, :version,

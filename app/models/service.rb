@@ -79,6 +79,7 @@ class Service < ApplicationRecord
   has_many :service_vocabularies, dependent: :destroy
   has_many :funding_bodies, through: :service_vocabularies, source: :vocabulary, source_type: "FundingBody"
   has_many :funding_programs, through: :service_vocabularies, source: :vocabulary, source_type: "FundingProgram"
+  has_many :trl, through: :service_vocabularies, source: :vocabulary, source_type: "Trl"
 
   has_many :service_user_relationships, dependent: :destroy
   has_many :owners,
@@ -132,6 +133,7 @@ class Service < ApplicationRecord
   validates :providers, presence: true
   validates :status, presence: true
   validates :order_target, allow_blank: true, email: true
+  validates :trl, length: { maximum: 1 }
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
