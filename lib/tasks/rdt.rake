@@ -49,5 +49,16 @@ namespace :rdt do
       end
       puts "Created funding program: #{hash["name"]}"
     end
+
+    puts "Creating trls from yaml"
+
+    yaml_hash["trl"].each do |_, hash|
+      Trl.find_or_initialize_by(name: hash["name"]) do |trl|
+        trl.update!(name: hash["name"],
+                    eid: hash["eid"],
+                    description: hash["description"])
+      end
+      puts "Created trl: #{hash["name"]}"
+    end
   end
 end

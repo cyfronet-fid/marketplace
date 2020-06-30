@@ -1,0 +1,43 @@
+life_cycle_status:
+  Concept:
+    name: Concept
+    description: Concept development
+  Discovery:
+    name: Discovery
+    description: Researching users needs, exploring technological or policy constraints
+  Design:
+    name: Design
+    description: Resource in design
+  Preparation:
+    name: Preparation
+    description: Resource in preparatory phase
+  Planned:
+    name: Planned
+    description: Resource plan defined
+  Alpha:
+    name: Alpha
+    description: Resource proto type available for closed set of users
+  Beta:
+    name: Beta
+    description: Resource being developed while available for testing publicly
+  Implementation:
+    name: Implementation
+    description: Resource in deployment
+  Production:
+    name: Production
+    description: Resource available in the live environment
+  Operation:
+    name: Operation
+    description: Resource offered
+  In_containment:
+    name: In containment
+    description: Resource active, but generally not available to new users
+  Retirement:
+    name:  Retirement
+    description: Resource is not anymore offered
+  Termination:
+    name: Termination
+    description: Resource dissolution, dismantling
+  Other:
+    name: Other
+    description:
