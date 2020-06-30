@@ -91,6 +91,9 @@
       %h5 Phase
       %p= t "simple_form.options.service.phase.#{@service.phase}" if @service.phase.present?
 
+      %h5 Trl
+      %p= @service.trl[0].name if @service.trl.present?
+
       %h5 Activate message
       %p= @service.activate_message
 

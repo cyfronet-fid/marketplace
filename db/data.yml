@@ -188,95 +188,95 @@ providers:
     GryCAP-I3M-UPV:
         name: &grycap "GryCAP-I3M-UPV"
     MTA SZTAKI Laboratory of Parallel and Distributed Systems:
-        name: &mtaSztaki MTA SZTAKI Laboratory of Parallel and Distributed Systems
+        name: &mtaSztaki "MTA SZTAKI Laboratory of Parallel and Distributed Systems"
     University of Oslo (UiO):
-        name: &uioProider University of Oslo (UiO)
+        name: &uioProider "University of Oslo (UiO)"
     Not specified:
         name: &not "not specified yet"
 
 domain:
 
     Interdisciplinary:
-      name: &interdisciplinary "Interdisciplinary"
+        name: &interdisciplinary "Interdisciplinary"
     # sub:
     #     name: &ra_test "Just for tests - should be removed by Rox"
     #     parent: *interdisciplinary
     Humanities:
-      name: &humanities "Humanities"
+        name: &humanities "Humanities"
     Philosophy:
-      name: &philosophy "Philosophy, ethics and religion"
-      parent: *humanities
+        name: &philosophy "Philosophy, ethics and religion"
+        parent: *humanities
     Arts:
-      name: &arts "Arts"
-      parent: *humanities
+        name: &arts "Arts"
+        parent: *humanities
     SocialScience:
-      name: &socialSciences "Social sciences"
+        name: &socialSciences "Social sciences"
     Political:
-      name: &political "Political sciences"
-      parent: *socialSciences
+        name: &political "Political sciences"
+        parent: *socialSciences
     Psychology:
-      name: &psychology "Psychology"
-      parent: *socialSciences
+        name: &psychology "Psychology"
+        parent: *socialSciences
     engineering:
-      name: &engineering "Engineering and Technology"
+        name: &engineering "Engineering and Technology"
     electrical:
-      name: &electrical "Electrical, electronic and information engineering"
-      parent: *engineering
+        name: &electrical "Electrical, electronic and information engineering"
+        parent: *engineering
     environmental:
-      name: &environmental "Environmental engineering"
-      parent: *engineering
+        name: &environmental "Environmental engineering"
+        parent: *engineering
     supportActivities:
-      name: &supportActivities "Support Activities"
+        name: &supportActivities "Support Activities"
     agricultural:
-      name: &agricultural "Agricultural Sciences"
+        name: &agricultural "Agricultural Sciences"
     medical:
-      name: &medical "Medical and Health Sciences"
+        name: &medical "Medical and Health Sciences"
     natural:
-      name: &natural "Natural Sciences"
+        name: &natural "Natural Sciences"
     HighEnergyPhysics:
-      name: &highEnergyPhysics "High-Energy Physics"
-      parent: *engineering
+        name: &highEnergyPhysics "High-Energy Physics"
+        parent: *engineering
     PhysicalScienceAerosol:
-      name: &physicalScienceAerosol "Physical science (aerosol physics)"
-      parent: *engineering
+        name: &physicalScienceAerosol "Physical science (aerosol physics)"
+        parent: *engineering
     PhysicalScienceEarth:
-      name: &physicalScienceEarth "Physical science (earth science)"
-      parent: *natural
+        name: &physicalScienceEarth "Physical science (earth science)"
+        parent: *natural
     ClimateScience:
-      name: &climateScience "Climate science"
-      parent: *natural
+        name: &climateScience "Climate science"
+        parent: *natural
     EnvironmentalScience:
-      name: &environmentalScience "Environmental science"
-      parent: *natural
+        name: &environmentalScience "Environmental science"
+        parent: *natural
     BiologicalSciences:
-      name: &biologicalSciences "Biological Sciences"
-      parent: *natural
+        name: &biologicalSciences "Biological Sciences"
+        parent: *natural
     EarthScience:
-      name: &earthScience "Earth Science"
-      parent: *natural
+        name: &earthScience "Earth Science"
+        parent: *natural
     LifeScience:
-      name: &lifeSciences "Life sciences"
-      parent: *natural
+        name: &lifeSciences "Life sciences"
+        parent: *natural
     ApplicationFrameworks:
-      name: &applicationFrameworks "Application and data analysis framework"
-      parent: *engineering
+        name: &applicationFrameworks "Application and data analysis framework"
+        parent: *engineering
     DataAnalysis:
-      name: &dataAnalysis "Data analysis"
-      parent: *engineering
+        name: &dataAnalysis "Data analysis"
+        parent: *engineering
     Security:
-      name: &security "Security"
-      parent: *engineering
+        name: &security "Security"
+        parent: *engineering
     FormalSciences:
-      name: &formalSciences "Formal Sciences"
-      parent: *engineering
+        name: &formalSciences "Formal Sciences"
+        parent: *engineering
     AppliedScience:
-      name: &appliedScience "Applied Sciences / Engineering / Healthcare"
-      parent: *engineering
+        name: &appliedScience "Applied Sciences / Engineering / Healthcare"
+        parent: *engineering
     PhysicalSciences:
-      name: &physicalSciences "Physical Sciences"
-      parent: *engineering
+        name: &physicalSciences "Physical Sciences"
+        parent: *engineering
     Other:
-      name: &other "Other"
+        name: &other "Other"
 
 
 
@@ -292,7 +292,6 @@ target_groups:
         name: &research_groups "Research group"
     Providers:
         name: &providers "Providers"
-
 
 
 services:
@@ -318,6 +317,7 @@ services:
         funding_bodies: ["funding_body-innoviris","funding_body-ec"]
         funding_programs: ["funding_program-icfs", "funding_program-insc2020", "funding_program-isf"]
         phase: production
+        trl: &trl_9 [ "trl-9"]
         tagline: Run virtual machines on-demand with complete control over computing resources
         platforms: [*egiPlatform]
         description: |
@@ -620,6 +620,7 @@ services:
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Execute thousands of computational tasks to analyse large datasets
         platforms: [*egiPlatform]
         description: |
@@ -786,6 +787,7 @@ services:
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: beta
+        trl: *trl_9
         tagline: Run Docker containers in a lightweight virtualised environment
         platforms: [*egiPlatform]
         description: |
@@ -820,6 +822,7 @@ services:
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Secure and trusted data exchange service for researchers
         platforms: [*eudatPlatform]
         description: |
@@ -952,6 +955,7 @@ services:
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Metadata based data-discovery
         platforms: [*eudatPlatform]
         funding_bodies: ["funding_body-fapesp","funding_body-rpf"]
@@ -1081,6 +1085,7 @@ services:
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Secure and trusted data exchange service for researchers
         platforms: [*eudatPlatform]
         description: |
@@ -1202,6 +1207,7 @@ services:
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Data annotation service to create annotations on research data
         platforms: [*eudatPlatform]
         description: |
@@ -1289,6 +1295,7 @@ services:
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Distribute and store large volumes of data based on data policies
         platforms: [*eudatPlatform]
         description: |
@@ -1343,6 +1350,7 @@ services:
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Store and publish research data
         platforms: [*eudatPlatform]
         description: |
@@ -1472,6 +1480,7 @@ services:
         target_groups: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Transfer of data between data resources and external computational facilities
         platforms: [*eudatPlatform]
         description: |
@@ -1535,6 +1544,7 @@ services:
         target_groups: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: AAI platform for federated authentication to EUDAT services
         platforms: [*eudatPlatform]
         description: |
@@ -1578,6 +1588,7 @@ services:
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Back-up your data for the long term and future use in a secure environment.
         platforms: [*egiPlatform]
         description: |
@@ -1646,6 +1657,7 @@ services:
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Store, share and access your files and their metadata on a global scale.
         platforms: [*egiPlatform]
         description: |
@@ -1818,6 +1830,7 @@ services:
 #        domain: *earthScience
 ##        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: Store, share and access your files and their metadata on a global scale.
 #        platforms: [*egiPlatform]
 #        description: |
@@ -1844,6 +1857,7 @@ services:
         domain: *earthScience
 #        #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Access to resources from the Global Earth Observation System of Systems
         platforms: [*ecopotential, *geossPlatform]
         description: |
@@ -1875,6 +1889,7 @@ services:
         language_availability: *english
         domain: [*earthScience, *lifeSciences, *interdisciplinary]
         restrictions:
+        trl: *trl_9
         phase: production
         tagline: Multi-disciplinary discovery, access, and use of resources from the Global Earth Observation System of Systems
         platforms: [*geo, *geossPlatform]
@@ -1917,6 +1932,7 @@ services:
         target_groups: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: A facet browser for fast navigation and searching in huge amounts of metadata.
         platforms: [*clarinPlatform, *eudatPlatform, *europeana]
         description: |
@@ -1964,6 +1980,7 @@ services:
         target_groups: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: A web application that suggests language analysis tools for specific data sets.
         platforms: [*clarinPlatform, *eudatPlatform, *europeana]
         description: |
@@ -2029,6 +2046,7 @@ services:
         domain: *humanities
 #        #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: A service that allows researchers to create their own citable digital bookmarks.
         platforms: [*clarinPlatform, *eudatPlatform, *europeana]
         description: |
@@ -2089,6 +2107,7 @@ services:
 #        domain: *earthScience
 ##        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: *notSpecified
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2112,6 +2131,7 @@ services:
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        description: "Features:
 #
@@ -2147,6 +2167,7 @@ services:
 #        domain: *mathematics
 #        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2222,6 +2243,7 @@ services:
 #        domain: *lifeSciences
 #        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2250,6 +2272,7 @@ services:
 #        domain: *lifeSciences
 ##        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        platforms: [*egiPlatform, *ec3, *aodp]
 #        description: |
@@ -2320,6 +2343,7 @@ services:
 #        language_availability: *english
 #        domain: *earthScience
 #        #restrictions: *notSpecified
+#        trl: *trl_9
 #        phase: production
 #        tagline: |
 #          Applications on Demand gives you access to online applications and application-development
@@ -2354,6 +2378,7 @@ services:
 #        domain: *lifeSciences
 ##        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        platforms: [*egiPlatform, *ec3, *aodp]
 #        description: |
@@ -2385,6 +2410,7 @@ services:
 #        domain: *applicationFrameworks
 #        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2415,6 +2441,7 @@ services:
 #        domain: *applicationFrameworks
 ##        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        platforms: [*egiPlatform, *ec3, *aodp]
 #        description: |
@@ -2446,6 +2473,7 @@ services:
 #        domain: *applicationFrameworks
 ##        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        platforms: [*egiPlatform, *ec3, *aodp]
 #        description: |
@@ -2477,6 +2505,7 @@ services:
 #        domain: *applicationFrameworks
 #        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2510,6 +2539,7 @@ services:
 #        domain: *dataAnalysis
 #        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2541,6 +2571,7 @@ services:
 #        domain: *humanities
 #        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        platforms: [*egiPlatform, *ec3, *aodp]
 #        description: |
@@ -2573,6 +2604,7 @@ services:
         domain: *lifeSciences
         restrictions: "Research affiliation needed"
         phase: production
+        trl: *trl_9
         tagline: NGS and microarray analysis in the cloud.
         platforms: [*eoscHub, *aodp]
         description: |
@@ -2620,6 +2652,7 @@ services:
 #        domain: *lifeSciences
 #        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2647,6 +2680,7 @@ services:
 #        language_availability: *english
 #        domain: *lifeSciences
 #        #restrictions: *notSpecified
+#        trl: *trl_9
 #        phase: production
 #        tagline: |
 #          Applications on Demand gives you access to online applications and application-development
@@ -2677,6 +2711,7 @@ services:
       domain: *lifeSciences
       #restrictions: *notSpecified
       phase: beta
+      trl: *trl_9
       tagline: Create interactive documents with live code, visualisations and narrative text powered by the Jupyter technology
       platforms: [*egiPlatform]
       description: |
@@ -2776,6 +2811,7 @@ services:
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: Services for Social Sciences and Humanities provided via the national CLARIN centres
 #        description: |
 #          CLARIN-ERIC is a consortium of national service providers dedicated to Social Sicences and Humanities. The CLARIN Metadata Infrastructure offers several services through EOSC-hub:
@@ -2817,6 +2853,7 @@ services:
         domain: *humanities
         #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: The DARIAH Science Gateway is a platform that provides access to various digital applications and services for the Arts & Humanities researchers
         # platforms: [*eopillar, *ec3]
         description: |
@@ -2877,6 +2914,7 @@ services:
         domain: &highEnergyPhysics High-Energy Physics
         #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Simplify the access and management of computing resources
         # platforms: [*eopillar, *ec3]
         description: |
@@ -2956,6 +2994,7 @@ services:
         domain: *physicalScienceEarth
         #restrictions: *notSpecified
         phase: beta
+        trl: *trl_9
         tagline: D4Science Service
         platforms: [*egiPlatform, *d4sciencePlatform]
         description: |
@@ -2988,6 +3027,7 @@ services:
         domain: *climateScience
         #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Analyze and process data from multiple communities with the Ophidia Big Data Analytics framework
         platforms: [*enesPlatform]
         description: |
@@ -3060,6 +3100,7 @@ services:
         domain: *environmentalScience
         #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Web service to classify plant pictures based on convolutional neural networks
         # platforms: [*eopillar, *ec3]
         description: |
@@ -3122,6 +3163,7 @@ services:
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: *notSpecified
 #        platforms: [*elixirPlatform]
 #        description: *notSpecified
@@ -3143,6 +3185,7 @@ services:
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: *notSpecified
 #        # platforms: [*eopillar, *ec3]
 #        description: *notSpecified
@@ -3164,6 +3207,7 @@ services:
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: *notSpecified
 #        # platforms: [*eopillar, *ec3]
 #        description: *notSpecified
@@ -3186,6 +3230,7 @@ services:
         domain: *environmentalScience
         #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: On-demand operational coastal circulation forecast service
         # platforms: [*eopillar, *ec3]
         description: |
@@ -3274,6 +3319,7 @@ services:
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: A suite of computational tools for structural biology
 #        description: "The WeNMR suite of computational tools is composed of eight individual platforms:
 #
@@ -3325,6 +3371,7 @@ services:
         domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
+        trl: *trl_9
         tagline: Integrative modeling of biomolecular complexes with the user-friendly, EGI HTC-enabled HADDOCK portal
         platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
         description: |
@@ -3363,6 +3410,7 @@ services:
         domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
+        trl: *trl_9
         tagline: The PowerFit server allows you to fit your 3D structures in any map!
         platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
         description: |
@@ -3391,6 +3439,7 @@ services:
         domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
+        trl: *trl_9
         tagline: |
           Visualizes and quantify the information content of distance
           restraints between macromolecular complexes with DisVis
@@ -3421,6 +3470,7 @@ services:
         domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
+        trl: *trl_9
         tagline: NMR protein structure prediction using the EGI HTC-enabled CS-ROSETTA portal
         platforms: [*wenmr, *egiPlatform, *instruct]
         description: |
@@ -3450,6 +3500,7 @@ services:
         domain: *biologicalSciences
         restrictions: "Limited to non-profit users, For-profit users can use the service if they a license agreement with the University of California for the AMBER toolkit"
         phase: production
+        trl: *trl_9
         tagline: Web portal for Nuclear Magnetic Resonance (NMR) structure refinement
         platforms: [*wenmr, *egiPlatform, *instruct]
         funding_bodies: ["funding_body-esa", "funding_body-epsrc"]
@@ -3485,6 +3536,7 @@ services:
         domain: *biologicalSciences
         restrictions: "Limited to non-profit users"
         phase: production
+        trl: *trl_9
         tagline: FANTEN for the analysis of magnetic anisotropy-induced NMR data
         platforms: [*wenmr, *egiPlatform, *instruct]
         description: |
@@ -3516,6 +3568,7 @@ services:
         domain: [*biologicalSciences, *lifeSciences]
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
+        trl: *trl_9
         tagline: "SpotOn: determination of Hot-Spots at protein-protein interfaces"
         platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
         description: |
@@ -3546,6 +3599,7 @@ services:
         domain: [*earthScience, *appliedScience, *interdisciplinary]
         restrictions: " Research affiliation needed, user account registration needed."
         phase: production
+        trl: *trl_9
         tagline: "Continuous systematic interferogram generation with Sentinel-1 data over the Alpine Region."
         platforms: [*gepPlatform, *esaPlatform]
         description: |
@@ -3579,6 +3633,7 @@ services:
         domain: [*earthScience, *appliedScience, *interdisciplinary]
         restrictions: " Research affiliation needed, user account registration needed."
         phase: production
+        trl: *trl_9
         tagline: "On-demand EO processing services for Earthquake Response and Landslides Analysis."
         platforms: [*gepPlatform, *esaPlatform]
         description: |
@@ -3611,6 +3666,7 @@ services:
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
         restrictions: "Research affiliation needed"
         phase: alpha
+        trl: *trl_9
         tagline: "EODC JupyterHub provides access to the global EODC Copernicus Data Archive."
 #        platforms: [*eopillar]
         description: |
@@ -3668,6 +3724,7 @@ services:
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: "Catalog Service for the Web (CSW), OGC compliant catalogue service to expose metadata of geospatial records hosted at EODC"
         platforms: [*openGC]
         description: |
@@ -3705,6 +3762,7 @@ services:
         domain: *earthScience
         #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Big data satellite imagery service
         platforms: [*eopillar]
         description: |
@@ -3732,6 +3790,7 @@ services:
         domain: *earthScience
         #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Cross-domain application supporting various application fields
         platforms: [*eopillar]
         description: |
@@ -3759,6 +3818,7 @@ services:
         domain: *earthScience
         #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Service providing analysis-ready EO data
         platforms: [*eopillar]
         description: |
@@ -3812,6 +3872,7 @@ services:
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: "Data Collections Catalog is based on two solutions  – CKAN - comprehensive frontend catalogue application for information discovery and EO Browser – specialized catalogue application for robust satellite imagery discovery and quick georeferenced preview"
         platforms: [*copernicus, *esaPlatform]
         description: |
@@ -3855,6 +3916,7 @@ services:
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: "CREODIAS platform is a cloud infrastructure adapted to the processing of big amounts of EO data, including an EO Data storage cluster and a dedicated IaaS cloud infrastructure for the platform’s Users"
         platforms: [*copernicus, *esaPlatform]
         description: |
@@ -3894,6 +3956,7 @@ services:
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: "Manage your data products"
         platforms: [*copernicus, *esaPlatform]
         description: |
@@ -3925,6 +3988,7 @@ services:
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: "The EO Browser allows visualization and basic processing of selected data collections (like Sentinel-1 L1 GRD or Sentinel-2 L1C)"
         platforms: [*copernicus, *esaPlatform]
         description: |
@@ -3965,6 +4029,7 @@ services:
         domain: *security
         #restrictions: *notSpecified
         phase: beta
+        trl: *trl_9
         tagline: Handle transparent Single Sign-On from multiple heterogeneous identity providers
         platforms: [*egiPlatform]
         description: |
@@ -4020,6 +4085,7 @@ services:
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
 #        tagline: ToFill
 #        platforms: [*egiPlatform]
 #        description: |
@@ -4051,6 +4117,7 @@ services:
         domain: *interdisciplinary
         #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Dedicated computing and storage for training and education
         platforms: [*egiPlatform]
         description: |
@@ -4165,6 +4232,7 @@ services:
         domain: *interdisciplinary
         #restrictions: *notSpecified
         phase: production
+        trl: *trl_9
         tagline: Learn how to manage IT services with a pragmatic and lightweight standard
         platforms: [*egiPlatform]
         description: |
@@ -4258,6 +4326,7 @@ services:
       language_availability: *english
       domain: *interdisciplinary
       phase: production
+      trl: *trl_9
       tagline: |
         A web-based, collaborative working environment enacting to predict the spread of an invasive species
         (possibly alien) in a new environment
@@ -4305,6 +4374,7 @@ services:
 #      domain: *interdisciplinary
 #      #restrictions: *notSpecified
 #      phase: production
+#      trl: *trl_9
 #      tagline: *notSpecified
 #      # platforms: [*eopillar, *ec3]
 #      description: *notSpecified
@@ -4331,6 +4401,7 @@ services:
       domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: alpha
+      trl: *trl_9
       tagline: Enabling HTC & HPC applications opportunistically across private, academic and public clouds
       # platforms: [*eopillar, *ec3]
       description: |
@@ -4372,6 +4443,7 @@ services:
       restrictions: |
         Access to the platform is granted based on motivation / proposal,
         In the pilot phase, usage is only supported for  photon and neutron science use-cases
+      trl: *trl_9
       phase: beta
       tagline: dCache backend storage for the EOSC PAN Science Demonstrator
       platforms: [*eoscPan]
@@ -4408,6 +4480,7 @@ services:
       domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: beta
+      trl: *trl_9
       tagline: OpenWhisk, cloud functions for the EOSC PAN Science Demonstrator
       platforms: [*eoscPan]
       description: |
@@ -4442,6 +4515,7 @@ services:
       domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: beta
+      trl: *trl_9
       tagline: JupyterHub for the EOSC PAN Science Demonstrator
       platforms: [*eoscPan]
       description: |
@@ -4476,6 +4550,7 @@ services:
       domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: beta
+      trl: *trl_9
       tagline: GitLab for the EOSC PAN Science Demonstrator
       platforms: [*eoscPan]
       description: |
@@ -4511,6 +4586,7 @@ services:
       domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: production
+      trl: *trl_9
       tagline: Setup and run parameter studies in the cloud with a few clicks.
       platforms: [*eoscHub, *aodp]
       description: |
@@ -4556,6 +4632,7 @@ services:
       domain: [*interdisciplinary, *lifeSciences, *socialSciences, *humanities, *appliedScience, *philosophy]
       #restrictions: *notSpecified
       phase: production
+      trl: *trl_9
       tagline: Secure and cost-effective cloud computing for processing sensitive data
       platforms: [*eudatPlatform, *elixirPlatform]
       description: |
@@ -4588,6 +4665,7 @@ services:
       domain: *interdisciplinary
       #restrictions: *notSpecified
       phase: production
+      trl: *trl_9
       tagline: Services for sensitive data
       platforms: [*eudatPlatform, *nird]
       description: |
@@ -4621,6 +4699,7 @@ services:
       domain: *interdisciplinary
       restrictions: Research affiliation needed
       phase: production
+      trl: *trl_9
       tagline: Deploy a virtual cluster on top of IaaS infrastructures with a few clicks.
       platforms: [*eoscHub, *aodp]
       description: |
