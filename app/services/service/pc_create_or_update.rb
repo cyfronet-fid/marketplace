@@ -83,6 +83,7 @@ class Service::PcCreateOrUpdate
         payment_model_url: data["paymentModel"] || "",
         pricing_url: data["pricing"] || "",
         phase: map_phase(data["trl"]),
+        trl: Trl.where(eid: data["trl"]),
         order_type: "open_access",
         status: "published",
         funding_bodies: map_funding_bodies(data["fundingBody"]),

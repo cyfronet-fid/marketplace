@@ -28,6 +28,7 @@ FactoryBot.define do
     sequence(:categories) { |n| [create(:category)] }
     sequence(:status) { :published }
     sequence(:version) { nil }
+    sequence(:trl) { [create(:trl)] }
 
     upstream { nil }
 

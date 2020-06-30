@@ -21,6 +21,7 @@ RSpec.describe Service::PcCreateOrUpdate do
 
   describe "#succesfull responses" do
     it "should create new service with all informations" do
+      trl_8 = create(:trl, name: "trl 7", eid: "trl-8")
       unirest = Unirest
       provider_response = double(code: 200, body: create(:eic_provider_response))
 
@@ -68,6 +69,7 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.sources.first.eid).to eq("first.service")
       expect(service.upstream_id).to eq(nil)
       expect(service.version).to eq("1.0")
+      expect(service.trl).to eq([trl_8])
     end
 
     it "should create new service with new provider" do
