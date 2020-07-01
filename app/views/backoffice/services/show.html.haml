@@ -94,6 +94,9 @@
       %h5 Trl
       %p= @service.trl[0].name if @service.trl.present?
 
+      %h5 Life cycle status
+      %p= @service.life_cycle_status[0].name if @service.life_cycle_status.present?
+
       %h5 Activate message
       %p= @service.activate_message
 
