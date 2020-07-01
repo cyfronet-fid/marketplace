@@ -34,7 +34,9 @@
   = f.association :funding_programs, input_html: { data: { choice: true } },
                   disabled: cant_edit([funding_program_ids: []])
   = f.association :trl, input_html: { data: { choice: true } },
-                  disabled: cant_edit([funding_program_ids: []])
+                  disabled: cant_edit([trl_ids: []])
+  = f.association :life_cycle_status, input_html: { data: { choice: true } },
+                  disabled: cant_edit([life_cycle_status_ids: []])
 
   .row.mt-5
     .col-12.col-md-5

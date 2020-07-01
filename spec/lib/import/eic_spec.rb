@@ -107,6 +107,7 @@ describe Import::Eic do
 
     it "should create service if none existed" do
       trl_7 = create(:trl, name: "trl 7", eid: "trl-7")
+      life_cycle_status = create(:life_cycle_status, name: "prod", eid: "production")
       expect { eic.call }.to output(/PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(3)
 
       service = Service.first
@@ -142,6 +143,7 @@ describe Import::Eic do
       expect(service.upstream_id).to eq(nil)
       expect(service.version).to eq("2018.08")
       expect(service.trl).to eq([trl_7])
+      expect(service.life_cycle_status).to eq([life_cycle_status])
       expect(Service.find_by(name: "MetalPDB")).to_not be_nil
       expect(Service.find_by(name: "PDB_REDO server")).to_not be_nil
     end
