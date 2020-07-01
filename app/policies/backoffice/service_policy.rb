@@ -25,7 +25,8 @@ EIC_SOURCE_FIELDS = [
   :order_type,
   [provider_ids: []],
   :version,
-  [trl_ids: []]
+  [trl_ids: []],
+  [life_cycle_status_ids: []]
 ]
 
 
@@ -106,6 +107,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       [contact_emails: []], [scientific_domain_ids: []],
       [platform_ids: []], :tag_list, [category_ids: []],
       [owner_ids: []], :status, :upstream_id, :version,
+      [life_cycle_status_ids: []],
       sources_attributes: [:id, :source_type, :eid, :_destroy]
     ]
 

@@ -29,7 +29,7 @@ RSpec.describe Backoffice::ServicePolicy do
                                                     :phase, :order_target,
                                                     :status_monitoring_url, :maintenance_url,
                                                     :order_url, :payment_model_url, :pricing_url,
-                                                    :activate_message, :logo, [trl_ids: []],
+                                                    :activate_message, :logo, [trl_ids: []], [life_cycle_status_ids: []],
                                                     [contact_emails: []], [scientific_domain_ids: []],
                                                     [platform_ids: []], :tag_list, [category_ids: []],
                                                     [owner_ids: []], :status, :upstream_id, :version,

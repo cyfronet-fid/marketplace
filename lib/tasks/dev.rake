@@ -76,6 +76,7 @@ namespace :dev do
       funding_programs = FundingProgram.where(eid: hash["funding_programs"])
       service = Service.find_or_initialize_by(name: hash["name"])
       trl = Trl.where(eid: hash["trl"])
+      life_cycle_status = LifeCycleStatus.where(eid: hash["life_cycle_status"])
       order_type = order_type_from(hash)
 
       service.update!(tagline: hash["tagline"],
@@ -98,6 +99,7 @@ namespace :dev do
                       restrictions: hash["restrictions"],
                       phase: hash["phase"],
                       trl: trl,
+                      life_cycle_status: life_cycle_status,
                       categories: categories,
                       tag_list: hash["tags"],
                       platforms: platforms,
@@ -153,9 +155,5 @@ namespace :dev do
 
   def create_vocabularies
     Rake::Task["rdt:add_vocabularies"].invoke
-  end
-
-  def create_trls
-    Rake::Task["rdt:add_trls"].invoke
   end
 end

@@ -84,6 +84,7 @@ class Service::PcCreateOrUpdate
         pricing_url: data["pricing"] || "",
         phase: map_phase(data["trl"]),
         trl: Trl.where(eid: data["trl"]),
+        life_cycle_status: LifeCycleStatus.where(eid: data["lifeCycleStatus"]),
         order_type: "open_access",
         status: "published",
         funding_bodies: map_funding_bodies(data["fundingBody"]),

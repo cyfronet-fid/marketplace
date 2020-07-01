@@ -37,6 +37,7 @@ RSpec.feature "Services in backoffice" do
       funding_body = create(:funding_body)
       funding_program = create(:funding_program)
       trl = create(:trl)
+      life_cycle_status = create(:life_cycle_status)
 
       visit backoffice_services_path
       click_on "Create new Service"
@@ -51,6 +52,7 @@ RSpec.feature "Services in backoffice" do
       select funding_body.name, from: "Funding bodies"
       select funding_program.name, from: "Funding programs"
       select trl.name, from: "Trl"
+      select life_cycle_status.name, from: "Life cycle status"
       fill_in "Terms of use url", with: "https://sample.url"
       fill_in "Access policies url", with: "https://sample.url"
       fill_in "Sla url", with: "https://sample.url"
@@ -98,6 +100,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("Alpha (min. TRL 5)")
       expect(page).to have_content("2.2.2")
       expect(page).to have_content(trl.name)
+      expect(page).to have_content(life_cycle_status.name)
     end
 
     scenario "I can see warning about no offers" do
