@@ -317,7 +317,8 @@ services:
         funding_bodies: ["funding_body-innoviris","funding_body-ec"]
         funding_programs: ["funding_program-icfs", "funding_program-insc2020", "funding_program-isf"]
         phase: production
-        trl: &trl_9 [ "trl-9"]
+        trl: &trl_9 ["trl-9"]
+        life_cycle_status: &prod ["life_cycle_status-production"]
         tagline: Run virtual machines on-demand with complete control over computing resources
         platforms: [*egiPlatform]
         description: |
@@ -621,6 +622,7 @@ services:
 #        #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Execute thousands of computational tasks to analyse large datasets
         platforms: [*egiPlatform]
         description: |
@@ -788,6 +790,7 @@ services:
 #        #restrictions: *notSpecified
         phase: beta
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Run Docker containers in a lightweight virtualised environment
         platforms: [*egiPlatform]
         description: |
@@ -823,6 +826,7 @@ services:
 #        #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Secure and trusted data exchange service for researchers
         platforms: [*eudatPlatform]
         description: |
@@ -956,6 +960,7 @@ services:
 #        #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Metadata based data-discovery
         platforms: [*eudatPlatform]
         funding_bodies: ["funding_body-fapesp","funding_body-rpf"]
@@ -1086,6 +1091,7 @@ services:
 #        #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Secure and trusted data exchange service for researchers
         platforms: [*eudatPlatform]
         description: |
@@ -1208,6 +1214,7 @@ services:
 #        #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Data annotation service to create annotations on research data
         platforms: [*eudatPlatform]
         description: |
@@ -1296,6 +1303,7 @@ services:
 #        #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Distribute and store large volumes of data based on data policies
         platforms: [*eudatPlatform]
         description: |
@@ -1351,6 +1359,7 @@ services:
 #        #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Store and publish research data
         platforms: [*eudatPlatform]
         description: |
@@ -1481,6 +1490,7 @@ services:
 #        #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Transfer of data between data resources and external computational facilities
         platforms: [*eudatPlatform]
         description: |
@@ -1545,6 +1555,7 @@ services:
 #        #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: AAI platform for federated authentication to EUDAT services
         platforms: [*eudatPlatform]
         description: |
@@ -1589,6 +1600,7 @@ services:
 #        #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Back-up your data for the long term and future use in a secure environment.
         platforms: [*egiPlatform]
         description: |
@@ -1658,6 +1670,7 @@ services:
 #        #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Store, share and access your files and their metadata on a global scale.
         platforms: [*egiPlatform]
         description: |
@@ -1831,6 +1844,7 @@ services:
 ##        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Store, share and access your files and their metadata on a global scale.
 #        platforms: [*egiPlatform]
 #        description: |
@@ -1858,6 +1872,7 @@ services:
 #        #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Access to resources from the Global Earth Observation System of Systems
         platforms: [*ecopotential, *geossPlatform]
         description: |
@@ -1890,6 +1905,7 @@ services:
         domain: [*earthScience, *lifeSciences, *interdisciplinary]
         restrictions:
         trl: *trl_9
+        life_cycle_status: *prod
         phase: production
         tagline: Multi-disciplinary discovery, access, and use of resources from the Global Earth Observation System of Systems
         platforms: [*geo, *geossPlatform]
@@ -1933,6 +1949,7 @@ services:
 #        #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: A facet browser for fast navigation and searching in huge amounts of metadata.
         platforms: [*clarinPlatform, *eudatPlatform, *europeana]
         description: |
@@ -1981,6 +1998,7 @@ services:
 #        #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: A web application that suggests language analysis tools for specific data sets.
         platforms: [*clarinPlatform, *eudatPlatform, *europeana]
         description: |
@@ -2047,6 +2065,7 @@ services:
 #        #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: A service that allows researchers to create their own citable digital bookmarks.
         platforms: [*clarinPlatform, *eudatPlatform, *europeana]
         description: |
@@ -2108,6 +2127,7 @@ services:
 ##        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: *notSpecified
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2132,6 +2152,7 @@ services:
 #        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        description: "Features:
 #
@@ -2168,6 +2189,7 @@ services:
 #        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2244,6 +2266,7 @@ services:
 #        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2273,6 +2296,7 @@ services:
 ##        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        platforms: [*egiPlatform, *ec3, *aodp]
 #        description: |
@@ -2344,6 +2368,7 @@ services:
 #        domain: *earthScience
 #        #restrictions: *notSpecified
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        phase: production
 #        tagline: |
 #          Applications on Demand gives you access to online applications and application-development
@@ -2379,6 +2404,7 @@ services:
 ##        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        platforms: [*egiPlatform, *ec3, *aodp]
 #        description: |
@@ -2411,6 +2437,7 @@ services:
 #        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2442,6 +2469,7 @@ services:
 ##        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        platforms: [*egiPlatform, *ec3, *aodp]
 #        description: |
@@ -2474,6 +2502,7 @@ services:
 ##        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        platforms: [*egiPlatform, *ec3, *aodp]
 #        description: |
@@ -2506,6 +2535,7 @@ services:
 #        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2540,6 +2570,7 @@ services:
 #        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2572,6 +2603,7 @@ services:
 #        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        platforms: [*egiPlatform, *ec3, *aodp]
 #        description: |
@@ -2605,6 +2637,7 @@ services:
         restrictions: "Research affiliation needed"
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: NGS and microarray analysis in the cloud.
         platforms: [*eoscHub, *aodp]
         description: |
@@ -2653,6 +2686,7 @@ services:
 #        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2681,6 +2715,7 @@ services:
 #        domain: *lifeSciences
 #        #restrictions: *notSpecified
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        phase: production
 #        tagline: |
 #          Applications on Demand gives you access to online applications and application-development
@@ -2712,6 +2747,7 @@ services:
       #restrictions: *notSpecified
       phase: beta
       trl: *trl_9
+      life_cycle_status: *prod
       tagline: Create interactive documents with live code, visualisations and narrative text powered by the Jupyter technology
       platforms: [*egiPlatform]
       description: |
@@ -2812,6 +2848,7 @@ services:
 #        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Services for Social Sciences and Humanities provided via the national CLARIN centres
 #        description: |
 #          CLARIN-ERIC is a consortium of national service providers dedicated to Social Sicences and Humanities. The CLARIN Metadata Infrastructure offers several services through EOSC-hub:
@@ -2854,6 +2891,7 @@ services:
         #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: The DARIAH Science Gateway is a platform that provides access to various digital applications and services for the Arts & Humanities researchers
         # platforms: [*eopillar, *ec3]
         description: |
@@ -2915,6 +2953,7 @@ services:
         #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Simplify the access and management of computing resources
         # platforms: [*eopillar, *ec3]
         description: |
@@ -2995,6 +3034,7 @@ services:
         #restrictions: *notSpecified
         phase: beta
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: D4Science Service
         platforms: [*egiPlatform, *d4sciencePlatform]
         description: |
@@ -3028,6 +3068,7 @@ services:
         #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Analyze and process data from multiple communities with the Ophidia Big Data Analytics framework
         platforms: [*enesPlatform]
         description: |
@@ -3101,6 +3142,7 @@ services:
         #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Web service to classify plant pictures based on convolutional neural networks
         # platforms: [*eopillar, *ec3]
         description: |
@@ -3164,6 +3206,7 @@ services:
 #        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: *notSpecified
 #        platforms: [*elixirPlatform]
 #        description: *notSpecified
@@ -3186,6 +3229,7 @@ services:
 #        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: *notSpecified
 #        # platforms: [*eopillar, *ec3]
 #        description: *notSpecified
@@ -3208,6 +3252,7 @@ services:
 #        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: *notSpecified
 #        # platforms: [*eopillar, *ec3]
 #        description: *notSpecified
@@ -3231,6 +3276,7 @@ services:
         #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: On-demand operational coastal circulation forecast service
         # platforms: [*eopillar, *ec3]
         description: |
@@ -3320,6 +3366,7 @@ services:
 #        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: A suite of computational tools for structural biology
 #        description: "The WeNMR suite of computational tools is composed of eight individual platforms:
 #
@@ -3372,6 +3419,7 @@ services:
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Integrative modeling of biomolecular complexes with the user-friendly, EGI HTC-enabled HADDOCK portal
         platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
         description: |
@@ -3411,6 +3459,7 @@ services:
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: The PowerFit server allows you to fit your 3D structures in any map!
         platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
         description: |
@@ -3440,6 +3489,7 @@ services:
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: |
           Visualizes and quantify the information content of distance
           restraints between macromolecular complexes with DisVis
@@ -3471,6 +3521,7 @@ services:
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: NMR protein structure prediction using the EGI HTC-enabled CS-ROSETTA portal
         platforms: [*wenmr, *egiPlatform, *instruct]
         description: |
@@ -3501,6 +3552,7 @@ services:
         restrictions: "Limited to non-profit users, For-profit users can use the service if they a license agreement with the University of California for the AMBER toolkit"
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Web portal for Nuclear Magnetic Resonance (NMR) structure refinement
         platforms: [*wenmr, *egiPlatform, *instruct]
         funding_bodies: ["funding_body-esa", "funding_body-epsrc"]
@@ -3537,6 +3589,7 @@ services:
         restrictions: "Limited to non-profit users"
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: FANTEN for the analysis of magnetic anisotropy-induced NMR data
         platforms: [*wenmr, *egiPlatform, *instruct]
         description: |
@@ -3569,6 +3622,7 @@ services:
         restrictions: "Registration required, Limited to non-profit users"
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: "SpotOn: determination of Hot-Spots at protein-protein interfaces"
         platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
         description: |
@@ -3600,6 +3654,7 @@ services:
         restrictions: " Research affiliation needed, user account registration needed."
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: "Continuous systematic interferogram generation with Sentinel-1 data over the Alpine Region."
         platforms: [*gepPlatform, *esaPlatform]
         description: |
@@ -3634,6 +3689,7 @@ services:
         restrictions: " Research affiliation needed, user account registration needed."
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: "On-demand EO processing services for Earthquake Response and Landslides Analysis."
         platforms: [*gepPlatform, *esaPlatform]
         description: |
@@ -3667,6 +3723,7 @@ services:
         restrictions: "Research affiliation needed"
         phase: alpha
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: "EODC JupyterHub provides access to the global EODC Copernicus Data Archive."
 #        platforms: [*eopillar]
         description: |
@@ -3725,6 +3782,7 @@ services:
         #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: "Catalog Service for the Web (CSW), OGC compliant catalogue service to expose metadata of geospatial records hosted at EODC"
         platforms: [*openGC]
         description: |
@@ -3763,6 +3821,7 @@ services:
         #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Big data satellite imagery service
         platforms: [*eopillar]
         description: |
@@ -3791,6 +3850,7 @@ services:
         #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Cross-domain application supporting various application fields
         platforms: [*eopillar]
         description: |
@@ -3819,6 +3879,7 @@ services:
         #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Service providing analysis-ready EO data
         platforms: [*eopillar]
         description: |
@@ -3873,6 +3934,7 @@ services:
         #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: "Data Collections Catalog is based on two solutions  – CKAN - comprehensive frontend catalogue application for information discovery and EO Browser – specialized catalogue application for robust satellite imagery discovery and quick georeferenced preview"
         platforms: [*copernicus, *esaPlatform]
         description: |
@@ -3917,6 +3979,7 @@ services:
         #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: "CREODIAS platform is a cloud infrastructure adapted to the processing of big amounts of EO data, including an EO Data storage cluster and a dedicated IaaS cloud infrastructure for the platform’s Users"
         platforms: [*copernicus, *esaPlatform]
         description: |
@@ -3957,6 +4020,7 @@ services:
         #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: "Manage your data products"
         platforms: [*copernicus, *esaPlatform]
         description: |
@@ -3989,6 +4053,7 @@ services:
         #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: "The EO Browser allows visualization and basic processing of selected data collections (like Sentinel-1 L1 GRD or Sentinel-2 L1C)"
         platforms: [*copernicus, *esaPlatform]
         description: |
@@ -4030,6 +4095,7 @@ services:
         #restrictions: *notSpecified
         phase: beta
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Handle transparent Single Sign-On from multiple heterogeneous identity providers
         platforms: [*egiPlatform]
         description: |
@@ -4086,6 +4152,7 @@ services:
 #        #restrictions: *notSpecified
 #        phase: production
 #        trl: *trl_9
+        life_cycle_status: *prod
 #        tagline: ToFill
 #        platforms: [*egiPlatform]
 #        description: |
@@ -4118,6 +4185,7 @@ services:
         #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Dedicated computing and storage for training and education
         platforms: [*egiPlatform]
         description: |
@@ -4233,6 +4301,7 @@ services:
         #restrictions: *notSpecified
         phase: production
         trl: *trl_9
+        life_cycle_status: *prod
         tagline: Learn how to manage IT services with a pragmatic and lightweight standard
         platforms: [*egiPlatform]
         description: |
@@ -4327,6 +4396,7 @@ services:
       domain: *interdisciplinary
       phase: production
       trl: *trl_9
+      life_cycle_status: *prod
       tagline: |
         A web-based, collaborative working environment enacting to predict the spread of an invasive species
         (possibly alien) in a new environment
@@ -4375,6 +4445,7 @@ services:
 #      #restrictions: *notSpecified
 #      phase: production
 #      trl: *trl_9
+#      life_cycle_status: *prod
 #      tagline: *notSpecified
 #      # platforms: [*eopillar, *ec3]
 #      description: *notSpecified
@@ -4402,6 +4473,7 @@ services:
       #restrictions: *notSpecified
       phase: alpha
       trl: *trl_9
+      life_cycle_status: *prod
       tagline: Enabling HTC & HPC applications opportunistically across private, academic and public clouds
       # platforms: [*eopillar, *ec3]
       description: |
@@ -4444,6 +4516,7 @@ services:
         Access to the platform is granted based on motivation / proposal,
         In the pilot phase, usage is only supported for  photon and neutron science use-cases
       trl: *trl_9
+      life_cycle_status: *prod
       phase: beta
       tagline: dCache backend storage for the EOSC PAN Science Demonstrator
       platforms: [*eoscPan]
@@ -4481,6 +4554,7 @@ services:
       #restrictions: *notSpecified
       phase: beta
       trl: *trl_9
+      life_cycle_status: *prod
       tagline: OpenWhisk, cloud functions for the EOSC PAN Science Demonstrator
       platforms: [*eoscPan]
       description: |
@@ -4516,6 +4590,7 @@ services:
       #restrictions: *notSpecified
       phase: beta
       trl: *trl_9
+      life_cycle_status: *prod
       tagline: JupyterHub for the EOSC PAN Science Demonstrator
       platforms: [*eoscPan]
       description: |
@@ -4551,6 +4626,7 @@ services:
       #restrictions: *notSpecified
       phase: beta
       trl: *trl_9
+      life_cycle_status: *prod
       tagline: GitLab for the EOSC PAN Science Demonstrator
       platforms: [*eoscPan]
       description: |
@@ -4587,6 +4663,7 @@ services:
       #restrictions: *notSpecified
       phase: production
       trl: *trl_9
+      life_cycle_status: *prod
       tagline: Setup and run parameter studies in the cloud with a few clicks.
       platforms: [*eoscHub, *aodp]
       description: |
@@ -4633,6 +4710,7 @@ services:
       #restrictions: *notSpecified
       phase: production
       trl: *trl_9
+      life_cycle_status: *prod
       tagline: Secure and cost-effective cloud computing for processing sensitive data
       platforms: [*eudatPlatform, *elixirPlatform]
       description: |
@@ -4666,6 +4744,7 @@ services:
       #restrictions: *notSpecified
       phase: production
       trl: *trl_9
+      life_cycle_status: *prod
       tagline: Services for sensitive data
       platforms: [*eudatPlatform, *nird]
       description: |
@@ -4700,6 +4779,7 @@ services:
       restrictions: Research affiliation needed
       phase: production
       trl: *trl_9
+      life_cycle_status: *prod
       tagline: Deploy a virtual cluster on top of IaaS infrastructures with a few clicks.
       platforms: [*eoscHub, *aodp]
       description: |

@@ -110,6 +110,7 @@ module Import
         # subcategory_name = service["subCategoryName"]
         phase = service["trl"]
         trl = service["trl"]
+        life_cycle_status = service["lifeCycleStatus"]
         provider_eid = service["providers"][0]
         version = service["version"]
 
@@ -184,7 +185,8 @@ module Import
             payment_model_url: payment_model_url || "",
             pricing_url: pricing_url || "",
             phase: map_phase(phase),
-            trl: Trl.find_by(eid: trl),
+            trl: Trl.where(eid: trl),
+            life_cycle_status: LifeCycleStatus.where(eid: life_cycle_status),
             order_type: "open_access",
             status: "draft",
             funding_bodies: map_funding_bodies(funding_bodies),
