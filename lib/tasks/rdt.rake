@@ -51,9 +51,18 @@ namespace :rdt do
     end
 
     puts "Creating trls from yaml"
-
     yaml_hash["trl"].each do |_, hash|
       Trl.find_or_initialize_by(name: hash["name"]) do |trl|
+        trl.update!(name: hash["name"],
+                    eid: hash["eid"],
+                    description: hash["description"])
+      end
+      puts "Created trl: #{hash["name"]}"
+    end
+
+    puts "Creating life_cycle_statuses from yaml"
+    yaml_hash["life_cycle_status"].each do |_, hash|
+      LifeCycleStatus.find_or_initialize_by(name: hash["name"]) do |trl|
         trl.update!(name: hash["name"],
                     eid: hash["eid"],
                     description: hash["description"])
