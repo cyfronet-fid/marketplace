@@ -1,5 +1,13 @@
 - fields.each do |field|
   - service.send(field).each do |element|
     %li.list-group-item
-      %span
-        = element
+      - if nested.present?
+        %span
+          = element.send(nested)
+      - else
+        %span
+          = element
+
+
+
+

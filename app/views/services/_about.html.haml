@@ -11,7 +11,10 @@
         - if any_present?(service, *group[:fields])
           %h5= t(".sidebar.title.#{group[:name]}")
           %ul.list-group
-            = render "services/sidebar/#{group[:template]}", service: service, fields: group[:fields]
+            = render "services/sidebar/#{group[:template]}",
+                      service: service,
+                      fields: group[:fields],
+                      nested: group[:nested] || ""
       - if current_user&.executive?
         %h5 Statistics
         %ul.list-group
