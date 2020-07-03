@@ -57,7 +57,6 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.manual_url).to eq("http://openminted.eu/user-manual/")
       expect(service.helpdesk_url).to eq("https://services.openminted.eu/support")
       expect(service.training_information_url).to eq("http://openminted.eu/support-training/")
-      expect(service.phase).to eq("production")
       expect(service.order_type).to eq("open_access")
       expect(service.funding_bodies).to eq([funding_body])
       expect(service.funding_programs).to eq([funding_program])

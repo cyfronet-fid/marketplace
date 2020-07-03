@@ -358,7 +358,6 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.string "helpdesk_url"
     t.string "training_information_url"
     t.string "restrictions"
-    t.string "phase"
     t.integer "offers_count", default: 0
     t.text "activate_message"
     t.string "slug"
