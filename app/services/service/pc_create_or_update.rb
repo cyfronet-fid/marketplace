@@ -11,11 +11,6 @@ class Service::PcCreateOrUpdate
     @unirest = unirest
     @eic_base_url = eic_base_url
     @eid = eic_service["id"]
-    @phase_mapping = {
-        "trl-7" => "beta",
-        "trl-8" => "production",
-        "trl-9" => "production"
-    }
     @best_effort_category_mapping = {
         "storage": "Storage",
         "training": "Training & Support",
@@ -82,7 +77,6 @@ class Service::PcCreateOrUpdate
         order_url: data["order"] || "",
         payment_model_url: data["paymentModel"] || "",
         pricing_url: data["pricing"] || "",
-        phase: map_phase(data["trl"]),
         trl: Trl.where(eid: data["trl"]),
         life_cycle_status: LifeCycleStatus.where(eid: data["lifeCycleStatus"]),
         order_type: "open_access",
@@ -150,10 +144,6 @@ class Service::PcCreateOrUpdate
       unless logo.nil?
         service.logo.attach(io: logo, filename: @eid, content_type: logo_content_type)
       end
-    end
-
-    def map_phase(phase)
-      @phase_mapping[phase] || "discovery"
     end
 
     def map_category(category)

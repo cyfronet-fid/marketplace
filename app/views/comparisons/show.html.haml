@@ -52,9 +52,10 @@
         - @services.each do |service|
           %td= service.target_groups.map { |tg| tg.name }.join(", ")
       %tr
-        %th Service phase
+        %th Service life cycle status
         - @services.each do |service|
-          %td= t("services.about.sidebar.fields.phase.#{service.phase}") if service.phase.present?
+          - if service.life_cycle_status.present?
+            %td= t("services.about.sidebar.fields.life_cycle_status.#{service.life_cycle_status.name}")
       %tr.lightgrey-row
         %th Places
         - @services.each do |service|
