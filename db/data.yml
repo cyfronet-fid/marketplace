@@ -316,7 +316,6 @@ services:
         restrictions: &notSpecified not yet specified
         funding_bodies: ["funding_body-innoviris","funding_body-ec"]
         funding_programs: ["funding_program-icfs", "funding_program-insc2020", "funding_program-isf"]
-        phase: production
         trl: &trl_9 ["trl-9"]
         life_cycle_status: &prod ["life_cycle_status-production"]
         tagline: Run virtual machines on-demand with complete control over computing resources
@@ -620,7 +619,6 @@ services:
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Execute thousands of computational tasks to analyse large datasets
@@ -788,7 +786,6 @@ services:
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
-        phase: beta
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Run Docker containers in a lightweight virtualised environment
@@ -824,7 +821,6 @@ services:
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Secure and trusted data exchange service for researchers
@@ -958,7 +954,6 @@ services:
         target_groups: [*researchers, *providers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Metadata based data-discovery
@@ -1089,7 +1084,6 @@ services:
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Secure and trusted data exchange service for researchers
@@ -1212,7 +1206,6 @@ services:
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Data annotation service to create annotations on research data
@@ -1301,7 +1294,6 @@ services:
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Distribute and store large volumes of data based on data policies
@@ -1357,7 +1349,6 @@ services:
         target_groups: [*researchers, *providers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Store and publish research data
@@ -1488,7 +1479,6 @@ services:
         domain: *interdisciplinary
         target_groups: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Transfer of data between data resources and external computational facilities
@@ -1553,7 +1543,6 @@ services:
         domain: *interdisciplinary
         target_groups: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: AAI platform for federated authentication to EUDAT services
@@ -1598,7 +1587,6 @@ services:
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Back-up your data for the long term and future use in a secure environment.
@@ -1668,7 +1656,6 @@ services:
         target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
 #        #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Store, share and access your files and their metadata on a global scale.
@@ -1842,7 +1829,6 @@ services:
 #        language_availability: *english
 #        domain: *earthScience
 ##        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
 #        life_cycle_status: *prod
 #        tagline: Store, share and access your files and their metadata on a global scale.
@@ -1870,7 +1856,6 @@ services:
         language_availability: *english
         domain: *earthScience
 #        #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Access to resources from the Global Earth Observation System of Systems
@@ -1906,7 +1891,6 @@ services:
         restrictions:
         trl: *trl_9
         life_cycle_status: *prod
-        phase: production
         tagline: Multi-disciplinary discovery, access, and use of resources from the Global Earth Observation System of Systems
         platforms: [*geo, *geossPlatform]
         description: |
@@ -1947,7 +1931,6 @@ services:
         domain: [*socialSciences, *humanities]
         target_groups: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: A facet browser for fast navigation and searching in huge amounts of metadata.
@@ -1996,7 +1979,6 @@ services:
         domain: [*socialSciences, *humanities]
         target_groups: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: A web application that suggests language analysis tools for specific data sets.
@@ -2063,7 +2045,6 @@ services:
         target_groups: [*researchers] #TODO: but not specified
         domain: *humanities
 #        #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: A service that allows researchers to create their own citable digital bookmarks.
@@ -2125,7 +2106,6 @@ services:
 #        language_availability: *english
 #        domain: *earthScience
 ##        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
 #        life_cycle_status: *prod
 #        tagline: *notSpecified
@@ -2150,7 +2130,6 @@ services:
 #        target_groups: ["Researchers", "Research organisations"]
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
 #        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2187,7 +2166,6 @@ services:
 #        target_groups: ["Researchers", "Research organisations"]
 #        domain: *mathematics
 #        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
 #        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2264,7 +2242,6 @@ services:
 #        language_availability: *english
 #        domain: *lifeSciences
 #        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
 #        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2294,7 +2271,6 @@ services:
 #        language_availability: *english
 #        domain: *lifeSciences
 ##        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
 #        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2369,7 +2345,6 @@ services:
 #        #restrictions: *notSpecified
 #        trl: *trl_9
 #        life_cycle_status: *prod
-#        phase: production
 #        tagline: |
 #          Applications on Demand gives you access to online applications and application-development
 #          and hosting frameworks to support compute-intensive data analysis
@@ -2402,7 +2377,6 @@ services:
 #        language_availability: *english
 #        domain: *lifeSciences
 ##        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
 #        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2500,7 +2474,6 @@ services:
 #        language_availability: *english
 #        domain: *applicationFrameworks
 ##        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
 #        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2533,7 +2506,6 @@ services:
 #        language_availability: *english
 #        domain: *applicationFrameworks
 #        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
 #        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2568,7 +2540,6 @@ services:
 #        language_availability: *english
 #        domain: *dataAnalysis
 #        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
 #        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2601,7 +2572,6 @@ services:
 #        language_availability: *english
 #        domain: *humanities
 #        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
 #        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2635,7 +2605,6 @@ services:
         language_availability: *english
         domain: *lifeSciences
         restrictions: "Research affiliation needed"
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: NGS and microarray analysis in the cloud.
@@ -2684,7 +2653,6 @@ services:
 #        language_availability: *english
 #        domain: *lifeSciences
 #        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
 #        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
@@ -2716,7 +2684,6 @@ services:
 #        #restrictions: *notSpecified
 #        trl: *trl_9
 #        life_cycle_status: *prod
-#        phase: production
 #        tagline: |
 #          Applications on Demand gives you access to online applications and application-development
 #          and hosting frameworks to support compute-intensive data analysis
@@ -2745,7 +2712,6 @@ services:
       language_availability: *english
       domain: *lifeSciences
       #restrictions: *notSpecified
-      phase: beta
       trl: *trl_9
       life_cycle_status: *prod
       tagline: Create interactive documents with live code, visualisations and narrative text powered by the Jupyter technology
@@ -2846,7 +2812,6 @@ services:
 #        language_availability: *english
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
 #        life_cycle_status: *prod
 #        tagline: Services for Social Sciences and Humanities provided via the national CLARIN centres
@@ -2889,7 +2854,6 @@ services:
         language_availability: *english
         domain: *humanities
         #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: The DARIAH Science Gateway is a platform that provides access to various digital applications and services for the Arts & Humanities researchers
@@ -2951,7 +2915,6 @@ services:
         language_availability: *english
         domain: &highEnergyPhysics High-Energy Physics
         #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Simplify the access and management of computing resources
@@ -3032,7 +2995,6 @@ services:
         language_availability: *english
         domain: *physicalScienceEarth
         #restrictions: *notSpecified
-        phase: beta
         trl: *trl_9
         life_cycle_status: *prod
         tagline: D4Science Service
@@ -3066,7 +3028,6 @@ services:
         language_availability: *english
         domain: *climateScience
         #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Analyze and process data from multiple communities with the Ophidia Big Data Analytics framework
@@ -3140,7 +3101,6 @@ services:
         language_availability: *english
         domain: *environmentalScience
         #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Web service to classify plant pictures based on convolutional neural networks
@@ -3204,7 +3164,6 @@ services:
 #        language_availability: *english
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
 #        life_cycle_status: *prod
 #        tagline: *notSpecified
@@ -3227,7 +3186,6 @@ services:
 #        language_availability: *english
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
 #        life_cycle_status: *prod
 #        tagline: *notSpecified
@@ -3250,7 +3208,6 @@ services:
 #        language_availability: *english
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
 #        life_cycle_status: *prod
 #        tagline: *notSpecified
@@ -3274,7 +3231,6 @@ services:
         language_availability: *english
         domain: *environmentalScience
         #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: On-demand operational coastal circulation forecast service
@@ -3364,7 +3320,6 @@ services:
 #        language_availability: *english
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
 #        life_cycle_status: *prod
 #        tagline: A suite of computational tools for structural biology
@@ -3417,7 +3372,6 @@ services:
         language_availability: *english
         domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Integrative modeling of biomolecular complexes with the user-friendly, EGI HTC-enabled HADDOCK portal
@@ -3457,7 +3411,6 @@ services:
         language_availability: *english
         domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: The PowerFit server allows you to fit your 3D structures in any map!
@@ -3487,7 +3440,6 @@ services:
         language_availability: *english
         domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: |
@@ -3519,7 +3471,6 @@ services:
         language_availability: *english
         domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: NMR protein structure prediction using the EGI HTC-enabled CS-ROSETTA portal
@@ -3550,7 +3501,6 @@ services:
         language_availability: *english
         domain: *biologicalSciences
         restrictions: "Limited to non-profit users, For-profit users can use the service if they a license agreement with the University of California for the AMBER toolkit"
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Web portal for Nuclear Magnetic Resonance (NMR) structure refinement
@@ -3587,7 +3537,6 @@ services:
         language_availability: *english
         domain: *biologicalSciences
         restrictions: "Limited to non-profit users"
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: FANTEN for the analysis of magnetic anisotropy-induced NMR data
@@ -3620,7 +3569,6 @@ services:
         language_availability: *english
         domain: [*biologicalSciences, *lifeSciences]
         restrictions: "Registration required, Limited to non-profit users"
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: "SpotOn: determination of Hot-Spots at protein-protein interfaces"
@@ -3652,7 +3600,6 @@ services:
         language_availability: *english
         domain: [*earthScience, *appliedScience, *interdisciplinary]
         restrictions: " Research affiliation needed, user account registration needed."
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: "Continuous systematic interferogram generation with Sentinel-1 data over the Alpine Region."
@@ -3687,7 +3634,6 @@ services:
         language_availability: *english
         domain: [*earthScience, *appliedScience, *interdisciplinary]
         restrictions: " Research affiliation needed, user account registration needed."
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: "On-demand EO processing services for Earthquake Response and Landslides Analysis."
@@ -3721,7 +3667,6 @@ services:
         language_availability: *english
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
         restrictions: "Research affiliation needed"
-        phase: alpha
         trl: *trl_9
         life_cycle_status: *prod
         tagline: "EODC JupyterHub provides access to the global EODC Copernicus Data Archive."
@@ -3780,7 +3725,6 @@ services:
         language_availability: *english
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
         #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: "Catalog Service for the Web (CSW), OGC compliant catalogue service to expose metadata of geospatial records hosted at EODC"
@@ -3819,7 +3763,6 @@ services:
         language_availability: *english
         domain: *earthScience
         #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Big data satellite imagery service
@@ -3848,7 +3791,6 @@ services:
         language_availability: *english
         domain: *earthScience
         #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Cross-domain application supporting various application fields
@@ -3877,7 +3819,6 @@ services:
         language_availability: *english
         domain: *earthScience
         #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Service providing analysis-ready EO data
@@ -3932,7 +3873,6 @@ services:
         language_availability: *english
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: "Data Collections Catalog is based on two solutions  – CKAN - comprehensive frontend catalogue application for information discovery and EO Browser – specialized catalogue application for robust satellite imagery discovery and quick georeferenced preview"
@@ -3977,7 +3917,6 @@ services:
         language_availability: *english
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: "CREODIAS platform is a cloud infrastructure adapted to the processing of big amounts of EO data, including an EO Data storage cluster and a dedicated IaaS cloud infrastructure for the platform’s Users"
@@ -4018,7 +3957,6 @@ services:
         language_availability: *english
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: "Manage your data products"
@@ -4051,7 +3989,6 @@ services:
         language_availability: *english
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: "The EO Browser allows visualization and basic processing of selected data collections (like Sentinel-1 L1 GRD or Sentinel-2 L1C)"
@@ -4093,7 +4030,6 @@ services:
         language_availability: *english
         domain: *security
         #restrictions: *notSpecified
-        phase: beta
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Handle transparent Single Sign-On from multiple heterogeneous identity providers
@@ -4150,7 +4086,6 @@ services:
 #        language_availability: *english
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
-#        phase: production
 #        trl: *trl_9
         life_cycle_status: *prod
 #        tagline: ToFill
@@ -4183,7 +4118,6 @@ services:
         language_availability: *english
         domain: *interdisciplinary
         #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Dedicated computing and storage for training and education
@@ -4299,7 +4233,6 @@ services:
         language_availability: *english
         domain: *interdisciplinary
         #restrictions: *notSpecified
-        phase: production
         trl: *trl_9
         life_cycle_status: *prod
         tagline: Learn how to manage IT services with a pragmatic and lightweight standard
@@ -4394,7 +4327,6 @@ services:
       restrictions: No restrictions
       language_availability: *english
       domain: *interdisciplinary
-      phase: production
       trl: *trl_9
       life_cycle_status: *prod
       tagline: |
@@ -4443,7 +4375,6 @@ services:
 #      language_availability: *english
 #      domain: *interdisciplinary
 #      #restrictions: *notSpecified
-#      phase: production
 #      trl: *trl_9
 #      life_cycle_status: *prod
 #      tagline: *notSpecified
@@ -4471,7 +4402,6 @@ services:
       language_availability: *english
       domain: *interdisciplinary
       #restrictions: *notSpecified
-      phase: alpha
       trl: *trl_9
       life_cycle_status: *prod
       tagline: Enabling HTC & HPC applications opportunistically across private, academic and public clouds
@@ -4517,7 +4447,6 @@ services:
         In the pilot phase, usage is only supported for  photon and neutron science use-cases
       trl: *trl_9
       life_cycle_status: *prod
-      phase: beta
       tagline: dCache backend storage for the EOSC PAN Science Demonstrator
       platforms: [*eoscPan]
       description: |
@@ -4552,7 +4481,6 @@ services:
       language_availability: *english
       domain: *interdisciplinary
       #restrictions: *notSpecified
-      phase: beta
       trl: *trl_9
       life_cycle_status: *prod
       tagline: OpenWhisk, cloud functions for the EOSC PAN Science Demonstrator
@@ -4588,7 +4516,6 @@ services:
       language_availability: *english
       domain: *interdisciplinary
       #restrictions: *notSpecified
-      phase: beta
       trl: *trl_9
       life_cycle_status: *prod
       tagline: JupyterHub for the EOSC PAN Science Demonstrator
@@ -4624,7 +4551,6 @@ services:
       language_availability: *english
       domain: *interdisciplinary
       #restrictions: *notSpecified
-      phase: beta
       trl: *trl_9
       life_cycle_status: *prod
       tagline: GitLab for the EOSC PAN Science Demonstrator
@@ -4661,7 +4587,6 @@ services:
       language_availability: *english
       domain: *interdisciplinary
       #restrictions: *notSpecified
-      phase: production
       trl: *trl_9
       life_cycle_status: *prod
       tagline: Setup and run parameter studies in the cloud with a few clicks.
@@ -4708,7 +4633,6 @@ services:
       language_availability: *english
       domain: [*interdisciplinary, *lifeSciences, *socialSciences, *humanities, *appliedScience, *philosophy]
       #restrictions: *notSpecified
-      phase: production
       trl: *trl_9
       life_cycle_status: *prod
       tagline: Secure and cost-effective cloud computing for processing sensitive data
@@ -4742,7 +4666,6 @@ services:
       language_availability: *english
       domain: *interdisciplinary
       #restrictions: *notSpecified
-      phase: production
       trl: *trl_9
       life_cycle_status: *prod
       tagline: Services for sensitive data
@@ -4777,7 +4700,6 @@ services:
       language_availability: *english
       domain: *interdisciplinary
       restrictions: Research affiliation needed
-      phase: production
       trl: *trl_9
       life_cycle_status: *prod
       tagline: Deploy a virtual cluster on top of IaaS infrastructures with a few clicks.
