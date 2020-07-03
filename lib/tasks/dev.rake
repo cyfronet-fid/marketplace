@@ -97,7 +97,6 @@ namespace :dev do
                       language_availability: hash["language_availability"],
                       target_groups: target_groups,
                       restrictions: hash["restrictions"],
-                      phase: hash["phase"],
                       trl: trl,
                       life_cycle_status: life_cycle_status,
                       categories: categories,

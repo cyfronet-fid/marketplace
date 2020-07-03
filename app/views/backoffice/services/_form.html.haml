@@ -73,7 +73,6 @@
       = f.input :pricing_url, disabled: cant_edit(:pricing_url)
   .row
     .col-12.col-md-5
-      = f.input :phase, collection: Service.phases.values.map(&:to_sym), disabled: cant_edit(:phase)
       = f.input :restrictions, disabled: cant_edit(:restrictions)
   .row.service-activate-message
     .col-12.col-md-10
