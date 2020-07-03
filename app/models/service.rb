@@ -52,15 +52,15 @@ class Service < ApplicationRecord
                       template: "text",
                       fields: ["restrictions"] },
                     { name: "Life cycle status",
-                      template: "text",
-                      fields: ["life_cycle_status"] },
+                      template: "array",
+                      fields: ["life_cycle_status", "trl"],
+                      nested: "name" },
                     { name: "version",
                       template: "plain_text",
                       fields: ["version"] },
                     { name: "last_update",
                       template: "date",
-                      fields: ["updated_at"],
-                      nested: "name" }]
+                      fields: ["updated_at"] }]
 
   enum status: STATUSES
 
