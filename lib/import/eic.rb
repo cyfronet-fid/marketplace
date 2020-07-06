@@ -235,7 +235,7 @@ module Import
     end
 
     def map_target_users(target_users)
-      TargetUser.where(name: target_users.split(", "))
+      TargetUser.where(eid: target_users)
     end
 
     def create_default_offer!(service, name, eid, url)
