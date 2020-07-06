@@ -25,7 +25,7 @@ EIC_SOURCE_FIELDS = [
   [provider_ids: []],
   :version,
   [trl_ids: []],
-  [life_cycle_status_ids: []]
+  [life_cycle_status_ids: []],
   :resource_organisation_id
 ]
 

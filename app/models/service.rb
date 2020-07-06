@@ -109,7 +109,7 @@ class Service < ApplicationRecord
                                 allow_destroy: true
 
   belongs_to :upstream, foreign_key: "upstream_id", class_name: "ServiceSource", optional: true
-  belongs_to :resource_organisation, class_name: "Provider"
+  belongs_to :resource_organisation, class_name: "Provider", optional: true
 
   serialize :geographical_availabilities, Country::Array
 
@@ -135,7 +135,6 @@ class Service < ApplicationRecord
   validates :logo, blob: { content_type: :image }
   validate :logo_variable, on: [:create, :update]
   validates :scientific_domains, presence: true
-  validates :providers, presence: true
   validates :status, presence: true
   validates :order_target, allow_blank: true, email: true
   validates :trl, length: { maximum: 1 }
