@@ -419,6 +419,7 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description"
+    t.text "eid"
   end
 
   create_table "user_categories", force: :cascade do |t|
