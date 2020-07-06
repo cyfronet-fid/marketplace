@@ -7,7 +7,6 @@ RSpec.describe Service do
   it { should validate_presence_of(:description) }
   it { should validate_presence_of(:tagline) }
   it { should validate_presence_of(:rating) }
-  it { should belong_to(:resource_organisation) }
 
   it { should have_many(:providers) }
   it { should have_many(:categorizations).dependent(:destroy) }
