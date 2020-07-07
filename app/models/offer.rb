@@ -4,8 +4,8 @@ class Offer < ApplicationRecord
   include Offerable
   include Offer::Parameters
 
-  searchkick word_middle: [:name, :description],
-            highlight: [:name, :description]
+  searchkick word_middle: [:offer_name, :description],
+            highlight: [:offer_name, :description]
 
   STATUSES = {
     published: "published",
@@ -14,7 +14,7 @@ class Offer < ApplicationRecord
 
   def search_data
     {
-      name: name,
+      offer_name: name,
       description: description,
       service_id: service_id
     }
