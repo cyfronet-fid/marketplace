@@ -40,6 +40,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Show welcome popup depending on database user information, not cookies (@goreck888)
 - Tab links in the home page (@jarekzet)
 - Fix js test (@martaswiatkowska)
+- Fixed autocomplete service name displayng (@martaswiatkowska)
 
 ### Security
 - Update rails to 6.0.3.2 (@goreck888)
