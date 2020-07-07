@@ -5,7 +5,7 @@ module Service::Autocomplete
 
   def autocomplete
     query = Searchkick.search(params[:q],
-                           fields: ["name", "name"],
+                           fields: ["name", "offer_name"],
                            operator: "or",
                            match: :word_middle,
                            limit: 5,
