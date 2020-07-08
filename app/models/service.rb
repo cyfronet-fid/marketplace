@@ -34,7 +34,11 @@ class Service < ApplicationRecord
 
   SIDEBAR_FIELDS = [{ name: "geographical_availabilities_and_languages",
                       template: "array",
-                      fields: ["geographical_availabilities"] },
+                      fields: ["geographical_availabilities", "languages"],
+                      nested: {
+                        "geographical_availabilities": "name"
+                      }
+                    },
                     { name: "service_availability",
                       template: "map",
                       fields: ["geographical_availabilities"] },
@@ -54,7 +58,11 @@ class Service < ApplicationRecord
                     { name: "Life cycle status",
                       template: "array",
                       fields: ["life_cycle_status", "trl"],
-                      nested: "name" },
+                      nested: {
+                        "life_cycle_status": "name",
+                        "trl": "name"
+                      }
+                    },
                     { name: "version",
                       template: "plain_text",
                       fields: ["version"] },
