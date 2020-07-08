@@ -30,6 +30,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - contact form tab layout modifications (@jarekzet)
 - rdt tsak (@martaswiatkowska)
 - Fixed autocomplete service name displayng (@martaswiatkowska)
+- languages and geographical_availabilities display (@martaswiatkowska)
 
 ### Security
 
