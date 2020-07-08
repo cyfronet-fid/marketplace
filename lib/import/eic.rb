@@ -102,8 +102,8 @@ module Import
         # subcategory_name = service["subCategoryName"]
         trl = service["trl"]
         life_cycle_status = service["lifeCycleStatus"]
-        resource_organisation_eid = service["resource_organisation"]
-        provider_eids = service["providers"] || []
+        resource_organisation_eid = service["resourceOrganisation"]
+        provider_eids = service["resourceProviders"] || []
         version = service["version"]
         target_users = service["targetUsers"]
 
