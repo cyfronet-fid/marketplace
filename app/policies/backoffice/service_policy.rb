@@ -95,7 +95,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       :tagline, :order_type,
       [provider_ids: []], [geographical_availabilities: []],
       [language_availability: []],
-      [target_group_ids: []], :terms_of_use_url,
+      [target_user_ids: []], :terms_of_use_url,
       :access_policies_url, :sla_url,
       :webpage_url, :manual_url, :helpdesk_url,
       :helpdesk_email, :training_information_url, :restrictions,

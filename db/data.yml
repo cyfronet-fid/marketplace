@@ -280,19 +280,76 @@ domain:
 
 
 
-target_groups:
+target_users:
 
     Researchers:
         name: &researchers "Researchers"
+        description: "Someone who conducts scientific research, i.e., an organized and systematic investigation by using scientific methods."
+        eid: "target_user-researchers"
     Research organisations:
         name: &research_organisations "Research organisations"
-    Business:
-        name: &business "Business"
+        description: "A public or private legal entity (e.g. academia, business, industry, public services, etc.) representing the User."
+        eid: "target_user-research_organisations"
+    Businesses:
+        name: &business "Businesses"
+        description: "An organization or economic system where goods and services are exchanged for one another or for money. Businesses can be privately owned, not-for-profit or state-owned."
+        eid: "target_user-businesses"
     Research group:
-        name: &research_groups "Research group"
+        name: &research_groups "Research groups"
+        description: "A research group is a group of researchers working together on a particular issue or topic. Research groups may be composed of researchers all from the same subject/discipline or from different subjects/disciplines."
+        eid: "target_user-research_groups"
     Providers:
         name: &providers "Providers"
-
+        description: "A Provider is an organisation that provides different kind of solutions and/or services or other Resources to end users and other organizations. This broad term incorporates all businesses and organisations that provide products and solutions that are offered for free, on-demand, pay per use or a hybrid delivery model."
+        eid: "target_user-providers"
+    Research communities:
+        name: &research_communities "Research communities"
+        description: "Research communities provide an infrastructure through which scientists of discipline-specific scientific areas are able to advance their research goals, reaching out to other researchers."
+        eid: "target_user-research_communities"
+    Research projects:
+        name: &research_projects "Research projects"
+        description: "A privately or publicly funded project on a research topic."
+        eid: "target_user-research_projects"
+    Research networks:
+        name: &research_network "Research networks"
+        desctiption: "Research networks aim to stimulate interaction between researchers and promote information exchange."
+        eid: "target_user-research_networks"
+    Research managers:
+        name: &research_manager "Research managers"
+        description: "Someone in an organization whose job is to manage a research initiative aiming to the development of new scientific results, products or ideas."
+        eid: "target_user-research_managers"
+    Students:
+        name: &students "Students"
+        desctiption: "A person who is studying at a university or other place of higher education."
+        eid: "target_user-students"
+    Innowators:
+        name: &innowators "Innovators"
+        description: "The group or individual which is the first to try new ideas, processes, goods and services. Innovators are followed by early adopters, early majority, late majority, and laggards, in that order."
+        eid: "target_user-innovators"
+    Funders:
+        name: &funders "Funders"
+        description: "Individual or organization financing a part or all of a project's cost as a grant, investment, or loan."
+        eid: "target_user-funders"
+    Policy Makers:
+        name: &policy_makers "Policy Makers"
+        description: "Individuals (usually members of the board of directors) who have the authority to set the policy framework of an organization."
+        eid: "target_user-policy_makers"
+    Research Infrastructure Managers:
+        name: &research_infrastructure_managers "Research Infrastructure Managers"
+        description: "A RI Manager is a type of Project Coordinator who specializes in research infrastructures. They are responsible for things like managing researchers, making sure costs are on budget and serving as a liaison between reserach staff and project stakeholders."
+        eid: "target_user-research_infrastructure_managers"
+    Provider Managers:
+        name: &provider_managers "Provider Managers"
+        description: "A Provider Manager is an individual within an organisation that is responsible for the quality of the Resources provided and monitors the delivery of the Resource."
+        eid: "target_user-provider_managers"
+    Resource Managers:
+        name: &resource_manager "Resource Managers"
+        description: "Resource Managers are typically responsible for managing Service level agreements with customers and external Providers."
+        eid: "target_user-resource_managers"
+    Other:
+        name: &other "Other"
+        description: ""
+        eid: "target_user-other"
 
 services:
 
@@ -311,8 +368,8 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         language_availability: &english EN
         geographical_availabilities: &poland PL
-        target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
         restrictions: &notSpecified not yet specified
         funding_bodies: ["funding_body-innoviris","funding_body-ec"]
         funding_programs: ["funding_program-icfs", "funding_program-insc2020", "funding_program-isf"]
@@ -616,8 +673,8 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         language_availability: *english
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
         trl: *trl_9
         life_cycle_status: *prod
@@ -783,8 +840,8 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         language_availability: *english
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
         trl: *trl_9
         life_cycle_status: *prod
@@ -818,8 +875,8 @@ services:
         access_policies_url: https://eudat.eu/policy
         language_availability: *english
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
         trl: *trl_9
         life_cycle_status: *prod
@@ -951,8 +1008,8 @@ services:
         access_policies_url: http://eudat.eu/policy
         language_availability: *english
         geographical_availabilities: *poland
-        target_groups: [*researchers, *providers, *research_organisations]
         domain: *interdisciplinary
+        target_users: [*researchers, *providers, *research_organisations]
 #        #restrictions: *notSpecified
         trl: *trl_9
         life_cycle_status: *prod
@@ -1081,8 +1138,8 @@ services:
         access_policies_url: https://eudat.eu/policy
         language_availability: *english
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
         trl: *trl_9
         life_cycle_status: *prod
@@ -1203,8 +1260,8 @@ services:
         access_policies_url: https://eudat.eu/policy
         language_availability: *english
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
         trl: *trl_9
         life_cycle_status: *prod
@@ -1291,8 +1348,8 @@ services:
         access_policies_url: https://eudat.eu/policy
         language_availability: *english
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
         trl: *trl_9
         life_cycle_status: *prod
@@ -1346,8 +1403,8 @@ services:
         access_policies_url: https://eudat.eu/policy
         language_availability: *english
         geographical_availabilities: *poland
-        target_groups: [*researchers, *providers, *research_organisations]
         domain: *interdisciplinary
+        target_users: [*researchers, *providers, *research_organisations]
 #        #restrictions: *notSpecified
         trl: *trl_9
         life_cycle_status: *prod
@@ -1477,7 +1534,7 @@ services:
         language_availability: *english
         domain: *interdisciplinary
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
         trl: *trl_9
         life_cycle_status: *prod
@@ -1541,7 +1598,7 @@ services:
         language_availability: *english
         domain: *interdisciplinary
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
         trl: *trl_9
         life_cycle_status: *prod
@@ -1584,8 +1641,8 @@ services:
         access_policies_url: https://eudat.eu/policy
         language_availability: *english
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
         trl: *trl_9
         life_cycle_status: *prod
@@ -1653,8 +1710,8 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         language_availability: *english
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
         domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
         trl: *trl_9
         life_cycle_status: *prod
@@ -1852,8 +1909,8 @@ services:
         sla_url:
         access_policies_url:
         geographical_availabilities: *poland
-        target_groups: [*researchers] #TODO: but not specified
         language_availability: *english
+        target_users: [*researchers] #TODO: but not specified
         domain: *earthScience
 #        #restrictions: *notSpecified
         trl: *trl_9
@@ -1885,8 +1942,8 @@ services:
         sla_url:
         access_policies_url:
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_groups, *research_organisations]
         language_availability: *english
+        target_users: [*researchers, *research_groups, *research_organisations]
         domain: [*earthScience, *lifeSciences, *interdisciplinary]
         restrictions:
         trl: *trl_9
@@ -1929,7 +1986,7 @@ services:
         language_availability: *english
         domain: [*socialSciences, *humanities]
         geographical_availabilities: *poland
-        target_groups: [*researchers] #TODO: but not specified
+        target_users: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
         trl: *trl_9
         life_cycle_status: *prod
@@ -1977,7 +2034,7 @@ services:
         language_availability: *english
         domain: [*socialSciences, *humanities]
         geographical_availabilities: *poland
-        target_groups: [*researchers] #TODO: but not specified
+        target_users: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
         trl: *trl_9
         life_cycle_status: *prod
@@ -2042,8 +2099,8 @@ services:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         language_availability: *english
         geographical_availabilities: *poland
-        target_groups: [*researchers] #TODO: but not specified
         domain: *humanities
+        target_users: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
         trl: *trl_9
         life_cycle_status: *prod
@@ -2101,7 +2158,7 @@ services:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        target_groups: ["Reaserchers"] #TODO: but not specified
+#        target_users: ["Reaserchers"] #TODO: but not specified
 #        language_availability: *english
 #        domain: *earthScience
 #        geographical_availabilities: *poland
@@ -2127,8 +2184,8 @@ services:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        language_availability: *english
 #        geographical_availabilities: *poland
-#        target_groups: ["Researchers", "Research organisations"]
 #        domain: *interdisciplinary
+#        target_users: ["Researchers", "Research organisations"]
 #        #restrictions: *notSpecified
 #        trl: *trl_9
 #        life_cycle_status: *prod
@@ -2163,9 +2220,8 @@ services:
 #        access_policies_url:
 #        language_availability: *english
 #        geographical_availabilities: *poland
-#        languages: *english
-#        target_groups: ["Researchers", "Research organisations"]
 #        domain: *mathematics
+#        target_users: ["Researchers", "Research organisations"]
 #        #restrictions: *notSpecified
 #        trl: *trl_9
 #        life_cycle_status: *prod
@@ -2239,8 +2295,8 @@ services:
 #        sla_url:
 #        access_policies_url:
 #        geographical_availabilities: *poland
-#        target_groups: ["Researchers", "Research organisations"]
 #        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
 #        domain: *lifeSciences
 #        #restrictions: *notSpecified
 #        trl: *trl_9
@@ -2268,8 +2324,8 @@ services:
 #        sla_url:
 #        access_policies_url:
 #        geographical_availabilities: *poland
-#        target_groups: ["Researchers", "Research organisations"]
 #        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
 #        domain: *lifeSciences
 ##        #restrictions: *notSpecified
 #        trl: *trl_9
@@ -2340,8 +2396,8 @@ services:
 #        sla_url:
 #        access_policies_url:
 #        geographical_availabilities: *poland
-#        target_groups: ["Researchers", "Research organisations"]
 #        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
 #        domain: *earthScience
 #        #restrictions: *notSpecified
 #        trl: *trl_9
@@ -2374,8 +2430,8 @@ services:
 #        sla_url:
 #        access_policies_url:
 #        geographical_availabilities: *poland
-#        target_groups: ["Researchers", "Research organisations"]
 #        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
 #        domain: *lifeSciences
 ##        #restrictions: *notSpecified
 #        trl: *trl_9
@@ -2406,8 +2462,8 @@ services:
 #        sla_url:
 #        access_policies_url:
 #        geographical_availabilities: *poland
-#        target_groups: ["Researchers", "Research organisations"]
 #        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
 #        domain: *applicationFrameworks
 #        #restrictions: *notSpecified
 #        phase: production
@@ -2438,8 +2494,8 @@ services:
 #        sla_url:
 #        access_policies_url:
 #        geographical_availabilities: *poland
-#        target_groups: ["Researchers", "Research organisations"]
 #        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
 #        domain: *applicationFrameworks
 ##        #restrictions: *notSpecified
 #        phase: production
@@ -2471,8 +2527,8 @@ services:
 #        sla_url:
 #        access_policies_url:
 #        geographical_availabilities: *poland
-#        target_groups: ["Researchers", "Research organisations"]
 #        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
 #        domain: *applicationFrameworks
 ##        #restrictions: *notSpecified
 #        trl: *trl_9
@@ -2503,8 +2559,8 @@ services:
 #        sla_url:
 #        access_policies_url:
 #        geographical_availabilities: *poland
-#        target_groups: ["Researchers", "Research organisations"]
 #        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
 #        domain: *applicationFrameworks
 #        #restrictions: *notSpecified
 #        trl: *trl_9
@@ -2537,8 +2593,8 @@ services:
 #        sla_url:
 #        access_policies_url:
 #        geographical_availabilities: *poland
-#        target_groups: ["Researchers", "Research organisations"]
 #        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
 #        domain: *dataAnalysis
 #        #restrictions: *notSpecified
 #        trl: *trl_9
@@ -2569,8 +2625,8 @@ services:
 #        sla_url:
 #        access_policies_url:
 #        geographical_availabilities: *poland
-#        target_groups: ["Researchers", "Research organisations"]
 #        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
 #        domain: *humanities
 #        #restrictions: *notSpecified
 #        trl: *trl_9
@@ -2602,8 +2658,8 @@ services:
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations, *business]
         language_availability: *english
+        target_users: [*researchers, *research_organisations, *business]
         domain: *lifeSciences
         restrictions: "Research affiliation needed"
         trl: *trl_9
@@ -2650,8 +2706,8 @@ services:
 #        sla_url:
 #        access_policies_url:
 #        geographical_availabilities: *poland
-#        target_groups: ["Researchers", "Research organisations"]
 #        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
 #        domain: *lifeSciences
 #        #restrictions: *notSpecified
 #        trl: *trl_9
@@ -2679,8 +2735,8 @@ services:
 #        sla_url:
 #        access_policies_url:
 #        geographical_availabilities: *poland
-#        target_groups: ["Researchers", "Research organisations"]
 #        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
 #        domain: *lifeSciences
 #        #restrictions: *notSpecified
 #        trl: *trl_9
@@ -2708,7 +2764,7 @@ services:
       terms_of_use_url:
       sla_url:
       access_policies_url:
-      target_groups: [*researchers, *research_organisations]
+      target_users: [*researchers, *research_organisations]
       language_availability: *english
       domain: *lifeSciences
       geographical_availabilities: *poland
@@ -2809,8 +2865,8 @@ services:
 #        sla_url:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        geographical_availabilities: *poland
-#        target_groups: ["Researchers"] #TODO: but not specified
 #        language_availability: *english
+#        target_users: ["Researchers"] #TODO: but not specified
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        trl: *trl_9
@@ -2851,8 +2907,8 @@ services:
         sla_url:
         access_policies_url: https://www.dariah.eu/privacy-notice/
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
         language_availability: *english
+        target_users: [*researchers, *research_organisations]
         domain: *humanities
         #restrictions: *notSpecified
         trl: *trl_9
@@ -2912,8 +2968,8 @@ services:
         sla_url:
         access_policies_url:
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
         language_availability: *english
+        target_users: [*researchers, *research_organisations]
         domain: &highEnergyPhysics High-Energy Physics
         #restrictions: *notSpecified
         trl: *trl_9
@@ -2992,8 +3048,8 @@ services:
         sla_url: https://documents.egi.eu/document/2875
         access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
         language_availability: *english
+        target_users: [*researchers, *research_organisations]
         domain: *physicalScienceEarth
         #restrictions: *notSpecified
         trl: *trl_9
@@ -3025,8 +3081,8 @@ services:
         sla_url:
         access_policies_url:
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
         language_availability: *english
+        target_users: [*researchers, *research_organisations]
         domain: *climateScience
         #restrictions: *notSpecified
         trl: *trl_9
@@ -3098,8 +3154,8 @@ services:
         sla_url:
         access_policies_url:
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
         language_availability: *english
+        target_users: [*researchers, *research_organisations]
         domain: *environmentalScience
         #restrictions: *notSpecified
         trl: *trl_9
@@ -3161,8 +3217,8 @@ services:
 #        sla_url:
 #        access_policies_url:
 #        geographical_availabilities: *poland
-#        target_groups: ["Researchers"] #TODO: but not specified
 #        language_availability: *english
+#        target_users: ["Researchers"] #TODO: but not specified
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        trl: *trl_9
@@ -3183,8 +3239,8 @@ services:
 #        sla_url:
 #        access_policies_url:
 #        geographical_availabilities: *poland
-#        target_groups: ["Researchers"] #TODO: but not specified
 #        language_availability: *english
+#        target_users: ["Researchers"] #TODO: but not specified
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        trl: *trl_9
@@ -3205,8 +3261,8 @@ services:
 #        sla_url:
 #        access_policies_url:
 #        geographical_availabilities: *poland
-#        target_groups: ["Researchers"] #TODO: but not specified
 #        language_availability: *english
+#        target_users: ["Researchers"] #TODO: but not specified
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        trl: *trl_9
@@ -3228,8 +3284,8 @@ services:
         sla_url:
         access_policies_url:
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
         language_availability: *english
+        target_users: [*researchers, *research_organisations]
         domain: *environmentalScience
         #restrictions: *notSpecified
         trl: *trl_9
@@ -3369,8 +3425,8 @@ services:
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
         geographical_availabilities: *poland
-        target_groups: [*researchers]
         language_availability: *english
+        target_users: [*researchers]
         domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
         trl: *trl_9
@@ -3408,8 +3464,8 @@ services:
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
         geographical_availabilities: *poland
-        target_groups: [*researchers]
         language_availability: *english
+        target_users: [*researchers]
         domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
         trl: *trl_9
@@ -3437,8 +3493,8 @@ services:
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
         geographical_availabilities: *poland
-        target_groups: [*researchers]
         language_availability: *english
+        target_users: [*researchers]
         domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
         trl: *trl_9
@@ -3468,8 +3524,8 @@ services:
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
         geographical_availabilities: *poland
-        target_groups: [*researchers]
         language_availability: *english
+        target_users: [*researchers]
         domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
         trl: *trl_9
@@ -3498,8 +3554,8 @@ services:
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         geographical_availabilities: *poland
-        target_groups: [*researchers]
         language_availability: *english
+        target_users: [*researchers]
         domain: *biologicalSciences
         restrictions: "Limited to non-profit users, For-profit users can use the service if they a license agreement with the University of California for the AMBER toolkit"
         trl: *trl_9
@@ -3534,8 +3590,8 @@ services:
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         geographical_availabilities: *poland
-        target_groups: [*researchers]
         language_availability: *english
+        target_users: [*researchers]
         domain: *biologicalSciences
         restrictions: "Limited to non-profit users"
         trl: *trl_9
@@ -3566,8 +3622,8 @@ services:
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
         geographical_availabilities: *poland
-        target_groups: [*researchers]
         language_availability: *english
+        target_users: [*researchers]
         domain: [*biologicalSciences, *lifeSciences]
         restrictions: "Registration required, Limited to non-profit users"
         trl: *trl_9
@@ -3597,8 +3653,8 @@ services:
         sla_url:
         access_policies_url:
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations, *business]
         language_availability: *english
+        target_users: [*researchers, *research_organisations, *business]
         domain: [*earthScience, *appliedScience, *interdisciplinary]
         restrictions: " Research affiliation needed, user account registration needed."
         trl: *trl_9
@@ -3631,8 +3687,8 @@ services:
         sla_url:
         access_policies_url:
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations, *business]
         language_availability: *english
+        target_users: [*researchers, *research_organisations, *business]
         domain: [*earthScience, *appliedScience, *interdisciplinary]
         restrictions: " Research affiliation needed, user account registration needed."
         trl: *trl_9
@@ -3664,8 +3720,8 @@ services:
         sla_url:
         access_policies_url:
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations, *research_groups]
         language_availability: *english
+        target_users: [*researchers, *research_organisations, *research_groups]
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
         restrictions: "Research affiliation needed"
         trl: *trl_9
@@ -3722,8 +3778,8 @@ services:
         sla_url:
         access_policies_url:
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations, *research_groups, *providers]
         language_availability: *english
+        target_users: [*researchers, *research_organisations, *research_groups, *providers]
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
         #restrictions: *notSpecified
         trl: *trl_9
@@ -3760,8 +3816,8 @@ services:
         sla_url:
         access_policies_url:
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
         language_availability: *english
+        target_users: [*researchers, *research_organisations]
         domain: *earthScience
         #restrictions: *notSpecified
         trl: *trl_9
@@ -3788,8 +3844,8 @@ services:
         sla_url:
         access_policies_url:
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
         language_availability: *english
+        target_users: [*researchers, *research_organisations]
         domain: *earthScience
         #restrictions: *notSpecified
         trl: *trl_9
@@ -3816,8 +3872,8 @@ services:
         sla_url:
         access_policies_url:
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations]
         language_availability: *english
+        target_users: [*researchers, *research_organisations]
         domain: *earthScience
         #restrictions: *notSpecified
         trl: *trl_9
@@ -3870,8 +3926,8 @@ services:
         sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
         language_availability: *english
+        target_users: [*researchers, *research_organisations, *research_groups, *providers, *business]
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         trl: *trl_9
@@ -3914,8 +3970,8 @@ services:
         sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
         language_availability: *english
+        target_users: [*researchers, *research_organisations, *research_groups, *providers, *business]
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         trl: *trl_9
@@ -3954,8 +4010,8 @@ services:
         sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
         language_availability: *english
+        target_users: [*researchers, *research_organisations, *research_groups, *providers, *business]
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         trl: *trl_9
@@ -3986,8 +4042,8 @@ services:
         sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
         geographical_availabilities: *poland
-        target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
         language_availability: *english
+        target_users: [*researchers, *research_organisations, *research_groups, *providers, *business]
         domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
         trl: *trl_9
@@ -4027,8 +4083,8 @@ services:
         sla_url:
         access_policies_url:
         geographical_availabilities: *poland
-        target_groups: [*research_organisations]
         language_availability: *english
+        target_users: [*research_organisations]
         domain: *security
         #restrictions: *notSpecified
         trl: *trl_9
@@ -4083,8 +4139,8 @@ services:
 #        sla_url: https://documents.egi.eu/document/2733
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
 #        geographical_availabilities: *poland
-#        target_groups: ["Research organisations"]
 #        language_availability: *english
+#        target_users: ["Research organisations"]
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        trl: *trl_9
@@ -4115,8 +4171,8 @@ services:
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         geographical_availabilities: *poland
-        target_groups: [*research_groups, *research_organisations]
         language_availability: *english
+        target_users: [*research_groups, *research_organisations]
         domain: *interdisciplinary
         #restrictions: *notSpecified
         trl: *trl_9
@@ -4230,8 +4286,8 @@ services:
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
         geographical_availabilities: *poland
-        target_groups: [*research_organisations]
         language_availability: *english
+        target_users: [*research_organisations]
         domain: *interdisciplinary
         #restrictions: *notSpecified
         trl: *trl_9
@@ -4324,7 +4380,7 @@ services:
       sla_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies#Service_Level_Agreement
       access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
       geographical_availabilities: *poland
-      target_groups: [*research_groups]
+      target_users: [*research_groups]
       restrictions: No restrictions
       language_availability: *english
       domain: *interdisciplinary
@@ -4372,8 +4428,8 @@ services:
 #      sla_url:
 #      access_policies_url:
 #      geographical_availabilities: *poland
-#      target_groups: ["Research groups", "Research organisations"]
 #      language_availability: *english
+#      target_users: ["Research groups", "Research organisations"]
 #      domain: *interdisciplinary
 #      #restrictions: *notSpecified
 #      trl: *trl_9
@@ -4399,8 +4455,8 @@ services:
       sla_url:
       access_policies_url:
       geographical_availabilities: *poland
-      target_groups: [*research_groups, *research_organisations]
       language_availability: *english
+      target_users: [*research_groups, *research_organisations]
       domain: *interdisciplinary
       #restrictions: *notSpecified
       trl: *trl_9
@@ -4440,8 +4496,8 @@ services:
       sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       geographical_availabilities: *poland
-      target_groups: [*researchers]
       language_availability: *english
+      target_users: [*researchers]
       domain: *interdisciplinary
       restrictions: |
         Access to the platform is granted based on motivation / proposal,
@@ -4478,8 +4534,8 @@ services:
       sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       geographical_availabilities: *poland
-      target_groups: [*researchers]
       language_availability: *english
+      target_users: [*researchers]
       domain: *interdisciplinary
       #restrictions: *notSpecified
       trl: *trl_9
@@ -4513,8 +4569,8 @@ services:
       sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       geographical_availabilities: *poland
-      target_groups: [*researchers]
       language_availability: *english
+      target_users: [*researchers]
       domain: *interdisciplinary
       #restrictions: *notSpecified
       trl: *trl_9
@@ -4548,8 +4604,8 @@ services:
       sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       geographical_availabilities: *poland
-      target_groups: [*researchers]
       language_availability: *english
+      target_users: [*researchers]
       domain: *interdisciplinary
       #restrictions: *notSpecified
       trl: *trl_9
@@ -4584,8 +4640,8 @@ services:
       sla_url: https://documents.egi.eu/document/2733
       access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
       geographical_availabilities: *poland
-      target_groups: [*researchers, *research_organisations, *business]
       language_availability: *english
+      target_users: [*researchers, *research_organisations, *business]
       domain: *interdisciplinary
       #restrictions: *notSpecified
       trl: *trl_9
@@ -4630,8 +4686,8 @@ services:
       sla_url: https://research.csc.fi/documents/48467/0/ePouta+SLA/cbac49af-f069-4a8b-9636-e519b1ee331d
       access_policies_url: https://research.csc.fi/pricing-of-computing-services
       geographical_availabilities: *poland
-      target_groups: [*researchers, *research_organisations, *research_groups, *providers]
       language_availability: *english
+      target_users: [*researchers, *research_organisations, *research_groups, *providers]
       domain: [*interdisciplinary, *lifeSciences, *socialSciences, *humanities, *appliedScience, *philosophy]
       #restrictions: *notSpecified
       trl: *trl_9
@@ -4663,8 +4719,8 @@ services:
       sla_url:
       access_policies_url:
       geographical_availabilities: *poland
-      target_groups: [*researchers]
       language_availability: *english
+      target_users: [*researchers]
       domain: *interdisciplinary
       #restrictions: *notSpecified
       trl: *trl_9
@@ -4697,8 +4753,8 @@ services:
       sla_url: https://documents.egi.eu/document/2733
       access_policies_url:  https://documents.egi.eu/public/ShowDocument?docid=2635
       geographical_availabilities: *poland
-      target_groups: [*researchers, *research_organisations, *business]
       language_availability: *english
+      target_users: [*researchers, *research_organisations, *business]
       domain: *interdisciplinary
       restrictions: Research affiliation needed
       trl: *trl_9
