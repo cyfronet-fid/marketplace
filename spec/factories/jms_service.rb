@@ -33,8 +33,8 @@ FactoryBot.define do
         "geographicalAvailabilities" => { "geographicalAvailability" => "WW" },
         "price" => "http://openminted.eu/pricing/",
         "resourceOrganisation" => "tp",
-        "providers" => {
-          "provider" => prov_eid
+        "resourceProviders" => {
+          "resourceProviders" => prov_eid
         },
         "publications" => "0",
         "relatedServices" => nil,

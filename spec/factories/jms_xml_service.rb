@@ -32,9 +32,10 @@ FactoryBot.define do
               <tns:geographicalAvailability>WW</tns:geographicalAvailability>
               </tns:geographicalAvailabilities>
             <tns:price>http://openminted.eu/pricing/</tns:price>
-            <tns:providers>
-              <tns:provider>tp</tns:provider></tns:providers>
-              <tns:publications>0</tns:publications>
+            <tns:resourceProviders>
+              <tns:resourceProviders>tp</tns:resourceProviders>
+            </tns:resourceProviders>
+            <tns:publications>0</tns:publications>
             <tns:relatedServices/>
             <tns:requiredServices/>
             <tns:serviceLevelAgreement>http://openminted.eu/sla-agreement/</tns:serviceLevelAgreement>
