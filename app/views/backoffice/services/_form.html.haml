@@ -33,6 +33,10 @@
                   disabled: cant_edit([funding_body_ids: []])
   = f.association :funding_programs, input_html: { data: { choice: true } },
                   disabled: cant_edit([funding_program_ids: []])
+  = f.association :trl, input_html: { data: { choice: true } },
+                  disabled: cant_edit([trl_ids: []])
+  = f.association :life_cycle_status, input_html: { data: { choice: true } },
+                  disabled: cant_edit([life_cycle_status_ids: []])
 
   .row.mt-5
     .col-12.col-md-5
@@ -69,7 +73,6 @@
       = f.input :pricing_url, disabled: cant_edit(:pricing_url)
   .row
     .col-12.col-md-5
-      = f.input :phase, collection: Service.phases.values.map(&:to_sym), disabled: cant_edit(:phase)
       = f.input :restrictions, disabled: cant_edit(:restrictions)
   .row.service-activate-message
     .col-12.col-md-10

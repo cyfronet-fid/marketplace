@@ -75,6 +75,8 @@ namespace :dev do
       funding_bodies = FundingBody.where(eid: hash["funding_bodies"])
       funding_programs = FundingProgram.where(eid: hash["funding_programs"])
       service = Service.find_or_initialize_by(name: hash["name"])
+      trl = Trl.where(eid: hash["trl"])
+      life_cycle_status = LifeCycleStatus.where(eid: hash["life_cycle_status"])
       order_type = order_type_from(hash)
 
       service.update!(tagline: hash["tagline"],
@@ -95,7 +97,8 @@ namespace :dev do
                       language_availability: hash["language_availability"],
                       target_groups: target_groups,
                       restrictions: hash["restrictions"],
-                      phase: hash["phase"],
+                      trl: trl,
+                      life_cycle_status: life_cycle_status,
                       categories: categories,
                       tag_list: hash["tags"],
                       platforms: platforms,

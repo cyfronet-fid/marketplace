@@ -106,6 +106,8 @@ describe Import::Eic do
     end
 
     it "should create service if none existed" do
+      trl_7 = create(:trl, name: "trl 7", eid: "trl-7")
+      life_cycle_status = create(:life_cycle_status, name: "prod", eid: "production")
       expect { eic.call }.to output(/PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(3)
 
       service = Service.first
@@ -129,7 +131,6 @@ describe Import::Eic do
       expect(service.manual_url).to eq("https://github.com/phnmnl/phenomenal-h2020/wiki")
       expect(service.helpdesk_url).to eq("http://phenomenal-h2020.eu/home/help")
       expect(service.training_information_url).to eq("http://phenomenal-h2020.eu/home/training-online")
-      expect(service.phase).to eq("beta")
       expect(service.order_type).to eq("open_access")
       expect(service.status).to eq("draft")
       expect(service.providers).to eq([Provider.first])
@@ -140,7 +141,8 @@ describe Import::Eic do
       expect(service.sources.first.eid).to eq("phenomenal.phenomenal")
       expect(service.upstream_id).to eq(nil)
       expect(service.version).to eq("2018.08")
-
+      expect(service.trl).to eq([trl_7])
+      expect(service.life_cycle_status).to eq([life_cycle_status])
       expect(Service.find_by(name: "MetalPDB")).to_not be_nil
       expect(Service.find_by(name: "PDB_REDO server")).to_not be_nil
     end
@@ -333,13 +335,6 @@ describe Import::Eic do
     expect(Service.first.providers).to eq([provider])
     provider.reload
     expect(provider.sources.count).to eq(1)
-  end
-
-  it "should correctly map trls" do
-    expect(eic.map_phase("trl-7")).to eq("beta")
-    expect(eic.map_phase("trl-8")).to eq("production")
-    expect(eic.map_phase("trl-9")).to eq("production")
-    expect(eic.map_phase("trl-unknown")).to eq("discovery")
   end
 
   it "should have correct category mapping" do

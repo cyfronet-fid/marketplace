@@ -18,11 +18,6 @@ module Import
       @dont_create_providers = dont_create_providers
       @default_upstream = default_upstream
 
-      @phase_mapping = {
-          "trl-7" => "beta",
-          "trl-8" => "production",
-          "trl-9" => "production"
-      }
       @logger = logger
       @ids = ids || []
       @filepath = filepath
@@ -108,7 +103,8 @@ module Import
         funding_programs = service["fundingPrograms"]
         # category_name = service["categoryName"]
         # subcategory_name = service["subCategoryName"]
-        phase = service["trl"]
+        trl = service["trl"]
+        life_cycle_status = service["lifeCycleStatus"]
         provider_eid = service["providers"][0]
         version = service["version"]
 
@@ -182,7 +178,8 @@ module Import
             order_url: order_url || "",
             payment_model_url: payment_model_url || "",
             pricing_url: pricing_url || "",
-            phase: map_phase(phase),
+            trl: Trl.where(eid: trl),
+            life_cycle_status: LifeCycleStatus.where(eid: life_cycle_status),
             order_type: "open_access",
             status: "draft",
             funding_bodies: map_funding_bodies(funding_bodies),
@@ -272,10 +269,6 @@ module Import
           "compute": Category.find_by!(name: "Compute"),
           "networking": Category.find_by!(name: "Networking"),
       }.stringify_keys
-    end
-
-    def map_phase(phase)
-      @phase_mapping[phase] || "discovery"
     end
 
     def map_funding_bodies(funding_bodies)

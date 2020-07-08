@@ -36,6 +36,8 @@ RSpec.feature "Services in backoffice" do
       target_group = create(:target_group)
       funding_body = create(:funding_body)
       funding_program = create(:funding_program)
+      trl = create(:trl)
+      life_cycle_status = create(:life_cycle_status)
 
       visit backoffice_services_path
       click_on "Create new Service"
@@ -49,6 +51,8 @@ RSpec.feature "Services in backoffice" do
       select target_group.name, from: "Dedicated For"
       select funding_body.name, from: "Funding bodies"
       select funding_program.name, from: "Funding programs"
+      select trl.name, from: "Trl"
+      select life_cycle_status.name, from: "Life cycle status"
       fill_in "Terms of use url", with: "https://sample.url"
       fill_in "Access policies url", with: "https://sample.url"
       fill_in "Sla url", with: "https://sample.url"
@@ -59,7 +63,6 @@ RSpec.feature "Services in backoffice" do
       fill_in "Restrictions", with: "Reaserch affiliation needed"
       fill_in "Activate message", with: "Welcome!!!"
       fill_in "Service Order Target", with: "email@domain.com"
-      select "Alpha (min. TRL 5)", from: "Phase"
       select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
       select "open_access", from: "Order type"
@@ -93,8 +96,9 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content(funding_program.name)
       expect(page).to have_content("Publish")
       expect(page).to have_content("eic: 12345a")
-      expect(page).to have_content("Alpha (min. TRL 5)")
       expect(page).to have_content("2.2.2")
+      expect(page).to have_content(trl.name)
+      expect(page).to have_content(life_cycle_status.name)
     end
 
     scenario "I can see warning about no offers" do
@@ -406,7 +410,6 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Helpdesk url", disabled: false
       expect(page).to have_field "Helpdesk email", disabled: false
       expect(page).to have_field "Training information url", disabled: false
-      expect(page).to have_field "Phase", disabled: false
       expect(page).to have_field "Restrictions", disabled: false
       expect(page).to have_field "Activate message", disabled: false
     end
@@ -445,7 +448,6 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Helpdesk url", disabled: true
       expect(page).to have_field "Helpdesk email", disabled: false
       expect(page).to have_field "Training information url", disabled: true
-      expect(page).to have_field "Phase", disabled: true
       expect(page).to have_field "Restrictions", disabled: false
       expect(page).to have_field "Activate message", disabled: false
     end

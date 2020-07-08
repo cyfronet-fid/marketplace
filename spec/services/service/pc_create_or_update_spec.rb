@@ -21,6 +21,8 @@ RSpec.describe Service::PcCreateOrUpdate do
 
   describe "#succesfull responses" do
     it "should create new service with all informations" do
+      trl_8 = create(:trl, name: "trl 7", eid: "trl-8")
+      life_cycle_status = create(:life_cycle_status, name: "prod", eid: "production")
       unirest = Unirest
       provider_response = double(code: 200, body: create(:eic_provider_response))
 
@@ -55,7 +57,6 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.manual_url).to eq("http://openminted.eu/user-manual/")
       expect(service.helpdesk_url).to eq("https://services.openminted.eu/support")
       expect(service.training_information_url).to eq("http://openminted.eu/support-training/")
-      expect(service.phase).to eq("production")
       expect(service.order_type).to eq("open_access")
       expect(service.funding_bodies).to eq([funding_body])
       expect(service.funding_programs).to eq([funding_program])
@@ -68,6 +69,8 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.sources.first.eid).to eq("first.service")
       expect(service.upstream_id).to eq(nil)
       expect(service.version).to eq("1.0")
+      expect(service.trl).to eq([trl_8])
+      expect(service.life_cycle_status).to eq([life_cycle_status])
     end
 
     it "should create new service with new provider" do
