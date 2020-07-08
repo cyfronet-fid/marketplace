@@ -84,7 +84,7 @@ class Service::PcCreateOrUpdate
         funding_bodies: map_funding_bodies(data["fundingBody"]),
         funding_programs: map_funding_programs(data["fundingPrograms"]),
         resource_organisation: map_provider(data["resourceOrganisation"]),
-        providers: Array(data["providers"]["provider"])&.map { |p| map_provider(p) },
+        providers: Array(data["resourceProviders"]["resourceProviders"])&.map { |p| map_provider(p) },
         categories: map_category(data["category"]),
         scientific_domains: [scientific_domain_other],
         version: data["version"] || "",
