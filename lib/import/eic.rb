@@ -94,10 +94,8 @@ module Import
         # category = service["category"]
         # subcategory = service["subcategory"]
         # tags = service["tags"]
-        # places = service["places"]
-        place_names = service["placeNames"]
         language_availability = Array(service["languages"] || "EN")
-        # language_names = service["languageNames"]
+        geographical_availabilities = service["geographicalAvailabilities"]
         category = service["category"]
         funding_bodies = service["fundingBody"]
         funding_programs = service["fundingPrograms"]
@@ -163,8 +161,8 @@ module Import
             tagline: tagline.blank? ? "NO IMPORTED TAGLINE" : tagline,
             # provider_id: ?
             # contact_emails: ?
-            places: place_names[0] || "World",
             language_availability: language_availability || ["EN"],
+            geographical_availabilities: geographical_availabilities || [],
             dedicated_for: [],
             terms_of_use_url: terms_of_use[0] || "",
             access_policies_url: price_url,

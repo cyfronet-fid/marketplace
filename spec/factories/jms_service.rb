@@ -30,7 +30,7 @@ FactoryBot.define do
         "options" => "Standard",
         "order" => "http://openminted.eu/omtd-services/catalogue-of-scholarly-datasets/",
         "otherProducts" => "0",
-        "places" => { "place" => "WW" },
+        "geographicalAvailabilities" => { "geographicalAvailability" => "WW" },
         "price" => "http://openminted.eu/pricing/",
         "providers" => {
           "provider" => prov_eid

@@ -32,12 +32,12 @@ class Service < ApplicationRecord
     draft: "draft"
   }
 
-  SIDEBAR_FIELDS = [{ name: "places_and_languages",
+  SIDEBAR_FIELDS = [{ name: "geographical_availabilities_and_languages",
                       template: "array",
-                      fields: ["languages"] },
+                      fields: ["geographical_availabilities"] },
                     { name: "service_availability",
                       template: "map",
-                      fields: ["places"] },
+                      fields: ["geographical_availabilities"] },
                     { name: "platforms",
                       template: "array",
                       fields: ["platforms"] },
@@ -110,6 +110,8 @@ class Service < ApplicationRecord
 
   belongs_to :upstream, foreign_key: "upstream_id", class_name: "ServiceSource", optional: true
 
+  serialize :geographical_availabilities, Country::Array
+
   validates :name, presence: true
   validates :description, presence: true
   validates :tagline, presence: true
@@ -137,6 +139,7 @@ class Service < ApplicationRecord
   validates :order_target, allow_blank: true, email: true
   validates :trl, length: { maximum: 1 }
   validates :life_cycle_status, length: { maximum: 1 }
+  validates :geographical_availabilities, presence: true
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
@@ -169,6 +172,10 @@ class Service < ApplicationRecord
     service_user_relationships.where(user: user).count.positive?
   end
 
+  def geographical_availabilities=(value)
+    super(value&.map { |v| Country.for(v) })
+  end
+
   private
     def open_access_or_external?
       open_access? || external?
@@ -181,6 +188,7 @@ class Service < ApplicationRecord
                           pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon format.")
       end
     end
+
 
     def main_category_missing?
       categorizations.where(main: true).count.zero?
