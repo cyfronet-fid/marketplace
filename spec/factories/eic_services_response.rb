@@ -26,7 +26,9 @@ FactoryBot.define do
                   "userValue" => "Reproducible Metabolomics processing and analysis pipeline without the need for expert installation and maintenance",
                   "userBase" => "Worldwide, individual researchers and larger labs with either commercial cloud-based or in-house deployments.",
                   "symbol" => "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-                  "multimediaURL" => "https://www.youtube.com/watch?v=-_F8NZwWXew",
+                  "multimedia" => [
+                      "https://www.youtube.com/watch?v=-_F8NZwWXew"
+                  ],
                   "resourceOrganisation" => "bluebridge",
                   "resourceProviders" => [
                       "phenomenal",
@@ -34,7 +36,9 @@ FactoryBot.define do
                   ],
                   "version" => "2018.08",
                   "lastUpdate" => 1533513600000,
-                  "changeLog" => "The release focuses on stability, introduction of new tools and workflows and updates to the PhenoMeNal Cloud Research Portal user interface in response to the feedback we have received in our usability tests. Support for Partner clouds has been added. The total number of Galaxy tools is now over 250",
+                  "changeLog" => [
+                      "fixed bug"
+                  ],
                   "validFor" => nil,
                   "lifeCycleStatus" => "production",
                   "trl" => trl,
@@ -46,9 +50,36 @@ FactoryBot.define do
                   "language_availability" => [
                       "EN"
                   ],
-                  "tags" => [
-                      "Metabolomics, Galaxy, Workflows, Cloud Research Environment, Analytics"
+                  "resourceGeographicLocations" => [
+                      "PL"
                   ],
+                  "accessTypes" => [
+                      "access_type-at"
+                  ],
+                  "accessModes" => [
+                      "access_mode-am"
+                  ],
+                  "certifications" => [
+                      "ISO-639"
+                  ],
+                  "standards" => [
+                      "standard"
+                  ],
+                  "openSourceTechnologies" => [
+                      "opensource"
+                  ],
+                  "grantProjectNames" => [
+                      "grant"
+                  ],
+                  "tags" => [
+                      "Metabolomics",
+                      "Galaxy",
+                      "Workflows",
+                      "Cloud Research Environment",
+                      "Analytics"
+                  ],
+                  "useCases" => "http://phenomenal-h2020.eu/home/help",
+                  "privacyPolicy" => "http://phenomenal-h2020.eu/home/help",
                   "requiredServices" => [],
                   "relatedServices" => [],
                   "order" => "https://portal.phenomenal-h2020.eu/home",
@@ -56,7 +87,7 @@ FactoryBot.define do
                   "userManual" => "https://github.com/phnmnl/phenomenal-h2020/wiki",
                   "trainingInformation" => "http://phenomenal-h2020.eu/home/training-online",
                   "feedback" => "http://phenomenal-h2020.eu/home/help",
-                  "price" => "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/09/Phenomenal-Terms-of-Use-version-11.pdf",
+                  "accessPolicy" => "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/09/Phenomenal-Terms-of-Use-version-11.pdf",
                   "serviceLevelAgreement" => "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/09/Phenomenal-Terms-of-Use-version-11.pdf",
                   "termsOfUse" => [
                       "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/09/Phenomenal-Terms-of-Use-version-11.pdf"
@@ -90,14 +121,16 @@ FactoryBot.define do
                   "userValue" => "",
                   "userBase" => "",
                   "symbol" => "http://metalweb.cerm.unifi.it/global/images/MetalPDB.png",
-                  "multimediaURL" => nil,
+                  "multimedia" => [
+                      "https://www.youtube.com/watch?v=-_F8NZwWXew"
+                  ],
                   "resourceOrganisation" => "bluebridge",
                   "resourceProviders" => [
                       "West-Life"
                   ],
                   "version" => "1.0",
                   "lastUpdate" => 1518912000000,
-                  "changeLog" => "",
+                  "changeLog" => [""],
                   "validFor" => nil,
                   "lifeCycleStatus" => "production",
                   "trl" => "trl-9",
@@ -161,7 +194,7 @@ FactoryBot.define do
                   ],
                   "version" => "6.26",
                   "lastUpdate" => 1537228800000,
-                  "changeLog" => "",
+                  "changeLog" => [""],
                   "validFor" => nil,
                   "lifeCycleStatus" => "production",
                   "trl" => "trl-9",

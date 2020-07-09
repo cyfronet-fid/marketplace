@@ -32,7 +32,7 @@ namespace :rdt do
         funding_body.update!(name: hash["name"],
                              eid: hash["eid"],
                              description: hash["description"],
-                             parent: FundingBody.find_by(id: hash["parentId"]),
+                             parent: FundingBody.find_by(eid: hash["parentId"]),
                              extras: hash["extras"])
       end
       puts "Created funding body: #{hash["name"]}"
@@ -44,7 +44,7 @@ namespace :rdt do
         funding_program.update!(name: hash["name"],
                                 eid: hash["eid"],
                                 description: hash["description"],
-                                parent: FundingProgram.find_by(id: hash["parentId"]),
+                                parent: FundingProgram.find_by(eid: hash["parentId"]),
                                 extras: hash["extras"])
       end
       puts "Created funding program: #{hash["name"]}"
@@ -67,6 +67,30 @@ namespace :rdt do
                   eid: hash["eid"],
                   description: hash["description"])
       puts "Created trl: #{lcs.name}"
+    end
+
+    puts "Creating access_types from yaml"
+    yaml_hash["access_type"].each do |_, hash|
+      AccessType.find_or_initialize_by(name: hash["name"]) do |access_type|
+        access_type.update!(name: hash["name"],
+                            eid: hash["eid"],
+                            description: hash["description"],
+                            parent: AccessType.find_by(eid: hash["parentId"]),
+                            extras: hash["extras"])
+      end
+      puts "Created access_type: #{hash["name"]}"
+    end
+
+    puts "Creating access_modes from yaml"
+    yaml_hash["access_mode"].each do |_, hash|
+      AccessMode.find_or_initialize_by(name: hash["name"]) do |access_mode|
+        access_mode.update!(name: hash["name"],
+                            eid: hash["eid"],
+                            description: hash["description"],
+                            parent: AccessMode.find_by(eid: hash["parentId"]),
+                            extras: hash["extras"])
+      end
+      puts "Created access_mode: #{hash["name"]}"
     end
   end
 
