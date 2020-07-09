@@ -86,6 +86,8 @@ class Service < ApplicationRecord
   has_many :service_vocabularies, dependent: :destroy
   has_many :funding_bodies, through: :service_vocabularies, source: :vocabulary, source_type: "FundingBody"
   has_many :funding_programs, through: :service_vocabularies, source: :vocabulary, source_type: "FundingProgram"
+  has_many :access_modes, through: :service_vocabularies, source: :vocabulary, source_type: "AccessMode"
+  has_many :access_types, through: :service_vocabularies, source: :vocabulary, source_type: "AccessType"
   has_many :trl, through: :service_vocabularies, source: :vocabulary, source_type: "Trl"
   has_many :life_cycle_status, through: :service_vocabularies, source: :vocabulary, source_type: "LifeCycleStatus"
   has_many :service_target_users, dependent: :destroy
@@ -133,11 +135,13 @@ class Service < ApplicationRecord
   belongs_to :resource_organisation, class_name: "Provider", optional: true
 
   serialize :geographical_availabilities, Country::Array
+  serialize :resource_geographic_locations, Country::Array
 
   validates :name, presence: true
   validates :description, presence: true
   validates :tagline, presence: true
   validates :rating, presence: true
+  validates :multimedia, array: { mp_url: true }
   validates :terms_of_use_url, mp_url: true, if: :terms_of_use_url?
   validates :access_policies_url, mp_url: true, if: :access_policies_url?
   validates :sla_url, mp_url: true, if: :sla_url?
@@ -151,8 +155,12 @@ class Service < ApplicationRecord
   validates :helpdesk_url, mp_url: true, if: :helpdesk_url?
   validates :helpdesk_email, allow_blank: true, email: true
   validates :security_contact_email, allow_blank: true, email: true
+  validates :use_cases_url, mp_url: true, if: :use_cases_url?
+  validates :privacy_policy_url, mp_url: true, if: :privacy_policy_url?
+  validates :contact_emails, array: { email: true }
   validates :training_information_url, mp_url: true, if: :training_information_url?
   validates :language_availability, array: true
+  validates :resource_geographic_locations, array: true
   validates :logo, blob: { content_type: :image }
   validate :logo_variable, on: [:create, :update]
   validates :scientific_domains, presence: true
@@ -194,6 +202,10 @@ class Service < ApplicationRecord
   end
 
   def geographical_availabilities=(value)
+    super(value&.map { |v| Country.for(v) })
+  end
+
+  def resource_geographic_locations=(value)
     super(value&.map { |v| Country.for(v) })
   end
 

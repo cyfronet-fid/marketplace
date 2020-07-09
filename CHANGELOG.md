@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service order type visibility and filter (@goreck888)
 - Missing breadcrumbs and page titles (@goreck888)
 - new url fields in service model (@goreck888)
+- new missing multiselect fields in service model (@goreck888)
 
 ### Changed
 - Sidebar links section name change from 'support' to 'links' (@goreck888)

@@ -76,8 +76,10 @@ module Import
         payment_model_url = service["paymentModel"]
         pricing_url = service["pricing"]
         helpdesk_url = service["helpdesk"]
-        # feedback_url = service["feedback"]
-        price_url = service["price"]
+        multimedia = Array(service["multimedia"]) || []
+        use_cases_url = service["useCases"]
+        privacy_policy_url = service["privacyPolicy"]
+        access_policy_url = service["accessPolicy"]
         service_level_agreement_url = service["serviceLevelAgreement"]
         terms_of_use = service["termsOfUse"] # list
 
@@ -88,18 +90,25 @@ module Import
         user_value = service["userValue"]
         user_base = service["userBase"]
         image_url = service["symbol"]
-        # last_update = service["lastUpdate"]
-        # change_log = service["changeLog"]
+        last_update = service["lastUpdate"]
+        changelog = Array(service["changeLog"])
+        certifications = service["certifications"]
+        standards = service["standards"]
+        open_source_technologies = service["openSourceTechnologies"]
+        grant_project_names = service["grantProjectNames"]
         # category = service["category"]
         # subcategory = service["subcategory"]
-        # tags = service["tags"]
+        tag_list = Array(service["tags"])
         language_availability = Array(service["languages"] || "EN")
         geographical_availabilities = service["geographicalAvailabilities"]
+        resource_geographic_locations = Array(service["resourceGeographicLocations"]) || []
         category = service["category"]
         funding_bodies = service["fundingBody"]
         funding_programs = service["fundingPrograms"]
         main_contact = MainContact.new(map_contact(service["mainContact"])) if service["mainContact"] || nil
         public_contacts = Array(service["publicContacts"])&.map { |c| PublicContact.new(map_contact(c)) } || []
+        access_types = service["accessTypes"]
+        access_modes = service["accessModes"]
         # category_name = service["categoryName"]
         # subcategory_name = service["subCategoryName"]
         trl = service["trl"]
@@ -147,12 +156,16 @@ module Import
             description: aggregated_description,
             tagline: tagline.blank? ? "NO IMPORTED TAGLINE" : tagline,
             # provider_id: ?
-            # contact_emails: ?
+            tag_list: tag_list,
             language_availability: language_availability || ["EN"],
             geographical_availabilities: geographical_availabilities || [],
+            resource_geographic_locations: resource_geographic_locations,
             dedicated_for: [],
+            multimedia: multimedia,
+            use_cases_url: use_cases_url,
             terms_of_use_url: terms_of_use[0] || "",
-            access_policies_url: price_url,
+            access_policies_url: access_policy_url,
+            privacy_policy_url: privacy_policy_url,
             sla_url: service_level_agreement_url || "",
             webpage_url: url || "",
             manual_url: user_manual_url || "",
@@ -171,12 +184,20 @@ module Import
             status: "draft",
             funding_bodies: map_funding_bodies(funding_bodies),
             funding_programs: map_funding_programs(funding_programs),
+            access_types: map_access_types(access_types),
+            access_modes: map_access_modes(access_modes),
             resource_organisation: mapped_resource_organisation[0],
             providers: mapped_providers,
             categories: map_category(category),
             scientific_domains: [@scientific_domain_other],
             version: version || "",
-            target_users: map_target_users(target_users)
+            target_users: map_target_users(target_users),
+            last_update: last_update,
+            changelog: changelog,
+            certifications: Array(certifications),
+            standards: Array(standards),
+            grant_project_names: Array(grant_project_names),
+            open_source_technologies: Array(open_source_technologies)
         }
 
         begin
@@ -302,6 +323,14 @@ module Import
 
     def map_funding_programs(funding_programs)
       FundingProgram.where(eid: funding_programs)
+    end
+
+    def map_access_types(access_types)
+      AccessType.where(eid: access_types)
+    end
+
+    def map_access_modes(aceess_modes)
+      AccessMode.where(eid: aceess_modes)
     end
 
     private

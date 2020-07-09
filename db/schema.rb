@@ -391,6 +391,16 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.string "payment_model_url"
     t.string "pricing_url"
     t.string "security_contact_email", default: "", null: false
+    t.string "resource_geographic_locations", default: [], array: true
+    t.string "certifications", default: [], array: true
+    t.string "standards", default: [], array: true
+    t.string "open_source_technologies", default: [], array: true
+    t.string "changelog", default: [], array: true
+    t.string "grant_project_names", default: [], array: true
+    t.string "multimedia", default: [], array: true
+    t.string "privacy_policy_url"
+    t.string "use_cases_url"
+    t.datetime "last_update"
     t.index ["name"], name: "index_services_on_name"
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["resource_organisation_id"], name: "index_services_on_resource_organisation_id"

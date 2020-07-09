@@ -10,7 +10,9 @@
     "userValue": "Reproducible Metabolomics processing and analysis pipeline without the need for expert installation and maintenance",
     "userBase": "Worldwide, individual researchers and larger labs with either commercial cloud-based or in-house deployments.",
     "symbol": "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-    "multimediaURL": "https://www.youtube.com/watch?v=-_F8NZwWXew",
+    "multimedia": [
+      "https://www.youtube.com/watch?v=-_F8NZwWXew"
+    ],
     "resourceOrganisation": "bluebridge",
     "resourceProviders": [
       "phenomenal",
@@ -18,7 +20,9 @@
     ],
     "version": "2018.08",
     "lastUpdate": 1533513600000,
-    "changeLog": "The release focuses on stability, introduction of new tools and workflows and updates to the PhenoMeNal Cloud Research Portal user interface in response to the feedback we have received in our usability tests. Support for Partner clouds has been added. The total number of Galaxy tools is now over 250",
+    "changeLog": [
+      "fixed bug"
+    ],
     "validFor": null,
     "lifeCycleStatus": "production",
     "trl": "trl-7",
@@ -30,9 +34,36 @@
     "language_availability": [
       "EN"
     ],
-    "tags": [
-      "Metabolomics, Galaxy, Workflows, Cloud Research Environment, Analytics"
+    "resourceGeographicLocations": [
+      "PL"
     ],
+    "accessTypes": [
+      "access_type-at"
+    ],
+    "accessModes": [
+      "access_mode-am"
+    ],
+    "certifications": [
+      "ISO-639"
+    ],
+    "standards": [
+      "standard"
+    ],
+    "openSourceTechnologies": [
+      "opensource"
+    ],
+    "grantProjectNames": [
+      "grant"
+    ],
+    "tags": [
+      "Metabolomics",
+      "Galaxy",
+      "Workflows",
+      "Cloud Research Environment",
+      "Analytics"
+    ],
+    "useCases": "http://phenomenal-h2020.eu/home/help",
+    "privacyPolicy": "http://phenomenal-h2020.eu/home/help",
     "requiredServices": [
 
     ],
@@ -44,7 +75,7 @@
     "userManual": "https://github.com/phnmnl/phenomenal-h2020/wiki",
     "trainingInformation": "http://phenomenal-h2020.eu/home/training-online",
     "feedback": "http://phenomenal-h2020.eu/home/help",
-    "price": "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/09/Phenomenal-Terms-of-Use-version-11.pdf",
+    "accessPolicy": "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/09/Phenomenal-Terms-of-Use-version-11.pdf",
     "serviceLevelAgreement": "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/09/Phenomenal-Terms-of-Use-version-11.pdf",
     "termsOfUse": [
       "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/09/Phenomenal-Terms-of-Use-version-11.pdf"
