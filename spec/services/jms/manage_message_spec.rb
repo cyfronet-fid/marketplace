@@ -32,7 +32,7 @@ describe Jms::ManageMessage do
     original_stdout = $stdout
     $stdout = StringIO.new
     allow(Provider::PcCreateOrUpdate).to receive(:new).with(parser.parse(provider_resource["resource"])["providerBundle"]["provider"], logger)
-      .and_return(provider_create_or_update)
+                                                            .and_return(provider_create_or_update)
     allow(provider_create_or_update).to receive(:call).and_return(true)
 
     expect {
