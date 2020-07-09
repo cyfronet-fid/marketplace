@@ -9,7 +9,16 @@ FactoryBot.define do
         "resourceId" => "13b90013-2e17-4ad9-a260-3b59a598f189",
         "resourceType" => "provider",
         "resource" => "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
-                      "<tns:provider xmlns:tns=\"http://einfracentral.eu\">" +
+                      "<tns:providerBundle xmlns:tns=\"http://einfracentral.eu\">" +
+                      "<tns:active>false</tns:active>" +
+                      "<tns:metadata>" +
+                        "<tns:modifiedAt>1594190519802</tns:modifiedAt>" +
+                        "<tns:modifiedBy>Ignacio Blanquer</tns:modifiedBy>" +
+                        "<tns:registeredAt>1594190519802</tns:registeredAt>" +
+                        "<tns:registeredBy>Ignacio Blanquer</tns:registeredBy>" +
+                      "</tns:metadata>" +
+                      "<tns:status>pending initial approval</tns:status>" +
+                      "<tns:provider>" +
                         "<tns:active>true</tns:active>" +
                         "<tns:additionalInfo>no</tns:additionalInfo>" +
                         "<tns:catalogueOfResources>http://no.i.dont</tns:catalogueOfResources>" +
@@ -34,7 +43,8 @@ FactoryBot.define do
                           "</tns:user>" +
                         "</tns:users>" +
                         "<tns:website>http://beta.providers.eosc-portal.eu</tns:website>" +
-                      "</tns:provider>",
+                      "</tns:provider>" +
+                    "</tns:providerBundle>",
         "payloadFormat" => "xml"
       }
     end
