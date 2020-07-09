@@ -74,6 +74,17 @@
       %h5 Order type
       %p= t("offers.type.#{@service.order_type}") if @service.order_type.present?
 
+      - if @service.access_types.present?
+        %h5 Access types
+        - @service.access_types.each do |access_type|
+          %p= access_type.name
+
+      - if @service.access_modes.present?
+        %h5 Access modes
+        - @service.access_modes.each do |access_mode|
+          %p= access_mode.name
+
+
       %h5 Dedicated For
       %ul
         - @service.target_users.each do |group|
@@ -88,7 +99,10 @@
                                             "data-region": @service.geographical_availabilities.map(&:alpha2) }
 
       %hr
-
+      %h5 Resource geographic locations
+      - if @service.resource_geographic_locations.present?
+        - @service.resource_geographic_locations.each do |location|
+          %p= location.name
       %h5 Trl
       %p= @service.trl[0].name if @service.trl.present?
 
@@ -125,6 +139,27 @@
       - @service.funding_programs.each do |program|
         %p= program.name
 
+      - if @service.grant_project_names.present?
+        %h5 Grant project names:
+        - @service.grant_project_names&.each do |name|
+          %p= name
+
+      - if @service.certifications.present?
+        %h5 Certifications:
+        - @service.certifications&.each do |certification|
+          %p= certification
+
+      - if @service.standards.present?
+        %h5 Standards:
+        - @service.standards&.each do |standard|
+          %p= standard
+
+      - if @service.open_source_technologies.present?
+        %h5 Open source technologies:
+        - @service.open_source_technologies&.each do |technology|
+          %p= technology
+
+
       %h5 Upstream External Source
       %p= @service.upstream || "MP"
 
@@ -138,5 +173,9 @@
       %h5 Version
       %p= @service&.version
 
-      %h5 Last update
+      - if @service.last_update.present?
+        %h5 Last external update
+        %p= l @service.last_update, format: :short
+
+      %h5 Updated at
       %p= l @service.updated_at, format: :short
