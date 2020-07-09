@@ -131,7 +131,7 @@ namespace :rdt do
   end
 
   def create_or_update_target_user(name, desc, eid)
-    target = TargetUser.find_or_initialise_by(name: name)
+    target = TargetUser.find_or_initialize_by(name: name)
     target.update!(description: desc, eid: eid)
   end
 end
