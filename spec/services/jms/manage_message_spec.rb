@@ -18,7 +18,7 @@ describe Jms::ManageMessage do
   it "should receive service message" do
     original_stdout = $stdout
     $stdout = StringIO.new
-    allow(Service::PcCreateOrUpdate).to receive(:new).with(parser.parse(service_resource["resource"])["infraService"],
+    allow(Service::PcCreateOrUpdate).to receive(:new).with(parser.parse(service_resource["resource"])["infraService"]["service"],
                                                             eic_base,
                                                             logger).and_return(service_create_or_update)
     allow(service_create_or_update).to receive(:call).and_return(true)
@@ -31,7 +31,7 @@ describe Jms::ManageMessage do
   it "should receive provider message" do
     original_stdout = $stdout
     $stdout = StringIO.new
-    allow(Provider::PcCreateOrUpdate).to receive(:new).with(parser.parse(provider_resource["resource"])["provider"], logger)
+    allow(Provider::PcCreateOrUpdate).to receive(:new).with(parser.parse(provider_resource["resource"])["providerBundle"]["provider"], logger)
       .and_return(provider_create_or_update)
     allow(provider_create_or_update).to receive(:call).and_return(true)
 
