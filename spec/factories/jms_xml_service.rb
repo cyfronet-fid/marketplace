@@ -19,9 +19,9 @@ FactoryBot.define do
             <tns:funding>EC funds (H2020 grant 654021 for the OpenMinTeD project) &amp; National funds for the GRNET cloud infrastructure on which the platform operates</tns:funding>
             <tns:helpdesk>https://services.openminted.eu/support</tns:helpdesk>
             <tns:id>tp.openminted_catalogue_of_corpora_2aaaaaaaaaaaaa</tns:id>
-            <tns:languages>
-              <tns:language>english</tns:language>
-            </tns:languages>
+            <tns:languageAvailabilities>
+              <tns:languageAvailability>english</tns:languageAvailability>
+            </tns:languageAvailabilities>
             <tns:lastUpdate>2018-09-05T00:00:00.000Z</tns:lastUpdate>
             <tns:lifeCycleStatus>production</tns:lifeCycleStatus>
             <tns:name>OpenMinTeD Catalogue of Corpora 2aaaaaaaaaaassssssssssssaa</tns:name>
