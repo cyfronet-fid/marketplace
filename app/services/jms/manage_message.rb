@@ -20,7 +20,8 @@ class Jms::ManageMessage
     case body["resourceType"]
     when "infra_service"
       if resource["infraService"]["latest"]
-        Service::PcCreateOrUpdate.new(resource["infraService"]["service"], @eic_base_url, @logger).call
+        Service::PcCreateOrUpdate.new(resource["infraService"]["service"], @eic_base_url, @logger,
+                                      resource["infraService"]["active"]).call
       end
     when "provider"
       if resource["providerBundle"]["active"]

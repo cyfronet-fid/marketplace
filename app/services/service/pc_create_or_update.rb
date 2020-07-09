@@ -6,6 +6,7 @@ class Service::PcCreateOrUpdate
   def initialize(eic_service,
                  eic_base_url,
                  logger,
+                 is_active,
                  unirest: Unirest)
     @logger = logger
     @unirest = unirest
@@ -21,7 +22,7 @@ class Service::PcCreateOrUpdate
         "networking": "Networking",
     }.stringify_keys
     @eic_service =  eic_service
-    @is_active = @eic_service["active"]
+    @is_active = is_active
   end
 
   def call
