@@ -27,7 +27,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Added missing homepage graphics (@jarekzet)
 - instance badge display on backoffice section (@goreck888)
 - contact form tab layout modifications (@jarekzet)
- 
+- rdt tsak (@martaswiatkowska)
+
 ### Security
 
 ## [2.11.0] 2020-06-09
