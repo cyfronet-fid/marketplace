@@ -65,7 +65,7 @@ class Service::PcCreateOrUpdate
                       data["userBase"]].join("\n"),
         tagline: data["tagline"].blank? ? "NO IMPORTED TAGLINE" : data["tagline"],
         tag_list: Array(data.dig("tags", "tag")) || [],
-        language_availability: Array(data.dig("languages", "language") || "EN"),
+        language_availability: Array(data.dig("languageAvailabilities", "languageAvailability") || "EN"),
         geographical_availabilities: Array(data.dig("geographicalAvailabilities", "geographicalAvailability") || "WW"),
         resource_geographic_locations: Array(data.dig("resourceGeographicLocations", "resourceGeographicLocation")) || [],
         dedicated_for: [],
