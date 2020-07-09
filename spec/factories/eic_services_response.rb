@@ -47,7 +47,7 @@ FactoryBot.define do
                   "geographicalAvailabilities" => [
                       "WW"
                   ],
-                  "language_availability" => [
+                  "languageAvailabilities" => [
                       "EN"
                   ],
                   "resourceGeographicLocations" => [
@@ -143,7 +143,7 @@ FactoryBot.define do
                   "geographicalAvailabilities" => [
                       "WW"
                   ],
-                  "language_availability" => [
+                  "languageAvailabilities" => [
                       "EN"
                   ],
                   "tags" => [
@@ -207,7 +207,7 @@ FactoryBot.define do
                   "geographicalAvailabilities" => [
                       "WW"
                   ],
-                  "language_availability" => [
+                  "languageAvailabilities" => [
                       "EN"
                   ],
                   "tags" => [

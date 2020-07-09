@@ -56,7 +56,7 @@ FactoryBot.define do
         ] },
         "helpdesk" => "https://services.openminted.eu/support",
         "id" => eid,
-        "languages" => { "language"=>"english" },
+        "languageAvailabilities" => { "languageAvailability"=>"english" },
         "lastUpdate" => "Wed, 05 Sep 2018 00:00:00 +0000".to_date,
         "lifeCycleStatus" => "production",
         "name" => name,
