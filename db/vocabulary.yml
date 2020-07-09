@@ -1174,41 +1174,41 @@ funding_program:
 
 trl:
   trl-1:
-    name: "trl-1"
-    description: "Basic principles observed"
-    eid: "trl-1"
+    name: trl-1
+    description: Basic principles observed
+    eid: trl-1
   trl-2:
-    name: "trl-2"
-    description: "Technology concept formulated"
-    eid: "trl-2"
+    name: trl-2
+    description: Technology concept formulated
+    eid: trl-2
   trl-3:
-    name: "trl-3"
-    description: "Experimental proof of concept"
-    eid: "trl-3"
+    name: trl-3
+    description: Experimental proof of concept
+    eid: trl-3
   trl-4:
-    name: "trl-4"
-    description: "Technology validated in lab"
-    eid: "trl-4"
+    name: trl-4
+    description: Technology validated in lab
+    eid: trl-4
   trl-5:
-    name: "trl-5"
-    description: "Technology validated in relevant environment (industrially relevant environment in the case of key enabling technologies)"
-    eid: "trl-5"
+    name: trl-5
+    description: Technology validated in relevant environment (industrially relevant environment in the case of key enabling technologies)
+    eid: trl-5
   trl-6:
-    name: "trl-6"
-    description: "Technology demonstrated in relevant environment (industrially relevant environment in the case of key enabling technologies)"
-    eid: "trl-6"
+    name: trl-6
+    description: Technology demonstrated in relevant environment (industrially relevant environment in the case of key enabling technologies)
+    eid: trl-6
   trl-7:
-    name: "trl-7"
-    description: "System prototype demonstration in operational environment"
-    eid: "trl-7"
+    name: trl-7
+    description: System prototype demonstration in operational environment
+    eid: trl-7
   trl-8:
-    name: "trl-8"
-    description: "System complete and qualified"
-    eid: "trl-8"
+    name: trl-8
+    description: System complete and qualified
+    eid: trl-8
   trl-9:
-    name: "trl-9"
-    description: "Actual system proven in operational environment (competitive manufacturing in the case of key enabling technologies; or in space)"
-    eid: "trl-9"
+    name: trl-9
+    description: Actual system proven in operational environment (competitive manufacturing in the case of key enabling technologies; or in space)
+    eid: trl-9
 
 
 life_cycle_status:
@@ -1268,3 +1268,70 @@ life_cycle_status:
     name: Other
     description:
     eid: life_cycle_status-other
+access_mode:
+  paid:
+    eid: access_mode-paid
+    name: Paid
+    description: Users need to pay a fee to access the Resource
+    type: ACCESS_MODE
+  free_conditionally:
+    eid: access_mode-free_conditionally
+    name: Free Conditionally
+    description: |
+      Users are granted access based on defined policies;
+      such policies usually apply to Resources being offered with “sponsored use”
+      to meet some national or EU level objective; for instance,
+      a country may offer Resources with “sponsored use” to support
+      national researchers involved in international collaborations.
+    type: ACCESS_MODE
+  free:
+    eid: access_mode-free
+    name: Free
+    description: Users can freely access the Resource provided, registration may be needed.
+    type: ACCESS_MODE
+  other:
+    eid: access_mode-other
+    name: Other
+    type: ACCESS_MODE
+  peer_reviewed:
+    eid: access_mode-peer_reviewed
+    name: Peer Reviewed
+    description: |
+      Users are selected based on scientific excellence evaluation, originality,
+      quality and technical and ethical feasibility of an application evaluated
+      through peer review conducted by internal or external experts of the activity to be supported by the Resource.
+    type: ACCESS_MODE
+access_type:
+  virtual:
+    eid: access_type-virtual
+    name: Virtual
+    description: |
+      The Resource is delivered through a virtual infrastructure that the use
+      may access virtually through the web or an intranet.
+    type: ACCESS_TYPE
+  mail_in:
+    eid: access_type-mail_in
+    name: Mail-In
+    description: |
+      Samples are sent in to for e.g. analysis and the results are returned
+      to the user without the user actually accessing the RI.
+    type: ACCESS_TYPE
+  remote:
+    eid: access_type-remote
+    name: Remote
+    description: |
+      Resources are delivered remotely with the use of a physical infrastructure.
+      The user is able to remotely work with the physical RI without the need of physical presence.
+    type: ACCESS_TYPE,
+  other:
+    eid: access_type-other
+    name: Other
+    description: null
+    type: ACCESS_TYPE
+  physical:
+    eid: access_type-physical
+    name: Physical
+    description: |
+      Resources require a physical presence of the user.
+      The user can only access the RI if he is physically present in the specific location that the RI is offered.
+    type: ACCESS_TYPE
