@@ -97,11 +97,11 @@ describe Import::Eic do
     end
 
     it "should create provider if it didn't exist and add external source for it" do
-      expect { log_less_eic.call }.to change { Provider.count }.by(2)
+      expect { log_less_eic.call }.to change { Provider.count }.by(4)
       provider = Provider.first
 
       expect(provider.sources.count).to eq(1)
-      expect(provider.sources.first.eid).to eq("phenomenal")
+      expect(provider.sources.first.eid).to eq("bluebridge")
       expect(provider.sources.first.source_type).to eq("eic")
     end
 
@@ -109,6 +109,7 @@ describe Import::Eic do
       trl_7 = create(:trl, name: "trl 7", eid: "trl-7")
       life_cycle_status = create(:life_cycle_status, name: "prod", eid: "production")
       expect { eic.call }.to output(/PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(3)
+
 
       service = Service.first
 
@@ -133,7 +134,8 @@ describe Import::Eic do
       expect(service.training_information_url).to eq("http://phenomenal-h2020.eu/home/training-online")
       expect(service.order_type).to eq("open_access")
       expect(service.status).to eq("draft")
-      expect(service.providers).to eq([Provider.first])
+      expect(service.providers).to eq([Provider.find_by(name: "Phenomenal"), Provider.find_by(name: "Awesome provider")])
+      expect(service.resource_organisation).to eq(Provider.find_by(name: "BlueBRIDGE"))
       expect(service.categories).to eq([])
       expect(service.scientific_domains).to eq([scientific_domain_other])
       expect(service.sources.count).to eq(1)
@@ -327,14 +329,17 @@ describe Import::Eic do
     response = double(code: 200, body: create(:eic_services_response, tagline: ""))
     provider_response = double(code: 200, body: create(:eic_providers_response))
     # create provider with matching name to one returned by provider_response
-    provider = create(:provider, name: "Phenomenal")
+    provider_phenomenal = create(:provider, name: "Phenomenal")
+    provider_awesome = create(:provider, name: "Awesome provider")
     expect_responses(unirest, test_url, response, provider_response)
 
     make_and_stub_eic(ids: [], dry_run: false, default_upstream: :eic).call
 
-    expect(Service.first.providers).to eq([provider])
-    provider.reload
-    expect(provider.sources.count).to eq(1)
+    expect(Service.first.providers).to eq([provider_phenomenal, provider_awesome])
+    provider_phenomenal.reload
+    provider_awesome.reload
+    expect(provider_phenomenal.sources.count).to eq(1)
+    expect(provider_awesome.sources.count).to eq(1)
   end
 
   it "should have correct category mapping" do

@@ -6,7 +6,6 @@ RSpec.describe Service do
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:description) }
   it { should validate_presence_of(:tagline) }
-  it { should validate_presence_of(:providers) }
   it { should validate_presence_of(:rating) }
 
   it { should have_many(:providers) }
@@ -37,6 +36,7 @@ RSpec.describe Service do
 
     expect(old_main.main).to be_falsy
   end
+
 
   it "has main category" do
     main, other = create_list(:category, 2)

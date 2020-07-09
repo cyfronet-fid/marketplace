@@ -26,12 +26,18 @@ RSpec.describe Service::PcCreateOrUpdate do
       unirest = Unirest
       create(:target_user, name: "Researchers", eid: "researchers")
       create(:target_user, name: "Risk assessors", eid: "risk-assessors")
-      provider_response = double(code: 200, body: create(:eic_provider_response))
+      provider_response_ten = double(code: 200, body: create(:eic_provider_response, eid: provider_eid))
+      provider_response_tp = double(code: 200, body: create(:eic_provider_response, eid: "tp"))
+      provider_response_awesome = double(code: 200, body: create(:eic_provider_response, eid: "awesome"))
 
       expect(unirest).to receive(:get).with("#{test_url}/api/provider/#{provider_eid}",
-                                            headers: { "Accept" => "application/json" }).and_return(provider_response)
+                                            headers: { "Accept" => "application/json" }).and_return(provider_response_ten)
+      expect(unirest).to receive(:get).with("#{test_url}/api/provider/tp",
+                                            headers: { "Accept" => "application/json" }).and_return(provider_response_tp)
+      expect(unirest).to receive(:get).with("#{test_url}/api/provider/awesome",
+                                            headers: { "Accept" => "application/json" }).and_return(provider_response_awesome)
 
-      service = stub_described_class(create(:jms_service, prov_eid: provider_eid), unirest: unirest)
+      service = stub_described_class(create(:jms_service, prov_eid: [provider_eid, "awesome"]), unirest: unirest)
 
       expect(service.name).to eq("Title")
       expect(service.description).to eq("A catalogue of corpora (datasets) made up of mainly " +
@@ -63,7 +69,8 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.funding_bodies).to eq([funding_body])
       expect(service.funding_programs).to eq([funding_program])
       expect(service.status).to eq("published")
-      expect(service.providers).to eq([Provider.first])
+      expect(service.providers).to eq([Provider.find_by(name: "Test Provider ten"), Provider.find_by(name: "Test Provider awesome") ])
+      expect(service.resource_organisation).to eq(Provider.find_by(name: "Test Provider tp"))
       expect(service.categories).to eq([])
       expect(service.scientific_domains).to eq([scientific_domain_other])
       expect(service.sources.count).to eq(1)
@@ -78,32 +85,44 @@ RSpec.describe Service::PcCreateOrUpdate do
 
     it "should create new service with new provider" do
       unirest = Unirest
-      provider_response = double(code: 200, body: create(:eic_provider_response))
+      provider_response_ten = double(code: 200, body: create(:eic_provider_response, eid: provider_eid))
+      provider_response_tp = double(code: 200, body: create(:eic_provider_response, eid: "tp"))
 
       expect(unirest).to receive(:get).with("#{test_url}/api/provider/#{provider_eid}",
-                                            headers: { "Accept" => "application/json" }).and_return(provider_response)
+                                            headers: { "Accept" => "application/json" }).and_return(provider_response_ten)
+      expect(unirest).to receive(:get).with("#{test_url}/api/provider/tp",
+                                            headers: { "Accept" => "application/json" }).and_return(provider_response_tp)
 
       service = stub_described_class(create(:jms_service, prov_eid: provider_eid), unirest: unirest)
 
+      first_provider = Provider.first
       last_provider = Provider.last
 
       expect(service.providers).to include(last_provider)
-      expect(last_provider.name).to eq("Test Provider 2")
+      expect(service.resource_organisation).to eq(first_provider)
+      expect(first_provider.name).to eq("Test Provider tp")
+      expect(last_provider.name).to eq("Test Provider ten")
     end
 
     it "should create new service with existed provider" do
-      provider = create(:provider, name: "Test Provider 3")
-      create(:provider_source, source_type: "eic", eid: "new.prov", provider: provider)
+      provider_ten = create(:provider, name: "Test Provider ten")
+      provider_tp = create(:provider, name: "Test Provider tp")
+      create(:provider_source, source_type: "eic", eid: "new.prov", provider: provider_ten)
+      create(:provider_source, source_type: "eic", eid: "tp", provider: provider_tp)
 
       service = stub_described_class(create(:jms_service, prov_eid: "new.prov", name: "New supper service"), unirest: unirest)
       last_service = Service.last
       expect(last_service.name).to eq("New supper service")
-      expect(service.providers[0].name).to eq("Test Provider 3")
+      expect(service.providers[0].name).to eq("Test Provider ten")
     end
 
     it "should create new service with new default offer" do
       provider = create(:provider, name: "Test Provider 3")
+      provider_tp = create(:provider, name: "Test Provider tp")
       create(:provider_source, source_type: "eic", eid: "new.prov", provider: provider)
+
+      create(:provider_source, source_type: "eic", eid: "tp", provider: provider_tp)
+
       service = create(:jms_service, prov_eid: "new.prov", name: "New supper service")
       expect {
         stub_described_class(service, unirest: unirest)
@@ -119,10 +138,12 @@ RSpec.describe Service::PcCreateOrUpdate do
     end
 
     it "should update logo" do
-      provider = create(:provider, name: "Test Provider 2")
-      create(:provider_source, source_type: "eic", eid: provider_eid, provider: provider)
+      provider_ten = create(:provider, name: "Test Provider ten")
+      provider_tp = create(:provider, name: "Test Provider tp")
+      create(:provider_source, source_type: "eic", eid: provider_eid, provider: provider_ten)
+      create(:provider_source, source_type: "eic", eid: "tp", provider: provider_tp)
 
-      service = create(:service, providers: [provider])
+      service = create(:service, providers: [provider_ten])
 
       create(:service_source, source_type: "eic", eid: "first.service", service: service)
 
@@ -134,9 +155,11 @@ RSpec.describe Service::PcCreateOrUpdate do
     end
 
     it "should update service" do
-      provider = create(:provider, name: "Test Provider 2")
-      create(:provider_source, source_type: "eic", eid: provider_eid, provider: provider)
-      service = create(:service, providers: [provider])
+      provider_ten = create(:provider, name: "Test Provider ten")
+      provider_tp = create(:provider, name: "Test Provider tp")
+      create(:provider_source, source_type: "eic", eid: provider_eid, provider: provider_ten)
+      create(:provider_source, source_type: "eic", eid: "tp", provider: provider_tp)
+      service = create(:service, providers: [provider_ten])
 
       create(:service_source, source_type: "eic", eid: "first.service", service: service)
 
@@ -150,16 +173,21 @@ RSpec.describe Service::PcCreateOrUpdate do
       unirest = Unirest
       service = create(:jms_service, prov_eid: "new2")
       provider_response = double(code: 500, body: {})
+      provider_response_tp = double(code: 200, body: create(:eic_provider_response, eid: "tp"))
 
       expect(unirest).to receive(:get).with("#{test_url}/api/provider/new2",
                                             headers: { "Accept" => "application/json" }).and_return(provider_response)
+      expect(unirest).to receive(:get).with("#{test_url}/api/provider/tp",
+                                            headers: { "Accept" => "application/json" }).and_return(provider_response_tp)
 
       expect { stub_described_class(service, unirest: unirest) }.to raise_error(SystemExit).and output.to_stderr
     end
 
     it "should gracefully handle error with logo download" do
-      provider = create(:provider, name: "Test Provider 3")
-      create(:provider_source, source_type: "eic", eid: "new", provider: provider)
+      provider_new = create(:provider, name: "Test Provider ten")
+      provider_tp = create(:provider, name: "Test Provider tp")
+      create(:provider_source, source_type: "eic", eid: "tp", provider: provider_new)
+      create(:provider_source, source_type: "eic", eid: "new", provider: provider_tp)
       unirest = Unirest
       jms_service = create(:jms_service, logo: "http://phenomenal-h2020.eu/home/wp-content/logo.png")
 

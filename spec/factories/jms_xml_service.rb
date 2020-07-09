@@ -32,9 +32,10 @@ FactoryBot.define do
               <tns:geographicalAvailability>WW</tns:geographicalAvailability>
               </tns:geographicalAvailabilities>
             <tns:price>http://openminted.eu/pricing/</tns:price>
-            <tns:providers>
-              <tns:provider>tp</tns:provider></tns:providers>
-              <tns:publications>0</tns:publications>
+            <tns:resourceProviders>
+              <tns:resourceProviders>tp</tns:resourceProviders>
+            </tns:resourceProviders>
+            <tns:publications>0</tns:publications>
             <tns:relatedServices/>
             <tns:requiredServices/>
             <tns:serviceLevelAgreement>http://openminted.eu/sla-agreement/</tns:serviceLevelAgreement>
@@ -74,6 +75,7 @@ FactoryBot.define do
             <tns:modifiedBy>Marta Swiatkowska</tns:modifiedBy>
             <tns:registeredAt>1588598332654</tns:registeredAt>
             <tns:registeredBy>Marta Swiatkowska</tns:registeredBy>
+            <tns:resourceOrganisation>new</tns:resourceOrganisation>
           </tns:serviceMetadata>
         </tns:infraService>",
         "payloadFormat" =>  "xml"

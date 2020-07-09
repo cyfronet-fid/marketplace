@@ -102,7 +102,8 @@ module Import
         # subcategory_name = service["subCategoryName"]
         trl = service["trl"]
         life_cycle_status = service["lifeCycleStatus"]
-        provider_eid = service["providers"][0]
+        resource_organisation_eid = service["resourceOrganisation"]
+        provider_eids = service["resourceProviders"] || []
         version = service["version"]
         target_users = service["targetUsers"]
 
@@ -135,25 +136,9 @@ module Import
         end
         aggregated_description = [description, options, user_value, user_base].join("\n")
 
-        # Get Provider or create new
-        mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eic",
-                                                           "provider_sources.eid": provider_eid)
-        if mapped_provider.nil?
-          if @dont_create_providers
-            log "[WARNING] No mapping for eic provider '#{provider_eid}', skipping service #{name}, #{eid}"
-            next
-          else
-            log "No mapped provider '#{provider_eid}', creating..."
-            unless @dry_run
-              if (mapped_provider = Provider.find_by(name: @providers[provider_eid]["name"])).nil?
-                mapped_provider = Provider.create!(name: @providers[provider_eid]["name"])
-              else
-                log "Provider with name '#{@providers[provider_eid]["name"]}' already exists, using existing provider"
-              end
-              ProviderSource.new(provider_id: mapped_provider.id, source_type: "eic", eid: provider_eid).save!
-            end
-          end
-        end
+
+        mapped_resource_organisation =  map_providers([resource_organisation_eid], @providers, name, eid)
+        mapped_providers = map_providers(provider_eids, @providers, name, eid)
 
         updated_service_data = {
             name: name,
@@ -182,7 +167,8 @@ module Import
             status: "draft",
             funding_bodies: map_funding_bodies(funding_bodies),
             funding_programs: map_funding_programs(funding_programs),
-            providers: [mapped_provider],
+            resource_organisation: mapped_resource_organisation[0],
+            providers: mapped_providers,
             categories: map_category(category),
             scientific_domains: [@scientific_domain_other],
             version: version || "",
@@ -236,6 +222,34 @@ module Import
 
     def map_target_users(target_users)
       TargetUser.where(eid: target_users)
+    end
+
+    def map_providers(providers_eids, providers, name, eid)
+      mapped_providers = providers_eids&.map { |provider_eid|
+        mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eic",
+                                                           "provider_sources.eid": provider_eid)
+        if mapped_provider.nil?
+          if  @dont_create_providers
+            log "[WARNING] No mapping for eic provider/resource_organisation '#{provider_eid}',
+                                                            skipping service #{name}, #{eid}"
+            return []
+          else
+            log "No mapped provider '#{provider_eid}', creating..."
+            unless @dry_run
+              if (mapped_provider = Provider.find_by(name: providers[provider_eid]["name"])).nil?
+                mapped_provider = Provider.create!(name: providers[provider_eid]["name"])
+              else
+                log "Provider with name '#{providers[provider_eid]["name"]}' already exists, using existing provider"
+              end
+              ProviderSource.new(provider_id: mapped_provider.id, source_type: "eic", eid: provider_eid).save!
+              mapped_provider
+            end
+          end
+        else
+          mapped_provider
+        end
+      }
+      Array(mapped_providers)
     end
 
     def create_default_offer!(service, name, eid, url)
