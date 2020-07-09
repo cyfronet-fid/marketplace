@@ -104,7 +104,7 @@ class Service::PcCreateOrUpdate
         grant_project_names: Array(data.dig("grantProjectNames", "grantProjectName")),
         resource_organisation: map_provider(data["resourceOrganisation"]),
         providers: Array(data.dig("resourceProviders", "resourceProviders"))&.map { |p| map_provider(p) },
-        categories: map_category(data["category"]),
+        categories: map_category(data.dig("subcategories", "subcategory")),
         scientific_domains: [scientific_domain_other],
         version: data["version"] || "",
         target_users: map_target_users(data.dig("targetUsers", "targetUsers")),
@@ -119,7 +119,6 @@ class Service::PcCreateOrUpdate
     def map_provider(prov_eid)
       mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eic",
                                                          "provider_sources.eid": prov_eid)
-
       if mapped_provider.nil?
         begin
           prov = @unirest.get("#{@eic_base_url}/api/provider/#{prov_eid}",
