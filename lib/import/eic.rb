@@ -99,7 +99,7 @@ module Import
         # category = service["category"]
         # subcategory = service["subcategory"]
         tag_list = Array(service["tags"])
-        language_availability = Array(service["languages"] || "EN")
+        language_availability = Array(service["languageAvailabilities"] || "EN")
         geographical_availabilities = service["geographicalAvailabilities"]
         resource_geographic_locations = Array(service["resourceGeographicLocations"]) || []
         category = service["category"]
