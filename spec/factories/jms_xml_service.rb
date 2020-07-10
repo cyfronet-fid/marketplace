@@ -19,14 +19,10 @@ FactoryBot.define do
               <tns:registeredBy>Marta Swiatkowska</tns:registeredBy>
             </tns:metadata>
             <tns:service>
-              <tns:aggregatedServices>1</tns:aggregatedServices>
               <tns:category>aggregator</tns:category>
               <tns:changeLog></tns:changeLog>
-              <tns:datasets>0</tns:datasets>
               <tns:description>&lt;p style=\"text-align: justify;\"&gt;A catalogue of corpora (datasets) made up of mainly Open Access scholarly publications.&lt;br /&gt; Users can view publicly available corpora that have been created with the OpenMinTeD Corpus Builder for Scholarly Works, or manually uploaded to the OpenMinTeD platform.&amp;nbsp;&lt;/p&gt; &lt;p style=\"text-align: justify;\"&gt;The catalogue can be browsed and searched via the faceted navigation facility or a google-like free text search query. All users can view the descriptions of the corpora (with administrative and technical information, such as language, domain, keywords, licence, resource creator, etc.), as well as the contents and, when available, the metadata descriptions of the individual files that compose them.&amp;nbsp;&lt;/p&gt; &lt;p style=\"text-align: justify;\"&gt;In addition, registered users can process them with the TDM applications offered by OpenMinTeD and download them in accordance with their licensing conditions.&lt;/p&gt;</tns:description>
-              <tns:feedback>http://openminted.eu/support/</tns:feedback>
-              <tns:funding>EC funds (H2020 grant 654021 for the OpenMinTeD project) &amp; National funds for the GRNET cloud infrastructure on which the platform operates</tns:funding>
-              <tns:helpdesk>https://services.openminted.eu/support</tns:helpdesk>
+              <tns:helpdeskPage>https://services.openminted.eu/support</tns:helpdeskPage>
               <tns:id>tp.openminted_catalogue_of_corpora_2aaaaaaaaaaaaa</tns:id>
               <tns:languageAvailabilities>
                 <tns:languageAvailability>english</tns:languageAvailability>
@@ -34,23 +30,21 @@ FactoryBot.define do
               <tns:lastUpdate>2018-09-05T00:00:00.000Z</tns:lastUpdate>
               <tns:lifeCycleStatus>production</tns:lifeCycleStatus>
               <tns:name>OpenMinTeD Catalogue of Corpora 2aaaaaaaaaaassssssssssssaa</tns:name>
-              <tns:options>Standard</tns:options>
-              <tns:order>http://openminted.eu/omtd-services/catalogue-of-scholarly-datasets/</tns:order>
-              <tns:otherProducts>0</tns:otherProducts>
+              <tns:order>http://support.d4science.org</tns:order>
               <tns:geographicalAvailabilities>
                 <tns:geographicalAvailability>WW</tns:geographicalAvailability>
-                </tns:geographicalAvailabilities>
-              <tns:price>http://openminted.eu/pricing/</tns:price>
+              </tns:geographicalAvailabilities>
+              <tns:pricing>http://openminted.eu/pricing/</tns:pricing>
+              <tns:paymentModel>http://openminted.eu/pricing/</tns:paymentModel>
+              <tns:resourceOrganisation>tp</tns:resourceOrganisation>
               <tns:resourceProviders>
                 <tns:resourceProviders>tp</tns:resourceProviders>
               </tns:resourceProviders>
-              <tns:publications>0</tns:publications>
-              <tns:relatedServices/>
-              <tns:requiredServices/>
-              <tns:serviceLevelAgreement>http://openminted.eu/sla-agreement/</tns:serviceLevelAgreement>
-              <tns:softwareApplications>0</tns:softwareApplications>
-              <tns:subcategory>data</tns:subcategory>
-              <tns:symbol>http://openminted.eu/wp-content/uploads/2018/08/catalogue-of-corpora.png</tns:symbol>
+              <tns:relatedSerources/>
+              <tns:requiredResources/>
+              <tns:serviceLevel>http://openminted.eu/sla-agreement/</tns:serviceLevel>
+              <tns:subcategories>data</tns:subcategories>
+              <tns:logo>http://openminted.eu/wp-content/uploads/2018/08/catalogue-of-corpora.png</tns:logo>
               <tns:tagline>Find easily accessible corpora of scholarly content and mine them!</tns:tagline>
               <tns:tags>
                 <tns:tag>Text Mining</tns:tag>
@@ -72,11 +66,11 @@ FactoryBot.define do
               <tns:termOfUse>https://services.openminted.eu/support/termsAndConditions</tns:termOfUse></tns:termsOfUse>
               <tns:trainingInformation>http://openminted.eu/support-training/</tns:trainingInformation>
               <tns:trl>trl-7</tns:trl>
-              <tns:url>http://openminted.eu/omtd-services/catalogue-of-scholarly-datasets/</tns:url>
-              <tns:userBase></tns:userBase>
+              <tns:webpage>http://openminted.eu/omtd-services/catalogue-of-scholarly-datasets/</tns:webpage>
               <tns:userManual>http://openminted.eu/user-manual/</tns:userManual>
-              <tns:userValue>For users interested in finding corpora of various languages and domains easily accessible and ready to be processed with TDM applications; the use of a uniform metadata schema for their description facilitates comparison and contrast and thereby selection of the appropriate corpus.</tns:userValue>
               <tns:version>1.0</tns:version>
+              <tns:statusMonitoring/>
+              <tns:accessPolicy/>
             </tns:service>
           </tns:infraService>",
         "payloadFormat" =>  "xml"
