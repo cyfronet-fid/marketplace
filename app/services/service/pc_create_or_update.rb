@@ -31,7 +31,7 @@ class Service::PcCreateOrUpdate
                                                      "service_sources.eid": @eid)
     if mapped_service.nil? && @is_active
       service = Service.new(service)
-      save_logo(service, @eic_service["symbol"])
+      save_logo(service, @eic_service["logo"])
 
       if service.save!
         log "Created new service: #{service.id}"
@@ -46,7 +46,7 @@ class Service::PcCreateOrUpdate
       log "Draft service: #{mapped_service.id}"
       mapped_service
     else
-      save_logo(mapped_service, @eic_service["symbol"])
+      save_logo(mapped_service, @eic_service["logo"])
       mapped_service.update!(service)
       log "Service with id: #{mapped_service.id} successfully updated"
       mapped_service
@@ -58,12 +58,9 @@ class Service::PcCreateOrUpdate
       main_contact = MainContact.new(map_contact(data["mainContact"])) if data["mainContact"] || nil
 
       { name: data["name"],
-        description: [ReverseMarkdown.convert(data["description"],
+        description: ReverseMarkdown.convert(data["description"],
                                              unknown_tags: :bypass,
                                              github_flavored: false),
-                      data["options"],
-                      data["userValue"],
-                      data["userBase"]].join("\n"),
         tagline: data["tagline"].blank? ? "NO IMPORTED TAGLINE" : data["tagline"],
         tag_list: Array(data.dig("tags", "tag")) || [],
         language_availability: Array(data.dig("languageAvailabilities", "languageAvailability") || "EN"),
@@ -73,15 +70,15 @@ class Service::PcCreateOrUpdate
         main_contact: main_contact,
         public_contacts: Array(data.dig("publicContacts", "publicContact"))&.
             map { |c| PublicContact.new(map_contact(c)) } || [],
-        terms_of_use_url: data.dig("termsOfUse", "termOfUse") || "",
-        access_policies_url: data["price"],
-        sla_url: data["serviceLevelAgreement"] || "",
         privacy_policy_url: data["privacyPolicy"] || "",
         use_cases_url: Array(data.dig("useCases", "useCase") || []),
         multimedia: Array(data["multimedia"]) || [],
-        webpage_url: data["url"] || "",
+        terms_of_use_url: data["termsOfUse"] || "",
+        access_policies_url: data["accessPolicy"],
+        sla_url: data["serviceLevel"] || "",
+        webpage_url: data["webpage"] || "",
         manual_url: data["userManual"] || "",
-        helpdesk_url: data["helpdesk"] || "",
+        helpdesk_url: data["helpdeskPage"] || "",
         training_information_url: data["trainingInformation"] || "",
         status_monitoring_url: data["statusMonitoring"] || "",
         maintenance_url: data["maintenance"] || "",

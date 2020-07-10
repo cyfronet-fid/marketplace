@@ -64,10 +64,7 @@ RSpec.describe Service::PcCreateOrUpdate do
                                         "such as language, domain, keywords, licence, resource creator, etc.), as well as the contents and, " +
                                         "when available, the metadata descriptions of the individual files that compose them.&nbsp; " +
                                         "In addition, registered users can process them with the TDM " +
-                                        "applications offered by OpenMinTeD and download them in accordance with their licensing conditions.\n\n\n" +
-                                        "Standard\nFor users interested in finding corpora of various languages and domains easily accessible and " +
-                                        "ready to be processed with TDM applications; the use of a uniform metadata schema for their description " +
-                                        "facilitates comparison and contrast and thereby selection of the appropriate corpus.\n")
+                                        "applications offered by OpenMinTeD and download them in accordance with their licensing conditions.\n\n")
 
       expect(service.tagline).to eq("Find easily accessible corpora of scholarly content and mine them!")
       expect(service.tag_list).to eq(["text mining", "catalogue", "research", "data mining",
@@ -95,24 +92,29 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.manual_url).to eq("http://openminted.eu/user-manual/")
       expect(service.helpdesk_url).to eq("https://services.openminted.eu/support")
       expect(service.training_information_url).to eq("http://openminted.eu/support-training/")
+      expect(service.status_monitoring_url).to eq("http://openminted.eu/monitoring/")
+      expect(service.maintenance_url).to eq("http://openminted.eu/maintenance/")
+      expect(service.order_url).to eq("http://openminted.eu/omtd-services/catalogue-of-scholarly-datasets/")
+      expect(service.payment_model_url).to eq("http://openminted.eu/payment-model")
+      expect(service.pricing_url).to eq("http://openminted.eu/pricing/")
+      expect(service.trl).to eq([trl_8])
+      expect(service.life_cycle_status).to eq([life_cycle_status])
       expect(service.order_type).to eq("open_access")
       expect(service.funding_bodies).to eq([funding_body])
       expect(service.funding_programs).to eq([funding_program])
       expect(service.related_services).to eq([related_service])
       expect(service.required_services).to eq([related_service])
       expect(service.status).to eq("published")
-      expect(service.providers).to eq([Provider.find_by(name: "Test Provider ten"), Provider.find_by(name: "Test Provider awesome") ])
       expect(service.resource_organisation).to eq(Provider.find_by(name: "Test Provider tp"))
+      expect(service.providers).to eq([Provider.find_by(name: "Test Provider ten"), Provider.find_by(name: "Test Provider awesome") ])
       expect(service.categories).to eq([])
       expect(service.scientific_domains).to eq([scientific_domain_other])
+      expect(service.version).to eq("1.0")
+      expect(service.target_users.count).to eq(2)
       expect(service.sources.count).to eq(1)
       expect(service.logo.download).to eq(file_fixture("PhenoMeNal_logo.png").read.b)
       expect(service.sources.first.eid).to eq("first.service")
       expect(service.upstream_id).to eq(nil)
-      expect(service.version).to eq("1.0")
-      expect(service.trl).to eq([trl_8])
-      expect(service.life_cycle_status).to eq([life_cycle_status])
-      expect(service.target_users.count).to eq(2)
     end
 
     it "should create new service with new provider" do
