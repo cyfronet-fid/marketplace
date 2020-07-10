@@ -20,7 +20,8 @@ describe Jms::ManageMessage do
     $stdout = StringIO.new
     allow(Service::PcCreateOrUpdate).to receive(:new).with(parser.parse(service_resource["resource"])["infraService"]["service"],
                                                             eic_base,
-                                                            logger).and_return(service_create_or_update)
+                                                            logger,
+                                                            true).and_return(service_create_or_update)
     allow(service_create_or_update).to receive(:call).and_return(true)
     expect {
       described_class.new(json_service, eic_base, logger).call
@@ -47,11 +48,13 @@ describe Jms::ManageMessage do
     service_hash = { "resource": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"+
                                    "<tns:infraService xmlns:tns=\"http://einfracentral.eu\">" +
                                    "<tns:latest>true</tns:latest>" +
+                                   "<tns:service></tns:service>" +
                                    "</tns:infraService>",
                      "resourceType": "infra_service" }
-    allow(Service::PcCreateOrUpdate).to receive(:new).with(parser.parse(service_hash[:resource])["infraService"],
+    allow(Service::PcCreateOrUpdate).to receive(:new).with(parser.parse(service_hash[:resource])["infraService"]["service"],
                                                            eic_base,
-                                                           logger).and_return(service_create_or_update)
+                                                           logger,
+                                                           true).and_return(service_create_or_update)
     allow(service_create_or_update).to receive(:call).and_raise(StandardError)
 
     expect {

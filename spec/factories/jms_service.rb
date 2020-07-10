@@ -12,8 +12,8 @@ FactoryBot.define do
     end
     initialize_with do
       next {
-        "aggregatedServices" => "1",
         "category" => "aggregator",
+<<<<<<< 43c3e9a358798639871e9287815bfebe54f223e8
         "changeLog" => { "changeLog" => [
             "fixed bug"
         ] },
@@ -38,6 +38,10 @@ FactoryBot.define do
             "funding_program-fp"
           ]
         },
+=======
+        "changeLog" => nil,
+        "description"=> "A catalogue of corpora (datasets) made up of mainly Open Access scholarly publications. Users can view publicly available corpora that have been created with the OpenMinTeD Corpus Builder for Scholarly Works, or manually uploaded to the OpenMinTeD platform.&nbsp; The catalogue can be browsed and searched via the faceted navigation facility or a google-like free text search query. All users can view the descriptions of the corpora (with administrative and technical information, such as language, domain, keywords, licence, resource creator, etc.), as well as the contents and, when available, the metadata descriptions of the individual files that compose them.&nbsp; In addition, registered users can process them with the TDM applications offered by OpenMinTeD and download them in accordance with their licensing conditions.",
+>>>>>>> Fix jms import
         "mainContact" => {
             "firstName" => "John",
             "lastName" => "Doe",
@@ -64,10 +68,9 @@ FactoryBot.define do
         "lastUpdate" => "Wed, 05 Sep 2018 00:00:00 +0000".to_date,
         "lifeCycleStatus" => "production",
         "name" => name,
-        "options" => "Standard",
         "order" => "http://openminted.eu/omtd-services/catalogue-of-scholarly-datasets/",
-        "otherProducts" => "0",
         "geographicalAvailabilities" => { "geographicalAvailability" => "WW" },
+<<<<<<< 43c3e9a358798639871e9287815bfebe54f223e8
         "resourceGeographicLocations" => { "resourceGeographicLocation" => [
             "PL"
         ] },
@@ -90,10 +93,15 @@ FactoryBot.define do
             "grant"
         ] },
         "price" => "http://openminted.eu/pricing/",
+=======
+        "pricing" => "http://openminted.eu/pricing/",
+        "paymentModel" => "http://openminted.eu/payment-model",
+>>>>>>> Fix jms import
         "resourceOrganisation" => "tp",
         "resourceProviders" => {
           "resourceProvider" => prov_eid
         },
+<<<<<<< 43c3e9a358798639871e9287815bfebe54f223e8
         "publications" => "0",
         "relatedResources" => {
             "relatedResource" => ["super-service"]
@@ -105,6 +113,13 @@ FactoryBot.define do
         "softwareApplications" => "0",
         "subcategory" => "data",
         "symbol" => logo,
+=======
+        "relatedResources" => nil,
+        "requiredResources" => nil,
+        "serviceLevel" => "http://openminted.eu/sla-agreement/",
+        "subcategories" =>  { "subcategory" => ["data"] },
+        "logo" => logo,
+>>>>>>> Fix jms import
         "tagline" => "Find easily accessible corpora of scholarly content and mine them!",
         "tags" => { "tag" => [
             "Text Mining",
@@ -119,21 +134,31 @@ FactoryBot.define do
            "Scholarly content"
           ] },
         "targetUsers" => {
-          "targetUsers" =>
+          "targetUser" =>
           ["researchers",
            "risk-assessors"]
         },
-        "termsOfUse" => { "termOfUse" => "https://services.openminted.eu/support/termsAndConditions" },
+        "termsOfUse" => "https://services.openminted.eu/support/termsAndConditions",
         "trainingInformation" => "http://openminted.eu/support-training/",
         "trl" => "trl-8",
-        "url" => "http://openminted.eu/omtd-services/catalogue-of-scholarly-datasets/",
-        "userBase" => nil,
+        "webpage" => "http://openminted.eu/omtd-services/catalogue-of-scholarly-datasets/",
         "userManual" => "http://openminted.eu/user-manual/",
-        "userValue" =>
-          "For users interested in finding corpora of various languages and domains easily accessible and ready to be processed with TDM applications; the use of a uniform metadata schema for their description facilitates comparison and contrast and thereby selection of the appropriate corpus.",
         "version" => "1.0",
-        "active" => true,
-        "latest" => true
+        "accessPolicy" => "http://openminted.eu/pricing/",
+        "statusMonitoring" => "http://openminted.eu/monitoring/",
+        "maintenance" => "http://openminted.eu/maintenance/",
+        "multimedia" => nil,
+        "useCase" => nil,
+        "accessTypes" => ["access_type-other"],
+        "accessModes" => ["access_mode-other"],
+        "resourceGeographicLocations" => nil,
+        "helpdeskEmail" => "info@bluebridge.support_for_data_publication",
+        "securityContactEmail" => "info@bluebridge.support_for_data_publication",
+        "certifications" => nil,
+        "standards" => nil,
+        "openSourceTechnologies" => nil,
+        "privacyPolicy" => nil,
+        "orderType" => "order_type-other"
       }
     end
   end
