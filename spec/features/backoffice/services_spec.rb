@@ -83,7 +83,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Standards", with: "standard"
       fill_in "Open source technologies", with: "opensource"
       fill_in "Grant project names", with: "grantname"
-      fill_in "Changelog", with: "fixed bug"
+      fill_in "service_changelog_0", with: "fixed bug"
       select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
       select "open_access", from: "Order type"
