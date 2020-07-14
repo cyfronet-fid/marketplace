@@ -395,11 +395,11 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.string "certifications", default: [], array: true
     t.string "standards", default: [], array: true
     t.string "open_source_technologies", default: [], array: true
-    t.string "changelog", default: [], array: true
+    t.text "changelog", default: [], array: true
     t.string "grant_project_names", default: [], array: true
     t.string "multimedia", default: [], array: true
     t.string "privacy_policy_url"
-    t.string "use_cases_url"
+    t.string "use_cases_url", default: [], array: true
     t.datetime "last_update"
     t.index ["name"], name: "index_services_on_name"
     t.index ["provider_id"], name: "index_services_on_provider_id"

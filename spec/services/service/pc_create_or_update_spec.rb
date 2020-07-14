@@ -87,7 +87,7 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.terms_of_use_url).to eq("https://services.openminted.eu/support/termsAndConditions")
       expect(service.access_policies_url).to eq("http://openminted.eu/pricing/")
       expect(service.privacy_policy_url).to eq("http://phenomenal-h2020.eu/home/help")
-      expect(service.use_cases_url).to eq("http://phenomenal-h2020.eu/home/help")
+      expect(service.use_cases_url).to eq(["http://phenomenal-h2020.eu/home/help"])
       expect(service.sla_url).to eq("http://openminted.eu/sla-agreement/")
       expect(service.webpage_url).to eq("http://openminted.eu/omtd-services/catalogue-of-scholarly-datasets/")
       expect(service.manual_url).to eq("http://openminted.eu/user-manual/")
