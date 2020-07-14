@@ -155,12 +155,10 @@ class Service < ApplicationRecord
   validates :helpdesk_url, mp_url: true, if: :helpdesk_url?
   validates :helpdesk_email, allow_blank: true, email: true
   validates :security_contact_email, allow_blank: true, email: true
-  validates :use_cases_url, mp_url: true, if: :use_cases_url?
+  validates :use_cases_url, array: { mp_url: true }
   validates :privacy_policy_url, mp_url: true, if: :privacy_policy_url?
-  validates :contact_emails, array: { email: true }
   validates :training_information_url, mp_url: true, if: :training_information_url?
   validates :language_availability, array: true
-  validates :resource_geographic_locations, array: true
   validates :logo, blob: { content_type: :image }
   validate :logo_variable, on: [:create, :update]
   validates :scientific_domains, presence: true
