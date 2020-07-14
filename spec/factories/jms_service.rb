@@ -14,20 +14,26 @@ FactoryBot.define do
       next {
         "aggregatedServices" => "1",
         "category" => "aggregator",
-        "changeLog" => [
+        "changeLog" => { "changeLog" => [
             "fixed bug"
-        ],
+        ] },
         "datasets"=>"0",
         "multimedia" => [
             "https://www.youtube.com/watch?v=-_F8NZwWXew"
         ],
-        "useCases" => "http://phenomenal-h2020.eu/home/help",
+        "useCases" =>  { "useCase" => [
+            "http://phenomenal-h2020.eu/home/help"
+        ] },
         "privacyPolicy" => "http://phenomenal-h2020.eu/home/help",
         "description"=> "A catalogue of corpora (datasets) made up of mainly Open Access scholarly publications. Users can view publicly available corpora that have been created with the OpenMinTeD Corpus Builder for Scholarly Works, or manually uploaded to the OpenMinTeD platform.&nbsp; The catalogue can be browsed and searched via the faceted navigation facility or a google-like free text search query. All users can view the descriptions of the corpora (with administrative and technical information, such as language, domain, keywords, licence, resource creator, etc.), as well as the contents and, when available, the metadata descriptions of the individual files that compose them.&nbsp; In addition, registered users can process them with the TDM applications offered by OpenMinTeD and download them in accordance with their licensing conditions.",
         "feedback" => "http://openminted.eu/support/",
         "funding" => "EC funds (H2020 grant 654021 for the OpenMinTeD project) & National funds for the GRNET cloud infrastructure on which the platform operates",
-        "fundingBody" => ["funding_body-fb"],
-        "fundingPrograms" => ["funding_program-fp"],
+        "fundingBody" => { "fundingBody" => [
+            "funding_body-fb"
+        ] },
+        "fundingPrograms" => { "fundingProgram" => [
+            "funding_program-fp"
+        ] },
         "mainContact" => {
             "firstName" => "John",
             "lastName" => "Doe",
@@ -58,28 +64,28 @@ FactoryBot.define do
         "order" => "http://openminted.eu/omtd-services/catalogue-of-scholarly-datasets/",
         "otherProducts" => "0",
         "geographicalAvailabilities" => { "geographicalAvailability" => "WW" },
-        "resourceGeographicLocations" => [
+        "resourceGeographicLocations" => { "resourceGeographicLocation" => [
             "PL"
-        ],
-        "accessModes" => [
+        ] },
+        "accessModes" => { "accessMode" => [
             "access_mode-am"
-        ],
-        "accessTypes" => [
+        ] },
+        "accessTypes" => { "accessType" => [
             "access_type-at"
-        ],
-        "certifications" => [
+        ] },
+        "certifications" => { "certification" => [
             "ISO-639"
-        ],
-        "standards" => [
+        ] },
+        "standards" => { "standard" => [
             "standard"
-        ],
-        "openSourceTechnologies" => [
+        ] },
+        "openSourceTechnologies" => { "openSourceTechnology" => [
             "opensource"
-        ],
-        "grantProjectNames" => [
+        ] },
+        "grantProjectNames" => { "grantProjectName" => [
             "grant"
-        ],
-        "accessPolicy" => "http://openminted.eu/pricing/",
+        ] },
+        "price" => "http://openminted.eu/pricing/",
         "resourceOrganisation" => "tp",
         "resourceProviders" => {
           "resourceProviders" => prov_eid
@@ -92,7 +98,7 @@ FactoryBot.define do
         "subcategory" => "data",
         "symbol" => logo,
         "tagline" => "Find easily accessible corpora of scholarly content and mine them!",
-        "tags" => [
+        "tags" => { "tag" => [
             "Text Mining",
            "Catalogue",
            "Research",
@@ -103,7 +109,7 @@ FactoryBot.define do
            "Scholarly literature",
            "Scientific publications",
            "Scholarly content"
-          ],
+          ] },
         "targetUsers" => {
           "targetUsers" =>
           ["researchers",
