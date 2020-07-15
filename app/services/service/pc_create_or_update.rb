@@ -128,7 +128,7 @@ class Service::PcCreateOrUpdate
         if prov.code != 200
           abort("\n Exited with errors - could not fetch data (code: #{prov.code})\n")
         end
-        provider  = Provider.create!(name: prov.body["name"])
+        provider  = Provider.find_or_create_by(name: prov.body["name"])
         ProviderSource.create!(provider_id: provider.id, source_type: "eic", eid: prov_eid)
         provider
       else
