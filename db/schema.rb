@@ -298,7 +298,8 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.bigint "target_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["source_id", "target_id"], name: "index_service_relationships_on_source_id_and_target_id", unique: true
+    t.string "type"
+    t.index ["source_id", "target_id", "type"], name: "index_service_relationships_on_source_id_and_target_id_and_type", unique: true
     t.index ["source_id"], name: "index_service_relationships_on_source_id"
     t.index ["target_id"], name: "index_service_relationships_on_target_id"
   end

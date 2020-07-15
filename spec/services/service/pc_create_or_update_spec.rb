@@ -15,6 +15,8 @@ RSpec.describe Service::PcCreateOrUpdate do
   let!(:scientific_domain_other) { create(:scientific_domain, name: "Other") }
   let!(:funding_body) { create(:funding_body, name: "FundingBody", eid: "funding_body-fb") }
   let!(:funding_program) { create(:funding_program, name: "FundingProgram", eid: "funding_program-fp") }
+  let!(:related_service) { create(:service, name: "Super Service",
+                                  sources: [build(:service_source, eid: "super-service")]) }
   let!(:access_mode) { create(:access_mode, name: "Access Mode", eid: "access_mode-am") }
   let!(:access_type) { create(:access_type, name: "Access Type", eid: "access_type-at") }
   let!(:main_contact) { build(:main_contact, first_name: "John", last_name: "Doe",
@@ -96,6 +98,8 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.order_type).to eq("open_access")
       expect(service.funding_bodies).to eq([funding_body])
       expect(service.funding_programs).to eq([funding_program])
+      expect(service.related_services).to eq([related_service])
+      expect(service.required_services).to eq([related_service])
       expect(service.status).to eq("published")
       expect(service.providers).to eq([Provider.find_by(name: "Test Provider ten"), Provider.find_by(name: "Test Provider awesome") ])
       expect(service.resource_organisation).to eq(Provider.find_by(name: "Test Provider tp"))
@@ -123,8 +127,8 @@ RSpec.describe Service::PcCreateOrUpdate do
 
       service = stub_described_class(create(:jms_service, prov_eid: provider_eid), unirest: unirest)
 
-      first_provider = Provider.first
-      last_provider = Provider.last
+      first_provider = Provider.find_by(name: "Test Provider tp")
+      last_provider = Provider.find_by(name: "Test Provider #{provider_eid}")
 
       expect(service.providers).to include(last_provider)
       expect(service.resource_organisation).to eq(first_provider)

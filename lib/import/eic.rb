@@ -111,6 +111,8 @@ module Import
         access_modes = service["accessModes"]
         # category_name = service["categoryName"]
         # subcategory_name = service["subCategoryName"]
+        required_services = service["requiredResources"]
+        related_services = service["relatedResources"]
         trl = service["trl"]
         life_cycle_status = service["lifeCycleStatus"]
         resource_organisation_eid = service["resourceOrganisation"]
@@ -179,6 +181,8 @@ module Import
             main_contact: main_contact,
             public_contacts: public_contacts,
             trl: Trl.where(eid: trl),
+            required_services: map_related_services(required_services),
+            related_services: map_related_services(related_services),
             life_cycle_status: LifeCycleStatus.where(eid: life_cycle_status),
             order_type: "open_access",
             status: "draft",
@@ -311,6 +315,11 @@ module Import
           "compute": Category.find_by!(name: "Compute"),
           "networking": Category.find_by!(name: "Networking"),
       }.stringify_keys
+    end
+
+    def map_related_services(services)
+      Service.joins(:sources).where("service_sources.source_type": "eic",
+                                    "service_sources.eid": services)
     end
 
     def map_contact(contact)
