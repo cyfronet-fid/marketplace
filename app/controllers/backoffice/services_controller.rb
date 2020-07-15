@@ -153,8 +153,8 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     end
 
     def sort_options
-      @sort_options = [["by name A-Z", "title"],
-                       ["by name Z-A", "-title"],
+      @sort_options = [["by name A-Z", "name"],
+                       ["by name Z-A", "-name"],
                        ["draft first", "status"],
                        ["published first", "-status"],
                        ["by rate 1-5", "rating"],
