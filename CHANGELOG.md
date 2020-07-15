@@ -29,6 +29,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - instance badge display on backoffice section (@goreck888)
 - contact form tab layout modifications (@jarekzet)
 - rdt tsak (@martaswiatkowska)
+- Fixed autocomplete service name displayng (@martaswiatkowska)
 
 ### Security
 
