@@ -145,9 +145,9 @@ namespace :dev do
     relations_hash && relations_hash.each do |_, hash|
       source = Service.find_by(name: hash["source"])
       target = Service.find_by(name: hash["target"])
-      ServiceRelationship.create!(source: source, target: target)
+      ManualServiceRelationship.create!(source: source, target: target)
       if hash["both"]
-        ServiceRelationship.create!(source: target, target: source)
+        ManualServiceRelationship.create!(source: target, target: source)
         puts "  - Relation from #{target.name} to #{source.name} generated"
       end
       puts "  - Relation from #{source.name} to #{target.name} generated"
