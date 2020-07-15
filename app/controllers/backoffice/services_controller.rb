@@ -72,7 +72,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
       if @service.valid?
         @offers = @service.offers.where(status: :published).order(:created_at)
-        @related_services = @service.related_services
+        @related_services = @service.target_relationships
 
         render :preview
       else

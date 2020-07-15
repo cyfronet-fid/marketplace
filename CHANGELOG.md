@@ -21,6 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - `target_group` to `target_user` in service model (@martaswiatkowska)
 - Added field resource_organisation(main provider) (@martaswiatkowska)
 - Refactor contact fields to new model `Contact` (@goreck888)
+- Refactor related services (@goreck888)
 
 ### Deprecated
 
