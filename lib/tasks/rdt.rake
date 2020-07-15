@@ -62,12 +62,11 @@ namespace :rdt do
 
     puts "Creating life_cycle_statuses from yaml"
     yaml_hash["life_cycle_status"].each do |_, hash|
-      LifeCycleStatus.find_or_initialize_by(name: hash["name"]) do |trl|
-        trl.update!(name: hash["name"],
-                    eid: hash["eid"],
-                    description: hash["description"])
-      end
-      puts "Created trl: #{hash["name"]}"
+      lcs = LifeCycleStatus.find_or_create_by(name: hash["name"])
+      lcs.update!(name: hash["name"],
+                  eid: hash["eid"],
+                  description: hash["description"])
+      puts "Created trl: #{lcs.name}"
     end
   end
 
