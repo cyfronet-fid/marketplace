@@ -46,6 +46,10 @@
   = f.association :access_modes, input_html: { data: { choice: true } },
                   disabled: cant_edit([access_mode_ids: []])
 
+  = f.association :required_services, multiple: true, input_html: { data: { choice: true } }
+
+  = f.association :related_services, multiple: true, input_html: { data: { choice: true } }
+
   .row.mt-5
     .col-12.col-md-5
       = f.association :owners, multiple: true, input_html: { data: { choice: true } },

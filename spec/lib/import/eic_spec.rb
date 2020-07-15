@@ -108,10 +108,14 @@ describe Import::Eic do
     it "should create service if none existed" do
       trl_7 = create(:trl, name: "trl 7", eid: "trl-7")
       life_cycle_status = create(:life_cycle_status, name: "prod", eid: "production")
+      required_resource = create(:service, name: "Super Service",
+                                 sources: [build(:service_source, source_type: "eic", eid: "super-service")])
+      related_resource = create(:service, name: "Extra Service",
+                                sources: [build(:service_source, source_type: "eic", eid: "extra-service")])
       expect { eic.call }.to output(/PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(3)
 
 
-      service = Service.first
+      service = Service.third
 
       expect(service.name).to eq("PhenoMeNal")
       expect(service.description).to eq("PhenoMeNal (Phenome and Metabolome aNalysis) is a comprehensive and standardised " +
@@ -141,6 +145,8 @@ describe Import::Eic do
       expect(service.sources.count).to eq(1)
       expect(service.logo.download).to eq(file_fixture("PhenoMeNal_logo.png").read.b)
       expect(service.sources.first.eid).to eq("phenomenal.phenomenal")
+      expect(service.required_services.first).to eq(required_resource)
+      expect(service.related_services.first).to eq(related_resource)
       expect(service.upstream_id).to eq(nil)
       expect(service.version).to eq("2018.08")
       expect(service.trl).to eq([trl_7])

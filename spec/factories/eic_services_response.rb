@@ -80,8 +80,6 @@ FactoryBot.define do
                   ],
                   "useCases" => "http://phenomenal-h2020.eu/home/help",
                   "privacyPolicy" => "http://phenomenal-h2020.eu/home/help",
-                  "requiredServices" => [],
-                  "relatedServices" => [],
                   "order" => "https://portal.phenomenal-h2020.eu/home",
                   "helpdesk" => "http://phenomenal-h2020.eu/home/help",
                   "userManual" => "https://github.com/phnmnl/phenomenal-h2020/wiki",
@@ -99,6 +97,12 @@ FactoryBot.define do
                   "lifeCycleStatusName" => "Production",
                   "languageNames" => [
                       "English"
+                  ],
+                  "requiredResources" => [
+                      "super-service"
+                  ],
+                  "relatedResources" => [
+                      "extra-service"
                   ],
                   "placeNames" => [
                       "World"

@@ -91,8 +91,12 @@ FactoryBot.define do
           "resourceProviders" => prov_eid
         },
         "publications" => "0",
-        "relatedServices" => nil,
-        "requiredServices" => nil,
+        "relatedResources" => {
+            "relatedResource" => ["super-service"]
+        },
+        "requiredResources" => {
+            "requiredResource" => ["super-service"]
+        },
         "serviceLevelAgreement" => "http://openminted.eu/sla-agreement/",
         "softwareApplications" => "0",
         "subcategory" => "data",

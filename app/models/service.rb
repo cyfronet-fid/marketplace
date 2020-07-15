@@ -121,9 +121,25 @@ class Service < ApplicationRecord
            foreign_key: "source_id",
            dependent: :destroy,
            inverse_of: :source
+
   has_many :related_services,
            through: :target_relationships,
-           source: :target
+           class_name: "Service",
+           source: :target,
+           source_type: "ServiceRelationship"
+
+  has_many :manual_related_services,
+           through: :target_relationships,
+           class_name: "Service",
+           source: :target,
+           source_type: "ManualServiceRelationship"
+
+  has_many :required_services,
+           through: :target_relationships,
+           class_name: "Service",
+           source: :target,
+           source_type: "RequiredServiceRelationship"
+
   has_many :sources, source: :service_sources, class_name: "ServiceSource", dependent: :destroy
 
   accepts_nested_attributes_for :sources,
@@ -204,6 +220,10 @@ class Service < ApplicationRecord
 
   def resource_geographic_locations=(value)
     super(value&.map { |v| Country.for(v) })
+  end
+
+  def target_relationships
+    (required_services + manual_related_services + related_services).uniq
   end
 
   private
