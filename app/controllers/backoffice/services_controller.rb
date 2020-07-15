@@ -72,7 +72,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
       if @service.valid?
         @offers = @service.offers.where(status: :published).order(:created_at)
-        @related_services = @service.related_services
+        @related_services = @service.target_relationships
         if current_user&.executive?
           @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
           @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)

@@ -19,11 +19,11 @@ class ServicesController < ApplicationController
 
   def show
     @service = Service.
-               includes(:offers, related_services: :providers).
+               includes(:offers, :target_relationships).
                friendly.find(params[:id])
     authorize @service
     @offers = policy_scope(@service.offers).order(:created_at)
-    @related_services = @service.related_services
+    @related_services = @service.target_relationships
 
     @service_opinions = ServiceOpinion.joins(project_item: :offer).
                         where(offers: { service_id: @service })

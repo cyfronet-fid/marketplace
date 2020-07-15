@@ -111,6 +111,8 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       :activate_message, :logo, [trl_ids: []],
       [scientific_domain_ids: []],
       [platform_ids: []], :tag_list, [category_ids: []],
+      [related_service_ids: []], [required_service_ids: []],
+      [manual_related_service_ids: []],
       [owner_ids: []], :status, :upstream_id, :version,
       [life_cycle_status_ids: []], :resource_organisation_id,
       main_contact_attributes: [:id, :first_name, :last_name, :email, :organisation, :position],
