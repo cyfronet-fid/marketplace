@@ -46,12 +46,6 @@ FactoryBot.define do
                     "languageAvailabilities" => [
                         "EN"
                     ],
-                    "openSourceTechnologies" => [
-                        "opensource"
-                    ],
-                    "grantProjectNames" => [
-                        "grant"
-                    ],
                     "tags" => [
                         "Metabolomics",
                         "Galaxy",
@@ -59,11 +53,9 @@ FactoryBot.define do
                         "Cloud Research Environment",
                         "Analytics"
                     ],
-
-                  "useCases" => "http://phenomenal-h2020.eu/home/help",
-                    "privacyPolicy" => "http://phenomenal-h2020.eu/home/help",
-                    "requiredResources" => [],
-                    "relatedResources" => [],
+                    "useCases" => "http://phenomenal-h2020.eu/home/help",
+                    "requiredResources" => ["super-service"],
+                    "relatedResources" => ["extra-service"],
                     "order" => "https://portal.phenomenal-h2020.eu/home",
                     "helpdeskPage" => "http://phenomenal-h2020.eu/home/help",
                     "userManual" => "https://github.com/phnmnl/phenomenal-h2020/wiki",
@@ -79,25 +71,33 @@ FactoryBot.define do
                     "accessModes" => ["access_mode-other"],
                     "resourceGeographicLocations" => ["PL"],
                     "mainContact" => {
-                      "firstName" => "nil",
-                      "lastName" => "nil",
-                      "email" => "nil",
-                      "phone" => "",
-                      "position" => "",
-                      "organisation" => ""
+                      "firstName" => "John",
+                      "lastName" => "Doe",
+                      "email" => "john@doe.com",
+                      "phone" => "+41 678 888 123",
+                      "position" => "Developer",
+                      "organisation" => "JD company"
                     },
                     "publicContacts" => [{
-                      "firstName" => "",
-                      "lastName" => "",
-                      "email" => "info@bluebridge.support_for_data_publication",
-                      "phone" => "",
-                      "position" => "",
-                      "organisation" => ""
-                    }],
+                        "firstName" => "Jane 1",
+                        "lastName" => "Doe",
+                        "email" => "john1@doe.com",
+                        "phone" => "",
+                        "position" => "",
+                        "organisation" => ""
+                      },
+                      {
+                        "firstName" => "Jane 2",
+                        "lastName" => "Doe",
+                        "email" => "jane2@doe.com",
+                        "phone" => "",
+                        "position" => "",
+                        "organisation" => ""
+                      }
+                    ],
                     "helpdeskEmail" => "info@bluebridge.support_for_data_publication",
                     "securityContactEmail" => "info@bluebridge.support_for_data_publication",
                     "certifications" => ["ISO-639"],
-,
                     "standards" => ["standard"],
                     "openSourceTechnologies" => ["opensource"],
                     "relatedPlatforms" => ["extra-service"],
@@ -216,16 +216,16 @@ FactoryBot.define do
                     "accessModes" => ["access_mode-other"],
                     "resourceGeographicLocations" => nil,
                     "mainContact" => {
-                      "firstName" => "nil",
-                      "lastName" => "nil",
-                      "email" => "nil",
+                      "firstName" => "Mar",
+                      "lastName" => "Sw",
+                      "email" => "bbb@op.pl",
                       "phone" => "",
                       "position" => "",
                       "organisation" => ""
                     },
                     "publicContacts" => [{
-                      "firstName" => "",
-                      "lastName" => "",
+                      "firstName" => "Mar2",
+                      "lastName" => "Sw2",
                       "email" => "info@bluebridge.support_for_data_publication",
                       "phone" => "",
                       "position" => "",
@@ -334,8 +334,8 @@ FactoryBot.define do
                         "X-ray diffraction",
                         "Structure analysis"
                     ],
-                    "requiredResources" => [],
-                    "relatedResources" => [],
+                    "requiredResources" => ["super-service"],
+                    "relatedResources" => ["extra-service"],
                     "order" => "http://xtal.nki.nl/pdb_redo",
                     "helpdeskPage" => "https://about.west-life.eu/network/west-life/documentation",
                     "userManual" => nil,
@@ -352,16 +352,16 @@ FactoryBot.define do
                     "accessModes" => ["access_mode-other"],
                     "resourceGeographicLocations" => nil,
                     "mainContact" => {
-                      "firstName" => "nil",
-                      "lastName" => "nil",
-                      "email" => "nil",
+                      "firstName" => "Mar",
+                      "lastName" => "Sw",
+                      "email" => "bbb@op.pl",
                       "phone" => "",
                       "position" => "",
                       "organisation" => ""
                     },
                     "publicContacts" => [{
-                      "firstName" => "",
-                      "lastName" => "",
+                      "firstName" => "Mar2",
+                      "lastName" => "Sw2",
                       "email" => "info@bluebridge.support_for_data_publication",
                       "phone" => "",
                       "position" => "",
@@ -438,7 +438,8 @@ FactoryBot.define do
                       }
                   }
                 }]
-              },
+              }
+          ],
           "facets" => [
               {
                   "field" => "language",
