@@ -64,8 +64,10 @@ class Service::PcCreateOrUpdate
                       data["userValue"],
                       data["userBase"]].join("\n"),
         tagline: data["tagline"].blank? ? "NO IMPORTED TAGLINE" : data["tagline"],
+        tag_list: Array(data["tags"]["tag"]) || [],
         language_availability: Array(data["languages"]["language"] || "EN"),
         geographical_availabilities: Array(data["geographicalAvailabilities"]["geographicalAvailability"] || "WW"),
+        resource_geographic_locations: Array(data["resourceGeographicLocations"]["resourceGeographicLocation"]) || [],
         dedicated_for: [],
         main_contact: main_contact,
         public_contacts: Array(data["publicContacts"]["publicContact"])&.
@@ -73,6 +75,9 @@ class Service::PcCreateOrUpdate
         terms_of_use_url: data["termsOfUse"]["termOfUse"] || "",
         access_policies_url: data["price"],
         sla_url: data["serviceLevelAgreement"] || "",
+        privacy_policy_url: data["privacyPolicy"] || "",
+        use_cases_url: Array(data["useCases"]["useCase"] || []),
+        multimedia: Array(data["multimedia"]) || [],
         webpage_url: data["url"] || "",
         manual_url: data["userManual"] || "",
         helpdesk_url: data["helpdesk"] || "",
@@ -84,16 +89,24 @@ class Service::PcCreateOrUpdate
         pricing_url: data["pricing"] || "",
         trl: Trl.where(eid: data["trl"]),
         life_cycle_status: LifeCycleStatus.where(eid: data["lifeCycleStatus"]),
+        access_types: AccessType.where(eid: Array(data["accessTypes"]["accessType"])),
+        access_modes: AccessMode.where(eid: Array(data["accessModes"]["accessMode"])),
         order_type: "open_access",
         status: "published",
-        funding_bodies: map_funding_bodies(data["fundingBody"]),
-        funding_programs: map_funding_programs(data["fundingPrograms"]),
+        funding_bodies: map_funding_bodies(data["fundingBody"]["fundingBody"]),
+        funding_programs: map_funding_programs(data["fundingPrograms"]["fundingProgram"]),
+        changelog: Array(data["changeLog"]["changeLog"]),
+        certifications: Array(data["certifications"]["certification"]),
+        standards: Array(data["standards"]["standard"]),
+        open_source_technologies: Array(data["openSourceTechnologies"]["openSourceTechnology"]),
+        grant_project_names: Array(data["grantProjectNames"]["grantProjectName"]),
         resource_organisation: map_provider(data["resourceOrganisation"]),
         providers: Array(data["resourceProviders"]["resourceProviders"])&.map { |p| map_provider(p) },
         categories: map_category(data["category"]),
         scientific_domains: [scientific_domain_other],
         version: data["version"] || "",
-        target_users: map_target_users(data["targetUsers"]["targetUsers"])
+        target_users: map_target_users(data["targetUsers"]["targetUsers"]),
+        last_update: data["lastUpdate"]
       }
     end
 

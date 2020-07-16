@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - new url fields in service model (@goreck888)
+- new missing multiselect fields in service model (@goreck888)
 
 ### Changed
 - `service_type` to `order_type` in service and offer (@goreck888)

@@ -2,6 +2,7 @@
   = f.error_notification
   .row
     .col-12.col-md-10
+      = f.input :last_update, as: :date_time_picker, disabled: true
       = f.input :version, disabled: cant_edit(:version)
       = f.input :logo, disabled: cant_edit(:logo)
       = f.input :name, disabled: cant_edit(:name)
@@ -14,6 +15,8 @@
       = f.input :order_type, collection: Service.order_types.keys.map(&:to_sym),
         disabled: cant_edit(:order_type)
 
+  = f.input :multimedia, input_html: { multiple: true, data: { choice: true } },
+    disabled: cant_edit([multimedia: []])
   = f.association :categories, multiple: true, input_html: { data: { choice: true } },
                   disabled: cant_edit([category_ids: []])
   = f.association :resource_organisation, disabled: cant_edit(:resource_organisation_id)
@@ -38,6 +41,10 @@
                   disabled: cant_edit([trl_ids: []])
   = f.association :life_cycle_status, input_html: { data: { choice: true } },
                   disabled: cant_edit([life_cycle_status_ids: []])
+  = f.association :access_types, input_html: { data: { choice: true } },
+                  disabled: cant_edit([access_type_ids: []])
+  = f.association :access_modes, input_html: { data: { choice: true } },
+                  disabled: cant_edit([access_mode_ids: []])
 
   .row.mt-5
     .col-12.col-md-5
@@ -78,11 +85,35 @@
         collection: Country.options.map { |c| [ c.name, "value" => c.alpha2 ] },
         disabled: cant_edit([geographical_availabilities: []]),
         input_html: { data: { choice: true },  "multiple" => "true" }
+      = f.input :resource_geographic_locations, as: :select,
+        collection: Country.options.map { |c| [ c.name, "value" => c.alpha2 ] },
+        disabled: cant_edit([resource_geographic_locations: []]),
+        input_html: { data: { choice: true },  "multiple" => "true" }
+  .row.mt-5
+    .col-12.col-md-5
+      = f.input :certifications, input_html: { multiple: true, data: { choice: true } },
+        disabled: cant_edit([certifications: []])
+      = f.input :standards, input_html: { multiple: true, data: { choice: true } },
+        disabled: cant_edit([standards: []])
+      = f.input :open_source_technologies, input_html: { multiple: true, data: { choice: true } },
+        disabled: cant_edit([open_source_technologies: []])
+      = f.input :grant_project_names, input_html: { multiple: true, data: { choice: true } },
+        disabled: cant_edit([grant_project_names: []])
+  .row.service-changelog
+    .col-12.col-md-10
+      = f.input :changelog, multiple: true, as: :array, disabled: cant_edit([changelog: []]),
+       wrapper_html: { "data-target" => "service.array" },
+       input_html: { "data-target": "service.input", class: "form-control text optional" }
+
+      %a.text-primary{ "data-action" => "click->service#addNewArrayField" } Add additional entry
   .row
     .col-12.col-md-10
       = f.input :terms_of_use_url, disabled: cant_edit(:terms_of_use_url)
       = f.input :access_policies_url, disabled: cant_edit(:access_policies_url)
+      = f.input :privacy_policy_url, disabled: cant_edit(:privacy_policy_url)
       = f.input :sla_url, disabled: cant_edit(:sla_url)
+      = f.input :use_cases_url, input_html: { multiple: true, data: { choice: true } },
+        disabled: cant_edit([use_cases_url: []])
       = f.input :webpage_url, disabled: cant_edit(:webpage_url)
       = f.input :manual_url, disabled: cant_edit(:manual_url)
       = f.input :helpdesk_url, disabled: cant_edit(:helpdesk_url)

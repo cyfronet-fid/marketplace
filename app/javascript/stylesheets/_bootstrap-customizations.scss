@@ -2080,9 +2080,11 @@ label[data-multicheckbox].small {
   margin-right: 4%;
 }
 
-.service-activate-message {
+.service-activate-message,
+.service-changelog {
   textarea {
     height: 135px;
+    margin: 5px;
   }
 }
 

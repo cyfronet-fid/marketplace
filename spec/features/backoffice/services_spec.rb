@@ -39,6 +39,9 @@ RSpec.feature "Services in backoffice" do
       trl = create(:trl)
       life_cycle_status = create(:life_cycle_status)
       target_user = create(:target_user)
+      access_type = create(:access_type)
+      access_mode = create(:access_mode)
+
 
       visit backoffice_services_path
       click_on "Create new Service"
@@ -47,8 +50,10 @@ RSpec.feature "Services in backoffice" do
       fill_in "Description", with: "service description"
       fill_in "Terms of use", with: "service terms of use"
       fill_in "Tagline", with: "service tagline"
+      fill_in "Multimedia", with: "https://sample.url"
       select "English", from: "Language availability"
       select "Poland", from: "Geographical availabilities"
+      select "Poland", from: "Resource geographic locations"
       select trl.name, from: "Trl"
       select life_cycle_status.name, from: "Life cycle status"
       select funding_body.name, from: "Funding bodies"
@@ -60,9 +65,13 @@ RSpec.feature "Services in backoffice" do
       fill_in "service_public_contacts_attributes_0_first_name", with: "Jane"
       fill_in "service_public_contacts_attributes_0_last_name", with: "Doe"
       fill_in "service_public_contacts_attributes_0_email", with: "jane@doe.com"
+      select access_mode.name, from: "Access modes"
+      select access_type.name, from: "Access types"
       fill_in "Terms of use url", with: "https://sample.url"
       fill_in "Access policies url", with: "https://sample.url"
+      fill_in "Privacy policy url", with: "https://sample.url"
       fill_in "Sla url", with: "https://sample.url"
+      fill_in "Use cases url", with: "https://sample.url"
       fill_in "Webpage url", with: "https://sample.url"
       fill_in "Manual url", with: "https://sample.url"
       fill_in "Helpdesk url", with: "https://sample.url"
@@ -70,6 +79,11 @@ RSpec.feature "Services in backoffice" do
       fill_in "Restrictions", with: "Reaserch affiliation needed"
       fill_in "Activate message", with: "Welcome!!!"
       fill_in "Service Order Target", with: "email@domain.com"
+      fill_in "Certifications", with: "ISO-639"
+      fill_in "Standards", with: "standard"
+      fill_in "Open source technologies", with: "opensource"
+      fill_in "Grant project names", with: "grantname"
+      fill_in "service_changelog_0", with: "fixed bug"
       select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
       select "open_access", from: "Order type"
@@ -100,6 +114,12 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("John Doe")
       expect(page).to have_content("john@doe.com")
       expect(page).to have_content("jane@doe.com")
+      expect(page).to have_content(access_type.name)
+      expect(page).to have_content(access_mode.name)
+      expect(page).to have_content("ISO-639")
+      expect(page).to have_content("standard")
+      expect(page).to have_content("opensource")
+      expect(page).to have_content("grantname")
       expect(page).to have_content("Publish")
       expect(page).to have_content("eic: 12345a")
       expect(page).to have_content("2.2.2")

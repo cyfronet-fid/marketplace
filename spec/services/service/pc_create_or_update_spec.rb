@@ -15,6 +15,8 @@ RSpec.describe Service::PcCreateOrUpdate do
   let!(:scientific_domain_other) { create(:scientific_domain, name: "Other") }
   let!(:funding_body) { create(:funding_body, name: "FundingBody", eid: "funding_body-fb") }
   let!(:funding_program) { create(:funding_program, name: "FundingProgram", eid: "funding_program-fp") }
+  let!(:access_mode) { create(:access_mode, name: "Access Mode", eid: "access_mode-am") }
+  let!(:access_type) { create(:access_type, name: "Access Type", eid: "access_type-at") }
   let!(:main_contact) { build(:main_contact, first_name: "John", last_name: "Doe",
                                email: "john@doe.com",
                                phone: "+41 678 888 123",
@@ -66,11 +68,26 @@ RSpec.describe Service::PcCreateOrUpdate do
                                         "facilitates comparison and contrast and thereby selection of the appropriate corpus.\n")
 
       expect(service.tagline).to eq("Find easily accessible corpora of scholarly content and mine them!")
+      expect(service.tag_list).to eq(["text mining", "catalogue", "research", "data mining",
+                                      "tdm", "corpora", "datasets", "scholarly literature",
+                                      "scientific publications", "scholarly content"])
       expect(service.language_availability).to eq(["english"])
       expect(service.geographical_availabilities.first.name).to eq("World")
+      expect(service.resource_geographic_locations.first.name).to eq("Poland")
+      expect(service.multimedia).to eq(["https://www.youtube.com/watch?v=-_F8NZwWXew"])
       expect(service.dedicated_for).to eq([])
+      expect(service.access_modes).to eq([access_mode])
+      expect(service.access_types).to eq([access_type])
+      expect(service.certifications).to eq(["ISO-639"])
+      expect(service.standards).to eq(["standard"])
+      expect(service.open_source_technologies).to eq(["opensource"])
+      expect(service.changelog).to eq(["fixed bug"])
+      expect(service.last_update).to eq("2018-09-05 00:00:00.000000000 +0000")
+      expect(service.grant_project_names).to eq(["grant"])
       expect(service.terms_of_use_url).to eq("https://services.openminted.eu/support/termsAndConditions")
       expect(service.access_policies_url).to eq("http://openminted.eu/pricing/")
+      expect(service.privacy_policy_url).to eq("http://phenomenal-h2020.eu/home/help")
+      expect(service.use_cases_url).to eq(["http://phenomenal-h2020.eu/home/help"])
       expect(service.sla_url).to eq("http://openminted.eu/sla-agreement/")
       expect(service.webpage_url).to eq("http://openminted.eu/omtd-services/catalogue-of-scholarly-datasets/")
       expect(service.manual_url).to eq("http://openminted.eu/user-manual/")
