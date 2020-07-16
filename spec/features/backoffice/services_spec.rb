@@ -54,6 +54,12 @@ RSpec.feature "Services in backoffice" do
       select funding_body.name, from: "Funding bodies"
       select funding_program.name, from: "Funding programs"
       select target_user.name, from: "Dedicated For"
+      fill_in "service_main_contact_attributes_first_name", with: "John"
+      fill_in "service_main_contact_attributes_last_name", with: "Doe"
+      fill_in "service_main_contact_attributes_email", with: "john@doe.com"
+      fill_in "service_public_contacts_attributes_0_first_name", with: "Jane"
+      fill_in "service_public_contacts_attributes_0_last_name", with: "Doe"
+      fill_in "service_public_contacts_attributes_0_email", with: "jane@doe.com"
       fill_in "Terms of use url", with: "https://sample.url"
       fill_in "Access policies url", with: "https://sample.url"
       fill_in "Sla url", with: "https://sample.url"
@@ -69,9 +75,6 @@ RSpec.feature "Services in backoffice" do
       select "open_access", from: "Order type"
       select resource_organisation.name, from: "Resource organisation"
       select platform.name, from: "Platforms"
-      fill_in "service_contact_emails_0", with: "person1@test.ok"
-      # page.find("#add-email-field").click
-      # fill_in "service_contact_emails_1", with: "person2@test.ok"
       select category.name, from: "Categories"
       select user.to_s, from: "Owners"
       fill_in "Version", with: "2.2.2"
@@ -88,19 +91,59 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("service description")
       expect(page).to have_content("service tagline")
       expect(page).to have_content("Open Access")
-      expect(page).to have_content("person1@test.ok")
-      # expect(page).to have_content("person2@test.ok")
       expect(page).to have_content("Welcome!!!")
       expect(page).to have_content(scientific_domain.name)
       expect(page).to have_content(target_user.name)
       expect(page).to have_content(category.name)
       expect(page).to have_content(funding_body.name)
       expect(page).to have_content(funding_program.name)
+      expect(page).to have_content("John Doe")
+      expect(page).to have_content("john@doe.com")
+      expect(page).to have_content("jane@doe.com")
       expect(page).to have_content("Publish")
       expect(page).to have_content("eic: 12345a")
       expect(page).to have_content("2.2.2")
       expect(page).to have_content(trl.name)
       expect(page).to have_content(life_cycle_status.name)
+    end
+
+    scenario "I can add additional public contacts", js: true do
+      service = create(:service)
+
+      visit edit_backoffice_service_path(service)
+
+      fill_in "service_public_contacts_attributes_0_first_name", with: "Jane"
+      fill_in "service_public_contacts_attributes_0_last_name", with: "Doe"
+      fill_in "service_public_contacts_attributes_0_email", with: "jane@doe.com"
+      click_on "Add additional public contact"
+      fill_in "service_public_contacts_attributes_1_first_name", with: "Johny"
+      fill_in "service_public_contacts_attributes_1_last_name", with: "Does"
+      fill_in "service_public_contacts_attributes_1_email", with: "johny@does.com"
+      click_on "Add additional public contact"
+      fill_in "service_public_contacts_attributes_2_first_name", with: "John"
+      fill_in "service_public_contacts_attributes_2_last_name", with: "Doe"
+      fill_in "service_public_contacts_attributes_2_email", with: "john@doe.com"
+      click_on "Update Service"
+
+      expect(page).to have_content("jane@doe.com")
+      expect(page).to have_content("johny@does.com")
+      expect(page).to have_content("john@doe.com")
+    end
+
+    scenario "I can remove additional public contacts", js: true do
+      service = create(:service)
+      public_contacts = create_list(:public_contact, 3, contactable: service)
+
+      visit edit_backoffice_service_path(service)
+
+      find("a", id: "public-contact-delete-0").click
+      find("a", id: "public-contact-delete-1").click
+
+      click_on "Update Service"
+
+      expect(page).to have_content(public_contacts.first.email)
+      expect(page).to_not have_content(public_contacts.second.email)
+      expect(page).to_not have_content(public_contacts.third.email)
     end
 
     scenario "I can see warning about no offers" do
@@ -403,7 +446,6 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Owners", disabled: false
       expect(page).to have_field "Funding bodies", disabled: false
       expect(page).to have_field "Funding programs", disabled: false
-      expect(page).to have_field "service_contact_emails_0", disabled: false
       expect(page).to have_field "Service Order Target", disabled: false
       expect(page).to have_field "Language availability", disabled: false
       expect(page).to have_field "Geographical availabilities", disabled: false
@@ -441,7 +483,6 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Funding bodies", disabled: false
       expect(page).to have_field "Funding programs", disabled: false
       expect(page).to have_field "Owners", disabled: false
-      expect(page).to have_field "service_contact_emails_0", disabled: false
       expect(page).to have_field "Service Order Target", disabled: false
       expect(page).to have_field "Language availability", disabled: true
       expect(page).to have_field "Geographical availabilities", disabled: true

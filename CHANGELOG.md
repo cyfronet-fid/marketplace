@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - `languages` to `language_availability` in service model (@goreck888)
 - `target_group` to `target_user` in service model (@martaswiatkowska)
 - Added field resource_organisation(main provider) (@martaswiatkowska)
+- Refactor contact fields to new model `Contact` (@goreck888)
 
 ### Deprecated
 

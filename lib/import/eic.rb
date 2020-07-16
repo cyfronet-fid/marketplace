@@ -98,6 +98,8 @@ module Import
         category = service["category"]
         funding_bodies = service["fundingBody"]
         funding_programs = service["fundingPrograms"]
+        main_contact = MainContact.new(map_contact(service["mainContact"])) if service["mainContact"] || nil
+        public_contacts = Array(service["publicContacts"])&.map { |c| PublicContact.new(map_contact(c)) } || []
         # category_name = service["categoryName"]
         # subcategory_name = service["subCategoryName"]
         trl = service["trl"]
@@ -161,6 +163,8 @@ module Import
             order_url: order_url || "",
             payment_model_url: payment_model_url || "",
             pricing_url: pricing_url || "",
+            main_contact: main_contact,
+            public_contacts: public_contacts,
             trl: Trl.where(eid: trl),
             life_cycle_status: LifeCycleStatus.where(eid: life_cycle_status),
             order_type: "open_access",
@@ -286,6 +290,10 @@ module Import
           "compute": Category.find_by!(name: "Compute"),
           "networking": Category.find_by!(name: "Networking"),
       }.stringify_keys
+    end
+
+    def map_contact(contact)
+      contact&.transform_keys { |k| k.to_s.underscore } || nil
     end
 
     def map_funding_bodies(funding_bodies)

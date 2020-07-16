@@ -31,5 +31,5 @@
       = link_to t(".order"),
                     service_offers_path(service),
                     class: "btn btn-primary d-block mb-3"
-    - if local_assigns[:question] && !service.contact_emails.empty?
+    - if local_assigns[:question] && !service.public_contacts.empty?
       = render "services/ask_question", service: service, question: question

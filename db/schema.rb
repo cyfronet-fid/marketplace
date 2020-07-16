@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_03_124752) do
+ActiveRecord::Schema.define(version: 2020_07_07_142820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,22 @@ ActiveRecord::Schema.define(version: 2020_07_03_124752) do
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_categorizations_on_category_id"
     t.index ["service_id"], name: "index_categorizations_on_service_id"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email", null: false
+    t.string "phone"
+    t.string "position"
+    t.string "organisation"
+    t.string "contactable_type"
+    t.string "type"
+    t.bigint "contactable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contactable_id"], name: "index_contacts_on_contactable_id"
+    t.index ["id", "contactable_id"], name: "index_contacts_on_id_and_contactable_id", unique: true
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -346,7 +362,6 @@ ActiveRecord::Schema.define(version: 2020_07_03_124752) do
     t.decimal "rating", precision: 2, scale: 1, default: "0.0", null: false
     t.bigint "provider_id"
     t.integer "service_opinion_count", default: 0
-    t.text "contact_emails", default: [], array: true
     t.string "geographical_availabilities", default: [], array: true
     t.string "language_availability", default: [], array: true
     t.string "dedicated_for", array: true
@@ -375,6 +390,7 @@ ActiveRecord::Schema.define(version: 2020_07_03_124752) do
     t.string "order_url"
     t.string "payment_model_url"
     t.string "pricing_url"
+    t.string "security_contact_email", default: "", null: false
     t.index ["name"], name: "index_services_on_name"
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["resource_organisation_id"], name: "index_services_on_resource_organisation_id"
