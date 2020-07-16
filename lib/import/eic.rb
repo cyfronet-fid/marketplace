@@ -85,7 +85,7 @@ module Import
         name = service["name"]
         tagline = service["tagline"]
         description = ReverseMarkdown.convert(service["description"], unknown_tags: :bypass, github_flavored: false)
-        image_url = service["symbol"]
+        image_url = service["logo"]
         last_update = service["lastUpdate"]
         changelog = Array(service["changeLog"])
         certifications = service["certifications"]
