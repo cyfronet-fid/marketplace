@@ -101,11 +101,11 @@ class Service::PcCreateOrUpdate
         open_source_technologies: Array(data.dig("openSourceTechnologies", "openSourceTechnology")),
         grant_project_names: Array(data.dig("grantProjectNames", "grantProjectName")),
         resource_organisation: map_provider(data["resourceOrganisation"]),
+        providers: Array(data.dig("resourceProviders", "resourceProvider"))&.map { |p| map_provider(p) },
         categories: map_category(data.dig("subcategories", "subcategory")),
         scientific_domains: [scientific_domain_other],
         version: data["version"] || "",
-        last_update: data["lastUpdate"]
-        providers: Array(data.dig("resourceProviders", "resourceProvider"))&.map { |p| map_provider(p) },
+        last_update: data["lastUpdate"],
         target_users: map_target_users(data.dig("targetUsers", "targetUser"))
       }
     end
