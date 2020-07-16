@@ -13,21 +13,12 @@ FactoryBot.define do
     initialize_with do
       next {
         "category" => "aggregator",
-<<<<<<< 43c3e9a358798639871e9287815bfebe54f223e8
-        "changeLog" => { "changeLog" => [
+        "changeLog" => {
+          "changeLog" => [
             "fixed bug"
         ] },
         "datasets"=>"0",
-        "multimedia" => [
-            "https://www.youtube.com/watch?v=-_F8NZwWXew"
-        ],
-        "useCases" =>  { "useCase" => [
-            "http://phenomenal-h2020.eu/home/help"
-        ] },
-        "privacyPolicy" => "http://phenomenal-h2020.eu/home/help",
         "description"=> "A catalogue of corpora (datasets) made up of mainly Open Access scholarly publications. Users can view publicly available corpora that have been created with the OpenMinTeD Corpus Builder for Scholarly Works, or manually uploaded to the OpenMinTeD platform.&nbsp; The catalogue can be browsed and searched via the faceted navigation facility or a google-like free text search query. All users can view the descriptions of the corpora (with administrative and technical information, such as language, domain, keywords, licence, resource creator, etc.), as well as the contents and, when available, the metadata descriptions of the individual files that compose them.&nbsp; In addition, registered users can process them with the TDM applications offered by OpenMinTeD and download them in accordance with their licensing conditions.",
-        "feedback" => "http://openminted.eu/support/",
-        "funding" => "EC funds (H2020 grant 654021 for the OpenMinTeD project) & National funds for the GRNET cloud infrastructure on which the platform operates",
         "fundingBody" => {
           "fundingBody" => [
             "funding_body-fb"
@@ -38,10 +29,7 @@ FactoryBot.define do
             "funding_program-fp"
           ]
         },
-=======
-        "changeLog" => nil,
         "description"=> "A catalogue of corpora (datasets) made up of mainly Open Access scholarly publications. Users can view publicly available corpora that have been created with the OpenMinTeD Corpus Builder for Scholarly Works, or manually uploaded to the OpenMinTeD platform.&nbsp; The catalogue can be browsed and searched via the faceted navigation facility or a google-like free text search query. All users can view the descriptions of the corpora (with administrative and technical information, such as language, domain, keywords, licence, resource creator, etc.), as well as the contents and, when available, the metadata descriptions of the individual files that compose them.&nbsp; In addition, registered users can process them with the TDM applications offered by OpenMinTeD and download them in accordance with their licensing conditions.",
->>>>>>> Fix jms import
         "mainContact" => {
             "firstName" => "John",
             "lastName" => "Doe",
@@ -50,16 +38,23 @@ FactoryBot.define do
             "position" => "Developer",
             "organisation" => "JD company"
         },
-        "publicContacts" => { "publicContact" => [
+        "publicContacts" => {
+          "publicContact" => [
             {
                 "firstName" => "Jane 1",
                 "lastName" => "Doe",
-                "email" => "john1@doe.com"
+                "email" => "john1@doe.com",
+                "phone" => "+41 678 888 123",
+                "position" => "Developer",
+                "organisation" => "JD company"
             },
             {
                 "firstName" => "Jane 2",
                 "lastName" => "Doe",
-                "email" => "jane2@doe.com"
+                "email" => "jane2@doe.com",
+                "phone" => "+41 678 888 123",
+                "position" => "Developer",
+                "organisation" => "JD company"
             }
         ] },
         "helpdeskPage" => "https://services.openminted.eu/support",
@@ -70,56 +65,24 @@ FactoryBot.define do
         "name" => name,
         "order" => "http://openminted.eu/omtd-services/catalogue-of-scholarly-datasets/",
         "geographicalAvailabilities" => { "geographicalAvailability" => "WW" },
-<<<<<<< 43c3e9a358798639871e9287815bfebe54f223e8
-        "resourceGeographicLocations" => { "resourceGeographicLocation" => [
-            "PL"
-        ] },
-        "accessModes" => { "accessMode" => [
-            "access_mode-am"
-        ] },
-        "accessTypes" => { "accessType" => [
-            "access_type-at"
-        ] },
-        "certifications" => { "certification" => [
-            "ISO-639"
-        ] },
-        "standards" => { "standard" => [
-            "standard"
-        ] },
-        "openSourceTechnologies" => { "openSourceTechnology" => [
-            "opensource"
-        ] },
         "grantProjectNames" => { "grantProjectName" => [
             "grant"
         ] },
-        "price" => "http://openminted.eu/pricing/",
-=======
         "pricing" => "http://openminted.eu/pricing/",
         "paymentModel" => "http://openminted.eu/payment-model",
->>>>>>> Fix jms import
         "resourceOrganisation" => "tp",
         "resourceProviders" => {
           "resourceProvider" => prov_eid
         },
-<<<<<<< 43c3e9a358798639871e9287815bfebe54f223e8
-        "publications" => "0",
         "relatedResources" => {
             "relatedResource" => ["super-service"]
         },
         "requiredResources" => {
             "requiredResource" => ["super-service"]
         },
-        "serviceLevelAgreement" => "http://openminted.eu/sla-agreement/",
-        "softwareApplications" => "0",
-        "subcategory" => "data",
-        "symbol" => logo,
-=======
-        "relatedResources" => nil,
-        "requiredResources" => nil,
         "serviceLevel" => "http://openminted.eu/sla-agreement/",
         "subcategories" =>  { "subcategory" => ["data"] },
         "logo" => logo,
->>>>>>> Fix jms import
         "tagline" => "Find easily accessible corpora of scholarly content and mine them!",
         "tags" => { "tag" => [
             "Text Mining",
@@ -147,17 +110,40 @@ FactoryBot.define do
         "accessPolicy" => "http://openminted.eu/pricing/",
         "statusMonitoring" => "http://openminted.eu/monitoring/",
         "maintenance" => "http://openminted.eu/maintenance/",
-        "multimedia" => nil,
-        "useCase" => nil,
-        "accessTypes" => ["access_type-other"],
-        "accessModes" => ["access_mode-other"],
-        "resourceGeographicLocations" => nil,
+        "multimedia" => [
+            "https://www.youtube.com/watch?v=-_F8NZwWXew"
+        ],
+        "useCases" =>  {
+          "useCase" => [
+            "http://phenomenal-h2020.eu/home/help"
+        ] },
+        "accessTypes" => {
+          "accessType" => [
+            "access_type-at"
+        ] },
+        "accessModes" => {
+          "accessMode" => [
+            "access_mode-am"
+        ] },
+        "resourceGeographicLocations" => {
+          "resourceGeographicLocation" => [
+            "PL"
+        ] },
         "helpdeskEmail" => "info@bluebridge.support_for_data_publication",
         "securityContactEmail" => "info@bluebridge.support_for_data_publication",
-        "certifications" => nil,
-        "standards" => nil,
-        "openSourceTechnologies" => nil,
-        "privacyPolicy" => nil,
+        "certifications" => {
+          "certification" => [
+            "ISO-639"
+        ] },
+        "standards" => {
+          "standard" => [
+            "standard"
+        ] },
+        "openSourceTechnologies" => {
+          "openSourceTechnology" => [
+            "opensource"
+        ] },
+        "privacyPolicy" => "http://phenomenal-h2020.eu/home/help",
         "orderType" => "order_type-other"
       }
     end
