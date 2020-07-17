@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 2020_07_07_142820) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["contactable_id"], name: "index_contacts_on_contactable_id"
-    t.index ["id", "contactable_id"], name: "index_contacts_on_id_and_contactable_id", unique: true
+    t.index ["id", "contactable_id", "contactable_type"], name: "index_contacts_on_id_and_contactable_id_and_contactable_type", unique: true
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
