@@ -64,19 +64,19 @@ class Service::PcCreateOrUpdate
                       data["userValue"],
                       data["userBase"]].join("\n"),
         tagline: data["tagline"].blank? ? "NO IMPORTED TAGLINE" : data["tagline"],
-        tag_list: Array(data["tags"]["tag"]) || [],
-        language_availability: Array(data["languages"]["language"] || "EN"),
-        geographical_availabilities: Array(data["geographicalAvailabilities"]["geographicalAvailability"] || "WW"),
-        resource_geographic_locations: Array(data["resourceGeographicLocations"]["resourceGeographicLocation"]) || [],
+        tag_list: Array(data.dig("tags", "tag")) || [],
+        language_availability: Array(data.dig("languages", "language") || "EN"),
+        geographical_availabilities: Array(data.dig("geographicalAvailabilities", "geographicalAvailability") || "WW"),
+        resource_geographic_locations: Array(data.dig("resourceGeographicLocations", "resourceGeographicLocation")) || [],
         dedicated_for: [],
         main_contact: main_contact,
-        public_contacts: Array(data["publicContacts"]["publicContact"])&.
+        public_contacts: Array(data.dig("publicContacts", "publicContact"))&.
             map { |c| PublicContact.new(map_contact(c)) } || [],
-        terms_of_use_url: data["termsOfUse"]["termOfUse"] || "",
+        terms_of_use_url: data.dig("termsOfUse", "termOfUse") || "",
         access_policies_url: data["price"],
         sla_url: data["serviceLevelAgreement"] || "",
         privacy_policy_url: data["privacyPolicy"] || "",
-        use_cases_url: Array(data["useCases"]["useCase"] || []),
+        use_cases_url: Array(data.dig("useCases", "useCase") || []),
         multimedia: Array(data["multimedia"]) || [],
         webpage_url: data["url"] || "",
         manual_url: data["userManual"] || "",
@@ -88,24 +88,26 @@ class Service::PcCreateOrUpdate
         payment_model_url: data["paymentModel"] || "",
         pricing_url: data["pricing"] || "",
         trl: Trl.where(eid: data["trl"]),
+        required_services: map_related_services(Array(data.dig("requiredResources", "requiredResource"))),
+        related_services: map_related_services(Array(data.dig("relatedResources", "relatedResource"))),
         life_cycle_status: LifeCycleStatus.where(eid: data["lifeCycleStatus"]),
-        access_types: AccessType.where(eid: Array(data["accessTypes"]["accessType"])),
-        access_modes: AccessMode.where(eid: Array(data["accessModes"]["accessMode"])),
+        access_types: AccessType.where(eid: Array(data.dig("accessTypes", "accessType"))),
+        access_modes: AccessMode.where(eid: Array(data.dig("accessModes", "accessMode"))),
         order_type: "open_access",
         status: "published",
-        funding_bodies: map_funding_bodies(data["fundingBody"]["fundingBody"]),
-        funding_programs: map_funding_programs(data["fundingPrograms"]["fundingProgram"]),
-        changelog: Array(data["changeLog"]["changeLog"]),
-        certifications: Array(data["certifications"]["certification"]),
-        standards: Array(data["standards"]["standard"]),
-        open_source_technologies: Array(data["openSourceTechnologies"]["openSourceTechnology"]),
-        grant_project_names: Array(data["grantProjectNames"]["grantProjectName"]),
+        funding_bodies: map_funding_bodies(data.dig("fundingBody", "fundingBody")),
+        funding_programs: map_funding_programs(data.dig("fundingPrograms", "fundingProgram")),
+        changelog: Array(data.dig("changeLog", "changeLog")),
+        certifications: Array(data.dig("certifications", "certification")),
+        standards: Array(data.dig("standards", "standard")),
+        open_source_technologies: Array(data.dig("openSourceTechnologies", "openSourceTechnology")),
+        grant_project_names: Array(data.dig("grantProjectNames", "grantProjectName")),
         resource_organisation: map_provider(data["resourceOrganisation"]),
-        providers: Array(data["resourceProviders"]["resourceProviders"])&.map { |p| map_provider(p) },
+        providers: Array(data.dig("resourceProviders", "resourceProviders"))&.map { |p| map_provider(p) },
         categories: map_category(data["category"]),
         scientific_domains: [scientific_domain_other],
         version: data["version"] || "",
-        target_users: map_target_users(data["targetUsers"]["targetUsers"]),
+        target_users: map_target_users(data.dig("targetUsers", "targetUsers")),
         last_update: data["lastUpdate"]
       }
     end
@@ -180,6 +182,11 @@ class Service::PcCreateOrUpdate
 
     def map_contact(contact)
       contact&.transform_keys { |k| k.to_s.underscore } || nil
+    end
+
+    def map_related_services(services)
+      Service.joins(:sources).where("service_sources.source_type": "eic",
+                              "service_sources.eid": services)
     end
 
     def map_funding_bodies(funding_bodies)
