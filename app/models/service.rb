@@ -93,9 +93,8 @@ class Service < ApplicationRecord
   has_many :service_target_users, dependent: :destroy
   has_many :target_users, through: :service_target_users
 
-  has_one :main_contact, as: :contactable, class_name: "MainContact", dependent: :destroy, autosave: true
-  has_many :public_contacts, as: :contactable, source: :service_contacts, class_name: "PublicContact",
-           dependent: :destroy, autosave: true
+  has_one :main_contact, as: :contactable, dependent: :destroy, autosave: true
+  has_many :public_contacts, as: :contactable, dependent: :destroy, autosave: true
 
   accepts_nested_attributes_for :main_contact,
                                 reject_if: lambda { |attributes| attributes["email"].blank? },
