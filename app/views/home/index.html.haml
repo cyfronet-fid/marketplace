@@ -21,7 +21,6 @@
     .col-12.col-lg-8.col-sm-7
       = render_sections("use-cases")
 
-- if current_user && !cookies[:disable_welcome_modal]
+- if @show_popup
   :javascript
     $("#welcome-modal").modal("show")
-  - cookies[:disable_welcome_modal] = true

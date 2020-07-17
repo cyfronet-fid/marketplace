@@ -5,6 +5,7 @@ FactoryBot.define do
     sequence(:email) { |n| "johndoe#{n}@email.pl" }
     sequence(:first_name) { |n| "John#{n}" }
     sequence(:last_name) { |n| "Doe#{n}" }
+    sequence(:show_welcome_popup) { |n| false }
     password { "12345678" }
     sequence(:uid) { |n| "uid#{n}" }
     factory :user_with_interests do
