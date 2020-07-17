@@ -1,0 +1,7 @@
+.container
+  .row.mt-5
+    .col-12.col-md-5
+      Welcome modal for all users:
+    .col-12.btn-group
+      = button_to "Enable welcome modal", admin_features_enable_modal_path, class: "btn btn-primary pl-5 pr-5 mr-5"
+      = button_to "Disable welcome modal", admin_features_disable_modal_path, class: "btn btn-warning pl-5 pr-5 mr-5"

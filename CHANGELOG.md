@@ -28,7 +28,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - contact form tab layout modifications (@jarekzet)
 - Service preview (@goreck888)
 - Duplicated "sort" ids on services page (@goreck888)
-
+- Show welcome popup depending on database user information, not cookies (@goreck888)
+ 
 ### Security
 
 ## [2.11.0] 2020-06-09
