@@ -18,7 +18,6 @@
     %main.container.order-container
       %h1.font-weight-bold.mt-4
         = wizard_title
-      %p.summary= @service.tagline
       = render "layouts/order/nav", service: @service, wizard: @wizard
       = yield
       %hr.bottom-hr.mt-5.mb-4
