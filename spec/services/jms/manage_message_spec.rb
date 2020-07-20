@@ -20,7 +20,6 @@ describe Jms::ManageMessage do
     $stdout = StringIO.new
     allow(Service::PcCreateOrUpdate).to receive(:new).with(parser.parse(service_resource["resource"])["infraService"]["service"],
                                                             eic_base,
-                                                            logger,
                                                             true).and_return(service_create_or_update)
     allow(service_create_or_update).to receive(:call).and_return(true)
     expect {
@@ -32,7 +31,7 @@ describe Jms::ManageMessage do
   it "should receive provider message" do
     original_stdout = $stdout
     $stdout = StringIO.new
-    allow(Provider::PcCreateOrUpdate).to receive(:new).with(parser.parse(provider_resource["resource"])["providerBundle"]["provider"], logger)
+    allow(Provider::PcCreateOrUpdate).to receive(:new).with(parser.parse(provider_resource["resource"])["providerBundle"]["provider"])
                                                             .and_return(provider_create_or_update)
     allow(provider_create_or_update).to receive(:call).and_return(true)
 
@@ -53,7 +52,6 @@ describe Jms::ManageMessage do
                      "resourceType": "infra_service" }
     allow(Service::PcCreateOrUpdate).to receive(:new).with(parser.parse(service_hash[:resource])["infraService"]["service"],
                                                            eic_base,
-                                                           logger,
                                                            true).and_return(service_create_or_update)
     allow(service_create_or_update).to receive(:call).and_raise(StandardError)
 
@@ -72,7 +70,7 @@ describe Jms::ManageMessage do
                                    "</tns:provider>",
                      "resourceType": "provider" }
 
-    allow(Provider::PcCreateOrUpdate).to receive(:new).with(parser.parse(provider_hash[:resource])["provider"], logger)
+    allow(Provider::PcCreateOrUpdate).to receive(:new).with(parser.parse(provider_hash[:resource])["provider"])
       .and_return(provider_create_or_update)
 
     allow(provider_create_or_update).to receive(:call).and_raise(StandardError)
