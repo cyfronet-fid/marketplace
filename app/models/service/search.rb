@@ -26,6 +26,7 @@ module Service::Search
       providers: providers.map(&:id),
       platforms: platforms.map(&:id),
       target_groups: target_groups.map(&:id),
+      service_type: service_type,
       tags: tag_list,
       source: upstream&.source_type,
       offers: offers.ids,

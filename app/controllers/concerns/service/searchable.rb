@@ -129,6 +129,7 @@ module Service::Searchable
           Filter::TargetGroup,
           Filter::Platform,
           Filter::Rating,
+          Filter::OrderType,
           Filter::Location,
           Filter::Tag
       ]

@@ -545,8 +545,30 @@ textarea:-ms-input-placeholder { /* IE 10+ */
   .service-box {
     display: block;
 
-    .service-logo {
-      margin: 20px 0;
+    .badge {
+      font-size: 0.8em;
+      padding: 7px 14px;
+      text-transform: uppercase;
+      position: absolute;
+      border-left: 1px solid $palette-solid-10;
+      border-bottom: 1px solid $palette-solid-10;
+      top: 0;
+      color: $palette-solid-50;
+      font-weight: 400;
+      right: 0;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
+
+      &.badge-success,
+      &.badge-warning,
+      &.badge-error {
+        color: $white;
+      }
+
+      .service-logo {
+        margin: 20px 0;
+      }
     }
   }
 }
@@ -2210,6 +2232,27 @@ label[data-multicheckbox].small {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+
+  .badge {
+    font-size: 0.8em;
+    padding: 7px 14px;
+    text-transform: uppercase;
+    border-bottom: 2px solid $palette-solid-10;
+    width: 120px;
+    top: 0;
+    color: $palette-solid-50;
+    font-weight: 400;
+    right: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+
+    &.badge-success,
+    &.badge-warning,
+    &.badge-error {
+      color: $white;
+    }
+  }
 
   .service-logo {
     min-width: 120px;

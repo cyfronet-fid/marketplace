@@ -48,6 +48,10 @@ module ServiceHelper
     service.providers.map { |target| target.name }
   end
 
+  def order_type(service)
+    service&.service_type || service&.offers&.first&.offer_type || nil
+  end
+
   def highlighted_for(field, model, highlights)
     highlights&.dig(field)&.html_safe || model.send(field)
   end
