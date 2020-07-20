@@ -216,26 +216,13 @@ RSpec.describe Service::PcCreateOrUpdate do
 
       expect { stub_described_class(service, unirest: unirest) }.to raise_error(SystemExit).and output.to_stderr
     end
-
-    it "should gracefully handle error with logo download" do
-      provider_new = create(:provider, name: "Test Provider ten")
-      provider_tp = create(:provider, name: "Test Provider tp")
-      create(:provider_source, source_type: "eic", eid: "tp", provider: provider_new)
-      create(:provider_source, source_type: "eic", eid: "new", provider: provider_tp)
-      unirest = Unirest
-      jms_service = create(:jms_service, logo: "http://phenomenal-h2020.eu/home/wp-content/logo.png")
-
-      stub_described_class(jms_service, unirest: unirest)
-
-      expect(Service.first.logo.attached?).to be_falsey
-    end
   end
 
 
 
   private
     def stub_described_class(jms_service, unirest: Unirest)
-      described_service = Service::PcCreateOrUpdate.new(jms_service, test_url, logger, unirest: unirest)
+      described_service = Service::PcCreateOrUpdate.new(jms_service, test_url, unirest: unirest)
 
       stub_http_file(described_service, "PhenoMeNal_logo.png",
                      "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png")

@@ -9,6 +9,7 @@ staging:
   :concurrency: 5
 
 :queues:
+  - jms
   - orders
   - mailers
   - reports
