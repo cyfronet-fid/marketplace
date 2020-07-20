@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- Sidebar links section name change from 'support' to 'links' (@goreck888)
 
 ### Deprecated
 
