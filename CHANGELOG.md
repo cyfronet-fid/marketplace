@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Deprecated
 
 ### Removed
+- tagline and unnecessary offer titles in ordering form (@goreck888)
 
 ### Fixed
 - Added missing homepage graphics (@jarekzet)
