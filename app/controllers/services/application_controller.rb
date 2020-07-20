@@ -107,7 +107,7 @@ class Services::ApplicationController < ApplicationController
     end
 
     def wizard_title
-      if step.offer
+      if step.offer && (@service.offers_count > 1)
         "#{@service.title} - #{step.offer.name}"
       else
         @service.title
