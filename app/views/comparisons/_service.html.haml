@@ -2,7 +2,7 @@
   .service.border
     .logo.float-left
       %span.helper
-      - if service.logo.attached?
+      - if service.logo.attached? && service.logo.variable?
         = image_tag service.logo.variant(resize: "40x40")
     .float-left.service-title
       %span.middle
