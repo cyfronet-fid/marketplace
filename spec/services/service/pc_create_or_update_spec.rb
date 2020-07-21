@@ -212,8 +212,7 @@ RSpec.describe Service::PcCreateOrUpdate do
                                             headers: { "Accept" => "application/json" }).and_return(provider_response)
       expect(unirest).to receive(:get).with("#{test_url}/api/provider/tp",
                                             headers: { "Accept" => "application/json" }).and_return(provider_response_tp)
-
-      expect { stub_described_class(service, unirest: unirest) }.to raise_error(SystemExit).and output.to_stderr
+      expect { stub_described_class(service, unirest: unirest) }.to raise_error(Service::PcCreateOrUpdate::ConnectionError)
     end
   end
 
