@@ -3,12 +3,16 @@
 require "mini_magick"
 
 class Service::PcCreateOrUpdate
+  class ConnectionError < StandardError
+    def initialize(msg)
+      super(msg)
+    end
+  end
+
   def initialize(eic_service,
                  eic_base_url,
-                 logger,
                  is_active,
                  unirest: Unirest)
-    @logger = logger
     @unirest = unirest
     @eic_base_url = eic_base_url
     @eid = eic_service["id"]
@@ -34,7 +38,6 @@ class Service::PcCreateOrUpdate
       save_logo(service, @eic_service["logo"])
 
       if service.save!
-        log "Created new service: #{service.id}"
         ServiceSource.create!(service_id: service.id, source_type: "eic", eid: @eid)
         service.offers.create!(name: "Offer", description: "#{service.name} Offer",
                                order_type: "open_access",
@@ -43,12 +46,10 @@ class Service::PcCreateOrUpdate
       service
     elsif mapped_service && !@is_active
       Service::Draft.new(mapped_service).call
-      log "Draft service: #{mapped_service.id}"
       mapped_service
     else
       save_logo(mapped_service, @eic_service["logo"])
       mapped_service.update!(service)
-      log "Service with id: #{mapped_service.id} successfully updated"
       mapped_service
     end
   end
@@ -56,6 +57,7 @@ class Service::PcCreateOrUpdate
   private
     def map_service(data)
       main_contact = MainContact.new(map_contact(data["mainContact"])) if data["mainContact"] || nil
+      providers = Array(data.dig("resourceProviders", "resourceProvider")) - [data["resourceOrganisation"]]
 
       { name: data["name"],
         description: ReverseMarkdown.convert(data["description"],
@@ -68,7 +70,7 @@ class Service::PcCreateOrUpdate
         resource_geographic_locations: Array(data.dig("resourceGeographicLocations", "resourceGeographicLocation")) || [],
         dedicated_for: [],
         main_contact: main_contact,
-        public_contacts: Array(data.dig("publicContacts", "publicContact"))&.
+        public_contacts: Array.wrap(data.dig("publicContacts", "publicContact")).
             map { |c| PublicContact.new(map_contact(c)) } || [],
         privacy_policy_url: data["privacyPolicy"] || "",
         use_cases_url: Array(data.dig("useCases", "useCase") || []),
@@ -101,7 +103,7 @@ class Service::PcCreateOrUpdate
         open_source_technologies: Array(data.dig("openSourceTechnologies", "openSourceTechnology")),
         grant_project_names: Array(data.dig("grantProjectNames", "grantProjectName")),
         resource_organisation: map_provider(data["resourceOrganisation"]),
-        providers: Array(data.dig("resourceProviders", "resourceProvider"))&.map { |p| map_provider(p) },
+        providers: providers.map { |p| map_provider(p) },
         categories: map_category(data.dig("subcategories", "subcategory")),
         scientific_domains: [scientific_domain_other],
         version: data["version"] || "",
@@ -118,16 +120,14 @@ class Service::PcCreateOrUpdate
       mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eic",
                                                          "provider_sources.eid": prov_eid)
       if mapped_provider.nil?
-        begin
-          prov = @unirest.get("#{@eic_base_url}/api/provider/#{prov_eid}",
-                              headers: { "Accept" => "application/json" })
-        rescue Errno::ECONNREFUSED
-          abort("\n Exited with errors - could not connect to #{@eic_base_url}\n")
-        end
+        prov = @unirest.get("#{@eic_base_url}/api/provider/#{prov_eid}",
+                            headers: { "Accept" => "application/json" })
 
         if prov.code != 200
-          abort("\n Exited with errors - could not fetch data (code: #{prov.code})\n")
+          raise Service::PcCreateOrUpdate::ConnectionError
+            .new("Cannot connect to: #{@eic_base_url}. Received status #{prov.code}")
         end
+
         provider  = Provider.find_or_create_by(name: prov.body["name"])
         ProviderSource.create!(provider_id: provider.id, source_type: "eic", eid: prov_eid)
         provider
@@ -137,33 +137,26 @@ class Service::PcCreateOrUpdate
     end
 
     def save_logo(service, image_url)
-      begin
-        logo = open(image_url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
-        logo_content_type = logo.content_type
+      logo = open(image_url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
+      logo_content_type = logo.content_type
 
-        if logo_content_type == "image/svg+xml"
-          img = MiniMagick::Image.read(logo, ".svg")
-          img.format "png" do |convert|
-            convert.args.unshift "800x800"
-            convert.args.unshift "-resize"
-            convert.args.unshift "1200"
-            convert.args.unshift "-density"
-            convert.args.unshift "none"
-            convert.args.unshift "-background"
-          end
-
-          logo = StringIO.new
-          logo.write(img.to_blob)
-          logo.seek(0)
-          logo_content_type = "image/png"
-          logo
+      if logo_content_type == "image/svg+xml"
+        img = MiniMagick::Image.read(logo, ".svg")
+        img.format "png" do |convert|
+          convert.args.unshift "800x800"
+          convert.args.unshift "-resize"
+          convert.args.unshift "1200"
+          convert.args.unshift "-density"
+          convert.args.unshift "none"
+          convert.args.unshift "-background"
         end
-      rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, SocketError => e
-        log "\nERROR - there was a problem processing image for #{@eid} #{image_url}: #{e}\n"
-      rescue => e
-        log "\nERROR - there was a unexpected problem processing image for #{@eid} #{image_url}: #{e}\n"
-      end
 
+        logo = StringIO.new
+        logo.write(img.to_blob)
+        logo.seek(0)
+        logo_content_type = "image/png"
+        logo
+      end
       unless logo.nil?
         service.logo.attach(io: logo, filename: @eid, content_type: logo_content_type)
       end
@@ -196,9 +189,5 @@ class Service::PcCreateOrUpdate
 
     def scientific_domain_other
       ScientificDomain.find_by!(name: "Other")
-    end
-
-    def log(msg)
-      @logger.info(msg)
     end
 end
