@@ -6,6 +6,7 @@ class Service::PcCreateOrUpdate
   def initialize(eic_service,
                  eic_base_url,
                  logger,
+                 is_active,
                  unirest: Unirest)
     @logger = logger
     @unirest = unirest
@@ -21,7 +22,7 @@ class Service::PcCreateOrUpdate
         "networking": "Networking",
     }.stringify_keys
     @eic_service =  eic_service
-    @is_active = @eic_service["active"]
+    @is_active = is_active
   end
 
   def call
@@ -30,7 +31,7 @@ class Service::PcCreateOrUpdate
                                                      "service_sources.eid": @eid)
     if mapped_service.nil? && @is_active
       service = Service.new(service)
-      save_logo(service, @eic_service["symbol"])
+      save_logo(service, @eic_service["logo"])
 
       if service.save!
         log "Created new service: #{service.id}"
@@ -45,7 +46,7 @@ class Service::PcCreateOrUpdate
       log "Draft service: #{mapped_service.id}"
       mapped_service
     else
-      save_logo(mapped_service, @eic_service["symbol"])
+      save_logo(mapped_service, @eic_service["logo"])
       mapped_service.update!(service)
       log "Service with id: #{mapped_service.id} successfully updated"
       mapped_service
@@ -57,30 +58,27 @@ class Service::PcCreateOrUpdate
       main_contact = MainContact.new(map_contact(data["mainContact"])) if data["mainContact"] || nil
 
       { name: data["name"],
-        description: [ReverseMarkdown.convert(data["description"],
+        description: ReverseMarkdown.convert(data["description"],
                                              unknown_tags: :bypass,
                                              github_flavored: false),
-                      data["options"],
-                      data["userValue"],
-                      data["userBase"]].join("\n"),
         tagline: data["tagline"].blank? ? "NO IMPORTED TAGLINE" : data["tagline"],
         tag_list: Array(data.dig("tags", "tag")) || [],
-        language_availability: Array(data.dig("languages", "language") || "EN"),
+        language_availability: Array(data.dig("languageAvailabilities", "languageAvailability") || "EN"),
         geographical_availabilities: Array(data.dig("geographicalAvailabilities", "geographicalAvailability") || "WW"),
         resource_geographic_locations: Array(data.dig("resourceGeographicLocations", "resourceGeographicLocation")) || [],
         dedicated_for: [],
         main_contact: main_contact,
         public_contacts: Array(data.dig("publicContacts", "publicContact"))&.
             map { |c| PublicContact.new(map_contact(c)) } || [],
-        terms_of_use_url: data.dig("termsOfUse", "termOfUse") || "",
-        access_policies_url: data["price"],
-        sla_url: data["serviceLevelAgreement"] || "",
         privacy_policy_url: data["privacyPolicy"] || "",
         use_cases_url: Array(data.dig("useCases", "useCase") || []),
         multimedia: Array(data["multimedia"]) || [],
-        webpage_url: data["url"] || "",
+        terms_of_use_url: data["termsOfUse"] || "",
+        access_policies_url: data["accessPolicy"],
+        sla_url: data["serviceLevel"] || "",
+        webpage_url: data["webpage"] || "",
         manual_url: data["userManual"] || "",
-        helpdesk_url: data["helpdesk"] || "",
+        helpdesk_url: data["helpdeskPage"] || "",
         training_information_url: data["trainingInformation"] || "",
         status_monitoring_url: data["statusMonitoring"] || "",
         maintenance_url: data["maintenance"] || "",
@@ -103,12 +101,12 @@ class Service::PcCreateOrUpdate
         open_source_technologies: Array(data.dig("openSourceTechnologies", "openSourceTechnology")),
         grant_project_names: Array(data.dig("grantProjectNames", "grantProjectName")),
         resource_organisation: map_provider(data["resourceOrganisation"]),
-        providers: Array(data.dig("resourceProviders", "resourceProviders"))&.map { |p| map_provider(p) },
-        categories: map_category(data["category"]),
+        providers: Array(data.dig("resourceProviders", "resourceProvider"))&.map { |p| map_provider(p) },
+        categories: map_category(data.dig("subcategories", "subcategory")),
         scientific_domains: [scientific_domain_other],
         version: data["version"] || "",
-        target_users: map_target_users(data.dig("targetUsers", "targetUsers")),
-        last_update: data["lastUpdate"]
+        last_update: data["lastUpdate"],
+        target_users: map_target_users(data.dig("targetUsers", "targetUser"))
       }
     end
 
@@ -119,7 +117,6 @@ class Service::PcCreateOrUpdate
     def map_provider(prov_eid)
       mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eic",
                                                          "provider_sources.eid": prov_eid)
-
       if mapped_provider.nil?
         begin
           prov = @unirest.get("#{@eic_base_url}/api/provider/#{prov_eid}",
@@ -131,7 +128,7 @@ class Service::PcCreateOrUpdate
         if prov.code != 200
           abort("\n Exited with errors - could not fetch data (code: #{prov.code})\n")
         end
-        provider  = Provider.create!(name: prov.body["name"])
+        provider  = Provider.find_or_create_by(name: prov.body["name"])
         ProviderSource.create!(provider_id: provider.id, source_type: "eic", eid: prov_eid)
         provider
       else

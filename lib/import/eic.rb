@@ -59,14 +59,14 @@ module Import
 
       log "EIC - all services #{total_service_count}"
 
-      r.body["results"].select { |_r| @ids.empty? || @ids.include?(_r["id"]) }
-          .each do |service|
+      r.body["results"].select { |_r| @ids.empty? || @ids.include?(_r["service"]["id"]) }
+          .each do |service_data|
+        service = service_data["service"]
         eid = service["id"]
 
-        output.append(service)
-
+        output.append(service_data)
         # TODO this should be moved to Offer.webpage
-        url = service["url"]
+        url = service["webpage"]
         # order_url = service["order"]
         user_manual_url = service["userManual"]
         training_information_url = service["trainingInformation"]
@@ -75,34 +75,28 @@ module Import
         order_url = service["order"]
         payment_model_url = service["paymentModel"]
         pricing_url = service["pricing"]
-        helpdesk_url = service["helpdesk"]
         multimedia = Array(service["multimedia"]) || []
         use_cases_url = service["useCases"]
         privacy_policy_url = service["privacyPolicy"]
         access_policy_url = service["accessPolicy"]
-        service_level_agreement_url = service["serviceLevelAgreement"]
+        helpdesk_url = service["helpdeskPage"]
+        service_level_agreement_url = service["serviceLevel"]
         terms_of_use = service["termsOfUse"] # list
-
         name = service["name"]
         tagline = service["tagline"]
         description = ReverseMarkdown.convert(service["description"], unknown_tags: :bypass, github_flavored: false)
-        options = service["options"]
-        user_value = service["userValue"]
-        user_base = service["userBase"]
-        image_url = service["symbol"]
+        image_url = service["logo"]
         last_update = service["lastUpdate"]
         changelog = Array(service["changeLog"])
         certifications = service["certifications"]
         standards = service["standards"]
         open_source_technologies = service["openSourceTechnologies"]
         grant_project_names = service["grantProjectNames"]
-        # category = service["category"]
-        # subcategory = service["subcategory"]
         tag_list = Array(service["tags"])
-        language_availability = Array(service["languages"] || "EN")
+        language_availability = Array(service["languageAvailabilities"] || "EN")
         geographical_availabilities = service["geographicalAvailabilities"]
         resource_geographic_locations = Array(service["resourceGeographicLocations"]) || []
-        category = service["category"]
+        category = service["subcategories"]
         funding_bodies = service["fundingBody"]
         funding_programs = service["fundingPrograms"]
         main_contact = MainContact.new(map_contact(service["mainContact"])) if service["mainContact"] || nil
@@ -147,7 +141,6 @@ module Import
         rescue => e
           log "ERROR - there was a unexpected problem processing image for #{eid} #{image_url}: #{e}"
         end
-        aggregated_description = [description, options, user_value, user_base].join("\n")
 
 
         mapped_resource_organisation =  map_providers([resource_organisation_eid], @providers, name, eid)
@@ -155,7 +148,7 @@ module Import
 
         updated_service_data = {
             name: name,
-            description: aggregated_description,
+            description: description,
             tagline: tagline.blank? ? "NO IMPORTED TAGLINE" : tagline,
             # provider_id: ?
             tag_list: tag_list,
@@ -165,9 +158,9 @@ module Import
             dedicated_for: [],
             multimedia: multimedia,
             use_cases_url: use_cases_url,
-            terms_of_use_url: terms_of_use[0] || "",
             access_policies_url: access_policy_url,
             privacy_policy_url: privacy_policy_url,
+            terms_of_use_url: terms_of_use.present? ? terms_of_use[0] : "",
             sla_url: service_level_agreement_url || "",
             webpage_url: url || "",
             manual_url: user_manual_url || "",
@@ -203,8 +196,8 @@ module Import
             grant_project_names: Array(grant_project_names),
             open_source_technologies: Array(open_source_technologies)
         }
-
         begin
+
           if (service_source = ServiceSource.find_by(eid: eid, source_type: "eic")).nil?
             created += 1
             log "Adding [NEW] service: #{name}, eid: #{eid}"
@@ -222,6 +215,7 @@ module Import
             end
           else
             service = Service.find_by(id: service_source.service_id)
+
             if service.upstream_id == service_source.id
               updated += 1
               log "Updating [EXISTING] service #{service.name}, id: #{service_source.id}, eid: #{eid}"
