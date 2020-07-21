@@ -732,7 +732,10 @@ li {
     padding: 0;
     margin: 0;
     list-style: none;
-    text-align: right;
+
+    &:not(.links) {
+      text-align: right;
+    }
 
     li {
       margin: 0 0.5rem;
