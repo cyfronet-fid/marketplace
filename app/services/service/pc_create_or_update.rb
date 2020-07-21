@@ -3,6 +3,12 @@
 require "mini_magick"
 
 class Service::PcCreateOrUpdate
+  class ConnectionError < StandardError
+    def initialize(msg)
+      super(msg)
+    end
+  end
+
   def initialize(eic_service,
                  eic_base_url,
                  is_active,
@@ -31,7 +37,7 @@ class Service::PcCreateOrUpdate
       service = Service.new(service)
       save_logo(service, @eic_service["logo"])
 
-      if service.save(validate: false)
+      if service.save!
         ServiceSource.create!(service_id: service.id, source_type: "eic", eid: @eid)
         service.offers.create!(name: "Offer", description: "#{service.name} Offer",
                                order_type: "open_access",
@@ -43,7 +49,7 @@ class Service::PcCreateOrUpdate
       mapped_service
     else
       save_logo(mapped_service, @eic_service["logo"])
-      mapped_service.update(service)
+      mapped_service.update!(service)
       mapped_service
     end
   end
@@ -51,7 +57,7 @@ class Service::PcCreateOrUpdate
   private
     def map_service(data)
       main_contact = MainContact.new(map_contact(data["mainContact"])) if data["mainContact"] || nil
-      providers =  Array(data.dig("resourceProviders", "resourceProvider")) - [data["resourceOrganisation"]]
+      providers = Array(data.dig("resourceProviders", "resourceProvider")) - [data["resourceOrganisation"]]
 
       { name: data["name"],
         description: ReverseMarkdown.convert(data["description"],
@@ -114,16 +120,14 @@ class Service::PcCreateOrUpdate
       mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eic",
                                                          "provider_sources.eid": prov_eid)
       if mapped_provider.nil?
-        begin
-          prov = @unirest.get("#{@eic_base_url}/api/provider/#{prov_eid}",
-                              headers: { "Accept" => "application/json" })
-        rescue Errno::ECONNREFUSED
-          abort("\n Exited with errors - could not connect to #{@eic_base_url}\n")
-        end
+        prov = @unirest.get("#{@eic_base_url}/api/provider/#{prov_eid}",
+                            headers: { "Accept" => "application/json" })
 
         if prov.code != 200
-          abort("\n Exited with errors - could not fetch data (code: #{prov.code})\n")
+          raise Service::PcCreateOrUpdate::ConnectionError
+            .new("Cannot connect to: #{@eic_base_url}. Received status #{prov.code}")
         end
+
         provider  = Provider.find_or_create_by(name: prov.body["name"])
         ProviderSource.create!(provider_id: provider.id, source_type: "eic", eid: prov_eid)
         provider
