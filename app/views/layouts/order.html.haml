@@ -16,7 +16,7 @@
             %button.btn.btn-primary{ form: "order-form", type: "submit" }= next_title
       = render "layouts/flash"
     %main.container.order-container
-      %h1.font-weight-bold.mt-4
+      %h1.font-weight-bold.mt-4.mb-4
         = wizard_title
       = render "layouts/order/nav", service: @service, wizard: @wizard
       = yield
