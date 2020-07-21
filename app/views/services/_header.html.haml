@@ -4,7 +4,7 @@
       - if local_assigns[:preview]
         = image_tag backoffice_service_logo_preview_path(service_id: service.id || "new"),
           class: "align-self-center img-fluid"
-      - elsif service.logo.attached?
+      - elsif service.logo.attached? && service.logo.variable?
         = image_tag service.logo.variant(resize: "180x120"), class: "align-self-center img-fluid"
     .col-12.col-sm-9
       %h2.font-weight-bolder= service.name
