@@ -41,7 +41,7 @@ class Service < ApplicationRecord
                     { name: "platforms",
                       template: "array",
                       fields: ["platforms"] },
-                    { name: "support",
+                    { name: "links",
                       template: "links",
                       fields: ["webpage_url", "helpdesk_url", "helpdesk_email",
                                "manual_url", "tutorial_url"] },
