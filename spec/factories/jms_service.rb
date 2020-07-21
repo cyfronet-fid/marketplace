@@ -10,6 +10,7 @@ FactoryBot.define do
       prov_eid { "new" }
       logo { "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png" }
     end
+
     initialize_with do
       next {
         "category" => "aggregator",
