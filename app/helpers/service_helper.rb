@@ -49,7 +49,12 @@ module ServiceHelper
   end
 
   def order_type(service)
-    service&.service_type || service&.offers&.first&.offer_type || nil
+    types = service&.offers.map { |o| o.offer_type }.uniq
+    if types.size > 1
+      "various"
+    else
+      types.first
+    end
   end
 
   def highlighted_for(field, model, highlights)
