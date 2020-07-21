@@ -16,5 +16,5 @@
               The service has #{service_offers.size} offers that match your search criteria
           = render "services/offers_box", service_offers: service_offers,
             service: service
-  - if service.logo.attached?
+  - if service.logo.attached? && service.logo.variable?
     = image_tag service.logo.variant(resize: "120x120"), class: "align-self-center mx-4 service-logo"
