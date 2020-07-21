@@ -17,7 +17,7 @@
           %th.title-col
             .logo-wrapper
               %span.helper
-              - if service.logo.attached?
+              - if service.logo.attached? && service.logo.variable?
                 = image_tag service.logo.variant(resize: "100x100")
             = link_to comparisons_services_path(slug: service.slug, fromc: params[:fromc]), method: :delete do
               %i.far.fa-trash-alt

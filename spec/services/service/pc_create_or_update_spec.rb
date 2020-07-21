@@ -194,7 +194,6 @@ RSpec.describe Service::PcCreateOrUpdate do
       create(:provider_source, source_type: "eic", eid: provider_eid, provider: provider_ten)
       create(:provider_source, source_type: "eic", eid: "tp", provider: provider_tp)
       service = create(:service, providers: [provider_ten])
-
       create(:service_source, source_type: "eic", eid: "first.service", service: service)
 
       service = stub_described_class(create(:jms_service, name: "New title", prov_eid: provider_eid))

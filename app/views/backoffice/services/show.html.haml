@@ -10,7 +10,7 @@
       Publish one offer to make possible for a user to Access the service.
   .row
     .col-5.col-md-2
-      - if @service.logo.attached?
+      - if @service.logo.attached? && @service.logo.variable?
         = image_tag @service.logo.variant(resize: "180x180"), class: "border img-fluid"
     .col-7.col-md-6.vertical-middle
       %h1.service-name= @service.name
