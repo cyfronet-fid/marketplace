@@ -1,6 +1,17 @@
+.social-wrapper
+  %ul
+    %li
+      = mail_to "contact@eosc-portal.eu", subject: "EOSC Portal" do
+        %i.fa.fa-envelope
+    %li
+      = link_to "https://twitter.com/eoscportal" do
+        %i.fab.fa-twitter
+    %li
+      = link_to "https://www.youtube.com/playlist?index=1&list=UUHsaUFy5LJ3rJ28qDg2StGA&playnext=1" do
+        %i.fab.fa-youtube
 %nav.top
   .container
-    %ul
+    %ul.right-links
       %li
         %a{ href: "https://www.eosc-portal.eu/contact-us" } Contact us
       %li
