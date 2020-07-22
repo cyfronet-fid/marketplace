@@ -4,7 +4,8 @@ module Backoffice::ServicesHelper
   BADGES = {
     "published" => "badge-success",
     "unverified" => "badge-warning",
-    "draft" => "badge-error"
+    "draft" => "badge-error",
+    "deleted" => "badge-error"
   }
 
   def service_status(service)
