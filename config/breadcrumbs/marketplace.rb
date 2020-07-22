@@ -76,3 +76,23 @@ crumb :project_edit do |project|
   link "Edit", edit_project_path(project)
   parent :project, project
 end
+
+crumb :providers do
+  link "Providers", projects_path
+  parent :marketplace_root
+end
+
+crumb :communities do
+  link "Communities and infrastructures", communities_path
+  parent :marketplace_root
+end
+
+crumb :help do
+  link "Help", help_path
+  parent :marketplace_root
+end
+
+crumb :about do
+  link "About Marketplace", about_path
+  parent :marketplace_root
+end
