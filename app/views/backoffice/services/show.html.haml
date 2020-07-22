@@ -23,7 +23,7 @@
       - if policy([:backoffice, @offer]).new?
         = link_to t("backoffice.services.offers.new.link"), new_backoffice_service_offer_path(@service),
             class: "btn btn-primary float-right ml-3 mb-3"
-      - if policy([:backoffice, @service]).edit?
+      - if policy([:backoffice, @service]).update?
         = link_to t("backoffice.services.edit.link"),
                   edit_backoffice_service_path(@service),
                   class: "btn btn-primary float-right"

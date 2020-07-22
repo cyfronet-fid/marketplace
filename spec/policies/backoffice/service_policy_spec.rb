@@ -283,4 +283,18 @@ RSpec.describe Backoffice::ServicePolicy do
       expect(subject).to_not permit(service_portfolio_manager, build(:service, status: :draft))
     end
   end
+
+  context "When offer is draft and service is deleted" do
+    let(:service) { create(:service, owners: [service_owner], status: :deleted) }
+
+    permissions :edit?, :update?, :destroy?, :publish?, :draft?, :publish_unverified? do
+      it "danies access to service portfolio manager" do
+        expect(subject).to_not permit(service_portfolio_manager, service)
+      end
+
+      it "danies access to service owner" do
+        expect(subject).to_not permit(service_owner, service)
+      end
+    end
+  end
 end

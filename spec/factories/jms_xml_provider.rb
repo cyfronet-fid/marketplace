@@ -10,7 +10,7 @@ FactoryBot.define do
         "resourceType" => "provider",
         "resource" => "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
                       "<tns:providerBundle xmlns:tns=\"http://einfracentral.eu\">" +
-                      "<tns:active>false</tns:active>" +
+                      "<tns:active>true</tns:active>" +
                       "<tns:metadata>" +
                         "<tns:modifiedAt>1594190519802</tns:modifiedAt>" +
                         "<tns:modifiedBy>Ignacio Blanquer</tns:modifiedBy>" +

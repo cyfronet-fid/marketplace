@@ -23,7 +23,7 @@ FactoryBot.define do
               <tns:changeLog></tns:changeLog>
               <tns:description>&lt;p style=\"text-align: justify;\"&gt;A catalogue of corpora (datasets) made up of mainly Open Access scholarly publications.&lt;br /&gt; Users can view publicly available corpora that have been created with the OpenMinTeD Corpus Builder for Scholarly Works, or manually uploaded to the OpenMinTeD platform.&amp;nbsp;&lt;/p&gt; &lt;p style=\"text-align: justify;\"&gt;The catalogue can be browsed and searched via the faceted navigation facility or a google-like free text search query. All users can view the descriptions of the corpora (with administrative and technical information, such as language, domain, keywords, licence, resource creator, etc.), as well as the contents and, when available, the metadata descriptions of the individual files that compose them.&amp;nbsp;&lt;/p&gt; &lt;p style=\"text-align: justify;\"&gt;In addition, registered users can process them with the TDM applications offered by OpenMinTeD and download them in accordance with their licensing conditions.&lt;/p&gt;</tns:description>
               <tns:helpdeskPage>https://services.openminted.eu/support</tns:helpdeskPage>
-              <tns:id>tp.openminted_catalogue_of_corpora_2aaaaaaaaaaaaa</tns:id>
+              <tns:id>tp.openminted_catalogue_of_corpora_2</tns:id>
               <tns:languageAvailabilities>
                 <tns:languageAvailability>english</tns:languageAvailability>
               </tns:languageAvailabilities>
