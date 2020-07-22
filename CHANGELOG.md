@@ -26,7 +26,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - instance badge display on backoffice section (@goreck888)
 - contact form tab layout modifications (@jarekzet)
 - Service preview (@goreck888)
- 
+- Duplicated "sort" ids on services page (@goreck888)
+
 ### Security
 
 ## [2.11.0] 2020-06-09
