@@ -1,6 +1,15 @@
+.social-wrapper
+  %ul
+    %li
+      = link_to "https://twitter.com/eoscportal" do
+        %i.fab.fa-twitter
+    %li
+      = link_to "https://www.youtube.com/playlist?index=1&list=UUHsaUFy5LJ3rJ28qDg2StGA&playnext=1" do
+        %i.fab.fa-youtube
+
 %nav.top
   .container
-    %ul.links
+    %ul.left-links
       %li
         = link_to "https://twitter.com/eoscportal" do
           %i.fab.fa-twitter
@@ -9,7 +18,7 @@
         = link_to "https://www.youtube.com/playlist?index=1&list=UUHsaUFy5LJ3rJ28qDg2StGA&playnext=1" do
           %i.fab.fa-youtube
           %span Youtube
-    %ul
+    %ul.right-links
       %li
         %a{ href: "https://www.eosc-portal.eu/contact-us" } Contact us
       %li
