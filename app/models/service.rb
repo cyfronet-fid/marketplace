@@ -29,7 +29,8 @@ class Service < ApplicationRecord
   STATUSES = {
     published: "published",
     unverified: "unverified",
-    draft: "draft"
+    draft: "draft",
+    deleted: "deleted"
   }
 
   SIDEBAR_FIELDS = [{ name: "geographical_availabilities_and_languages",

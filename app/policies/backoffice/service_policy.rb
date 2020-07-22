@@ -65,19 +65,27 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   end
 
   def update?
-    service_portfolio_manager? || (record.draft? && owned_service?)
+    (service_portfolio_manager? ||
+     (record.draft? && owned_service?)) &&
+    !record.deleted?
   end
 
   def publish?
-    service_portfolio_manager? && (record.draft? || record.unverified?)
+    service_portfolio_manager? &&
+      (record.draft? || record.unverified?) &&
+      !record.deleted?
   end
 
   def publish_unverified?
-    service_portfolio_manager? && (record.draft? || record.published?)
+    service_portfolio_manager? &&
+      (record.draft? || record.published?) &&
+      !record.deleted?
   end
 
   def draft?
-    service_portfolio_manager? && (record.published? || record.unverified?)
+    service_portfolio_manager? &&
+      (record.published? || record.unverified?) &&
+      !record.deleted?
   end
 
   def preview?

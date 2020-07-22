@@ -72,4 +72,40 @@ RSpec.describe Backoffice::OfferPolicy do
       end
     end
   end
+
+  context "When offer is published and service is deleted" do
+    let(:service) { create(:service, owners: [owner], status: :deleted) }
+    let(:offer) { build(:offer, service: service, status: :published) }
+
+    permissions :create?, :edit?, :update?, :destroy?, :draft? do
+      it "danies access to service portfolio manager" do
+        expect(subject).to_not permit(service_portfolio_manager, offer)
+      end
+
+      it "danies access to service owner" do
+        expect(subject).to_not permit(owner, offer)
+      end
+      it "denies access to other users" do
+        expect(subject).to_not permit(stranger, offer)
+      end
+    end
+  end
+
+  context "When offer is draft and service is deleted" do
+    let(:service) { create(:service, owners: [owner], status: :deleted) }
+    let(:offer) { build(:offer, service: service, status: :draft) }
+
+    permissions :create?, :edit?, :update?, :destroy?, :publish? do
+      it "danies access to service portfolio manager" do
+        expect(subject).to_not permit(service_portfolio_manager, offer)
+      end
+
+      it "danies access to service owner" do
+        expect(subject).to_not permit(owner, offer)
+      end
+      it "denies access to other users" do
+        expect(subject).to_not permit(stranger, offer)
+      end
+    end
+  end
 end
