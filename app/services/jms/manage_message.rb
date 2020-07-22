@@ -12,17 +12,19 @@ class Jms::ManageMessage
 
   def call
     body = JSON.parse(@message.body)
+    action = @message.headers["destination"].split(".").last
     log body
     resource = @parser.parse(body["resource"])
 
     raise ResourceParseError.new("Cannot parse resource") if resource.empty?
-
     case body["resourceType"]
     when "infra_service"
-      if resource["infraService"]["latest"]
+      if action != "delete" && resource["infraService"]["latest"]
         Service::PcCreateOrUpdateJob.perform_later(resource["infraService"]["service"],
                                                    @eic_base_url,
                                                    resource["infraService"]["active"])
+      elsif action == "delete"
+        Service::DeleteJob.perform_later(resource["infraService"]["service"]["id"])
       end
     when "provider"
       if resource["providerBundle"]["active"]
