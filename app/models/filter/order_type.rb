@@ -4,7 +4,7 @@ class Filter::OrderType < Filter
   def initialize(params = {})
     super(params: params.fetch(:params, {}),
           field_name: "service_type",
-          title: "Service type",
+          title: "Order type",
           type: :select,
           index: "service_type")
   end

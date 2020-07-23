@@ -2241,6 +2241,30 @@ label[data-multicheckbox].small {
 }
 
 // scss-lint:disable all
+.ordertype {
+  width: 11px;
+  height: 11px;
+  display: inline-block;
+  background-size: 11px auto;
+  margin-right: 5px;
+
+  &.open_access {
+    background-image: url('../images/catalog_icon.svg');
+  }
+
+  &.orderable {
+    background-image: url('../images/internal_ordering_icon.svg');
+  }
+
+  &.external {
+    background-image: url('../images/external_ordering_icon.svg');
+  }
+
+  &.various {
+    background-image: url('../images/catalog_icon.svg');
+  }
+}
+
 .service-box {
   border: 1px solid $palette-gray-10;
   -webkit-border-radius: 5px;
@@ -2256,30 +2280,6 @@ label[data-multicheckbox].small {
     margin-bottom: 30px;
     font-weight: 400;
     width: 100%;
-
-    .ordertype {
-      width: 11px;
-      height: 11px;
-      display: inline-block;
-      background-size: 11px auto;
-      margin-right: 5px;
-
-      &.open_access {
-        background-image: url('../images/catalog_icon.svg');
-      }
-
-      &.orderable {
-        background-image: url('../images/internal_ordering_icon.svg');
-      }
-
-      &.external {
-        background-image: url('../images/external_ordering_icon.svg');
-      }
-
-      &.various {
-        background-image: url('../images/catalog_icon.svg');
-      }
-    }
   }
 
   .badge {
