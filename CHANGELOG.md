@@ -11,17 +11,23 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
-- Sidebar links section name change from 'support' to 'links' (@goreck888)
-- information texts in service ordering page (@goreck888)
 
 ### Deprecated
 
 ### Removed
-- tagline and unnecessary offer titles in ordering form (@goreck888)
 
 ### Fixed
  
 ### Security
+
+## [2.10.6] 2020-07-23
+
+### Changed
+- Sidebar links section name change from 'support' to 'links' (@goreck888)
+- information texts in service ordering page (@goreck888)
+
+### Removed
+- tagline and unnecessary offer titles in ordering form (@goreck888)
 
 ## [2.10.5] 2020-06-26
 
