@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Links for EOSC Portal social media (@goreck888)
 
 ### Changed
 - Sidebar links section name change from 'support' to 'links' (@goreck888)
