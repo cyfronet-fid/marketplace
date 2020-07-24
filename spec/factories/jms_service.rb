@@ -30,7 +30,6 @@ FactoryBot.define do
             "funding_program-fp"
           ]
         },
-        "description"=> "A catalogue of corpora (datasets) made up of mainly Open Access scholarly publications. Users can view publicly available corpora that have been created with the OpenMinTeD Corpus Builder for Scholarly Works, or manually uploaded to the OpenMinTeD platform.&nbsp; The catalogue can be browsed and searched via the faceted navigation facility or a google-like free text search query. All users can view the descriptions of the corpora (with administrative and technical information, such as language, domain, keywords, licence, resource creator, etc.), as well as the contents and, when available, the metadata descriptions of the individual files that compose them.&nbsp; In addition, registered users can process them with the TDM applications offered by OpenMinTeD and download them in accordance with their licensing conditions.",
         "mainContact" => {
             "firstName" => "John",
             "lastName" => "Doe",
