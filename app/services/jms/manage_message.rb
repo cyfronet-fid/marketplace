@@ -17,12 +17,16 @@ class Jms::ManageMessage
     resource = @parser.parse(body["resource"])
 
     raise ResourceParseError.new("Cannot parse resource") if resource.empty?
+
     case body["resourceType"]
     when "infra_service"
+      modified_at = modified_at(resource, "infraService")
       if action != "delete" && resource["infraService"]["latest"]
         Service::PcCreateOrUpdateJob.perform_later(resource["infraService"]["service"],
                                                    @eic_base_url,
-                                                   resource["infraService"]["active"])
+                                                   resource["infraService"]["active"],
+                                                   modified_at)
+
       elsif action == "delete"
         Service::DeleteJob.perform_later(resource["infraService"]["service"]["id"])
       end
@@ -36,6 +40,11 @@ class Jms::ManageMessage
   end
 
   private
+    def modified_at(resource, resource_type)
+      metadata  = resource[resource_type]["metadata"]
+      Time.new(metadata["modifiedAt"])
+    end
+
     def log(msg)
       @logger.info(msg)
     end

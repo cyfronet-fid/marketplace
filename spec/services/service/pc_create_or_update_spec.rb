@@ -24,11 +24,12 @@ RSpec.describe Service::PcCreateOrUpdate do
                                phone: "+41 678 888 123",
                                position: "Developer",
                                organisation: "JD company") }
-  let!(:public_contacts) { build_list(:public_contact, 2) do |contact, i|
-    contact.first_name= "Jane #{i}"
-    contact.last_name= "Doe"
-    contact.email= "jane#{i}@doe.com"
-  end
+  let!(:public_contacts) {
+    build_list(:public_contact, 2) do |contact, i|
+      contact.first_name= "Jane #{i}"
+      contact.last_name= "Doe"
+      contact.email= "jane#{i}@doe.com"
+    end
   }
 
   let(:unirest) { double(Unirest) }
@@ -199,6 +200,19 @@ RSpec.describe Service::PcCreateOrUpdate do
       service = stub_described_class(create(:jms_service, name: "New title", prov_eid: provider_eid))
       expect(service.name).to eq("New title")
     end
+
+    it "should not update service" do
+      provider_ten = create(:provider, name: "Test Provider ten")
+      provider_tp = create(:provider, name: "Test Provider tp")
+      create(:provider_source, source_type: "eic", eid: provider_eid, provider: provider_ten)
+      create(:provider_source, source_type: "eic", eid: "tp", provider: provider_tp)
+      service = create(:service, providers: [provider_ten], name: "Old title")
+      create(:service_source, source_type: "eic", eid: "first.service", service: service)
+
+      service = stub_described_class(create(:jms_service, name: "New title", prov_eid: provider_eid), is_active: true, modified_at: Time.now - 3.days)
+      expect(service.name).to_not eq("New title")
+      expect(service.name).to eq("Old title")
+    end
   end
 
   context "#failed response" do
@@ -219,8 +233,8 @@ RSpec.describe Service::PcCreateOrUpdate do
 
 
   private
-    def stub_described_class(jms_service, unirest: Unirest)
-      described_service = Service::PcCreateOrUpdate.new(jms_service, test_url, unirest: unirest)
+    def stub_described_class(jms_service, is_active: true, modified_at: Time.now, unirest: Unirest)
+      described_service = Service::PcCreateOrUpdate.new(jms_service, test_url, is_active, modified_at, unirest: unirest)
 
       stub_http_file(described_service, "PhenoMeNal_logo.png",
                      "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png")
