@@ -12,6 +12,7 @@ class Service::PcCreateOrUpdate
   def initialize(eic_service,
                  eic_base_url,
                  is_active,
+                 modified_at,
                  unirest: Unirest)
     @unirest = unirest
     @eic_base_url = eic_base_url
@@ -27,12 +28,16 @@ class Service::PcCreateOrUpdate
     }.stringify_keys
     @eic_service =  eic_service
     @is_active = is_active
+    @modified_at = modified_at
   end
 
   def call
     service = map_service(@eic_service)
     mapped_service = Service.joins(:sources).find_by("service_sources.source_type": "eic",
                                                      "service_sources.eid": @eid)
+
+    the_latest_update = mapped_service ? (@modified_at > mapped_service.last_update) : true
+
     if mapped_service.nil? && @is_active
       service = Service.new(service)
       save_logo(service, @eic_service["logo"])
@@ -44,12 +49,16 @@ class Service::PcCreateOrUpdate
                                webpage: service.webpage_url, status: service.status)
       end
       service
-    elsif mapped_service && !@is_active
-      Service::Draft.new(mapped_service).call
-      mapped_service
+    elsif the_latest_update
+      if mapped_service && !@is_active
+        Service::Draft.new(mapped_service).call
+        mapped_service
+      else
+        save_logo(mapped_service, @eic_service["logo"])
+        mapped_service.update!(service)
+        mapped_service
+      end
     else
-      save_logo(mapped_service, @eic_service["logo"])
-      mapped_service.update!(service)
       mapped_service
     end
   end
