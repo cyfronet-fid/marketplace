@@ -20,9 +20,11 @@ describe Jms::ManageMessage do
   it "should receive service message" do
     original_stdout = $stdout
     $stdout = StringIO.new
-    expect(Service::PcCreateOrUpdateJob).to receive(:perform_later).with(parser.parse(service_resource["resource"])["infraService"]["service"],
+    resource = parser.parse(service_resource["resource"])
+    expect(Service::PcCreateOrUpdateJob).to receive(:perform_later).with(resource["infraService"]["service"],
                                                                          eic_base,
-                                                                         true)
+                                                                         true,
+                                                                         Time.new(resource["infraService"]["metadata"]["modifiedAt"]))
     expect {
       described_class.new(json_service, eic_base, logger).call
     }.to_not raise_error

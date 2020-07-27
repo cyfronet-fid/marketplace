@@ -29,6 +29,7 @@ FactoryBot.define do
     sequence(:status) { :published }
     sequence(:version) { nil }
     sequence(:trl) { [create(:trl)] }
+    sequence(:last_update) { Time.now - 2.days }
 
     upstream { nil }
 
