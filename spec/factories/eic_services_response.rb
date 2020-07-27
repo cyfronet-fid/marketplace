@@ -183,7 +183,7 @@ FactoryBot.define do
                         "West-Life"
                     ],
                     "version" => "1.0",
-                    "lastUpdate" => 1518912000000,
+                    "lastUpdate" => 1533513600000,
                     "changeLog" => [""],
                     "lifeCycleStatus" => "production",
                     "trl" => "trl-9",
@@ -318,7 +318,7 @@ FactoryBot.define do
                         "West-Life"
                     ],
                     "version" => "6.26",
-                    "lastUpdate" => 1537228800000,
+                    "lastUpdate" => 1518912000000,
                     "changeLog" => [""],
                     "lifeCycleStatus" => "production",
                     "trl" => "trl-9",
