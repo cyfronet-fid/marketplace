@@ -63,7 +63,6 @@ module Import
           .each do |service_data|
         service = service_data["service"]
         eid = service["id"]
-
         output.append(service_data)
         # TODO this should be moved to Offer.webpage
         url = service["webpage"]
@@ -189,13 +188,14 @@ module Import
             scientific_domains: [@scientific_domain_other],
             version: version || "",
             target_users: map_target_users(target_users),
-            last_update: last_update,
+            last_update: last_update ? Time.at(last_update&./1000) : Time.now,
             changelog: changelog,
             certifications: Array(certifications),
             standards: Array(standards),
             grant_project_names: Array(grant_project_names),
             open_source_technologies: Array(open_source_technologies)
         }
+
         begin
 
           if (service_source = ServiceSource.find_by(eid: eid, source_type: "eic")).nil?

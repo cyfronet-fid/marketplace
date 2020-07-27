@@ -157,6 +157,7 @@ describe Import::Eic do
       expect(service.funding_programs).to eq([funding_program])
       expect(Service.find_by(name: "MetalPDB")).to_not be_nil
       expect(Service.find_by(name: "PDB_REDO server")).to_not be_nil
+      expect(service.last_update).to eq(Time.at(1533513600000/1000))
     end
 
     it "should create an offer for a new services" do
