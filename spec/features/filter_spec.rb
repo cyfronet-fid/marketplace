@@ -198,6 +198,19 @@ RSpec.feature "Service filter" do
       expect(page).to_not have_text(z.name)
       expect(page).to_not have_text(parent_z.name)
     end
+
+    it "shows correct number of results in order type filter" do
+      open_access_service = create(:open_access_service, offers: [create(:open_access_offer)])
+      internal_ordering_service = create(:service, offers: [create(:offer)])
+      external_service = create(:external_service, offers: [create(:external_offer)])
+      mixed_offers_services = create(:service, offers: [create(:open_access_offer, iid: 1),
+                                                               create(:offer, iid: 2)])
+      visit services_path(service_type: "open_access")
+      expect(page).to have_text(open_access_service.title)
+      expect(page).to have_text(mixed_offers_services.title)
+      expect(page).to_not have_text(external_service.title)
+      expect(page).to_not have_text(internal_ordering_service.title)
+    end
   end
 
   context "invisible filters" do

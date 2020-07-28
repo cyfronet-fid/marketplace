@@ -16,7 +16,8 @@ class Offer < ApplicationRecord
     {
       name: name,
       description: description,
-      service_id: service_id
+      service_id: service_id,
+      offer_type: offer_type
     }
   end
 
