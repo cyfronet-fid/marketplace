@@ -1,6 +1,9 @@
 .social-wrapper
   %ul
     %li
+      = mail_to "contact@eosc-portal.eu", subject: "EOSC Portal" do
+        %i.fa.fa-envelope
+    %li
       = link_to "https://twitter.com/eoscportal" do
         %i.fab.fa-twitter
     %li
