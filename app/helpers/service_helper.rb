@@ -48,6 +48,25 @@ module ServiceHelper
     service.providers.map { |target| target.name }
   end
 
+  def filtered_offers(offers)
+    if params[:service_type] && offers
+      offers&.each.reject { |o| o.first.dig("offer_type") != params[:service_type] }
+    else
+      offers
+    end
+  end
+
+  def order_type(service)
+    types = service&.offers.map { |o| o.offer_type }.uniq
+    if types.size > 1
+      "various"
+    elsif types.size == 1
+      types.first
+    else
+      service&.service_type || "external"
+    end
+  end
+
   def highlighted_for(field, model, highlights)
     highlights&.dig(field)&.html_safe || model.send(field)
   end

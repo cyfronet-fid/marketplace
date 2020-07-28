@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="11px" height="12px" viewBox="0 0 11 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>internal ordering icon</title>
+    <g id="--Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.7">
+        <g id="access-type-label---internal" transform="translate(-1.000000, -1.000000)" fill="#1C313A" fill-rule="nonzero">
+            <g id="access-type-label" transform="translate(1.000000, 0.000000)">
+                <g id="Group" transform="translate(0.000000, 0.500000)">
+                    <path d="M8.98725001,3.79232141 C9.9360345,4.6747455 10.5,5.89913319 10.5,7.21921051 C10.5,9.86530667 8.25599338,12 5.5,12 C2.74400662,12 0.5,9.86530667 0.5,7.21921051 C0.5,5.89890041 1.06418364,4.67457763 2.01269499,3.79235678 C2.04585032,4.19954113 2.14885388,4.58584694 2.3092899,4.94062416 C1.79379202,5.58279421 1.5,6.37735041 1.5,7.21921051 C1.5,9.30154385 3.28543063,11 5.5,11 C7.71456937,11 9.5,9.30154385 9.5,7.21921051 C9.5,6.3775856 9.20640116,5.5831296 8.69209486,4.94005657 C8.8395392,4.61151369 8.93894526,4.25527155 8.97946248,3.88136356 L8.98725001,3.79232141 Z M5,0.5 L6,0.5 L6,5.5 L7,5.5 L5.5,8.5 L4,5.5 L5,5.5 L5,0.5 Z" id="internal-ordering-icon"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
