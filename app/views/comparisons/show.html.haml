@@ -34,7 +34,7 @@
         - @services.each do |service|
           %td= service.providers.map { |p| p.name }.join(", ")
       %tr.lightgrey-row
-        %th Service access type
+        %th Service order type
         - @services.each do |service|
           %td
             - service.offers.each_with_index do |offer, idx|
