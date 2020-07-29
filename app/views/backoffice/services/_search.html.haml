@@ -11,7 +11,7 @@
                                      "data-target": "autocomplete.input",
                                      "data-toggle": "dropdown"
     = hidden_field_tag "service_id", nil, "data-target": "autocomplete.hidden"
-    = hidden_field_tag "sort", "_score"
+    = hidden_field_tag "sort", "_score", id: nil
     = hidden_field_tag "anchor", nil, "data-target": "autocomplete.anchor"
     %ul.autocomplete-results{ "data-target": "autocomplete.results" }
   .input-group-append
