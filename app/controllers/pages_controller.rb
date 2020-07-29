@@ -14,4 +14,8 @@ class PagesController < ApplicationController
   def communities
     @platforms = Platform.all.order(:name)
   end
+
+  def target_users
+    @target_users = TargetUser.all.order(:name)
+  end
 end
