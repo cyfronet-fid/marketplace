@@ -2,6 +2,8 @@ en:
   pages:
     about:
       title: About Marketplace
+    target_users:
+      title: Target users
     communities:
       title: Communities and infrastructures
     providers:
