@@ -76,3 +76,8 @@ crumb :project_edit do |project|
   link "Edit", edit_project_path(project)
   parent :project, project
 end
+
+crumb :target_users do
+  link "Target users", target_users_path
+  parent :marketplace_root
+end
