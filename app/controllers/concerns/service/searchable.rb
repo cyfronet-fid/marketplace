@@ -26,11 +26,10 @@ module Service::Searchable
     offers = Offer.search(query,
                           where: { service_id: services.results.map(&:id) },
                           load: false,
-                          fields: [:name],
+                          fields: [:offer_name],
                           operator: :or,
                           match: :word_middle,
                           highlight: { tag: "<mark>" })
-
     [services, service_offers(services, offers)]
   end
 
