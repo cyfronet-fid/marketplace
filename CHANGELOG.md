@@ -45,6 +45,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Fix js test (@martaswiatkowska)
 - Fixed autocomplete service name displayng (@martaswiatkowska)
 - languages and geographical_availabilities display (@martaswiatkowska)
+- displaying services on search (@martaswiatkowska)
 
 ### Security
 - Update rails to 6.0.3.2 (@goreck888)
