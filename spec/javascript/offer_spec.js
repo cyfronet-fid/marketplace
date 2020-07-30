@@ -20,6 +20,7 @@ describe("OfferController", () => {
         '<option value="catalog">catalog</option>' +
         '</select>' +
         '<div id="result" data-target="offer.webpage" class="hidden-fields"> </div>' +
+        '<div class="offer-attributes" data-target="offer.attributes"> </div>'+
         '</div>';
 
       const application = Application.start();
