@@ -28,7 +28,7 @@ module Mp
 
     config.redis_url = ENV["REDIS_URL"] || default_redis_url
 
-    config.matomo_url = ENV["MP_MATOMO_URL"] || "//catalogue.eosc-portal.eu/matomo/"
+    config.matomo_url = ENV["MP_MATOMO_URL"] || "//providers.eosc-portal.eu/matomo/"
     config.matomo_site_id = ENV["MP_MATOMO_SITE_ID"] || 1
 
     # Hierachical locales file structure
