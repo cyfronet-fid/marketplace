@@ -2,3 +2,7 @@ en:
   pages:
     about:
       title: About Marketplace
+    communities:
+      title: Communities and infrastructures
+    providers:
+      title: Providers
