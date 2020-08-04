@@ -7,6 +7,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    abraham (2.1.1)
     actioncable (6.0.2)
       actionpack (= 6.0.2)
       nio4r (~> 2.0)
@@ -556,6 +557,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  abraham
   activestorage-validator
   acts-as-taggable-on (~> 6.0)
   ancestry

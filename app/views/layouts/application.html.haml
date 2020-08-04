@@ -22,3 +22,5 @@
   = render "layouts/report", report: @report
   = render "layouts/modal"
   = render "layouts/footer", root_categories: @root_categories
+  - if current_user
+    = abraham_tour

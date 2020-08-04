@@ -16,3 +16,7 @@ if(process.env.CUSTOMIZATION_PATH) {
 require.context('../images');
 
 import "app"
+import Shepherd from 'shepherd.js';
+window.Shepherd = Shepherd;
+import Cookies from 'js-cookie/src/js.cookie';
+window.Cookies = Cookies;

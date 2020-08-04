@@ -18,9 +18,11 @@
     "expose-loader": "^0.7.5",
     "fuse.js": "^3.4.5",
     "highcharts": "^8.0.4",
-    "jquery": "3.5.1",
+    "jquery": "^3.4.0",
+    "js-cookie": "^2.2.0",
     "lodash.debounce": "^4.0.8",
     "popper.js": "^1.14.3",
+    "shepherd.js": "^6.0.0",
     "stimulus": "^1.0.1",
     "trix": "^1.0.0",
     "turbolinks": "^5.2.0"

@@ -1,0 +1,33 @@
+intro:
+  steps:
+    1:
+      title: "WELCOME"
+      text: "Welcome to your dashboard! This is where we'll highlight key information to manage your day."
+    2:
+      title: "Events"
+      text: "If you're participating in any events today, we'll show that here."
+      attachTo:
+        element: ".eosc-hub-logo-main"
+        placement: "right"
+intro6:
+  steps:
+    1:
+      text: "Welcome to your dashboard! This is where we'll highlight key information to manage your day."
+    2:
+      title: "Events"
+      text: "If you're participating in any events today, we'll show that here."
+      attachTo:
+        element: "#home-carousel"
+        placement: "bottom"
+    3:
+      title: "Events 2"
+      text: "there"
+      attachTo:
+        element: ".intro-box"
+        placement: "bottom"
+    4:
+      title: "Events 3"
+      text: "fiore"
+      attachTo:
+        element: "#home-carousel"
+        placement: "bottom"

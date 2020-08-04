@@ -62,4 +62,5 @@ require("@rails/actiontext")
 require("highcharts")
 require('@highcharts/map-collection/custom/world.geo.json');
 require('@highcharts/map-collection/custom/europe.geo.json');
+require("shepherd.js")
 
