@@ -31,6 +31,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Show welcome popup depending on database user information, not cookies (@goreck888)
  
 ### Security
+- Update rails to 6.0.3.2 (@goreck888)
 
 ## [2.11.0] 2020-06-09
 
