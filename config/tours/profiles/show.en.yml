@@ -1,0 +1,20 @@
+profile_edit:
+  steps:
+    1:
+      title: "Welcome in profile edition"
+      text: "Welcome"
+    2:
+      text: "Here you can edit your profile"
+      attachTo:
+        element: ".bordered-header"
+        placement: "left"
+    3:
+      text: "And here"
+      attachTo:
+        element: ".bordered-header"
+        placement: "left"
+    4:
+      text: "But not here"
+      attachTo:
+        element: "div.row.profile"
+        placement: "top"

@@ -9,7 +9,7 @@ intro:
       attachTo:
         element: ".eosc-hub-logo-main"
         placement: "right"
-intro6:
+intro7:
   steps:
     1:
       text: "Welcome to your dashboard! This is where we'll highlight key information to manage your day."

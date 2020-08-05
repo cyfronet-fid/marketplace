@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
     dom.watch();
 });
 
+
 require("trix")
 require("@rails/actiontext")
 require("highcharts")
