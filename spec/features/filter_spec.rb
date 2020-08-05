@@ -205,11 +205,11 @@ RSpec.feature "Service filter" do
       external_service = create(:external_service, offers: [create(:external_offer)])
       mixed_offers_services = create(:service, offers: [create(:open_access_offer, iid: 1),
                                                                create(:offer, iid: 2)])
-      visit services_path(service_type: "open_access")
-      expect(page).to have_text(open_access_service.title)
-      expect(page).to have_text(mixed_offers_services.title)
-      expect(page).to_not have_text(external_service.title)
-      expect(page).to_not have_text(internal_ordering_service.title)
+      visit services_path(order_type: "open_access")
+      expect(page).to have_text(open_access_service.name)
+      expect(page).to have_text(mixed_offers_services.name)
+      expect(page).to_not have_text(external_service.name)
+      expect(page).to_not have_text(internal_ordering_service.name)
     end
   end
 
