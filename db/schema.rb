@@ -489,7 +489,7 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.integer "owned_services_count", default: 0, null: false
     t.boolean "categories_updates", default: false, null: false
     t.boolean "scientific_domains_updates", default: false, null: false
-    t.boolean "show_welcome_popup", default: true, null: false
+    t.boolean "show_welcome_popup", default: false, null: false
     t.index ["email"], name: "index_users_on_email"
   end
 

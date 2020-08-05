@@ -17,7 +17,7 @@ class Offer < ApplicationRecord
       offer_name: name,
       description: description,
       service_id: service_id,
-      offer_type: offer_type
+      order_type: order_type
     }
   end
 
