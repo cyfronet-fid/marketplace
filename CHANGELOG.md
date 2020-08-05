@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
  
 ### Security
+- Update rails to 6.0.3.2 (@goreck888)
 
 ## [2.10.6] 2020-07-23
 
