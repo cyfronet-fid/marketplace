@@ -13,6 +13,6 @@
         %li.nav-item
           = link_to "Reviews (#{service.service_opinion_count})", service_opinions_path(service),
             class: "nav-link text-uppercase #{"active" if controller.controller_name == 'opinions'}", role: "tab"
-      - if local_assigns[:question] && !service.contact_emails.empty?
+      - if local_assigns[:question] && !service.public_contacts.empty?
         = render "services/ask_question", service: service, question: question
 
