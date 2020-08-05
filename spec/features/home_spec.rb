@@ -48,13 +48,31 @@ RSpec.feature "Home" do
         expect(page).to have_text("Cannot find lead_section with slug \"use-cases\"")
         expect(page).to have_text("Learn More Section")
       end
+
+      it "should see welcome modal only once", js: true do
+        visit admin_features_path
+
+        click_on "Enable welcome modal"
+        expect(page).to have_current_path(admin_features_path)
+        expect(page).to have_content("Welcome modal enabled for all first logged-in users")
+
+        visit root_path
+
+        expect(page).to have_content ("New functionality arrived!")
+
+        click_on "I'll do it later"
+
+        visit root_path
+
+        expect(page).to_not have_content ("New functionality arrived!")
+      end
     end
 
     context "user" do
       let(:admin) { create(:user) }
       before { checkin_sign_in_as(admin) }
 
-      it "should see error" do
+      it "shouldn't see warning" do
         visit "/"
         expect(page).to_not have_text("Cannot find lead_section with slug \"learn-more\"")
         expect(page).to_not have_text("Cannot find lead_section with slug \"use-cases\"")
