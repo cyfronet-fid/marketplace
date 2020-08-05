@@ -57,13 +57,13 @@ module ServiceHelper
   end
 
   def order_type(service)
-    types = service&.offers.map { |o| o.offer_type }.uniq
+    types = service&.offers.map { |o| o.order_type }.uniq
     if types.size > 1
       "various"
     elsif types.size == 1
       types.first
     else
-      service&.service_type || "external"
+      service&.order_type || "external"
     end
   end
 
