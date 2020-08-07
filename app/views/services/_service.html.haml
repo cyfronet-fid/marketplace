@@ -1,3 +1,6 @@
+- if service_counter == 0 && variant == "top" || service_counter == 2 && variant == "middle"
+  = placeholder(variant)
+
 = render "service_details", service: service, highlights: highlights[service.id],
   service_offers: offers[service.id], comparison_enabled: comparison_enabled do
   = link_to highlighted_for(:name, service, highlights[service.id]),

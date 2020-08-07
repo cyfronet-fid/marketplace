@@ -52,5 +52,19 @@ module Mp
 
     config.providers_dashboard_url = ENV["PROVIDERS_DASHBOARD_URL"].present? ?
       ENV["PROVIDERS_DASHBOARD_URL"] : " https://catalogue.eosc-portal.eu/myServiceProviders"
+
+    cookie_adapter = Split::Persistence::CookieAdapter
+    redis_adapter = Split::Persistence::RedisAdapter.with_config(
+        lookup_by: -> (context) { context.send(:current_user).try(:id) },
+        expire_seconds: 2592000)
+
+    Split.configure do |config|
+      config.persistence = Split::Persistence::DualAdapter.with_config(
+          logged_in: -> (context) { !context.send(:current_user).try(:id).nil? },
+          logged_in_adapter: redis_adapter,
+          logged_out_adapter: cookie_adapter)
+      config.persistence_cookie_length = 2592000 # 30 days
+      config.experiments = YAML.load_file "config/split.yml"
+    end
   end
 end

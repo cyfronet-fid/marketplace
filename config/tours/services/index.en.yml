@@ -1,0 +1,11 @@
+intro:
+  steps:
+#    1:
+#      title: "WELCOME"
+#      text: "We want to invite you to test our placeholder"
+    2:
+      title: "Recommendations"
+      text: "In the future you can click here to choose form our recommendations"
+      attachTo:
+        element: ".placeholder"
+        placement: "right"

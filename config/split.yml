@@ -1,0 +1,8 @@
+recommendations:
+  alternatives:
+    - name: top
+      percent: 25
+    - name: middle
+      percent: 25
+    - name: none
+      percent: 50

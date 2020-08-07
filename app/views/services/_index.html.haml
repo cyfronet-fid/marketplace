@@ -14,15 +14,13 @@
         = render "services/pagination", sort_options: sort_options, services: services
 
       %p
-        - ab_test "recommended", "top", "bottom" do |text|
-          .media.mb-3.service-box.p-3
-            %p RECOMMENDED SERVISESSSSSSSSSSS
-            %p= text
-
+        - ab_test :recommendations do |variant|
+          = variant
           = render partial: "service", collection: services,
             locals: { highlights: highlights,
                       category: category,
                       offers: offers,
+                      variant: variant,
                       comparison_enabled: comparison_enabled,
                       remote: true }
           = render "services/paginate", services: services
