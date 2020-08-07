@@ -14,6 +14,11 @@ crumb :admin_lead do
   parent :admin_root
 end
 
+crumb :admin_experiments do
+  link "AB experiments", admin_ab_tests_path
+  parent :admin_root
+end
+
 crumb :admin_lead_section_edit do
   link "Edit lead section", admin_leads_path
   parent :admin_lead
