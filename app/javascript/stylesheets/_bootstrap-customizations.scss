@@ -5,11 +5,23 @@ body {
   margin-bottom: 0 !important;
   font-weight: $font-weight-normal;
 
+  &.main {
+
+    main {
+      position: relative;
+      z-index: 5;
+    }
+  }
+
   > main {
     padding: 0 15px;
     margin-bottom: 50px;
-  }
 
+    .home-tabs {
+      position: relative;
+      z-index: 11;
+    }
+  }
 }
 
 header {
