@@ -6,12 +6,12 @@ profile_edit:
     2:
       text: "Here you can edit your profile"
       attachTo:
-        element: ".bordered-header"
+        element: "#additional-information"
         placement: "left"
     3:
       text: "And here"
       attachTo:
-        element: ".bordered-header"
+        element: "#email-notification"
         placement: "left"
     4:
       text: "But not here"

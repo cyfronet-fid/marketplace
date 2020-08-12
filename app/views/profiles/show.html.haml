@@ -7,7 +7,7 @@
 
   #profile-information.row
     .col-12.col-md-5.profile-edit
-      .bordered-header
+      #additional-information.bordered-header
         %h3 Additional information
         %span= link_to "Edit", edit_profile_path, class: "btn-sm btn-warning"
       %h5 Categories of interests
@@ -22,7 +22,7 @@
           %li
             %span= sd.name
     .col-12.col-md-5.profile-edit.ml-auto
-      .bordered-header
+      #email-notification.bordered-header
         %h3 Email notifications
         %span= link_to "Edit", edit_profile_path, class: "btn-sm btn-warning"
       %h5 You are signed up to receive updates about new EOSC Services in your:
