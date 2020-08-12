@@ -13,6 +13,7 @@
     - if ENV["MP_INSTANCE"]
       = render "layouts/badge"
     = render "layouts/flash"
+    = render "layouts/welcome_modal"
     %header
       = render "layouts/navbar",
         categories: @siblings || @root_categories
