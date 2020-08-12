@@ -29,6 +29,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service preview (@goreck888)
 - Duplicated "sort" ids on services page (@goreck888)
 - Show welcome popup depending on database user information, not cookies (@goreck888)
+- Tab links in the home page (@jarekzet)
  
 ### Security
 - Update rails to 6.0.3.2 (@goreck888)
