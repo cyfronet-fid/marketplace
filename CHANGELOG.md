@@ -9,7 +9,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
-- Links for EOSC Portal social media (@goreck888)
 
 ### Changed
 
@@ -18,8 +17,17 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- Tab links in the home page (@jarekzet)
  
+### Security
+
+## [2.10.7] 2020-08-13
+
+### Added
+- Links for EOSC Portal social media (@goreck888)
+
+### Fixed
+- Tab links in the home page (@jarekzet)
+
 ### Security
 - Update rails to 6.0.3.2 (@goreck888)
 
