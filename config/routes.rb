@@ -103,6 +103,7 @@ Rails.application.routes.draw do
     post "features/disable_modal"
     resources :lead_sections, except: :show
     resources :leads, except: :show
+    mount Split::Dashboard, at: "split"
   end
 
   # Sidekiq monitoring
