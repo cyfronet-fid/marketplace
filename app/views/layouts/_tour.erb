@@ -1,0 +1,75 @@
+<script>
+  var tour = new Shepherd.Tour(<%= Rails.configuration.tours.tour_options.html_safe unless Rails.configuration.tours.tour_options.nil? %>);
+
+  tour.on("complete", function() {
+    <% if current_user %>
+      return $.ajax({
+        url: "/tour_histories/",
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify({
+          authenticity_token: '<%= form_authenticity_token %>',
+          controller_name: '<%= controller_name %>',
+          action_name: '<%= action_name %>',
+          tour_name: '<%= tour_name %>'
+        })
+      });
+    <% else %>
+      Cookies.set('<%= cookie_prefix %>-<%= tour_name %>', 'done', { domain: '<%= tours_domain %>' });
+    <%end%>
+  });
+
+  tour.on("cancel", function() {
+    Cookies.set('<%= cookie_prefix %>-<%= tour_name %>', 'later', { domain: '<%= tours_domain %>' });
+  });
+
+  <% steps.each_with_index do |(key, step), index| %>
+    tour.addStep({
+      id: 'step-<%= key %>',
+      <% if step.key?('title') %>
+        title: "<%= step['title'] %>",
+      <% end %>
+      text: "<%= step['text'] %>",
+      <% if step.key?('advanceOn') %>
+        advanceOn: { selector: "<%= step['advanceOn']['selector'] %>", event: "<%= step['advanceOn']['event'] %>" },
+      <% end %>
+      <% if step.key?('attachTo') %>
+        attachTo: { element: "<%= step['attachTo']['element'] %>", on: "<%= step['attachTo']['placement'] %>" },
+        showOn: function() {
+        return document.querySelector("<%= step['attachTo']['element'] %>") ? true : false
+        },
+      <% end %>
+      buttons: [
+      <% if index == 0 %>
+        { text: '<%= t('tours.later') %>', action: tour.cancel, classes: 'shepherd-button-secondary' },
+        { text: '<%= t('tours.continue') %>', action: tour.next }
+      <% else %>
+        <% if index == steps.size - 1 %>
+          { text: '<%= t('tours.done') %>', action: tour.complete }
+        <% else %>
+          { text: '<%= t('tours.exit') %>', action: tour.cancel, classes: 'shepherd-button-secondary' },
+          { text: '<%= t('tours.next') %>', action: tour.next }
+        <% end %>
+      <% end %>
+      ]
+    });
+  <% end %>
+
+  tour.start = function (start) {
+  return function () {
+    var tourMayStart = !Cookies.get('<%= cookie_prefix %>-<%= tour_name %>', {domain: '<%= tours_domain %>'});
+    <% if steps.first[1]['attachTo'] %>
+    // Don't start the tour if the first step's element is missing
+    tourMayStart = tourMayStart && document.querySelector("<%= steps.first[1]['attachTo']['element'] %>");
+    <% end %>
+
+      if (tourMayStart) {
+        start();
+      }
+    }
+  }(tour.start)
+
+  tour.start()
+
+</script>

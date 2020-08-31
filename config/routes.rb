@@ -111,6 +111,8 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => "/admin/sidekiq"
   end
 
+  resource :tour_histories, only: :create
+
   get "errors/not_found"
   get "errors/unprocessable"
   get "errors/internal_server_error"
@@ -131,6 +133,6 @@ Rails.application.routes.draw do
     get "designsystem/:file" => "designsystem#show",
       constraints: { file: %r{[^/\.]+} }
   end
-
+  mount Split::Dashboard, at: "split"
   root "home#index"
 end
