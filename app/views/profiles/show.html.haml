@@ -9,7 +9,7 @@
     .col-12.col-md-5.profile-edit
       .bordered-header
         %h3 Additional information
-        %span= link_to "Edit", edit_profile_path, class: "btn-sm btn-warning"
+        %span= link_to "Edit", edit_profile_path, class: "btn-sm btn-warning edit-button"
       %h5 Categories of interests
       %ul
         - current_user.categories.each do |category|

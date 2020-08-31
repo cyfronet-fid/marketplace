@@ -462,6 +462,18 @@ ActiveRecord::Schema.define(version: 2020_10_21_113337) do
     t.text "eid"
   end
 
+  create_table "tour_histories", force: :cascade do |t|
+    t.string "controller_name"
+    t.string "action_name"
+    t.string "tour_name"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at"], name: "index_tour_histories_on_created_at"
+    t.index ["updated_at"], name: "index_tour_histories_on_updated_at"
+    t.index ["user_id"], name: "index_tour_histories_on_user_id"
+  end
+
   create_table "user_categories", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "category_id"
@@ -501,6 +513,7 @@ ActiveRecord::Schema.define(version: 2020_10_21_113337) do
     t.boolean "categories_updates", default: false, null: false
     t.boolean "scientific_domains_updates", default: false, null: false
     t.boolean "show_welcome_popup", default: false, null: false
+    t.boolean "guest", default: false
     t.index ["email"], name: "index_users_on_email"
   end
 
@@ -540,6 +553,7 @@ ActiveRecord::Schema.define(version: 2020_10_21_113337) do
   add_foreign_key "services", "providers"
   add_foreign_key "services", "providers", column: "resource_organisation_id"
   add_foreign_key "services", "service_sources", column: "upstream_id", on_delete: :nullify
+  add_foreign_key "tour_histories", "users"
   add_foreign_key "user_categories", "categories"
   add_foreign_key "user_categories", "users"
   add_foreign_key "user_scientific_domains", "scientific_domains"
