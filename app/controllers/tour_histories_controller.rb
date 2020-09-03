@@ -3,7 +3,7 @@
 class TourHistoriesController < ApplicationController
   def create
     @tours_history = TourHistory.new(tour_history_params)
-    @tours_history.creator_id = current_user.id
+    @tours_history.user_id = current_user.id
     respond_to do |format|
       if @tours_history.save
         format.json { render json: @tours_history, status: :created }

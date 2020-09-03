@@ -1,4 +1,9 @@
 intro:
+  next:
+    tour_name: "intro2"
+    controller_name: "profile"
+    action_name: "edit"
+    redirect_to: "edit_profile_path"
   steps:
     1:
       title: "WELCOME"
@@ -6,33 +11,24 @@ intro:
     2:
       title: "Events 1"
       text:  "bla blabla bla"
-      advanceOn:
-        selector: ".dropdown"
-        event: "click"
       attachTo:
         element: ".dropdown"
         placement: "right"
-    3:
+    4:
       title: "Events 1"
       text:  "bla blabla bla"
-      advanceOn:
-        selector: ".profile"
-        event: "click"
       attachTo:
         element: ".profile"
         placement: "right"
-    4:
+    5:
       title: "Events 2"
       text:  "bla blabla blabla"
-      advanceOn:
-        selector: ".edit-button"
-        action: "click"
       attachTo:
         element: ".edit-button"
         placement: "right"
-    5:
-      title: "Events"
-      text:  "bla blabla bla pfffffff"
-      attachTo:
-        element: ".profile"
-        placement: "right"
+      buttons:
+        1:
+          text: 'next'
+          action: 'done'
+        2:
+          action: 'later'

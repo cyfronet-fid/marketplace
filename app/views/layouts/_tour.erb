@@ -2,8 +2,12 @@
   var tour = new Shepherd.Tour(<%= Rails.configuration.tours.tour_options.html_safe unless Rails.configuration.tours.tour_options.nil? %>);
 
   tour.on("complete", function() {
+    var list = Cookies.get('<%= cookie_prefix %>-completed')
+    list = list ? JSON.parse(list) : []
+    list.push('<%= tour_name %>')
+    Cookies.set('<%= cookie_prefix %>-completed', list, { domain: '<%= tours_domain %>' });
     <% if current_user %>
-      return $.ajax({
+      $.ajax({
         url: "/tour_histories/",
         type: "POST",
         dataType: "json",
@@ -15,9 +19,10 @@
           tour_name: '<%= tour_name %>'
         })
       });
-    <% else %>
-      Cookies.set('<%= cookie_prefix %>-<%= tour_name %>', 'done', { domain: '<%= tours_domain %>' });
-    <%end%>
+    <% end %>
+    <% if next_tour.present? %>
+      window.location.replace("<%= next_tour_link(next_tour) %>")
+    <% end %>
   });
 
   tour.on("cancel", function() {
@@ -41,28 +46,49 @@
         },
       <% end %>
       buttons: [
-      <% if index == 0 %>
-        { text: '<%= t('tours.later') %>', action: tour.cancel, classes: 'shepherd-button-secondary' },
-        { text: '<%= t('tours.continue') %>', action: tour.next }
-      <% else %>
-        <% if index == steps.size - 1 %>
-          { text: '<%= t('tours.done') %>', action: tour.complete }
+      <% unless step.key?('buttons') %>
+        <% if index == 0 %>
+          { text: '<%= t('tours.later') %>', action: tour.cancel, classes: 'shepherd-button-secondary' },
+          { text: '<%= t('tours.continue') %>', action: tour.next }
         <% else %>
+          <% if index == steps.size - 1 %>
+            { text: '<%= t('tours.done') %>', action: tour.complete }
+          <% else %>
+            { text: '<%= t('tours.exit') %>', action: tour.cancel, classes: 'shepherd-button-secondary' },
+            { text: '<%= t('tours.next') %>', action: tour.next }
+          <% end %>
+        <% end %>
+      <% else %>
+        <% step['buttons'].each_with_index do |(key, button)| %>
+          <% case button['action'] when 'done'%>
+            { text: '<%= button["text"] || t('tours.done') %>', action: tour.complete },
+          <% when 'later'%>
+            { text: '<%= t('tours.later') %>', action: tour.cancel, classes: 'shepherd-button-secondary' },
+          <% when 'continue'%>
+            { text: '<%= t('tours.continue') %>', action: tour.next },
+          <% when 'next'%>
+            { text: '<%= t('tours.next') %>', action: tour.next },
+          <% when 'exit'%>
           { text: '<%= t('tours.exit') %>', action: tour.cancel, classes: 'shepherd-button-secondary' },
-          { text: '<%= t('tours.next') %>', action: tour.next }
+          <% end %>
         <% end %>
       <% end %>
-      ]
+      ],
+      <% if step['canClickTarget'] %>
+        canClickTarget: false,
+      <% end %>
     });
   <% end %>
 
+
+
   tour.start = function (start) {
-  return function () {
-    var tourMayStart = !Cookies.get('<%= cookie_prefix %>-<%= tour_name %>', {domain: '<%= tours_domain %>'});
-    <% if steps.first[1]['attachTo'] %>
-    // Don't start the tour if the first step's element is missing
-    tourMayStart = tourMayStart && document.querySelector("<%= steps.first[1]['attachTo']['element'] %>");
-    <% end %>
+    return function () {
+      var tourMayStart = !Cookies.get('<%= cookie_prefix %>-<%= tour_name %>', {domain: '<%= tours_domain %>'});
+      <% if steps.first[1]['attachTo'] %>
+      // Don't start the tour if the first step's element is missing
+      tourMayStart = tourMayStart && document.querySelector("<%= steps.first[1]['attachTo']['element'] %>");
+      <% end %>
 
       if (tourMayStart) {
         start();
@@ -70,6 +96,6 @@
     }
   }(tour.start)
 
-  tour.start()
+  tour.start();
 
 </script>

@@ -513,7 +513,6 @@ ActiveRecord::Schema.define(version: 2020_10_21_113337) do
     t.boolean "categories_updates", default: false, null: false
     t.boolean "scientific_domains_updates", default: false, null: false
     t.boolean "show_welcome_popup", default: false, null: false
-    t.boolean "guest", default: false
     t.index ["email"], name: "index_users_on_email"
   end
 
