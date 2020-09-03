@@ -1,46 +1,59 @@
-intro:
+intro3:
+  previous:
+    tour_name: "intro2"
+    action_name: "edit"
+    controller_name: "profiles"
   steps:
     1:
-      title: "WELCOME"
-      text: "Welcome to your dashboard! This is where we'll highlight key information to manage your day."
+      title: "here we have..."
+      text: "user categories..."
+      attachTo:
+        element: ".home-carousel"
+        placement: "bottom"
+      buttons:
+        1:
+          action: 'next'
+        2:
+          action: 'later'
     2:
-      title: "Events"
-      text: "If you're participating in any events today, we'll show that here."
+      title: "here we have...2"
+      text: "user categories...2"
       attachTo:
-        element: ".eosc-hub-logo-main"
+        element: ".proucts"
         placement: "right"
+      buttons:
+        1:
+          action: 'next'
+        2:
+          action: 'later'
     3:
-      title: "Events 2"
-      text: "If you're participating in any events today, we'll show that here."
+      title: "And the end"
+      text: "thx"
+welcome:
+  steps:
+    1:
+      title: "here we have..."
+      text: "user categories..."
       attachTo:
-        element: ".eosc-hub-logo-main"
-        placement: "right"
-    4:
-      title: "Events"
-      text: "If you're participating in any events today, we'll show that here."
+        element: ".categories"
+        placement: "top"
+      buttons:
+        1:
+          action: 'next'
+        2:
+          action: 'later'
+    2:
+      title: "here we have...2"
+      text: "user categories...2"
       attachTo:
-        element: ".eosc-hub-logo-main"
+        element: ".proucts"
         placement: "right"
+      buttons:
+        1:
+          action: 'next'
+        2:
+          action: 'later'
+    3:
+      title: "And the end"
+      text: "thx"
 
-intro7:
-  steps:
-    1:
-      text: "Welcome to your dashboard! This is where we'll highlight key information to manage your day."
-    2:
-      title: "Events"
-      text: "If you're participating in any events today, we'll show that here."
-      attachTo:
-        element: "#home-carousel"
-        placement: "bottom"
-    3:
-      title: "Events 2"
-      text: "there"
-      attachTo:
-        element: ".intro-box"
-        placement: "bottom"
-    4:
-      title: "Events 3"
-      text: "fiore"
-      attachTo:
-        element: "#home-carousel"
-        placement: "bottom"
