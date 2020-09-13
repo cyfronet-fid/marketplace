@@ -116,7 +116,7 @@
       = f.input :access_policies_url, disabled: cant_edit(:access_policies_url)
       = f.input :privacy_policy_url, disabled: cant_edit(:privacy_policy_url)
       = f.input :sla_url, disabled: cant_edit(:sla_url)
-      = f.input :use_cases_url, input_html: { multiple: true, data: { choice: true } },
+      = f.input :use_cases_url, input_html: { multiple: true, type: "text", data: { choice: true } },
         disabled: cant_edit([use_cases_url: []])
       = f.input :webpage_url, disabled: cant_edit(:webpage_url)
       = f.input :manual_url, disabled: cant_edit(:manual_url)
