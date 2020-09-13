@@ -35,8 +35,8 @@ class Service::PcCreateOrUpdate
     service = map_service(@eic_service)
     mapped_service = Service.joins(:sources).find_by("service_sources.source_type": "eic",
                                                      "service_sources.eid": @eid)
-
-    the_latest_update = mapped_service ? (@modified_at > mapped_service.last_update) : true
+    # The latest update from PC is now nil, we have to temporary disable this check
+    the_latest_update = true # mapped_service ? (@modified_at > mapped_service.last_update) : true
 
     if mapped_service.nil? && @is_active
       service = Service.new(service)
@@ -74,7 +74,7 @@ class Service::PcCreateOrUpdate
                                              github_flavored: false),
         tagline: data["tagline"].blank? ? "NO IMPORTED TAGLINE" : data["tagline"],
         tag_list: Array(data.dig("tags", "tag")) || [],
-        language_availability: Array(data.dig("languageAvailabilities", "languageAvailability") || "EN"),
+        language_availability: Array(data.dig("languageAvailabilities", "languageAvailabilities") || "en"),
         geographical_availabilities: Array(data.dig("geographicalAvailabilities", "geographicalAvailability") || "WW"),
         resource_geographic_locations: Array(data.dig("resourceGeographicLocations", "resourceGeographicLocation")) || [],
         dedicated_for: [],
@@ -83,13 +83,14 @@ class Service::PcCreateOrUpdate
             map { |c| PublicContact.new(map_contact(c)) } || [],
         privacy_policy_url: data["privacyPolicy"] || "",
         use_cases_url: Array(data.dig("useCases", "useCase") || []),
-        multimedia: Array(data["multimedia"]) || [],
+        multimedia: Array(data.dig("multimedia", "multimedia")) || [],
         terms_of_use_url: data["termsOfUse"] || "",
         access_policies_url: data["accessPolicy"],
         sla_url: data["serviceLevel"] || "",
         webpage_url: data["webpage"] || "",
         manual_url: data["userManual"] || "",
         helpdesk_url: data["helpdeskPage"] || "",
+        helpdesk_email: data["helpdeskEmail"] || "",
         training_information_url: data["trainingInformation"] || "",
         status_monitoring_url: data["statusMonitoring"] || "",
         maintenance_url: data["maintenance"] || "",
@@ -164,11 +165,12 @@ class Service::PcCreateOrUpdate
         logo.write(img.to_blob)
         logo.seek(0)
         logo_content_type = "image/png"
-        logo
       end
-      unless logo.nil?
+      if !logo.blank? && logo_content_type.start_with?("image")
         service.logo.attach(io: logo, filename: @eid, content_type: logo_content_type)
       end
+    rescue OpenURI::HTTPError => e
+      Rails.logger.warn "WARN: Cannot attach logo. #{e.message}"
     end
 
     def map_category(category)
