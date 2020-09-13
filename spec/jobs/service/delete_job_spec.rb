@@ -17,6 +17,6 @@ RSpec.describe Service::DeleteJob do
     ActiveJob::Base.queue_adapter = :test
     expect {
       described_class.perform_later(service.id)
-    }.to have_enqueued_job.on_queue("jms")
+    }.to have_enqueued_job.on_queue("pc_subscriber")
   end
 end

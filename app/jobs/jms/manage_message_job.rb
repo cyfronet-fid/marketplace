@@ -3,7 +3,7 @@
 require "nori"
 
 class Jms::ManageMessageJob < ApplicationJob
-  queue_as :jms
+  queue_as :pc_subscriber
 
   def perform(message, eic_base_url, logger)
     Jms::ManageMessage.new(message, eic_base_url, logger)
