@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Service::PcCreateOrUpdateJob < ApplicationJob
-  queue_as :jms
+  queue_as :pc_subscriber
 
   rescue_from(Errno::ECONNREFUSED) do |exception|
     raise exception

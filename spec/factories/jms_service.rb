@@ -110,9 +110,10 @@ FactoryBot.define do
         "accessPolicy" => "http://openminted.eu/pricing/",
         "statusMonitoring" => "http://openminted.eu/monitoring/",
         "maintenance" => "http://openminted.eu/maintenance/",
-        "multimedia" => [
+        "multimedia" => {
+            "multimedia" => [
             "https://www.youtube.com/watch?v=-_F8NZwWXew"
-        ],
+        ] },
         "useCases" =>  {
           "useCase" => [
             "http://phenomenal-h2020.eu/home/help"
