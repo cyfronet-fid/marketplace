@@ -65,10 +65,11 @@ class Service::PcCreateOrUpdate
                                              github_flavored: false),
         tagline: data["tagline"].blank? ? "NO IMPORTED TAGLINE" : data["tagline"],
         tag_list: Array(data.dig("tags", "tag")) || [],
-        language_availability: Array(data.dig("languageAvailabilities", "languageAvailabilities") || "en"),
+        language_availability: Array(data.dig("languageAvailabilities", "languageAvailability")).
+            map { |lang| lang.upcase } || ["EN"],
         geographical_availabilities: Array(data.dig("geographicalAvailabilities", "geographicalAvailability") || "WW"),
         resource_geographic_locations: Array(data.dig("resourceGeographicLocations", "resourceGeographicLocation")) || [],
-        dedicated_for: map_target_users(Array(data.dig("targetUsers", "targetUsers"))) || [],
+        target_users: Array(map_target_users(data.dig("targetUsers", "targetUser"))) || [],
         main_contact: main_contact,
         public_contacts: Array.wrap(data.dig("publicContacts", "publicContact")).
             map { |c| PublicContact.new(map_contact(c)) } || [],
@@ -106,11 +107,10 @@ class Service::PcCreateOrUpdate
         grant_project_names: Array(data.dig("grantProjectNames", "grantProjectName")),
         resource_organisation: map_provider(data["resourceOrganisation"]),
         providers: providers.map { |p| map_provider(p) },
-        categories: map_categories(Array(data.dig("subcategories", "subcategories"))) || [],
-        scientific_domains: map_scientific_domains(Array(data.dig("scientificSubdomains", "scientificSubdomains"))),
+        categories: Array(map_categories(data.dig("subcategories", "subcategory"))) || [],
+        scientific_domains: Array(map_scientific_domains(data.dig("scientificSubdomains", "scientificSubdomain"))),
         version: data["version"] || "",
-        last_update: data["lastUpdate"],
-        target_users: map_target_users(data.dig("targetUsers", "targetUser"))
+        last_update: data["lastUpdate"]
       }
     end
 
