@@ -4,757 +4,757 @@ funding_body:
     name: Academy of Finland (AKA)
     description: Finland
     type: FUNDING_BODY
-    
+
   ademe:
     eid: funding_body-ademe
     name: Agency for Environment and Energy Management (ADEME)
     description: France
     type: FUNDING_BODY
-    
+
   iwt:
     eid: funding_body-iwt
     name: Agency for Innovation by Science and Technology (IWT)
     description: Belgium
     type: FUNDING_BODY
-    
+
   mita:
     eid: funding_body-mita
     name: Agency for Science Innovation and Technology (MITA)
     description: Lithuania
     type: FUNDING_BODY
-    
+
   awi:
     eid: funding_body-awi
     name: Alfred Wegener Institute for Polar and Marine Research (AWI)
     description: Germany
     type: FUNDING_BODY
-    
+
   cea:
     eid: funding_body-cea
     name: Alternative Energies and Atomic Energy Commission (CEA)
     description: France
     type: FUNDING_BODY
-    
+
   ahrc:
     eid: funding_body-ahrc
     name: Arts and Humanities Research Council (AHRC)
     description: United Kingdom
     type: FUNDING_BODY
-    
+
   arc:
     eid: funding_body-arc
     name: Australian Research Council (ARC)
     description: Australia
     type: FUNDING_BODY
-    
+
   oeaw:
     eid: funding_body-oeaw
     name: Austrian Academy of Sciences (OeAW)
     description: Austria
     type: FUNDING_BODY
-    
+
   ffg:
     eid: funding_body-ffg
     name: Austrian Research Promotion Agency (FFG)
     description: Austria
     type: FUNDING_BODY
-    
+
   fwf:
     eid: funding_body-fwf
     name: Austrian Science Fund (FWF)
     description: Austria
     type: FUNDING_BODY
-    
+
   bf:
     eid: funding_body-bf
     name: Belmont Forum (BF)
     description: null
     type: FUNDING_BODY
-    
+
   bbsrc:
     eid: funding_body-bbsrc
     name: Biotechnology and Biological Sciences Research Council (BBSRC)
     description: United Kingdom
     type: FUNDING_BODY
-    
+
   innoviris:
     eid: funding_body-innoviris
     name: Brussels Institute for Research and Innovation (INNOVIRIS)
     description: Belgium
     type: FUNDING_BODY
-    
+
   cihr:
     eid: funding_body-cihr
     name: Canadian Institutes of Health Research (CIHR)
     description: Canada
     type: FUNDING_BODY
-    
+
   isciii:
     eid: funding_body-isciii
     name: Carlos III Health Institute (ISCIII)
     description: Spain
     type: FUNDING_BODY
-    
+
   cdti:
     eid: funding_body-cdti
     name: Center for Industrial Technological Development (CDTI)
     description: Spain
     type: FUNDING_BODY
-    
+
   csf:
     eid: funding_body-csf
     name: Croatian Science Foundation (CSF)
     description: Croatia
     type: FUNDING_BODY
-    
+
   gacr:
     eid: funding_body-gacr
     name: Czech Science Foundation (GACR)
     description: Czechia
     type: FUNDING_BODY
-    
+
   dashe:
     eid: funding_body-dashe
     name: Danish Agency for Science and Higher Education (DASHE)
     description: Denmark
     type: FUNDING_BODY
-    
+
   dasti:
     eid: funding_body-dasti
     name: Danish Agency for Science Technology and Innovation (DASTI)
     description: Denmark
     type: FUNDING_BODY
-    
+
   dff:
     eid: funding_body-dff
     name: Danish Council for Independent Research (DFF)
     description: Denmark
     type: FUNDING_BODY
-    
+
   dnrf:
     eid: funding_body-dnrf
     name: Danish National Research Foundation (DNRF)
     description: Denmark
     type: FUNDING_BODY
-    
+
   dfg:
     eid: funding_body-dfg
     name: German Research Foundation (DFG)
     description: Germany
     type: FUNDING_BODY
-    
+
   esrc:
     eid: funding_body-esrc
     name: Economic and Social Research Council (ESRC)
     description: United Kingdom
     type: FUNDING_BODY
-    
+
   epsrc:
     eid: funding_body-epsrc
     name: Engineering and Physical Sciences Research Council (EPSRC)
     description: United Kingdom
     type: FUNDING_BODY
-    
+
   etag:
     eid: funding_body-etag
     name: Estonian Research Council (ETAG)
     description: Estonia
     type: FUNDING_BODY
-    
+
   ec:
     eid: funding_body-ec
     name: European Comission (EC)
     description: null
     type: FUNDING_BODY
-    
+
   esa:
     eid: funding_body-esa
     name: European Space Agency (ESA)
     description: null
     type: FUNDING_BODY
-    
+
   cncs:
     eid: funding_body-uefiscdi_cncs
     name: Executive Agency for Higher Education Research Development and Innovation Funding (UEFISCDI - CNCS)
     description: Romania
     type: FUNDING_BODY
-    
+
   eaer:
     eid: funding_body-eaer
     name: Federal Department of Economic Affairs Education and Research (EAER)
     description: Switzerland
     type: FUNDING_BODY
-    
+
   bmbf:
     eid: funding_body-bmbf
     name: Federal Ministry of Education and Research (BMBF)
     description: Germany
     type: FUNDING_BODY
-    
+
   tekes:
     eid: funding_body-tekes
     name: Finnish Funding Agency for Technology and Innovation (TEKES)
     description: Finland
     type: FUNDING_BODY
-    
+
   vlaio:
     eid: funding_body-vlaio
     name: Flanders Innovation & Entrepeneurship (VLAIO)
     description: Belgium
     type: FUNDING_BODY
-    
+
   fnrs:
     eid: funding_body-fnrs
     name: Fonds National de la Recherche Scientifique (FNRS)
     description: Belgium
     type: FUNDING_BODY
-    
+
   fom:
     eid: funding_body-fom
     name: Foundation for Fundamental Research on Matter (FOM)
     description: Netherlands
     type: FUNDING_BODY
-    
+
   fnp:
     eid: funding_body-fnp
     name: Foundation for Polish Science (FNP)
     description: Poland
     type: FUNDING_BODY
-    
+
   gsrt:
     eid: funding_body-gsrt
     name: General Secretariat for Research and Technology (GSRT)
     description: Greece
     type: FUNDING_BODY
-    
+
   fct:
     eid: funding_body-fct
     name: Foundation for Science and Technology (FCT)
     description: Portugal
     type: FUNDING_BODY
-    
+
   onera:
     eid: funding_body-onera
     name: French National Aerospace Research Center (ONERA)
     description: France
     type: FUNDING_BODY
-    
+
   anr:
     eid: funding_body-anr
     name: French National Research Agency (ANR)
     description: France
     type: FUNDING_BODY
-    
+
   ipev:
     eid: funding_body-ipev
     name: French Polar Institute (IPEV)
     description: France
     type: FUNDING_BODY
-    
+
   ifremer:
     eid: funding_body-ifremer
     name: French Research Institute for Exploitation of the Sea (IFREMER)
     description: France
     type: FUNDING_BODY
-    
+
   fts:
     eid: funding_body-fts
     name: Fritz Thyssen Foundation (FTS)
     description: Germany
     type: FUNDING_BODY
-    
+
   dgo6:
     eid: funding_body-dgo6
     name: General Operational Directorate for Economy Employment and Research (DGO6)
     description: Belgium
     type: FUNDING_BODY
-    
+
   dlr:
     eid: funding_body-dlr
     name: German Aerospace Center (DLR)
     description: Germany
     type: FUNDING_BODY
-    
+
   rannis:
     eid: funding_body-rannis
     name: Icelandic Centre for Research (RANNIS)
     description: Iceland
     type: FUNDING_BODY
-    
+
   ifd:
     eid: funding_body-ifd
     name: Innovation Fund Denmark (IFD)
     description: Denmark
     type: FUNDING_BODY
-    
+
   imsr:
     eid: funding_body-imsr
     name: Innovation Fund of the Ministry of Economy of the Slovak Republic (IMSR)
     description: Slovakia
     type: FUNDING_BODY
-    
+
   isc:
     eid: funding_body-isc
     name: International Science Council (ISC)
     description: null
     type: FUNDING_BODY
-    
+
   irc:
     eid: funding_body-irc
     name: Irish Research Council (IRC)
     description: Ireland
     type: FUNDING_BODY
-    
+
   isf:
     eid: funding_body-isf
     name: Israel Science Foundation (ISF)
     description: Israel
     type: FUNDING_BODY
-    
+
   jst:
     eid: funding_body-jst
     name: Japanese Science and Technology Agency (JST)
     description: Japan
     type: FUNDING_BODY
-    
+
   jsps:
     eid: funding_body-jsps
     name: Japanese Society for the Promotion of Science (JSPS)
     description: Japan
     type: FUNDING_BODY
-    
+
   kks:
     eid: funding_body-kks
     name: Knowledge Foundation (KKS)
     description: Sweden
     type: FUNDING_BODY
-    
+
   kaws:
     eid: funding_body-kaws
     name: Knut and Alice Wallenberg Foundation (KAWS)
     description: Sweden
     type: FUNDING_BODY
-    
+
   caixa:
     eid: funding_body-caixa
     name: La Caixa Foundation (CAIXA)
     description: Spain
     type: FUNDING_BODY
-    
+
   mcst:
     eid: funding_body-mcst
     name: Malta Council for Science and Technology (MCST)
     description: Malta
     type: FUNDING_BODY
-    
+
   mpg:
     eid: funding_body-mpg
     name: Max Planck Society for the Advancement of Science (MPG)
     description: Germany
     type: FUNDING_BODY
-    
+
   mrc:
     eid: funding_body-mrc
     name: Medical Research Council (MRC)
     description: United Kingdom
     type: FUNDING_BODY
-    
+
   mgrt:
     eid: funding_body-mgrt
     name: Ministry for Economic Development and Technology (MGRT)
     description: Slovenia
     type: FUNDING_BODY
-    
+
   mineco:
     eid: funding_body-mineco
     name: Ministry for Economy and Competitveness (MINECO)
     description: Spain
     type: FUNDING_BODY
-    
+
   mecr:
     eid: funding_body-mecr
     name: Ministry for Education and Scientific Research (MECR)
     description: Romania
     type: FUNDING_BODY
-    
+
   miur:
     eid: funding_body-miur
     name: Ministry for Education University and Research (MIUR)
     description: Italy
     type: FUNDING_BODY
-    
+
   mestd:
     eid: funding_body-mestd
     name: Ministry of Education Science and Technological Development of Republic of Serbia (MESTD)
     description: Serbia
     type: FUNDING_BODY
-    
+
   mesr:
     eid: funding_body-mesr
     name: Ministry of Higher Education and Research (MESR)
     description: France
     type: FUNDING_BODY
-    
+
   mse:
     eid: funding_body-mse
     name: Ministry of Science and Education Republic of Croatia (MSE)
     description: Croatia
     type: FUNDING_BODY
-    
+
   most:
     eid: funding_body-most
     name: Ministry of Science and Technology of the People's Republic of China (MOST)
     description: China
     type: FUNDING_BODY
-    
+
   nasa:
     eid: funding_body-nasa
     name: National Aeronautics and Space Administration (NASA)
     description: United States
     type: FUNDING_BODY
-    
+
   ancs:
     eid: funding_body-ancs
     name: National Authority for Scientific Research (ANCS)
     description: Romania
     type: FUNDING_BODY
-    
+
   ncbir:
     eid: funding_body-ncbir
     name: National Centre for Research and Development (NCBiR)
     description: Poland
     type: FUNDING_BODY
-    
+
   cnrs:
     eid: funding_body-cnrs
     name: National Centre for Scientific Research (CNRS)
     description: France
     type: FUNDING_BODY
-    
+
   cnes:
     eid: funding_body-cnes
     name: National Centre for Space Studies (CNES)
     description: France
     type: FUNDING_BODY
-    
+
   cnpq:
     eid: funding_body-cnpq
     name: National Council for Scientific and Technological Development (CNPq)
     description: Brazil
     type: FUNDING_BODY
-    
+
   oenfte:
     eid: funding_body-oenfte
     name: National Foundation for Research Technology and Development (OeNFTE)
     description: Austria
     type: FUNDING_BODY
-    
+
   nhmrc:
     eid: funding_body-nhmrc
     name: National Health and Medical Research Council (NHMRC)
     description: Australia
     type: FUNDING_BODY
-    
+
   inra:
     eid: funding_body-inra
     name: National institute of Agricultural Research (INRA)
     description: France
     type: FUNDING_BODY
-    
+
   inserm:
     eid: funding_body-inserm
     name: National Institute of Health and Medical Research (INSERM)
     description: France
     type: FUNDING_BODY
-    
+
   nig:
     eid: funding_body-nig
     name: National Institutes of Health (NIG)
     description: United States
     type: FUNDING_BODY
-    
+
   cnr:
     eid: funding_body-cnr
     name: National Research Council (CNR)
     description: Italy
     type: FUNDING_BODY
-    
+
   nrf:
     eid: funding_body-nrf
     name: National Research Foundation (NRF)
     description: South Africa
     type: FUNDING_BODY
-    
+
   fnr:
     eid: funding_body-fnr
     name: National Research Fund (FNR)
     description: Luxembourg
     type: FUNDING_BODY
-    
+
   nkfia:
     eid: funding_body-nkfia
     name: National Research Development and Innovation Fund (NKFIA)
     description: Hungary
     type: FUNDING_BODY
-    
+
   ncn:
     eid: funding_body-ncn
     name: National Science Center (NCN)
     description: Poland
     type: FUNDING_BODY
-    
+
   nsf:
     eid: funding_body-nsf
     name: National Science Foundation (NSF)
     description: United States
     type: FUNDING_BODY
-    
+
   cncsis:
     eid: funding_body-cncsis
     name: National University Research Council (CNCSIS) - Romania
     description: Romania
     type: FUNDING_BODY
-    
+
   nerc:
     eid: funding_body-nerc
     name: Natural Environment Research Council (NERC)
     description: United Kingdom
     type: FUNDING_BODY
-    
+
   nserc:
     eid: funding_body-nserc
     name: Natural Sciences and Engineering Research Council of Canada (NSERC)
     description: Canada
     type: FUNDING_BODY
-    
+
   nwo:
     eid: funding_body-nwo
     name: Netherlands Organisation for Scientific Research (NWO)
     description: Netherlands
     type: FUNDING_BODY
-    
+
   rcuk:
     eid: funding_body-rcuk
     name: Research Council UK (RCUK)
     description: United Kingdom
     type: FUNDING_BODY
-    
+
   apvv:
     eid: funding_body-apvv
     name: Research and Development Agency (APVV)
     description: Slovakia
     type: FUNDING_BODY
-    
+
   lmt:
     eid: funding_body-lmt
     name: Research Council of Lithuania (LMT)
     description: Lithuania
     type: FUNDING_BODY
-    
+
   rcn:
     eid: funding_body-rcn
     name: Research Council of Norway (RCN)
     description: Norway
     type: FUNDING_BODY
-    
+
   fwo:
     eid: funding_body-fwo
     name: Research Foundation Flanders (FWO)
     description: Belgium
     type: FUNDING_BODY
-    
+
   rpf:
     eid: funding_body-rpf
     name: Research Promotion Foundation (RPF)
     description: Cyprus
     type: FUNDING_BODY
-    
+
   fapesp:
     eid: funding_body-fapesp
     name: São Paulo Research Foundation (FAPESP)
     description: Brazil
     type: FUNDING_BODY
-    
+
   stfc:
     eid: funding_body-stfc
     name: Science and Technology Facilities Council (STFC)
     description: United Kingdom
     type: FUNDING_BODY
-    
+
   sfi:
     eid: funding_body-sfi
     name: Science Foundation Ireland (SFI)
     description: Ireland
     type: FUNDING_BODY
-    
+
   tubitak:
     eid: funding_body-tubitak
     name: Scientific and Technological Research Council of Turkey (TUBITAK)
     description: Turkey
     type: FUNDING_BODY
-    
+
   vega:
     eid: funding_body-vega
     name: Scientific Grant Agency (VEGA)
     description: Slovakia
     type: FUNDING_BODY
-    
+
   sgpi:
     eid: funding_body-sgpi
     name: Secretariat-General for Investment (SGPI)
     description: France
     type: FUNDING_BODY
-    
+
   arrs:
     eid: funding_body-arrs
     name: Slovenian Research Agency (ARRS)
     description: Slovenia
     type: FUNDING_BODY
-    
+
   sshrc:
     eid: funding_body-sshrc
     name: Social Sciences and Humanities Research Council (SSHRC)
     description: Canada
     type: FUNDING_BODY
-    
+
   csic:
     eid: funding_body-csic
     name: Spanish National Research Council (CSIC)
     description: Spain
     type: FUNDING_BODY
-    
+
   viaa:
     eid: funding_body-viaa
     name: State Education Development Agency (VIAA)
     description: Latvia
     type: FUNDING_BODY
-    
+
   sea:
     eid: funding_body-sea
     name: Swedish Energy Agency (SEA)
     description: Sweden
     type: FUNDING_BODY
-    
+
   sepa:
     eid: funding_body-sepa
     name: Swedish Environmental Protection Agency (SEPA)
     description: Sweden
     type: FUNDING_BODY
-    
+
   mistra:
     eid: funding_body-mistra
     name: Swedish Foundation for Strategic Environmental Research (MISTRA)
     description: Sweden
     type: FUNDING_BODY
-    
+
   ssf:
     eid: funding_body-ssf
     name: Swedish Foundation for Strategic Research (SSF)
     description: Sweden
     type: FUNDING_BODY
-    
+
   vinnova:
     eid: funding_body-vinnova
     name: Swedish Governmental Agency for Innovation Systems (VINNOVA)
     description: Sweden
     type: FUNDING_BODY
-    
+
   snsb:
     eid: funding_body-snsb
     name: Swedish National Space Board (SNSB)
     description: Sweden
     type: FUNDING_BODY
-    
+
   srsa:
     eid: funding_body-srsa
     name: Swedish Radiation Safety Authority (SRSA)
     description: Sweden
     type: FUNDING_BODY
-    
+
   srcf:
     eid: funding_body-srcf
     name: Swedish Reseach Council Formas (SRCF)
     description: Sweden
     type: FUNDING_BODY
-    
+
   vr:
     eid: funding_body-vr
     name: Swedish Research Council (VR)
     description: Sweden
     type: FUNDING_BODY
-    
+
   forte:
     eid: funding_body-forte
     name: Swedish Research Council for Health Working Life and Welfare (FORTE)
     description: Sweden
     type: FUNDING_BODY
-    
+
   snf:
     eid: funding_body-snf
     name: Swiss National Science Foundation (SNF)
     description: Switzerland
     type: FUNDING_BODY
-    
+
   tara:
     eid: funding_body-tara
     name: Tara Expeditions Foundation (TARA)
     description: France
     type: FUNDING_BODY
-    
+
   tacr:
     eid: funding_body-tacr
     name: Technology Agency of the Czech Republic (TACR)
     description: Czechia
     type: FUNDING_BODY
-    
+
   stw:
     eid: funding_body-stw
     name: Technology Foundation (STW)
     description: Netherlands
     type: FUNDING_BODY
-    
+
   ddf:
     eid: funding_body-ddf
     name: The Danish Council for Independent Research (DDF)
     description: Denmark
     type: FUNDING_BODY
-    
+
   sr:
     eid: funding_body-msvvas_sr
     name: The Ministry of Education Science Research and Sports of the Slovak Republic (MSVVaS SR)
     description: Slovakia
     type: FUNDING_BODY
-    
+
   rj:
     eid: funding_body-rj
     name: The Swedish Foundation for Humanities and Social Sciences (RJ)
     description: Sweden
     type: FUNDING_BODY
-    
+
   ukri:
     eid: funding_body-ukri
     name: UK Research and Innovation (UKRI)
     description: United Kingdom
     type: FUNDING_BODY
-    
+
   wwtf:
     eid: funding_body-wwtf
     name: Vienna Science and Technology Fund (WWTF)
     description: Austria
     type: FUNDING_BODY
-    
+
   vs:
     eid: funding_body-vs
     name: Volkswagen Foundation (VS)
     description: Germany
     type: FUNDING_BODY
-    
+
   wt:
     eid: funding_body-wt
     name: Wellcome trust (WT)
     description: United Kingdom
     type: FUNDING_BODY
-    
+
   other:
     eid: funding_body-other
     name: Other
@@ -1171,7 +1171,6 @@ funding_program:
     name: Other
     type: FUNDING_PROGRAM
 
-
 trl:
   trl-1:
     name: trl-1
@@ -1210,6 +1209,92 @@ trl:
     description: Actual system proven in operational environment (competitive manufacturing in the case of key enabling technologies; or in space)
     eid: trl-9
 
+target_user:
+  funders:
+    eid: target_user-funders
+    name: Funders
+    description: Individual or organization financing a part or all of a project's cost as a grant, investment, or loan.
+    type: TARGET_USER
+  students:
+    eid: target_user-students
+    name: Students
+    description: A person who is studying at a university or other place of higher education.
+    type: TARGET_USER
+  businesses:
+    eid: target_user-businesses
+    name: Businesses
+    description: An organization or economic system where goods and services are exchanged for one another or for money. Businesses can be privately owned, not-for-profit or state-owned.
+    type: TARGET_USER
+  research_networks:
+    eid: target_user-research_networks
+    name: Research Networks
+    description: Research networks aim to stimulate interaction between researchers and promote information exchange.
+    type: TARGET_USER
+  other:
+    eid: target_user-other
+    name: Other
+    description: null
+    type: TARGET_USER
+  resource_managers:
+    eid: target_user-resource_managers
+    name: Resource Managers
+    description: Resource Managers are typically responsible for managing Service level agreements with customers and external Providers.
+    type: TARGET_USER
+  resource_provider_managers:
+    eid: target_user-resource_provider_managers
+    name: Resource Provider Managers
+    description: A Provider Manager is an individual within an organisation that is responsible for the quality of the Resources provided and monitors the delivery of the Resource.
+    type: TARGET_USER
+  research_infrastructure_managers:
+    eid: target_user-research_infrastructure_managers
+    name: Research Infrastructure Managers
+    description: A RI Manager is a type of Project Coordinator who specializes in research infrastructures. They are responsible for things like managing researchers, making sure costs are on budget and serving as a liaison between reserach staff and project stakeholders.
+    type: TARGET_USER
+  research_managers:
+    eid: target_user-research_managers
+    name: Research Managers
+    description: Someone in an organization whose job is to manage a research initiative aiming to the development of new scientific results, products or ideas.
+    type: TARGET_USER
+  researchers:
+    eid: target_user-researchers
+    name: Researchers
+    description: Someone who conducts scientific research, i.e., an organized and systematic investigation by using scientific methods.
+    type: TARGET_USER
+  innovators:
+    eid: target_user-innovators
+    name: Innovators
+    description: The group which is the first to try new ideas, processes, goods and services. Innovators are followed by early adopters, early majority, late majority, and laggards, in that order.
+    type: TARGET_USER
+  policy_makers:
+    eid: target_user-policy_makers
+    name: Policy Makers
+    description: Individuals (usually members of the board of directors) who have the authority to set the policy framework of an organization.
+    type: TARGET_USER
+  research_communities:
+    eid: target_user-research_communities
+    name: Research Communities
+    description: Research communities provide an infrastructure through which scientists of discipline-specific scientific areas are able to advance their research goals, reaching out to other researchers.
+    type: TARGET_USER
+  research_projects:
+    eid: target_user-research_projects
+    name: Research Projects
+    description: A privately or publicly funded project on a research topic.
+    type: TARGET_USER
+  research_groups:
+    eid: target_user-research_groups
+    name: Research Groups
+    description: A research group is a group of researchers working together on a particular issue or topic. Research groups may be composed of researchers all from the same subject/discipline or from different subjects/disciplines.
+    type: TARGET_USER
+  research_organisations:
+    eid: target_user-research_organisations
+    name: Research Organisations
+    description: A public or private legal entity (e.g. academia, business, industry, public services, etc.) representing the User.
+    type: TARGET_USER
+  providers:
+    eid: target_user-providers
+    name: Providers
+    description: A Provider is an organisation that provides different kind of solutions and/or services or other Resources to end users and other organizations. This broad term incorporates all businesses and organisations that provide products and solutions that are offered for free, on-demand, pay per use or a hybrid delivery model.
+    type: TARGET_USER
 
 life_cycle_status:
   Concept:
@@ -1268,6 +1353,7 @@ life_cycle_status:
     name: Other
     description:
     eid: life_cycle_status-other
+
 access_mode:
   paid:
     eid: access_mode-paid
@@ -1301,6 +1387,7 @@ access_mode:
       quality and technical and ethical feasibility of an application evaluated
       through peer review conducted by internal or external experts of the activity to be supported by the Resource.
     type: ACCESS_MODE
+
 access_type:
   virtual:
     eid: access_type-virtual
@@ -1322,7 +1409,7 @@ access_type:
     description: |
       Resources are delivered remotely with the use of a physical infrastructure.
       The user is able to remotely work with the physical RI without the need of physical presence.
-    type: ACCESS_TYPE,
+    type: ACCESS_TYPE
   other:
     eid: access_type-other
     name: Other
@@ -1335,3 +1422,1434 @@ access_type:
       Resources require a physical presence of the user.
       The user can only access the RI if he is physically present in the specific location that the RI is offered.
     type: ACCESS_TYPE
+
+category:
+  data-management:
+    eid: category-processing_and_analysis-data_management
+    name: Data Management
+    description: Robust, feature-rich and user-friendly data management services.
+    # parentId: supercategory-processing_and_analysis
+    type: CATEGORY
+  development-resources:
+    eid: category-sharing_and_discovery-development_resources
+    name: Development Resources
+    description: Developer tools, development kits, libraries, APIs.
+    # parentId: supercategory-sharing_and_discovery
+    type: CATEGORY
+  securirty-indentity:
+    eid: category-security_and_operations-security_and_identity
+    name: Security & Identity
+    description: Protect infrastructure and manage user identities and access against advanced threats across devices, data, apps, etc.
+    # parentId: supercategory-security_and_operations
+    type: CATEGORY
+  data:
+    eid: category-sharing_and_discovery-data
+    name: Data
+    description: Vast range of datasets to facilitate research and scientific activities.
+    # parentId: supercategory-sharing_and_discovery
+    type: CATEGORY
+  samples:
+    eid: category-sharing_and_discovery-samples
+    name: Samples
+    description: Collection, preparation and delivery of biological, chemical, environmental or other samples.
+    parentId: supercategory-sharing_and_discovery
+    type: CATEGORY
+  software:
+    eid: category-sharing_and_discovery-software
+    name: Software
+    description: Software, platforms and tools offered-as-a-service or deployed-on-demand.
+    # parentId: supercategory-sharing_and_discovery
+    type: CATEGORY
+  operations-infrastructure-management:
+    eid: category-security_and_operations-operations_and_infrastructure_management_services
+    name: Operations & Infrastructure Management Services
+    description: Services for monitoring, scaling, creating, tracking and automating operations on infrastructures and services.
+    # parentId: supercategory-security_and_operations
+    type: CATEGORY
+  aggregators-integrators:
+    eid: category-aggregators_and_integrators-aggregators_and_integrators
+    name: Aggregators & Integrators
+    description: Thematic, Regional and other Aggregators & Integrators.
+    # parentId: supercategory-aggregators_and_integrators
+    type: CATEGORY
+  data-analysis:
+    eid: category-processing_and_analysis-data_analysis
+    name: Data Analysis
+    description: Processes for data with the goal of discovering useful information, informing conclusions, and supporting decision-making.
+    # parentId: supercategory-processing_and_analysis
+    type: CATEGORY
+  other:
+    eid: category-other-other
+    name: Other
+    description: null
+    # parentId: supercategory-other
+    type: CATEGORY
+  applications:
+    eid: category-sharing_and_discovery-applications
+    name: Applications
+    description: End-user applications offered-as-a-service or deployed-on-demand.
+    # parentId: supercategory-sharing_and_discovery
+    type: CATEGORY
+  instrument-equipment:
+    eid: category-access_physical_and_eInfrastructures-instrument_and_equipment
+    name: Instrument & Equipment
+    description: Access to instruments and equipment.
+    parentId: supercategory-access_physical_and_eInfrastructures
+    type: CATEGORY
+  education-training:
+    eid: category-training_and_support-education_and_training
+    name: Education & Training
+    description: Highly-specialized seminars and courses to help advance research knowledge and sharpen scientific skills.
+    # parentId: supercategory-training_and_support
+    type: CATEGORY
+  data-storage:
+    eid: category-access_physical_and_eInfrastructures-data_storage
+    name: Data Storage
+    description: Reliable, secure and scalable cloud storage for scientific data, apps and workloads.
+    parentId: supercategory-access_physical_and_eInfrastructures
+    type: CATEGORY
+  consultancy-support:
+    eid: category-training_and_support-consultancy_and_support
+    name: Consultancy & Support
+    description: Dedicated professional support for a wide range of scientific disciplines and research activities.
+    # parentId: supercategory-training_and_support
+    type: CATEGORY
+  material-storage:
+    eid: category-access_physical_and_eInfrastructures-material_storage
+    name: Material Storage
+    description: Access to biological, chemical, historical, archeological, cultural, etc. storage. Includes the acquisition, preparation and processing of samples and materials in view of their preservation.
+    parentId: supercategory-access_physical_and_eInfrastructures
+    type: CATEGORY
+  scholarly-communication:
+    eid: category-sharing_and_discovery-scholarly_communication
+    name: Scholarly Communication
+    description: Research findings available to the wider academic community and beyond.
+    # parentId: supercategory-sharing_and_discovery
+    type: CATEGORY
+  measurement-materials-analysis:
+    eid: category-processing_and_analysis-measurement_and_materials_analysis
+    name: Measurement & Materials Analysis
+    description: Processess and techiques for material analysis, characterisation and monitoring.
+    # parentId: supercategory-processing_and_analysis
+    type: CATEGORY
+  network:
+    eid: category-access_physical_and_eInfrastructures-network
+    name: Network
+    description: Ultra-fast connectivity and ubiquitous access to eInfrastructures' resources and services.
+    # parentId: supercategory-access_physical_and_eInfrastructures
+    type: CATEGORY
+  compute:
+    eid: category-access_physical_and_eInfrastructures-compute
+    name: Compute
+    description: High-performance computing resources and scalable cloud compute capacity for demanding job processes.
+    # parentId: supercategory-access_physical_and_eInfrastructures
+    type: CATEGORY
+  sharing_and_discovery-software-other:
+    eid: subcategory-sharing_and_discovery-software-other
+    name: Other
+    parentId: category-sharing_and_discovery-software
+    type: SUBCATEGORY
+  sharing_and_discovery-applications-communication:
+    eid: subcategory-sharing_and_discovery-applications-communication
+    name: Communication
+
+    parentId: category-sharing_and_discovery-applications
+    type: SUBCATEGORY
+  sharing_and_discovery-scholarly_communication-assessment:
+    eid: subcategory-sharing_and_discovery-scholarly_communication-assessment
+    name: Assessment
+
+    parentId: category-sharing_and_discovery-scholarly_communication
+    type: SUBCATEGORY
+  processing_and_analysis-data_analysis-2d_3d_digitisation:
+    eid: subcategory-processing_and_analysis-data_analysis-2d_3d_digitisation
+    name: 2D/3D Digitisation
+
+    parentId: category-processing_and_analysis-data_analysis
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-instrument_and_equipment-spectrophotometer:
+    eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-spectrophotometer
+    name: Spectrophotometer
+
+    parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
+    type: SUBCATEGORY
+    extras: {}
+  processing_and_analysis-data_analysis-image_data_analysis:
+    eid: subcategory-processing_and_analysis-data_analysis-image_data_analysis
+    name: Image/Data Analysis
+    parentId: category-processing_and_analysis-data_analysis
+    type: SUBCATEGORY
+  sharing_and_discovery-applications-social_networking:
+    eid: subcategory-sharing_and_discovery-applications-social_networking
+    name: Social/Networking
+    parentId: category-sharing_and_discovery-applications
+  training_and_support-consultancy_and_support-consulting:
+    eid: subcategory-training_and_support-consultancy_and_support-consulting
+    name: Consulting
+    parentId: category-training_and_support-consultancy_and_support
+  access_physical_and_eInfrastructures-material_storage-archiving:
+    eid: subcategory-access_physical_and_eInfrastructures-material_storage-archiving
+    name: Archiving
+
+    parentId: category-access_physical_and_eInfrastructures-material_storage
+    type: SUBCATEGORY
+  processing_and_analysis-data_management-maintenance:
+    eid: subcategory-processing_and_analysis-data_management-maintenance
+    name: Maintenance
+
+    parentId: category-processing_and_analysis-data_management
+    type: SUBCATEGORY
+  training_and_support-consultancy_and_support-methodology_development:
+    eid: subcategory-training_and_support-consultancy_and_support-methodology_development
+    name: Methodology Development
+
+    parentId: category-training_and_support-consultancy_and_support
+    type: SUBCATEGORY
+  processing_and_analysis-measurement_and_materials_analysis-other:
+    eid: subcategory-processing_and_analysis-measurement_and_materials_analysis-other
+    name: Other
+
+    parentId: category-processing_and_analysis-measurement_and_materials_analysis
+    type: SUBCATEGORY
+  sharing_and_discovery-scholarly_communication-other:
+    eid: subcategory-sharing_and_discovery-scholarly_communication-other
+    name: Other
+
+    parentId: category-sharing_and_discovery-scholarly_communication
+    type: SUBCATEGORY
+  sharing_and_discovery-scholarly_communication-outreach:
+    eid: subcategory-sharing_and_discovery-scholarly_communication-outreach
+    name: Outreach
+
+    parentId: category-sharing_and_discovery-scholarly_communication
+    type: SUBCATEGORY
+  sharing_and_discovery-data-statistical_data:
+    eid: subcategory-sharing_and_discovery-data-statistical_data
+    name: Statistical Data
+
+    parentId: category-sharing_and_discovery-data
+    type: SUBCATEGORY
+  processing_and_analysis-data_analysis-machine_learning:
+    eid: subcategory-processing_and_analysis-data_analysis-machine_learning
+    name: Machine Learning
+
+    parentId: category-processing_and_analysis-data_analysis
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-instrument_and_equipment-radiation:
+    eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-radiation
+    name: Radiation
+
+    parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
+    type: SUBCATEGORY
+  sharing_and_discovery-software-software_package:
+    eid: subcategory-sharing_and_discovery-software-software_package
+    name: Software Package
+
+    parentId: category-sharing_and_discovery-software
+    type: SUBCATEGORY
+  sharing_and_discovery-software-software_repository:
+    eid: subcategory-sharing_and_discovery-software-software_repository
+    name: Software Repository
+
+    parentId: category-sharing_and_discovery-software
+    type: SUBCATEGORY
+  aggregators_and_integrators-aggregators_and_integrators-software:
+    eid: subcategory-aggregators_and_integrators-aggregators_and_integrators-software
+    name: Software
+
+    parentId: category-aggregators_and_integrators-aggregators_and_integrators
+    type: SUBCATEGORY
+  sharing_and_discovery-development_resources-software_development_kits:
+    eid: subcategory-sharing_and_discovery-development_resources-software_development_kits
+    name: Software Development Kits
+
+    parentId: category-sharing_and_discovery-development_resources
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-compute-workload_management:
+    eid: subcategory-access_physical_and_eInfrastructures-compute-workload_management
+    name: Workload Management
+
+    parentId: category-access_physical_and_eInfrastructures-compute
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-data_storage-digital_preservation:
+    eid: subcategory-access_physical_and_eInfrastructures-data_storage-digital_preservation
+    name: Digital Preservation
+
+    parentId: category-access_physical_and_eInfrastructures-data_storage
+    type: SUBCATEGORY
+  sharing_and_discovery-data-government_and_agency_data:
+    eid: subcategory-sharing_and_discovery-data-government_and_agency_data
+    name: Government & Agency Data
+
+    parentId: category-sharing_and_discovery-data
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-network-load_balancer:
+    eid: subcategory-access_physical_and_eInfrastructures-network-load_balancer
+    name: Load Balancer
+
+    parentId: category-access_physical_and_eInfrastructures-network
+    type: SUBCATEGORY
+  sharing_and_discovery-scholarly_communication-discovery:
+    eid: subcategory-sharing_and_discovery-scholarly_communication-discovery
+    name: Discovery
+
+    parentId: category-sharing_and_discovery-scholarly_communication
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-network-direct_connect:
+    eid: subcategory-access_physical_and_eInfrastructures-network-direct_connect
+    name: Direct Connect
+
+    parentId: category-access_physical_and_eInfrastructures-network
+    type: SUBCATEGORY
+  processing_and_analysis-data_analysis-other:
+    eid: subcategory-processing_and_analysis-data_analysis-other
+    name: Other
+
+    parentId: category-processing_and_analysis-data_analysis
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-data_storage-archive:
+    eid: subcategory-access_physical_and_eInfrastructures-data_storage-archive
+    name: Archive
+
+    parentId: category-access_physical_and_eInfrastructures-data_storage
+    type: SUBCATEGORY
+  sharing_and_discovery-scholarly_communication-preparation:
+    eid: subcategory-sharing_and_discovery-scholarly_communication-preparation
+    name: Preparation
+
+    parentId: category-sharing_and_discovery-scholarly_communication
+    type: SUBCATEGORY
+  sharing_and_discovery-data-clinical_trial_data:
+    eid: subcategory-sharing_and_discovery-data-clinical_trial_data
+    name: Clinical Trial Data
+
+    parentId: category-sharing_and_discovery-data
+    type: SUBCATEGORY
+  processing_and_analysis-data_management-validation:
+    eid: subcategory-processing_and_analysis-data_management-validation
+    name: Validation
+
+    parentId: category-processing_and_analysis-data_management
+    type: SUBCATEGORY
+  security_and_operations-operations_and_infrastructure_management_services-helpdesk:
+    eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-helpdesk
+    name: Helpdesk
+
+    parentId: category-security_and_operations-operations_and_infrastructure_management_services
+    type: SUBCATEGORY
+  security_and_operations-operations_and_infrastructure_management_services-other:
+    eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-other
+    name: Other
+
+    parentId: category-security_and_operations-operations_and_infrastructure_management_services
+    type: SUBCATEGORY
+  processing_and_analysis-data_management-preservation:
+    eid: subcategory-processing_and_analysis-data_management-preservation
+    name: Preservation
+
+    parentId: category-processing_and_analysis-data_management
+    type: SUBCATEGORY
+  sharing_and_discovery-data-data_archives:
+    eid: subcategory-sharing_and_discovery-data-data_archives
+    name: Data Archives
+
+    parentId: category-sharing_and_discovery-data
+    type: SUBCATEGORY
+  security_and_operations-security_and_identity-threat_protection:
+    eid: subcategory-security_and_operations-security_and_identity-threat_protection
+    name: Threat Protection
+
+    parentId: category-security_and_operations-security_and_identity
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-material_storage-repository:
+    eid: subcategory-access_physical_and_eInfrastructures-material_storage-repository
+    name: Repository
+
+    parentId: category-access_physical_and_eInfrastructures-material_storage
+    type: SUBCATEGORY
+  security_and_operations-security_and_identity-user_authentication:
+    eid: subcategory-security_and_operations-security_and_identity-user_authentication
+    name: User Authentication
+
+    parentId: category-security_and_operations-security_and_identity
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-instrument_and_equipment-chromatographer:
+    eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-chromatographer
+    name: Chromatographer
+
+    parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
+    type: SUBCATEGORY
+  sharing_and_discovery-scholarly_communication-publication:
+    eid: subcategory-sharing_and_discovery-scholarly_communication-publication
+    name: Publication
+
+    parentId: category-sharing_and_discovery-scholarly_communication
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-material_storage-quality_inspecting:
+    eid: subcategory-access_physical_and_eInfrastructures-material_storage-quality_inspecting
+    name: Quality Inspecting
+
+    parentId: category-access_physical_and_eInfrastructures-material_storage
+    type: SUBCATEGORY
+  sharing_and_discovery-development_resources-developer_tools:
+    eid: subcategory-sharing_and_discovery-development_resources-developer_tools
+    name: Developer Tools
+
+    parentId: category-sharing_and_discovery-development_resources
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-network-vpn_gateway:
+    eid: subcategory-access_physical_and_eInfrastructures-network-vpn_gateway
+    name: VPN Gateway
+
+    parentId: category-access_physical_and_eInfrastructures-network
+    type: SUBCATEGORY
+  training_and_support-consultancy_and_support-testing:
+    eid: subcategory-training_and_support-consultancy_and_support-testing
+    name: Testing
+
+    parentId: category-training_and_support-consultancy_and_support
+    type: SUBCATEGORY
+  security_and_operations-operations_and_infrastructure_management_services-billing:
+    eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-billing
+    name: Billing
+
+    parentId: category-security_and_operations-operations_and_infrastructure_management_services
+    type: SUBCATEGORY
+  training_and_support-consultancy_and_support-prototype_development:
+    eid: subcategory-training_and_support-consultancy_and_support-prototype_development
+    name: Prototype Development
+
+    parentId: category-training_and_support-consultancy_and_support
+    type: SUBCATEGORY
+  processing_and_analysis-data_analysis-data_exploitation:
+    eid: subcategory-processing_and_analysis-data_analysis-data_exploitation
+    name: Data Exploitation
+
+    parentId: category-processing_and_analysis-data_analysis
+    type: SUBCATEGORY
+  processing_and_analysis-data_management-other:
+    eid: subcategory-processing_and_analysis-data_management-other
+    name: Other
+
+    parentId: category-processing_and_analysis-data_management
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-material_storage-disposal:
+    eid: subcategory-access_physical_and_eInfrastructures-material_storage-disposal
+    name: Disposal
+
+    parentId: category-access_physical_and_eInfrastructures-material_storage
+    type: SUBCATEGORY
+  security_and_operations-operations_and_infrastructure_management_services-monitoring:
+    eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-monitoring
+    name: Monitoring
+
+    parentId: category-security_and_operations-operations_and_infrastructure_management_services
+    type: SUBCATEGORY
+  processing_and_analysis-measurement_and_materials_analysis-characterisation:
+    eid: subcategory-processing_and_analysis-measurement_and_materials_analysis-characterisation
+    name: Characterisation
+
+    parentId: category-processing_and_analysis-measurement_and_materials_analysis
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-data_storage-disk:
+    eid: subcategory-access_physical_and_eInfrastructures-data_storage-disk
+    name: Disk
+
+    parentId: category-access_physical_and_eInfrastructures-data_storage
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-data_storage-recovery:
+    eid: subcategory-access_physical_and_eInfrastructures-data_storage-recovery
+    name: Recovery
+
+    parentId: category-access_physical_and_eInfrastructures-data_storage
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-data_storage-synchronised:
+    eid: subcategory-access_physical_and_eInfrastructures-data_storage-synchronised
+    name: Synchronised
+
+    parentId: category-access_physical_and_eInfrastructures-data_storage
+    type: SUBCATEGORY
+  sharing_and_discovery-applications-other:
+    eid: subcategory-sharing_and_discovery-applications-other
+    name: Other
+
+    parentId: category-sharing_and_discovery-applications
+    type: SUBCATEGORY
+  processing_and_analysis-data_management-transfer:
+    eid: subcategory-processing_and_analysis-data_management-transfer
+    name: Transfer
+
+    parentId: category-processing_and_analysis-data_management
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-data_storage-file:
+    eid: subcategory-access_physical_and_eInfrastructures-data_storage-file
+    name: File
+
+    parentId: category-access_physical_and_eInfrastructures-data_storage
+    type: SUBCATEGORY
+  security_and_operations-operations_and_infrastructure_management_services-coordination:
+    eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-coordination
+    name: Coordination
+
+    parentId: category-security_and_operations-operations_and_infrastructure_management_services
+    type: SUBCATEGORY
+  sharing_and_discovery-samples-characterisation:
+    eid: subcategory-sharing_and_discovery-samples-characterisation
+    name: Characterisation
+
+    parentId: category-sharing_and_discovery-samples
+    type: SUBCATEGORY
+  training_and_support-consultancy_and_support-calibration:
+    eid: subcategory-training_and_support-consultancy_and_support-calibration
+    name: Calibration
+
+    parentId: category-training_and_support-consultancy_and_support
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-instrument_and_equipment-monument_maintenance_equipment:
+    eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-monument_maintenance_equipment
+    name: Monument Maintenance Equipment
+
+    parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
+    type: SUBCATEGORY
+  training_and_support-education_and_training-open_registration_courses:
+    eid: subcategory-training_and_support-education_and_training-open_registration_courses
+    name: Open Registration Courses
+
+    parentId: category-training_and_support-education_and_training
+    type: SUBCATEGORY
+  sharing_and_discovery-data-scientific_research_data:
+    eid: subcategory-sharing_and_discovery-data-scientific_research_data
+    name: Scientific/Research Data
+
+    parentId: category-sharing_and_discovery-data
+    type: SUBCATEGORY
+  processing_and_analysis-data_management-access:
+    eid: subcategory-processing_and_analysis-data_management-access
+    name: Access
+
+    parentId: category-processing_and_analysis-data_management
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-material_storage-assembly:
+    eid: subcategory-access_physical_and_eInfrastructures-material_storage-assembly
+    name: Assembly
+
+    parentId: category-access_physical_and_eInfrastructures-material_storage
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-data_storage-replicated:
+    eid: subcategory-access_physical_and_eInfrastructures-data_storage-replicated
+    name: Replicated
+
+    parentId: category-access_physical_and_eInfrastructures-data_storage
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-instrument_and_equipment-other:
+    eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-other
+    name: Other
+
+    parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
+    type: SUBCATEGORY
+  processing_and_analysis-data_analysis-visualization:
+    eid: subcategory-processing_and_analysis-data_analysis-visualization
+    name: Visualization
+
+    parentId: category-processing_and_analysis-data_analysis
+    type: SUBCATEGORY
+  processing_and_analysis-data_management-annotation:
+    eid: subcategory-processing_and_analysis-data_management-annotation
+    name: Annotation
+
+    parentId: category-processing_and_analysis-data_management
+    type: SUBCATEGORY
+  processing_and_analysis-measurement_and_materials_analysis-analysis:
+    eid: subcategory-processing_and_analysis-measurement_and_materials_analysis-analysis
+    name: Analysis
+
+    parentId: category-processing_and_analysis-measurement_and_materials_analysis
+    type: SUBCATEGORY
+  sharing_and_discovery-scholarly_communication-writing:
+    eid: subcategory-sharing_and_discovery-scholarly_communication-writing
+    name: Writing
+
+    parentId: category-sharing_and_discovery-scholarly_communication
+    type: SUBCATEGORY
+  processing_and_analysis-measurement_and_materials_analysis-maintenance_and_modification:
+    eid: subcategory-processing_and_analysis-measurement_and_materials_analysis-maintenance_and_modification
+    name: Maintenance & Modification
+
+    parentId: category-processing_and_analysis-measurement_and_materials_analysis
+    type: SUBCATEGORY
+  training_and_support-consultancy_and_support-application_optimisation:
+    eid: subcategory-training_and_support-consultancy_and_support-application_optimisation
+    name: Application Optimisation
+
+    parentId: category-training_and_support-consultancy_and_support
+    type: SUBCATEGORY
+  other-other-other:
+    eid: subcategory-other-other-other
+    name: Other
+
+    parentId: category-other-other
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-compute-other:
+    eid: subcategory-access_physical_and_eInfrastructures-compute-other
+    name: Other
+
+    parentId: category-access_physical_and_eInfrastructures-compute
+    type: SUBCATEGORY
+  training_and_support-education_and_training-online_courses:
+    eid: subcategory-training_and_support-education_and_training-online_courses
+    name: Online Courses
+
+    parentId: category-training_and_support-education_and_training
+    type: SUBCATEGORY
+  processing_and_analysis-measurement_and_materials_analysis-production:
+    eid: subcategory-processing_and_analysis-measurement_and_materials_analysis-production
+    name: Production
+
+    parentId: category-processing_and_analysis-measurement_and_materials_analysis
+    type: SUBCATEGORY
+  sharing_and_discovery-applications-productivity:
+    eid: subcategory-sharing_and_discovery-applications-productivity
+    name: Productivity
+
+    parentId: category-sharing_and_discovery-applications
+    type: SUBCATEGORY
+  processing_and_analysis-data_management-brokering:
+    eid: subcategory-processing_and_analysis-data_management-brokering
+    name: Brokering
+
+    parentId: category-processing_and_analysis-data_management
+    type: SUBCATEGORY
+  security_and_operations-security_and_identity-coordination:
+    eid: subcategory-security_and_operations-security_and_identity-coordination
+    name: Coordination
+
+    parentId: category-security_and_operations-security_and_identity
+    type: SUBCATEGORY
+  processing_and_analysis-data_management-registration:
+    eid: subcategory-processing_and_analysis-data_management-registration
+    name: Registration
+
+    parentId: category-processing_and_analysis-data_management
+    type: SUBCATEGORY
+  training_and_support-consultancy_and_support-certification:
+    eid: subcategory-training_and_support-consultancy_and_support-certification
+    name: Certification
+
+    parentId: category-training_and_support-consultancy_and_support
+    type: SUBCATEGORY
+  sharing_and_discovery-development_resources-apis_repository_gateway:
+    eid: subcategory-sharing_and_discovery-development_resources-apis_repository_gateway
+    name: APIs Repository/Gateway
+
+    parentId: category-sharing_and_discovery-development_resources
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-material_storage-sorting:
+    eid: subcategory-access_physical_and_eInfrastructures-material_storage-sorting
+    name: Sorting
+
+    parentId: category-access_physical_and_eInfrastructures-material_storage
+    type: SUBCATEGORY
+  security_and_operations-operations_and_infrastructure_management_services-configuration:
+    eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-configuration
+    name: Configuration
+
+    parentId: category-security_and_operations-operations_and_infrastructure_management_services
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-instrument_and_equipment-spectrometer:
+    eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-spectrometer
+    name: Spectrometer
+
+    parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
+    type: SUBCATEGORY
+  training_and_support-consultancy_and_support-other:
+    eid: subcategory-training_and_support-consultancy_and_support-other
+    name: Other
+
+    parentId: category-training_and_support-consultancy_and_support
+    type: SUBCATEGORY
+  sharing_and_discovery-data-epidemiological_data:
+    eid: subcategory-sharing_and_discovery-data-epidemiological_data
+    name: Epidemiological Data
+
+    parentId: category-sharing_and_discovery-data
+    type: SUBCATEGORY
+  sharing_and_discovery-applications-applications_repository:
+    eid: subcategory-sharing_and_discovery-applications-applications_repository
+    name: Applications Repository
+
+    parentId: category-sharing_and_discovery-applications
+    type: SUBCATEGORY
+  training_and_support-consultancy_and_support-technology_transfer:
+    eid: subcategory-training_and_support-consultancy_and_support-technology_transfer
+    name: Technology Transfer
+
+    parentId: category-training_and_support-consultancy_and_support
+    type: SUBCATEGORY
+  training_and_support-consultancy_and_support-software_improvement:
+    eid: subcategory-training_and_support-consultancy_and_support-software_improvement
+    name: Software Improvement
+
+    parentId: category-training_and_support-consultancy_and_support
+    type: SUBCATEGORY
+  sharing_and_discovery-samples-other:
+    eid: subcategory-sharing_and_discovery-samples-other
+    name: Other
+
+    parentId: category-sharing_and_discovery-samples
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-data_storage-online:
+    eid: subcategory-access_physical_and_eInfrastructures-data_storage-online
+    name: Online
+
+    parentId: category-access_physical_and_eInfrastructures-data_storage
+    type: SUBCATEGORY
+  aggregators_and_integrators-aggregators_and_integrators-other:
+    eid: subcategory-aggregators_and_integrators-aggregators_and_integrators-other
+    name: Other
+
+    parentId: category-aggregators_and_integrators-aggregators_and_integrators
+    type: SUBCATEGORY
+  security_and_operations-security_and_identity-tools:
+    eid: subcategory-security_and_operations-security_and_identity-tools
+    name: Tools
+
+    parentId: category-security_and_operations-security_and_identity
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-data_storage-data:
+    eid: subcategory-access_physical_and_eInfrastructures-data_storage-data
+    name: Data
+
+    parentId: category-access_physical_and_eInfrastructures-data_storage
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-compute-orchestration:
+    eid: subcategory-access_physical_and_eInfrastructures-compute-orchestration
+    name: Orchestration
+
+    parentId: category-access_physical_and_eInfrastructures-compute
+    type: SUBCATEGORY
+  training_and_support-consultancy_and_support-application_scaling:
+    eid: subcategory-training_and_support-consultancy_and_support-application_scaling
+    name: Application Scaling
+
+    parentId: category-training_and_support-consultancy_and_support
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-material_storage-warehousing:
+    eid: subcategory-access_physical_and_eInfrastructures-material_storage-warehousing
+    name: Warehousing
+
+    parentId: category-access_physical_and_eInfrastructures-material_storage
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-data_storage-backup:
+    eid: subcategory-access_physical_and_eInfrastructures-data_storage-backup
+    name: Backup
+
+    parentId: category-access_physical_and_eInfrastructures-data_storage
+    type: SUBCATEGORY
+  security_and_operations-security_and_identity-firewall:
+    eid: subcategory-security_and_operations-security_and_identity-firewall
+    name: Firewall
+
+    parentId: category-security_and_operations-security_and_identity
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-material_storage-other:
+    eid: subcategory-access_physical_and_eInfrastructures-material_storage-other
+    name: Other
+
+    parentId: category-access_physical_and_eInfrastructures-material_storage
+    type: SUBCATEGORY
+  processing_and_analysis-measurement_and_materials_analysis-workflows:
+    eid: subcategory-processing_and_analysis-measurement_and_materials_analysis-workflows
+    name: Workflows
+
+    parentId: category-processing_and_analysis-measurement_and_materials_analysis
+    type: SUBCATEGORY
+  sharing_and_discovery-development_resources-software_libraries:
+    eid: subcategory-sharing_and_discovery-development_resources-software_libraries
+    name: Software Libraries
+
+    parentId: category-sharing_and_discovery-development_resources
+    type: SUBCATEGORY
+  processing_and_analysis-data_analysis-artificial_intelligence:
+    eid: subcategory-processing_and_analysis-data_analysis-artificial_intelligence
+    name: Artificial Intelligence
+
+    parentId: category-processing_and_analysis-data_analysis
+    type: SUBCATEGORY
+  security_and_operations-security_and_identity-other:
+    eid: subcategory-security_and_operations-security_and_identity-other
+    name: Other
+
+    parentId: category-security_and_operations-security_and_identity
+    type: SUBCATEGORY
+  sharing_and_discovery-applications-collaboration:
+    eid: subcategory-sharing_and_discovery-applications-collaboration
+    name: Collaboration
+
+    parentId: category-sharing_and_discovery-applications
+    type: SUBCATEGORY
+  training_and_support-education_and_training-in_house_courses:
+    eid: subcategory-training_and_support-education_and_training-in_house_courses
+    name: In-House Courses
+
+    parentId: category-training_and_support-education_and_training
+    type: SUBCATEGORY
+  sharing_and_discovery-applications-business:
+    eid: subcategory-sharing_and_discovery-applications-business
+    name: Business
+
+    parentId: category-sharing_and_discovery-applications
+    type: SUBCATEGORY
+  training_and_support-education_and_training-training_platform:
+    eid: subcategory-training_and_support-education_and_training-training_platform
+    name: Training Platform
+
+    parentId: category-training_and_support-education_and_training
+    type: SUBCATEGORY
+  aggregators_and_integrators-aggregators_and_integrators-data:
+    eid: subcategory-aggregators_and_integrators-aggregators_and_integrators-data
+    name: Data
+
+    parentId: category-aggregators_and_integrators-aggregators_and_integrators
+    type: SUBCATEGORY
+  security_and_operations-operations_and_infrastructure_management_services-utilities:
+    eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-utilities
+    name: Utilities
+
+    parentId: category-security_and_operations-operations_and_infrastructure_management_services
+    type: SUBCATEGORY
+  training_and_support-education_and_training-other:
+    eid: subcategory-training_and_support-education_and_training-other
+    name: Other
+
+    parentId: category-training_and_support-education_and_training
+    type: SUBCATEGORY
+  training_and_support-education_and_training-related_training:
+    eid: subcategory-training_and_support-education_and_training-related_training
+    name: Related Training
+
+    parentId: category-training_and_support-education_and_training
+    type: SUBCATEGORY
+  training_and_support-education_and_training-required_training:
+    eid: subcategory-training_and_support-education_and_training-required_training
+    name: Required Training
+
+    parentId: category-training_and_support-education_and_training
+    type: SUBCATEGORY
+  processing_and_analysis-measurement_and_materials_analysis-validation:
+    eid: subcategory-processing_and_analysis-measurement_and_materials_analysis-validation
+    name: Validation
+
+    parentId: category-processing_and_analysis-measurement_and_materials_analysis
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-network-exchange:
+    eid: subcategory-access_physical_and_eInfrastructures-network-exchange
+    name: Exchange
+
+    parentId: category-access_physical_and_eInfrastructures-network
+    type: SUBCATEGORY
+  processing_and_analysis-data_management-interlinking:
+    eid: subcategory-processing_and_analysis-data_management-interlinking
+    name: Interlinking
+
+    parentId: category-processing_and_analysis-data_management
+    type: SUBCATEGORY
+  processing_and_analysis-data_management-mining:
+    eid: subcategory-processing_and_analysis-data_management-mining
+    name: Mining
+
+    parentId: category-processing_and_analysis-data_management
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-instrument_and_equipment-cytometer:
+    eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-cytometer
+    name: Cytometer
+
+    parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
+    type: SUBCATEGORY
+  processing_and_analysis-data_management-digitisation:
+    eid: subcategory-processing_and_analysis-data_management-digitisation
+    name: Digitisation
+
+    parentId: category-processing_and_analysis-data_management
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-data_storage-other:
+    eid: subcategory-access_physical_and_eInfrastructures-data_storage-other
+    name: Other
+
+    parentId: category-access_physical_and_eInfrastructures-data_storage
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-material_storage-packaging:
+    eid: subcategory-access_physical_and_eInfrastructures-material_storage-packaging
+    name: Packaging
+
+    parentId: category-access_physical_and_eInfrastructures-material_storage
+    type: SUBCATEGORY
+  security_and_operations-operations_and_infrastructure_management_services-accounting:
+    eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-accounting
+    name: Accounting
+
+    parentId: category-security_and_operations-operations_and_infrastructure_management_services
+    type: SUBCATEGORY
+  training_and_support-consultancy_and_support-software_development:
+    eid: subcategory-training_and_support-consultancy_and_support-software_development
+    name: Software Development
+
+    parentId: category-training_and_support-consultancy_and_support
+    type: SUBCATEGORY
+  security_and_operations-operations_and_infrastructure_management_services-transportation:
+    eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-transportation
+    name: Transportation
+
+    parentId: category-security_and_operations-operations_and_infrastructure_management_services
+    type: SUBCATEGORY
+  sharing_and_discovery-scholarly_communication-analysis:
+    eid: subcategory-sharing_and_discovery-scholarly_communication-analysis
+    name: Analysis
+
+    parentId: category-sharing_and_discovery-scholarly_communication
+    type: SUBCATEGORY
+  training_and_support-consultancy_and_support-modeling_and_simulation:
+    eid: subcategory-training_and_support-consultancy_and_support-modeling_and_simulation
+    name: Modeling & Simulation
+
+    parentId: category-training_and_support-consultancy_and_support
+    type: SUBCATEGORY
+  training_and_support-education_and_training-training_tool:
+    eid: subcategory-training_and_support-education_and_training-training_tool
+    name: Training Tool
+
+    parentId: category-training_and_support-education_and_training
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-instrument_and_equipment-digitisation_equipment:
+    eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-digitisation_equipment
+    name: Digitisation Equipment
+
+    parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
+    type: SUBCATEGORY
+  sharing_and_discovery-data-online_service_data:
+    eid: subcategory-sharing_and_discovery-data-online_service_data
+    name: Online Service Data
+
+    parentId: category-sharing_and_discovery-data
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-network-other:
+    eid: subcategory-access_physical_and_eInfrastructures-network-other
+    name: Other
+
+    parentId: category-access_physical_and_eInfrastructures-network
+    type: SUBCATEGORY
+  training_and_support-consultancy_and_support-benchmarking:
+    eid: subcategory-training_and_support-consultancy_and_support-benchmarking
+    name: Benchmarking
+
+    parentId: category-training_and_support-consultancy_and_support
+    type: SUBCATEGORY
+  sharing_and_discovery-samples-chemical_compounds_library:
+    eid: subcategory-sharing_and_discovery-samples-chemical_compounds_library
+    name: Chemical Compounds Library
+
+    parentId: category-sharing_and_discovery-samples
+    type: SUBCATEGORY
+  sharing_and_discovery-software-platform:
+    eid: subcategory-sharing_and_discovery-software-platform
+    name: Platform
+
+    parentId: category-sharing_and_discovery-software
+    type: SUBCATEGORY
+  training_and_support-consultancy_and_support-audit_and_assessment:
+    eid: subcategory-training_and_support-consultancy_and_support-audit_and_assessment
+    name: Audit & Assessment
+
+    parentId: category-training_and_support-consultancy_and_support
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-compute-container_management:
+    eid: subcategory-access_physical_and_eInfrastructures-compute-container_management
+    name: Container Management
+
+    parentId: category-access_physical_and_eInfrastructures-compute
+    type: SUBCATEGORY
+  processing_and_analysis-data_management-publishing:
+    eid: subcategory-processing_and_analysis-data_management-publishing
+    name: processing_and_analysis-data_management-publishing
+
+    parentId: category-processing_and_analysis-data_management
+    type: SUBCATEGORY
+    extras: {}
+  access_physical_and_eInfrastructures-network-virtual_nework:
+    eid: subcategory-access_physical_and_eInfrastructures-network-virtual_nework
+    name: Virtual Network
+
+    parentId: category-access_physical_and_eInfrastructures-network
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-instrument_and_equipment-laser:
+    eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-laser
+    name: Laser
+
+    parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
+    type: SUBCATEGORY
+  sharing_and_discovery-samples-preparation:
+    eid: subcategory-sharing_and_discovery-samples-preparation
+    name: Preparation
+
+    parentId: category-sharing_and_discovery-samples
+    type: SUBCATEGORY
+  security_and_operations-security_and_identity-single_sign_on:
+    eid: subcategory-security_and_operations-security_and_identity-single_sign_on
+    name: Single Sign-On
+
+    parentId: category-security_and_operations-security_and_identity
+    type: SUBCATEGORY
+  processing_and_analysis-data_management-anonymisation:
+    eid: subcategory-processing_and_analysis-data_management-anonymisation
+    name: Anonymisation
+
+    parentId: category-processing_and_analysis-data_management
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-compute-serverless_applications_repository:
+    eid: subcategory-access_physical_and_eInfrastructures-compute-serverless_applications_repository
+    name: Serverless Applications Repository
+
+    parentId: category-access_physical_and_eInfrastructures-compute
+    type: SUBCATEGORY
+  sharing_and_discovery-applications-utilities:
+    eid: subcategory-sharing_and_discovery-applications-utilities
+    name: Utilities
+
+    parentId: category-sharing_and_discovery-applications
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-network-content_delivery_network:
+    eid: subcategory-access_physical_and_eInfrastructures-network-content_delivery_network
+    name: Content Delivery Network
+
+    parentId: category-access_physical_and_eInfrastructures-network
+    type: SUBCATEGORY
+  security_and_operations-security_and_identity-identity_and_access_management:
+    eid: subcategory-security_and_operations-security_and_identity-identity_and_access_management
+    name: Identity & Access Management
+
+    parentId: category-security_and_operations-security_and_identity
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-instrument_and_equipment-microscopy:
+    eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-microscopy
+    name: Microscopy
+
+    parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-data_storage-queue:
+    eid: subcategory-access_physical_and_eInfrastructures-data_storage-queue
+    name: Queue
+
+    parentId: category-access_physical_and_eInfrastructures-data_storage
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-network-traffic_manager:
+    eid: subcategory-access_physical_and_eInfrastructures-network-traffic_manager
+    name: Traffic Manager
+
+    parentId: category-access_physical_and_eInfrastructures-network
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-material_storage-preservation:
+    eid: subcategory-access_physical_and_eInfrastructures-material_storage-preservation
+    name: Preservation
+
+    parentId: category-access_physical_and_eInfrastructures-material_storage
+    type: SUBCATEGORY
+  sharing_and_discovery-data-other:
+    eid: subcategory-sharing_and_discovery-data-other
+    name: Other
+
+    parentId: category-sharing_and_discovery-data
+    type: SUBCATEGORY
+  sharing_and_discovery-software-libraries:
+    eid: subcategory-sharing_and_discovery-software-libraries
+    name: Libraries
+
+    parentId: category-sharing_and_discovery-software
+    type: SUBCATEGORY
+  security_and_operations-operations_and_infrastructure_management_services-order_management:
+    eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-order_management
+    name: Order Management
+
+    parentId: category-security_and_operations-operations_and_infrastructure_management_services
+    type: SUBCATEGORY
+  processing_and_analysis-data_analysis-workflows:
+    eid: subcategory-processing_and_analysis-data_analysis-workflows
+    name: Workflows
+
+    parentId: category-processing_and_analysis-data_analysis
+    type: SUBCATEGORY
+  aggregators_and_integrators-aggregators_and_integrators-services:
+    eid: subcategory-aggregators_and_integrators-aggregators_and_integrators-services
+    name: Services
+
+    parentId: category-aggregators_and_integrators-aggregators_and_integrators
+    type: SUBCATEGORY
+  training_and_support-consultancy_and_support-application_porting:
+    eid: subcategory-training_and_support-consultancy_and_support-application_porting
+    name: Application_Porting
+
+    parentId: category-training_and_support-consultancy_and_support
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-compute-job_execution:
+    eid: subcategory-access_physical_and_eInfrastructures-compute-job_execution
+    name: Job Execution
+
+    parentId: category-access_physical_and_eInfrastructures-compute
+    type: SUBCATEGORY
+  processing_and_analysis-measurement_and_materials_analysis-testing_and_validation:
+    eid: subcategory-processing_and_analysis-measurement_and_materials_analysis-testing_and_validation
+    name: TEsting & Validation
+
+    parentId: category-processing_and_analysis-measurement_and_materials_analysis
+    type: SUBCATEGORY
+  processing_and_analysis-data_management-embargo:
+    eid: subcategory-processing_and_analysis-data_management-embargo
+    name: Embargo
+
+    parentId: category-processing_and_analysis-data_management
+    type: SUBCATEGORY
+  processing_and_analysis-data_analysis-forecast:
+    eid: subcategory-processing_and_analysis-data_analysis-forecast
+    name: Forecast
+
+    parentId: category-processing_and_analysis-data_analysis
+    type: SUBCATEGORY
+  security_and_operations-operations_and_infrastructure_management_services-analysis:
+    eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-analysis
+    name: Analysis
+
+    parentId: category-security_and_operations-operations_and_infrastructure_management_services
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-material_storage-fulfilment:
+    eid: subcategory-access_physical_and_eInfrastructures-material_storage-fulfilment
+    name: Fulfilment
+
+    parentId: category-access_physical_and_eInfrastructures-material_storage
+    type: SUBCATEGORY
+  security_and_operations-security_and_identity-group_management:
+    eid: subcategory-security_and_operations-security_and_identity-group_management
+    name: Group Management
+
+    parentId: category-security_and_operations-security_and_identity
+    type: SUBCATEGORY
+  sharing_and_discovery-samples-biological_samples:
+    eid: subcategory-sharing_and_discovery-samples-biological_samples
+    name: Biological Samples
+
+    parentId: category-sharing_and_discovery-samples
+    type: SUBCATEGORY
+  processing_and_analysis-data_management-discovery:
+    eid: subcategory-processing_and_analysis-data_management-discovery
+    name: Discovery
+
+    parentId: category-processing_and_analysis-data_management
+    type: SUBCATEGORY
+  security_and_operations-security_and_identity-certification_authority:
+    eid: subcategory-security_and_operations-security_and_identity-certification_authority
+    name: Certification Authority
+
+    parentId: category-security_and_operations-security_and_identity
+    type: SUBCATEGORY
+  processing_and_analysis-data_management-persistent_identifier:
+    eid: subcategory-processing_and_analysis-data_management-persistent_identifier
+    name: Persistent Identifier
+
+    parentId: category-processing_and_analysis-data_management
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-material_storage-reworking:
+    eid: subcategory-access_physical_and_eInfrastructures-material_storage-reworking
+    name: Reworking
+
+    parentId: category-access_physical_and_eInfrastructures-material_storage
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-instrument_and_equipment-geophysical:
+    eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-geophysical
+    name: Geophysical
+
+    parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
+    type: SUBCATEGORY
+  sharing_and_discovery-applications-education:
+    eid: subcategory-sharing_and_discovery-applications-education
+    name: Education
+
+    parentId: category-sharing_and_discovery-applications
+    type: SUBCATEGORY
+  access_physical_and_eInfrastructures-compute-virtual_machine_management:
+    eid: subcategory-access_physical_and_eInfrastructures-compute-virtual_machine_management
+    name: Virtual Machine Management
+
+    parentId: category-access_physical_and_eInfrastructures-compute
+    type: SUBCATEGORY
+  aggregators_and_integrators-aggregators_and_integrators-applications:
+    eid: subcategory-aggregators_and_integrators-aggregators_and_integrators-applications
+    name: Applications
+
+    parentId: category-aggregators_and_integrators-aggregators_and_integrators
+    type: SUBCATEGORY
+  sharing_and_discovery-development_resources-other:
+    eid: subcategory-sharing_and_discovery-development_resources-other
+    name: Other
+
+    parentId: category-sharing_and_discovery-development_resources
+    type: SUBCATEGORY
+
+scientific_domain:
+  medical_and_health_sciences:
+    eid: scientific_domain-medical_and_health_sciences
+    name: Medical & Health Sciences
+    description: The science of dealing with the maintenance of health and the prevention and treatment of disease.
+    type: SCIENTIFIC_DOMAIN
+  engineering_and_technology:
+    eid: scientific_domain-engineering_and_technology
+    name: Engineering & Technology
+    description: The application of science and mathematics by which the properties of matter and the sources of energy in nature are made useful to people.
+    type: SCIENTIFIC_DOMAIN
+  natural_sciences:
+    eid: scientific_domain-natural_sciences
+    name: Natural Sciences
+    description: Any of the sciences (such as physics, chemistry, or biology) that deal with matter, energy, and their interrelations and transformations or with objectively measurable phenomena.
+    type: SCIENTIFIC_DOMAIN
+  generic:
+    eid: scientific_domain-generic
+    name: Generic
+    description: Generic, Not targetting a specific domain.
+    type: SCIENTIFIC_DOMAIN
+  humanities:
+    eid: scientific_domain-humanities
+    name: Humanities
+    description: The branches of learning that investigate human constructs and concerns as opposed to natural processes (as in physics or chemistry) and social relations (as in anthropology or economics).
+    parentId: null,
+    type: SCIENTIFIC_DOMAIN
+  agricultural_sciences:
+    eid: scientific_domain-agricultural_sciences
+    name: Agricultural Sciences
+    description: Sciences dealing with food and fibre production and processing. They include the technologies of soil cultivation, crop cultivation and harvesting, animal production, and the processing of plant and animal products for human consumption and use.
+    type: SCIENTIFIC_DOMAIN
+  social_sciences:
+    eid: scientific_domain-social_sciences
+    name: Social Sciences
+    description: A branch of science that deals with the institutions and functioning of human society and with the interpersonal relationships of individuals as members of society.
+    type: SCIENTIFIC_DOMAIN
+  other:
+    eid: scientific_domain-other
+    name: Other
+    type: SCIENTIFIC_DOMAIN
+  natural_sciences-computer_and_information_sciences:
+    eid: scientific_subdomain-natural_sciences-computer_and_information_sciences
+    name: Computer & Information Sciences
+    parentId: scientific_domain-natural_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  engineering_and_technology-chemical_engineering:
+    eid: scientific_subdomain-engineering_and_technology-chemical_engineering
+    name: Chemical Engineering
+    parentId: scientific_domain-engineering_and_technology
+    type: SCIENTIFIC_SUBDOMAIN
+  other-other:
+    eid: scientific_subdomain-other-other
+    name: Other
+    parentId: scientific_domain-other
+    type: SCIENTIFIC_SUBDOMAIN
+  social_sciences-law:
+    eid: scientific_subdomain-social_sciences-law
+    name: Law
+    parentId: scientific_domain-social_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  social_sciences-sociology:
+    eid: scientific_subdomain-social_sciences-sociology
+    name: Sociology
+    parentId: scientific_domain-social_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  social_sciences-psychology:
+    eid: scientific_subdomain-social_sciences-psychology
+    name: Psychology
+    parentId: scientific_domain-social_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  engineering_and_technology-environmental_biotechnology:
+    eid: scientific_subdomain-engineering_and_technology-environmental_biotechnology
+    name: Environmental Biotechnology
+    parentId: scientific_domain-engineering_and_technology
+    type: SCIENTIFIC_SUBDOMAIN
+  social_sciences-media_and_communications:
+    eid: scientific_subdomain-social_sciences-media_and_communications
+    name: Media & Communications
+    parentId: scientific_domain-social_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  medical_and_health_sciences-clinical_medicine:
+    eid: scientific_subdomain-medical_and_health_sciences-clinical_medicine
+    name: Clinical Medicine
+    parentId: scientific_domain-medical_and_health_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  natural_sciences-earth_and_related_environmental_sciences:
+    eid: scientific_subdomain-natural_sciences-earth_and_related_environmental_sciences
+    name: Earth & Related Environmental Sciences
+    parentId: scientific_domain-natural_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  agricultural_sciences-veterinary_sciences:
+    eid: scientific_subdomain-agricultural_sciences-veterinary_sciences
+    name: Veterinary Sciences
+    parentId: scientific_domain-agricultural_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  humanities-philosophy_ethics_and_religion:
+    eid: scientific_subdomain-humanities-philosophy_ethics_and_religion
+    name: Philosophy, Ethics & Religion
+    parentId: scientific_domain-humanities
+    type: SCIENTIFIC_SUBDOMAIN
+  engineering_and_technology-environmental_engineering:
+    eid: scientific_subdomain-engineering_and_technology-environmental_engineering
+    name: Environmental Engineering
+    parentId: scientific_domain-engineering_and_technology
+    type: SCIENTIFIC_SUBDOMAIN
+  social_sciences-social_and_economic_geography:
+    eid: scientific_subdomain-social_sciences-social_and_economic_geography
+    name: Social & Economic Geography
+    parentId: scientific_domain-social_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  medical_and_health_sciences-basic_medicine:
+    eid: scientific_subdomain-medical_and_health_sciences-basic_medicine
+    name: Basic Medicine
+    parentId: scientific_domain-medical_and_health_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  agricultural_sciences-agricultural_biotechnology:
+    eid: scientific_subdomain-agricultural_sciences-agricultural_biotechnology
+    name: Agricultural Biotechnology
+    parentId: scientific_domain-agricultural_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  medical_and_health_sciences-health_sciences:
+    eid: scientific_subdomain-medical_and_health_sciences-health_sciences
+    name: Health Sciences
+    parentId: scientific_domain-medical_and_health_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  agricultural_sciences-agriculture_forestry_and_fisheries:
+    eid: scientific_subdomain-agricultural_sciences-agriculture_forestry_and_fisheries
+    name: Agriculture, Forestry & Fisheries
+    parentId: scientific_domain-agricultural_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  humanities-languages_and_literature:
+    eid: scientific_subdomain-humanities-languages_and_literature
+    name: Languages & Literature
+    parentId: scientific_domain-humanities
+    type: SCIENTIFIC_SUBDOMAIN
+  engineering_and_technology-civil_engineering:
+    eid: scientific_subdomain-engineering_and_technology-civil_engineering
+    name: Civil Engineering
+    parentId: scientific_domain-engineering_and_technology
+    type: SCIENTIFIC_SUBDOMAIN
+  natural_sciences-physical_sciences:
+    eid: scientific_subdomain-natural_sciences-physical_sciences
+    name: Physical Sciences
+    parentId: scientific_domain-natural_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  engineering_and_technology-materials_engineering:
+    eid: scientific_subdomain-engineering_and_technology-materials_engineering
+    name: Materials Engineering
+    parentId: scientific_domain-engineering_and_technology
+    type: SCIENTIFIC_SUBDOMAIN
+  medical_and_health_sciences-medical_biotechnology:
+    eid: scientific_subdomain-medical_and_health_sciences-medical_biotechnology
+    name: Medical Biotechnology
+    parentId: scientific_domain-medical_and_health_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  engineering_and_technology-medical_engineering:
+    eid: scientific_subdomain-engineering_and_technology-medical_engineering
+    name: Medical Engineering
+    parentId: scientific_domain-engineering_and_technology
+    type: SCIENTIFIC_SUBDOMAIN
+  humanities-arts:
+    eid: scientific_subdomain-humanities-arts
+    name: Arts
+    parentId: scientific_domain-humanities
+    type: SCIENTIFIC_SUBDOMAIN
+  engineering_and_technology-industrial_biotechnology:
+    eid: scientific_subdomain-engineering_and_technology-industrial_biotechnology
+    name: Industrial Biotechnology
+    parentId: scientific_domain-engineering_and_technology
+    type: SCIENTIFIC_SUBDOMAIN
+  social_sciences-political_sciences:
+    eid: scientific_subdomain-social_sciences-political_sciences
+    name: Political Sciences
+    parentId: scientific_domain-social_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  natural_sciences-mathematics:
+    eid: scientific_subdomain-natural_sciences-mathematics
+    name: Mathematics
+    parentId: scientific_domain-natural_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  humanities-history_and_archaeology:
+    eid: scientific_subdomain-humanities-history_and_archaeology
+    name: History & Archaeology
+    parentId: scientific_domain-humanities
+    type: SCIENTIFIC_SUBDOMAIN
+  engineering_and_technology-mechanical_engineering:
+    eid: scientific_subdomain-engineering_and_technology-mechanical_engineering
+    name: Mechanical Engineering
+    parentId: scientific_domain-engineering_and_technology
+    type: SCIENTIFIC_SUBDOMAIN
+  engineering_and_technology-electrical_electronic_and_information_engineering:
+    eid: scientific_subdomain-engineering_and_technology-electrical_electronic_and_information_engineering
+    name: Electrical, Electronic & Information Engineering
+    parentId: scientific_domain-engineering_and_technology
+    type: SCIENTIFIC_SUBDOMAIN
+  natural_sciences-chemical_sciences:
+    eid: scientific_subdomain-natural_sciences-chemical_sciences
+    name: Chemical Sciences
+    parentId: scientific_domain-natural_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  generic-generic:
+    eid: scientific_subdomain-generic-generic
+    name: Generic
+    parentId: scientific_domain-generic
+    type: SCIENTIFIC_SUBDOMAIN
+  natural_sciences-biological_sciences:
+    eid: scientific_subdomain-natural_sciences-biological_sciences
+    name: Biological Sciences
+    parentId: scientific_domain-natural_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  social_sciences-economics_and_business:
+    eid: scientific_subdomain-social_sciences-economics_and_business
+    name: Economics & Business
+    parentId: scientific_domain-social_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  social_sciences-educational_sciences:
+    eid: scientific_subdomain-social_sciences-educational_sciences
+    name: Educational Sciences
+    parentId: scientific_domain-social_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  agricultural_sciences-animal_and_dairy_sciences:
+    eid: scientific_subdomain-agricultural_sciences-animal_and_dairy_sciences
+    name: Animal & Dairy Sciences
+    parentId: scientific_domain-agricultural_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  humanities-other_humanities:
+    eid: scientific_subdomain-humanities-other_humanities
+    name: Other Humanities
+    parentId: scientific_domain-humanities
+    type: SCIENTIFIC_SUBDOMAIN
+  social_sciences-other_social_sciences:
+    eid: scientific_subdomain-social_sciences-other_social_sciences
+    name: Other Social Sciences
+    parentId: scientific_domain-social_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  agricultural_sciences-other_agricultural_sciences:
+    eid: scientific_subdomain-agricultural_sciences-other_agricultural_sciences
+    name: Other Agricultural Sciences
+    parentId: scientific_domain-agricultural_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+  medical_and_health_sciences-other_medical_sciences:
+    eid: scientific_subdomain-medical_and_health_sciences-other_medical_sciences
+    name: Other Medical Sciences
+    parentId: scientific_domain-medical_and_health_sciences
+    type: SCIENTIFIC_SUBDOMAIN
+    extras: { }
+  engineering_and_technology-other_engineering_and_technology_sciences:
+    eid: scientific_subdomain-engineering_and_technology-other_engineering_and_technology_sciences
+    name: Other Engineering & Technology Sciences
+    parentId: scientific_domain-engineering_and_technology
+    type: SCIENTIFIC_SUBDOMAIN
+  engineering_and_technology-nanotechnology:
+    eid: scientific_subdomain-engineering_and_technology-nanotechnology
+    name: Nanotechnology
+    parentId: scientific_domain-engineering_and_technology
+    type: SCIENTIFIC_SUBDOMAIN
+  natural_sciences-other_natural_sciences:
+    eid: scientific_subdomain-natural_sciences-other_natural_sciences
+    name: Other Natural Sciences
+    parentId: scientific_domain-natural_sciences
+    type: SCIENTIFIC_SUBDOMAIN

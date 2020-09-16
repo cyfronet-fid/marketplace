@@ -33,7 +33,7 @@ class Backoffice::CategoryPolicy < ApplicationPolicy
 
   def permitted_attributes
     [
-      :name, :parent_id, :logo
+      :name, :description, :eid, :parent_id, :logo
     ]
   end
 

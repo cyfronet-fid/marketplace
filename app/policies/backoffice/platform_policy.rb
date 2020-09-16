@@ -32,7 +32,7 @@ class Backoffice::PlatformPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name]
+    [:name, :eid]
   end
 
   private

@@ -91,6 +91,7 @@ class Service::PcCreateOrUpdate
         manual_url: data["userManual"] || "",
         helpdesk_url: data["helpdeskPage"] || "",
         helpdesk_email: data["helpdeskEmail"] || "",
+        security_contact_email: data["securityContactEmail"] || "",
         training_information_url: data["trainingInformation"] || "",
         status_monitoring_url: data["statusMonitoring"] || "",
         maintenance_url: data["maintenance"] || "",
