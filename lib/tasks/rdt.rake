@@ -52,7 +52,7 @@ namespace :rdt do
 
     puts "Creating trls from yaml"
     yaml_hash["trl"].each do |_, hash|
-      Trl.find_or_initialize_by(name: hash["name"]) do |trl|
+      Trl.find_or_initialize_by(eid: hash["eid"]) do |trl|
         trl.update!(name: hash["name"],
                     eid: hash["eid"],
                     description: hash["description"])
@@ -62,17 +62,17 @@ namespace :rdt do
 
     puts "Creating target_users from yaml"
     yaml_hash["target_user"].each do |_, hash|
-      TargetUser.find_or_initialize_by(name: hash["name"]) do |target_user|
+      TargetUser.find_or_initialize_by(eid: hash["eid"]) do |target_user|
         target_user.update!(name: hash["name"],
                             eid: hash["eid"],
                             description: hash["description"])
       end
-      puts "Created target_user: #{hash["name"]}"
+      puts "Created target_user: #{hash["name"]}, eid: #{hash["eid"]}"
     end
 
     puts "Creating life_cycle_statuses from yaml"
     yaml_hash["life_cycle_status"].each do |_, hash|
-      lcs = LifeCycleStatus.find_or_create_by(name: hash["name"])
+      lcs = LifeCycleStatus.find_or_create_by(eid: hash["eid"])
       lcs.update!(name: hash["name"],
                   eid: hash["eid"],
                   description: hash["description"])
@@ -81,48 +81,48 @@ namespace :rdt do
 
     puts "Creating access_types from yaml"
     yaml_hash["access_type"].each do |_, hash|
-      AccessType.find_or_initialize_by(name: hash["name"]) do |access_type|
+      AccessType.find_or_initialize_by(eid: hash["eid"]) do |access_type|
         access_type.update!(name: hash["name"],
                             eid: hash["eid"],
                             description: hash["description"],
                             parent: AccessType.find_by(eid: hash["parentId"]),
                             extras: hash["extras"])
       end
-      puts "Created access_type: #{hash["name"]}"
+      puts "Created access_type: #{hash["name"]}, eid: #{hash["eid"]}"
     end
 
     puts "Creating access_modes from yaml"
     yaml_hash["access_mode"].each do |_, hash|
-      AccessMode.find_or_initialize_by(name: hash["name"]) do |access_mode|
+      AccessMode.find_or_initialize_by(eid: hash["eid"]) do |access_mode|
         access_mode.update!(name: hash["name"],
                             eid: hash["eid"],
                             description: hash["description"],
                             parent: AccessMode.find_by(eid: hash["parentId"]),
                             extras: hash["extras"])
       end
-      puts "Created access_mode: #{hash["name"]}"
+      puts "Created access_mode: #{hash["name"]}, eid: #{hash["eid"]}"
     end
 
     puts "Creating categories from yaml"
     yaml_hash["category"].each do |_, hash|
-      Category.find_or_initialize_by(name: hash["name"]) do |category|
+      Category.find_or_initialize_by(eid: hash["eid"]) do |category|
         category.update!(name: hash["name"],
                          eid: hash["eid"],
                          description: hash["description"],
                          parent: Category.find_by(eid: hash["parentId"]))
       end
-      puts "Created category: #{hash["name"]}"
+      puts "Created category: #{hash["name"]}, eid: #{hash["eid"]}"
     end
 
     puts "Creating scientific_domains from yaml"
     yaml_hash["scientific_domain"].each do |_, hash|
-      ScientificDomain.find_or_initialize_by(name: hash["name"]) do |sd|
+      ScientificDomain.find_or_initialize_by(eid: hash["eid"]) do |sd|
         sd.update!(name: hash["name"],
                          eid: hash["eid"],
                          description: hash["description"],
                          parent: ScientificDomain.find_by(eid: hash["parentId"]))
       end
-      puts "Created scientific domain: #{hash["name"]}"
+      puts "Created scientific domain: #{hash["name"]}, eid: #{hash["eid"]}"
     end
   end
 end

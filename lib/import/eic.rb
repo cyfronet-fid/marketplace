@@ -26,8 +26,6 @@ module Import
     def call
       log "Importing services from eInfraCentral..."
 
-      get_db_dependencies
-
       begin
         r = @unirest.get("#{@eic_base_url}/api/service/rich/all?quantity=10000&from=0",
                         headers: { "Accept" => "application/json" })
@@ -92,12 +90,13 @@ module Import
         open_source_technologies = service["openSourceTechnologies"]
         grant_project_names = service["grantProjectNames"]
         tag_list = Array(service["tags"])
-        language_availability = Array(service["languageAvailabilities"] || "EN")
-        geographical_availabilities = service["geographicalAvailabilities"]
+        language_availability = service["languageAvailabilities"] || ["EN"]
+        geographical_availabilities = service["geographicalAvailabilities"] ||
         resource_geographic_locations = Array(service["resourceGeographicLocations"]) || []
-        category = service["subcategories"]
+        categories = service["subcategories"]
+        scientific_domains = service["scientificSubdomains"]
         funding_bodies = service["fundingBody"]
-        funding_programs = service["fundingPrograms"]
+        funding_programs = Array(service["fundingPrograms"])
         main_contact = MainContact.new(map_contact(service["mainContact"])) if service["mainContact"] || nil
         public_contacts = Array(service["publicContacts"])&.map { |c| PublicContact.new(map_contact(c)) } || []
         access_types = service["accessTypes"]
@@ -116,7 +115,7 @@ module Import
         logo = nil
 
         begin
-          logo = open(image_url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
+          logo = open(image_url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, read_timeout: 10)
           logo_content_type = logo.content_type
 
           if logo_content_type == "image/svg+xml"
@@ -154,12 +153,12 @@ module Import
             language_availability: language_availability || ["EN"],
             geographical_availabilities: geographical_availabilities || [],
             resource_geographic_locations: resource_geographic_locations,
-            dedicated_for: [],
+            target_users: map_target_users(target_users),
             multimedia: multimedia,
             use_cases_url: use_cases_url,
             access_policies_url: access_policy_url,
             privacy_policy_url: privacy_policy_url,
-            terms_of_use_url: terms_of_use.present? ? terms_of_use[0] : "",
+            terms_of_use_url: terms_of_use || "",
             sla_url: service_level_agreement_url || "",
             webpage_url: url || "",
             manual_url: user_manual_url || "",
@@ -184,10 +183,9 @@ module Import
             access_modes: map_access_modes(access_modes),
             resource_organisation: mapped_resource_organisation[0],
             providers: mapped_providers,
-            categories: map_category(category),
-            scientific_domains: [@scientific_domain_other],
+            categories: map_categories(categories),
+            scientific_domains: map_scientific_domains(scientific_domains),
             version: version || "",
-            target_users: map_target_users(target_users),
             last_update: last_update ? Time.at(last_update&./1000) : Time.now,
             changelog: changelog,
             certifications: Array(certifications),
@@ -289,26 +287,12 @@ module Import
       log "ERROR - Default offer for #{service.name} (eid: #{eid}) cannot be created. Unexpected #{error}!"
     end
 
-    def map_category(category)
-      if @best_effort_category_mapping[category]
-        [@best_effort_category_mapping[category]]
-      else
-        []
-      end
+    def map_categories(categories)
+      Category.where(eid: categories)
     end
 
-    def get_db_dependencies
-      @scientific_domain_other = ScientificDomain.find_by!(name: "Other")
-
-      @best_effort_category_mapping = {
-          "storage":  Category.find_by!(name: "Storage"),
-          "training": Category.find_by!(name: "Training & Support"),
-          "security": Category.find_by!(name: "Security & Operations"),
-          "analytics": Category.find_by!(name: "Processing & Analysis"),
-          "data": Category.find_by!(name: "Data management"),
-          "compute": Category.find_by!(name: "Compute"),
-          "networking": Category.find_by!(name: "Networking"),
-      }.stringify_keys
+    def map_scientific_domains(domains)
+      ScientificDomain.where(eid: domains)
     end
 
     def map_related_services(services)
