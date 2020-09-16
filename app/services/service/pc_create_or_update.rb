@@ -17,15 +17,6 @@ class Service::PcCreateOrUpdate
     @unirest = unirest
     @eic_base_url = eic_base_url
     @eid = eic_service["id"]
-    @best_effort_category_mapping = {
-        "storage": "Storage",
-        "training": "Training & Support",
-        "security": "Security & Operations",
-        "analytics": "Processing & Analysis",
-        "data": "Data management",
-        "compute": "Compute",
-        "networking": "Networking",
-    }.stringify_keys
     @eic_service =  eic_service
     @is_active = is_active
     @modified_at = modified_at
@@ -77,7 +68,7 @@ class Service::PcCreateOrUpdate
         language_availability: Array(data.dig("languageAvailabilities", "languageAvailabilities") || "en"),
         geographical_availabilities: Array(data.dig("geographicalAvailabilities", "geographicalAvailability") || "WW"),
         resource_geographic_locations: Array(data.dig("resourceGeographicLocations", "resourceGeographicLocation")) || [],
-        dedicated_for: [],
+        dedicated_for: map_target_users(Array(data.dig("targetUsers", "targetUsers"))) || [],
         main_contact: main_contact,
         public_contacts: Array.wrap(data.dig("publicContacts", "publicContact")).
             map { |c| PublicContact.new(map_contact(c)) } || [],
@@ -115,8 +106,8 @@ class Service::PcCreateOrUpdate
         grant_project_names: Array(data.dig("grantProjectNames", "grantProjectName")),
         resource_organisation: map_provider(data["resourceOrganisation"]),
         providers: providers.map { |p| map_provider(p) },
-        categories: map_category(data.dig("subcategories", "subcategory")),
-        scientific_domains: [scientific_domain_other],
+        categories: map_categories(Array(data.dig("subcategories", "subcategories"))) || [],
+        scientific_domains: map_scientific_domains(Array(data.dig("scientificSubdomains", "scientificSubdomains"))),
         version: data["version"] || "",
         last_update: data["lastUpdate"],
         target_users: map_target_users(data.dig("targetUsers", "targetUser"))
@@ -174,12 +165,12 @@ class Service::PcCreateOrUpdate
       Rails.logger.warn "WARN: Cannot attach logo. #{e.message}"
     end
 
-    def map_category(category)
-      if @best_effort_category_mapping[category]
-        [Category.find_by!(name: @best_effort_category_mapping[category])]
-      else
-        []
-      end
+    def map_categories(categories)
+      Category.where(eid: categories)
+    end
+
+    def map_scientific_domains(domains)
+      ScientificDomain.where(eid: domains)
     end
 
     def map_contact(contact)
