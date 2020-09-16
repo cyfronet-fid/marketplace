@@ -33,7 +33,7 @@ class Backoffice::ScientificDomainPolicy < ApplicationPolicy
 
   def permitted_attributes
     [
-      :name, :parent_id, :logo
+      :name, :eid, :description, :parent_id, :logo
     ]
   end
 

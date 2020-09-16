@@ -2,6 +2,10 @@
 - breadcrumb :backoffice_scientific_domain, @scientific_domain
 
 %h1= @scientific_domain.name
+%h2 Description:
+%p= @scientific_domain.description
+%h2 eID:
+%p= @scientific_domain.eid
 %h2= @scientific_domain.parent ? "Parent: #{@scientific_domain.parent.name}" : "Root element"
 - if @scientific_domain.logo.attached?
   = image_tag @scientific_domain.logo
