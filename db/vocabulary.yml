@@ -1452,7 +1452,7 @@ category:
     eid: category-sharing_and_discovery-samples
     name: Samples
     description: Collection, preparation and delivery of biological, chemical, environmental or other samples.
-    parentId: supercategory-sharing_and_discovery
+    # parentId: supercategory-sharing_and_discovery
     type: CATEGORY
   software:
     eid: category-sharing_and_discovery-software
@@ -1494,7 +1494,7 @@ category:
     eid: category-access_physical_and_eInfrastructures-instrument_and_equipment
     name: Instrument & Equipment
     description: Access to instruments and equipment.
-    parentId: supercategory-access_physical_and_eInfrastructures
+    # parentId: supercategory-access_physical_and_eInfrastructures
     type: CATEGORY
   education-training:
     eid: category-training_and_support-education_and_training
@@ -1506,7 +1506,7 @@ category:
     eid: category-access_physical_and_eInfrastructures-data_storage
     name: Data Storage
     description: Reliable, secure and scalable cloud storage for scientific data, apps and workloads.
-    parentId: supercategory-access_physical_and_eInfrastructures
+    # parentId: supercategory-access_physical_and_eInfrastructures
     type: CATEGORY
   consultancy-support:
     eid: category-training_and_support-consultancy_and_support
@@ -1518,7 +1518,7 @@ category:
     eid: category-access_physical_and_eInfrastructures-material_storage
     name: Material Storage
     description: Access to biological, chemical, historical, archeological, cultural, etc. storage. Includes the acquisition, preparation and processing of samples and materials in view of their preservation.
-    parentId: supercategory-access_physical_and_eInfrastructures
+    # parentId: supercategory-access_physical_and_eInfrastructures
     type: CATEGORY
   scholarly-communication:
     eid: category-sharing_and_discovery-scholarly_communication
@@ -1552,25 +1552,21 @@ category:
   sharing_and_discovery-applications-communication:
     eid: subcategory-sharing_and_discovery-applications-communication
     name: Communication
-
     parentId: category-sharing_and_discovery-applications
     type: SUBCATEGORY
   sharing_and_discovery-scholarly_communication-assessment:
     eid: subcategory-sharing_and_discovery-scholarly_communication-assessment
     name: Assessment
-
     parentId: category-sharing_and_discovery-scholarly_communication
     type: SUBCATEGORY
   processing_and_analysis-data_analysis-2d_3d_digitisation:
     eid: subcategory-processing_and_analysis-data_analysis-2d_3d_digitisation
     name: 2D/3D Digitisation
-
     parentId: category-processing_and_analysis-data_analysis
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-instrument_and_equipment-spectrophotometer:
     eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-spectrophotometer
     name: Spectrophotometer
-
     parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
     type: SUBCATEGORY
     extras: {}
@@ -1590,1004 +1586,837 @@ category:
   access_physical_and_eInfrastructures-material_storage-archiving:
     eid: subcategory-access_physical_and_eInfrastructures-material_storage-archiving
     name: Archiving
-
     parentId: category-access_physical_and_eInfrastructures-material_storage
     type: SUBCATEGORY
   processing_and_analysis-data_management-maintenance:
     eid: subcategory-processing_and_analysis-data_management-maintenance
     name: Maintenance
-
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
   training_and_support-consultancy_and_support-methodology_development:
     eid: subcategory-training_and_support-consultancy_and_support-methodology_development
     name: Methodology Development
-
     parentId: category-training_and_support-consultancy_and_support
     type: SUBCATEGORY
   processing_and_analysis-measurement_and_materials_analysis-other:
     eid: subcategory-processing_and_analysis-measurement_and_materials_analysis-other
     name: Other
-
     parentId: category-processing_and_analysis-measurement_and_materials_analysis
     type: SUBCATEGORY
   sharing_and_discovery-scholarly_communication-other:
     eid: subcategory-sharing_and_discovery-scholarly_communication-other
     name: Other
-
     parentId: category-sharing_and_discovery-scholarly_communication
     type: SUBCATEGORY
   sharing_and_discovery-scholarly_communication-outreach:
     eid: subcategory-sharing_and_discovery-scholarly_communication-outreach
     name: Outreach
-
     parentId: category-sharing_and_discovery-scholarly_communication
     type: SUBCATEGORY
   sharing_and_discovery-data-statistical_data:
     eid: subcategory-sharing_and_discovery-data-statistical_data
     name: Statistical Data
-
     parentId: category-sharing_and_discovery-data
     type: SUBCATEGORY
   processing_and_analysis-data_analysis-machine_learning:
     eid: subcategory-processing_and_analysis-data_analysis-machine_learning
     name: Machine Learning
-
     parentId: category-processing_and_analysis-data_analysis
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-instrument_and_equipment-radiation:
     eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-radiation
     name: Radiation
-
     parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
     type: SUBCATEGORY
   sharing_and_discovery-software-software_package:
     eid: subcategory-sharing_and_discovery-software-software_package
     name: Software Package
-
     parentId: category-sharing_and_discovery-software
     type: SUBCATEGORY
   sharing_and_discovery-software-software_repository:
     eid: subcategory-sharing_and_discovery-software-software_repository
     name: Software Repository
-
     parentId: category-sharing_and_discovery-software
     type: SUBCATEGORY
   aggregators_and_integrators-aggregators_and_integrators-software:
     eid: subcategory-aggregators_and_integrators-aggregators_and_integrators-software
     name: Software
-
     parentId: category-aggregators_and_integrators-aggregators_and_integrators
     type: SUBCATEGORY
   sharing_and_discovery-development_resources-software_development_kits:
     eid: subcategory-sharing_and_discovery-development_resources-software_development_kits
     name: Software Development Kits
-
     parentId: category-sharing_and_discovery-development_resources
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-compute-workload_management:
     eid: subcategory-access_physical_and_eInfrastructures-compute-workload_management
     name: Workload Management
-
     parentId: category-access_physical_and_eInfrastructures-compute
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-data_storage-digital_preservation:
     eid: subcategory-access_physical_and_eInfrastructures-data_storage-digital_preservation
     name: Digital Preservation
-
     parentId: category-access_physical_and_eInfrastructures-data_storage
     type: SUBCATEGORY
   sharing_and_discovery-data-government_and_agency_data:
     eid: subcategory-sharing_and_discovery-data-government_and_agency_data
     name: Government & Agency Data
-
     parentId: category-sharing_and_discovery-data
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-network-load_balancer:
     eid: subcategory-access_physical_and_eInfrastructures-network-load_balancer
     name: Load Balancer
-
     parentId: category-access_physical_and_eInfrastructures-network
     type: SUBCATEGORY
   sharing_and_discovery-scholarly_communication-discovery:
     eid: subcategory-sharing_and_discovery-scholarly_communication-discovery
     name: Discovery
-
     parentId: category-sharing_and_discovery-scholarly_communication
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-network-direct_connect:
     eid: subcategory-access_physical_and_eInfrastructures-network-direct_connect
     name: Direct Connect
-
     parentId: category-access_physical_and_eInfrastructures-network
     type: SUBCATEGORY
   processing_and_analysis-data_analysis-other:
     eid: subcategory-processing_and_analysis-data_analysis-other
     name: Other
-
     parentId: category-processing_and_analysis-data_analysis
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-data_storage-archive:
     eid: subcategory-access_physical_and_eInfrastructures-data_storage-archive
     name: Archive
-
     parentId: category-access_physical_and_eInfrastructures-data_storage
     type: SUBCATEGORY
   sharing_and_discovery-scholarly_communication-preparation:
     eid: subcategory-sharing_and_discovery-scholarly_communication-preparation
     name: Preparation
-
     parentId: category-sharing_and_discovery-scholarly_communication
     type: SUBCATEGORY
   sharing_and_discovery-data-clinical_trial_data:
     eid: subcategory-sharing_and_discovery-data-clinical_trial_data
     name: Clinical Trial Data
-
     parentId: category-sharing_and_discovery-data
     type: SUBCATEGORY
   processing_and_analysis-data_management-validation:
     eid: subcategory-processing_and_analysis-data_management-validation
     name: Validation
-
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
   security_and_operations-operations_and_infrastructure_management_services-helpdesk:
     eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-helpdesk
     name: Helpdesk
-
     parentId: category-security_and_operations-operations_and_infrastructure_management_services
     type: SUBCATEGORY
   security_and_operations-operations_and_infrastructure_management_services-other:
     eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-other
     name: Other
-
     parentId: category-security_and_operations-operations_and_infrastructure_management_services
     type: SUBCATEGORY
   processing_and_analysis-data_management-preservation:
     eid: subcategory-processing_and_analysis-data_management-preservation
     name: Preservation
-
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
   sharing_and_discovery-data-data_archives:
     eid: subcategory-sharing_and_discovery-data-data_archives
     name: Data Archives
-
     parentId: category-sharing_and_discovery-data
     type: SUBCATEGORY
   security_and_operations-security_and_identity-threat_protection:
     eid: subcategory-security_and_operations-security_and_identity-threat_protection
     name: Threat Protection
-
     parentId: category-security_and_operations-security_and_identity
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-material_storage-repository:
     eid: subcategory-access_physical_and_eInfrastructures-material_storage-repository
     name: Repository
-
     parentId: category-access_physical_and_eInfrastructures-material_storage
     type: SUBCATEGORY
   security_and_operations-security_and_identity-user_authentication:
     eid: subcategory-security_and_operations-security_and_identity-user_authentication
     name: User Authentication
-
     parentId: category-security_and_operations-security_and_identity
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-instrument_and_equipment-chromatographer:
     eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-chromatographer
     name: Chromatographer
-
     parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
     type: SUBCATEGORY
   sharing_and_discovery-scholarly_communication-publication:
     eid: subcategory-sharing_and_discovery-scholarly_communication-publication
     name: Publication
-
     parentId: category-sharing_and_discovery-scholarly_communication
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-material_storage-quality_inspecting:
     eid: subcategory-access_physical_and_eInfrastructures-material_storage-quality_inspecting
     name: Quality Inspecting
-
     parentId: category-access_physical_and_eInfrastructures-material_storage
     type: SUBCATEGORY
   sharing_and_discovery-development_resources-developer_tools:
     eid: subcategory-sharing_and_discovery-development_resources-developer_tools
     name: Developer Tools
-
     parentId: category-sharing_and_discovery-development_resources
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-network-vpn_gateway:
     eid: subcategory-access_physical_and_eInfrastructures-network-vpn_gateway
     name: VPN Gateway
-
     parentId: category-access_physical_and_eInfrastructures-network
     type: SUBCATEGORY
   training_and_support-consultancy_and_support-testing:
     eid: subcategory-training_and_support-consultancy_and_support-testing
     name: Testing
-
     parentId: category-training_and_support-consultancy_and_support
     type: SUBCATEGORY
   security_and_operations-operations_and_infrastructure_management_services-billing:
     eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-billing
     name: Billing
-
     parentId: category-security_and_operations-operations_and_infrastructure_management_services
     type: SUBCATEGORY
   training_and_support-consultancy_and_support-prototype_development:
     eid: subcategory-training_and_support-consultancy_and_support-prototype_development
     name: Prototype Development
-
     parentId: category-training_and_support-consultancy_and_support
     type: SUBCATEGORY
   processing_and_analysis-data_analysis-data_exploitation:
     eid: subcategory-processing_and_analysis-data_analysis-data_exploitation
     name: Data Exploitation
-
     parentId: category-processing_and_analysis-data_analysis
     type: SUBCATEGORY
   processing_and_analysis-data_management-other:
     eid: subcategory-processing_and_analysis-data_management-other
     name: Other
-
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-material_storage-disposal:
     eid: subcategory-access_physical_and_eInfrastructures-material_storage-disposal
     name: Disposal
-
     parentId: category-access_physical_and_eInfrastructures-material_storage
     type: SUBCATEGORY
   security_and_operations-operations_and_infrastructure_management_services-monitoring:
     eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-monitoring
     name: Monitoring
-
     parentId: category-security_and_operations-operations_and_infrastructure_management_services
     type: SUBCATEGORY
   processing_and_analysis-measurement_and_materials_analysis-characterisation:
     eid: subcategory-processing_and_analysis-measurement_and_materials_analysis-characterisation
     name: Characterisation
-
     parentId: category-processing_and_analysis-measurement_and_materials_analysis
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-data_storage-disk:
     eid: subcategory-access_physical_and_eInfrastructures-data_storage-disk
     name: Disk
-
     parentId: category-access_physical_and_eInfrastructures-data_storage
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-data_storage-recovery:
     eid: subcategory-access_physical_and_eInfrastructures-data_storage-recovery
     name: Recovery
-
     parentId: category-access_physical_and_eInfrastructures-data_storage
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-data_storage-synchronised:
     eid: subcategory-access_physical_and_eInfrastructures-data_storage-synchronised
     name: Synchronised
-
     parentId: category-access_physical_and_eInfrastructures-data_storage
     type: SUBCATEGORY
   sharing_and_discovery-applications-other:
     eid: subcategory-sharing_and_discovery-applications-other
     name: Other
-
     parentId: category-sharing_and_discovery-applications
     type: SUBCATEGORY
   processing_and_analysis-data_management-transfer:
     eid: subcategory-processing_and_analysis-data_management-transfer
     name: Transfer
-
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-data_storage-file:
     eid: subcategory-access_physical_and_eInfrastructures-data_storage-file
     name: File
-
     parentId: category-access_physical_and_eInfrastructures-data_storage
     type: SUBCATEGORY
   security_and_operations-operations_and_infrastructure_management_services-coordination:
     eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-coordination
     name: Coordination
-
     parentId: category-security_and_operations-operations_and_infrastructure_management_services
     type: SUBCATEGORY
   sharing_and_discovery-samples-characterisation:
     eid: subcategory-sharing_and_discovery-samples-characterisation
     name: Characterisation
-
     parentId: category-sharing_and_discovery-samples
     type: SUBCATEGORY
   training_and_support-consultancy_and_support-calibration:
     eid: subcategory-training_and_support-consultancy_and_support-calibration
     name: Calibration
-
     parentId: category-training_and_support-consultancy_and_support
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-instrument_and_equipment-monument_maintenance_equipment:
     eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-monument_maintenance_equipment
     name: Monument Maintenance Equipment
-
     parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
     type: SUBCATEGORY
   training_and_support-education_and_training-open_registration_courses:
     eid: subcategory-training_and_support-education_and_training-open_registration_courses
     name: Open Registration Courses
-
     parentId: category-training_and_support-education_and_training
     type: SUBCATEGORY
   sharing_and_discovery-data-scientific_research_data:
     eid: subcategory-sharing_and_discovery-data-scientific_research_data
     name: Scientific/Research Data
-
     parentId: category-sharing_and_discovery-data
     type: SUBCATEGORY
   processing_and_analysis-data_management-access:
     eid: subcategory-processing_and_analysis-data_management-access
     name: Access
-
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-material_storage-assembly:
     eid: subcategory-access_physical_and_eInfrastructures-material_storage-assembly
     name: Assembly
-
     parentId: category-access_physical_and_eInfrastructures-material_storage
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-data_storage-replicated:
     eid: subcategory-access_physical_and_eInfrastructures-data_storage-replicated
     name: Replicated
-
     parentId: category-access_physical_and_eInfrastructures-data_storage
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-instrument_and_equipment-other:
     eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-other
     name: Other
-
     parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
     type: SUBCATEGORY
   processing_and_analysis-data_analysis-visualization:
     eid: subcategory-processing_and_analysis-data_analysis-visualization
     name: Visualization
-
     parentId: category-processing_and_analysis-data_analysis
     type: SUBCATEGORY
   processing_and_analysis-data_management-annotation:
     eid: subcategory-processing_and_analysis-data_management-annotation
     name: Annotation
-
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
   processing_and_analysis-measurement_and_materials_analysis-analysis:
     eid: subcategory-processing_and_analysis-measurement_and_materials_analysis-analysis
     name: Analysis
-
     parentId: category-processing_and_analysis-measurement_and_materials_analysis
     type: SUBCATEGORY
   sharing_and_discovery-scholarly_communication-writing:
     eid: subcategory-sharing_and_discovery-scholarly_communication-writing
     name: Writing
-
     parentId: category-sharing_and_discovery-scholarly_communication
     type: SUBCATEGORY
   processing_and_analysis-measurement_and_materials_analysis-maintenance_and_modification:
     eid: subcategory-processing_and_analysis-measurement_and_materials_analysis-maintenance_and_modification
     name: Maintenance & Modification
-
     parentId: category-processing_and_analysis-measurement_and_materials_analysis
     type: SUBCATEGORY
   training_and_support-consultancy_and_support-application_optimisation:
     eid: subcategory-training_and_support-consultancy_and_support-application_optimisation
     name: Application Optimisation
-
     parentId: category-training_and_support-consultancy_and_support
     type: SUBCATEGORY
   other-other-other:
     eid: subcategory-other-other-other
     name: Other
-
     parentId: category-other-other
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-compute-other:
     eid: subcategory-access_physical_and_eInfrastructures-compute-other
     name: Other
-
     parentId: category-access_physical_and_eInfrastructures-compute
     type: SUBCATEGORY
   training_and_support-education_and_training-online_courses:
     eid: subcategory-training_and_support-education_and_training-online_courses
     name: Online Courses
-
     parentId: category-training_and_support-education_and_training
     type: SUBCATEGORY
   processing_and_analysis-measurement_and_materials_analysis-production:
     eid: subcategory-processing_and_analysis-measurement_and_materials_analysis-production
     name: Production
-
     parentId: category-processing_and_analysis-measurement_and_materials_analysis
     type: SUBCATEGORY
   sharing_and_discovery-applications-productivity:
     eid: subcategory-sharing_and_discovery-applications-productivity
     name: Productivity
-
     parentId: category-sharing_and_discovery-applications
     type: SUBCATEGORY
   processing_and_analysis-data_management-brokering:
     eid: subcategory-processing_and_analysis-data_management-brokering
     name: Brokering
-
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
   security_and_operations-security_and_identity-coordination:
     eid: subcategory-security_and_operations-security_and_identity-coordination
     name: Coordination
-
     parentId: category-security_and_operations-security_and_identity
     type: SUBCATEGORY
   processing_and_analysis-data_management-registration:
     eid: subcategory-processing_and_analysis-data_management-registration
     name: Registration
-
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
   training_and_support-consultancy_and_support-certification:
     eid: subcategory-training_and_support-consultancy_and_support-certification
     name: Certification
-
     parentId: category-training_and_support-consultancy_and_support
     type: SUBCATEGORY
   sharing_and_discovery-development_resources-apis_repository_gateway:
     eid: subcategory-sharing_and_discovery-development_resources-apis_repository_gateway
     name: APIs Repository/Gateway
-
     parentId: category-sharing_and_discovery-development_resources
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-material_storage-sorting:
     eid: subcategory-access_physical_and_eInfrastructures-material_storage-sorting
     name: Sorting
-
     parentId: category-access_physical_and_eInfrastructures-material_storage
     type: SUBCATEGORY
   security_and_operations-operations_and_infrastructure_management_services-configuration:
     eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-configuration
     name: Configuration
-
     parentId: category-security_and_operations-operations_and_infrastructure_management_services
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-instrument_and_equipment-spectrometer:
     eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-spectrometer
     name: Spectrometer
-
     parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
     type: SUBCATEGORY
   training_and_support-consultancy_and_support-other:
     eid: subcategory-training_and_support-consultancy_and_support-other
     name: Other
-
     parentId: category-training_and_support-consultancy_and_support
     type: SUBCATEGORY
   sharing_and_discovery-data-epidemiological_data:
     eid: subcategory-sharing_and_discovery-data-epidemiological_data
     name: Epidemiological Data
-
     parentId: category-sharing_and_discovery-data
     type: SUBCATEGORY
   sharing_and_discovery-applications-applications_repository:
     eid: subcategory-sharing_and_discovery-applications-applications_repository
     name: Applications Repository
-
     parentId: category-sharing_and_discovery-applications
     type: SUBCATEGORY
   training_and_support-consultancy_and_support-technology_transfer:
     eid: subcategory-training_and_support-consultancy_and_support-technology_transfer
     name: Technology Transfer
-
     parentId: category-training_and_support-consultancy_and_support
     type: SUBCATEGORY
   training_and_support-consultancy_and_support-software_improvement:
     eid: subcategory-training_and_support-consultancy_and_support-software_improvement
     name: Software Improvement
-
     parentId: category-training_and_support-consultancy_and_support
     type: SUBCATEGORY
   sharing_and_discovery-samples-other:
     eid: subcategory-sharing_and_discovery-samples-other
     name: Other
-
     parentId: category-sharing_and_discovery-samples
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-data_storage-online:
     eid: subcategory-access_physical_and_eInfrastructures-data_storage-online
     name: Online
-
     parentId: category-access_physical_and_eInfrastructures-data_storage
     type: SUBCATEGORY
   aggregators_and_integrators-aggregators_and_integrators-other:
     eid: subcategory-aggregators_and_integrators-aggregators_and_integrators-other
     name: Other
-
     parentId: category-aggregators_and_integrators-aggregators_and_integrators
     type: SUBCATEGORY
   security_and_operations-security_and_identity-tools:
     eid: subcategory-security_and_operations-security_and_identity-tools
     name: Tools
-
     parentId: category-security_and_operations-security_and_identity
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-data_storage-data:
     eid: subcategory-access_physical_and_eInfrastructures-data_storage-data
     name: Data
-
     parentId: category-access_physical_and_eInfrastructures-data_storage
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-compute-orchestration:
     eid: subcategory-access_physical_and_eInfrastructures-compute-orchestration
     name: Orchestration
-
     parentId: category-access_physical_and_eInfrastructures-compute
     type: SUBCATEGORY
   training_and_support-consultancy_and_support-application_scaling:
     eid: subcategory-training_and_support-consultancy_and_support-application_scaling
     name: Application Scaling
-
     parentId: category-training_and_support-consultancy_and_support
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-material_storage-warehousing:
     eid: subcategory-access_physical_and_eInfrastructures-material_storage-warehousing
     name: Warehousing
-
     parentId: category-access_physical_and_eInfrastructures-material_storage
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-data_storage-backup:
     eid: subcategory-access_physical_and_eInfrastructures-data_storage-backup
     name: Backup
-
     parentId: category-access_physical_and_eInfrastructures-data_storage
     type: SUBCATEGORY
   security_and_operations-security_and_identity-firewall:
     eid: subcategory-security_and_operations-security_and_identity-firewall
     name: Firewall
-
     parentId: category-security_and_operations-security_and_identity
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-material_storage-other:
     eid: subcategory-access_physical_and_eInfrastructures-material_storage-other
     name: Other
-
     parentId: category-access_physical_and_eInfrastructures-material_storage
     type: SUBCATEGORY
   processing_and_analysis-measurement_and_materials_analysis-workflows:
     eid: subcategory-processing_and_analysis-measurement_and_materials_analysis-workflows
     name: Workflows
-
     parentId: category-processing_and_analysis-measurement_and_materials_analysis
     type: SUBCATEGORY
   sharing_and_discovery-development_resources-software_libraries:
     eid: subcategory-sharing_and_discovery-development_resources-software_libraries
     name: Software Libraries
-
     parentId: category-sharing_and_discovery-development_resources
     type: SUBCATEGORY
   processing_and_analysis-data_analysis-artificial_intelligence:
     eid: subcategory-processing_and_analysis-data_analysis-artificial_intelligence
     name: Artificial Intelligence
-
     parentId: category-processing_and_analysis-data_analysis
     type: SUBCATEGORY
   security_and_operations-security_and_identity-other:
     eid: subcategory-security_and_operations-security_and_identity-other
     name: Other
-
     parentId: category-security_and_operations-security_and_identity
     type: SUBCATEGORY
   sharing_and_discovery-applications-collaboration:
     eid: subcategory-sharing_and_discovery-applications-collaboration
     name: Collaboration
-
     parentId: category-sharing_and_discovery-applications
     type: SUBCATEGORY
   training_and_support-education_and_training-in_house_courses:
     eid: subcategory-training_and_support-education_and_training-in_house_courses
     name: In-House Courses
-
     parentId: category-training_and_support-education_and_training
     type: SUBCATEGORY
   sharing_and_discovery-applications-business:
     eid: subcategory-sharing_and_discovery-applications-business
     name: Business
-
     parentId: category-sharing_and_discovery-applications
     type: SUBCATEGORY
   training_and_support-education_and_training-training_platform:
     eid: subcategory-training_and_support-education_and_training-training_platform
     name: Training Platform
-
     parentId: category-training_and_support-education_and_training
     type: SUBCATEGORY
   aggregators_and_integrators-aggregators_and_integrators-data:
     eid: subcategory-aggregators_and_integrators-aggregators_and_integrators-data
     name: Data
-
     parentId: category-aggregators_and_integrators-aggregators_and_integrators
     type: SUBCATEGORY
   security_and_operations-operations_and_infrastructure_management_services-utilities:
     eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-utilities
     name: Utilities
-
     parentId: category-security_and_operations-operations_and_infrastructure_management_services
     type: SUBCATEGORY
   training_and_support-education_and_training-other:
     eid: subcategory-training_and_support-education_and_training-other
     name: Other
-
     parentId: category-training_and_support-education_and_training
     type: SUBCATEGORY
   training_and_support-education_and_training-related_training:
     eid: subcategory-training_and_support-education_and_training-related_training
     name: Related Training
-
     parentId: category-training_and_support-education_and_training
     type: SUBCATEGORY
   training_and_support-education_and_training-required_training:
     eid: subcategory-training_and_support-education_and_training-required_training
     name: Required Training
-
     parentId: category-training_and_support-education_and_training
     type: SUBCATEGORY
   processing_and_analysis-measurement_and_materials_analysis-validation:
     eid: subcategory-processing_and_analysis-measurement_and_materials_analysis-validation
     name: Validation
-
     parentId: category-processing_and_analysis-measurement_and_materials_analysis
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-network-exchange:
     eid: subcategory-access_physical_and_eInfrastructures-network-exchange
     name: Exchange
-
     parentId: category-access_physical_and_eInfrastructures-network
     type: SUBCATEGORY
   processing_and_analysis-data_management-interlinking:
     eid: subcategory-processing_and_analysis-data_management-interlinking
     name: Interlinking
-
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
   processing_and_analysis-data_management-mining:
     eid: subcategory-processing_and_analysis-data_management-mining
     name: Mining
-
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-instrument_and_equipment-cytometer:
     eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-cytometer
     name: Cytometer
-
     parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
     type: SUBCATEGORY
   processing_and_analysis-data_management-digitisation:
     eid: subcategory-processing_and_analysis-data_management-digitisation
     name: Digitisation
-
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-data_storage-other:
     eid: subcategory-access_physical_and_eInfrastructures-data_storage-other
     name: Other
-
     parentId: category-access_physical_and_eInfrastructures-data_storage
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-material_storage-packaging:
     eid: subcategory-access_physical_and_eInfrastructures-material_storage-packaging
     name: Packaging
-
     parentId: category-access_physical_and_eInfrastructures-material_storage
     type: SUBCATEGORY
   security_and_operations-operations_and_infrastructure_management_services-accounting:
     eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-accounting
     name: Accounting
-
     parentId: category-security_and_operations-operations_and_infrastructure_management_services
     type: SUBCATEGORY
   training_and_support-consultancy_and_support-software_development:
     eid: subcategory-training_and_support-consultancy_and_support-software_development
     name: Software Development
-
     parentId: category-training_and_support-consultancy_and_support
     type: SUBCATEGORY
   security_and_operations-operations_and_infrastructure_management_services-transportation:
     eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-transportation
     name: Transportation
-
     parentId: category-security_and_operations-operations_and_infrastructure_management_services
     type: SUBCATEGORY
   sharing_and_discovery-scholarly_communication-analysis:
     eid: subcategory-sharing_and_discovery-scholarly_communication-analysis
     name: Analysis
-
     parentId: category-sharing_and_discovery-scholarly_communication
     type: SUBCATEGORY
   training_and_support-consultancy_and_support-modeling_and_simulation:
     eid: subcategory-training_and_support-consultancy_and_support-modeling_and_simulation
     name: Modeling & Simulation
-
     parentId: category-training_and_support-consultancy_and_support
     type: SUBCATEGORY
   training_and_support-education_and_training-training_tool:
     eid: subcategory-training_and_support-education_and_training-training_tool
     name: Training Tool
-
     parentId: category-training_and_support-education_and_training
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-instrument_and_equipment-digitisation_equipment:
     eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-digitisation_equipment
     name: Digitisation Equipment
-
     parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
     type: SUBCATEGORY
   sharing_and_discovery-data-online_service_data:
     eid: subcategory-sharing_and_discovery-data-online_service_data
     name: Online Service Data
-
     parentId: category-sharing_and_discovery-data
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-network-other:
     eid: subcategory-access_physical_and_eInfrastructures-network-other
     name: Other
-
     parentId: category-access_physical_and_eInfrastructures-network
     type: SUBCATEGORY
   training_and_support-consultancy_and_support-benchmarking:
     eid: subcategory-training_and_support-consultancy_and_support-benchmarking
     name: Benchmarking
-
     parentId: category-training_and_support-consultancy_and_support
     type: SUBCATEGORY
   sharing_and_discovery-samples-chemical_compounds_library:
     eid: subcategory-sharing_and_discovery-samples-chemical_compounds_library
     name: Chemical Compounds Library
-
     parentId: category-sharing_and_discovery-samples
     type: SUBCATEGORY
   sharing_and_discovery-software-platform:
     eid: subcategory-sharing_and_discovery-software-platform
     name: Platform
-
     parentId: category-sharing_and_discovery-software
     type: SUBCATEGORY
   training_and_support-consultancy_and_support-audit_and_assessment:
     eid: subcategory-training_and_support-consultancy_and_support-audit_and_assessment
     name: Audit & Assessment
-
     parentId: category-training_and_support-consultancy_and_support
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-compute-container_management:
     eid: subcategory-access_physical_and_eInfrastructures-compute-container_management
     name: Container Management
-
     parentId: category-access_physical_and_eInfrastructures-compute
     type: SUBCATEGORY
   processing_and_analysis-data_management-publishing:
     eid: subcategory-processing_and_analysis-data_management-publishing
     name: processing_and_analysis-data_management-publishing
-
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
     extras: {}
   access_physical_and_eInfrastructures-network-virtual_nework:
     eid: subcategory-access_physical_and_eInfrastructures-network-virtual_nework
     name: Virtual Network
-
     parentId: category-access_physical_and_eInfrastructures-network
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-instrument_and_equipment-laser:
     eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-laser
     name: Laser
-
     parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
     type: SUBCATEGORY
   sharing_and_discovery-samples-preparation:
     eid: subcategory-sharing_and_discovery-samples-preparation
     name: Preparation
-
     parentId: category-sharing_and_discovery-samples
     type: SUBCATEGORY
   security_and_operations-security_and_identity-single_sign_on:
     eid: subcategory-security_and_operations-security_and_identity-single_sign_on
     name: Single Sign-On
-
     parentId: category-security_and_operations-security_and_identity
     type: SUBCATEGORY
   processing_and_analysis-data_management-anonymisation:
     eid: subcategory-processing_and_analysis-data_management-anonymisation
     name: Anonymisation
-
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-compute-serverless_applications_repository:
     eid: subcategory-access_physical_and_eInfrastructures-compute-serverless_applications_repository
     name: Serverless Applications Repository
-
     parentId: category-access_physical_and_eInfrastructures-compute
     type: SUBCATEGORY
   sharing_and_discovery-applications-utilities:
     eid: subcategory-sharing_and_discovery-applications-utilities
     name: Utilities
-
     parentId: category-sharing_and_discovery-applications
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-network-content_delivery_network:
     eid: subcategory-access_physical_and_eInfrastructures-network-content_delivery_network
     name: Content Delivery Network
-
     parentId: category-access_physical_and_eInfrastructures-network
     type: SUBCATEGORY
   security_and_operations-security_and_identity-identity_and_access_management:
     eid: subcategory-security_and_operations-security_and_identity-identity_and_access_management
     name: Identity & Access Management
-
     parentId: category-security_and_operations-security_and_identity
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-instrument_and_equipment-microscopy:
     eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-microscopy
     name: Microscopy
-
     parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-data_storage-queue:
     eid: subcategory-access_physical_and_eInfrastructures-data_storage-queue
     name: Queue
-
     parentId: category-access_physical_and_eInfrastructures-data_storage
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-network-traffic_manager:
     eid: subcategory-access_physical_and_eInfrastructures-network-traffic_manager
     name: Traffic Manager
-
     parentId: category-access_physical_and_eInfrastructures-network
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-material_storage-preservation:
     eid: subcategory-access_physical_and_eInfrastructures-material_storage-preservation
     name: Preservation
-
     parentId: category-access_physical_and_eInfrastructures-material_storage
     type: SUBCATEGORY
   sharing_and_discovery-data-other:
     eid: subcategory-sharing_and_discovery-data-other
     name: Other
-
     parentId: category-sharing_and_discovery-data
     type: SUBCATEGORY
   sharing_and_discovery-software-libraries:
     eid: subcategory-sharing_and_discovery-software-libraries
     name: Libraries
-
     parentId: category-sharing_and_discovery-software
     type: SUBCATEGORY
   security_and_operations-operations_and_infrastructure_management_services-order_management:
     eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-order_management
     name: Order Management
-
     parentId: category-security_and_operations-operations_and_infrastructure_management_services
     type: SUBCATEGORY
   processing_and_analysis-data_analysis-workflows:
     eid: subcategory-processing_and_analysis-data_analysis-workflows
     name: Workflows
-
     parentId: category-processing_and_analysis-data_analysis
     type: SUBCATEGORY
   aggregators_and_integrators-aggregators_and_integrators-services:
     eid: subcategory-aggregators_and_integrators-aggregators_and_integrators-services
     name: Services
-
     parentId: category-aggregators_and_integrators-aggregators_and_integrators
     type: SUBCATEGORY
   training_and_support-consultancy_and_support-application_porting:
     eid: subcategory-training_and_support-consultancy_and_support-application_porting
     name: Application_Porting
-
     parentId: category-training_and_support-consultancy_and_support
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-compute-job_execution:
     eid: subcategory-access_physical_and_eInfrastructures-compute-job_execution
     name: Job Execution
-
     parentId: category-access_physical_and_eInfrastructures-compute
     type: SUBCATEGORY
   processing_and_analysis-measurement_and_materials_analysis-testing_and_validation:
     eid: subcategory-processing_and_analysis-measurement_and_materials_analysis-testing_and_validation
     name: TEsting & Validation
-
     parentId: category-processing_and_analysis-measurement_and_materials_analysis
     type: SUBCATEGORY
   processing_and_analysis-data_management-embargo:
     eid: subcategory-processing_and_analysis-data_management-embargo
     name: Embargo
-
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
   processing_and_analysis-data_analysis-forecast:
     eid: subcategory-processing_and_analysis-data_analysis-forecast
     name: Forecast
-
     parentId: category-processing_and_analysis-data_analysis
     type: SUBCATEGORY
   security_and_operations-operations_and_infrastructure_management_services-analysis:
     eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-analysis
     name: Analysis
-
     parentId: category-security_and_operations-operations_and_infrastructure_management_services
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-material_storage-fulfilment:
     eid: subcategory-access_physical_and_eInfrastructures-material_storage-fulfilment
     name: Fulfilment
-
     parentId: category-access_physical_and_eInfrastructures-material_storage
     type: SUBCATEGORY
   security_and_operations-security_and_identity-group_management:
     eid: subcategory-security_and_operations-security_and_identity-group_management
     name: Group Management
-
     parentId: category-security_and_operations-security_and_identity
     type: SUBCATEGORY
   sharing_and_discovery-samples-biological_samples:
     eid: subcategory-sharing_and_discovery-samples-biological_samples
     name: Biological Samples
-
     parentId: category-sharing_and_discovery-samples
     type: SUBCATEGORY
   processing_and_analysis-data_management-discovery:
     eid: subcategory-processing_and_analysis-data_management-discovery
     name: Discovery
-
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
   security_and_operations-security_and_identity-certification_authority:
     eid: subcategory-security_and_operations-security_and_identity-certification_authority
     name: Certification Authority
-
     parentId: category-security_and_operations-security_and_identity
     type: SUBCATEGORY
   processing_and_analysis-data_management-persistent_identifier:
     eid: subcategory-processing_and_analysis-data_management-persistent_identifier
     name: Persistent Identifier
-
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-material_storage-reworking:
     eid: subcategory-access_physical_and_eInfrastructures-material_storage-reworking
     name: Reworking
-
     parentId: category-access_physical_and_eInfrastructures-material_storage
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-instrument_and_equipment-geophysical:
     eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-geophysical
     name: Geophysical
-
     parentId: category-access_physical_and_eInfrastructures-instrument_and_equipment
     type: SUBCATEGORY
   sharing_and_discovery-applications-education:
     eid: subcategory-sharing_and_discovery-applications-education
     name: Education
-
     parentId: category-sharing_and_discovery-applications
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-compute-virtual_machine_management:
     eid: subcategory-access_physical_and_eInfrastructures-compute-virtual_machine_management
     name: Virtual Machine Management
-
     parentId: category-access_physical_and_eInfrastructures-compute
     type: SUBCATEGORY
   aggregators_and_integrators-aggregators_and_integrators-applications:
     eid: subcategory-aggregators_and_integrators-aggregators_and_integrators-applications
     name: Applications
-
     parentId: category-aggregators_and_integrators-aggregators_and_integrators
     type: SUBCATEGORY
   sharing_and_discovery-development_resources-other:
     eid: subcategory-sharing_and_discovery-development_resources-other
     name: Other
-
     parentId: category-sharing_and_discovery-development_resources
     type: SUBCATEGORY
 
