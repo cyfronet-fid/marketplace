@@ -59,7 +59,7 @@ FactoryBot.define do
         ] },
         "helpdeskPage" => "https://services.openminted.eu/support",
         "id" => eid,
-        "languageAvailabilities" => { "languageAvailability"=>"english" },
+        "languageAvailabilities" => { "languageAvailability"=>"en" },
         "lastUpdate" => "Wed, 05 Sep 2018 00:00:00 +0000".to_date,
         "lifeCycleStatus" => "production",
         "name" => name,
@@ -83,6 +83,7 @@ FactoryBot.define do
         "serviceLevel" => "http://openminted.eu/sla-agreement/",
         "subcategories" =>  { "subcategory" => ["data"] },
         "logo" => logo,
+        "scientificSubdomains" => { "scientificSubdomain" => "scientific_domain-other" },
         "tagline" => "Find easily accessible corpora of scholarly content and mine them!",
         "tags" => { "tag" => [
             "Text Mining",

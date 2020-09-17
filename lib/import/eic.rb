@@ -78,7 +78,7 @@ module Import
         access_policy_url = service["accessPolicy"]
         helpdesk_url = service["helpdeskPage"]
         service_level_agreement_url = service["serviceLevel"]
-        terms_of_use = service["termsOfUse"] # list
+        terms_of_use = service["termsOfUse"]
         name = service["name"]
         tagline = service["tagline"]
         description = ReverseMarkdown.convert(service["description"], unknown_tags: :bypass, github_flavored: false)
@@ -115,7 +115,7 @@ module Import
         logo = nil
 
         begin
-          logo = open(image_url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, read_timeout: 10)
+          logo = open(image_url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
           logo_content_type = logo.content_type
 
           if logo_content_type == "image/svg+xml"
