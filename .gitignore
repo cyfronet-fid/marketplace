@@ -33,6 +33,7 @@ yarn-debug.log*
 
 # Ignore OS speciffic files
 .DS_Store
+.rake_tasks~
 
 # Ignore IDE configuration
 /.idea

@@ -128,11 +128,12 @@ module Import
               convert.args.unshift "none"
               convert.args.unshift "-background"
             end
-
-            logo = StringIO.new
-            logo.write(img.to_blob)
-            logo.seek(0)
-            logo_content_type = "image/png"
+            if logo_content_type.start_with?("image")
+              logo = StringIO.new
+              logo.write(img.to_blob)
+              logo.seek(0)
+              logo_content_type = "image/png"
+            end
           end
         rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, SocketError => e
           log "ERROR - there was a problem processing image for #{eid} #{image_url}: #{e}"
