@@ -12,7 +12,7 @@ RSpec.describe Service::PcCreateOrUpdate do
   let!(:data) { create(:category, name: "Data management") }
   let!(:compute) { create(:category, name: "Compute") }
   let!(:networking) { create(:category, name: "Networking") }
-  let!(:scientific_domain_other) { create(:scientific_domain, name: "Other") }
+  let!(:scientific_domain_other) { create(:scientific_domain, name: "Other", eid: "scientific_domain-other") }
   let!(:funding_body) { create(:funding_body, name: "FundingBody", eid: "funding_body-fb") }
   let!(:funding_program) { create(:funding_program, name: "FundingProgram", eid: "funding_program-fp") }
   let!(:related_service) { create(:service, name: "Super Service",
@@ -71,11 +71,10 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.tag_list).to eq(["text mining", "catalogue", "research", "data mining",
                                       "tdm", "corpora", "datasets", "scholarly literature",
                                       "scientific publications", "scholarly content"])
-      expect(service.language_availability).to eq(["english"])
+      expect(service.language_availability).to eq(["EN"])
       expect(service.geographical_availabilities.first.name).to eq("World")
       expect(service.resource_geographic_locations.first.name).to eq("Poland")
       expect(service.multimedia).to eq(["https://www.youtube.com/watch?v=-_F8NZwWXew"])
-      expect(service.dedicated_for).to eq([])
       expect(service.access_modes).to eq([access_mode])
       expect(service.access_types).to eq([access_type])
       expect(service.certifications).to eq(["ISO-639"])
