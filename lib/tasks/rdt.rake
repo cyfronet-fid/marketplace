@@ -62,12 +62,20 @@ namespace :rdt do
 
     puts "Creating target_users from yaml"
     yaml_hash["target_user"].each do |_, hash|
-      TargetUser.find_or_initialize_by(eid: hash["eid"]) do |target_user|
-        target_user.update!(name: hash["name"],
-                            eid: hash["eid"],
-                            description: hash["description"])
+      existing_target_user = TargetUser.find_by(name: hash["name"], eid:  [hash["eid"], nil])
+      if existing_target_user.blank?
+        TargetUser.find_or_initialize_by(eid: hash["eid"]) do |tu|
+          tu.update!(name: hash["name"],
+                     eid: hash["eid"],
+                     description: hash["description"])
+        end
+        puts "Created target user: #{hash["name"]}, eid: #{hash["eid"]}"
+      else
+        existing_target_user.update!(name: hash["name"],
+                                eid: hash["eid"],
+                                description: hash["description"])
+        puts "Updated existing target user: #{hash["name"]} with eid: #{hash["eid"]}"
       end
-      puts "Created target_user: #{hash["name"]}, eid: #{hash["eid"]}"
     end
 
     puts "Creating life_cycle_statuses from yaml"
@@ -105,24 +113,44 @@ namespace :rdt do
 
     puts "Creating categories from yaml"
     yaml_hash["category"].each do |_, hash|
-      Category.find_or_initialize_by(eid: hash["eid"]) do |category|
-        category.update!(name: hash["name"],
-                         eid: hash["eid"],
-                         description: hash["description"],
-                         parent: Category.find_by(eid: hash["parentId"]))
+      existing_category = Category.find_by(name: hash["name"], eid: [hash["eid"], nil])
+      parent = hash["parentId"].blank? ? nil : Category.find_by(eid: hash["parentId"])
+      if existing_category.blank?
+        Category.find_or_initialize_by(eid: hash["eid"]) do |category|
+          category.update!(name: hash["name"],
+                           eid: hash["eid"],
+                           description: hash["description"],
+                           parent: parent)
+        end
+        puts "Created category: #{hash["name"]}, eid: #{hash["eid"]}"
+      else
+        existing_category.update!(name: hash["name"],
+                                   eid: hash["eid"],
+                                   description: hash["description"],
+                                   parent: parent)
+        puts "Updated existing category: #{hash["name"]} with eid: #{hash["eid"]}"
       end
-      puts "Created category: #{hash["name"]}, eid: #{hash["eid"]}"
     end
 
     puts "Creating scientific_domains from yaml"
     yaml_hash["scientific_domain"].each do |_, hash|
-      ScientificDomain.find_or_initialize_by(eid: hash["eid"]) do |sd|
-        sd.update!(name: hash["name"],
-                         eid: hash["eid"],
-                         description: hash["description"],
-                         parent: ScientificDomain.find_by(eid: hash["parentId"]))
+      existing_domain = ScientificDomain.find_by(name: hash["name"], eid:  [hash["eid"], nil])
+      parent = hash["parentId"].blank? ? nil : ScientificDomain.find_by(eid: hash["parentId"])
+      if existing_domain.blank?
+        ScientificDomain.find_or_initialize_by(eid: hash["eid"]) do |sd|
+          sd.update!(name: hash["name"],
+                           eid: hash["eid"],
+                           description: hash["description"],
+                           parent: parent)
+        end
+        puts "Created scientific domain: #{hash["name"]}, eid: #{hash["eid"]}"
+      else
+        existing_domain.update!(name: hash["name"],
+                 eid: hash["eid"],
+                 description: hash["description"],
+                 parent: parent)
+        puts "Updated existing scientific domain: #{hash["name"]} with eid: #{hash["eid"]}"
       end
-      puts "Created scientific domain: #{hash["name"]}, eid: #{hash["eid"]}"
     end
   end
 end
