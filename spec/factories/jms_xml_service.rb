@@ -13,7 +13,7 @@ FactoryBot.define do
             <tns:active>true</tns:active>
             <tns:latest>true</tns:latest>
             <tns:metadata>
-              <tns:modifiedAt>1594132470671</tns:modifiedAt>
+              <tns:modifiedAt>1600863105818</tns:modifiedAt>
               <tns:modifiedBy>Marta Swiatkowska</tns:modifiedBy>
               <tns:registeredAt>1593444757069</tns:registeredAt>
               <tns:registeredBy>Marta Swiatkowska</tns:registeredBy>
