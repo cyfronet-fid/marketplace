@@ -107,7 +107,8 @@ class Service::PcCreateOrUpdate
         grant_project_names: Array(data.dig("grantProjectNames", "grantProjectName")),
         resource_organisation: map_provider(data["resourceOrganisation"]),
         providers: providers.map { |p| map_provider(p) },
-        categories: Array(map_categories(data.dig("subcategories", "subcategory"))) || [],
+        related_platforms: Array(data.dig("relatedPlatforms", "relatedPlatform")) || [],
+        pc_categories: Array(map_pc_categories(data.dig("subcategories", "subcategory"))) || [],
         scientific_domains: Array(map_scientific_domains(data.dig("scientificSubdomains", "scientificSubdomain"))),
         version: data["version"] || "",
         last_update: data["lastUpdate"]
@@ -165,8 +166,8 @@ class Service::PcCreateOrUpdate
       Rails.logger.warn "WARN: Cannot attach logo. #{e.message}"
     end
 
-    def map_categories(categories)
-      Category.where(eid: categories)
+    def map_pc_categories(categories)
+      PcCategory.where(eid: categories)
     end
 
     def map_scientific_domains(domains)

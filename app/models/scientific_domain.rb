@@ -22,20 +22,4 @@ class ScientificDomain < ApplicationRecord
   def to_s
     self.name
   end
-
-
-  private
-    def self.child_names(records = ScientificDomain.arrange, parent_name = "", result = [])
-      records.each do |r, sub_r|
-        result << [name_with_path(parent_name, r.name), r]
-        unless sub_r.blank?
-          child_names(sub_r, name_with_path(parent_name, r.name), result)
-        end
-      end
-      result
-    end
-
-    def self.name_with_path(parent, child, separator = " ⇒ ")
-      parent.blank? ? child : parent + separator + child
-    end
 end

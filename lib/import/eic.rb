@@ -94,6 +94,7 @@ module Import
         geographical_availabilities = service["geographicalAvailabilities"] ||
         resource_geographic_locations = Array(service["resourceGeographicLocations"]) || []
         categories = service["subcategories"]
+        related_platforms = service["relatedPlatforms"] || []
         scientific_domains = service["scientificSubdomains"]
         funding_bodies = service["fundingBody"]
         funding_programs = Array(service["fundingPrograms"])
@@ -184,7 +185,8 @@ module Import
             access_modes: map_access_modes(access_modes),
             resource_organisation: mapped_resource_organisation[0],
             providers: mapped_providers,
-            categories: map_categories(categories),
+            related_platforms: related_platforms,
+            pc_categories: map_pc_categories(categories),
             scientific_domains: map_scientific_domains(scientific_domains),
             version: version || "",
             last_update: last_update ? Time.at(last_update&./1000) : Time.now,
@@ -288,8 +290,8 @@ module Import
       log "ERROR - Default offer for #{service.name} (eid: #{eid}) cannot be created. Unexpected #{error}!"
     end
 
-    def map_categories(categories)
-      Category.where(eid: categories)
+    def map_pc_categories(categories)
+      PcCategory.where(eid: categories)
     end
 
     def map_scientific_domains(domains)

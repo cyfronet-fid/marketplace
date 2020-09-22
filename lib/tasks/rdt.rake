@@ -111,12 +111,12 @@ namespace :rdt do
       puts "Created access_mode: #{hash["name"]}, eid: #{hash["eid"]}"
     end
 
-    puts "Creating categories from yaml"
+    puts "Creating PC categories from yaml"
     yaml_hash["category"].each do |_, hash|
-      existing_category = Category.find_by(name: hash["name"], eid: [hash["eid"], nil])
-      parent = hash["parentId"].blank? ? nil : Category.find_by(eid: hash["parentId"])
+      existing_category = PcCategory.find_by(name: hash["name"], eid: [hash["eid"], nil])
+      parent = hash["parentId"].blank? ? nil : PcCategory.find_by(eid: hash["parentId"])
       if existing_category.blank?
-        Category.find_or_initialize_by(eid: hash["eid"]) do |category|
+        PcCategory.find_or_initialize_by(eid: hash["eid"]) do |category|
           category.update!(name: hash["name"],
                            eid: hash["eid"],
                            description: hash["description"],
