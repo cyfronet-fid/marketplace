@@ -60,7 +60,7 @@ FactoryBot.define do
         "helpdeskPage" => "https://services.openminted.eu/support",
         "id" => eid,
         "languageAvailabilities" => { "languageAvailability"=>"en" },
-        "lastUpdate" => "Wed, 05 Sep 2018 00:00:00 +0000".to_date,
+        "lastUpdate" => 1599609600,
         "lifeCycleStatus" => "production",
         "name" => name,
         "order" => "http://openminted.eu/omtd-services/catalogue-of-scholarly-datasets/",
