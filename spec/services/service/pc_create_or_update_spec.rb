@@ -81,7 +81,7 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.standards).to eq(["standard"])
       expect(service.open_source_technologies).to eq(["opensource"])
       expect(service.changelog).to eq(["fixed bug"])
-      expect(service.last_update).to eq("2018-09-05 00:00:00.000000000 +0000")
+      expect(service.last_update).to eq("2020-09-09 00:00:00.000000000 +0000")
       expect(service.grant_project_names).to eq(["grant"])
       expect(service.terms_of_use_url).to eq("https://services.openminted.eu/support/termsAndConditions")
       expect(service.access_policies_url).to eq("http://openminted.eu/pricing/")
@@ -200,8 +200,7 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.name).to eq("New title")
     end
 
-    # TODO: This test should be enabled when latest_update will work
-    xit "should not update service" do
+    it "should not update service" do
       provider_ten = create(:provider, name: "Test Provider ten")
       provider_tp = create(:provider, name: "Test Provider tp")
       create(:provider_source, source_type: "eic", eid: provider_eid, provider: provider_ten)

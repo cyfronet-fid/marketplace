@@ -14,6 +14,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Missing breadcrumbs and page titles (@goreck888)
 - new url fields in service model (@goreck888)
 - new missing multiselect fields in service model (@goreck888)
+- pc_categories and pc_platforms near the internal entities (@goreck888)
+- missing eid for scientific_domains and target_users(@goreck888)
+- synchronized_at field for pc_create_or_update (@goreck888)
+
 
 ### Changed
 - Sidebar links section name change from 'support' to 'links' (@goreck888)
@@ -27,6 +31,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Added field resource_organisation(main provider) (@martaswiatkowska)
 - Refactor contact fields to new model `Contact` (@goreck888)
 - Refactor related services (@goreck888)
+- handling errors with logo downloading in importers (@goreck888)
 
 ### Deprecated
 
