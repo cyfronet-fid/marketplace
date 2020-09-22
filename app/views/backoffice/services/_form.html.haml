@@ -19,11 +19,17 @@
     disabled: cant_edit([multimedia: []])
   = f.association :categories, multiple: true, input_html: { data: { choice: true } },
                   disabled: cant_edit([category_ids: []])
+  = f.association :pc_categories, multiple: true, input_html: { data: { choice: true } },
+                  disabled: cant_edit([pc_category_ids: []]),
+                  collection: Vocabulary.where(type: "PcCategory").child_names.map { |name, pcc| [name, pcc.id] },
+                  label_method: :first, value_method: :second
   = f.association :resource_organisation, disabled: cant_edit(:resource_organisation_id)
   = f.association :providers, multiple: true, input_html: { data: { choice: true } },
                   disabled: cant_edit([provider_ids: []])
-  = f.association :platforms, multiple: true, input_html: { data: { choice: true } },
+  = f.association :platforms, label: "Platforms (internal)", multiple: true, input_html: { data: { choice: true } },
                   disabled: cant_edit([platform_ids: []])
+  = f.input :related_platforms, label: "Related platforms (PC data)", multiple: true,
+                  input_html: { data: { choice: true } }
   = f.association :scientific_domains, input_html: { data: { choice: true } }, include_hidden: false,
                   disabled: cant_edit([scientific_domain_ids: []]),
                   collection: ScientificDomain.child_names.map { |name, sd| [name, sd.id] },
