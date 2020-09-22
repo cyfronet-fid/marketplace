@@ -24,7 +24,7 @@ describe Jms::ManageMessage do
     expect(Service::PcCreateOrUpdateJob).to receive(:perform_later).with(resource["infraService"]["service"],
                                                                          eic_base,
                                                                          true,
-                                                                         Time.new(resource["infraService"]["metadata"]["modifiedAt"]))
+                                                                         Time.at(resource["infraService"]["metadata"]["modifiedAt"].to_i&./1000))
     expect {
       described_class.new(json_service, eic_base, logger).call
     }.to_not raise_error

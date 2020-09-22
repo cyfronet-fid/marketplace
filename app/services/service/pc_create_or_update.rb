@@ -26,8 +26,7 @@ class Service::PcCreateOrUpdate
     service = map_service(@eic_service)
     mapped_service = Service.joins(:sources).find_by("service_sources.source_type": "eic",
                                                      "service_sources.eid": @eid)
-    # The latest update from PC is now nil, we have to temporary disable this check
-    the_latest_update = true # mapped_service ? (@modified_at > mapped_service.last_update) : true
+    is_newer_update = mapped_service&.synchronized_at.present? ? (@modified_at > mapped_service.synchronized_at) : true
 
     if mapped_service.nil? && @is_active
       service = Service.new(service)
@@ -40,7 +39,7 @@ class Service::PcCreateOrUpdate
                                webpage: service.webpage_url, status: service.status)
       end
       service
-    elsif the_latest_update
+    elsif is_newer_update
       if mapped_service && !@is_active
         Service::Draft.new(mapped_service).call
         mapped_service
@@ -111,7 +110,8 @@ class Service::PcCreateOrUpdate
         pc_categories: Array(map_pc_categories(data.dig("subcategories", "subcategory"))) || [],
         scientific_domains: Array(map_scientific_domains(data.dig("scientificSubdomains", "scientificSubdomain"))),
         version: data["version"] || "",
-        last_update: data["lastUpdate"]
+        last_update: data["lastUpdate"].present? ? Time.at(data["lastUpdate"].to_i) : nil,
+        synchronized_at: @modified_at
       }
     end
 
