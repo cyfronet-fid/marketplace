@@ -2,6 +2,7 @@
   = f.error_notification
   .row
     .col-12.col-md-10
+      = f.input :synchronized_at, as: :date_time_picker, disabled: true
       = f.input :last_update, as: :date_time_picker, disabled: true
       = f.input :version, disabled: cant_edit(:version)
       = f.input :logo, disabled: cant_edit(:logo)

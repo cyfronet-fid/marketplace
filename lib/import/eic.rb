@@ -112,6 +112,7 @@ module Import
         provider_eids = service["resourceProviders"] || []
         version = service["version"]
         target_users = service["targetUsers"]
+        synchronized_at = service_data["metadata"]["modifiedAt"].to_i
 
         logo = nil
 
@@ -189,7 +190,8 @@ module Import
             pc_categories: map_pc_categories(categories),
             scientific_domains: map_scientific_domains(scientific_domains),
             version: version || "",
-            last_update: last_update ? Time.at(last_update&./1000) : Time.now,
+            synchronized_at: Time.at(synchronized_at&./1000),
+            last_update: last_update.blank? ? nil : Time.at(last_update&./1000),
             changelog: changelog,
             certifications: Array(certifications),
             standards: Array(standards),
