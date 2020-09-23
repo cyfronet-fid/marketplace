@@ -7,6 +7,26 @@
         = render "services/offers", offers: offers, service: service
 
     %sidebar.col-12.col-xl-3.pl-5
+      %dl.mb-0
+        %dt.x-small
+          %span
+            Provided by:
+        %dd.x-small
+          %strong.mr-4= safe_join(providers(service), ", ")
+      %dl.mb-0
+        %dt.x-small
+          %span
+            Scientific domain:
+        %dd.x-small
+          %strong.mr-4= safe_join(scientific_domains(service), ", ")
+      %dl.mb-0
+        %dt.x-small
+          %span
+            Dedicated for:
+        %dd.x-small
+          %strong.mr-4= safe_join(dedicated_for_links(service), ", ")
+      %span.clearfix
+
       - Service::SIDEBAR_FIELDS.each do |group|
         - if any_present?(service, *group[:fields])
           %h5= t(".sidebar.title.#{group[:name]}")
