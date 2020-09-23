@@ -40,6 +40,11 @@ module ServiceHelper
     service.scientific_domains.map { |target| link_to(target.name, services_path(scientific_domains: target)) }
   end
 
+  def field_tree(service, field)
+    parents = service.send(field).map { |f| f.parent.blank? ? f : f.parent }
+    Hash[parents.map { |parent| [parent.name, (parent.children & service.send(field)).map(&:name)] } ]
+  end
+
   def providers(service)
     service.providers.map { |target| link_to(target.name, services_path(providers: target)) }
   end
@@ -56,10 +61,10 @@ module ServiceHelper
     end
   end
 
-  def map_view_to_order_type(object)
-    if object.external
+  def map_view_to_order_type(service_or_offer)
+    if service_or_offer.external
       "external"
-    elsif object.order_type == "order_required"
+    elsif service_or_offer.order_type == "order_required"
       "orderable"
     else
       "open_access"
