@@ -60,6 +60,10 @@ a {
   }
 }
 
+.default-color {
+  color: $navbar-light-color;
+}
+
 h1 {
   font-weight: $font-weight-light;
   font-size: 2.1rem;
@@ -2370,7 +2374,7 @@ label[data-multicheckbox].small {
       margin-bottom: 0;
 
       a {
-        font-weight: 300;
+        font-weight: bold;
       }
     }
   }
@@ -3438,6 +3442,7 @@ textarea.form-control.is-invalid {
     position: relative;
     cursor: pointer;
     padding-left: 23px;
+    color: $link-color;
     padding-top: 1px;
     margin-right: 6px;
   }
@@ -3804,4 +3809,10 @@ textarea.form-control.is-invalid {
       color: $white;
     }
   }
+}
+
+.service-links {
+  border-top: 1px solid $palette-solid-10;
+  margin-top: 20px;
+  padding-top: 12px;
 }
