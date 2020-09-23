@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - missing eid for scientific_domains and target_users(@goreck888)
 - synchronized_at field for pc_create_or_update (@goreck888)
 - Handling eIC services ids in mp (@goreck888)
+- New resource presentation page (@michal-szostak) 
 
 
 ### Changed

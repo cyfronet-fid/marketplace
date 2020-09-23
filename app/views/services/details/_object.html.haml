@@ -1,0 +1,6 @@
+- Array(service.send(clazz)).map.with_index do |object, idx|
+  %li
+    - fields.map do |field|
+      - if object.send(field).present?
+        %span= object.send(field)
+        %br

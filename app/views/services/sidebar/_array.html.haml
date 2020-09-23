@@ -1,12 +1,13 @@
-- fields.each do |field|
-  - service.send(field).each do |element|
-    %li.list-group-item
-      - if nested.present? && nested[field.to_sym].present?
-        %span
-          = element.send(nested[field.to_sym])
-      - else
-        %span
-          = element
+%ul.list-group
+  - fields.each do |field|
+    - service.send(field).each do |element|
+      %li.list-group-item
+        - if nested.present? && nested[field.to_sym].present?
+          %span
+            = element.send(nested[field.to_sym])
+        - else
+          %span
+            = element
 
 
 

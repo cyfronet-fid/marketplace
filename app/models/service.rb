@@ -34,43 +34,103 @@ class Service < ApplicationRecord
     deleted: "deleted"
   }
 
-  SIDEBAR_FIELDS = [{ name: "geographical_availabilities_and_languages",
-                      template: "array",
-                      fields: ["geographical_availabilities", "languages"],
+  SIDEBAR_FIELDS = [{ name: "scientific_categorisation",
+                      template: "classification",
+                      fields: ["scientific_domains"],
                       nested: {
-                        "geographical_availabilities": "name"
+                          scientific_domains: "name"
                       }
                     },
-                    { name: "service_availability",
-                      template: "map",
-                      fields: ["geographical_availabilities"] },
-                    { name: "platforms",
+                    { name: "categorisation",
                       template: "array",
-                      fields: ["platforms"] },
-                    { name: "links",
+                      fields: ["categories"]
+                    },
+                    { name: "target_users",
+                      template: "array",
+                      fields: ["target_users"],
+                      nested: {
+                          target_users: "name"
+                      }
+                    },
+                    { name: "service_availability_and_languages",
+                      template: "map",
+                      fields: ["languages", "geographical_availabilities"] }]
+
+  HEADER_FIELDS = [{ name: "links",
                       template: "links",
                       fields: ["webpage_url", "helpdesk_url", "helpdesk_email",
-                               "manual_url", "training_information_url"] },
-                    { name: "documents",
-                      template: "links",
-                      fields: ["sla_url", "terms_of_use_url", "access_policies_url"] },
-                    { name: "restrictions",
-                      template: "text",
-                      fields: ["restrictions"] },
-                    { name: "Life cycle status",
-                      template: "array",
-                      fields: ["life_cycle_status", "trl"],
-                      nested: {
-                        "life_cycle_status": "name",
-                        "trl": "name"
-                      }
-                    },
-                    { name: "version",
-                      template: "plain_text",
-                      fields: ["version"] },
-                    { name: "last_update",
-                      template: "date",
-                      fields: ["updated_at"] }]
+                               "manual_url", "training_information_url"] }]
+
+  DETAIL_FIELDS_1 = [{ name: "classification",
+                       template: "array",
+                       fields: ["target_users", "access_types", "access_modes", "tags"],
+                       with_desc: true,
+                       nested: {
+                           target_users: "name",
+                           access_types: "name",
+                           access_modes: "name"
+                       } },
+                     { name: "availability",
+                       template: "array",
+                       fields: ["geographical_availabilities", "languages"],
+                       with_desc: true },
+                     { name: "multimedia",
+                       template: "links",
+                       fields: ["multimedia", "use_cases_url"],
+                       type: "array" },
+                     { name: "dependencies",
+                       template: "array",
+                       fields: ["required_services", "related_services", "related_platforms"],
+                       with_desc: true,
+                       nested: {
+                           required_services: "service",
+                           related_services: "service"
+                       } },
+                     { name: "attribution",
+                       template: "array",
+                       fields: ["funding_bodies", "funding_programs", "grant_project_names"],
+                       with_desc: true,
+                       nested: {
+                           funding_bodies: "name",
+                           funding_programs: "name"
+                       } },
+                     { name: "order",
+                       template: "array",
+                       fields: ["order_type", "order_url"],
+                       nested: {
+                           order_url: "link"
+                       },
+                       with_desc: true }]
+
+
+  DETAIL_FIELDS_2 = [{ name: "public_contacts",
+                       template: "object",
+                       fields: ["full_name", "email", "phone", "position_in_organisation"],
+                       type: "array",
+                       clazz: "public_contacts" },
+                     { name: "maturity_information",
+                       template: "array",
+                       fields: ["trl", "life_cycle_status", "certifications", "standards", "open_source_technologies",
+                                "version", "last_update"],
+                       with_desc: true,
+                       nested: {
+                           trl: "name",
+                           life_cycle_status: "name"
+                       } },
+                     { name: "management",
+                       template: "links",
+                       fields: ["helpdesk_url", "manual_url", "terms_of_use_url", "privacy_policy_url",
+                                "access_policies_url", "training_information_url", "status_monitoring_url",
+                                "maintenance_url"],
+                       with_desc: true },
+                     { name: "financial_information",
+                       template: "links",
+                       fields: ["payment_model_url", "pricing_url"] }
+                     ]
+
+  DETAIL_FIELDS_3 = [{ name: "changelog",
+                       template: "changelog",
+                       fields: ["changelog"] }]
 
   enum status: STATUSES
 
@@ -227,6 +287,10 @@ class Service < ApplicationRecord
 
   def target_relationships
     (required_services + manual_related_services + related_services).uniq
+  end
+
+  def external
+    order_type == "order_required" && order_url.present?
   end
 
   private
