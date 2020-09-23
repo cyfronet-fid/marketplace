@@ -10,7 +10,7 @@ RSpec.feature "Question about service" do
 
     visit service_path(service)
 
-    expect(page).to_not have_content "Want to ask a question about this service?"
+    expect(page).to_not have_content "Ask a question about this service?"
   end
 
   context "as logged in user" do
@@ -22,7 +22,7 @@ RSpec.feature "Question about service" do
 
       visit service_path(service)
 
-      click_on "Want to ask a question about this service?"
+      click_on "Ask a question about this service?"
 
       within("#ajax-modal") do
         fill_in("service_question_text", with: "text")
@@ -40,7 +40,7 @@ RSpec.feature "Question about service" do
 
       visit service_path(service)
 
-      click_on "Want to ask a question about this service?"
+      click_on "Ask a question about this service?"
 
       click_on "SEND"
 
@@ -55,7 +55,7 @@ RSpec.feature "Question about service" do
 
       visit service_path(service)
 
-      click_on "Want to ask a question about this service?"
+      click_on "Ask a question about this service?"
 
       within("#ajax-modal") do
         fill_in("service_question_author", with: "John Doe")
@@ -75,7 +75,7 @@ RSpec.feature "Question about service" do
 
       visit service_path(service)
 
-      click_on "Want to ask a question about this service?"
+      click_on "Ask a question about this service?"
 
       click_on "SEND"
 
