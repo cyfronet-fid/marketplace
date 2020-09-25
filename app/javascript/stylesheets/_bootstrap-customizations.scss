@@ -3814,5 +3814,31 @@ textarea.form-control.is-invalid {
 .service-links {
   border-top: 1px solid $palette-solid-10;
   margin-top: 20px;
-  padding-top: 12px;
+  padding: 10px 0;
+
+  ul {
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: inline;
+      float: left;
+      margin-right: 20px;
+
+      svg {
+        font-size: 10px;
+        margin-right: 4px;
+        color: $palette-yellow;
+      }
+    }
+  }
 }
+
+.question-col {
+  text-align: center;
+
+  .question-link {
+    font-size: 13px;
+  }
+}
+

@@ -35,8 +35,6 @@
                       class: "btn btn-primary d-block mb-3"
       %i{ class: "ordertype #{order_type(service)}" }
       = t("offers.type.#{order_type(service)}")
-      - if local_assigns[:question] && !service.public_contacts.empty?
-        = render "services/ask_question", service: service, question: question
 .row.service-links
   .col-12.col-lg-9.row
     .col-12.col-sm-3
@@ -47,6 +45,6 @@
                       service: service,
                       fields: group[:fields],
                       nested: group[:nested] || ""
-  .col-12.col-sm-3
+  .col-12.col-sm-3.question-col
     - if local_assigns[:question] && !service.public_contacts.empty?
       = render "services/ask_question", service: service, question: question

@@ -1,6 +1,7 @@
 - fields.each do |field|
   - if service.send(field).present?
     %li
+      %i.fas.fa-arrow-right
       - if field.end_with? "_url"
         = link_to(t("services.about.sidebar.fields.#{field}"), service.send(field))
       - elsif field.end_with? "_email"
