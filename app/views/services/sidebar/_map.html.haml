@@ -4,4 +4,4 @@
   - if map_data.present?
     .geographical-availabilities-map{ "data-controller": "map",
                                       "data-geographical_availabilities": map_data,
-                                      "data-region": field_value.map(&:alpha2) }
+                                      "data-region": data_for_region(field_value.map(&:alpha2)) }
