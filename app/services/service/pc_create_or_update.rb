@@ -56,7 +56,7 @@ class Service::PcCreateOrUpdate
   private
     def map_service(data)
       main_contact = MainContact.new(map_contact(data["mainContact"])) if data["mainContact"] || nil
-      providers = Array(data.dig("resourceProviders", "resourceProvider")) - [data["resourceOrganisation"]]
+      providers = Array(data.dig("resourceProviders", "resourceProvider"))
 
       { name: data["name"],
         description: ReverseMarkdown.convert(data["description"],
