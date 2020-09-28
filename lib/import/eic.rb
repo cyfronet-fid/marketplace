@@ -154,7 +154,7 @@ module Import
             # provider_id: ?
             tag_list: tag_list,
             language_availability: language_availability || ["EN"],
-            geographical_availabilities: geographical_availabilities || [],
+            geographical_availabilities: geographical_availabilities || ["WW"],
             resource_geographic_locations: resource_geographic_locations,
             target_users: map_target_users(target_users),
             multimedia: multimedia,
