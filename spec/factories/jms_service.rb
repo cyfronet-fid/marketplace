@@ -59,8 +59,8 @@ FactoryBot.define do
         ] },
         "helpdeskPage" => "https://services.openminted.eu/support",
         "id" => eid,
-        "languageAvailabilities" => { "languageAvailability"=>"english" },
-        "lastUpdate" => "Wed, 05 Sep 2018 00:00:00 +0000".to_date,
+        "languageAvailabilities" => { "languageAvailability"=>"en" },
+        "lastUpdate" => 1599609600,
         "lifeCycleStatus" => "production",
         "name" => name,
         "order" => "http://openminted.eu/omtd-services/catalogue-of-scholarly-datasets/",
@@ -83,6 +83,7 @@ FactoryBot.define do
         "serviceLevel" => "http://openminted.eu/sla-agreement/",
         "subcategories" =>  { "subcategory" => ["data"] },
         "logo" => logo,
+        "scientificSubdomains" => { "scientificSubdomain" => "scientific_domain-other" },
         "tagline" => "Find easily accessible corpora of scholarly content and mine them!",
         "tags" => { "tag" => [
             "Text Mining",
@@ -110,9 +111,10 @@ FactoryBot.define do
         "accessPolicy" => "http://openminted.eu/pricing/",
         "statusMonitoring" => "http://openminted.eu/monitoring/",
         "maintenance" => "http://openminted.eu/maintenance/",
-        "multimedia" => [
+        "multimedia" => {
+            "multimedia" => [
             "https://www.youtube.com/watch?v=-_F8NZwWXew"
-        ],
+        ] },
         "useCases" =>  {
           "useCase" => [
             "http://phenomenal-h2020.eu/home/help"

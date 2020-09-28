@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_17_142450) do
+ActiveRecord::Schema.define(version: 2020_09_22_120654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,12 +48,13 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
-    t.string "description"
+    t.text "description"
     t.string "ancestry"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
     t.integer "ancestry_depth", default: 0
+    t.string "eid"
     t.index ["ancestry"], name: "index_categories_on_ancestry"
     t.index ["description"], name: "index_categories_on_description"
     t.index ["name", "ancestry"], name: "index_categories_on_name_and_ancestry", unique: true
@@ -168,6 +169,7 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "eid"
     t.index ["name"], name: "index_platforms_on_name", unique: true
   end
 
@@ -262,6 +264,8 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.text "name", null: false
     t.string "ancestry"
     t.integer "ancestry_depth", default: 0
+    t.string "eid"
+    t.text "description"
     t.index ["name", "ancestry"], name: "index_scientific_domains_on_name_and_ancestry", unique: true
   end
 
@@ -402,6 +406,8 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.string "privacy_policy_url"
     t.string "use_cases_url", default: [], array: true
     t.datetime "last_update"
+    t.string "related_platforms", default: [], array: true
+    t.datetime "synchronized_at"
     t.index ["name"], name: "index_services_on_name"
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["resource_organisation_id"], name: "index_services_on_resource_organisation_id"
@@ -496,7 +502,7 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
   create_table "vocabularies", force: :cascade do |t|
     t.string "eid", null: false
     t.string "name", null: false
-    t.string "description"
+    t.text "description"
     t.string "type", null: false
     t.string "ancestry"
     t.integer "ancestry_depth", default: 0

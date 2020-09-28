@@ -17,15 +17,6 @@ class Service::PcCreateOrUpdate
     @unirest = unirest
     @eic_base_url = eic_base_url
     @eid = eic_service["id"]
-    @best_effort_category_mapping = {
-        "storage": "Storage",
-        "training": "Training & Support",
-        "security": "Security & Operations",
-        "analytics": "Processing & Analysis",
-        "data": "Data management",
-        "compute": "Compute",
-        "networking": "Networking",
-    }.stringify_keys
     @eic_service =  eic_service
     @is_active = is_active
     @modified_at = modified_at
@@ -35,8 +26,7 @@ class Service::PcCreateOrUpdate
     service = map_service(@eic_service)
     mapped_service = Service.joins(:sources).find_by("service_sources.source_type": "eic",
                                                      "service_sources.eid": @eid)
-
-    the_latest_update = mapped_service ? (@modified_at > mapped_service.last_update) : true
+    is_newer_update = mapped_service&.synchronized_at.present? ? (@modified_at > mapped_service.synchronized_at) : true
 
     if mapped_service.nil? && @is_active
       service = Service.new(service)
@@ -49,7 +39,7 @@ class Service::PcCreateOrUpdate
                                webpage: service.webpage_url, status: service.status)
       end
       service
-    elsif the_latest_update
+    elsif is_newer_update
       if mapped_service && !@is_active
         Service::Draft.new(mapped_service).call
         mapped_service
@@ -66,7 +56,7 @@ class Service::PcCreateOrUpdate
   private
     def map_service(data)
       main_contact = MainContact.new(map_contact(data["mainContact"])) if data["mainContact"] || nil
-      providers = Array(data.dig("resourceProviders", "resourceProvider")) - [data["resourceOrganisation"]]
+      providers = Array(data.dig("resourceProviders", "resourceProvider"))
 
       { name: data["name"],
         description: ReverseMarkdown.convert(data["description"],
@@ -74,22 +64,25 @@ class Service::PcCreateOrUpdate
                                              github_flavored: false),
         tagline: data["tagline"].blank? ? "NO IMPORTED TAGLINE" : data["tagline"],
         tag_list: Array(data.dig("tags", "tag")) || [],
-        language_availability: Array(data.dig("languageAvailabilities", "languageAvailability") || "EN"),
+        language_availability: Array(data.dig("languageAvailabilities", "languageAvailability")).
+            map { |lang| lang.upcase } || ["EN"],
         geographical_availabilities: Array(data.dig("geographicalAvailabilities", "geographicalAvailability") || "WW"),
         resource_geographic_locations: Array(data.dig("resourceGeographicLocations", "resourceGeographicLocation")) || [],
-        dedicated_for: [],
+        target_users: Array(map_target_users(data.dig("targetUsers", "targetUser"))) || [],
         main_contact: main_contact,
         public_contacts: Array.wrap(data.dig("publicContacts", "publicContact")).
             map { |c| PublicContact.new(map_contact(c)) } || [],
         privacy_policy_url: data["privacyPolicy"] || "",
         use_cases_url: Array(data.dig("useCases", "useCase") || []),
-        multimedia: Array(data["multimedia"]) || [],
+        multimedia: Array(data.dig("multimedia", "multimedia")) || [],
         terms_of_use_url: data["termsOfUse"] || "",
         access_policies_url: data["accessPolicy"],
         sla_url: data["serviceLevel"] || "",
         webpage_url: data["webpage"] || "",
         manual_url: data["userManual"] || "",
         helpdesk_url: data["helpdeskPage"] || "",
+        helpdesk_email: data["helpdeskEmail"] || "",
+        security_contact_email: data["securityContactEmail"] || "",
         training_information_url: data["trainingInformation"] || "",
         status_monitoring_url: data["statusMonitoring"] || "",
         maintenance_url: data["maintenance"] || "",
@@ -113,11 +106,12 @@ class Service::PcCreateOrUpdate
         grant_project_names: Array(data.dig("grantProjectNames", "grantProjectName")),
         resource_organisation: map_provider(data["resourceOrganisation"]),
         providers: providers.map { |p| map_provider(p) },
-        categories: map_category(data.dig("subcategories", "subcategory")),
-        scientific_domains: [scientific_domain_other],
+        related_platforms: Array(data.dig("relatedPlatforms", "relatedPlatform")) || [],
+        pc_categories: Array(map_pc_categories(data.dig("subcategories", "subcategory"))) || [],
+        scientific_domains: Array(map_scientific_domains(data.dig("scientificSubdomains", "scientificSubdomain"))),
         version: data["version"] || "",
-        last_update: data["lastUpdate"],
-        target_users: map_target_users(data.dig("targetUsers", "targetUser"))
+        last_update: data["lastUpdate"].present? ? Time.at(data["lastUpdate"].to_i) : nil,
+        synchronized_at: @modified_at
       }
     end
 
@@ -164,19 +158,20 @@ class Service::PcCreateOrUpdate
         logo.write(img.to_blob)
         logo.seek(0)
         logo_content_type = "image/png"
-        logo
       end
-      unless logo.nil?
+      if !logo.blank? && logo_content_type.start_with?("image")
         service.logo.attach(io: logo, filename: @eid, content_type: logo_content_type)
       end
+    rescue OpenURI::HTTPError => e
+      Rails.logger.warn "WARN: Cannot attach logo. #{e.message}"
     end
 
-    def map_category(category)
-      if @best_effort_category_mapping[category]
-        [Category.find_by!(name: @best_effort_category_mapping[category])]
-      else
-        []
-      end
+    def map_pc_categories(categories)
+      PcCategory.where(eid: categories)
+    end
+
+    def map_scientific_domains(domains)
+      ScientificDomain.where(eid: domains)
     end
 
     def map_contact(contact)

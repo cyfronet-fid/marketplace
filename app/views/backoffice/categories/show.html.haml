@@ -1,6 +1,10 @@
 - breadcrumb :backoffice_category, @category
 
 %h1= @category.name
+%h2 Description:
+%p= @category.description
+%h2 eID:
+%p= @category.eid
 %h2= @category.parent ? "Parent: #{@category.parent.name}" : "Root element"
 - if @category.logo.attached?
   = image_tag @category.logo

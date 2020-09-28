@@ -89,4 +89,17 @@ module ServiceHelper
     }
     countries.map(&:alpha2).map { |c| [c.downcase, 1] }
   end
+
+  def data_for_region(countries_alpha2)
+    if is_any_non_european(countries_alpha2)
+      countries_alpha2.append("WW")
+    end
+    countries_alpha2
+  end
+
+  def is_any_non_european(countries_alpha2)
+    (countries_alpha2 -
+     Country.countries_for_region("Europe").map(&:alpha2))
+      .present?
+  end
 end
