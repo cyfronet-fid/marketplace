@@ -39,12 +39,11 @@
   .col-12.col-lg-9.row
     .col-12.col-sm-3
     .col-12.col-sm-9
-      - Service::SIDEBAR_FIELDS.select { |h| h[:name] == "links" }.each do |group|
-        %ul
-          = render "services/sidebar/simple_links",
-                      service: service,
-                      fields: group[:fields],
-                      nested: group[:nested] || ""
+      - Service::SIDEBAR_FIELDS.select { |h| h[:name] == "links" }.map do |group|
+        = render "services/sidebar/simple_links",
+                    service: service,
+                    fields: group[:fields],
+                    nested: group[:nested] || ""
   .col-12.col-sm-3.question-col
     - if local_assigns[:question] && !service.public_contacts.empty?
       = render "services/ask_question", service: service, question: question

@@ -71,6 +71,30 @@ class Service < ApplicationRecord
                       template: "date",
                       fields: ["updated_at"] }]
 
+  DETAIL_FIELDS = [{ name: "public_contacts",
+                     template: "object",
+                     fields: ["full_name", "email", "position_in_organisation"],
+                     type: "array",
+                     clazz: "public_contacts" },
+                   { name: "maturity_information",
+                     template: "array",
+                     fields: ["standards", "certifications", "version"],
+                     with_desc: true },
+                   { name: "required_resources",
+                     template: "links",
+                     type: "service",
+                     fields: ["required_services"] },
+                   { name: "financial_information",
+                     type: "links",
+                     fields: ["payment_model_url", "pricing_url"] },
+                   { name: "multimedia",
+                     template: "links",
+                     fields: ["multimedia", "use_cases_url"],
+                     type: "array" },
+                   { name: "changelog",
+                     template: "array",
+                     fields: ["changelog"] }]
+
   enum status: STATUSES
 
   has_many :offers, dependent: :restrict_with_error
