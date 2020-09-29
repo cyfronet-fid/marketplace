@@ -33,7 +33,21 @@ class Service < ApplicationRecord
     deleted: "deleted"
   }
 
-  SIDEBAR_FIELDS = [{ name: "geographical_availabilities_and_languages",
+  SIDEBAR_FIELDS = [{ name: "classification",
+                      template: "classification",
+                      fields: ["scientific_domains"],
+                      nested: {
+                          scientific_domains: "name"
+                      }
+                    },
+                    { name: "target_users",
+                      template: "array",
+                      fields: ["target_users"],
+                      nested: {
+                          target_users: "name"
+                      }
+                    },
+                    { name: "geographical_availabilities_and_languages",
                       template: "array",
                       fields: ["geographical_availabilities", "languages"],
                       nested: {

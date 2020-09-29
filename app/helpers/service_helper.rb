@@ -40,6 +40,11 @@ module ServiceHelper
     service.scientific_domains.map { |target| link_to(target.name, services_path(scientific_domains: target)) }
   end
 
+  def field_tree(service, field)
+    parents = service.send(field).map(&:parent)
+    Hash[parents.map { |parent| [parent.name, (parent.children & service.send(field)).map(&:name)] } ]
+  end
+
   def providers(service)
     service.providers.map { |target| link_to(target.name, services_path(providers: target)) }
   end
