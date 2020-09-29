@@ -1,0 +1,11 @@
+- fields.map do |field|
+  - if with_desc
+    %h6= t(".#{field}")
+  - Array(service.send(field)).map do |element|
+    %li.list-group-item
+      - if nested.present? && nested[field.to_sym].present?
+        %span
+        = element.send(nested[field.to_sym])
+      - else
+        %span
+          = element

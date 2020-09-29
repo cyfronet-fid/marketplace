@@ -11,6 +11,9 @@
           = link_to "About", service_path(service),
             class: "nav-link text-uppercase #{"active" if controller.controller_name == 'services'}", role: "tab"
         %li.nav-item
+          = link_to "Details", service_details_path(service),
+            class: "nav-link text-uppercase #{"active" if controller.controller_name == 'details'}", role: "tab"
+        %li.nav-item
           = link_to "Reviews (#{service.service_opinion_count})", service_opinions_path(service),
             class: "nav-link text-uppercase #{"active" if controller.controller_name == 'opinions'}", role: "tab"
 
