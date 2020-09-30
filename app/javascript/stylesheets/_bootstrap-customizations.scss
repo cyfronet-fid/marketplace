@@ -865,10 +865,6 @@ Service detail
 
 .desc {
 
-  main {
-    border-right: 5px solid $palette-gray-5;
-  }
-
   sidebar {
     h5 {
       text-transform: uppercase;
@@ -905,10 +901,27 @@ Service detail
   }
 }
 
+.highcharts-container {
+  margin: auto;
+}
 
-/* -----------------------
-Card style
--------------------------*/
+.more-details {
+  color: $palette-blue;
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 10px;
+  float: left;
+
+  svg {
+    font-size: 14px;
+    margin-left: 5px;
+    color: $palette-yellow;
+  }
+}
+
+  /* -----------------------
+  Card style
+  -------------------------*/
 
 .parameters-section {
   padding: 2rem 0;
@@ -2352,6 +2365,7 @@ label[data-multicheckbox].small {
 
   h2 {
     font-weight: 300;
+    margin-bottom: 0.35rem;
   }
 
   dl {

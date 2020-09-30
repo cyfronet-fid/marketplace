@@ -1,13 +1,13 @@
 -# here should be icons variables for classification below
-= service.main_category
-= service.scientific_domains.first(2).map(&:name).join(", ")
-- fields.map do |field|
-  %ul
-    - field_tree(service, field).each do |parent, children|
-      %li
-        = parent
-        %ul
-          - children.each do |child|
-            %li= child
+  = service.main_category
+  = service.scientific_domains.first(2).map(&:name).join(", ")
+  - fields.map do |field|
+    %ul
+      - field_tree(service, field).each do |parent, children|
+        %li
+          = parent
+          %ul
+            - children.each do |child|
+              %li= child
 
 

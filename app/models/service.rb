@@ -47,43 +47,14 @@ class Service < ApplicationRecord
                           target_users: "name"
                       }
                     },
-                    { name: "geographical_availabilities_and_languages",
-                      template: "array",
-                      fields: ["geographical_availabilities", "languages"],
-                      nested: {
-                        "geographical_availabilities": "name"
-                      }
-                    },
-                    { name: "service_availability",
+                    { name: "service_availability_and_language",
                       template: "map",
-                      fields: ["geographical_availabilities"] },
-                    { name: "platforms",
-                      template: "array",
-                      fields: ["platforms"] },
-                    { name: "links",
+                      fields: ["geographical_availabilities"] }]
+
+  HEADER_FIELDS = [{ name: "links",
                       template: "links",
                       fields: ["webpage_url", "helpdesk_url", "helpdesk_email",
-                               "manual_url", "training_information_url"] },
-                    { name: "documents",
-                      template: "links",
-                      fields: ["sla_url", "terms_of_use_url", "access_policies_url"] },
-                    { name: "restrictions",
-                      template: "text",
-                      fields: ["restrictions"] },
-                    { name: "Life cycle status",
-                      template: "array",
-                      fields: ["life_cycle_status", "trl"],
-                      nested: {
-                        "life_cycle_status": "name",
-                        "trl": "name"
-                      }
-                    },
-                    { name: "version",
-                      template: "plain_text",
-                      fields: ["version"] },
-                    { name: "last_update",
-                      template: "date",
-                      fields: ["updated_at"] }]
+                               "manual_url", "training_information_url"] }]
 
   DETAIL_FIELDS = [{ name: "public_contacts",
                      template: "object",
