@@ -118,35 +118,10 @@
         input_html: { data: { choice: true },  "multiple" => "true" }
   .row.mt-5
     .col-12.col-md-10
-      = f.input :certifications, multiple: true, input_html: { class: "form-control text optional" },
-        wrapper_html: { "data-target" => "service.certifications" },
-        disabled: cant_edit([certifications: []]), as: :array
-      %a.text-primary{ "data-action" => "click->service#addNewArrayField",
-        "data-wrapper" => "service_certifications",
-        "data-name" => "service[service_certifications[]]",
-        "data-class" => "form-control text optional" } Add new
-      = f.input :standards, multiple: true, input_html: { class: "form-control text optional" },
-        wrapper_html: { "data-target" => "service.standards" },
-        disabled: cant_edit([standards: []]), as: :array
-      %a.text-primary{ "data-action" => "click->service#addNewArrayField",
-        "data-wrapper" => "service_standards",
-        "data-name" => "service[service_standards[]]",
-        "data-class" => "form-control text optional" } Add new
-
-      = f.input :open_source_technologies, multiple: true, input_html: { class: "form-control text optional" },
-        wrapper_html: { "data-target" => "service.openSourceTechnologies" },
-        disabled: cant_edit([open_source_technologies: []]), as: :array
-      %a.text-primary{ "data-action" => "click->service#addNewArrayField",
-        "data-wrapper" => "service_open_source_technologies",
-        "data-name" => "service[service_open_source_technologies[]]",
-        "data-class" => "form-control text optional" } Add new
-      = f.input :grant_project_names, input_html: { class: "form-control text optional" },
-        wrapper_html: { "data-target" => "service.grantProjectNames" },
-        disabled: cant_edit([grant_project_names: []]), as: :array
-      %a.text-primary{ "data-action" => "click->service#addNewArrayField",
-        "data-wrapper" => "service_grant_project_names",
-        "data-name" => "service[service_grant_project_names[]]",
-        "data-class" => "form-control text optional" } Add new
+      = array_inputs("certifications", f)
+      = array_inputs("standards", f)
+      = array_inputs("open_source_technologies", f)
+      = array_inputs("grant_project_names", f)
   .row.service-changelog
     .col-12.col-md-10
       = f.input :changelog, multiple: true, as: :array, disabled: cant_edit([changelog: []]),
