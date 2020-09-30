@@ -869,12 +869,60 @@ Service detail
     h5 {
       text-transform: uppercase;
     }
+
+    .category-box {
+      width: 31.3%;
+      border: 1px solid $palette-solid-10;
+      border-radius: 2px;
+      display: inline-block;
+      height: 84px;
+      overflow: hidden;
+      margin-right: 2%;
+
+      &.last {
+        margin-right: 0;
+        float: right;
+      }
+
+      .category-icon {
+        width: 100%;
+        margin: 7px 0 3px;
+        text-align: center;
+      }
+
+      .category-name {
+        width: 100%;
+        font-size: 10px;
+        line-height: 11px;
+        text-align: center;
+      }
+    }
   }
 
   .list-group {
     margin-bottom: 1.4rem;
     border: 1px solid $palette-solid-10;
     padding: 0.8rem 0.5rem;
+
+    &.domains {
+      margin-bottom: 0;
+    }
+
+    ul {
+      margin-bottom: 0;
+      padding-left: 0;
+
+      li {
+        list-style: none !important;
+
+        &::before {
+          content: '-';
+          font-size: 20px;
+          float: left;
+          margin-right: 5px;
+        }
+      }
+    }
   }
 
   .list-group-item {
