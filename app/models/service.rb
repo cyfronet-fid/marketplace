@@ -56,7 +56,7 @@ class Service < ApplicationRecord
                       fields: ["webpage_url", "helpdesk_url", "helpdesk_email",
                                "manual_url", "training_information_url"] }]
 
-  DETAIL_FIELDS = [{ name: "public_contacts",
+  DETAIL_FIELDS_1 = [{ name: "public_contacts",
                      template: "object",
                      fields: ["full_name", "email", "position_in_organisation"],
                      type: "array",
@@ -64,21 +64,23 @@ class Service < ApplicationRecord
                    { name: "maturity_information",
                      template: "array",
                      fields: ["standards", "certifications", "version"],
-                     with_desc: true },
-                   { name: "required_resources",
-                     template: "links",
-                     type: "service",
-                     fields: ["required_services"] },
-                   { name: "financial_information",
-                     type: "links",
-                     fields: ["payment_model_url", "pricing_url"] },
-                   { name: "multimedia",
-                     template: "links",
-                     fields: ["multimedia", "use_cases_url"],
-                     type: "array" },
-                   { name: "changelog",
-                     template: "array",
-                     fields: ["changelog"] }]
+                     with_desc: true }]
+
+  DETAIL_FIELDS_2 = [{ name: "required_resources",
+                       template: "links",
+                       type: "service",
+                       fields: ["required_services"] },
+                     { name: "financial_information",
+                       type: "links",
+                       fields: ["payment_model_url", "pricing_url"] },
+                     { name: "multimedia",
+                       template: "links",
+                       fields: ["multimedia", "use_cases_url"],
+                       type: "array" }]
+
+  DETAIL_FIELDS_3 = [{ name: "changelog",
+                       template: "array",
+                       fields: ["changelog"] }]
 
   enum status: STATUSES
 

@@ -1,4 +1,5 @@
 - Array(service.send(clazz)).map do |object|
   - fields.map do |field|
     - if object.send(field).present?
-      %li= object.send(field)
+      %li
+        %span= object.send(field)

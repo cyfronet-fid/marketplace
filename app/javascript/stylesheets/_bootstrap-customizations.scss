@@ -3908,3 +3908,43 @@ textarea.form-control.is-invalid {
   margin-bottom: 1.4rem;
 }
 
+.details-box {
+  border: 1px solid $palette-solid-10;
+  border-radius: 3px;
+  background-color: $border-header;
+
+  .details-header {
+    border-bottom: 1px solid $palette-solid-10;
+    background-color: $footer-color;
+    padding: 10px 20px;
+
+    h5 {
+      color: $palette-gray-100;
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 14px;
+      margin: 0;
+    }
+  }
+
+  .details-content {
+    padding: 15px 20px;
+
+    ul {
+      margin-bottom: 0;
+      padding-left: 0;
+
+      li {
+        margin: 0 0 0 1rem;
+        padding: 0 0.2rem;
+        color: $palette-yellow;
+        list-style-type: disc !important;
+        display: list-item;
+
+        span {
+          color: $body-color;
+        }
+      }
+    }
+  }
+}
