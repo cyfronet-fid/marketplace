@@ -12,9 +12,10 @@ class Service < ApplicationRecord
   has_one_attached :logo
 
   enum order_type: {
-    orderable: "orderable",
-    open_access: "open_access",
-    external: "external"
+      open_access: "open_access",
+      fully_open_access: "fully_open_access",
+      order_required: "order_required",
+      other: "other"
   }
 
   enum phase: {
