@@ -5,17 +5,19 @@
   .category-name
     = service.main_category
 
-.category-box
-  .category-icon
-    = image_pack_tag("ico_ra_default.png", width: 35, alt: "category name")
-  .category-name
-    = service.scientific_domains.first
+- if service.scientific_domains.first
+  .category-box
+    .category-icon
+      = image_pack_tag("ico_ra_default.png", width: 35, alt: "category name")
+    .category-name
+      = service.scientific_domains.first
 
-.category-box.last
-  .category-icon
-    = image_pack_tag("ico_ra_default.png", width: 35, alt: "category name")
-  .category-name
-    = service.scientific_domains.second
+- if service.scientific_domains.second
+  .category-box.last
+    .category-icon
+      = image_pack_tag("ico_ra_default.png", width: 35, alt: "category name")
+    .category-name
+      = service.scientific_domains.second
 %ul.list-group.domains.mt-3.mb-4
   - fields.map do |field|
     - if service.send(field).present?
