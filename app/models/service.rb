@@ -71,7 +71,7 @@ class Service < ApplicationRecord
                        type: "service",
                        fields: ["required_services"] },
                      { name: "financial_information",
-                       type: "links",
+                       template: "links",
                        fields: ["payment_model_url", "pricing_url"] },
                      { name: "multimedia",
                        template: "links",

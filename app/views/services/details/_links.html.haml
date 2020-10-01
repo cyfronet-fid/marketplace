@@ -9,7 +9,4 @@
     - else
       %li
         %span
-          - if field.end_with? "_url"
-            = link_to(t("services.about.sidebar.fields.#{field}"), service.send(field))
-          - elsif field.end_with? "_email"
-            = mail_to(service.send(field), t("services.about.sidebar.fields.#{field}"))
+          = link_to(t("services.about.sidebar.fields.#{field}"), service.send(field))
