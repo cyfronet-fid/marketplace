@@ -16,16 +16,16 @@
     = image_pack_tag("ico_ra_default.png", width: 35, alt: "category name")
   .category-name
     = service.scientific_domains.second
-  -# = service.scientific_domains.first(2).map(&:name).join(", ")
-- fields.map do |field|
-  %ul.list-group.domains.mt-3.mb-4
-    - field_tree(service, field).each do |parent, children|
-      %li.list-group-item.mb-2
-        %span
-          = parent
-        %ul
-          - children.each do |child|
-            %li
-              %span= child
+%ul.list-group.domains.mt-3.mb-4
+  - fields.map do |field|
+    - if service.send(field).present?
+      - field_tree(service, field).each do |parent, children|
+        %li.list-group-item.mb-2
+          %span
+            = parent
+          %ul
+            - children.each do |child|
+              %li
+                %span= child
 
 

@@ -35,7 +35,7 @@ class Service < ApplicationRecord
 
   SIDEBAR_FIELDS = [{ name: "classification",
                       template: "classification",
-                      fields: ["scientific_domains"],
+                      fields: ["categories", "scientific_domains"],
                       nested: {
                           scientific_domains: "name"
                       }
