@@ -7,6 +7,8 @@
       selected: (offer.order_type || service.order_type),
       input_html: { "data-target" => "offer.offerType", "data-action" => "change->offer#showWebpage",
       class: "form-control-lg col-lg-6" }
+    = f.input :external, as: :boolean, label: "External ordering",
+      input_html: { "data-target" => "offer.external", "data-action" => "change->offer#showWebpage" }
     = f.input :webpage, label: "Offer website",
       wrapper_html: { "data-target" => "offer.webpage" }, input_html: { class: "form-control-lg" }
 

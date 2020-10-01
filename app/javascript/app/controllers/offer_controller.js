@@ -2,7 +2,7 @@ import {Controller} from 'stimulus'
 import initChoises from "../choises";
 
 export default class extends Controller {
-  static targets = ["parameters", "webpage", "offerType",
+  static targets = ["parameters", "webpage", "external", "offerType",
                     "attributes", "button", "attributeType"];
 
   initialize() {
@@ -79,7 +79,8 @@ export default class extends Controller {
 
   showWebpage(event){
     const offerType = this.offerTypeTarget.value
-    if (offerType == "external" || offerType == "open_access"){
+    const external = this.externalTarget.checked
+    if (offerType !== "order_required" || external ){
       this.webpageTarget.classList.remove("hidden-fields");
     } else {
       this.webpageTarget.classList.add("hidden-fields");
