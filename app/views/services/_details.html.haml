@@ -1,10 +1,10 @@
 #opinions.tab-pane.container.pt-2.active{ "aria-labelledby" => "opinions-tab", role: "tabpanel" }
   .row.pt-3
     .col-12.col-lg-4
-      .details-box
-        - Service::DETAIL_FIELDS_1.map do |group|
-          - if (!group[:clazz].present? && any_present?(service,
+      - Service::DETAIL_FIELDS_1.map do |group|
+        - if (!group[:clazz].present? && any_present?(service,
                   *group[:fields])) || (group[:clazz] && service.send(group[:clazz]).present?)
+          .details-box
             .details-header
               %h5= t(".details.title.#{group[:name]}")
             .details-content

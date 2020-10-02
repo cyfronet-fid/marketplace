@@ -3911,6 +3911,7 @@ textarea.form-control.is-invalid {
 .details-box {
   border: 1px solid $palette-solid-10;
   border-radius: 3px;
+  margin-bottom: 20px;
   background-color: $border-header;
 
   .details-header {
@@ -3930,16 +3931,32 @@ textarea.form-control.is-invalid {
   .details-content {
     padding: 15px 20px;
 
+    h6 {
+      font-weight: 300;
+      margin-bottom: 3px;
+    }
+
     ul {
       margin-bottom: 0;
       padding-left: 0;
 
       li {
-        margin: 0 0 0 1rem;
+        margin: 0 0 6px 1rem;
         padding: 0 0.2rem;
         color: $palette-yellow;
+        line-height: 1.5;
         list-style-type: disc !important;
         display: list-item;
+
+        &.links {
+          list-style: none !important;
+          margin-left: 0;
+
+          svg {
+            font-size: 11px;
+            margin-right: 7px;
+          }
+        }
 
         span {
           color: $body-color;
