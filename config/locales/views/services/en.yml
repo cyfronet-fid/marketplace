@@ -31,6 +31,12 @@ en:
       links:
         use_cases_url: Use case %{idx}
         multimedia: Multimedia %{idx}
+      array:
+        standards: Standards
+        certifications: Certifications
+        version: Version
+      object:
+        public_contacts: Public contact %{idx}
     order:
       wizard:
         previous: Back to previous step - %{step_title}
