@@ -32,6 +32,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Refactor contact fields to new model `Contact` (@goreck888)
 - Refactor related services (@goreck888)
 - handling errors with logo downloading in importers (@goreck888)
+- Hide default offer (@goreck888)
+- Update default offer through service (@goreck888)
+- New order_type mapping (@goreck888)
 
 ### Deprecated
 
