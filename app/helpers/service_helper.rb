@@ -71,7 +71,7 @@ module ServiceHelper
     if types.size > 1
       "various"
     elsif types.size == 1
-      types.first
+      map_view_to_order_type(service)
     else
       service&.order_type || "external"
     end

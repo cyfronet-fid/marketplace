@@ -6,13 +6,13 @@
     %dt Service offer:
     %dd= project_item.name
 %dl
-  %dt= t("project_items.service.label.#{project_item.order_type}")
+  %dt= t("project_items.service.label.#{map_view_to_order_type(project_item)}")
   %dd= l project_item.created_at, format: :short
 %dl
   %dt Service access:
   %dd{ "data-toggle" => "tootltip",
-  "title" => "#{t("project_items.order_type.#{project_item.order_type}.tooltip")}" }
-    = t("project_items.order_type.#{project_item.order_type}.title")
+  "title" => "#{t("project_items.order_type.#{map_view_to_order_type(project_item)}.tooltip")}" }
+    = t("project_items.order_type.#{map_view_to_order_type(project_item)}.title")
 %dl
   %dt
     Project name:
