@@ -135,15 +135,21 @@ RSpec.feature "Services in backoffice" do
       fill_in "service_public_contacts_attributes_0_first_name", with: "Jane"
       fill_in "service_public_contacts_attributes_0_last_name", with: "Doe"
       fill_in "service_public_contacts_attributes_0_email", with: "jane@doe.com"
+
       click_on "Add additional public contact"
+
       fill_in "service_public_contacts_attributes_1_first_name", with: "Johny"
       fill_in "service_public_contacts_attributes_1_last_name", with: "Does"
       fill_in "service_public_contacts_attributes_1_email", with: "johny@does.com"
+
       click_on "Add additional public contact"
+
       fill_in "service_public_contacts_attributes_2_first_name", with: "John"
       fill_in "service_public_contacts_attributes_2_last_name", with: "Doe"
       fill_in "service_public_contacts_attributes_2_email", with: "john@doe.com"
+
       click_on "Update Service"
+
 
       expect(page).to have_content("jane@doe.com")
       expect(page).to have_content("johny@does.com")

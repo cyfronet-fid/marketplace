@@ -99,7 +99,7 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.pricing_url).to eq("http://openminted.eu/pricing/")
       expect(service.trl).to eq([trl_8])
       expect(service.life_cycle_status).to eq([life_cycle_status])
-      expect(service.order_type).to eq("open_access")
+      expect(service.order_type).to eq("other")
       expect(service.funding_bodies).to eq([funding_body])
       expect(service.funding_programs).to eq([funding_program])
       expect(service.related_services).to eq([related_service])
@@ -166,7 +166,7 @@ RSpec.describe Service::PcCreateOrUpdate do
 
       expect(offer.name).to eq("Offer")
       expect(offer.description).to eq("#{service.name} Offer")
-      expect(offer.order_type).to eq("open_access")
+      expect(offer.order_type).to eq("other")
       expect(offer.status).to eq(service.status)
       expect(offer.service.id).to eq(service.id)
     end

@@ -28,20 +28,33 @@ class Service::PcCreateOrUpdate
                                                      "service_sources.eid": @eid)
     is_newer_update = mapped_service&.synchronized_at.present? ? (@modified_at > mapped_service.synchronized_at) : true
 
+    url = service[:order_url] || service[:webpage_url] || ""
+
     if mapped_service.nil? && @is_active
       service = Service.new(service)
       save_logo(service, @eic_service["logo"])
 
       if service.save!
         ServiceSource.create!(service_id: service.id, source_type: "eic", eid: @eid)
-        service.offers.create!(name: "Offer", description: "#{service.name} Offer",
-                               order_type: "open_access",
-                               webpage: service.webpage_url, status: service.status)
+        if url.present? || service.order_type=="order_required"
+          service.offers.create!(name: "Offer",
+                                 description: "#{service.name} Offer",
+                                 order_type: service.order_type,
+                                 external: url.present? && service.order_type=="order_required",
+                                 webpage: url, status: "published")
+        else
+          Rails.logger.warn "[WARNING] Offer cannot be created, because url is empty"
+        end
       end
       service
     elsif is_newer_update
       if mapped_service && !@is_active
         Service::Draft.new(mapped_service).call
+        if mapped_service.offers_count == 1
+          Service.offers.first.update!(order_type: service.order_type,
+                                       external: url.present? && service.order_type=="order_required",
+                                       webpage: url, status: "published")
+        end
         mapped_service
       else
         save_logo(mapped_service, @eic_service["logo"])
@@ -69,6 +82,7 @@ class Service::PcCreateOrUpdate
         geographical_availabilities: Array(data.dig("geographicalAvailabilities", "geographicalAvailability") || "WW"),
         resource_geographic_locations: Array(data.dig("resourceGeographicLocations", "resourceGeographicLocation")) || [],
         target_users: Array(map_target_users(data.dig("targetUsers", "targetUser"))) || [],
+        order_type: map_order_type(data["orderType"]),
         main_contact: main_contact,
         public_contacts: Array.wrap(data.dig("publicContacts", "publicContact")).
             map { |c| PublicContact.new(map_contact(c)) } || [],
@@ -95,7 +109,6 @@ class Service::PcCreateOrUpdate
         life_cycle_status: LifeCycleStatus.where(eid: data["lifeCycleStatus"]),
         access_types: AccessType.where(eid: Array(data.dig("accessTypes", "accessType"))),
         access_modes: AccessMode.where(eid: Array(data.dig("accessModes", "accessMode"))),
-        order_type: "open_access",
         status: "published",
         funding_bodies: map_funding_bodies(data.dig("fundingBody", "fundingBody")),
         funding_programs: map_funding_programs(data.dig("fundingPrograms", "fundingProgram")),
@@ -163,7 +176,7 @@ class Service::PcCreateOrUpdate
         service.logo.attach(io: logo, filename: @eid, content_type: logo_content_type)
       end
     rescue OpenURI::HTTPError => e
-      Rails.logger.warn "WARN: Cannot attach logo. #{e.message}"
+      Rails.logger.warn "[WARNING] Cannot attach logo. #{e.message}"
     end
 
     def map_pc_categories(categories)
@@ -193,5 +206,9 @@ class Service::PcCreateOrUpdate
 
     def scientific_domain_other
       ScientificDomain.find_by!(name: "Other")
+    end
+
+    def map_order_type(order_type)
+      order_type.gsub("order_type-", "") unless order_type.blank?
     end
 end
