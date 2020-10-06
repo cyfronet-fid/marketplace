@@ -14,8 +14,9 @@ class Filter::OrderType < Filter
       [
           { name: "Any", id: "" },
           { name: "Open Access", id: "open_access" },
-          { name: "Internal ordering", id: "orderable" },
-          { name: "External ordering", id: "external" }
+          { name: "Fully open access", id: "fully_open_access" },
+          { name: "Order required", id: "order_required" },
+          { name: "Other", id: "other" }
       ]
     end
 
