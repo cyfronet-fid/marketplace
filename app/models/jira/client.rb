@@ -262,6 +262,16 @@ private
     end
   end
 
+  def map_to_jira_order_type(object)
+    if object.external
+      "external"
+    elsif object.order_type == "order_required"
+      "orderable"
+    else
+      "open_access"
+    end
+  end
+
   def generate_project_item_custom_field_value(field_name, project_item)
     case field_name
     when "Order reference"
@@ -283,7 +293,7 @@ private
     when "SO-ServiceOrderTarget"
       project_item.service.order_target
     when "SO-OfferType"
-      { "id" => @jira_config[:custom_fields][:select_values]["SO-OfferType".to_sym][project_item.order_type.to_sym] }
+      { "id" => @jira_config[:custom_fields][:select_values]["SO-OfferType".to_sym][map_to_jira_order_type(project_item).to_sym] }
     else
       nil
     end

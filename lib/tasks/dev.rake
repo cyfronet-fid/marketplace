@@ -85,6 +85,8 @@ namespace :dev do
                       scientific_domains: domain,
                       providers: providers,
                       order_type: order_type,
+                      external: hash["external"].blank? ? false : hash["external"],
+                      order_url: hash["order_url"] || hash["webpage_url"],
                       resource_organisation: resource_organisation,
                       webpage_url: hash["webpage_url"],
                       manual_url: hash["manual_url"],
@@ -115,14 +117,10 @@ namespace :dev do
   end
 
   def order_type_from(hash)
-    if hash["offers"].blank?
-      hash["open_access"] ? "external" : "orderable"
+    if hash["external"]
+      "order_required"
     else
-      if hash["external"]
-        "external"
-      else
-        hash["open_access"] ? "open_access" : "orderable"
-      end
+      hash["open_access"] ? "open_access" : "order_required"
     end
   end
 
@@ -133,6 +131,7 @@ namespace :dev do
                             webpage: h["webpage"],
                             parameters: Parameter::Array.load(h["parameters"] || []),
                             order_type: service.order_type,
+                            external: service.external,
                             status: :published)
       puts "    - #{h["name"]} offer generated"
     end

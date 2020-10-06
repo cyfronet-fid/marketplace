@@ -203,6 +203,7 @@ ActiveRecord::Schema.define(version: 2020_10_01_155112) do
     t.string "order_type", null: false
     t.string "webpage"
     t.boolean "voucherable", default: false, null: false
+    t.boolean "external", default: false
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
   end
@@ -409,6 +410,7 @@ ActiveRecord::Schema.define(version: 2020_10_01_155112) do
     t.datetime "last_update"
     t.string "related_platforms", default: [], array: true
     t.datetime "synchronized_at"
+    t.boolean "external", default: false
     t.index ["name"], name: "index_services_on_name"
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["resource_organisation_id"], name: "index_services_on_resource_organisation_id"
