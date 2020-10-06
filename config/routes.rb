@@ -136,6 +136,6 @@ Rails.application.routes.draw do
     get "designsystem/:file" => "designsystem#show",
       constraints: { file: %r{[^/\.]+} }
   end
-  mount Split::Dashboard, at: "split"
+
   root "home#index"
 end

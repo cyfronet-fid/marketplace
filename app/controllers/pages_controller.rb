@@ -2,7 +2,6 @@
 
 class PagesController < ApplicationController
   def about
-    ab_finished(:recommendations)
   end
 
   def about_projects
