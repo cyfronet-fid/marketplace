@@ -302,9 +302,33 @@ RSpec.feature "Services in backoffice" do
         click_on "Create Offer"
       }.to change { service.offers.count }.by(1)
 
-      expect(page).to have_content("test offer")
       service.reload
       expect(service.offers.last.name).to eq("new offer 1")
+    end
+
+    scenario "I can update default offer through service", js: true do
+      service = create(:service, name: "my service", owners: [user])
+      create(:offer, service: service)
+
+      service.reload
+
+      expect(service.offers.last.order_type).to eq("order_required")
+      expect(service.offers.last.webpage).to_not eq("http://google.com")
+
+      visit backoffice_service_path(service)
+
+      expect(page).to have_content("This service has one default offer.")
+
+      click_on "Edit"
+
+      select "open_access", from: "Order type"
+      fill_in "Order url", with: "http://google.com"
+
+      click_on "Update Service"
+
+      service.reload
+      expect(service.offers.first.order_type).to eq(service.order_type)
+      expect(service.offers.first.webpage).to eq(service.order_url)
     end
 
     scenario "I can see warning about no published offers", js: true do
@@ -323,6 +347,7 @@ RSpec.feature "Services in backoffice" do
       offer = create(:offer,
                      name: "offer1",
                      description: "# Test offer\r\n\rDescription offer")
+      create(:offer, service: offer.service)
 
       visit backoffice_service_path(offer.service)
 
@@ -350,9 +375,10 @@ RSpec.feature "Services in backoffice" do
                          value_type: "integer")
       offer = create(:offer, name: "offer1", description: "desc", service: service,
                      parameters: [parameter])
+      create(:offer, service: service)
 
       visit backoffice_service_path(service)
-      click_on(class: "edit-offer")
+      first("a[class='edit-offer card-link']").click
 
       fill_in "Description", with: "new desc"
       click_on "Update Offer"
@@ -370,9 +396,10 @@ RSpec.feature "Services in backoffice" do
                          value_type: "integer")
       offer = create(:offer, name: "offer1", description: "desc", service: service,
                      parameters: [parameter, parameter])
+      create(:offer, service: service)
 
       visit backoffice_service_path(service)
-      click_on(class: "edit-offer")
+      first("a[class='edit-offer card-link']").click
 
       first("a[data-action='offer#remove']").first("i").click
       first("a[data-action='offer#remove']").first("i").click
@@ -382,14 +409,15 @@ RSpec.feature "Services in backoffice" do
     end
 
 
-    scenario "I can delete offer" do
+    scenario "I can delete offer if they are more than 2" do
       service = create(:service, name: "my service", status: :draft)
       _offer = create(:offer, name: "offer1", description: "desc", service: service)
+      _second_offer = create(:offer, service: service)
 
       visit backoffice_service_path(service)
-      click_on(class: "delete-offer")
+      first("a[class='delete-offer card-link']").click
 
-      expect(page).to have_content("This service has no offers")
+      expect(page).to have_content("This service has one default offer.")
     end
 
     scenario "I can see info if service has no offer" do
@@ -402,15 +430,17 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I can change offer status from published to draft" do
       offer = create(:offer)
+      create(:offer, service: offer.service)
 
       visit backoffice_service_path(offer.service)
-      click_on "Stop showing offer"
+      first("a[class='draft-offer card-link']").click
 
       expect(offer.reload.status).to eq("draft")
     end
 
     scenario "I can change offer status from draft to publish" do
       offer = create(:offer, status: :draft)
+      create(:offer, service: offer.service)
 
       visit backoffice_service_path(offer.service)
       click_on "Publish offer"
@@ -543,6 +573,7 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I can create new offer" do
       service = create(:service, owners: [user])
+      create(:offer, service: service)
 
       visit backoffice_service_path(service)
       click_on "Add new Offer", match: :first

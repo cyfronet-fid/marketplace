@@ -54,7 +54,11 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
 
     def offer_template
       temp = update_blank_parameters(permitted_attributes(Offer))
-      Offer.new(temp.merge(service: @service, status: :draft))
+      if @service.offers_count.positive?
+        Offer.new(temp.merge(service: @service, status: :draft))
+      else
+        Offer.new(temp.merge(service: @service, status: :published))
+      end
     end
 
     def update_blank_parameters(template)
