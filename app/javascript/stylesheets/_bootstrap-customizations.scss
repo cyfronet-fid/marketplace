@@ -3875,7 +3875,7 @@ textarea.form-control.is-invalid {
 
 .service-links {
   border-top: 1px solid $palette-solid-10;
-  margin-top: 20px;
+  margin-top: 19px;
   padding: 10px 0;
 
   ul {
@@ -3890,6 +3890,7 @@ textarea.form-control.is-invalid {
       svg {
         font-size: 10px;
         margin-right: 4px;
+        margin-top: 9px;
         color: $palette-yellow;
       }
     }
@@ -3955,6 +3956,7 @@ textarea.form-control.is-invalid {
           svg {
             font-size: 11px;
             margin-right: 7px;
+            margin-top: 6px;
           }
         }
 
