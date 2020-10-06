@@ -1,11 +1,11 @@
 - content_for :title, t(".title")
-.row{ class: "#{@offer.order_type}" }
+.row{ class: "#{map_view_to_order_type(@offer)}" }
   .col-md-6.access-information.pt-5.vertical-center
-    = t(".#{@offer.order_type}.description_html",
+    = t(".#{map_view_to_order_type(@offer)}.description_html",
         service_title: wizard_title, faq_url: help_path)
 
-    - unless @offer.orderable? || @offer.webpage.blank?
-      = link_to t("common.#{@offer.order_type}.link"),  @offer.webpage,
+    - unless (@offer.order_required? && !@offer.external) || @offer.webpage.blank?
+      = link_to t("common.#{map_view_to_order_type(@offer)}.link"),  @offer.webpage,
           class: "btn btn-outline-primary mt-3", target: "_blank", title: "External link"
   .col-md-6.access-image
 

@@ -64,12 +64,11 @@ module Import
         output.append(service_data)
         # TODO this should be moved to Offer.webpage
         url = service["webpage"]
-        # order_url = service["order"]
+        order_url = service["order"] || url
         user_manual_url = service["userManual"]
         training_information_url = service["trainingInformation"]
         status_monitoring_url = service["statusMonitoring"]
         maintenance_url = service["maintenance"]
-        order_url = service["order"]
         payment_model_url = service["paymentModel"]
         pricing_url = service["pricing"]
         multimedia = Array(service["multimedia"]) || []
@@ -94,6 +93,7 @@ module Import
         geographical_availabilities = service["geographicalAvailabilities"] ||
         resource_geographic_locations = Array(service["resourceGeographicLocations"]) || []
         categories = service["subcategories"]
+        order_type = map_order_type(service["orderType"])
         related_platforms = service["relatedPlatforms"] || []
         scientific_domains = service["scientificSubdomains"]
         funding_bodies = service["fundingBody"]
@@ -178,7 +178,7 @@ module Import
             required_services: map_related_services(required_services),
             related_services: map_related_services(related_services),
             life_cycle_status: LifeCycleStatus.where(eid: life_cycle_status),
-            order_type: "open_access",
+            order_type: order_type,
             status: "draft",
             funding_bodies: map_funding_bodies(funding_bodies),
             funding_programs: map_funding_programs(funding_programs),
@@ -214,7 +214,7 @@ module Import
               if @default_upstream == :eic
                 service.update(upstream_id: service_source.id)
               end
-              create_default_offer!(service, name, eid, url)
+              create_default_offer!(service, name, eid, order_type, order_url)
             end
           else
             service = Service.find_by(id: service_source.service_id)
@@ -224,7 +224,7 @@ module Import
               log "Updating [EXISTING] service #{service.name}, id: #{service_source.id}, eid: #{eid}"
               unless @dry_run
                 service.update!(updated_service_data.except(:scientific_domains, :categories, :status))
-                create_default_offer!(service, name, eid, url)
+                create_default_offer!(service, name, eid, order_type, order_url)
               end
             else
               not_modified += 1
@@ -278,12 +278,15 @@ module Import
       Array(mapped_providers)
     end
 
-    def create_default_offer!(service, name, eid, url)
-      if service&.offers.blank? && !url.blank?
+    def create_default_offer!(service, name, eid, order_type, url)
+      if service&.offers.blank? && (url.present? || order_type=="order_required")
         log "Adding [NEW] default offer for service: #{name}, eid: #{eid}"
-        Offer.create!(name: "Offer", description: "#{name} Offer", order_type: "open_access",
-                      webpage: url, status: service.status, service: service)
-      elsif url.blank?
+        Offer.create!(name: "Offer",
+                      description: "#{name} Offer",
+                      order_type: order_type,
+                      external: url.present? && order_type=="order_required",
+                      webpage: url, status: "published", service: service)
+      elsif url.blank? || order_type != "order_required"
         log "[WARNING] Offer cannot be created, because url is empty"
       end
     rescue ActiveRecord::RecordInvalid => reason
@@ -323,6 +326,10 @@ module Import
 
     def map_access_modes(aceess_modes)
       AccessMode.where(eid: aceess_modes)
+    end
+
+    def map_order_type(order_type)
+      order_type.gsub("order_type-", "") unless order_type.blank?
     end
 
     private

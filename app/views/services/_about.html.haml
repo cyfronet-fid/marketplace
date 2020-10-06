@@ -27,7 +27,7 @@
           %li.list-group-item
             %span Total occurrences in project:
             %strong.text-dark= service.project_items_count
-          - if service.offers.orderable.present?
+          - if service.offers.order_required.present?
             %li.list-group-item
               %span Total orders:
-              %strong.text-dark= service.project_items.orderable.size
+              %strong.text-dark= service.project_items.order_required.size
