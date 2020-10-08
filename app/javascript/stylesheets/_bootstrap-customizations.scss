@@ -3953,6 +3953,10 @@ textarea.form-control.is-invalid {
           list-style: none !important;
           margin-left: 0;
 
+          span {
+            color: $palette-blue;
+          }
+
           svg {
             font-size: 11px;
             margin-right: 7px;
