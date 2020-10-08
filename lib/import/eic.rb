@@ -146,6 +146,7 @@ module Import
 
         updated_service_data = {
             name: name,
+            pid: eid,
             description: description,
             tagline: tagline.blank? ? "NO IMPORTED TAGLINE" : tagline,
             # provider_id: ?
