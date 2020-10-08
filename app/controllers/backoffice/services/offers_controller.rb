@@ -32,7 +32,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   def update
     template = permitted_attributes(Offer.new)
     if Offer::Update.new(@offer, update_blank_parameters(template)).call
-      redirect_to backoffice_service_path(@service, @offer),
+      redirect_to backoffice_service_path(@service),
                   notice: "Offer updated correctly"
     else
       render :edit, status: :bad_request

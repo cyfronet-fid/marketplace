@@ -71,6 +71,7 @@ class Service::PcCreateOrUpdate
       categories = data.dig("categories", "category").map { |c| c["subcategory"] }
 
       { name: data["name"],
+        pid: @eid,
         description: ReverseMarkdown.convert(data["description"],
                                              unknown_tags: :bypass,
                                              github_flavored: false),

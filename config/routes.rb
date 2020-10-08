@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
   get "/robots.txt" => "home#robots"
 
-  resources :services, only: [:index, :show] do
+  resources :services, only: [:index, :show], constraints: { id: /[^\/]+/ } do
     scope module: :services do
       resource :offers, only: [:show, :update]
       resource :configuration, only: [:show, :update]
@@ -57,7 +57,7 @@ Rails.application.routes.draw do
 
   resource :backoffice, only: :show
   namespace :backoffice do
-    resources :services do
+    resources :services, constraints: { id: /[^\/]+/ } do
       scope module: :services do
         resource :logo_preview, only: :show
         resources :offers
