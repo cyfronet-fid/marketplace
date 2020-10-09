@@ -62,7 +62,6 @@ module Import
         service = service_data["service"]
         eid = service["id"]
         output.append(service_data)
-        # TODO this should be moved to Offer.webpage
         url = service["webpage"]
         order_url = service["order"] || url
         user_manual_url = service["userManual"]
@@ -92,18 +91,16 @@ module Import
         language_availability = service["languageAvailabilities"] || ["EN"]
         geographical_availabilities = service["geographicalAvailabilities"] ||
         resource_geographic_locations = Array(service["resourceGeographicLocations"]) || []
-        categories = service["subcategories"]
+        categories = service["categories"].map { |c| c["subcategory"] }
         order_type = map_order_type(service["orderType"])
         related_platforms = service["relatedPlatforms"] || []
-        scientific_domains = service["scientificSubdomains"]
+        scientific_domains = service["scientificDomains"]&.map { |sd| sd["scientificSubdomain"] }
         funding_bodies = service["fundingBody"]
         funding_programs = Array(service["fundingPrograms"])
         main_contact = MainContact.new(map_contact(service["mainContact"])) if service["mainContact"] || nil
         public_contacts = Array(service["publicContacts"])&.map { |c| PublicContact.new(map_contact(c)) } || []
         access_types = service["accessTypes"]
         access_modes = service["accessModes"]
-        # category_name = service["categoryName"]
-        # subcategory_name = service["subCategoryName"]
         required_services = service["requiredResources"]
         related_services = service["relatedResources"]
         trl = service["trl"]
@@ -170,6 +167,7 @@ module Import
             status_monitoring_url: status_monitoring_url || "",
             maintenance_url: maintenance_url || "",
             order_url: order_url || "",
+            external: order_url.present? && order_type=="order_required",
             payment_model_url: payment_model_url || "",
             pricing_url: pricing_url || "",
             main_contact: main_contact,
@@ -179,7 +177,7 @@ module Import
             related_services: map_related_services(related_services),
             life_cycle_status: LifeCycleStatus.where(eid: life_cycle_status),
             order_type: order_type,
-            status: "draft",
+            status: "unverified",
             funding_bodies: map_funding_bodies(funding_bodies),
             funding_programs: map_funding_programs(funding_programs),
             access_types: map_access_types(access_types),
@@ -223,7 +221,7 @@ module Import
               updated += 1
               log "Updating [EXISTING] service #{service.name}, id: #{service_source.id}, eid: #{eid}"
               unless @dry_run
-                service.update!(updated_service_data.except(:scientific_domains, :categories, :status))
+                service.update!(updated_service_data)
                 create_default_offer!(service, name, eid, order_type, order_url)
               end
             else
@@ -284,7 +282,7 @@ module Import
         Offer.create!(name: "Offer",
                       description: "#{name} Offer",
                       order_type: order_type,
-                      external: url.present? && order_type=="order_required",
+                      external: service.order_url.present? && order_type=="order_required",
                       webpage: url, status: "published", service: service)
       elsif url.blank? || order_type != "order_required"
         log "[WARNING] Offer cannot be created, because url is empty"

@@ -48,13 +48,16 @@ describe Import::Eic do
 
   let(:eic) { make_and_stub_eic(log: true) }
   let(:log_less_eic) { make_and_stub_eic(log: false) }
-  let!(:scientific_domain_other) { create(:scientific_domain, name: "Other", eid: "scientific_subdomain-other") }
+  let!(:scientific_domain_other) { create(:scientific_domain, name: "Other",
+                                          eid: "scientific_subdomain-other-other") }
   let!(:target_user_other) { create(:target_user, name: "Other", eid: "target_user-other") }
   let!(:storage) { create(:category, name: "Storage") }
   let!(:training) { create(:category, name: "Training & Support") }
   let!(:security) { create(:category, name: "Security & Operations") }
   let!(:analytics) { create(:category, name: "Processing & Analysis") }
-  let!(:data) { create(:category, name: "Data management") }
+  let!(:data) { create(:pc_category, name: "Data management", eid: "category-data") }
+  let!(:data_subcategory) { create(:pc_category, name: "Access", eid: "data-applications-software") }
+
   let!(:compute) { create(:category, name: "Compute") }
   let!(:networking) { create(:category, name: "Networking") }
 
@@ -135,7 +138,7 @@ describe Import::Eic do
       expect(service.helpdesk_url).to eq("http://phenomenal-h2020.eu/home/help")
       expect(service.training_information_url).to eq("http://phenomenal-h2020.eu/home/training-online")
       expect(service.order_type).to eq("other")
-      expect(service.status).to eq("draft")
+      expect(service.status).to eq("unverified")
       expect(service.providers).to eq([Provider.find_by(name: "Phenomenal"), Provider.find_by(name: "Awesome provider")])
       expect(service.resource_organisation).to eq(Provider.find_by(name: "BlueBRIDGE"))
       expect(service.categories).to eq([])
@@ -214,7 +217,7 @@ describe Import::Eic do
       expect(offer.name).to eq("Offer")
       expect(offer.description).to eq("PhenoMeNal Offer")
       expect(offer.order_type).to eq("other")
-      expect(offer.status).to eq(service.status)
+      expect(offer.status).to eq("published")
     end
 
     it "should not create an offer for updated services with offers" do
@@ -233,19 +236,6 @@ describe Import::Eic do
     it "should not change db if dry_run is set to true" do
       eic = make_and_stub_eic(dry_run: true, dont_create_providers: false, log: true)
       expect { eic.call }.to output(/PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(0).and change { Provider.count }.by(0)
-    end
-
-    it "should not update scientific_domains and categories" do
-      scientific_domain_something = create(:scientific_domain, name: "Something")
-
-      service = create(:service, categories: [Category.find_by(name: "Networking")], scientific_domains: [scientific_domain_something])
-      source = create(:service_source, eid: "phenomenal.phenomenal", service_id: service.id, source_type: "eic")
-      service.update!(upstream_id: source.id)
-
-      log_less_eic.call
-
-      expect(Service.first.categories).to eq(service.categories)
-      expect(Service.first.scientific_domains).to eq(service.scientific_domains)
     end
 
     it "should filter by ids if they are provided" do
@@ -316,26 +306,6 @@ describe Import::Eic do
 
     service = Service.first
     expect(service.upstream_id).to eq(service.sources.first.id)
-  end
-
-  it "should update only EIC fields when importing existing service with EIC upstream" do
-    response = double(code: 200, body: create(:eic_services_response, tagline: ""))
-    provider_response = double(code: 200, body: create(:eic_providers_response))
-    expect_responses(unirest, test_url, response, provider_response)
-
-    make_and_stub_eic(ids: [], dry_run: false, default_upstream: :eic).call
-
-    scientific_domain = create(:scientific_domain)
-    service = Service.first
-    service.update!(status: "published", scientific_domains: [scientific_domain], categories: [])
-
-    expect_responses(unirest, test_url, response, provider_response)
-
-    make_and_stub_eic(ids: [], dry_run: false, default_upstream: :eic).call
-    service.reload
-    expect(service.status).to eq("published")
-    expect(service.scientific_domains).to eq([scientific_domain])
-    expect(service.categories).to eq([])
   end
 
   it "should match provider by name and connect external source" do

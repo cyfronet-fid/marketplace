@@ -41,7 +41,9 @@ FactoryBot.define do
                     ],
                     "lifeCycleStatus" => "production",
                     "trl" => trl,
-                    "subcategories" => ["data-applications-software"],
+                    "categories" => [{
+                        "category" => "category-data",
+                        "subcategory" => "data-applications-software" }],
                     "geographicalAvailabilities" => [
                         "WW"
                     ],
@@ -72,7 +74,10 @@ FactoryBot.define do
                     "paymentModel" => "http://openminted.eu/payment-model",
                     "serviceLevel" => "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/09/Phenomenal-Terms-of-Use-version-11.pdf",
                     "termsOfUse" => "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/09/Phenomenal-Terms-of-Use-version-11.pdf",
-                    "scientificSubdomains" => ["scientific_subdomain-other"],
+                    "scientificDomains" => [{
+                        "scientificDomain" => "scientific_domain-other",
+                        "scientificSubdomain" => "scientific_subdomain-other-other"
+                    }],
                     "accessTypes" => ["access_type-other"],
                     "accessModes" => ["access_mode-other"],
                     "resourceGeographicLocations" => ["PL"],
@@ -193,7 +198,9 @@ FactoryBot.define do
                     "changeLog" => [""],
                     "lifeCycleStatus" => "production",
                     "trl" => "trl-9",
-                    "subcategories" => ["tool"],
+                    "categories" => [{
+                                         "category" => "category-data",
+                                         "subcategory" => "data-applications-software" }],
                     "geographicalAvailabilities" => [
                         "WW"
                     ],
@@ -215,7 +222,10 @@ FactoryBot.define do
                     "serviceLevel" => "https://auth.west-life.eu/aai/AUP.pdf",
                     "termsOfUse" => "https://auth.west-life.eu/aai/AUP.pdf",
                     "useCases" => nil,
-                    "scientificSubdomains" => ["scientific_subdomain-other"],
+                    "scientificDomains" => [{
+                                                "scientificDomain" => "scientific_domain-other",
+                                                "scientificSubdomain" => "scientific_subdomain-other-other"
+                                            }],
                     "accessTypes" => ["access_type-other"],
                     "accessModes" => ["access_mode-other"],
                     "resourceGeographicLocations" => nil,
@@ -327,7 +337,9 @@ FactoryBot.define do
                     "lifeCycleStatus" => "production",
                     "trl" => "trl-9",
                     "category" => "software",
-                    "subcategories" => ["tool"],
+                    "categories" => [{
+                                         "category" => "category-data",
+                                         "subcategory" => "data-applications-software" }],
                     "geographicalAvailabilities" => [
                         "WW"
                     ],
@@ -349,7 +361,10 @@ FactoryBot.define do
                     "serviceLevel" => "https://auth.west-life.eu/aai/AUP.pdf",
                     "termsOfUse" => "https://auth.west-life.eu/aai/AUP.pdf",
                     "useCases" => nil,
-                    "scientificSubdomains" => ["scientific_subdomain-other"],
+                    "scientificDomains" => [{
+                                                "scientificDomain" => "scientific_domain-other",
+                                                "scientificSubdomain" => "scientific_subdomain-other-other"
+                                            }],
                     "accessTypes" => ["access_type-other"],
                     "accessModes" => ["access_mode-other"],
                     "resourceGeographicLocations" => nil,
