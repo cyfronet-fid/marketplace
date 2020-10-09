@@ -76,7 +76,11 @@ class Service < ApplicationRecord
                      { name: "dependencies",
                        template: "array",
                        fields: ["required_services", "related_services", "related_platforms"],
-                       with_desc: true },
+                       with_desc: true,
+                       nested: {
+                           required_services: "service",
+                           related_services: "service"
+                       } },
                      { name: "attribution",
                        template: "array",
                        fields: ["funding_bodies", "funding_programs", "grant_project_names"],

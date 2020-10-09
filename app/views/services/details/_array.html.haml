@@ -1,19 +1,25 @@
 - fields.map do |field|
   - if service.send(field).present?
-    %li
-      %span
-        - if with_desc
+    %li{ class: ("links" if nested.present? && nested[field.to_sym] == "link") }
+      - if with_desc && (nested.blank? || nested[field.to_sym] != "link")
+        %span
           = t(".#{field}") + ":"
-          %br
-        - if service.send(field).is_a?(ActiveSupport::TimeWithZone)
-          = service.send(field).to_date
-        - else
-          - Array(service.send(field)).map.with_index do |element, idx|
-            %span
-            - if nested.present? && nested[field.to_sym].present?
-              - if nested[field.to_sym] == "link"
-                = link_to element, element
-              - else
-                "#{element.send(nested[field.to_sym])}#{idx == (Array(service.send(field)).map.size) - 1 ? nil : ", "}"
+        %br
+      - if service.send(field).is_a?(ActiveSupport::TimeWithZone)
+        = service.send(field).to_date
+      - else
+        - Array(service.send(field)).map.with_index do |element, idx|
+          - if nested.present? && nested[field.to_sym].present?
+            - if nested[field.to_sym] == "link"
+              %i.fas.fa-arrow-right
+              = link_to field.humanize, element
+            - elsif nested[field.to_sym] == "service"
+              %li.links
+                %i.fas.fa-arrow-right
+                = link_to(element.name, service_path(element))
             - else
-              "#{element}#{idx == (Array(service.send(field)).map.size) - 1 ? nil : ", "}"
+              %span
+                #{element.send(nested[field.to_sym])}#{idx == (Array(service.send(field)).map.size) - 1 ? nil : ", "}
+          - else
+            %span
+              #{element}#{idx == (Array(service.send(field)).map.size) - 1 ? nil : ", "}
