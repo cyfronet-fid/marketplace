@@ -1,21 +1,14 @@
 - fields.map do |field|
-  - if with_desc
+  - if service.send(field).present?
     %li
-      %span= t(".#{field}") + ":"
-      %br
-      - Array(service.send(field)).map do |element|
-        - if nested.present? && nested[field.to_sym].present?
-          %span
-            = element.send(nested[field.to_sym])
-        - else
-          %span
-            = element
-  - else
-    - Array(service.send(field)).map do |element|
-      %li
-        - if nested.present? && nested[field.to_sym].present?
-          %span
-            = element.send(nested[field.to_sym])
-        - else
-          %span
-            = element
+      %span
+        - if with_desc
+          = t(".#{field}") + ":"
+          %br
+        - Array(service.send(field)).map do |element|
+          - if nested.present? && nested[field.to_sym].present?
+            %span
+              = element.send(nested[field.to_sym])
+          - else
+            %span
+              = element
