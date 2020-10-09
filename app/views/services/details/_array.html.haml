@@ -2,7 +2,7 @@
   - if service.send(field).present?
     %li
       %span
-        - if with_desc
+        - if with_desc && (nested.blank? || nested[field.to_sym] != "link")
           = t(".#{field}") + ":"
           %br
         - if service.send(field).is_a?(ActiveSupport::TimeWithZone)
@@ -12,8 +12,8 @@
             %span
             - if nested.present? && nested[field.to_sym].present?
               - if nested[field.to_sym] == "link"
-                = link_to element, element
+                = link_to field.humanize, element
               - else
-                "#{element.send(nested[field.to_sym])}#{idx == (Array(service.send(field)).map.size) - 1 ? nil : ", "}"
+                #{element.send(nested[field.to_sym])}#{idx == (Array(service.send(field)).map.size) - 1 ? nil : ", "}
             - else
-              "#{element}#{idx == (Array(service.send(field)).map.size) - 1 ? nil : ", "}"
+              #{element}#{idx == (Array(service.send(field)).map.size) - 1 ? nil : ", "}
