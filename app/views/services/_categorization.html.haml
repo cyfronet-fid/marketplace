@@ -1,7 +1,19 @@
-%dl.mb-1
+%dl.mb-0
   %dt.x-small
     %span
       Provided by:
   %dd.x-small
     %strong.mr-4= safe_join(providers(service), ", ")
+%dl.mb-0.research
+  %dt.x-small
+    %span
+      Research area:
+  %dd.x-small
+    %strong.mr-4= safe_join(scientific_domains(service), ", ")
+%dl.mb-0.dedicated
+  %dt.x-small
+    %span
+      Dedicated for:
+  %dd.x-small
+    %strong.mr-4= safe_join(dedicated_for_links(service), ", ")
 %span.clearfix

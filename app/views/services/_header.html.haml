@@ -6,7 +6,7 @@
           class: "align-self-center img-fluid"
       - elsif service.logo.attached? && service.logo.variable?
         = image_tag service.logo.variant(resize: "180x120"), class: "align-self-center img-fluid"
-    .col-12.col-sm-9
+    .col-12.col-sm-9.service-details-header
       %h2.font-weight-bolder= service.name
       %p.mb-1= service.tagline
       = render "services/categorization", service: service

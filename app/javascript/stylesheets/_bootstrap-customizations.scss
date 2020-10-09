@@ -3873,6 +3873,13 @@ textarea.form-control.is-invalid {
   }
 }
 
+.service-details-header {
+  .research,
+  .dedicated {
+    display: none;
+  }
+}
+
 .service-links {
   border-top: 1px solid $palette-solid-10;
   margin-top: 19px;
