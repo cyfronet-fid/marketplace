@@ -9,10 +9,13 @@ RSpec.describe Service::PcCreateOrUpdate do
   let!(:training) { create(:category, name: "Training & Support") }
   let!(:security) { create(:category, name: "Security & Operations") }
   let!(:analytics) { create(:category, name: "Processing & Analysis") }
-  let!(:data) { create(:category, name: "Data management") }
+  let!(:data) { create(:pc_category, name: "Data management", eid: "category-data") }
+  let!(:data_subcategory) { create(:pc_category, name: "Access", parent: data,
+                                   eid: "subcategory-access") }
   let!(:compute) { create(:category, name: "Compute") }
   let!(:networking) { create(:category, name: "Networking") }
-  let!(:scientific_domain_other) { create(:scientific_domain, name: "Other", eid: "scientific_domain-other") }
+  let!(:scientific_domain_other) {
+    create(:scientific_domain, name: "Other", eid: "scientific_subdomain-other-other") }
   let!(:funding_body) { create(:funding_body, name: "FundingBody", eid: "funding_body-fb") }
   let!(:funding_program) { create(:funding_program, name: "FundingProgram", eid: "funding_program-fp") }
   let!(:related_service) { create(:service, name: "Super Service",
@@ -104,9 +107,10 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.funding_programs).to eq([funding_program])
       expect(service.related_services).to eq([related_service])
       expect(service.required_services).to eq([related_service])
-      expect(service.status).to eq("published")
+      expect(service.status).to eq("unverified")
       expect(service.resource_organisation).to eq(Provider.find_by(name: "Test Provider tp"))
       expect(service.providers).to eq([Provider.find_by(name: "Test Provider ten"), Provider.find_by(name: "Test Provider awesome") ])
+      expect(service.pc_categories).to eq([data_subcategory])
       expect(service.categories).to eq([])
       expect(service.scientific_domains).to eq([scientific_domain_other])
       expect(service.version).to eq("1.0")
@@ -167,7 +171,7 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(offer.name).to eq("Offer")
       expect(offer.description).to eq("#{service.name} Offer")
       expect(offer.order_type).to eq("other")
-      expect(offer.status).to eq(service.status)
+      expect(offer.status).to eq("published")
       expect(offer.service.id).to eq(service.id)
     end
 
