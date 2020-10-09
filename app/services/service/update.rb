@@ -11,7 +11,7 @@ class Service::Update
       url = @params["order_url"] || @params["webpage_url"]
       if url.present? || @params["order_type"]=="order_required"
         @service.offers.first.update(order_type: @params["order_type"],
-                                     external: url.present? && @params["order_type"]=="order_required",
+                                     external: @params["order_url"].present? && @params["order_type"]=="order_required",
                                      webpage: url, status: "published")
       end
     end

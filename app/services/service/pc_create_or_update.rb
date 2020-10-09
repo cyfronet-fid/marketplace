@@ -40,7 +40,7 @@ class Service::PcCreateOrUpdate
           service.offers.create!(name: "Offer",
                                  description: "#{service.name} Offer",
                                  order_type: service.order_type,
-                                 external: url.present? && service.order_type=="order_required",
+                                 external: service[:order_url].present? && service.order_type=="order_required",
                                  webpage: url, status: "published")
         else
           Rails.logger.warn "[WARNING] Offer cannot be created, because url is empty"
@@ -50,15 +50,12 @@ class Service::PcCreateOrUpdate
     elsif is_newer_update
       if mapped_service && !@is_active
         Service::Draft.new(mapped_service).call
-        if mapped_service.offers_count == 1
-          Service.offers.first.update!(order_type: service.order_type,
-                                       external: url.present? && service.order_type=="order_required",
-                                       webpage: url, status: "published")
-        end
+        update_offer(mapped_service, service, url)
         mapped_service
       else
         save_logo(mapped_service, @eic_service["logo"])
         mapped_service.update!(service)
+        update_offer(mapped_service, service, url)
         mapped_service
       end
     else
@@ -70,6 +67,8 @@ class Service::PcCreateOrUpdate
     def map_service(data)
       main_contact = MainContact.new(map_contact(data["mainContact"])) if data["mainContact"] || nil
       providers = Array(data.dig("resourceProviders", "resourceProvider"))
+      scientific_domains = data.dig("scientificDomains", "scientificDomain").map { |sd| sd["scientificSubdomain"] }
+      categories = data.dig("categories", "category").map { |c| c["subcategory"] }
 
       { name: data["name"],
         description: ReverseMarkdown.convert(data["description"],
@@ -83,6 +82,8 @@ class Service::PcCreateOrUpdate
         resource_geographic_locations: Array(data.dig("resourceGeographicLocations", "resourceGeographicLocation")) || [],
         target_users: Array(map_target_users(data.dig("targetUsers", "targetUser"))) || [],
         order_type: map_order_type(data["orderType"]),
+        order_url: data["order"] || "",
+        external: data["order"].present? && map_order_type(data["orderType"])=="order_required",
         main_contact: main_contact,
         public_contacts: Array.wrap(data.dig("publicContacts", "publicContact")).
             map { |c| PublicContact.new(map_contact(c)) } || [],
@@ -100,7 +101,6 @@ class Service::PcCreateOrUpdate
         training_information_url: data["trainingInformation"] || "",
         status_monitoring_url: data["statusMonitoring"] || "",
         maintenance_url: data["maintenance"] || "",
-        order_url: data["order"] || "",
         payment_model_url: data["paymentModel"] || "",
         pricing_url: data["pricing"] || "",
         trl: Trl.where(eid: data["trl"]),
@@ -109,7 +109,7 @@ class Service::PcCreateOrUpdate
         life_cycle_status: LifeCycleStatus.where(eid: data["lifeCycleStatus"]),
         access_types: AccessType.where(eid: Array(data.dig("accessTypes", "accessType"))),
         access_modes: AccessMode.where(eid: Array(data.dig("accessModes", "accessMode"))),
-        status: "published",
+        status: "unverified",
         funding_bodies: map_funding_bodies(data.dig("fundingBody", "fundingBody")),
         funding_programs: map_funding_programs(data.dig("fundingPrograms", "fundingProgram")),
         changelog: Array(data.dig("changeLog", "changeLog")),
@@ -120,12 +120,20 @@ class Service::PcCreateOrUpdate
         resource_organisation: map_provider(data["resourceOrganisation"]),
         providers: providers.map { |p| map_provider(p) },
         related_platforms: Array(data.dig("relatedPlatforms", "relatedPlatform")) || [],
-        pc_categories: Array(map_pc_categories(data.dig("subcategories", "subcategory"))) || [],
-        scientific_domains: Array(map_scientific_domains(data.dig("scientificSubdomains", "scientificSubdomain"))),
+        pc_categories: map_pc_categories(categories) || [],
+        scientific_domains: map_scientific_domains(scientific_domains),
         version: data["version"] || "",
         last_update: data["lastUpdate"].present? ? Time.at(data["lastUpdate"].to_i) : nil,
         synchronized_at: @modified_at
       }
+    end
+
+    def update_offer(mapped_service, service, url)
+      if mapped_service.offers_count == 1
+        mapped_service.offers.first.update!(order_type: service.order_type,
+                                            external: service.order_url.present? && service.order_type=="order_required",
+                                            webpage: url, status: "published")
+      end
     end
 
     def map_target_users(target_users)
@@ -202,10 +210,6 @@ class Service::PcCreateOrUpdate
 
     def map_funding_programs(funding_programs)
       FundingProgram.where(eid: funding_programs)
-    end
-
-    def scientific_domain_other
-      ScientificDomain.find_by!(name: "Other")
     end
 
     def map_order_type(order_type)
