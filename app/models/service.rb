@@ -59,7 +59,12 @@ class Service < ApplicationRecord
   DETAIL_FIELDS_1 = [{ name: "classification",
                        template: "array",
                        fields: ["target_users", "access_types", "access_modes", "tags"],
-                       with_desc: true },
+                       with_desc: true,
+                       nested: {
+                           target_users: "name",
+                           access_types: "name",
+                           access_modes: "name"
+                       } },
                      { name: "availability",
                        template: "array",
                        fields: ["geographical_availabilities", "language_availability"],
@@ -75,10 +80,17 @@ class Service < ApplicationRecord
                      { name: "attribution",
                        template: "array",
                        fields: ["funding_bodies", "funding_programs", "grant_project_names"],
-                       with_desc: true },
+                       with_desc: true,
+                       nested: {
+                           funding_bodies: "name",
+                           funding_programs: "name"
+                       } },
                      { name: "order",
                        template: "array",
                        fields: ["order_type", "order_url"],
+                       nested: {
+                           order_url: "link"
+                       },
                        with_desc: true }]
 
 
@@ -91,7 +103,11 @@ class Service < ApplicationRecord
                        template: "array",
                        fields: ["trl", "life_cycle_status", "certifications", "standards", "open_source_technologies",
                                 "version", "last_update"],
-                       with_desc: true },
+                       with_desc: true,
+                       nested: {
+                           trl: "name",
+                           life_cycle_status: "name"
+                       } },
                      { name: "management",
                        template: "links",
                        fields: ["helpdesk_url", "manual_url", "terms_of_use_url", "privacy_policy_url",
