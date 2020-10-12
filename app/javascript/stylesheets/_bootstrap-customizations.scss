@@ -906,6 +906,7 @@ Service detail
 
     &.domains {
       margin-bottom: 0;
+      list-style-position: outside;
     }
 
     ul {
@@ -914,12 +915,15 @@ Service detail
 
       li {
         list-style: none !important;
+        padding-left: 15px;
+        position: relative;
 
         &::before {
           content: '-';
           font-size: 20px;
-          float: left;
-          margin-right: 5px;
+          position: absolute;
+          top: 0;
+          left: 0;
         }
       }
     }
@@ -3922,6 +3926,18 @@ textarea.form-control.is-invalid {
   margin-bottom: 20px;
   background-color: $border-header;
 
+  &.special-box {
+    .details-content {
+      ul {
+        li {
+          &.links {
+            margin-left: 8px;
+          }
+        }
+      }
+    }
+  }
+
   .details-header {
     border-bottom: 1px solid $palette-solid-10;
     background-color: $footer-color;
@@ -3959,7 +3975,7 @@ textarea.form-control.is-invalid {
 
         &.links {
           list-style: none !important;
-          margin-left: 0;
+          margin-left: -4px;
 
           a {
             font-size: 0.875rem;
@@ -3977,9 +3993,10 @@ textarea.form-control.is-invalid {
           }
 
           svg {
-            font-size: 11px;
+            font-size: 9px;
             margin-right: 7px;
-            margin-top: 6px;
+            margin-top: 2px;
+            vertical-align: middle;
           }
         }
 
