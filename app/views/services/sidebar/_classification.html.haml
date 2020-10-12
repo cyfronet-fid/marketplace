@@ -22,7 +22,7 @@
   - fields.map do |field|
     - if service.send(field).present?
       - field_tree(service, field).each do |parent, children|
-        %li.list-group-item.mb-2
+        %li.list-group-item
           %span
             = parent
           %ul
