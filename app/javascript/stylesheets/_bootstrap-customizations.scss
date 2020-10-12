@@ -917,6 +917,8 @@ Service detail
         list-style: none !important;
         padding-left: 15px;
         position: relative;
+        margin: 5px 0;
+        line-height: 19px;
 
         &::before {
           content: '-';
