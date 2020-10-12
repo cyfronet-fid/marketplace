@@ -21,5 +21,9 @@
               %span
                 #{element.send(nested[field.to_sym])}#{idx == (Array(service.send(field)).map.size) - 1 ? nil : ", "}
           - else
-            %span
-              #{element}#{idx == (Array(service.send(field)).map.size) - 1 ? nil : ", "}
+            - if type == "list"
+              %li
+                #{element}
+            - else
+              %span
+                #{element}#{idx == (Array(service.send(field)).map.size) - 1 ? nil : ", "}
