@@ -1,23 +1,23 @@
--# here should be icons variables for classification below
-.category-box
-  .category-icon
-    = image_pack_tag("ico_ra_default.png", width: 35, alt: "category name")
-  .category-name
-    = service.main_category
-
-- if service.scientific_domains.first
+- if service.main_category
   .category-box
     .category-icon
-      = image_pack_tag("ico_ra_default.png", width: 35, alt: "category name")
+      - if service.main_category.logo.attached?
+        = image_tag service.main_category.logo.variant(resize: "35x35")
+      - else
+        = image_pack_tag("ico_default.png", width: 35, alt: "#{service.main_category.name}")
     .category-name
-      = service.scientific_domains.first
+      = service.main_category.name.truncate(35, separator: " ")
 
-- if service.scientific_domains.second
-  .category-box.last
+- service.scientific_domains.map(&:parent).first(2).map.with_index do |scientific_domain, idx|
+  .category-box{ class: ("last" if idx == 1) }
     .category-icon
-      = image_pack_tag("ico_ra_default.png", width: 35, alt: "category name")
+      - if scientific_domain.logo.attached?
+        = image_tag scientific_domain.logo.variant(resize: "35x35")
+      - else
+        = image_pack_tag("ico_ra_default.png", width: 35, alt: "#{scientific_domain.name}")
     .category-name
-      = service.scientific_domains.second
+      = scientific_domain.name.truncate(35, separator: " ")
+
 %ul.list-group.domains.mt-3.mb-4
   - fields.map do |field|
     - if service.send(field).present?
