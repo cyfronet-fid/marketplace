@@ -50,12 +50,12 @@ class Service::PcCreateOrUpdate
     elsif is_newer_update
       if mapped_service && !@is_active
         Service::Draft.new(mapped_service).call
-        update_offer(mapped_service, service, url)
+        update_offer(mapped_service, url)
         mapped_service
       else
         save_logo(mapped_service, @eic_service["logo"])
         mapped_service.update!(service)
-        update_offer(mapped_service, service, url)
+        update_offer(mapped_service, url)
         mapped_service
       end
     else
@@ -128,10 +128,10 @@ class Service::PcCreateOrUpdate
       }
     end
 
-    def update_offer(mapped_service, service, url)
+    def update_offer(mapped_service, url)
       if mapped_service.offers_count == 1
-        mapped_service.offers.first.update!(order_type: service.order_type,
-                                            external: service.order_url.present? && service.order_type=="order_required",
+        mapped_service.offers.first.update!(order_type: mapped_service.order_type,
+                                            external: mapped_service.external,
                                             webpage: url, status: "published")
       end
     end
