@@ -23,7 +23,8 @@
           - else
             - if type == "list"
               %li
-                #{element}
+                %span
+                  #{element}
             - else
               %span
                 #{element}#{idx == (Array(service.send(field)).map.size) - 1 ? nil : ", "}
