@@ -48,6 +48,20 @@ class Country
         "en" => "non-European"
     })
 
+  ISO3166::Data.register(
+    alpha2: "UK",
+    name: "United Kingdom",
+    translations: {
+        "en" => "non-European"
+    })
+
+  ISO3166::Data.register(
+    alpha2: "EL",
+    name: "Greece",
+    translations: {
+        "en" => "Greece"
+    })
+
   class << self
     def for(value)
       return value if value.is_a?(ISO3166::Country)

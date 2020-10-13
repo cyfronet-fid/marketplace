@@ -17,8 +17,11 @@ describe("OfferController", () => {
         'data-action="change->offer#showWebpage" >' +
         '<option value=""></option>' +
         '<option value="open_access">open_access</option>' +
-        '<option value="catalog">catalog</option>' +
+        '<option value="external">external</option>' +
         '</select>' +
+        '<input class="form-check-input is-valid boolean optional" data-target="offer.external"' +
+        'data-action="change->offer#showWebpage" type="checkbox"' +
+        'value="1" name="offer[external]" id="offer_external">' +
         '<div id="result" data-target="offer.webpage" class="hidden-fields"> </div>' +
         '</div>';
 

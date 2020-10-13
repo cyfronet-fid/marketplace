@@ -12,18 +12,18 @@
               %i.fas.fa-chevron-left.fa-xs.mr-1
               = link_to "back to #{project.name} project services", [project, :services]
       .col-md-4.float-right.justify-content-center
-        - if project_item.orderable?
+        - if project_item.order_required? && !project_item.external?
           %p.text-uppercase.text-right.font-weight-bold.text-secondary.mb-0
             %span{ class: "status-#{project_item.status}" }= t("project_items.status.#{project_item.status}")
 
         - elsif project_item.webpage.present?
-          = link_to t("common.#{project_item.order_type}.link"), project_item.webpage,
+          = link_to t("common.#{map_view_to_order_type(project_item)}.link"), project_item.webpage,
           class: "btn btn-primary float-right pl-3 pr-3", target: "_blank", title: "External link"
     %ul.nav.nav-tabs.mt-4.pl-3.row.services-menu
       %li.nav-item
         = link_to "Details", project_service_path(project, project_item),
           class: "nav-link #{"active" if controller.controller_name == "services"} text-uppercase"
-      - if project_item.orderable?
+      - if project_item.order_required? && !project_item.external?
         %li.nav-item
           = link_to "Order history", project_service_timeline_path(project, project_item),
             class: "nav-link #{"active" if controller.controller_name == "timelines"} text-uppercase"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_22_120654) do
+ActiveRecord::Schema.define(version: 2020_10_01_155112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -160,6 +160,7 @@ ActiveRecord::Schema.define(version: 2020_09_22_120654) do
     t.string "status"
     t.string "order_type", null: false
     t.string "webpage"
+    t.boolean "external", default: false
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
     t.index ["service_id"], name: "index_offers_on_service_id"
@@ -202,6 +203,7 @@ ActiveRecord::Schema.define(version: 2020_09_22_120654) do
     t.string "order_type", null: false
     t.string "webpage"
     t.boolean "voucherable", default: false, null: false
+    t.boolean "external", default: false
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
   end
@@ -408,6 +410,7 @@ ActiveRecord::Schema.define(version: 2020_09_22_120654) do
     t.datetime "last_update"
     t.string "related_platforms", default: [], array: true
     t.datetime "synchronized_at"
+    t.boolean "external", default: false
     t.index ["name"], name: "index_services_on_name"
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["resource_organisation_id"], name: "index_services_on_resource_organisation_id"

@@ -24,7 +24,8 @@ RSpec.feature "Project services" do
 
   [:open_access, :external].each do |type|
     scenario "I cannot see timeline for #{type} order" do
-      offer = create(:offer, service: service, order_type: type)
+      offer = create(:offer, service: service, order_type: type == :external ? :order_required : type,
+                     external: type == :external ? true : false)
       project_item = create(:project_item, offer: offer, project: project)
 
       visit project_service_path(project, project_item)
@@ -39,7 +40,7 @@ RSpec.feature "Project services" do
                    webpage: "http://old.pl",
                    voucherable: false)
     project_item = create(:project_item, offer: offer, project: project)
-    offer.update(order_type: :orderable, voucherable: true, webpage: "http://new.pl")
+    offer.update(order_type: :order_required, external: false, voucherable: true, webpage: "http://new.pl")
 
     visit project_service_path(project, project_item)
 

@@ -41,22 +41,21 @@ class Offer < ApplicationRecord
   validates :service, presence: true
   validates :iid, presence: true, numericality: true
   validates :status, presence: true
-  validates :webpage, presence: true, mp_url: true, unless: :orderable?
 
   def to_param
     iid.to_s
   end
 
   def open_access?
-    order_type == "open_access"
+    order_type == "open_access" || order_type == "fully_open_access"
+  end
+
+  def order_required?
+    order_type == "order_required"
   end
 
   def orderable?
-    order_type == "orderable"
-  end
-
-  def external?
-    order_type == "external"
+    order_required? && !external?
   end
 
   private

@@ -56,12 +56,22 @@ module ServiceHelper
     end
   end
 
+  def map_view_to_order_type(object)
+    if object.external
+      "external"
+    elsif object.order_type == "order_required"
+      "orderable"
+    else
+      "open_access"
+    end
+  end
+
   def order_type(service)
     types = service&.offers.map { |o| o.order_type }.uniq
     if types.size > 1
       "various"
     elsif types.size == 1
-      types.first
+      map_view_to_order_type(service)
     else
       service&.order_type || "external"
     end
