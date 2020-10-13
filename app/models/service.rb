@@ -124,8 +124,7 @@ class Service < ApplicationRecord
                      ]
 
   DETAIL_FIELDS_3 = [{ name: "changelog",
-                       template: "array",
-                       type: "list",
+                       template: "changelog",
                        fields: ["changelog"] }]
 
   enum status: STATUSES
