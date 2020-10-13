@@ -13,12 +13,12 @@ RSpec.describe Offer do
 
   context "is open access" do
     subject { build(:offer, order_type: :open_access) }
-    it { should validate_presence_of(:webpage) }
+    it { should_not validate_presence_of(:webpage) }
   end
 
   context "is external" do
     subject { build(:offer, order_type: :order_required, external: true) }
-    it { should validate_presence_of(:webpage) }
+    it { should_not validate_presence_of(:webpage) }
   end
 
   context "is orderable" do
