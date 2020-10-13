@@ -1,6 +1,7 @@
 - if service.main_category
   .category-box
     .category-icon
+      %span.helper
       - if service.main_category.logo.attached?
         = image_tag service.main_category.logo.variant(resize: "35x35")
       - else
@@ -11,6 +12,7 @@
 - service.scientific_domains.map(&:parent).first(2).map.with_index do |scientific_domain, idx|
   .category-box{ class: ("last" if idx == 1) }
     .category-icon
+      %span.helper
       - if scientific_domain.logo.attached?
         = image_tag scientific_domain.logo.variant(resize: "35x35")
       - else

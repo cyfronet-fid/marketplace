@@ -887,7 +887,19 @@ Service detail
       .category-icon {
         width: 100%;
         margin: 7px 0 3px;
+        height: 41px;
         text-align: center;
+
+        .helper {
+          display: inline-block;
+          height: 100%;
+          vertical-align: middle;
+        }
+
+        img {
+          vertical-align: middle;
+          max-height: 40px;
+        }
       }
 
       .category-name {
