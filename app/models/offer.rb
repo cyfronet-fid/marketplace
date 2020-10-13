@@ -41,7 +41,6 @@ class Offer < ApplicationRecord
   validates :service, presence: true
   validates :iid, presence: true, numericality: true
   validates :status, presence: true
-  validates :webpage, presence: true, mp_url: true, unless: :orderable?
 
   def to_param
     iid.to_s
