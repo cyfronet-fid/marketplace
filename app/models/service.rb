@@ -47,7 +47,7 @@ class Service < ApplicationRecord
                           target_users: "name"
                       }
                     },
-                    { name: "service_availability_and_language",
+                    { name: "service_availability_and_languages",
                       template: "map",
                       fields: ["geographical_availabilities"] }]
 
