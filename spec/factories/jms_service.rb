@@ -81,14 +81,14 @@ FactoryBot.define do
             "requiredResource" => ["super-service"]
         },
         "serviceLevel" => "http://openminted.eu/sla-agreement/",
-        "categories" =>  { "category" => [{
+        "categories" =>  { "category" => {
             "category" => "category-data",
-            "subcategory" => "subcategory-access" }] },
+            "subcategory" => "subcategory-access" } },
         "logo" => logo,
-        "scientificDomains" => { "scientificDomain" => [{
+        "scientificDomains" => { "scientificDomain" => {
             "scientificDomain" => "scientific_domain-other",
             "scientificSubdomain" => "scientific_subdomain-other-other"
-            }] },
+            } },
         "tagline" => "Find easily accessible corpora of scholarly content and mine them!",
         "tags" => { "tag" => [
             "Text Mining",
