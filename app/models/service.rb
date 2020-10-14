@@ -49,7 +49,7 @@ class Service < ApplicationRecord
                     },
                     { name: "service_availability_and_languages",
                       template: "map",
-                      fields: ["geographical_availabilities"] }]
+                      fields: ["languages", "geographical_availabilities"] }]
 
   HEADER_FIELDS = [{ name: "links",
                       template: "links",
@@ -67,7 +67,7 @@ class Service < ApplicationRecord
                        } },
                      { name: "availability",
                        template: "array",
-                       fields: ["geographical_availabilities", "language_availability"],
+                       fields: ["geographical_availabilities", "languages"],
                        with_desc: true },
                      { name: "multimedia",
                        template: "links",
