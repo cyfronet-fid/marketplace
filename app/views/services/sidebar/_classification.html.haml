@@ -1,17 +1,6 @@
-- if service.main_category
-  .category-box
-    .category-icon
-      %span.helper
-      - if service.main_category.logo.attached?
-        = image_tag service.main_category.logo.variant(resize: "35x35")
-      - else
-        = image_pack_tag("ico_default.png", width: 35, alt: "#{service.main_category.name}")
-    .category-name
-      = service.main_category.name.truncate(35, separator: " ")
-
-- service.scientific_domains.map(&:parent).first(2).map.with_index do |scientific_domain, idx|
+- service.scientific_domains.map(&:root).uniq.map.with_index do |scientific_domain, idx|
   - if scientific_domain.present?
-    .category-box{ class: ("last" if idx == 1) }
+    .category-box{ class: ("last" if idx == 2) }
       .category-icon
         %span.helper
         - if scientific_domain.logo.attached?

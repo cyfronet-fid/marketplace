@@ -33,12 +33,16 @@ class Service < ApplicationRecord
     deleted: "deleted"
   }
 
-  SIDEBAR_FIELDS = [{ name: "classification",
+  SIDEBAR_FIELDS = [{ name: "scientific_categorisation",
                       template: "classification",
-                      fields: ["categories", "scientific_domains"],
+                      fields: ["scientific_domains"],
                       nested: {
                           scientific_domains: "name"
                       }
+                    },
+                    { name: "categorisation",
+                      template: "array",
+                      fields: ["categories"]
                     },
                     { name: "target_users",
                       template: "array",
