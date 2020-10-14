@@ -26,6 +26,8 @@ class Service::PcCreateOrUpdate
     service = map_service(@eic_service)
     mapped_service = Service.joins(:sources).find_by("service_sources.source_type": "eic",
                                                      "service_sources.eid": @eid)
+    source_id = mapped_service.nil? ? nil : ServiceSource.find_by("service_id": mapped_service.id, "source_type": "eic")&.id
+
     is_newer_update = mapped_service&.synchronized_at.present? ? (@modified_at > mapped_service.synchronized_at) : true
 
     url = service[:order_url] || service[:webpage_url] || ""
@@ -52,10 +54,12 @@ class Service::PcCreateOrUpdate
         Service::Draft.new(mapped_service).call
         update_offer(mapped_service, url)
         mapped_service
-      else
+      elsif !source_id.nil? && mapped_service.upstream_id == source_id
         save_logo(mapped_service, @eic_service["logo"])
         mapped_service.update!(service)
         update_offer(mapped_service, url)
+        mapped_service
+      else
         mapped_service
       end
     else
@@ -67,8 +71,8 @@ class Service::PcCreateOrUpdate
     def map_service(data)
       main_contact = MainContact.new(map_contact(data["mainContact"])) if data["mainContact"] || nil
       providers = Array(data.dig("resourceProviders", "resourceProvider"))
-      scientific_domains = data.dig("scientificDomains", "scientificDomain").map { |sd| sd["scientificSubdomain"] }
-      categories = data.dig("categories", "category").map { |c| c["subcategory"] }
+      scientific_domains = [data.dig("scientificDomains", "scientificDomain", "scientificSubdomain")]
+      categories = [data.dig("categories", "category", "subcategory")]
 
       { name: data["name"],
         pid: @eid,
