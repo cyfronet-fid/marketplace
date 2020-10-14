@@ -88,9 +88,7 @@ module Import
         open_source_technologies = service["openSourceTechnologies"]
         grant_project_names = service["grantProjectNames"]
         tag_list = Array(service["tags"])
-        language_availability = service["languageAvailabilities"] || ["EN"]
         geographical_availabilities = service["geographicalAvailabilities"] ||
-        resource_geographic_locations = Array(service["resourceGeographicLocations"]) || []
         categories = service["categories"].map { |c| c["subcategory"] }
         order_type = map_order_type(service["orderType"])
         related_platforms = service["relatedPlatforms"] || []
@@ -110,6 +108,11 @@ module Import
         version = service["version"]
         target_users = service["targetUsers"]
         synchronized_at = service_data["metadata"]["modifiedAt"].to_i
+
+        language_availability = service["languageAvailabilities"] || ["EN"]
+        resource_geographic_locations = service["resourceGeographicLocations"] || []
+        helpdesk_email = service["helpdeskEmail"] || ""
+        security_contact_email = service["securityContactEmail"] || ""
 
         logo = nil
 
@@ -195,7 +198,9 @@ module Import
             certifications: Array(certifications),
             standards: Array(standards),
             grant_project_names: Array(grant_project_names),
-            open_source_technologies: Array(open_source_technologies)
+            open_source_technologies: Array(open_source_technologies),
+            helpdesk_email: helpdesk_email,
+            security_contact_email: security_contact_email
         }
 
         begin
