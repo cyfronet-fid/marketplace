@@ -183,7 +183,8 @@ RSpec.describe Service::PcCreateOrUpdate do
 
       service = create(:service, providers: [provider_ten])
 
-      create(:service_source, source_type: "eic", eid: "first.service", service: service)
+      service.upstream = create(:service_source, source_type: "eic", eid: "first.service", service: service)
+      service.save!
 
       service = stub_described_class(create(:jms_service, name: "New title",
                                             logo: "http://metalweb.cerm.unifi.it/global/images/MetalPDB.png",
@@ -198,7 +199,8 @@ RSpec.describe Service::PcCreateOrUpdate do
       create(:provider_source, source_type: "eic", eid: provider_eid, provider: provider_ten)
       create(:provider_source, source_type: "eic", eid: "tp", provider: provider_tp)
       service = create(:service, providers: [provider_ten])
-      create(:service_source, source_type: "eic", eid: "first.service", service: service)
+      service.upstream = create(:service_source, source_type: "eic", eid: "first.service", service: service)
+      service.save!
 
       service = stub_described_class(create(:jms_service, name: "New title", prov_eid: provider_eid))
       expect(service.name).to eq("New title")
@@ -215,6 +217,18 @@ RSpec.describe Service::PcCreateOrUpdate do
       service = stub_described_class(create(:jms_service, name: "New title", prov_eid: provider_eid), is_active: true, modified_at: Time.now - 3.days)
       expect(service.name).to_not eq("New title")
       expect(service.name).to eq("Old title")
+    end
+
+    it "should not update service if upstream is not set" do
+      provider_ten = create(:provider, name: "Test Provider ten")
+      provider_tp = create(:provider, name: "Test Provider tp")
+      create(:provider_source, source_type: "eic", eid: provider_eid, provider: provider_ten)
+      create(:provider_source, source_type: "eic", eid: "tp", provider: provider_tp)
+      service = create(:service, name: "Old Name", providers: [provider_ten])
+      create(:service_source, source_type: "eic", eid: "first.service", service: service)
+
+      service = stub_described_class(create(:jms_service, name: "New title", prov_eid: provider_eid))
+      expect(service.name).to eq("Old Name")
     end
   end
 
