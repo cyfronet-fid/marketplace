@@ -2454,7 +2454,7 @@ label[data-multicheckbox].small {
       margin-bottom: 0;
 
       a {
-        font-weight: bold;
+        font-weight: 300;
       }
     }
   }
@@ -2498,6 +2498,22 @@ label[data-multicheckbox].small {
     }
   }
 }
+
+.service-details-header {
+  .research,
+  .dedicated {
+    display: none;
+  }
+
+  dl {
+    dd {
+      a {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
 // scss-lint:enable all
 
 @media (max-width: 576px) {
@@ -3888,13 +3904,6 @@ textarea.form-control.is-invalid {
       background: $danger;
       color: $white;
     }
-  }
-}
-
-.service-details-header {
-  .research,
-  .dedicated {
-    display: none;
   }
 }
 
