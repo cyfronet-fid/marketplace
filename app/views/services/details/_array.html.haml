@@ -6,7 +6,8 @@
           = t(".#{field}") + ":"
         %br
       - if service.send(field).is_a?(ActiveSupport::TimeWithZone)
-        = service.send(field).to_date
+        %span
+          = service.send(field).to_date
       - else
         - Array(service.send(field)).map.with_index do |element, idx|
           - if nested.present? && nested[field.to_sym].present?

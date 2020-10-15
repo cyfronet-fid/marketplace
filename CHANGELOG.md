@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - synchronized_at field for pc_create_or_update (@goreck888)
 - Handling eIC services ids in mp (@goreck888)
 - New resource presentation page (@michal-szostak) 
+- UPCASE languages in import:eic task (@michal-szostak) 
 
 
 ### Changed
@@ -56,6 +57,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Fixed autocomplete service name displayng (@martaswiatkowska)
 - languages and geographical_availabilities display (@martaswiatkowska)
 - displaying services on search (@martaswiatkowska)
+- date style in service details in "Maturity Information" (@michal-szostak)
+- language concatenation and headaer naming in service details (@michal-szostak)
 
 ### Security
 - Update rails to 6.0.3.2 (@goreck888)
