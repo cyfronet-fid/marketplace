@@ -109,7 +109,7 @@ module Import
         target_users = service["targetUsers"]
         synchronized_at = service_data["metadata"]["modifiedAt"].to_i
 
-        language_availability = service["languageAvailabilities"] || ["EN"]
+        language_availability = service["languageAvailabilities"].map { |lang| lang.upcase } || ["EN"]
         resource_geographic_locations = service["resourceGeographicLocations"] || []
         helpdesk_email = service["helpdeskEmail"] || ""
         security_contact_email = service["securityContactEmail"] || ""

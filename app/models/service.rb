@@ -74,7 +74,7 @@ class Service < ApplicationRecord
                        template: "array",
                        fields: ["geographical_availabilities", "languages"],
                        with_desc: true },
-                     { name: "multimedia",
+                     { name: "marketing",
                        template: "links",
                        fields: ["multimedia", "use_cases_url"],
                        type: "array" },
@@ -266,7 +266,7 @@ class Service < ApplicationRecord
   end
 
   def languages
-    language_availability.map { |l| I18nData.languages[l] }
+    language_availability.map { |l| I18nData.languages[l] || l }
   end
 
   def aod?
