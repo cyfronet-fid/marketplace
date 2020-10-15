@@ -41,12 +41,8 @@ RSpec.feature "Comparison", js: true do
     find("#comparison-#{service2.id}", visible: false).click
     find("#comparison-#{service3.id}", visible: false).click
 
-    expect(find("#comparison-#{service4.id}", visible: false).disabled?).to eql true
-    expect(find("#comparison-#{service5.id}", visible: false).disabled?).to eql true
-
-    click_on service4.name
-
-    expect(find("#comparison-#{service4.id}", visible: false).disabled?).to eql true
+    expect(find_field("comparison-#{service4.id}", disabled: true, visible: false)).to be_present
+    expect(find_field("comparison-#{service5.id}", disabled: true, visible: false)).to be_present
   end
 
   it "clears all elements when click on CLEAR ALL" do

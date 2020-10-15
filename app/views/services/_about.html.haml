@@ -6,15 +6,14 @@
       - if policy(service).order? && !offers&.empty?
         = render "services/offers", offers: offers, service: service
 
-    %sidebar.col-12.col-xl-3.pl-5
+    %sidebar.col-12.col-xl-3
       - Service::SIDEBAR_FIELDS.each do |group|
         - if any_present?(service, *group[:fields])
           %h5= t(".sidebar.title.#{group[:name]}")
-          %ul.list-group
-            = render "services/sidebar/#{group[:template]}",
-                      service: service,
-                      fields: group[:fields],
-                      nested: group[:nested] || ""
+          = render "services/sidebar/#{group[:template]}",
+                    service: service,
+                    fields: group[:fields],
+                    nested: group[:nested] || ""
       - if current_user&.executive?
         %h5 Statistics
         %ul.list-group
@@ -31,3 +30,8 @@
             %li.list-group-item
               %span Total orders:
               %strong.text-dark= service.project_items.order_required.size
+
+      %a.more-details{ href: service_details_path(service) }
+        More about
+        = service.name
+        %i.fas.fa-long-arrow-alt-right

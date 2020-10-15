@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resource :cancel, only: :destroy
       resource :question, only: [:new, :create], constraints: lambda { |req| req.format == :js }
       resources :opinions, only: :index
+      resources :details, only: :index
     end
   end
 

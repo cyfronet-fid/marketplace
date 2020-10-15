@@ -1,0 +1,50 @@
+#opinions.tab-pane.container.pt-2.active{ "aria-labelledby" => "opinions-tab", role: "tabpanel" }
+  .row.pt-3
+    .col-12.col-lg-4
+      - Service::DETAIL_FIELDS_1.map do |group|
+        - if (!group[:clazz].present? && any_present?(service,
+                  *group[:fields])) || (group[:clazz] && service.send(group[:clazz]).present?)
+          .details-box{ class: ("special-box" if group[:name] == "dependencies") }
+            .details-header
+              %h5= t(".details.title.#{group[:name]}")
+            .details-content
+              %ul.list-group
+                = render "services/details/#{group[:template]}",
+                            service: service,
+                            fields: group[:fields],
+                            type: group[:type] || "single",
+                            clazz: group[:clazz] || "",
+                            nested: group[:nested] || "",
+                            with_desc: group[:with_desc] || false
+    .col-12.col-lg-4
+      - Service::DETAIL_FIELDS_2.map do |group|
+        - if (!group[:clazz].present? && any_present?(service,
+                  *group[:fields])) || (group[:clazz] && service.send(group[:clazz]).present?)
+          .details-box{ class: ("special-box" if group[:name] == "dependencies") }
+            .details-header
+              %h5= t(".details.title.#{group[:name]}")
+            .details-content
+              %ul.list-group
+                = render "services/details/#{group[:template]}",
+                            service: service,
+                            fields: group[:fields],
+                            type: group[:type] || "single",
+                            clazz: group[:clazz] || "",
+                            nested: group[:nested] || "",
+                            with_desc: group[:with_desc] || false
+    .col-12.col-lg-4
+      - Service::DETAIL_FIELDS_3.map do |group|
+        - if (!group[:clazz].present? && any_present?(service,
+                  *group[:fields])) || (group[:clazz] && service.send(group[:clazz]).present?)
+          .details-box{ class: ("special-box" if group[:name] == "dependencies") }
+            .details-header
+              %h5= t(".details.title.#{group[:name]}")
+            .details-content
+              %ul.list-group
+                = render "services/details/#{group[:template]}",
+                            service: service,
+                            fields: group[:fields],
+                            type: group[:type] || "single",
+                            clazz: group[:clazz] || "",
+                            nested: group[:nested] || "",
+                            with_desc: group[:with_desc] || false
