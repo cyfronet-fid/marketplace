@@ -36,8 +36,9 @@
         = link_to t(".order"),
                       service_offers_path(service),
                       class: "btn btn-primary d-block mb-3"
-      %i{ class: "ordertype #{order_type(service)}" }
-      = t("offers.type.#{order_type(service)}")
+      %span.ordertype-label
+        %i{ class: "ordertype #{order_type(service)}" }
+        = t("offers.type.#{order_type(service)}")
 .row.service-links
   .col-12.col-lg-9.row
     .col-12.col-sm-3
