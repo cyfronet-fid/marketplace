@@ -1,64 +1,189 @@
-= simple_form_for [:backoffice, service], html: { "data-controller" => "service" }  do |f|
+= simple_form_for [:backoffice, service], html: { "data-controller" => "service",
+                                                  "data-action" => "submit->service#onSubmit" }  do |f|
   = f.error_notification
   .row
     .col-12.col-md-10
+      = f.input :synchronized_at, as: :date_time_picker, disabled: true
+      = f.input :last_update, as: :date_time_picker, disabled: true
       = f.input :version, disabled: cant_edit(:version)
       = f.input :logo, disabled: cant_edit(:logo)
-      = f.input :title, disabled: cant_edit(:title)
+      = f.input :name, disabled: cant_edit(:name)
       = f.input :tagline, disabled: cant_edit(:tagline)
       = f.input :tag_list, input_html: { value: service.tag_list.to_s }, disabled: cant_edit(:tag_list)
       .service-description
         = f.input :description, disabled: cant_edit(:description)
   .row.mt-5
     .col-12.col-md-5
-      = f.input :service_type, collection: Service.service_types.keys.map(&:to_sym),
-        disabled: cant_edit(:service_type)
+      = f.input :order_type, collection: Service.order_types.keys.map(&:to_sym),
+        disabled: cant_edit(:order_type)
+      = f.input :external, as: :boolean, label: "External ordering"
 
+  .row
+    .col-12.com-md-10
+      = f.input :multimedia, multiple: true, input_html: { class: "form-control" },
+        wrapper_html: { "data-target" => "service.multimedia" },
+        disabled: cant_edit([multimedia: []]), as: :array
+
+      %a.text-primary{ "data-action" => "click->service#addNewArrayField",
+        "data-wrapper" => "service_multimedia",
+        "data-name" => "service[multimedia[]]",
+        "data-class" => "form-control text optional" } Add additional entry
   = f.association :categories, multiple: true, input_html: { data: { choice: true } },
                   disabled: cant_edit([category_ids: []])
+  = f.association :pc_categories, multiple: true, input_html: { data: { choice: true } },
+                  disabled: cant_edit([pc_category_ids: []]),
+                  collection: Vocabulary.where(type: "PcCategory").child_names.map { |name, pcc| [name, pcc.id] },
+                  label_method: :first, value_method: :second
+  = f.association :resource_organisation, disabled: cant_edit(:resource_organisation_id)
   = f.association :providers, multiple: true, input_html: { data: { choice: true } },
                   disabled: cant_edit([provider_ids: []])
-  = f.association :platforms, multiple: true, input_html: { data: { choice: true } },
+  = f.association :platforms, label: "Platforms (internal)", multiple: true, input_html: { data: { choice: true } },
                   disabled: cant_edit([platform_ids: []])
-  = f.association :research_areas, input_html: { data: { choice: true } }, include_hidden: false,
-                  disabled: cant_edit([research_area_ids: []]),
-                  collection: ResearchArea.child_names.map { |name, ra| [name, ra.id] },
+  = f.input :related_platforms, label: "Related platforms (PC data)", multiple: true,
+    input_html: { class: "form-control" },
+    wrapper_html: { "data-target" => "service.relatedPlatforms" },
+    disabled: cant_edit([related_platforms: []]), as: :array
+
+  %a.text-primary{ "data-action" => "click->service#addNewArrayField",
+    "data-wrapper" => "service_related_platforms",
+    "data-name" => "service[related_platforms[]]",
+    "data-class" => "form-control text optional" } Add additional entry
+  = f.association :scientific_domains, input_html: { data: { choice: true } }, include_hidden: false,
+                  disabled: cant_edit([scientific_domain_ids: []]),
+                  collection: ScientificDomain.child_names.map { |name, sd| [name, sd.id] },
                   label_method: :first, value_method: :second
-  = f.association :target_groups,
+  = f.association :target_users,
                   label: "Dedicated For",
-                  input_html: { data: { choice: true }, class: "target_groups" },
+                  input_html: { data: { choice: true }, class: "target_users" },
                   include_hidden: false,
-                  disabled: cant_edit([target_group_ids: []])
+                  disabled: cant_edit([target_user_ids: []])
+  = f.association :funding_bodies, input_html: { data: { choice: true } },
+                  disabled: cant_edit([funding_body_ids: []])
+  = f.association :funding_programs, input_html: { data: { choice: true } },
+                  disabled: cant_edit([funding_program_ids: []])
+  = f.association :trl, input_html: { data: { choice: true } },
+                  disabled: cant_edit([trl_ids: []])
+  = f.association :life_cycle_status, input_html: { data: { choice: true } },
+                  disabled: cant_edit([life_cycle_status_ids: []])
+  = f.association :access_types, input_html: { data: { choice: true } },
+                  disabled: cant_edit([access_type_ids: []])
+  = f.association :access_modes, input_html: { data: { choice: true } },
+                  disabled: cant_edit([access_mode_ids: []])
+
+  = f.association :required_services, multiple: true, input_html: { data: { choice: true } }
+
+  = f.association :related_services, multiple: true, input_html: { data: { choice: true } }
+
   .row.mt-5
     .col-12.col-md-5
       = f.association :owners, multiple: true, input_html: { data: { choice: true } },
                       disabled: cant_edit([owner_ids: []])
-  .row.service-contact-emails
+  .row.mt-5
     .col-12.col-md-6
-      = f.input :contact_emails, multiple: true, as: :array, wrapper_html: { "data-target" => "service.contactEmails" },
-        disabled: cant_edit([contact_emails: []])
-      %a.text-primary{ "data-action" => "click->service#addNewEmailField" } Add additional email
+      %h3 Main Contact
+      = f.fields_for :main_contact do |main_contact_form|
+        = main_contact_form.hidden_field :id
+        = main_contact_form.input :first_name
+        = main_contact_form.input :last_name
+        = main_contact_form.input :email
+        = main_contact_form.input :organisation
+        = main_contact_form.input :position
+  .row.service-contact-emails{ "data-target": "service.publicContacts" }
+    .col-12.col-md-6
+      %h3 Public contacts
+      = f.fields_for :public_contacts, multiple: true, as: :array,
+        wrapper_html: { "data-target" => "service.publicContact" },
+        disabled: cant_edit([public_contacts: []]) do |public_contact_form|
+        = render "public_contact_fields", public_contact_form: public_contact_form
+      = link_to "Add additional public contact", "#", class: "btn btn-primary",
+        data: { "target": "service.addContact",
+        "action": "click->service#addContact",
+        "fields": f.fields_for(:public_contacts, PublicContact.new,
+        child_index: "new_field") { |public_contact_form| render "public_contact_fields",
+        public_contact_form: public_contact_form } }
   .row.mt-5
     .col-12.col-md-10
       = f.input :order_target, label: "Service Order Target", disabled: cant_edit(:order_target)
 
   .row.mt-5
     .col-12.col-md-5
-      = f.input :places, disabled: cant_edit(:places)
-      = f.input :languages, disabled: cant_edit(:languages)
+      = f.input :language_availability, input_html: { multiple: true, data: { choice: true } }, include_hidden: false,
+      collection: I18nData.languages.map { |k, v| [v, k] }, disabled: cant_edit([language_availability: []])
+      = f.input :geographical_availabilities, as: :select,
+        collection: Country.options.map { |c| [ c.name, "value" => c.alpha2 ] },
+        disabled: cant_edit([geographical_availabilities: []]),
+        input_html: { data: { choice: true },  "multiple" => "true" }
+      = f.input :resource_geographic_locations, as: :select,
+        collection: Country.options.map { |c| [ c.name, "value" => c.alpha2 ] },
+        disabled: cant_edit([resource_geographic_locations: []]),
+        input_html: { data: { choice: true },  "multiple" => "true" }
+  .row.mt-5
+    .col-12.col-md-10
+      = f.input :certifications, multiple: true, input_html: { class: "form-control text optional" },
+        wrapper_html: { "data-target" => "service.certifications" },
+        disabled: cant_edit([certifications: []]), as: :array
+      %a.text-primary{ "data-action" => "click->service#addNewArrayField",
+        "data-wrapper" => "service_certifications",
+        "data-name" => "service[service_certifications[]]",
+        "data-class" => "form-control text optional" } Add new
+      = f.input :standards, multiple: true, input_html: { class: "form-control text optional" },
+        wrapper_html: { "data-target" => "service.standards" },
+        disabled: cant_edit([standards: []]), as: :array
+      %a.text-primary{ "data-action" => "click->service#addNewArrayField",
+        "data-wrapper" => "service_standards",
+        "data-name" => "service[service_standards[]]",
+        "data-class" => "form-control text optional" } Add new
+
+      = f.input :open_source_technologies, multiple: true, input_html: { class: "form-control text optional" },
+        wrapper_html: { "data-target" => "service.openSourceTechnologies" },
+        disabled: cant_edit([open_source_technologies: []]), as: :array
+      %a.text-primary{ "data-action" => "click->service#addNewArrayField",
+        "data-wrapper" => "service_open_source_technologies",
+        "data-name" => "service[service_open_source_technologies[]]",
+        "data-class" => "form-control text optional" } Add new
+      = f.input :grant_project_names, input_html: { class: "form-control text optional" },
+        wrapper_html: { "data-target" => "service.grantProjectNames" },
+        disabled: cant_edit([grant_project_names: []]), as: :array
+      %a.text-primary{ "data-action" => "click->service#addNewArrayField",
+        "data-wrapper" => "service_grant_project_names",
+        "data-name" => "service[service_grant_project_names[]]",
+        "data-class" => "form-control text optional" } Add new
+  .row.service-changelog
+    .col-12.col-md-10
+      = f.input :changelog, multiple: true, as: :array, disabled: cant_edit([changelog: []]),
+       wrapper_html: { "data-target" => "service.changelog" },
+       input_html: { class: "form-control text optional" }
+
+      %a.text-primary{ "data-action" => "click->service#addNewArrayField",
+        "data-wrapper" => "service_changelog",
+        "data-name" => "service[changelog[]]",
+        "data-class" => "form-control text optional" } Add new
   .row
     .col-12.col-md-10
       = f.input :terms_of_use_url, disabled: cant_edit(:terms_of_use_url)
       = f.input :access_policies_url, disabled: cant_edit(:access_policies_url)
+      = f.input :privacy_policy_url, disabled: cant_edit(:privacy_policy_url)
       = f.input :sla_url, disabled: cant_edit(:sla_url)
+      = f.input :use_cases_url, multiple: true, as: :array, input_html: { class: "form-control text optional" },
+        wrapper_html: { "data-target" => "service.useCasesUrl" },
+        disabled: cant_edit([use_cases_url: []])
+      %a.text-primary{ "data-action" => "click->service#addNewArrayField",
+        "data-wrapper" => "service_use_cases_url",
+        "data-name" => "service[service_use_cases_url[]]",
+        "data-class" => "form-control text optional" } Add new
       = f.input :webpage_url, disabled: cant_edit(:webpage_url)
       = f.input :manual_url, disabled: cant_edit(:manual_url)
       = f.input :helpdesk_url, disabled: cant_edit(:helpdesk_url)
       = f.input :helpdesk_email, input_html: { type: "text" }, disabled: cant_edit(:helpdesk_email)
-      = f.input :tutorial_url, disabled: cant_edit(:tutorial_url)
+      = f.input :security_contact_email, input_html: { type: "text" }, disabled: cant_edit(:security_contact_email)
+      = f.input :training_information_url, disabled: cant_edit(:training_information_url)
+      = f.input :status_monitoring_url, disabled: cant_edit(:status_monitoring_url)
+      = f.input :maintenance_url, disabled: cant_edit(:maintenance_url)
+      = f.input :order_url, disabled: cant_edit(:order_url)
+      = f.input :payment_model_url, disabled: cant_edit(:payment_model_url)
+      = f.input :pricing_url, disabled: cant_edit(:pricing_url)
   .row
     .col-12.col-md-5
-      = f.input :phase, collection: Service.phases.values.map(&:to_sym), disabled: cant_edit(:phase)
       = f.input :restrictions, disabled: cant_edit(:restrictions)
   .row.service-activate-message
     .col-12.col-md-10
@@ -89,8 +214,6 @@
         name: "commit",
         value: "Preview",
         class: "btn btn-primary pl-5 pr-5 mr-5"
-      = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5",
-        "data-action": "click->service#clearEmptyEmails"
+      = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5"
       = back_link_to "Cancel and back to previous page", service, prefix: :backoffice,
         class: "text-left flex-grow-1 text-uppercase"
-

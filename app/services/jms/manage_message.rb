@@ -12,6 +12,7 @@ class Jms::ManageMessage
 
   def call
     body = JSON.parse(@message.body)
+    action = @message.headers["destination"].split(".").last
     log body
     resource = @parser.parse(body["resource"])
 
@@ -19,12 +20,19 @@ class Jms::ManageMessage
 
     case body["resourceType"]
     when "infra_service"
-      if resource["infraService"]["latest"]
-        Service::PcCreateOrUpdate.new(resource["infraService"], @eic_base_url, @logger).call
+      modified_at = modified_at(resource, "infraService")
+      if action != "delete" && resource["infraService"]["latest"]
+        Service::PcCreateOrUpdateJob.perform_later(resource["infraService"]["service"],
+                                                   @eic_base_url,
+                                                   resource["infraService"]["active"],
+                                                   modified_at)
+
+      elsif action == "delete"
+        Service::DeleteJob.perform_later(resource["infraService"]["service"]["id"])
       end
     when "provider"
-      if resource["provider"]["active"]
-        Provider::PcCreateOrUpdate.new(resource["provider"], @logger).call
+      if resource["providerBundle"]["active"]
+        Provider::PcCreateOrUpdateJob.perform_later(resource["providerBundle"]["provider"])
       end
     else
       log @message
@@ -32,6 +40,11 @@ class Jms::ManageMessage
   end
 
   private
+    def modified_at(resource, resource_type)
+      metadata  = resource[resource_type]["metadata"]
+      Time.at(metadata["modifiedAt"].to_i&./1000)
+    end
+
     def log(msg)
       @logger.info(msg)
     end

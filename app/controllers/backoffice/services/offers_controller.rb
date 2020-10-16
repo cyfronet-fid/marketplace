@@ -32,7 +32,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   def update
     template = permitted_attributes(Offer.new)
     if Offer::Update.new(@offer, update_blank_parameters(template)).call
-      redirect_to backoffice_service_path(@service, @offer),
+      redirect_to backoffice_service_path(@service),
                   notice: "Offer updated correctly"
     else
       render :edit, status: :bad_request
@@ -54,7 +54,11 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
 
     def offer_template
       temp = update_blank_parameters(permitted_attributes(Offer))
-      Offer.new(temp.merge(service: @service, status: :draft))
+      if @service.offers_count.positive?
+        Offer.new(temp.merge(service: @service, status: :draft))
+      else
+        Offer.new(temp.merge(service: @service, status: :published))
+      end
     end
 
     def update_blank_parameters(template)

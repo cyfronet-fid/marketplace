@@ -3,106 +3,161 @@
 require "mini_magick"
 
 class Service::PcCreateOrUpdate
+  class ConnectionError < StandardError
+    def initialize(msg)
+      super(msg)
+    end
+  end
+
   def initialize(eic_service,
                  eic_base_url,
-                 logger,
+                 is_active,
+                 modified_at,
                  unirest: Unirest)
-    @logger = logger
     @unirest = unirest
     @eic_base_url = eic_base_url
     @eid = eic_service["id"]
-    @phase_mapping = {
-        "trl-7" => "beta",
-        "trl-8" => "production",
-        "trl-9" => "production"
-    }
-    @best_effort_category_mapping = {
-        "storage": "Storage",
-        "training": "Training & Support",
-        "security": "Security & Operations",
-        "analytics": "Processing & Analysis",
-        "data": "Data management",
-        "compute": "Compute",
-        "networking": "Networking",
-    }.stringify_keys
     @eic_service =  eic_service
-    @is_active = @eic_service["active"]
+    @is_active = is_active
+    @modified_at = modified_at
   end
 
   def call
     service = map_service(@eic_service)
     mapped_service = Service.joins(:sources).find_by("service_sources.source_type": "eic",
                                                      "service_sources.eid": @eid)
+    source_id = mapped_service.nil? ? nil : ServiceSource.find_by("service_id": mapped_service.id, "source_type": "eic")&.id
+
+    is_newer_update = mapped_service&.synchronized_at.present? ? (@modified_at > mapped_service.synchronized_at) : true
+
+    url = service[:order_url] || service[:webpage_url] || ""
+
     if mapped_service.nil? && @is_active
       service = Service.new(service)
-      save_logo(service, @eic_service["symbol"])
+      save_logo(service, @eic_service["logo"])
 
       if service.save!
-        log "Created new service: #{service.id}"
         ServiceSource.create!(service_id: service.id, source_type: "eic", eid: @eid)
-        service.offers.create!(name: "Offer", description: "#{service.title} Offer",
-                               offer_type: "open_access",
-                               webpage: service.webpage_url, status: service.status)
+        if url.present? || service.order_type=="order_required"
+          service.offers.create!(name: "Offer",
+                                 description: "#{service.name} Offer",
+                                 order_type: service.order_type,
+                                 external: service[:order_url].present? && service.order_type=="order_required",
+                                 webpage: url, status: "published")
+        else
+          Rails.logger.warn "[WARNING] Offer cannot be created, because url is empty"
+        end
       end
       service
-    elsif mapped_service && !@is_active
-      Service::Draft.new(mapped_service).call
-      log "Draft service: #{mapped_service.id}"
-      mapped_service
+    elsif is_newer_update
+      if mapped_service && !@is_active
+        Service::Draft.new(mapped_service).call
+        update_offer(mapped_service, url)
+        mapped_service
+      elsif !source_id.nil? && mapped_service.upstream_id == source_id
+        save_logo(mapped_service, @eic_service["logo"])
+        mapped_service.update!(service)
+        update_offer(mapped_service, url)
+        mapped_service
+      else
+        mapped_service
+      end
     else
-      save_logo(mapped_service, @eic_service["symbol"])
-      mapped_service.update!(service)
-      log "Service with id: #{mapped_service.id} successfully updated"
       mapped_service
     end
   end
 
   private
     def map_service(data)
-      { title: data["name"],
-        description: [ReverseMarkdown.convert(data["description"],
+      main_contact = MainContact.new(map_contact(data["mainContact"])) if data["mainContact"] || nil
+      providers = Array(data.dig("resourceProviders", "resourceProvider"))
+      scientific_domains = [data.dig("scientificDomains", "scientificDomain", "scientificSubdomain")]
+      categories = [data.dig("categories", "category", "subcategory")]
+
+      { name: data["name"],
+        pid: @eid,
+        description: ReverseMarkdown.convert(data["description"],
                                              unknown_tags: :bypass,
                                              github_flavored: false),
-                      data["options"],
-                      data["userValue"],
-                      data["userBase"]].join("\n"),
         tagline: data["tagline"].blank? ? "NO IMPORTED TAGLINE" : data["tagline"],
-        places: map_places(data["places"]["place"]) || "World",
-        languages: data["languages"]["language"] || "English",
-        dedicated_for: [],
-        terms_of_use_url: data["termsOfUse"]["termOfUse"] || "",
-        access_policies_url: data["price"],
-        sla_url: data["serviceLevelAgreement"] || "",
-        webpage_url: data["url"] || "",
+        tag_list: Array(data.dig("tags", "tag")) || [],
+        language_availability: Array(data.dig("languageAvailabilities", "languageAvailability")).
+            map { |lang| lang.upcase } || ["EN"],
+        geographical_availabilities: Array(data.dig("geographicalAvailabilities", "geographicalAvailability") || "WW"),
+        resource_geographic_locations: Array(data.dig("resourceGeographicLocations", "resourceGeographicLocation")) || [],
+        target_users: Array(map_target_users(data.dig("targetUsers", "targetUser"))) || [],
+        order_type: map_order_type(data["orderType"]),
+        order_url: data["order"] || "",
+        external: data["order"].present? && map_order_type(data["orderType"])=="order_required",
+        main_contact: main_contact,
+        public_contacts: Array.wrap(data.dig("publicContacts", "publicContact")).
+            map { |c| PublicContact.new(map_contact(c)) } || [],
+        privacy_policy_url: data["privacyPolicy"] || "",
+        use_cases_url: Array(data.dig("useCases", "useCase") || []),
+        multimedia: Array(data.dig("multimedia", "multimedia")) || [],
+        terms_of_use_url: data["termsOfUse"] || "",
+        access_policies_url: data["accessPolicy"],
+        sla_url: data["serviceLevel"] || "",
+        webpage_url: data["webpage"] || "",
         manual_url: data["userManual"] || "",
-        helpdesk_url: data["helpdesk"] || "",
-        tutorial_url: data["trainingInformation"] || "",
-        phase: map_phase(data["trl"]),
-        service_type: "open_access",
-        status: "published",
-        providers: [map_provider(data["providers"]["provider"])],
-        categories: map_category(data["category"]),
-        research_areas: [research_area_other],
-        version: data["version"] || ""
+        helpdesk_url: data["helpdeskPage"] || "",
+        helpdesk_email: data["helpdeskEmail"] || "",
+        security_contact_email: data["securityContactEmail"] || "",
+        training_information_url: data["trainingInformation"] || "",
+        status_monitoring_url: data["statusMonitoring"] || "",
+        maintenance_url: data["maintenance"] || "",
+        payment_model_url: data["paymentModel"] || "",
+        pricing_url: data["pricing"] || "",
+        trl: Trl.where(eid: data["trl"]),
+        required_services: map_related_services(Array(data.dig("requiredResources", "requiredResource"))),
+        related_services: map_related_services(Array(data.dig("relatedResources", "relatedResource"))),
+        life_cycle_status: LifeCycleStatus.where(eid: data["lifeCycleStatus"]),
+        access_types: AccessType.where(eid: Array(data.dig("accessTypes", "accessType"))),
+        access_modes: AccessMode.where(eid: Array(data.dig("accessModes", "accessMode"))),
+        status: "unverified",
+        funding_bodies: map_funding_bodies(data.dig("fundingBody", "fundingBody")),
+        funding_programs: map_funding_programs(data.dig("fundingPrograms", "fundingProgram")),
+        changelog: Array(data.dig("changeLog", "changeLog")),
+        certifications: Array(data.dig("certifications", "certification")),
+        standards: Array(data.dig("standards", "standard")),
+        open_source_technologies: Array(data.dig("openSourceTechnologies", "openSourceTechnology")),
+        grant_project_names: Array(data.dig("grantProjectNames", "grantProjectName")),
+        resource_organisation: map_provider(data["resourceOrganisation"]),
+        providers: providers.map { |p| map_provider(p) },
+        related_platforms: Array(data.dig("relatedPlatforms", "relatedPlatform")) || [],
+        pc_categories: map_pc_categories(categories) || [],
+        scientific_domains: map_scientific_domains(scientific_domains),
+        version: data["version"] || "",
+        last_update: data["lastUpdate"].present? ? Time.at(data["lastUpdate"].to_i) : nil,
+        synchronized_at: @modified_at
       }
+    end
+
+    def update_offer(mapped_service, url)
+      if mapped_service.offers_count == 1
+        mapped_service.offers.first.update!(order_type: mapped_service.order_type,
+                                            external: mapped_service.external,
+                                            webpage: url, status: "published")
+      end
+    end
+
+    def map_target_users(target_users)
+      TargetUser.where(eid: target_users)
     end
 
     def map_provider(prov_eid)
       mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eic",
                                                          "provider_sources.eid": prov_eid)
-
       if mapped_provider.nil?
-        begin
-          prov = @unirest.get("#{@eic_base_url}/api/provider/#{prov_eid}",
-                              headers: { "Accept" => "application/json" })
-        rescue Errno::ECONNREFUSED
-          abort("\n Exited with errors - could not connect to #{@eic_base_url}\n")
-        end
+        prov = @unirest.get("#{@eic_base_url}/api/provider/#{prov_eid}",
+                            headers: { "Accept" => "application/json" })
 
         if prov.code != 200
-          abort("\n Exited with errors - could not fetch data (code: #{prov.code})\n")
+          raise Service::PcCreateOrUpdate::ConnectionError
+            .new("Cannot connect to: #{@eic_base_url}. Received status #{prov.code}")
         end
-        provider  = Provider.create!(name: prov.body["name"])
+
+        provider  = Provider.find_or_create_by(name: prov.body["name"])
         ProviderSource.create!(provider_id: provider.id, source_type: "eic", eid: prov_eid)
         provider
       else
@@ -111,65 +166,58 @@ class Service::PcCreateOrUpdate
     end
 
     def save_logo(service, image_url)
-      begin
-        logo = open(image_url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
-        logo_content_type = logo.content_type
+      logo = open(image_url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
+      logo_content_type = logo.content_type
 
-        if logo_content_type == "image/svg+xml"
-          img = MiniMagick::Image.read(logo, ".svg")
-          img.format "png" do |convert|
-            convert.args.unshift "800x800"
-            convert.args.unshift "-resize"
-            convert.args.unshift "1200"
-            convert.args.unshift "-density"
-            convert.args.unshift "none"
-            convert.args.unshift "-background"
-          end
-
-          logo = StringIO.new
-          logo.write(img.to_blob)
-          logo.seek(0)
-          logo_content_type = "image/png"
-          logo
+      if logo_content_type == "image/svg+xml"
+        img = MiniMagick::Image.read(logo, ".svg")
+        img.format "png" do |convert|
+          convert.args.unshift "800x800"
+          convert.args.unshift "-resize"
+          convert.args.unshift "1200"
+          convert.args.unshift "-density"
+          convert.args.unshift "none"
+          convert.args.unshift "-background"
         end
-      rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, SocketError => e
-        log "\nERROR - there was a problem processing image for #{@eid} #{image_url}: #{e}\n"
-      rescue => e
-        log "\nERROR - there was a unexpected problem processing image for #{@eid} #{image_url}: #{e}\n"
-      end
 
-      unless logo.nil?
+        logo = StringIO.new
+        logo.write(img.to_blob)
+        logo.seek(0)
+        logo_content_type = "image/png"
+      end
+      if !logo.blank? && logo_content_type.start_with?("image")
         service.logo.attach(io: logo, filename: @eid, content_type: logo_content_type)
       end
+    rescue OpenURI::HTTPError => e
+      Rails.logger.warn "[WARNING] Cannot attach logo. #{e.message}"
     end
 
-    def map_phase(phase)
-      @phase_mapping[phase] || "discovery"
+    def map_pc_categories(categories)
+      PcCategory.where(eid: categories)
     end
 
-    def map_category(category)
-      if @best_effort_category_mapping[category]
-        [Category.find_by!(name: @best_effort_category_mapping[category])]
-      else
-        []
-      end
+    def map_scientific_domains(domains)
+      ScientificDomain.where(eid: domains)
     end
 
-    def research_area_other
-      ResearchArea.find_by!(name: "Other")
+    def map_contact(contact)
+      contact&.transform_keys { |k| k.to_s.underscore } || nil
     end
 
-    def map_places(place)
-      if place == "WW"
-        "World"
-      elsif place == "EU"
-        "Europe"
-      else
-        ISO3166::Country.search(place).name
-      end
+    def map_related_services(services)
+      Service.joins(:sources).where("service_sources.source_type": "eic",
+                              "service_sources.eid": services)
     end
 
-    def log(msg)
-      @logger.info(msg)
+    def map_funding_bodies(funding_bodies)
+      FundingBody.where(eid: funding_bodies)
+    end
+
+    def map_funding_programs(funding_programs)
+      FundingProgram.where(eid: funding_programs)
+    end
+
+    def map_order_type(order_type)
+      order_type.gsub("order_type-", "") unless order_type.blank?
     end
 end

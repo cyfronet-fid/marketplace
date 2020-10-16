@@ -11,7 +11,7 @@ class Executive::StatisticsController < Executive::ApplicationController
     @providers = report.providers
     @providers_count = @providers.size
 
-    @disciplines = report.disciplines
+    @disciplines = report.domains
     @disciplines_count = @disciplines.size
 
     @countries = report.countries

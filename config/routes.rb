@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
   get "/robots.txt" => "home#robots"
 
-  resources :services, only: [:index, :show] do
+  resources :services, only: [:index, :show], constraints: { id: /[^\/]+/ } do
     scope module: :services do
       resource :offers, only: [:show, :update]
       resource :configuration, only: [:show, :update]
@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resource :cancel, only: :destroy
       resource :question, only: [:new, :create], constraints: lambda { |req| req.format == :js }
       resources :opinions, only: :index
+      resources :details, only: :index
     end
   end
 
@@ -57,7 +58,7 @@ Rails.application.routes.draw do
 
   resource :backoffice, only: :show
   namespace :backoffice do
-    resources :services do
+    resources :services, constraints: { id: /[^\/]+/ } do
       scope module: :services do
         resource :logo_preview, only: :show
         resources :offers
@@ -73,7 +74,7 @@ Rails.application.routes.draw do
     end
     get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
     get "services/c/:category_id" => "services#index", as: :category_services
-    resources :research_areas
+    resources :scientific_domains
     resources :categories
     resources :providers
     resources :platforms
@@ -115,6 +116,7 @@ Rails.application.routes.draw do
   get "errors/internal_server_error"
   match "about", to: "pages#about", via: "get", as: :about
   match "providers", to: "pages#providers", via: "get", as: :providers
+  match "target_users", to: "pages#target_users", via: "get", as: :target_users
   match "communities", to: "pages#communities", via: "get", as: :communities
   match "about_projects", to: "pages#about_projects", via: "get", as: :about_projects
 

@@ -42,7 +42,7 @@ RSpec.feature "Service searching in top bar", js: true do
 
   scenario "redirect when selecting service_id by autocomplete controller", js: true, search: true do
     service = create(:service)
-    fill_in "q", with: service.title
+    fill_in "q", with: service.name
     find(:css, "li[id='-option-0']").click
     expect(current_path).to eq(service_path(service))
   end
@@ -54,9 +54,9 @@ RSpec.feature "Service searching in top bar", js: true do
   end
 
   scenario "After starting searching autocomplete are shown", js: true, search: true do
-    create(:service, title: "DDDD Something 1")
-    create(:service, title: "DDDD Something 2")
-    create(:service, title: "DDDD Something 3")
+    create(:service, name: "DDDD Something 1")
+    create(:service, name: "DDDD Something 2")
+    create(:service, name: "DDDD Something 3")
 
     visit services_path
 
@@ -68,11 +68,11 @@ RSpec.feature "Service searching in top bar", js: true do
   end
 
   scenario "After starting searching autocomplete not show draft offers", js: true, search: true do
-    service = create(:service, title: "DDDD Something 1")
+    service = create(:service, name: "DDDD Something 1")
     create(:offer, name: "DDDD Something offer 1", service: service, status: :draft)
     create(:offer, name: "DDDD Something offer 2", service: service, status: :draft)
-    create(:service, title: "DDDD Something 2")
-    create(:service, title: "DDDD Something 3")
+    create(:service, name: "DDDD Something 2")
+    create(:service, name: "DDDD Something 3")
     Offer.reindex
 
     visit services_path
@@ -87,11 +87,11 @@ RSpec.feature "Service searching in top bar", js: true do
   end
 
   scenario "After starting searching autocomplete are shown with published offers", js: true, search: true do
-    service = create(:service, title: "DDDD Something 1")
+    service = create(:service, name: "DDDD Something 1")
     create(:offer, name: "DDDD Something offer 1", service: service)
     create(:offer, name: "DDDD Something offer 2", service: service)
-    create(:service, title: "DDDD Something 2")
-    create(:service, title: "DDDD Something 3")
+    create(:service, name: "DDDD Something 2")
+    create(:service, name: "DDDD Something 3")
     Offer.reindex
 
     visit services_path

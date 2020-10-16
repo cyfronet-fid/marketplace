@@ -4,8 +4,8 @@ class Offer < ApplicationRecord
   include Offerable
   include Offer::Parameters
 
-  searchkick word_middle: [:name, :description],
-            highlight: [:name, :description]
+  searchkick word_middle: [:offer_name, :description],
+            highlight: [:offer_name, :description]
 
   STATUSES = {
     published: "published",
@@ -14,10 +14,10 @@ class Offer < ApplicationRecord
 
   def search_data
     {
-      name: name,
+      offer_name: name,
       description: description,
       service_id: service_id,
-      offer_type: offer_type
+      order_type: order_type
     }
   end
 
@@ -41,22 +41,21 @@ class Offer < ApplicationRecord
   validates :service, presence: true
   validates :iid, presence: true, numericality: true
   validates :status, presence: true
-  validates :webpage, presence: true, mp_url: true, unless: :orderable?
 
   def to_param
     iid.to_s
   end
 
   def open_access?
-    offer_type == "open_access"
+    order_type == "open_access" || order_type == "fully_open_access"
+  end
+
+  def order_required?
+    order_type == "order_required"
   end
 
   def orderable?
-    offer_type == "orderable"
-  end
-
-  def external?
-    offer_type == "external"
+    order_required? && !external?
   end
 
   private

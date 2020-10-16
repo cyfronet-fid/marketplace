@@ -8,20 +8,20 @@ class ServiceMailer < ApplicationMailer
     @email = email
 
     mail(to: recipient_email,
-         subject: "Question about #{@service.title} service",
+         subject: "Question about #{@service.name} service",
          template_name: "new_question")
   end
 
-  def new_service(service, common_categories, common_research_areas, subscriber_email)
+  def new_service(service, common_categories, common_scientific_domains, subscriber_email)
     @service = service
     @common_categories = common_categories
-    @common_research_areas = common_research_areas
+    @common_scientific_domains = common_scientific_domains
     if @service.logo.attached?
       attachments.inline["logo.png"] = File.read(ActiveStorage::Blob.service.send(:path_for, @service.logo.key))
     end
     interests = []
     interests << ("categories" if @common_categories.present?) <<
-        ("research areas" if @common_research_areas.present?)
+        ("scientific domains" if @common_scientific_domains.present?)
     subject = "New service in your #{interests.join(" and ")} of interests"
     mail(to: subscriber_email,
          subject: subject,

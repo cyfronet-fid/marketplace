@@ -3,10 +3,10 @@
 class Filter::OrderType < Filter
   def initialize(params = {})
     super(params: params.fetch(:params, {}),
-          field_name: "service_type",
+          field_name: "order_type",
           title: "Order type",
           type: :select,
-          index: "service_type")
+          index: "order_type")
   end
 
   protected
@@ -14,8 +14,9 @@ class Filter::OrderType < Filter
       [
           { name: "Any", id: "" },
           { name: "Open Access", id: "open_access" },
-          { name: "Internal ordering", id: "orderable" },
-          { name: "External ordering", id: "external" }
+          { name: "Fully open access", id: "fully_open_access" },
+          { name: "Order required", id: "order_required" },
+          { name: "Other", id: "other" }
       ]
     end
 

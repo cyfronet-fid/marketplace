@@ -21,15 +21,15 @@ module Service::Searchable
                                     per_page: per_page,
                                     order: ordering,
                                     highlight: { tag: "<mark>" },
-                                    scope_results: ->(r) { r.includes(:research_areas, :providers, :target_groups, :offers).with_attached_logo }))
+                                    scope_results: ->(r) { r.includes(:scientific_domains, :providers, :target_users, :offers).with_attached_logo }))
+
     offers = Offer.search(query,
                           where: { service_id: services.results.map(&:id) },
                           load: false,
-                          fields: [:name],
+                          fields: [:offer_name],
                           operator: :or,
                           match: :word_middle,
                           highlight: { tag: "<mark>" })
-
     [services, service_offers(services, offers)]
   end
 
@@ -73,7 +73,7 @@ module Service::Searchable
 
     def common_params
       {
-          fields: [ "title^7", "tagline^3", "description", "offer_names"],
+          fields: [ "name^7", "tagline^3", "description", "offer_names"],
           operator: "or",
           match: :word_middle
       }
@@ -124,9 +124,9 @@ module Service::Searchable
 
     def filter_classes
       [
-          Filter::ResearchArea,
+          Filter::ScientificDomain,
           Filter::Provider,
-          Filter::TargetGroup,
+          Filter::TargetUser,
           Filter::Platform,
           Filter::Rating,
           Filter::OrderType,

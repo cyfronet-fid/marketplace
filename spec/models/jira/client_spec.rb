@@ -24,7 +24,7 @@ describe Jira::Client do
     user = create(:user, first_name: "John", last_name: "Doe", uid: "uid1")
     project_item = create(:project_item,
           offer: create(:offer, name: "off1", service: create(:service,
-                                                        title: "s1",
+                                                              name: "s1",
                                                         categories: [create(:category, name: "cat1")])),
           project: create(:project, user: user, name: "My Secret Project",
                           user_group_name: "New user group", reason_for_access: "some reason"),
@@ -76,7 +76,7 @@ describe Jira::Client do
                          }
                        }.to_json,
                        "SO-ServiceOrderTarget-1" => "",
-                       "SO-OfferType-1" => { "id" => "20005" } }
+                       "SO-OfferType-1" => { "id" => "20007" } }
 
     issue = double(:Issue)
     expect(issue).to receive("save").with(fields: expected_fields).and_return(true)
@@ -95,7 +95,7 @@ describe Jira::Client do
                                         name: "off1",
                                         service: create(:open_access_service,
                                                         order_target: "email@domain.com",
-                                                        title: "s1",
+                                                        name: "s1",
                                                         categories: [create(:category, name: "cat1")])),
                           project: create(:project, user: user,
                                           name: "My Secret Project",
@@ -139,7 +139,7 @@ describe Jira::Client do
                                         name: "off1",
                                         voucherable: true,
                                         service: create(:open_access_service,
-                                                                 title: "s1",
+                                                        name: "s1",
                                                                  categories: [create(:category, name: "cat1")])),
                           voucher_id: "123123",
                           project: create(:project, user: user,
@@ -183,8 +183,8 @@ describe Jira::Client do
                                         name: "off1",
                                         voucherable: true,
                                         service: create(:open_access_service,
-                                                                 title: "s1",
-                                                                 categories: [create(:category, name: "cat1")])),
+                                                        name: "s1",
+                                                        categories: [create(:category, name: "cat1")])),
                           request_voucher: true,
                           project: create(:project, user: user, name: "My Secret Project",
                                           user_group_name: "New user group", reason_for_access: "Some reason"))
@@ -228,7 +228,7 @@ describe Jira::Client do
                      department: "dep",
                      webpage: "http://dep-wwww.pl",
                      organization: "org",
-                     research_areas: [create(:research_area, name: "My RA")])
+                     scientific_domains: [create(:scientific_domain, name: "My RA")])
 
     expected_fields = { summary: "Project, John Doe, My Secret Project",
                         project: { key: "MP" },
@@ -274,7 +274,7 @@ describe Jira::Client do
                      webpage: "http://dep-wwww.pl",
                      organization: "org",
                      issue_id: "1234",
-                     research_areas: [create(:research_area, name: "My RA")])
+                     scientific_domains: [create(:scientific_domain, name: "My RA")])
 
     issue = double(:Issue)
     expected_updated_fields = { summary: "Project, John Doe, My Updated Project Name",

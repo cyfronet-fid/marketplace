@@ -1,6 +1,6 @@
 = render "service_details", service: service, highlights: highlights[service.id],
   service_offers: filtered_offers(offers[service.id]), comparison_enabled: comparison_enabled do
-  = link_to highlighted_for(:title, service, highlights[service.id]),
+  = link_to highlighted_for(:name, service, highlights[service.id]),
     service_path(service, category.present? ? { fromc: category.slug } : nil)
   - content_for :checkbox do
     .mt-3.compare

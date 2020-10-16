@@ -17,12 +17,12 @@
           %th.title-col
             .logo-wrapper
               %span.helper
-              - if service.logo.attached?
+              - if service.logo.attached? && service.logo.variable?
                 = image_tag service.logo.variant(resize: "100x100")
             = link_to comparisons_services_path(slug: service.slug, fromc: params[:fromc]), method: :delete do
               %i.far.fa-trash-alt
             .service-title
-              = link_to service.title.truncate(30, separator: " "),
+              = link_to service.name.truncate(30, separator: " "),
               service_path(service, fromc: params[:fromc], comp_link: true)
             .service-description
               = service.description.truncate(80, separator: " ")
@@ -39,30 +39,35 @@
           %td
             - service.offers.each_with_index do |offer, idx|
               %span{ "data-toggle": "tootltip",
-                     "title": "#{t("project_items.offer_type.#{offer.offer_type}.tooltip")}" }
-                = t("offers.type.#{offer.offer_type}")
+                     "title": "#{t("project_items.offer_type.#{map_view_to_order_type(offer)}.tooltip")}" }
+                = t("offers.type.#{map_view_to_order_type(offer)}")
                 - unless service.offers.length == idx+1
                   %br
       %tr
-        %th Research area
+        %th Scientific domain
         - @services.each do |service|
-          %td= service.research_areas.map { |ra| ra.name }.join(", ")
+          %td= service.scientific_domains .map { |sd| sd.name }.join(", ")
       %tr.lightgrey-row
         %th Dedicated for
         - @services.each do |service|
-          %td= service.target_groups.map { |tg| tg.name }.join(", ")
+          %td= service.target_users.map { |tg| tg.name }.join(", ")
       %tr
-        %th Service phase
+        %th Service life cycle status
         - @services.each do |service|
-          %td= t("services.about.sidebar.fields.phase.#{service.phase}") if service.phase.present?
+          - if service.life_cycle_status.present?
+            %td= t("services.about.sidebar.fields.life_cycle_status.#{service.life_cycle_status.name}")
       %tr.lightgrey-row
-        %th Places
+        %th Geographical availabilities
         - @services.each do |service|
-          %td= service.places
+          %td= service.geographical_availabilities.join(", ")
       %tr
         %th Languages
         - @services.each do |service|
-          %td= service.languages
+          %td
+            %ul
+            - service.language_availability.each do |language|
+              %li= language
+
       %tr.lightgrey-row
         %th Tags
         - @services.each do |service|

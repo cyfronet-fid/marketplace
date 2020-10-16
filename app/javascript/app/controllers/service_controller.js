@@ -2,27 +2,59 @@ import { Controller } from "stimulus"
 
 
 export default class extends Controller {
-  static targets = ["contactEmails"]
+  static targets = ["array", "input", "publicContacts", "publicContact",
+    "destroy", "addContact", "multimedia", "changelog", "grantProjectNames",
+    "certifications", "standards", "openSourceTechnologies", "useCasesUrl",
+    "relatedPlatforms"]
 
   initialize(){
   }
 
-  addNewEmailField(event) {
+  addNewArrayField(event) {
+    console.log(event)
     event.preventDefault()
-    var lastEmailField = document.createElement("input")
-    var parent = this.contactEmailsTarget
-    lastEmailField.type = "email"
-    lastEmailField.name = "service[contact_emails][]"
-    lastEmailField.id = "service_contact_emails_"+(parent.children.length - 1)
+    const lastArrayField = document.createElement("textarea")
+    const parent_name = event.target.dataset.wrapper
+    const parent = document.getElementsByClassName(parent_name)[0]
 
-    parent.appendChild(lastEmailField)
+    lastArrayField.name = event.target.dataset.name
+    lastArrayField.id = parent_name + "_" + (parent.children.length - 1)
+    lastArrayField.classList = event.target.dataset.class
+
+    parent.appendChild(lastArrayField)
   }
 
-  clearEmptyEmails(event){
-    for (let i = 0; i < this.contactEmailsTarget.childElementCount; i++) {
-      var el = this.contactEmailsTarget.children[i]
-      if(el.type === "email" && !el.value)
-        this.contactEmailsTarget.children[i].remove()
+  _clearEmptyFields(target){
+    for (let i = 0; i < target.childElementCount; i++) {
+      var el = target.children[i]
+      if(!el.value) {
+        target.children[i].remove()
+        i = i - 1
+      }
     }
+  }
+
+  addContact(event){
+    event.preventDefault();
+    event.target.insertAdjacentHTML('beforebegin',
+        event.target.dataset.fields.replace(/new_field/g, this.publicContactTargets.length));
+  }
+
+  removeContact(event){
+    event.preventDefault();
+    event.target.parentElement.previousElementSibling.value = "true";
+    event.target.closest(".contact").classList.add("d-none");
+  }
+
+  onSubmit(event) {
+    this._clearEmptyFields(this.multimediaTarget)
+    this._clearEmptyFields(this.changelogTarget)
+    this._clearEmptyFields(this.certificationsTarget)
+    this._clearEmptyFields(this.standardsTarget)
+    this._clearEmptyFields(this.openSourceTechnologiesTarget)
+    this._clearEmptyFields(this.grantProjectNamesTarget)
+    this._clearEmptyFields(this.useCasesUrlTarget)
+    this._clearEmptyFields(this.relatedPlatformsTarget)
+    this.element.submit();
   }
 }

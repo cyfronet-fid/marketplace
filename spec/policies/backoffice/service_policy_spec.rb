@@ -16,20 +16,40 @@ RSpec.describe Backoffice::ServicePolicy do
   context "permitted_attributes" do
     it "should return attrs if service has no upstream or is not persisted" do
       policy = described_class.new(service_owner, create(:service))
-      expect(policy.permitted_attributes).to eq([
-                                                    :title, :description,
-                                                    :tagline, :service_type,
-                                                    [provider_ids: []], :places, :languages,
-                                                    [target_group_ids: []], :terms_of_use_url,
+      expect(policy.permitted_attributes).to match_array([
+                                                    :name, :description,
+                                                    :tagline, :order_type,
+                                                    [multimedia: []],
+                                                    [provider_ids: []], [geographical_availabilities: []],
+                                                    [language_availability: []], [resource_geographic_locations: []],
+                                                    [target_user_ids: []], :terms_of_use_url,
                                                     :access_policies_url, :sla_url,
                                                     :webpage_url, :manual_url, :helpdesk_url,
-                                                    :helpdesk_email, :tutorial_url, :restrictions,
-                                                    :phase, :order_target,
-                                                    :activate_message, :logo,
-                                                    [contact_emails: []], [research_area_ids: []],
-                                                    [platform_ids: []], :tag_list, [category_ids: []],
+                                                    :privacy_policy_url, [use_cases_url: []],
+                                                    [funding_body_ids: []],
+                                                    [funding_program_ids: []],
+                                                    [access_type_ids: []], [access_mode_ids: []],
+                                                    [certifications: []], [standards: []],
+                                                    [grant_project_names: []], [open_source_technologies: []],
+                                                    [changelog: []],
+                                                    :helpdesk_email, :security_contact_email,
+                                                    :training_information_url, :restrictions,
+                                                    :order_target, :status_monitoring_url, :maintenance_url,
+                                                    :order_url, :payment_model_url, :pricing_url,
+                                                    [related_service_ids: []], [required_service_ids: []],
+                                                    [manual_related_service_ids: []],
+                                                    :activate_message, :logo, [trl_ids: []], [life_cycle_status_ids: []],
+                                                    [scientific_domain_ids: []],
+                                                    [platform_ids: []], [related_platforms: []],
+                                                    :tag_list, [category_ids: []], [pc_category_ids: []],
                                                     [owner_ids: []], :status, :upstream_id, :version,
-                                                    sources_attributes: [:id, :source_type, :eid, :_destroy]
+                                                    :resource_organisation_id,
+                                                    main_contact_attributes: [:id, :first_name, :last_name,
+                                                                              :email, :organisation, :position],
+                                                    sources_attributes: [:id, :source_type, :eid, :_destroy],
+                                                    public_contacts_attributes: [:id, :first_name, :last_name,
+                                                                                 :email, :organisation,
+                                                                                 :position, :_destroy]
                                                 ])
     end
 
@@ -38,13 +58,30 @@ RSpec.describe Backoffice::ServicePolicy do
       source = create(:service_source, source_type: :eic, service: service)
       service.update!(upstream: source)
       policy = described_class.new(service_owner, service)
-      expect(policy.permitted_attributes).to eq([
-                                                    [target_group_ids: []], :helpdesk_email, :restrictions,
+      expect(policy.permitted_attributes).to match_array([
+                                                    [target_user_ids: []], :helpdesk_email, :restrictions,
                                                     :order_target, :activate_message,
-                                                    [contact_emails: []], [research_area_ids: []],
+                                                    [multimedia: []],
+                                                    :privacy_policy_url, [use_cases_url: []],
+                                                    [resource_geographic_locations: []],
+                                                    [funding_body_ids: []],
+                                                    [funding_program_ids: []],
+                                                    [access_type_ids: []], [access_mode_ids: []],
+                                                    [certifications: []], [standards: []],
+                                                    [changelog: []],
+                                                    [grant_project_names: []], [open_source_technologies: []],
+                                                    [scientific_domain_ids: []],
+                                                    :security_contact_email,
                                                     [platform_ids: []], :tag_list, [category_ids: []],
+                                                    [related_service_ids: []], [required_service_ids: []],
+                                                    [manual_related_service_ids: []],
                                                     [owner_ids: []], :status, :upstream_id,
-                                                    sources_attributes: [:id, :source_type, :eid, :_destroy]
+                                                    main_contact_attributes: [:id, :first_name, :last_name,
+                                                                              :email, :organisation, :position],
+                                                    sources_attributes: [:id, :source_type, :eid, :_destroy],
+                                                    public_contacts_attributes: [:id, :first_name, :last_name,
+                                                                                 :email, :organisation,
+                                                                                 :position, :_destroy]
                                                 ])
     end
   end
@@ -245,6 +282,20 @@ RSpec.describe Backoffice::ServicePolicy do
 
     it "denies access fo service in draft state" do
       expect(subject).to_not permit(service_portfolio_manager, build(:service, status: :draft))
+    end
+  end
+
+  context "When offer is draft and service is deleted" do
+    let(:service) { create(:service, owners: [service_owner], status: :deleted) }
+
+    permissions :edit?, :update?, :destroy?, :publish?, :draft?, :publish_unverified? do
+      it "danies access to service portfolio manager" do
+        expect(subject).to_not permit(service_portfolio_manager, service)
+      end
+
+      it "danies access to service owner" do
+        expect(subject).to_not permit(service_owner, service)
+      end
     end
   end
 end

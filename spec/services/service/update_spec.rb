@@ -6,8 +6,8 @@ RSpec.describe Service::Update do
   it "updates attributes" do
     service = create(:service)
 
-    described_class.new(service, title: "new title").call
+    described_class.new(service, name: "new name").call
 
-    expect(service.title).to eq("new title")
+    expect(service.name).to eq("new name")
   end
 end
