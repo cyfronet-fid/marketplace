@@ -5,11 +5,12 @@ namespace :dev do
   task prime: "db:setup" do
     yaml_hash = YAML.load_file("db/data.yml")
 
+    create_vocabularies
     create_categories(yaml_hash["categories"])
     create_providers(yaml_hash["providers"])
-    create_research_areas(yaml_hash["area"])
+    create_scientific_domains(yaml_hash["domain"])
     create_platforms(yaml_hash["platforms"])
-    create_target_groups(yaml_hash["target_groups"])
+    create_target_users(yaml_hash["target_users"])
     create_services(yaml_hash["services"])
     create_relations(yaml_hash["relations"])
 
@@ -35,15 +36,15 @@ namespace :dev do
     end
   end
 
-  def create_research_areas(research_areas_hash)
-    puts "Generating research areas:"
-    research_areas_hash.each do |_, hash|
+  def create_scientific_domains(scientific_domains_hash)
+    puts "Generating scientific domains:"
+    scientific_domains_hash.each do |_, hash|
       # !!! Warning: parent need to be defined before child in yaml !!!
-      parent = ResearchArea.find_by(name: hash["parent"])
-      ResearchArea.find_or_initialize_by(name: hash["name"]) do |ra|
-        ra.update!(parent: parent)
+      parent = ScientificDomain.find_by(name: hash["parent"])
+      ScientificDomain.find_or_initialize_by(name: hash["name"]) do |sd|
+        sd.update!(parent: parent)
       end
-      puts "  - #{hash["name"]} research area generated"
+      puts "  - #{hash["name"]} scientific domain generated"
     end
   end
 
@@ -55,10 +56,10 @@ namespace :dev do
     end
   end
 
-  def create_target_groups(target_groups_hash)
+  def create_target_users(target_users_hash)
     puts "Generating target groups:"
-    target_groups_hash.each do |_, hash|
-      TargetGroup.find_or_create_by(name: hash["name"])
+    target_users_hash.each do |_, hash|
+      TargetUser.find_or_create_by(name: hash["name"])
       puts "  - #{hash["name"]} target group generated"
     end
   end
@@ -68,29 +69,40 @@ namespace :dev do
     services_hash.each do |_, hash|
       categories = Category.where(name: hash["parents"])
       providers = Provider.where(name: hash["providers"])
-      area = ResearchArea.where(name: hash["area"])
+      domain = ScientificDomain.where(name: hash["domain"])
+      resource_organisation = Provider.find_by(name: "not specified yet")
       platforms = Platform.where(name: hash["platforms"])
-      target_groups = TargetGroup.where(name: hash["target_groups"])
-      service = Service.find_or_initialize_by(title: hash["title"])
-      service_type = service_type_from(hash)
+      funding_bodies = FundingBody.where(eid: hash["funding_bodies"])
+      funding_programs = FundingProgram.where(eid: hash["funding_programs"])
+      service = Service.find_or_initialize_by(name: hash["name"])
+      trl = Trl.where(eid: hash["trl"])
+      life_cycle_status = LifeCycleStatus.where(eid: hash["life_cycle_status"])
+      target_users = TargetUser.where(name: hash["target_users"])
+      order_type = order_type_from(hash)
 
       service.update!(tagline: hash["tagline"],
                       description: hash["description"],
-                      research_areas: area,
+                      scientific_domains: domain,
                       providers: providers,
-                      service_type: service_type,
+                      order_type: order_type,
+                      external: hash["external"].blank? ? false : hash["external"],
+                      order_url: hash["order_url"] || hash["webpage_url"],
+                      resource_organisation: resource_organisation,
                       webpage_url: hash["webpage_url"],
                       manual_url: hash["manual_url"],
                       helpdesk_url: hash["helpdesk_url"],
-                      tutorial_url: hash["tutorial_url"],
+                      training_information_url: hash["training_information_url"],
+                      funding_bodies: funding_bodies,
+                      funding_programs: funding_programs,
                       terms_of_use_url: hash["terms_of_use_url"],
                       sla_url: hash["sla_url"],
                       access_policies_url: hash["access_policies_url"],
-                      places: hash["places"],
-                      languages: hash["languages"],
-                      target_groups: target_groups,
+                      language_availability: hash["language_availability"],
+                      geographical_availabilities: [hash["geographical_availabilities"]],
+                      target_users: target_users,
                       restrictions: hash["restrictions"],
-                      phase: hash["phase"],
+                      trl: trl,
+                      life_cycle_status: life_cycle_status,
                       categories: categories,
                       tag_list: hash["tags"],
                       platforms: platforms,
@@ -98,21 +110,17 @@ namespace :dev do
 
       service.logo.attached? && service.logo.purge_later
       hash["logo"] && service.logo.attach(io: File.open("db/logos/#{hash["logo"]}"), filename: hash["logo"])
-      puts "  - #{hash["title"]} service generated"
+      puts "  - #{hash["name"]} service generated"
 
       create_offers(service, hash["offers"])
     end
   end
 
-  def service_type_from(hash)
-    if hash["offers"].blank?
-      hash["open_access"] ? "external" : "orderable"
+  def order_type_from(hash)
+    if hash["external"]
+      "order_required"
     else
-      if hash["external"]
-        "external"
-      else
-        hash["open_access"] ? "open_access" : "orderable"
-      end
+      hash["open_access"] ? "open_access" : "order_required"
     end
   end
 
@@ -122,7 +130,8 @@ namespace :dev do
                             description: h["description"],
                             webpage: h["webpage"],
                             parameters: Parameter::Array.load(h["parameters"] || []),
-                            offer_type: service.service_type,
+                            order_type: service.order_type,
+                            external: service.external,
                             status: :published)
       puts "    - #{h["name"]} offer generated"
     end
@@ -133,14 +142,18 @@ namespace :dev do
     ServiceRelationship.delete_all
 
     relations_hash && relations_hash.each do |_, hash|
-      source = Service.find_by(title: hash["source"])
-      target = Service.find_by(title: hash["target"])
-      ServiceRelationship.create!(source: source, target: target)
+      source = Service.find_by(name: hash["source"])
+      target = Service.find_by(name: hash["target"])
+      ManualServiceRelationship.create!(source: source, target: target)
       if hash["both"]
-        ServiceRelationship.create!(source: target, target: source)
-        puts "  - Relation from #{target.title} to #{source.title} generated"
+        ManualServiceRelationship.create!(source: target, target: source)
+        puts "  - Relation from #{target.name} to #{source.name} generated"
       end
-      puts "  - Relation from #{source.title} to #{target.title} generated"
+      puts "  - Relation from #{source.name} to #{target.name} generated"
     end
+  end
+
+  def create_vocabularies
+    Rake::Task["rdt:add_vocabularies"].invoke
   end
 end

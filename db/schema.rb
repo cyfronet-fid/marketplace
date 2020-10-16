@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_17_142450) do
+ActiveRecord::Schema.define(version: 2020_10_06_160433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,12 +48,13 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
-    t.string "description"
+    t.text "description"
     t.string "ancestry"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
     t.integer "ancestry_depth", default: 0
+    t.string "eid"
     t.index ["ancestry"], name: "index_categories_on_ancestry"
     t.index ["description"], name: "index_categories_on_description"
     t.index ["name", "ancestry"], name: "index_categories_on_name_and_ancestry", unique: true
@@ -67,6 +68,22 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_categorizations_on_category_id"
     t.index ["service_id"], name: "index_categorizations_on_service_id"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email", null: false
+    t.string "phone"
+    t.string "position"
+    t.string "organisation"
+    t.string "contactable_type"
+    t.string "type"
+    t.bigint "contactable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contactable_id"], name: "index_contacts_on_contactable_id"
+    t.index ["id", "contactable_id", "contactable_type"], name: "index_contacts_on_id_and_contactable_id_and_contactable_type", unique: true
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -141,8 +158,9 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.jsonb "parameters", default: [], null: false
     t.boolean "voucherable", default: false, null: false
     t.string "status"
-    t.string "offer_type", null: false
+    t.string "order_type", null: false
     t.string "webpage"
+    t.boolean "external", default: false
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
     t.index ["service_id"], name: "index_offers_on_service_id"
@@ -152,6 +170,7 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "eid"
     t.index ["name"], name: "index_platforms_on_name", unique: true
   end
 
@@ -181,21 +200,22 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.integer "iid"
     t.string "name", null: false
     t.text "description", null: false
-    t.string "offer_type", null: false
+    t.string "order_type", null: false
     t.string "webpage"
     t.boolean "voucherable", default: false, null: false
+    t.boolean "external", default: false
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
   end
 
-  create_table "project_research_areas", force: :cascade do |t|
+  create_table "project_scientific_domains", force: :cascade do |t|
     t.bigint "project_id"
-    t.bigint "research_area_id"
+    t.bigint "scientific_domain_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["project_id", "research_area_id"], name: "index_project_research_areas_on_project_id_and_research_area_id", unique: true
-    t.index ["project_id"], name: "index_project_research_areas_on_project_id"
-    t.index ["research_area_id"], name: "index_project_research_areas_on_research_area_id"
+    t.index ["project_id", "scientific_domain_id"], name: "index_psd_on_service_id_and_sd_id", unique: true
+    t.index ["project_id"], name: "index_project_scientific_domains_on_project_id"
+    t.index ["scientific_domain_id"], name: "index_project_scientific_domains_on_scientific_domain_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -242,11 +262,13 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.index ["name"], name: "index_providers_on_name", unique: true
   end
 
-  create_table "research_areas", force: :cascade do |t|
+  create_table "scientific_domains", force: :cascade do |t|
     t.text "name", null: false
     t.string "ancestry"
     t.integer "ancestry_depth", default: 0
-    t.index ["name", "ancestry"], name: "index_research_areas_on_name_and_ancestry", unique: true
+    t.string "eid"
+    t.text "description"
+    t.index ["name", "ancestry"], name: "index_scientific_domains_on_name_and_ancestry", unique: true
   end
 
   create_table "service_opinions", force: :cascade do |t|
@@ -282,19 +304,20 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.bigint "target_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["source_id", "target_id"], name: "index_service_relationships_on_source_id_and_target_id", unique: true
+    t.string "type"
+    t.index ["source_id", "target_id", "type"], name: "index_service_relationships_on_source_id_and_target_id_and_type", unique: true
     t.index ["source_id"], name: "index_service_relationships_on_source_id"
     t.index ["target_id"], name: "index_service_relationships_on_target_id"
   end
 
-  create_table "service_research_areas", force: :cascade do |t|
+  create_table "service_scientific_domains", force: :cascade do |t|
     t.bigint "service_id"
-    t.bigint "research_area_id"
+    t.bigint "scientific_domain_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["research_area_id"], name: "index_service_research_areas_on_research_area_id"
-    t.index ["service_id", "research_area_id"], name: "index_service_research_areas_on_service_id_and_research_area_id", unique: true
-    t.index ["service_id"], name: "index_service_research_areas_on_service_id"
+    t.index ["scientific_domain_id"], name: "index_service_scientific_domains_on_scientific_domain_id"
+    t.index ["service_id", "scientific_domain_id"], name: "index_ssd_on_service_id_and_sd_id", unique: true
+    t.index ["service_id"], name: "index_service_scientific_domains_on_service_id"
   end
 
   create_table "service_sources", force: :cascade do |t|
@@ -307,14 +330,14 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.index ["service_id"], name: "index_service_sources_on_service_id"
   end
 
-  create_table "service_target_groups", force: :cascade do |t|
+  create_table "service_target_users", force: :cascade do |t|
     t.bigint "service_id"
-    t.bigint "target_group_id"
+    t.bigint "target_user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["service_id", "target_group_id"], name: "index_service_target_groups_on_service_id_and_target_group_id", unique: true
-    t.index ["service_id"], name: "index_service_target_groups_on_service_id"
-    t.index ["target_group_id"], name: "index_service_target_groups_on_target_group_id"
+    t.index ["service_id", "target_user_id"], name: "index_service_target_users_on_service_id_and_target_user_id", unique: true
+    t.index ["service_id"], name: "index_service_target_users_on_service_id"
+    t.index ["target_user_id"], name: "index_service_target_users_on_target_user_id"
   end
 
   create_table "service_user_relationships", force: :cascade do |t|
@@ -326,8 +349,19 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.index ["user_id"], name: "index_service_user_relationships_on_user_id"
   end
 
+  create_table "service_vocabularies", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "vocabulary_id"
+    t.string "vocabulary_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["service_id", "vocabulary_id"], name: "index_service_vocabularies_on_service_id_and_vocabulary_id", unique: true
+    t.index ["service_id"], name: "index_service_vocabularies_on_service_id"
+    t.index ["vocabulary_id"], name: "index_service_vocabularies_on_vocabulary_id"
+  end
+
   create_table "services", force: :cascade do |t|
-    t.string "title", null: false
+    t.string "name", null: false
     t.text "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -335,9 +369,8 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.decimal "rating", precision: 2, scale: 1, default: "0.0", null: false
     t.bigint "provider_id"
     t.integer "service_opinion_count", default: 0
-    t.text "contact_emails", default: [], array: true
-    t.string "places"
-    t.string "languages"
+    t.string "geographical_availabilities", default: [], array: true
+    t.string "language_availability", default: [], array: true
     t.string "dedicated_for", array: true
     t.string "terms_of_use_url"
     t.string "access_policies_url"
@@ -345,13 +378,12 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.string "webpage_url"
     t.string "manual_url"
     t.string "helpdesk_url"
-    t.string "tutorial_url"
+    t.string "training_information_url"
     t.string "restrictions"
-    t.string "phase"
     t.integer "offers_count", default: 0
     t.text "activate_message"
     t.string "slug"
-    t.string "service_type"
+    t.string "order_type"
     t.string "status"
     t.integer "upstream_id"
     t.string "order_target", default: "", null: false
@@ -359,8 +391,30 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.integer "project_items_count", default: 0, null: false
     t.string "version"
     t.float "popularity_ratio"
+    t.bigint "resource_organisation_id"
+    t.string "status_monitoring_url"
+    t.string "maintenance_url"
+    t.string "order_url"
+    t.string "payment_model_url"
+    t.string "pricing_url"
+    t.string "security_contact_email", default: "", null: false
+    t.string "resource_geographic_locations", default: [], array: true
+    t.string "certifications", default: [], array: true
+    t.string "standards", default: [], array: true
+    t.string "open_source_technologies", default: [], array: true
+    t.text "changelog", default: [], array: true
+    t.string "grant_project_names", default: [], array: true
+    t.string "multimedia", default: [], array: true
+    t.string "privacy_policy_url"
+    t.string "use_cases_url", default: [], array: true
+    t.datetime "last_update"
+    t.string "related_platforms", default: [], array: true
+    t.datetime "synchronized_at"
+    t.boolean "external", default: false
+    t.string "pid"
+    t.index ["name"], name: "index_services_on_name"
     t.index ["provider_id"], name: "index_services_on_provider_id"
-    t.index ["title"], name: "index_services_on_title"
+    t.index ["resource_organisation_id"], name: "index_services_on_resource_organisation_id"
   end
 
   create_table "statuses", force: :cascade do |t|
@@ -399,10 +453,12 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "target_groups", force: :cascade do |t|
+  create_table "target_users", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
+    t.text "eid"
   end
 
   create_table "user_categories", force: :cascade do |t|
@@ -415,14 +471,14 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.index ["user_id"], name: "index_user_categories_on_user_id"
   end
 
-  create_table "user_research_areas", force: :cascade do |t|
+  create_table "user_scientific_domains", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "research_area_id"
+    t.bigint "scientific_domain_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["research_area_id"], name: "index_user_research_areas_on_research_area_id"
-    t.index ["user_id", "research_area_id"], name: "index_user_research_areas_on_user_id_and_research_area_id", unique: true
-    t.index ["user_id"], name: "index_user_research_areas_on_user_id"
+    t.index ["scientific_domain_id"], name: "index_user_scientific_domains_on_scientific_domain_id"
+    t.index ["user_id", "scientific_domain_id"], name: "index_usd_on_service_id_and_sd_id", unique: true
+    t.index ["user_id"], name: "index_user_scientific_domains_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -442,33 +498,49 @@ ActiveRecord::Schema.define(version: 2020_07_17_142450) do
     t.integer "roles_mask"
     t.integer "owned_services_count", default: 0, null: false
     t.boolean "categories_updates", default: false, null: false
-    t.boolean "research_areas_updates", default: false, null: false
-    t.boolean "show_welcome_popup", default: true, null: false
+    t.boolean "scientific_domains_updates", default: false, null: false
+    t.boolean "show_welcome_popup", default: false, null: false
     t.index ["email"], name: "index_users_on_email"
+  end
+
+  create_table "vocabularies", force: :cascade do |t|
+    t.string "eid", null: false
+    t.string "name", null: false
+    t.text "description"
+    t.string "type", null: false
+    t.string "ancestry"
+    t.integer "ancestry_depth", default: 0
+    t.jsonb "extras"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ancestry"], name: "index_vocabularies_on_ancestry"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "project_item_changes", "users", column: "author_id"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
-  add_foreign_key "project_research_areas", "projects"
-  add_foreign_key "project_research_areas", "research_areas"
+  add_foreign_key "project_scientific_domains", "projects"
+  add_foreign_key "project_scientific_domains", "scientific_domains"
   add_foreign_key "service_providers", "providers"
   add_foreign_key "service_providers", "services"
   add_foreign_key "service_related_platforms", "platforms"
   add_foreign_key "service_related_platforms", "services"
   add_foreign_key "service_relationships", "services", column: "source_id"
   add_foreign_key "service_relationships", "services", column: "target_id"
-  add_foreign_key "service_research_areas", "research_areas"
-  add_foreign_key "service_research_areas", "services"
-  add_foreign_key "service_target_groups", "services"
-  add_foreign_key "service_target_groups", "target_groups"
+  add_foreign_key "service_scientific_domains", "scientific_domains"
+  add_foreign_key "service_scientific_domains", "services"
+  add_foreign_key "service_target_users", "services"
+  add_foreign_key "service_target_users", "target_users"
   add_foreign_key "service_user_relationships", "services"
   add_foreign_key "service_user_relationships", "users"
+  add_foreign_key "service_vocabularies", "services"
+  add_foreign_key "service_vocabularies", "vocabularies"
   add_foreign_key "services", "providers"
+  add_foreign_key "services", "providers", column: "resource_organisation_id"
   add_foreign_key "services", "service_sources", column: "upstream_id", on_delete: :nullify
   add_foreign_key "user_categories", "categories"
   add_foreign_key "user_categories", "users"
-  add_foreign_key "user_research_areas", "research_areas"
-  add_foreign_key "user_research_areas", "users"
+  add_foreign_key "user_scientific_domains", "scientific_domains"
+  add_foreign_key "user_scientific_domains", "users"
 end

@@ -9,6 +9,7 @@ staging:
   :concurrency: 5
 
 :queues:
+  - pc_subscriber
   - orders
   - mailers
   - reports

@@ -1,8 +1,8 @@
 .card.bg-gray-5.border-0
   .card-body
-    %h3.card-title= link_to service.title.truncate(35, separator: " "), service, title: service.title
+    %h3.card-title= link_to service.name.truncate(35, separator: " "), service, name: service.name
     .row.card-description
-      - if service.logo.attached?
+      - if service.logo.attached? && service.logo.variable?
         .col-4
           = image_tag service.logo.variant(resize: "100x67"),
             class: "align-self-center mr-4 float-left img-responsive"
@@ -19,5 +19,5 @@
       %span.text-right
         Dedicated for:
       %strong.text-right{ "data-toggle" => "tooltip",
-                          "title" => "#{ service.target_groups.map { |p| p.name }.join(", ")}" }
-        #{service.target_groups.map { |x| x.name }.join(", ").truncate(26, separator: " ")}
+                          "title" => "#{ service.target_users.map { |p| p.name }.join(", ")}" }
+        #{service.target_users.map { |x| x.name }.join(", ").truncate(26, separator: " ")}

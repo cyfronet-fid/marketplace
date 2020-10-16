@@ -5,7 +5,7 @@
       "warning_code": 70,
       "fingerprint": "0b0b808d8841fc9690e7fcaf7a60b846d6f6f70453b446772bd45cda32f0ec80",
       "check_name": "MassAssignment",
-      "message": "Parameters should be whitelisted for mass assignment",
+      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
       "file": "app/views/services/_paginate_simple.haml",
       "line": 8,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
@@ -15,7 +15,7 @@
           "type": "controller",
           "class": "Backoffice::ServicesController",
           "method": "index",
-          "line": 19,
+          "line": 21,
           "file": "app/controllers/backoffice/services_controller.rb",
           "rendered": {
             "name": "backoffice/services/index",
@@ -25,7 +25,7 @@
         {
           "type": "template",
           "name": "backoffice/services/index",
-          "line": 17,
+          "line": 18,
           "file": "app/views/backoffice/services/index.html.haml",
           "rendered": {
             "name": "services/_index",
@@ -35,7 +35,7 @@
         {
           "type": "template",
           "name": "services/_index",
-          "line": 19,
+          "line": 14,
           "file": "app/views/services/_index.html.haml",
           "rendered": {
             "name": "services/_pagination",
@@ -66,7 +66,7 @@
       "warning_code": 70,
       "fingerprint": "26ed0731ae68a388b2b3f2322bedc8cec22960f77acf1bd2f22a73ad8f8484c5",
       "check_name": "MassAssignment",
-      "message": "Parameters should be whitelisted for mass assignment",
+      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
       "file": "app/views/services/_paginate_simple.haml",
       "line": 6,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
@@ -76,7 +76,7 @@
           "type": "controller",
           "class": "Backoffice::ServicesController",
           "method": "index",
-          "line": 19,
+          "line": 21,
           "file": "app/controllers/backoffice/services_controller.rb",
           "rendered": {
             "name": "backoffice/services/index",
@@ -86,7 +86,7 @@
         {
           "type": "template",
           "name": "backoffice/services/index",
-          "line": 17,
+          "line": 18,
           "file": "app/views/backoffice/services/index.html.haml",
           "rendered": {
             "name": "services/_index",
@@ -96,7 +96,7 @@
         {
           "type": "template",
           "name": "services/_index",
-          "line": 19,
+          "line": 14,
           "file": "app/views/services/_index.html.haml",
           "rendered": {
             "name": "services/_pagination",
@@ -123,11 +123,27 @@
       "note": ""
     },
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "28c3d5ff08d0ca32331fd33852f7e7268409aaacfce931769df6d9ecf5903484",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "config/initializers/friendly_id.rb",
+      "line": 20,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "find_by(\"#{friendly_id_config.query_field} = ? OR #{(self.column_names & [\"pid\", \"eid\"]).first} = ?\", id, id)",
+      "render_path": null,
+      "location": null,
+      "user_input": "friendly_id_config.query_field",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
       "warning_type": "Mass Assignment",
       "warning_code": 70,
       "fingerprint": "2fbbd766459c796fa13ed38170547a2689999b1648f61869c8d90112ea51af73",
       "check_name": "MassAssignment",
-      "message": "Parameters should be whitelisted for mass assignment",
+      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
       "file": "app/controllers/concerns/sentryable.rb",
       "line": 17,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
@@ -147,7 +163,7 @@
       "warning_code": 70,
       "fingerprint": "3aa961f8b2b6468e0677efc995ada5be6554337f13351cf422ccd777714a94b4",
       "check_name": "MassAssignment",
-      "message": "Parameters should be whitelisted for mass assignment",
+      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
       "file": "app/views/services/_paginate_simple.haml",
       "line": 11,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
@@ -157,7 +173,7 @@
           "type": "controller",
           "class": "Backoffice::ServicesController",
           "method": "index",
-          "line": 19,
+          "line": 21,
           "file": "app/controllers/backoffice/services_controller.rb",
           "rendered": {
             "name": "backoffice/services/index",
@@ -167,7 +183,7 @@
         {
           "type": "template",
           "name": "backoffice/services/index",
-          "line": 17,
+          "line": 18,
           "file": "app/views/backoffice/services/index.html.haml",
           "rendered": {
             "name": "services/_index",
@@ -177,7 +193,7 @@
         {
           "type": "template",
           "name": "services/_index",
-          "line": 19,
+          "line": 14,
           "file": "app/views/services/_index.html.haml",
           "rendered": {
             "name": "services/_pagination",
@@ -224,11 +240,27 @@
       "note": ""
     },
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "62bead22e534a8e8841316a88fb06622ac7d023fc7b9a5128d5a9df244fdd117",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "config/initializers/friendly_id.rb",
+      "line": 22,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "find_by(\"#{friendly_id_config.query_field} = ?\", id)",
+      "render_path": null,
+      "location": null,
+      "user_input": "friendly_id_config.query_field",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
       "warning_type": "Mass Assignment",
       "warning_code": 70,
       "fingerprint": "d06e1c85551aa02f3f8da3a7d5c309ed69783a1fa39928ea676b0bf9646f3d0c",
       "check_name": "MassAssignment",
-      "message": "Parameters should be whitelisted for mass assignment",
+      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
       "file": "app/helpers/categories_helper.rb",
       "line": 5,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
@@ -244,6 +276,6 @@
       "note": ""
     }
   ],
-  "updated": "2020-01-22 11:04:39 +0100",
-  "brakeman_version": "4.7.2"
+  "updated": "2020-10-08 17:27:44 +0200",
+  "brakeman_version": "4.10.0"
 }

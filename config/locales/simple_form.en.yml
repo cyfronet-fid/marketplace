@@ -17,16 +17,16 @@ en:
       question:
         new: SEND
         author: Name and surname
-        text: Your question to provider about %{title}
+        text: Your question to provider about %{name}
       report:
         text: Describe problem precisely
       project_item:
         additional_comment: Please enter additional details of your request
       user:
         categories: Categories of interests
-        research_areas: Research areas of interests
+        scientific_domains: Scientific domains of interests
         categories_updates: New service in Category of interest
-        research_areas_updates: New service in Research area of interest
+        scientific_domains_updates: New service in Scientific domain of interest
       project:
         name: Project name
         reason_for_access: Reason to request access to the EOSC services
@@ -58,7 +58,7 @@ en:
           and up to 60 characters for use cases section
         body: Preferred length of description is up to 140 characters
       service:
-        tutorial_url: |
+        training_information_url: |
           Url should start with http or https [e.g. http://webpage.org]
         helpdesk_url: |
           Url should start with http or https [e.g. http://webpage.org]

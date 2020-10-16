@@ -9,12 +9,12 @@ RSpec.describe UsageReport do
       s2 = create(:service, status: :published)
       s3 = create(:service, status: :unverified)
       s4 = create(:service, status: :draft)
-      create(:offer, service: s1, offer_type: :orderable, status: :draft)
-      create(:offer, service: s1, offer_type: :open_access, status: :published)
-      create(:offer, service: s1, offer_type: :external, status: :published)
-      create(:offer, service: s2, offer_type: :orderable, status: :published)
-      create(:offer, service: s3, offer_type: :orderable, status: :published)
-      create(:offer, service: s4, offer_type: :orderable, status: :published)
+      create(:offer, service: s1, order_type: :order_required, status: :draft)
+      create(:offer, service: s1, order_type: :open_access, status: :published)
+      create(:offer, service: s1, order_type: :order_required, external: true, status: :published)
+      create(:offer, service: s2, order_type: :order_required, status: :published)
+      create(:offer, service: s3, order_type: :order_required, status: :published)
+      create(:offer, service: s4, order_type: :order_required, status: :published)
 
       expect(subject.orderable_count).to eq(2)
     end
@@ -26,12 +26,12 @@ RSpec.describe UsageReport do
       s2 = create(:service, status: :published)
       s3 = create(:service, status: :unverified)
       s4 = create(:service, status: :draft)
-      create(:offer, service: s1, offer_type: :orderable, status: :published)
-      create(:offer, service: s1, offer_type: :open_access, status: :draft)
-      create(:offer, service: s1, offer_type: :external, status: :draft)
-      create(:offer, service: s2, offer_type: :open_access, status: :published)
-      create(:offer, service: s3, offer_type: :external, status: :published)
-      create(:offer, service: s4, offer_type: :external, status: :published)
+      create(:offer, service: s1, order_type: :order_required, status: :published)
+      create(:offer, service: s1, order_type: :open_access, status: :draft)
+      create(:offer, service: s1, order_type: :order_required, external: true, status: :draft)
+      create(:offer, service: s2, order_type: :open_access, status: :published)
+      create(:offer, service: s3, order_type: :order_required, external: true, status: :published)
+      create(:offer, service: s4, order_type: :order_required, external: true, status: :published)
 
       expect(subject.not_orderable_count).to eq(2)
     end
@@ -58,12 +58,12 @@ RSpec.describe UsageReport do
 
   context ".disciplines" do
     it "returns disciplines from projects with services" do
-      ra1, ra2, ra3 = create_list(:research_area, 3)
-      create(:project, research_areas: [ra1])
-      p = create(:project, research_areas: [ra2, ra3])
+      sd1, sd2, sd3 = create_list(:scientific_domain, 3)
+      create(:project, scientific_domains: [sd1])
+      p = create(:project, scientific_domains: [sd2, sd3])
       create(:project_item, project: p)
 
-      expect(subject.disciplines).to contain_exactly(ra2.name, ra3.name)
+      expect(subject.domains).to contain_exactly(sd2.name, sd3.name)
     end
   end
 

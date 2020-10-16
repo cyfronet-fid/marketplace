@@ -19,11 +19,11 @@ class ServicesController < ApplicationController
 
   def show
     @service = Service.
-               includes(:offers, related_services: :providers).
+               includes(:offers, :target_relationships).
                friendly.find(params[:id])
     authorize @service
     @offers = policy_scope(@service.offers).order(:created_at)
-    @related_services = @service.related_services
+    @related_services = @service.target_relationships
 
     @service_opinions = ServiceOpinion.joins(project_item: :offer).
                         where(offers: { service_id: @service })
@@ -36,8 +36,8 @@ class ServicesController < ApplicationController
 
   private
     def sort_options
-      @sort_options = [["by name A-Z", "title"],
-                       ["by name Z-A", "-title"],
+      @sort_options = [["by name A-Z", "name"],
+                       ["by name Z-A", "-name"],
                        ["by rate 1-5", "rating"],
                        ["by rate 5-1", "-rating"],
                        ["Best match", "_score"]]

@@ -188,117 +188,173 @@ providers:
     GryCAP-I3M-UPV:
         name: &grycap "GryCAP-I3M-UPV"
     MTA SZTAKI Laboratory of Parallel and Distributed Systems:
-        name: &mtaSztaki MTA SZTAKI Laboratory of Parallel and Distributed Systems
+        name: &mtaSztaki "MTA SZTAKI Laboratory of Parallel and Distributed Systems"
     University of Oslo (UiO):
-        name: &uioProider University of Oslo (UiO)
+        name: &uioProider "University of Oslo (UiO)"
     Not specified:
         name: &not "not specified yet"
 
-area:
+domain:
 
     Interdisciplinary:
-      name: &interdisciplinary "Interdisciplinary"
+        name: &interdisciplinary "Interdisciplinary"
     # sub:
     #     name: &ra_test "Just for tests - should be removed by Rox"
     #     parent: *interdisciplinary
     Humanities:
-      name: &humanities "Humanities"
+        name: &humanities "Humanities"
     Philosophy:
-      name: &philosophy "Philosophy, ethics and religion"
-      parent: *humanities
+        name: &philosophy "Philosophy, ethics and religion"
+        parent: *humanities
     Arts:
-      name: &arts "Arts"
-      parent: *humanities
+        name: &arts "Arts"
+        parent: *humanities
     SocialScience:
-      name: &socialSciences "Social sciences"
+        name: &socialSciences "Social sciences"
     Political:
-      name: &political "Political sciences"
-      parent: *socialSciences
+        name: &political "Political sciences"
+        parent: *socialSciences
     Psychology:
-      name: &psychology "Psychology"
-      parent: *socialSciences
+        name: &psychology "Psychology"
+        parent: *socialSciences
     engineering:
-      name: &engineering "Engineering and Technology"
+        name: &engineering "Engineering and Technology"
     electrical:
-      name: &electrical "Electrical, electronic and information engineering"
-      parent: *engineering
+        name: &electrical "Electrical, electronic and information engineering"
+        parent: *engineering
     environmental:
-      name: &environmental "Environmental engineering"
-      parent: *engineering
+        name: &environmental "Environmental engineering"
+        parent: *engineering
     supportActivities:
-      name: &supportActivities "Support Activities"
+        name: &supportActivities "Support Activities"
     agricultural:
-      name: &agricultural "Agricultural Sciences"
+        name: &agricultural "Agricultural Sciences"
     medical:
-      name: &medical "Medical and Health Sciences"
+        name: &medical "Medical and Health Sciences"
     natural:
-      name: &natural "Natural Sciences"
+        name: &natural "Natural Sciences"
     HighEnergyPhysics:
-      name: &highEnergyPhysics "High-Energy Physics"
-      parent: *engineering
+        name: &highEnergyPhysics "High-Energy Physics"
+        parent: *engineering
     PhysicalScienceAerosol:
-      name: &physicalScienceAerosol "Physical science (aerosol physics)"
-      parent: *engineering
+        name: &physicalScienceAerosol "Physical science (aerosol physics)"
+        parent: *engineering
     PhysicalScienceEarth:
-      name: &physicalScienceEarth "Physical science (earth science)"
-      parent: *natural
+        name: &physicalScienceEarth "Physical science (earth science)"
+        parent: *natural
     ClimateScience:
-      name: &climateScience "Climate science"
-      parent: *natural
+        name: &climateScience "Climate science"
+        parent: *natural
     EnvironmentalScience:
-      name: &environmentalScience "Environmental science"
-      parent: *natural
+        name: &environmentalScience "Environmental science"
+        parent: *natural
     BiologicalSciences:
-      name: &biologicalSciences "Biological Sciences"
-      parent: *natural
+        name: &biologicalSciences "Biological Sciences"
+        parent: *natural
     EarthScience:
-      name: &earthScience "Earth Science"
-      parent: *natural
+        name: &earthScience "Earth Science"
+        parent: *natural
     LifeScience:
-      name: &lifeSciences "Life sciences"
-      parent: *natural
+        name: &lifeSciences "Life sciences"
+        parent: *natural
     ApplicationFrameworks:
-      name: &applicationFrameworks "Application and data analysis framework"
-      parent: *engineering
+        name: &applicationFrameworks "Application and data analysis framework"
+        parent: *engineering
     DataAnalysis:
-      name: &dataAnalysis "Data analysis"
-      parent: *engineering
+        name: &dataAnalysis "Data analysis"
+        parent: *engineering
     Security:
-      name: &security "Security"
-      parent: *engineering
+        name: &security "Security"
+        parent: *engineering
     FormalSciences:
-      name: &formalSciences "Formal Sciences"
-      parent: *engineering
+        name: &formalSciences "Formal Sciences"
+        parent: *engineering
     AppliedScience:
-      name: &appliedScience "Applied Sciences / Engineering / Healthcare"
-      parent: *engineering
+        name: &appliedScience "Applied Sciences / Engineering / Healthcare"
+        parent: *engineering
     PhysicalSciences:
-      name: &physicalSciences "Physical Sciences"
-      parent: *engineering
+        name: &physicalSciences "Physical Sciences"
+        parent: *engineering
     Other:
-      name: &other "Other"
+        name: &other "Other"
 
 
 
-target_groups:
+target_users:
 
     Researchers:
         name: &researchers "Researchers"
+        description: "Someone who conducts scientific research, i.e., an organized and systematic investigation by using scientific methods."
+        eid: "target_user-researchers"
     Research organisations:
         name: &research_organisations "Research organisations"
-    Business:
-        name: &business "Business"
+        description: "A public or private legal entity (e.g. academia, business, industry, public services, etc.) representing the User."
+        eid: "target_user-research_organisations"
+    Businesses:
+        name: &business "Businesses"
+        description: "An organization or economic system where goods and services are exchanged for one another or for money. Businesses can be privately owned, not-for-profit or state-owned."
+        eid: "target_user-businesses"
     Research group:
-        name: &research_groups "Research group"
+        name: &research_groups "Research groups"
+        description: "A research group is a group of researchers working together on a particular issue or topic. Research groups may be composed of researchers all from the same subject/discipline or from different subjects/disciplines."
+        eid: "target_user-research_groups"
     Providers:
         name: &providers "Providers"
-
-
+        description: "A Provider is an organisation that provides different kind of solutions and/or services or other Resources to end users and other organizations. This broad term incorporates all businesses and organisations that provide products and solutions that are offered for free, on-demand, pay per use or a hybrid delivery model."
+        eid: "target_user-providers"
+    Research communities:
+        name: &research_communities "Research communities"
+        description: "Research communities provide an infrastructure through which scientists of discipline-specific scientific areas are able to advance their research goals, reaching out to other researchers."
+        eid: "target_user-research_communities"
+    Research projects:
+        name: &research_projects "Research projects"
+        description: "A privately or publicly funded project on a research topic."
+        eid: "target_user-research_projects"
+    Research networks:
+        name: &research_network "Research networks"
+        desctiption: "Research networks aim to stimulate interaction between researchers and promote information exchange."
+        eid: "target_user-research_networks"
+    Research managers:
+        name: &research_manager "Research managers"
+        description: "Someone in an organization whose job is to manage a research initiative aiming to the development of new scientific results, products or ideas."
+        eid: "target_user-research_managers"
+    Students:
+        name: &students "Students"
+        desctiption: "A person who is studying at a university or other place of higher education."
+        eid: "target_user-students"
+    Innowators:
+        name: &innowators "Innovators"
+        description: "The group or individual which is the first to try new ideas, processes, goods and services. Innovators are followed by early adopters, early majority, late majority, and laggards, in that order."
+        eid: "target_user-innovators"
+    Funders:
+        name: &funders "Funders"
+        description: "Individual or organization financing a part or all of a project's cost as a grant, investment, or loan."
+        eid: "target_user-funders"
+    Policy Makers:
+        name: &policy_makers "Policy Makers"
+        description: "Individuals (usually members of the board of directors) who have the authority to set the policy framework of an organization."
+        eid: "target_user-policy_makers"
+    Research Infrastructure Managers:
+        name: &research_infrastructure_managers "Research Infrastructure Managers"
+        description: "A RI Manager is a type of Project Coordinator who specializes in research infrastructures. They are responsible for things like managing researchers, making sure costs are on budget and serving as a liaison between reserach staff and project stakeholders."
+        eid: "target_user-research_infrastructure_managers"
+    Provider Managers:
+        name: &provider_managers "Provider Managers"
+        description: "A Provider Manager is an individual within an organisation that is responsible for the quality of the Resources provided and monitors the delivery of the Resource."
+        eid: "target_user-provider_managers"
+    Resource Managers:
+        name: &resource_manager "Resource Managers"
+        description: "Resource Managers are typically responsible for managing Service level agreements with customers and external Providers."
+        eid: "target_user-resource_managers"
+    Other:
+        name: &other "Other"
+        description: ""
+        eid: "target_user-other"
 
 services:
 
     Cloud compute:
-        title: &egiCloud EGI Cloud compute
+        name: &egiCloud EGI Cloud compute
         parents: *computeParent
         providers: [*egi]
         logo: cloud-compute.png
@@ -306,16 +362,19 @@ services:
         webpage_url: https://www.egi.eu/services/cloud-compute/
         manual_url: https://wiki.egi.eu/wiki/Federated_Cloud_user_support
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
+        training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-        places: &europe Europe
-        languages: &english English
-        target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        language_availability: &english EN
+        geographical_availabilities: &poland PL
+        domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
         restrictions: &notSpecified not yet specified
-        phase: production
+        funding_bodies: ["funding_body-innoviris","funding_body-ec"]
+        funding_programs: ["funding_program-icfs", "funding_program-insc2020", "funding_program-isf"]
+        trl: &trl_9 ["trl-9"]
+        life_cycle_status: &prod ["life_cycle_status-production"]
         tagline: Run virtual machines on-demand with complete control over computing resources
         platforms: [*egiPlatform]
         description: |
@@ -600,7 +659,7 @@ services:
                   minimum: 1
                   maximum: 730
     High-Throughput compute:
-        title: &egiHTC EGI High-Throughput compute
+        name: &egiHTC EGI High-Throughput compute
         parents: *computeParent
         providers: [*egi]
         logo: high-throughput-compute.png
@@ -608,16 +667,17 @@ services:
         webpage_url: https://www.egi.eu/services/high-throughput-compute/
         manual_url: https://wiki.egi.eu/wiki/Federated_Cloud_user_support
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
+        training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-        places: *europe
-        languages: *english
-        target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        language_availability: *english
+        geographical_availabilities: *poland
+        domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Execute thousands of computational tasks to analyse large datasets
         platforms: [*egiPlatform]
         description: |
@@ -766,7 +826,7 @@ services:
                   minimum: 1
                   maximum: 730
     Cloud container compute:
-        title: EGI Cloud container compute BETA
+        name: EGI Cloud container compute BETA
         parents: *computeParent
         providers: [*egi]
         logo: cloud-container-compute.png
@@ -774,16 +834,17 @@ services:
         webpage_url: https://www.egi.eu/services/cloud-compute/
         manual_url: https://wiki.egi.eu/wiki/Federated_Cloud_user_support
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-container-compute-training-material
+        training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-container-compute-training-material
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-        places: *europe
-        languages: *english
-        target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        language_availability: *english
+        geographical_availabilities: *poland
+        domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
-        phase: beta
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Run Docker containers in a lightweight virtualised environment
         platforms: [*egiPlatform]
         description: |
@@ -800,7 +861,7 @@ services:
             5. You will be contacted by the EGI support team.
         offers: *cloudComputeOffers
     B2DROP:
-        title: &b2drop B2DROP
+        name: &b2drop B2DROP
         parents: [*storageParent, *sharingAndDicoveryParent]
         providers: [*eudat, *jsc]
         logo: b2drop.png
@@ -808,16 +869,17 @@ services:
         webpage_url: https://b2drop.eudat.eu
         manual_url: https://eudat.eu/services/userdoc/b2drop
         helpdesk_url: https://www.eudat.eu/support-request?service=B2DROP
-        tutorial_url: https://eudat.eu/services/userdoc/b2drop
+        training_information_url: https://eudat.eu/services/userdoc/b2drop
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://eudat.eu/policy
-        places: *europe
-        languages: *english
-        target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        language_availability: *english
+        geographical_availabilities: *poland
+        domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Secure and trusted data exchange service for researchers
         platforms: [*eudatPlatform]
         description: |
@@ -932,7 +994,7 @@ services:
             parameters: *b2dropParameters
 
     B2FIND:
-        title: &b2find B2FIND
+        name: &b2find B2FIND
         parents: [*sharingAndDicoveryParent, *dataManagementParent]
         providers: [*eudat, *dkrz]
         logo: b2find.png
@@ -940,18 +1002,21 @@ services:
         webpage_url: http://b2find.eudat.eu/
         manual_url: http://eudat.eu/services/userdoc/b2find
         helpdesk_url: http://www.egi.eu/more-information/
-        tutorial_url: http://eudat.eu/services/userdoc/b2find
+        training_information_url: http://eudat.eu/services/userdoc/b2find
         terms_of_use_url: http://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: http://eudat.eu/policy
-        places: *europe
-        languages: *english
-        target_groups: [*researchers, *providers, *research_organisations]
-        area: *interdisciplinary
+        language_availability: *english
+        geographical_availabilities: *poland
+        domain: *interdisciplinary
+        target_users: [*researchers, *providers, *research_organisations]
 #        #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Metadata based data-discovery
         platforms: [*eudatPlatform]
+        funding_bodies: ["funding_body-fapesp","funding_body-rpf"]
+        funding_programs: ["funding_program-icfs", "funding_program-insc2020", "funding_program-iter"]
         description: |
           B2FIND is the EUDAT metadata service and provides a discovery portal which allows users
           to find data collections within an international and inter-disciplinary scope.
@@ -1059,7 +1124,7 @@ services:
               in order of relevance, Access to the scientifc data objects in given through references provided
               in the metadata, Local B2FIND instace. Ideal for: Community/organisational data managers.
     B2HANDLE:
-        title: &b2handle B2HANDLE
+        name: &b2handle B2HANDLE
         parents: [*dataManagementParent, *sharingAndDicoveryParent]
         providers: [*eudat, *surfsara, *grnet]
         logo: b2handle.png
@@ -1067,16 +1132,17 @@ services:
         webpage_url: https://www.eudat.eu/services/b2handle
         manual_url: https://eudat.eu/services/userdoc/b2handle
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://eudat.eu/services/userdoc/b2handle
+        training_information_url: https://eudat.eu/services/userdoc/b2handle
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://eudat.eu/policy
-        places: *europe
-        languages: *english
-        target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        language_availability: *english
+        geographical_availabilities: *poland
+        domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Secure and trusted data exchange service for researchers
         platforms: [*eudatPlatform]
         description: |
@@ -1180,7 +1246,7 @@ services:
                 value_type:  "integer"
                 value: 365
     B2NOTE:
-        title: &b2note B2NOTE
+        name: &b2note B2NOTE
         parents: [*sharingAndDicoveryParent, *dataManagementParent]
         providers: [*eudat, *bsc]
         logo: b2note.png
@@ -1188,16 +1254,17 @@ services:
         webpage_url: https://www.eudat.eu/catalogue/B2NOTE
         manual_url:
         helpdesk_url: https://www.eudat.eu/contact-support-request?service=B2NOTE
-        tutorial_url:
+        training_information_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://eudat.eu/policy
-        places: *europe
-        languages: *english
-        target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        language_availability: *english
+        geographical_availabilities: *poland
+        domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Data annotation service to create annotations on research data
         platforms: [*eudatPlatform]
         description: |
@@ -1267,7 +1334,7 @@ services:
                 value_type:  "integer"
                 value: 365
     B2SAFE:
-        title: &b2safe B2SAFE
+        name: &b2safe B2SAFE
         parents: [*dataManagementParent, *storageParent]
         providers: [*eudat, *all]
         logo: b2safe.png
@@ -1275,16 +1342,17 @@ services:
         webpage_url: https://www.eudat.eu/services/b2safe
         manual_url: https://eudat.eu/services/userdoc/configure-b2safe
         helpdesk_url: https://eudat.eu/contact-support-request
-        tutorial_url:
+        training_information_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://eudat.eu/policy
-        places: *europe
-        languages: *english
-        target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        language_availability: *english
+        geographical_availabilities: *poland
+        domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Distribute and store large volumes of data based on data policies
         platforms: [*eudatPlatform]
         description: |
@@ -1321,7 +1389,7 @@ services:
               integration between B2ACCSS and B2SAFE to provide federated authentication
               (expected in the next stable release).
     B2SHARE:
-        title: &b2share B2SHARE
+        name: &b2share B2SHARE
         parents: [*sharingAndDicoveryParent, *dataManagementParent]
         providers: [*eudat, *csc]
         logo: b2share.png
@@ -1329,16 +1397,17 @@ services:
         webpage_url: https://www.eudat.eu/services/b2share
         manual_url: https://eudat.eu/services/userdoc/b2share
         helpdesk_url: https://eudat.eu/contact-support-request
-        tutorial_url:
+        training_information_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://eudat.eu/policy
-        places: *europe
-        languages: *english
-        target_groups: [*researchers, *providers, *research_organisations]
-        area: *interdisciplinary
+        language_availability: *english
+        geographical_availabilities: *poland
+        domain: *interdisciplinary
+        target_users: [*researchers, *providers, *research_organisations]
 #        #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Store and publish research data
         platforms: [*eudatPlatform]
         description: |
@@ -1450,7 +1519,7 @@ services:
               Access to the scientifc data objects in given through references provided in the metadata,
               Local B2FIND instace. Ideal for: Community/organisational data managers.
     B2STAGE:
-        title: &b2stage B2STAGE
+        name: &b2stage B2STAGE
         parents: *storageParent
         providers: [*eudat, *all]
         logo: b2stage.png
@@ -1458,16 +1527,17 @@ services:
         webpage_url: https://www.eudat.eu/services/b2stage
         manual_url: https://eudat.eu/services/userdoc/b2stage
         helpdesk_url: https://eudat.eu/contact-support-request
-        tutorial_url:
+        training_information_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://eudat.eu/policy
-        places: *europe
-        languages: *english
-        area: *interdisciplinary
-        target_groups: [*researchers, *research_organisations]
+        language_availability: *english
+        domain: *interdisciplinary
+        geographical_availabilities: *poland
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Transfer of data between data resources and external computational facilities
         platforms: [*eudatPlatform]
         description: |
@@ -1513,7 +1583,7 @@ services:
                 value_type:  "integer"
                 value: 365
     B2ACCESS:
-        title: &b2access B2ACCESS
+        name: &b2access B2ACCESS
         parents: *securityAndOperationsParent
         providers: [*eudat, *all]
         logo: b2access.png
@@ -1521,16 +1591,17 @@ services:
         webpage_url: https://b2access.eudat.eu
         manual_url: https://eudat.eu/services/userdoc/b2stage
         helpdesk_url: https://eudat.eu/contact-support-request
-        tutorial_url:
+        training_information_url:
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url: http://hdl.handle.net/11304/e43b2e3f-83c5-4e3f-b8b7-18d38d37a6cd
         access_policies_url: https://eudat.eu/policy
-        places: *europe
-        languages: *english
-        area: *interdisciplinary
-        target_groups: [*researchers, *research_organisations]
+        language_availability: *english
+        domain: *interdisciplinary
+        geographical_availabilities: *poland
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: AAI platform for federated authentication to EUDAT services
         platforms: [*eudatPlatform]
         description: |
@@ -1556,7 +1627,7 @@ services:
 
 
     EGI Archive storage:
-        title: EGI Archive storage
+        name: EGI Archive storage
         parents: *storageParent
         providers: [*egi]
         logo: archive-storage.png
@@ -1564,16 +1635,17 @@ services:
         webpage_url: https://www.egi.eu/services/archive-storage/
         manual_url: https://wiki.egi.eu/wiki/Online_Storage
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://wiki.egi.eu/wiki/Online_Storage
+        training_information_url: https://wiki.egi.eu/wiki/Online_Storage
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://eudat.eu/policy
-        places: *europe
-        languages: *english
-        target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        language_availability: *english
+        geographical_availabilities: *poland
+        domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Back-up your data for the long term and future use in a secure environment.
         platforms: [*egiPlatform]
         description: |
@@ -1624,7 +1696,7 @@ services:
                 value_type:  "integer"
                 value: 365
     EGI Online Storage:
-        title: &egiOnlineStorage EGI Online Storage
+        name: &egiOnlineStorage EGI Online Storage
         parents: *storageParent
         providers: [*egi]
         logo: archive-storage.png
@@ -1632,16 +1704,17 @@ services:
         webpage_url: https://www.egi.eu/services/online-storage/
         manual_url: https://wiki.egi.eu/wiki/Online_Storage
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://wiki.egi.eu/wiki/Online_Storage
+        training_information_url: https://wiki.egi.eu/wiki/Online_Storage
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-        places: *europe
-        languages: *english
-        target_groups: [*researchers, *research_organisations]
-        area: *interdisciplinary
+        language_availability: *english
+        geographical_availabilities: *poland
+        domain: *interdisciplinary
+        target_users: [*researchers, *research_organisations]
 #        #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Store, share and access your files and their metadata on a global scale.
         platforms: [*egiPlatform]
         description: |
@@ -1796,7 +1869,7 @@ services:
                 value_type:  "integer"
                 value: 365
 #    Argo:
-#        title: Argo
+#        name: Argo
 #        parents: *sharingAndDicoveryParent
 #        providers: [*not] #TODO: not specified
 #        logo: argo-data.png
@@ -1804,16 +1877,17 @@ services:
 #        webpage_url: http://www.euro-argo.eu/Activities/Data-Management
 #        manual_url: http://www.argo.ucsd.edu/Argo_date_guide.html
 #        helpdesk_url: https://www.egi.eu/more-information/
-#        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
+#        training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
 #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
 #        sla_url:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-#        places: *europe
+#        geographical_availabilities: *poland
 #        dedicated_for: ["Researchers"] #TODO: but not specified
-#        languages: *english
-#        area: *earthScience
+#        language_availability: *english
+#        domain: *earthScience
 ##        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Store, share and access your files and their metadata on a global scale.
 #        platforms: [*egiPlatform]
 #        description: |
@@ -1822,7 +1896,7 @@ services:
 #          which can be accessed through various data viewers.
 #          Data from individual floats are also available from a certain region or time.
     GEOSS Portal:
-        title: &geossPortal GEOSS Web Portal
+        name: &geossPortal GEOSS Web Portal
         parents: *sharingAndDicoveryParent
         providers: [*esa]
         logo: geoss-portal.png
@@ -1830,16 +1904,17 @@ services:
         webpage_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
         manual_url:
         helpdesk_url:
-        tutorial_url:
+        training_information_url:
         terms_of_use_url: http://geosspublish.uat.esaportal.eu/community/guest/terms-conditions
         sla_url:
         access_policies_url:
-        places: *europe
-        target_groups: [*researchers] #TODO: but not specified
-        languages: *english
-        area: *earthScience
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers] #TODO: but not specified
+        domain: *earthScience
 #        #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Access to resources from the Global Earth Observation System of Systems
         platforms: [*ecopotential, *geossPlatform]
         description: |
@@ -1854,7 +1929,7 @@ services:
             description: *notSpecified
             webpage: http://geosspublish.uat.esaportal.eu/knowledge-producer
     GEO DAB:
-        title: &geossDab GEO DAB
+        name: &geossDab GEO DAB
         parents: *sharingAndDicoveryParent
         providers: [*cnr]
         logo: geo-dab.jpg
@@ -1862,16 +1937,17 @@ services:
         webpage_url: http://www.geodab.net
         manual_url: http://api.geodab.eu/index.html
         helpdesk_url: http://api.geodab.eu/index.html
-        tutorial_url: http://eosc.geodab.eu/gi-cat-StP/
+        training_information_url: http://eosc.geodab.eu/gi-cat-StP/
         terms_of_use_url:
         sla_url:
         access_policies_url:
-        places: *europe
-        target_groups: [*researchers, *research_groups, *research_organisations]
-        languages: *english
-        area: [*earthScience, *lifeSciences, *interdisciplinary]
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_groups, *research_organisations]
+        domain: [*earthScience, *lifeSciences, *interdisciplinary]
         restrictions:
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Multi-disciplinary discovery, access, and use of resources from the Global Earth Observation System of Systems
         platforms: [*geo, *geossPlatform]
         description: |
@@ -1895,7 +1971,7 @@ services:
             description: *notSpecified
             webpage: http://www.geodab.net
     VLO:
-        title: &vloService Virtual Language Observatory
+        name: &vloService Virtual Language Observatory
         parents: *sharingAndDicoveryParent
         providers: [*clarin]
         logo: vlo-logo.png #component-metadata-infrastructure.png
@@ -1903,16 +1979,17 @@ services:
         webpage_url: https://vlo.clarin.eu
         manual_url: https://vlo.clarin.eu/help
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
+        training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-        places: *europe
-        languages: *english
-        area: [*socialSciences, *humanities]
-        target_groups: [*researchers] #TODO: but not specified
+        language_availability: *english
+        domain: [*socialSciences, *humanities]
+        geographical_availabilities: *poland
+        target_users: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: A facet browser for fast navigation and searching in huge amounts of metadata.
         platforms: [*clarinPlatform, *eudatPlatform, *europeana]
         description: |
@@ -1942,7 +2019,7 @@ services:
 
 
     LRS:
-        title: &lrsService Language Resource Switchboard
+        name: &lrsService Language Resource Switchboard
         parents: *sharingAndDicoveryParent
         providers: [*clarin]
         logo: lrs-logo.png #component-metadata-infrastructure.png
@@ -1950,16 +2027,17 @@ services:
         webpage_url: https://switchboard.clarin.eu/ #https://clarin.eu/
         manual_url: https://vlo.clarin.eu/help
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
+        training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-        places: *europe
-        languages: *english
-        area: [*socialSciences, *humanities]
-        target_groups: [*researchers] #TODO: but not specified
+        language_availability: *english
+        domain: [*socialSciences, *humanities]
+        geographical_availabilities: *poland
+        target_users: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: A web application that suggests language analysis tools for specific data sets.
         platforms: [*clarinPlatform, *eudatPlatform, *europeana]
         description: |
@@ -2007,7 +2085,7 @@ services:
               A web application that suggests language analysis tools for specific data sets.
             webpage: https://switchboard.clarin.eu/
     VCR:
-        title: &vcrService Virtual Collection Registry
+        name: &vcrService Virtual Collection Registry
         parents: *sharingAndDicoveryParent
         providers: [*clarin]
         logo: vcr-logo.png #component-metadata-infrastructure.png
@@ -2015,16 +2093,17 @@ services:
         webpage_url: https://www.clarin.eu/content/virtual-collections
         manual_url: https://vlo.clarin.eu/help
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
+        training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url:
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-        places: *europe
-        languages: *english
-        target_groups: [*researchers] #TODO: but not specified
-        area: *humanities
+        language_availability: *english
+        geographical_availabilities: *poland
+        domain: *humanities
+        target_users: [*researchers] #TODO: but not specified
 #        #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: A service that allows researchers to create their own citable digital bookmarks.
         platforms: [*clarinPlatform, *eudatPlatform, *europeana]
         description: |
@@ -2067,7 +2146,7 @@ services:
               The collection metadata is openly available and accessible via the Virtual Language Observatory.
               The referenced digital objects can also be processed with the Language Resource Switchboard.
 #    EIDA Data Archive:
-#        title: EIDA Data Archive
+#        name: EIDA Data Archive
 #        parents: *sharingAndDicoveryParent
 #        providers: *eida
 #        logo: orfeus-european-integrated-data-archive-eida.png
@@ -2075,16 +2154,17 @@ services:
 #        webpage_url: https://www.orfeus-eu.org/data/eida/
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        target_groups: ["Reaserchers"] #TODO: but not specified
-#        places: *europe
-#        languages: *english
-#        area: *earthScience
+#        target_users: ["Reaserchers"] #TODO: but not specified
+#        language_availability: *english
+#        domain: *earthScience
+#        geographical_availabilities: *poland
 ##        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: *notSpecified
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2093,21 +2173,22 @@ services:
 #          Access to waveform and station metadata is possible through modern APIs and interfaces,
 #          such as the Rapid Raw Strong Motion system."
 #    Applications on Demand:
-#        title: Applications on Demand
+#        name: Applications on Demand
 #        parents: *applicationsParent
 #        webpage_url: https://www.egi.eu/services/applications-on-demand/
 #        manual_url: https://wiki.egi.eu/wiki/AoD
 #        helpdesk_url: https://www.egi.eu/more-information/
-#        tutorial_url: https://wiki.egi.eu/wiki/HowToAccessTheEGIMarketPlace
+#        training_information_url: https://wiki.egi.eu/wiki/HowToAccessTheEGIMarketPlace
 #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
 #        sla_url:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-#        places: *europe
-#        languages: *english
-#        target_groups: ["Researchers", "Research organisations"]
-#        area: *interdisciplinary
+#        language_availability: *english
+#        geographical_availabilities: *poland
+#        domain: *interdisciplinary
+#        target_users: ["Researchers", "Research organisations"]
 #        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        description: "Features:
 #
@@ -2125,7 +2206,7 @@ services:
 #
 #                         New viruses implicated in fatal snake disease  how the  platform helped virologists to make sense of millions of virus genomes"
 #    GNU Octave:
-#        title: GNU Octave
+#        name: GNU Octave
 #        parents: *processingAndAnalysisParent
 #        providers: [*ics, *recas, *cyfro, *begrid, *cesga]
 #        logo: gnu-octave.png
@@ -2133,16 +2214,17 @@ services:
 #        webpage_url: https://www.gnu.org/software/octave/
 #        manual_url: https://octave.org/doc/interpreter/
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        places: *europe
-#        languages: *english
-#        target_groups: ["Researchers", "Research organisations"]
-#        area: *mathematics
+#        language_availability: *english
+#        geographical_availabilities: *poland
+#        domain: *mathematics
+#        target_users: ["Researchers", "Research organisations"]
 #        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2200,7 +2282,7 @@ services:
 #
 #
 #    Galaxy:
-#        title: Galaxy
+#        name: Galaxy
 #        parents: *processingAndAnalysisParent
 #        providers: [*cesga, *recas, *ics]
 #        logo: galaxy.png
@@ -2208,16 +2290,17 @@ services:
 #        webpage_url:
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        places: *europe
-#        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
-#        area: *lifeSciences
+#        geographical_availabilities: *poland
+#        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
+#        domain: *lifeSciences
 #        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2228,7 +2311,7 @@ services:
 #            description: Galaxy is an open, web-based platform for data-intensive biomedical research.
 #            parameters: *appParameters
 #    NAMD:
-#        title: NAMD
+#        name: NAMD
 #        parents: *processingAndAnalysisParent
 #        providers: [*cesga, *recas, *ics]
 #        logo: namd.png
@@ -2236,16 +2319,17 @@ services:
 #        webpage_url:
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        places: *europe
-#        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
-#        area: *lifeSciences
+#        geographical_availabilities: *poland
+#        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
+#        domain: *lifeSciences
 ##        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        platforms: [*egiPlatform, *ec3, *aodp]
 #        description: |
@@ -2299,7 +2383,7 @@ services:
 #                minimum: 1
 #                maximum: 730
 #    Apache Tomcat:
-#        title: Apache Tomcat
+#        name: Apache Tomcat
 #        parents: *networkingParent
 #        providers: [*cesga, *recas, *ics]
 #        logo: apache-tomcat.png
@@ -2307,16 +2391,17 @@ services:
 #        webpage_url:
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        places: *europe
-#        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
-#        area: *earthScience
+#        geographical_availabilities: *poland
+#        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
+#        domain: *earthScience
 #        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: |
 #          Applications on Demand gives you access to online applications and application-development
 #          and hosting frameworks to support compute-intensive data analysis
@@ -2332,7 +2417,7 @@ services:
 #              Java Expression Language and Java WebSocket technologies.
 #            parameters: *appParameters
 #    Gnuplot:
-#        title: Gnuplot
+#        name: Gnuplot
 #        parents: *processingAndAnalysisParent
 #        providers: [*cesga, *recas, *ics]
 #        logo: gnuplot.png
@@ -2340,16 +2425,17 @@ services:
 #        webpage_url: http://gnuplot.sourceforge.net
 #        manual_url: http://gnuplot.sourceforge.net/documentation.html
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        places: *europe
-#        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
-#        area: *lifeSciences
+#        geographical_availabilities: *poland
+#        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
+#        domain: *lifeSciences
 ##        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        platforms: [*egiPlatform, *ec3, *aodp]
 #        description: |
@@ -2363,7 +2449,7 @@ services:
 #              OS/2, MS Windows, OSX, VMS, and other platforms.
 #            parameters: *appParameters
 #    Docker:
-#        title: Docker
+#        name: Docker
 #        parents: *networkingParent
 #        providers: [*cesga, *recas, *ics]
 #        logo: docker.png
@@ -2371,16 +2457,18 @@ services:
 #        webpage_url: https://www.docker.com/
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        places: *europe
-#        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
-#        area: *applicationFrameworks
+#        geographical_availabilities: *poland
+#        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
+#        domain: *applicationFrameworks
 #        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2393,7 +2481,7 @@ services:
 #              of Linux applications inside software containers.
 #            parameters: *appParameters
 #    Hadoop:
-#        title: Hadoop
+#        name: Hadoop
 #        parents: *processingAndAnalysisParent
 #        providers: [*cesga, *recas, *ics]
 #        logo: hadoop.png
@@ -2401,16 +2489,18 @@ services:
 #        webpage_url: http://hadoop.apache.org/
 #        manual_url: http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        places: *europe
-#        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
-#        area: *applicationFrameworks
+#        geographical_availabilities: *poland
+#        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
+#        domain: *applicationFrameworks
 ##        #restrictions: *notSpecified
 #        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        platforms: [*egiPlatform, *ec3, *aodp]
 #        description: |
@@ -2424,7 +2514,7 @@ services:
 #              of large data sets across clusters of computers using simple programming models.
 #            parameters: *appParameters
 #    Marathon:
-#        title: Marathon
+#        name: Marathon
 #        parents: *dataManagementParent
 #        providers: [*cesga, *recas, *ics]
 #        logo: marathon.png
@@ -2432,16 +2522,17 @@ services:
 #        webpage_url: https://mesosphere.github.io/marathon/
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        places: *europe
-#        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
-#        area: *applicationFrameworks
+#        geographical_availabilities: *poland
+#        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
+#        domain: *applicationFrameworks
 ##        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        platforms: [*egiPlatform, *ec3, *aodp]
 #        description: |
@@ -2455,7 +2546,7 @@ services:
 #              for Mesosphere's Data Center/Operating System (DC/OS) and Apache Mesos.
 #            parameters: *appParameters
 #    Chronos:
-#        title: Chronos
+#        name: Chronos
 #        open_access: false
 #        providers: [*cesga, *recas, *ics]
 #        logo: chronos.png
@@ -2463,16 +2554,17 @@ services:
 #        webpage_url: https://github.com/mesos/chronos
 #        manual_url: https://mesos.github.io/chronos/
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        places: *europe
-#        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
-#        area: *applicationFrameworks
+#        geographical_availabilities: *poland
+#        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
+#        domain: *applicationFrameworks
 #        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2488,7 +2580,7 @@ services:
 
 
 #    The R project for statistical computing:
-#        title: The R project for statistical computing
+#        name: The R project for statistical computing
 #        parents: *processingAndAnalysisParent
 #        providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
 #        logo: the-r-project-for-statistical-computing.png
@@ -2496,16 +2588,17 @@ services:
 #        webpage_url: https://www.r-project.org
 #        manual_url: https://cran.r-project.org/manuals.html
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        places: *europe
-#        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
-#        area: *dataAnalysis
+#        geographical_availabilities: *poland
+#        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
+#        domain: *dataAnalysis
 #        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2519,7 +2612,7 @@ services:
 #              is a language and environment for statistical computing and graphics.
 #            parameters: *appParameters
 #    The Semantic Search Engine (SSE):
-#        title: The Semantic Search Engine (SSE)
+#        name: The Semantic Search Engine (SSE)
 #        parents: *dataManagementParent
 #        providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
 #        logo: the-semantic-search-engine-sse.png
@@ -2527,16 +2620,17 @@ services:
 #        webpage_url:
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        places: *europe
-#        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
-#        area: *humanities
+#        geographical_availabilities: *poland
+#        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
+#        domain: *humanities
 #        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        platforms: [*egiPlatform, *ec3, *aodp]
 #        description: |
@@ -2550,7 +2644,7 @@ services:
 #              coupled with semantic web technologies to address the issues of data discovery and correlation.
 #            parameters: *appParameters
     Chipster:
-        title: &chipster Chipster
+        name: &chipster Chipster
         parents: *processingAndAnalysisParent
         providers: [*infn, *csc]
         logo: chipster.png
@@ -2558,17 +2652,18 @@ services:
         webpage_url: https://csgf.egi.eu/
         manual_url: https://csgf.egi.eu/documents/620030/0/csg_manual_for_ltos.pdf/be218ad7-8a0d-42b7-b932-4b7667524c09
         helpdesk_url:
-        tutorial_url:
+        training_information_url:
         #contact: applications-platform-info@mailman.egi.eu
         terms_of_use_url: https://csgf.egi.eu/terms-of-use
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
-        places: *europe
-        target_groups: [*researchers, *research_organisations, *business]
-        languages: *english
-        area: *lifeSciences
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations, *business]
+        domain: *lifeSciences
         restrictions: "Research affiliation needed"
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: NGS and microarray analysis in the cloud.
         platforms: [*eoscHub, *aodp]
         description: |
@@ -2598,7 +2693,7 @@ services:
 
 
 #    ClustalW2:
-#        title: ClustalW2
+#        name: ClustalW2
 #        parents: *processingAndAnalysisParent
 #        providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
 #        logo: clustalw2.png
@@ -2606,16 +2701,17 @@ services:
 #        webpage_url: http://www.clustal.org/clustal2/
 #        manual_url: http://www.clustal.org/clustal2/#Documentation
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        places: *europe
-#        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
-#        area: *lifeSciences
+#        geographical_availabilities: *poland
+#        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
+#        domain: *lifeSciences
 #        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
 #        # platforms: [*eopillar, *ec3]
 #        description: |
@@ -2626,7 +2722,7 @@ services:
 #            description: ClustalW2 is a multiple sequence alignment tool for the alignment of DNA or protein sequences.
 #            parameters: *appParameters
 #    AutoDock Vina:
-#        title: AutoDock Vina
+#        name: AutoDock Vina
 #        parents: *processingAndAnalysisParent
 #        providers: [*cesga, *recas, *ics]
 #        logo: autodock-vina.png
@@ -2634,16 +2730,17 @@ services:
 #        webpage_url:
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        places: *europe
-#        target_groups: ["Researchers", "Research organisations"]
-#        languages: *english
-#        area: *lifeSciences
+#        geographical_availabilities: *poland
+#        language_availability: *english
+#        target_users: ["Researchers", "Research organisations"]
+#        domain: *lifeSciences
 #        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: |
 #          Applications on Demand gives you access to online applications and application-development
 #          and hosting frameworks to support compute-intensive data analysis
@@ -2656,23 +2753,24 @@ services:
 #            description: AutoDock Vina is an open-source software for doing molecular docking.
 #            parameters: *appParameters
     EGI Notebooks:
-      title: &notebook EGI Notebooks
+      name: &notebook EGI Notebooks
       parents: *processingAndAnalysisParent
       providers: [*egi]
       open_access: false
       webpage_url: https://www.egi.eu/services/notebooks/
       manual_url: https://wiki.egi.eu/wiki/EGI_Notebooks
       helpdesk_url:
-      tutorial_url:
+      training_information_url:
       terms_of_use_url:
       sla_url:
       access_policies_url:
-      target_groups: [*researchers, *research_organisations]
-      places: *europe
-      languages: *english
-      area: *lifeSciences
+      target_users: [*researchers, *research_organisations]
+      language_availability: *english
+      domain: *lifeSciences
+      geographical_availabilities: *poland
       #restrictions: *notSpecified
-      phase: beta
+      trl: *trl_9
+      life_cycle_status: *prod
       tagline: Create interactive documents with live code, visualisations and narrative text powered by the Jupyter technology
       platforms: [*egiPlatform]
       description: |
@@ -2755,23 +2853,24 @@ services:
               type:  "input"
               value_type:  "integer"
 #    Component Metadata Infrastructure:
-#        title: Component Metadata Infrastructure
+#        name: Component Metadata Infrastructure
 #        parents: *thematicServicesParent
 #        providers: [*not]
 #        open_access: false
 #        webpage_url: https://www.clarin.eu/content/component-metadata
 #        manual_url: https://www.clarin.eu/content/component-metadata
 #        helpdesk_url: https://www.clarin.eu/content/support
-#        tutorial_url: https://www.eosc-hub.eu/training-material/component-metadata-infrastructure-services
+#        training_information_url: https://www.eosc-hub.eu/training-material/component-metadata-infrastructure-services
 #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
 #        sla_url:
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-#        places: *europe
-#        target_groups: ["Researchers"] #TODO: but not specified
-#        languages: *english
-#        area: *interdisciplinary
+#        geographical_availabilities: *poland
+#        language_availability: *english
+#        target_users: ["Researchers"] #TODO: but not specified
+#        domain: *interdisciplinary
 #        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: Services for Social Sciences and Humanities provided via the national CLARIN centres
 #        description: |
 #          CLARIN-ERIC is a consortium of national service providers dedicated to Social Sicences and Humanities. The CLARIN Metadata Infrastructure offers several services through EOSC-hub:
@@ -2795,7 +2894,7 @@ services:
 #            - EUDAT, by the integration with several services, such as B2SHARE, B2ACCESS and B2DROP.
 
     DARIAH:
-        title: &dariah DARIAH Science Gateway
+        name: &dariah DARIAH Science Gateway
         parents: *processingAndAnalysisParent
         providers: [*rbi]
         logo: dariah.png
@@ -2803,16 +2902,17 @@ services:
         webpage_url: https://dariah-gateway.lpds.sztaki.hu/
         manual_url: https://dariah-gateway.lpds.sztaki.hu/help2
         helpdesk_url: https://www.dariah.eu/contact
-        tutorial_url: https://www.dariah.eu/tools-services/dariah-training/
+        training_information_url: https://www.dariah.eu/tools-services/dariah-training/
         terms_of_use_url:
         sla_url:
         access_policies_url: https://www.dariah.eu/privacy-notice/
-        places: *europe
-        target_groups: [*researchers, *research_organisations]
-        languages: *english
-        area: *humanities
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations]
+        domain: *humanities
         #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: The DARIAH Science Gateway is a platform that provides access to various digital applications and services for the Arts & Humanities researchers
         # platforms: [*eopillar, *ec3]
         description: |
@@ -2855,7 +2955,7 @@ services:
                 value_type:  "integer"
                 value: 365
     Dynamic On Demand Analysis Service:
-        title: Dynamic On Demand Analysis Service (DODAS Portal)
+        name: Dynamic On Demand Analysis Service (DODAS Portal)
         parents: *processingAndAnalysisParent
         providers: [*infn]
         logo: dynamic-on-demand-analysis-service.png
@@ -2863,16 +2963,17 @@ services:
         webpage_url: https://dodas-iam.cloud.cnaf.infn.it/login
         manual_url: https://dodas-ts.github.io/dodas-doc/
         helpdesk_url:
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
-        places: *europe
-        target_groups: [*researchers, *research_organisations]
-        languages: *english
-        area: &highEnergyPhysics High-Energy Physics
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations]
+        domain: &highEnergyPhysics High-Energy Physics
         #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Simplify the access and management of computing resources
         # platforms: [*eopillar, *ec3]
         description: |
@@ -2934,7 +3035,7 @@ services:
                 value_type:  "integer"
                 value: 365
     D4 Science Particle Formation:
-        title: &d4scienceService New Particle Formation Event Analysis
+        name: &d4scienceService New Particle Formation Event Analysis
         parents: *processingAndAnalysisParent
         providers: [*d4science, *egi, *smartSmear]
         logo: vre.png
@@ -2942,16 +3043,17 @@ services:
         webpage_url: https://services.d4science.org/web/particleformation/
         manual_url: https://github.com/markusstocker/pynpf-d4science
         helpdesk_url: https://github.com/markusstocker/pynpf-d4science
-        tutorial_url: https://youtu.be/ra9W7b5DbgI
+        training_information_url: https://youtu.be/ra9W7b5DbgI
         terms_of_use_url: https://documents.egi.eu/public/ShowDocument?docid=2623
         sla_url: https://documents.egi.eu/document/2875
         access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
-        places: *europe
-        target_groups: [*researchers, *research_organisations]
-        languages: *english
-        area: *physicalScienceEarth
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations]
+        domain: *physicalScienceEarth
         #restrictions: *notSpecified
-        phase: beta
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: D4Science Service
         platforms: [*egiPlatform, *d4sciencePlatform]
         description: |
@@ -2966,7 +3068,7 @@ services:
             description: *notSpecified
             webpage: https://services.d4science.org/web/particleformation/
     ENES Climate Analytics Service:
-        title: &enes ENES Climate Analytics Service
+        name: &enes ENES Climate Analytics Service
         parents: *processingAndAnalysisParent
         logo: enes-climate-analytics-service.png
         providers: [*ccmc, *dkrz]
@@ -2974,16 +3076,17 @@ services:
         webpage_url: https://portal.enes.org/data/data-metadata-service/processing/ecas
         manual_url:
         helpdesk_url: https://portal.enes.org/contact
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
-        places: *europe
-        target_groups: [*researchers, *research_organisations]
-        languages: *english
-        area: *climateScience
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations]
+        domain: *climateScience
         #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Analyze and process data from multiple communities with the Ophidia Big Data Analytics framework
         platforms: [*enesPlatform]
         description: |
@@ -3038,7 +3141,7 @@ services:
                 value_type:  "integer"
                 value: 365
     LifeWatch ERIC Plants Identification App:
-        title: &lifewatchERICPlants LifeWatch ERIC Plants Identification App
+        name: &lifewatchERICPlants LifeWatch ERIC Plants Identification App
         parents: *processingAndAnalysisParent
         providers: [*lifewatch]
         logo: lifewatch-eric-plants-identification-app.png
@@ -3046,16 +3149,17 @@ services:
         webpage_url: https://www.lifewatch.eu/
         manual_url: https://github.com/IgnacioHeredia/plant_classification/blob/master/webpage/README.md#using-the-api%20
         helpdesk_url:
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
-        places: *europe
-        target_groups: [*researchers, *research_organisations]
-        languages: *english
-        area: *environmentalScience
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations]
+        domain: *environmentalScience
         #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Web service to classify plant pictures based on convolutional neural networks
         # platforms: [*eopillar, *ec3]
         description: |
@@ -3101,70 +3205,73 @@ services:
                 value_type:  "integer"
                 value: 365
 #    ELIXIR Core Data Resources:
-#        title: ELIXIR Core Data Resources
+#        name: ELIXIR Core Data Resources
 #        parents: *sharingAndDicoveryParent
 #        providers: [*not]
 #        open_access: false
 #        webpage_url:
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        places: *europe
-#        target_groups: ["Researchers"] #TODO: but not specified
-#        languages: *english
-#        area: *interdisciplinary
+#        geographical_availabilities: *poland
+#        language_availability: *english
+#        target_users: ["Researchers"] #TODO: but not specified
+#        domain: *interdisciplinary
 #        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: *notSpecified
 #        platforms: [*elixirPlatform]
 #        description: *notSpecified
 #    EISCAT:
-#        title: EISCAT
+#        name: EISCAT
 #        parents: *sharingAndDicoveryParent
 #        providers: [*not]
 #        open_access: false
 #        webpage_url:
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        places: *europe
-#        target_groups: ["Researchers"] #TODO: but not specified
-#        languages: *english
-#        area: *interdisciplinary
+#        geographical_availabilities: *poland
+#        language_availability: *english
+#        target_users: ["Researchers"] #TODO: but not specified
+#        domain: *interdisciplinary
 #        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: *notSpecified
 #        # platforms: [*eopillar, *ec3]
 #        description: *notSpecified
 #    LOFAR:
-#        title: LOFAR
+#        name: LOFAR
 #        parents: *sharingAndDicoveryParent
 #        providers: [*astron, *rug, *surfsara, *fzj, *psnc]
 #        open_access: false
 #        webpage_url:
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        places: *europe
-#        target_groups: ["Researchers"] #TODO: but not specified
-#        languages: *english
-#        area: *interdisciplinary
+#        geographical_availabilities: *poland
+#        language_availability: *english
+#        target_users: ["Researchers"] #TODO: but not specified
+#        domain: *interdisciplinary
 #        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: *notSpecified
 #        # platforms: [*eopillar, *ec3]
 #        description: *notSpecified
     OPENCoastS:
-        title: &openCoastS OPENCoastS Portal
+        name: &openCoastS OPENCoastS Portal
         parents: *processingAndAnalysisParent
         providers: [*pncel]
         logo: opencoasts.png
@@ -3172,16 +3279,17 @@ services:
         webpage_url: https://opencoasts.ncg.ingrid.pt/
         manual_url: https://opencoasts.ncg.ingrid.pt/static/OPENCoastS_manual.pdf
         helpdesk_url:
-        tutorial_url: https://www.eosc-hub.eu/training-material/opencoasts-service
+        training_information_url: https://www.eosc-hub.eu/training-material/opencoasts-service
         terms_of_use_url:
         sla_url:
         access_policies_url:
-        places: *europe
-        target_groups: [*researchers, *research_organisations]
-        languages: *english
-        area: *environmentalScience
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations]
+        domain: *environmentalScience
         #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: On-demand operational coastal circulation forecast service
         # platforms: [*eopillar, *ec3]
         description: |
@@ -3256,20 +3364,21 @@ services:
                 value: 365
 
 #    WeNMR Suite for Structural Biology:
-#        title: WeNMR Suite for Structural Biology
+#        name: WeNMR Suite for Structural Biology
 #        parents: *thematicServicesParent
 #        webpage_url: https://www.wenmr.eu/
 #        manual_url: https://www.wenmr.eu/tutorials/
 #        helpdesk_url: https://www.wenmr.eu/support/
-#        tutorial_url: https://www.wenmr.eu/tutorials/
+#        training_information_url: https://www.wenmr.eu/tutorials/
 #        terms_of_use_url:
 #        sla_url:
 #        access_policies_url:
-#        places: *europe
-#        languages: *english
-#        area: *interdisciplinary
+#        language_availability: *english
+#        domain: *interdisciplinary
+#        geographical_availabilities: *poland
 #        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+#        life_cycle_status: *prod
 #        tagline: A suite of computational tools for structural biology
 #        description: "The WeNMR suite of computational tools is composed of eight individual platforms:
 #
@@ -3303,7 +3412,7 @@ services:
 #
 #                      During EOSC-hub, the WeNMR services will be integrated with EUDAT services and other components from the INDIGO catalogue."
     HADDOCK:
-        title: &haddock HADDOCK
+        name: &haddock HADDOCK
         parents: *processingAndAnalysisParent
         providers: [*uou]
         logo: haddock.png
@@ -3311,16 +3420,17 @@ services:
         webpage_url: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
         manual_url: http://www.bonvinlab.org/software/haddock2.2/manual/
         helpdesk_url: http://ask.bioexcel.eu/c/haddock
-        tutorial_url: https://www.wenmr.eu/tutorials/#haddock
+        training_information_url: https://www.wenmr.eu/tutorials/#haddock
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
-        places: *europe
-        target_groups: [*researchers]
-        languages: *english
-        area: *biologicalSciences
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers]
+        domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Integrative modeling of biomolecular complexes with the user-friendly, EGI HTC-enabled HADDOCK portal
         platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
         description: |
@@ -3341,7 +3451,7 @@ services:
               necessary for data analysis and modelling.
             webpage: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
     PowerFit:
-        title: &powerFit PowerFit
+        name: &powerFit PowerFit
         parents: *processingAndAnalysisParent
         providers: [*uou]
         logo: powerfit.png
@@ -3349,16 +3459,17 @@ services:
         webpage_url: http://haddock.science.uu.nl/enmr/services/POWERFIT
         manual_url: http://haddock.science.uu.nl/cgi/enmr/services/POWERFIT/powerfit/help
         helpdesk_url: http://ask.bioexcel.eu/c/powerfit
-        tutorial_url: https://www.wenmr.eu/tutorials/#powerfit
+        training_information_url: https://www.wenmr.eu/tutorials/#powerfit
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
-        places: *europe
-        target_groups: [*researchers]
-        languages: *english
-        area: *biologicalSciences
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers]
+        domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: The PowerFit server allows you to fit your 3D structures in any map!
         platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
         description: |
@@ -3369,7 +3480,7 @@ services:
             <<: *wenMRService
             webpage: http://haddock.science.uu.nl/enmr/services/POWERFIT
     DisVis:
-        title: &disVis DisVis
+        name: &disVis DisVis
         parents: *processingAndAnalysisParent
         providers: [*uou]
         logo: disvis.png
@@ -3377,16 +3488,17 @@ services:
         webpage_url: http://haddock.science.uu.nl/enmr/services/DISVIS
         manual_url: http://haddock.science.uu.nl/cgi/enmr/services/DISVIS/disvis/help
         helpdesk_url: http://ask.bioexcel.eu/c/disvis
-        tutorial_url: https://www.wenmr.eu/tutorials/#disvis
+        training_information_url: https://www.wenmr.eu/tutorials/#disvis
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
-        places: *europe
-        target_groups: [*researchers]
-        languages: *english
-        area: *biologicalSciences
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers]
+        domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: |
           Visualizes and quantify the information content of distance
           restraints between macromolecular complexes with DisVis
@@ -3399,7 +3511,7 @@ services:
             <<: *wenMRService
             webpage: http://haddock.science.uu.nl/enmr/services/DISVIS
     CS-ROSETTA:
-        title: &csRoseta CS-ROSETTA
+        name: &csRoseta CS-ROSETTA
         parents: *processingAndAnalysisParent
         providers: [*uou]
         logo: cs-rosetta.png
@@ -3407,16 +3519,17 @@ services:
         webpage_url: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
         manual_url: https://www.wenmr.eu/tutorials/#cs-rosetta
         helpdesk_url:
-        tutorial_url: https://www.wenmr.eu/tutorials/
+        training_information_url: https://www.wenmr.eu/tutorials/
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
-        places: *europe
-        target_groups: [*researchers]
-        languages: *english
-        area: *biologicalSciences
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers]
+        domain: *biologicalSciences
         restrictions: "Registration required, Limited to non-profit users"
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: NMR protein structure prediction using the EGI HTC-enabled CS-ROSETTA portal
         platforms: [*wenmr, *egiPlatform, *instruct]
         description: |
@@ -3428,7 +3541,7 @@ services:
             <<: *wenMRService
             webpage: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
     AMBER:
-        title: &amber AMBER
+        name: &amber AMBER
         parents: *processingAndAnalysisParent
         providers: [*cerm, *cirmmp]
         logo: amber.png
@@ -3436,18 +3549,21 @@ services:
         webpage_url: http://py-enmr.cerm.unifi.it/access/index
         manual_url: https://www.wenmr.eu/tutorials
         helpdesk_url: http://py-enmr.cerm.unifi.it/feedback/index?type=amps-nmr
-        tutorial_url: https://www.wenmr.eu/tutorials/
+        training_information_url: https://www.wenmr.eu/tutorials/
         terms_of_use_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
-        places: *europe
-        target_groups: [*researchers]
-        languages: *english
-        area: *biologicalSciences
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers]
+        domain: *biologicalSciences
         restrictions: "Limited to non-profit users, For-profit users can use the service if they a license agreement with the University of California for the AMBER toolkit"
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Web portal for Nuclear Magnetic Resonance (NMR) structure refinement
         platforms: [*wenmr, *egiPlatform, *instruct]
+        funding_bodies: ["funding_body-esa", "funding_body-epsrc"]
+        funding_programs: ["funding_program-h2020","funding_program-health"]
         description: |
           Simple and user-friendly NMR-based refinement of the 3D structures of biological macromolecules
           thought the AMPS-NMR portal. Amber (Assisted Model Building with Energy Refinement) is a suite
@@ -3461,7 +3577,7 @@ services:
             <<: *wenMRService
             webpage: http://py-enmr.cerm.unifi.it/access/index
     FANTEN:
-        title: &fanten FANTEN
+        name: &fanten FANTEN
         parents: *processingAndAnalysisParent
         providers: [*cerm, *cirmmp]
         logo: fanten.png
@@ -3469,16 +3585,17 @@ services:
         webpage_url: http://abs.cerm.unifi.it:8080
         manual_url: http://abs.cerm.unifi.it:8080/manual/FANTEN_manual.pdf
         helpdesk_url:
-        tutorial_url: https://www.wenmr.eu/tutorials/
+        training_information_url: https://www.wenmr.eu/tutorials/
         terms_of_use_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
-        places: *europe
-        target_groups: [*researchers]
-        languages: *english
-        area: *biologicalSciences
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers]
+        domain: *biologicalSciences
         restrictions: "Limited to non-profit users"
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: FANTEN for the analysis of magnetic anisotropy-induced NMR data
         platforms: [*wenmr, *egiPlatform, *instruct]
         description: |
@@ -3492,7 +3609,7 @@ services:
             <<: *wenMRService
             webpage: http://abs.cerm.unifi.it:8080
     SpotOn:
-        title: &spotOn SpotOn
+        name: &spotOn SpotOn
         parents: *processingAndAnalysisParent
         providers: [*uou]
         logo: SpotOn-logo.png
@@ -3500,16 +3617,17 @@ services:
         webpage_url: https://haddock.science.uu.nl/enmr/services/SPOTON
         manual_url: https://haddock.science.uu.nl/cgi/enmr/services/SPOTON/spoton/help
         helpdesk_url: http://ask.bioexcel.eu/c/spoton
-        tutorial_url: https://www.wenmr.eu/tutorials/#spoton
+        training_information_url: https://www.wenmr.eu/tutorials/#spoton
         terms_of_use_url: https://wenmr.science.uu.nl/conditions
         sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
         access_policies_url: https://wenmr.science.uu.nl/conditions
-        places: *europe
-        target_groups: [*researchers]
-        languages: *english
-        area: [*biologicalSciences, *lifeSciences]
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers]
+        domain: [*biologicalSciences, *lifeSciences]
         restrictions: "Registration required, Limited to non-profit users"
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: "SpotOn: determination of Hot-Spots at protein-protein interfaces"
         platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
         description: |
@@ -3521,7 +3639,7 @@ services:
             <<: *wenMRService
             webpage: https://haddock.science.uu.nl/enmr/services/SPOTON
     GEP - HRCM:
-        title: &gepHRCM GEP - High-Resolution Change Monitoring for the Alpine Region
+        name: &gepHRCM GEP - High-Resolution Change Monitoring for the Alpine Region
         parents: *processingAndAnalysisParent
         providers: [*terradue]
         logo: gep-alpine.png
@@ -3530,16 +3648,17 @@ services:
         manual_url: https://terradue.github.io/doc-tep-geohazards/
         helpdesk_url: https://helpdesk.terradue.com
         #contect: support@terradue.com
-        tutorial_url: https://discuss.terradue.com/t/interpreting-the-layers-of-dlr-s-insar-browse-service/216 #TODO: should be able to link several urls
+        training_information_url: https://discuss.terradue.com/t/interpreting-the-layers-of-dlr-s-insar-browse-service/216 #TODO: should be able to link several urls
         terms_of_use_url:
         sla_url:
         access_policies_url:
-        places: *europe
-        target_groups: [*researchers, *research_organisations, *business]
-        languages: *english
-        area: [*earthScience, *appliedScience, *interdisciplinary]
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations, *business]
+        domain: [*earthScience, *appliedScience, *interdisciplinary]
         restrictions: " Research affiliation needed, user account registration needed."
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: "Continuous systematic interferogram generation with Sentinel-1 data over the Alpine Region."
         platforms: [*gepPlatform, *esaPlatform]
         description: |
@@ -3554,7 +3673,7 @@ services:
                 description: description
                 webpage: https://geohazards-tep.eo.esa.int/
     GEP - EO:
-        title: &gepEO GEP - EO Services for Earthquake Response and Landslides Analysis
+        name: &gepEO GEP - EO Services for Earthquake Response and Landslides Analysis
         parents: *sharingAndDicoveryParent
         providers: [*terradue]
         logo: gep-eo.png
@@ -3563,16 +3682,17 @@ services:
         manual_url: https://terradue.github.io/doc-tep-geohazards/
         helpdesk_url: https://helpdesk.terradue.com
         #contect: support@terradue.com
-        tutorial_url: https://terradue.github.io/doc-tep-geohazards/tutorials/index.html
+        training_information_url: https://terradue.github.io/doc-tep-geohazards/tutorials/index.html
         terms_of_use_url:
         sla_url:
         access_policies_url:
-        places: *europe
-        target_groups: [*researchers, *research_organisations, *business]
-        languages: *english
-        area: [*earthScience, *appliedScience, *interdisciplinary]
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations, *business]
+        domain: [*earthScience, *appliedScience, *interdisciplinary]
         restrictions: " Research affiliation needed, user account registration needed."
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: "On-demand EO processing services for Earthquake Response and Landslides Analysis."
         platforms: [*gepPlatform, *esaPlatform]
         description: |
@@ -3586,7 +3706,7 @@ services:
                 webpage: https://geohazards-tep.eo.esa.int/#!
 
     EODC JupyterHub for global Copernicus data:
-        title: &eodcJH EODC JupyterHub for global Copernicus data
+        name: &eodcJH EODC JupyterHub for global Copernicus data
         parents: *processingAndAnalysisParent
         providers: [*eodc]
         logo: eodc-jupyter.png
@@ -3595,16 +3715,17 @@ services:
         webpage_url: https://jupyterhub.eodc.eu
         manual_url: https://github.com/jupyterhub/jupyterhub
         helpdesk_url: https://www.eodc.eu/support-request/
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
-        places: *europe
-        target_groups: [*researchers, *research_organisations, *research_groups]
-        languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations, *research_groups]
+        domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
         restrictions: "Research affiliation needed"
-        phase: alpha
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: "EODC JupyterHub provides access to the global EODC Copernicus Data Archive."
 #        platforms: [*eopillar]
         description: |
@@ -3643,7 +3764,7 @@ services:
 #                type:  "input"
 #                value_type:  "string"
     EODC Data Catalogue Service:
-        title: &eodcDCS EODC Data Catalogue Service
+        name: &eodcDCS EODC Data Catalogue Service
         parents: *dataManagementParent
         providers: [*eodc]
         logo: eodc-jupyter.png
@@ -3652,16 +3773,17 @@ services:
         manual_url: https://csw.eodc.eu
         helpdesk_url: https://www.eodc.eu/support-request/
         #contact: support@eodc.eu
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
-        places: *europe
-        target_groups: [*researchers, *research_organisations, *research_groups, *providers]
-        languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations, *research_groups, *providers]
+        domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *interdisciplinary]
         #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: "Catalog Service for the Web (CSW), OGC compliant catalogue service to expose metadata of geospatial records hosted at EODC"
         platforms: [*openGC]
         description: |
@@ -3682,23 +3804,24 @@ services:
               Catalog Service for the Web (CSW)
             webpage: https://csw.eodc.eu
     Sentinel hub:
-        title: &sentinelHub Sentinel Hub
+        name: &sentinelHub Sentinel Hub
         parents: *sharingAndDicoveryParent
         providers: [*sinergise]
         open_access: false
         webpage_url: http://sentinel-hub.com/
         manual_url: https://www.sentinel-hub.com/develop/documentation
         helpdesk_url:
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
-        places: *europe
-        target_groups: [*researchers, *research_organisations]
-        languages: *english
-        area: *earthScience
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations]
+        domain: *earthScience
         #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Big data satellite imagery service
         platforms: [*eopillar]
         description: |
@@ -3709,23 +3832,24 @@ services:
           and specific time range from full archives in a matter of seconds.
           Sentinel Hub received Copernicus Masters Award 2016.
     MEA Platform:
-        title: &meaPlatform MEA Platform (Data access and exploitation service)
+        name: &meaPlatform MEA Platform (Data access and exploitation service)
         parents: *sharingAndDicoveryParent
         providers: [*meeo]
         open_access: false
         webpage_url: https://eodataservice.org
         manual_url: https://www.youtube.com/channel/UCqy-bd6CpXMOlRqfHmBqlZw
         helpdesk_url:
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
-        places: *europe
-        target_groups: [*researchers, *research_organisations]
-        languages: *english
-        area: *earthScience
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations]
+        domain: *earthScience
         #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Cross-domain application supporting various application fields
         platforms: [*eopillar]
         description: |
@@ -3735,7 +3859,7 @@ services:
           only the data amount that is really needed.
           MEA platform exposes OGC-standardised discovery (openSearch) and access (WCS 2.0) interfaces.
     Rasdaman EO Datacube:
-        title: &rasdamanDatacube Rasdaman EO Datacube
+        name: &rasdamanDatacube Rasdaman EO Datacube
         parents: *processingAndAnalysisParent
         providers: [*terradue]
         logo: rasdaman-eo-datacube.png
@@ -3743,16 +3867,17 @@ services:
         webpage_url: http://eoschub.rasdaman.com:8080/rasdaman/ows
         manual_url: http://doc.rasdaman.org/05_geo-services-guide.html#ogc-web-services
         helpdesk_url:
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
-        places: *europe
-        target_groups: [*researchers, *research_organisations]
-        languages: *english
-        area: *earthScience
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations]
+        domain: *earthScience
         #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Service providing analysis-ready EO data
         platforms: [*eopillar]
         description: |
@@ -3787,7 +3912,7 @@ services:
 #              type:  "input"
 #              value_type:  "string"
     CloudFerro Data Collections Catalog:
-        title: &cfdcc CloudFerro Data Collections Catalog
+        name: &cfdcc CloudFerro Data Collections Catalog
         parents: *dataManagementParent
         providers: [*cloudFerro]
         logo: &cfLogo cloud-ferro.png
@@ -3796,16 +3921,17 @@ services:
         #contact: support@creodias.eu
         manual_url: https://creodias.eu/data-related-services
         helpdesk_url:
-        tutorial_url: https://creodias.eu/knowledgebase
+        training_information_url: https://creodias.eu/knowledgebase
         terms_of_use_url: https://creodias.eu/terms-of-service
         sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
-        places: *europe
-        target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
-        languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations, *research_groups, *providers, *business]
+        domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: "Data Collections Catalog is based on two solutions  – CKAN - comprehensive frontend catalogue application for information discovery and EO Browser – specialized catalogue application for robust satellite imagery discovery and quick georeferenced preview"
         platforms: [*copernicus, *esaPlatform]
         description: |
@@ -3830,7 +3956,7 @@ services:
                     cloudferro
                 webpage: https://discovery.creodias.eu/dataset
     CloudFerro Infrastructure:
-        title: &cfi CloudFerro Infrastructure
+        name: &cfi CloudFerro Infrastructure
         parents: [*computeParent, *storageParent, *processingAndAnalysisParent]
         providers: [*cloudFerro]
         logo: *cfLogo
@@ -3839,16 +3965,17 @@ services:
         #contact: support@creodias.eu
         manual_url: https://creodias.eu/your-processing-environment
         helpdesk_url:
-        tutorial_url: https://creodias.eu/knowledgebase
+        training_information_url: https://creodias.eu/knowledgebase
         terms_of_use_url: https://creodias.eu/terms-of-service
         sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
-        places: *europe
-        target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
-        languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations, *research_groups, *providers, *business]
+        domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: "CREODIAS platform is a cloud infrastructure adapted to the processing of big amounts of EO data, including an EO Data storage cluster and a dedicated IaaS cloud infrastructure for the platform’s Users"
         platforms: [*copernicus, *esaPlatform]
         description: |
@@ -3869,7 +3996,7 @@ services:
                     cloudferro
                 webpage: https://creodias.eu
     Cloudferro Data related Services - EO Finder:
-        title: &cfdrsEOF Cloudferro Data related Services - EO Finder
+        name: &cfdrsEOF Cloudferro Data related Services - EO Finder
         parents: [*dataManagementParent]
         providers: [*cloudFerro]
         logo: *cfLogo
@@ -3878,16 +4005,17 @@ services:
         #contact: support@creodias.eu
         manual_url: https://creodias.eu/eo-data-finder-api-manual
         helpdesk_url:
-        tutorial_url: https://creodias.eu/knowledgebase
+        training_information_url: https://creodias.eu/knowledgebase
         terms_of_use_url: https://creodias.eu/terms-of-service
         sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
-        places: *europe
-        target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
-        languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations, *research_groups, *providers, *business]
+        domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: "Manage your data products"
         platforms: [*copernicus, *esaPlatform]
         description: |
@@ -3900,7 +4028,7 @@ services:
                     cloudferro
                 webpage: https://finder.creodias.eu/www
     Cloudferro Data related Services - EO browser:
-        title: &cfdrsEOB Cloudferro Data related Services - EO browser
+        name: &cfdrsEOB Cloudferro Data related Services - EO browser
         parents: *dataManagementParent
         providers: [*cloudFerro]
         logo: cloud-ferro-eo-browser.png
@@ -3909,16 +4037,17 @@ services:
         #contact: support@creodias.eu
         manual_url: https://creodias.eu/using-the-eo-browser
         helpdesk_url:
-        tutorial_url: https://creodias.eu/knowledgebase
+        training_information_url: https://creodias.eu/knowledgebase
         terms_of_use_url: https://creodias.eu/terms-of-service
         sla_url: https://creodias.eu/appendix-service-level
         access_policies_url: https://creodias.eu/legal-matters
-        places: *europe
-        target_groups: [*researchers, *research_organisations, *research_groups, *providers, *business]
-        languages: *english
-        area: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*researchers, *research_organisations, *research_groups, *providers, *business]
+        domain: [*lifeSciences, *socialSciences, *physicalSciences, *formalSciences, *appliedScience, *interdisciplinary]
         #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: "The EO Browser allows visualization and basic processing of selected data collections (like Sentinel-1 L1 GRD or Sentinel-2 L1C)"
         platforms: [*copernicus, *esaPlatform]
         description: |
@@ -3942,23 +4071,24 @@ services:
                     cloudferro
                 webpage: https://browser.creodias.eu
     Check-in:
-        title: &checkIn EGI Check-in
+        name: &checkIn EGI Check-in
         parents: *securityAndOperationsParent
         providers: [*egi]
         open_access: false
         webpage_url: https://www.egi.eu/services/check-in/
         manual_url:
         helpdesk_url:
-        tutorial_url:
+        training_information_url:
         terms_of_use_url:
         sla_url:
         access_policies_url:
-        places: *europe
-        target_groups: [*research_organisations]
-        languages: *english
-        area: *security
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*research_organisations]
+        domain: *security
         #restrictions: *notSpecified
-        phase: beta
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Handle transparent Single Sign-On from multiple heterogeneous identity providers
         platforms: [*egiPlatform]
         description: |
@@ -3997,23 +4127,24 @@ services:
 
           Brochure: https://www.egi.eu/wp-content/uploads/2017/09/Check-in.pdf
 #    Attribute management:
-#        title: Attribute management
+#        name: Attribute management
 #        parents: *securityAndOperationsParent
 #        providers: [*grnet, *cesnet]
 #        open_access: false
 #        webpage_url: https://www.egi.eu/internal-services/attribute-management/
 #        manual_url:
 #        helpdesk_url:
-#        tutorial_url:
+#        training_information_url:
 #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
 #        sla_url: https://documents.egi.eu/document/2733
 #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-#        places: *europe
-#        target_groups: ["Research organisations"]
-#        languages: *english
-#        area: *interdisciplinary
+#        geographical_availabilities: *poland
+#        language_availability: *english
+#        target_users: ["Research organisations"]
+#        domain: *interdisciplinary
 #        #restrictions: *notSpecified
-#        phase: production
+#        trl: *trl_9
+        life_cycle_status: *prod
 #        tagline: ToFill
 #        platforms: [*egiPlatform]
 #        description: |
@@ -4027,7 +4158,7 @@ services:
 #          In the wake of extending AAI capabilities, EGI will provide similar capabilities also
 #          for other authentication technologies, like OpenID and SAML2, for example.
     Training infrastructure:
-        title: Training infrastructure
+        name: Training infrastructure
         parents: *trainingAndSupportParent
         providers: [*egi]
         logo: training-infrastructure.png
@@ -4035,16 +4166,17 @@ services:
         webpage_url: https://www.egi.eu/services/training-infrastructure/
         manual_url: https://wiki.egi.eu/wiki/Training_infrastructure
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://wiki.egi.eu/wiki/Training_infrastructure
+        training_information_url: https://wiki.egi.eu/wiki/Training_infrastructure
         terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-        places: *europe
-        target_groups: [*research_groups, *research_organisations]
-        languages: *english
-        area: *interdisciplinary
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*research_groups, *research_organisations]
+        domain: *interdisciplinary
         #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Dedicated computing and storage for training and education
         platforms: [*egiPlatform]
         description: |
@@ -4141,7 +4273,7 @@ services:
                 maximum: 730
 
     FitSM:
-        title: FitSM
+        name: FitSM
         parents: *trainingAndSupportParent
         providers: [*egi]
         logo: fitsm.png
@@ -4149,16 +4281,17 @@ services:
         webpage_url: https://www.egi.eu/services/fitsm-training/
         manual_url: https://www.egi.eu/services/fitsm-training/
         helpdesk_url: https://www.egi.eu/more-information/
-        tutorial_url: https://www.egi.eu/services/fitsm-training/
+        training_information_url: https://www.egi.eu/services/fitsm-training/
         terms_of_use_url: https://www.egi.eu/services/fitsm-training/terms-and-conditions/
         sla_url: https://documents.egi.eu/document/2733
         access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-        places: *europe
-        target_groups: [*research_organisations]
-        languages: *english
-        area: *interdisciplinary
+        geographical_availabilities: *poland
+        language_availability: *english
+        target_users: [*research_organisations]
+        domain: *interdisciplinary
         #restrictions: *notSpecified
-        phase: production
+        trl: *trl_9
+        life_cycle_status: *prod
         tagline: Learn how to manage IT services with a pragmatic and lightweight standard
         platforms: [*egiPlatform]
         description: |
@@ -4234,7 +4367,7 @@ services:
                 type:  "input"
                 value_type:  "string"
     Alien and Invasive Species:
-      title: &alien Alien and Invasive Species Virtual Research Environment
+      name: &alien Alien and Invasive Species Virtual Research Environment
       parents: *processingAndAnalysisParent
       providers: [*d4science]
       logo: alien.png
@@ -4242,16 +4375,17 @@ services:
       webpage_url: https://services.d4science.org/web/alienandinvasivespecies
       manual_url: https://services.d4science.org/web/alienandinvasivespecies
       helpdesk_url: https://support.d4science.org/
-      tutorial_url: https://dev.d4science.org/
+      training_information_url: https://dev.d4science.org/
       terms_of_use_url:  https://services.d4science.org/terms-of-use
       sla_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies#Service_Level_Agreement
       access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
-      places: *europe
-      target_groups: [*research_groups]
+      geographical_availabilities: *poland
+      target_users: [*research_groups]
       restrictions: No restrictions
-      languages: *english
-      area: *interdisciplinary
-      phase: production
+      language_availability: *english
+      domain: *interdisciplinary
+      trl: *trl_9
+      life_cycle_status: *prod
       tagline: |
         A web-based, collaborative working environment enacting to predict the spread of an invasive species
         (possibly alien) in a new environment
@@ -4281,7 +4415,7 @@ services:
           webpage: https://services.d4science.org/web/alienandinvasivespecies
 
 #    OpenAIRE:
-#      title: &openAIRE OpenAIRE
+#      name: &openAIRE OpenAIRE
 #      parents: *sharingAndDicoveryParent
 #      providers: [*not]
 ##      logo: training-infrastructure. TODO: logo
@@ -4289,16 +4423,17 @@ services:
 #      webpage_url:
 #      manual_url:
 #      helpdesk_url:
-#      tutorial_url:
+#      training_information_url:
 #      terms_of_use_url:
 #      sla_url:
 #      access_policies_url:
-#      places: *europe
-#      target_groups: ["Research groups", "Research organisations"]
-#      languages: *english
-#      area: *interdisciplinary
+#      geographical_availabilities: *poland
+#      language_availability: *english
+#      target_users: ["Research groups", "Research organisations"]
+#      domain: *interdisciplinary
 #      #restrictions: *notSpecified
-#      phase: production
+#      trl: *trl_9
+#      life_cycle_status: *prod
 #      tagline: *notSpecified
 #      # platforms: [*eopillar, *ec3]
 #      description: *notSpecified
@@ -4307,7 +4442,7 @@ services:
 #          name: *notSpecified
 #          description: *notSpecified
     PROMINENCE:
-      title: &prominence PROMINENCE
+      name: &prominence PROMINENCE
       parents: *computeParent
       providers: [*egi] #TODO: change to United Kingdom Atomic Energy Authority (or UKAEA)
       logo: prominence-logo.png
@@ -4315,16 +4450,17 @@ services:
       webpage_url: https://alahiff.github.io/prominence/
       manual_url:
       helpdesk_url:
-      tutorial_url:
+      training_information_url:
       terms_of_use_url:
       sla_url:
       access_policies_url:
-      places: *europe
-      target_groups: [*research_groups, *research_organisations]
-      languages: *english
-      area: *interdisciplinary
+      geographical_availabilities: *poland
+      language_availability: *english
+      target_users: [*research_groups, *research_organisations]
+      domain: *interdisciplinary
       #restrictions: *notSpecified
-      phase: alpha
+      trl: *trl_9
+      life_cycle_status: *prod
       tagline: Enabling HTC & HPC applications opportunistically across private, academic and public clouds
       # platforms: [*eopillar, *ec3]
       description: |
@@ -4347,7 +4483,7 @@ services:
           name: *notSpecified
           description: *notSpecified
     PAN data:
-      title: &panData PaN data
+      name: &panData PaN data
       parents: *storageParent
       providers: [*desyProvider]
       logo: panData.png
@@ -4355,18 +4491,19 @@ services:
       webpage_url: https://dcache-xdc.desy.de
       manual_url: https://eosc-pan-git.desy.de/support
       helpdesk_url: https://eosc-pan-git.desy.de/support
-      tutorial_url: https://eosc-pan-git.desy.de
+      training_information_url: https://eosc-pan-git.desy.de
       terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-      places: *europe
-      target_groups: [*researchers]
-      languages: *english
-      area: *interdisciplinary
+      geographical_availabilities: *poland
+      language_availability: *english
+      target_users: [*researchers]
+      domain: *interdisciplinary
       restrictions: |
         Access to the platform is granted based on motivation / proposal,
         In the pilot phase, usage is only supported for  photon and neutron science use-cases
-      phase: beta
+      trl: *trl_9
+      life_cycle_status: *prod
       tagline: dCache backend storage for the EOSC PAN Science Demonstrator
       platforms: [*eoscPan]
       description: |
@@ -4384,7 +4521,7 @@ services:
             in case of special requests for write access to backend storage, cloud functions from
             new gitlab repositories, events streaming from the dCache backend.
     Pan faas:
-      title: &panFaas PaN faas
+      name: &panFaas PaN faas
       parents: *computeParent
       providers: [*desyProvider]
       logo: panFaas.png
@@ -4392,16 +4529,17 @@ services:
       webpage_url: https://eosc-pan-git.desy.de/pan/support/
       manual_url: https://eosc-pan-git.desy.de/support
       helpdesk_url: https://eosc-pan-git.desy.de/support
-      tutorial_url: https://eosc-pan-git.desy.de
+      training_information_url: https://eosc-pan-git.desy.de
       terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-      places: *europe
-      target_groups: [*researchers]
-      languages: *english
-      area: *interdisciplinary
+      geographical_availabilities: *poland
+      language_availability: *english
+      target_users: [*researchers]
+      domain: *interdisciplinary
       #restrictions: *notSpecified
-      phase: beta
+      trl: *trl_9
+      life_cycle_status: *prod
       tagline: OpenWhisk, cloud functions for the EOSC PAN Science Demonstrator
       platforms: [*eoscPan]
       description: |
@@ -4418,7 +4556,7 @@ services:
             in case of special requests for write access to backend storage, cloud functions from
             new gitlab repositories, events streaming from the dCache backend.
     PAN notebook:
-      title: &panNotebook PaN notebook
+      name: &panNotebook PaN notebook
       parents: *computeParent
       providers: [*desyProvider]
       logo: panFaas.png
@@ -4426,16 +4564,17 @@ services:
       webpage_url: https://eosc-pan-jhub.desy.de
       manual_url: https://eosc-pan-git.desy.de/support
       helpdesk_url: https://eosc-pan-git.desy.de/support
-      tutorial_url: https://eosc-pan-git.desy.de
+      training_information_url: https://eosc-pan-git.desy.de
       terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-      places: *europe
-      target_groups: [*researchers]
-      languages: *english
-      area: *interdisciplinary
+      geographical_availabilities: *poland
+      language_availability: *english
+      target_users: [*researchers]
+      domain: *interdisciplinary
       #restrictions: *notSpecified
-      phase: beta
+      trl: *trl_9
+      life_cycle_status: *prod
       tagline: JupyterHub for the EOSC PAN Science Demonstrator
       platforms: [*eoscPan]
       description: |
@@ -4452,7 +4591,7 @@ services:
             in case of special requests for write access to backend storage, cloud functions from
             new gitlab repositories, events streaming from the dCache backend.
     PAN gitlab:
-      title: &panGitlab PAN gitlab
+      name: &panGitlab PAN gitlab
       parents: *computeParent
       providers: [*desyProvider]
       logo: panFaas.png
@@ -4460,16 +4599,17 @@ services:
       webpage_url: https://eosc-pan-git.desy.de
       manual_url: https://eosc-pan-git.desy.de/support
       helpdesk_url: https://eosc-pan-git.desy.de/support
-      tutorial_url: https://eosc-pan-git.desy.de
+      training_information_url: https://eosc-pan-git.desy.de
       terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
       sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
       access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-      places: *europe
-      target_groups: [*researchers]
-      languages: *english
-      area: *interdisciplinary
+      geographical_availabilities: *poland
+      language_availability: *english
+      target_users: [*researchers]
+      domain: *interdisciplinary
       #restrictions: *notSpecified
-      phase: beta
+      trl: *trl_9
+      life_cycle_status: *prod
       tagline: GitLab for the EOSC PAN Science Demonstrator
       platforms: [*eoscPan]
       description: |
@@ -4487,7 +4627,7 @@ services:
             in case of special requests for write access to backend storage, cloud functions from
             new gitlab repositories, events streaming from the dCache backend.
     WS-PGRADE:
-      title: &wsPgrade WS-PGRADE
+      name: &wsPgrade WS-PGRADE
       parents: *processingAndAnalysisParent
       providers: [*mtaSztaki]
       logo: wspgrade.png
@@ -4495,16 +4635,17 @@ services:
       webpage_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard
       manual_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/help
       helpdesk_url: https://wiki.egi.eu/wiki/GGUS:WS-PGRADE/gUSE_FAQ
-      tutorial_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/help
+      training_information_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/help
       terms_of_use_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/terms-of-use
       sla_url: https://documents.egi.eu/document/2733
       access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
-      places: *europe
-      target_groups: [*researchers, *research_organisations, *business]
-      languages: *english
-      area: *interdisciplinary
+      geographical_availabilities: *poland
+      language_availability: *english
+      target_users: [*researchers, *research_organisations, *business]
+      domain: *interdisciplinary
       #restrictions: *notSpecified
-      phase: production
+      trl: *trl_9
+      life_cycle_status: *prod
       tagline: Setup and run parameter studies in the cloud with a few clicks.
       platforms: [*eoscHub, *aodp]
       description: |
@@ -4532,7 +4673,7 @@ services:
             description: |
               demo
     CSC ePouta:
-      title: &cscEpouta CSC ePouta
+      name: &cscEpouta CSC ePouta
       parents: [*processingAndAnalysisParent, *computeParent]
       providers: [*csc]
       logo: ePouta-logo.jpg
@@ -4540,16 +4681,17 @@ services:
       webpage_url: https://research.csc.fi/epouta
       manual_url: https://research.csc.fi/pouta-user-guide
       helpdesk_url:
-      tutorial_url:
+      training_information_url:
       terms_of_use_url: https://research.csc.fi/pouta-user-policy
       sla_url: https://research.csc.fi/documents/48467/0/ePouta+SLA/cbac49af-f069-4a8b-9636-e519b1ee331d
       access_policies_url: https://research.csc.fi/pricing-of-computing-services
-      places: *europe
-      target_groups: [*researchers, *research_organisations, *research_groups, *providers]
-      languages: *english
-      area: [*interdisciplinary, *lifeSciences, *socialSciences, *humanities, *appliedScience, *philosophy]
+      geographical_availabilities: *poland
+      language_availability: *english
+      target_users: [*researchers, *research_organisations, *research_groups, *providers]
+      domain: [*interdisciplinary, *lifeSciences, *socialSciences, *humanities, *appliedScience, *philosophy]
       #restrictions: *notSpecified
-      phase: production
+      trl: *trl_9
+      life_cycle_status: *prod
       tagline: Secure and cost-effective cloud computing for processing sensitive data
       platforms: [*eudatPlatform, *elixirPlatform]
       description: |
@@ -4564,7 +4706,7 @@ services:
             description: |
               demo
     TDS:
-      title: &tds TDS
+      name: &tds TDS
       parents: [*processingAndAnalysisParent, *storageParent]
       providers: [*uioProider]
       #logo: panFaas.png TODO: nologo
@@ -4572,16 +4714,17 @@ services:
       webpage_url: https://www.uio.no/english/services/it/research/sensitive-data/
       manual_url:
       helpdesk_url: https://www.uio.no/english/services/it/research/sensitive-data/
-      tutorial_url:
+      training_information_url:
       terms_of_use_url:
       sla_url:
       access_policies_url:
-      places: *europe
-      target_groups: [*researchers]
-      languages: *english
-      area: *interdisciplinary
+      geographical_availabilities: *poland
+      language_availability: *english
+      target_users: [*researchers]
+      domain: *interdisciplinary
       #restrictions: *notSpecified
-      phase: production
+      trl: *trl_9
+      life_cycle_status: *prod
       tagline: Services for sensitive data
       platforms: [*eudatPlatform, *nird]
       description: |
@@ -4597,7 +4740,7 @@ services:
             description: |
               demo
     Elastic Cloud Compute Cluster (EC3):
-      title: &ec3Service Elastic Cloud Compute Cluster (EC3)
+      name: &ec3Service Elastic Cloud Compute Cluster (EC3)
       parents: *processingAndAnalysisParent
       providers: [*grycap]
       logo: ec3.png
@@ -4605,16 +4748,17 @@ services:
       webpage_url: https://servproject.i3m.upv.es/ec3-ltos/index.php
       manual_url: https://ec3.readthedocs.io/en/devel/
       helpdesk_url: https://wiki.egi.eu/wiki/GGUS:EC3_FAQ
-      tutorial_url: https://github.com/grycap/ec3
+      training_information_url: https://github.com/grycap/ec3
       terms_of_use_url: https://servproject.i3m.upv.es/ec3-ltos/terms.html
       sla_url: https://documents.egi.eu/document/2733
       access_policies_url:  https://documents.egi.eu/public/ShowDocument?docid=2635
-      places: *europe
-      target_groups: [*researchers, *research_organisations, *business]
-      languages: *english
-      area: *interdisciplinary
+      geographical_availabilities: *poland
+      language_availability: *english
+      target_users: [*researchers, *research_organisations, *business]
+      domain: *interdisciplinary
       restrictions: Research affiliation needed
-      phase: production
+      trl: *trl_9
+      life_cycle_status: *prod
       tagline: Deploy a virtual cluster on top of IaaS infrastructures with a few clicks.
       platforms: [*eoscHub, *aodp]
       description: |

@@ -24,20 +24,25 @@ module ServiceHelper
   end
 
   def get_terms_and_condition_hint_text(service)
-    "You are about to order #{service.title} service. Please accept " \
-      "#{link_to service.title, service.terms_of_use_url} terms and conditions to proceed.".html_safe
+    "You are about to order #{service.name} service. Please accept " \
+      "#{link_to service.name, service.terms_of_use_url} terms and conditions to proceed.".html_safe
   end
 
   def dedicated_for_links(service)
-    service.target_groups.map { |target| link_to(target.name, services_path(target_groups: target)) }
+    service.target_users.map { |target| link_to(target.name, services_path(target_users: target)) }
   end
 
   def dedicated_for_text(service)
-    service.target_groups.map { |target| target.name }
+    service.target_users.map { |target| target.name }
   end
 
-  def research_areas(service)
-    service.research_areas.map { |target| link_to(target.name, services_path(research_areas: target)) }
+  def scientific_domains(service)
+    service.scientific_domains.map { |target| link_to(target.name, services_path(scientific_domains: target)) }
+  end
+
+  def field_tree(service, field)
+    parents = service.send(field).map { |f| f.parent.blank? ? f : f.parent }
+    Hash[parents.map { |parent| [parent.name, (parent.children & service.send(field)).map(&:name)] } ]
   end
 
   def providers(service)
@@ -56,14 +61,24 @@ module ServiceHelper
     end
   end
 
+  def map_view_to_order_type(service_or_offer)
+    if service_or_offer.external
+      "external"
+    elsif service_or_offer.order_type == "order_required"
+      "orderable"
+    else
+      "open_access"
+    end
+  end
+
   def order_type(service)
-    types = service&.offers.map { |o| o.offer_type }.uniq
+    types = service&.offers.map { |o| o.order_type }.uniq
     if types.size > 1
       "various"
     elsif types.size == 1
-      types.first
+      map_view_to_order_type(service)
     else
-      service&.service_type || "external"
+      service&.order_type || "external"
     end
   end
 
@@ -79,9 +94,29 @@ module ServiceHelper
     end
   end
 
-  def data_for_map(places)
-    countries = Country.where(region: places)
-    countries = Country.where(name: places) if countries.blank?
+  def data_for_map(geographical_availabilities)
+    countries = []
+    geographical_availabilities.each { |place|
+      co = []
+      co = Country.countries_for_region(place&.name) if place
+      co = [place] if co.empty?
+      countries = countries | co if co.any?
+    }
     countries.map(&:alpha2).map { |c| [c.downcase, 1] }
+  end
+
+  def data_for_region(countries)
+    if is_any_non_european(countries) &&
+        (countries != ["EO"]) &&
+        (countries != ["EU"])
+      countries.append("WW")
+    end
+    countries
+  end
+
+  def is_any_non_european(countries)
+    (countries -
+     Country.countries_for_region("Europe").map(&:alpha2))
+      .present?
   end
 end

@@ -40,7 +40,7 @@ RSpec.feature "Service ordering" do
 
       # Step 1
       expect(page).to have_current_path(service_offers_path(service))
-      expect(page).to have_text(service.title)
+      expect(page).to have_text(service.name)
       expect(page).to have_selector(:link_or_button,
                                     "Next", exact: true)
 
@@ -70,7 +70,7 @@ RSpec.feature "Service ordering" do
 
       # Project item page
       expect(page).to have_current_path(project_service_path(project_item.project, project_item))
-      expect(page).to have_content(service.title)
+      expect(page).to have_content(service.name)
     end
 
     scenario "I can order service with offert containing range" do
@@ -112,13 +112,13 @@ RSpec.feature "Service ordering" do
 
       # Project item page
       expect(page).to have_current_path(project_service_path(project_item.project, project_item))
-      expect(page).to have_content(service.title)
+      expect(page).to have_content(service.name)
     end
 
     [:open_access_service, :external_service].each do |type|
       scenario "I cannot order #{type} service twice in one project if offer has no parameters" do
         service = create(type)
-        _offer = create(:offer, service: service, offer_type: service.service_type)
+        _offer = create(:offer, service: service, order_type: service.order_type, external: service.external)
         _default_project = user.projects.find_by(name: "Services")
 
         visit service_path(service)
@@ -155,7 +155,8 @@ RSpec.feature "Service ordering" do
     [:open_access_service, :external_service].each do |type|
       scenario "I can order #{type} service twice in one project if offer has parameters" do
         service = create(type)
-        _offer = create(:offer_with_parameters, service: service, offer_type: service.service_type)
+        _offer = create(:offer_with_parameters, service: service, order_type: service.order_type,
+                        external: service.external)
         _default_project = user.projects.find_by(name: "Services")
 
         visit service_path(service)
@@ -340,7 +341,7 @@ RSpec.feature "Service ordering" do
 
     scenario "I can create new project for private company typology", js: true do
       service = create(:service)
-      research_area = create(:research_area)
+      scientific_domain = create(:scientific_domain)
       create(:offer, service: service)
 
       visit service_path(service)
@@ -351,9 +352,9 @@ RSpec.feature "Service ordering" do
       within("#ajax-modal") do
         fill_in "Project name", with: "New project"
         fill_in "Reason to request access to the EOSC services", with: "To pass test"
-        within ".project_research_areas" do
-          find("label", text: "Research areas").click
-          find("div", class: "choices__item", text: research_area.name).click
+        within ".project_scientific_domains" do
+          find("label", text: "Scientific domains").click
+          find("div", class: "choices__item", text: scientific_domain.name).click
         end
 
 
@@ -370,7 +371,7 @@ RSpec.feature "Service ordering" do
         click_on "Create new project"
       end
       expect(page).to have_select("project_item_project_id", selected: "New project")
-      expect(page).to have_text(research_area.name)
+      expect(page).to have_text(scientific_domain.name)
       expect(page).to have_text("New company name")
       expect(page).to have_text("https://www.company.name")
       expect(page).to have_text("non-European")
@@ -506,7 +507,7 @@ RSpec.feature "Service ordering" do
 
       click_on "Access the service", match: :first
 
-      expect(page).to have_text(service.title)
+      expect(page).to have_text(service.name)
       expect(page).to have_text(o1.name)
       expect(page).to have_text(o2.name)
     end

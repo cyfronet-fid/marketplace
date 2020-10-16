@@ -141,7 +141,7 @@ class Jira::Client < JIRA::Client
 
     fields = { summary: "Service order, #{project_item.project.user.first_name} " +
                        "#{project_item.project.user.last_name}, " +
-                       "#{project_item.service.title}",
+                       "#{project_item.service.name}",
               project: { key: @jira_project_key },
               issuetype: { id: @jira_issue_type_id },
     }
@@ -204,7 +204,7 @@ private
   def encode_order_properties(project_item)
     {
       "category" => project_item.service.categories.first&.name,
-      "service" => project_item.service.title,
+      "service" => project_item.service.name,
       "offer" => project_item.name,
       "attributes" => encode_properties(project_item.properties)
     }.to_json
@@ -229,7 +229,7 @@ private
     when "CI-DisplayName"
       "#{project.user.first_name} #{project.user.last_name}"
     when "CP-ScientificDiscipline"
-      project.research_areas.names.join(", ")
+      project.scientific_domains .names.join(", ")
     when "CI-EOSC-UniqueID"
       project.user.uid
     when "CP-CustomerTypology"
@@ -256,9 +256,19 @@ private
       "#{project&.name} (#{project&.id})"
     # this is not a property of project
     # when "CP-ScientificDiscipline"
-    #   project.research_area&.name
+    #   project.scientific_domain&.name
     else
       nil
+    end
+  end
+
+  def map_to_jira_order_type(object)
+    if object.external
+      "external"
+    elsif object.order_type == "order_required"
+      "orderable"
+    else
+      "open_access"
     end
   end
 
@@ -283,7 +293,7 @@ private
     when "SO-ServiceOrderTarget"
       project_item.service.order_target
     when "SO-OfferType"
-      { "id" => @jira_config[:custom_fields][:select_values]["SO-OfferType".to_sym][project_item.offer_type.to_sym] }
+      { "id" => @jira_config[:custom_fields][:select_values]["SO-OfferType".to_sym][map_to_jira_order_type(project_item).to_sym] }
     else
       nil
     end

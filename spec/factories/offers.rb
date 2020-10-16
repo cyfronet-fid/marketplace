@@ -7,16 +7,17 @@ FactoryBot.define do
     sequence(:service) { |n| create(:service, offers_count: 1) }
     sequence(:status) { :published }
     sequence(:webpage) { |n| "http://webpage#{n}.invalid" }
-    sequence(:offer_type) { :orderable }
+    sequence(:order_type) { :order_required }
     factory :offer_with_parameters do
       sequence(:parameters) { [build(:input_parameter)] }
     end
 
     factory :open_access_offer do
-      sequence(:offer_type) { :open_access }
+      sequence(:order_type) { :open_access }
     end
     factory :external_offer do
-      sequence(:offer_type) { :external }
+      sequence(:order_type) { :order_required }
+      sequence(:external) { true }
     end
   end
 end

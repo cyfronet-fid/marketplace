@@ -3,17 +3,19 @@
 require "rails_helper"
 
 RSpec.describe Service do
-  it { should validate_presence_of(:title) }
+  it { should validate_presence_of(:name) }
   it { should validate_presence_of(:description) }
   it { should validate_presence_of(:tagline) }
-  it { should validate_presence_of(:providers) }
   it { should validate_presence_of(:rating) }
 
   it { should have_many(:providers) }
   it { should have_many(:categorizations).dependent(:destroy) }
   it { should have_many(:offers).dependent(:restrict_with_error) }
   it { should have_many(:categories) }
-  it { should have_many(:service_research_areas).dependent(:destroy) }
+  it { should have_many(:service_scientific_domains).dependent(:destroy) }
+  it { should have_many(:funding_bodies) }
+  it { should have_many(:funding_programs) }
+  it { should have_many(:service_vocabularies).dependent(:destroy) }
 
   it { should belong_to(:upstream).required(false) }
 
@@ -34,6 +36,7 @@ RSpec.describe Service do
 
     expect(old_main.main).to be_falsy
   end
+
 
   it "has main category" do
     main, other = create_list(:category, 2)

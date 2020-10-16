@@ -29,14 +29,14 @@ class Jira::IssueUpdated
           ProjectItemMailer.closed(@project_item).deliver_later
         when @jira_client.wf_approved_id
           status = :approved
-          ProjectItemMailer.approved(@project_item).deliver_later if service.orderable?
+          ProjectItemMailer.approved(@project_item).deliver_later if service.order_required? && !service.external
         else
           Rails.logger.warn("Unknown issue status (#{change["to"]}")
         end
 
         if status
           @project_item.new_status(status: status)
-          if status == :ready && service.orderable?
+          if status == :ready && service.order_required? && !service.external
             if service.aod?
               aod_voucherable? ? ProjectItemMailer.aod_voucher_accepted(@project_item).deliver_later :
                   ProjectItemMailer.aod_accepted(@project_item).deliver_later

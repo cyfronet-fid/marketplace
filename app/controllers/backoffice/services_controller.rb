@@ -28,6 +28,8 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   def new
     @service = Service.new(attributes_from_session || {})
     @service.sources.build source_type: "eic"
+    @service.build_main_contact
+    @service.public_contacts.build
     authorize(@service)
   end
 
@@ -40,9 +42,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def edit
     @service.assign_attributes(attributes_from_session || {})
-    if @service.sources.empty?
-      @service.sources.build source_type: "eic"
-    end
+    add_missing_nested_models
   end
 
   def update
@@ -72,7 +72,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
       if @service.valid?
         @offers = @service.offers.where(status: :published).order(:created_at)
-        @related_services = @service.related_services
+        @related_services = @service.target_relationships
         if current_user&.executive?
           @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
           @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
@@ -101,6 +101,18 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       end
     end
 
+    def add_missing_nested_models
+      if @service.sources.empty?
+        @service.sources.build source_type: "eic"
+      end
+      if @service.main_contact.blank?
+        @service.build_main_contact
+      end
+      if @service.public_contacts.blank?
+        @service.public_contacts.build
+      end
+    end
+
     def attributes_from_session
       preview = session[preview_session_key]
       preview["attributes"] if preview
@@ -120,6 +132,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
         redirect_to backoffice_service_path(@service),
                     notice: "New service created sucessfully"
       else
+        add_missing_nested_models
         render :new, status: :bad_request
       end
     end
@@ -133,6 +146,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
         redirect_to backoffice_service_path(@service),
                     notice: "Service updated correctly"
       else
+        add_missing_nested_models
         render :edit, status: :bad_request
       end
     end
@@ -157,8 +171,8 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     end
 
     def sort_options
-      @sort_options = [["by name A-Z", "title"],
-                       ["by name Z-A", "-title"],
+      @sort_options = [["by name A-Z", "name"],
+                       ["by name Z-A", "-name"],
                        ["draft first", "status"],
                        ["published first", "-status"],
                        ["by rate 1-5", "rating"],

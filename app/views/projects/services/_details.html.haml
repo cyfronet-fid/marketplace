@@ -1,18 +1,18 @@
 %dl
   %dt Service name:
-  %dd= link_to project_item.service.title, project_item.service
+  %dd= link_to project_item.service.name, project_item.service
 - if project_item.service.offers_count > 1
   %dl
     %dt Service offer:
     %dd= project_item.name
 %dl
-  %dt= t("project_items.service.label.#{project_item.offer_type}")
+  %dt= t("project_items.service.label.#{map_view_to_order_type(project_item)}")
   %dd= l project_item.created_at, format: :short
 %dl
   %dt Service access:
   %dd{ "data-toggle" => "tootltip",
-  "title" => "#{t("project_items.offer_type.#{project_item.offer_type}.tooltip")}" }
-    = t("project_items.offer_type.#{project_item.offer_type}.title")
+  "title" => "#{t("project_items.order_type.#{map_view_to_order_type(project_item)}.tooltip")}" }
+    = t("project_items.order_type.#{map_view_to_order_type(project_item)}.title")
 %dl
   %dt
     Project name:

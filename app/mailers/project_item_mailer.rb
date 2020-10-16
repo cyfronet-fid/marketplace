@@ -14,7 +14,7 @@ class ProjectItemMailer < ApplicationMailer
     load_data(project_item)
 
     mail(to: @user.email,
-         subject: "The service #{@project_item.service.title} has been added to your project",
+         subject: "The service #{@project_item.service.name} has been added to your project",
          template_name: "added_to_project")
   end
 
@@ -99,7 +99,7 @@ class ProjectItemMailer < ApplicationMailer
     @activate_message = service.activate_message
 
     mail(to: @user.email,
-         subject: "[EOSC merketplace] #{service.title} is ready - usage instructions",
+         subject: "[EOSC merketplace] #{service.name} is ready - usage instructions",
          template_name: "activate_message")
   end
 

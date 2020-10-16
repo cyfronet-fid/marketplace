@@ -345,5 +345,43 @@
     }
   }
 
+  .service-detail {
+    .row.col-lg-9 {
+      padding-right: 0;
+
+      .col-sm-9 {
+        padding-right: 0;
+      }
+    }
+  }
+
+  .service-box {
+    .access-type {
+      margin-bottom: 0;
+    }
+  }
+  // scss-lint:disable all
+  .compare input[type=checkbox] + span {
+    margin-top: 20px;
+    float: left;
+  }
+  // scss-lint:enable all
+  .service-links {
+    .row {
+      padding-right: 0;
+    }
+  }
+
+  .question-col {
+    margin: 20px 0 15px;
+  }
+
+  .nav-tabs {
+    .nav-link {
+      padding: 0.6rem;
+    }
+  }
+
+
 }
 

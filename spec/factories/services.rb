@@ -2,32 +2,36 @@
 
 FactoryBot.define do
   factory :service do
-    sequence(:title) { |n| "service #{n}" }
+    sequence(:name) { |n| "service #{n}" }
     sequence(:description) { |n| "service #{n} description" }
     sequence(:tagline) { |n| "service #{n} tagline" }
-    sequence(:service_type) { :orderable }
+    sequence(:order_type) { :order_required }
+    sequence(:external) { false }
 
     factory :open_access_service do
-      sequence(:service_type) { :open_access }
+      sequence(:order_type) { :open_access }
+      sequence(:order_url) { "http://order.com" }
     end
     sequence(:webpage_url) { "https://wabpage.url"  }
     sequence(:manual_url) { "https://manual.url"  }
     sequence(:helpdesk_url) { "https://helpdesk.url"  }
-    sequence(:tutorial_url) { "https://tutorial.url"  }
+    sequence(:training_information_url) { "https://tutorial.url"  }
     sequence(:terms_of_use_url) { "https://terms.of.use.url"  }
     sequence(:sla_url) { "https://corporate.sla.url"  }
     sequence(:access_policies_url) { "https://access.policies.url"  }
 
-    sequence(:places) { |n| "Europe" }
-    sequence(:languages) { |n| "service #{n} lanuage" }
+    sequence(:language_availability) { [I18nData.languages.values.sample] }
+    sequence(:geographical_availabilities) { |n| ["EU"] }
     sequence(:dedicated_for) { |n| ["service #{n} dedicated for"] }
     sequence(:restrictions) { |n| "service #{n} restrictions" }
-    sequence(:phase) { :alpha }
-    sequence(:research_areas) { |n| [create(:research_area)] }
+    sequence(:scientific_domains) { |n| [create(:scientific_domain)] }
+    sequence(:resource_organisation) { |n| create(:provider) }
     sequence(:providers) { |n| [create(:provider)] }
     sequence(:categories) { |n| [create(:category)] }
     sequence(:status) { :published }
     sequence(:version) { nil }
+    sequence(:trl) { [create(:trl)] }
+    sequence(:synchronized_at) { Time.now - 2.days }
 
     upstream { nil }
 
@@ -35,7 +39,9 @@ FactoryBot.define do
       service.reindex(refresh: true)
     end
     factory :external_service do
-      sequence(:service_type) { :external }
+      sequence(:order_type) { :order_required }
+      sequence(:external) { true }
+      sequence(:order_url) { "http://order.com" }
     end
   end
 end

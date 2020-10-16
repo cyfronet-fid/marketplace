@@ -1,0 +1,5 @@
+- content_for :title, t(".title")
+- breadcrumb :backoffice_scientific_domain_new, @scientific_domain
+
+%h2= t(".title")
+= render "form", scientific_domain: @scientific_domain

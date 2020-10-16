@@ -10,12 +10,12 @@ RSpec.describe Provider::PcCreateOrUpdate do
     original_stdout = $stdout
     $stdout = StringIO.new
     expect {
-      described_class.new(provider_response, logger).call
+      described_class.new(provider_response).call
     }.to change { Provider.count }.by(1)
 
     provider = Provider.last
 
-    expect(provider.name).to eq("Test Provider 2")
+    expect(provider.name).to eq("Test Provider tp")
     expect(provider.sources.length).to eq(1)
     expect(provider.sources[0].eid).to eq("tp")
     $stdout = original_stdout
@@ -30,7 +30,7 @@ RSpec.describe Provider::PcCreateOrUpdate do
     expect {
       described_class.new(create(:eic_provider_response,
                                  eid: "new.provider",
-                                 name: "Supper new name for updated  provider"), logger).call
+                                 name: "Supper new name for updated  provider")).call
     }.to change { Provider.count }.by(0)
 
     updated_provider = Provider.find(provider.id)

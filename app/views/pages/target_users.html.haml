@@ -1,0 +1,14 @@
+- content_for :title, t(".title")
+- breadcrumb :target_users
+%main.pages
+  .container
+    .row
+      %h2.home-title.mb-4 Target Users
+      .media.border-0
+        .media-body
+          .row
+            .col-12.col-lg-6.communities-wrapper
+            %ul.row
+              - @target_users.each do |target_user|
+                %li.col-lg-6
+                  = link_to target_user.name, services_path(target_users: target_user.to_param)

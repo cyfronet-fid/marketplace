@@ -31,7 +31,7 @@ class ProjectItem < ApplicationRecord
   belongs_to :offer
   belongs_to :service, inverse_of: :project_items
   belongs_to :project
-  belongs_to :research_area, required: false
+  belongs_to :scientific_domain, required: false
   has_one :service_opinion, dependent: :restrict_with_error
   has_many :messages, as: :messageable, dependent: :destroy
   has_many :statuses, as: :status_holder
@@ -39,7 +39,7 @@ class ProjectItem < ApplicationRecord
 
   validates :offer, presence: true
   validates :status, presence: true
-  validate :research_area_is_a_leaf
+  validate :scientific_domain_is_a_leaf
   validate :properties_not_nil
 
   delegate :user, to: :project
@@ -91,8 +91,8 @@ class ProjectItem < ApplicationRecord
     "\"#{project.name}##{id}\""
   end
 
-  def research_area_is_a_leaf
-    errors.add(:research_area_id, "cannot have children") if research_area&.has_children?
+  def scientific_domain_is_a_leaf
+    errors.add(:scientific_domain_id, "cannot have children") if scientific_domain&.has_children?
   end
 
   def properties_not_nil
@@ -101,9 +101,14 @@ class ProjectItem < ApplicationRecord
     end
   end
 
+  def external
+    # :TODO: this is compatibility layer hack, what is WEBPAGE?
+    order_type == "order_required" && webpage.present?
+  end
+
   private
     def copy_offer_fields
-      self.offer_type = offer&.offer_type
+      self.order_type = offer&.order_type
       self.name = offer&.name
       self.description = offer&.description
       self.webpage = offer&.webpage

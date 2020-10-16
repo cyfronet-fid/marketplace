@@ -20,7 +20,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       encoded_body = mail.body.encoded
 
       expect(encoded_body).to match(/#{project_item.user.full_name}/)
-      expect(encoded_body).to match(/#{project_item.service.title}/)
+      expect(encoded_body).to match(/#{project_item.service.name}/)
       expect(encoded_body).to match(/#{project_service_url(project, project_item)}/)
     end
   end

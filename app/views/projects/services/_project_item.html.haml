@@ -1,9 +1,9 @@
 %li.projects-list
-  = link_to project_item.service.title, project_service_path(project, project_item)
+  = link_to project_item.service.name, project_service_path(project, project_item)
   .float-right.status
     - if project_item.closed?
       = t("project_items.status.#{project_item.status}")
-    - elsif !project_item.orderable?
+    - elsif !project_item.order_required? || project_item.external?
       = link_to "Visit website", project_item.service.webpage_url
     - else
       = project_item_status(project_item)

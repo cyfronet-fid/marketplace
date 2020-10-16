@@ -12,10 +12,32 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Links for EOSC Portal social media (@goreck888)
 - Service order type visibility and filter (@goreck888)
 - Missing breadcrumbs and page titles (@goreck888)
+- new url fields in service model (@goreck888)
+- new missing multiselect fields in service model (@goreck888)
+- pc_categories and pc_platforms near the internal entities (@goreck888)
+- missing eid for scientific_domains and target_users(@goreck888)
+- synchronized_at field for pc_create_or_update (@goreck888)
+- Handling eIC services ids in mp (@goreck888)
+- New resource presentation page (@michal-szostak) 
+- UPCASE languages in import:eic task (@michal-szostak) 
+
 
 ### Changed
 - Sidebar links section name change from 'support' to 'links' (@goreck888)
 - information texts in service ordering page (@goreck888)
+- `service_type` to `order_type` in service and offer (@goreck888)
+- `tutorial_url` to `training_information_url` in service model (@goreck888)
+- Service `title` to `name` (@goreck888)
+- name of research area model to scientific domain (@goreck888)
+- `languages` to `language_availability` in service model (@goreck888)
+- `target_group` to `target_user` in service model (@martaswiatkowska)
+- Added field resource_organisation(main provider) (@martaswiatkowska)
+- Refactor contact fields to new model `Contact` (@goreck888)
+- Refactor related services (@goreck888)
+- handling errors with logo downloading in importers (@goreck888)
+- Hide default offer (@goreck888)
+- Update default offer through service (@goreck888)
+- New order_type mapping (@goreck888)
 
 ### Deprecated
 
@@ -28,9 +50,15 @@ Please view this file on the master branch, on stable branches it's out of date.
 - contact form tab layout modifications (@jarekzet)
 - Service preview (@goreck888)
 - Duplicated "sort" ids on services page (@goreck888)
+- rdt task (@martaswiatkowska)
 - Show welcome popup depending on database user information, not cookies (@goreck888)
 - Tab links in the home page (@jarekzet)
 - Fix js test (@martaswiatkowska)
+- Fixed autocomplete service name displayng (@martaswiatkowska)
+- languages and geographical_availabilities display (@martaswiatkowska)
+- displaying services on search (@martaswiatkowska)
+- date style in service details in "Maturity Information" (@michal-szostak)
+- language concatenation and headaer naming in service details (@michal-szostak)
 
 ### Security
 - Update rails to 6.0.3.2 (@goreck888)
