@@ -52,7 +52,7 @@ class Service < ApplicationRecord
                           target_users: "name"
                       }
                     },
-                    { name: "service_availability_and_languages",
+                    { name: "resource_availability_and_languages",
                       template: "map",
                       fields: ["languages", "geographical_availabilities"] }]
 
@@ -266,7 +266,7 @@ class Service < ApplicationRecord
   end
 
   def languages
-    language_availability.map { |l| I18nData.languages[l] || l }
+    language_availability.map { |l| I18nData.languages[l.upcase] || l }
   end
 
   def aod?

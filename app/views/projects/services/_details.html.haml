@@ -1,15 +1,15 @@
 %dl
-  %dt Service name:
+  %dt Resource name:
   %dd= link_to project_item.service.name, project_item.service
 - if project_item.service.offers_count > 1
   %dl
-    %dt Service offer:
+    %dt Resource offer:
     %dd= project_item.name
 %dl
   %dt= t("project_items.service.label.#{map_view_to_order_type(project_item)}")
   %dd= l project_item.created_at, format: :short
 %dl
-  %dt Service access:
+  %dt Resource access:
   %dd{ "data-toggle" => "tootltip",
   "title" => "#{t("project_items.order_type.#{map_view_to_order_type(project_item)}.tooltip")}" }
     = t("project_items.order_type.#{map_view_to_order_type(project_item)}.title")

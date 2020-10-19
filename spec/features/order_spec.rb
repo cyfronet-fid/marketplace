@@ -19,7 +19,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      expect(page).to have_text("Access the service")
+      expect(page).to have_text("Access the resource")
     end
 
     scenario "I see order open acces service button" do
@@ -28,7 +28,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(open_access_service)
 
-      expect(page).to have_text("Access the service")
+      expect(page).to have_text("Access the resource")
     end
 
     scenario "I can order service" do
@@ -36,7 +36,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Access the service", match: :first
+      click_on "Access the resource", match: :first
 
       # Step 1
       expect(page).to have_current_path(service_offers_path(service))
@@ -81,7 +81,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Access the service", match: :first
+      click_on "Access the resource", match: :first
 
       # Step 2
       expect(page).to have_current_path(service_information_path(service))
@@ -123,7 +123,7 @@ RSpec.feature "Service ordering" do
 
         visit service_path(service)
 
-        click_on "Access the service"
+        click_on "Access the resource"
 
         # Information step
         click_on "Next", match: :first
@@ -137,7 +137,7 @@ RSpec.feature "Service ordering" do
 
         visit service_path(service)
 
-        click_on "Access the service"
+        click_on "Access the resource"
 
         # Information step
         click_on "Next", match: :first
@@ -161,7 +161,7 @@ RSpec.feature "Service ordering" do
 
         visit service_path(service)
 
-        click_on "Access the service"
+        click_on "Access the resource"
         click_on "Next", match: :first
 
         # Configuration step
@@ -176,7 +176,7 @@ RSpec.feature "Service ordering" do
 
         visit service_path(service)
 
-        click_on "Access the service"
+        click_on "Access the resource"
         click_on "Next", match: :first
 
         fill_in "parameter_#{_offer.parameters[0].id}", with: "test"
@@ -194,7 +194,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Access the service"
+      click_on "Access the resource"
 
       expect(page).to have_current_path(service_information_path(service))
     end
@@ -220,7 +220,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Access the service"
+      click_on "Access the resource"
 
       # Go directly to summary page
       visit service_summary_path(service)
@@ -237,7 +237,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(open_access_service)
 
-      click_on "Access the service"
+      click_on "Access the resource"
 
       # Information page
       click_on "Next", match: :first
@@ -264,7 +264,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(external_service)
 
-      click_on "Access the service"
+      click_on "Access the resource"
       click_on "Next", match: :first
 
       # Summary page
@@ -296,7 +296,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Access the service"
+      click_on "Access the resource"
       click_on "Next", match: :first
 
       click_on "Add new project"
@@ -306,7 +306,7 @@ RSpec.feature "Service ordering" do
         fill_in "Email", with: "john@doe.com"
         fill_in "Organization", with: "Home corp."
         fill_in "Webpage", with: "http://home.corp.com"
-        fill_in "Reason to request access to the EOSC services", with: "Some reason"
+        fill_in "Reason to request access to the EOSC resources", with: "Some reason"
         select "non-European", from: "Origin country"
       end
       click_on "Create new project"
@@ -324,7 +324,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Access the service"
+      click_on "Access the resource"
       click_on "Next", match: :first
       click_on "Add new project"
 
@@ -346,12 +346,12 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Access the service"
+      click_on "Access the resource"
       click_on "Next", match: :first
       click_on "Add new project"
       within("#ajax-modal") do
         fill_in "Project name", with: "New project"
-        fill_in "Reason to request access to the EOSC services", with: "To pass test"
+        fill_in "Reason to request access to the EOSC resources", with: "To pass test"
         within ".project_scientific_domains" do
           find("label", text: "Scientific domains").click
           find("div", class: "choices__item", text: scientific_domain.name).click
@@ -387,7 +387,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Access the service"
+      click_on "Access the resource"
 
       # Information step
       click_on "Next", match: :first
@@ -403,7 +403,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Access the service"
+      click_on "Access the resource"
       click_on "Next", match: :first
 
       # Step 2
@@ -422,7 +422,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      click_on "Access the service"
+      click_on "Access the resource"
       click_on "Next", match: :first
 
       # Step 2
@@ -465,9 +465,9 @@ RSpec.feature "Service ordering" do
 
         visit service_path(service)
 
-        click_on "Access the service"
+        click_on "Access the resource"
 
-        expect(page).to have_link("Go to the service")
+        expect(page).to have_link("Go to the resource")
       end
 
       scenario "I cannot see link to external service webpage when offert is orderable" do
@@ -476,7 +476,7 @@ RSpec.feature "Service ordering" do
 
         visit service_path(service)
 
-        click_on "Access the service"
+        click_on "Access the resource"
 
         expect(page).to_not have_link("Go to the service")
         expect(page).to_not have_link("Order externally")
@@ -489,7 +489,7 @@ RSpec.feature "Service ordering" do
 
         visit service_path(service)
 
-        click_on "Access the service"
+        click_on "Access the resource"
 
         expect(page).to have_link("Order externally")
       end
@@ -503,9 +503,9 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      expect(page).to have_selector(:link_or_button, "Access the service", exact: true)
+      expect(page).to have_selector(:link_or_button, "Access the resource", exact: true)
 
-      click_on "Access the service", match: :first
+      click_on "Access the resource", match: :first
 
       expect(page).to have_text(service.name)
       expect(page).to have_text(o1.name)
@@ -535,7 +535,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      expect(page).to have_selector(:link_or_button, "Access the service", exact: true)
+      expect(page).to have_selector(:link_or_button, "Access the resource", exact: true)
     end
 
     scenario "I can see openaccess service order button" do
@@ -544,7 +544,7 @@ RSpec.feature "Service ordering" do
 
       visit service_path(open_access_service)
 
-      expect(page).to have_selector(:link_or_button, "Access the service", exact: true)
+      expect(page).to have_selector(:link_or_button, "Access the resource", exact: true)
     end
 
     scenario "I can see catalog service button" do
@@ -552,7 +552,7 @@ RSpec.feature "Service ordering" do
       create(:offer, service: external)
 
       visit service_path(external)
-      expect(page).to have_selector(:link_or_button, "Access the service", exact: true)
+      expect(page).to have_selector(:link_or_button, "Access the resource", exact: true)
     end
   end
 end

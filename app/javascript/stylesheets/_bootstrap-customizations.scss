@@ -1850,13 +1850,13 @@ h5 {
 }
 
 .carousel-indicators {
-  top: -55px;
+  top: -57px;
   z-index: 1;
   display: block;
   position: absolute;
   bottom: 0;
   margin: 0;
-  left: 230px;
+  left: 247px;
   right: auto;
   width: auto;
 
@@ -2389,7 +2389,7 @@ label[data-multicheckbox].small {
     font-size: 0.8em;
     line-height: 12px;
     padding: 7px 14px;
-    text-transform: uppercase;
+    //text-transform: uppercase;
     border-bottom: 2px solid $palette-solid-10;
     text-align: center;
     color: $palette-gray-70;

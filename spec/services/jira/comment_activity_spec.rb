@@ -108,7 +108,7 @@ RSpec.describe Jira::CommentActivity do
 
         expect(email.to).to contain_exactly(project_item.user.email)
         expect(email.body.encoded).to match(/A new message was added to your service request/)
-        expect(email.subject).to eq("Question about your service access request in EOSC Portal Marketplace")
+        expect(email.subject).to eq("Question about your resource access request in EOSC Portal Marketplace")
       end
 
       it "register messages for all and for User" do

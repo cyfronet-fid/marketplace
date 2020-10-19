@@ -9,7 +9,7 @@ crumb :backoffice_services do |category|
     link category.name, backoffice_category_services_path(category_id: category)
     parent :backoffice_services
   else
-    link "Owned Services", backoffice_services_path
+    link "Owned Resources", backoffice_services_path
     parent :backoffice_root
   end
 end
