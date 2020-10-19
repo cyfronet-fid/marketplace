@@ -11,7 +11,7 @@
   .searchbar__input
     %label.sr-only{ for: "search" } Search
     = text_field_tag :q, params[:q],  class: "autocomplete-input",
-                                     placeholder: "Find service...",
+                                     placeholder: "Find resource...",
                                      "data-target": "autocomplete.input",
                                      "data-toggle": "dropdown"
     - if params[:q].present? && params.permitted?
@@ -20,11 +20,11 @@
     %ul.autocomplete-results{ "data-target": "autocomplete.results" }
   .searchbar__select
     %span{ "data-target": "search.selected" }
-      All services
+      All resources
     %select#category-select.container-select{ "data-action": "change->search#refresh",
                                                     "data-target": "search.categorySelect" }
       %option{ value: "", selected: "selected" }
-        All services
+        All resources
       = options_for_select categories.map { |category| [category.name, category.slug] }, params[:category]
   .input-group-append
     %button#query-submit.input-group-text.bg-white

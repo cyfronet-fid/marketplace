@@ -22,7 +22,7 @@ RSpec.feature "Home" do
 
     it "should show only published service in Popular services section" do
       visit "/"
-      expect(page).to have_text "Popular services"
+      expect(page).to have_text "Popular resources"
       expect(page).to have_text(service1.name)
       expect(page).to have_text(service2.name)
       expect(page).not_to have_text(service_draft.name)

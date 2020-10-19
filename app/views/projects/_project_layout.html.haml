@@ -32,7 +32,7 @@
             $('a[data-toggle="tooltip"]').tooltip();
     %ul.nav.nav-tabs.mt-4.pl-3.row.services-menu
       %li.nav-item
-        = link_to "Services", project_services_path(project),
+        = link_to "Resources", project_services_path(project),
           class: "nav-link #{"active" if controller.controller_name == "services"} text-uppercase"
       %li.nav-item
         = link_to "Project details", project_path(project),

@@ -39,7 +39,7 @@ en:
   cancel: Cancel
   common:
     open_access:
-      link: Go to the service
+      link: Go to the resource
     external:
       link: Order externally
 
@@ -51,20 +51,20 @@ en:
   project_item:
     mail:
       new_message: |
-        Question about your service access request in EOSC Portal Marketplace
+        Question about your resource access request in EOSC Portal Marketplace
   conversations:
     message:
-      question: "Your message to the service provider"
-      answer: "Message from the service provider"
+      question: "Your message to the resource provider"
+      answer: "Message from the resource provider"
     status:
       info:
-        created: "Your service request has been created"
-        in_progress: "Your service request is under review by service provider"
-        waiting_for_response: "Service provider is waiting for your response"
-        approved: "You service request has been accepted and is currently being processed by service provider"
-        ready: "Your service is now ready to be used"
-        rejected: " Your service request has been rejected. Please contact service provider if you have any questions"
-        closed: "Your service request is closed. If you want to use the service again, please contact service provider"
+        created: "Your resource request has been created"
+        in_progress: "Your resource request is under review by resource provider"
+        waiting_for_response: "Resource provider is waiting for your response"
+        approved: "You resource request has been accepted and is currently being processed by resource provider"
+        ready: "Your resource is now ready to be used"
+        rejected: " Your resource request has been rejected. Please contact resource provider if you have any questions"
+        closed: "Your resource request is closed. If you want to use the resource again, please contact resource provider"
   lead:
     learn_more:
       title: Learn more
@@ -77,13 +77,13 @@ en:
         header: Projects
         body: |
           Through Marketplace Projects you can organise
-          your services and gain support from the EOSC experts.
+          your resources and gain support from the EOSC experts.
         url: https://marketplace.eosc-portal.eu/about_projects
       providers:
         header: For providers
         body: |
           Contribute to develop EOSC into a rich environment with
-          a wide range of services and resources for researchers.
+          a wide range of resources and resources for researchers.
         url: https://eosc-portal.eu/for-providers
     use_cases:
       title: Use cases

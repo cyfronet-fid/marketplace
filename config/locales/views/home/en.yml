@@ -3,12 +3,12 @@ en:
     info:
       title: Welcome to the EOSC Portal Catalogue and Marketplace
       description: |
-        Integrated platform that allows easy access to lots of services and
+        Integrated platform that allows easy access to lots of
         resources for various research domains along with integrated data
-        analytics tools. Browse by scientific domain, service category or
+        analytics tools. Browse by scientific domain, resource category or
         provider and, if you need help, we are here for you!
       services:
-        description: Find EOSC Services that suit your use case yourself
+        description: Find EOSC Resources that suit your use case yourself
         link: Browse through catalogue
       projects:
         description: Describe your use case and get support from our experts

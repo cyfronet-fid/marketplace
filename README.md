@@ -2,10 +2,10 @@
 
 # README
 
-Marketplace is a place where you can find services you need for your research:
-  * free of charge services for researchers
+Marketplace is a place where you can find resources you need for your research:
+  * free of charge resources for researchers
   * unified order management
-  * compatible services linking to ready to use environments
+  * compatible resources linking to ready to use environments
 
 ## Development environment
 
@@ -45,20 +45,20 @@ marketplace root directory.
 ### Generating DB entries for development
 Actually, filling the database is done by parsing yaml: `db/data.yml`.
 Data come from actual official version of the marketplace.
-If you want to update informations, or add new services/categories you can add new records by edit yaml,
+If you want to update informations, or add new resources/categories you can add new records by edit yaml,
 but very imporant is, when some records are parent for other they must be written above their children.
 But if it's necessary, there is other option to fill the database:
 To simplify development `dev:prime` rake task is created. Right now it generates
-services with random name and description (this generation is done using
+resources with random name and description (this generation is done using
 `faker` gem). In the future this task will be extended with additional data.
 
 ```
-rails dev:prime     # Remove existing services and generate 100 new services
-rails dev:prime[50] # Remove existing services and generate 50 new services
+rails dev:prime     # Remove existing resources and generate 100 new resources
+rails dev:prime[50] # Remove existing resources and generate 50 new resources
 ```
 
 ## Elasticserach
-Elasticsearch is used for full text service search.
+Elasticsearch is used for full text resource search.
 
 On Debian/Ubuntu/Mint Elasticsearch installation is quite simple
 (but it doesn't always work, see below):
@@ -110,12 +110,12 @@ To run on different than test instance, there is a need do set environmental var
 
 ## Google Analytics API
 
-Marketplace has integration with Google Analytics and shows users with executive role services unique visits counter.
+Marketplace has integration with Google Analytics and shows users with executive role resources unique visits counter.
 Default period is 1 month,
 
 ## ReCaptcha
 
-ReCaptcha is now used in the ask service question form. To work it needs to set 2 environment variables:
+ReCaptcha is now used in the ask resource question form. To work it needs to set 2 environment variables:
 `RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY`. For test, development and internal docker instances
 values of these variables are stored in encrypted credentials.
 
@@ -185,7 +185,7 @@ ENV variables:
   * `PROVIDERS_DASHBOARD_URL` - Provider's Dashboard URL used to create links to the provider's dashboard
   * `ASSET_HOST` and `ASSET_PROTOCOL` - assets mailer config is mandatory
     (e.g. ASSET_HOST = marketplace.eosc-portal.eu/ and ASSET_PROTOCOL = https )
-  * `RATE_AFTER_PERIOD` - number of days after which user can rate service (default is set to 90 days)
+  * `RATE_AFTER_PERIOD` - number of days after which user can rate resource (default is set to 90 days)
   * `ATTRIBUTES_DOCS_URL` - offer attributes definition documentation (external link)
   * ENV Variables connected to JIRA integration are described in [JIRA integration manual](./docs/jira_integration.md)
 
