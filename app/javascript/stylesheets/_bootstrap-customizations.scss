@@ -2079,6 +2079,8 @@ h5 {
 }
 
 .step-progress-item {
+  margin-left: 5em !important;
+
   .edited {
     background: $edited-comment-background-color;
     border-color: $edited-comment-border-color !important;
@@ -2086,7 +2088,6 @@ h5 {
 
   .frame {
     padding: 14px 15px 12px;
-    max-width: 90%;
     margin-top: 10px;
     border: 1px solid $palette-gray-30;
     font-size: 14px;
@@ -2905,7 +2906,7 @@ label[data-multicheckbox].small {
 }
 
 .details-row {
-  .details-box {
+  .details-box-info {
     display: inline;
     float: left;
   }
