@@ -939,17 +939,25 @@ Service detail
           top: 0;
           left: 0;
         }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
     }
   }
 
   .list-group-item {
     border: none;
-    margin: 0 0 0 1.5rem;
+    margin: 0 0 0.35rem 1.5rem;
     padding: 0 0.2rem;
     color: $secondary;
     list-style-type: disc !important;
     display: list-item;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   .arrows {
@@ -2366,12 +2374,15 @@ label[data-multicheckbox].small {
   .access-type {
     font-size: 0.8em;
     padding: 7px 14px;
-    text-transform: uppercase;
     text-align: center;
     color: $palette-gray-70;
-    margin-bottom: 30px;
+    //margin-bottom: 30px;
     font-weight: 400;
     width: 100%;
+
+    .ordertype-label {
+      text-transform: uppercase;
+    }
   }
 
   .badge {
@@ -2500,6 +2511,21 @@ label[data-multicheckbox].small {
 }
 
 .service-details-header {
+
+  .stars {
+    float: left;
+  }
+
+  .rating {
+    float: left;
+    margin: 1px 20px 0 0;
+  }
+
+  .comparison {
+    float: left;
+    margin: 2px 0 0 0;
+  }
+
   .research,
   .dedicated {
     display: none;
@@ -3919,12 +3945,15 @@ textarea.form-control.is-invalid {
     li {
       display: inline;
       float: left;
+      padding-left: 16px;
+      position: relative;
       margin-right: 20px;
 
       svg {
         font-size: 10px;
-        margin-right: 4px;
-        margin-top: 9px;
+        position: absolute;
+        top: 7px;
+        left: 0;
         color: $palette-yellow;
       }
     }
@@ -3991,8 +4020,8 @@ textarea.form-control.is-invalid {
         margin: 0 0 6px 1rem;
         padding: 0 0.2rem;
         color: $palette-yellow;
-        line-height: 1.14;
-        font-size: 1.3rem;
+        line-height: 1.15;
+        font-size: 1.1rem;
         list-style-type: disc !important;
         display: list-item;
 
