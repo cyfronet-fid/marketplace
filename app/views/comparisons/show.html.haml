@@ -34,7 +34,7 @@
         - @services.each do |service|
           %td= service.providers.map { |p| p.name }.join(", ")
       %tr.lightgrey-row
-        %th Service order type
+        %th Resource order type
         - @services.each do |service|
           %td
             - service.offers.each_with_index do |offer, idx|
@@ -52,7 +52,7 @@
         - @services.each do |service|
           %td= service.target_users.map { |tg| tg.name }.join(", ")
       %tr
-        %th Service life cycle status
+        %th Resource life cycle status
         - @services.each do |service|
           - if service.life_cycle_status.present?
             %td= t("services.about.sidebar.fields.life_cycle_status.#{service.life_cycle_status.name}")

@@ -12,20 +12,20 @@
 #statistics.accordion
   = render "pages/card", parent: "statistics",
     name: "providers", title: t(".providers.title", count: @providers_count) do
-    %p= t(".providers.description")
+    %p= t("executive.statistics.index.providers.description")
     %ul
       - @providers.each do |provider|
         %li= provider
 
   = render "pages/card", parent: "statistics",
     name: "discriplines", title: t(".disciplines.title", count: @disciplines_count) do
-    %p= t(".disciplines.description")
+    %p= t("executive.statistics.index.disciplines.description")
     %ul
       - @disciplines.each do |discipline|
         %li= discipline
   = render "pages/card", parent: "statistics",
     name: "origin", title: t(".countries.title", count: @countries_count) do
-    %p= t(".countries.description")
+    %p= t("executive.statistics.index.countries.description")
     %ul
       - @countries.each do |country|
         %li= country

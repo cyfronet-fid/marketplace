@@ -10,7 +10,7 @@ crumb :profile do
 end
 
 crumb :services do
-  link "Services", services_path(params: (session[:query].blank? ? {} : session[:query]))
+  link "Resources", services_path(params: (session[:query].blank? ? {} : session[:query]))
   parent :marketplace_root
 end
 
@@ -46,7 +46,7 @@ crumb :comparison do
 end
 
 crumb :project_item do |project_item|
-  link "Service (#{project_item.service.name})",
+  link "Resource (#{project_item.service.name})",
     project_service_path(project_item.project, project_item)
   parent :project, project_item.project
 end

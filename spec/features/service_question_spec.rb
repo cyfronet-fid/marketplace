@@ -22,7 +22,7 @@ RSpec.feature "Question about service" do
 
       visit service_path(service)
 
-      click_on "Ask a question about this service?"
+      click_on "Ask a question about this resource?"
 
       within("#ajax-modal") do
         fill_in("service_question_text", with: "text")
@@ -40,7 +40,7 @@ RSpec.feature "Question about service" do
 
       visit service_path(service)
 
-      click_on "Ask a question about this service?"
+      click_on "Ask a question about this resource?"
 
       click_on "SEND"
 
@@ -55,7 +55,7 @@ RSpec.feature "Question about service" do
 
       visit service_path(service)
 
-      click_on "Ask a question about this service?"
+      click_on "Ask a question about this resource?"
 
       within("#ajax-modal") do
         fill_in("service_question_author", with: "John Doe")
@@ -75,7 +75,7 @@ RSpec.feature "Question about service" do
 
       visit service_path(service)
 
-      click_on "Ask a question about this service?"
+      click_on "Ask a question about this resource?"
 
       click_on "SEND"
 
