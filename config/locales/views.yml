@@ -13,17 +13,17 @@ en:
         orderable:
           title: Orderable
           description: |
-              Number of services orderable through the Marketplace
+              Number of resources orderable through the Marketplace
               (Sum of all offers with Internal ordering access type)
         not_orderable:
           title: Not orderable/open access
           description: |
-            Number of services not orderable (Sum of all offers with External
+            Number of resources not orderable (Sum of all offers with External
             and Open access type added to the projects)
         all_services:
-          title: All service
+          title: All resources
           description: |
-            All services registered in Marketplace
+            All resources registered in Marketplace
         providers:
           title: Providers (%{count})
           description: "Providers in the Marketplace:"

@@ -14,18 +14,18 @@ en:
     empty_project:
       description_html: |
         <h3>
-          You have no services </br>
+          You have no resources </br>
           in this project yet.
         </h3>
         <ul class= "simple-list">
           <li>
             <span>
-              Browse our catalogue to find EOSC services that can support your scientific work and add them to your
+              Browse our catalogue to find EOSC resources that can support your scientific work and add them to your
               Marketplace Project
             </span>
           </li>
           <li>
-            <span>Follow the status of your service access request and gain all necessary information</span>
+            <span>Follow the status of your resource access request and gain all necessary information</span>
           <li>
             <span>
               If you need help with any of these, don't hesitate and contact our customer support in ‘CONTACT WITH
@@ -35,13 +35,13 @@ en:
     project_description:
       header: Welcome to the Marketplace Projects!
       summary: |
-        With Marketplace Projects you can organise your services and service orders into a logical blocks to
+        With Marketplace Projects you can organise your resources and resource orders into a logical blocks to
         reflect a common scientific purpose and gain support for the created Marketplace Project.
       details_html: |
         <div class="row">
             <div class="col-lg-9 pl-5 pr-5 mt-4">
               <p class="info">
-                As the services available in the Marketplace are available for all European researchers
+                As the resources available in the Marketplace are available for all European researchers
                 you can precise your customer typology.
                 Tell us, whether you want to use available EOSC resources in the scope of: </p>
               <ul class="short-list">
@@ -68,11 +68,11 @@ en:
                 to address your digital needs.
                 To get this support, after creating a MP Project please go to ‚CONTACT WITH PROJECT SUPPORT’ tab.</p>
               <p class="info">
-                When ready to start using EOSC services, with ‚Services’ tab you can select EOSC resources
+                When ready to start using EOSC resources, with ‚Resources’ tab you can select EOSC resources
                 and solutions suitable for your work. Some of them you will be able to start using right away,
                 some will require you to issue access request (Marketplace order). For the latter,
                 Marketplace Projects will be the place to follow the status of your orders,
-                get all relevant information about the service access when the access is granted
+                get all relevant information about the resource access when the access is granted
                 and contact the EOSC support if necessary. </p>
               <p class="info">
                 So find out how EOSC can support your scientific needs and use our quick creation form to
@@ -84,8 +84,8 @@ en:
         </div>
     select:
       description: |
-        You can organize your services in projects.
-        Add this service to a specific project or create a new one.
+        You can organize your resources in projects.
+        Add this resource to a specific project or create a new one.
     buttons:
       create: Create new project
       update: Update

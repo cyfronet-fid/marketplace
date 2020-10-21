@@ -44,7 +44,7 @@ RSpec.feature "Services in backoffice" do
 
 
       visit backoffice_services_path
-      click_on "Create new Service"
+      click_on "Create new Resource"
 
       fill_in "Name", with: "service name"
       fill_in "Description", with: "service description"
@@ -78,7 +78,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Training information url", with: "https://sample.url"
       fill_in "Restrictions", with: "Reaserch affiliation needed"
       fill_in "Activate message", with: "Welcome!!!"
-      fill_in "Service Order Target", with: "email@domain.com"
+      fill_in "Resource Order Target", with: "email@domain.com"
       fill_in "service_certifications_0", with: "ISO-639"
       fill_in "service_standards_0", with: "standard"
       fill_in "service_open_source_technologies_0", with: "opensource"
@@ -95,7 +95,7 @@ RSpec.feature "Services in backoffice" do
 
       fill_in "service_sources_attributes_0_eid", with: "12345a"
 
-      expect { click_on "Create Service" }.
+      expect { click_on "Create Resource" }.
         to change { user.owned_services.count }.by(1)
 
 
@@ -148,7 +148,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "service_public_contacts_attributes_2_last_name", with: "Doe"
       fill_in "service_public_contacts_attributes_2_email", with: "john@doe.com"
 
-      click_on "Update Service"
+      click_on "Update Resource"
 
 
       expect(page).to have_content("jane@doe.com")
@@ -165,7 +165,7 @@ RSpec.feature "Services in backoffice" do
       find("a", id: "public-contact-delete-0").click
       find("a", id: "public-contact-delete-1").click
 
-      click_on "Update Service"
+      click_on "Update Resource"
 
       expect(page).to have_content(public_contacts.first.email)
       expect(page).to_not have_content(public_contacts.second.email)
@@ -188,7 +188,7 @@ RSpec.feature "Services in backoffice" do
       resource_organisation = create(:provider)
 
       visit backoffice_services_path
-      click_on "Create new Service"
+      click_on "Create new Resource"
 
       fill_in "Name", with: "service name"
       fill_in "Tagline", with: "tagline"
@@ -212,7 +212,7 @@ RSpec.feature "Services in backoffice" do
       scientific_domain = create(:scientific_domain)
 
       visit backoffice_services_path
-      click_on "Create new Service"
+      click_on "Create new Resource"
 
       attach_file("service_logo", "spec/lib/images/invalid-logo.svg")
       fill_in "Name", with: "service name"
@@ -221,7 +221,7 @@ RSpec.feature "Services in backoffice" do
       select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
 
-      expect { click_on "Create Service" }.
+      expect { click_on "Create Resource" }.
         to change { user.owned_services.count }.by(0)
 
       expect(page).to have_content("Sorry, but the logo format you were trying to attach is not supported in the Marketplace.")
@@ -240,7 +240,7 @@ RSpec.feature "Services in backoffice" do
       service = create(:service, status: :draft)
 
       visit backoffice_service_path(service)
-      click_on "Publish as unverified service"
+      click_on "Publish as unverified resource"
 
       expect(page).to have_content("Status: unverified")
     end
@@ -261,7 +261,7 @@ RSpec.feature "Services in backoffice" do
       click_on "Edit"
 
       fill_in "Name", with: "updated name"
-      click_on "Update Service"
+      click_on "Update Resource"
 
       expect(page).to have_content("updated name")
     end
@@ -324,7 +324,7 @@ RSpec.feature "Services in backoffice" do
       select "open_access", from: "Order type"
       fill_in "Order url", with: "http://google.com"
 
-      click_on "Update Service"
+      click_on "Update Resource"
 
       service.reload
       expect(service.offers.first.order_type).to eq(service.order_type)
@@ -466,7 +466,7 @@ RSpec.feature "Services in backoffice" do
 
       expect(page).to have_content("777")
       fill_in "service_sources_attributes_0_eid", with: "12345a"
-      click_on "Update Service"
+      click_on "Update Resource"
       expect(page).to have_content("eic: 12345a")
     end
 
@@ -477,8 +477,8 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
       click_on "Edit"
 
-      select external_source.to_s, from: "Service Upstream"
-      click_on "Update Service"
+      select external_source.to_s, from: "Resource Upstream"
+      click_on "Update Resource"
       expect(page).to have_content(external_source.to_s, count: 2)
     end
 
@@ -502,7 +502,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Owners", disabled: false
       expect(page).to have_field "Funding bodies", disabled: false
       expect(page).to have_field "Funding programs", disabled: false
-      expect(page).to have_field "Service Order Target", disabled: false
+      expect(page).to have_field "Resource Order Target", disabled: false
       expect(page).to have_field "Language availability", disabled: false
       expect(page).to have_field "Geographical availabilities", disabled: false
       expect(page).to have_field "Terms of use url", disabled: false
@@ -539,7 +539,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Funding bodies", disabled: false
       expect(page).to have_field "Funding programs", disabled: false
       expect(page).to have_field "Owners", disabled: false
-      expect(page).to have_field "Service Order Target", disabled: false
+      expect(page).to have_field "Resource Order Target", disabled: false
       expect(page).to have_field "Language availability", disabled: true
       expect(page).to have_field "Geographical availabilities", disabled: true
       expect(page).to have_field "Terms of use url", disabled: true
@@ -567,7 +567,7 @@ RSpec.feature "Services in backoffice" do
       click_on "Edit"
 
       fill_in "Name", with: "Owner can edit service draft"
-      click_on "Update Service"
+      click_on "Update Resource"
       expect(page).to have_content("Owner can edit service draft")
     end
 

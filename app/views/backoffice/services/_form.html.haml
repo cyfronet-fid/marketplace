@@ -103,7 +103,7 @@
         public_contact_form: public_contact_form } }
   .row.mt-5
     .col-12.col-md-10
-      = f.input :order_target, label: "Service Order Target", disabled: cant_edit(:order_target)
+      = f.input :order_target, label: "Resource Order Target", disabled: cant_edit(:order_target)
 
   .row.mt-5
     .col-12.col-md-5
@@ -191,7 +191,7 @@
   .row.mt-5
     .col-12.col-md-5
       = f.input :upstream_id, collection: f.object.sources.reject { |source| source.id.nil? },
-                              include_blank: "MP", label: "Service Upstream"
+                              include_blank: "MP", label: "Resource Upstream"
 
       %h3 External Sources
 

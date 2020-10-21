@@ -32,7 +32,7 @@ RSpec.feature "Service browsing" do
 
     visit service_path(service)
 
-    expect(page.body).to have_content "Suggested compatible services"
+    expect(page.body).to have_content "Suggested compatible resources"
     expect(page.body).to have_content related.name
   end
 
@@ -59,7 +59,7 @@ RSpec.feature "Service browsing" do
 
     visit service_path(service)
 
-    expect(page).to have_link("Access the service")
+    expect(page).to have_link("Access the resource")
     expect(page).to_not have_content(offer2.name)
     expect(page).to_not have_content(offer1.name)
   end
@@ -143,7 +143,7 @@ RSpec.feature "Service browsing" do
   scenario "should have 'All' link in categories with all services count" do
     visit services_path
 
-    expect(page).to have_text("All Services #{Service.count}")
+    expect(page).to have_text("All Resources #{Service.count}")
   end
 
   scenario "should by default sort services by name, ascending" do

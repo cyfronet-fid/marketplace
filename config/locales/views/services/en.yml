@@ -1,7 +1,7 @@
 en:
   services:
     header:
-      order: Access the service
+      order: Access the resource
     about:
       sidebar:
         title:
@@ -9,8 +9,8 @@ en:
           platforms: Related Infrastructures and Platforms
           support: Support
           documents: Documents
-          restrictions: Service restrictions
-          phase: Service phase
+          restrictions: Resource restrictions
+          phase: Resource phase
         fields:
           webpage_url: Webpage
           helpdesk_url: Helpdesk
@@ -55,41 +55,41 @@ en:
         external:
           link: Order externally
           description_html: |
-            <p>To use this service you need to request access at the provider’s website.
-            Press <strong>Go to the service</strong> button to visit it.
-            You may also add the service to a <strong>Project</strong> in order to:
+            <p>To use this resource you need to request access at the provider’s website.
+            Press <strong>Go to the resource</strong> button to visit it.
+            You may also add the resource to a <strong>Project</strong> in order to:
             <ul class="simple-list">
                 <li>Gain EOSC experts support</li>
-                <li>Easily access the selected service</li>
-                <li>Organise your services and orders into logical blocks</li>
+                <li>Easily access the selected resource</li>
+                <li>Organise your resources and orders into logical blocks</li>
             </ul>
             </p><p> To find out more about Projects in EOSC Marketplace, please refer to our
             <a href="%{faq_url}">FAQ</a>.</p>
         open_access:
-          link: Go to the service
+          link: Go to the resource
           description_html: |
-            <p>This is an open access offer of the %{service_title} service.
-            Press <strong>Go to the service</strong> button to reach the service website.
-            You may also add the service to a <strong>Project</strong> in order to:
+            <p>This is an open access offer of the %{service_title} resource.
+            Press <strong>Go to the resource</strong> button to reach the resource website.
+            You may also add the resource to a <strong>Project</strong> in order to:
             <ul class="simple-list">
                 <li>Gain EOSC experts support</li>
-                <li>Easily access the selected service</li>
-                <li>Organise your services and orders into logical blocks</li>
+                <li>Easily access the selected resource</li>
+                <li>Organise your resources and orders into logical blocks</li>
             </ul>
             </p><p> To find out more about Projects in EOSC Marketplace, please refer to our
             <a href="%{faq_url}">FAQ</a>.</p>
         orderable:
           description_html: |
-            <p>This service can be ordered via EOSC Marketplace. Once the information provided in the details
-            of the underpinned Project is verified, the service will be delivered to you by the service provider.
+            <p>This resource can be ordered via EOSC Marketplace. Once the information provided in the details
+            of the underpinned Project is verified, the resource will be delivered to you by the resource provider.
             </p><p>
-            To access the service:
+            To access the resource:
             <ul class="simple-list">
                 <li>Place an order to request access</li>
                 <li>You will receive the summary of your order via email</li>
-                <li>You will be contacted by the support team once the service is ready for you to use</li>
+                <li>You will be contacted by the support team once the resource is ready for you to use</li>
             </ul>
-            </p><p>Your service request status changes can be tracked in the project's dashboard.
+            </p><p>Your resource request status changes can be tracked in the project's dashboard.
             To find out more about Projects in EOSC Marketplace, please refer to our <a href="%{faq_url}">FAQ</a>.</p>
     configurations:
       show:
@@ -113,7 +113,7 @@ en:
           cancel: Quit
         description_html: |
           Please select a Project and review the summary below. Once added to
-          the project, your service ordering page will be accessible via URL
+          the project, your resource ordering page will be accessible via URL
           at your Project space.
       open_access:
         order:
@@ -121,12 +121,12 @@ en:
           cancel: Quit
         description_html: |
           Please select a Project and review the summary below. Once added to
-          the project, your service will be accessible via URL at your Project space.
+          the project, your resource will be accessible via URL at your Project space.
       orderable:
         order:
           title: Send access request
           cancel: Cancel order and quit
         description_html: |
           Please select a Project and review the summary below. Once you submit the order,
-          your request will be sent to a service provider. </br>
+          your request will be sent to a resource provider. </br>
           The order status will be visible at your Project space.

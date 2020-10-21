@@ -33,9 +33,9 @@ RSpec.feature "Executive stistics" do
       visit executive_statistics_path
 
       expect(page.body).to have_selector("h1", text: "Statistics")
-      expect(page.body).to have_text("1\nNumber of services orderable")
-      expect(page.body).to have_text("2\nNumber of services not orderable")
-      expect(page.body).to have_text("3\nAll services")
+      expect(page.body).to have_text("1\nNumber of resources orderable")
+      expect(page.body).to have_text("2\nNumber of resources not orderable")
+      expect(page.body).to have_text("3\nAll resources")
       expect(page.body).to have_text("Providers (3)")
       expect(page.body).to have_text("Domains (4)")
       expect(page.body).to have_text("Origins (5)")
