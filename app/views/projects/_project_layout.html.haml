@@ -7,14 +7,14 @@
             = project.name
           .details-row
             - if project.archived?
-              .details-box.text-uppercase= t("project_items.status.#{project.status}")
+              .details-box-info.text-uppercase= t("project_items.status.#{project.status}")
               .separator
-            .details-box Created at #{l(project.created_at, format: :short)}
+            .details-box-info Created at #{l(project.created_at, format: :short)}
             .separator
-            .details-box= t "projects.customer_typology.#{project.customer_typology || "none"}"
+            .details-box-info= t "projects.customer_typology.#{project.customer_typology || "none"}"
             - if project.organization?
               .separator
-              .details-box= project.organization
+              .details-box-info= project.organization
       .buttons-panel.col-md-3.float-right.d-flex.align-items-center
         - if policy(project).edit?
           = link_to "Edit", edit_project_path(project), class: "btn btn-outline-secondary btn-sm mb-1 mt-1"
