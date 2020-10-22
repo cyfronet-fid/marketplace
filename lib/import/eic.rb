@@ -11,12 +11,14 @@ module Import
                    filepath: nil,
                    unirest: Unirest,
                    logger: ->(msg) { puts msg },
-                   default_upstream: :mp)
+                   default_upstream: :mp,
+                   token: nil)
       @eic_base_url = eic_base_url
       @dry_run = dry_run
       @unirest = unirest
       @dont_create_providers = dont_create_providers
       @default_upstream = default_upstream
+      @token = token
 
       @logger = logger
       @ids = ids || []
@@ -27,8 +29,17 @@ module Import
       log "Importing services from eInfraCentral..."
 
       begin
-        r = @unirest.get("#{@eic_base_url}/api/service/rich/all?quantity=10000&from=0",
-                        headers: { "Accept" => "application/json" })
+        unless @token.blank?
+          http_response = RestClient::Request.execute(method: :get,
+                                              url: "#{@eic_base_url}/api/service/rich/all?quantity=10000&from=0",
+                                              headers: { Accept: "application/json",
+                                                         Authorization: "Bearer #{@token}" })
+
+          r = Unirest::HttpResponse.new(http_response)
+        else
+          r = @unirest.get("#{@eic_base_url}/api/service/rich/all?quantity=10000&from=0",
+                           headers: { "Accept" => "application/json" })
+        end
       rescue Errno::ECONNREFUSED
         abort("import:eic exited with errors - could not connect to #{@eic_base_url}")
       end
