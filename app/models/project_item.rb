@@ -101,11 +101,6 @@ class ProjectItem < ApplicationRecord
     end
   end
 
-  def external
-    # :TODO: this is compatibility layer hack, what is WEBPAGE?
-    order_type == "order_required" && webpage.present?
-  end
-
   private
     def copy_offer_fields
       self.order_type = offer&.order_type

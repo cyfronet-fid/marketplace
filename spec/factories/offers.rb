@@ -17,7 +17,7 @@ FactoryBot.define do
     end
     factory :external_offer do
       sequence(:order_type) { :order_required }
-      sequence(:external) { true }
+      sequence(:order_url) { "http://order.com" }
     end
   end
 end

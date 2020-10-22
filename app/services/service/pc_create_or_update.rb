@@ -30,34 +30,22 @@ class Service::PcCreateOrUpdate
 
     is_newer_update = mapped_service&.synchronized_at.present? ? (@modified_at > mapped_service.synchronized_at) : true
 
-    url = service[:order_url] || service[:webpage_url] || ""
-
     if mapped_service.nil? && @is_active
       service = Service.new(service)
       save_logo(service, @eic_service["logo"])
 
-      if service.save!
+      if Service::Create.new(service).call
         ServiceSource.create!(service_id: service.id, source_type: "eic", eid: @eid)
-        if url.present? || service.order_type=="order_required"
-          service.offers.create!(name: "Offer",
-                                 description: "#{service.name} Offer",
-                                 order_type: service.order_type,
-                                 external: service[:order_url].present? && service.order_type=="order_required",
-                                 webpage: url, status: "published")
-        else
-          Rails.logger.warn "[WARNING] Offer cannot be created, because url is empty"
-        end
       end
       service
     elsif is_newer_update
       if mapped_service && !@is_active
+        Service::Update.new(mapped_service, service).call
         Service::Draft.new(mapped_service).call
-        update_offer(mapped_service, url)
         mapped_service
       elsif !source_id.nil? && mapped_service.upstream_id == source_id
         save_logo(mapped_service, @eic_service["logo"])
-        mapped_service.update!(service)
-        update_offer(mapped_service, url)
+        Service::Update.new(mapped_service, service).call
         mapped_service
       else
         mapped_service
@@ -88,7 +76,6 @@ class Service::PcCreateOrUpdate
         target_users: Array(map_target_users(data.dig("targetUsers", "targetUser"))) || [],
         order_type: map_order_type(data["orderType"]),
         order_url: data["order"] || "",
-        external: data["order"].present? && map_order_type(data["orderType"])=="order_required",
         main_contact: main_contact,
         public_contacts: Array.wrap(data.dig("publicContacts", "publicContact")).
             map { |c| PublicContact.new(map_contact(c)) } || [],
@@ -131,14 +118,6 @@ class Service::PcCreateOrUpdate
         last_update: data["lastUpdate"].present? ? Time.at(data["lastUpdate"].to_i) : nil,
         synchronized_at: @modified_at
       }
-    end
-
-    def update_offer(mapped_service, url)
-      if mapped_service.offers_count == 1
-        mapped_service.offers.first.update!(order_type: mapped_service.order_type,
-                                            external: mapped_service.external,
-                                            webpage: url, status: "published")
-      end
     end
 
     def map_target_users(target_users)
