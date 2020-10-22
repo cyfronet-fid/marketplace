@@ -59,8 +59,12 @@ class Service::PcCreateOrUpdate
     def map_service(data)
       main_contact = MainContact.new(map_contact(data["mainContact"])) if data["mainContact"] || nil
       providers = Array(data.dig("resourceProviders", "resourceProvider"))
-      scientific_domains = [data.dig("scientificDomains", "scientificDomain", "scientificSubdomain")]
-      categories = [data.dig("categories", "category", "subcategory")]
+      scientific_domains = data.dig("scientificDomains", "scientificDomain").is_a?(Array) ?
+         data.dig("scientificDomains", "scientificDomain").map { |sd|  sd["scientificSubdomain"] } :
+         data.dig("scientificDomains", "scientificDomain", "scientificSubdomain")
+      categories = data.dig("categories", "category").is_a?(Array) ?
+         data.dig("categories", "category").map { |c| c["subcategory"] } :
+         data.dig("categories", "category", "subcategory")
 
       { name: data["name"],
         pid: @eid,
