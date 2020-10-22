@@ -89,10 +89,10 @@ module Import
         grant_project_names = service["grantProjectNames"]
         tag_list = Array(service["tags"])
         geographical_availabilities = service["geographicalAvailabilities"] ||
-        categories = service["categories"].map { |c| c["subcategory"] }
+        categories = service["categories"].map { |c| c["subcategory"] } || []
         order_type = map_order_type(service["orderType"])
         related_platforms = service["relatedPlatforms"] || []
-        scientific_domains = service["scientificDomains"]&.map { |sd| sd["scientificSubdomain"] }
+        scientific_domains = service["scientificDomains"]&.map { |sd| sd["scientificSubdomain"] } || []
         funding_bodies = service["fundingBody"]
         funding_programs = Array(service["fundingPrograms"])
         main_contact = MainContact.new(map_contact(service["mainContact"])) if service["mainContact"] || nil
