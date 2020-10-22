@@ -293,7 +293,7 @@ describe Import::Eic do
     eic = make_and_stub_eic(ids: [], dry_run: false, dont_create_providers: false)
     eic.call
 
-    expect(Service.first.tagline).to eq("NO IMPORTED TAGLINE")
+    expect(Service.first.tagline).to eq("-")
   end
 
   it "should set upstream_id if :eic argument is provided" do

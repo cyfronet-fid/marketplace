@@ -37,12 +37,9 @@
         %th Resource order type
         - @services.each do |service|
           %td
-            - service.offers.each_with_index do |offer, idx|
-              %span{ "data-toggle": "tootltip",
-                     "title": "#{t("project_items.offer_type.#{offer.order_type}.tooltip")}" }
-                = t("offers.type.#{offer.order_type}")
-                - unless service.offers.length == idx+1
-                  %br
+            %span{ "data-toggle": "tootltip",
+                   "title": "#{t("project_items.order_type.#{order_type(service)}.tooltip")}" }
+              = t("offers.type.#{order_type(service)}")
       %tr
         %th Scientific domain
         - @services.each do |service|
@@ -55,7 +52,7 @@
         %th Resource life cycle status
         - @services.each do |service|
           - if service.life_cycle_status.present?
-            %td= t("services.about.sidebar.fields.life_cycle_status.#{service.life_cycle_status.name}")
+            %td= service.life_cycle_status.first.name
       %tr.lightgrey-row
         %th Geographical availabilities
         - @services.each do |service|
@@ -66,9 +63,11 @@
           %td
             %ul
             - service.language_availability.each do |language|
-              %li= language
+              %li= I18nData.languages[language.upcase] || language
 
       %tr.lightgrey-row
         %th Tags
         - @services.each do |service|
-          %td= service.tags.map { |t| t.name }.join(", ")
+          %td
+            - service.tag_list.sort.each do |tag|
+              = link_to tag, services_path(tag: tag), class: "badge badge-light"

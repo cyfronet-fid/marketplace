@@ -19,6 +19,12 @@
               %li.links
                 %i.fas.fa-arrow-right
                 = link_to(element.name, service_path(element))
+            - elsif nested[field.to_sym] == "tag"
+              %span
+                = link_to element, services_path(tag: element), class: "badge badge-light"
+            - elsif nested[field.to_sym] == "label"
+              %span
+                = t(".#{element}")
             - else
               %span
                 #{element.send(nested[field.to_sym])}#{idx == (Array(service.send(field)).map.size) - 1 ? nil : ", "}
