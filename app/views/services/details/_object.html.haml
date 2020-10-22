@@ -2,5 +2,9 @@
   %li
     - fields.map do |field|
       - if object.send(field).present?
-        %span= object.send(field)
-        %br
+        - if nested[field.to_sym].present? && nested[field.to_sym] == "email"
+          %span= mail_to object.send(field), object.send(field)
+          %br
+        - else
+          %span= object.send(field)
+          %br

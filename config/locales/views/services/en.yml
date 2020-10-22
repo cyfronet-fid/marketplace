@@ -32,6 +32,11 @@ en:
         use_cases_url: Use case %{idx}
         multimedia: Multimedia %{idx}
       array:
+        tag_list: Tags
+        fully_open_access: Fully Open Access
+        open_access: Open Access
+        order_required: Order Required
+        other: Other Order Type
         standards: Standards
         certifications: Certifications
         version: Version
