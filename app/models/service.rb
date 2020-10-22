@@ -43,7 +43,10 @@ class Service < ApplicationRecord
                     },
                     { name: "categorisation",
                       template: "array",
-                      fields: ["categories"]
+                      fields: ["pc_categories"],
+                      nested: {
+                          pc_categories: "name"
+                      }
                     },
                     { name: "target_users",
                       template: "array",
@@ -63,12 +66,13 @@ class Service < ApplicationRecord
 
   DETAIL_FIELDS_1 = [{ name: "classification",
                        template: "array",
-                       fields: ["target_users", "access_types", "access_modes", "tags"],
+                       fields: ["target_users", "access_types", "access_modes", "tag_list"],
                        with_desc: true,
                        nested: {
                            target_users: "name",
                            access_types: "name",
-                           access_modes: "name"
+                           access_modes: "name",
+                           tag_list: "tag"
                        } },
                      { name: "availability",
                        template: "array",
@@ -98,6 +102,7 @@ class Service < ApplicationRecord
                        template: "array",
                        fields: ["order_type", "order_url"],
                        nested: {
+                           order_type: "label",
                            order_url: "link"
                        },
                        with_desc: true }]
@@ -107,7 +112,10 @@ class Service < ApplicationRecord
                        template: "object",
                        fields: ["full_name", "email", "phone", "position_in_organisation"],
                        type: "array",
-                       clazz: "public_contacts" },
+                       clazz: "public_contacts",
+                       nested: {
+                           email: "email"
+                       } },
                      { name: "maturity_information",
                        template: "array",
                        fields: ["trl", "life_cycle_status", "certifications", "standards", "open_source_technologies",
@@ -295,7 +303,7 @@ class Service < ApplicationRecord
 
   private
     def open_access_or_external?
-      open_access? || external?
+      open_access? || external
     end
 
     def logo_variable

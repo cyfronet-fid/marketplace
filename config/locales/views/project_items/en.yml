@@ -47,6 +47,10 @@ en:
         title: Other
         tooltip: |
           Resource has other order type, visit its website to know the details.
+      various:
+        title: Various order types
+        tooltip: |
+          Resource has various order types, check offers to know the details.
       external:
         title: External ordering
         tooltip: |
