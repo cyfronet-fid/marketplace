@@ -26,6 +26,8 @@ en:
       draft:
         link: Stop showing in the MP
       offers:
+        parameters:
+          link: Edit parameters
         new:
           link: Add new Offer
           title: Create new offer

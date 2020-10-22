@@ -1,0 +1,18 @@
+= simple_form_for [:backoffice, service, offer], html: { "data-controller": "offer" } do |f|
+  %h4.mt-5.mb-0.text-uppercase
+    Offer parameters
+  .row.parameters-section
+    .col-12
+      .float-left.parameter-list
+        = parameter_templates(f)
+      .float-right.parameter-cards
+        .offer-attributes{ "data-target": "offer.attributes" }
+          - offer.parameters.each do |p|
+            = render "parameters/template", parameter: p, form: f
+
+  %hr.bottom-hr.mb-5
+  .row
+    .col-12
+      = f.button :submit, class: "btn btn-primary pl-5 pr-5"
+      = link_to t("cancel and back to previous page"), backoffice_service_path(service),
+      class: "btn btn-link text-uppercase"

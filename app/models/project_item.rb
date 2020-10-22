@@ -108,5 +108,6 @@ class ProjectItem < ApplicationRecord
       self.description = offer&.description
       self.webpage = offer&.webpage
       self.voucherable = offer&.voucherable
+      self.order_url = offer&.order_url
     end
 end
