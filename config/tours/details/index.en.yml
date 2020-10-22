@@ -1,0 +1,45 @@
+service_details_intro:
+  previous:
+    tour_name: "service_about_intro"
+    controller_name: "services"
+    action_name: "show"
+    redirect_to: "service_path"
+    controller_params_map:
+      service_id: id
+
+  steps:
+    1:
+      title: Main section
+      text: |-
+        The **Details** page will help you to get additional information about the resource.
+        The details provided by resource providers during the EOSC Resource Onboarding
+        Process will help you to assess if the resource is suitable for you or not.
+      attachTo:
+        element: "[data-shepherd-tour-target='service-details-tab']"
+        placement: "top"
+    2:
+      title: Main section
+      text: |-
+        If you don’t find the needed information here do not hesitate to use "Ask a question" link to ask for help.
+        Also, you can let the providers know that their descriptions may need to be more detailed.
+
+        In this summary you will find:
+
+        * Information about the resource **Classification**
+        * Information about the resource **Geographical Availability** and **Location**
+        * **Marketing** information such as linked **Multimedia** and **Use Cases**
+        * Information about **Public Contacts** for the resource
+        * **Maturity** Information such as **TRL**, **Life Cycle Status** or **Certification**
+        * **Dependencies** - information about other resources needed to use this resource
+        * Resource attribution to **Funding Programs** and **Grants**
+        * Information about **Ordering methods**
+        * **Financial** Information
+
+      attachTo:
+        element: "[data-shepherd-tour-target='service-details-content']"
+        placement: "top"
+    3:
+      title: Great job!
+      text: |-
+        You have completed basic tour! We hope you liked our short introduction and this functionality will
+        help you in your work.

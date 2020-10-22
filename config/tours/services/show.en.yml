@@ -1,0 +1,74 @@
+service_about_intro:
+  next:
+    tour_name: "service_details_intro"
+    controller_name: "details"
+    action_name: "index"
+    redirect_to: "service_details_path"
+    controller_params_map:
+      id: service_id
+
+  steps:
+    1:
+      welcome: true
+      title: New resource presentation layout!
+      text: |-
+        The resources shown in the EOSC Portal come from a wide variety of sources.
+        A large number of resource attributes are being collected from providers during the resource onboarding process.
+
+        The new layout of the resource  presentation page highlights the most necessary information,
+        to ensure the presentation of a resource is helping users finding the ones, that are most relevant to their work.
+
+    2:
+      title: Main section
+      text: |-
+        The **main section** of the resource presentation page highlights the most important information such as:
+
+        * Resource **name and logotype**
+        * Brief and descriptive **tagline**
+        * The list of the **resource providers**
+        * All the **necessary links** that will help you to access and use the resource
+        * **Access the resource** button navigating to the resource access guide
+        * Access to the **resource comparison**  functionality
+        * Access to the **question form**
+        * **Resource rating** score
+
+      attachTo:
+        element: "[data-shepherd-tour-target='service-box']"
+        placement: "bottom"
+    3:
+      title: About
+      text: |-
+        The section “About” allows to analyse the service offering
+        and choose the offer appropriate for the desired use case. You will find out about:
+
+        * **A high-level description** in fairly non-technical terms of what the service does,
+          functionality it provides, resources it enables to access and the benefit to a user delivered by it
+        * Information about the **resource offerings**
+
+      attachTo:
+        element: "[data-shepherd-tour-target='service-about']"
+        placement: "right"
+    4:
+      title: Classification
+      text: |-
+        This section describes how the resource is classified and who is it for. You will find out about:
+
+        * **Scientific Classification** - the branch of science / scientific discipline that the resource is related to
+        * **Categorisation** - a position in a tree-like hierarchy of resources of the same type
+        * **Types of the users** that the resource is provided for
+        * **Locations** where the resource is offered
+        * **Languages** which are supported while the  resource is being delivered and used
+
+      attachTo:
+        element: "[data-shepherd-tour-target='service-classification']"
+        placement: "right"
+    5:
+      title: More about...
+      text: |-
+        In order to review more advanced attributes of the resource, use the **More about...**
+        link to navigate to the resource **Details** page.
+
+      attachTo:
+        element: "[data-shepherd-tour-target='service-more-about']"
+        placement: "right"
+

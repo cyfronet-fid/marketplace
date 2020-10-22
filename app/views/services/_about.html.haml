@@ -1,12 +1,12 @@
 #desc.tab-pane.container.pt-2.active.desc{ "aria-labelledby" => "home-tab", role: "tabpanel" }
   .row.pt-5.justify-content-between
-    %main.col-12.col-xl-9.pr-5.mb-4
+    %main.col-12.col-xl-9.pr-5.mb-4{ "data-shepherd-tour-target": "service-about" }
 
       = markdown(service.description)
       - if policy(service).order? && !offers&.empty?
         = render "services/offers", offers: offers, service: service
 
-    %sidebar.col-12.col-xl-3
+    %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
       - Service::SIDEBAR_FIELDS.each do |group|
         - if any_present?(service, *group[:fields])
           %h5= t(".sidebar.title.#{group[:name]}")
@@ -32,7 +32,7 @@
               %span Total orders:
               %strong.text-dark= service.project_items.order_required.size
 
-      %a.more-details{ href: service_details_path(service) }
+      %a.more-details{ href: service_details_path(service), "data-shepherd-tour-target": "service-more-about" }
         More about
         = service.name
         %i.fas.fa-long-arrow-alt-right

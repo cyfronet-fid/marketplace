@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
 module TourHelper
-  def tour
+  def tour(show_popup)
     # Do we have tours for this controller/action in the user's locale?
     tours = Rails.configuration.tours.list["#{controller_name}.#{action_name}.#{I18n.locale}"]
     tours ||= Rails.configuration.tours.list["#{controller_name}.#{action_name}.#{I18n.default_locale}"]
+    tours ||= {}
 
-    if tours
+    if !tours.empty? || show_popup
       remaining = tours.keys - finished_tours
       to_show = tours.select { |t| show_tour?(t, tours[t]) }.keys
       to_render = to_show & remaining
-      unless to_render.empty?
-        render(partial: "layouts/tour",
-               locals: { tour_name: to_render.first,
-               steps: tours[to_render.first]["steps"],
-               next_tour: further_tour(tours[to_render.first]) })
-      end
+      render(partial: "layouts/tour",
+             locals: { tour_name: to_render.first,
+                      show_popup: show_popup,
+                      steps: (!tours.empty? && tours[to_render.first]) ? tours[to_render.first]["steps"] : [],
+                      next_tour: further_tour(tours[to_render.first] || {}) })
     end
   end
 
@@ -23,7 +23,7 @@ module TourHelper
     user_cookie(controller, action) ? JSON.parse(user_cookie(controller, action)) : []
   end
 
-  def finished?(tour_name, controller =  controller_name, action =  action_name)
+  def finished?(tour_name, controller = controller_name, action = action_name)
     user_cookie(controller, action) ? JSON.parse(user_cookie(controller, action)).include?(tour_name) : false
   end
 
@@ -56,11 +56,13 @@ module TourHelper
   end
 
   def further_tour(tour)
-    tour.dig("next", "redirect_to")
+    tour.dig("next")
   end
 
-  def next_tour_link(next_tour_path)
-    next_tour_path.blank? ? nil : send(next_tour_path).to_s
+  def next_tour_link(next_tour_path, controller_params_map)
+    params = controller_params_map.map { |param_id, mapped_Id| [mapped_Id.to_sym, self.controller.params[param_id]] }.to_h
+    puts(params)
+    next_tour_path.blank? ? nil : send(next_tour_path, params).to_s
   end
 
   def cookie_prefix(controller = controller_name, action = action_name)
