@@ -14,7 +14,11 @@ module ProjectItemsHelper
   end
 
   def webpage(project_item)
-    project_item.order_url || project_item.webpage
+    if project_item.external
+      project_item.order_url
+    else
+      project_item.webpage
+    end
   end
 
   def project_item_status(project_item)
