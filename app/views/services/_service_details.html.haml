@@ -17,7 +17,7 @@
           = render "services/offers_box", service_offers: service_offers,
             service: service
   .right-extra-info
-    .text-center.badge
+    .text-center.badge.text-uppercase
       %i{ class: "ordertype #{order_type(service)}" }
       = t("offers.type.#{order_type(service)}")
     - if service.logo.attached? && service.logo.variable?

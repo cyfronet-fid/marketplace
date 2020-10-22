@@ -71,7 +71,7 @@ class Service::PcCreateOrUpdate
         description: ReverseMarkdown.convert(data["description"],
                                              unknown_tags: :bypass,
                                              github_flavored: false),
-        tagline: data["tagline"].blank? ? "NO IMPORTED TAGLINE" : data["tagline"],
+        tagline: data["tagline"].blank? ? "-" : data["tagline"],
         tag_list: Array(data.dig("tags", "tag")) || [],
         language_availability: Array(data.dig("languageAvailabilities", "languageAvailability")).
             map { |lang| lang.upcase } || ["EN"],

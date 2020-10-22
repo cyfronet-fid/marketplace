@@ -162,7 +162,7 @@ module Import
             name: name,
             pid: eid,
             description: description,
-            tagline: tagline.blank? ? "NO IMPORTED TAGLINE" : tagline,
+            tagline: tagline.blank? ? "-" : tagline,
             # provider_id: ?
             tag_list: tag_list,
             language_availability: language_availability || ["EN"],
