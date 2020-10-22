@@ -301,6 +301,11 @@ class Service < ApplicationRecord
     order_type == "order_required" && order_url.present?
   end
 
+  def orderable?
+    order_type == "order_required" && order_url.blank?
+  end
+
+
   private
     def open_access_or_external?
       open_access? || external
