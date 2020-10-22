@@ -11,6 +11,7 @@ namespace :import do
                     default_upstream: (ENV["UPSTREAM"] || "mp").to_sym,
                     dont_create_providers: ENV["DONT_CREATE_PROVIDERS"] || false,
                     ids: (ENV["IDS"] || "").split(","),
-                    filepath: ENV["OUTPUT"]).call
+                    filepath: ENV["OUTPUT"],
+                    token: ENV["MP_IMPORT_TOKEN"]).call
   end
 end
