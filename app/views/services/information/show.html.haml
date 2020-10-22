@@ -3,9 +3,9 @@
   .col-md-6.access-information.pt-5.vertical-center
     = t(".#{map_view_to_order_type(@offer)}.description_html",
         service_title: wizard_title, faq_url: help_path)
-
-    - unless (@offer.order_required? && !@offer.external) || @offer.webpage.blank?
-      = link_to t("common.#{map_view_to_order_type(@offer)}.link"),  @offer.webpage,
+    - webpage = @offer.order_url || @offer.webpage
+    - unless (@offer.order_required? && !@offer.external) || webpage.blank?
+      = link_to t("common.#{map_view_to_order_type(@offer)}.link"),  webpage,
           class: "btn btn-outline-primary mt-3", target: "_blank", title: "External link"
   .col-md-6.access-image
 

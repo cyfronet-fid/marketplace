@@ -14,5 +14,21 @@ module Offerable
     validates :order_type, presence: true
     validates :name, presence: true
     validates :description, presence: true
+
+    def external
+      order_required? && order_url.present?
+    end
+
+    def open_access?
+      order_type == "open_access" || order_type == "fully_open_access"
+    end
+
+    def order_required?
+      order_type == "order_required"
+    end
+
+    def orderable?
+      order_required? && !external
+    end
   end
 end

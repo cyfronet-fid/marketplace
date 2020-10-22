@@ -2349,20 +2349,16 @@ label[data-multicheckbox].small {
   background-size: 11px auto;
   margin-right: 5px;
 
-  &.open_access {
+  &.open_access, &.fully_open_access, &.various {
     background-image: url('../images/catalog_icon.svg');
   }
 
-  &.orderable {
+  &.order_required {
     background-image: url('../images/internal_ordering_icon.svg');
   }
 
-  &.external {
+  &.other {
     background-image: url('../images/external_ordering_icon.svg');
-  }
-
-  &.various {
-    background-image: url('../images/catalog_icon.svg');
   }
 }
 
@@ -3514,7 +3510,7 @@ textarea.form-control.is-invalid {
 }
 
 // scss-lint:disable all
-.open_access {
+.open_access, .fully_open_access, .other {
   .access-image {
     width: 100%;
     height: 390px;
@@ -3522,8 +3518,8 @@ textarea.form-control.is-invalid {
     background-size: contain;
   }
 }
-// scss-lint:enable all
-.orderable {
+
+.order_required {
   .access-image {
     width: 100%;
     height: 390px;
@@ -3531,7 +3527,7 @@ textarea.form-control.is-invalid {
     background-size: contain;
   }
 }
-
+// scss-lint:enable all
 .external {
   .access-image {
     width: 100%;

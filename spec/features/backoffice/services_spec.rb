@@ -328,7 +328,7 @@ RSpec.feature "Services in backoffice" do
 
       service.reload
       expect(service.offers.first.order_type).to eq(service.order_type)
-      expect(service.offers.first.webpage).to eq(service.order_url)
+      expect(service.offers.first.webpage).to eq(service.webpage_url)
     end
 
     scenario "I can see warning about no published offers", js: true do

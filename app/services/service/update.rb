@@ -7,13 +7,19 @@ class Service::Update
   end
 
   def call
-    if @service.offers_count == 1
-      url = @params["order_url"] || @params["webpage_url"]
-      if url.present? || @params["order_type"]=="order_required"
-        @service.offers.first.update(order_type: @params["order_type"],
-                                     external: @params["order_url"].present? && @params["order_type"]=="order_required",
-                                     webpage: url, status: "published")
-      end
+    if @service.offers.size == 1
+      Offer::Update.new(@service.offers.first, { order_type: @params[:order_type] || @service.order_type,
+                                   order_url: @params[:order_url] || @service.order_url,
+                                   webpage: @params[:webpage_url] || @service.webpage_url,
+                                   status: "published" }).call
+    elsif @service.offers.size == 0
+      Offer::Create.new(Offer.new(name: "Offer",
+                                  description: "#{@params[:name] || @service.name} Offer",
+                                  order_type: @params[:order_type] || @service.order_type,
+                                  order_url: @params[:order_url] || @service.order_url,
+                                  webpage: @params[:webpage_url] || @service.webpage_url,
+                                  status: "published",
+                                  service: @service)).call
     end
     @service.update(@params)
   end
