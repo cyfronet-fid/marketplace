@@ -39,7 +39,7 @@ RSpec.describe Service::PcCreateOrUpdate do
   let(:provider_eid) { "ten" }
 
   describe "#succesfull responses" do
-    it "should create new service with all informations" do
+    it "should create new service and default offer with all informations" do
       trl_8 = create(:trl, name: "trl 7", eid: "trl-8")
       life_cycle_status = create(:life_cycle_status, name: "prod", eid: "production")
       unirest = Unirest
@@ -119,6 +119,12 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.logo.download).to eq(file_fixture("PhenoMeNal_logo.png").read.b)
       expect(service.sources.first.eid).to eq("first.service")
       expect(service.upstream_id).to eq(nil)
+      expect(service.offers.first.name).to eq("Offer")
+      expect(service.offers.first.description).to eq("#{service.name} Offer")
+      expect(service.offers.first.order_type).to eq(service.order_type)
+      expect(service.offers.first.order_url).to eq(service.order_url)
+      expect(service.offers.first.webpage).to eq(service.webpage_url)
+      expect(service.offers.first.status).to eq("published")
     end
 
     it "should create new service with new provider" do

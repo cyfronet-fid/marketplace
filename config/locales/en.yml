@@ -40,6 +40,10 @@ en:
   common:
     open_access:
       link: Go to the resource
+    fully_open_access:
+      link: Go to the resource
+    other:
+      link: Go to the resource
     external:
       link: Order externally
 

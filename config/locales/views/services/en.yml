@@ -78,7 +78,33 @@ en:
             </ul>
             </p><p> To find out more about Projects in EOSC Marketplace, please refer to our
             <a href="%{faq_url}">FAQ</a>.</p>
-        orderable:
+        fully_open_access:
+          link: Go to the resource
+          description_html: |
+            <p>This is an open access offer of the %{service_title} resource.
+            Press <strong>Go to the resource</strong> button to reach the resource website.
+            You may also add the resource to a <strong>Project</strong> in order to:
+            <ul class="simple-list">
+                <li>Gain EOSC experts support</li>
+                <li>Easily access the selected resource</li>
+                <li>Organise your resources and orders into logical blocks</li>
+            </ul>
+            </p><p> To find out more about Projects in EOSC Marketplace, please refer to our
+            <a href="%{faq_url}">FAQ</a>.</p>
+        other:
+          link: Go to the resource
+          description_html: |
+            <p>This is an open access offer of the %{service_title} resource.
+            Press <strong>Go to the resource</strong> button to reach the resource website.
+            You may also add the resource to a <strong>Project</strong> in order to:
+            <ul class="simple-list">
+                <li>Gain EOSC experts support</li>
+                <li>Easily access the selected resource</li>
+                <li>Organise your resources and orders into logical blocks</li>
+            </ul>
+            </p><p> To find out more about Projects in EOSC Marketplace, please refer to our
+            <a href="%{faq_url}">FAQ</a>.</p>
+        order_required:
           description_html: |
             <p>This resource can be ordered via EOSC Marketplace. Once the information provided in the details
             of the underpinned Project is verified, the resource will be delivered to you by the resource provider.
@@ -115,6 +141,13 @@ en:
           Please select a Project and review the summary below. Once added to
           the project, your resource ordering page will be accessible via URL
           at your Project space.
+      fully_open_access:
+        order:
+          title: Add to a project
+          cancel: Quit
+        description_html: |
+          Please select a Project and review the summary below. Once added to
+          the project, your resource will be accessible via URL at your Project space.
       open_access:
         order:
           title: Add to a project
@@ -122,7 +155,7 @@ en:
         description_html: |
           Please select a Project and review the summary below. Once added to
           the project, your resource will be accessible via URL at your Project space.
-      orderable:
+      order_required:
         order:
           title: Send access request
           cancel: Cancel order and quit
@@ -130,3 +163,10 @@ en:
           Please select a Project and review the summary below. Once you submit the order,
           your request will be sent to a resource provider. </br>
           The order status will be visible at your Project space.
+      other:
+        order:
+          title: Add to a project
+          cancel: Quit
+        description_html: |
+          Please select a Project and review the summary below. Once added to
+          the project, your resource will be accessible via URL at your Project space.

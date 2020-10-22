@@ -6,11 +6,9 @@ FactoryBot.define do
     sequence(:description) { |n| "service #{n} description" }
     sequence(:tagline) { |n| "service #{n} tagline" }
     sequence(:order_type) { :order_required }
-    sequence(:external) { false }
 
     factory :open_access_service do
       sequence(:order_type) { :open_access }
-      sequence(:order_url) { "http://order.com" }
     end
     sequence(:webpage_url) { "https://wabpage.url"  }
     sequence(:manual_url) { "https://manual.url"  }
@@ -40,7 +38,6 @@ FactoryBot.define do
     end
     factory :external_service do
       sequence(:order_type) { :order_required }
-      sequence(:external) { true }
       sequence(:order_url) { "http://order.com" }
     end
   end

@@ -76,7 +76,7 @@ describe Jira::Client do
                          }
                        }.to_json,
                        "SO-ServiceOrderTarget-1" => "",
-                       "SO-OfferType-1" => { "id" => "20007" } }
+                       "SO-OfferType-1" => { "id" => "20005" } }
 
     issue = double(:Issue)
     expect(issue).to receive("save").with(fields: expected_fields).and_return(true)

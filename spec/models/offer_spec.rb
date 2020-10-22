@@ -17,7 +17,7 @@ RSpec.describe Offer do
   end
 
   context "is external" do
-    subject { build(:offer, order_type: :order_required, external: true) }
+    subject { build(:offer, order_type: :order_required, order_url: "http://order.com") }
     it { should_not validate_presence_of(:webpage) }
   end
 

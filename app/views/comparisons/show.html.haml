@@ -28,7 +28,7 @@
               = service.description.truncate(80, separator: " ")
         - i.times do
           %td.title-col.empty.text-uppercase
-            = link_to "Add next service", services_path
+            = link_to "Add next resource", services_path
       %tr
         %th Providers
         - @services.each do |service|
@@ -39,8 +39,8 @@
           %td
             - service.offers.each_with_index do |offer, idx|
               %span{ "data-toggle": "tootltip",
-                     "title": "#{t("project_items.offer_type.#{map_view_to_order_type(offer)}.tooltip")}" }
-                = t("offers.type.#{map_view_to_order_type(offer)}")
+                     "title": "#{t("project_items.offer_type.#{offer.order_type}.tooltip")}" }
+                = t("offers.type.#{offer.order_type}")
                 - unless service.offers.length == idx+1
                   %br
       %tr
