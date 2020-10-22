@@ -16,6 +16,7 @@ describe "import:eic", type: :task do
     allow(ENV).to receive(:[]).with("IDS").and_return("sampleeid,sampleeid2")
     allow(ENV).to receive(:[]).with("OUTPUT").and_return("/tmp/output.json")
     allow(ENV).to receive(:[]).with("UPSTREAM").and_return("eic")
+    allow(ENV).to receive(:[]).with("MP_IMPORT_TOKEN").and_return("password")
 
     allow(importer).to receive(:call)
     import_class_stub = class_double(Import::Eic).as_stubbed_const(transfer_nested_constants: true)
@@ -24,7 +25,8 @@ describe "import:eic", type: :task do
                                                    dont_create_providers: "1",
                                                    ids: ["sampleeid", "sampleeid2"],
                                                    filepath: "/tmp/output.json",
-                                                   default_upstream: :eic)
+                                                   default_upstream: :eic,
+                                                   token: "password")
                                     .and_return(importer)
 
     subject.invoke
