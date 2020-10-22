@@ -6,29 +6,8 @@ intro:
     redirect_to: "edit_profile_path"
   steps:
     1:
-      title: "WELCOME"
-      text: "Welcome to your dashboard! This is where we'll highlight key information to manage your day."
-    2:
-      title: "Events 1"
-      text:  "bla blabla bla"
+      title: "Edit profile"
+      text:  "Click on **Edit** button to start filling your profile interests."
       attachTo:
-        element: ".dropdown"
+        element: "[data-shepherd-tour-target='profile-edit']"
         placement: "right"
-    4:
-      title: "Events 1"
-      text:  "bla blabla bla"
-      attachTo:
-        element: ".profile"
-        placement: "right"
-    5:
-      title: "Events 2"
-      text:  "bla blabla blabla"
-      attachTo:
-        element: ".edit-button"
-        placement: "right"
-      buttons:
-        1:
-          text: 'next'
-          action: 'done'
-        2:
-          action: 'later'

@@ -4,39 +4,25 @@ intro2:
     action_name: "show"
     controller_name: "profiles"
     redirect_to: "root_path"
-  next:
-    tour_name: "intro3"
-    action_name: "show"
-    controller_name: "home"
   steps:
     1:
-      title: "here we have..."
-      text: "user categories..."
+      title: Additional information
+      text: |-
+        Choose your **Category** of interests and **Research Area** of interest from the drop down list.
+        It will help you to receive personalized results and updates.
       attachTo:
-        element: ".user_categories"
+        element: "[data-shepherd-tour-target='profile-additional-information']"
         placement: "right"
-      buttons:
-        1:
-          action: 'next'
-        2:
-          action: 'later'
     2:
-      title: "here we have...2"
-      text: "user categories...2"
+      title: Saving changes
+      text: |-
+        Ince you've chosen your interests, click on the "Save changes" button to finalize your choice.
+        You can modify it at any time.
       attachTo:
-        element: ".user_scientific_domains"
+        element: "[data-shepherd-tour-target='profile-submit']"
         placement: "right"
-      buttons:
-        1:
-          action: 'next'
-        2:
-          action: 'later'
     3:
-      title: "And the end"
-      text: "thx"
-      buttons:
-        1:
-          text: 'next'
-          action: 'done'
-        2:
-          action: 'later'
+      title: Great job!
+      text: |-
+        You have completed basic tour! We hope you liked our short introduction and this functionality
+        will help you in your work.

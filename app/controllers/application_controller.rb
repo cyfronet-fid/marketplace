@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   include Devise::StoreLocation
 
-  before_action :load_root_categories!, :report
+  before_action :welcome_popup, :load_root_categories!, :report
 
   protect_from_forgery
 
@@ -18,6 +18,13 @@ class ApplicationController < ActionController::Base
   end
 
   private
+    def welcome_popup
+      @show_popup = current_user&.show_welcome_popup
+      if @show_popup
+        current_user.update(show_welcome_popup: false)
+      end
+    end
+
     def report
       @report = Report.new
     end
