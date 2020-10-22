@@ -1,11 +1,15 @@
 en:
   offers:
     type:
+      fully_open_access:
+        Fully open access
       open_access:
         Open Access
-      orderable:
-        Internal ordering
+      order_required:
+        Order required
       external:
         External ordering
       various:
         Various order types
+      other:
+        Other order type

@@ -11,8 +11,8 @@
 %dl
   %dt Resource access:
   %dd{ "data-toggle" => "tootltip",
-  "title" => "#{t("project_items.order_type.#{map_view_to_order_type(project_item)}.tooltip")}" }
-    = t("project_items.order_type.#{map_view_to_order_type(project_item)}.title")
+  "title" => "#{t("project_items.order_type.#{project_item.order_type}.tooltip")}" }
+    = t("project_items.order_type.#{project_item.order_type}.title")
 %dl
   %dt
     Project name:

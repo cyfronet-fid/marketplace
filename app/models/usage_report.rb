@@ -41,12 +41,13 @@ class UsageReport
       if types.include? :external
         Service.joins(:offers).where(offers: { order_type: types, status: :published },
                                      status: [:published, :unverified])
-            .or(Service.joins(:offers).where(offers: { external: true, status: :published },
-                                     status: [:published, :unverified]))
+            .or(Service.joins(:offers).where("services.status IN ('published', 'unverified')
+                   AND offers.order_url IS NOT NULL
+                   AND offers.status = 'published'"))
             .uniq.count
       else
         Service.joins(:offers)
-            .where(offers: { order_type: types, external: false, status: :published },
+            .where(offers: { order_type: types, order_url: ["", nil], status: :published },
                    status: [:published, :unverified])
             .uniq.count
       end

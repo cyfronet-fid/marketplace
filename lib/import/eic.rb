@@ -171,7 +171,6 @@ module Import
             status_monitoring_url: status_monitoring_url || "",
             maintenance_url: maintenance_url || "",
             order_url: order_url || "",
-            external: order_url.present? && order_type=="order_required",
             payment_model_url: payment_model_url || "",
             pricing_url: pricing_url || "",
             main_contact: main_contact,
@@ -204,7 +203,6 @@ module Import
         }
 
         begin
-
           if (service_source = ServiceSource.find_by(eid: eid, source_type: "eic")).nil?
             created += 1
             log "Adding [NEW] service: #{name}, eid: #{eid}"
@@ -213,12 +211,11 @@ module Import
               unless logo.nil?
                 service.logo.attach(io: logo, filename: eid, content_type: logo_content_type)
               end
-              service.save!
+              Service::Create.new(service).call
               service_source = ServiceSource.create!(service_id: service.id, eid: eid, source_type: "eic")
               if @default_upstream == :eic
                 service.update(upstream_id: service_source.id)
               end
-              create_default_offer!(service, name, eid, order_type, order_url)
             end
           else
             service = Service.find_by(id: service_source.service_id)
@@ -227,8 +224,7 @@ module Import
               updated += 1
               log "Updating [EXISTING] service #{service.name}, id: #{service_source.id}, eid: #{eid}"
               unless @dry_run
-                service.update!(updated_service_data)
-                create_default_offer!(service, name, eid, order_type, order_url)
+                Service::Update.new(service, updated_service_data).call
               end
             else
               not_modified += 1
@@ -280,23 +276,6 @@ module Import
         end
       }
       Array(mapped_providers)
-    end
-
-    def create_default_offer!(service, name, eid, order_type, url)
-      if service&.offers.blank? && (url.present? || order_type=="order_required")
-        log "Adding [NEW] default offer for service: #{name}, eid: #{eid}"
-        Offer.create!(name: "Offer",
-                      description: "#{name} Offer",
-                      order_type: order_type,
-                      external: service.order_url.present? && order_type=="order_required",
-                      webpage: url, status: "published", service: service)
-      elsif url.blank? || order_type != "order_required"
-        log "[WARNING] Offer cannot be created, because url is empty"
-      end
-    rescue ActiveRecord::RecordInvalid => reason
-      log "ERROR - Default offer for #{service.name} (eid: #{eid}) cannot be created. #{reason}"
-    rescue StandardError => error
-      log "ERROR - Default offer for #{service.name} (eid: #{eid}) cannot be created. Unexpected #{error}!"
     end
 
     def map_pc_categories(categories)

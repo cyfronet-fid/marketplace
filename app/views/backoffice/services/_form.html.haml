@@ -16,7 +16,6 @@
     .col-12.col-md-5
       = f.input :order_type, collection: Service.order_types.keys.map(&:to_sym),
         disabled: cant_edit(:order_type)
-      = f.input :external, as: :boolean, label: "External ordering"
 
   .row
     .col-12.com-md-10
