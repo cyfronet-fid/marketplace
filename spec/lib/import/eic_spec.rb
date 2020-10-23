@@ -4,7 +4,7 @@ require "rails_helper"
 require "jira/setup"
 
 describe Import::Eic do
-  let(:test_url) { "https://localhost" }
+  let(:test_url) { "https://localhost/api" }
   let(:unirest) { double(Unirest) }
 
   def make_and_stub_eic(ids: [], dry_run: false, dont_create_providers: false, filepath: nil, log: false,
@@ -63,12 +63,12 @@ describe Import::Eic do
 
   def expect_responses(unirest, test_url, services_response = nil, providers_response = nil)
     unless services_response.nil?
-      expect(unirest).to receive(:get).with("#{test_url}/api/service/rich/all?quantity=10000&from=0",
+      expect(unirest).to receive(:get).with("#{test_url}/service/rich/all?quantity=10000&from=0",
                                             headers: { "Accept" => "application/json" }).and_return(services_response)
     end
 
     unless providers_response.nil?
-      expect(unirest).to receive(:get).with("#{test_url}/api/provider/all?quantity=10000&from=0",
+      expect(unirest).to receive(:get).with("#{test_url}/provider/all?quantity=10000&from=0",
                                             headers: { "Accept" => "application/json" }).and_return(providers_response)
     end
   end
