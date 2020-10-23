@@ -132,7 +132,7 @@ class Service::PcCreateOrUpdate
       mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eic",
                                                          "provider_sources.eid": prov_eid)
       if mapped_provider.nil?
-        prov = @unirest.get("#{@eic_base_url}/api/provider/#{prov_eid}",
+        prov = @unirest.get("#{@eic_base_url}/provider/#{prov_eid}",
                             headers: { "Accept" => "application/json" })
 
         if prov.code != 200
