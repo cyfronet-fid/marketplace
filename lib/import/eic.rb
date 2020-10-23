@@ -99,8 +99,8 @@ module Import
         open_source_technologies = service["openSourceTechnologies"]
         grant_project_names = service["grantProjectNames"]
         tag_list = Array(service["tags"])
-        geographical_availabilities = service["geographicalAvailabilities"] ||
-        categories = service["categories"].map { |c| c["subcategory"] } || []
+        geographical_availabilities = service["geographicalAvailabilities"] || []
+        categories = service["categories"]&.map { |c| c["subcategory"] } || []
         order_type = map_order_type(service["orderType"])
         related_platforms = service["relatedPlatforms"] || []
         scientific_domains = service["scientificDomains"]&.map { |sd| sd["scientificSubdomain"] } || []
@@ -243,9 +243,9 @@ module Import
             end
           end
         rescue ActiveRecord::RecordInvalid => invalid
-          log "ERROR - #{invalid}! #{service.name} (eid: #{eid}) will NOT be created (please contact catalog manager)"
+          log "ERROR - #{invalid}! #{service[:name]} (eid: #{eid}) will NOT be created (please contact catalog manager)"
         rescue StandardError => error
-          log "ERROR - Unexpected #{error}! #{service.name} (eid: #{eid}) will NOT be created!"
+          log "ERROR - Unexpected #{error}! #{service[:name]} (eid: #{eid}) will NOT be created!"
         end
       end
       log "PROCESSED: #{total_service_count}, CREATED: #{created}, UPDATED: #{updated}, NOT MODIFIED: #{not_modified}"
