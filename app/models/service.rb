@@ -44,6 +44,7 @@ class Service < ApplicationRecord
                     { name: "categorisation",
                       template: "array",
                       fields: ["pc_categories"],
+                      type: "tree",
                       nested: {
                           pc_categories: "name"
                       }

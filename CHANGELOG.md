@@ -19,7 +19,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 - synchronized_at field for pc_create_or_update (@goreck888)
 - Handling eIC services ids in mp (@goreck888)
 - New resource presentation page (@michal-szostak) 
-- UPCASE languages in import:eic task (@michal-szostak) 
+- UPCASE languages in import:eic task (@michal-szostak)
+- `internal` field for offers and project_items (@goreck888)
+- links for tags and emails in details view (@goreck888)
+- authorized import:eic by token as parameter (@goreck888)
 
 
 ### Changed
@@ -38,6 +41,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Hide default offer (@goreck888)
 - Update default offer through service (@goreck888)
 - New order_type mapping (@goreck888)
+- service to resources in the mp content (@goreck888)
+- hide visibility of single offer but allow to edit parameters (@goreck888)
 
 ### Deprecated
 
@@ -58,7 +63,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 - languages and geographical_availabilities display (@martaswiatkowska)
 - displaying services on search (@martaswiatkowska)
 - date style in service details in "Maturity Information" (@michal-szostak)
-- language concatenation and headaer naming in service details (@michal-szostak)
+- language concatenation and header naming in service details (@michal-szostak)
+- comparison view (@goreck888)
+- parameters in offers (@goreck888)
+- service sidebar and details titles `translation-missing` error (@goreck888)
+- displaying categories as tree in the sidebar (@goreck888)
 
 ### Security
 - Update rails to 6.0.3.2 (@goreck888)

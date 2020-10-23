@@ -22,6 +22,9 @@ en:
         text: Describe problem precisely
       project_item:
         additional_comment: Please enter additional details of your request
+      service:
+        required_services: Required Resources
+        related_services: Related Resources
       user:
         categories: Categories of interests
         scientific_domains: Scientific domains of interests
