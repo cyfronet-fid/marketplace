@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_21_115035) do
+ActiveRecord::Schema.define(version: 2020_10_21_113337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -160,6 +160,7 @@ ActiveRecord::Schema.define(version: 2020_10_21_115035) do
     t.string "status"
     t.string "order_type", null: false
     t.string "webpage"
+    t.boolean "internal", default: false
     t.string "order_url"
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
@@ -203,6 +204,7 @@ ActiveRecord::Schema.define(version: 2020_10_21_115035) do
     t.string "order_type", null: false
     t.string "webpage"
     t.boolean "voucherable", default: false, null: false
+    t.boolean "internal", default: false
     t.string "order_url"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
