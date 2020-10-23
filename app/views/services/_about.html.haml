@@ -13,6 +13,7 @@
           = render "services/sidebar/#{group[:template]}",
                     service: service,
                     fields: group[:fields],
+                    type: group[:type] || "",
                     nested: group[:nested] || ""
       - if current_user&.executive?
         %h5 Statistics
