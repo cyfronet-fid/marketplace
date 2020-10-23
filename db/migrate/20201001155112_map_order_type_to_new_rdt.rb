@@ -3,20 +3,9 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
     execute(
         <<~SQL
       UPDATE offers
-      SET external = CASE
-        WHEN order_type='orderable' THEN false
-        WHEN order_type='external' THEN true
-      END
-      WHERE order_type <> 'open_access';
-    SQL
-    )
-
-    execute(
-        <<~SQL
-      UPDATE services
-      SET external = CASE
-        WHEN order_type='orderable' THEN false
-        WHEN order_type='external' THEN true
+      SET internal = CASE
+        WHEN order_type='orderable' THEN true
+        WHEN order_type='external' THEN false
       END
       WHERE order_type <> 'open_access';
     SQL
@@ -25,9 +14,9 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
     execute(
         <<~SQL
       UPDATE project_items
-      SET external = CASE
-        WHEN order_type='orderable' THEN false
-        WHEN order_type='external' THEN true
+      SET internal = CASE
+        WHEN order_type='orderable' THEN true
+        WHEN order_type='external' THEN false
       END
       WHERE order_type <> 'open_access';
     SQL
@@ -63,8 +52,8 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
         <<~SQL
       UPDATE project_items
       SET order_type = CASE
-        WHEN external=false THEN 'orderable'
-        WHEN external=true THEN 'external'
+        WHEN internal=true THEN 'orderable'
+        WHEN internal=false THEN 'external'
       END
       WHERE order_type <> 'open_access';
     SQL
@@ -74,8 +63,8 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
         <<~SQL
       UPDATE project_items
       SET order_type = CASE
-        WHEN external=false THEN 'orderable'
-        WHEN external=true THEN 'external'
+        WHEN internal=true THEN 'orderable'
+        WHEN internal=false THEN 'external'
       END
       WHERE order_type <> 'open_access';
     SQL
@@ -85,8 +74,8 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
         <<~SQL
       UPDATE services
       SET order_type = CASE
-        WHEN external=false THEN 'orderable'
-        WHEN external=true THEN 'external'
+        WHEN internal=true THEN 'orderable'
+        WHEN internal=false THEN 'external'
       END
       WHERE order_type <> 'open_access';
     SQL
@@ -96,8 +85,8 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
         <<~SQL
       UPDATE offers
       SET order_type = CASE
-        WHEN external=false THEN 'orderable'
-        WHEN external=true THEN 'external'
+        WHEN internal=true THEN 'orderable'
+        WHEN internal=false THEN 'external'
       END
       WHERE order_type <> 'open_access';
     SQL
