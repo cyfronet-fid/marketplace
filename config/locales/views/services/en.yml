@@ -11,11 +11,20 @@ en:
           documents: Documents
           restrictions: Resource restrictions
           phase: Resource phase
+          scientific_categorisation: Scientific categorisation
+          categorisation: Categorisation
+          target_users: Target users
+          resource_availability_and_languages: Resource availability and languages
         fields:
           webpage_url: Webpage
           helpdesk_url: Helpdesk
           helpdesk_email: Helpdesk e-mail
           manual_url: Manual
+          privacy_policy_url: Privacy policy
+          status_monitoring_url: Status Monitoring
+          maintenance_url: Maintenance
+          payment_model_url: Payment Model
+          pricing_url: Pricing
           training_information_url: Training information
           sla_url: Corporate SLA
           terms_of_use_url: Terms of use
@@ -28,18 +37,46 @@ en:
             production: "Production (min. TRL 8)"
             retired: "Retired (n/a)"
     details:
+      details:
+        title:
+          classification: Classification
+          availability: Availability
+          order: Order
+          marketing: Marketing
+          dependencies: Dependencies
+          attribution: Attribution
+          financial_information: Financial Information
+          public_contacts: Public Contacts
+          maturity_information: Maturity Information
+          management: Management
+          changelog: Changelog
       links:
         use_cases_url: Use case %{idx}
         multimedia: Multimedia %{idx}
       array:
+        order_type: Order type
+        target_users: Target Users
+        access_types: Access Types
+        access_modes: Acces Modes
         tag_list: Tags
+        geographical_availabilities: Geographical Availabilities
+        languages: Languages
         fully_open_access: Fully Open Access
         open_access: Open Access
         order_required: Order Required
         other: Other Order Type
         standards: Standards
         certifications: Certifications
+        open_source_technologies: Open Source Technologies
         version: Version
+        funding_bodies: Funding Bodies
+        funding_programs: Funding Programs
+        grant_project_names: Grant Project Names
+        trl: Trl
+        life_cycle_status: Life Cycle Status
+        required_services: Required Resources
+        related_services: Related Resources
+        related_platforms: Related Platforms
       object:
         public_contacts: Public contact %{idx}
     order:
