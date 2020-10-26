@@ -3,9 +3,9 @@
 require "rails_helper"
 
 RSpec.feature "Comparison", js: true do
-  let!(:service1) { create(:service) }
-  let!(:service2) { create(:service) }
-  let!(:service3) { create(:service) }
+  let!(:service1) { create(:open_access_service, geographical_availabilities: %w( EL )) }
+  let!(:service2) { create(:service, geographical_availabilities: %w( PL DE )) }
+  let!(:service3) { create(:external_service, tag_list: %w( tag1 tag2 tag3 )) }
 
   it "doesn't show comparison bar until I click the Add to compare checkbox" do
     visit services_path
@@ -74,7 +74,7 @@ RSpec.feature "Comparison", js: true do
     end
   end
 
-  it "shows comparison page after click on compare" do
+  it "shows comparison page with correct data after click on compare" do
     visit services_path
 
     find("#comparison-#{service1.id}", visible: false).click
@@ -84,6 +84,57 @@ RSpec.feature "Comparison", js: true do
     click_on "Compare"
 
     expect(current_path).to eql comparisons_path
+
+    expect(page).to have_content(service1.name)
+    expect(page).to have_content(service2.name)
+    expect(page).to have_content(service3.name)
+
+    expect(page).to have_text("Providers")
+
+    expect(page).to have_text(service1.providers.map(&:name).join(", "))
+    expect(page).to have_text(service2.providers.map(&:name).join(", "))
+    expect(page).to have_text(service3.providers.map(&:name).join(", "))
+
+    expect(page).to have_text("Resource order type")
+
+    expect(page).to have_text("Open Access")
+    expect(page).to have_text("Order required").twice
+
+    expect(page).to have_text("Scientific domain")
+
+    expect(page).to have_text(service1.scientific_domains.map(&:name).join(", "))
+    expect(page).to have_text(service2.scientific_domains.map(&:name).join(", "))
+    expect(page).to have_text(service3.scientific_domains.map(&:name).join(", "))
+
+    expect(page).to have_text("Dedicated for")
+
+    expect(page).to have_text(service1.target_users.map(&:name).join(", "))
+    expect(page).to have_text(service2.target_users.map(&:name).join(", "))
+    expect(page).to have_text(service3.target_users.map(&:name).join(", "))
+
+    expect(page).to have_text("Resource life cycle status")
+
+    expect(page).to have_text(service1.life_cycle_status.map(&:name).join(", "))
+    expect(page).to have_text(service2.life_cycle_status.map(&:name).join(", "))
+    expect(page).to have_text(service3.life_cycle_status.map(&:name).join(", "))
+
+    expect(page).to have_text("Geographical availabilities")
+
+    expect(page).to have_text("Greece")
+    expect(page).to have_text("Poland, Germany")
+    expect(page).to have_text("European Union")
+
+    expect(page).to have_text("Languages")
+
+    expect(page).to have_text(service1.languages.join(", "))
+    expect(page).to have_text(service2.languages.join(", "))
+    expect(page).to have_text(service3.languages.join(", "))
+
+    expect(page).to have_text("Tags")
+
+    expect(page).to have_selector("a[href='/services?tag=tag1']")
+    expect(page).to have_selector("a[href='/services?tag=tag2']")
+    expect(page).to have_selector("a[href='/services?tag=tag3']")
   end
 
   it "deletes service from comparison on comparison page" do
@@ -91,11 +142,11 @@ RSpec.feature "Comparison", js: true do
     visit comparisons_path
 
     expect do
-      find("a[value=#{service2.slug}").click
+      find("a[value=#{service2.slug}]").click
       expect(current_path).to eql comparisons_path
-      expect(page).to_not have_selector("a[value=#{service2.slug}")
-      expect(page).to have_selector("a[value=#{service1.slug}")
-      expect(page).to have_selector("a[value=#{service3.slug}")
+      expect(page).to_not have_selector("a[value=#{service2.slug}]")
+      expect(page).to have_selector("a[value=#{service1.slug}]")
+      expect(page).to have_selector("a[value=#{service3.slug}]")
     end
   end
 
