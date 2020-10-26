@@ -45,10 +45,10 @@ RSpec.describe Backoffice::ServicePolicy do
                                                     [owner_ids: []], :status, :upstream_id, :version,
                                                     :resource_organisation_id,
                                                     main_contact_attributes: [:id, :first_name, :last_name,
-                                                                              :email, :organisation, :position],
+                                                                              :email, :phone, :organisation, :position],
                                                     sources_attributes: [:id, :source_type, :eid, :_destroy],
                                                     public_contacts_attributes: [:id, :first_name, :last_name,
-                                                                                 :email, :organisation,
+                                                                                 :email, :phone, :organisation,
                                                                                  :position, :_destroy]
                                                 ])
     end
@@ -77,10 +77,10 @@ RSpec.describe Backoffice::ServicePolicy do
                                                     [manual_related_service_ids: []],
                                                     [owner_ids: []], :status, :upstream_id,
                                                     main_contact_attributes: [:id, :first_name, :last_name,
-                                                                              :email, :organisation, :position],
+                                                                              :email, :phone, :organisation, :position],
                                                     sources_attributes: [:id, :source_type, :eid, :_destroy],
                                                     public_contacts_attributes: [:id, :first_name, :last_name,
-                                                                                 :email, :organisation,
+                                                                                 :email, :phone, :organisation,
                                                                                  :position, :_destroy]
                                                 ])
     end
