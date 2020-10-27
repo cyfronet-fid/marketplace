@@ -9,6 +9,19 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Security
+
+
+## [3.0.0] 2020-10-23
+
+### Added
 - Links for EOSC Portal social media (@goreck888)
 - Service order type visibility and filter (@goreck888)
 - Missing breadcrumbs and page titles (@goreck888)
@@ -23,7 +36,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - `internal` field for offers and project_items (@goreck888)
 - links for tags and emails in details view (@goreck888)
 - authorized import:eic by token as parameter (@goreck888)
-
 
 ### Changed
 - Sidebar links section name change from 'support' to 'links' (@goreck888)
@@ -43,8 +55,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - New order_type mapping (@goreck888)
 - service to resources in the mp content (@goreck888)
 - hide visibility of single offer but allow to edit parameters (@goreck888)
-
-### Deprecated
 
 ### Removed
 - tagline and unnecessary offer titles in ordering form (@goreck888)
