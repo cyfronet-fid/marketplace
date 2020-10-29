@@ -321,7 +321,7 @@ RSpec.feature "Services in backoffice" do
 
       visit backoffice_service_path(service)
 
-      expect(page).to have_content("This service has one default offer.")
+      expect(page).to have_content("This resource has one default offer.")
 
       click_on "Edit"
 
@@ -423,7 +423,7 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
       first("a[class='delete-offer card-link']").click
 
-      expect(page).to have_content("This service has one default offer.")
+      expect(page).to have_content("This resource has one default offer.")
     end
 
     scenario "I can see info if service has no offer" do
@@ -431,7 +431,7 @@ RSpec.feature "Services in backoffice" do
 
       visit backoffice_service_path(service)
 
-      expect(page).to have_content("This service has no offers")
+      expect(page).to have_content("This resource has no offers")
     end
 
     scenario "I can change offer status from published to draft" do

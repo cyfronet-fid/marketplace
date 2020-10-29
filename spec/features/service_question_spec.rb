@@ -10,7 +10,7 @@ RSpec.feature "Question about service" do
 
     visit service_path(service)
 
-    expect(page).to_not have_content "Ask a question about this service?"
+    expect(page).to_not have_content "Ask a question about this resource?"
   end
 
   context "as logged in user" do
