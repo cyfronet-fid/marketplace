@@ -20,6 +20,10 @@ module Backoffice::ServicesHelper
     end
   end
 
+  def collapsed?(service, fields)
+    (service.errors.keys & fields).blank?
+  end
+
   def offer_status(offer)
     content_tag(:span, offer.status, class: "badge #{BADGES[offer.status]}")
   end
