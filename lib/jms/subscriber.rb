@@ -16,12 +16,13 @@ module Jms
 
     def initialize(topic, login, pass,  host,
                    client_name, eic_base_url,
+                   ssl_enabled,
                    client: Stomp::Client,
                    logger: Logger.new("#{Rails.root}/log/jms.log"))
       @logger = logger
       $stdout.sync = true
-      @client = client.new(conf_hash(login, pass, host, client_name))
-      log "Parameters: #{conf_hash(login, pass, host, client_name)}"
+      @client = client.new(conf_hash(login, pass, host, client_name, ssl_enabled))
+      log "Parameters: #{conf_hash(login, pass, host, client_name, ssl_enabled)}"
       @destination = topic
       @eic_base_url = eic_base_url
     end
@@ -51,7 +52,7 @@ module Jms
         abort(e.full_message)
       end
 
-      def conf_hash(login, pass, host_des, client_name)
+      def conf_hash(login, pass, host_des, client_name, ssl)
         {
           hosts: [
             {
@@ -59,7 +60,7 @@ module Jms
               passcode: pass,
               host:  "#{host_des}",
               port: 61613,
-              ssl: false
+              ssl: ssl
             }
           ],
           connect_headers: {

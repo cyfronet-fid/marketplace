@@ -17,7 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Security
-
+- Allow ssl secured connection in jms (@goreck888)
 
 ## [3.0.0] 2020-10-23
 
