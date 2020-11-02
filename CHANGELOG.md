@@ -16,6 +16,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Removed
 
+### Fixed
+- Added missing `phone` field to contact forms (@goreck888)
+
 ### Security
 - Allow ssl secured connection in jms (@goreck888)
 
