@@ -6,7 +6,6 @@ require "raven"
 
 module Jms
   class Subscriber
-    class ResourceParseError < StandardError; end
     class ConnectionError < StandardError
       def initialize(msg)
         Raven.capture_exception(msg)
@@ -33,7 +32,7 @@ module Jms
         log "Arrived message"
         Jms::ManageMessage.new(msg, @eic_base_url, @logger).call
         @client.ack(msg)
-      rescue StandardError => e
+      rescue Jms::ManageMessage::ResourceParseError, JSON::ParserError, StandardError => e
         @client.unreceive(msg)
         error_block(msg, e)
       end
