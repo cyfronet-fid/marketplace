@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Resource form fields sort similar as PC (@goreck888) 
+- missing `service` to `resource` texts in popups and messages (@goreck888) 
 
 ### Deprecated
 
