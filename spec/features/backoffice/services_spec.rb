@@ -132,6 +132,8 @@ RSpec.feature "Services in backoffice" do
 
       visit edit_backoffice_service_path(service)
 
+      click_on "Contact"
+
       fill_in "service_public_contacts_attributes_0_first_name", with: "Jane"
       fill_in "service_public_contacts_attributes_0_last_name", with: "Doe"
       fill_in "service_public_contacts_attributes_0_email", with: "jane@doe.com"
@@ -161,6 +163,8 @@ RSpec.feature "Services in backoffice" do
       public_contacts = create_list(:public_contact, 3, contactable: service)
 
       visit edit_backoffice_service_path(service)
+
+      click_on "Contact"
 
       find("a", id: "public-contact-delete-0").click
       find("a", id: "public-contact-delete-1").click
@@ -320,6 +324,8 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("This service has one default offer.")
 
       click_on "Edit"
+
+      click_on "Order"
 
       select "open_access", from: "Order type"
       fill_in "Order url", with: "http://google.com"

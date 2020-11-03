@@ -104,10 +104,16 @@ h1 {
   width: 300px;
 }
 
+.choices.is-disabled {
+  .choices__list--multiple > .choices__item {
+    background-color: $choices-disabled-background-color;
+    color: $choices-disabled-text-color;
+  }
+}
+
 .contact {
   margin-bottom: 5px;
   padding: 5px;
-  border: 1px solid $black;
 }
 
 .report-link {
