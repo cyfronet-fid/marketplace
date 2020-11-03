@@ -19,8 +19,8 @@ We will need:
     Recommented way to manage nodejs versions is to use [asdf](https://github.com/asdf-vm/asdf)
     with [asdf-nodejs](https://github.com/asdf-vm/asdf-nodejs) plugin.
   * elasticsearch (specific version can be found in [.tool-versions](.tool-versions)).
-    Recommented way to manage nodejs versions is to use [asdf](https://github.com/asdf-vm/asdf)
-    with [asdf-elasticsearch](https://github.com/asdf-vm/asdf-elasticsearch) plugin.
+    Recommented way to manage elasticsearch versions is to use [asdf](https://github.com/asdf-vm/asdf)
+    with [asdf-elasticsearch](https://github.com/asdf-community/asdf-elasticsearch) plugin.
   * [postgresql](https://www.postgresql.org)
   * redis (https://redis.io)
 
