@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- Resource form fields sort similar as PC (@goreck888) 
 
 ### Deprecated
 
