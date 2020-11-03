@@ -2,6 +2,6 @@
   - if offers.count > 1
     = render partial: "backoffice/services/offers/offer", collection: offers, locals: { service: service }
   - elsif offers.count == 1
-    %p This service has one default offer.
+    %p This resource has one default offer.
   - else
-    %p This service has no offers.
+    %p This resource has no offers.

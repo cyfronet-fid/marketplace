@@ -147,7 +147,7 @@ RSpec.feature "Service ordering" do
 
         expect do
           click_on "Add to a project", match: :first
-          expect(page).to have_text("Please note that this service can be added to the Project only once. Please choose another project")
+          expect(page).to have_text("Please note that this resource can be added to the Project only once. Please choose another project")
         end.to change { ProjectItem.count }.by(0)
       end
     end
