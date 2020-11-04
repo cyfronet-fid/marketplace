@@ -119,6 +119,7 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.logo.download).to eq(file_fixture("PhenoMeNal_logo.png").read.b)
       expect(service.sources.first.eid).to eq("first.service")
       expect(service.upstream_id).to eq(nil)
+
       expect(service.offers.first.name).to eq("Offer")
       expect(service.offers.first.description).to eq("#{service.name} Offer")
       expect(service.offers.first.order_type).to eq(service.order_type)
@@ -199,7 +200,7 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.logo.download).to eq(file_fixture("MetalPDB.png").read.b)
     end
 
-    it "should update service" do
+    it "should update service with default offer" do
       provider_ten = create(:provider, name: "Test Provider ten")
       provider_tp = create(:provider, name: "Test Provider tp")
       create(:provider_source, source_type: "eic", eid: provider_eid, provider: provider_ten)
@@ -209,7 +210,15 @@ RSpec.describe Service::PcCreateOrUpdate do
       service.save!
 
       service = stub_described_class(create(:jms_service, name: "New title", prov_eid: provider_eid))
+      service.reload
+
+      offer = service.offers.first
+
       expect(service.name).to eq("New title")
+
+      expect(offer.webpage).to eq(service.webpage_url)
+      expect(offer.order_url).to eq(service.order_url)
+      expect(offer.order_type).to eq(service.order_type)
     end
 
     it "should not update service" do

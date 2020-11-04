@@ -10,4 +10,45 @@ RSpec.describe Service::Update do
 
     expect(service.name).to eq("new name")
   end
+
+  it "updates attributes of default offer if it exists" do
+    service = create(:service, offers: [create(:offer)])
+    offer = service.offers.first
+
+
+
+    described_class.new(service, name: "new name",
+                        webpage_url: "http://service.valid",
+                        order_url: "http://order.valid",
+                        order_type: "fully_open_access").call
+
+    expect(service.offers.size).to eq(1)
+
+    expect(offer.order_type).to eq("fully_open_access")
+    expect(offer.order_url).to eq("http://order.valid")
+    expect(offer.webpage).to eq("http://service.valid")
+    expect(offer.status).to eq("published")
+  end
+
+  it "creates new offer by service update if offers_count equals 0" do
+    service = create(:service)
+
+    expect(service.offers.size).to eq(0)
+
+    described_class.new(service, name: "new name",
+                        webpage_url: "http://service.valid",
+                        order_url: "http://order.valid",
+                        order_type: "fully_open_access").call
+
+    service.reload
+
+    expect(service.offers.size).to eq(1)
+
+    offer = service.offers.first
+
+    expect(offer.order_type).to eq("fully_open_access")
+    expect(offer.order_url).to eq("http://order.valid")
+    expect(offer.webpage).to eq("http://service.valid")
+    expect(offer.status).to eq("published")
+  end
 end
