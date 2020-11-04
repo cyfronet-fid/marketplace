@@ -60,7 +60,21 @@ rails dev:prime[50] # Remove existing resources and generate 50 new resources
 ## Elasticserach
 Elasticsearch is used for full text resource search.
 
-On Debian/Ubuntu/Mint Elasticsearch installation is quite simple
+If you installed Elasticsearch using asdf, run this command in the marketplace root directory:
+```
+elasticsearch --daemonize --pidfile <pidfile_path> 
+```
+It will run Elasticsearch server in the background, on the default port (9200) 
+and record the pid of the server to the <pidfile_path>.
+
+To shut down the server run:
+```
+pkill -F <pidfile_path> 
+```
+... or just shut down your OS.
+
+
+Alternatively, you can install Elasticsearch on Debian/Ubuntu/Mint:
 (but it doesn't always work, see below):
 ```
 sudo apt-get install elasticsearch
