@@ -11,6 +11,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - missing tests for comparison view (@goreck888)
 - missing tests for create/update default offer by create/update resource (@goreck888)
+- Default resource logo if not set (@goreck888)
+
 ### Changed
 - Resource form fields sort similar as PC (@goreck888) 
 - missing `service` to `resource` texts in popups and messages (@goreck888) 
