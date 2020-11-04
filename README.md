@@ -22,7 +22,7 @@ We will need:
     Recommented way to manage elasticsearch versions is to use [asdf](https://github.com/asdf-vm/asdf)
     with [asdf-elasticsearch](https://github.com/asdf-community/asdf-elasticsearch) plugin.
   * [postgresql](https://www.postgresql.org)
-  * redis (https://redis.io)
+  * [redis](https://redis.io)
 
 If you are using [asdf](https://github.com/asdf-vm/asdf) the easiest way to
 install required ruby, nodejs and elasticsearch version is to type
