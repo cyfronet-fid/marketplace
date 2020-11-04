@@ -109,7 +109,7 @@ describe Import::Eic do
       expect(provider.sources.first.source_type).to eq("eic")
     end
 
-    it "should create service if none existed" do
+    it "should create service with default offer if none existed" do
       trl_7 = create(:trl, name: "trl 7", eid: "trl-7")
       life_cycle_status = create(:life_cycle_status, name: "prod", eid: "production")
       required_resource = create(:service, name: "Super Service",
@@ -231,8 +231,6 @@ describe Import::Eic do
       expect { eic.call }.to output(/PROCESSED: 3, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(0).and change { Offer.count }.by(0)
     end
 
-
-
     it "should not change db if dry_run is set to true" do
       eic = make_and_stub_eic(dry_run: true, dont_create_providers: false, log: true)
       expect { eic.call }.to output(/PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(0).and change { Provider.count }.by(0)
@@ -323,18 +321,5 @@ describe Import::Eic do
     provider_awesome.reload
     expect(provider_phenomenal.sources.count).to eq(1)
     expect(provider_awesome.sources.count).to eq(1)
-  end
-
-  xit "should have correct category mapping" do
-    eic.get_db_dependencies
-
-    expect(eic.map_category("storage")).to eq([storage])
-    expect(eic.map_category("training")).to eq([training])
-    expect(eic.map_category("security")).to eq([security])
-    expect(eic.map_category("analytics")).to eq([analytics])
-    expect(eic.map_category("data")).to eq([data])
-    expect(eic.map_category("compute")).to eq([compute])
-    expect(eic.map_category("networking")).to eq([networking])
-    expect(eic.map_category("unknown")).to eq([])
   end
 end

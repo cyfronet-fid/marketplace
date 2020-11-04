@@ -10,6 +10,9 @@ FactoryBot.define do
     factory :open_access_service do
       sequence(:order_type) { :open_access }
     end
+    factory :fully_open_access_servoce do
+      sequence(:order_type) { :fully_open_access }
+    end
     sequence(:webpage_url) { "https://wabpage.url"  }
     sequence(:manual_url) { "https://manual.url"  }
     sequence(:helpdesk_url) { "https://helpdesk.url"  }
@@ -25,6 +28,7 @@ FactoryBot.define do
     sequence(:scientific_domains) { |n| [create(:scientific_domain)] }
     sequence(:resource_organisation) { |n| create(:provider) }
     sequence(:providers) { |n| [create(:provider)] }
+    sequence(:life_cycle_status) { |n| [create(:life_cycle_status)] }
     sequence(:categories) { |n| [create(:category)] }
     sequence(:status) { :published }
     sequence(:version) { nil }
