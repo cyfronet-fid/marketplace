@@ -41,7 +41,8 @@ marketplace root directory.
     dependencies and setup databases (development and test).
   * After update run `./bin/update`. It will update dependencies, run db
     migrations and restart currently started application. 
-    
+    <!-- TODO: There is no ./bin/update file! -->
+
 ### Generating DB entries for development
 Actually, filling the database is done by parsing yaml: `db/data.yml`.
 Data come from actual official version of the marketplace.
@@ -56,6 +57,10 @@ resources with random name and description (this generation is done using
 ./bin/rails dev:prime     # Remove existing resources and generate 100 new resources
 ./bin/rails dev:prime[50] # Remove existing resources and generate 50 new resources
 ```
+<!---
+    This task fails when trying to seed 'services', need to run 
+    ./bin/rails import:eic to seed them.
+ -->
 
 ## Elasticserach
 Elasticsearch is used for full text resource search.
