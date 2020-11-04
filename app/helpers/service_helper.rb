@@ -82,11 +82,11 @@ module ServiceHelper
     highlights&.dig(field)&.html_safe || model.send(field)
   end
 
-  def service_logo(service)
-    if service.logo.attached?
-      image_tag service.logo.variant(resize: "100x70")
+  def service_logo(service, classes = "align-self-center mr-4 float-left img-responsive", resize = "100x67")
+    if service.logo.attached? && service.logo.variable?
+      image_tag service.logo.variant(resize: resize), class: classes
     else
-      image_pack_tag "eosc-img.png"
+      image_pack_tag("eosc-img.png", size: resize, class: classes)
     end
   end
 
