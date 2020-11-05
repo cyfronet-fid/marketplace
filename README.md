@@ -240,6 +240,11 @@ Other solutions could be:
 **Remember** that before pushing to git, `overcommit` runs rspec tests and it needs running 
 [Elasticsearch server](#elasticsearch) in the background.
 
+If for some reason you would like to disable overcommit hooks during `commit`/`push` you can use:
+```shell script
+git <command> --no-verify
+```
+
 ## Designing UI without dedicated controller
 
 If there is no view yet implemented than still designing team can play around
