@@ -28,7 +28,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("service1")
     end
 
-    scenario "I can create new service" do
+    scenario "I can create new service with default offer" do
       category = create(:category)
       provider = create(:provider)
       scientific_domain = create(:scientific_domain)
@@ -97,6 +97,7 @@ RSpec.feature "Services in backoffice" do
 
       expect { click_on "Create Resource" }.
         to change { user.owned_services.count }.by(1)
+               .and change { Offer.count }.by(1)
 
 
       expect(user.owned_services.last.order_target).to eq("email@domain.com")
@@ -125,12 +126,16 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("2.2.2")
       expect(page).to have_content(trl.name)
       expect(page).to have_content(life_cycle_status.name)
+
+      expect(page).to have_text("This resource has one default offer.")
     end
 
     scenario "I can add additional public contacts", js: true do
       service = create(:service)
 
       visit edit_backoffice_service_path(service)
+
+      click_on "Contact"
 
       fill_in "service_public_contacts_attributes_0_first_name", with: "Jane"
       fill_in "service_public_contacts_attributes_0_last_name", with: "Doe"
@@ -161,6 +166,8 @@ RSpec.feature "Services in backoffice" do
       public_contacts = create_list(:public_contact, 3, contactable: service)
 
       visit edit_backoffice_service_path(service)
+
+      click_on "Contact"
 
       find("a", id: "public-contact-delete-0").click
       find("a", id: "public-contact-delete-1").click
@@ -266,6 +273,41 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("updated name")
     end
 
+    scenario "I can update service with default offer with parameters" do
+      service = create(:service, name: "my service", offers: [create(:offer_with_parameters)])
+
+      parameters = service.offers.first.parameters
+      parameter = parameters.first
+
+      visit backoffice_service_path(service)
+      click_on "Edit"
+
+      fill_in "Name", with: "updated name"
+      fill_in "Webpage url", with: "http://service.com"
+      fill_in "Order url", with: "http://order.com"
+      select "fully_open_access", from: "Order type"
+
+      click_on "Update Resource"
+
+      expect(page).to have_content("updated name")
+      expect(page).to have_text("This resource has one default offer.")
+
+      service.reload
+
+      offer = service.offers.first
+
+      expect(offer.webpage).to eq(service.webpage_url)
+      expect(offer.order_url).to eq(service.order_url)
+      expect(offer.order_type).to eq(service.order_type)
+
+      expect(offer.parameters.size).to eq(1)
+
+      expect(offer.parameters.first.id).to eq(parameter.id)
+      expect(offer.parameters.first.name).to eq(parameter.name)
+      expect(offer.parameters.first.value_type).to eq(parameter.value_type)
+      expect(offer.parameters.first.hint).to eq(parameter.hint)
+    end
+
     scenario "I can see service preview" do
       service = create(:service, name: "my service")
 
@@ -317,9 +359,11 @@ RSpec.feature "Services in backoffice" do
 
       visit backoffice_service_path(service)
 
-      expect(page).to have_content("This service has one default offer.")
+      expect(page).to have_content("This resource has one default offer.")
 
       click_on "Edit"
+
+      click_on "Order"
 
       select "open_access", from: "Order type"
       fill_in "Order url", with: "http://google.com"
@@ -417,7 +461,7 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
       first("a[class='delete-offer card-link']").click
 
-      expect(page).to have_content("This service has one default offer.")
+      expect(page).to have_content("This resource has one default offer.")
     end
 
     scenario "I can see info if service has no offer" do
@@ -425,7 +469,7 @@ RSpec.feature "Services in backoffice" do
 
       visit backoffice_service_path(service)
 
-      expect(page).to have_content("This service has no offers")
+      expect(page).to have_content("This resource has no offers")
     end
 
     scenario "I can change offer status from published to draft" do
