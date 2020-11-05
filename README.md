@@ -27,7 +27,7 @@ We will need:
 If you are using [asdf](https://github.com/asdf-vm/asdf) the easiest way to
 install required ruby, nodejs and elasticsearch version is to type
 
-```shell script
+```
 asdf install
 ```
 
@@ -119,7 +119,7 @@ to this port and is blocking it
 Marketplace is integrated with xGUS Helpdesk.
 All variables needed to establish a connection to the test instance are stored in encrypted credentials.
 To run integration test there is a need to type `rake xgus:check` in the console.
-To run on different than test instance, there is a need do set environmental variables:
+To run on different than test instance, there is a need do set [env variables](#environmental-variables):
 - `MP_XGUS_USERNAME`
 - `MP_XGUS_PASSWORD`
 - `MP_XGUS_WSDL`
@@ -180,8 +180,8 @@ This project can be customized via numerous environmental variables.
 To make storing them a little easier `dotenv` gem has been employed.
 You can read documentation [here](https://github.com/bkeepers/dotenv).
 
-In short you can store your env variables in `.env` file in the root of the project. 
-You can then access them via:
+You can store your env variables in `.env` file in the root of the project. 
+You can then access them in ruby code via:
 ```
 ENV[VAR]
 ```
@@ -220,7 +220,7 @@ We are currently using the following ENV variables:
 Running `./bin/setup` automatically installs githooks (using `overcommit` gem) for code linting. But if you're using
 an IDE for repository management then you will probably experience problems with commiting
 code changes. This is related to the fact that some IDE's do not inherit user's `.bash_profile`
-or any other scripts which traditionally set environmental variables.
+or any other scripts which traditionally set OS environmental variables.
 
 Installed githooks require access to ruby, so ruby environment must be available for IDE.
 
@@ -228,7 +228,7 @@ If you are using asdf-based ruby installation and IDE like RubyMine, the solutio
 sourcing commands at the end of your `.profile` file which is inherited by graphical applications 
 (unlike `.bashrc` that is standard place for asdf sourcing commands):
 
-```shell script
+```
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
 ```
@@ -237,7 +237,7 @@ Other solutions could be:
   * For OSX: calling `sudo launchctl config user path $PATH`
   * For Linux systems: modifying `PATH` in `/etc/environment`.
   
-Remember that before pushing to git, `overcommit` runs rspec tests and they need running 
+**Remember** that before pushing to git, `overcommit` runs rspec tests and it needs running 
 [Elasticsearch server](#elasticsearch) in the background.
 
 ## Designing UI without dedicated controller
@@ -263,7 +263,7 @@ If this is not enough you can customize it by using environment variables:
 
 ## Views, locales and scss customization
 
-Views, JS and SCSS can be customized by adding `CUSTOMIZATION_PATH` env variable.
+Views, JS and SCSS can be customized by adding `CUSTOMIZATION_PATH` [env variable](#environmental-variables).
 This variable should point to the directory with the following structure:
 
 ```
