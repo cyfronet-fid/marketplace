@@ -37,15 +37,11 @@ marketplace root directory.
 
 ### Setup
 Before running `./bin/setup` you need to:
-  * create file `config/master.key` with appropriate content in order to make credentials.yml decryptable.
-  * run elasticsearch server in the background (described in section below)
+  * create file `config/master.key` with appropriate content in order to make `config/credentials.yml.enc` decryptable.
+  * run elasticsearch server in the background (described in the [section below](#elasticsearch))
 
-Running `./bin/setup` and `./bin/update`:
-  * First time run `./bin/setup`. It will install bundler, foreman,
-    dependencies and setup databases (development and test).
-  * After update run `./bin/update`. It will update dependencies, run db
-    migrations and restart currently started application. 
-    <!-- TODO: There is no ./bin/update file! -->
+To set up the environment run `./bin/setup`. It will install bundler, foreman, 
+dependencies and setup databases (development and test).
 
 ### Generating DB entries for development
 Filling the database is done by parsing yaml: `db/data.yml`.
@@ -141,7 +137,8 @@ Default period is 1 month,
 
 ## ReCaptcha
 
-ReCaptcha is now used in the ask resource question form. To work it needs to set 2 environment variables:
+ReCaptcha is now used in the ask resource question form. To work it needs to set 2 
+[env variables](#environmental-variables):
 `RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY`. For test, development and internal docker instances
 values of these variables are stored in encrypted credentials.
 
@@ -168,14 +165,15 @@ is present in the classpath and uses it instead of `foreman`.
 > use `2.0.3` instead.
 
 By default application should start on [http://localhost:5000](). You can change
-port by setting ENV variable `PORT`.
+port by setting [env variable](#environmental-variables) `PORT`. You also need to run an instance of 
+[Elasticsearch server](#elasticsearch) in the background, before starting the application server.
 
 ## Sentry integration
 
 In production environment sentry integration can be turned on. To do so create
-dedicated env variable `SENTRY_DSN` with details how to connect to sentry
+dedicated [env variable](#environmental-variables) `SENTRY_DSN` with details how to connect to sentry
 server. Sentry environment can also be configured using `SENTRY_ENVIRONMENT`
-env variable (default set to `production`).
+[env variable](#environmental-variables) (default set to `production`).
 
 ## New relic integration
 
@@ -225,7 +223,7 @@ We are currently using the following ENV variables:
 
 ## Commits
 
-Running `./bin/setup` automatically installs githooks for code linting. But if you're using
+Running `./bin/setup` automatically installs githooks (using `overcommit` gem) for code linting. But if you're using
 an IDE for repository management then you will probably experience problems with commiting
 code changes. This is related to the fact that some IDE's do not inherit user's `.bash_profile`
 or any other scripts which traditionally set environmental variables.
@@ -244,6 +242,9 @@ sourcing commands at the end of your `.profile` file which is inherited by graph
 Other solutions could be:
   * For OSX: calling `sudo launchctl config user path $PATH`
   * For Linux systems: modifying `PATH` in `/etc/environment`.
+  
+Remember that before pushing to git, `overcommit` runs rspec tests and they need running 
+[Elasticsearch server](#elasticsearch) in the background.
 
 ## Designing UI without dedicated controller
 
