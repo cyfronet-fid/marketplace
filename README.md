@@ -37,10 +37,11 @@ marketplace root directory.
 
 ### Setup
 
-  * First time run `/bin/setup`. It will install bundler, foreman,
+  * First time run `./bin/setup`. It will install bundler, foreman,
     dependencies and setup databases (development and test).
-  * After update run `/bin/update`. It will update dependencies, run db
-    migrations and restart currently started application.
+  * After update run `./bin/update`. It will update dependencies, run db
+    migrations and restart currently started application. 
+    <!-- TODO: There is no ./bin/update file! -->
 
 ### Generating DB entries for development
 Actually, filling the database is done by parsing yaml: `db/data.yml`.
@@ -53,14 +54,32 @@ resources with random name and description (this generation is done using
 `faker` gem). In the future this task will be extended with additional data.
 
 ```
-rails dev:prime     # Remove existing resources and generate 100 new resources
-rails dev:prime[50] # Remove existing resources and generate 50 new resources
+./bin/rails dev:prime     # Remove existing resources and generate 100 new resources
+./bin/rails dev:prime[50] # Remove existing resources and generate 50 new resources
 ```
+<!---
+    This task fails when trying to seed 'services', need to run 
+    ./bin/rails import:eic to seed them.
+ -->
 
 ## Elasticserach
 Elasticsearch is used for full text resource search.
 
-On Debian/Ubuntu/Mint Elasticsearch installation is quite simple
+If you installed Elasticsearch using asdf, run this command in the marketplace root directory:
+```
+elasticsearch --daemonize --pidfile <pidfile_path> 
+```
+It will run Elasticsearch server in the background, on the default port (9200) 
+and record the pid of the server to the <pidfile_path>.
+
+To shut down the server run:
+```
+pkill -F <pidfile_path> 
+```
+... or just shut down your OS.
+
+
+Alternatively, you can install Elasticsearch on Debian/Ubuntu/Mint:
 (but it doesn't always work, see below):
 ```
 sudo apt-get install elasticsearch
@@ -132,7 +151,7 @@ css/js files change) use following command:
 ```
 ./bin/server
 ```
-It uses foremant and start processes defined in `Procfile.dev`.
+It uses foreman and start processes defined in `Procfile.dev`.
 Script also checks if [overmind](https://github.com/DarthSim/overmind)
 is present in the classpath and uses it instead of `foreman`.
 `overmind` is more advanced than `foreman` and plays nicely with e.g. `byebug`.
@@ -191,7 +210,7 @@ ENV variables:
 
 ## Commits
 
-Running `bin/setuo` automatically installs githooks for code linting. But if you're using
+Running `./bin/setuo` automatically installs githooks for code linting. But if you're using
 an IDE for repository management then you will probably experience problems with commiting
 code changes. This is related to the fact that some IDE's do not inherit user's `.bash_profile`
 or any other scripts which traditionally set environmental variables.
