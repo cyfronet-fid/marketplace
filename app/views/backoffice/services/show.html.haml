@@ -38,19 +38,19 @@
             = link_to t("backoffice.services.publish.link"),
                     backoffice_service_publish_path(@service),
                     method: :post,
-                    data: { confirm: "Are you sure you want to publish this service?" },
+                    data: { confirm: "Are you sure you want to publish this resource?" },
                     class: "btn btn-success btn-sm"
           - if policy([:backoffice, @service]).publish_unverified?
             = link_to t("backoffice.services.publish_as_unverified.link"),
                     backoffice_service_publish_path(@service, unverified: true),
                     method: :post,
-                    data: { confirm: "Are you sure you want to publish this service as unvefiried service?" },
+                    data: { confirm: "Are you sure you want to publish this resource as unvefiried resource?" },
                     class: "btn btn-warning btn-sm"
           - if policy([:backoffice, @service]).draft?
             = link_to t("backoffice.services.draft.link"),
                     backoffice_service_draft_path(@service),
                     method: :post,
-                    data: { confirm: "Are you sure you want to stop showing this service?" },
+                    data: { confirm: "Are you sure you want to stop showing this resource?" },
                     class: "btn btn-error btn-sm"
   .row.mt-4
     .col-12.col-sm-8

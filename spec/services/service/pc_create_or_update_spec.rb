@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Service::PcCreateOrUpdate do
-  let(:test_url) { "https://localhost" }
+  let(:test_url) { "https://localhost/api" }
   let(:logger) { double("Logger").as_null_object }
   let!(:storage) { create(:category, name: "Storage") }
   let!(:training) { create(:category, name: "Training & Support") }
@@ -49,11 +49,11 @@ RSpec.describe Service::PcCreateOrUpdate do
       provider_response_tp = double(code: 200, body: create(:eic_provider_response, eid: "tp"))
       provider_response_awesome = double(code: 200, body: create(:eic_provider_response, eid: "awesome"))
 
-      expect(unirest).to receive(:get).with("#{test_url}/api/provider/#{provider_eid}",
+      expect(unirest).to receive(:get).with("#{test_url}/provider/#{provider_eid}",
                                             headers: { "Accept" => "application/json" }).and_return(provider_response_ten)
-      expect(unirest).to receive(:get).with("#{test_url}/api/provider/tp",
+      expect(unirest).to receive(:get).with("#{test_url}/provider/tp",
                                             headers: { "Accept" => "application/json" }).and_return(provider_response_tp)
-      expect(unirest).to receive(:get).with("#{test_url}/api/provider/awesome",
+      expect(unirest).to receive(:get).with("#{test_url}/provider/awesome",
                                             headers: { "Accept" => "application/json" }).and_return(provider_response_awesome)
 
       service = stub_described_class(create(:jms_service, prov_eid: [provider_eid, "awesome"]), unirest: unirest)
@@ -119,6 +119,7 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.logo.download).to eq(file_fixture("PhenoMeNal_logo.png").read.b)
       expect(service.sources.first.eid).to eq("first.service")
       expect(service.upstream_id).to eq(nil)
+
       expect(service.offers.first.name).to eq("Offer")
       expect(service.offers.first.description).to eq("#{service.name} Offer")
       expect(service.offers.first.order_type).to eq(service.order_type)
@@ -132,9 +133,9 @@ RSpec.describe Service::PcCreateOrUpdate do
       provider_response_ten = double(code: 200, body: create(:eic_provider_response, eid: provider_eid))
       provider_response_tp = double(code: 200, body: create(:eic_provider_response, eid: "tp"))
 
-      expect(unirest).to receive(:get).with("#{test_url}/api/provider/#{provider_eid}",
+      expect(unirest).to receive(:get).with("#{test_url}/provider/#{provider_eid}",
                                             headers: { "Accept" => "application/json" }).and_return(provider_response_ten)
-      expect(unirest).to receive(:get).with("#{test_url}/api/provider/tp",
+      expect(unirest).to receive(:get).with("#{test_url}/provider/tp",
                                             headers: { "Accept" => "application/json" }).and_return(provider_response_tp)
 
       service = stub_described_class(create(:jms_service, prov_eid: provider_eid), unirest: unirest)
@@ -199,7 +200,7 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(service.logo.download).to eq(file_fixture("MetalPDB.png").read.b)
     end
 
-    it "should update service" do
+    it "should update service with default offer" do
       provider_ten = create(:provider, name: "Test Provider ten")
       provider_tp = create(:provider, name: "Test Provider tp")
       create(:provider_source, source_type: "eic", eid: provider_eid, provider: provider_ten)
@@ -209,7 +210,15 @@ RSpec.describe Service::PcCreateOrUpdate do
       service.save!
 
       service = stub_described_class(create(:jms_service, name: "New title", prov_eid: provider_eid))
+      service.reload
+
+      offer = service.offers.first
+
       expect(service.name).to eq("New title")
+
+      expect(offer.webpage).to eq(service.webpage_url)
+      expect(offer.order_url).to eq(service.order_url)
+      expect(offer.order_type).to eq(service.order_type)
     end
 
     it "should not update service" do
@@ -245,9 +254,9 @@ RSpec.describe Service::PcCreateOrUpdate do
       provider_response = double(code: 500, body: {})
       provider_response_tp = double(code: 200, body: create(:eic_provider_response, eid: "tp"))
 
-      expect(unirest).to receive(:get).with("#{test_url}/api/provider/new2",
+      expect(unirest).to receive(:get).with("#{test_url}/provider/new2",
                                             headers: { "Accept" => "application/json" }).and_return(provider_response)
-      expect(unirest).to receive(:get).with("#{test_url}/api/provider/tp",
+      expect(unirest).to receive(:get).with("#{test_url}/provider/tp",
                                             headers: { "Accept" => "application/json" }).and_return(provider_response_tp)
       expect { stub_described_class(service, unirest: unirest) }.to raise_error(Service::PcCreateOrUpdate::ConnectionError)
     end
