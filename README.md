@@ -210,17 +210,25 @@ ENV variables:
 
 ## Commits
 
-Running `./bin/setuo` automatically installs githooks for code linting. But if you're using
+Running `./bin/setup` automatically installs githooks for code linting. But if you're using
 an IDE for repository management then you will probably experience problems with commiting
 code changes. This is related to the fact that some IDE's do not inherit user's `.bash_profile`
 or any other scripts which traditionally set environmental variables.
 
 Installed githooks require access to ruby, so ruby environment must be available for IDE.
 
-For Jetbrains IDE some solutions can be found [here](https://emmanuelbernard.com/blog/2012/05/09/setting-global-variables-intellij/)
+If you are using asdf-based ruby installation and IDE like RubyMine, the solution is placing asdf 
+sourcing commands at the end of your `.profile` file which is inherited by graphical applications 
+(unlike `.bashrc` that is standard place for asdf sourcing commands):
 
-For OSX solution might be calling `sudo launchctl config user path $PATH`
-For Linux systems modifying `PATH` in `/etc/environment` should do the job.
+```shell script
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+```
+
+Other solutions could be:
+  * For OSX: calling `sudo launchctl config user path $PATH`
+  * For Linux systems: modifying `PATH` in `/etc/environment`.
 
 ## Designing UI without dedicated controller
 
