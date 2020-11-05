@@ -64,7 +64,7 @@ resources with random name and description (this generation is done using
 
 If this task fails when trying to seed 'services', the workaround is to run
 ```shell script
-bin/rake import:eic MP_IMPORT_EIC_URL=https://providers.eosc-portal.eu/
+./bin/rake import:eic MP_IMPORT_EIC_URL=https://providers.eosc-portal.eu/
 ```
 to seed them.
 
@@ -182,10 +182,18 @@ Newrelic rpm gem is added into `production` dependencies. The only thing you
 need to do to turn newrelic on production is to get `newrelic.yml` and put it
 into rails root directory.
 
-## ENV variables
+## Environmental variables
+This project can be customized via numerous environmental variables.
+To make storing them a little easier `dotenv` gem has been employed.
+You can read documentation [here](https://github.com/bkeepers/dotenv).
 
-We are using ENV variables to customize application. You can set the following
-ENV variables:
+In short you can store your env variables in `.env` file in the root of the project. 
+You can then access them via:
+```
+ENV[VAR]
+```
+
+We are currently using the following ENV variables:
 
   * `PORT` (Optional) - http server port (default 5000)
   * `CHECKIN_HOST` (Optional) - checkin IDP host (default `aai-dev.egi.eu`)
@@ -256,14 +264,6 @@ If this is not enough you can customize it by using environment variables:
   * `MP_DATABASE_HOST` - PostgreSQL database host
   * `MP_DATABASE_USERNAME` - PostgreSQL database username
   * `MP_DATABASE_PASSWORD` - PostgreSQL database password
-
-## Environmental Variables
-
-This project can be further customized via numerous environmental variables.
-To make storing them a little easier `dotenv` gem has been employed.
-You can read documentation [here](https://github.com/bkeepers/dotenv).
-
-In short you can store your env variables in `.env` file in the root of the project.
 
 ## Views, locales and scss customization
 
