@@ -27,7 +27,7 @@ We will need:
 If you are using [asdf](https://github.com/asdf-vm/asdf) the easiest way to
 install required ruby, nodejs and elasticsearch version is to type
 
-```
+```shell script
 asdf install
 ```
 
@@ -61,10 +61,12 @@ resources with random name and description (this generation is done using
 ./bin/rails dev:prime     # Remove existing resources and generate 100 new resources
 ./bin/rails dev:prime[50] # Remove existing resources and generate 50 new resources
 ```
-<!---
-    This task fails when trying to seed 'services', need to run 
-    ./bin/rails import:eic to seed them.
- -->
+
+If this task fails when trying to seed 'services', the workaround is to run
+```shell script
+bin/rake import:eic MP_IMPORT_EIC_URL=https://providers.eosc-portal.eu/
+```
+to seed them.
 
 ## Elasticserach
 Elasticsearch is used for full text resource search.
