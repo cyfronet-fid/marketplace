@@ -59,11 +59,11 @@ resources with random names and descriptions (this generation is done using
 ./bin/rails dev:prime[50] # Remove existing resources and generate 50 new resources
 ```
 
-If this task fails when trying to seed 'services', the workaround is to run
+If you need actual production data run:
 ```
 ./bin/rake import:eic
 ```
-to seed them.
+to seed the database with it.
 
 ## Elasticsearch
 Elasticsearch is used for full text resource search.
