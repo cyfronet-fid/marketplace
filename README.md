@@ -244,7 +244,13 @@ Other solutions could be:
   * For Linux systems: modifying `PATH` in `/etc/environment`.
   
 **Remember** that before pushing to git, `overcommit` runs rspec tests and it needs running 
-[Elasticsearch server](#elasticsearch) in the background.
+[Elasticsearch server](#elasticsearch) in the background. 
+
+You can also skip githooks altogether using:
+```
+ git <command> --no-verify
+```
+... or by unchecking 'run Git hooks' in RubyMine when applying git operations.
 
 If for some reason you would like to disable overcommit hooks during `commit`/`push` you can use:
 ```shell script
