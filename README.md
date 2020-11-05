@@ -250,12 +250,7 @@ You can also skip githooks altogether using:
 ```
  git <command> --no-verify
 ```
-... or by unchecking 'run Git hooks' in RubyMine when applying git operations.
-
-If for some reason you would like to disable overcommit hooks during `commit`/`push` you can use:
-```shell script
-git <command> --no-verify
-```
+... or by unchecking 'run Git hooks' in RubyMine IDE when applying git operations.
 
 ## Designing UI without dedicated controller
 
