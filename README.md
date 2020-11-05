@@ -48,13 +48,14 @@ Running `./bin/setup` and `./bin/update`:
     <!-- TODO: There is no ./bin/update file! -->
 
 ### Generating DB entries for development
-Actually, filling the database is done by parsing yaml: `db/data.yml`.
-Data come from actual official version of the marketplace.
-If you want to update data, or add new resources/categories you can add new records by edit yaml,
-but very important is, when some records are parent for other they must be written above their children.
-But if it's necessary, there is other option to fill the database:
+Filling the database is done by parsing yaml: `db/data.yml`.
+Data comes from the actual official version of the marketplace.
+If you want to update the data or add new resources/categories, you can add new records by editing `db/data.yml`.
+It is important to remember that if some record is a parent for another, it must be written above its child.
+
+If necessary, there is an other option to fill the database:
 To simplify development `dev:prime` rake task is created. Right now it generates
-resources with random name and description (this generation is done using
+resources with random names and descriptions (this generation is done using
 `faker` gem). In the future this task will be extended with additional data.
 
 ```
@@ -68,7 +69,7 @@ If this task fails when trying to seed 'services', the workaround is to run
 ```
 to seed them.
 
-## Elasticserach
+## Elasticsearch
 Elasticsearch is used for full text resource search.
 
 If you installed Elasticsearch using asdf, run this command in the marketplace root directory:
@@ -135,7 +136,7 @@ To run on different than test instance, there is a need do set environmental var
 
 ## Google Analytics API
 
-Marketplace has integration with Google Analytics and shows users with executive role resources unique visits counter.
+Marketplace has integration with Google Analytics and shows users with executive roles resources unique visits counter.
 Default period is 1 month,
 
 ## ReCaptcha
