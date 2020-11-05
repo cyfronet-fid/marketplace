@@ -13,13 +13,13 @@ Marketplace is a place where you can find resources you need for your research:
 
 We will need:
   * ruby (specific version can be found in [.tool-versions](.tool-versions)).
-    Recommented way to manage ruby versions is to use [asdf](https://github.com/asdf-vm/asdf)
+    Recommended way to manage ruby versions is to use [asdf](https://github.com/asdf-vm/asdf)
     with [asdf-ruby](https://github.com/asdf-vm/asdf-ruby) plugin
   * nodejs (specific version can be found in [.tool-versions](.tool-versions)).
-    Recommented way to manage nodejs versions is to use [asdf](https://github.com/asdf-vm/asdf)
+    Recommended way to manage nodejs versions is to use [asdf](https://github.com/asdf-vm/asdf)
     with [asdf-nodejs](https://github.com/asdf-vm/asdf-nodejs) plugin.
   * elasticsearch (specific version can be found in [.tool-versions](.tool-versions)).
-    Recommented way to manage elasticsearch versions is to use [asdf](https://github.com/asdf-vm/asdf)
+    Recommended way to manage elasticsearch versions is to use [asdf](https://github.com/asdf-vm/asdf)
     with [asdf-elasticsearch](https://github.com/asdf-community/asdf-elasticsearch) plugin.
   * [postgresql](https://www.postgresql.org)
   * [redis](https://redis.io)
@@ -50,8 +50,8 @@ Running `./bin/setup` and `./bin/update`:
 ### Generating DB entries for development
 Actually, filling the database is done by parsing yaml: `db/data.yml`.
 Data come from actual official version of the marketplace.
-If you want to update informations, or add new resources/categories you can add new records by edit yaml,
-but very imporant is, when some records are parent for other they must be written above their children.
+If you want to update data, or add new resources/categories you can add new records by edit yaml,
+but very important is, when some records are parent for other they must be written above their children.
 But if it's necessary, there is other option to fill the database:
 To simplify development `dev:prime` rake task is created. Right now it generates
 resources with random name and description (this generation is done using
@@ -94,7 +94,7 @@ sudo apt-get install elasticsearch
 The version included in ubuntu 16.04 and 17.10 is buggy and outdated, so it should be
 installed manually through deb file as described below.
 
-If your disto does not include this package use [instructions from
+If your distro does not include this package use [instructions from
 elasticsearch.org](https://www.elastic.co/guide/en/elastic-stack/current/index.html).
 
 Use `service` command to control the server:
@@ -251,7 +251,7 @@ existence checks.
 ## Database
 
 By default we are using pure rails database configuration in development and
-test enironemnts (sockets and database login the same as your system login).
+test environments (sockets and database login the same as your system login).
 If this is not enough you can customize it by using environment variables:
   * `MP_DATABASE_HOST` - PostgreSQL database host
   * `MP_DATABASE_USERNAME` - PostgreSQL database username
@@ -263,7 +263,7 @@ This project can be further customized via numerous environmental variables.
 To make storing them a little easier `dotenv` gem has been employed.
 You can read documentation [here](https://github.com/bkeepers/dotenv).
 
-In shourt you can store your env variables in `.env` file in the root of the project.
+In short you can store your env variables in `.env` file in the root of the project.
 
 ## Views, locales and scss customization
 
