@@ -14,6 +14,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Default resource logo if not set (@goreck888)
 
 ### Changed
+- Improved README readability and accessibility (@JanKapala, @wujuu)
 - Resource form fields sort similar as PC (@goreck888) 
 - missing `service` to `resource` texts in popups and messages (@goreck888) 
 
