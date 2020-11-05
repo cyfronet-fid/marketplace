@@ -36,7 +36,11 @@ way. To start correct elasticsearch version type `elasticsearch` in the
 marketplace root directory.
 
 ### Setup
+Before running `./bin/setup` you need to:
+  * create file `config/master.key` with appropriate content in order to make credentials.yml decryptable.
+  * run elasticsearch server in the background (described in section below)
 
+Running `./bin/setup` and `./bin/update`:
   * First time run `./bin/setup`. It will install bundler, foreman,
     dependencies and setup databases (development and test).
   * After update run `./bin/update`. It will update dependencies, run db
