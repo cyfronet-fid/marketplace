@@ -9,7 +9,7 @@
                   new_backoffice_platform_path,
                   class: "btn btn-primary"
       .clearfix
-  %ul.list-group.backoffice-list.mt-5.mb-3
+  %ul.list-group.backoffice-list.mt-3.mb-3
     - @platforms.each do |platform|
       %li.list-group-item
         = link_to platform.name, backoffice_platform_path(platform)

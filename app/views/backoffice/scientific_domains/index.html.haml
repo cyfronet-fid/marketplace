@@ -9,7 +9,7 @@
                   new_backoffice_scientific_domain_path,
                   class: "btn btn-primary"
       .clearfix
-  %ul.list-group.backoffice-list.mt-5.mb-3
+  %ul.list-group.backoffice-list.mt-3.mb-3
     - ancestry_tree(@scientific_domains).each do |record|
       - ra = record[1]
       %li.list-group-item
