@@ -4079,3 +4079,12 @@ textarea.form-control.is-invalid {
   border-top: 1px solid $palette-solid-10;
   margin-top: 20px;
 }
+
+.backoffice-intro-pic {
+  text-align: right;
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
