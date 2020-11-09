@@ -35,6 +35,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Default resource logo if not set (@goreck888)
 - Tours (@michal-szostak)
 - JIRA collector button (@michal-szostak)
+- Remove element for array inputs (@goreck888)
 
 ### Changed
 - Improved README readability and accessibility (@JanKapala, @wujuu)
