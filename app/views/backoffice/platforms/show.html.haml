@@ -3,11 +3,13 @@
 
 %h1= @platform.name
 
+%hr.bottom-hr.mt-5.mb-4
+
 .btn-group
   - if policy([:backoffice, @platform]).edit?
     = link_to "Edit",
               edit_backoffice_platform_path(@platform),
-              class: "btn btn-warning"
+              class: "btn btn-primary"
   - if policy([:backoffice, @platform]).destroy?
     = link_to "Delete",
               backoffice_platform_path(@platform),

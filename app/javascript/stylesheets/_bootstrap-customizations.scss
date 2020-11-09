@@ -4088,3 +4088,8 @@ textarea.form-control.is-invalid {
     height: auto;
   }
 }
+// scss-lint:disable all
+.backoffice-form .simple_form {
+  width: 100%;
+}
+// scss-lint:enable all

@@ -1,23 +1,24 @@
 - breadcrumb :backoffice_category, @category
 
 %h1= @category.name
-%h2 Description:
-%p= @category.description
-%h2 eID:
-%p= @category.eid
-%h2= @category.parent ? "Parent: #{@category.parent.name}" : "Root element"
-- if @category.logo.attached?
-  = image_tag @category.logo
+.service-box.shadow-sm.p-4.mt-3.backoffice-form
+  %h2 Description:
+  %p= @category.description
+  %h2 eID:
+  %p= @category.eid
+  %h2= @category.parent ? "Parent: #{@category.parent.name}" : "Root element"
+  - if @category.logo.attached?
+    = image_tag @category.logo
 
-%hr
-.btn-group
-  - if policy([:backoffice, @category]).edit?
-    = link_to "Edit",
-              edit_backoffice_category_path(@category),
-              class: "btn btn-warning"
-  - if policy([:backoffice, @category]).destroy?
-    = link_to "Delete",
-              backoffice_category_path(@category),
-              method: :delete,
-              data: { confirm: "Are you sure you want to remove this category" },
-              class: "btn btn-danger"
+  %hr.bottom-hr.mt-5.mb-4
+  .btn-group
+    - if policy([:backoffice, @category]).edit?
+      = link_to "Edit",
+                edit_backoffice_category_path(@category),
+                class: "btn btn-primary"
+    - if policy([:backoffice, @category]).destroy?
+      = link_to "Delete",
+                backoffice_category_path(@category),
+                method: :delete,
+                data: { confirm: "Are you sure you want to remove this category" },
+                class: "btn btn-danger"

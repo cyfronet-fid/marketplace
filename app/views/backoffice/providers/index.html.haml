@@ -9,7 +9,7 @@
                   new_backoffice_provider_path,
                   class: "btn btn-primary"
       .clearfix
-  %ul.list-group.backoffice-list.mt-5.mb-3
+  %ul.list-group.backoffice-list.mt-3.mb-3
     - @providers.each do |provider|
       %li.list-group-item
         = link_to provider.name, backoffice_provider_path(provider)
