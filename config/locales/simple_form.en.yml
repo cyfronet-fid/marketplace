@@ -1,5 +1,15 @@
 en:
   simple_form:
+    add_new_array_item:
+      service:
+        multimedia: multimedia
+        use_cases_url: use case url
+        certifications: certification
+        standards: standard
+        open_source_technologies: open source technology
+        grant_project_names: grant/project name
+        changelog: changelog entry
+        related_platforms: related platform
     "yes": 'Yes'
     "no": 'No'
     required:
@@ -23,6 +33,7 @@ en:
       project_item:
         additional_comment: Please enter additional details of your request
       service:
+        grant_project_names: Grant/Project names
         required_services: Required Resources
         related_services: Related Resources
       user:
