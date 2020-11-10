@@ -13,16 +13,16 @@ Marketplace is a place where you can find resources you need for your research:
 
 We will need:
   * ruby (specific version can be found in [.tool-versions](.tool-versions)).
-    Recommented way to manage ruby versions is to use [asdf](https://github.com/asdf-vm/asdf)
+    Recommended way to manage ruby versions is to use [asdf](https://github.com/asdf-vm/asdf)
     with [asdf-ruby](https://github.com/asdf-vm/asdf-ruby) plugin
   * nodejs (specific version can be found in [.tool-versions](.tool-versions)).
-    Recommented way to manage nodejs versions is to use [asdf](https://github.com/asdf-vm/asdf)
+    Recommended way to manage nodejs versions is to use [asdf](https://github.com/asdf-vm/asdf)
     with [asdf-nodejs](https://github.com/asdf-vm/asdf-nodejs) plugin.
   * elasticsearch (specific version can be found in [.tool-versions](.tool-versions)).
-    Recommented way to manage nodejs versions is to use [asdf](https://github.com/asdf-vm/asdf)
-    with [asdf-elasticsearch](https://github.com/asdf-vm/asdf-elasticsearch) plugin.
+    Recommended way to manage elasticsearch versions is to use [asdf](https://github.com/asdf-vm/asdf)
+    with [asdf-elasticsearch](https://github.com/asdf-community/asdf-elasticsearch) plugin.
   * [postgresql](https://www.postgresql.org)
-  * redis (https://redis.io)
+  * [redis](https://redis.io)
 
 If you are using [asdf](https://github.com/asdf-vm/asdf) the easiest way to
 install required ruby, nodejs and elasticsearch version is to type
@@ -36,31 +36,53 @@ way. To start correct elasticsearch version type `elasticsearch` in the
 marketplace root directory.
 
 ### Setup
+Before running `./bin/setup` you need to:
+  * create file `config/master.key` with appropriate content in order to make `config/credentials.yml.enc` decryptable.
+  * run elasticsearch server in the background (described in the [section below](#elasticsearch))
 
-  * First time run `/bin/setup`. It will install bundler, foreman,
-    dependencies and setup databases (development and test).
-  * After update run `/bin/update`. It will update dependencies, run db
-    migrations and restart currently started application.
+To set up the environment run `./bin/setup`. It will install bundler, foreman, 
+dependencies and setup databases (development and test).
 
 ### Generating DB entries for development
-Actually, filling the database is done by parsing yaml: `db/data.yml`.
-Data come from actual official version of the marketplace.
-If you want to update informations, or add new resources/categories you can add new records by edit yaml,
-but very imporant is, when some records are parent for other they must be written above their children.
-But if it's necessary, there is other option to fill the database:
+Filling the database is done by parsing yaml: `db/data.yml`.
+Data comes from the actual official version of the marketplace.
+If you want to update the data or add new resources/categories, you can add new records by editing `db/data.yml`.
+It is important to remember that if some record is a parent for another, it must be written above its child.
+
+If necessary, there is an other option to fill the database:
 To simplify development `dev:prime` rake task is created. Right now it generates
-resources with random name and description (this generation is done using
+resources with random names and descriptions (this generation is done using
 `faker` gem). In the future this task will be extended with additional data.
 
 ```
-rails dev:prime     # Remove existing resources and generate 100 new resources
-rails dev:prime[50] # Remove existing resources and generate 50 new resources
+./bin/rails dev:prime     # Remove existing resources and generate 100 new resources
+./bin/rails dev:prime[50] # Remove existing resources and generate 50 new resources
 ```
 
-## Elasticserach
+If you need actual production data run:
+```
+./bin/rake import:eic
+```
+to seed the database with it.
+
+## Elasticsearch
 Elasticsearch is used for full text resource search.
 
-On Debian/Ubuntu/Mint Elasticsearch installation is quite simple
+If you installed Elasticsearch using asdf, run this command in the marketplace root directory:
+```
+elasticsearch --daemonize --pidfile <pidfile_path> 
+```
+It will run Elasticsearch server in the background, on the default port (9200) 
+and record the pid of the server to the <pidfile_path>.
+
+To shut down the server run:
+```
+pkill -F <pidfile_path> 
+```
+... or just shut down your OS.
+
+
+Alternatively, you can install Elasticsearch on Debian/Ubuntu/Mint:
 (but it doesn't always work, see below):
 ```
 sudo apt-get install elasticsearch
@@ -69,7 +91,7 @@ sudo apt-get install elasticsearch
 The version included in ubuntu 16.04 and 17.10 is buggy and outdated, so it should be
 installed manually through deb file as described below.
 
-If your disto does not include this package use [instructions from
+If your distro does not include this package use [instructions from
 elasticsearch.org](https://www.elastic.co/guide/en/elastic-stack/current/index.html).
 
 Use `service` command to control the server:
@@ -103,19 +125,20 @@ to this port and is blocking it
 Marketplace is integrated with xGUS Helpdesk.
 All variables needed to establish a connection to the test instance are stored in encrypted credentials.
 To run integration test there is a need to type `rake xgus:check` in the console.
-To run on different than test instance, there is a need do set environmental variables:
+To run on different than test instance, there is a need do set [env variables](#environmental-variables):
 - `MP_XGUS_USERNAME`
 - `MP_XGUS_PASSWORD`
 - `MP_XGUS_WSDL`
 
 ## Google Analytics API
 
-Marketplace has integration with Google Analytics and shows users with executive role resources unique visits counter.
+Marketplace has integration with Google Analytics and shows users with executive roles resources unique visits counter.
 Default period is 1 month,
 
 ## ReCaptcha
 
-ReCaptcha is now used in the ask resource question form. To work it needs to set 2 environment variables:
+ReCaptcha is now used in the ask resource question form. To work it needs to set 2 
+[env variables](#environmental-variables):
 `RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY`. For test, development and internal docker instances
 values of these variables are stored in encrypted credentials.
 
@@ -132,7 +155,7 @@ css/js files change) use following command:
 ```
 ./bin/server
 ```
-It uses foremant and start processes defined in `Procfile.dev`.
+It uses foreman and start processes defined in `Procfile.dev`.
 Script also checks if [overmind](https://github.com/DarthSim/overmind)
 is present in the classpath and uses it instead of `foreman`.
 `overmind` is more advanced than `foreman` and plays nicely with e.g. `byebug`.
@@ -142,14 +165,15 @@ is present in the classpath and uses it instead of `foreman`.
 > use `2.0.3` instead.
 
 By default application should start on [http://localhost:5000](). You can change
-port by setting ENV variable `PORT`.
+port by setting [env variable](#environmental-variables) `PORT`. You also need to run an instance of 
+[Elasticsearch server](#elasticsearch) in the background, before starting the application server.
 
 ## Sentry integration
 
 In production environment sentry integration can be turned on. To do so create
-dedicated env variable `SENTRY_DSN` with details how to connect to sentry
+dedicated [env variable](#environmental-variables) `SENTRY_DSN` with details how to connect to sentry
 server. Sentry environment can also be configured using `SENTRY_ENVIRONMENT`
-env variable (default set to `production`).
+[env variable](#environmental-variables) (default set to `production`).
 
 ## New relic integration
 
@@ -157,10 +181,18 @@ Newrelic rpm gem is added into `production` dependencies. The only thing you
 need to do to turn newrelic on production is to get `newrelic.yml` and put it
 into rails root directory.
 
-## ENV variables
+## Environmental variables
+This project can be customized via numerous environmental variables.
+To make storing them a little easier `dotenv` gem has been employed.
+You can read documentation [here](https://github.com/bkeepers/dotenv).
 
-We are using ENV variables to customize application. You can set the following
-ENV variables:
+You can store your env variables in `.env` file in the root of the project. 
+You can then access them in ruby code via:
+```
+ENV[VAR]
+```
+
+We are currently using the following ENV variables:
 
   * `PORT` (Optional) - http server port (default 5000)
   * `CHECKIN_HOST` (Optional) - checkin IDP host (default `aai-dev.egi.eu`)
@@ -191,17 +223,34 @@ ENV variables:
 
 ## Commits
 
-Running `bin/setuo` automatically installs githooks for code linting. But if you're using
+Running `./bin/setup` automatically installs githooks (using `overcommit` gem) for code linting. But if you're using
 an IDE for repository management then you will probably experience problems with commiting
 code changes. This is related to the fact that some IDE's do not inherit user's `.bash_profile`
-or any other scripts which traditionally set environmental variables.
+or any other scripts which traditionally set OS environmental variables.
 
 Installed githooks require access to ruby, so ruby environment must be available for IDE.
 
-For Jetbrains IDE some solutions can be found [here](https://emmanuelbernard.com/blog/2012/05/09/setting-global-variables-intellij/)
+If you are using asdf-based ruby installation and IDE like RubyMine, the solution is placing asdf 
+sourcing commands at the end of your `.profile` file which is inherited by graphical applications 
+(unlike `.bashrc` that is standard place for asdf sourcing commands):
 
-For OSX solution might be calling `sudo launchctl config user path $PATH`
-For Linux systems modifying `PATH` in `/etc/environment` should do the job.
+```
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+```
+
+Other solutions could be:
+  * For OSX: calling `sudo launchctl config user path $PATH`
+  * For Linux systems: modifying `PATH` in `/etc/environment`.
+  
+**Remember** that before pushing to git, `overcommit` runs rspec tests and it needs running 
+[Elasticsearch server](#elasticsearch) in the background. 
+
+You can also skip githooks altogether using:
+```
+ git <command> --no-verify
+```
+... or by unchecking 'run Git hooks' in RubyMine IDE when applying git operations.
 
 ## Designing UI without dedicated controller
 
@@ -218,23 +267,15 @@ existence checks.
 ## Database
 
 By default we are using pure rails database configuration in development and
-test enironemnts (sockets and database login the same as your system login).
+test environments (sockets and database login the same as your system login).
 If this is not enough you can customize it by using environment variables:
   * `MP_DATABASE_HOST` - PostgreSQL database host
   * `MP_DATABASE_USERNAME` - PostgreSQL database username
   * `MP_DATABASE_PASSWORD` - PostgreSQL database password
 
-## Environmental Variables
-
-This project can be further customized via numerous environmental variables.
-To make storing them a little easier `dotenv` gem has been employed.
-You can read documentation [here](https://github.com/bkeepers/dotenv).
-
-In shourt you can store your env variables in `.env` file in the root of the project.
-
 ## Views, locales and scss customization
 
-Views, JS and SCSS can be customized by adding `CUSTOMIZATION_PATH` env variable.
+Views, JS and SCSS can be customized by adding `CUSTOMIZATION_PATH` [env variable](#environmental-variables).
 This variable should point to the directory with the following structure:
 
 ```
