@@ -28,16 +28,21 @@ class TourFeedbacksController < ApplicationController
       @errors["email"] = "Email required"
     end
 
-    unless @errors.empty?
+    if @errors.present? || !verify_recaptcha
       @form["share"] = tour_params["share"]
       @form["email"] = tour_params["email"]
-      return render partial: "layouts/tours/modal_content", status: :bad_request,
-                    locals: { feedback: @feedback,
-                             errors: @errors,
-                             form: @form,
-                             tour_controller_name: @tour_controller_name,
-                             tour_controller_action: @tour_controller_action,
-                             tour_name: @tour_name }
+      return respond_to do |format|
+        format.js { render "layouts/show_tour_feedback", status: :bad_request,
+                           locals: {
+                               feedback_form: "layouts/tours/modal_content",
+                               feedback_locals: {
+                                   feedback: @feedback,
+                                   errors: @errors,
+                                   form: @form,
+                                   tour_controller_name: @tour_controller_name,
+                                   tour_controller_action: @tour_controller_action,
+                                   tour_name: @tour_name } } }
+      end
     end
 
     TourFeedback.new(controller_name: @tour_controller_name,
