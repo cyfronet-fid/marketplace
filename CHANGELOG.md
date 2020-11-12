@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - missing tests for create/update default offer by create/update resource (@goreck888)
 - Default resource logo if not set (@goreck888)
 - Tours (@michal-szostak)
+- JIRA collector button (@michal-szostak)
 
 ### Changed
 - Improved README readability and accessibility (@JanKapala, @wujuu)
