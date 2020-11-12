@@ -1,0 +1,10 @@
+#tour-feedback-modal.feedback-modal.modal{ tabindex: "-1", role: "dialog", aria: { hidden: "false" } }
+  .modal-dialog.new-feature{ role: "document" }
+    .modal-content
+      = render "layouts/tours/modal_content",
+      feedback: feedback,
+      tour_controller_name: controller_name,
+      tour_controller_action: action_name,
+      tour_name: tour_name,
+      form: {},
+      errors: {}

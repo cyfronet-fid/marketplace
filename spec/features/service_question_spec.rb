@@ -17,10 +17,13 @@ RSpec.feature "Question about service" do
     before { checkin_sign_in_as(create(:user)) }
 
     scenario "I can send question to contact emails", js: true do
+      Capybara.page.current_window.resize_to("1600", "1024")
       service = create(:service)
       create_list(:public_contact, 2, contactable: service)
 
       visit service_path(service)
+      # close shepherd's tour
+      click_on "I'll do it later"
 
       click_on "Ask a question about this resource?"
 
@@ -35,10 +38,14 @@ RSpec.feature "Question about service" do
     end
 
     scenario "I cannot send message about service with empty message", js: true do
+      Capybara.page.current_window.resize_to("1600", "1024")
       service = create(:service)
       create_list(:public_contact, 2, contactable: service)
 
       visit service_path(service)
+      # close shepherd's tour
+      click_on "I'll do it later"
+
 
       click_on "Ask a question about this resource?"
 
@@ -50,10 +57,13 @@ RSpec.feature "Question about service" do
 
   context "as not logged in user" do
     scenario "I can send message about service", js: true do
+      Capybara.page.current_window.resize_to("1600", "1024")
       service = create(:service)
       create_list(:public_contact, 2, contactable: service)
 
       visit service_path(service)
+      # close shepherd's tour
+      click_on "I'll do it later"
 
       click_on "Ask a question about this resource?"
 
@@ -70,10 +80,13 @@ RSpec.feature "Question about service" do
     end
 
     scenario "I cannot send message about service with empty fields", js: true do
+      Capybara.page.current_window.resize_to("1600", "1024")
       service = create(:service)
       create_list(:public_contact, 2, contactable: service)
 
       visit service_path(service)
+      # close shepherd's tour
+      click_on "I'll do it later"
 
       click_on "Ask a question about this resource?"
 

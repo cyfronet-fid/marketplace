@@ -24,7 +24,10 @@
     "popper.js": "^1.14.3",
     "stimulus": "^1.0.1",
     "trix": "^1.0.0",
-    "turbolinks": "^5.2.0"
+    "turbolinks": "^5.2.0",
+    "jquery": "^3.4.0",
+    "js-cookie": "^2.2.0",
+    "shepherd.js": "8.0.0"
   },
   "devDependencies": {
     "babel-jest": "^25.3.0",
