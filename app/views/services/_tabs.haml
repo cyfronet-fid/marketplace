@@ -10,7 +10,7 @@
         %li.nav-item
           = link_to "About", service_path(service),
             class: "nav-link text-uppercase #{"active" if controller.controller_name == 'services'}", role: "tab"
-        %li.nav-item
+        %li.nav-item{ "data-shepherd-tour-target": "service-details-tab" }
           = link_to "Details", service_details_path(service),
             class: "nav-link text-uppercase #{"active" if controller.controller_name == 'details'}", role: "tab"
         %li.nav-item

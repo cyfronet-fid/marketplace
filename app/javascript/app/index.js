@@ -11,6 +11,7 @@ import "app/nav";
 require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
+require("shepherd.js")
 
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
 import { far } from '@fortawesome/free-regular-svg-icons';
@@ -18,6 +19,11 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import "@fortawesome/fontawesome-free/js/all";
 import "@fortawesome/fontawesome-free/css/all.css";
 import 'bootstrap-datepicker';
+import Shepherd from 'shepherd.js';
+window.Shepherd = Shepherd;
+
+import Cookies from 'js-cookie/src/js.cookie';
+window.Cookies = Cookies;
 
 // :TODO: for now import all fonts, so ux people can work without problems, optimize later
 library.add(fas, far);

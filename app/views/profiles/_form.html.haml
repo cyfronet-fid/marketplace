@@ -1,6 +1,6 @@
 = simple_form_for user, url: profile_path(user)  do |f|
   .row
-    .col-12.col-md-5.profile-edit
+    .col-12.col-md-5.profile-edit{ "data-shepherd-tour-target": "profile-additional-information" }
       .bordered-header
         %h3 Additional information
 
@@ -20,7 +20,8 @@
   %hr.bottom-hr.mt-5.mb-4
   .row.mt-5
     .col-12.col-md-7
-      = f.button :submit, method: :patch, class: "btn btn-primary pl-5 pr-5 mr-5"
+      = f.button :submit, method: :patch, class: "btn btn-primary pl-5 pr-5 mr-5",
+        "data-shepherd-tour-target": "profile-submit"
       = link_to "Cancel and back to previous page", profile_path,
         class: "text-left flex-grow-1 text-uppercase"
     .col-12.col-md-5.delete-info

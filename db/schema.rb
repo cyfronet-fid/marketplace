@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_21_113337) do
+ActiveRecord::Schema.define(version: 2020_11_12_070943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -462,6 +462,34 @@ ActiveRecord::Schema.define(version: 2020_10_21_113337) do
     t.text "eid"
   end
 
+  create_table "tour_feedbacks", force: :cascade do |t|
+    t.string "controller_name"
+    t.string "action_name"
+    t.string "tour_name"
+    t.bigint "user_id"
+    t.string "email"
+    t.json "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["action_name"], name: "index_tour_feedbacks_on_action_name"
+    t.index ["controller_name"], name: "index_tour_feedbacks_on_controller_name"
+    t.index ["email"], name: "index_tour_feedbacks_on_email"
+    t.index ["tour_name"], name: "index_tour_feedbacks_on_tour_name"
+    t.index ["user_id"], name: "index_tour_feedbacks_on_user_id"
+  end
+
+  create_table "tour_histories", force: :cascade do |t|
+    t.string "controller_name"
+    t.string "action_name"
+    t.string "tour_name"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at"], name: "index_tour_histories_on_created_at"
+    t.index ["updated_at"], name: "index_tour_histories_on_updated_at"
+    t.index ["user_id"], name: "index_tour_histories_on_user_id"
+  end
+
   create_table "user_categories", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "category_id"
@@ -540,6 +568,8 @@ ActiveRecord::Schema.define(version: 2020_10_21_113337) do
   add_foreign_key "services", "providers"
   add_foreign_key "services", "providers", column: "resource_organisation_id"
   add_foreign_key "services", "service_sources", column: "upstream_id", on_delete: :nullify
+  add_foreign_key "tour_feedbacks", "users"
+  add_foreign_key "tour_histories", "users"
   add_foreign_key "user_categories", "categories"
   add_foreign_key "user_categories", "users"
   add_foreign_key "user_scientific_domains", "scientific_domains"

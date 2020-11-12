@@ -1,0 +1,41 @@
+intro2:
+  feedback:
+    title: Congratulations!
+    text: |-
+      You have completed the resource presentation tour guide.
+      We hope you like our new resource presentation layout and find the provided information useful.
+
+
+      **Please take a moment and tell us how do you like the new layout of this page?**
+    questions:
+      -
+        name: rating
+        type: rating
+        label:
+      -
+        name: comment
+        type: comment
+        label: Please also leave a comment on how we can improve it.
+
+  previous:
+    tour_name: "intro"
+    action_name: "show"
+    controller_name: "profiles"
+    redirect_to: "root_path"
+  steps:
+    1:
+      title: Additional information
+      text: |-
+        Choose your **Category** of interests and **Research Area** of interest from the drop down list.
+        It will help you to receive personalized results and updates.
+      attachTo:
+        element: "[data-shepherd-tour-target='profile-additional-information']"
+        placement: "right"
+    2:
+      title: Saving changes
+      text: |-
+        Once you've chosen your interests, click on the "Save changes" button to finalize your choice.
+        You can modify it at any time.
+      attachTo:
+        element: "[data-shepherd-tour-target='profile-submit']"
+        placement: "right"

@@ -1,0 +1,119 @@
+$modal-background: #fff;
+
+.shepherd-element {
+  margin: 40px !important;
+  max-width: 500px;
+}
+
+.shepherd-content {
+  // scss-lint:disable PlaceholderInExtend
+  @extend .modal-content;
+  background-color: $modal-background;
+
+  ul {
+    padding-left: 20px;
+
+    > li {
+      list-style: disc;
+    }
+  }
+
+  .shepherd-header {
+    padding: 1em;
+    background: unset !important;
+
+    .shepherd-title {
+      @extend .modal-title;
+    }
+  }
+
+  .shepherd-text {
+    padding: 1em;
+    font-size: 0.8rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .shepherd-footer {
+    padding: 1em;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+
+    :first-child {
+      text-align: left;
+    }
+
+    :last-child {
+      text-align: left;
+    }
+
+    .shepherd-button:not(.close-link) {
+      @extend .btn;
+      @extend .btn-primary;
+    }
+
+    .close-link {
+      //Can't extend .modal .close-link: can't extend nested selectors
+      // thus content of this selector is copied
+      //@extend .modal .close-link;
+
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 300;
+      color: $palette-blue;
+      float: left;
+      opacity: 1;
+
+      &:hover {
+        background: unset !important;
+      }
+    }
+
+    .steps-counter {
+      text-align: center;
+      padding-top: 10px;
+      font-weight: bold;
+      color: $text-muted;
+    }
+  }
+}
+
+.shepherd-arrow::before {
+  background-color: $modal-background !important;
+}
+
+.tour-welcome {
+  width: 900px !important;
+  max-width: 900px !important;
+
+  > .shepherd-content {
+    padding-top: 40px;
+    padding-right: 40px;
+    padding-bottom: 40px;
+    width: 900px !important;
+
+    >.shepherd-header {
+      padding-left: 300px;
+
+      .shepherd-title {
+        font-size: 20px;
+      }
+    }
+
+    > .shepherd-text {
+      padding-left: 300px;
+    }
+
+    > .shepherd-footer {
+      padding-left: 300px;
+    }
+
+    > .new-feature {
+      background-image: url('../images/new-feature.png');
+      width: 300px;
+      height: 290px;
+      position: absolute;
+    }
+  }
+}

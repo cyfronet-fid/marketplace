@@ -1,0 +1,13 @@
+intro:
+  next:
+    tour_name: "intro2"
+    controller_name: "profile"
+    action_name: "edit"
+    redirect_to: "edit_profile_path"
+  steps:
+    1:
+      title: "Edit profile"
+      text:  "Click on **Edit** button to start filling your profile interests."
+      attachTo:
+        element: "[data-shepherd-tour-target='profile-edit']"
+        placement: "right"

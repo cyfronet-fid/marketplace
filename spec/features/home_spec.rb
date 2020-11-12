@@ -55,16 +55,17 @@ RSpec.feature "Home" do
         click_on "Enable welcome modal"
         expect(page).to have_current_path(admin_features_path)
         expect(page).to have_content("Welcome modal enabled for all first logged-in users")
+        admin.update(show_welcome_popup: true)
 
         visit root_path
 
-        expect(page).to have_content ("New functionality arrived!")
+        expect(page).to have_content("New functionality arrived!")
 
         click_on "I'll do it later"
 
         visit root_path
 
-        expect(page).to_not have_content ("New functionality arrived!")
+        expect(page).to_not have_content("New functionality arrived!")
       end
     end
 
