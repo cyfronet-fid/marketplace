@@ -147,6 +147,20 @@ values of these variables are stored in encrypted credentials.
 If you are an admin, who wants to integrate production instance of JIRA go to
 [JIRA integration manual](./docs/jira_integration.md) otherwise read on.
 
+Additionally there is HD / Feedback mechanism implemented using JIRA collectors.
+In order to enable it in production following environmental variable should be set:
+
+* `JIRA_COLLECTOR_SCRIPTS`
+
+This variable should be set to the address of script (or scripts - space separated) which are generated when
+configuring JIRA collector in JIRA instance. Sample declaration of this variable can be as follows (for two scripts)
+
+Note the space separating both scripts sources
+
+```
+JIRA_COLLECTOR_SCRIPTS="https://jira.domain.com/s/xxx-CDN/xx/00/xxx/x.x.x.x/_/download/batch/com.atlassian.plugins.jquery:jquery/com.atlassian.plugins.jquery:jquery.js?collectorId=00000 https://jira.domain.com/s/xxx/xxx/0/xxx/x.x.x/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-UK&collectorId=yyyyy"
+```
+
 ## Run
 
 To start web application in development mode (with auto refresh capability when
