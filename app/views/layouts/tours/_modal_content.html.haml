@@ -24,6 +24,7 @@
             = check_box_tag :share, "yes", form["share"], class: "form-check-input",
             "data-target": "tourfeedbackmodal.share", "data-action": "change->tourfeedbackmodal#share"
             = label_tag :share, "Yes, I want to take part in the EOSC Portal design verification/validation"
+          #recaptcha= recaptcha_tags
           - if !current_user
             .form-group.feedback-email{ "data-target" => "tourfeedbackmodal.email", class: ("show" if form["share"]) }
               = label_tag :email, "Email address"

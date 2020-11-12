@@ -34,7 +34,7 @@ intro2:
     2:
       title: Saving changes
       text: |-
-        Ince you've chosen your interests, click on the "Save changes" button to finalize your choice.
+        Once you've chosen your interests, click on the "Save changes" button to finalize your choice.
         You can modify it at any time.
       attachTo:
         element: "[data-shepherd-tour-target='profile-submit']"

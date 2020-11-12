@@ -37,7 +37,7 @@
       modalOverlayOpeningPadding: 10,
       when: {
           show: function() {
-              if (<%= step['welcome'] ? 'true' : 'false' =%>) {
+              if (<%= step['welcome'] ? 'true' : 'false' %>) {
                   const img = document.createElement('div');
                   img.classList.add('new-feature')
 
@@ -58,7 +58,7 @@
           }
       },
       id: 'step-<%= key %>',
-      classes: '<%= step['welcome'] ? 'tour-welcome' : '' =%>',
+      classes: '<%= step['welcome'] ? 'tour-welcome' : '' %>',
       <% if step.key?('title') %>
       title: "<%= step['title'] %>",
       <% end %>
