@@ -44,18 +44,17 @@
                   document.querySelector(`[data-shepherd-step-id="${Shepherd.activeTour.currentStep.id}"] .shepherd-content`).appendChild(img);
               }
 
-              if (Shepherd.activeTour.steps.indexOf(Shepherd.activeTour.currentStep) === Shepherd.activeTour.steps.length - 1 && !hasNext) {
-                  return;
-              }
-
-              const counter = document.createElement('div')
-              counter.classList.add('steps-counter')
-              counter.textContent = `${Shepherd.activeTour.steps.indexOf(Shepherd.activeTour.currentStep) + 1} of ${Shepherd.activeTour.steps.length}`;
-              const footer = document.querySelector(`[data-shepherd-step-id="${Shepherd.activeTour.currentStep.id}"] .shepherd-footer`);
-              footer.insertBefore(
-                  counter,
-                  footer.querySelector(':last-child')
-              )
+              // if (Shepherd.activeTour.steps.indexOf(Shepherd.activeTour.currentStep) === Shepherd.activeTour.steps.length - 1 && !hasNext) {
+              //     return;
+              // }
+              // const counter = document.createElement('div')
+              // counter.classList.add('steps-counter')
+              // counter.textContent = `${Shepherd.activeTour.steps.indexOf(Shepherd.activeTour.currentStep) + 1} of ${Shepherd.activeTour.steps.length}`;
+              // const footer = document.querySelector(`[data-shepherd-step-id="${Shepherd.activeTour.currentStep.id}"] .shepherd-footer`);
+              // footer.insertBefore(
+              //     counter,
+              //     footer.querySelector(':last-child')
+              // )
           }
       },
       id: 'step-<%= key %>',
@@ -78,9 +77,15 @@
           { text: '<%= t('tours.later') %>', action: tour.cancel, classes: 'close close-link' },
         <% elsif index < steps.size - 1 || next_tour.present? %>
           { text: '<%= t('tours.skip') %>', action: tour.cancel, classes: 'close close-link' },
-          { text: '<%= t('tours.continue') %>', action: tour.next }
+          { text: '<%= t('tours.continue') %>', action: tour.next },
+        <% elsif feedback %>
+          { text: '<%= t('tours.gotofeedback') %>', action: () => {
+                  tour.complete();
+                  $("#tour-feedback-modal").modal("show");
+              }
+          },
         <% else %>
-          { text: '<%= t('tours.done') %>', action: tour.complete }
+          { text: '<%= t('tours.done') %>', action: tour.complete },
         <% end %>
       <% else %>
         <% step['buttons'].each_with_index do |(key, button)| %>
@@ -130,3 +135,7 @@
   }
 
 </script>
+
+<% if feedback %>
+  <%= render "layouts/tours/feedback_modal", tour_controller_action: action_name, tour_controller_name: controller_name, tour_name: tour_name, feedback: feedback %>
+<% end %>

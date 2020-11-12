@@ -15,16 +15,21 @@ module TourHelper
              locals: { tour_name: to_render.first,
                       show_popup: show_popup,
                       steps: (!tours.empty? && tours[to_render.first]) ? tours[to_render.first]["steps"] : [],
-                      next_tour: further_tour(tours[to_render.first] || {}) })
+                      next_tour: further_tour(tours[to_render.first] || {}),
+                      tour_controller_action: action_name,
+                      tour_controller_name: controller_name,
+                      feedback: tours.dig(to_render.first, "feedback") })
     end
   end
 
   def finished_tours(controller = controller_name, action = action_name)
-    user_cookie(controller, action) ? JSON.parse(user_cookie(controller, action)) : []
+    db_tours = current_user ? TourHistory.where(user_id: current_user.id, controller_name: controller, action_name: action).map { |feedback| feedback.tour_name } : []
+    cookie_tours = (user_cookie(controller, action) ? JSON.parse(user_cookie(controller, action)) : [])
+    db_tours + cookie_tours
   end
 
   def finished?(tour_name, controller = controller_name, action = action_name)
-    user_cookie(controller, action) ? JSON.parse(user_cookie(controller, action)).include?(tour_name) : false
+    finished_tours(controller, action).include?(tour_name)
   end
 
   def show_tour?(tour_name, tour)
@@ -61,7 +66,6 @@ module TourHelper
 
   def next_tour_link(next_tour_path, controller_params_map)
     params = controller_params_map.map { |param_id, mapped_Id| [mapped_Id.to_sym, self.controller.params[param_id]] }.to_h
-    puts(params)
     next_tour_path.blank? ? nil : send(next_tour_path, params).to_s
   end
 

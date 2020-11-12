@@ -112,6 +112,7 @@ Rails.application.routes.draw do
   end
 
   resource :tour_histories, only: :create
+  resource :tour_feedbacks, only: :create
 
   get "errors/not_found"
   get "errors/unprocessable"

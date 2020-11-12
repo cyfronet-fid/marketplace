@@ -1,0 +1,39 @@
+= form_tag "/tour_feedbacks/", remote: true,
+  "data-action" => "ajax:success->tourfeedbackmodal#onPostSuccess ajax:error->tourfeedbackmodal#onPostError",
+  "data-controller" => "tourfeedbackmodal",
+  "data-target" => "tourfeedbackmodal.form" do
+  .row
+    .col-12.col-sm-4.image-col
+      = image_pack_tag "new-feature.png", class: "img-fluid"
+    .col-12.col-sm-8
+      .modal-header
+        %h2#tour-feedback-modal-title.modal-title
+          = feedback["title"]
+      #tour-feedback-modal-body.modal-body
+        - feedback["questions"].each do |question|
+          = render "layouts/tours/" + question["type"], name: question["name"], value: form[question["name"]] || "",
+          error: errors[question["name"]], label: question["label"]
+        = hidden_field_tag :tour_controller_name, tour_controller_name
+        = hidden_field_tag :tour_name, tour_name
+        = hidden_field_tag :tour_controller_action, tour_controller_action
+        .leave-feedback
+          .mb-1
+            Do you want to help us in development of the EOSC Portal?
+            Select the checkbox to be a part of our validation team.
+          .form-group.form-check
+            = check_box_tag :share, "yes", form["share"], class: "form-check-input",
+            "data-target": "tourfeedbackmodal.share", "data-action": "change->tourfeedbackmodal#share"
+            = label_tag :share, "Yes, I want to take part in the EOSC Portal design verification/validation"
+          - if !current_user
+            .form-group.feedback-email{ "data-target" => "tourfeedbackmodal.email", class: ("show" if form["share"]) }
+              = label_tag :email, "Email address"
+              = text_field_tag :email, form["email"], class: "form-control #{"is-invalid" if errors["email"]}",
+              placeholder: "email@domain", "data-controller": "clearerrors", "data-action": "click->clearerrors#change"
+              - if errors["email"]
+                .invalid-feedback.mb-4
+                  = errors["email"]
+      .modal-footer.border-top-0
+        = submit_tag "Send feedback", class: "btn btn-primary pl-5 pr-5 float-left"
+        %button#dismiss-btn.close.close-link.pl-3.pr-3{ type: "button", data: { dismiss: "modal" } }
+          %span
+            Cancel and end tour

@@ -1,0 +1,26 @@
+.tour-feedback{ "data-controller" => "tourfeedback", class: ("is-invalid" if error) }
+  = hidden_field_tag "content[#{name}]", value.blank? ? "2" : value, "data-target": "tourfeedback.input"
+  .feedback-labels
+    .feedback-label
+      Not Useful
+    .feedback-label
+      Neutral
+    .feedback-label
+      Very Useful
+
+  .feedback-rating
+    .feedback-point{ "data-action" => "click->tourfeedback#rate", "data-target" => "tourfeedback.point" }
+    .feedback-point{ "data-action" => "click->tourfeedback#rate", "data-target" => "tourfeedback.point" }
+    .feedback-point{ "data-action" => "click->tourfeedback#rate", "data-target" => "tourfeedback.point" }
+    .feedback-point{ "data-action" => "click->tourfeedback#rate", "data-target" => "tourfeedback.point" }
+    .feedback-point{ "data-action" => "click->tourfeedback#rate", "data-target" => "tourfeedback.point" }
+
+    .feedback-lines
+      .feedback-line{ "data-target" => "tourfeedback.line" }
+      .feedback-line{ "data-target" => "tourfeedback.line" }
+      .feedback-line{ "data-target" => "tourfeedback.line" }
+      .feedback-line{ "data-target" => "tourfeedback.line" }
+
+- if error
+  .invalid-feedback.mb-4
+    = error
