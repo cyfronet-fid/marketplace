@@ -3,6 +3,8 @@
 require "nori"
 
 class Jms::ManageMessage
+  class ResourceParseError < StandardError; end
+
   def initialize(message, eic_base_url, logger)
     @parser = Nori.new(strip_namespaces: true)
     @message = message
