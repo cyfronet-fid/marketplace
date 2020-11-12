@@ -25,6 +25,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Added missing `phone` field to contact forms (@goreck888)
 - `rake dev:prime` task (@goreck888)
+- Better parsing error handling in jms-subscriber (@goreck888)
 
 ### Security
 - Allow ssl secured connection in jms (@goreck888)
