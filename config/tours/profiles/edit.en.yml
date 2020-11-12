@@ -1,4 +1,22 @@
 intro2:
+  feedback:
+    title: Congratulations!
+    text: |-
+      You have completed the resource presentation tour guide.
+      We hope you like our new resource presentation layout and find the provided information useful.
+
+
+      **Please take a moment and tell us how do you like the new layout of this page?**
+    questions:
+      -
+        name: rating
+        type: rating
+        label:
+      -
+        name: comment
+        type: comment
+        label: Please also leave a comment on how we can improve it.
+
   previous:
     tour_name: "intro"
     action_name: "show"
@@ -21,8 +39,3 @@ intro2:
       attachTo:
         element: "[data-shepherd-tour-target='profile-submit']"
         placement: "right"
-    3:
-      title: Great job!
-      text: |-
-        You have completed basic tour! We hope you liked our short introduction and this functionality
-        will help you in your work.

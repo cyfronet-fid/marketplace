@@ -291,10 +291,13 @@ RSpec.feature "Service ordering" do
     end
 
     scenario "I can create new project on order summary view", js: true do
+      Capybara.page.current_window.resize_to("1600", "1024")
       service = create(:service)
       create(:offer, service: service)
 
       visit service_path(service)
+      # close shepherd's tour
+      click_on "I'll do it later"
 
       click_on "Access the resource"
       click_on "Next", match: :first
@@ -319,10 +322,14 @@ RSpec.feature "Service ordering" do
     end
 
     scenario "I will stay in project edit modal while trying to create empty project", js: true do
+      Capybara.page.current_window.resize_to("1600", "1024")
       service = create(:service)
       create(:offer, service: service)
 
       visit service_path(service)
+
+      # close shepherd's tour
+      click_on "I'll do it later"
 
       click_on "Access the resource"
       click_on "Next", match: :first
@@ -340,11 +347,15 @@ RSpec.feature "Service ordering" do
     end
 
     scenario "I can create new project for private company typology", js: true do
+      Capybara.page.current_window.resize_to("1600", "1024")
       service = create(:service)
       scientific_domain = create(:scientific_domain)
       create(:offer, service: service)
 
       visit service_path(service)
+
+      # close shepherd's tour
+      click_on "I'll do it later"
 
       click_on "Access the resource"
       click_on "Next", match: :first
@@ -397,11 +408,15 @@ RSpec.feature "Service ordering" do
       expect(page).to_not have_text("Voucher")
     end
 
-    scenario "Voucher ID input should be visible for voucher enabled service" do
+    scenario "Voucher ID input should be visible for voucher enabled service", js: true do
+      Capybara.page.current_window.resize_to("1600", "1024")
       service = create(:service)
       _offer = create(:offer, service: service, voucherable: true)
 
       visit service_path(service)
+
+      # close shepherd's tour
+      click_on "I'll do it later"
 
       click_on "Access the resource"
       click_on "Next", match: :first
@@ -418,9 +433,13 @@ RSpec.feature "Service ordering" do
     end
 
     scenario "Voucher ID input should not be visible if 'request voucher' radio is set", js: true do
+      Capybara.page.current_window.resize_to("1600", "1024")
       _offer = create(:offer, service: service, voucherable: true)
 
       visit service_path(service)
+
+      # close shepherd's tour
+      click_on "I'll do it later"
 
       click_on "Access the resource"
       click_on "Next", match: :first

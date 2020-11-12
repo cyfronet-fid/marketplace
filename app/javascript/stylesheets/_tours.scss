@@ -1,0 +1,115 @@
+$feedback-line-height: 7px;
+$rating-point-size: 30px;
+
+.feedback-modal {
+  .feedback-email {
+    display: none;
+
+    &.show {
+      display: block;
+    }
+  }
+}
+
+.leave-feedback {
+  background-color: $palette-solid-5;
+  padding: 10px;
+}
+
+.tour-feedback {
+  .feedback-rating {
+    height: 60px;
+    position: relative;
+
+    > .feedback-point {
+      border: 1px solid $palette-solid-30;
+      border-radius: 50%;
+      background-color: $white;
+      width: $rating-point-size;
+      height: $rating-point-size;
+      position: absolute;
+      cursor: pointer;
+      z-index: 1;
+
+      &.active {
+        background-color: $palette-yellow;
+      }
+
+      &:hover {
+        background-color: $palette-solid-20;
+      }
+
+      &:nth-child(1) {
+        left: 0;
+      }
+
+      &:nth-child(2) {
+        left: calc(25% - #{$rating-point-size / 6});
+      }
+
+      &:nth-child(3) {
+        left: calc(50% - #{$rating-point-size / 2});
+      }
+
+      &:nth-child(4) {
+        left: calc(75% - #{$rating-point-size / 6 * 5});
+      }
+
+      &:nth-child(5) {
+        left: calc(100% - #{$rating-point-size});
+      }
+    }
+  }
+
+  .feedback-lines {
+    display: inline-flex;
+    position: absolute;
+    top: #{$rating-point-size / 2 - $feedback-line-height / 2};
+    left: #{$rating-point-size / 2};
+    right: #{$rating-point-size / 2};
+
+    > .feedback-line {
+      height: $feedback-line-height;
+      width: 100%;
+      background-color: $palette-solid-10;
+
+      &.active {
+        background-color: $palette-yellow;
+      }
+    }
+  }
+
+  .feedback-labels {
+    display: flex;
+    width: 100%;
+    font-size: 12px;
+    margin-bottom: 10px;
+
+    > .feedback-label {
+      width: 100%;
+      text-align: center;
+
+      &:nth-child(1) {
+        text-align: left;
+      }
+
+      &:nth-child(3) {
+        text-align: right;
+      }
+    }
+  }
+
+  &.is-invalid {
+    .feedback-label {
+      color: $danger;
+    }
+
+    .feedback-lines > .feedback-line {
+      background-color: $danger;
+    }
+
+    .feedback-point {
+      border-color: $danger;
+    }
+  }
+}

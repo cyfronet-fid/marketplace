@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 
   private
     def welcome_popup
-      @show_popup = current_user&.show_welcome_popup
+      @show_popup = current_user&.show_welcome_popup || false
       if @show_popup
         current_user.update(show_welcome_popup: false)
       end

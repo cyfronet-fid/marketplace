@@ -7,6 +7,23 @@ service_details_intro:
     controller_params_map:
       service_id: id
 
+  feedback:
+    title: Great job!
+    text: |-
+      You have completed basic tour! We hope you liked our short introduction and this functionality
+      will help you in your work.
+
+      **Tell how about usefullness**
+    questions:
+      -
+        name: rating
+        type: rating
+        label:
+      -
+        name: comment
+        type: comment
+        label: Please also leave comment if needed
+
   steps:
     1:
       title: Main section
@@ -38,8 +55,3 @@ service_details_intro:
       attachTo:
         element: "[data-shepherd-tour-target='service-details-content']"
         placement: "top"
-    3:
-      title: Great job!
-      text: |-
-        You have completed basic tour! We hope you liked our short introduction and this functionality will
-        help you in your work.
