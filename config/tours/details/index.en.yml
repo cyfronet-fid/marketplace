@@ -8,12 +8,13 @@ service_details_intro:
       service_id: id
 
   feedback:
-    title: Great job!
+    title: Congratulations!
     text: |-
-      You have completed basic tour! We hope you liked our short introduction and this functionality
-      will help you in your work.
+      You have completed the resource presentation page tour guide. We hope you like our new resource presentation
+      layout and find the provided information useful.
 
-      **Tell how about usefullness**
+
+      **Please take a moment and tell us how do you like the new layout of this page?**
     questions:
       -
         name: rating
@@ -22,11 +23,11 @@ service_details_intro:
       -
         name: comment
         type: comment
-        label: Please also leave comment if needed
+        label: Please also leave a comment on how we can improve it
 
   steps:
     1:
-      title: Main section
+      title: Resource details
       text: |-
         The **Details** page will help you to get additional information about the resource.
         The details provided by resource providers during the EOSC Resource Onboarding
@@ -35,11 +36,8 @@ service_details_intro:
         element: "[data-shepherd-tour-target='service-details-tab']"
         placement: "top"
     2:
-      title: Main section
+      title: Resource details
       text: |-
-        If you don’t find the needed information here do not hesitate to use "Ask a question" link to ask for help.
-        Also, you can let the providers know that their descriptions may need to be more detailed.
-
         In this summary you will find:
 
         * Information about the resource **Classification**
@@ -52,6 +50,9 @@ service_details_intro:
         * Information about **Ordering methods**
         * **Financial** Information
 
+        If you don’t find the needed information here do not hesitate to use the '**Ask a question about this
+        resource**' link to ask for help. Also, consider letting the providers know in case you find some
+        information missing or inaccurate.
       attachTo:
         element: "[data-shepherd-tour-target='service-details-content']"
         placement: "top"

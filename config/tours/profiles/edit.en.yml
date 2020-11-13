@@ -2,11 +2,11 @@ intro2:
   feedback:
     title: Congratulations!
     text: |-
-      You have completed the resource presentation tour guide.
-      We hope you like our new resource presentation layout and find the provided information useful.
+      You have completed the user profile tour guide. We hope you like our new feature and find it 
+      useful.
 
 
-      **Please take a moment and tell us how do you like the new layout of this page?**
+      **Please take a moment and tell us how do you like the new functionalities provided with this page?**
     questions:
       -
         name: rating
