@@ -9,6 +9,20 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [3.1.0] 2020-11-13
+
+### Added
 - missing tests for comparison view (@goreck888)
 - missing tests for create/update default offer by create/update resource (@goreck888)
 - Default resource logo if not set (@goreck888)
@@ -19,10 +33,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Improved README readability and accessibility (@JanKapala, @wujuu)
 - Resource form fields sort similar as PC (@goreck888) 
 - missing `service` to `resource` texts in popups and messages (@goreck888) 
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Added missing `phone` field to contact forms (@goreck888)
