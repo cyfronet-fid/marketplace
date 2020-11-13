@@ -10,6 +10,8 @@
         %h2#tour-feedback-modal-title.modal-title
           = feedback["title"]
       #tour-feedback-modal-body.modal-body
+        = markdown(feedback["text"])
+        %br
         - feedback["questions"].each do |question|
           = render "layouts/tours/" + question["type"], name: question["name"], value: form[question["name"]] || "",
           error: errors[question["name"]], label: question["label"]
