@@ -21,16 +21,9 @@ service_about_intro:
     2:
       title: Main section
       text: |-
-        The **main section** of the resource presentation page highlights the most important information such as:
-
-        * Resource **name and logotype**
-        * Brief and descriptive **tagline**
-        * The list of the **resource providers**
-        * All the **necessary links** that will help you to access and use the resource
-        * **Access the resource** button navigating to the resource access guide
-        * Access to the **resource comparison**  functionality
-        * Access to the **question form**
-        * **Resource rating** score
+        The **main section** of the resource presentation page highlights the most important elements of the resource 
+        description such as the **name**, **logotype**, list of **providers** and all the **necessary links** you will 
+        need to access and use it.
 
       attachTo:
         element: "[data-shepherd-tour-target='service-box']"
@@ -38,7 +31,7 @@ service_about_intro:
     3:
       title: About
       text: |-
-        The section “About” allows to analyse the service offering
+        The section “About” allows to analyse the resource description 
         and choose the offer appropriate for the desired use case. You will find out about:
 
         * **A high-level description** in fairly non-technical terms of what the service does,
@@ -51,13 +44,13 @@ service_about_intro:
     4:
       title: Classification
       text: |-
-        This section describes how the resource is classified and who is it for. You will find out about:
+        This section describes how the resource has been classified by the provider and who is it for. You will find out about:
 
         * **Scientific Classification** - the branch of science / scientific discipline that the resource is related to
         * **Categorisation** - a position in a tree-like hierarchy of resources of the same type
-        * **Types of the users** that the resource is provided for
-        * **Locations** where the resource is offered
-        * **Languages** which are supported while the  resource is being delivered and used
+        * **Target users** - user groups the resource is provided for
+        * **Locations** where the resource is provided
+        * **Languages** supported while the resource is being delivered and used
 
       attachTo:
         element: "[data-shepherd-tour-target='service-classification']"
