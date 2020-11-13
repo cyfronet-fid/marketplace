@@ -17,6 +17,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Popular resources (@goreck888)
+- Displaying service details tour on project_item page (@goreck888)
 
 ### Security
 
