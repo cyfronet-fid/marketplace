@@ -17,9 +17,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- Services api (@goreck888)
 
 ### Security
+
+## [3.1.1] 2020-11-16
+
+### Fixed
+- Services api (@goreck888)
 
 ## [3.1.0] 2020-11-13
 
