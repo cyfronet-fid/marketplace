@@ -33,9 +33,15 @@ class Service::PcCreateOrUpdate
     if mapped_service.nil? && @is_active
       service = Service.new(service)
       save_logo(service, @eic_service["logo"])
-
-      if Service::Create.new(service).call
+      if service.valid?
+        if Service::Create.new(service).call
+          ServiceSource.create!(service_id: service.id, source_type: "eic", eid: @eid)
+        end
+      else
+        service.status = "errored"
+        service.save(validate: false)
         ServiceSource.create!(service_id: service.id, source_type: "eic", eid: @eid)
+
       end
       service
     elsif is_newer_update
