@@ -258,7 +258,7 @@ class Service < ApplicationRecord
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
   def self.popular(count)
-    order(popularity_ratio: :desc, name: :asc).limit(count)
+    where(status: [:published, :unverified]).includes(:providers).order(popularity_ratio: :desc, name: :asc).limit(count)
   end
 
   def main_category
