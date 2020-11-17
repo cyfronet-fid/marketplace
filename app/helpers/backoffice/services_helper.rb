@@ -5,6 +5,7 @@ module Backoffice::ServicesHelper
     "published" => "badge-success",
     "unverified" => "badge-warning",
     "draft" => "badge-error",
+    "errored" => "badge-error",
     "deleted" => "badge-error"
   }
 

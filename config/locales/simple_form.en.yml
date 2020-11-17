@@ -141,6 +141,8 @@ en:
           draft: "Draft"
           published: "Published"
           unverified: "Published as unverified"
+          errored: "Errored"
+          deleted: "Deleted"
     project_item:
         status:
           created: Created

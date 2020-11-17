@@ -33,6 +33,7 @@ class Service < ApplicationRecord
     published: "published",
     unverified: "unverified",
     draft: "draft",
+    errored: "errored",
     deleted: "deleted"
   }
 
