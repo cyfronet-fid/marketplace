@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Popular resources (@goreck888)
 
 ### Security
 
