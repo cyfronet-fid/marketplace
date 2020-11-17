@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Add and configure split gem (@goreck888)
+- Errored status for imported resources (@goreck888)
 
 ### Changed
 - Backoffice front-end mods (@jarekzet)
