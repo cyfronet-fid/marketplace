@@ -6,7 +6,7 @@ class Api::ServicesController < ActionController::API
             |s| { "Service Unique ID": s.id,
             "SERVICE_TYPE": "eu.eosc.portal.services.url",
             "CONTACT_EMAIL": s.public_contacts.map(&:email),
-            "SITENAME-SERVICEGROUP": s.title,
+            "SITENAME-SERVICEGROUP": s.name,
             "COUNTRY_NAME": s.geographical_availabilities,
             "URL": s.webpage_url } }
     render json: @json
