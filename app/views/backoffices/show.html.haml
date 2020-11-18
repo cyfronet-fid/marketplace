@@ -1,8 +1,27 @@
 - content_for :title, t(".title")
 - breadcrumb :backoffice_root
 
-%h1
-  Welcome to the backoffice
-%p
-  Please choose from top navigation what you want to manage.
-
+.row
+  .col-12.col-sm-7.backoffice-intro
+    %h1.mb-3
+      Welcome to the EOSC Portal Catalogue
+      %br
+      and Marketplace Backoffice
+    %p
+      EOSC Portal Catalogue and Marketplace Backoffice is a powerful tool to manage resources and resource offers.
+    %p
+      Each provider joining EOSC can use EOSC Portal Catalogue and Marketplace Backoffice, benefitting of a dedicated
+      view.
+    %p
+      Thanks to our tool you are able to track and manage information about resources, the resource offers
+      description, resource categories, scientific disciplines, providers, and platforms.
+  .col-12.col-sm-5.backoffice-intro-pic
+    = image_pack_tag "addfirstservice.png"
+.row
+  .col-12
+    .btn-toolbar
+      %a.btn.btn-primary.d-block.mt-4{ href: "/backoffice/services" } Owned resources
+      %a.btn.btn-primary.d-block.mt-4.ml-3{ href: "/backoffice/scientific_domains" } Scientific domains
+      %a.btn.btn-primary.d-block.mt-4.ml-3{ href: "/backoffice/categories" } Categories
+      %a.btn.btn-primary.d-block.mt-4.ml-3{ href: "/backoffice/providers" } Providers
+      %a.btn.btn-primary.d-block.mt-4.ml-3{ href: "/backoffice/platforms" } Platforms

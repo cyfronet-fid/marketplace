@@ -9,7 +9,7 @@
                   new_backoffice_category_path,
                   class: "btn btn-primary"
       .clearfix
-  %ul.list-group.backoffice-list.mt-5.mb-
+  %ul.list-group.backoffice-list.mt-3.mb-
     - ancestry_tree(@categories).each do |record|
       - category = record[1]
       %li.list-group-item

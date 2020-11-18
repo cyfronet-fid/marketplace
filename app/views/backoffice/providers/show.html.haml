@@ -2,21 +2,21 @@
 - breadcrumb :backoffice_provider, @provider
 
 %h1= @provider.name
-
-- unless @provider.sources.empty?
-  %h3 External Sources:
-  %ul
-    - @provider.sources.each do |source|
-      %li "#{source.source_type}: #{source.eid}"
-
-.btn-group
-  - if policy([:backoffice, @provider]).edit?
-    = link_to "Edit",
-              edit_backoffice_provider_path(@provider),
-              class: "btn btn-warning"
-  - if policy([:backoffice, @provider]).destroy?
-    = link_to "Delete",
-              backoffice_provider_path(@provider),
-              method: :delete,
-              data: { confirm: "Are you sure you want to remove this provider" },
-              class: "btn btn-danger"
+.service-box.shadow-sm.p-4.mt-3.backoffice-form
+  - unless @provider.sources.empty?
+    %h3 External Sources:
+    %ul
+      - @provider.sources.each do |source|
+        %li "#{source.source_type}: #{source.eid}"
+  %hr.bottom-hr.mt-5.mb-4
+  .btn-group
+    - if policy([:backoffice, @provider]).edit?
+      = link_to "Edit",
+                edit_backoffice_provider_path(@provider),
+                class: "btn btn-primary"
+    - if policy([:backoffice, @provider]).destroy?
+      = link_to "Delete",
+                backoffice_provider_path(@provider),
+                method: :delete,
+                data: { confirm: "Are you sure you want to remove this provider" },
+                class: "btn btn-danger"
