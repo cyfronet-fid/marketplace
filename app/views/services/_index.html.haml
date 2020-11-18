@@ -13,10 +13,11 @@
         = render "services/active_filters", category: category, active_filters: active_filters
         = render "services/pagination", sort_options: sort_options, services: services
 
-      = render partial: "service", collection: services,
-        locals: { highlights: highlights,
-                  category: category,
-                  offers: offers,
-                  comparison_enabled: comparison_enabled,
-                  remote: true }
-  = render "services/paginate", services: services
+      %p
+        = render partial: "service", collection: services,
+          locals: { highlights: highlights,
+                    category: category,
+                    offers: offers,
+                    comparison_enabled: comparison_enabled,
+                    remote: true }
+        = render "services/paginate", services: services

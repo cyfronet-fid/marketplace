@@ -47,4 +47,8 @@ module ApplicationHelper
   def yield_content!(content_key)
     view_flow.content.delete(content_key)
   end
+
+  def placeholder(variant, text = "Placeholder - link to about", link = about_path)
+    render "layouts/placeholder", text: text, link: link, variant: variant
+  end
 end

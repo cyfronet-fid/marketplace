@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Add and configure split gem (@goreck888)
 
 ### Changed
 - Backoffice front-end mods (@jarekzet)
@@ -38,7 +39,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - Improved README readability and accessibility (@JanKapala, @wujuu)
 - Resource form fields sort similar as PC (@goreck888) 
-- missing `service` to `resource` texts in popups and messages (@goreck888) 
+- missing `service` to `resource` texts in popups and messages (@goreck888)
 
 ### Fixed
 - Added missing `phone` field to contact forms (@goreck888)

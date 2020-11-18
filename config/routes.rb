@@ -103,12 +103,14 @@ Rails.application.routes.draw do
     post "features/disable_modal"
     resources :lead_sections, except: :show
     resources :leads, except: :show
+    resource :ab_tests, only: :show
   end
 
-  # Sidekiq monitoring
+  # Sidekiq monitoring and split dashboard
   authenticate :user, ->(u) { u.admin? } do
     require "sidekiq/web"
     mount Sidekiq::Web => "/admin/sidekiq"
+    mount Split::Dashboard, at: "/admin/split"
   end
 
   resource :tour_histories, only: :create
@@ -134,6 +136,6 @@ Rails.application.routes.draw do
     get "designsystem/:file" => "designsystem#show",
       constraints: { file: %r{[^/\.]+} }
   end
-  mount Split::Dashboard, at: "split"
+
   root "home#index"
 end
