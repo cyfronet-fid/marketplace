@@ -7,7 +7,9 @@
     label_method: :first, value_method: :last, as: :select, include_blank: true
   = f.input :eid
 
-
-  .btn-group
-    = f.button :submit, class: "btn btn-success"
-    = back_link_to t("cancel"), category, prefix: :backoffice, class: "btn btn-secondary"
+  %hr.bottom-hr.mt-5.mb-4
+  .row.mt-5
+    .col-12
+      = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5"
+      %a.text-left.flex-grow-1.text-uppercase{ "href": "/backoffice/categories" }
+        Cancel and back to previous page

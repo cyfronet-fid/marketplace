@@ -1,5 +1,8 @@
 - content_for :title, t(".title")
 - breadcrumb :backoffice_category_edit, @category
 
-%h2= t(".title")
-= render "form", category: @category
+.container
+  %h1= t(".title")
+  .container
+    .row.service-box.shadow-sm.p-4.mt-3.backoffice-form
+      = render "form", category: @category
