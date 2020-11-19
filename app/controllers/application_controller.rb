@@ -17,10 +17,14 @@ class ApplicationController < ActionController::Base
                   alert: not_authorized_message(exception)
   end
 
+  def tour_disabled
+    false
+  end
+
   private
     def welcome_popup
       @show_popup = current_user&.show_welcome_popup || false
-      if @show_popup
+      if @show_popup && !tour_disabled
         current_user.update(show_welcome_popup: false)
       end
     end

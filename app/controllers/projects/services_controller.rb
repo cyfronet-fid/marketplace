@@ -17,6 +17,10 @@ class Projects::ServicesController < ApplicationController
     authorize(@project_item)
   end
 
+  def tour_disabled
+    true
+  end
+
   private
     def load_projects
       @projects = policy_scope(Project).order(:name)
