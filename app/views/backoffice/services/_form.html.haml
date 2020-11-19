@@ -1,420 +1,482 @@
-= simple_form_for [:backoffice, service], html: { "data-controller" => "service",
-                                                  "data-action" => "submit->service#onSubmit" }  do |f|
+= simple_form_for [:backoffice, service],
+  html: { "data-controller" => "service", "data-target": "service.form",
+  "data-disabled": service.upstream_id.present? }  do |f|
   = f.error_notification
   .row
-    .col-12.col-md-4
-      = f.input :synchronized_at, as: :date_time_picker, disabled: true
-  .accordion
-    .card.shadow-sm.rounded
-      %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-        [:name, :resource_organisation, :providers, :webpage_url])),
-        data: { toggle: "collapse", target: "#basic" },
-        aria: { expanded: true, controls: "basic" } }
-        .card-header.text-left{ id: "basic-header" }
-          .row
-            .col-11
-              Basic
-            .col-1.text-right
-              .collapse-icon
-                %i.fas.fa-chevron-down
-                %i.fas.fa-chevron-up
-    .collapse{ id: "basic", "aria-labelledby": "basic-header",
-      class: ("show" unless collapsed?(service, [:name, :resource_organisation, :providers, :webpage_url])) }
-      .card-body
-        = f.input :name, disabled: cant_edit(:name)
-        = f.association :resource_organisation, disabled: cant_edit(:resource_organisation_id)
-        = f.association :providers, multiple: true, input_html: { data: { choice: true } },
-                        disabled: cant_edit([provider_ids: []])
-        = f.input :webpage_url, disabled: cant_edit(:webpage_url)
-    .card.shadow-sm.rounded
-      %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-        [:description, :tagline, :logo, :multimedia, :use_cases_url])),
-        data: { toggle: "collapse", target: "#marketing" },
-        aria: { expanded: true, controls: "marketing" } }
-        .card-header.text-left{ id: "marketing-header" }
-          .row
-            .col-11
-              Marketing
-            .col-1.text-right
-              .collapse-icon
-                %i.fas.fa-chevron-down
-                %i.fas.fa-chevron-up
-    .collapse{ id: "marketing", "aria-labelledby": "marketing-header",
-      class: ("show" unless collapsed?(service, [:description, :tagline, :logo, :multimedia, :use_cases_url])) }
-      .card-body
-        .service-description
-          = f.input :description, disabled: cant_edit(:description)
-        = f.input :tagline, disabled: cant_edit(:tagline)
-        = f.input :logo, disabled: cant_edit(:logo)
-        = f.input :multimedia, multiple: true, input_html: { class: "form-control" },
-          wrapper_html: { "data-target" => "service.multimedia" },
-          disabled: cant_edit([multimedia: []]), as: :array
-        = link_to_add_array_field("service", "multimedia")
-        = f.input :use_cases_url, multiple: true, as: :array, input_html: { class: "form-control text optional" },
-          wrapper_html: { "data-target" => "service.useCasesUrl" },
-          disabled: cant_edit([use_cases_url: []])
-        = link_to_add_array_field("service", "use_cases_url")
-    .card.shadow-sm.rounded
-      %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-        [:scientific_domains, :pc_categories, :categories, :target_users, :access_types, :access_modes, :tag_list])),
-        data: { toggle: "collapse", target: "#classification" },
-        aria: { expanded: true, controls: "classification" } }
-        .card-header.text-left{ id: "classification-header" }
-          .row
-            .col-11
-              = _("Classification")
-            .col-1.text-right
-              .collapse-icon
-                %i.fas.fa-chevron-down
-                %i.fas.fa-chevron-up
-    .collapse{ id: "classification", "aria-labelledby": "classification-header",
-      class: ("show" unless collapsed?(service, [:scientific_domains, :pc_categories,
-                        :categories, :target_users, :access_types, :access_modes, :tag_list])) }
-      .card-body
-        = f.association :scientific_domains, input_html: { data: { choice: true } }, include_hidden: false,
-                        disabled: cant_edit([scientific_domain_ids: []]),
-                        collection: ScientificDomain.child_names.map { |name, sd| [name, sd.id] },
+    .col-12.col-md-2
+      .fixme{ "data-target": "service.fixme", "data-action": "scroll@window->service#onScroll" }
+        %ul.add-new-menu
+          %li
+            %a{ "href": "#basic", "data-toggle": "collapse" }= _("Basic")
+          %li
+            %a{ "href": "#marketing", "data-toggle": "collapse" }= _("Marketing")
+          %li
+            %a{ "href": "#classification", "data-toggle": "collapse" }= _("Classification")
+          %li
+            %a{ "href": "#availability", "data-toggle": "collapse" }= _("Availability")
+          %li
+            %a{ "href": "#location", "data-toggle": "collapse" }= _("Location")
+          %li
+            %a{ "href": "#contact", "data-toggle": "collapse" }= _("Contact")
+          %li
+            %a{ "href": "#maturity", "data-toggle": "collapse" }= _("Maturity")
+          %li
+            %a{ "href": "#dependencies", "data-toggle": "collapse" }= _("Dependencies")
+          %li
+            %a{ "href": "#attribution", "data-toggle": "collapse" }= _("Attribution")
+          %li
+            %a{ "href": "#management", "data-toggle": "collapse" }= _("Management")
+          %li
+            %a{ "href": "#order", "data-toggle": "collapse" }= _("Order")
+          %li
+            %a{ "href": "#financial", "data-toggle": "collapse" }= _("Financial")
+          %li
+            %a{ "href": "#other", "data-toggle": "collapse" }= _("Other")
+
+    .col-12.col-md-10
+
+      #accordion-form.accordion
+        .card.shadow-sm.rounded
+          %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:name, :resource_organisation, :providers, :webpage_url])),
+              data: { toggle: "collapse", target: "#basic" },
+              aria: { expanded: true, controls: "basic" } }
+            .card-header.text-left{ id: "basic-header" }
+              .row
+                .col-11
+                  = _("Basic")
+                .col-1.text-right
+                  .collapse-icon
+                    %i.fas.fa-chevron-down
+                    %i.fas.fa-chevron-up
+        .collapse{ id: "basic", "aria-labelledby": "basic-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:name, :resource_organisation, :providers, :webpage_url])) }
+          .card-body
+            = f.input :name, disabled: cant_edit(:name)
+            = f.association :resource_organisation, disabled: cant_edit(:resource_organisation_id)
+            = f.association :providers, multiple: true, input_html: { data: { choice: true } },
+                              disabled: cant_edit([provider_ids: []])
+            = f.input :webpage_url, disabled: cant_edit(:webpage_url)
+        .card.shadow-sm.rounded
+          %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:description, :tagline, :logo, :multimedia, :use_cases_url])),
+              data: { toggle: "collapse", target: "#marketing" },
+              aria: { expanded: true, controls: "marketing" } }
+            .card-header.text-left{ id: "marketing-header" }
+              .row
+                .col-11
+                  = _("Marketing")
+                .col-1.text-right
+                  .collapse-icon
+                    %i.fas.fa-chevron-down
+                    %i.fas.fa-chevron-up
+        .collapse{ id: "marketing", "aria-labelledby": "marketing-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:description, :tagline, :logo, :multimedia, :use_cases_url])) }
+          .card-body
+            .service-description
+              = f.input :description, disabled: cant_edit(:description)
+            = f.input :tagline, disabled: cant_edit(:tagline)
+            = f.input :logo, disabled: cant_edit(:logo)
+            = f.input :multimedia, multiple: true, input_html: { class: "form-control" },
+                wrapper_html: { "data-target" => "service.multimedia" },
+                disabled: cant_edit([multimedia: []]), as: :array
+            = link_to_add_array_field("service", "multimedia")
+            .mt-4
+              = f.input :use_cases_url, multiple: true, as: :array, input_html: { class: "form-control text optional" },
+                  wrapper_html: { "data-target" => "service.useCasesUrl" },
+                  disabled: cant_edit([use_cases_url: []])
+              = link_to_add_array_field("service", "use_cases_url")
+        .card.shadow-sm.rounded
+          %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:scientific_domains, :pc_categories, :categories, :target_users, :access_types,
+              :access_modes, :tag_list])),
+              data: { toggle: "collapse", target: "#classification" },
+              aria: { expanded: true, controls: "classification" } }
+            .card-header.text-left{ id: "classification-header" }
+              .row
+                .col-11
+                  = _("Classification")
+                .col-1.text-right
+                  .collapse-icon
+                    %i.fas.fa-chevron-down
+                    %i.fas.fa-chevron-up
+        .collapse{ id: "classification", "aria-labelledby": "classification-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:scientific_domains, :pc_categories,
+                              :categories, :target_users, :access_types, :access_modes, :tag_list])) }
+          .card-body
+            = f.association :scientific_domains, input_html: { data: { choice: true } }, include_hidden: false,
+                              disabled: cant_edit([scientific_domain_ids: []]),
+                              collection: ScientificDomain.child_names.map { |name, sd| [name, sd.id] },
+                              label_method: :first, value_method: :second
+            = f.association :pc_categories, multiple: true, input_html: { data: { choice: true } },
+                        disabled: cant_edit([pc_category_ids: []]),
+                        collection: Vocabulary.where(type: "PcCategory").child_names.map { |name, pcc| [name, pcc.id] },
                         label_method: :first, value_method: :second
-        = f.association :pc_categories, multiple: true, input_html: { data: { choice: true } },
-                  disabled: cant_edit([pc_category_ids: []]),
-                  collection: Vocabulary.where(type: "PcCategory").child_names.map { |name, pcc| [name, pcc.id] },
-                  label_method: :first, value_method: :second
-        = f.association :categories, multiple: true, input_html: { data: { choice: true } },
-                        disabled: cant_edit([category_ids: []])
-        = f.association :target_users,
-                  label: _("Dedicated For"),
-                  input_html: { data: { choice: true }, class: "target_users" },
-                  include_hidden: false,
-                  disabled: cant_edit([target_user_ids: []])
-        = f.association :access_types, input_html: { data: { choice: true } },
-                  disabled: cant_edit([access_type_ids: []])
-        = f.association :access_modes, input_html: { data: { choice: true } },
-                        disabled: cant_edit([access_mode_ids: []])
-        = f.input :tag_list, input_html: { value: service.tag_list.to_s }, disabled: cant_edit(:tag_list)
-    .card.shadow-sm.rounded
-      %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-        [:geographical_availabilities, :language_availability])),
-        data: { toggle: "collapse", target: "#availability" },
-        aria: { expanded: true, controls: "availability" } }
-        .card-header.text-left{ id: "availability-header" }
-          .row
-            .col-11
-              = _("Availability")
-            .col-1.text-right
-              .collapse-icon
-                %i.fas.fa-chevron-down
-                %i.fas.fa-chevron-up
-    .collapse{ id: "availability", "aria-labelledby": "availability-header",
-      class: ("show" unless collapsed?(service, [:geographical_availabilities, :language_availability])) }
-      .card-body
-        = f.input :geographical_availabilities, as: :select,
-          collection: Country.options.map { |c| [ c.name, "value" => c.alpha2 ] },
-          disabled: cant_edit([geographical_availabilities: []]),
-          input_html: { data: { choice: true },  "multiple" => "true" }
-        = f.input :language_availability, input_html: { multiple: true, data: { choice: true } }, include_hidden: false,
-        collection: I18nData.languages.map { |k, v| [v, k] }, disabled: cant_edit([language_availability: []])
-    .card.shadow-sm.rounded
-      %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-        [:resource_geographic_locations])),
-        data: { toggle: "collapse", target: "#location" },
-        aria: { expanded: true, controls: "location" } }
-        .card-header.text-left{ id: "location-header" }
-          .row
-            .col-11
-              = _("Location")
-            .col-1.text-right
-              .collapse-icon
-                %i.fas.fa-chevron-down
-                %i.fas.fa-chevron-up
-    .collapse{ id: "location", "aria-labelledby": "location-header",
-      class: ("show" unless collapsed?(service, [:resource_geographic_locations])) }
-      .card-body
-        = f.input :resource_geographic_locations, as: :select,
-          collection: Country.options.map { |c| [ c.name, "value" => c.alpha2 ] },
-          disabled: cant_edit([resource_geographic_locations: []]),
-          input_html: { data: { choice: true },  "multiple" => "true" }
+            = f.association :categories, multiple: true, input_html: { data: { choice: true } },
+                              disabled: cant_edit([category_ids: []])
+            = f.association :target_users,
+                        label: _("Dedicated For"),
+                        input_html: { data: { choice: true }, class: "target_users" },
+                        include_hidden: false,
+                        disabled: cant_edit([target_user_ids: []])
+            = f.association :access_types, input_html: { data: { choice: true } },
+                        disabled: cant_edit([access_type_ids: []])
+            = f.association :access_modes, input_html: { data: { choice: true } },
+                              disabled: cant_edit([access_mode_ids: []])
+            = f.input :tag_list, input_html: { value: service.tag_list.to_s }, disabled: cant_edit(:tag_list)
+        .card.shadow-sm.rounded
+          %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:geographical_availabilities, :language_availability])),
+              data: { toggle: "collapse", target: "#availability" },
+              aria: { expanded: true, controls: "availability" } }
+            .card-header.text-left{ id: "availability-header" }
+              .row
+                .col-11
+                  = _("Availability")
+                .col-1.text-right
+                  .collapse-icon
+                    %i.fas.fa-chevron-down
+                    %i.fas.fa-chevron-up
+        .collapse{ id: "availability", "aria-labelledby": "availability-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:geographical_availabilities, :language_availability])) }
+          .card-body
+            = f.input :geographical_availabilities, as: :select,
+                collection: Country.options.map { |c| [ c.name, "value" => c.alpha2 ] },
+                disabled: cant_edit([geographical_availabilities: []]),
+                input_html: { data: { choice: true },  "multiple" => "true" }
+            = f.input :language_availability, input_html: { multiple: true, data: { choice: true } },
+            include_hidden: false, collection: I18nData.languages.map { |k, v| [v, k] },
+            disabled: cant_edit([language_availability: []])
 
-    .card.shadow-sm.rounded
-      %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-        ["main_contact.first_name".to_sym, "main_contact.last_name".to_sym,
-        "main_contact.email".to_sym, "public_contacts.email".to_sym])),
-          data: { toggle: "collapse", target: "#contact" },
-          aria: { expanded: true, controls: "contact" } }
-        .card-header.text-left{ id: "contact-header" }
-          .row
-            .col-11
-              = _("Contact")
-            .col-1.text-right
-              .collapse-icon
-                %i.fas.fa-chevron-down
-                %i.fas.fa-chevron-up
-    .collapse{ id: "contact", "aria-labelledby": "contact-header",
-      class: ("show" unless collapsed?(service, ["main_contact.first_name".to_sym, "main_contact.last_name".to_sym,
-      "main_contact.email".to_sym, "public_contacts.email".to_sym])) }
-      .card-body
-        .row.service-contact-emails
-          .col-12.col-md-6
-            %h3
-              = _("Main Contact")
-            .contact
-              = f.fields_for :main_contact do |main_contact_form|
-                = main_contact_form.hidden_field :id
-                = main_contact_form.input :first_name
-                = main_contact_form.input :last_name
-                = main_contact_form.input :email
-                = main_contact_form.input :phone
-                = main_contact_form.input :organisation
-                = main_contact_form.input :position
-        .row.service-contact-emails{ "data-target": "service.publicContacts" }
-          .col-12.col-md-6
-            %h3
-              = _("Public contacts")
-            = f.fields_for :public_contacts, multiple: true, as: :array,
-              wrapper_html: { "data-target" => "service.publicContact" },
-              disabled: cant_edit([public_contacts: []]) do |public_contact_form|
-              = render "public_contact_fields", public_contact_form: public_contact_form
-            = link_to _("Add additional public contact"), "#", class: "btn btn-primary",
-              data: { "target": "service.addContact",
-              "action": "click->service#addContact",
-              "fields": f.fields_for(:public_contacts, PublicContact.new,
-              child_index: "new_field") { |public_contact_form| render "public_contact_fields",
-              public_contact_form: public_contact_form } }
-        .row.mt-5
-          .col-12.col-md-6
-            = f.input :helpdesk_email, input_html: { type: "text" }, disabled: cant_edit(:helpdesk_email)
-            = f.input :security_contact_email, input_html: { type: "text" },
-              disabled: cant_edit(:security_contact_email)
+        .card.shadow-sm.rounded
+          %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+                  [:resource_geographic_locations])),
+                  data: { toggle: "collapse", target: "#location" },
+                  aria: { expanded: true, controls: "location" } }
+            .card-header.text-left{ id: "contact-header" }
+              .row
+                .col-11
+                  = _("Location")
+                .col-1.text-right
+                  .collapse-icon
+                    %i.fas.fa-chevron-down
+                    %i.fas.fa-chevron-up
+        .collapse{ id: "location", "aria-labelledby": "location-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:resource_geographic_locations])) }
+          .card-body
+            = f.input :resource_geographic_locations, as: :select,
+                  collection: Country.options.map { |c| [ c.name, "value" => c.alpha2 ] },
+                  disabled: cant_edit([resource_geographic_locations: []]),
+                  input_html: { data: { choice: true },  "multiple" => "true" }
 
-    .card.shadow-sm.rounded
-      %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-        [:trl, :life_cycle_status, :certifications, :standards,
-        :open_source_technologies, :version, :last_update, :changelog])),
-          data: { toggle: "collapse", target: "#maturity" },
-          aria: { expanded: true, controls: "maturity" } }
-        .card-header.text-left{ id: "maturity-header" }
-          .row
-            .col-11
-              = _("Maturity")
-            .col-1.text-right
-              .collapse-icon
-                %i.fas.fa-chevron-down
-                %i.fas.fa-chevron-up
-    .collapse{ id: "maturity", "aria-labelledby": "maturity-header",
-      class: ("show" unless collapsed?(service, [:trl, :life_cycle_status, :certifications, :standards,
-                                                :open_source_technologies, :version,
-                                                :last_update, :changelog])) }
-      .card-body
-        = f.association :trl, input_html: { data: { choice: true } },
-                    disabled: cant_edit([trl_ids: []])
-        = f.association :life_cycle_status, input_html: { data: { choice: true } },
-                        disabled: cant_edit([life_cycle_status_ids: []])
-        = f.input :certifications, multiple: true, input_html: { class: "form-control text optional" },
-          wrapper_html: { "data-target" => "service.certifications" },
-          disabled: cant_edit([certifications: []]), as: :array
-        = link_to_add_array_field("service", "certifications")
-        = f.input :standards, multiple: true, input_html: { class: "form-control text optional" },
-          wrapper_html: { "data-target" => "service.standards" },
-          disabled: cant_edit([standards: []]), as: :array
-        = link_to_add_array_field("service", "standards")
-        = f.input :open_source_technologies, multiple: true, input_html: { class: "form-control text optional" },
-          wrapper_html: { "data-target" => "service.openSourceTechnologies" },
-          disabled: cant_edit([open_source_technologies: []]), as: :array
-        = link_to_add_array_field("service", "open_source_technologies")
-        = f.input :version, disabled: cant_edit(:version)
-        = f.input :last_update, as: :date_time_picker, disabled: cant_edit(:last_update)
+        .card.shadow-sm.rounded
+          %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              ["main_contact.first_name".to_sym, "main_contact.last_name".to_sym,
+              "main_contact.email".to_sym, "public_contacts.email".to_sym])),
+                data: { toggle: "collapse", target: "#contact" },
+                aria: { expanded: true, controls: "contact" } }
+            .card-header.text-left{ id: "contact-header" }
+              .row
+                .col-11
+                  = _("Contact")
+                .col-1.text-right
+                  .collapse-icon
+                    %i.fas.fa-chevron-down
+                    %i.fas.fa-chevron-up
+        .collapse{ id: "contact", "aria-labelledby": "contact-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, ["main_contact.first_name".to_sym,
+            "main_contact.last_name".to_sym, "main_contact.email".to_sym, "public_contacts.email".to_sym])) }
+          .card-body
+            .row.service-contact-emails
+              .col-12
+                %h3
+                  = _("Main Contact")
+                .contact
+                  = f.fields_for :main_contact do |main_contact_form|
+                    = main_contact_form.hidden_field :id,
+                      disabled: service.upstream_id.present?
+                    = main_contact_form.input :first_name,
+                      disabled: service.upstream_id.present?
+                    = main_contact_form.input :last_name,
+                      disabled: service.upstream_id.present?
+                    = main_contact_form.input :email,
+                      disabled: service.upstream_id.present?
+                    = main_contact_form.input :phone,
+                      disabled: service.upstream_id.present?
+                    = main_contact_form.input :organisation,
+                      disabled: service.upstream_id.present?
+                    = main_contact_form.input :position,
+                      disabled: service.upstream_id.present?
+            .row.service-contact-emails{ "data-target": "service.publicContacts" }
+              .col-12
+                %h3
+                  = _("Public contacts")
+                = f.fields_for :public_contacts, multiple: true, as: :array,
+                    wrapper_html: { "data-target" => "service.publicContact" } do |public_contact_form|
+                  = render "public_contact_fields", public_contact_form: public_contact_form, service: service
+                = link_to _("Add additional public contact"), "#", class: "btn btn-primary disablable",
+                    data: { "target": "service.addContact",
+                    "action": "click->service#addContact",
+                    "fields": f.fields_for(:public_contacts, PublicContact.new,
+                    child_index: "new_field") { |public_contact_form| render "public_contact_fields",
+                    public_contact_form: public_contact_form, service: service } }
+            .row.mt-5
+              .col-12
+                = f.input :helpdesk_email, input_html: { type: "text" }, disabled: cant_edit(:helpdesk_email)
+                = f.input :security_contact_email, input_html: { type: "text" },
+                    disabled: cant_edit(:security_contact_email)
 
-        .row.service-changelog
-          .col-12
-            = f.input :changelog, multiple: true, as: :array, disabled: cant_edit([changelog: []]),
-             wrapper_html: { "data-target" => "service.changelog" },
-             input_html: { class: "form-control text optional" }
+        .card.shadow-sm.rounded
+          %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:trl, :life_cycle_status, :certifications, :standards,
+              :open_source_technologies, :version, :last_update, :changelog])),
+                data: { toggle: "collapse", target: "#maturity" },
+                aria: { expanded: true, controls: "maturity" } }
+            .card-header.text-left{ id: "maturity-header" }
+              .row
+                .col-11
+                  = _("Maturity")
+                .col-1.text-right
+                  .collapse-icon
+                    %i.fas.fa-chevron-down
+                    %i.fas.fa-chevron-up
+        .collapse{ id: "maturity", "aria-labelledby": "maturity-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:trl, :life_cycle_status, :certifications, :standards,
+                                                      :open_source_technologies, :version,
+                                                      :last_update, :changelog])) }
+          .card-body
+            = f.association :trl, input_html: { data: { choice: true } },
+                          disabled: cant_edit([trl_ids: []])
+            = f.association :life_cycle_status, input_html: { data: { choice: true } },
+                              disabled: cant_edit([life_cycle_status_ids: []])
+            = f.input :certifications, multiple: true, input_html: { class: "form-control text optional" },
+                wrapper_html: { "data-target" => "service.certifications" },
+                disabled: cant_edit([certifications: []]), as: :array
+            = link_to_add_array_field("service", "certifications")
+            .mt-4
+              = f.input :standards, multiple: true, input_html: { class: "form-control text optional" },
+                  wrapper_html: { "data-target" => "service.standards" },
+                  disabled: cant_edit([standards: []]), as: :array
+              = link_to_add_array_field("service", "standards")
+            .mt-4
+              = f.input :open_source_technologies, multiple: true, input_html: { class: "form-control text optional" },
+                  wrapper_html: { "data-target" => "service.openSourceTechnologies" },
+                  disabled: cant_edit([open_source_technologies: []]), as: :array
+              = link_to_add_array_field("service", "open_source_technologies")
+            .mt-4
+              = f.input :version, disabled: cant_edit(:version)
+            = f.input :last_update, as: :date_time_picker, disabled: cant_edit(:last_update)
 
+            .row.service-changelog
+              .col-12
+                = f.input :changelog, multiple: true, as: :array, disabled: cant_edit([changelog: []]),
+                   wrapper_html: { "data-target" => "service.changelog" },
+                   input_html: { class: "form-control text optional" }
             = link_to_add_array_field("service", "changelog")
 
-    .card.shadow-sm.rounded
-      %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-        [:required_services, :related_services, :related_platforms, :platforms])),
-          data: { toggle: "collapse", target: "#dependencies" },
-          aria: { expanded: true, controls: "dependencies" } }
-        .card-header.text-left{ id: "dependencies-header" }
-          .row
-            .col-11
-              = _("Dependencies")
-            .col-1.text-right
-              .collapse-icon
-                %i.fas.fa-chevron-down
-                %i.fas.fa-chevron-up
-    .collapse{ id: "dependencies", "aria-labelledby": "dependencies-header",
-      class: ("show" unless collapsed?(service, [:required_services, :related_services,
-                                                :related_platforms, :platforms])) }
-      .card-body
-        = f.association :required_services, multiple: true, input_html: { data: { choice: true } }
+        .card.shadow-sm.rounded
+          %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:required_services, :related_services, :related_platforms, :platforms])),
+                data: { toggle: "collapse", target: "#dependencies" },
+                aria: { expanded: true, controls: "dependencies" } }
+            .card-header.text-left{ id: "dependencies-header" }
+              .row
+                .col-11
+                  = _("Dependencies")
+                .col-1.text-right
+                  .collapse-icon
+                    %i.fas.fa-chevron-down
+                    %i.fas.fa-chevron-up
+        .collapse{ id: "dependencies", "aria-labelledby": "dependencies-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:required_services, :related_services,
+                                                      :related_platforms, :platforms])) }
+          .card-body
+            = f.association :required_services, multiple: true, input_html: { data: { choice: true } },
+            disabled: cant_edit(:required_services)
 
-        = f.association :related_services, multiple: true, input_html: { data: { choice: true } }
+            = f.association :related_services, multiple: true, input_html: { data: { choice: true } },
+            disabled: cant_edit(:related_services)
 
-        = f.association :platforms, label: _("Platforms (internal)"),
-                         multiple: true, input_html: { data: { choice: true } },
-                         disabled: cant_edit([platform_ids: []])
-        = f.input :related_platforms, label: _("Related platforms (PC data)"), multiple: true,
-          input_html: { class: "form-control" },
-          wrapper_html: { "data-target" => "service.relatedPlatforms" },
-          disabled: cant_edit([related_platforms: []]), as: :array
-        = link_to_add_array_field("service", "related_platforms")
+            = f.association :platforms, label: _("Platforms (internal)"),
+                               multiple: true, input_html: { data: { choice: true } },
+                               disabled: cant_edit([platform_ids: []])
+            = f.input :related_platforms, label: _("Related platforms (PC data)"), multiple: true,
+                input_html: { class: "form-control" },
+                wrapper_html: { "data-target" => "service.relatedPlatforms" },
+                disabled: cant_edit([related_platforms: []]), as: :array
+            = link_to_add_array_field("service", "related_platforms")
 
-    .card.shadow-sm.rounded
-      %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-        [:funding_bodies, :funding_programs, :grant_project_names])),
-        data: { toggle: "collapse", target: "#attribution" },
-        aria: { expanded: true, controls: "attribution" } }
-        .card-header.text-left{ id: "attribution-header" }
-          .row
-            .col-11
-              = _("Attribution")
-            .col-1.text-right
-              .collapse-icon
-                %i.fas.fa-chevron-down
-                %i.fas.fa-chevron-up
-    .collapse{ id: "attribution", "aria-labelledby": "attribution-header",
-      class: ("show" unless collapsed?(service, [:funding_bodies, :funding_programs, :grant_project_names])) }
-      .card-body
-        = f.association :funding_bodies, input_html: { data: { choice: true } },
-                    disabled: cant_edit([funding_body_ids: []])
-        = f.association :funding_programs, input_html: { data: { choice: true } },
-                        disabled: cant_edit([funding_program_ids: []])
-        .row
-          .col-12
-            = f.input :grant_project_names, input_html: { class: "form-control text optional" },
-              wrapper_html: { "data-target" => "service.grantProjectNames" },
-              disabled: cant_edit([grant_project_names: []]), as: :array
-            = link_to_add_array_field("service", "grant_project_names")
+        .card.shadow-sm.rounded
+          %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:funding_bodies, :funding_programs, :grant_project_names])),
+              data: { toggle: "collapse", target: "#attribution" },
+              aria: { expanded: true, controls: "attribution" } }
+            .card-header.text-left{ id: "attribution-header" }
+              .row
+                .col-11
+                  = _("Attribution")
+                .col-1.text-right
+                  .collapse-icon
+                    %i.fas.fa-chevron-down
+                    %i.fas.fa-chevron-up
+        .collapse{ id: "attribution", "aria-labelledby": "attribution-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:funding_bodies, :funding_programs, :grant_project_names])) }
+          .card-body
+            = f.association :funding_bodies, input_html: { data: { choice: true } },
+                          disabled: cant_edit([funding_body_ids: []])
+            = f.association :funding_programs, input_html: { data: { choice: true } },
+                              disabled: cant_edit([funding_program_ids: []])
+            .row
+              .col-12
+                = f.input :grant_project_names, input_html: { class: "form-control text optional" },
+                    wrapper_html: { "data-target" => "service.grantProjectNames" },
+                    disabled: cant_edit([grant_project_names: []]), as: :array
+                = link_to_add_array_field("service", "grant_project_names")
 
-    .card.shadow-sm.rounded
-      %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-        [:helpdesk_url, :manual_url, :terms_of_use_url, :privacy_policy_url,
-        :access_policies_url, :training_information_url, :status_monitoring_url, :maintenance_url])),
-        data: { toggle: "collapse", target: "#management" },
-        aria: { expanded: true, controls: "management" } }
-        .card-header.text-left{ id: "management-header" }
-          .row
-            .col-11
-              = _("Management")
-            .col-1.text-right
-              .collapse-icon
-                %i.fas.fa-chevron-down
-                %i.fas.fa-chevron-up
-    .collapse{ id: "management", "aria-labelledby": "management-header",
-      class: ("show" unless collapsed?(service, [:helpdesk_url, :manual_url, :terms_of_use_url, :privacy_policy_url,
-                                                :access_policies_url, :training_information_url,
-                                                :status_monitoring_url, :maintenance_url])) }
-      .card-body
-        = f.input :helpdesk_url, disabled: cant_edit(:helpdesk_url)
-        = f.input :manual_url, disabled: cant_edit(:manual_url)
-        = f.input :terms_of_use_url, disabled: cant_edit(:terms_of_use_url)
-        = f.input :privacy_policy_url, disabled: cant_edit(:privacy_policy_url)
-        = f.input :access_policies_url, disabled: cant_edit(:access_policies_url)
-        = f.input :sla_url, disabled: cant_edit(:sla_url)
-        = f.input :training_information_url, disabled: cant_edit(:training_information_url)
-        = f.input :status_monitoring_url, disabled: cant_edit(:status_monitoring_url)
-        = f.input :maintenance_url, disabled: cant_edit(:maintenance_url)
-    .card.shadow-sm.rounded
-      %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-        [:order_type, :order_url, :order_target])),
-        data: { toggle: "collapse", target: "#order" },
-        aria: { expanded: true, controls: "order" } }
-        .card-header.text-left{ id: "order-header" }
-          .row
-            .col-11
-              = _("Order")
-            .col-1.text-right
-              .collapse-icon
-                %i.fas.fa-chevron-down
-                %i.fas.fa-chevron-up
-    .collapse{ id: "order", "aria-labelledby": "order-header",
-      class: ("show" unless collapsed?(service, [:order_type, :order_url, :order_target])) }
-      .card-body
-        .row
-          .col-12.col-md-5
-            = f.input :order_type, collection: Service.order_types.keys.map(&:to_sym),
-              disabled: cant_edit(:order_type)
-        .row
-          .col-12.col-md-5
-            = f.input :order_url, disabled: cant_edit(:order_url)
-        .row
-          .col-12.col-md-5
-            = f.input :order_target, label: _("Resource Order Target"), disabled: cant_edit(:order_target)
-    .card.shadow-sm.rounded
-      %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-        [:payment_model_url, :pricing_url])),
-        data: { toggle: "collapse", target: "#financial" },
-        aria: { expanded: true, controls: "financial" } }
-        .card-header.text-left{ id: "financial-header" }
-          .row
-            .col-11
-              = _("Financial")
-            .col-1.text-right
-              .collapse-icon
-                %i.fas.fa-chevron-down
-                %i.fas.fa-chevron-up
-    .collapse{ id: "financial", "aria-labelledby": "financial-header",
-      class: ("show" unless collapsed?(service, [:payment_model_url, :pricing_url])) }
-      .card-body
-        = f.input :payment_model_url, disabled: cant_edit(:payment_model_url)
-        = f.input :pricing_url, disabled: cant_edit(:pricing_url)
+        .card.shadow-sm.rounded
+          %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:helpdesk_url, :manual_url, :terms_of_use_url, :privacy_policy_url,
+              :access_policies_url, :training_information_url, :status_monitoring_url, :maintenance_url])),
+              data: { toggle: "collapse", target: "#management" },
+              aria: { expanded: true, controls: "management" } }
+            .card-header.text-left{ id: "management-header" }
+              .row
+                .col-11
+                  = _("Management")
+                .col-1.text-right
+                  .collapse-icon
+                    %i.fas.fa-chevron-down
+                    %i.fas.fa-chevron-up
+        .collapse{ id: "management", "aria-labelledby": "management-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:helpdesk_url, :manual_url, :terms_of_use_url,
+                                                      :privacy_policy_url,
+                                                      :access_policies_url, :training_information_url,
+                                                      :status_monitoring_url, :maintenance_url])) }
+          .card-body
+            = f.input :helpdesk_url, disabled: cant_edit(:helpdesk_url)
+            = f.input :manual_url, disabled: cant_edit(:manual_url)
+            = f.input :terms_of_use_url, disabled: cant_edit(:terms_of_use_url)
+            = f.input :privacy_policy_url, disabled: cant_edit(:privacy_policy_url)
+            = f.input :access_policies_url, disabled: cant_edit(:access_policies_url)
+            = f.input :sla_url, disabled: cant_edit(:sla_url)
+            = f.input :training_information_url, disabled: cant_edit(:training_information_url)
+            = f.input :status_monitoring_url, disabled: cant_edit(:status_monitoring_url)
+            = f.input :maintenance_url, disabled: cant_edit(:maintenance_url)
+        .card.shadow-sm.rounded
+          %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:order_type, :order_url, :order_target])),
+              data: { toggle: "collapse", target: "#order" },
+              aria: { expanded: true, controls: "order" } }
+            .card-header.text-left{ id: "order-header" }
+              .row
+                .col-11
+                  = _("Order")
+                .col-1.text-right
+                  .collapse-icon
+                    %i.fas.fa-chevron-down
+                    %i.fas.fa-chevron-up
+        .collapse{ id: "order", "aria-labelledby": "order-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:order_type, :order_url, :order_target])) }
+          .card-body
+            .row
+              .col-12
+                = f.input :order_type, collection: Service.order_types.keys.map(&:to_sym),
+                    disabled: cant_edit(:order_type)
+            .row
+              .col-12
+                = f.input :order_url, disabled: cant_edit(:order_url)
+            .row
+              .col-12
+                = f.input :order_target, label: _("Resource Order Target"), disabled: cant_edit(:order_target)
+        .card.shadow-sm.rounded
+          %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:payment_model_url, :pricing_url])),
+              data: { toggle: "collapse", target: "#financial" },
+              aria: { expanded: true, controls: "financial" } }
+            .card-header.text-left{ id: "financial-header" }
+              .row
+                .col-11
+                  = _("Financial")
+                .col-1.text-right
+                  .collapse-icon
+                    %i.fas.fa-chevron-down
+                    %i.fas.fa-chevron-up
+        .collapse{ id: "financial", "aria-labelledby": "financial-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:payment_model_url, :pricing_url])) }
+          .card-body
+            = f.input :payment_model_url, disabled: cant_edit(:payment_model_url)
+            = f.input :pricing_url, disabled: cant_edit(:pricing_url)
 
-    .card.shadow-sm.rounded
-      %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-        [:owners, :restrictions, :activate_message, :activate_message, :upstream_id])),
-          data: { toggle: "collapse", target: "#other" },
-          aria: { expanded: true, controls: "other" } }
-        .card-header.text-left{ id: "other-header" }
-          .row
-            .col-11
-              = _("Other")
-            .col-1.text-right
-              .collapse-icon
-                %i.fas.fa-chevron-down
-                %i.fas.fa-chevron-up
-    .collapse{ id: "other", "aria-labelledby": "other-header",
-      class: ("show" unless collapsed?(service, [:owners, :restrictions, :activate_message,
-                                                :activate_message, :upstream_id])) }
-      .card-body
-        .row
-          .col-12.col-md-5
-            = f.association :owners, multiple: true, input_html: { data: { choice: true } },
-                            disabled: cant_edit([owner_ids: []])
-        .row
-          .col-12.col-md-5
-            = f.input :restrictions, disabled: cant_edit(:restrictions)
-        .row.service-activate-message
-          .col-12.col-md-10
-            = f.input :activate_message, disabled: cant_edit(:activate_message)
-        .row
-          .col-12.col-md-5
-            = f.input :upstream_id, collection: f.object.sources.reject { |source| source.id.nil? },
-                                    include_blank: "MP", label: _("Resource Upstream")
+        .card.shadow-sm.rounded
+          %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:owners, :restrictions, :activate_message, :activate_message, :upstream_id])),
+                data: { toggle: "collapse", target: "#other" },
+                aria: { expanded: true, controls: "other" } }
+            .card-header.text-left{ id: "other-header" }
+              .row
+                .col-11
+                  = _("Other")
+                .col-1.text-right
+                  .collapse-icon
+                    %i.fas.fa-chevron-down
+                    %i.fas.fa-chevron-up
+        .collapse{ id: "other", "aria-labelledby": "other-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:owners, :restrictions, :activate_message,
+                                                      :activate_message, :upstream_id])) }
+          .card-body
+            .row
+              .col-12
+                = f.association :owners, multiple: true, input_html: { data: { choice: true } },
+                                  disabled: cant_edit([owner_ids: []])
+            .row
+              .col-12
+                = f.input :restrictions, disabled: cant_edit(:restrictions)
+            .row.service-activate-message
+              .col-12
+                = f.input :activate_message, disabled: cant_edit(:activate_message)
+            .row
+              .col-12
+                = f.input :upstream_id, collection: f.object.sources.reject { |source| source.id.nil? },
+                                          include_blank: "MP", label: _("Resource Upstream")
 
-            %h3
-              = _("External Sources")
+                %h3.mt-4
+                  = _("External Sources")
 
-            = f.fields_for :sources do |sources_form|
-              = sources_form.hidden_field :id
-              = sources_form.input :source_type, collection: ServiceSource.source_types.keys.map(&:to_sym)
-              = sources_form.input :eid, label: _("eInfraCentral External ID")
-              - unless sources_form.object.id.nil?
-                = sources_form.check_box :_destroy
-                = sources_form.label :_destroy, _("Remove external source")
+                = f.fields_for :sources do |sources_form|
+                  = sources_form.hidden_field :id
+                  = sources_form.input :source_type, collection: ServiceSource.source_types.keys.map(&:to_sym)
+                  = sources_form.input :eid, label: _("eInfraCentral External ID")
+                  - unless sources_form.object.id.nil?
+                    = sources_form.check_box :_destroy
+                    = sources_form.label :_destroy, _("Remove external source")
+            .row
+              .col-12.col-md-4.mt-4
+                = f.input :synchronized_at, as: :date_time_picker, disabled: true
 
 
-  .invalid-feedback{ styles: "display:block" }
+      .invalid-feedback{ styles: "display:block" }
 
-  %hr.bottom-hr.mt-5.mb-4
+      %hr.bottom-hr.mt-5.mb-4
 
-  .row.mt-5
-    .col-12
-      = f.button :button, _("Preview"),
-        name: "commit",
-        value: "Preview",
-        class: "btn btn-primary pl-5 pr-5 mr-5"
-      = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5"
-      = back_link_to _("Cancel and back to previous page"), service, prefix: :backoffice,
-        class: "text-left flex-grow-1 text-uppercase"
+      .row.mt-5
+        .col-12
+          = f.button :button, _("Preview"),
+              name: "commit",
+              value: "Preview",
+              class: "btn btn-primary pl-5 pr-5 mr-5"
+          = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5"
+          = back_link_to _("Cancel and back to previous page"), service, prefix: :backoffice,
+              class: "text-left flex-grow-1 text-uppercase"

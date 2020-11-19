@@ -1,13 +1,13 @@
 %div{ "data-target": "service.publicContact" }
   .contact
-    = public_contact_form.hidden_field :id
-    = public_contact_form.input :first_name
-    = public_contact_form.input :last_name
-    = public_contact_form.input :email
-    = public_contact_form.input :phone
-    = public_contact_form.input :organisation
-    = public_contact_form.input :position
+    = public_contact_form.hidden_field :id, disabled: service.upstream_id.present?
+    = public_contact_form.input :first_name, disabled: service.upstream_id.present?
+    = public_contact_form.input :last_name, disabled: service.upstream_id.present?
+    = public_contact_form.input :email, disabled: service.upstream_id.present?
+    = public_contact_form.input :phone, disabled: service.upstream_id.present?
+    = public_contact_form.input :organisation, disabled: service.upstream_id.present?
+    = public_contact_form.input :position, disabled: service.upstream_id.present?
     = public_contact_form.hidden_field :_destroy, "data-target": "service.destroy"
     .text-right
       = link_to _("Delete contact"), "#", id: "public-contact-delete-#{public_contact_form.index}",
-      class: "btn btn-danger", "data-action": "click->service#removeContact"
+      class: "btn-sm disablable btn-danger", "data-action": "click->service#removeContact"
