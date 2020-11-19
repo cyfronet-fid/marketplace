@@ -1,6 +1,5 @@
 - content_for :title, _("New Resource")
 - breadcrumb :backoffice_service_new
 .container
-  %h2= _("New Resource")
+  %h1#title.mb-3= _("New Resource")
   = render "form", service: @service
-

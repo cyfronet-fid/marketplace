@@ -2,6 +2,11 @@ h1 {
   color: map-get($colors, major);
 }
 
+.disabled.btn-sm {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
 .underline-light {
   position: relative;
 

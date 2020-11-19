@@ -543,6 +543,11 @@ textarea:-ms-input-placeholder { /* IE 10+ */
         list-style: square;
       }
     }
+
+    .remove {
+      color: $white;
+      margin: 1rem 0;
+    }
   }
 
   .collapse,
@@ -2237,6 +2242,11 @@ label[data-multicheckbox].small {
 }
 
 .service-contact-emails {
+
+  .contact {
+    padding: 8px 0;
+  }
+
   input {
     width: 100%;
     height: auto !important;
@@ -4099,4 +4109,30 @@ textarea.form-control.is-invalid {
 .backoffice-form .simple_form {
   width: 100%;
 }
+
+.add-new-menu {
+  margin-top: 10px;
+
+  li {
+    margin-bottom: 6px;
+
+    a {
+      font-size: 16px;
+    }
+
+    a[aria-expanded="true"] {
+      font-weight: bold;
+    }
+  }
+}
+
+#service_logo {
+  border: none;
+}
 // scss-lint:enable all
+
+.fixme {
+  background: $white;
+  z-index: 100;
+  padding: 0 20px 20px 0;
+}
