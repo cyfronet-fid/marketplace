@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Errored status for imported resources (@goreck888)
 
 ### Changed
 

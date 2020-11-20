@@ -222,10 +222,21 @@ module Import
               unless logo.nil?
                 service.logo.attach(io: logo, filename: eid, content_type: logo_content_type)
               end
-              Service::Create.new(service).call
-              service_source = ServiceSource.create!(service_id: service.id, eid: eid, source_type: "eic")
-              if @default_upstream == :eic
-                service.update(upstream_id: service_source.id)
+              if service.valid?
+                Service::Create.new(service).call
+                service_source = ServiceSource.create!(service_id: service.id, eid: eid, source_type: "eic")
+                if @default_upstream == :eic
+                  service.update(upstream_id: service_source.id)
+                end
+              else
+                service.status = "errored"
+                service.save(validate: false)
+                service_source = ServiceSource.create!(service_id: service.id, eid: eid, source_type: "eic")
+                if @default_upstream == :eic
+                  service.upstream_id = service_source.id
+                  service.save(validate: false)
+                end
+                log "Service #{service.name}, eid: #{service.pid} saved with errors: #{service.errors.messages}"
               end
             end
           else
