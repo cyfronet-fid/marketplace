@@ -14,6 +14,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Mark i18 dynamic translations with `-# TODO: refactor dynamic translation` (@JanKapala)
 - Add configuration of PO files
 - Whitelabel gettext support (@wujuu)
+- Resources api tests (@goreck888)
 
 ### Changed
 - Replace i18 static translations in views with gettext (@JanKapala)
