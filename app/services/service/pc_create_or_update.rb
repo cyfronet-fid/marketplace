@@ -28,7 +28,7 @@ class Service::PcCreateOrUpdate
                                                      "service_sources.eid": @eid)
     source_id = mapped_service.nil? ? nil : ServiceSource.find_by("service_id": mapped_service.id, "source_type": "eic")&.id
 
-    is_newer_update = mapped_service&.synchronized_at.present? ? (@modified_at > mapped_service.synchronized_at) : true
+    is_newer_update = mapped_service&.synchronized_at.present? ? (@modified_at >= mapped_service.synchronized_at) : true
 
     if mapped_service.nil? && @is_active
       service = Service.new(service)

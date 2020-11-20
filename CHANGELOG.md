@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Popular resources (@goreck888)
 - Displaying service details tour on project_item page (@goreck888)
+- Change status of resource to draft via jms (@goreck888)
 
 ### Security
 
