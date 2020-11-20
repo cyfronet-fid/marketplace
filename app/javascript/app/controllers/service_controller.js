@@ -11,27 +11,34 @@ export default class extends Controller {
   }
 
   addNewArrayField(event) {
-    console.log(event)
-    event.preventDefault()
-    const lastArrayField = document.createElement("textarea")
-    const parent_name = event.target.dataset.wrapper
-    const parent = document.getElementsByClassName(parent_name)[0]
+    event.preventDefault();
+    const lastArrayField = document.createElement("textarea");
+    const parentName = event.target.dataset.wrapper;
+    const parent = document.getElementsByClassName(parentName)[0];
 
-    lastArrayField.name = event.target.dataset.name
-    lastArrayField.id = parent_name + "_" + (parent.children.length - 1)
-    lastArrayField.classList = event.target.dataset.class
+    lastArrayField.name = event.target.dataset.name;
+    lastArrayField.id = parentName + "_" + (parent.getElementsByTagName("textarea").length);
+    lastArrayField.classList = event.target.dataset.class;
 
-    parent.appendChild(lastArrayField)
+    const removeLink = document.createElement("a");
+
+    const linkText = document.createTextNode("Remove")
+
+    removeLink.id = "remove_" + lastArrayField.id;
+    removeLink.dataset.target= event.target;
+    removeLink.dataset.action= "click->service#removeField";
+    removeLink.dataset.value= lastArrayField.id;
+    removeLink.appendChild(linkText);
+    removeLink.classList.add("btn", "btn-danger");
+
+    parent.appendChild(lastArrayField);
+    parent.appendChild(removeLink);
   }
 
-  _clearEmptyFields(target){
-    for (let i = 0; i < target.childElementCount; i++) {
-      var el = target.children[i]
-      if(!el.value) {
-        target.children[i].remove()
-        i = i - 1
-      }
-    }
+  removeField(event) {
+    event.preventDefault();
+    document.getElementById(event.target.dataset.value).remove();
+    event.target.remove();
   }
 
   addContact(event){
@@ -44,17 +51,5 @@ export default class extends Controller {
     event.preventDefault();
     event.target.parentElement.previousElementSibling.value = "true";
     event.target.closest(".contact").classList.add("d-none");
-  }
-
-  onSubmit(event) {
-    this._clearEmptyFields(this.multimediaTarget)
-    this._clearEmptyFields(this.changelogTarget)
-    this._clearEmptyFields(this.certificationsTarget)
-    this._clearEmptyFields(this.standardsTarget)
-    this._clearEmptyFields(this.openSourceTechnologiesTarget)
-    this._clearEmptyFields(this.grantProjectNamesTarget)
-    this._clearEmptyFields(this.useCasesUrlTarget)
-    this._clearEmptyFields(this.relatedPlatformsTarget)
-    this.element.submit();
   }
 }

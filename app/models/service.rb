@@ -9,6 +9,8 @@ class Service < ApplicationRecord
 
   acts_as_taggable
 
+  before_save :remove_empty_array_fields
+
   has_one_attached :logo
 
   enum order_type: {
@@ -308,6 +310,15 @@ class Service < ApplicationRecord
 
 
   private
+    def remove_empty_array_fields
+      array_fields = [:multimedia, :use_cases_url, :certifications,
+                      :standards, :open_source_technologies,
+                      :changelog, :related_platforms, :grant_project_names]
+      array_fields.each do |field|
+        send(field).present? ? send(:"#{field}=", send(field).reject(&:blank?)) : send(:"#{field}=", [])
+      end
+    end
+
     def open_access_or_external?
       open_access? || external
     end
