@@ -9,22 +9,30 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
-- Add and configure split gem (@goreck888)
-- Errored status for imported resources (@goreck888)
 
 ### Changed
-- Backoffice front-end mods (@jarekzet)
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+
+### Security
+
+## [3.2.0] 2020-11-20
+
+### Added
+- Add and configure split gem (@goreck888)
+- Errored status for imported resources (@goreck888)
+
+### Changed
+- Backoffice front-end mods (@jarekzet)
+
+### Fixed
 - Popular resources (@goreck888)
 - Displaying service details tour on project_item page (@goreck888)
 - Change status of resource to draft via jms (@goreck888)
-
-### Security
 
 ## [3.1.1] 2020-11-16
 
