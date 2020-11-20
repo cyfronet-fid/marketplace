@@ -7,7 +7,7 @@ module TourHelper
     tours ||= Rails.configuration.tours.list["#{controller_name}.#{action_name}.#{I18n.default_locale}"]
     tours ||= {}
 
-    if !tours.empty? || show_popup
+    if !controller.tour_disabled && !tours.empty? || show_popup
       remaining = tours.keys - finished_tours
       to_show = tours.select { |t| show_tour?(t, tours[t]) }.keys
       to_render = to_show & remaining
