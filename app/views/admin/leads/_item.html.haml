@@ -6,7 +6,7 @@
       %i.fa.fa-pencil-alt
     = link_to admin_lead_path(item),
       method: :delete,
-      data: { confirm: "Are you sure you want to remove this lead section?" },
+      data: { confirm: _("Are you sure you want to remove this lead section?") },
       class: "delete-icon btn-sm" do
       %i.far.fa-trash-alt{ id: "delete-lead-#{item.id}" }
 

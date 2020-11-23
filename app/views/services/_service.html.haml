@@ -9,4 +9,5 @@
                 class: "form-check-input",
                 disabled: !checked?(service.slug) && comparison_enabled,
                 data: { "target": "comparison.checkbox", "action": "click->comparison#update" }
-        %span Add to comparison
+        %span
+          = _("Add to comparison")

@@ -1,5 +1,5 @@
-- content_for :title, t(".title")
+- content_for :title, _("New Category")
 - breadcrumb :backoffice_category_new, @category
 
-%h2= t(".title")
+%h2= _("New Category")
 = render "form", category: @category

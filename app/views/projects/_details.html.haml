@@ -1,77 +1,98 @@
 - content_for :title, project.name
-%h3 Project details
+%h3
+  = _("Project details")
 %dl
-  %dt Project name
+  %dt
+    = _("Project name")
   %dd= project.name
 
-  %dt Email
+  %dt
+    = _("Email")
   %dd= link_to project.email, "mailto:#{project.email}"
 
   - if project.project_website_url?
-    %dt Project website url
+    %dt
+      = _("Project website url")
     %dd= project.project_website_url
 
   - if project.private_company?
-    %dt Company name
+    %dt
+      = _("Company name")
     %dd= project.company_name
 
 
-%h3 Customer details
+%h3
+  = _("Customer details")
 %dl
 
-  %dt Customer Typology
+  %dt
+    = _("Customer Typology")
   %dd= t "projects.customer_typology.#{project.customer_typology || "none"}"
 
   - if project.research?
-    %dt User group name
+    %dt
+      = _("User group name")
     %dd= project.user_group_name
 
   - if project.single_user_or_community?
-    %dt Organization
+    %dt
+      = _("Organization")
     %dd= project.organization
 
   - if project.department?
-    %dt Department
+    %dt
+      = _("Department")
     %dd= project.department
 
   - if project.single_user_or_private_company?
-    %dt Origin country
+    %dt
+      = _("Origin country")
     %dd= project.country_of_origin
 
   - if project.webpage?
-    %dt Webpage
+    %dt
+      = _("Webpage")
     %dd= project.webpage
 
   - if project.scientific_domains .present?
-    %dt Scientific Domains
+    %dt
+      = _("Scientific Domains")
   - project.scientific_domains .each do |area|
     %dd= area.name
 
   - if project.research?
-    %dt User group name
+    %dt
+      = _("User group name")
     %dd= project.user_group_name
 
   - if project.project?
-    %dt Project name
+    %dt
+      = _("Project name")
     %dd= project.project_name
 
   - if project.project_website_url?
-    %dt Project website url
+    %dt
+      = _("Project website url")
     %dd= project.project_website_url
 
   - if project.company_website_url?
-    %dt Company website url
+    %dt
+      = _("Company website url")
     %dd= project.company_website_url
 
   - unless project.single_user? || project.countries_of_partnership.blank?
-    %dt Collaboration countries
+    %dt
+      = _("Collaboration countries")
     %dd= project.countries_of_partnership&.join(", ")
 
-%h3 Usage
+%h3
+  = _("Usage")
 %dl
-  %dt Reason to request access to the EOSC resources
+  %dt
+    = _("Reason to request access to the EOSC resources")
   %dd= project.reason_for_access
 
   - if project.additional_information?
-    %dt Additional information
+    %dt
+      = _("Additional information")
     %dd= project.additional_information

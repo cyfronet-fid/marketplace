@@ -1,26 +1,33 @@
 %dl
-  %dt Resource name:
+  %dt
+    = _("Resource name") + ":"
   %dd= link_to project_item.service.name, project_item.service
 - if project_item.service.offers_count > 1
   %dl
-    %dt Resource offer:
+    %dt
+      = _("Resource offer") + ":"
     %dd= project_item.name
 %dl
+  -# TODO: refactor dynamic translation
   %dt= t("project_items.service.label.#{map_view_to_order_type(project_item)}")
   %dd= l project_item.created_at, format: :short
 %dl
-  %dt Resource access:
+  %dt
+    = _("Resource access") + ":"
+  -# TODO: refactor dynamic translation
   %dd{ "data-toggle" => "tootltip",
   "title" => "#{t("project_items.order_type.#{project_item.order_type}.tooltip")}" }
     = t("project_items.order_type.#{project_item.order_type}.title")
 %dl
   %dt
-    Project name:
+    = _("Project name") + ":"
   %dd= link_to project.name, project
 - if project_item.service.sla_url.present?
   %dl
-    %dt SLA:
-    %dd= link_to "Service Level Agreement", project_item.service.sla_url
+    %dt
+      = _("SLA") + ":"
+    %dd= link_to _("Service Level Agreement"), project_item.service.sla_url
 %dl
-  %dt Providers:
+  %dt
+    = _("Providers") + ":"
   %dd= service_providers_list(project_item)

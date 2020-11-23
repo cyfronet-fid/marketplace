@@ -4,4 +4,5 @@
       - statuses.reverse_each do |status|
         = render "statuses/status", status: status
     - else
-      %p Conversation not started yet.
+      %p
+        = _("Conversation not started yet.")

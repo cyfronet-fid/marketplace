@@ -4,13 +4,18 @@
       .col-12.col-lg-4.pl-0.pt-2.voucher-title
         %i.fas.fa-ticket-alt.fa-3x.d-inline
         .d-inline
-          %span.text-uppercase.mb-3 Marketplace
-          %span.big Vouchers
+          %span.text-uppercase.mb-3
+            = _("Marketplace")
+          %span.big
+            = _("Vouchers")
       .col-12.col-lg-7
         %p.pt-3
-          Vouchers allow researchers to test different configurations or different resources to choose the best offer
-          for their needs.
+          -# haml-lint:disable MultilinePipe
+          = _("Vouchers allow researchers to test different configurations or different resources to choose the " + |
+              "best offer for their needs.") |
+          -# haml-lint:enable MultilinePipe
 - if policy(service).offers_show?
-  %h2.mb-4.mt-5.font-weight-normal Resource offers
+  %h2.mb-4.mt-5.font-weight-normal
+    = _("Resource offers")
   .row
     = render partial: "services/offer", collection: offers, as: :offer

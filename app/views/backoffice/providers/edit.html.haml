@@ -1,8 +1,8 @@
-- content_for :title, t(".title")
+- content_for :title, _("Edit Provider")
 - breadcrumb :backoffice_provider_edit, @provider
 
 .container
-  %h1= t(".title")
+  %h1= _("Edit Provider")
   .container
     .row.service-box.shadow-sm.p-4.mt-3.backoffice-form
       = render "form", provider: @provider

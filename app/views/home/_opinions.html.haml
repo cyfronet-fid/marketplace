@@ -1,4 +1,5 @@
-%h2.home-title Recent opinions
+%h2.home-title
+  = _("Recent opinions")
 
 - if opinion
   %a.card-title{ href: "#{service_path(opinion.project_item.service)}" }
@@ -11,4 +12,4 @@
   .card-description
     = opinion.opinion
 - else
-  There are no reviews available.
+  = _("There are no reviews available.")

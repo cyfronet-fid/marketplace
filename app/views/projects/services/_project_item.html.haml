@@ -2,8 +2,9 @@
   = link_to project_item.service.name, project_service_path(project, project_item)
   .float-right.status
     - if project_item.closed?
+      -# TODO: refactor dynamic translation
       = t("project_items.status.#{project_item.status}")
     - elsif !project_item.orderable?
-      = link_to "Visit website", webpage(project_item)
+      = link_to _("Visit website"), webpage(project_item)
     - else
       = project_item_status(project_item)

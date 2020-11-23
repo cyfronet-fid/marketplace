@@ -1,7 +1,6 @@
-- content_for :title, t(".title")
+- content_for :title, _("Offer selection")
 %p.mb-4
-  To gain the access to the resource,
-  please select an offer that suits your needs best.
+  = _("To gain the access to the resource, please select an offer that suits your needs best.")
 
 = simple_form_for @step, url: service_offers_path(@service), method: :put,
   html: { id: "order-form", role: "form", class: "btn-group-toogle", data: { toogle: "buttons" } } do |f|

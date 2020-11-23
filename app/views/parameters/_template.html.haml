@@ -1,6 +1,7 @@
 .card.parameter-form
   .card-body
     .card-title
+      -# TODO: refactor dynamic translation
       = t("parameters.#{parameter.type}.title")
       .card-controls
         %a{ "data-action": "offer#remove" }

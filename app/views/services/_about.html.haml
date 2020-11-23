@@ -15,24 +15,30 @@
                     fields: group[:fields],
                     type: group[:type] || "",
                     nested: group[:nested] || ""
+          -# TODO: refactor dynamic translation (above)
       - if current_user&.executive?
-        %h5 Statistics
+        %h5
+          = _("Statistics")
         %ul.list-group
           %li.list-group-item
-            %span Total visits:
+            %span
+              = _("Total visits") + ":"
             %strong.text-dark= analytics[:views]
           %li.list-group-item
-            %span Total redirections:
+            %span
+              = _("Total redirections") + ":"
             %strong.text-dark= analytics[:redirects]
           %li.list-group-item
-            %span Total occurrences in project:
+            %span
+              = _("Total occurrences in project") + ":"
             %strong.text-dark= service.project_items_count
           - if service.offers.order_required.present?
             %li.list-group-item
-              %span Total orders:
+              %span
+                = _("Total orders") + ":"
               %strong.text-dark= service.project_items.order_required.size
 
       %a.more-details{ href: service_details_path(service), "data-shepherd-tour-target": "service-more-about" }
-        More about
+        = _("More about")
         = service.name
         %i.fas.fa-long-arrow-alt-right

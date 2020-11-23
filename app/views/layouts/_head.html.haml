@@ -5,7 +5,7 @@
   = meta_robots
   %title
     = "#{yield :title} - " if content_for?(:title)
-    EOSC Marketplace
+    = _("EOSC Marketplace")
   = csrf_meta_tags
   = csp_meta_tag
   = favicon_pack_tag "favicon.ico"

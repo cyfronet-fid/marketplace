@@ -1,8 +1,8 @@
-- content_for :title, t(".title")
+- content_for :title, _("Edit Scientific Domain")
 - breadcrumb :backoffice_scientific_domain_edit, @scientific_domain
 
 .container
-  %h1= t(".title")
+  %h1= _("Edit Scientific Domain")
   .container
     .row.service-box.shadow-sm.p-4.mt-3.backoffice-form
       = render "form", scientific_domain: @scientific_domain

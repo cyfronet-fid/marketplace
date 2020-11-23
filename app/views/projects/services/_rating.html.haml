@@ -1,10 +1,13 @@
 - if ratingable?
   %h2.mb-3
-    Your review
+    = _("Your review")
   .blue-row.form-inline.mb-3
     .d-inline.mr-4
       %i.fas.fa-star.fa-pull-left
-      = t("project_items.opinion.prompt")
-  = link_to "Review service",
+      -# haml-lint:disable MultilinePipe
+      = _("Thank you for using EOSC marketplace." + |
+        "To help us to improve, please share your experience so far.") |
+      -# haml-lint:enable MultilinePipe
+  = link_to _("Review service"),
       new_project_service_opinion_path(project, project_item),
       class: "btn btn-primary btn-sm"

@@ -6,7 +6,7 @@
         = link_to project.name, [project, :services],
           class: "nav-link #{"active" if project == current}"
         -# TODO: Commented since we don't have notification mechanism yet  .message  %i.comment
-= link_to "+ Create new project", new_project_path, class: "simple-link text-uppercase d-block mt-3"
+= link_to ("+ " + _("Create new project")), new_project_path, class: "simple-link text-uppercase d-block mt-3"
 
 - if projects.archived.any?
   %h5.mt-5.font-weight-bold.projects-title.text-uppercase My archived projects

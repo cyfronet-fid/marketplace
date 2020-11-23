@@ -62,7 +62,7 @@
         .card-header.text-left{ id: "classification-header" }
           .row
             .col-11
-              Classification
+              = _("Classification")
             .col-1.text-right
               .collapse-icon
                 %i.fas.fa-chevron-down
@@ -82,7 +82,7 @@
         = f.association :categories, multiple: true, input_html: { data: { choice: true } },
                         disabled: cant_edit([category_ids: []])
         = f.association :target_users,
-                  label: "Dedicated For",
+                  label: _("Dedicated For"),
                   input_html: { data: { choice: true }, class: "target_users" },
                   include_hidden: false,
                   disabled: cant_edit([target_user_ids: []])
@@ -99,7 +99,7 @@
         .card-header.text-left{ id: "availability-header" }
           .row
             .col-11
-              Availability
+              = _("Availability")
             .col-1.text-right
               .collapse-icon
                 %i.fas.fa-chevron-down
@@ -121,7 +121,7 @@
         .card-header.text-left{ id: "location-header" }
           .row
             .col-11
-              Location
+              = _("Location")
             .col-1.text-right
               .collapse-icon
                 %i.fas.fa-chevron-down
@@ -143,7 +143,7 @@
         .card-header.text-left{ id: "contact-header" }
           .row
             .col-11
-              Contact
+              = _("Contact")
             .col-1.text-right
               .collapse-icon
                 %i.fas.fa-chevron-down
@@ -154,7 +154,8 @@
       .card-body
         .row.service-contact-emails
           .col-12.col-md-6
-            %h3 Main Contact
+            %h3
+              = _("Main Contact")
             .contact
               = f.fields_for :main_contact do |main_contact_form|
                 = main_contact_form.hidden_field :id
@@ -166,12 +167,13 @@
                 = main_contact_form.input :position
         .row.service-contact-emails{ "data-target": "service.publicContacts" }
           .col-12.col-md-6
-            %h3 Public contacts
+            %h3
+              = _("Public contacts")
             = f.fields_for :public_contacts, multiple: true, as: :array,
               wrapper_html: { "data-target" => "service.publicContact" },
               disabled: cant_edit([public_contacts: []]) do |public_contact_form|
               = render "public_contact_fields", public_contact_form: public_contact_form
-            = link_to "Add additional public contact", "#", class: "btn btn-primary",
+            = link_to _("Add additional public contact"), "#", class: "btn btn-primary",
               data: { "target": "service.addContact",
               "action": "click->service#addContact",
               "fields": f.fields_for(:public_contacts, PublicContact.new,
@@ -192,7 +194,7 @@
         .card-header.text-left{ id: "maturity-header" }
           .row
             .col-11
-              Maturity
+              = _("Maturity")
             .col-1.text-right
               .collapse-icon
                 %i.fas.fa-chevron-down
@@ -237,7 +239,7 @@
         .card-header.text-left{ id: "dependencies-header" }
           .row
             .col-11
-              Dependencies
+              = _("Dependencies")
             .col-1.text-right
               .collapse-icon
                 %i.fas.fa-chevron-down
@@ -250,10 +252,10 @@
 
         = f.association :related_services, multiple: true, input_html: { data: { choice: true } }
 
-        = f.association :platforms, label: "Platforms (internal)",
+        = f.association :platforms, label: _("Platforms (internal)"),
                          multiple: true, input_html: { data: { choice: true } },
                          disabled: cant_edit([platform_ids: []])
-        = f.input :related_platforms, label: "Related platforms (PC data)", multiple: true,
+        = f.input :related_platforms, label: _("Related platforms (PC data)"), multiple: true,
           input_html: { class: "form-control" },
           wrapper_html: { "data-target" => "service.relatedPlatforms" },
           disabled: cant_edit([related_platforms: []]), as: :array
@@ -267,7 +269,7 @@
         .card-header.text-left{ id: "attribution-header" }
           .row
             .col-11
-              Attribution
+              = _("Attribution")
             .col-1.text-right
               .collapse-icon
                 %i.fas.fa-chevron-down
@@ -295,7 +297,7 @@
         .card-header.text-left{ id: "management-header" }
           .row
             .col-11
-              Management
+              = _("Management")
             .col-1.text-right
               .collapse-icon
                 %i.fas.fa-chevron-down
@@ -322,7 +324,7 @@
         .card-header.text-left{ id: "order-header" }
           .row
             .col-11
-              Order
+              = _("Order")
             .col-1.text-right
               .collapse-icon
                 %i.fas.fa-chevron-down
@@ -339,7 +341,7 @@
             = f.input :order_url, disabled: cant_edit(:order_url)
         .row
           .col-12.col-md-5
-            = f.input :order_target, label: "Resource Order Target", disabled: cant_edit(:order_target)
+            = f.input :order_target, label: _("Resource Order Target"), disabled: cant_edit(:order_target)
     .card.shadow-sm.rounded
       %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
         [:payment_model_url, :pricing_url])),
@@ -348,7 +350,7 @@
         .card-header.text-left{ id: "financial-header" }
           .row
             .col-11
-              Financial
+              = _("Financial")
             .col-1.text-right
               .collapse-icon
                 %i.fas.fa-chevron-down
@@ -367,7 +369,7 @@
         .card-header.text-left{ id: "other-header" }
           .row
             .col-11
-              Other
+              = _("Other")
             .col-1.text-right
               .collapse-icon
                 %i.fas.fa-chevron-down
@@ -389,17 +391,18 @@
         .row
           .col-12.col-md-5
             = f.input :upstream_id, collection: f.object.sources.reject { |source| source.id.nil? },
-                                    include_blank: "MP", label: "Resource Upstream"
+                                    include_blank: "MP", label: _("Resource Upstream")
 
-            %h3 External Sources
+            %h3
+              = _("External Sources")
 
             = f.fields_for :sources do |sources_form|
               = sources_form.hidden_field :id
               = sources_form.input :source_type, collection: ServiceSource.source_types.keys.map(&:to_sym)
-              = sources_form.input :eid, label: "eInfraCentral External ID"
+              = sources_form.input :eid, label: _("eInfraCentral External ID")
               - unless sources_form.object.id.nil?
                 = sources_form.check_box :_destroy
-                = sources_form.label :_destroy, "Remove external source"
+                = sources_form.label :_destroy, _("Remove external source")
 
 
   .invalid-feedback{ styles: "display:block" }
@@ -408,10 +411,10 @@
 
   .row.mt-5
     .col-12
-      = f.button :button, "Preview",
+      = f.button :button, _("Preview"),
         name: "commit",
         value: "Preview",
         class: "btn btn-primary pl-5 pr-5 mr-5"
       = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5"
-      = back_link_to "Cancel and back to previous page", service, prefix: :backoffice,
+      = back_link_to _("Cancel and back to previous page"), service, prefix: :backoffice,
         class: "text-left flex-grow-1 text-uppercase"

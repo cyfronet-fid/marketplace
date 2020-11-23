@@ -1,6 +1,6 @@
 %li.step-progress-item.current.ml-5
   .time.x-small
-    = time_ago_in_words(message.created_at) + " ago"
+    = time_ago_in_words(message.created_at) + " " + _("ago")
 
   .ml-4
     %p.frame{ class: ("edited" if message.edited?) }= message.message
