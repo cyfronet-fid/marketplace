@@ -2,7 +2,8 @@
   .row
     .col-12.col-md-5.profile-edit{ "data-shepherd-tour-target": "profile-additional-information" }
       .bordered-header
-        %h3 Additional information
+        %h3
+          = _("Additional information")
 
       = f.association :categories, multiple: true, include_hidden: false,
       input_html: { data: { choice: true } }
@@ -10,9 +11,11 @@
       input_html: { data: { choice: true } }
     .col-12.col-md-5.profile-edit.ml-auto
       .bordered-header
-        %h3 Email notifications
+        %h3
+          = _("Email notifications")
 
-      %h5.mb-4 Keep me regularly informed on all our updates.
+      %h5.mb-4
+        = _("Keep me regularly informed on all our updates.")
       = f.input :categories_updates, as: :boolean, include_hidden: false
       = f.input :scientific_domains_updates, as: :boolean, include_hidden: false
 
@@ -22,11 +25,14 @@
     .col-12.col-md-7
       = f.button :submit, method: :patch, class: "btn btn-primary pl-5 pr-5 mr-5",
         "data-shepherd-tour-target": "profile-submit"
-      = link_to "Cancel and back to previous page", profile_path,
+      = link_to _("Cancel and back to previous page"), profile_path,
         class: "text-left flex-grow-1 text-uppercase"
     .col-12.col-md-5.delete-info
       .delete-text
-        If you're no longer interested in sharing with us your data,
-        you can delete information connected to your profile by clicking the button
-      = link_to "Delete", profile_path(user), method: :delete, class: "btn-sm btn-danger",
-      data: { confirm: "Are you sure?" }
+        -# haml-lint:disable MultilinePipe
+        = _("If you're no longer interested in sharing with us your data, you can delete information connected to " + |
+            "your profile by clicking the button") |
+        -# haml-lint:enable MultilinePipe
+
+      = link_to _("Delete"), profile_path(user), method: :delete, class: "btn-sm btn-danger",
+      data: { confirm: _("Are you sure?") }

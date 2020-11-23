@@ -8,22 +8,22 @@
       %p.card-text= markdown(offer.description)
     .card-footer
       - if policy([:backoffice, offer]).edit?
-        = link_to "Edit",
+        = link_to _("Edit"),
                   edit_backoffice_service_offer_path(service, offer),
                   class: "edit-offer card-link"
       - if policy([:backoffice, offer]).destroy?
-        = link_to "Delete",
+        = link_to _("Delete"),
                   backoffice_service_offer_path(service, offer),
-                  method: :delete, data: { confirm: "Are you sure?" },
+                  method: :delete, data: { confirm: _("Are you sure?") },
                   class: "delete-offer card-link"
 
       - if policy([:backoffice, offer]).publish?
-        = link_to "Publish offer",
+        = link_to _("Publish offer"),
                   backoffice_service_offer_publish_path(service, offer),
                   method: :post,
                   class: "publish-offer card-link"
       - if policy([:backoffice, offer]).draft?
-        = link_to "Stop showing offer",
+        = link_to _("Stop showing offer"),
                   backoffice_service_offer_draft_path(service, offer),
                   method: :post,
                   class: "draft-offer card-link"

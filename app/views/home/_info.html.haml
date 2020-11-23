@@ -6,22 +6,26 @@
 .contentbox
   %div
     %p.contentbox__title
-      = t(".title")
+      = _("Welcome to the EOSC Portal Catalogue and Marketplace")
     %p.contentbox__lead
-      = t(".description")
+      -# haml-lint:disable MultilinePipe
+      = _("Integrated platform that allows easy access to lots of resources for various research domains along " + |
+          "with integrated data analytics tools. Browse by scientific domain, resource category or provider and, " + |
+          "if you need help, we are here for you!") |
+      -# haml-lint:enable MultilinePipe
 
     .intro-box-wrapper
       .intro-box
-        = t(".services.description")
+        = _("Find EOSC Resources that suit your use case yourself")
         = link_to services_path do
           %i.fas.fa-arrow-right
-          = t(".services.link")
+          = _("Browse through catalogue")
 
       .intro-box
-        =  t(".projects.description")
+        =  _("Describe your use case and get support from our experts")
         = link_to projects_path do
           %i.fas.fa-arrow-right
-          = t(".projects.link")
+          = _("Go to your projects")
 
   %aside
     = image_pack_tag "gfx_whole_illustation_desktop.png"

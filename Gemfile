@@ -31,6 +31,12 @@ gem "countries"
 gem "activestorage-validator"
 gem "image_processing", "~> 1.9.2"
 
+# translations
+gem "fast_gettext"
+gem "gettext_i18n_rails"
+gem "gettext", ">=3.0.2", require: false, group: :development
+gem "ruby_parser", require: false, group: :development
+
 # turbo-charged counter caches
 gem "counter_culture", "~> 2.0"
 
@@ -46,7 +52,6 @@ gem "omniauth_openid_connect"
 gem "pundit", "~> 2.0"
 gem "role_model"
 gem "recaptcha", require: "recaptcha/rails"
-gem "split", require: "split/dashboard"
 # Markdown
 gem "github-markup"
 gem "redcarpet"

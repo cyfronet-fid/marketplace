@@ -3,17 +3,19 @@
     %ul#my-tab.nav.nav-tabs.row.pl-3{ role: "tablist" }
       - if local_assigns[:preview]
         %li.nav-item
-          %a.nav-link.active.text-uppercase About
+          %a.nav-link.active.text-uppercase
+            = _("About")
         %li.nav-item
-          %a.nav-link.disabled.text-uppercase Reviews (#{service.service_opinion_count})
+          %a.nav-link.disabled.text-uppercase
+            = _("Reviews (%{ssoc})") % { ssoc: service.service_opinion_count }
       - else
         %li.nav-item
-          = link_to "About", service_path(service),
+          = link_to _("About"), service_path(service),
             class: "nav-link text-uppercase #{"active" if controller.controller_name == 'services'}", role: "tab"
         %li.nav-item{ "data-shepherd-tour-target": "service-details-tab" }
-          = link_to "Details", service_details_path(service),
+          = link_to _("Details"), service_details_path(service),
             class: "nav-link text-uppercase #{"active" if controller.controller_name == 'details'}", role: "tab"
         %li.nav-item
-          = link_to "Reviews (#{service.service_opinion_count})", service_opinions_path(service),
+          = link_to _("Reviews (%{ssoc})") % { ssoc: service.service_opinion_count }, service_opinions_path(service),
             class: "nav-link text-uppercase #{"active" if controller.controller_name == 'opinions'}", role: "tab"
 

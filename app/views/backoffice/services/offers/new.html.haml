@@ -1,8 +1,8 @@
-- content_for :title, t(".title")
+- content_for :title, _("Create new offer")
 - breadcrumb :backoffice_service_new
 .container
   .mb-4.pb-4.border-header
-    %h1= t(".title")
+    %h1= _("Create new offer")
 
   = render "form",
     service: @service,

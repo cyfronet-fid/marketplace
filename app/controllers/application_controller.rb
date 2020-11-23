@@ -7,8 +7,9 @@ class ApplicationController < ActionController::Base
   include Sentryable
   include Pundit
   include Devise::StoreLocation
+  include FastGettext::Translation
 
-  before_action :welcome_popup, :load_root_categories!, :report
+  before_action :welcome_popup, :load_root_categories!, :report, :set_locale, :set_gettext_locale
 
   protect_from_forgery
 
@@ -40,5 +41,19 @@ class ApplicationController < ActionController::Base
     def not_authorized_message(exception)
       policy_name = exception.policy.class.to_s.underscore
       I18n.t "#{policy_name}.#{exception.query}", scope: :pundit, default: :default
+    end
+
+    def set_locale
+      FastGettext.available_locales = ["en"]
+      FastGettext.text_domain = "marketplace"
+
+      FastGettext.locale = "en"
+      # #if you want automatic language detection:
+      #   - replace line `FastGettext.locale = "en"` with below lines:
+      #     FastGettext.set_locale(params[:locale] || session[:locale] || request.env['HTTP_ACCEPT_LANGUAGE'])
+      #     session[:locale] = I18n.locale = FastGettext.locale
+      #   - put specific language shortcut (for example "pl") to the `FastGettext.available_locales` array above
+      #   - put specific language shortcut (for example "pl") to the `FastGettext.default_available_locales`
+      #     in the file `config/initializers/fast_gettext.rb`
     end
 end

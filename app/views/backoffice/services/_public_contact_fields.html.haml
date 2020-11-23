@@ -9,5 +9,5 @@
     = public_contact_form.input :position
     = public_contact_form.hidden_field :_destroy, "data-target": "service.destroy"
     .text-right
-      = link_to "Delete contact", "#", id: "public-contact-delete-#{public_contact_form.index}",
+      = link_to _("Delete contact"), "#", id: "public-contact-delete-#{public_contact_form.index}",
       class: "btn btn-danger", "data-action": "click->service#removeContact"

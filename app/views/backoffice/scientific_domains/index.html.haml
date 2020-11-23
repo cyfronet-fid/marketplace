@@ -1,11 +1,11 @@
-- content_for :title, t(".title")
+- content_for :title, _("Scientific Domains")
 - breadcrumb :backoffice_scientific_domains
 .container
   %h1
-    Scientific Domains
+    = _("Scientific Domains")
     - if policy([:backoffice, ScientificDomain]).new?
       .float-right
-        = link_to t("backoffice.scientific_domains.new.link"),
+        = link_to _("Add new Scientific Domain"),
                   new_backoffice_scientific_domain_path,
                   class: "btn btn-primary"
       .clearfix
@@ -20,8 +20,8 @@
         - if policy([:backoffice, ra]).destroy?
           = link_to backoffice_scientific_domain_path(ra),
                 method: :delete,
-                data: { confirm: "Are you sure you want to remove this scientific domain?" },
+                data: { confirm: _("Are you sure you want to remove this scientific domain?") },
                 class: "delete-icon float-right" do
             %i.far.fa-trash-alt
         - if policy([:backoffice, ra]).edit?
-          = link_to "Edit", edit_backoffice_scientific_domain_path(ra), class: "btn-sm btn-warning float-right mr-4"
+          = link_to _("Edit"), edit_backoffice_scientific_domain_path(ra), class: "btn-sm btn-warning float-right mr-4"

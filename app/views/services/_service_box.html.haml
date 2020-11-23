@@ -10,12 +10,12 @@
   .card-footer.no-gutters.row.mb-2
     .col.x-small
       %span
-        Provided by:
+        = _("Provided by") + ":"
       %strong{ "data-toggle" => "tooltip", "title" => "#{ service.providers.map { |p| p.name }.join(", ") }" }
         #{service.providers.map { |p| p.name }.join(", ").truncate(26, separator: " ") }
     .col.x-small.no-gutters
       %span.text-right
-        Dedicated for:
+        = _("Dedicated for") + ":"
       %strong.text-right{ "data-toggle" => "tooltip",
                           "title" => "#{ service.target_users.map { |p| p.name }.join(", ")}" }
         #{service.target_users.map { |x| x.name }.join(", ").truncate(26, separator: " ")}

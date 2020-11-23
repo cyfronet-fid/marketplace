@@ -1,6 +1,7 @@
-- content_for :title, t(".title")
+- content_for :title, _("My projects")
 - breadcrumb :projects
 
 = render "projects/layout", project: @project, projects: @projects do
   .empty-project.container.shadow-sm
+    -# TODO: missing translation (no entry in original i18 locales)
     = render "project_description", button_label: t(".button_label.first")

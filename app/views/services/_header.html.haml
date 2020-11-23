@@ -29,15 +29,17 @@
                           class: "form-check-input",
                           disabled: !checked?(service.slug) && comparison_enabled,
                           data: { "target": "comparison.checkbox", "action": "click->comparison#update" }
-                  %span Add to comparison
+                  %span
+                    = _("Add to comparison")
   .col-12.col-lg-3.text-center.vertical-center
     .vertical-center-inner.access-type
       - if policy(service).order?
-        = link_to t(".order"),
+        = link_to _("Access the resource"),
                       service_offers_path(service),
                       class: "btn btn-primary d-block mb-3"
       %span.ordertype-label
         %i{ class: "ordertype #{order_type(service)}" }
+        -# TODO: refactor dynamic translation
         = t("offers.type.#{order_type(service)}")
 .row.service-links
   .col-12.col-lg-9.row

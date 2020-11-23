@@ -1,5 +1,5 @@
 :ruby
-  content_for :title, "Service comparison"
+  content_for :title, _("Service comparison")
   i = 3 - @services&.size
   breadcrumb :comparison
 .container
@@ -7,9 +7,9 @@
     %thead
       %tr
         %th{ colspan: 4 }
-          Comparison
+          = _("Comparison")
           %span.float-right.font-weight-light.text-uppercase
-            = link_to "Clear all", comparisons_path, method: :delete
+            = link_to _("Clear all"), comparisons_path, method: :delete
     %tbody
       %tr
         %th.title-col
@@ -28,37 +28,45 @@
               = service.description.truncate(80, separator: " ")
         - i.times do
           %td.title-col.empty.text-uppercase
-            = link_to "Add next resource", services_path
+            = link_to _("Add next resource"), services_path
       %tr
-        %th Providers
+        %th
+          = _("Providers")
         - @services.each do |service|
           %td= service.providers.map { |p| p.name }.join(", ")
       %tr.lightgrey-row
-        %th Resource order type
+        %th
+          = _("Resource order type")
         - @services.each do |service|
           %td
             %span{ "data-toggle": "tootltip",
                    "title": "#{t("project_items.order_type.#{order_type(service)}.tooltip")}" }
               = t("offers.type.#{order_type(service)}")
+              -# TODO: refactor dynamic translation (above)
       %tr
-        %th Scientific domain
+        %th
+          = _("Scientific domain")
         - @services.each do |service|
           %td= service.scientific_domains .map { |sd| sd.name }.join(", ")
       %tr.lightgrey-row
-        %th Dedicated for
+        %th
+          = _("Dedicated for")
         - @services.each do |service|
           %td= service.target_users.map { |tg| tg.name }.join(", ")
       %tr
-        %th Resource life cycle status
+        %th
+          = _("Resource life cycle status")
         - @services.each do |service|
           - if service.life_cycle_status.present?
             %td= service.life_cycle_status.first.name
       %tr.lightgrey-row
-        %th Geographical availabilities
+        %th
+          = _("Geographical availabilities")
         - @services.each do |service|
           %td= service.geographical_availabilities.join(", ")
       %tr
-        %th Languages
+        %th
+          = _("Languages")
         - @services.each do |service|
           %td
             %ul
@@ -66,7 +74,8 @@
               %li= I18nData.languages[language.upcase] || language
 
       %tr.lightgrey-row
-        %th Tags
+        %th
+          = _("Tags")
         - @services.each do |service|
           %td
             - service.tag_list.sort.each do |tag|

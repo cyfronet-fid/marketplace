@@ -6,7 +6,7 @@
   %p= @category.description
   %h2 eID:
   %p= @category.eid
-  %h2= @category.parent ? "Parent: #{@category.parent.name}" : "Root element"
+  %h2= @category.parent ? _("Parent: %{cpn}") % { cpn: @category.parent.name } : _("Root element")
   - if @category.logo.attached?
     = image_tag @category.logo
 
