@@ -1,54 +1,22 @@
 #opinions.tab-pane.container.pt-2.active{ "aria-labelledby": "opinions-tab", role: "tabpanel",
                                           "data-shepherd-tour-target": "service-details-content" }
   .row.pt-3
-    .col-12.col-lg-4
-      - Service::DETAIL_FIELDS_1.map do |group|
-        - if (!group[:clazz].present? && any_present?(service,
-                  *group[:fields])) || (group[:clazz] && service.send(group[:clazz]).present?)
-          .details-box{ class: ("special-box" if group[:name] == "dependencies") }
-            .details-header
-              -# TODO: refactor dynamic translation
-              %h5= t(".details.title.#{group[:name]}")
-            .details-content
-              %ul.list-group
-                = render "services/details/#{group[:template]}",
-                            service: service,
-                            fields: group[:fields],
-                            type: group[:type] || "single",
-                            clazz: group[:clazz] || "",
-                            nested: group[:nested] || "",
-                            with_desc: group[:with_desc] || false
-    .col-12.col-lg-4
-      - Service::DETAIL_FIELDS_2.map do |group|
-        - if (!group[:clazz].present? && any_present?(service,
-                  *group[:fields])) || (group[:clazz] && service.send(group[:clazz]).present?)
-          .details-box{ class: ("special-box" if group[:name] == "dependencies") }
-            .details-header
-              -# TODO: refactor dynamic translation
-              %h5= t(".details.title.#{group[:name]}")
-            .details-content
-              %ul.list-group
-                = render "services/details/#{group[:template]}",
-                            service: service,
-                            fields: group[:fields],
-                            type: group[:type] || "single",
-                            clazz: group[:clazz] || "",
-                            nested: group[:nested] || "",
-                            with_desc: group[:with_desc] || false
-    .col-12.col-lg-4
-      - Service::DETAIL_FIELDS_3.map do |group|
-        - if (!group[:clazz].present? && any_present?(service,
-                  *group[:fields])) || (group[:clazz] && service.send(group[:clazz]).present?)
-          .details-box{ class: ("special-box" if group[:name] == "dependencies") }
-            .details-header
-              -# TODO: refactor dynamic translation
-              %h5= t(".details.title.#{group[:name]}")
-            .details-content
-              %ul.list-group
-                = render "services/details/#{group[:template]}",
-                            service: service,
-                            fields: group[:fields],
-                            type: group[:type] || "single",
-                            clazz: group[:clazz] || "",
-                            nested: group[:nested] || "",
-                            with_desc: group[:with_desc] || false
+    - service_details_columns.each do |column|
+      %span{ class: ["col-#{details_column_width_sm(service_details_columns)}",
+                     "col-sm#{details_column_width_sm(service_details_columns)}",
+                     "col-md#{details_column_width_md(service_details_columns)}",
+                     "col-lg-#{details_column_width_lg(service_details_columns)}"] }
+        - column.map do |group|
+          - if display_detail?(group, service)
+            .details-box{ class: ("special-box" if group[:name] == "dependencies") }
+              .details-header
+                %h5= t(".details.title.#{group[:name]}")
+              .details-content
+                %ul.list-group
+                  = render "services/details/#{group[:template]}",
+                              service: service,
+                              fields: group[:fields],
+                              type: group[:type] || "single",
+                              clazz: group[:clazz] || "",
+                              nested: group[:nested] || "",
+                              with_desc: group[:with_desc] || false
