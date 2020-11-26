@@ -23,6 +23,7 @@ We will need:
     with [asdf-elasticsearch](https://github.com/asdf-community/asdf-elasticsearch) plugin.
   * [postgresql](https://www.postgresql.org)
   * [redis](https://redis.io)
+  * [yarn](https://classic.yarnpkg.com/en/docs/install#debian-stable)
 
 If you are using [asdf](https://github.com/asdf-vm/asdf) the easiest way to
 install required ruby, nodejs and elasticsearch version is to type
@@ -38,6 +39,7 @@ marketplace root directory.
 ### Setup
 Before running `./bin/setup` you need to:
   * create file `config/master.key` with appropriate content in order to make `config/credentials.yml.enc` decryptable.
+  * setup postgres <system_username> role with SUPERUSER and CREATEDB privileges (see [database section](#database))
   * run elasticsearch server in the background (described in the [section below](#elasticsearch))
 
 To set up the environment run `./bin/setup`. It will install bundler, foreman, 
@@ -65,14 +67,34 @@ If you need actual production data run:
 ```
 to seed the database with it.
 
+## Run
+To start web application in development mode (with auto refresh capability when
+css/js files change) use following command:
+
+```
+./bin/server
+```
+It uses foreman and start processes defined in `Procfile.dev`.
+Script also checks if [overmind](https://github.com/DarthSim/overmind)
+is present in the classpath and uses it instead of `foreman`.
+`overmind` is more advanced than `foreman` and plays nicely with e.g. `byebug`.
+
+> Currently there is a problem with stopping overmind process when sidekiq is
+> used in versions [2.1.1 and 2.1.0](https://github.com/DarthSim/overmind/issues/76) -
+> use `2.0.3` instead.
+
+By default application should start on [http://localhost:5000](). You can change
+port by setting [env variable](#environmental-variables) `PORT`. You also need to run 
+[elasticsearch](#elasticsearch) and [redis](#redis) in the background before starting the application server.
+
 ## Elasticsearch
 Elasticsearch is used for full text resource search.
 
-If you installed Elasticsearch using asdf, run this command in the marketplace root directory:
+If you installed elasticsearch using asdf, run this command in the marketplace root directory:
 ```
 elasticsearch --daemonize --pidfile <pidfile_path> 
 ```
-It will run Elasticsearch server in the background, on the default port (9200) 
+It will run elasticsearch server in the background, on the default port (9200) 
 and record the pid of the server to the <pidfile_path>.
 
 To shut down the server run:
@@ -82,7 +104,7 @@ pkill -F <pidfile_path>
 ... or just shut down your OS.
 
 
-Alternatively, you can install Elasticsearch on Debian/Ubuntu/Mint:
+Alternatively, you can install elasticsearch on Debian/Ubuntu/Mint:
 (but it doesn't always work, see below):
 ```
 sudo apt-get install elasticsearch
@@ -103,6 +125,15 @@ or you can also use `systemctl`, it shouldn't matter which one you use.
 -In order to inspect it you can use
  -[ElasticHQ](http://www.elastichq.org/gettingstarted.html) (plugin option is
  -quick and easy).
+
+## Redis
+
+Marketplace uses [redis](https://redis.io) server to run jobs in the background. 
+After installing it, run the server with:
+```
+redis-server
+```
+...which will start the server on default port (6379).
 
 ## JIRA
 
@@ -161,27 +192,6 @@ Note the space separating both scripts sources
 JIRA_COLLECTOR_SCRIPTS="https://jira.domain.com/s/xxx-CDN/xx/00/xxx/x.x.x.x/_/download/batch/com.atlassian.plugins.jquery:jquery/com.atlassian.plugins.jquery:jquery.js?collectorId=00000 https://jira.domain.com/s/xxx/xxx/0/xxx/x.x.x/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-UK&collectorId=yyyyy"
 ```
 
-## Run
-
-To start web application in development mode (with auto refresh capability when
-css/js files change) use following command:
-
-```
-./bin/server
-```
-It uses foreman and start processes defined in `Procfile.dev`.
-Script also checks if [overmind](https://github.com/DarthSim/overmind)
-is present in the classpath and uses it instead of `foreman`.
-`overmind` is more advanced than `foreman` and plays nicely with e.g. `byebug`.
-
-> Currently there is a problem with stopping overmind process when sidekiq is
-> used in versions [2.1.1 and 2.1.0](https://github.com/DarthSim/overmind/issues/76) -
-> use `2.0.3` instead.
-
-By default application should start on [http://localhost:5000](). You can change
-port by setting [env variable](#environmental-variables) `PORT`. You also need to run an instance of 
-[Elasticsearch server](#elasticsearch) in the background, before starting the application server.
-
 ## Sentry integration
 
 In production environment sentry integration can be turned on. To do so create
@@ -196,6 +206,7 @@ need to do to turn newrelic on production is to get `newrelic.yml` and put it
 into rails root directory.
 
 ## Environmental variables
+
 This project can be customized via numerous environmental variables.
 To make storing them a little easier `dotenv` gem has been employed.
 You can read documentation [here](https://github.com/bkeepers/dotenv).
@@ -279,6 +290,13 @@ Since this is only for development there is no security and template
 existence checks.
 
 ## Database
+
+To setup development and test databases, you need to have a proper postgres role defined:
+```
+<your_system_username>:~$ sudo -u postgres -i
+postgres:~$ psql
+postgres=# CREATE ROLE <your_system_username> PASSWORD <your_system_password> SUPERUSER CREATEDB LOGIN;
+```
 
 By default we are using pure rails database configuration in development and
 test environments (sockets and database login the same as your system login).
