@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add configuration of PO files
 - Whitelabel gettext support (@wujuu)
 - Resources api tests (@goreck888)
+- View components (@goreck888)
 
 ### Changed
 - Replace i18 static translations in views with gettext (@JanKapala)

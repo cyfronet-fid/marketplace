@@ -12,12 +12,8 @@
   %dt= t("project_items.service.label.#{map_view_to_order_type(project_item)}")
   %dd= l project_item.created_at, format: :short
 %dl
-  %dt
-    = _("Resource access") + ":"
-  -# TODO: refactor dynamic translation
-  %dd{ "data-toggle" => "tootltip",
-  "title" => "#{t("project_items.order_type.#{project_item.order_type}.tooltip")}" }
-    = t("project_items.order_type.#{project_item.order_type}.title")
+  %dt= _("Resource access") + ":"
+  = render Services::InlineOrderTypeComponent.new(:dd, project_item.order_type)
 %dl
   %dt
     = _("Project name") + ":"
