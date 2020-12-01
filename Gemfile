@@ -13,6 +13,7 @@ gem "nori"
 gem "sass-rails", ">= 6"
 gem "uglifier", ">= 1.3.0"
 gem "webpacker", "~> 4.0"
+gem "view_component", require: "view_component/engine"
 gem "haml-rails"
 gem "turbolinks", "~> 5", require: false
 

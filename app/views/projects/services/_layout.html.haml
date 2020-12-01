@@ -18,10 +18,8 @@
             -# TODO: refactor dynamic translation
             %span{ class: "status-#{project_item.status}" }= t("project_items.status.#{project_item.status}")
 
-        - elsif webpage(project_item).present?
-          = link_to t("common.#{map_view_to_order_type(project_item)}.link"), webpage(project_item),
-          class: "btn btn-primary float-right pl-3 pr-3", target: "_blank", title: "External link"
-          -# TODO: refactor dynamic translation (above)
+        = render Services::InlineOrderUrlComponent.new(offerable: project_item,
+          classes: "btn btn-primary float-right pl-3 pr-3")
     %ul.nav.nav-tabs.mt-4.pl-3.row.services-menu
       %li.nav-item
         = link_to _("Details"), project_service_path(project, project_item),

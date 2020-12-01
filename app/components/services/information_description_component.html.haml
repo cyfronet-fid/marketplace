@@ -1,0 +1,3 @@
+= render "components/services/information_description_component/#{@order_type}",
+  service_title: @service_title
+= render Services::InlineOrderUrlComponent.new(offerable: @offer)

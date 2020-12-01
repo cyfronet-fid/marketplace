@@ -39,10 +39,7 @@
           = _("Resource order type")
         - @services.each do |service|
           %td
-            %span{ "data-toggle": "tootltip",
-                   "title": "#{t("project_items.order_type.#{order_type(service)}.tooltip")}" }
-              = t("offers.type.#{order_type(service)}")
-              -# TODO: refactor dynamic translation (above)
+            = render Services::InlineOrderTypeComponent.new(:span, order_type(service))
       %tr
         %th
           = _("Scientific domain")
