@@ -135,7 +135,7 @@ RSpec.feature "Services in backoffice" do
 
       visit edit_backoffice_service_path(service)
 
-      click_on "Contact"
+      find_button("Contact").click
 
       fill_in "service_public_contacts_attributes_0_first_name", with: "Jane"
       fill_in "service_public_contacts_attributes_0_last_name", with: "Doe"
@@ -167,7 +167,7 @@ RSpec.feature "Services in backoffice" do
 
       visit edit_backoffice_service_path(service)
 
-      click_on "Contact"
+      find_button("Contact").click
 
       find("a", id: "public-contact-delete-0").click
       find("a", id: "public-contact-delete-1").click
@@ -363,7 +363,7 @@ RSpec.feature "Services in backoffice" do
 
       click_on "Edit"
 
-      click_on "Order"
+      find_button("Order").click
 
       select "open_access", from: "Order type"
       fill_in "Order url", with: "http://google.com"
@@ -570,32 +570,74 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
       click_on "Edit"
 
-      expect(page).to have_field "Logo", disabled: true
       expect(page).to have_field "Name", disabled: true
-      expect(page).to have_field "Tag list", disabled: false
+      expect(page).to have_field "Resource organisation", disabled: true
+      expect(page).to have_field "Logo", disabled: true
+      expect(page).to have_field "Tag list", disabled: true
       expect(page).to have_field "Description", disabled: true
+      expect(page).to have_field "Tagline", disabled: true
+      expect(page).to have_field "service_multimedia_0", disabled: true
+      expect(page).to have_field "service_use_cases_url_0", disabled: true
       expect(page).to have_field "Order type", disabled: true
+      expect(page).to have_field "Order url", disabled: true
       expect(page).to have_field "Categories", disabled: false
+      expect(page).to have_field "Pc categories", disabled: true
+      expect(page).to have_field "Access types", disabled: true
+      expect(page).to have_field "Access modes", disabled: true
       expect(page).to have_field "Providers", disabled: true
       expect(page).to have_field "Platforms", disabled: false
-      expect(page).to have_field "Scientific domains", disabled: false
-      expect(page).to have_field "Dedicated For", disabled: false
-      expect(page).to have_field "Funding bodies", disabled: false
-      expect(page).to have_field "Funding programs", disabled: false
+      expect(page).to have_field "service_main_contact_attributes_first_name", disabled: true
+      expect(page).to have_field "service_main_contact_attributes_last_name", disabled: true
+      expect(page).to have_field "service_main_contact_attributes_email", disabled: true
+      expect(page).to have_field "service_main_contact_attributes_phone", disabled: true
+      expect(page).to have_field "service_main_contact_attributes_organisation", disabled: true
+      expect(page).to have_field "service_main_contact_attributes_position", disabled: true
+      expect(page).to have_field "service_public_contacts_attributes_0_first_name", disabled: true
+      expect(page).to have_field "service_public_contacts_attributes_0_last_name", disabled: true
+      expect(page).to have_field "service_public_contacts_attributes_0_email", disabled: true
+      expect(page).to have_field "service_public_contacts_attributes_0_phone", disabled: true
+      expect(page).to have_field "service_public_contacts_attributes_0_organisation", disabled: true
+      expect(page).to have_field "service_public_contacts_attributes_0_position", disabled: true
+      expect(page).to have_field "Helpdesk email", disabled: true
+      expect(page).to have_field "Security contact email", disabled: true
+      expect(page).to have_field "Trl", disabled: true
+      expect(page).to have_field "Life cycle status", disabled: true
+      expect(page).to have_field "service_certifications_0", disabled: true
+      expect(page).to have_field "service_standards_0", disabled: true
+      expect(page).to have_field "service_open_source_technologies_0", disabled: true
+      expect(page).to have_field "Version", disabled: true
+      expect(page).to have_field "Last update", disabled: true
+      expect(page).to have_field "service_changelog_0", disabled: true
+      expect(page).to have_field "service_related_platforms_0", disabled: true
+      expect(page).to have_field "Required Resources", disabled: true
+      expect(page).to have_field "Related Resources", disabled: true
+      expect(page).to have_field "Scientific domains", disabled: true
+      expect(page).to have_field "Dedicated For", disabled: true
+      expect(page).to have_field "Funding bodies", disabled: true
+      expect(page).to have_field "Funding programs", disabled: true
+      expect(page).to have_field "service_grant_project_names_0", disabled: true
       expect(page).to have_field "Owners", disabled: false
       expect(page).to have_field "Resource Order Target", disabled: false
       expect(page).to have_field "Language availability", disabled: true
       expect(page).to have_field "Geographical availabilities", disabled: true
+      expect(page).to have_field "Resource geographic locations", disabled: true
       expect(page).to have_field "Terms of use url", disabled: true
       expect(page).to have_field "Access policies url", disabled: true
       expect(page).to have_field "Sla url", disabled: true
       expect(page).to have_field "Webpage url", disabled: true
       expect(page).to have_field "Manual url", disabled: true
       expect(page).to have_field "Helpdesk url", disabled: true
-      expect(page).to have_field "Helpdesk email", disabled: false
       expect(page).to have_field "Training information url", disabled: true
+      expect(page).to have_field "Status monitoring url", disabled: true
+      expect(page).to have_field "Status monitoring url", disabled: true
+      expect(page).to have_field "Maintenance url", disabled: true
+      expect(page).to have_field "Payment model url", disabled: true
+      expect(page).to have_field "Pricing url", disabled: true
       expect(page).to have_field "Restrictions", disabled: false
       expect(page).to have_field "Activate message", disabled: false
+      expect(page).to have_field "service_upstream_id", disabled: false
+      expect(page).to have_field "service_sources_attributes_0_eid", disabled: false
+      expect(page).to have_field "Synchronized at", disabled: true
     end
   end
 

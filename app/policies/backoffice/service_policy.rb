@@ -1,34 +1,16 @@
 # frozen_string_literal: true
 
 
-EIC_SOURCE_FIELDS = [
-  :logo,
-  :name,
-  :description,
-  :tagline,
-  [language_availability: []],
-  [geographical_availabilities: []],
-  [related_platforms: []],
-  [pc_category_ids: []],
-  :dedicated_for,
-  :terms_of_use_url,
-  :access_policies_url,
-  :sla_url,
-  :webpage_url,
-  :manual_url,
-  :helpdesk_url,
-  :training_information_url,
-  :status_monitoring_url,
-  :maintenance_url,
-  :order_url,
-  :payment_model_url,
-  :pricing_url,
-  :order_type,
-  [provider_ids: []],
-  :version,
-  [trl_ids: []],
-  [life_cycle_status_ids: []],
-  :resource_organisation_id
+MP_INTERNAL_FIELDS = [
+  [category_ids: []],
+  [platform_ids: []],
+  :order_target,
+  :restrictions,
+  :status,
+  :activate_message,
+  :upstream_id,
+  [owner_ids: []],
+  sources_attributes: [:id, :source_type, :eid, :_destroy]
 ]
 
 
@@ -45,10 +27,6 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       end
     end
   end
-
-  SOURCES_FIELDS = {
-      "eic" => EIC_SOURCE_FIELDS
-  }
 
   def index?
     service_portfolio_manager? || service_owner?
@@ -102,6 +80,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
 
   def permitted_attributes
     attrs = [
+      { sources_attributes: [:id, :source_type, :eid, :_destroy] },
       :name, :description,
       :tagline, :order_type,
       [provider_ids: []], [geographical_availabilities: []],
@@ -125,15 +104,14 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       [manual_related_service_ids: []],
       [owner_ids: []], :status, :upstream_id, :version,
       [life_cycle_status_ids: []], :resource_organisation_id,
-      main_contact_attributes: [:id, :first_name, :last_name, :email, :phone, :organisation, :position],
-      sources_attributes: [:id, :source_type, :eid, :_destroy],
-      public_contacts_attributes: [:id, :first_name, :last_name, :email, :phone, :organisation, :position, :_destroy]
+      { main_contact_attributes: [:id, :first_name, :last_name, :email, :phone, :organisation, :position] },
+      { public_contacts_attributes: [:id, :first_name, :last_name, :email, :phone, :organisation, :position, :_destroy] }
     ]
 
     if !@record.is_a?(Service) || @record.upstream.nil?
       attrs
     else
-      attrs - SOURCES_FIELDS[@record.upstream.source_type]
+      attrs & MP_INTERNAL_FIELDS
     end
   end
 
