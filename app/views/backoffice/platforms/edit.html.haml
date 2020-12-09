@@ -1,8 +1,8 @@
-- content_for :title, t(".title")
+- content_for :title, _("Edit Platform")
 - breadcrumb :backoffice_platform_edit, @platform
 
 .container
-  %h1= t(".title")
+  %h1= _("Edit Platform")
   .container
     .row.service-box.shadow-sm.p-4.mt-3.backoffice-form
       = render "form", platform: @platform

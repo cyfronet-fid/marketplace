@@ -11,5 +11,7 @@
           = current_user.email
     .col-12.col-md-5.profile-info
       %p
-        By default,  system use the e-mail your signed up via EOSC AAI.
-        If you would like those to use other e-mail address, you may modify it using this link.
+        -# haml-lint:disable MultilinePipe
+        = _("By default,  system use the e-mail your signed up via EOSC AAI. If you would like those to use other " + |
+            " e-mail address, you may modify it using this link.") |
+        -# haml-lint:enable MultilinePipe

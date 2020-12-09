@@ -7,5 +7,6 @@
               role: "button", "aria-expanded": "true" }
           %span#badge-text.collapse{ class: ("show" unless collapsed), "data-target": "form" }
             = t("badge.#{ENV["MP_INSTANCE"]}")
+            -# TODO: refactor dynamic translation (above)
           .fas.fa-chevron-left
           .fas.fa-chevron-right

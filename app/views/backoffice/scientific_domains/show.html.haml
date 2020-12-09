@@ -3,24 +3,26 @@
 
 %h1= @scientific_domain.name
 .service-box.shadow-sm.p-4.mt-3.backoffice-form
-  %h2 Description:
+  %h2
+    = _("Description") + ":"
   %p= @scientific_domain.description
-  %h2 eID:
+  %h2
+    = _("eID") + ":"
   %p= @scientific_domain.eid
-  %h2= @scientific_domain.parent ? "Parent: #{@scientific_domain.parent.name}" : "Root element"
+  %h2= @scientific_domain.parent ? _("Parent: %{sdpn}") % { sdpn: @scientific_domain.parent.name } : "Root element"
   - if @scientific_domain.logo.attached?
     = image_tag @scientific_domain.logo
 
   %hr.bottom-hr.mt-5.mb-4
   .btn-group
     - if policy([:backoffice, @scientific_domain]).edit?
-      = link_to "Edit",
+      = link_to _("Edit"),
                 edit_backoffice_scientific_domain_path(@scientific_domain),
                 class: "btn btn-primary"
     - if policy([:backoffice, @scientific_domain]).destroy?
-      = link_to "Delete",
+      = link_to _("Delete"),
                 backoffice_scientific_domain_path(@scientific_domain),
                 method: :delete,
-                data: { confirm: "Are you sure you want to remove this scientific domain?" },
+                data: { confirm: _("Are you sure you want to remove this scientific domain?") },
                 class: "btn btn-danger"
 

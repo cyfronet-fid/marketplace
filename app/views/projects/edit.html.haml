@@ -1,9 +1,9 @@
-- content_for :title, "#{t(".title")} #{@project.name}"
+- content_for :title, (_("Edit Project %{pn}") % { pn: @project.name })
 - breadcrumb :project_edit, @project
 .container
   .mb-4.pb-4.border-header
     %h1.mr-auto.my-auto
-      "#{t(".title")} #{@project.name}"
+      = _("Edit Project %{pn}") % { pn: @project.name }
   .edit-project
     = render "form", project: @project, show_recaptcha: false
   %hr.bottom-hr.mt-5.mb-4
@@ -11,6 +11,6 @@
     .col-12
       %button.btn.btn-primary.pl-5.pr-5{ type: "submit",
         form: "modal-form" }
-        = t("projects.buttons.update")
-      = back_link_to t("projects.buttons.cancel"), @project,
+        = _("Update")
+      = back_link_to _("Cancel"), @project,
                       class: "btn btn-link text-uppercase"

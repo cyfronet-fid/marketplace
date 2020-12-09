@@ -9,22 +9,22 @@
   = hidden_field_tag "sort", "_score", id: nil
 
   .searchbar__input
-    %label.sr-only{ for: "search" } Search
+    %label.sr-only{ for: "search" }= _("Search")
     = text_field_tag :q, params[:q],  class: "autocomplete-input",
                                      placeholder: "Find resource...",
                                      "data-target": "autocomplete.input",
                                      "data-toggle": "dropdown"
     - if params[:q].present? && params.permitted?
-      %a.search-clear{ href: url_for(params.except(:q, :sort, :service_id)), title: "Clear search" }
+      %a.search-clear{ href: url_for(params.except(:q, :sort, :service_id)), title: _("Clear search") }
         .fas.fa-times
     %ul.autocomplete-results{ "data-target": "autocomplete.results" }
   .searchbar__select
     %span{ "data-target": "search.selected" }
-      All resources
+      = _("All resources")
     %select#category-select.container-select{ "data-action": "change->search#refresh",
                                                     "data-target": "search.categorySelect" }
       %option{ value: "", selected: "selected" }
-        All resources
+        = _("All resources")
       = options_for_select categories.map { |category| [category.name, category.slug] }, params[:category]
   .input-group-append
     %button#query-submit.input-group-text.bg-white

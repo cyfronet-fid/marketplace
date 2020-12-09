@@ -9,8 +9,17 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Add fast_gettext, gettext_p18_rails, gettext, ruby_parser gems (@JanKapala)
+- Mark missing translations with `-# TODO: missing translation` (@JanKapala)
+- Mark i18 dynamic translations with `-# TODO: refactor dynamic translation` (@JanKapala)
+- Add configuration of PO files
+- Whitelabel gettext support (@wujuu)
 
 ### Changed
+- Replace i18 static translations in views with gettext (@JanKapala)
+- Replace part of i18 dynamic translations in views with gettext(@JanKapala)
+- Replace direct html strings with gettext translations in views (@JanKapala)
+- Refactor html injection via i18 translation into regular hamls  (@JanKapala)
 
 ### Deprecated
 

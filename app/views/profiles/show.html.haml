@@ -1,39 +1,46 @@
 .container
   - breadcrumb :profile
 
-  %h1 Profile
+  %h1
+    = _("Profile")
 
   = render "basic_information"
 
   #profile-information.row
     .col-12.col-md-5.profile-edit
       .bordered-header
-        %h3 Additional information
+        %h3
+          = _("Additional information")
         %span= link_to "Edit", edit_profile_path, class: "btn-sm btn-warning edit-button",
         "data-shepherd-tour-target": "profile-edit"
-      %h5 Categories of interests
+      %h5
+        = _("Categories of interests")
       %ul
         - current_user.categories.each do |category|
           %li
             %span= category.name
 
-      %h5 Scientific domains of interests
+      %h5
+        = _("Scientific domains of interests")
       %ul
         - current_user.scientific_domains.each do |sd|
           %li
             %span= sd.name
     .col-12.col-md-5.profile-edit.ml-auto
       .bordered-header
-        %h3 Email notifications
-        %span= link_to "Edit", edit_profile_path, class: "btn-sm btn-warning"
-      %h5 You are signed up to receive updates about new EOSC Services in your:
+        %h3
+          = _("Email notifications")
+        %span= link_to _("Edit"), edit_profile_path, class: "btn-sm btn-warning"
+      %h5
+        = _("You are signed up to receive updates about new EOSC Services in your") + ":"
       %ul
         - if current_user.categories_updates
           %li
-            %span Category of interests
+            %span
+              = _("Category of interests")
         - if current_user.scientific_domains_updates
           %li
-            %span Scientific domain of interests
+            %span
+              = _("Scientific domain of interests")
       %p.small
-        You can add or remove notification channel
-        at any time by editing your subscribe preferences.
+        = _("You can add or remove notification channel at any time by editing your subscribe preferences.")

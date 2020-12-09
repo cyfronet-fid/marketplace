@@ -2,7 +2,8 @@
 
 - if technical_parameters.present?
   .card-body.pt-0.collapse-group
-    %h5.text-uppercase.parameters-title.mb-0 Parameters
+    %h5.text-uppercase.parameters-title.mb-0
+      = _("Parameters")
     %table.offer-params.table.table-hover
       %tbody
         - technical_parameters.each do |parameter|

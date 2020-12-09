@@ -7,11 +7,11 @@
       = item.title
 
     .float-right
-      = link_to "Edit", edit_admin_help_item_path(item),
+      = link_to _("Edit"), edit_admin_help_item_path(item),
         class: "btn btn-sm btn-warning"
-      = link_to "Remove", admin_help_item_path(item),
+      = link_to _("Remove"), admin_help_item_path(item),
         class: "btn btn-sm btn-danger",
-        method: :delete, data: { confirm: "Are you sure?" }
+        method: :delete, data: { confirm: _("Are you sure?") }
 
 .collapse{ id: id, "aria-labelledby": "#{id}-header", "data-parent": "##{parent}" }
   .card-body

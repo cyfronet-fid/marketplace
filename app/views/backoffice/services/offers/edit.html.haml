@@ -1,6 +1,6 @@
-- content_for :title, t(".title")
+- content_for :title, _("Edit Offer")
 .container
-  %h2= t(".title")
+  %h2= _("Edit Offer")
   - if @service.offers.size == 1
     = render "one_offer_edit_form",
       offer: @offer,

@@ -7,5 +7,6 @@
   .question-box.col-9.mx-auto.mt-4.pt-4
     = simple_form_for @message,
       url: project_service_conversation_path(@project, @project_item) do |f|
-      = f.input :message, label: t("conversations.message.question")
-      %button.btn.btn-primary.btn-sm.mt-2{ type: "submit" } Send message
+      = f.input :message, label: _("Your message to the resource provider")
+      %button.btn.btn-primary.btn-sm.mt-2{ type: "submit" }
+        = _("Send message")

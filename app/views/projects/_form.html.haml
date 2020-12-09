@@ -2,14 +2,16 @@
   html: { role: "form", id: "modal-form",
           "data-controller" => "project",
           data: { action: "submit->project#filterFileds" } } do |f|
-  %h4 Usage
+  %h4
+    = _("Usage")
   = f.input :name, input_html: { class: "col-lg-6 form-control-lg" }
   = f.input :reason_for_access, input_html: { class: "col-lg-8 form-control-lg textarea-lg" }
   = f.association :scientific_domains, multiple: true, include_hidden: false,
     wrapper_html: { class: "col-lg-8 pl-0 pr-0" }, input_html: { data: { choice: true } }
   = f.input :additional_information,
   input_html: { class: "col-lg-8 form-control-lg textarea-md" }
-  %h4 Customer details
+  %h4
+    = _("Customer details")
   = f.input :customer_typology, collection: Project.customer_typologies.keys.map(&:to_sym),
     input_html: { "data-target" => "project.customer",
                   "data-action" => "change->project#showSelectedSection", class: "col-lg-5 form-control-lg" }

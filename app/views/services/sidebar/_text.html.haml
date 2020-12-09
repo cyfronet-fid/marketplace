@@ -3,4 +3,5 @@
   - if service.send(field).present?
     %li.list-group-item
       %span
+        -# TODO: refactor dynamic translation
         = t(".fields.#{field}.#{service.send(field)}")

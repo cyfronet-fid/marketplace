@@ -1,7 +1,7 @@
 %h3.subsection
   %a{ id: section.slug }
   = section.title
-  = link_to "Add new help item",
+  = link_to _("Add new help item"),
             new_admin_help_item_path(section: section.slug),
             class: "btn btn-sm btn-success float-right"
 .accordion.faq-list{ id: "s-#{section.slug}" }
