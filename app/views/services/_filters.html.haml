@@ -2,7 +2,7 @@
   %h5.underline-light.mb-2.pb-2.mt-4
     .row
       .col-7.text-uppercase
-        Filters
+        = _("Filters")
 
   = form_tag "", method: :get, role: "search", class: "filters", "data-controller": "filter",
     "data-target": "filter.form" do

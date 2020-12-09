@@ -8,11 +8,13 @@
   %footer
     .column-left
       %p
-        %small Provided by:
+        %small
+          = _("Provided by") + ":"
         %br
         = safe_join(providers_text(service), ", ").truncate(24)
     .column-right
       %p.text-right
-        %small Dedicated for:
+        %small
+          = _("Dedicated for") + ":"
         %br
         = safe_join(dedicated_for_text(service), ", ").truncate(24)

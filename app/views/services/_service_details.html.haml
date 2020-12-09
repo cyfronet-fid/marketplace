@@ -11,14 +11,15 @@
         .pl-4.pr-4
           %span.x-small.text-uppercase
             - if service_offers.size == 1
-              The resource has 1 offer that matches your search criteria
+              = _("The resource has 1 offer that matches your search criteria")
             - else
-              The resource has #{service_offers.size} offers that match your search criteria
+              = _("The resource has %{sos} offers that match your search criteria") % { sos: service_offers.size }
           = render "services/offers_box", service_offers: service_offers,
             service: service
   .right-extra-info
     .text-center.badge.text-uppercase
       %i{ class: "ordertype #{order_type(service)}" }
+      -# TODO: refactor dynamic translation
       = t("offers.type.#{order_type(service)}")
     .service-logo
       = service_logo(service, "align-center mx-4 service-logo", "120x120")

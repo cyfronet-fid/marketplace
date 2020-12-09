@@ -1,5 +1,6 @@
-- content_for :title, t(".title")
+- content_for :title, _("Final details")
 %p.mb-4= t("services.summary.#{map_view_to_order_type(@offer)}.description_html")
+-# TODO: refactor dynamic translation (above)
 
 = render "services/summaries/technical_configuration",
          service: @service, project_item: @step
@@ -9,18 +10,22 @@
     .card.offer-description.mb-4
       .card-body.pb-2.pt-4.pl-4.pr-4
         - if @offer.voucherable
-          %h4 Voucher
+          %h4
+            = _("Voucher")
           %dl.mb-4
             - if @step.request_voucher
-              %dt I don't have a voucher, and I would like to request for one
+              %dt
+                = _("I don't have a voucher, and I would like to request for one")
             - else
-              %dt Voucher ID
+              %dt
+                = _("Voucher ID")
               %dd= @step.voucher_id
 
         = render "services/summaries/project_browser", project_item: @step, projects: @projects, f: f
     .card.offer-description.mb-4
       .card-body.pb-2.pt-4.pl-4.pr-4
-        %h4 Additional information
+        %h4
+          = _("Additional information")
         = f.input :additional_comment, as: :text, class: "form-control"
         #recaptcha= recaptcha_tags
         = f.error :verified_recapcha, class: "invalid-feedback d-block"

@@ -1,4 +1,4 @@
-- content_for :title, t(".title")
+- content_for :title, _("Owned resources")
 - breadcrumb :backoffice_services, @category
 
 = content_for :category_view, "backoffice/categories/nav/category"
@@ -10,7 +10,7 @@
     = render "backoffice/services/search"
   .col-lg-3
     - if policy([:backoffice, Service]).new?
-      = link_to t("backoffice.services.new.link"),
+      = link_to _("Create new Resource"),
                     new_backoffice_service_path,
                     class: "btn btn-primary"
 

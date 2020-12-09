@@ -10,102 +10,138 @@
           = image_pack_tag "eosc-footer-logo.png"
       .col-md-6.my-auto.copyright
         %span.copy-text
-          Copyright 2018 - All right reserved
+          = _("Copyright 2018 - All right reserved")
         %a.ml-4.text-uppercase{ href: "https://eosc-portal.eu/privacy-policy-summary" }
-          privacy policy
+          = _("privacy policy")
     %hr.mb-4
     .row
       .col-md
         %ul
           %li
-            .title About
+            .title
+              = _("About")
           %li.mb-1
-            %a{ href: "#{portal_base}/about/eosc" } EOSC
+            %a{ href: "#{portal_base}/about/eosc" }
+              = _("EOSC")
           %li.mb-1
-            %a{ href: "#{portal_base}/about/eosc-doers" } EOSC Doers
+            %a{ href: "#{portal_base}/about/eosc-doers" }
+              = _("EOSC Doers")
           %li.mb-1
-            %a{ href: "#{portal_base}/about/eosc-projects" } EOSC Projects
+            %a{ href: "#{portal_base}/about/eosc-projects" }
+              = _("EOSC Projects")
           %li.mb-1
-            %a{ href: "#{portal_base}/about/funding-opportunities" } Funding Opportunities
+            %a{ href: "#{portal_base}/about/funding-opportunities" }
+              = _("Funding Opportunities")
           %li.mb-1
-            %a{ href: "#{root_url}about" } Marketplace
+            %a{ href: "#{root_url}about" }
+              = _("Marketplace")
           %li.mb-1
-            %a{ href: "#{portal_base}/about/faqs" } FAQs
+            %a{ href: "#{portal_base}/about/faqs" }
+              = _("FAQs")
           %li.mb-1
-            %a{ href: "#{portal_base}/contact-us" } Contact us
+            %a{ href: "#{portal_base}/contact-us" }
+              = _("Contact us")
       .col-md
         %ul
           %li
-            .title Governance
+            .title
+              = _("Governance")
           %li.mb-1
-            %a{ href: "#{portal_base}/governance" } EOSC Governance
+            %a{ href: "#{portal_base}/governance" }
+              = _("EOSC Governance")
           %li.mb-1
-            %a{ href: "#{portal_base}/governance/rules-participation" } Rules of participation
+            %a{ href: "#{portal_base}/governance/rules-participation" }
+              = _("Rules of participation")
           %li.mb-1
-            %a{ href: "#{portal_base}/governance/best-practices" } Best Practices
+            %a{ href: "#{portal_base}/governance/best-practices" }
+              = _("Best Practices")
       .col-md
         %ul
           %li
-            .title Resources
+            .title
+              = _("Resources")
           %li.mb-1
-            %a{ href: "#{root_url}categories/sharing-discovery" } Sharing & Discovery
+            %a{ href: "#{root_url}categories/sharing-discovery" }
+              = _("Sharing & Discovery")
           %li.mb-1
-            %a{ href: "#{root_url}categories/processing-analysis" } Processing & Analysis
+            %a{ href: "#{root_url}categories/processing-analysis" }
+              = _("Processing & Analysis")
           %li.mb-1
-            %a{ href: "#{root_url}categories/data-management" } Data Management
+            %a{ href: "#{root_url}categories/data-management" }
+              = _("Data Management")
           %li.mb-1
-            %a{ href: "#{root_url}categories/compute" } Compute
+            %a{ href: "#{root_url}categories/compute" }
+              = _("Compute")
+
           %li.mb-1
-            %a{ href: "#{root_url}categories/storage" } Storage
+            %a{ href: "#{root_url}categories/storage" }
+              = _("Storage")
           %li.mb-1
-            %a{ href: "#{root_url}categories/networking" } Networking
+            %a{ href: "#{root_url}categories/networking" }
+              = _("Networking")
           %li.mb-1
-            %a{ href: "#{root_url}categories/training-support" } Training & Support
+            %a{ href: "#{root_url}categories/training-support" }
+              = _("Training & Support")
           %li.mb-1
-            %a{ href: "#{root_url}categories/security-operations" } Security & Operations
+            %a{ href: "#{root_url}categories/security-operations" }
+              = _("Security & Operations")
       .col-md
         %ul
           %li
-            .title Policy
+            .title
+              = _("Policy")
           %li.mb-1
-            %a{ href: "#{portal_base}/policy/ec-documents" } EC Documents
+            %a{ href: "#{portal_base}/policy/ec-documents" }
+              = _("EC Documents")
           %li.mb-1
-            %a{ href: "#{portal_base}/policy/europe" } Europe
+            %a{ href: "#{portal_base}/policy/europe" }
+              = _("Europe")
           %li.mb-1
-            %a{ href: "#{portal_base}/policy/eu-member-states" } Member States
+            %a{ href: "#{portal_base}/policy/eu-member-states" }
+              = _("Member States")
       .col-md
         %ul
           %li
-            .title EOSC IN PRACTICE
+            .title
+              = _("EOSC IN PRACTICE")
           %li.mb-1
-            %a{ href: "#{portal_base}/eosc-in-practice/use-cases" } Use Cases
+            %a{ href: "#{portal_base}/eosc-in-practice/use-cases" }
+              = _("Use Cases")
           %li.mb-1
-            %a{ href: "#{portal_base}/eosc-in-practice/open-call" } Open Call
+            %a{ href: "#{portal_base}/eosc-in-practice/open-call" }
+              = _("Open Call")
       .col-md
         %ul
           %li
-            .title Media
+            .title
+              = _("Media")
           %li.mb-1
-            %a{ href: "#{portal_base}/media/news" } News
+            %a{ href: "#{portal_base}/media/news" }
+              = _("News")
           %li.mb-1
-            %a{ href: "#{portal_base}/media/events" } Forthcoming events
+            %a{ href: "#{portal_base}/media/events" }
+              = _("Forthcoming events")
           %li.mb-1
-            %a{ href: "#{portal_base}/media/past-events" } Past Events
+            %a{ href: "#{portal_base}/media/past-events" }
+              = _("Past Events")
       .col-md
         %ul
           %li.mb-1
-            .title MARKETPLACE
+            .title
+              = _("MARKETPLACE")
           %li.mb-1
-            %a{ href: "#{root_url}about" } About
+            %a{ href: "#{root_url}about" }
+              = _("About")
           %li.mb-1
-            = link_to "All Services", services_path
+            = link_to _("All Services"), services_path
           - @root_categories.each do |root_category|
             %li.mb-1
               = link_to root_category.name, root_category
           %li.mb-1
-            %a{ href: "#{portal_base}/for-providers" } For providers
+            %a{ href: "#{portal_base}/for-providers" }
+              = _("For providers")
           %li.mb-1
-            = link_to "Help", help_path
+            = link_to _("Help"), help_path
 
 
     .row.mt-4.socials
@@ -115,4 +151,13 @@
 
 .eu-information.p-4
   .container
-    = t(".description_html")
+    %p.mb-1
+      -# haml-lint:disable MultilinePipe
+      = _("The EOSC portal is been jointly developed and maintained by the EOSC-hub, eInfraCentral and " + |
+          "OpenAIRE-Advance projects funded by the European") |
+      -# haml-lint:enable MultilinePipe
+    %p.mb-1
+      = _("Union’s Horizon 2020 research and innovation programme with contribution of the European Commission")
+    %p.mt-2
+      = _("2018 EOSC Portal")
+

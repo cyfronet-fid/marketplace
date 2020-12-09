@@ -7,14 +7,14 @@
     .col.text-right
       .btn-group
         - if @service.persisted?
-          = link_to "Go back to edit", edit_backoffice_service_path(@service),
+          = link_to _("Go back to edit"), edit_backoffice_service_path(@service),
             class: "btn btn-warning"
-          = link_to "Confirm changes", backoffice_service_path(@service),
+          = link_to _("Confirm changes"), backoffice_service_path(@service),
             class: "btn btn-success", method: :put
         - else
-          = link_to "Go back to edit", new_backoffice_service_path,
+          = link_to _("Go back to edit"), new_backoffice_service_path,
             class: "btn btn-warning"
-          = link_to "Confirm changes", backoffice_services_path,
+          = link_to _("Confirm changes"), backoffice_services_path,
             class: "btn btn-success", method: :post
 
 .container.preview

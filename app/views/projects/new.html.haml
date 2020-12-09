@@ -1,8 +1,8 @@
-- content_for :title, t(".title")
+- content_for :title, _("Create new Project")
 - breadcrumb :project_new
 .container
   .mb-4.pb-4.border-header
-    %h1.mr-auto.my-auto= t(".title")
+    %h1.mr-auto.my-auto= _("Create new Project")
   = render "form", project: @project, show_recaptcha: true
 
   %hr.bottom-hr.mt-5.mb-4
@@ -10,6 +10,6 @@
     .col-12
       %button.btn.btn-primary.pl-5.pr-5{ type: "submit",
                                form: "modal-form" }
-        = t("projects.buttons.create")
-      = back_link_to t("projects.buttons.cancel"), @project,
+        = _("Create new project")
+      = back_link_to _("Cancel"), @project,
         class: "btn btn-link text-uppercase"

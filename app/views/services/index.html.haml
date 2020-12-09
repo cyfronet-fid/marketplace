@@ -5,7 +5,7 @@
     elsif @category
       @category.name
     else
-      "All resources"
+      _("All resources")
     end
 .container{ "data-controller": "comparison" }
   - @category ? breadcrumb(:category, @category) : breadcrumb(:services)

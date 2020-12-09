@@ -7,6 +7,7 @@
                   *group[:fields])) || (group[:clazz] && service.send(group[:clazz]).present?)
           .details-box{ class: ("special-box" if group[:name] == "dependencies") }
             .details-header
+              -# TODO: refactor dynamic translation
               %h5= t(".details.title.#{group[:name]}")
             .details-content
               %ul.list-group
@@ -23,6 +24,7 @@
                   *group[:fields])) || (group[:clazz] && service.send(group[:clazz]).present?)
           .details-box{ class: ("special-box" if group[:name] == "dependencies") }
             .details-header
+              -# TODO: refactor dynamic translation
               %h5= t(".details.title.#{group[:name]}")
             .details-content
               %ul.list-group
@@ -39,6 +41,7 @@
                   *group[:fields])) || (group[:clazz] && service.send(group[:clazz]).present?)
           .details-box{ class: ("special-box" if group[:name] == "dependencies") }
             .details-header
+              -# TODO: refactor dynamic translation
               %h5= t(".details.title.#{group[:name]}")
             .details-content
               %ul.list-group

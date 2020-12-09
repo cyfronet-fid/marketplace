@@ -1,8 +1,10 @@
-%li.label Services
+%li.label
+  = _("Services")
 - results.each do |elem, highlights|
   - if highlights[:name]
     = render "services/autocomplete/service_item", service: elem, highlights: highlights
-%li.label Offers
+%li.label
+  = _("Offers")
 - results.each do |elem, highlights|
   - if highlights[:offer_name]
     = render "services/autocomplete/offer_item", offer: elem,

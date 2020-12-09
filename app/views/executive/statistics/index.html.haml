@@ -1,31 +1,36 @@
-- content_for :title, t(".title")
-%h1 Statistics
+- content_for :title, _("Executive")
+%h1
+  = _("Statistics")
 
 .card-deck.text-center
-  = render "statistic", title: t(".orderable.title"), amount: @orderable_count,
-    description: t(".orderable.description")
-  = render "statistic", title: t(".not_orderable.title"), amount: @not_orderable_count,
-    description: t(".not_orderable.description")
-  = render "statistic", title: t(".all_services.title"), amount: @all_services_count,
-    description: t(".all_services.description")
+  -# haml-lint:disable MultilinePipe
+  = render "statistic", title: _("Orderable"), amount: @orderable_count,
+    description: _("Number of resources orderable through the Marketplace " + |
+                 "(Sum of all offers with Internal ordering access type)") |
+  = render "statistic", title: _("Not orderable/open access"), amount: @not_orderable_count,
+    description: _("Number of resources not orderable (Sum of all offers with External " + |
+                   "and Open access type added to the projects)") |
+  -# haml-lint:enable MultilinePipe
+  = render "statistic", title: _("All resources"), amount: @all_services_count,
+    description: _("All resources registered in Marketplace")
 
 #statistics.accordion
   = render "pages/card", parent: "statistics",
-    name: "providers", title: t(".providers.title", count: @providers_count) do
-    %p= t("executive.statistics.index.providers.description")
+    name: "providers", title: _("Providers (%{count})") % { count: @providers_count } do
+    %p= _("Providers in the Marketplace:")
     %ul
       - @providers.each do |provider|
         %li= provider
 
   = render "pages/card", parent: "statistics",
-    name: "discriplines", title: t(".disciplines.title", count: @disciplines_count) do
-    %p= t("executive.statistics.index.disciplines.description")
+    name: "disciplines", title: _("Domains (%{count})") % { count: @disciplines_count } do
+    %p= _("Scientific domains ordered services are used for:")
     %ul
       - @disciplines.each do |discipline|
         %li= discipline
   = render "pages/card", parent: "statistics",
-    name: "origin", title: t(".countries.title", count: @countries_count) do
-    %p= t("executive.statistics.index.countries.description")
+    name: "origin", title: _("Origins (%{count})") % { count: @countries_count } do
+    %p= _("Countries of users ordering services:")
     %ul
       - @countries.each do |country|
         %li= country

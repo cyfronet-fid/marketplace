@@ -1,12 +1,52 @@
+-# haml-lint:disable MultilinePipe
 .row
   .col-lg-6.pt-5.pb-5.pl-5.order-lg-first.order-md-last.order-sm-last.order-last
     %h1.mb-4
-      = t(".header")
+      = _("Welcome to the Marketplace Projects!")
     %p.lead.pr-4.order-lg-first.order-md-last.order-sm-last.order-last
-      = t(".summary")
+
+      = _("With Marketplace Projects you can organise your resources and resource orders into a logical blocks to " + |
+          "reflect a common scientific purpose and gain support for the created Marketplace Project.") |
     = link_to button_label, new_project_path, class: "btn btn-primary mt-3"
   .col
     .empty-list-img-big.mt-5.pt-5
 .row
-  = t(".details_html")
-
+  .row
+    .col-lg-9.pl-5.pr-5.mt-4
+      %p.info
+        = _("As the resources available in the Marketplace are available for all European researchers you can " + |
+            "precise your customer typology. Tell us, whether you want to use available EOSC resources in the " + |
+            "scope of:") |
+      %ul.short-list
+        %li
+          %span
+            = _("your own academic research") + ","
+        %li
+          %span
+            = _("larger community collaboration") + ","
+        %li
+          %span
+            = _("EC project or maybe") + ","
+        %li
+          %span
+            = _("R&D work of your company") + "."
+  .row
+    .col.pl-5.pr-5.pb-4
+      %p.info
+        = _("and along with a general description of your scientific work you will be able to get assistance from " + |
+            "international technical teams who provide advice on the most suitable solutions to address your " + |
+            "digital needs. To get this support, after creating a MP Project please go to " + |
+            "‚CONTACT WITH PROJECT SUPPORT’ tab.") |
+      %p.info
+        = _("When ready to start using EOSC resources, with ‚Resources’ tab you can select EOSC resources and " + |
+            "solutions suitable for your work. Some of them you will be able to start using right away, some will " + |
+            "require you to issue access request (Marketplace order). For the latter, Marketplace Projects will be " + |
+            "the place to follow the status of your orders, get all relevant information about the resource access " + |
+            "when the access is granted and contact the EOSC support if necessary.") |
+      %p.info
+        = _("So find out how EOSC can support your scientific needs and use our quick creation form to")
+        = link_to _("add your first Marketplace project!"), new_project_path
+      %p.info
+        = _("If you need help with creating a new project, don't hesitate and ")
+        = link_to _("contact with our support"), "https://eosc-portal.eu/contact-us"
+-# haml-lint:enable MultilinePipe

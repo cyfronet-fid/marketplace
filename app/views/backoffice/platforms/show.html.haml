@@ -1,4 +1,4 @@
-- content_for :title, t(".title")
+- content_for :title, t(".title") # TODO: missing translation (no entry in original i18 locales)
 - breadcrumb :backoffice_platform, @platform
 
 %h1= @platform.name
@@ -7,12 +7,12 @@
 
 .btn-group
   - if policy([:backoffice, @platform]).edit?
-    = link_to "Edit",
+    = link_to _("Edit"),
               edit_backoffice_platform_path(@platform),
               class: "btn btn-primary"
   - if policy([:backoffice, @platform]).destroy?
-    = link_to "Delete",
+    = link_to _("Delete"),
               backoffice_platform_path(@platform),
               method: :delete,
-              data: { confirm: "Are you sure you want to remove this platform" },
+              data: { confirm: _("Are you sure you want to remove this platform") },
               class: "btn btn-danger"

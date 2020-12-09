@@ -1,7 +1,7 @@
 = form_tag url_for, method: :get, role: "search", "data-controller": "order" do
   .form-group.row.sort-box
     %label.col-sm-3.control-label.pr-0
-      Sort by:
+      = _("Sort by") + ":"
     .col-sm-9.pl-0
       %select#sort.query-sort.form-control.form-control-sm{ "data-target": "order.select",
                                                             "data-submit-on-change": "data-submit-on-change" }
