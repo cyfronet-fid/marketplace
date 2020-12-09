@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Replace part of i18 dynamic translations in views with gettext(@JanKapala)
 - Replace direct html strings with gettext translations in views (@JanKapala)
 - Refactor html injection via i18 translation into regular hamls  (@JanKapala)
+- Log level in production environment to info (@goreck888)
 
 ### Deprecated
 
