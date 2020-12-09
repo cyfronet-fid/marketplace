@@ -7,7 +7,7 @@
         = render "services/offers", offers: offers, service: service
 
     %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
-      - Service::SIDEBAR_FIELDS.each do |group|
+      - service_sidebar_fields.each do |group|
         - if any_present?(service, *group[:fields])
           %h5= t(".sidebar.title.#{group[:name]}")
           = render "services/sidebar/#{group[:template]}",
