@@ -37,17 +37,6 @@ en:
   previous: Back
   next: Next
   cancel: Cancel
-  common:
-    open_access:
-      link: Go to the resource
-    fully_open_access:
-      link: Go to the resource
-    other:
-      link: Go to the resource
-    external:
-      link: Order externally
-
-
   project:
     mail:
       new_message: |

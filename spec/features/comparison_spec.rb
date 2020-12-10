@@ -98,7 +98,7 @@ RSpec.feature "Comparison", js: true do
     expect(page).to have_text("Resource order type")
 
     expect(page).to have_text("Open Access")
-    expect(page).to have_text("Order required").twice
+    expect(page).to have_text("Order Required").twice
 
     expect(page).to have_text("Scientific domain")
 

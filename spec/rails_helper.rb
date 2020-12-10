@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require "view_component/test_helpers"
 # require "capybara/rails"
 
 ENV["RAILS_ENV"] ||= "test"
@@ -59,6 +60,9 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # Add view component helpers
+  config.include ViewComponent::TestHelpers, type: :component
 
   Capybara.register_driver :chrome do |app|
     options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox headless disable-gpu])
