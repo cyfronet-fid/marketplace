@@ -1,0 +1,8 @@
+{
+  "allOf": [{ "$ref": "offer_definitions.json#offer"}],
+  "required":[
+    "name",
+    "description",
+    "order_type"
+  ]
+}

@@ -160,6 +160,10 @@
       margin-top: 15px;
     }
   }
+
+  .api-submenu {
+    margin-bottom: 30px;
+  }
 }
 
 @media (max-width: 576px) {
@@ -187,7 +191,8 @@
     .menu__hamburger {
       top: 9px;
     }
-  } // end Header
+  }
+  // end Header
 
   .overlay {
     .closebtn {
@@ -382,6 +387,27 @@
     }
   }
 
+  .tokens {
+    font-size: 14px;
+    line-height: 20px;
+
+    .icon {
+      margin: 0 15px 25px 0;
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+
+      svg {
+        font-size: 40px;
+        line-height: 60px;
+      }
+    }
+
+    .active {
+      font-size: 14px;
+      line-height: 27px;
+    }
+  }
 
 }
 

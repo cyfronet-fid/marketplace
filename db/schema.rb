@@ -550,6 +550,8 @@ ActiveRecord::Schema.define(version: 2021_01_29_114724) do
     t.boolean "categories_updates", default: false, null: false
     t.boolean "scientific_domains_updates", default: false, null: false
     t.boolean "show_welcome_popup", default: false, null: false
+    t.string "authentication_token", limit: 30
+    t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["email"], name: "index_users_on_email"
   end
 

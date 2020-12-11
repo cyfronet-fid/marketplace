@@ -1,0 +1,42 @@
+- breadcrumb :token
+
+.container
+  %h1 API
+  .container
+    .row.pt-4.pb-4.pl-3.pr-3.mt-4.shadow-sm.rounded.service-box.tokens
+      .col-12.col-md-7
+        .icon
+          %i.fas.fa-key
+        .mt-4
+          - unless current_user.valid_token?
+            %p
+              You don't have an authentication token yet.
+              %br
+              Click
+              %b Generate token
+              to get one.
+          - else
+            %p.mb-0
+              %i.fas.fa-check-circle
+              Your token is active:
+            %p.active
+              = current_user.authentication_token
+      .col-12.col-md-5.token-button
+        - unless current_user.valid_token?
+          %p
+            = link_to "Generate token", token_path, method: :post, class: "btn btn-primary float-right"
+        - else
+          %p
+            = link_to "Revoke token", token_path, method: :delete, class: "btn btn-outline-danger float-right"
+  %h2.mb-5 EOSC Marketplace API Documentation
+  .container
+    .row
+      .col-12.col-md-3.api-submenu
+        %ul
+          - api_wiki_subsections.each do |subsection|
+            %li{ class: ("active" if subsection == @subsection) }
+              %span
+                = link_to subsection.capitalize, token_path(subsection: subsection)
+
+      .col-12.col-md-8.float-right.ml-auto.mr-auto
+        = render "tokens/subsections/#{@subsection}"

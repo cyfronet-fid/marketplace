@@ -43,4 +43,61 @@ RSpec.describe User do
       expect(user).to be_service_owner
     end
   end
+
+  context "#valid_token?" do
+    it "is false when token is nil or 'revoked'" do
+      user = create(:user)
+      user.update(authentication_token: "revoked")
+
+      expect(user.valid_token?).to be false
+
+      # Workaround of the fact that 'simple_authentication_token' automatically generates token when you try to save
+      # model object to database and model.authentication_token = nil.
+      # Workaround is that we don't do 'user model.update(attribute: value)', but rather 'model.attribute = value'
+      user.authentication_token = nil
+      expect(user.valid_token?).to be false
+    end
+
+    it "is true when token is not nil or 'revoked'" do
+      user = create(:user)
+      expect(user.valid_token?).to be true
+    end
+  end
+
+  context "authentication_token" do
+    it "is present when creating new user" do
+      user = create(:user)
+      expect(user.authentication_token).to be_truthy
+    end
+  end
+
+  context "#managed_services" do
+    it "returns all managed services" do
+      user = create(:user)
+      data_administrator1 = create(:data_administrator, email: user.email)
+      data_administrator2 = create(:data_administrator, email: user.email)
+      service1 = create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator1]))
+      service2 = create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator2]))
+
+      expect(user.managed_services).to eq([service1, service2])
+    end
+
+    it "returns all managed services if there are any" do
+      user = create(:user)
+      data_administrator = create(:data_administrator, email: user.email)
+      create(:provider, data_administrators: [data_administrator])
+
+      expect(user.managed_services).to eq([])
+    end
+
+    it "returns all managed services if the user is a data admin" do
+      regular_user = create(:user)
+      data_admin_user = create(:user)
+      data_administrator = create(:data_administrator, email: data_admin_user.email)
+      service = create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator]))
+
+      expect(regular_user.managed_services).to eq([])
+      expect(data_admin_user.managed_services).to eq([service])
+    end
+  end
 end
