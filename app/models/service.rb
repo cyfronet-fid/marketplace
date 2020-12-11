@@ -157,6 +157,12 @@ class Service < ApplicationRecord
     where(status: [:published, :unverified]).includes(:providers).order(popularity_ratio: :desc, name: :asc).limit(count)
   end
 
+
+  def self.administered_by(user)
+    joins(resource_organisation: [provider_data_administrators: [:data_administrator]]).
+      where("data_administrators.email = ?", user.email)
+  end
+
   def main_category
     @main_category ||= categories.joins(:categorizations).
                                   find_by(categorizations: { main: true })

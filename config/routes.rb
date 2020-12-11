@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-
   devise_for :users,
              controllers: { omniauth_callbacks: "users/omniauth_callbacks" },
              skip: [:sessions]
@@ -95,6 +94,23 @@ Rails.application.routes.draw do
     namespace :webhooks do
       post "/jira" => "jiras#create", as: :jira
     end
+  end
+
+  unless Mp::Application.config.offers_api_disabled
+    mount Rswag::Ui::Engine => '/api-docs'
+    mount Rswag::Api::Engine => '/api-docs'
+
+    namespace :api do
+      namespace :v1 do
+        resources :services, only: [:index, :show] do
+          scope module: :services do
+            resources :offers, only: [:index, :create, :show, :destroy, :update]
+          end
+        end
+      end
+    end
+
+    resource :token, only: [:show, :create, :destroy]
   end
 
   resource :admin, only: :show
