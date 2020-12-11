@@ -9,6 +9,18 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+## [3.3.0] 2020-12-11
+
+### Added
 - Add fast_gettext, gettext_p18_rails, gettext, ruby_parser gems (@JanKapala)
 - Mark missing translations with `-# TODO: missing translation` (@JanKapala)
 - Mark i18 dynamic translations with `-# TODO: refactor dynamic translation` (@JanKapala)
@@ -24,13 +36,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Refactor html injection via i18 translation into regular hamls  (@JanKapala)
 - Log level in production environment to info (@goreck888)
 - Refactor serivce details display (@wujuu)
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 
 ## [3.2.0] 2020-11-20
 
