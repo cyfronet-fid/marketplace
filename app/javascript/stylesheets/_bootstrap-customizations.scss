@@ -4136,3 +4136,30 @@ textarea.form-control.is-invalid {
   z-index: 100;
   padding: 0 20px 20px 0;
 }
+
+.based-on-your-search {
+  font-size: 16px;
+  line-height: 30px;
+
+  .recommend-box {
+    float: left;
+    display: inline-block;
+    color: $palette-gray-100;
+    font-size: 11px;
+    font-weight: 500;
+    margin-right: 10px;
+    position: relative;
+    line-height: 20px;
+    border: 1px solid $recommendation-box-border;
+    background: $home-card-bg;
+    padding: 4px 12px 4px 40px;
+
+    svg {
+      font-size: 19px;
+      color: $edited-comment-border-color;
+      position: absolute;
+      top: 5px;
+      left: 10px;
+    }
+  }
+}

@@ -7,7 +7,13 @@ RSpec.feature "Service categories" do
 
   let(:user) { create(:user) }
 
-  before { checkin_sign_in_as(user) }
+  before do
+    resources_selector = "body main div:nth-child(2).container div.container div.row div.col-lg-9"
+    service_selector = "div.media.mb-3.service-box.shadow-sm"
+    @services_selector = resources_selector + " " + service_selector
+
+    checkin_sign_in_as(user)
+  end
 
   scenario "service list shows root categories" do
     root1, root2 = create_list(:category, 2)
@@ -59,7 +65,9 @@ RSpec.feature "Service categories" do
     expect(page.body).to have_content s1.name
     expect(page.body).to have_content s2.name
     expect(page.body).to have_content s3.name
-    expect(page.body).to_not have_content other_service.name
+    all(@services_selector).each do |element|
+      expect(element).to_not have_content other_service.name
+    end
   end
 
   scenario "limit number of services per page" do

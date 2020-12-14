@@ -1,0 +1,16 @@
+.service-info-box.recommendation.ver-1
+  %header
+    = link_to highlighted_for(:name, recommendation_v1, highlights[recommendation_v1.id]).truncate(30),
+              service_path(recommendation_v1, category.present? ? { fromc: category.slug } : nil,
+              from_recommendation_panel: true)
+  %article
+    %p
+      = truncate(highlighted_for(:tagline, recommendation_v1, highlights[recommendation_v1.id]), length: 110)
+  %footer
+    .column-left
+      %p
+        %small
+          = _("Provided by") + ":"
+        %br
+          %span
+            = safe_join(providers_text(recommendation_v1), ", ").truncate(24)
