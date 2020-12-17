@@ -35,7 +35,7 @@ RSpec.feature "Service filter" do
 
   it "respects seach query", js: true do
     visit services_path(q: "Funcy search phrase")
-    select "EU"
+    select "Other"
 
     expect(body).to have_text("Funcy search phrase")
   end
@@ -57,7 +57,7 @@ RSpec.feature "Service filter" do
     create_list(:service, 5)
 
     visit services_path(page: 3, per_page: 1)
-    select "EU"
+    select "European Union"
 
     expect(page.current_path).to_not have_content("page=")
   end
