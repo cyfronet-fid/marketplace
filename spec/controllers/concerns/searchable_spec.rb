@@ -275,5 +275,20 @@ RSpec.describe ApplicationController, type: :controller do
         basic_test
       end
     end
+
+    context Filter::Location do
+      let!(:collection) { ["PL", "UK"] }
+      let!(:service1) { create(:service, geographical_availabilities: Array.wrap(Country.load(collection.first))) }
+      let!(:service2) { create(:service, geographical_availabilities: Array.wrap([Country.load(collection.first), Country.load(collection.second)])) }
+      let!(:service4) { create(:service, geographical_availabilities: Array.wrap(Country.load(collection.second))) }
+      let!(:field_name) { :geographical_availabilities }
+      let!(:param_name) { :geographical_availabilities }
+      let!(:values) { "Poland" }
+      let!(:filter_class) { Filter::Location }
+      it "checks if location filter works" do
+        Service.reindex
+        basic_test
+      end
+    end
   end
 end
