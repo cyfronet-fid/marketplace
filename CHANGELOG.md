@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Filter save by breadcrumbs navigation test (@goreck888)
+- Filter Provider location to use geographical_availabilities (@kmarszalek)
 
 ## [3.4.0] 2020-12-22
 

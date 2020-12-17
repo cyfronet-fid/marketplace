@@ -25,6 +25,7 @@ module Service::Search
       scientific_domains: search_scientific_domains_ids,
       providers: providers.map(&:id),
       platforms: platforms.map(&:id),
+      geographical_availabilities: geographical_availabilities.map(&:alpha2),
       target_users: target_users.map(&:id),
       order_type: [order_type] << offers.map(&:order_type),
       tags: tag_list,
