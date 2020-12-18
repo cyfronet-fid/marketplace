@@ -1,5 +1,4 @@
-= simple_form_for [:backoffice, service, offer], html: { "data-controller": "offer" } do |f|
-  = f.hidden_field :id
+= simple_form_for offer_edit_source_module, html: { "data-controller": "offer" } do |f|
   %h4.mt-5.mb-0.text-uppercase
     = _("Offer parameters")
   .row.parameters-section
@@ -15,5 +14,5 @@
   .row
     .col-12
       = f.button :submit, class: "btn btn-primary pl-5 pr-5"
-      = link_to _("cancel and back to previous page"), backoffice_service_path(service),
+      = link_to _("cancel and back to previous page"), back_link,
       class: "btn btn-link text-uppercase"

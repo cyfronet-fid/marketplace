@@ -4,9 +4,8 @@
   .mb-4.pb-4.border-header
     %h1= _("Create new offer")
 
-  = render "form",
+  = render "backoffice/services/offers/form",
     service: @service,
     offer: @offer,
-    offer_edit_source_module: [:backoffice, @service, @offer],
-    back_link: backoffice_service_path(@service)
-
+    offer_edit_source_module: [@service, :data_administrator, @offer],
+    back_link: service_data_administrator_path(@service)

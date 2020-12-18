@@ -1,0 +1,45 @@
+.row
+  .col-12.col-lg-9.row
+    .col-12.col-sm-3.d-flex.img-service-detail
+      - if local_assigns[:preview]
+        = image_tag backoffice_service_logo_preview_path(service_id: service.id || "new"),
+        class: "align-self-center img-fluid"
+      - else
+        = service_logo(service, "align-self-center img-fluid", "180x120")
+    .col-12.col-sm-9.service-details-header
+      %h2.font-weight-bolder= service.name
+      %p.mb-1= service.tagline
+      = render "services/categorization", service: service
+
+      .row.mt-2
+        .col
+          .stars
+            = print_rating_stars(service.rating)
+          .rating
+            %span.ml-1.font-weight-bold
+              (#{service.rating} /5)
+            - if service.persisted?
+              = link_to "#{service.service_opinion_count} reviews", service_opinions_path(service),
+              class: "ml-1 default-color"
+  .col-12.col-lg-3.text-center.vertical-center
+    .vertical-center-inner.access-type
+      - if policy(service).order?
+        = link_to _("Back to the resource"),
+          "https://providers.eosc-portal.eu/resource-dashboard/#{service.pid.split(".").first}/#{service.pid}/stats",
+          class: "btn btn-primary d-block mb-3"
+        = link_to _("Set parameters and offers"),
+          "#offers",
+          class: "btn btn-primary d-block mb-3"
+      %span.ordertype-label
+        %i{ class: "ordertype #{order_type(service)}" }
+        -# TODO: refactor dynamic translation
+        = t("offers.type.#{order_type(service)}")
+.row.service-links
+  .col-12.col-lg-9.row
+    .col-12.col-sm-3
+    .col-12.col-sm-9
+      - service_header_fields.select { |h| h[:name] == "links" }.map do |group|
+        = render "services/sidebar/simple_links",
+                    service: service,
+                    fields: group[:fields],
+                    nested: group[:nested] || ""
