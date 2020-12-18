@@ -22,6 +22,11 @@ Rails.application.routes.draw do
       resource :question, only: [:new, :create], constraints: lambda { |req| req.format == :js }
       resources :opinions, only: :index
       resources :details, only: :index
+      resource :data_administrator, only: :show do
+        scope module: :data_administrator do
+          resources :offers, only: [:new, :edit, :create, :update]
+        end
+      end
     end
   end
 

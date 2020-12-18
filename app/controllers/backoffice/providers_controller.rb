@@ -14,6 +14,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   def new
     @provider = Provider.new
     @provider.sources.build source_type: "eic"
+    @provider.data_administrators.build
     authorize(@provider)
   end
 
@@ -30,9 +31,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   end
 
   def edit
-    if @provider.sources.empty?
-      @provider.sources.build source_type: "eic"
-    end
+    add_missing_nested_models
   end
 
   def update
@@ -54,5 +53,14 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     def find_and_authorize
       @provider = Provider.find(params[:id])
       authorize(@provider)
+    end
+
+    def add_missing_nested_models
+      if @provider.sources.empty?
+        @provider.sources.build source_type: "eic"
+      end
+      if @provider.data_administrators.blank?
+        @provider.data_administrators.build
+      end
     end
 end
