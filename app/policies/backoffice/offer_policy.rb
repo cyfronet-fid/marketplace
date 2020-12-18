@@ -5,7 +5,7 @@ class Backoffice::OfferPolicy < ApplicationPolicy
     def resolve
       if user.service_portfolio_manager?
         scope
-      elsif user.service_owner?
+      elsif user.service_owner? || DataAdministrator.where(email: user&.email).count.positive?
         scope.joins(:service_user_relationships).
           where(service_user_relationships: { user: user })
       else
@@ -20,7 +20,8 @@ class Backoffice::OfferPolicy < ApplicationPolicy
   end
 
   def create?
-    managed? && !service_deleted?
+    DataAdministrator.where(email: user&.email).count.positive? ||
+      managed? && !service_deleted?
   end
 
   def edit?
@@ -28,7 +29,8 @@ class Backoffice::OfferPolicy < ApplicationPolicy
   end
 
   def update?
-    managed? && !service_deleted?
+    DataAdministrator.where(email: user&.email).count.positive? ||
+      managed? && !service_deleted?
   end
 
   def destroy?
