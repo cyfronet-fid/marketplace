@@ -17,8 +17,8 @@
         = parameter_templates(f)
       .float-right.parameter-cards
         .offer-attributes{ "data-target": "offer.attributes" }
-          - offer.parameters.each do |p|
-            = render "parameters/template", parameter: p, form: f
+          - offer.parameters.each_with_index do |p, idx|
+            = render "parameters/template", parameter: p, form: f, index: idx
 
   %hr.bottom-hr.mb-5
   .row
