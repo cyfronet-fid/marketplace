@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_12_070943) do
+ActiveRecord::Schema.define(version: 2020_12_16_161322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,6 +84,17 @@ ActiveRecord::Schema.define(version: 2020_11_12_070943) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["contactable_id"], name: "index_contacts_on_contactable_id"
     t.index ["id", "contactable_id", "contactable_type"], name: "index_contacts_on_id_and_contactable_id_and_contactable_type", unique: true
+  end
+
+  create_table "data_administrators", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_data_administrators_on_email"
+    t.index ["first_name"], name: "index_data_administrators_on_first_name"
+    t.index ["last_name"], name: "index_data_administrators_on_last_name"
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -245,6 +256,15 @@ ActiveRecord::Schema.define(version: 2020_11_12_070943) do
     t.datetime "updated_at", null: false
     t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
+  end
+
+  create_table "provider_data_administrators", force: :cascade do |t|
+    t.bigint "data_administrator_id"
+    t.bigint "provider_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["data_administrator_id"], name: "index_provider_data_administrators_on_data_administrator_id"
+    t.index ["provider_id"], name: "index_provider_data_administrators_on_provider_id"
   end
 
   create_table "provider_sources", force: :cascade do |t|

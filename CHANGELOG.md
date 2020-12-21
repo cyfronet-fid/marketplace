@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Remove parameters in default offer(@goreck888)
 
 ## [3.3.0] 2020-12-11
 
