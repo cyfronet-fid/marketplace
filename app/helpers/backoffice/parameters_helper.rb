@@ -30,6 +30,6 @@ module Backoffice::ParametersHelper
 
   def parameter_template(parameter, form)
     render(partial: "parameters/template",
-           locals: { form: form, parameter: parameter }).html_safe
+           locals: { form: form, parameter: parameter, index: parameter.id }).html_safe
   end
 end
