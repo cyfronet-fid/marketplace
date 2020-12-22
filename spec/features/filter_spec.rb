@@ -5,6 +5,12 @@ require "rails_helper"
 RSpec.feature "Service filter" do
   include OmniauthHelper
 
+  before do
+    resources_selector = "body main div:nth-child(2).container div.container div.row div.col-lg-9"
+    service_selector = "div.media.mb-3.service-box.shadow-sm"
+    @services_selector = resources_selector + " " + service_selector
+  end
+
   context "wrapper" do
     it "can be closed", js: true do
       create(:provider, name: "Cyfronet provider")
@@ -40,7 +46,7 @@ RSpec.feature "Service filter" do
     create(:service, name: "dd", providers: [provider], scientific_domains: [scientific_domain])
 
     visit services_path(q: "dd", providers: [provider.to_param], scientific_domains: [scientific_domain.to_param])
-    click_on "dd"
+    click_on "dd", match: :first
     click_on "Resources"
 
     expect(page).to have_text("Looking for: dd")
@@ -62,7 +68,10 @@ RSpec.feature "Service filter" do
     create(:service, name: "Cyfronet service", providers: [cyfronet])
 
     visit services_path(providers: [cyfronet.to_param])
-    expect(page).to_not have_text("Other service")
+
+    all(@services_selector).each do |element|
+      expect(element).to_not have_text("Other service")
+    end
 
     click_on "Clear all filters"
 
@@ -103,19 +112,30 @@ RSpec.feature "Service filter" do
       expect(page).to have_text("Root service")
       expect(page).to have_text("Sub service")
       expect(page).to have_text("Subsub service")
-      expect(page).to_not have_text("Other service")
+      all(@services_selector).each do |element|
+        expect(element).to_not have_text("Other service")
+      end
 
       visit services_path(scientific_domains: [sub.id])
-      expect(page).to_not have_text("Root service")
+      all(@services_selector).each do |element|
+        expect(element).to_not have_text("Root service")
+      end
       expect(page).to have_text("Sub service")
       expect(page).to have_text("Subsub service")
-      expect(page).to_not have_text("Other service")
+      all(@services_selector).each do |element|
+        expect(element).to_not have_text("Other service")
+      end
 
       visit services_path(scientific_domains: [subsub.id])
-      expect(page).to_not have_text("Root service")
-      expect(page).to_not have_text("Sub service")
+      all(@services_selector).each do |element|
+        expect(element).to_not have_text("Root service")
+        expect(element).to_not have_text("Sub service")
+      end
       expect(page).to have_text("Subsub service")
       expect(page).to_not have_text("Other service")
+      all(@services_selector).each do |element|
+        expect(element).to_not have_text("Other service")
+      end
     end
 
     it "shows first 5 elements by default", js: true do
@@ -208,8 +228,10 @@ RSpec.feature "Service filter" do
       visit services_path(order_type: "open_access")
       expect(page).to have_text(open_access_service.name)
       expect(page).to have_text(mixed_offers_services.name)
-      expect(page).to_not have_text(external_service.name)
-      expect(page).to_not have_text(internal_ordering_service.name)
+      all(@services_selector).each do |element|
+        expect(element).to_not have_text(external_service.name)
+        expect(element).to_not have_text(internal_ordering_service.name)
+      end
     end
   end
 
@@ -222,12 +244,16 @@ RSpec.feature "Service filter" do
       visit services_path(tag: "a")
       expect(page).to have_text("ATag")
       expect(page).to have_text("ABTag")
-      expect(page).to_not have_text("CTag")
+      all(@services_selector).each do |element|
+        expect(element).to_not have_text("CTag")
+      end
 
       visit services_path(tag: ["a", "b"])
       expect(page).to have_text("ATag")
       expect(page).to have_text("ABTag")
-      expect(page).to_not have_text("CTag")
+      all(@services_selector).each do |element|
+        expect(element).to_not have_text("CTag")
+      end
 
       visit services_path(tag: ["a", "b", "c"])
       expect(page).to have_text("ATag")
@@ -235,9 +261,11 @@ RSpec.feature "Service filter" do
       expect(page).to have_text("CTag")
 
       visit services_path(tag: ["d"])
-      expect(page).to_not have_text("ATag")
-      expect(page).to_not have_text("ABTag")
-      expect(page).to_not have_text("CTag")
+      all(@services_selector).each do |element|
+        expect(element).to_not have_text("ATag")
+        expect(element).to_not have_text("ABTag")
+        expect(element).to_not have_text("CTag")
+      end
     end
   end
 end

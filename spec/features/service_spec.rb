@@ -5,6 +5,12 @@ require "rails_helper"
 RSpec.feature "Service browsing" do
   include OmniauthHelper
 
+  before do
+    resources_selector = "body main div:nth-child(2).container div.container div.row div.col-lg-9"
+    service_selector = "div.media.mb-3.service-box.shadow-sm"
+    @services_selector = resources_selector + " " + service_selector
+  end
+
   scenario "allows to see service details" do
     service = create(:service, tag_list: ["my-tag"])
 
@@ -153,8 +159,14 @@ RSpec.feature "Service browsing" do
 
     visit services_path
 
-    expect(page.body.index("Service a")).to be < page.body.index("Service b")
-    expect(page.body.index("Service b")).to be < page.body.index("Service c")
+    names = ["Service a", "Service b", "Service c"]
+    all(@services_selector).each_with_index do |service_box, i|
+      expect(service_box).to have_content(names[i])
+    end
+
+    # Above implementation can be replaced with below after fixing split gem use_ab_test
+    # expect(page.body.index("Service a")).to be < page.body.index("Service b")
+    # expect(page.body.index("Service b")).to be < page.body.index("Service c")
   end
 
   scenario "sorting will set query param and preserve existing ones", js: true do
@@ -175,6 +187,8 @@ RSpec.feature "Service browsing" do
     visit services_path(per_page: "1")
 
     expect(page).to have_text("Service a")
-    expect(page).to_not have_text("Service b")
+    all(@services_selector).each do |element|
+      expect(element).to_not have_text("Service b")
+    end
   end
 end
