@@ -1,4 +1,3 @@
-
 .container
   .row
     .col-lg-3.mb-5
@@ -11,13 +10,25 @@
     .col-lg-9
       .row.mb-4
         = render "services/active_filters", category: category, active_filters: active_filters
+        - ab_test(:recommendation_panel) do |version|
+          = render partial: "services/recommendation_panel_v1",
+                   locals: { highlights: highlights, category: category } if version == "v1"
         = render "services/pagination", sort_options: sort_options, services: services
 
       %p
-        = render partial: "service", collection: services,
-          locals: { highlights: highlights,
-                    category: category,
-                    offers: offers,
-                    comparison_enabled: comparison_enabled,
-                    remote: true }
+        = render partial: "service", collection: services[0..1],
+                 locals: { highlights: highlights,
+                           category: category,
+                           offers: offers,
+                           comparison_enabled: comparison_enabled,
+                           remote: true }
+        - ab_test(:recommendation_panel) do |version|
+          = render partial: "services/recommendation_panel_v2",
+                   locals: { highlights: highlights, category: category } if version == "v2"
+        = render partial: "service", collection: services[2..],
+                 locals: { highlights: highlights,
+                           category: category,
+                           offers: offers,
+                           comparison_enabled: comparison_enabled,
+                           remote: true }
         = render "services/paginate", services: services

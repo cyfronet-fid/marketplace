@@ -1,0 +1,28 @@
+.service-info-box.recommendation
+  .recommend-box
+    Recommended
+  %header
+    = link_to highlighted_for(:name, recommendation_v2, highlights[recommendation_v2.id]).truncate(40),
+              service_path(recommendation_v2, category.present? ? { fromc: category.slug } : nil,
+              from_recommendation_panel: true)
+  %article
+    %p
+      .image-frame
+        %span.helper
+        = service_logo(recommendation_v2)
+      = truncate(highlighted_for(:tagline, recommendation_v2, highlights[recommendation_v2.id]), length: 110)
+  %footer
+    .column-left
+      %p
+        %small
+          = _("Provided by") + ":"
+        %br
+          %span
+            = safe_join(providers_text(recommendation_v2), ", ").truncate(24)
+    .column-right
+      %p.text-right
+        %small
+          = _("Dedicated for") + ":"
+        %br
+          %span
+            = safe_join(dedicated_for_text(recommendation_v2), ", ").truncate(24)

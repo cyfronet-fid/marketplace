@@ -9,8 +9,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Create Simple Recommender Service (@JanKapala)
+- Create two versions of "Recommended results" section on the search result page, managed by the split gem (@JanKapala)
 
 ### Changed
+- Adapt old tests to the new "Recommended results" section (@JanKapala)
 
 ### Deprecated
 

@@ -1,0 +1,4 @@
+.container
+  .row.mb-4
+    = render partial: "services/recommendation_v2", collection: get_naive_recommendation,
+             locals: { highlights: highlights, category: category }
