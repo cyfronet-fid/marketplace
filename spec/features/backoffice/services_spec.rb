@@ -432,7 +432,6 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "I can delete existed parameters", js: true do
-      # Need to fix remove parameters
       service = create(:service, name: "my service", status: :draft)
       parameter = build(:input_parameter,
                          name: "Number of CPU Cores",
@@ -446,10 +445,27 @@ RSpec.feature "Services in backoffice" do
       first("a[class='edit-offer card-link']").click
 
       first("a[data-action='offer#remove']").first("i").click
-      first("a[data-action='offer#remove']").first("i").click
       click_on "Update Offer"
 
-      expect(offer.reload.parameters).to eq([])
+      parameters = offer.reload.parameters
+
+      expect(parameters.size).to eq(1)
+      expect(parameters.first.name).to eq("Number of CPU Cores")
+      expect(parameters.first.hint).to eq("Select number of cores you want")
+      expect(parameters.first.value_type).to eq("integer")
+    end
+
+    scenario "I can delete existed parameters in default offer", js: true do
+      service = create(:service, name: "my service", offers: [create(:offer_with_parameters)])
+
+      visit backoffice_service_path(service)
+      click_on "Edit parameters"
+
+      find("a[data-action='offer#remove']").click
+
+      click_on "Update Offer"
+
+      expect(service.offers.first.reload.parameters).to eq([])
     end
 
 
