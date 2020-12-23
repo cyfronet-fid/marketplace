@@ -152,12 +152,10 @@
 .eu-information.p-4
   .container
     %p.mb-1
-      -# haml-lint:disable MultilinePipe
-      = _("The EOSC portal is been jointly developed and maintained by the EOSC-hub, eInfraCentral and " + |
-          "OpenAIRE-Advance projects funded by the European") |
-      -# haml-lint:enable MultilinePipe
-    %p.mb-1
-      = _("Union’s Horizon 2020 research and innovation programme with contribution of the European Commission")
-    %p.mt-2
-      = _("2018 EOSC Portal")
-
+      :ruby
+        text = "The EOSC Portal is operated by the EOSC Enhance (Grant Agreement no. 871160), "
+        text += "EOSC-hub (Grant Agreement no. 777536), and OpenAIRE-Advance (Grant Agreement no. 777541)"
+        text += "projects funded by the European Union’s Horizon 2020 research and innovation programme."
+        text += "For a complete list of contributors, visit "
+        _(text)
+        link_to _("About EOSC Portal"), "https://www.eosc-portal.eu/about-eosc-portal"
