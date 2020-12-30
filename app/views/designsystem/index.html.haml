@@ -428,31 +428,26 @@
               %li
                 %a{ href: "#" } EOSC
               %li
+                %a{ href: "#" } EOSC Portal
+              %li
                 %a{ href: "#" } EOSC Doers
+              %li
+                %a{ href: "#" } EOSC Glossary
               %li
                 %a{ href: "#" } EOSC Projects
               %li
-                %a{ href: "#" } Funding Opportunities
-              %li
-                %a{ href: "#" } Marketplace
-              %li
-                %a{ href: "#" } FAQs
-              %li
-                %a{ href: "#" } Contact us
-          .col-md
-            %ul
-              %li
-                .title Governance
-              %li
                 %a{ href: "#" } EOSC Governance
               %li
-                %a{ href: "#" } Rules of participation
+                %a{ href: "#" } EOSC Portal FAQs
               %li
-                %a{ href: "#" } Best Practices
+                %a{ href: "#" } EOSC Association
+              %li
+                %a{ href: "#" } EOSC Enhance
           .col-md
             %ul
               %li
-                .title Services & Resources
+                .title
+                  %a{ href: "#" } Services & Resources
               %li
                 %a{ href: "#" } Sharing & Discovery
               %li
@@ -469,12 +464,12 @@
                 %a{ href: "#" } Training & Support
               %li
                 %a{ href: "#" } Security & Operations
+              %li
+                %a{ href: "#" } Help Desk
           .col-md
             %ul
               %li
                 .title Policy
-              %li
-                %a{ href: "#" } EC Documents
               %li
                 %a{ href: "#" } Europe
               %li
@@ -482,11 +477,13 @@
           .col-md
             %ul
               %li
-                .title EOSC IN PRACTICE
+                .title Use Cases
               %li
-                %a{ href: "#" } Use Cases
+                %a{ href: "#" } Community Use Cases
               %li
-                %a{ href: "#" } Open Call
+                %a{ href: "#" } Submit Use Case
+              %li
+                %a{ href: "#" } Industry Use Case
           .col-md
             %ul
               %li
@@ -497,20 +494,33 @@
                 %a{ href: "#" } Forthcoming events
               %li
                 %a{ href: "#" } Past Events
+              %li
+                %a{ href: "#" } Submit your News/Event
+              %li
+                Documents
+              %li
+                %a{ href: "#" } European Commission
+              %li
+                %a{ href: "#" } Community
+              %li
+                %a{ href: "#" } Member States
           .col-md
             %ul
               %li
-                .title MARKETPLACE
+                .title
+                  %a{ href: "#" } For providers
               %li
-                %a{ href: "#" } About
+                %a{ href: "#" } Providers Documentation
+          .col-md
+            %ul
               %li
-                = link_to "All Services", services_path
-              - @root_categories.each do |root_category|
-                %li
-                  = link_to root_category.name, root_category
+                .title
+                  %a{ href: "#" } Subscribe
+          .col-md
+            %ul
               %li
-                %a{ href: "#" } For providers
-
+                .title
+                  %a{ href: "#" } Using the Portal
 
         .row.socials
           .col-md-6

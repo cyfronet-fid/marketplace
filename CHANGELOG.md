@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Footer content (@goreck888)
+- Footer align with EOSC Portal (@kmarszalek)
 
 ### Deprecated
 
