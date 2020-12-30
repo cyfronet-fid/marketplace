@@ -573,6 +573,14 @@ li {
   font-weight: 300;
   padding: 1rem 0;
 
+  .arrow-up {
+    margin: -67px auto 8px;
+    display: block;
+    width: 162px;
+    height: 60px;
+    background: url('../images/arrow-up.png') top center no-repeat;
+  }
+
   .logo-one {
     background: url('../images/eosc-logo-mono.png') top center no-repeat;
     width: 203px;
@@ -590,6 +598,7 @@ li {
   .copyright {
     text-align: right;
     font-size: 0.875rem;
+    font-weight: 700;
 
     a {
       text-transform: uppercase;
@@ -610,10 +619,13 @@ li {
 
     li {
       margin-bottom: 0.25rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: $color-white;
 
       a {
-        font-size: 0.75rem;
-        font-weight: 100;
+        font-size: 0.68rem;
+        font-weight: 700;
         line-height: 1.1;
 
         &:hover {
@@ -625,12 +637,17 @@ li {
   }
 
   .title {
-    color: $color-6;
-    text-transform: uppercase;
-    font-weight: 600;
+    color: $color-white;
+    font-weight: 200;
     line-height: 1.2;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     margin-bottom: 0.5rem;
+
+    a {
+      font-size: 0.875rem;
+      color: $color-white;
+      font-weight: 200;
+    }
   }
 
   a {
