@@ -32,8 +32,7 @@ class ServicesController < ApplicationController
       @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
       @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
     end
-
-    ab_finished(:recommendation_panel, reset: false) if params[:from_recommendation_panel]
+    # TODO: add ab_finished to run split recommendations experiment
   end
 
   private

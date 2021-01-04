@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Split experiments in recommendations view (@goreck888)
 
 ## [3.4.0] 2020-12-22
 
