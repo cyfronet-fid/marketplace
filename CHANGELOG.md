@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Filter save by breadcrumbs navigation test (@goreck888)
 
 ## [3.4.0] 2020-12-22
 
