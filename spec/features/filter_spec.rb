@@ -40,13 +40,13 @@ RSpec.feature "Service filter" do
     expect(body).to have_text("Funcy search phrase")
   end
 
-  it "stores filter state by breadcrumbs navigation", js: true do
+  it "stores filter state by breadcrumbs navigation" do
     scientific_domain = create(:scientific_domain, name: "Science!")
     provider = create(:provider, name: "Cyfronet provider")
     create(:service, name: "dd", providers: [provider], scientific_domains: [scientific_domain])
 
     visit services_path(q: "dd", providers: [provider.to_param], scientific_domains: [scientific_domain.to_param])
-    click_on "dd", match: :first
+    find("a[href='/services/dd']").click
     click_on "Resources"
 
     expect(page).to have_text("Looking for: dd")
