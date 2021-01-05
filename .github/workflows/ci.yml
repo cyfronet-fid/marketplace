@@ -1,0 +1,61 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:10.11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: mp_test
+        ports:
+        - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      redis:
+        image: redis
+        ports:
+        - 6379:6379
+        
+    steps:
+    - name: Configure sysctl limits
+      run: |
+        sudo swapoff -a
+        sudo sysctl -w vm.swappiness=1
+        sudo sysctl -w fs.file-max=262144
+        sudo sysctl -w vm.max_map_count=262144
+    - name: Runs Elasticsearch
+      uses: elastic/elastic-github-actions/elasticsearch@master
+      with:
+        stack-version: 7.5.0
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.6.5
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '10'
+        check-latest: true
+    - name: Install yarn
+      run: |
+        npm install -g yarn
+        yarn
+    - name: Setup and run rubocop
+      run: |
+        gem install rubocop
+        bundle exec rubocop
+    - name: Setup and run brakeman
+      run: |
+        gem install brakeman
+        brakeman --exit-on-warn --quiet -f plain
+    - name: Setup DB, Run tests
+      env:
+        RAILS_ENV: test
+        DATABASE_URL: "postgres://postgres:password@localhost/mp_test"
+        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      run: |
+        bundle exec rake db:drop db:create db:migrate RAILS_ENV=test
+        bundle exec rspec
