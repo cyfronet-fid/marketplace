@@ -11,12 +11,18 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
-- Footer content (@goreck888)
-- Footer align with EOSC Portal (@kmarszalek)
 
 ### Deprecated
 
 ### Removed
+
+### Fixed
+
+## [3.4.1] 2021-01-07
+
+### Changed
+- Footer content (@goreck888)
+- Footer align with EOSC Portal (@kmarszalek)
 
 ### Fixed
 - Split experiments in recommendations view (@goreck888)
