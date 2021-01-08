@@ -22,6 +22,14 @@ RSpec.feature "Service browsing" do
     expect(body).to have_content "my-tag"
   end
 
+  scenario "check trl on service details" do
+    service = create(:service)
+
+    visit service_details_path(service)
+
+    expect(body).to have_content service.trl.first.name.upcase
+  end
+
   scenario "not allows to see draft service via direct link for default user" do
     service = create(:service, status: :draft)
     visit service_path(service)

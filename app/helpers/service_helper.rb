@@ -115,4 +115,8 @@ module ServiceHelper
      Country.countries_for_region("Europe").map(&:alpha2))
       .present?
   end
+
+  def trl_description_text(service)
+    service.trl.first.description
+  end
 end
