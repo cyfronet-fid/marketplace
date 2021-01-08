@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- More fields to the comparision view (@kmarszalek)
 
 ### Changed
 - Footer content (@goreck888)

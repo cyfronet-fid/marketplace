@@ -30,50 +30,97 @@
           %td.title-col.empty.text-uppercase
             = link_to _("Add next resource"), services_path
       %tr
-        %th
-          = _("Providers")
+        %th{ "data-toggle": "tooltip",
+        title: "The name(s) (or abbreviation(s)) of Provider(s) that manage or deliver the Resource in |
+        federated scenarios." } |
+          = _("Resource Providers")
         - @services.each do |service|
           %td= service.providers.map { |p| p.name }.join(", ")
       %tr.lightgrey-row
-        %th
-          = _("Resource order type")
+        %th{ "data-toggle": "tooltip",
+        title: "The branch of science, scientific discipline that is related to the Resource." }
+          = _("Scientific Domain")
         - @services.each do |service|
           %td
-            = render Services::InlineOrderTypeComponent.new(:span, order_type(service))
+            %dl
+              - field_tree(service, :scientific_domains).each do |parent, children|
+                %dt
+                  %span
+                    = parent
+                - children.each do |child|
+                  %dd
+                    %span= child
       %tr
-        %th
-          = _("Scientific domain")
+        %th{ "data-toggle": "tooltip",
+        title: "A named group of Resources that offer access to the same type of Resource or capabilities." }
+          = _("Categorisation")
         - @services.each do |service|
-          %td= service.scientific_domains .map { |sd| sd.name }.join(", ")
+          %td
+            %dl
+              - field_tree(service, :pc_categories).each do |parent, children|
+                %dt
+                  %span
+                    = parent
+                - children.each do |child|
+                  %dd
+                    %span= child
       %tr.lightgrey-row
-        %th
-          = _("Dedicated for")
+        %th{ "data-toggle": "tooltip",
+        title: "Type of users/customers that commissions a Provider to deliver a Resource." }
+          = _("Target Users")
         - @services.each do |service|
           %td= service.target_users.map { |tg| tg.name }.join(", ")
       %tr
-        %th
-          = _("Resource life cycle status")
+        %th{ "data-toggle": "tooltip",
+        title: "The way a user can access the Resource (Remote, Physical, Virtual, etc.)" }
+          = _("Resource Access Type")
         - @services.each do |service|
-          - if service.life_cycle_status.present?
-            %td= service.life_cycle_status.first.name
+          %td= service.access_types.map { |tg| tg.name }.join(", ")
       %tr.lightgrey-row
-        %th
-          = _("Geographical availabilities")
+        %th{ "data-toggle": "tooltip",
+        title: "Eligibility/criteria for granting access to users (excellence-based, free-conditionally, free etc.)" }
+          = _("Resource Access Mode")
         - @services.each do |service|
-          %td= service.geographical_availabilities.join(", ")
+          %td= service.access_modes.map { |sd| sd.name }.join(", ")
       %tr
-        %th
-          = _("Languages")
-        - @services.each do |service|
-          %td
-            %ul
-            - service.language_availability.each do |language|
-              %li= I18nData.languages[language.upcase] || language
-
-      %tr.lightgrey-row
-        %th
+        %th{ "data-toggle": "tooltip",
+        title: "Keywords associated to the Resource to simplify search by relevant keywords." }
           = _("Tags")
         - @services.each do |service|
           %td
             - service.tag_list.sort.each do |tag|
               = link_to tag, services_path(tag: tag), class: "badge badge-light"
+      %tr.lightgrey-row
+        %th{ "data-toggle": "tooltip", title: "Locations where the Resource is offered." }
+          = _("Geographical Availability")
+        - @services.each do |service|
+          %td= service.geographical_availabilities.join(", ")
+      %tr
+        %th{ "data-toggle": "tooltip", title: "Languages of the (user interface of the) Resource." }
+          = _("Language Availability")
+        - @services.each do |service|
+          %td
+            %ul
+            - service.language_availability.each do |language|
+              %li= I18nData.languages[language.upcase] || language
+      %tr.lightgrey-row
+        %th{ "data-toggle": "tooltip",
+        title: "The Technology Readiness Level of the Resource updated in the context of the EOSC." }
+          = _("Technology Readiness Level")
+        - @services.each do |service|
+          %td{ "data-toggle": "tooltip", title: service.trl.present? ? trl_description_text(service) : nil }
+            = service.trl.map { |trl| trl.name.upcase }.join(", ")
+      %tr
+        %th{ "data-toggle": "tooltip", title: "Phase of the Resource life-cycle." }
+          = _("Resource Life Cycle Status")
+        - @services.each do |service|
+          - if service.life_cycle_status.present?
+            %td= service.life_cycle_status.first.name
+      %tr.lightgrey-row
+        %th{ "data-toggle": "tooltip",
+        title: "Information on the order type (requires an ordering procedure, or no ordering and if fully open or |
+        requires authentication)" } |
+          = _("Resource Order Type")
+        - @services.each do |service|
+          %td
+            = render Services::InlineOrderTypeComponent.new(:span, order_type(service))
