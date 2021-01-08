@@ -416,7 +416,7 @@
               = image_pack_tag "eosc-footer-logo.png"
           .col-md-6.my-auto.copyright
             %span.copy-text
-              Copyright 2018 - All right reserved
+              Copyright 2018 - All rights reserved
             %a{ href: "https://eosc-portal.eu/privacy-policy-summary" }
               privacy policy
         %hr
@@ -529,10 +529,10 @@
 
     .eu-information
       .container
-        :ruby
-          text = "The EOSC Portal is operated by the EOSC Enhance (Grant Agreement no. 871160), "
-          text += "EOSC-hub (Grant Agreement no. 777536), and OpenAIRE-Advance (Grant Agreement no. 777541)"
-          text += "projects funded by the European Union’s Horizon 2020 research and innovation programme."
-          text += "For a complete list of contributors, visit "
-          _(text)
-          link_to _("About EOSC Portal"), "https://www.eosc-portal.eu/about-eosc-portal"
+        -# haml-lint:disable MultilinePipe
+        = _("The EOSC Portal is operated by the EOSC Enhance (Grant Agreement no. 871160), " + |
+            "EOSC-hub (Grant Agreement no. 777536), and OpenAIRE-Advance (Grant Agreement no. 777541) " + |
+            "projects funded by the European Union’s Horizon 2020 research and innovation programme." + |
+            "For a complete list of contributors, visit the ") |
+        -# haml-lint:enable MultilinePipe
+        = link_to _("About EOSC Portal"), "https://www.eosc-portal.eu/about-eosc-portal"
