@@ -19,4 +19,9 @@ RSpec.describe ServiceHelper, type: :helper do
     list = create_list(:provider, 4)
     expect(get_providers_list).to eq(list)
   end
+
+  it "return trl description" do
+    service = create(:service)
+    expect(trl_description_text(service)).to eq("Super description")
+  end
 end

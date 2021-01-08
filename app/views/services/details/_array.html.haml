@@ -27,6 +27,10 @@
               %span
                 -# TODO: refactor dynamic translation
                 = t(".#{element}")
+            - elsif field == "trl"
+              %span
+                %text{ "data-toggle": "tooltip", title: trl_description_text(service) }
+                  #{element.send(nested[field.to_sym]).upcase}
             - else
               %span
                 #{element.send(nested[field.to_sym])}#{idx == (Array(service.send(field)).map.size) - 1 ? nil : ", "}
