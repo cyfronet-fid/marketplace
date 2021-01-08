@@ -89,42 +89,42 @@ RSpec.feature "Comparison", js: true do
     expect(page).to have_content(service2.name)
     expect(page).to have_content(service3.name)
 
-    expect(page).to have_text("Providers")
+    expect(page).to have_text("Resource Providers")
 
     expect(page).to have_text(service1.providers.map(&:name).join(", "))
     expect(page).to have_text(service2.providers.map(&:name).join(", "))
     expect(page).to have_text(service3.providers.map(&:name).join(", "))
 
-    expect(page).to have_text("Resource order type")
+    expect(page).to have_text("Resource Order Type")
 
     expect(page).to have_text("Open Access")
     expect(page).to have_text("Order Required").twice
 
-    expect(page).to have_text("Scientific domain")
+    expect(page).to have_text("Scientific Domain")
 
     expect(page).to have_text(service1.scientific_domains.map(&:name).join(", "))
     expect(page).to have_text(service2.scientific_domains.map(&:name).join(", "))
     expect(page).to have_text(service3.scientific_domains.map(&:name).join(", "))
 
-    expect(page).to have_text("Dedicated for")
+    expect(page).to have_text("Target Users")
 
     expect(page).to have_text(service1.target_users.map(&:name).join(", "))
     expect(page).to have_text(service2.target_users.map(&:name).join(", "))
     expect(page).to have_text(service3.target_users.map(&:name).join(", "))
 
-    expect(page).to have_text("Resource life cycle status")
+    expect(page).to have_text("Resource Life Cycle Status")
 
     expect(page).to have_text(service1.life_cycle_status.map(&:name).join(", "))
     expect(page).to have_text(service2.life_cycle_status.map(&:name).join(", "))
     expect(page).to have_text(service3.life_cycle_status.map(&:name).join(", "))
 
-    expect(page).to have_text("Geographical availabilities")
+    expect(page).to have_text("Geographical Availability")
 
     expect(page).to have_text("Greece")
     expect(page).to have_text("Poland, Germany")
     expect(page).to have_text("European Union")
 
-    expect(page).to have_text("Languages")
+    expect(page).to have_text("Language Availability")
 
     expect(page).to have_text(service1.languages.join(", "))
     expect(page).to have_text(service2.languages.join(", "))
@@ -135,6 +135,21 @@ RSpec.feature "Comparison", js: true do
     expect(page).to have_selector("a[href='/services?tag=tag1']")
     expect(page).to have_selector("a[href='/services?tag=tag2']")
     expect(page).to have_selector("a[href='/services?tag=tag3']")
+
+    expect(page).to have_text("Technology Readiness Level")
+
+    expect(page).to have_text(service1.trl.first.name.upcase)
+    expect(page).to have_text(service2.trl.first.name.upcase)
+    expect(page).to have_text(service3.trl.first.name.upcase)
+
+    expect(page).to have_text("Resource Access Type")
+    expect(page).to have_text("Resource Access Mode")
+
+    expect(page).to have_text("Categorisation")
+
+    expect(page).to have_text(service1.categories.map(&:name).join(", "))
+    expect(page).to have_text(service2.categories.map(&:name).join(", "))
+    expect(page).to have_text(service3.categories.map(&:name).join(", "))
   end
 
   it "deletes service from comparison on comparison page" do
