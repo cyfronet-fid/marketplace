@@ -163,7 +163,7 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I can remove additional public contacts", js: true do
       service = create(:service)
-      public_contacts = create_list(:public_contact, 3, contactable: service)
+      public_contacts = create_list(:public_contact, 2, contactable: service)
 
       visit edit_backoffice_service_path(service)
 
@@ -174,9 +174,8 @@ RSpec.feature "Services in backoffice" do
 
       click_on "Update Resource"
 
-      expect(page).to have_content(public_contacts.first.email)
+      expect(page).to_not have_content(public_contacts.first.email)
       expect(page).to_not have_content(public_contacts.second.email)
-      expect(page).to_not have_content(public_contacts.third.email)
     end
 
     scenario "I can see warning about no offers" do
