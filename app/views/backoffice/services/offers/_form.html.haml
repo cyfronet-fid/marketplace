@@ -1,4 +1,4 @@
-= simple_form_for [source_module, service, offer], html: { "data-controller": "offer" } do |f|
+= simple_form_for offer_form_source_module, html: { "data-controller": "offer" } do |f|
   .col-lg-8.pl-0
     = f.error_notification
     = f.input :name, input_html: { class: "form-control-lg" }
