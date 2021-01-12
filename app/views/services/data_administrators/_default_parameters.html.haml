@@ -1,0 +1,40 @@
+.col-md-6
+  .card.m-0.mb-5
+    - technical_parameters = filter_technical_parameters(offer.attributes.map(&:to_json))
+    - if technical_parameters.present?
+      .card-body.pt-0.collapse-group
+        - if offer.name == "Offer" && offer.description == "#{offer.service.name} Offer"
+          .container
+            .row
+              .col-12.col-sm-3
+                = _("Edit icon")
+              .col-12.col-sm-7
+                %p
+                  -# haml-lint:disable MultilinePipe
+                  = _("Your parameters settings has been changed to default offer. New fields appeared in edit mode. " |
+                      "Please complete Name and Description for better user experience.") |
+                  -# haml-lint:enable MultilinePipe
+
+        %h5.text-uppercase.parameters-title.mb-0
+          = _("Technical Parameters")
+        %table.offer-params.table.table-hover
+          %tbody
+            - technical_parameters.each do |parameter|
+              %tr
+                %td= parameter["label"]
+                %td.text-right.text-nowrap.font-weight-bold= parse_offer_parameter_value(parameter)
+    - else
+      .row
+        .col-12.col-sm-3
+          default parameters icon
+        .col-12.col-sm-7
+          %p
+            = _("Your service does not have any default parameters yet.")
+
+    .card-button.text-center
+      %label
+        = link_to edit_service_data_administrator_offer_path(offer.service, offer) do
+          %span.btn.btn-primary.font-weight-bold
+            = _("Edit ordering parameters")
+
+

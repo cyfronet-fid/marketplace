@@ -15,8 +15,8 @@
               "best offer for their needs.") |
           -# haml-lint:enable MultilinePipe
 %h2#offers.mb-4.mt-5.font-weight-normal
-  = _("Resource offers")
+  = _("Parameters and offers")
 .row
-  = render partial: "services/data_administrators/edit_parameters"
+  = render partial: "services/data_administrators/default_parameters", locals: { offer: offers.first }
   = render partial: "services/data_administrators/offer", collection: offers, as: :offer
   = render partial: "services/data_administrators/new_offer"
