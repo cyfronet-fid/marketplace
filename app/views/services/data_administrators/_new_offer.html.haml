@@ -1,0 +1,14 @@
+.col-md-6
+  .card.m-0.mb-5
+    .row
+      .col-12.col-sm-3
+        Add new offer icon
+      .col-12.col-sm-7
+        %p
+          = _("You can add dedicated offer for your service")
+
+    .card-button.text-center
+      %label
+        = link_to new_service_data_administrator_offer_path do
+          %span.btn.btn-primary.font-weight-bold
+            = _("Add new offer")

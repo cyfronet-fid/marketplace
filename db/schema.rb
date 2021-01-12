@@ -168,8 +168,8 @@ ActiveRecord::Schema.define(version: 2020_12_16_161322) do
     t.datetime "updated_at", null: false
     t.jsonb "parameters", default: [], null: false
     t.boolean "voucherable", default: false, null: false
-    t.string "order_type", null: false
     t.string "status"
+    t.string "order_type", null: false
     t.string "webpage"
     t.boolean "internal", default: false
     t.string "order_url"

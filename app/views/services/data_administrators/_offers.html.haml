@@ -17,4 +17,6 @@
 %h2#offers.mb-4.mt-5.font-weight-normal
   = _("Resource offers")
 .row
+  = render partial: "services/data_administrators/edit_parameters"
   = render partial: "services/data_administrators/offer", collection: offers, as: :offer
+  = render partial: "services/data_administrators/new_offer"

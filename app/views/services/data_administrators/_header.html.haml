@@ -25,7 +25,7 @@
     .vertical-center-inner.access-type
       - if policy(service).order?
         = link_to _("Back to the resource"),
-          "https://providers.eosc-portal.eu/resource-dashboard/#{service.pid.split(".").first}/#{service.pid}/stats",
+          "https://providers.eosc-portal.eu/resource-dashboard/#{service.slug.split(".").first}/#{service.slug}/stats",
           class: "btn btn-primary d-block mb-3"
         = link_to _("Set parameters and offers"),
           "#offers",
