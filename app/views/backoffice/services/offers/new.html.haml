@@ -7,5 +7,6 @@
   = render "form",
     service: @service,
     offer: @offer,
-    source_module: :backoffice
+    offer_edit_source_module: [:backoffice, @service, @offer],
+    back_link: backoffice_service_path(@service)
 

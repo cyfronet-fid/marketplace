@@ -27,6 +27,13 @@ class OfferPolicy < ApplicationPolicy
     offer_editor?(user)
   end
 
+  def permitted_attributes
+    [:name, :description, :webpage, :order_type, :order_url,
+     parameters_attributes: [:type, :name, :hint, :min, :max,
+                             :unit, :value_type, :start_price, :step_price, :currency,
+                             :exclusive_min, :exclusive_max, :mode, :values, :value]]
+  end
+
   private
     def offer_editor?(user)
       DataAdministrator.where(email: user&.email).count.positive? ||
