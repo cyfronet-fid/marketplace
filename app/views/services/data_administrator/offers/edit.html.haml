@@ -5,11 +5,11 @@
     = render "backoffice/services/offers/one_offer_edit_form",
       offer: @offer,
       service: @service,
-      offer_edit_source_module: [@service, :data_administrator, @offer],
+      offer_form_source_module: [@service, :data_administrator, @offer],
       back_link: service_data_administrator_path(@service)
   - else
     = render "backoffice/services/offers/form",
       offer: @offer,
       service: @service,
-      offer_edit_source_module: [@service, :data_administrator, @offer],
+      offer_form_source_module: [@service, :data_administrator, @offer],
       back_link: service_data_administrator_path(@service)
