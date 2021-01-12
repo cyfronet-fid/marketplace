@@ -7,5 +7,5 @@
   = render "backoffice/services/offers/form",
     service: @service,
     offer: @offer,
-    offer_edit_source_module: [@service, :data_administrator, @offer],
+    offer_form_source_module: [@service, :data_administrator, @offer],
     back_link: service_data_administrator_path(@service)
