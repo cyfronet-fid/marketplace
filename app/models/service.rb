@@ -182,6 +182,10 @@ class Service < ApplicationRecord
     service_user_relationships.where(user: user).count.positive?
   end
 
+  def administered_by?(user)
+    resource_organisation.data_administrators.where(email: user.email).count.positive?
+  end
+
   def geographical_availabilities=(value)
     super(value&.map { |v| Country.for(v) })
   end
