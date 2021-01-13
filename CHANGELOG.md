@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - data_administator panel for adding/editing offers and its parameters (@goreck888)
 - views for data_administrator panel (@JanKapala, @jarekzet)
+- New resource view in the backoffice (@goreck888, @jarekzet)
 
 ### Changed
 

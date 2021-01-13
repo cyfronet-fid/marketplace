@@ -17,6 +17,16 @@ module Service::HeaderHelper
     "#{PC_DEFAULT_PROVIDER_DASHBOARD_URL}/provider/my"
   end
 
+  def about_link(service, from)
+    if from == "ordering_configuration"
+      service_ordering_configuration_path(service, { from: from })
+    elsif from == "backoffice_service"
+      backoffice_service_path(service, { from: from })
+    else
+      service_path(service)
+    end
+  end
+
   private
     def links
       {
