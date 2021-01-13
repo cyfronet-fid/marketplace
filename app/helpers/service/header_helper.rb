@@ -5,6 +5,14 @@ module Service::HeaderHelper
     [links]
   end
 
+  def resource_link(service)
+    if service.pid.present?
+      "https://providers.eosc-portal.eu/resource-dashboard/#{service.pid.split(".").first}/#{service.pid}/stats"
+    else
+      service_path(service)
+    end
+  end
+
   private
     def links
       {

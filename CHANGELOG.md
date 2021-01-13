@@ -9,6 +9,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- data_administator panel for adding/editing offers and its parameters (@goreck888)
+- views for data_administrator panel (@JanKapala, @jarekzet)
 
 ### Changed
 
@@ -35,7 +37,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - Footer content (@goreck888)
 - Footer align with EOSC Portal (@kmarszalek)
-- TRL field on the details page (@kmarszalek)
+- TRL field view on the service details page (@kmarszalek)
 
 ### Fixed
 - Filter save by breadcrumbs navigation test (@goreck888)

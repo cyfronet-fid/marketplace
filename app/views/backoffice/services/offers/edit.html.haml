@@ -6,7 +6,7 @@
       offer: @offer,
       service: @service,
       offer_form_source_module: [:backoffice, @service, @offer],
-      back_link: backoffice_service_path(service)
+      back_link: backoffice_service_path(@service)
   - else
     = render "form",
       offer: @offer,
