@@ -6,7 +6,6 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   after_action :reindex_offer, only: [:create, :update, :destroy]
 
   def new
-    @documentation_url = documentation_url
     @offer = Offer.new(service: @service)
     authorize(@offer)
   end
@@ -26,7 +25,6 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   end
 
   def edit
-    @documentation_url = documentation_url
   end
 
   def update
@@ -54,11 +52,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
 
     def offer_template
       temp = update_blank_parameters(permitted_attributes(Offer))
-      if @service.offers_count.positive?
-        Offer.new(temp.merge(service: @service, status: :draft))
-      else
-        Offer.new(temp.merge(service: @service, status: :published))
-      end
+      Offer.new(temp.merge(service: @service, status: :published))
     end
 
     def update_blank_parameters(template)
@@ -75,9 +69,5 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     def find_offer_and_authorize
       @offer = @service.offers.find_by(iid: params[:id])
       authorize(@offer)
-    end
-
-    def documentation_url
-      ENV["ATTRIBUTES_DOCS_URL"] || "https://confluence.egi.eu/x/wYI7Ag"
     end
 end

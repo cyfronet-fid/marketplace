@@ -119,4 +119,20 @@ module ServiceHelper
   def trl_description_text(service)
     service.trl.first.description
   end
+
+  def new_offer_link(service, controller_name)
+    if controller_name == "ordering_configuration"
+      new_service_ordering_configuration_offer_path(service)
+    else
+      new_backoffice_service_offer_path(service)
+    end
+  end
+
+  def edit_offer_link(service, offer, controller_name)
+    if controller_name == "ordering_configurations"
+      edit_service_ordering_configuration_offer_path(service, offer)
+    elsif controller_name == "services"
+      edit_backoffice_service_offer_path(service, offer)
+    end
+  end
 end
