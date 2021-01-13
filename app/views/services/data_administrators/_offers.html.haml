@@ -14,9 +14,10 @@
           = _("Vouchers allow researchers to test different configurations or different resources to choose the " + |
               "best offer for their needs.") |
           -# haml-lint:enable MultilinePipe
+%hr.bottom-hr.mt-5.mb-4
 %h2#offers.mb-4.mt-5.font-weight-normal
   = _("Parameters and offers")
-.row
+.row.parameters
   = render partial: "services/data_administrators/default_parameters", locals: { offer: offers.first }
   = render partial: "services/data_administrators/offer", collection: offers, as: :offer
   = render partial: "services/data_administrators/new_offer"

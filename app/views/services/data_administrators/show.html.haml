@@ -1,14 +1,14 @@
 - content_for :title, @service.name
 - breadcrumb :service, @service
 .container
-  %h1
+  %h1.mb-3
     = _("Ordering configuration")
-  .row
-    .col-12.col-sm-1
-      = _("Edit icon")
-    .col-12.col-sm-7
+  .container
+    .row.info-row
       %p
+        = image_pack_tag "icon-pencil.png", class: "icon-pencil"
         = _("In this site you can manage your resource offers. Scroll down to section where you can find it.")
+        %br
         = _("Below view also show how your resource will look in Catalogue & Marketplace.")
 
 

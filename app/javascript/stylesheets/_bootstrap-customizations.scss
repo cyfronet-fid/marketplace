@@ -2390,6 +2390,18 @@ label[data-multicheckbox].small {
     .ordertype-label {
       text-transform: uppercase;
     }
+
+    .btn-outline-primary {
+      font-weight: bold;
+      padding: 0.475rem 2rem 0.3rem;
+    }
+
+    .btn-outline-secondary {
+      padding-left:10px;
+      padding-right: 10px;
+      border: 1px solid $palette-yellow;
+      color: $palette-gray-100;
+    }
   }
 
   .badge {
@@ -4135,4 +4147,63 @@ textarea.form-control.is-invalid {
   background: $white;
   z-index: 100;
   padding: 0 20px 20px 0;
+}
+
+.info-row {
+  margin-bottom: 20px;
+  background: $palette-light-blue;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 15px 0 0;
+
+  .icon-pencil {
+    width: auto;
+    float: left;
+    margin: 0 20px;
+    height: 41px;
+  }
+}
+
+.parameters {
+
+  .card {
+    border-color: $palette-solid-10;
+    padding: 20px 25px 0;
+
+    .icon-speed {
+      width: auto;
+      height: 44px;
+      float: left;
+      margin: 0 20px;
+    }
+
+    .icon-tag {
+      width: auto;
+      height: 51px;
+      float: left;
+      margin: 0 20px;
+    }
+
+    .card-button {
+
+      .btn-outline-secondary {
+        border: 1px solid $palette-yellow;
+        background: $footer-color;
+        color: $palette-gray-100;
+
+        &:hover {
+          background: $palette-yellow;
+          color: $footer-color;
+        }
+      }
+    }
+  }
+
+  .edit-offer {
+
+    .card-body {
+      padding-top: 0 !important;
+    }
+  }
 }
