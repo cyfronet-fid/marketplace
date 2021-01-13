@@ -1,19 +1,6 @@
 # frozen_string_literal: true
 
 
-MP_INTERNAL_FIELDS = [
-  [category_ids: []],
-  [platform_ids: []],
-  :order_target,
-  :restrictions,
-  :status,
-  :activate_message,
-  :upstream_id,
-  [owner_ids: []],
-  sources_attributes: [:id, :source_type, :eid, :_destroy]
-]
-
-
 class Backoffice::ServicePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
@@ -27,6 +14,18 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       end
     end
   end
+
+  MP_INTERNAL_FIELDS = [
+    [category_ids: []],
+    [platform_ids: []],
+    :order_target,
+    :restrictions,
+    :status,
+    :activate_message,
+    :upstream_id,
+    [owner_ids: []],
+    sources_attributes: [:id, :source_type, :eid, :_destroy]
+  ]
 
   def index?
     service_portfolio_manager? || service_owner?

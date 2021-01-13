@@ -23,13 +23,11 @@
               class: "ml-1 default-color"
   .col-12.col-lg-3.text-center.vertical-center
     .vertical-center-inner.access-type
-      - if policy(service).order?
-        = link_to _("Back to the resource"),
-          "https://providers.eosc-portal.eu/resource-dashboard/#{service.slug.split(".").first}/#{service.slug}/stats",
-          class: "btn btn-outline-primary d-block mb-3"
-        = link_to _("Set parameters and offers"),
-          "#offers",
-          class: "btn btn-outline-secondary d-block mb-3"
+      = link_to _("Back to the resource"), resource_link(service),
+        class: "btn btn-outline-primary d-block mb-3"
+      = link_to _("Set parameters and offers"),
+        "#offers",
+        class: "btn btn-outline-secondary d-block mb-3"
       %span.ordertype-label
         %i{ class: "ordertype #{order_type(service)}" }
         -# TODO: refactor dynamic translation

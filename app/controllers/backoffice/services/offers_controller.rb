@@ -47,7 +47,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
 
   private
     def reindex_offer
-      if @service.offers.size == 2
+      if @service.offers.size > 1
         @service.offers.reindex
       end
     end

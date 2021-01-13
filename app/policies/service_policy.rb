@@ -18,4 +18,8 @@ class ServicePolicy < ApplicationPolicy
   def offers_show?
     record.offers_count > 1
   end
+
+  def data_administrator?
+    record.administered_by?(user)
+  end
 end

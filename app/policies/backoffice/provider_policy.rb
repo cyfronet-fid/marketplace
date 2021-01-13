@@ -32,7 +32,8 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name, sources_attributes: [:id, :source_type, :eid, :_destroy]]
+    [:name, sources_attributes: [:id, :source_type, :eid, :_destroy],
+     data_administrators_attributes: [:id, :first_name, :last_name, :email, :_destroy]]
   end
 
   private

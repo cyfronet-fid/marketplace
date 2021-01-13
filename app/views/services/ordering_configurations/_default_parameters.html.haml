@@ -14,6 +14,8 @@
                   = _("Your parameters settings has been changed to default offer. New fields appeared in edit mode. " |
                       "Please complete Name and Description for better user experience.") |
                   -# haml-lint:enable MultilinePipe
+        - else
+          = render "services/offers/description", offer: offer
 
         %h5.text-uppercase.parameters-title.mb-0
           = _("Technical Parameters")
@@ -31,7 +33,7 @@
 
     .card-button.text-center
       %label
-        = link_to edit_service_data_administrator_offer_path(offer.service, offer) do
+        = link_to edit_service_ordering_configuration_offer_path(offer.service, offer) do
           %span.btn.btn-outline-secondary.font-weight-bold
             = _("Edit parameters")
 
