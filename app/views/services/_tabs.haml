@@ -1,4 +1,4 @@
-- from_oc = params[:from] == "ordering_configuration"
+- from = params[:from]
 - about_active = ["services", "ordering_configurations"].include?(controller_name)
 .row
   .col-12
@@ -12,15 +12,15 @@
             = _("Reviews (%{ssoc})") % { ssoc: service.service_opinion_count }
       - else
         %li.nav-item
+
           = link_to _("About"),
-            from_oc ? service_ordering_configuration_path(service,
-            { from: "ordering_configuration" }) : service_path(service),
-            class: "nav-link text-uppercase #{"active" if about_active}", role: "tab"
+            from.blank? ? service_path(service) : about_link(service, from),
+            class: "nav-link text-uppercase #{"active" if about_active }", role: "tab"
         %li.nav-item{ "data-shepherd-tour-target": "service-details-tab" }
-          = link_to _("Details"), service_details_path(service, from_oc ? { from: "ordering_configuration" } : nil),
+          = link_to _("Details"), service_details_path(service, from.present? ? { from: from } : nil),
             class: "nav-link text-uppercase #{"active" if controller.controller_name == 'details'}", role: "tab"
         %li.nav-item
           = link_to _("Reviews (%{ssoc})") % { ssoc: service.service_opinion_count },
-            service_opinions_path(service, from_oc ? { from: "ordering_configuration" } : nil),
+            service_opinions_path(service, from.present? ? { from: from } : nil),
             class: "nav-link text-uppercase #{"active" if controller.controller_name == 'opinions'}", role: "tab"
 

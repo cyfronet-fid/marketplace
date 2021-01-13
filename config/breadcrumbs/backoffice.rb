@@ -19,6 +19,24 @@ crumb :backoffice_service do |service|
   parent :backoffice_services
 end
 
+crumb :resource_details do |service|
+  link "Details", service_details_path(service)
+  if params[:from]
+    parent params[:from].to_sym, service
+  else
+    parent :service, service
+  end
+end
+
+crumb :resource_opinions do |service|
+  link "Reviews", service_opinions_path(service)
+  if params[:from]
+    parent params[:from].to_sym, service
+  else
+    parent :service, service
+  end
+end
+
 crumb :backoffice_service_new do
   link "New", new_backoffice_service_path
   parent :backoffice_services

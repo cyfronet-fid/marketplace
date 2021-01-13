@@ -8,6 +8,6 @@
 
     .card-button.text-center
       %label
-        = link_to new_service_ordering_configuration_offer_path do
+        = link_to new_offer_link(service, controller_name) do
           %span.btn.btn-outline-secondary.font-weight-bold
             = _("Add new offer")
