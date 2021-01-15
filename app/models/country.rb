@@ -118,6 +118,35 @@ class Country
     def schengen_area
       Country::SCHENGEN.map { |p| ISO3166::Country.new(p) }
     end
+
+    def convert(name)
+      regions_for_country(name).blank? ? convert_name_to_code(name) : convert_to_regions_add_country(name)
+    end
+
+    def convert_name_to_code(name)
+      Country.dump(Country.find_by_name(name))
+    end
+
+    def convert_to_regions_add_country(name)
+      regions_for_country(name).push(convert_name_to_code(name))
+    end
+
+    def regions_for_country(country)
+      regions = []
+      if Country.world.include?(Country.find_by_name(country))
+        regions.push(convert_name_to_code("World"))
+      end
+      if Country.european_union.include?(Country.find_by_name(country))
+        regions.push(convert_name_to_code("European Union"))
+      end
+      if Country.schengen_area.include?(Country.find_by_name(country))
+        regions.push(convert_name_to_code("Schengen Area"))
+      end
+      if ISO3166::Country.find_all_countries_by_region("Europe").include?(Country.find_by_name(country))
+        regions.push(convert_name_to_code("Europe"))
+      end
+      regions.map { |r| r }
+    end
   end
 
   class Array
@@ -131,6 +160,10 @@ class Country
         return nil if obj.blank?
         obj.compact.map { |o| o.alpha2 }
       end
+
+      # def push(obj)
+      #   Array.prototype.push.call(this, el)
+      # end
     end
   end
 end

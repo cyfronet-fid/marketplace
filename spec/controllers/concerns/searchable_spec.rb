@@ -277,17 +277,28 @@ RSpec.describe ApplicationController, type: :controller do
     end
 
     context Filter::Location do
-      let!(:collection) { ["PL", "UK"] }
-      let!(:service1) { create(:service, geographical_availabilities: Array.wrap(Country.load(collection.first))) }
-      let!(:service2) { create(:service, geographical_availabilities: Array.wrap([Country.load(collection.first), Country.load(collection.second)])) }
+      let!(:collection) { ["PL", "BR", "EO"] }
+      let!(:service1) { create(:service, geographical_availabilities: Array.wrap([Country.load(collection.first), Country.load(collection.third)])) }
+      let!(:service2) { create(:service, geographical_availabilities: Array.wrap([Country.load(collection.second), Country.load(collection.third)])) }
       let!(:service4) { create(:service, geographical_availabilities: Array.wrap(Country.load(collection.second))) }
       let!(:field_name) { :geographical_availabilities }
       let!(:param_name) { :geographical_availabilities }
-      let!(:values) { "Poland" }
       let!(:filter_class) { Filter::Location }
-      it "checks if location filter works" do
-        Service.reindex
-        basic_test
+
+      context "with filter country value" do
+        let!(:values) { "Poland" }
+        it "checks if location filter works" do
+          Service.reindex
+          basic_test
+        end
+      end
+
+      context "with filter region value" do
+        let!(:values) { "Europe" }
+        it "checks if location filter works" do
+          Service.reindex
+          basic_test
+        end
       end
     end
   end
