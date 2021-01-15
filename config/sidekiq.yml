@@ -9,6 +9,8 @@ staging:
   :concurrency: 5
 
 :queues:
+  - active_storage_analysis
+  - active_storage_purge
   - pc_subscriber
   - orders
   - mailers
