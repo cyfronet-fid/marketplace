@@ -28,6 +28,9 @@ module Mp
 
     config.redis_url = ENV["REDIS_URL"] || default_redis_url
 
+    config.active_storage.queues.analysis = :active_storage_analysis
+    config.active_storage.queues.purge = :active_storage_purge
+
     config.matomo_url = ENV["MP_MATOMO_URL"] || "//providers.eosc-portal.eu/matomo/"
     config.matomo_site_id = ENV["MP_MATOMO_SITE_ID"] || 1
 
