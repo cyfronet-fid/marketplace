@@ -9,16 +9,24 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+## [3.5.0] 2021-01-15
+
+### Added
 - More fields to the comparision view (@kmarszalek)
 
 ### Changed
 - Footer content (@goreck888)
 - Footer align with EOSC Portal (@kmarszalek)
 - TRL field on the details page (@kmarszalek)
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Filter save by breadcrumbs navigation test (@goreck888)
