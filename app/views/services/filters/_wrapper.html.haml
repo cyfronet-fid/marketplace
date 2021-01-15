@@ -6,7 +6,12 @@
     class: ("collapsed" if collapsed) }
   .row
     .col-10
-      %h6.panel-heading= filter.title
+      - if filter.field_name == "geographical_availabilities"
+        %h6.panel-heading{ "data-toggle": "tooltip",
+        title: "Resource available in the territory of the entire selected region" }
+          = filter.title
+      - else
+        %h6.panel-heading= filter.title
     .col-2
       .collapse-icon
         %i.fas.fa-chevron-down
