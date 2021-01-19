@@ -14,6 +14,7 @@ class ServicesController < ApplicationController
                                anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?))
     end
     @services, @offers = search(scope)
+    @pagy = Pagy.new_from_searchkick(@services, items: params[:per_page])
     @highlights = highlights(@services)
   end
 
