@@ -25,5 +25,5 @@
               edit_backoffice_platform_path(platform),
               class: "btn-sm btn-warning float-right mr-4"
 
-  = will_paginate @services
+  = (pagy_bootstrap_nav @pagy).html_safe
 
