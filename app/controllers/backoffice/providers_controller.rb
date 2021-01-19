@@ -5,7 +5,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
 
   def index
     authorize(Provider)
-    @providers = policy_scope(Provider).page(params[:page]).order(:name)
+    @pagy, @providers = pagy(policy_scope(Provider).order(:name))
   end
 
   def show
