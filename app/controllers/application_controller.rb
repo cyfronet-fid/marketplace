@@ -3,6 +3,7 @@
 require "turbolinks"
 
 class ApplicationController < ActionController::Base
+  include Pagy::Backend
   include Turbolinks::Redirection
   include Sentryable
   include Pundit

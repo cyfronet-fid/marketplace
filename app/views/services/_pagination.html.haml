@@ -2,7 +2,7 @@
   %hr.category-separator
 .col-md-3
   %i.control-label.search-results
-    = page_entries_info services
+    = (pagy_info pagy).html_safe
 .col-md-4
   = render "services/order", sort_options: sort_options
 .col-md-5
