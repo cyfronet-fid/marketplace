@@ -5,7 +5,7 @@ class Backoffice::PlatformsController < Backoffice::ApplicationController
 
   def index
     authorize(Platform)
-    @platforms = policy_scope(Platform).page(params[:page]).order(:name)
+    @pagy, @platforms = pagy(policy_scope(Platform).order(:name))
   end
 
   def show

@@ -10,6 +10,7 @@
 .container{ "data-controller": "comparison" }
   - @category ? breadcrumb(:category, @category) : breadcrumb(:services)
   = render "services/index", services: @services,
+                             pagy: @pagy,
                              category: @category,
                              services_count: @services_total,
                              categories: @siblings_with_counters,

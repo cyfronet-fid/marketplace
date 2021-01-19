@@ -92,16 +92,18 @@ en:
         body: How EOSC could open the way for Earth Observation innovation.
         url: https://eosc-portal.eu/eosc-scalable-computing-infrastructure-earth-observation
 
+  pagy:
 
-  will_paginate:
-    page_entries_info:
-      single_page:
-        zero: "No results"
-        one: "Found 1 %{model}"
-        other: "Found %{count} results"
-      single_page_html:
-        zero:  "No results"
-        one:   "Found <b>1</b> %{model}"
-        other: "Found <b>&nbsp;%{count}</b> results"
-      multi_page: "%{from} - %{to} of %{count} results"
-      multi_page_html: "<b>%{from}&nbsp;-&nbsp;%{to}</b> of <b>%{count}</b> results"
+    item_name:
+      one: "result"
+      other: "results"
+
+    nav:
+      prev: "&lsaquo;&nbsp;Prev"
+      next: "Next&nbsp;&rsaquo;"
+      gap: "&hellip;"
+
+    info:
+      no_items: "No %{item_name}"
+      single_page: "Displaying <b>%{count}</b> %{item_name}"
+      multiple_pages: "<b>%{from}-%{to}</b> of <b>%{count}</b> results"
