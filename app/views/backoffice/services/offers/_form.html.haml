@@ -25,6 +25,10 @@
   .row
     .col-12
       = f.button :submit, class: "btn btn-primary pl-5 pr-5"
+      - if show_delete_button
+        = link_to "Delete Offer", service_ordering_configuration_offer_path(service, offer),
+          data: { confirm: _("Are you sure?") },
+          method: :delete, class: "btn btn-danger pl-5 pr-5"
       = link_to _("cancel and back to previous page"), back_link,
       class: "btn btn-link text-uppercase"
 

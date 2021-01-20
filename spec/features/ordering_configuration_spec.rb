@@ -74,5 +74,28 @@ RSpec.feature "Services in ordering_configuration panel" do
       service.reload
       expect(service.offers.last.name).to eq("new offer 1")
     end
+
+    scenario "I cannot delete offer if it's only one" do
+      visit service_ordering_configuration_path(service)
+
+      click_on "Edit parameters"
+
+      expect(page).to_not have_link("Delete Offer")
+    end
+
+    scenario "I can delete offer if there are more than 1" do
+      create(:offer, service: service)
+
+      visit service_ordering_configuration_path(service)
+
+      click_on "Edit"
+
+      expect(page).to have_link("Delete Offer")
+
+      click_on "Delete Offer"
+
+      expect(page).to have_content("Offer removed successfully")
+      expect(service.offers.size).to eq(1)
+    end
   end
 end
