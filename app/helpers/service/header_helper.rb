@@ -7,10 +7,14 @@ module Service::HeaderHelper
 
   def resource_link(service)
     if service.pid.present?
-      "https://providers.eosc-portal.eu/resource-dashboard/#{service.pid.split(".").first}/#{service.pid}/stats"
+      "#{PC_DEFAULT_PROVIDER_DASHBOARD_URL}/dashboard/#{service.pid.split(".").first}/#{service.pid}/stats"
     else
       service_path(service)
     end
+  end
+
+  def my_providers_link
+    "#{PC_DEFAULT_PROVIDER_DASHBOARD_URL}/provider/my"
   end
 
   private

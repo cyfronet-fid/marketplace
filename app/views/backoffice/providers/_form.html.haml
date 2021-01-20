@@ -13,16 +13,18 @@
                   "fields": f.fields_for(:data_administrators, DataAdministrator.new,
                   child_index: "new_field") { |data_administrator_form| render "data_administrator_fields",
                   data_administrator_form: data_administrator_form } }
-  %h3
-    = _("External Sources")
+  .row.mt-3
+    .col-12
+      %h3
+        = _("External Sources")
 
-  = f.fields_for :sources do |sources_form|
-    = sources_form.hidden_field :id
-    = sources_form.input :source_type, collection: ProviderSource.source_types.keys.map(&:to_sym)
-    = sources_form.input :eid, label: _("eInfraCentral External ID")
-    - unless sources_form.object.id.nil?
-      = sources_form.check_box :_destroy
-      = sources_form.label :_destroy, _("Remove external source")
+      = f.fields_for :sources do |sources_form|
+        = sources_form.hidden_field :id
+        = sources_form.input :source_type, collection: ProviderSource.source_types.keys.map(&:to_sym)
+        = sources_form.input :eid, label: _("eInfraCentral External ID")
+        - unless sources_form.object.id.nil?
+          = sources_form.check_box :_destroy
+          = sources_form.label :_destroy, _("Remove external source")
 
 
   %hr.bottom-hr.mt-5.mb-4

@@ -6,6 +6,10 @@ class Offer::Destroy
   end
 
   def call
-    @offer.destroy
+    if @offer&.project_items.present?
+      Offer::Draft.new(@offer).call
+    else
+      @offer.destroy
+    end
   end
 end

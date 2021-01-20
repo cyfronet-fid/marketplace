@@ -18,7 +18,7 @@
 %h2#offers.mb-4.mt-5.font-weight-normal
   = _("Parameters and offers")
 .row.parameters
-  = render partial: "services/ordering_configurations/default_parameters", locals: { offer: offers.first }
-  - if offers.size > 1
+  = render partial: "services/ordering_configurations/default_parameters", locals: { offer: offers.published.first }
+  - if offers.published.size > 1
     = render partial: "services/ordering_configurations/offer", collection: offers[1..], as: :offer
   = render partial: "services/ordering_configurations/new_offer"

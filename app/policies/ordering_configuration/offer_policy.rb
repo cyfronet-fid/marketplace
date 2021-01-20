@@ -3,7 +3,7 @@
 class OrderingConfiguration::OfferPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope
+      scope.where(status: :published)
     end
   end
 
@@ -20,6 +20,10 @@ class OrderingConfiguration::OfferPolicy < ApplicationPolicy
   end
 
   def update?
+    offer_editor?
+  end
+
+  def destroy?
     offer_editor?
   end
 
