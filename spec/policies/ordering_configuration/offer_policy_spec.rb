@@ -12,7 +12,7 @@ RSpec.describe OrderingConfiguration::OfferPolicy do
 
   subject { described_class }
 
-  permissions :new?, :edit?, :create?, :update? do
+  permissions :new?, :edit?, :create?, :update?, :destroy? do
     it "grants access for data_administrator of service" do
       expect(subject).
         to permit(user, offer)

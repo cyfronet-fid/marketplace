@@ -1,0 +1,18 @@
+= render "layouts/sections"
+.container
+  %nav.navbar.navbar-expand-lg.navbar-light
+    = link_to root_path, class: "navbar-brand col-12 col-lg-3 pl-0" do
+      = image_pack_tag "eosc-logo-color.png", class: "eosc-hub-logo-main"
+
+    %button.navbar-toggler{ "aria-controls" => "navbar-supported-content",
+                            "aria-expanded" => "false", "aria-label" => "Toggle navigation",
+                            "data-target" => "#navbar-supported-content",
+                            "data-toggle" => "collapse",
+                             type: "button" }
+      %span.navbar-toggler-icon
+
+    #navbar-supported-content.collapse.navbar-collapse
+      %ul.navbar-nav.ml-auto.pt-2
+        = nav_link controller: :backoffices, html_options: { class: "nav-item" } do
+          = link_to _("My providers"), my_providers_link, class: "nav-link px-2 py-1"
+

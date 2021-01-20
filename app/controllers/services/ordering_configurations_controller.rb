@@ -4,7 +4,7 @@ class Services::OrderingConfigurationsController < Services::ApplicationControll
   before_action :authenticate_user!
   before_action :data_administrator_authorization!, only: :show
 
-  layout "application"
+  layout "ordering_configuration"
 
   def show
     @service = Service.includes(:offers).friendly.find(params[:service_id])

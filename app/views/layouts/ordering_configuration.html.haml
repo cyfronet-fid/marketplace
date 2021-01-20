@@ -1,0 +1,13 @@
+!!!
+%html{ lang: "en" }
+  = render "layouts/head"
+  %body
+    %header.pb-2
+      - if ENV["MP_INSTANCE"]
+        = render "layouts/badge"
+      = render "layouts/ordering_configuration/navbar"
+      = render "layouts/flash"
+    %main
+      .container
+        = yield
+  = render "layouts/footer", root_categories: @root_categories

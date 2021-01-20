@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       resources :details, only: :index
       resource :ordering_configuration, only: :show do
         scope module: :ordering_configuration do
-          resources :offers, only: [:new, :edit, :create, :update]
+          resources :offers, only: [:new, :edit, :create, :update, :destroy]
         end
       end
     end

@@ -2,8 +2,8 @@
 
 class Services::OrderingConfiguration::OffersController < Services::OrderingConfiguration::ApplicationController
   before_action :find_service
-  before_action :find_offer_and_authorize, only: [:edit, :update]
-  after_action :reindex_offer, only: [:create, :update]
+  before_action :find_offer_and_authorize, only: [:edit, :update, :destroy]
+  after_action :reindex_offer, only: [:create, :update, :destroy]
 
   def new
     @offer = Offer.new(service: @service)
@@ -34,6 +34,13 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
                   notice: "Offer updated correctly"
     else
       render :edit, status: :bad_request
+    end
+  end
+
+  def destroy
+    if Offer::Destroy.new(@offer).call
+      redirect_to service_ordering_configuration_path(@service),
+                  notice: "Offer removed successfully"
     end
   end
 
