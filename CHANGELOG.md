@@ -11,13 +11,18 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
-- Replace will_paginate with pagy gem (@goreck888)
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+
+
+## [3.5.1] 2021-01-21
+
+### Changed
+- Replace will_paginate with pagy gem (@goreck888)
 
 ## [3.5.0] 2021-01-15
 
