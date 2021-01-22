@@ -63,7 +63,7 @@ describe Import::Eic do
 
   def expect_responses(unirest, test_url, services_response = nil, providers_response = nil)
     unless services_response.nil?
-      expect(unirest).to receive(:get).with("#{test_url}/service/rich/all?quantity=10000&from=0",
+      expect(unirest).to receive(:get).with("#{test_url}/resource/rich/all?quantity=10000&from=0",
                                             headers: { "Accept" => "application/json" }).and_return(services_response)
     end
 

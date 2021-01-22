@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Replace will_paginate with pagy gem (@goreck888)
+- Move from deprecated `service` API to `resource` API in Providers component (@goreck888)
 
 ### Deprecated
 
