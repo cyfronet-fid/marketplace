@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- Replace will_paginate with pagy gem (@goreck888)
 
 ### Deprecated
 
@@ -18,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - split rspec issues (@kmarszalek)
+- Show recommendations only in the regular services catalogue - not in backoffice (@JanKapala)
 
 ## [3.7.0] 2021-02-02
 
