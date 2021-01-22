@@ -31,13 +31,13 @@ module Import
       begin
         unless @token.blank?
           http_response = RestClient::Request.execute(method: :get,
-                                              url: "#{@eic_base_url}/service/rich/all?quantity=10000&from=0",
+                                              url: "#{@eic_base_url}/resource/rich/all?quantity=10000&from=0",
                                               headers: { Accept: "application/json",
                                                          Authorization: "Bearer #{@token}" })
 
           r = Unirest::HttpResponse.new(http_response)
         else
-          r = @unirest.get("#{@eic_base_url}/service/rich/all?quantity=10000&from=0",
+          r = @unirest.get("#{@eic_base_url}/resource/rich/all?quantity=10000&from=0",
                            headers: { "Accept" => "application/json" })
         end
       rescue Errno::ECONNREFUSED
