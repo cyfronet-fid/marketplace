@@ -10,9 +10,10 @@
     .col-lg-9
       .row.mb-4
         = render "services/active_filters", category: category, active_filters: active_filters
-        - if ab_test(:recommendation_panel) == "v1"
-          = render partial: "services/recommendation_panel_v1",
-                   locals: { highlights: highlights, category: category }
+        - if (not defined? show_recommendations) || show_recommendations
+          - if ab_test(:recommendation_panel) == "v1"
+            = render partial: "services/recommendation_panel_v1",
+                     locals: { highlights: highlights, category: category }
         = render "services/pagination", sort_options: sort_options, services: services, pagy: pagy
 
       %p
@@ -22,9 +23,11 @@
                            offers: offers,
                            comparison_enabled: comparison_enabled,
                            remote: true }
-        - if ab_test(:recommendation_panel) == "v2"
-          = render partial: "services/recommendation_panel_v2",
-                   locals: { highlights: highlights, category: category }
+
+        - if (not defined? show_recommendations) || show_recommendations
+          - if ab_test(:recommendation_panel) == "v2"
+            = render partial: "services/recommendation_panel_v2",
+                     locals: { highlights: highlights, category: category }
         = render partial: "service", collection: services[2..],
                  locals: { highlights: highlights,
                            category: category,
