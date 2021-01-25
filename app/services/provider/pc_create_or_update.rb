@@ -25,7 +25,17 @@ class Provider::PcCreateOrUpdate
   private
     def map_provider(data)
       {
-        "name": data["name"]
+        name: data["name"],
+        data_administrators: Array(data.dig("users", "user")).
+          map { |admin| DataAdministrator.new(map_data_administrator(admin)) }
+      }
+    end
+
+    def map_data_administrator(data)
+      {
+        first_name: data["name"],
+        last_name: data["surname"],
+        email: data["email"]
       }
     end
 end
