@@ -7,7 +7,7 @@ module Service::HeaderHelper
 
   def resource_link(service)
     if service.pid.present?
-      "#{PC_DEFAULT_PROVIDER_DASHBOARD_URL}/dashboard/#{service.pid.split(".").first}/#{service.pid}/stats"
+      "#{PC_DEFAULT_PROVIDER_DASHBOARD_URL}resource-dashboard/#{service.pid.split(".").first}/#{service.pid}/stats"
     else
       service_path(service)
     end
