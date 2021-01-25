@@ -285,9 +285,16 @@ module Import
             log "No mapped provider '#{provider_eid}', creating..."
             unless @dry_run
               if (mapped_provider = Provider.find_by(name: providers[provider_eid]["name"])).nil?
-                mapped_provider = Provider.create!(name: providers[provider_eid]["name"])
+                mapped_provider = Provider.create!(name: providers[provider_eid]["name"],
+                     data_administrators: providers[provider_eid]["users"]&.
+                     map { |data| DataAdministrator.new(map_data_administrator(data)) } || [])
               else
                 log "Provider with name '#{providers[provider_eid]["name"]}' already exists, using existing provider"
+                if providers[provider_eid]["users"].present?
+                  mapped_provider.update(name: providers[provider_eid]["name"],
+                                         data_administrators: providers[provider_eid]["users"]&.
+                    map { |data| DataAdministrator.new(map_data_administrator(data)) })
+                end
               end
               ProviderSource.new(provider_id: mapped_provider.id, source_type: "eic", eid: provider_eid).save!
               mapped_provider
@@ -298,6 +305,14 @@ module Import
         end
       }
       Array(mapped_providers)
+    end
+
+    def map_data_administrator(data)
+      {
+        first_name: data["name"],
+        last_name: data["surname"],
+        email: data["email"]
+      }
     end
 
     def map_pc_categories(categories)
