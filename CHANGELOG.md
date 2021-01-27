@@ -11,14 +11,21 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
-- Replace will_paginate with pagy gem (@goreck888)
-- Move from deprecated `service` API to `resource` API in Providers component (@goreck888)
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+
+## [3.6.0] 2021-01-27
+
+### Changed
+- Replace will_paginate with pagy gem (@goreck888)
+- Move from deprecated `service` API to `resource` API in Providers component (@goreck888)
+
+### Fixed
+- Filter Provider location, rename to Resource availability (@kmarszalek)
 
 ## [3.5.0] 2021-01-15
 
