@@ -1,4 +1,5 @@
 - from_oc = params[:from] == "ordering_configuration"
+- about_active = ["services", "ordering_configurations"].include?(controller_name)
 .row
   .col-12
     %ul#my-tab.nav.nav-tabs.row.pl-3{ role: "tablist" }
@@ -14,7 +15,7 @@
           = link_to _("About"),
             from_oc ? service_ordering_configuration_path(service,
             { from: "ordering_configuration" }) : service_path(service),
-            class: "nav-link text-uppercase #{"active" if controller.controller_name == 'services'}", role: "tab"
+            class: "nav-link text-uppercase #{"active" if about_active}", role: "tab"
         %li.nav-item{ "data-shepherd-tour-target": "service-details-tab" }
           = link_to _("Details"), service_details_path(service, from_oc ? { from: "ordering_configuration" } : nil),
             class: "nav-link text-uppercase #{"active" if controller.controller_name == 'details'}", role: "tab"
