@@ -15,7 +15,7 @@ body {
 
   > main {
     padding: 0 15px;
-    margin-bottom: 50px;
+    margin-bottom: 80px;
   }
 }
 
@@ -1645,6 +1645,11 @@ h5 {
   padding: 0 0 7px;
   border-bottom: 2px solid $secondary;
   font-size: 1.05em;
+
+  svg {
+    margin-right: 5px;
+    color: $palette-yellow;
+  }
 }
 
 .configuration-title {
@@ -2263,7 +2268,7 @@ label[data-multicheckbox].small {
 }
 
 .bottom-hr {
-  background-color: $palette-gray-10;
+  background-color: $palette-gray-5;
   border: 0 none;
   height: 5px;
 }
@@ -2393,7 +2398,7 @@ label[data-multicheckbox].small {
 
     .btn-outline-primary {
       font-weight: bold;
-      padding: 0.475rem 2rem 0.3rem;
+      padding: 0.475rem 1.4rem 0.3rem;
     }
 
     .btn-outline-secondary {
@@ -4187,7 +4192,7 @@ textarea.form-control.is-invalid {
   .icon-pencil {
     width: auto;
     float: left;
-    margin: 0 20px;
+    margin: 10px 20px;
     height: 41px;
   }
 }
@@ -4196,7 +4201,7 @@ textarea.form-control.is-invalid {
 
   .card {
     border-color: $palette-solid-10;
-    padding: 20px 25px 0;
+    padding: 23px 25px 0;
 
     .icon-speed {
       width: auto;
@@ -4209,7 +4214,7 @@ textarea.form-control.is-invalid {
       width: auto;
       height: 51px;
       float: left;
-      margin: 0 20px;
+      margin: -4px 20px 0;
     }
 
     .card-button {
@@ -4229,8 +4234,21 @@ textarea.form-control.is-invalid {
 
   .edit-offer {
 
-    .card-body {
-      padding-top: 0 !important;
+    .card {
+      border: 1px solid $palette-yellow;
+      min-height: 250px;
+      padding: 15px 0 0;
+
+      .card-body {
+        padding-top: 0 !important;
+
+        .info-row {
+
+          .icon-pencil {
+            margin: 10px 0;
+          }
+        }
+      }
     }
   }
 }

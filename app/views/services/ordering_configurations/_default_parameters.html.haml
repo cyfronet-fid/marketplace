@@ -9,7 +9,7 @@
             .row.info-row
               .col-12.col-sm-3
                 = image_pack_tag "icon-pencil.png", class: "icon-pencil"
-              .col-12.col-sm-7
+              .col-12.col-sm-9.pl-0
                 %p
                   -# haml-lint:disable MultilinePipe
                   = _("Your parameters settings has been changed to default offer.")
@@ -21,6 +21,7 @@
     - if technical_parameters.present?
       .card-body.pt-0.collapse-group
         %h5.text-uppercase.parameters-title.mb-0
+          %i.fas.fa-tachometer-alt
           = _("Technical Parameters")
         %table.offer-params.table.table-hover
           %tbody
