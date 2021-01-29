@@ -2,6 +2,17 @@
 
 class Services::DetailsController < ApplicationController
   include Service::Comparison
+  layout :choose_layout
+
+  def choose_layout
+    if params[:from] == "backoffice_service"
+      "backoffice"
+    elsif params[:from] == "ordering_configuration"
+      "ordering_configuration"
+    else
+      "application"
+    end
+  end
 
   def index
     @service = Service.friendly.find(params[:service_id])

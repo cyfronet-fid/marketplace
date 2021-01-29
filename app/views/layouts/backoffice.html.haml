@@ -5,8 +5,8 @@
     %header.pb-2
       - if ENV["MP_INSTANCE"]
         = render "layouts/badge"
-      = render "layouts/backoffice/navbar"
       = render "layouts/flash"
+      = render "layouts/backoffice/navbar"
     %main
       .container
         = render "layouts/breadcrumb"

@@ -4236,8 +4236,11 @@ textarea.form-control.is-invalid {
 
     .card {
       border: 1px solid $palette-yellow;
-      min-height: 250px;
       padding: 15px 0 0;
+
+      &:not(.default) {
+        min-height: 250px;
+      }
 
       .card-body {
         padding-top: 0 !important;

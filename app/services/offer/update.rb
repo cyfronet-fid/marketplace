@@ -7,6 +7,10 @@ class Offer::Update
   end
 
   def call
-    @offer.update(@params)
+    if @offer.service.offers_count == 1
+      @offer.update(@params)
+    else
+      @offer.update(@params.merge(default: false))
+    end
   end
 end
