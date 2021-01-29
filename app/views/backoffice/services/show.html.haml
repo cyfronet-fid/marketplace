@@ -10,6 +10,36 @@
       = ("The service is published but has no published offers. Publish one offer to make possible for a user to " + |
          "Access the service.") |
       -# haml-lint:enable MultilinePipe
+
+.container
+  .status-row
+    .row
+      .col-12.col-lg-4
+        %span
+          = _("Status") + ":"
+        %span.font-weight-bold= @service.status
+      .col-12.col-lg-8.service-buttons
+        .btn-group.float-right
+          - if policy([:backoffice, @service]).publish?
+            = link_to _("Publish"),
+                      backoffice_service_publish_path(@service),
+                      method: :post,
+                      data: { confirm: _("Are you sure you want to publish this resource?") },
+                      class: "btn btn-success btn-sm"
+          - if policy([:backoffice, @service]).publish_unverified?
+            = link_to _("Publish as unverified resource"),
+                      backoffice_service_publish_path(@service, unverified: true),
+                      method: :post,
+                      data: { confirm: _("Are you sure you want to publish this resource as unverified resource?") },
+                      class: "btn btn-warning btn-sm"
+          - if policy([:backoffice, @service]).draft?
+            = link_to _("Stop showing in the MP"),
+                      backoffice_service_draft_path(@service),
+                      method: :post,
+                      data: { confirm: _("Are you sure you want to stop showing this resource?") },
+                      class: "btn btn-error btn-sm"
+
+
 .container
   .pt-4.pl-3.pr-3.shadow-sm.rounded.service-box.service-detail{ "data-shepherd-tour-target": "service-box" }
     = render "backoffice/services/header", service: @service
