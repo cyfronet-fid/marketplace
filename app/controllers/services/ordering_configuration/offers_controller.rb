@@ -3,7 +3,7 @@
 class Services::OrderingConfiguration::OffersController < Services::OrderingConfiguration::ApplicationController
   before_action :find_service
   before_action :find_offer_and_authorize, only: [:edit, :update, :destroy]
-  after_action :reindex_offer, only: [:create, :update, :destroy]
+  after_action :reindex_and_set_default_offer, only: [:create, :update, :destroy]
 
   def new
     @offer = Offer.new(service: @service)
@@ -45,15 +45,17 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
   end
 
   private
-    def reindex_offer
-      if @service.offers.size > 1
+    def reindex_and_set_default_offer
+      if @service.offers_count > 1
         @service.offers.reindex
+      elsif @service.offers_count == 1
+        @service.offers.first.update!(default: true)
       end
     end
 
     def offer_template
       temp = update_blank_parameters(permitted_attributes(Offer))
-      Offer.new(temp.merge(service: @service, status: :published))
+      Offer.new(temp.merge(service: @service, default: false, status: :published))
     end
 
     def update_blank_parameters(template)

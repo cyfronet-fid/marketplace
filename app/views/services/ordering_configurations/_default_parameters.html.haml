@@ -1,9 +1,9 @@
 - technical_parameters = offer.attributes.map(&:to_json)
-- published_offers_size = offer.service.offers.published.size
+- published_offers_size = offer.service.offers_count
 .col-md-6.edit-offer
-  .card.m-0.mb-5
+  .card.m-0.mb-5{ class: offer.default ? "default" : nil }
     - if published_offers_size > 1
-      - if offer.name == "Offer" && offer.description == "#{offer.service.name} Offer"
+      - if offer.default && published_offers_size == 2
         .card-body.pt-0.collapse-group
           .container
             .row.info-row
@@ -12,9 +12,8 @@
               .col-12.col-sm-9.pl-0
                 %p
                   -# haml-lint:disable MultilinePipe
-                  = _("Your parameters settings has been changed to default offer.")
-                  = _(" New fields appeared in edit mode. " |
-                      "Please complete Name and Description for better user experience.") |
+                  = _("Your technical parameters configuration has been changed into a default offer. ")
+                  = _(" Please provide the offer Name and Description for a better user experience.") |
                   -# haml-lint:enable MultilinePipe
       - else
         = render "services/offers/description", offer: offer
@@ -30,15 +29,18 @@
                 %td= parameter["label"]
                 %td.text-right.text-nowrap.font-weight-bold= parse_offer_parameter_value(parameter)
     - else
-      .row
+      .card-body.pt-0.collapse-group
         %p
           = image_pack_tag "icon-speed.png", class: "icon-speed"
-          = _("Your offer does not have any default parameters yet.")
+          = _("The technical parameters configuration is empty")
 
     .card-button.text-center
       %label
         = link_to edit_service_ordering_configuration_offer_path(offer.service, offer) do
           %span.btn.btn-outline-secondary.font-weight-bold
-            = _("Edit parameters")
+            - if published_offers_size == 1
+              = _("Edit parameters")
+            - else
+              = _("Edit")
 
 

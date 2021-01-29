@@ -86,9 +86,13 @@ RSpec.feature "Services in ordering_configuration panel" do
     scenario "I can delete offer if there are more than 1" do
       create(:offer, service: service)
 
+      service.reload
+
       visit service_ordering_configuration_path(service)
 
-      click_on "Edit"
+      within "#offer-#{service.offers.last.id}" do
+        click_on "Edit"
+      end
 
       expect(page).to have_link("Delete Offer")
 
