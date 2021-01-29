@@ -36,7 +36,7 @@
 
     .card-button.text-center
       %label
-        = link_to edit_service_ordering_configuration_offer_path(offer.service, offer) do
+        = link_to edit_offer_link(offer.service, offer, controller_name) do
           %span.btn.btn-outline-secondary.font-weight-bold
             - if published_offers_size == 1
               = _("Edit parameters")

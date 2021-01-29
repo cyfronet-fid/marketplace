@@ -31,35 +31,11 @@
         -# TODO: refactor dynamic translation
         = t("offers.type.#{order_type(service)}")
 .row.service-links
-  .col-12.col-lg-9.row
+  .col-12.col-lg-9.row.padding
     .col-12.col-sm-3
-
-      %span
-      = _("Status") + ":"
-      %span.font-weight-bold= service.status
     .col-12.col-sm-9
       - service_header_fields.select { |h| h[:name] == "links" }.map do |group|
         = render "services/sidebar/simple_links",
                     service: service,
                     fields: group[:fields],
                     nested: group[:nested] || ""
-  .col-12.col-lg-3
-    .btn-group.float-right
-      - if policy([:backoffice, service]).publish?
-        = link_to _("Publish"),
-                backoffice_service_publish_path(service),
-                method: :post,
-                data: { confirm: _("Are you sure you want to publish this resource?") },
-                class: "btn btn-success btn-sm py-0"
-      - if policy([:backoffice, service]).publish_unverified?
-        = link_to _("Publish as unverified resource"),
-                backoffice_service_publish_path(service, unverified: true),
-                method: :post,
-                data: { confirm: _("Are you sure you want to publish this resource as unverified resource?") },
-                class: "btn btn-warning btn-sm py-0"
-      - if policy([:backoffice, service]).draft?
-        = link_to _("Stop showing in the MP"),
-                backoffice_service_draft_path(service),
-                method: :post,
-                data: { confirm: _("Are you sure you want to stop showing this resource?") },
-                class: "btn btn-error btn-sm py-0"
