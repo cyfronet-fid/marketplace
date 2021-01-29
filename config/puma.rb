@@ -36,3 +36,35 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+require 'raven';
+
+before_fork do
+  require 'puma_worker_killer'
+
+  PumaWorkerKiller.config do |config|
+    config.ram = ENV.fetch("PUMA_KILLER_MACHINE_RAM_MB") { 7168 }.to_i
+    config.frequency = ENV.fetch("PUMA_KILLER_CHECK_FREQ") { 10 }.to_i
+    config.percent_usage = ENV.fetch("PUMA_KILLER_RAM_UTILIZATION_PERCENT") { 0.07 }.to_f
+
+    # Prevent logging puma killer info about RAM consumption
+    config.reaper_status_logs = false
+
+    # Prevent killing all puma workers, kill only largest one a time
+    config.rolling_restart_frequency = false
+
+    config.pre_term = -> (worker) {
+      Raven.capture_message(
+        "Puma worker #{worker.instance_variable_get("@index")} "\
+        "(pid: #{worker.instance_variable_get("@pid")}) "\
+        "#{worker.instance_variable_get("@stage")}, "\
+        "phase: #{worker.instance_variable_get("@phase")} "\
+        "will be terminated"
+      )
+    }
+  end
+
+  if ENV.fetch("PUMA_KILLER_ENABLE") { false }
+    PumaWorkerKiller.start
+  end
+end
