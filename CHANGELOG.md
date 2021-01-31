@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Add recommender::serialize_db rake task (@wujuu)
 
 ### Changed
 
