@@ -335,3 +335,14 @@ This variable should point to the directory with the following structure:
 
 **Warning**: when new SCSS / image / asset is added to customization directory rails application
 needs to be restarted.
+
+## Recommender app integration
+
+Marketplace is connected to an [external app](https://github.com/cyfronet-fid/recommender-system) 
+which recommends services to users. 
+
+It needs the MP data to learn. Run:
+```
+./bin/rails recommender:serialize_db
+```
+...to send the database dump to the recommender system 
