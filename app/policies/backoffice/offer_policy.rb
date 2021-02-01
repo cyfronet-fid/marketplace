@@ -53,7 +53,7 @@ class Backoffice::OfferPolicy < ApplicationPolicy
   private
     def managed?
       service_portfolio_manager? ||
-        (record.service.owned_by?(user) && record.draft?)
+        record.service.owned_by?(user)
     end
 
     def service_portfolio_manager?

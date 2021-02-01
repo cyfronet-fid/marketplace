@@ -106,14 +106,14 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("service description")
       expect(page).to have_content("service tagline")
       expect(page).to have_content("Open Access")
-      expect(page).to have_content("Welcome!!!")
       expect(page).to have_content(scientific_domain.name)
       expect(page).to have_content(target_user.name)
-      expect(page).to have_content(category.name)
+      expect(page).to have_content("Publish")
+
+      click_on "Details"
+
       expect(page).to have_content(funding_body.name)
       expect(page).to have_content(funding_program.name)
-      expect(page).to have_content("John Doe")
-      expect(page).to have_content("john@doe.com")
       expect(page).to have_content("jane@doe.com")
       expect(page).to have_content(access_type.name)
       expect(page).to have_content(access_mode.name)
@@ -121,13 +121,9 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("standard")
       expect(page).to have_content("opensource")
       expect(page).to have_content("grantname")
-      expect(page).to have_content("Publish")
-      expect(page).to have_content("eic: 12345a")
       expect(page).to have_content("2.2.2")
-      expect(page).to have_content(trl.name)
+      expect(page).to have_content(trl.name.upcase)
       expect(page).to have_content(life_cycle_status.name)
-
-      expect(page).to have_text("This resource has one default offer.")
     end
 
     scenario "I can add additional public contacts", js: true do
@@ -154,6 +150,8 @@ RSpec.feature "Services in backoffice" do
       fill_in "service_public_contacts_attributes_2_email", with: "john@doe.com"
 
       click_on "Update Resource"
+
+      click_on "Details"
 
 
       expect(page).to have_content("jane@doe.com")
@@ -184,8 +182,8 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
 
       expect(page)
-          .to have_content("The service has no offers." \
-                           " Add one offer to make possible for a user to Access the service.")
+          .to have_content("This resource has no offers. " \
+                           "Add one offer to make possible for a user to Access the service.")
     end
 
     scenario "I can preview service before create" do
@@ -279,7 +277,7 @@ RSpec.feature "Services in backoffice" do
       parameter = parameters.first
 
       visit backoffice_service_path(service)
-      click_on "Edit"
+      click_on "Edit resource"
 
       fill_in "Name", with: "updated name"
       fill_in "Webpage url", with: "http://service.com"
@@ -289,11 +287,12 @@ RSpec.feature "Services in backoffice" do
       click_on "Update Resource"
 
       expect(page).to have_content("updated name")
-      expect(page).to have_text("This resource has one default offer.")
 
       service.reload
 
       offer = service.offers.first
+
+      expect(page).to have_text(offer.parameters.first.name)
 
       expect(offer.webpage).to eq(service.webpage_url)
       expect(offer.order_url).to eq(service.order_url)
@@ -326,7 +325,7 @@ RSpec.feature "Services in backoffice" do
       service = create(:service, name: "my service", owners: [user])
 
       visit backoffice_service_path(service)
-      click_on "Add new Offer", match: :first
+      click_on "Add new offer"
 
       expect {
         fill_in "Name", with: "new offer 1"
@@ -358,9 +357,7 @@ RSpec.feature "Services in backoffice" do
 
       visit backoffice_service_path(service)
 
-      expect(page).to have_content("This resource has one default offer.")
-
-      click_on "Edit"
+      click_on "Edit resource"
 
       find_button("Order").click
 
@@ -376,12 +373,12 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I can see warning about no published offers", js: true do
       service = create(:service)
-      offer = create(:offer, status: "draft", service: service)
 
       visit backoffice_service_path(service)
 
-      expect(page).to have_content("The service is published but has no published offers. " \
-                                   "Publish one offer to make possible for a user to Access the service.")
+      expect(page).to have_content("This resource has no offers. " \
+                                   "Add one offer to make possible for a user to Access the service.")
+      offer = create(:offer, service: service)
       service.reload
       expect(service.offers).to eq([offer])
     end
@@ -399,10 +396,10 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "I cannot add invalid offer", js: true do
-      service = create(:service, name: "my service", owners: [user])
+      service = create(:service, name: "my service", owners: [user], offers: [create(:offer)])
 
       visit backoffice_service_path(service)
-      click_on "Add new Offer", match: :first
+      click_on "Add new offer"
 
       expect {
         fill_in "Description", with: "test offer"
@@ -420,8 +417,10 @@ RSpec.feature "Services in backoffice" do
                      parameters: [parameter])
       create(:offer, service: service)
 
+      service.reload
+
       visit backoffice_service_path(service)
-      first("a[class='edit-offer card-link']").click
+      first(".btn.btn-outline-secondary.font-weight-bold").click
 
       fill_in "Description", with: "new desc"
       click_on "Update Offer"
@@ -441,7 +440,7 @@ RSpec.feature "Services in backoffice" do
       create(:offer, service: service)
 
       visit backoffice_service_path(service)
-      first("a[class='edit-offer card-link']").click
+      first(".btn.btn-outline-secondary.font-weight-bold").click
 
       first("a[data-action='offer#remove']").first("i").click
       click_on "Update Offer"
@@ -469,14 +468,17 @@ RSpec.feature "Services in backoffice" do
 
 
     scenario "I can delete offer if they are more than 2" do
-      service = create(:service, name: "my service", status: :draft)
+      service = create(:service, name: "my service")
       _offer = create(:offer, name: "offer1", description: "desc", service: service)
       _second_offer = create(:offer, service: service)
 
-      visit backoffice_service_path(service)
-      first("a[class='delete-offer card-link']").click
+      service.reload
 
-      expect(page).to have_content("This resource has one default offer.")
+      visit edit_backoffice_service_offer_path(service, _offer)
+
+      click_on "Delete Offer"
+
+      expect(page).to have_content("Offer removed successfully")
     end
 
     scenario "I can see info if service has no offer" do
@@ -484,27 +486,8 @@ RSpec.feature "Services in backoffice" do
 
       visit backoffice_service_path(service)
 
-      expect(page).to have_content("This resource has no offers")
-    end
-
-    scenario "I can change offer status from published to draft" do
-      offer = create(:offer)
-      create(:offer, service: offer.service)
-
-      visit backoffice_service_path(offer.service)
-      first("a[class='draft-offer card-link']").click
-
-      expect(offer.reload.status).to eq("draft")
-    end
-
-    scenario "I can change offer status from draft to publish" do
-      offer = create(:offer, status: :draft)
-      create(:offer, service: offer.service)
-
-      visit backoffice_service_path(offer.service)
-      click_on "Publish offer"
-
-      expect(offer.reload.status).to eq("published")
+      expect(page).to have_content("This resource has no offers. " \
+                                   "Add one offer to make possible for a user to Access the service.")
     end
 
     scenario "I can change service status from publish to draft" do
@@ -526,7 +509,8 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("777")
       fill_in "service_sources_attributes_0_eid", with: "12345a"
       click_on "Update Resource"
-      expect(page).to have_content("eic: 12345a")
+      service.reload
+      expect(service.sources.first.eid).to eq("12345a")
     end
 
     scenario "I can change upstream" do
@@ -538,7 +522,10 @@ RSpec.feature "Services in backoffice" do
 
       select external_source.to_s, from: "Resource Upstream"
       click_on "Update Resource"
-      expect(page).to have_content(external_source.to_s, count: 2)
+
+      service.reload
+
+      expect(service.upstream_id).to eq(external_source.id)
     end
 
     scenario "if upstream is set to MP (nil) all fields should be enabled" do
@@ -677,14 +664,13 @@ RSpec.feature "Services in backoffice" do
       create(:offer, service: service)
 
       visit backoffice_service_path(service)
-      click_on "Add new Offer", match: :first
+      click_on "Add new offer", match: :first
 
       fill_in "Name", with: "New offer"
       fill_in "Description", with: "New fancy offer"
       click_on "Create Offer"
 
-      expect(page).to have_content("New offer")
-      expect(page).to have_content("New fancy offer")
+      expect(page).to have_content("New offer has been created")
     end
   end
 end
