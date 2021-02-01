@@ -2,7 +2,7 @@
 
 class Services::OrderingConfiguration::OffersController < Services::OrderingConfiguration::ApplicationController
   before_action :find_service
-  before_action :find_offer_and_authorize, only: [:edit, :update, :destroy]
+  before_action :find_offer_and_authorize, only: [:edit, :update]
   after_action :reindex_and_set_default_offer, only: [:create, :update, :destroy]
 
   def new
@@ -38,6 +38,7 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
   end
 
   def destroy
+    @offer = @service.offers.find_by(iid: params[:id])
     if Offer::Destroy.new(@offer).call
       redirect_to service_ordering_configuration_path(@service),
                   notice: "Offer removed successfully"

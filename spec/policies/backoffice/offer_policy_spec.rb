@@ -46,8 +46,8 @@ RSpec.describe Backoffice::OfferPolicy do
         expect(subject).to permit(service_portfolio_manager, offer)
       end
 
-      it "denies access to service owner" do
-        expect(subject).to_not permit(owner, offer)
+      it "grants access to service owner" do
+        expect(subject).to permit(owner, offer)
       end
 
       it "denies access to other users" do

@@ -13,4 +13,5 @@
       service: @service,
       show_delete_button: true,
       offer_form_source_module: [@service, :ordering_configuration, @offer],
+      offer_delete_link: service_ordering_configuration_offer_path(@service, @offer),
       back_link: service_ordering_configuration_path(@service)

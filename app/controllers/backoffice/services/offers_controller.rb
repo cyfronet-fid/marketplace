@@ -2,7 +2,7 @@
 
 class Backoffice::Services::OffersController < Backoffice::ApplicationController
   before_action :find_service
-  before_action :find_offer_and_authorize, only: [:destroy, :edit, :update]
+  before_action :find_offer_and_authorize, only: [:edit, :update]
   after_action :reindex_offer, only: [:create, :update, :destroy]
 
   def new
@@ -38,9 +38,10 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   end
 
   def destroy
+    @offer = @service.offers.find_by(iid: params[:id])
     Offer::Destroy.new(@offer).call
     redirect_to backoffice_service_path(@service),
-                notice: "Offer destroyed"
+                notice: "Offer removed successfully"
   end
 
   private

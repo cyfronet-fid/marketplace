@@ -115,10 +115,10 @@ RSpec.describe Backoffice::ServicePolicy do
         expect(subject).to permit(owner, service)
       end
 
-      it "denies access for service owner when service is published" do
+      it "allows access for service owner when service is published" do
         service = create(:service, owners: [owner], status: :published)
 
-        expect(subject).to_not permit(owner, service)
+        expect(subject).to permit(owner, service)
       end
     end
 

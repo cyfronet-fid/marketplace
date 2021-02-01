@@ -121,7 +121,7 @@ module ServiceHelper
   end
 
   def new_offer_link(service, controller_name)
-    if controller_name == "ordering_configuration"
+    if controller_name == "ordering_configurations"
       new_service_ordering_configuration_offer_path(service)
     else
       new_backoffice_service_offer_path(service)

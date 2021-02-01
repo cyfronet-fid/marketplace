@@ -45,7 +45,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
 
   def update?
     (service_portfolio_manager? ||
-     (record.draft? && owned_service?)) &&
+     owned_service?) &&
     !record.deleted?
   end
 

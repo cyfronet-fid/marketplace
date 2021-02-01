@@ -3,9 +3,7 @@
     %main.col-12.col-xl-9.pr-5.mb-4{ "data-shepherd-tour-target": "service-about" }
 
       = markdown(service.description)
-      - if policy(service).order? && !offers&.empty?
-        = render "layouts/common_parts/services/offers", offers: offers, service: service
-
+      = render "layouts/common_parts/services/offers", offers: offers, service: service
     %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
       - service_sidebar_fields.each do |group|
         - if any_present?(service, *group[:fields])
@@ -43,7 +41,7 @@
           - if service.synchronized_at.present?
             %li.list-group-item
               %span
-                = _("Last external update") + ":"
+                = _("Synchronized at") + ":"
               %strong.text-dark= l service.synchronized_at, format: :short
           %li.list-group-item
             %span
