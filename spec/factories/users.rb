@@ -22,5 +22,8 @@ FactoryBot.define do
       sequence(:categories) { |n| [create(:category)] }
       sequence(:categories_updates) { true }
     end
+    factory :user_with_services do
+      sequence(:owned_services) { |n| [create(:service)] }
+    end
   end
 end

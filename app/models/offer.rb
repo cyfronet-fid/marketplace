@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Offer < ApplicationRecord
+  # TODO: validate parameter ids uniqueness - for now we are safe thanks to schema validation though
   include Offerable
   include Offer::Parameters
 
@@ -23,6 +24,12 @@ class Offer < ApplicationRecord
 
   def should_index?
     status == STATUSES[:published] && offers_count > 1
+  end
+
+  def as_json(options = nil)
+    # TODO: Offer Serializer works when you do render json: offer, but doesn't trigger when doing offer.as_json, ...
+    # TODO: ... from anywhere in the code. Look into it
+    OfferSerializer.new(self).as_json
   end
 
   enum status: STATUSES

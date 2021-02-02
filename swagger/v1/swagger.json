@@ -1,0 +1,403 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Offers API",
+    "version": "v1",
+    "description": "API providing CRUD on Offers and listing of the Services owned"
+  },
+  "paths": {
+    "/api/v1/services/{service_id}/offers": {
+      "get": {
+        "summary": "lists offers for a given service",
+        "tags": [
+          "Offers"
+        ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "service_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "lists offers for service with no offers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "offer/offer_output.json"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "denies entry for unknown token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "doesn't show offers for unowned services",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "returns not found for nonexistent service id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "creates an offer for a given service",
+        "tags": [
+          "Offers"
+        ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "service_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "creates an offer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "offer/offer_output.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "fails improper json offer payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "offer/offer_input.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/services/{service_id}/offers/{id}": {
+      "get": {
+        "summary": "retrieves a published offer",
+        "tags": [
+          "Offers"
+        ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "service_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "retrieves a published offer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "offer/offer_output.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "returns not found for nonexistent offer id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "updates an offer",
+        "tags": [
+          "Offers"
+        ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "service_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "updates an offer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "offer/offer_output.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "offer/offer_update.json"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "deletes an offer",
+        "tags": [
+          "Offers"
+        ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "service_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "properly deletes an offer"
+          },
+          "403": {
+            "description": "doesn't allow to delete a draft offer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/services": {
+      "get": {
+        "summary": "lists services managed by user",
+        "tags": [
+          "Services"
+        ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return services managed by user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "service.json"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "denies entry for unknown token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "denies entry non data administrator",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/services/{id}": {
+      "get": {
+        "summary": "retrieves a managed service",
+        "tags": [
+          "Services"
+        ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "lists a managed service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "service.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "doesn't show unmanaged service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "returns not found for nonexistent service id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "authentication_token": {
+        "type": "apiKey",
+        "name": "X-User-Token",
+        "in": "header"
+      }
+    }
+  }
+}

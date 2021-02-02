@@ -305,6 +305,22 @@ If this is not enough you can customize it by using environment variables:
   * `MP_DATABASE_USERNAME` - PostgreSQL database username
   * `MP_DATABASE_PASSWORD` - PostgreSQL database password
 
+
+## OpenAPI docs
+Marketplace is using OpenAPI documentation standard([swagger](https://swagger.io/)). To do this we are using `rswag` gem.
+To check API documentation go to `/api-docs`.
+
+The docs are generated from specs (`/spec/requests/api/{api_version}`). 
+There is a special DSL (https://github.com/rswag/rswag) for writing specs in OpenAPI fashion. 
+
+When you write/change api specs run:
+```
+./bin/rails rswag
+```
+...to generate and deploy new swagger docs (no server restart required).
+
+You can also customize OpenAPI metadata (such as default port, authentication scheme etc.) in `spec/swagger_helper.rb`
+
 ## Views, locales and scss customization
 
 Views, JS and SCSS can be customized by adding `CUSTOMIZATION_PATH` [env variable](#environmental-variables).
