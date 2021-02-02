@@ -44,5 +44,8 @@ FactoryBot.define do
       sequence(:order_type) { :order_required }
       sequence(:order_url) { "http://order.com" }
     end
+    factory :service_with_offers do
+      sequence(:offers) { create_list(:offer_with_parameters, 2) }
+    end
   end
 end

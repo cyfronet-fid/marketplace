@@ -28,6 +28,11 @@ class Parameter
     false
   end
 
+  def as_json(options = nil)
+    # This method is used by OfferSerializer
+    dump.as_json
+  end
+
   class << self
     def type
       model_name.element

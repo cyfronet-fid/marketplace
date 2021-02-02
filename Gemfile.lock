@@ -43,6 +43,11 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_model_serializers (0.10.12)
+      actionpack (>= 4.1, < 6.2)
+      activemodel (>= 4.1, < 6.2)
+      case_transform (>= 0.2)
+      jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     activejob (6.0.3.2)
       activesupport (= 6.0.3.2)
       globalid (>= 0.3.6)
@@ -96,6 +101,8 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
+    case_transform (0.2)
+      activesupport
     childprocess (3.0.0)
     coderay (1.1.2)
     colorize (0.8.1)
@@ -224,6 +231,7 @@ GEM
       bindata
     json-schema (2.8.1)
       addressable (>= 2.4)
+    jsonapi-renderer (0.2.2)
     jwt (2.1.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -408,6 +416,15 @@ GEM
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.3)
+    rswag-api (2.3.2)
+      railties (>= 3.1, < 7.0)
+    rswag-specs (2.3.2)
+      activesupport (>= 3.1, < 7.0)
+      json-schema (~> 2.2)
+      railties (>= 3.1, < 7.0)
+    rswag-ui (2.3.2)
+      actionpack (>= 3.1, < 7.0)
+      railties (>= 3.1, < 7.0)
     rubocop (0.80.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -485,6 +502,10 @@ GEM
     simple_form (5.0.2)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
+    simple_token_authentication (1.17.0)
+      actionmailer (>= 3.2.6, < 7)
+      actionpack (>= 3.2.6, < 7)
+      devise (>= 3.2, < 6)
     sinatra (2.0.8.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -579,6 +600,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers
   activestorage-validator
   acts-as-taggable-on (~> 6.0)
   ancestry
@@ -630,6 +652,9 @@ DEPENDENCIES
   reverse_markdown
   role_model
   rspec-rails (~> 3.8.2)
+  rswag-api
+  rswag-specs
+  rswag-ui
   rubocop-rails_config
   ruby_parser
   sass-rails (>= 6)
@@ -641,6 +666,7 @@ DEPENDENCIES
   shoulda-matchers
   sidekiq
   simple_form
+  simple_token_authentication
   split
   spring
   spring-watcher-listen (~> 2.0.0)

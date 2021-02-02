@@ -55,5 +55,8 @@ module Mp
 
     config.providers_dashboard_url = ENV["PROVIDERS_DASHBOARD_URL"].present? ?
       ENV["PROVIDERS_DASHBOARD_URL"] : " https://catalogue.eosc-portal.eu/myServiceProviders"
+
+    config.offers_api_disabled = ENV["OFFERS_API_DISABLED"].present? ?
+                                   ActiveModel::Type::Boolean.new.cast(ENV["OFFERS_API_DISABLED"]): false
   end
 end

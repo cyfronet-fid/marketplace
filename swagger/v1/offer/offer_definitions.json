@@ -1,0 +1,368 @@
+{
+    "stub_parameter": {
+      "type":"object",
+      "properties":{
+        "id":{
+          "type":"string"
+        },
+        "label":{
+          "type":"string"
+        },
+        "description":{
+          "type":[
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required":[
+        "id",
+        "label"
+      ]
+    },
+    "attribute_parameter" : {
+      "allOf": [{ "$ref": "#/stub_parameter"}],
+      "properties": {
+        "type":{
+          "type":"string",
+          "enum":[
+            "attribute"
+          ]
+        },
+        "value":{
+          "type":"string"
+        },
+        "value_type":{
+          "type":"string",
+          "enum":[
+            "string",
+            "integer"
+          ]
+        }
+      },
+      "required":[
+        "type",
+        "value",
+        "value_type"
+      ]
+    },
+    "input_parameter" : {
+      "allOf": [{ "$ref": "#/stub_parameter"}],
+      "properties": {
+        "type":{
+          "type":"string",
+          "enum":[
+            "input"
+          ]
+        },
+        "unit":{
+          "type":[
+            "string",
+            "null"
+          ]
+        },
+        "value_type":{
+          "type":"string",
+          "enum":[
+            "string",
+            "integer"
+          ]
+        }
+      },
+      "required":[
+        "type",
+        "value_type"
+      ]
+    },
+    "select_parameter" : {
+      "allOf": [{ "$ref": "#/stub_parameter"}],
+      "properties": {
+        "type":{
+          "type":"string",
+          "enum":[
+            "select"
+          ]
+        },
+        "config":{
+          "type":"object",
+          "properties":{
+            "values":{
+              "type":"array",
+              "minItems":1,
+              "uniqueItems":true,
+              "items": {
+                "type": ["integer", "string"]
+              }
+            },
+            "mode":{
+              "type":"string",
+              "enum":[
+                "dropdown",
+                "buttons"
+              ]
+            }
+          },
+          "required":[
+            "values",
+            "mode"
+          ]
+        },
+        "value_type":{
+          "type":"string",
+          "enum":[
+            "string",
+            "integer"
+          ]
+        },
+        "unit":{
+          "type":[
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required":[
+        "type",
+        "config",
+        "value_type"
+      ]
+    },
+    "multiselect_parameter" : {
+      "allOf": [{ "$ref": "#/stub_parameter"}],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "multiselect"
+          ]
+        },
+        "config":{
+          "type":"object",
+          "properties":{
+            "values":{
+              "type":"array",
+              "minItems":1,
+              "uniqueItems":true,
+              "items": {
+                "type": ["integer", "string"]
+              }
+            },
+            "minItems":{
+              "type":[
+                "integer",
+                "null"
+              ]
+            },
+            "maxItems":{
+              "type":[
+                "integer",
+                "null"
+              ]
+            }
+          },
+          "required":[
+            "values"
+          ]
+        },
+        "value_type":{
+          "type":"string",
+          "enum":[
+            "string",
+            "integer"
+          ]
+        },
+        "unit":{
+          "type":[
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required":[
+        "type",
+        "config",
+        "value_type"
+      ]
+    },
+    "date_parameter" : {
+      "allOf": [{ "$ref": "#/stub_parameter"}],
+      "properties": {
+        "type":{
+          "type":"string",
+          "enum":[
+            "date"
+          ]
+        },
+        "value_type":{
+          "type":"string",
+          "enum":[
+            "string"
+          ]
+        }
+      },
+      "required":[
+        "type",
+        "value_type"
+      ]
+    },
+    "range_parameter" : {
+      "allOf": [{ "$ref": "#/stub_parameter"}],
+      "properties": {
+        "type":{
+          "type":"string",
+          "enum":[
+            "range"
+          ]
+        },
+        "unit":{
+          "type":[
+            "string",
+            "null"
+          ]
+        },
+        "value_type":{
+          "type":"string",
+          "enum":[
+            "integer"
+          ]
+        },
+        "config":{
+          "type":"object",
+          "properties":{
+            "minimum":{
+              "type":"integer"
+            },
+            "maximum":{
+              "type":"integer"
+            },
+            "exclusiveMinimum":{
+              "type":[
+                "boolean",
+                "null"
+              ]
+            },
+            "exclusiveMaximum":{
+              "type":[
+                "boolean",
+                "null"
+              ]
+            }
+          },
+          "required":[
+            "minimum",
+            "maximum"
+          ]
+        }
+      },
+      "required":[
+        "type",
+        "value_type",
+        "config"
+      ]
+    },
+    "quantity_price_parameter" : {
+      "allOf": [{ "$ref": "#/stub_parameter"}],
+      "properties": {
+        "type":{
+          "type":"string",
+          "enum":[
+            "quantity_price"
+          ]
+        },
+        "unit":{
+          "type":[
+            "string",
+            "null"
+          ]
+        },
+        "value_type":{
+          "type":"string",
+          "enum":[
+            "integer"
+          ]
+        },
+        "config":{
+          "type":"object",
+          "properties":{
+            "start_price":{
+              "type":"integer"
+            },
+            "step_price":{
+              "type":"integer"
+            },
+            "max":{
+              "type":[
+                "integer",
+                "null"
+              ]
+            },
+            "currency":{
+              "type":"string"
+            }
+          },
+          "required":[
+            "start_price",
+            "step_price",
+            "currency"
+          ]
+        }
+
+      },
+      "required":[
+        "type",
+        "value_type",
+        "config"
+      ]
+    },
+    "offer": {
+      "type":"object",
+      "properties":{
+        "name":{
+          "type":"string"
+        },
+        "description":{
+          "type":"string"
+        },
+        "webpage":{
+          "type":[
+            "string",
+            "null"
+          ]
+        },
+        "order_type":{
+          "type":"string",
+          "enum":[
+            "open_access",
+            "fully_open_access",
+            "order_required",
+            "other"
+          ]
+        },
+        "order_url":{
+          "type":[
+            "string",
+            "null"
+          ]
+        },
+        "internal":{
+          "type":"boolean"
+        },
+        "parameters":{
+          "type":"array",
+          "uniqueItems":true,
+          "items":{
+            "oneOf":[
+              { "$ref": "#/attribute_parameter" },
+              { "$ref": "#/input_parameter" },
+              { "$ref": "#/select_parameter" },
+              { "$ref": "#/multiselect_parameter" },
+              { "$ref": "#/date_parameter" },
+              { "$ref": "#/range_parameter" },
+              { "$ref": "#/quantity_price_parameter" }
+            ]
+          }
+        }
+      },
+      "not": { "required": [ "status" ] }
+    }
+}

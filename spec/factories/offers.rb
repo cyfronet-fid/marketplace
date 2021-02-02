@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :offer do
+    sequence(:iid) { |n| n }
     sequence(:name) { |n| "offer #{n}" }
     sequence(:description) { |n| "offer #{n} description" }
     sequence(:service) { |n| create(:service, offers_count: 1) }
@@ -10,6 +11,18 @@ FactoryBot.define do
     sequence(:order_type) { :order_required }
     factory :offer_with_parameters do
       sequence(:parameters) { [build(:input_parameter)] }
+    end
+
+    factory :offer_with_all_parameters do
+      sequence(:parameters) { [
+        build(:constant_parameter),
+        build(:input_parameter),
+        build(:select_parameter),
+        build(:multiselect_parameter),
+        build(:range_parameter),
+        build(:date_parameter),
+        build(:quantity_price_parameter),
+      ] }
     end
 
     factory :open_access_offer do

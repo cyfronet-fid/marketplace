@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  acts_as_token_authenticatable
+
   devise :database_authenticatable, :rememberable, :trackable,
          :omniauthable, omniauth_providers: %i[checkin]
 
@@ -32,7 +34,23 @@ class User < ApplicationRecord
     owned_services_count.positive?
   end
 
+  def data_administrator?
+    DataAdministrator.where(email: email).count.positive?
+  end
+
+  def managed_services
+    Service.administered_by(self)
+  end
+
   def to_s
     full_name
+  end
+
+  def valid_token?
+    authentication_token != "revoked" && authentication_token.present?
+  end
+
+  def self.generate_token
+    Devise.friendly_token
   end
 end
