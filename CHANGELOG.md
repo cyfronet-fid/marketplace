@@ -9,13 +9,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
-- v1 Offers API (@wujuu)
-- OpenAPI (swagger) documentation (rswag gem) (@wujuu)
-- User token authentication (simple_token_authentication gem) (@wujuu)
-- Token generation (UI and logic) (@wujuu, @jarekzet)
-- data_administator panel for adding/editing offers and its parameters (@goreck888)
-- views for data_administrator panel (@JanKapala, @jarekzet)
-- New resource view in the backoffice (@goreck888, @jarekzet)
 
 ### Changed
 
@@ -24,6 +17,17 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+
+## [3.7.0] 2021-02-02
+
+### Added
+- v1 Offers API (@wujuu)
+- OpenAPI (swagger) documentation (rswag gem) (@wujuu)
+- User token authentication (simple_token_authentication gem) (@wujuu)
+- Token generation (UI and logic) (@wujuu, @jarekzet)
+- data_administator panel for adding/editing offers and its parameters (@goreck888)
+- views for data_administrator panel (@JanKapala, @jarekzet)
+- New resource view in the backoffice (@goreck888, @jarekzet)
 
 ## [3.6.0] 2021-01-27
 
