@@ -186,10 +186,10 @@ module Import
             pricing_url: pricing_url || "",
             main_contact: main_contact,
             public_contacts: public_contacts,
-            trl: Trl.where(eid: trl),
+            trl: Vocabulary::Trl.where(eid: trl),
             required_services: map_related_services(required_services),
             related_services: map_related_services(related_services),
-            life_cycle_status: LifeCycleStatus.where(eid: life_cycle_status),
+            life_cycle_status: Vocabulary::LifeCycleStatus.where(eid: life_cycle_status),
             order_type: order_type,
             status: "unverified",
             funding_bodies: map_funding_bodies(funding_bodies),
@@ -316,7 +316,7 @@ module Import
     end
 
     def map_pc_categories(categories)
-      PcCategory.where(eid: categories)
+      Vocabulary::PcCategory.where(eid: categories)
     end
 
     def map_scientific_domains(domains)
@@ -333,19 +333,19 @@ module Import
     end
 
     def map_funding_bodies(funding_bodies)
-      FundingBody.where(eid: funding_bodies)
+      Vocabulary::FundingBody.where(eid: funding_bodies)
     end
 
     def map_funding_programs(funding_programs)
-      FundingProgram.where(eid: funding_programs)
+      Vocabulary::FundingProgram.where(eid: funding_programs)
     end
 
     def map_access_types(access_types)
-      AccessType.where(eid: access_types)
+      Vocabulary::AccessType.where(eid: access_types)
     end
 
     def map_access_modes(aceess_modes)
-      AccessMode.where(eid: aceess_modes)
+      Vocabulary::AccessMode.where(eid: aceess_modes)
     end
 
     def map_order_type(order_type)

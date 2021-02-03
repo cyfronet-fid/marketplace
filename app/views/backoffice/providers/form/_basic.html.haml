@@ -1,0 +1,23 @@
+.card.shadow-sm.rounded
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(provider, [:name, :abbreviation, :website,
+          :legal_entity, :legal_statuses])),
+              data: { toggle: "collapse", target: "#basic" },
+              aria: { expanded: true, controls: "basic" } }
+    .card-header.text-left{ id: "basic-header" }
+      .row
+        .col-11
+          = _("Basic")
+        .col-1.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+.collapse{ id: "basic", "aria-labelledby": "basic-header",
+          "data-parent": "#accordion-form",
+          class: ("show" unless collapsed?(provider, [:name, :abbreviation, :website,
+          :legal_entity, :legal_statuses])) }
+  .card-body
+    = f.input :name
+    = f.input :abbreviation
+    = f.input :website
+    = f.input :legal_entity, as: :boolean, checked_value: true, unchecked_value: false
+    = f.association :legal_statuses, input_html: { data: { choice: true } }

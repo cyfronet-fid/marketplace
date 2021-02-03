@@ -3,6 +3,7 @@
 
 class Service < ApplicationRecord
   include Service::Search
+  include LogoAttachable
 
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -51,13 +52,20 @@ class Service < ApplicationRecord
   has_many :service_related_platforms, dependent: :destroy
   has_many :platforms, through: :service_related_platforms
   has_many :service_vocabularies, dependent: :destroy
-  has_many :pc_categories, through: :service_vocabularies, source: :vocabulary, source_type: "PcCategory"
-  has_many :funding_bodies, through: :service_vocabularies, source: :vocabulary, source_type: "FundingBody"
-  has_many :funding_programs, through: :service_vocabularies, source: :vocabulary, source_type: "FundingProgram"
-  has_many :access_modes, through: :service_vocabularies, source: :vocabulary, source_type: "AccessMode"
-  has_many :access_types, through: :service_vocabularies, source: :vocabulary, source_type: "AccessType"
-  has_many :trl, through: :service_vocabularies, source: :vocabulary, source_type: "Trl"
-  has_many :life_cycle_status, through: :service_vocabularies, source: :vocabulary, source_type: "LifeCycleStatus"
+  has_many :pc_categories, through: :service_vocabularies,
+           source: :vocabulary, source_type: "Vocabulary::PcCategory"
+  has_many :funding_bodies, through: :service_vocabularies,
+           source: :vocabulary, source_type: "Vocabulary::FundingBody"
+  has_many :funding_programs, through: :service_vocabularies,
+           source: :vocabulary, source_type: "Vocabulary::FundingProgram"
+  has_many :access_modes, through: :service_vocabularies,
+           source: :vocabulary, source_type: "Vocabulary::AccessMode"
+  has_many :access_types, through: :service_vocabularies,
+           source: :vocabulary, source_type: "Vocabulary::AccessType"
+  has_many :trl, through: :service_vocabularies,
+           source: :vocabulary, source_type: "Vocabulary::Trl"
+  has_many :life_cycle_status, through: :service_vocabularies,
+           source: :vocabulary, source_type: "Vocabulary::LifeCycleStatus"
   has_many :service_target_users, dependent: :destroy
   has_many :target_users, through: :service_target_users
 
@@ -226,15 +234,6 @@ class Service < ApplicationRecord
     def open_access_or_external?
       open_access? || external
     end
-
-    def logo_variable
-      if logo.present? && !logo.variable?
-        errors.add(:logo, "^Sorry, but the logo format you were trying to attach is not supported
-                          in the Marketplace. Please attach the logo in png, gif, jpg, jpeg,
-                          pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon format.")
-      end
-    end
-
 
     def main_category_missing?
       categorizations.where(main: true).count.zero?

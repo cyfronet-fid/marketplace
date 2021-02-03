@@ -10,7 +10,7 @@ class ArrayInput < SimpleForm::Inputs::TextInput
           template.content_tag(:a, "Remove", id: "remove_#{object_name}_#{attribute_name}_#{index}",
                                class: "btn-sm btn-danger remove float-right disablable",
                                "data-target": "#{attribute_name}",
-                               "data-action": "click->service#removeField",
+                               "data-action": "click->form#removeField",
                                "data-value": "#{object_name}_#{attribute_name}_#{index}")
     end
     number = Array(object.public_send(attribute_name)).length
@@ -21,7 +21,7 @@ class ArrayInput < SimpleForm::Inputs::TextInput
                         template.content_tag(:a, "Remove", id: "remove-#{object_name}_#{attribute_name}_#{number}",
                                              class: "btn-sm btn-danger remove float-right disablable",
                                              "data-target": "#{attribute_name}",
-                                             "data-action": "click->service#removeField",
+                                             "data-action": "click->form#removeField",
                                              "data-value": "#{object_name}_#{attribute_name}_#{number}")
     existing_value.join.html_safe
   end

@@ -1,5 +1,6 @@
 - content_for :title, _("New Provider")
 - breadcrumb :backoffice_provider_new, @provider
 
-%h2= _("New Provider")
-= render "form", provider: @provider
+.container
+  %h1#title.mb-5= _("New Provider")
+  = render "form", provider: @provider

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_29_114724) do
+ActiveRecord::Schema.define(version: 2021_02_03_170414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -268,6 +268,16 @@ ActiveRecord::Schema.define(version: 2021_01_29_114724) do
     t.index ["provider_id"], name: "index_provider_data_administrators_on_provider_id"
   end
 
+  create_table "provider_scientific_domains", force: :cascade do |t|
+    t.bigint "provider_id"
+    t.bigint "scientific_domain_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["provider_id", "scientific_domain_id"], name: "index_psd_on_provider_id_and_sd_id", unique: true
+    t.index ["provider_id"], name: "index_provider_scientific_domains_on_provider_id"
+    t.index ["scientific_domain_id"], name: "index_provider_scientific_domains_on_scientific_domain_id"
+  end
+
   create_table "provider_sources", force: :cascade do |t|
     t.string "eid", null: false
     t.string "source_type", null: false
@@ -278,10 +288,40 @@ ActiveRecord::Schema.define(version: 2021_01_29_114724) do
     t.index ["provider_id"], name: "index_provider_sources_on_provider_id"
   end
 
+  create_table "provider_vocabularies", force: :cascade do |t|
+    t.bigint "provider_id"
+    t.bigint "vocabulary_id"
+    t.string "vocabulary_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["provider_id", "vocabulary_id"], name: "index_provider_vocabularies_on_provider_id_and_vocabulary_id", unique: true
+    t.index ["provider_id"], name: "index_provider_vocabularies_on_provider_id"
+    t.index ["vocabulary_id"], name: "index_provider_vocabularies_on_vocabulary_id"
+  end
+
   create_table "providers", force: :cascade do |t|
     t.text "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "pid"
+    t.string "abbreviation"
+    t.string "website"
+    t.boolean "legal_entity"
+    t.text "description"
+    t.string "multimedia", default: [], array: true
+    t.text "tagline"
+    t.string "street_name_and_number"
+    t.string "postal_code"
+    t.string "city"
+    t.string "region"
+    t.string "country"
+    t.string "certifications", default: [], array: true
+    t.string "hosting_legal_entity"
+    t.string "participating_countries", default: [], array: true
+    t.string "affiliations", default: [], array: true
+    t.string "national_roadmaps", default: [], array: true
+    t.integer "upstream_id"
+    t.datetime "synchronized_at"
     t.index ["name"], name: "index_providers_on_name", unique: true
   end
 
@@ -574,6 +614,10 @@ ActiveRecord::Schema.define(version: 2021_01_29_114724) do
   add_foreign_key "project_items", "projects"
   add_foreign_key "project_scientific_domains", "projects"
   add_foreign_key "project_scientific_domains", "scientific_domains"
+  add_foreign_key "provider_scientific_domains", "providers"
+  add_foreign_key "provider_scientific_domains", "scientific_domains"
+  add_foreign_key "provider_vocabularies", "providers"
+  add_foreign_key "provider_vocabularies", "vocabularies"
   add_foreign_key "service_providers", "providers"
   add_foreign_key "service_providers", "services"
   add_foreign_key "service_related_platforms", "platforms"
