@@ -1,0 +1,31 @@
+.card.shadow-sm.rounded
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(provider,
+            ["data_administrators.email".to_sym])),
+                data: { toggle: "collapse", target: "#admins" },
+                aria: { expanded: true, controls: "admins" } }
+    .card-header.text-left{ id: "admins-header" }
+      .row
+        .col-11
+          = _("Admins")
+        .col-1.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+.collapse{ id: "admins", "aria-labelledby": "admins-header",
+          "data-parent": "#accordion-form",
+          class: ("show" unless collapsed?(provider,
+            ["data_administrators.email".to_sym])) }
+  .card-body
+    .row.service-contact-emails{ "data-controller": "provider", "data-target": "provider.dataAdministrators" }
+      .col-12
+        %h3
+          = _("Data Administrators")
+        = f.fields_for :data_administrators, multiple: true, as: :array,
+          wrapper_html: { "data-target" => "provider.dataAdministrator" } do |data_administrator_form|
+          = render "data_administrator_fields", data_administrator_form: data_administrator_form
+        = link_to _("Add additional data administrator"), "#", class: "btn btn-primary disablable mb-5",
+                    data: { "target": "provider.addAdmin",
+                    "action": "click->provider#addAdmin",
+                    "fields": f.fields_for(:data_administrators, DataAdministrator.new,
+                    child_index: "new_field") { |data_administrator_form| render "data_administrator_fields",
+                    data_administrator_form: data_administrator_form } }

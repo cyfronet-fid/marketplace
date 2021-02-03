@@ -10,6 +10,11 @@ en:
         grant_project_names: grant/project name
         changelog: changelog entry
         related_platforms: related platform
+      provider:
+        multimedia: multimedia
+        affiliations: affiliation
+        certifications: certification
+        national_roadmaps: National roadmap
     "yes": 'Yes'
     "no": 'No'
     required:

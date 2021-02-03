@@ -5,7 +5,7 @@ export default class extends Controller {
   static targets = ["array", "form", "input", "publicContacts", "publicContact",
     "destroy", "addContact", "multimedia", "changelog", "grantProjectNames",
     "certifications", "standards", "openSourceTechnologies", "useCasesUrl",
-    "relatedPlatforms", "fixme"]
+    "relatedPlatforms", "affiliations", "national_roadmaps", "fixme"]
 
   initialize() {
     this.addListenersForCollapse();
@@ -60,7 +60,7 @@ export default class extends Controller {
 
     removeLink.id = "remove_" + lastArrayField.id;
     removeLink.dataset.target= event.target;
-    removeLink.dataset.action= "click->service#removeField";
+    removeLink.dataset.action= "click->form#removeField";
     removeLink.dataset.value= lastArrayField.id;
     removeLink.appendChild(linkText);
     removeLink.classList.add("btn-sm", "btn-danger", "remove", "float-right");

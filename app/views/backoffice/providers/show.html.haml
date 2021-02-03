@@ -3,6 +3,10 @@
 
 %h1= @provider.name
 .service-box.shadow-sm.p-4.mt-3.backoffice-form
+  .logo-wrapper
+    %span.helper
+    - if @provider.logo.attached? && @provider.logo.variable?
+      = image_tag @provider.logo.variant(resize: "100x100")
   - unless @provider.sources.empty?
     %h3
       = _("External Sources:")
