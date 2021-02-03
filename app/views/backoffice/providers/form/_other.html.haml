@@ -1,0 +1,66 @@
+.card.shadow-sm.rounded
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(provider,
+              [:hosting_legal_entity, :participating_countries, :affiliations, :networks, :structure_types,
+              :esfri_types, :esfri_domains, :meril_scientific_domains, :areas_of_activity,
+              :societal_grand_challenges, :national_roadmaps])),
+                data: { toggle: "collapse", target: "#other" },
+                aria: { expanded: true, controls: "other" } }
+    .card-header.text-left{ id: "other-header" }
+      .row
+        .col-11
+          = _("Other")
+        .col-1.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+.collapse{ id: "other", "aria-labelledby": "other-header",
+          "data-parent": "#accordion-form",
+          class: ("show" unless collapsed?(provider,
+              [:hosting_legal_entity, :participating_countries, :affiliations, :networks, :structure_types,
+              :esfri_types, :esfri_domains, :meril_scientific_domains, :areas_of_activity,
+              :societal_grand_challenges, :national_roadmaps])) }
+  .card-body
+    .row
+      .col-12
+        = f.input :hosting_legal_entity
+    .row
+      .col-12
+        = f.input :participating_countries, as: :select,
+                  collection: Country.options.map { |c| [ c.name, "value" => c.alpha2 ] },
+                  input_html: { data: { choice: true },  multiple: true }
+    .row
+      .col-12
+        = f.input :affiliations, multiple: true, input_html: { class: "form-control text optional" },
+              wrapper_html: { "data-target" => "form.affiliations" }, as: :array
+        = link_to_add_array_field("provider", "affiliations")
+        - msd = Vocabulary.where(type: "Vocabulary::MerilScientificDomain").child_names.map { |name, sd| [name, sd.id] }
+        .mt-4
+        = f.association :networks, input_html: { multiple: true, data: { choice: true } }
+        = f.association :structure_types, input_html: { multiple: true, data: { choice: true } }
+        = f.association :esfri_domains, input_html: { multiple: true, data: { choice: true } }
+        = f.association :esfri_types, input_html: { multiple: true, data: { choice: true } }
+        = f.association :meril_scientific_domains, input_html: { multiple: true, data: { choice: true } },
+          collection: msd, label_method: :first, value_method: :second
+        = f.association :areas_of_activity, input_html: { multiple: true, data: { choice: true } }
+        = f.association :societal_grand_challenges, input_html: { multiple: true, data: { choice: true } }
+        = f.input :national_roadmaps, multiple: true, input_html: { class: "form-control text optional" },
+              wrapper_html: { "data-target" => "form.national_roadmaps" }, as: :array
+        = link_to_add_array_field("provider", "national_roadmaps")
+    .row
+      .col-12
+        = f.input :upstream_id, collection: f.object.sources.reject { |source| source.id.nil? },
+          include_blank: "MP", label: _("Provider Upstream")
+
+        %h3.mt-4
+          = _("External Sources")
+
+        = f.fields_for :sources do |sources_form|
+          = sources_form.hidden_field :id
+          = sources_form.input :source_type, collection: ProviderSource.source_types.keys.map(&:to_sym)
+          = sources_form.input :eid, label: _("eInfraCentral External ID")
+          - unless sources_form.object.id.nil?
+            = sources_form.check_box :_destroy
+            = sources_form.label :_destroy, _("Remove external source")
+    .row
+      .col-12.col-md-4.mt-4
+        = f.input :synchronized_at, as: :date_time_picker, disabled: true
