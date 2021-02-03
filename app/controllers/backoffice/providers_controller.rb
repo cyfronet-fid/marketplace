@@ -15,6 +15,8 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     @provider = Provider.new
     @provider.sources.build source_type: "eic"
     @provider.data_administrators.build
+    @provider.build_main_contact
+    @provider.public_contacts.build
     authorize(@provider)
   end
 
@@ -51,7 +53,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
 
   private
     def find_and_authorize
-      @provider = Provider.find(params[:id])
+      @provider = Provider.friendly.find(params[:id])
       authorize(@provider)
     end
 
@@ -61,6 +63,12 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
       end
       if @provider.data_administrators.blank?
         @provider.data_administrators.build
+      end
+      if @provider.main_contact.blank?
+        @provider.build_main_contact
+      end
+      if @provider.public_contacts.blank?
+        @provider.public_contacts.build
       end
     end
 end

@@ -40,24 +40,19 @@ RSpec.feature "Providers in backoffice" do
       expect(page).to have_content("My new provider")
     end
 
-    scenario "I can create new provider with data administrators", js: true do
+    scenario "I can create new provider with data administrators" do
       visit backoffice_providers_path
       click_on "Add new Provider"
-
       fill_in "Name", with: "My new provider"
+
+      click_on "Admins", match: :first
 
       fill_in "provider_data_administrators_attributes_0_first_name", with: "John"
       fill_in "provider_data_administrators_attributes_0_last_name", with: "Doe"
       fill_in "provider_data_administrators_attributes_0_email", with: "john@doe.com"
 
-      click_on "Add additional data administrator"
-
-      fill_in "provider_data_administrators_attributes_1_first_name", with: "Jane"
-      fill_in "provider_data_administrators_attributes_1_last_name", with: "Doe"
-      fill_in "provider_data_administrators_attributes_1_email", with: "jane@doe.com"
-
       expect { click_on "Create Provider" }.
-        to change { Provider.count }.by(1).and(change { DataAdministrator.count }.by(2))
+        to change { Provider.count }.by(1).and(change { DataAdministrator.count }.by(1))
 
       expect(page).to have_content("My new provider")
     end
@@ -97,6 +92,8 @@ RSpec.feature "Providers in backoffice" do
       provider = create(:provider, data_administrators: data_administrators)
 
       visit edit_backoffice_provider_path(provider)
+
+      click_on "Admins", match: :first
 
       expect(page).to have_css("#data-administrator-delete-0")
       expect(page).to have_css("#data-administrator-delete-1")

@@ -1,0 +1,24 @@
+.card.shadow-sm.rounded
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(provider,
+    [:street_name_and_number, :postal_code, :city, :region, :country])),
+              data: { toggle: "collapse", target: "#location" },
+              aria: { expanded: true, controls: "location" } }
+    .card-header.text-left{ id: "marketing-header" }
+      .row
+        .col-11
+          = _("Location")
+        .col-1.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+.collapse{ id: "location", "aria-labelledby": "location-header",
+          "data-parent": "#accordion-form",
+          class: ("show" unless collapsed?(provider, [:street_name_and_number, :postal_code,
+                                                      :city, :region, :country])) }
+  .card-body
+    = f.input :street_name_and_number
+    = f.input :postal_code
+    = f.input :city
+    = f.input :region
+    = f.input :country, as: :select,
+              collection: Country.options.map { |c| [ c.name, "value" => c.alpha2 ] }

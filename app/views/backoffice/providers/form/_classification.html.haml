@@ -1,0 +1,20 @@
+.card.shadow-sm.rounded
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(provider, [:scientific_domains, :tag_list])),
+              data: { toggle: "collapse", target: "#classification" },
+              aria: { expanded: true, controls: "classification" } }
+    .card-header.text-left{ id: "classification-header" }
+      .row
+        .col-11
+          = _("Classification")
+        .col-1.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+.collapse{ id: "classification", "aria-labelledby": "classification-header",
+          "data-parent": "#accordion-form",
+          class: ("show" unless collapsed?(provider, [:scientific_domains, :tag_list])) }
+  .card-body
+    = f.association :scientific_domains, input_html: { data: { choice: true } }, include_hidden: false,
+                            collection: ScientificDomain.child_names.map { |name, sd| [name, sd.id] },
+                            label_method: :first, value_method: :second
+    = f.input :tag_list, input_html: { value: provider.tag_list.to_s }
