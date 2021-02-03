@@ -5,7 +5,7 @@ module FormsHelper
     content_tag(:a, "Add new " + t("simple_form.add_new_array_item.#{model}.#{field_name}"),
                 class: "btn btn-sm btn-primary disablable",
                 data:  {
-                    action: "click->service#addNewArrayField",
+                    action: "click->form#addNewArrayField",
                     wrapper: "#{model}_#{field_name}",
                     name: "#{model}[#{field_name}][]",
                     class: "form-control text optional" })

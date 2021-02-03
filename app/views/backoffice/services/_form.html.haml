@@ -1,10 +1,10 @@
 = simple_form_for [:backoffice, service],
-  html: { "data-controller" => "service", "data-target": "service.form",
+  html: { "data-controller" => "form", "data-target": "form.form",
   "data-disabled": service.upstream_id.present? }  do |f|
   = f.error_notification
   .row
     .col-12.col-md-2
-      .fixme{ "data-target": "service.fixme", "data-action": "scroll@window->service#onScroll" }
+      .fixme{ "data-target": "form.fixme", "data-action": "scroll@window->form#onScroll" }
         %ul.add-new-menu
           %li
             %a{ "href": "#basic", "data-toggle": "collapse" }= _("Basic")
@@ -108,24 +108,24 @@
                               :categories, :target_users, :access_types, :access_modes, :tag_list])) }
           .card-body
             = f.association :scientific_domains, input_html: { data: { choice: true } }, include_hidden: false,
-                              disabled: cant_edit([scientific_domain_ids: []]),
-                              collection: ScientificDomain.child_names.map { |name, sd| [name, sd.id] },
-                              label_method: :first, value_method: :second
+            disabled: cant_edit([scientific_domain_ids: []]),
+            collection: ScientificDomain.child_names.map { |name, sd| [name, sd.id] },
+            label_method: :first, value_method: :second
             = f.association :pc_categories, multiple: true, input_html: { data: { choice: true } },
-                        disabled: cant_edit([pc_category_ids: []]),
-                        collection: Vocabulary.where(type: "PcCategory").child_names.map { |name, pcc| [name, pcc.id] },
-                        label_method: :first, value_method: :second
+            disabled: cant_edit([pc_category_ids: []]),
+            collection: Vocabulary.where(type: "Vocabulary::PcCategory").child_names.map { |name, pcc| [name, pcc.id] },
+            label_method: :first, value_method: :second
             = f.association :categories, multiple: true, input_html: { data: { choice: true } },
-                              disabled: cant_edit([category_ids: []])
+                            disabled: cant_edit([category_ids: []])
             = f.association :target_users,
-                        label: _("Dedicated For"),
-                        input_html: { data: { choice: true }, class: "target_users" },
-                        include_hidden: false,
-                        disabled: cant_edit([target_user_ids: []])
+              label: _("Dedicated For"),
+              input_html: { data: { choice: true }, class: "target_users" },
+              include_hidden: false,
+              disabled: cant_edit([target_user_ids: []])
             = f.association :access_types, input_html: { data: { choice: true } },
-                        disabled: cant_edit([access_type_ids: []])
+                            disabled: cant_edit([access_type_ids: []])
             = f.association :access_modes, input_html: { data: { choice: true } },
-                              disabled: cant_edit([access_mode_ids: []])
+                            disabled: cant_edit([access_mode_ids: []])
             = f.input :tag_list, input_html: { value: service.tag_list.to_s }, disabled: cant_edit(:tag_list)
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
@@ -218,14 +218,15 @@
                 %h3
                   = _("Public contacts")
                 = f.fields_for :public_contacts, multiple: true, as: :array,
-                    wrapper_html: { "data-target" => "service.publicContact" } do |public_contact_form|
-                  = render "public_contact_fields", public_contact_form: public_contact_form, service: service
+                    wrapper_html: { "data-target" => "form.publicContact" } do |public_contact_form|
+                  = render "backoffice/common_parts/form/public_contact_fields",
+                  public_contact_form: public_contact_form, service: service
                 = link_to _("Add additional public contact"), "#", class: "btn btn-primary disablable",
-                    data: { "target": "service.addContact",
-                    "action": "click->service#addContact",
-                    "fields": f.fields_for(:public_contacts, PublicContact.new,
-                    child_index: "new_field") { |public_contact_form| render "public_contact_fields",
-                    public_contact_form: public_contact_form, service: service } }
+                  data: { "target": "form.addContact",
+                  "action": "click->form#addContact",
+                  "fields": f.fields_for(:public_contacts, PublicContact.new,
+                  child_index: "new_field") { |pcf| render "backoffice/common_parts/form/public_contact_fields",
+                  public_contact_form: pcf, service: service } }
             .row.mt-5
               .col-12
                 = f.input :helpdesk_email, input_html: { type: "text" }, disabled: cant_edit(:helpdesk_email)

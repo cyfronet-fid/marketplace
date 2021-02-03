@@ -105,12 +105,12 @@ class Service::PcCreateOrUpdate
         maintenance_url: data["maintenance"] || "",
         payment_model_url: data["paymentModel"] || "",
         pricing_url: data["pricing"] || "",
-        trl: Trl.where(eid: data["trl"]),
+        trl: Vocabulary::Trl.where(eid: data["trl"]),
         required_services: map_related_services(Array(data.dig("requiredResources", "requiredResource"))),
         related_services: map_related_services(Array(data.dig("relatedResources", "relatedResource"))),
-        life_cycle_status: LifeCycleStatus.where(eid: data["lifeCycleStatus"]),
-        access_types: AccessType.where(eid: Array(data.dig("accessTypes", "accessType"))),
-        access_modes: AccessMode.where(eid: Array(data.dig("accessModes", "accessMode"))),
+        life_cycle_status: Vocabulary::LifeCycleStatus.where(eid: data["lifeCycleStatus"]),
+        access_types: Vocabulary::AccessType.where(eid: Array(data.dig("accessTypes", "accessType"))),
+        access_modes: Vocabulary::AccessMode.where(eid: Array(data.dig("accessModes", "accessMode"))),
         status: "unverified",
         funding_bodies: map_funding_bodies(data.dig("fundingBody", "fundingBody")),
         funding_programs: map_funding_programs(data.dig("fundingPrograms", "fundingProgram")),
@@ -182,7 +182,7 @@ class Service::PcCreateOrUpdate
     end
 
     def map_pc_categories(categories)
-      PcCategory.where(eid: categories)
+      Vocabulary::PcCategory.where(eid: categories)
     end
 
     def map_scientific_domains(domains)
@@ -199,11 +199,11 @@ class Service::PcCreateOrUpdate
     end
 
     def map_funding_bodies(funding_bodies)
-      FundingBody.where(eid: funding_bodies)
+      Vocabulary::FundingBody.where(eid: funding_bodies)
     end
 
     def map_funding_programs(funding_programs)
-      FundingProgram.where(eid: funding_programs)
+      Vocabulary::FundingProgram.where(eid: funding_programs)
     end
 
     def map_order_type(order_type)

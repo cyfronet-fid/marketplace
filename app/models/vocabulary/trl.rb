@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-class Trl < Vocabulary
+class Vocabulary::Trl < Vocabulary
 end
