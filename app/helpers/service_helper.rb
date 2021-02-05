@@ -45,8 +45,12 @@ module ServiceHelper
     Hash[parents.map { |parent| [parent.name, (parent.children & service.send(field)).map(&:name)] } ]
   end
 
+  def scientific_domains_text(service)
+    service.scientific_domains.map { |target| target.name }
+  end
+
   def providers(service)
-    service.providers.map { |target| link_to(target.name, services_path(providers: target)) }
+    service.providers.map { |target| link_to(target.name, provider_path(target)) }
   end
 
   def providers_text(service)

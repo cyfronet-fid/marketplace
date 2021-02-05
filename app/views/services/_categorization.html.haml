@@ -3,17 +3,17 @@
     %span
       = _("Provided by") + ":"
   %dd.x-small
-    %strong.mr-4= safe_join(providers(service), ", ")
+    %mr-4= safe_join(providers(service), ", ")
 %dl.mb-0.research
   %dt.x-small
     %span
       = _("Scientific domain") + ":"
   %dd.x-small
-    %strong.mr-4= safe_join(scientific_domains(service), ", ")
+    %mr-4= safe_join(scientific_domains_text(service), ", ")
 %dl.mb-0.dedicated
   %dt.x-small
     %span
       = _("Dedicated for") + ":"
   %dd.x-small
-    %strong.mr-4= safe_join(dedicated_for_links(service), ", ")
+    %mr-4= safe_join(dedicated_for_text(service), ", ")
 %span.clearfix
