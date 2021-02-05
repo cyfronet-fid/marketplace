@@ -101,8 +101,13 @@ crumb :project_edit do |project|
 end
 
 crumb :providers do
-  link "Providers", projects_path
+  link "Providers", providers_path
   parent :marketplace_root
+end
+
+crumb :provider do |provider|
+  link provider.name, provider_path(provider)
+  parent :providers
 end
 
 crumb :communities do

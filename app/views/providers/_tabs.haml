@@ -1,0 +1,12 @@
+-# - from = params[:from]
+  - about_active = ["services", "ordering_configurations"].include?(controller_name)
+.row
+  .col-12
+    %ul#my-tab.nav.nav-tabs.row.pl-3{ role: "tablist" }
+      %li.nav-item
+        = link_to _("About")
+        -# = link_to _("About")
+          class: "nav-link text-uppercase #{"active" if about_active }", role: "tab"
+      %li.nav-item
+        = link_to _("Details")
+        -# class: "nav-link text-uppercase #{"active" if controller.controller_name == 'details'}", role: "tab"
