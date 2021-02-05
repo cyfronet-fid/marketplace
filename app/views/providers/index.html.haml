@@ -1,5 +1,5 @@
 - content_for :title, _("Providers")
-- breadcrumb :providers
+- breadcrumb(:providers)
 %main.pages
   .container
     .row
@@ -12,4 +12,4 @@
             %ul.row
               - @providers.each do |provider|
                 %li.col-lg-6
-                  = link_to provider.name, services_path(providers: provider.to_param)
+                  = link_to provider.name, provider_path(provider)
