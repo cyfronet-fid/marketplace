@@ -18,17 +18,11 @@ RSpec.configure do |config|
     "v1/swagger.json" => {
       openapi: "3.0.1",
       info: {
-        title: "Offers API",
+        title: "EOSC Marketplace API",
         version: "v1",
-        description: "API providing CRUD on Offers and listing of the Services owned"
+        description: "Documentation of the EOSC Marketplace REST API for integration of other software systems"
       },
       paths: {},
-      # servers: [
-      #   {
-      #     url: ENV["ROOT_URL"] || "http://localhost:#{ENV['PORT'] || 5000}",
-      #     description: "Current instance"
-      #   }
-      # ],
       components: {
         securitySchemes: {
           authentication_token: {

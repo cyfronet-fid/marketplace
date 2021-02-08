@@ -1,4 +1,4 @@
-- breadcrumb :token
+- breadcrumb :api_docs
 
 .container
   %h1 API
@@ -24,10 +24,10 @@
       .col-12.col-md-5.token-button
         - unless current_user.valid_token?
           %p
-            = link_to "Generate token", token_path, method: :post, class: "btn btn-primary float-right"
+            = link_to "Generate token", api_docs_path, method: :post, class: "btn btn-primary float-right"
         - else
           %p
-            = link_to "Revoke token", token_path, method: :delete, class: "btn btn-outline-danger float-right"
+            = link_to "Revoke token", api_docs_path, method: :delete, class: "btn btn-outline-danger float-right"
   %h2.mb-5 EOSC Marketplace API Documentation
   .container
     .row
@@ -36,7 +36,7 @@
           - api_wiki_subsections.each do |subsection|
             %li{ class: ("active" if subsection == @subsection) }
               %span
-                = link_to subsection.capitalize, token_path(subsection: subsection)
+                = link_to subsection.capitalize, api_docs_path(subsection: subsection)
 
       .col-12.col-md-8.float-right.ml-auto.mr-auto
-        = render "tokens/subsections/#{@subsection}"
+        = render "api_docs/subsections/#{@subsection}"

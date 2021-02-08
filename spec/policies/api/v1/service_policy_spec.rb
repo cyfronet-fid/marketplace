@@ -10,7 +10,7 @@ RSpec.describe Api::V1::ServicePolicy do
   let!(:service) { create(:service,
                           resource_organisation: create(:provider, data_administrators: [data_administrator])) }
 
-  # TODO: scope test, even though it is tested in requests/api/v1/services_controller_spec.rb
+  # TODO: scope test, even though it is tested in spec/requests/api/v1/services_controller_spec.rb
 
   permissions :show? do
     it "grants access for data administrator and managed service" do

@@ -12,14 +12,14 @@ RSpec.describe "Offers API" do
     Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
   end
 
-  path "/api/v1/services/{service_id}/offers" do
-    get "lists offers for a given service" do
+  path "/api/v1/resources/{resource_id}/offers" do
+    get "lists offers for an administered resource" do
       tags "Offers"
       produces "application/json"
       security [ authentication_token: [] ]
-      parameter name: :service_id, in: :path, type: :string
+      parameter name: :resource_id, in: :path, type: :string, description: "Resource identifier (id or eid)"
 
-      response "200", "lists published and managed offers" do
+      response "200", "offers found" do
         schema type: :array,
                items: { "$ref" => "offer/offer_output.json" }
 
@@ -31,7 +31,7 @@ RSpec.describe "Offers API" do
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]),
                                 offers: [published_offer1, published_offer2, draft_offer]) }
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
         run_test! do |response|
@@ -54,28 +54,11 @@ RSpec.describe "Offers API" do
         end
       end
 
-      response "200", "lists offers for service with no offers" do
-        schema type: :array,
-               items: { "$ref" => "offer/offer_output.json" }
-
-        let(:data_admin_user) { create(:user) }
-        let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
-        let(:service_id) { service.slug }
-        let(:"X-User-Token") { data_admin_user.authentication_token }
-
-        run_test! do |response|
-          data = JSON.parse(response.body)
-          expect(data.length).to eq(0)
-        end
-      end
-
-      response "401", "denies entry for unknown token" do
+      response "401", "unauthorized" do
         schema "$ref" => "error.json"
 
         let(:"X-User-Token") { "wrong-token" }
-        let(:service_id) { "0" }
+        let(:resource_id) { "0" }
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -83,11 +66,11 @@ RSpec.describe "Offers API" do
         end
       end
 
-      response "403", "denies entry non data administrator" do
+      response "403", "forbidden" do
         schema "$ref" => "error.json"
 
         let(:regular_user) { create(:user) }
-        let(:service_id) { "0" }
+        let(:resource_id) { "0" }
         let(:"X-User-Token") { regular_user.authentication_token }
 
         run_test! do |response|
@@ -96,7 +79,7 @@ RSpec.describe "Offers API" do
         end
       end
 
-      response "403", "doesn't show offers for unowned services" do
+      response "403", "doesn't show offers for unowned resources", document: false do
         schema "$ref" => "error.json"
 
         let(:data_admin_user) { create(:user) }
@@ -108,7 +91,7 @@ RSpec.describe "Offers API" do
         let!(:diff_data_administrator) { create(:data_administrator, email: diff_data_admin_user.email) }
 
         let(:"X-User-Token") { diff_data_admin_user.authentication_token }
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -116,30 +99,30 @@ RSpec.describe "Offers API" do
         end
       end
 
-      response "404", "returns not found for nonexistent service id" do
+      response "404", "resource not found" do
         schema "$ref" => "error.json"
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
         let(:"X-User-Token") { data_admin_user.authentication_token }
-        let(:service_id) { "definitely-doesnt-exist" }
+        let(:resource_id) { "definitely-doesnt-exist" }
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data["error"]).to eq("Service #{service_id} not found")
+          expect(data["error"]).to eq("Resource #{resource_id} not found")
         end
       end
     end
 
-    post "creates an offer for a given service" do
+    post "creates an offer for an administered resource" do
       tags "Offers"
       produces "application/json"
       consumes "application/json"
       security [ authentication_token: [] ]
-      parameter name: :service_id, in: :path, type: :string
+      parameter name: :resource_id, in: :path, type: :string, description: "Resource identifier (id or eid)"
       parameter name: :offer_payload, in: :body, schema: { "$ref" => "offer/offer_input.json" }
 
-      response "201", "creates an offer" do
+      response "201", "offer created" do
         schema "$ref" => "offer/offer_output.json"
 
         let(:data_admin_user) { create(:user) }
@@ -148,7 +131,7 @@ RSpec.describe "Offers API" do
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]))}
         let(:offer) { create(:offer_with_all_parameters) }
         let(:offer_payload) { JSON.parse(offer.to_json) }
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
         run_test! do |response|
@@ -165,7 +148,7 @@ RSpec.describe "Offers API" do
         end
       end
 
-      response "201", "creates a minimalistic offer", document: false do
+      response "201", "minimalistic offer created", document: false do
         schema "$ref" => "offer/offer_output.json"
 
         let(:data_admin_user) { create(:user) }
@@ -175,7 +158,7 @@ RSpec.describe "Offers API" do
         let(:offer_payload) { { name: "New offer",
                                 description: "sample description",
                                 order_type: "order_required" } }
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
         run_test! do |response|
@@ -191,14 +174,14 @@ RSpec.describe "Offers API" do
         end
       end
 
-      response "400", "fails improper json offer payload" do
+      response "400", "bad request" do
         schema "$ref" => "error.json"
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]))}
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:offer_payload) { {
             name: "New offer",
             description: "asd",
@@ -218,7 +201,7 @@ RSpec.describe "Offers API" do
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]))}
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:offer_payload) { {
           name: "New offer",
           description: "asd",
@@ -249,7 +232,7 @@ RSpec.describe "Offers API" do
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]))}
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:offer_payload) { {
           name: "New offer",
           description: "asd",
@@ -279,7 +262,7 @@ RSpec.describe "Offers API" do
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]))}
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:offer_payload) { {
           name: "New offer",
           description: "asd",
@@ -314,7 +297,7 @@ RSpec.describe "Offers API" do
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]))}
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:offer_payload) { {
           name: "New offer",
           description: "asd",
@@ -353,7 +336,7 @@ RSpec.describe "Offers API" do
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]))}
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:offer_payload) { {
           name: "New offer",
           description: "asd",
@@ -388,7 +371,7 @@ RSpec.describe "Offers API" do
                                 description: "sample description",
                                 order_type: "order_required",
                                 status: "draft" } }
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
         run_test! do |response|
@@ -401,15 +384,15 @@ RSpec.describe "Offers API" do
     end
   end
 
-  path "/api/v1/services/{service_id}/offers/{id}" do
-    get "retrieves a published offer" do
+  path "/api/v1/resources/{resource_id}/offers/{id}" do
+    get "retrieves an offer for an administered resource" do
       tags "Offers"
       produces "application/json"
       security [ authentication_token: [] ]
-      parameter name: :service_id, in: :path, type: :string
-      parameter name: :id, in: :path, type: :string
+      parameter name: :resource_id, in: :path, type: :string, description: "Resource identifier (id or eid)"
+      parameter name: :id, in: :path, type: :string, description: "Offer identifier"
 
-      response "200", "retrieves a published offer" do
+      response "200", "offer found" do
         schema "$ref" => "offer/offer_output.json"
 
         let(:offer) { build(:offer_with_all_parameters) }
@@ -418,7 +401,7 @@ RSpec.describe "Offers API" do
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]),
                                 offers: [offer]) }
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
@@ -442,7 +425,7 @@ RSpec.describe "Offers API" do
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]),
                                 offers: [offer]) }
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
@@ -455,7 +438,7 @@ RSpec.describe "Offers API" do
         end
       end
 
-      response "403", "doesn't retrieve a draft offer", document: false do
+      response "403", "forbidden" do
         schema "$ref" => "error.json"
 
         let(:draft_offer) { build(:offer, status: "draft") }
@@ -464,7 +447,7 @@ RSpec.describe "Offers API" do
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]),
                                 offers: [draft_offer]) }
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:id) { draft_offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
@@ -474,7 +457,7 @@ RSpec.describe "Offers API" do
         end
       end
 
-      response "404", "returns not found for nonexistent offer id" do
+      response "404", "offer not found" do
         schema "$ref" => "error.json"
 
         let(:offer) { build(:offer_with_all_parameters) }
@@ -483,27 +466,27 @@ RSpec.describe "Offers API" do
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]),
                                 offers: [offer]) }
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:id) { "doesnt-exist" }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data["error"]).to eq("Offer #{id} for service #{service_id} not found.")
+          expect(data["error"]).to eq("Offer #{id} for resource #{resource_id} not found.")
         end
       end
     end
 
-    patch "updates an offer" do
+    patch "updates an offer for an administered resource" do
       tags "Offers"
       produces "application/json"
       consumes "application/json"
       security [ authentication_token: [] ]
-      parameter name: :service_id, in: :path, type: :string
-      parameter name: :id, in: :path, type: :string
+      parameter name: :resource_id, in: :path, type: :string, description: "Resource identifier (id or eid)"
+      parameter name: :id, in: :path, type: :string, description: "Offer identifier"
       parameter name: :offer_payload, in: :body, schema: { "$ref" => "offer/offer_update.json" }
 
-      response "200", "updates an offer" do
+      response "200", "offer updated" do
         schema "$ref" => "offer/offer_output.json"
 
         let(:offer) { build(:offer) }
@@ -512,7 +495,7 @@ RSpec.describe "Offers API" do
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]),
                                 offers: [offer])}
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
         let(:offer_payload) { { name: "New offer",
@@ -543,7 +526,7 @@ RSpec.describe "Offers API" do
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]),
                                 offers: [offer])}
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
         let(:offer_payload) { {
@@ -582,7 +565,7 @@ RSpec.describe "Offers API" do
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]),
                                 offers: [offer])}
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
         let(:offer_payload) { {
@@ -612,7 +595,7 @@ RSpec.describe "Offers API" do
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]),
                                 offers: [offer])}
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
         let(:offer_payload) { { status: "draft" } }
@@ -634,7 +617,7 @@ RSpec.describe "Offers API" do
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]),
                                 offers: [draft_offer])}
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:id) { draft_offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
         let(:offer_payload) { { name: "New offer",
@@ -649,14 +632,14 @@ RSpec.describe "Offers API" do
       # TODO: default offer behaviour validation
     end
 
-    delete "deletes an offer" do
+    delete "deletes an offer for an administered resource" do
       tags "Offers"
       produces "application/json"
       security [ authentication_token: [] ]
-      parameter name: :service_id, in: :path, type: :string
-      parameter name: :id, in: :path, type: :string
+      parameter name: :resource_id, in: :path, type: :string, description: "Resource identifier (id or eid)"
+      parameter name: :id, in: :path, type: :string, description: "Offer identifier"
 
-      response "200", "properly deletes an offer" do
+      response "200", "offer deleted" do
         let(:offer1) { build(:offer) }
         let(:offer2) { build(:offer) }
         let(:offer3) { build(:offer) }
@@ -665,7 +648,7 @@ RSpec.describe "Offers API" do
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]),
                                 offers: [offer1, offer2, offer3]) }
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:id) { offer2.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
@@ -678,7 +661,7 @@ RSpec.describe "Offers API" do
         end
       end
 
-      response "403", "doesn't allow to delete a draft offer" do
+      response "403", "doesn't allow to delete a draft offer", document: false do
         schema "$ref" => "error.json"
 
         let(:draft_offer) { build(:offer, status: "draft") }
@@ -688,7 +671,7 @@ RSpec.describe "Offers API" do
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]),
                                 offers: [offer, draft_offer])}
-        let(:service_id) { service.slug }
+        let(:resource_id) { service.slug }
         let(:id) { draft_offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
         let(:offer_payload) { { name: "New offer",
