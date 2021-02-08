@@ -125,7 +125,7 @@ crumb :target_users do
   parent :marketplace_root
 end
 
-crumb :token do
-  link "Marketplace API", token_path
+crumb :api_docs do
+  link "Marketplace API", api_docs_path
   parent :marketplace_root
 end

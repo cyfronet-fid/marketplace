@@ -3,7 +3,7 @@
 class Api::V1::ServicePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.administered_by(user).order(:id)
+      scope.administered_by(user).where.not(status: ["deleted"]).order(:id)
     end
   end
 

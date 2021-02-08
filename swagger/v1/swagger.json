@@ -1,14 +1,122 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Offers API",
+    "title": "EOSC Marketplace API",
     "version": "v1",
-    "description": "API providing CRUD on Offers and listing of the Services owned"
+    "description": "Documentation of the EOSC Marketplace REST API for integration of other software systems"
   },
   "paths": {
-    "/api/v1/services/{service_id}/offers": {
+    "/api/v1/resources": {
       "get": {
-        "summary": "lists offers for a given service",
+        "summary": "lists resources administered by user",
+        "tags": [
+          "Resources"
+        ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "resources found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "service.json"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/resources/{id}": {
+      "get": {
+        "summary": "retrieves an administered resource",
+        "tags": [
+          "Resources"
+        ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Resource identifier (id or eid)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "resource found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "service.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/resources/{resource_id}/offers": {
+      "get": {
+        "summary": "lists offers for an administered resource",
         "tags": [
           "Offers"
         ],
@@ -21,8 +129,9 @@
         ],
         "parameters": [
           {
-            "name": "service_id",
+            "name": "resource_id",
             "in": "path",
+            "description": "Resource identifier (id or eid)",
             "required": true,
             "schema": {
               "type": "string"
@@ -31,7 +140,7 @@
         ],
         "responses": {
           "200": {
-            "description": "lists offers for service with no offers",
+            "description": "offers found",
             "content": {
               "application/json": {
                 "schema": {
@@ -44,7 +153,7 @@
             }
           },
           "401": {
-            "description": "denies entry for unknown token",
+            "description": "unauthorized",
             "content": {
               "application/json": {
                 "schema": {
@@ -54,7 +163,7 @@
             }
           },
           "403": {
-            "description": "doesn't show offers for unowned services",
+            "description": "forbidden",
             "content": {
               "application/json": {
                 "schema": {
@@ -64,7 +173,7 @@
             }
           },
           "404": {
-            "description": "returns not found for nonexistent service id",
+            "description": "resource not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -76,7 +185,7 @@
         }
       },
       "post": {
-        "summary": "creates an offer for a given service",
+        "summary": "creates an offer for an administered resource",
         "tags": [
           "Offers"
         ],
@@ -89,8 +198,9 @@
         ],
         "parameters": [
           {
-            "name": "service_id",
+            "name": "resource_id",
             "in": "path",
+            "description": "Resource identifier (id or eid)",
             "required": true,
             "schema": {
               "type": "string"
@@ -99,7 +209,7 @@
         ],
         "responses": {
           "201": {
-            "description": "creates an offer",
+            "description": "offer created",
             "content": {
               "application/json": {
                 "schema": {
@@ -109,7 +219,7 @@
             }
           },
           "400": {
-            "description": "fails improper json offer payload",
+            "description": "bad request",
             "content": {
               "application/json": {
                 "schema": {
@@ -130,9 +240,9 @@
         }
       }
     },
-    "/api/v1/services/{service_id}/offers/{id}": {
+    "/api/v1/resources/{resource_id}/offers/{id}": {
       "get": {
-        "summary": "retrieves a published offer",
+        "summary": "retrieves an offer for an administered resource",
         "tags": [
           "Offers"
         ],
@@ -145,8 +255,9 @@
         ],
         "parameters": [
           {
-            "name": "service_id",
+            "name": "resource_id",
             "in": "path",
+            "description": "Resource identifier (id or eid)",
             "required": true,
             "schema": {
               "type": "string"
@@ -155,6 +266,7 @@
           {
             "name": "id",
             "in": "path",
+            "description": "Offer identifier",
             "required": true,
             "schema": {
               "type": "string"
@@ -163,7 +275,7 @@
         ],
         "responses": {
           "200": {
-            "description": "retrieves a published offer",
+            "description": "offer found",
             "content": {
               "application/json": {
                 "schema": {
@@ -172,8 +284,18 @@
               }
             }
           },
+          "403": {
+            "description": "forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
           "404": {
-            "description": "returns not found for nonexistent offer id",
+            "description": "offer not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -185,7 +307,7 @@
         }
       },
       "patch": {
-        "summary": "updates an offer",
+        "summary": "updates an offer for an administered resource",
         "tags": [
           "Offers"
         ],
@@ -198,8 +320,9 @@
         ],
         "parameters": [
           {
-            "name": "service_id",
+            "name": "resource_id",
             "in": "path",
+            "description": "Resource identifier (id or eid)",
             "required": true,
             "schema": {
               "type": "string"
@@ -208,6 +331,7 @@
           {
             "name": "id",
             "in": "path",
+            "description": "Offer identifier",
             "required": true,
             "schema": {
               "type": "string"
@@ -216,7 +340,7 @@
         ],
         "responses": {
           "200": {
-            "description": "updates an offer",
+            "description": "offer updated",
             "content": {
               "application/json": {
                 "schema": {
@@ -237,7 +361,7 @@
         }
       },
       "delete": {
-        "summary": "deletes an offer",
+        "summary": "deletes an offer for an administered resource",
         "tags": [
           "Offers"
         ],
@@ -250,8 +374,9 @@
         ],
         "parameters": [
           {
-            "name": "service_id",
+            "name": "resource_id",
             "in": "path",
+            "description": "Resource identifier (id or eid)",
             "required": true,
             "schema": {
               "type": "string"
@@ -260,6 +385,7 @@
           {
             "name": "id",
             "in": "path",
+            "description": "Offer identifier",
             "required": true,
             "schema": {
               "type": "string"
@@ -268,124 +394,7 @@
         ],
         "responses": {
           "200": {
-            "description": "properly deletes an offer"
-          },
-          "403": {
-            "description": "doesn't allow to delete a draft offer",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "error.json"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/services": {
-      "get": {
-        "summary": "lists services managed by user",
-        "tags": [
-          "Services"
-        ],
-        "security": [
-          {
-            "authentication_token": [
-
-            ]
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "return services managed by user",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "service.json"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "denies entry for unknown token",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "error.json"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "denies entry non data administrator",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "error.json"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/services/{id}": {
-      "get": {
-        "summary": "retrieves a managed service",
-        "tags": [
-          "Services"
-        ],
-        "security": [
-          {
-            "authentication_token": [
-
-            ]
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "lists a managed service",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "service.json"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "doesn't show unmanaged service",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "error.json"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "returns not found for nonexistent service id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "error.json"
-                }
-              }
-            }
+            "description": "offer deleted"
           }
         }
       }

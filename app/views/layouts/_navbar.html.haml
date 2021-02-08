@@ -75,11 +75,6 @@
             %li
               %a.dropdown-item.dropdown-profile{ href: "/profile" }
                 = _("Profile")
-            - if policy(:token).show? && !Mp::Application.config.offers_api_disabled
-              %li
-                %a.dropdown-item.dropdown-profile{ href: "/token" }
-                  = _("Marketplace API")
-
 
       .menu__hamburger{ "onclick": "openNav()" }
         %span

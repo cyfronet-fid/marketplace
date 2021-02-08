@@ -3,7 +3,7 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe "Services API", swagger_doc: "v1/swagger.json" do
+RSpec.describe "Resources API", swagger_doc: "v1/swagger.json" do
   before(:all) do
     Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
   end
@@ -12,13 +12,13 @@ RSpec.describe "Services API", swagger_doc: "v1/swagger.json" do
     Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
   end
 
-  path "/api/v1/services" do
-    get "lists services managed by user" do
-      tags "Services"
+  path "/api/v1/resources" do
+    get "lists resources administered by user" do
+      tags "Resources"
       produces "application/json"
       security [ authentication_token: [] ]
 
-      response "200", "return services managed by user" do
+      response "200", "resources found" do
         schema type: :array,
                items: { "$ref" => "service.json" }
 
@@ -27,6 +27,7 @@ RSpec.describe "Services API", swagger_doc: "v1/swagger.json" do
         let(:provider) { create(:provider, data_administrators: [data_administrator]) }
         let!(:service1) { create(:service, resource_organisation: provider) }
         let!(:service2) { create(:service, resource_organisation: provider) }
+        let!(:deleted_service) { create(:service, resource_organisation: provider, status: :deleted) }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
         run_test! do |response|
@@ -37,7 +38,7 @@ RSpec.describe "Services API", swagger_doc: "v1/swagger.json" do
         end
       end
 
-      response "200", "return empty list if user doesn't manage any services", document: false do
+      response "200", "resources found but were an empty list", document: false do
         schema type: :array,
                items: { "$ref" => "service.json" }
 
@@ -46,12 +47,12 @@ RSpec.describe "Services API", swagger_doc: "v1/swagger.json" do
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
         run_test! do |response|
-          services = JSON.parse(response.body)
-          expect(services.length).to eq(0)
+          data = JSON.parse(response.body)
+          expect(data.length).to eq(0)
         end
       end
 
-      response "401", "denies entry for unknown token" do
+      response "401", "unauthorized" do
         schema "$ref" => "error.json"
 
         let(:"X-User-Token") { "wrong-token" }
@@ -62,7 +63,7 @@ RSpec.describe "Services API", swagger_doc: "v1/swagger.json" do
         end
       end
 
-      response "403", "denies entry non data administrator" do
+      response "403", "forbidden" do
         schema "$ref" => "error.json"
 
         let(:regular_user) { create(:user) }
@@ -76,14 +77,14 @@ RSpec.describe "Services API", swagger_doc: "v1/swagger.json" do
     end
   end
 
-  path "/api/v1/services/{id}" do
-    get "retrieves a managed service" do
-      tags "Services"
+  path "/api/v1/resources/{id}" do
+    get "retrieves an administered resource" do
+      tags "Resources"
       produces "application/json"
       security [ authentication_token: [] ]
-      parameter name: :id, in: :path, type: :string
+      parameter name: :id, in: :path, type: :string, description: "Resource identifier (id or eid)"
 
-      response "200", "lists a managed service" do
+      response "200", "resource found" do
         schema "$ref" => "service.json"
 
         let(:data_admin_user) { create(:user) }
@@ -99,11 +100,24 @@ RSpec.describe "Services API", swagger_doc: "v1/swagger.json" do
         end
       end
 
-      response "200", "lists a service with an eid", document: false do
-        # TODO
+      response "200", "resource found with an eid", document: false do
+        schema "$ref" => "service.json"
+
+        let(:data_admin_user) { create(:user) }
+        let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
+        let!(:service) { create(:service,
+                                pid: "qwe.asd",
+                                resource_organisation: create(:provider, data_administrators: [data_administrator])) }
+        let(:"X-User-Token") { data_admin_user.authentication_token }
+        let(:id) { service.pid }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq(JSON.parse(ServiceSerializer.new(service).to_json))
+        end
       end
 
-      response "403", "doesn't show unmanaged service" do
+      response "403", "forbidden" do
         schema "$ref" => "error.json"
 
         let(:data_admin_user) { create(:user) }
@@ -123,7 +137,7 @@ RSpec.describe "Services API", swagger_doc: "v1/swagger.json" do
         end
       end
 
-      response "404", "returns not found for nonexistent service id" do
+      response "404", "resource not found" do
         schema "$ref" => "error.json"
 
         let(:data_admin_user) { create(:user) }
@@ -133,7 +147,7 @@ RSpec.describe "Services API", swagger_doc: "v1/swagger.json" do
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data["error"]).to eq("Service #{id} not found")
+          expect(data["error"]).to eq("Resource #{id} not found")
         end
       end
     end

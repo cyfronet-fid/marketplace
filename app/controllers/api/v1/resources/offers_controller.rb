@@ -2,7 +2,7 @@
 
 require "json-schema"
 
-class Api::V1::Services::OffersController < Api::V1::ApiController
+class Api::V1::Resources::OffersController < Api::V1::ApiController
   before_action :find_and_authorize_service
   before_action :find_and_authorize_offer, only: [:show, :update, :destroy]
   before_action :validate_payload, only: [:create, :update]
@@ -45,17 +45,17 @@ class Api::V1::Services::OffersController < Api::V1::ApiController
 
   private
     def find_and_authorize_service
-      @service = Service.friendly.find(params[:service_id])
+      @service = Service.friendly.find(params[:resource_id])
       authorize @service, :administered_by?
     rescue ActiveRecord::RecordNotFound
-      render json: { error: "Service #{params[:service_id]} not found" }, status: 404
+      render json: { error: "Resource #{params[:resource_id]} not found" }, status: 404
     end
 
     def find_and_authorize_offer
       @offer = @service.offers.find_by!(iid: params[:id])
       authorize @offer
     rescue ActiveRecord::RecordNotFound
-      render json: { error: "Offer #{params[:id]} for service #{params[:service_id]} not found." }, status: 404
+      render json: { error: "Offer #{params[:id]} for resource #{params[:resource_id]} not found." }, status: 404
     end
 
     def validate_payload

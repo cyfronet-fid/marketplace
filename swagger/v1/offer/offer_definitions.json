@@ -9,9 +9,13 @@
           "type":"string"
         },
         "description":{
-          "type":[
-            "string",
-            "null"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
           ]
         }
       },
@@ -56,9 +60,13 @@
           ]
         },
         "unit":{
-          "type":[
-            "string",
-            "null"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "value_type":{
@@ -91,7 +99,14 @@
               "minItems":1,
               "uniqueItems":true,
               "items": {
-                "type": ["integer", "string"]
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ]
               }
             },
             "mode":{
@@ -109,15 +124,23 @@
         },
         "value_type":{
           "type":"string",
-          "enum":[
-            "string",
-            "integer"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
           ]
         },
         "unit":{
-          "type":[
-            "string",
-            "null"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
           ]
         }
       },
@@ -144,19 +167,34 @@
               "minItems":1,
               "uniqueItems":true,
               "items": {
-                "type": ["integer", "string"]
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ]
               }
             },
             "minItems":{
-              "type":[
-                "integer",
-                "null"
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
               ]
             },
             "maxItems":{
-              "type":[
-                "integer",
-                "null"
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
               ]
             }
           },
@@ -172,9 +210,13 @@
           ]
         },
         "unit":{
-          "type":[
-            "string",
-            "null"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
           ]
         }
       },
@@ -215,9 +257,13 @@
           ]
         },
         "unit":{
-          "type":[
-            "string",
-            "null"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "value_type":{
@@ -236,15 +282,23 @@
               "type":"integer"
             },
             "exclusiveMinimum":{
-              "type":[
-                "boolean",
-                "null"
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
               ]
             },
             "exclusiveMaximum":{
-              "type":[
-                "boolean",
-                "null"
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
               ]
             }
           },
@@ -270,9 +324,13 @@
           ]
         },
         "unit":{
-          "type":[
-            "string",
-            "null"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "value_type":{
@@ -291,9 +349,13 @@
               "type":"integer"
             },
             "max":{
-              "type":[
-                "integer",
-                "null"
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
               ]
             },
             "currency":{
@@ -324,9 +386,13 @@
           "type":"string"
         },
         "webpage":{
-          "type":[
-            "string",
-            "null"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "order_type":{
@@ -339,9 +405,13 @@
           ]
         },
         "order_url":{
-          "type":[
-            "string",
-            "null"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "internal":{

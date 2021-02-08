@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::ServicesController < Api::V1::ApiController
+class Api::V1::ResourcesController < Api::V1::ApiController
   before_action :find_and_authorize, only: [:show]
   def index
     render json: policy_scope(Service)
@@ -15,6 +15,6 @@ class Api::V1::ServicesController < Api::V1::ApiController
       @service = Service.friendly.find(params[:id])
       authorize @service
     rescue ActiveRecord::RecordNotFound
-      render json: { error: "Service #{params[:id]} not found" }, status: 404
+      render json: { error: "Resource #{params[:id]} not found" }, status: 404
     end
 end
