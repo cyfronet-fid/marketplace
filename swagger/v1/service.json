@@ -11,10 +11,24 @@
       "type":"string"
     },
     "status":{
-      "type": ["string", "null"]
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "eid":{
-      "type": ["string", "null"]
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,

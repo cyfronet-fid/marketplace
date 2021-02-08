@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-class TokensController < ApplicationController
+class ApiDocsController < ApplicationController
   before_action :authenticate_user!
-  before_action :token_authorization!
+  before_action :api_docs_authorization!
 
   def show
     @subsection = extract_subsection
     if @subsection.nil?
-      redirect_to token_path, status: :bad_request
+      redirect_to api_docs_path, status: :bad_request
     end
   end
 
@@ -15,12 +15,12 @@ class TokensController < ApplicationController
     unless current_user.valid_token?
       generate_token
     end
-    redirect_to token_path
+    redirect_to api_docs_path
   end
 
   def destroy
     revoke_token
-    redirect_to token_path
+    redirect_to api_docs_path
   end
 
   private
@@ -41,7 +41,7 @@ class TokensController < ApplicationController
       current_user.update(authentication_token: "revoked")
     end
 
-    def token_authorization!
-      authorize :token, :show?
+    def api_docs_authorization!
+      authorize :api_docs, :show?
     end
 end

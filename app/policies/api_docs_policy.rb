@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TokenPolicy < Struct.new(:user, :token)
+class ApiDocsPolicy < Struct.new(:user, :api_docs)
   def show?
     user.data_administrator?
   end
