@@ -1,0 +1,17 @@
+%ul.list-group
+  - fields.each do |field|
+    - unless field == "geographical_availabilities"
+      - service.send(field).each do |element|
+        %li.list-group-item
+          - if nested.present? && nested[field.to_sym].present?
+            %span
+              = element.send(nested[field.to_sym])
+          - else
+            %span
+              = element
+    - else
+      - field_value = service.send(field)
+      - if (map_data = data_for_map(field_value) if field_value&.any?).present?
+        .z{ "data-controller": "map",
+                                          "data-geographical_availabilities": map_data,
+                                          "data-region": data_for_region(field_value.map(&:alpha2)) }

@@ -1,0 +1,14 @@
+-# here should be icons variables for classification below
+%ul.list-group
+  - fields.map do |field|
+    - if service.send(field).present?
+      - field_tree(service, field).each do |parent, children|
+        %li.list-group-item.mb-2
+          %span
+            = parent
+          %ul
+            - children.each do |child|
+              %li
+                %span= child
+
+

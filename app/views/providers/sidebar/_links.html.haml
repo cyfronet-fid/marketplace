@@ -1,0 +1,13 @@
+%ul.list-group
+  - fields.each do |field|
+    - if provider.send(field).present?
+      - if type == "array"
+        - provider.send(field).each_with_index do |link, idx|
+          %li.list-group-item
+            = link_to(t(".#{field}", idx: idx+1), link)
+            -# TODO: refactor dynamic translation
+      - else
+        %li.list-group-item
+          %span
+            = link_to(field)
+          -# TODO: refactor dynamic translation (above)

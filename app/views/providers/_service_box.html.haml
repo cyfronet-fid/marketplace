@@ -1,0 +1,21 @@
+.card.bg-gray-5.border-0
+  .card-body
+    %h3.card-title= link_to service.name.truncate(35, separator: " "), service, name: service.name
+    .row.card-description
+      .col-4
+        = service_logo(service)
+      .col
+        = service.tagline.truncate(105, separator: " ")
+    .clearfix
+  .card-footer.no-gutters.row.mb-2
+    .col.x-small
+      %span
+        = _("Provided by") + ":"
+      %strong= link_to service.resource_organisation.name,
+      services_path(providers: service.resource_organisation.id)
+    .col.x-small.no-gutters
+      %span.text-right
+        = _("Dedicated for") + ":"
+      %strong.text-right{ "data-toggle" => "tooltip",
+                          "title" => "#{ service.target_users.map { |p| p.name }.join(", ")}" }
+        #{service.target_users.map { |x| x.name }.join(", ").truncate(26, separator: " ")}
