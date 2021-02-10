@@ -18,11 +18,16 @@ export default class extends Controller {
     const region = element.dataset.region;
     var map = this.returnRegion(region);
 
+    let width = 223
+    if("about" === element.dataset.type) {
+      width = 822;
+    }
+
     Highcharts.mapChart(element, {
       chart: {
         map: map,
         height: "100%",
-        width: '223'
+        width: width
       },
       title: {
         text: ''

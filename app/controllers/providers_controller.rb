@@ -6,6 +6,8 @@ class ProvidersController < ApplicationController
   end
 
   def show
-    @provider = Provider.find(params[:id])
+    @provider = Provider.friendly.find(params[:id])
+    @related_services = @provider.services.order(created_at: :desc).limit(2)
+    @question = Provider::Question.new(provider: @provider)
   end
 end

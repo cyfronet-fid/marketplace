@@ -9,6 +9,14 @@ module Service::DetailsHelper
     ]
   end
 
+  def provider_details_columns
+    [
+      [certifications, esfri_types_and_domains],
+      [affiliations, societal_grand_challenges],
+      [networks]
+    ]
+  end
+
   def details_column_width_lg(columns)
     [4, 12 / columns.length].min
   end
@@ -24,6 +32,19 @@ module Service::DetailsHelper
   def display_detail?(detail, service)
     (!detail[:clazz].present? && any_present?(service, *detail[:fields])) ||
       (detail[:clazz] && service.send(detail[:clazz]).present?)
+  end
+
+  def public_contacts
+    {
+      name: "public_contacts",
+      template: "object",
+      fields: %w[full_name email phone position_in_organisation],
+      type: "array",
+      clazz: "public_contacts",
+      nested: {
+        email: "email"
+      }
+    }
   end
 
   private
@@ -99,19 +120,6 @@ module Service::DetailsHelper
       }
     end
 
-    def public_contacts
-      {
-        name: "public_contacts",
-        template: "object",
-        fields: %w[full_name email phone position_in_organisation],
-        type: "array",
-        clazz: "public_contacts",
-        nested: {
-            email: "email"
-        }
-      }
-    end
-
     def maturity_information
       {
         name: "maturity_information",
@@ -148,6 +156,57 @@ module Service::DetailsHelper
         name: "changelog",
         template: "changelog",
         fields: ["changelog"]
+      }
+    end
+
+    def esfri_types_and_domains
+      {
+        name: "esfri_types_and_domains",
+        template: "array",
+        fields: %w[esfri_types esfri_domains],
+        with_desc: true,
+        nested: {
+          esfri_types: "name",
+          esfri_domains: "name"
+        }
+      }
+    end
+
+    def certifications
+      {
+        name: "certifications",
+        template: "array",
+        fields: %w[certifications]
+      }
+    end
+
+    def affiliations
+      {
+        name: "affiliations",
+        template: "array",
+        fields: %w[affiliations]
+      }
+    end
+
+    def societal_grand_challenges
+      {
+        name: "societal_grand_challenges",
+        template: "array",
+        fields: %w[societal_grand_challenges],
+        nested: {
+          societal_grand_challenges: "name"
+        }
+      }
+    end
+
+    def networks
+      {
+        name: "networks",
+        template: "array",
+        fields: %w[networks],
+        nested: {
+          networks: "name"
+        }
       }
     end
 end

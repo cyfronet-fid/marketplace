@@ -58,7 +58,12 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:show, :edit, :update, :destroy]
 
-  resources :providers, only: [:index, :show]
+  resources :providers, only: [:index, :show] do
+    scope module: :providers do
+      resource :question, only: [:new, :create], constraints: lambda { |req| req.format == :js }
+      resources :details, only: :index
+    end
+  end
 
   resource :help, only: :show
 

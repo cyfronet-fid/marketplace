@@ -1,0 +1,18 @@
+- fields.map do |field|
+  - if service.send(field).present?
+    - if type == "array"
+      - service.send(field).each_with_index do |link, idx|
+        %li.links
+          %i.fas.fa-arrow-right
+          -# TODO: refactor dynamic translation
+          = link_to(t(".#{field}", idx: idx+1), link)
+    - elsif type == "service"
+      - service.send(field).map do |element|
+        %li.links
+          %i.fas.fa-arrow-right
+          = link_to(element.name, service_path(element))
+    - else
+      %li.links
+        %i.fas.fa-arrow-right
+        -# TODO: refactor dynamic translation
+        = link_to(t("services.about.sidebar.fields.#{field}"), service.send(field))

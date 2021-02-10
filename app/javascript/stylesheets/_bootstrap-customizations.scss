@@ -4112,6 +4112,12 @@ textarea.form-control.is-invalid {
   margin-top: 20px;
 }
 
+.geographical-availabilities-map-provider {
+  border: 1px solid $palette-solid-10;
+  margin-top: 20px;
+  padding: 10px;
+}
+
 .backoffice-intro {
   p {
     font-size: 19px;
@@ -4360,5 +4366,12 @@ textarea.form-control.is-invalid {
         color: $palette-blue;
       }
     }
+  }
+}
+
+.card-columns {
+  &.two {
+    -moz-column-count: 2;
+    column-count: 2;
   }
 }

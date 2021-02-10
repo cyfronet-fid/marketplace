@@ -171,7 +171,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_170414) do
     t.string "status"
     t.string "order_type", null: false
     t.string "webpage"
-    t.boolean "internal", default: false
+    t.boolean "external", default: false
     t.string "order_url"
     t.boolean "default", default: false
     t.index ["iid"], name: "index_offers_on_iid"
@@ -216,7 +216,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_170414) do
     t.string "order_type", null: false
     t.string "webpage"
     t.boolean "voucherable", default: false, null: false
-    t.boolean "internal", default: false
+    t.boolean "external", default: false
     t.string "order_url"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
@@ -473,6 +473,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_170414) do
     t.datetime "last_update"
     t.string "related_platforms", default: [], array: true
     t.datetime "synchronized_at"
+    t.boolean "external", default: false
     t.string "pid"
     t.index ["name"], name: "index_services_on_name"
     t.index ["provider_id"], name: "index_services_on_provider_id"
