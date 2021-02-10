@@ -1,0 +1,8 @@
+- if related_services&.count&.positive?
+  %h2.mb-4.mt-5
+    = _("Recently added resources")
+
+  .card-columns.two
+    = render partial: "providers/service_box",
+             collection: related_services,
+             as: :service

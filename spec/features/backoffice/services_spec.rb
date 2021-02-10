@@ -228,7 +228,7 @@ RSpec.feature "Services in backoffice" do
       expect { click_on "Create Resource" }.
         to change { user.owned_services.count }.by(0)
 
-      expect(page).to have_content("Sorry, but the logo format you were trying to attach is not supported in the Marketplace.")
+      expect(page).to have_content("The logo format you're trying to attach is not supported.")
     end
 
     scenario "I can publish service" do

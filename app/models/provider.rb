@@ -76,6 +76,14 @@ class Provider < ApplicationRecord
     super(Country.for(value))
   end
 
+  def postal_code_and_city
+    "#{postal_code} #{city}"
+  end
+
+  def address
+    "#{street_name_and_number} #{postal_code} #{city} #{country}"
+  end
+
   private
     def remove_empty_array_fields
       array_fields = [:multimedia, :certifications, :affiliations, :national_roadmaps]

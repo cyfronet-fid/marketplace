@@ -5,6 +5,10 @@ module Service::HeaderHelper
     [links]
   end
 
+  def provider_header_fields
+    [provider_links]
+  end
+
   def resource_link(service)
     if service.pid.present?
       "#{PC_DEFAULT_PROVIDER_DASHBOARD_URL}resource-dashboard/#{service.pid.split(".").first}/#{service.pid}/stats"
@@ -33,6 +37,14 @@ module Service::HeaderHelper
         name: "links",
         template: "links",
         fields: %w[webpage_url helpdesk_url helpdesk_email manual_url training_information_url]
+      }
+    end
+
+    def provider_links
+      {
+        name: "links",
+        template: "links",
+        fields: %w[website]
       }
     end
 end

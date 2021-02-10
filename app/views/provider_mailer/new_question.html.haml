@@ -1,0 +1,14 @@
+%h2 New question
+%p
+  Dear Sir/Madam,
+  %br You have received a question from #{@email}
+  The question refers to the #{@provider.name}
+%p
+  %strong The question was issued by:
+  #{@author}
+%p
+  %strong The content of the question:
+%p= @message
+%p
+  %strong Kindly give your reply to the below email address:
+%p= @email
