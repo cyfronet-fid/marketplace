@@ -1,0 +1,17 @@
+.modal-info.mb-4
+  %p
+    = _("We will send your question to the Provider.")
+    %br
+      = _("You will receive an answer to your email address.")
+= simple_form_for question, remote: true, url: provider_question_path(provider),
+  html: { role: "form", id: "modal-form", data: { action: "submit" } } do |f|
+  - unless current_user
+    = f.input :author, label: _("Name and surname")
+    = f.input :email, as: :email
+  -# haml-lint:disable MultilinePipe
+  = f.input :text, as: :text, input_html: { rows: 6 }, |
+          label: _("Your question to provider"), |
+          hint: _("We will send your report to the Provider. You will receive an answer to " + |
+                 "%{email} email address.") % { email: current_user&.email || "your" }  |
+  -# haml-lint:enable MultilinePipe
+#recaptcha= recaptcha_tags

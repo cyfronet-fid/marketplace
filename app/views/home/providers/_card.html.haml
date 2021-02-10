@@ -1,0 +1,19 @@
+-# TODO: refactor dynamic translation
+.title= t(".#{key}.title")
+%ul
+  - records.each do |record|
+    %li
+      = link_to record.name, provider_path(record)
+
+- if remaining_count > 0
+  - if local_assigns[:more_path]
+    = link_to more_path, class: "more-link d-block" do
+      %i.fas.fa-arrow-right
+      -# TODO: refactor dynamic translation
+      = t(".#{key}.more_html", count: remaining_count)
+  - else
+    %a.more-link.d-block
+      %i.fas.fa-arrow-right
+      -# TODO: refactor dynamic translation
+      = t(".#{key}.more_html", count: remaining_count)
+
