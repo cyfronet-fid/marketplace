@@ -53,7 +53,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
 
   private
     def find_and_authorize
-      @provider = Provider.friendly.find(params[:id])
+      @provider = Provider.with_attached_logo.friendly.find(params[:id])
       authorize(@provider)
     end
 

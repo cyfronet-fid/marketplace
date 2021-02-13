@@ -45,7 +45,7 @@ RSpec.feature "Service filter" do
     provider = create(:provider, name: "Cyfronet provider")
     create(:service, name: "dd", providers: [provider], scientific_domains: [scientific_domain])
 
-    visit services_path(q: "dd", providers: [provider.to_param], scientific_domains: [scientific_domain.to_param])
+    visit services_path(q: "dd", providers: [provider.id], scientific_domains: [scientific_domain.id])
     find("a[href='/services/dd']").click
     click_on "Resources"
 
@@ -67,7 +67,7 @@ RSpec.feature "Service filter" do
     create(:service, name: "Other service")
     create(:service, name: "Cyfronet service", providers: [cyfronet])
 
-    visit services_path(providers: [cyfronet.to_param])
+    visit services_path(providers: [cyfronet.id])
 
     all(@services_selector).each do |element|
       expect(element).to_not have_text("Other service")

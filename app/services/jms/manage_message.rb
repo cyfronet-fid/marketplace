@@ -5,11 +5,14 @@ require "nori"
 class Jms::ManageMessage
   class ResourceParseError < StandardError; end
 
-  def initialize(message, eic_base_url, logger)
+  class WrongMessageError < StandardError; end
+
+  def initialize(message, eic_base_url, logger, token = nil)
     @parser = Nori.new(strip_namespaces: true)
     @message = message
     @logger = logger
     @eic_base_url = eic_base_url
+    @token = token
   end
 
   def call
@@ -27,18 +30,23 @@ class Jms::ManageMessage
         Service::PcCreateOrUpdateJob.perform_later(resource["infraService"]["service"],
                                                    @eic_base_url,
                                                    resource["infraService"]["active"],
-                                                   modified_at)
+                                                   modified_at,
+                                                   @token)
 
       elsif action == "delete"
         Service::DeleteJob.perform_later(resource["infraService"]["service"]["id"])
       end
     when "provider"
+      modified_at = modified_at(resource, "providerBundle")
       if resource["providerBundle"]["active"]
-        Provider::PcCreateOrUpdateJob.perform_later(resource["providerBundle"]["provider"])
+        Provider::PcCreateOrUpdateJob.perform_later(resource["providerBundle"]["provider"], modified_at)
       end
     else
-      log @message
+      raise WrongMessageError
     end
+  rescue WrongMessageError => e
+    warn "[WARN] Message arrived, but the type is unknown: #{body["resourceType"]}, #{e}"
+    Raven.capture_exception(e)
   end
 
   private
@@ -49,5 +57,9 @@ class Jms::ManageMessage
 
     def log(msg)
       @logger.info(msg)
+    end
+
+    def warn(msg)
+      @logger.warn(msg)
     end
 end

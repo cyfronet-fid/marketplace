@@ -10,6 +10,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Add recommender::serialize_db rake task (@wujuu)
+- New provider's view (@kmarszalek, @jarekzet)
+- New information fields in the Provider model (@goreck888)
+- Providers import task (@goreck888)
 
 ### Changed
 
@@ -18,20 +21,20 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- split rspec issues (@kmarszalek)
 - Show recommendations only in the regular services catalogue - not in backoffice (@JanKapala)
 - Fix minor Offers API bugs and cosmetic content (@wujuu)
+- Split gem rspec issues (@kmarszalek)
 
 ## [3.7.0] 2021-02-02
 
 ### Added
-- v1 Offers API (@wujuu)
+- Offers API v1 (@wujuu)
 - OpenAPI (swagger) documentation (rswag gem) (@wujuu)
 - User token authentication (simple_token_authentication gem) (@wujuu)
 - Token generation (UI and logic) (@wujuu, @jarekzet)
-- data_administator panel for adding/editing offers and its parameters (@goreck888)
-- views for data_administrator panel (@JanKapala, @jarekzet)
-- New resource view in the backoffice (@goreck888, @jarekzet)
+- Data_administrator panel for adding/editing offers and its parameters (@goreck888)
+- Views for data_administrator panel (@JanKapala, @jarekzet)
+- Resource Preview for the providers aligned with the layout of Resource Presentation Page (@goreck888, @jarekzet)
 
 ## [3.6.0] 2021-01-27
 

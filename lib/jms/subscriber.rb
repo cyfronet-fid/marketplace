@@ -16,6 +16,7 @@ module Jms
     def initialize(topic, login, pass,  host,
                    client_name, eic_base_url,
                    ssl_enabled,
+                   token = nil,
                    client: Stomp::Client,
                    logger: Logger.new("#{Rails.root}/log/jms.log"))
       @logger = logger
@@ -24,21 +25,22 @@ module Jms
       log "Parameters: #{conf_hash(login, pass, host, client_name, ssl_enabled)}"
       @destination = topic
       @eic_base_url = eic_base_url
+      @token = token
     end
 
     def run
       log "Start subscriber on destination: #{@destination}"
       @client.subscribe("/topic/#{@destination}.>", { "ack": "client-individual", "activemq.subscriptionName": "mpSubscription" }) do |msg|
         log "Arrived message"
-        Jms::ManageMessage.new(msg, @eic_base_url, @logger).call
+        Jms::ManageMessage.new(msg, @eic_base_url, @logger, @token).call
         @client.ack(msg)
-      rescue Jms::ManageMessage::ResourceParseError, JSON::ParserError, StandardError => e
+      rescue Jms::ManageMessage::ResourceParseError, Jms::ManageMessage::WrongMessageError, JSON::ParserError, StandardError => e
         @client.unreceive(msg)
         error_block(msg, e)
       end
 
       raise ConnectionError.new("Connection failed!!") unless @client.open?()
-      raise ConnectionError.new("Connect error: #{@client.connection_frame().body}") if @client.connection_frame().command == Stomp::CMD_ERROR
+      raise ConnectionError.new("Connection error: #{@client.connection_frame().body}") if @client.connection_frame().command == Stomp::CMD_ERROR
 
       @client.join
     end

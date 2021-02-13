@@ -3,7 +3,8 @@
 require "rails_helper"
 
 describe "import:eic", type: :task do
-  let(:importer) { double("Import::Eic") }
+  let(:resource_importer) { double("Import::Eic") }
+  let(:provider_importer) { double("Import::Providers") }
 
   it "preloads the Rails environment" do
     expect(task.prerequisites).to include "environment"
@@ -12,36 +13,49 @@ describe "import:eic", type: :task do
   it "should pass ENV variables" do
     allow(ENV).to receive(:[]).with("MP_IMPORT_EIC_URL").and_return("https://api.custom")
     allow(ENV).to receive(:[]).with("DRY_RUN").and_return("1")
-    allow(ENV).to receive(:[]).with("DONT_CREATE_PROVIDERS").and_return("1")
     allow(ENV).to receive(:[]).with("IDS").and_return("sampleeid,sampleeid2")
     allow(ENV).to receive(:[]).with("OUTPUT").and_return("/tmp/output.json")
     allow(ENV).to receive(:[]).with("UPSTREAM").and_return("eic")
     allow(ENV).to receive(:[]).with("MP_IMPORT_TOKEN").and_return("password")
 
-    allow(importer).to receive(:call)
+    allow(resource_importer).to receive(:call)
     import_class_stub = class_double(Import::Eic).as_stubbed_const(transfer_nested_constants: true)
     allow(import_class_stub).to receive(:new).with("https://api.custom",
                                                    dry_run: "1",
-                                                   dont_create_providers: "1",
                                                    ids: ["sampleeid", "sampleeid2"],
                                                    filepath: "/tmp/output.json",
                                                    default_upstream: :eic,
                                                    token: "password")
-                                    .and_return(importer)
+                                    .and_return(resource_importer)
 
     subject.invoke
   end
 
   it "should call Import::EIC.call" do
-    allow(importer).to receive(:call)
+    allow(resource_importer).to receive(:call)
     import_class_stub = class_double(Import::Eic).as_stubbed_const(transfer_nested_constants: true)
     allow(import_class_stub).
       to receive(:new).
-      with("https://catalogue.eosc-portal.eu",
+      with("https://beta.providers.eosc-portal.eu/api",
+           default_upstream: :mp,
            dry_run: false,
-           dont_create_providers: false,
-           filepath: nil, ids: []).
-      and_return(importer)
+           filepath: nil,
+           ids: [],
+           token: nil).
+      and_return(resource_importer)
+
+    subject.invoke
+  end
+
+  it "should call Import::Providers.call" do
+    allow(provider_importer).to receive(:call)
+    import_class_stub = class_double(Import::Providers).as_stubbed_const(transfer_nested_constants: true)
+    allow(import_class_stub).
+      to receive(:new).
+        with("https://beta.providers.eosc-portal.eu/api",
+             dry_run: false,
+             filepath: nil).
+        and_return(provider_importer)
 
     subject.invoke
   end
