@@ -1,0 +1,16 @@
+en:
+  providers:
+    sidebar:
+      links:
+        multimedia: Multimedia %{idx}
+    details:
+      details:
+        title:
+          certifications: Certifications
+          esfri_types_and_domains: ESFRI Types & Domains
+          affiliations: Affiliations
+          societal_grand_challenges: Societal Grand Challenges
+          networks: Networks
+      array:
+        esfri_types: ESFRI Types
+        esfri_domains: ESFRI Domains

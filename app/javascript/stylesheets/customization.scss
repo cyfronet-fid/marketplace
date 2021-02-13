@@ -33,6 +33,14 @@
   }
 }
 
+// scss-lint:disable QualifyingElement
+
+img.provider-header {
+  max-width: 180px;
+  max-height: 120px;
+}
+
+// scss-lint:enable QualifyingElement
 
 /* ===============================
 Mobile version only for customization.

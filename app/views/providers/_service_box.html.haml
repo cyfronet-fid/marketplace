@@ -12,7 +12,7 @@
       %span
         = _("Provided by") + ":"
       %strong= link_to service.resource_organisation.name,
-      services_path(providers: service.resource_organisation.id)
+      provider_path(service.resource_organisation)
     .col.x-small.no-gutters
       %span.text-right
         = _("Dedicated for") + ":"

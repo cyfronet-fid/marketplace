@@ -7,10 +7,11 @@ class Service::PcCreateOrUpdateJob < ApplicationJob
     raise exception
   end
 
-  def perform(infra_service, eic_base_url, is_active, modified_at)
+  def perform(infra_service, eic_base_url, is_active, modified_at, token = nil)
     Service::PcCreateOrUpdate.new(infra_service,
                                   eic_base_url,
                                   is_active,
-                                  modified_at).call
+                                  modified_at,
+                                  token).call
   end
 end
