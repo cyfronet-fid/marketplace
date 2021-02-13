@@ -12,4 +12,5 @@ Jms::Subscriber.new(stomp_config["destination"],
                     stomp_config["host"],
                     stomp_config["client-name"],
                     ENV["MP_IMPORT_EIC_URL"] || "https://beta.providers.eosc-portal.eu/api",
-                    stomp_config["ssl-enabled"]).run
+                    stomp_config["ssl-enabled"],
+                    ENV["MP_IMPORT_TOKEN"] || nil).run

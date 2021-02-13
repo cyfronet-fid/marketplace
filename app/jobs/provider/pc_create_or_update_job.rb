@@ -3,7 +3,7 @@
 class Provider::PcCreateOrUpdateJob < ApplicationJob
   queue_as :pc_subscriber
 
-  def perform(provider)
-    Provider::PcCreateOrUpdate.new(provider).call
+  def perform(provider, modified_at)
+    Provider::PcCreateOrUpdate.new(provider, modified_at).call
   end
 end
