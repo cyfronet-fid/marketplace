@@ -51,6 +51,9 @@ en:
         reason_for_access: Reason to request access to the EOSC resources
         country_of_origin: Origin country
         countries_of_partnership: Collaboration countries
+      provider:
+        esfri_types: ESFRI Type
+        esfri_domains: ESFRI Domains
     #   defaults:
     #     password: 'Password'
     #   user:

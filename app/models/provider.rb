@@ -66,6 +66,7 @@ class Provider < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :logo, blob: { content_type: :image }
   validates :legal_statuses, length: { maximum: 1 }
+  validates :provider_life_cycle_statuses, length: { maximum: 1 }
   validate :logo_variable, on: [:create, :update]
 
   def participating_countries=(value)

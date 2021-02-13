@@ -24,7 +24,8 @@ describe Jms::ManageMessage do
     expect(Service::PcCreateOrUpdateJob).to receive(:perform_later).with(resource["infraService"]["service"],
                                                                          eic_base,
                                                                          true,
-                                                                         Time.at(resource["infraService"]["metadata"]["modifiedAt"].to_i&./1000))
+                                                                         Time.at(resource["infraService"]["metadata"]["modifiedAt"].to_i&./1000),
+                                                                         nil)
     expect {
       described_class.new(json_service, eic_base, logger).call
     }.to_not raise_error
@@ -34,10 +35,13 @@ describe Jms::ManageMessage do
   it "should receive provider message" do
     original_stdout = $stdout
     $stdout = StringIO.new
-    expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(parser.parse(provider_resource["resource"])["providerBundle"]["provider"])
+    resource = parser.parse(provider_resource["resource"])
+    expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).
+      with(resource["providerBundle"]["provider"],
+           Time.at(resource["providerBundle"]["metadata"]["modifiedAt"].to_i&./1000))
 
     expect {
-      described_class.new(json_provider, eic_base, logger).call
+      described_class.new(json_provider, eic_base, logger, nil).call
     }.to_not raise_error
     $stdout = original_stdout
   end
