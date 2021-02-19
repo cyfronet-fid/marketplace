@@ -9,6 +9,18 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+## [3.7.0] 2021-02-19
+
+### Added
 - API for Resource Offers management v1 (@wujuu)
 - OpenAPI (swagger) documentation (rswag gem) (@wujuu)
 - User token authentication for the MP API (simple_token_authentication gem) (@wujuu)
@@ -20,12 +32,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - New provider's view (@kmarszalek, @jarekzet)
 - New information fields in the Provider model (@goreck888)
 - Providers import task (rake import:providers) (@goreck888)
-
-### Changed
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - A/B testing framework issues in unit tests (rspec, split) (@kmarszalek)
