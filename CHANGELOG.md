@@ -9,10 +9,17 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
-- Add recommender::serialize_db rake task (@wujuu)
+- API for Resource Offers management v1 (@wujuu)
+- OpenAPI (swagger) documentation (rswag gem) (@wujuu)
+- User token authentication for the MP API (simple_token_authentication gem) (@wujuu)
+- Possibility to generate token for the MP API (UI and logic) (@wujuu, @jarekzet)
+- Dedicated panel for Data Administrator role for adding/editing offers and its parameters (@goreck888)
+- Dedicated views for Data Administrator's panel (@JanKapala, @jarekzet)
+- Database serialization task for recommender system (rake - recommender::serialize_db) (@wujuu)
+- Resource Preview for the providers aligned with the layout of Resource Presentation Page (@goreck888, @jarekzet)
 - New provider's view (@kmarszalek, @jarekzet)
 - New information fields in the Provider model (@goreck888)
-- Providers import task (@goreck888)
+- Providers import task (rake import:providers) (@goreck888)
 
 ### Changed
 
@@ -21,20 +28,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- Show recommendations only in the regular services catalogue - not in backoffice (@JanKapala)
-- Fix minor Offers API bugs and cosmetic content (@wujuu)
-- Split gem rspec issues (@kmarszalek)
-
-## [3.7.0] 2021-02-02
-
-### Added
-- Offers API v1 (@wujuu)
-- OpenAPI (swagger) documentation (rswag gem) (@wujuu)
-- User token authentication (simple_token_authentication gem) (@wujuu)
-- Token generation (UI and logic) (@wujuu, @jarekzet)
-- Data_administrator panel for adding/editing offers and its parameters (@goreck888)
-- Views for data_administrator panel (@JanKapala, @jarekzet)
-- Resource Preview for the providers aligned with the layout of Resource Presentation Page (@goreck888, @jarekzet)
+- A/B testing framework issues in unit tests (rspec, split) (@kmarszalek)
+- Recommendations removed from the backoffice resource list (@JanKapala)
+- Minor Offers API bugs and cosmetic content changes (@wujuu)
 
 ## [3.6.0] 2021-01-27
 
