@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Highcharts scalability for the resource and provider views (@kmarszalek)
 
 ### Changed
 
