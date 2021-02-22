@@ -32,6 +32,10 @@ export default class extends Controller {
       title: {
         text: ''
       },
+      mapNavigation: {
+        enabled: true,
+        enableDoubleClickZoomTo: true
+      },
       legend: {
         enabled: false
       },

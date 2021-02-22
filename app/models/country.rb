@@ -48,16 +48,21 @@ class Country
         "en" => "non-European"
     })
 
+  ISO3166::Data.unregister("GB")
+  ISO3166::Data.unregister("GR")
+
   ISO3166::Data.register(
     alpha2: "UK",
-    name: "United Kingdom",
+    name: "United Kingdom of Great Britain and Northern Ireland",
+    region: "Europe",
     translations: {
-        "en" => "non-European"
+        "en" => "United Kingdom of Great Britain and Northern Ireland"
     })
 
   ISO3166::Data.register(
     alpha2: "EL",
     name: "Greece",
+    region: "Europe",
     translations: {
         "en" => "Greece"
     })

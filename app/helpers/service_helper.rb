@@ -103,6 +103,8 @@ module ServiceHelper
       countries = countries | co if co.any?
     }
     countries.map(&:alpha2).map { |c| [c.downcase, 1] }
+                           .map { |c| c == ["uk", 1] ? ["gb", 1] : c }
+                           .map { |c| c == ["el", 1] ? ["gr", 1] : c }
   end
 
   def data_for_region(countries)
