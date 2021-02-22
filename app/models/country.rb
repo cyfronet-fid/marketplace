@@ -55,6 +55,8 @@ class Country
     alpha2: "UK",
     name: "United Kingdom of Great Britain and Northern Ireland",
     region: "Europe",
+    eu_member: false,
+    eea_member: false,
     translations: {
         "en" => "United Kingdom of Great Britain and Northern Ireland"
     })
@@ -63,6 +65,8 @@ class Country
     alpha2: "EL",
     name: "Greece",
     region: "Europe",
+    eu_member: true,
+    eea_member: true,
     translations: {
         "en" => "Greece"
     })

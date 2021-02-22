@@ -70,7 +70,7 @@ RSpec.describe UsageReport do
 
   context ".countries" do
     it "returns countries from projects with services" do
-      create(:project, country_of_origin: "gb")
+      create(:project, country_of_origin: "fr")
       p = create(:project, country_of_origin: "pl")
       create(:project_item, project: p)
 
