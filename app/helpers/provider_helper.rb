@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ProviderHelper
-  def data_for_map(geographical_availabilities)
+  def data_for_map_provider(geographical_availabilities)
     countries = []
     geographical_availabilities.each { |place|
       co = []
@@ -10,9 +10,11 @@ module ProviderHelper
       countries = countries | co if co.any?
     }
     countries.map(&:alpha2).map { |c| [c.downcase, 1] }
+                         .map { |c| c == ["uk", 1] ? ["gb", 1] : c }
+                         .map { |c| c == ["el", 1] ? ["gr", 1] : c }
   end
 
-  def data_for_region(countries)
+  def data_for_region_provider(countries)
     if is_any_non_european(countries) &&
       (countries != ["EO"]) &&
       (countries != ["EU"])
