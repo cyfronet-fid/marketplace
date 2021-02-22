@@ -921,6 +921,12 @@ Service detail
     border: 1px solid $palette-solid-10;
     padding: 0.8rem 0.5rem;
 
+    .geographical-availabilities-map {
+      border: none;
+      border-top: 1px solid $palette-solid-10;
+      margin-top: 5px;
+    }
+
     &.domains {
       margin-bottom: 0;
       list-style-position: outside;
@@ -4108,7 +4114,10 @@ textarea.form-control.is-invalid {
 }
 
 .geographical-availabilities-map {
-  border-top: 1px solid $palette-solid-10;
+  border: 1px solid $palette-solid-10;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
   margin-top: 20px;
 }
 
