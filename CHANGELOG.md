@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Nondeterministic GH-actions failing (@kmarszalek)
 
 ## [3.7.0] 2021-02-19
 
