@@ -12,9 +12,9 @@
           -# TODO: refactor dynamic translation
           = link_to t("service.#{map_view_to_order_type(@service)}.order.cancel"),
             service_cancel_path(@service),
-            method: :delete, class: "text-uppercase align-middle"
+            method: :delete, class: "text-uppercase align-middle", "data-probe": ""
           .ml-3.d-inline
-            %button.btn.btn-primary{ form: "order-form", type: "submit" }= next_title
+            %button.btn.btn-primary{ form: "order-form", type: "submit", "data-probe": "" }= next_title
       = render "layouts/flash"
     %main.container.order-container
       %h1.font-weight-bold.mt-4.mb-4
@@ -25,9 +25,9 @@
       .navbar.pr-0.pl-0.order-bottom-nav
         .text-left.flex-grow-1
           - if prev_visible_step_key
-            = link_to prev_title, url_for([@service, prev_visible_step_key]), class: "text-uppercase"
+            = link_to prev_title, url_for([@service, prev_visible_step_key]), class: "text-uppercase", "data-probe": ""
         .ml-3.d-inline
-          %button.btn.btn-primary{ form: "order-form", type: "submit" }= next_title
+          %button.btn.btn-primary{ form: "order-form", type: "submit", "data-probe": "" }= next_title
 
   = render "layouts/footer", root_categories: @root_categories
   = render "layouts/modal"

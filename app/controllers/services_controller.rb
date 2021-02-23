@@ -5,6 +5,7 @@ class ServicesController < ApplicationController
   include Service::Categorable
   include Service::Autocomplete
   include Service::Comparison
+  include Service::Recommendable
 
   before_action :sort_options
 
@@ -16,6 +17,7 @@ class ServicesController < ApplicationController
     @services, @offers = search(scope)
     @pagy = Pagy.new_from_searchkick(@services, items: params[:per_page])
     @highlights = highlights(@services)
+    @recommended_services = fetch_recommended
   end
 
   def show

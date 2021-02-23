@@ -4,6 +4,8 @@ import initSorting from "app/sort_filter";
 import initFlash from "app/flash";
 import initChoises from "app/choises";
 import initCookiesPolicy from "app/cookies_policy";
+import handleTabId from "app/tabs";
+import initProbes from "app/user-action";
 import 'bootstrap/dist/js/bootstrap';
 import 'stylesheets/application';
 import "app/nav";
@@ -48,6 +50,7 @@ document.addEventListener("turbolinks:load", function(event) {
     initChoises();
     initCookiesPolicy();
     initBadgeState();
+    initProbes();
 });
 
 document.addEventListener("ajax:success", function(event) {
@@ -57,11 +60,12 @@ document.addEventListener("ajax:success", function(event) {
 /**
  * Apart from turbolinks we need to replace FA for the first page load
  */
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function (event) {
     dom.i2svg();
     initSorting();
     initFlash();
     initBadgeState();
+    handleTabId();
     dom.watch();
 });
 
