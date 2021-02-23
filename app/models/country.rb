@@ -6,6 +6,8 @@ class Country
               "IS", "IT", "LI", "LT", "LU", "LV",
               "MT", "NL", "NO", "PL", "PT", "SE", "SI", "SK"].freeze
 
+  REGIONS = ["WW", "EO", "EU", "EZ", "AH"].freeze
+
   ISO3166::Data.register(
     alpha2: "WW",
     name: "World",
@@ -130,6 +132,10 @@ class Country
 
     def convert(name)
       regions_for_country(name).blank? ? convert_name_to_code(name) : convert_to_regions_add_country(name)
+    end
+
+    def regions
+      Country::REGIONS.map { |p| ISO3166::Country.new(p) }
     end
 
     def convert_name_to_code(name)
