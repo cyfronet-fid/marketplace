@@ -58,5 +58,7 @@ module Mp
 
     config.offers_api_disabled = ENV["OFFERS_API_DISABLED"].present? ?
                                    ActiveModel::Type::Boolean.new.cast(ENV["OFFERS_API_DISABLED"]): false
+
+    config.recommender_host = ENV["RECOMMENDER_HOST"]
   end
 end

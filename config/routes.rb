@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
   get "/robots.txt" => "home#robots"
+  post "user_action", to: "user_action#create"
 
   resources :services, only: [:index, :show], constraints: { id: /[^\/]+/ } do
     scope module: :services do

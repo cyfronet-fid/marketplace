@@ -9,7 +9,7 @@
         %th{ colspan: 4 }
           = _("Comparison")
           %span.float-right.font-weight-light.text-uppercase
-            = link_to _("Clear all"), comparisons_path, method: :delete
+            = link_to _("Clear all"), comparisons_path, method: :delete, "data-probe": ""
     %tbody
       %tr
         %th.title-col
@@ -23,12 +23,13 @@
               %i.far.fa-trash-alt
             .service-title
               = link_to service.name.truncate(30, separator: " "),
-              service_path(service, fromc: params[:fromc], comp_link: true)
+              service_path(service, fromc: params[:fromc], comp_link: true),
+              "data-probe": ""
             .service-description
               = service.description.truncate(80, separator: " ")
         - i.times do
           %td.title-col.empty.text-uppercase
-            = link_to _("Add next resource"), services_path
+            = link_to _("Add next resource"), services_path, "data-probe": ""
       %tr
         %th{ "data-toggle": "tooltip",
         title: "The name(s) (or abbreviation(s)) of Provider(s) that manage or deliver the Resource in |

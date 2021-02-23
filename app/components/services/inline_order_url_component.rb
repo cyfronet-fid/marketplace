@@ -10,7 +10,7 @@ class Services::InlineOrderUrlComponent < ApplicationComponent
 
   def call
     link_to link_name, url,
-            class: @classes, target: "_blank", title: "External link"
+            class: @classes, target: "_blank", title: "External link", "data-probe": ""
   end
 
   def url

@@ -23,7 +23,7 @@
               class: "ml-1 default-color"
           .comparison
             - unless local_assigns[:preview]
-              %span.compare
+              %span.compare{"data-probe" => ""}
                 %label{ options(service.slug, comparison_enabled) }
                   = check_box_tag "comparison", service.slug, checked?(service.slug), id: "comparison-#{service.id}",
                           class: "form-check-input",
@@ -36,7 +36,8 @@
       - if policy(service).order?
         = link_to _("Access the resource"),
                       service_offers_path(service),
-                      class: "btn btn-primary d-block mb-3"
+                      class: "btn btn-primary d-block mb-3",
+                      "data-probe": ""
       %span.ordertype-label
         %i{ class: "ordertype #{order_type(service)}" }
         -# TODO: refactor dynamic translation

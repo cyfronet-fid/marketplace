@@ -4,7 +4,7 @@
   %header
     = link_to highlighted_for(:name, recommendation_v2, highlights[recommendation_v2.id]).truncate(40),
               service_path(recommendation_v2, category.present? ? { fromc: category.slug } : nil,
-              from_recommendation_panel: true)
+              from_recommendation_panel: true), "data-probe": "recommendation-panel"
   %article
     %p
       .image-frame

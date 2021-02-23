@@ -2,7 +2,8 @@
 
 #all-services-link{ class: "d-flex justify-content-between mb-4 align-items-center #{active}" }
   = link_to _("All Resources"),
-  content_for(:all_services) || services_path(category_query_params.merge(page: nil).permit!)
+  content_for(:all_services) || services_path(category_query_params.merge(page: nil).permit!),
+  "data-probe": ""
   %span= services_count
 
 %h5.text-uppercase.underline-light.mb-2.pb-2 Categories
