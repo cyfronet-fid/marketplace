@@ -24,4 +24,16 @@ RSpec.describe ServiceHelper, type: :helper do
     service = create(:service)
     expect(trl_description_text(service)).to eq("Super description")
   end
+
+  it "return only regions from geographical_availabilities" do
+    poland = Country.load("PL")
+    europe = Country.load("EO")
+    expect(get_only_regions([poland, europe])).to eq([europe])
+  end
+
+  it "return only countries from geographical_availabilities" do
+    poland = Country.load("PL")
+    europe = Country.load("EO")
+    expect(get_only_countries([poland, europe])).to eq([poland])
+  end
 end

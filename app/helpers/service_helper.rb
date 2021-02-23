@@ -141,4 +141,12 @@ module ServiceHelper
       edit_backoffice_service_offer_path(service, offer)
     end
   end
+
+  def get_only_regions(locations)
+    Country.regions & locations
+  end
+
+  def get_only_countries(locations)
+    locations.reject { |c| Country.regions.include? c }
+  end
 end
