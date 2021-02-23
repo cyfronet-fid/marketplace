@@ -19,13 +19,13 @@
             %span.text-muted
               #{title}:
             = label
-            = link_to(p) do
+            = link_to(p, "data-probe": "") do
               .fas.fa-times
 
         - if active_filters.present?
           .filter-tag.clear
             = link_to controller: controller.controller_name, action: action_name,
-                    per_page: params[:per_page], sort: params[:sort] do
+                    per_page: params[:per_page], sort: params[:sort], "data-probe": "" do
               %span
                 = _("Clear all filters")
               .fa.fa-times

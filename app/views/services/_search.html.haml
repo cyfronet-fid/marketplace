@@ -18,7 +18,7 @@
       %a.search-clear{ href: url_for(params.except(:q, :sort, :service_id)), title: _("Clear search") }
         .fas.fa-times
     %ul.autocomplete-results{ "data-target": "autocomplete.results" }
-  .searchbar__select
+  .searchbar__select{"data-probe": ""}
     %span{ "data-target": "search.selected" }
       = _("All resources")
     %select#category-select.container-select{ "data-action": "change->search#refresh",

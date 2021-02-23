@@ -21,14 +21,15 @@
             - if nested[field.to_sym] == "link"
               %li.links
                 %i.fas.fa-arrow-right
-                = link_to field.humanize, element
+                = link_to field.humanize, element, "data-probe": ""
             - elsif nested[field.to_sym] == "service"
               %li.links
                 %i.fas.fa-arrow-right
-                = link_to(element.name, service_path(element))
+                = link_to(element.name, service_path(element), "data-probe": "")
             - elsif nested[field.to_sym] == "tag"
               %span
-                = link_to element, services_path(tag: element), class: "badge badge-light"
+                = link_to element, services_path(tag: element), class: "badge badge-light",
+                "data-probe": ""
             - elsif nested[field.to_sym] == "label"
               %span
                 -# TODO: refactor dynamic translation
