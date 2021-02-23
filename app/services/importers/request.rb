@@ -11,7 +11,7 @@ class Importers::Request
 
   def call
     request = @id.blank? ? all : specific
-    if request.code != 200
+    if request.blank? || request.code != 200
       raise Errno::ECONNREFUSED
     end
     request

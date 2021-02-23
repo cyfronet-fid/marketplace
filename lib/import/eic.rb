@@ -75,7 +75,7 @@ module Import
             existing_service = Service.find_by(id: service_source.service_id)
             if existing_service.upstream_id == service_source.id
               updated += 1
-              log "Updating [EXISTING] service #{service.name}, id: #{service_source.id}, eid: #{service.pid}"
+              log "Updating [EXISTING] service #{service[:name]}, id: #{service_source.id}, eid: #{service[:pid]}"
               unless @dry_run
                 Service::Update.new(existing_service, service).call
               end
