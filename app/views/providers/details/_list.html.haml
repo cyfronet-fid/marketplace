@@ -1,0 +1,9 @@
+- fields.map do |field|
+  - if provider.send(field).present?
+    - Array(provider.send(field)).map do |entry|
+      - if nested.present? && nested[field.to_sym].present?
+        %li
+          %span= entry.send(nested[field.to_sym])
+      - else
+        %li
+          %span= entry
