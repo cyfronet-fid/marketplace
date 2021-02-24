@@ -92,6 +92,8 @@ module Import
       end
       log "PROCESSED: #{total_service_count}, CREATED: #{created}, UPDATED: #{updated}, NOT MODIFIED: #{not_modified}"
 
+      Service.reindex
+
       unless @filepath.nil?
         open(@filepath, "w") do |file|
           file << JSON.pretty_generate(output)
