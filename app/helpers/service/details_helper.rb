@@ -11,9 +11,9 @@ module Service::DetailsHelper
 
   def provider_details_columns
     [
-      [certifications, esfri_types_and_domains],
-      [affiliations, societal_grand_challenges],
-      [networks]
+      [statuses, certifications, esfri_types_and_domains, meril_scientific_domains],
+      [affiliations, structure_types, areas_of_activity, societal_grand_challenges],
+      [hosting_legal_entity, networks, national_roadmaps]
     ]
   end
 
@@ -154,8 +154,21 @@ module Service::DetailsHelper
     def changelog
       {
         name: "changelog",
-        template: "changelog",
+        template: "list",
         fields: ["changelog"]
+      }
+    end
+
+    def statuses
+      {
+        name: "statuses",
+        template: "array",
+        fields: %w[legal_statuses provider_life_cycle_statuses],
+        with_desc: true,
+        nested: {
+          legal_statuses: "name",
+          provider_life_cycle_statuses: "name"
+        }
       }
     end
 
@@ -175,7 +188,7 @@ module Service::DetailsHelper
     def meril_scientific_domains
       {
         name: "meril_scientific_categorisation",
-        template: "array",
+        template: "list",
         fields: %w[meril_scientific_domains],
         nested: {
           meril_scientific_domains: "name"
@@ -186,7 +199,7 @@ module Service::DetailsHelper
     def certifications
       {
         name: "certifications",
-        template: "array",
+        template: "list",
         fields: %w[certifications]
       }
     end
@@ -194,15 +207,37 @@ module Service::DetailsHelper
     def affiliations
       {
         name: "affiliations",
-        template: "array",
+        template: "list",
         fields: %w[affiliations]
+      }
+    end
+
+    def structure_types
+      {
+        name: "structure_types",
+        template: "list",
+        fields: %w[structure_types],
+        nested: {
+          structure_types: "name"
+        }
+      }
+    end
+
+    def areas_of_activity
+      {
+        name: "areas_of_activity",
+        template: "list",
+        fields: %w[areas_of_activity],
+        nested: {
+          areas_of_activity: "name"
+        }
       }
     end
 
     def societal_grand_challenges
       {
         name: "societal_grand_challenges",
-        template: "array",
+        template: "list",
         fields: %w[societal_grand_challenges],
         nested: {
           societal_grand_challenges: "name"
@@ -210,14 +245,30 @@ module Service::DetailsHelper
       }
     end
 
+    def hosting_legal_entity
+      {
+        name: "hosting_legal_entity",
+        template: "array",
+        fields: %w[hosting_legal_entity]
+      }
+    end
+
     def networks
       {
         name: "networks",
-        template: "array",
+        template: "list",
         fields: %w[networks],
         nested: {
           networks: "name"
         }
+      }
+    end
+
+    def national_roadmaps
+      {
+        name: "national_roadmaps",
+        template: "list",
+        fields: %w[national_roadmaps]
       }
     end
 end
