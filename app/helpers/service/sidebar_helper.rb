@@ -96,7 +96,7 @@ module Service::SidebarHelper
       {
         name: "contact",
         template: "object",
-        fields: %w[full_name email phone position_in_organisation],
+        fields: %w[full_name email phone position],
         type: "array",
         clazz: "public_contacts",
         nested: {

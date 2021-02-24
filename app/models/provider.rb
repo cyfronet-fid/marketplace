@@ -82,11 +82,12 @@ class Provider < ApplicationRecord
   end
 
   def address
-    "#{street_name_and_number} #{postal_code} #{city} #{country}"
+    "#{street_name_and_number} <br> #{postal_code} #{city} <br> #{region} #{country}"
   end
 
   def services
-    Service.left_joins(:service_providers).where("service_providers.provider_id = #{self.id} OR resource_organisation_id = #{self.id}")
+    Service.left_joins(:service_providers).where("(status = 'unverified' OR status = 'published') AND
+    (service_providers.provider_id = #{self.id} OR resource_organisation_id = #{self.id})")
   end
 
   private
