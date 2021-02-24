@@ -112,8 +112,11 @@ describe Import::Eic do
 
     it "should update service which has upstream to external id" do
       service = create(:service)
+      create(:offer, service: service)
       source = create(:service_source, eid: "phenomenal.phenomenal", service_id: service.id, source_type: "eic")
       service.update!(upstream_id: source.id)
+
+      service.reload
 
       eic = make_and_stub_eic(ids: ["phenomenal.phenomenal"], log: true)
 

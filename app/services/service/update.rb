@@ -21,6 +21,10 @@ class Service::Update
                                   status: "published",
                                   service: @service)).call
     end
-    @service.update(@params)
+    if @service.errored? && @service.valid?
+      @service.update(@params.merge(status: :unverified))
+    else
+      @service.update(@params)
+    end
   end
 end
