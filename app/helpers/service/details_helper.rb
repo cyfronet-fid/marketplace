@@ -172,6 +172,17 @@ module Service::DetailsHelper
       }
     end
 
+    def meril_scientific_domains
+      {
+        name: "meril_scientific_categorisation",
+        template: "array",
+        fields: %w[meril_scientific_domains],
+        nested: {
+          meril_scientific_domains: "name"
+        }
+      }
+    end
+
     def certifications
       {
         name: "certifications",
