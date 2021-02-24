@@ -49,6 +49,15 @@ module ServiceHelper
     service.scientific_domains.map { |target| target.name }
   end
 
+  def resource_organisation(service)
+    target = service.resource_organisation
+    link_to(target.name, provider_path(target))
+  end
+
+  def resource_organisation_text(service)
+    service.resource_organisation.name
+  end
+
   def providers(service)
     service.providers.map { |target| link_to(target.name, provider_path(target)) }
   end
