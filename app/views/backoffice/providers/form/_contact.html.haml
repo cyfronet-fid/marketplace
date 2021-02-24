@@ -28,7 +28,6 @@
             = main_contact_form.input :last_name
             = main_contact_form.input :email
             = main_contact_form.input :phone
-            = main_contact_form.input :organisation
             = main_contact_form.input :position
     .row.service-contact-emails{ "data-target": "service.publicContacts" }
       .col-12
@@ -37,10 +36,10 @@
         = f.fields_for :public_contacts, multiple: true, as: :array,
                 wrapper_html: { "data-target" => "form.publicContact" } do |public_contact_form|
           = render "backoffice/common_parts/form/public_contact_fields",
-          public_contact_form: public_contact_form, service: nil
+          public_contact_form: public_contact_form, service: nil, provider_form: true
         = link_to _("Add additional public contact"), "#", class: "btn btn-primary disablable",
           data: { "target": "form.addContact",
           "action": "click->form#addContact",
           "fields": f.fields_for(:public_contacts, PublicContact.new,
           child_index: "new_field") { |public_contact_form| render "backoffice/common_parts/form/public_contact_fields",
-          public_contact_form: public_contact_form, service: nil } }
+          public_contact_form: public_contact_form, service: nil, provider_form: true } }

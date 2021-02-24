@@ -3,4 +3,4 @@
     - if provider.send(field).present?
       %li.list-group-item
         %span
-          = provider.send(field)
+          = provider.send(field).html_safe
