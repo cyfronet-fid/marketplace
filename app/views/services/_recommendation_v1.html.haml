@@ -13,4 +13,4 @@
           = _("Provided by") + ":"
         %br
           %span
-            = safe_join(providers_text(recommendation_v1), ", ").truncate(24)
+            = resource_organisation_text(recommendation_v1).truncate(24)
