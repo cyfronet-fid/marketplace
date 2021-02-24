@@ -11,7 +11,7 @@
         %small
           = _("Provided by") + ":"
         %br
-        = safe_join(providers_text(service), ", ").truncate(24)
+        = resource_organisation_text(service).truncate(24)
     .column-right
       %p.text-right
         %small
