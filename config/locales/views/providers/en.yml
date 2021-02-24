@@ -6,11 +6,19 @@ en:
     details:
       details:
         title:
+          statuses: Statuses
           certifications: Certifications
           esfri_types_and_domains: ESFRI Types & Domains
+          meril_scientific_categorisation: MERIL Scientific Categorisation
           affiliations: Affiliations
+          structure_types: Structure Types
+          areas_of_activity: Areas of Activity
           societal_grand_challenges: Societal Grand Challenges
           networks: Networks
+          hosting_legal_entity: Hosting Legal Entity
+          national_roadmaps: National Roadmaps
       array:
         esfri_types: ESFRI Types
         esfri_domains: ESFRI Domains
+        legal_statuses: Legal Status
+        provider_life_cycle_statuses: Provider Life Cycle Status
