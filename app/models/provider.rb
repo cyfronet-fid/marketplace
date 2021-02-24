@@ -85,6 +85,10 @@ class Provider < ApplicationRecord
     "#{street_name_and_number} #{postal_code} #{city} #{country}"
   end
 
+  def services
+    Service.left_joins(:service_providers).where("service_providers.provider_id = #{self.id} OR resource_organisation_id = #{self.id}")
+  end
+
   private
     def remove_empty_array_fields
       array_fields = [:multimedia, :certifications, :affiliations, :national_roadmaps]
