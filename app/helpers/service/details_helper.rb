@@ -191,7 +191,7 @@ module Service::DetailsHelper
         template: "list",
         fields: %w[meril_scientific_domains],
         nested: {
-          meril_scientific_domains: "name"
+          meril_scientific_domains: "name_with_parent"
         }
       }
     end
