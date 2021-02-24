@@ -220,13 +220,13 @@
                 = f.fields_for :public_contacts, multiple: true, as: :array,
                     wrapper_html: { "data-target" => "form.publicContact" } do |public_contact_form|
                   = render "backoffice/common_parts/form/public_contact_fields",
-                  public_contact_form: public_contact_form, service: service
+                  public_contact_form: public_contact_form, service: service, provider_form: false
                 = link_to _("Add additional public contact"), "#", class: "btn btn-primary disablable",
                   data: { "target": "form.addContact",
                   "action": "click->form#addContact",
                   "fields": f.fields_for(:public_contacts, PublicContact.new,
                   child_index: "new_field") { |pcf| render "backoffice/common_parts/form/public_contact_fields",
-                  public_contact_form: pcf, service: service } }
+                  public_contact_form: pcf, service: service, provider_form: false } }
             .row.mt-5
               .col-12
                 = f.input :helpdesk_email, input_html: { type: "text" }, disabled: cant_edit(:helpdesk_email)
@@ -301,10 +301,10 @@
                                                       :related_platforms, :platforms])) }
           .card-body
             = f.association :required_services, multiple: true, input_html: { data: { choice: true } },
-            disabled: cant_edit(:required_services)
+            disabled: cant_edit([required_service_ids: []])
 
             = f.association :related_services, multiple: true, input_html: { data: { choice: true } },
-            disabled: cant_edit(:related_services)
+            disabled: cant_edit([related_service_ids: []])
 
             = f.association :platforms, label: _("Platforms (internal)"),
                                multiple: true, input_html: { data: { choice: true } },

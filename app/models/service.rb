@@ -212,6 +212,10 @@ class Service < ApplicationRecord
     (required_services + manual_related_services + related_services).uniq
   end
 
+  def resource_organisation_and_providers
+    ([resource_organisation] + Array(providers)).reject(&:blank?).uniq
+  end
+
   def external
     order_type == "order_required" && order_url.present?
   end

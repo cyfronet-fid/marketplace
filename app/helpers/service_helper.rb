@@ -58,6 +58,14 @@ module ServiceHelper
     service.resource_organisation.name
   end
 
+  def resource_organisation_and_providers(service)
+    service.resource_organisation_and_providers.map { |target| link_to(target.name, provider_path(target)) }
+  end
+
+  def resource_organisation_and_providers_text(service)
+    service.resource_organisation_and_providers.map { |target| target.name }
+  end
+
   def providers(service)
     service.providers.map { |target| link_to(target.name, provider_path(target)) }
   end
