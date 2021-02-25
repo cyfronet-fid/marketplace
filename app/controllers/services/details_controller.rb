@@ -17,6 +17,7 @@ class Services::DetailsController < ApplicationController
   def index
     @service = Service.friendly.find(params[:service_id])
     @related_services = @service.related_services
+    @related_services_title = "Related resources"
     @question = Service::Question.new(service: @service)
   end
 end
