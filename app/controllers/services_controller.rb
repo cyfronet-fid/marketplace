@@ -25,6 +25,7 @@ class ServicesController < ApplicationController
     authorize @service
     @offers = policy_scope(@service.offers).order(:created_at)
     @related_services = @service.target_relationships
+    @related_services_title = "Suggested compatible resources"
 
     @service_opinions = ServiceOpinion.joins(project_item: :offer).
                         where(offers: { service_id: @service })

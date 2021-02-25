@@ -78,6 +78,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       if @service.valid?
         @offers = @service.offers.where(status: :published).order(:created_at)
         @related_services = @service.target_relationships
+        @related_services_title = "Suggested compatible resources"
         if current_user&.executive?
           @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
           @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
