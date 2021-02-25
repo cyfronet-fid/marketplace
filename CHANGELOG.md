@@ -6,22 +6,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [Unreleased]
-
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
-- Rake import:eic task in case of resource update (@goreck888)
-- Both Resource Organisation and Resource Providers included in `Recently Added Resources` query in provider's view (@goreck888)
-- Displaying `Provided by` in all cases as Resource Organisation (@goreck888)
-- Updating valid resources with `errored` status (@goreck888)
-
 ## [3.7.0] 2021-02-19
 
 ### Added
