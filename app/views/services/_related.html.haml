@@ -1,7 +1,6 @@
 - if related_services&.count&.positive?
   %h2.mb-4.mt-3.font-weight-light
-    = _("Suggested compatible resources")
-
+    = _(title)
   .card-columns
     = render partial: "services/service_box",
             collection: related_services,
