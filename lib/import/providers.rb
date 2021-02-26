@@ -51,6 +51,8 @@ class Import::Providers
           mapped_provider.update!(updated_provider_data)
           Importers::Logo.new(mapped_provider, image_url).call
         end
+      rescue ActiveRecord::RecordInvalid => e
+        log "[WARN] Provider #{updated_provider_data[:name]} #{updated_provider_data[:pid]} cannot be created. #{e}"
       end
     end
 
