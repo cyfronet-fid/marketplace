@@ -14,6 +14,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - Geographical availabilities order in the Resource details view (@kmarszalek, @jarekzet)
 - Title of section `Related resources` instead of `Suggested compatible resources`  in `details` and `opinions` page (@goreck888)
+- Statistics in executive panel counting resources grouped in access types and MP ordering/No MP ordering (@goreck888) 
 
 ### Deprecated
 
