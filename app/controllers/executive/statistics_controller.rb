@@ -8,6 +8,11 @@ class Executive::StatisticsController < Executive::ApplicationController
     @not_orderable_count = report.not_orderable_count
     @all_services_count = report.all_services_count
 
+    @order_required_count = report.order_required_count
+    @open_access_count = report.open_access_count
+    @fully_open_access_count = report.fully_open_access_count
+    @other_count = report.other_count
+
     @providers = report.providers
     @providers_count = @providers.size
 

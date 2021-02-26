@@ -2,11 +2,27 @@
 
 class UsageReport
   def orderable_count
-    service_count_by_order_type(:order_required)
+    service_count_by_order_type(:order_required, internal: true)
   end
 
   def not_orderable_count
-    service_count_by_order_type(:open_access, :fully_open_access, :other, :external)
+    all_services_count - orderable_count
+  end
+
+  def order_required_count
+    service_count_by_order_type(:order_required)
+  end
+
+  def open_access_count
+    service_count_by_order_type(:open_access)
+  end
+
+  def fully_open_access_count
+    service_count_by_order_type(:fully_open_access)
+  end
+
+  def other_count
+    service_count_by_order_type(:other)
   end
 
   def all_services_count
@@ -37,18 +53,14 @@ class UsageReport
         .group("projects.id")
     end
 
-    def service_count_by_order_type(*types)
-      if types.include? :external
+    def service_count_by_order_type(*types, internal: false)
+      unless internal
         Service.joins(:offers).where(offers: { order_type: types, status: :published },
-                                     status: [:published, :unverified])
-            .or(Service.joins(:offers).where("services.status IN ('published', 'unverified')
-                   AND offers.order_url IS NOT NULL
-                   AND offers.status = 'published'"))
-            .uniq.count
+                                     status: [:published, :unverified]).uniq.count
       else
         Service.joins(:offers)
             .where(offers: { order_type: types, order_url: ["", nil], status: :published },
-                   status: [:published, :unverified])
+                   status: [:published, :unverified], order_type: types)
             .uniq.count
       end
     end
