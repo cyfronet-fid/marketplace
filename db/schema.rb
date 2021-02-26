@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_03_170414) do
+ActiveRecord::Schema.define(version: 2021_02_26_164811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -473,7 +473,6 @@ ActiveRecord::Schema.define(version: 2021_02_03_170414) do
     t.datetime "last_update"
     t.string "related_platforms", default: [], array: true
     t.datetime "synchronized_at"
-    t.boolean "external", default: false
     t.string "pid"
     t.index ["name"], name: "index_services_on_name"
     t.index ["provider_id"], name: "index_services_on_provider_id"

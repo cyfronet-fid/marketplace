@@ -74,7 +74,7 @@ class Importers::Service
       grant_project_names = Array(@data["grantProjectNames"])
     end
 
-    status = ENV["RESOURCE_IMPORT_STATUS"] || "unverified"
+    status = ENV["RESOURCE_IMPORT_STATUS"] || "published"
 
     main_contact = MainContact.new(map_contact(@data["mainContact"])) if @data["mainContact"] || nil
 
