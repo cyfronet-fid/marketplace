@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.7.1] 2021-02-26
+
+### Fixed
+- Rake `import:providers` abort when invalid provider data received (@goreck888)
+
 ## [3.7.0] 2021-02-19
 
 ### Added
