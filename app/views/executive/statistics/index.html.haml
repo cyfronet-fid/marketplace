@@ -3,14 +3,12 @@
   = _("Statistics")
 
 .card-deck.text-center
-  -# haml-lint:disable MultilinePipe
-  = render "statistic", title: _("MP ordering"), amount: @orderable_count,
-    description: _("Number of EOSC resources with offerings using EOSC Marketplace ordering process")
-  = render "statistic", title: _("No MP ordering"), amount: @not_orderable_count,
-    description: _("Number of EOSC resources not using EOSC Marketplace ordering process")
-  -# haml-lint:enable MultilinePipe
   = render "statistic", title: _("All resources"), amount: @all_services_count,
     description: _("Number of all EOSC resources registered in the EOSC Marketplace")
+  = render "statistic", title: _("Marketplace ordering"), amount: @orderable_count,
+    description: _("Number of EOSC resources with offerings using EOSC Marketplace ordering process")
+  = render "statistic", title: _("No Marketplace ordering"), amount: @not_orderable_count,
+    description: _("Number of EOSC resources not using EOSC Marketplace ordering process")
 .card-deck.mt-4.text-center
   = render "statistic", title: _("Fully open access"), amount: @fully_open_access_count,
     description: _("Number of resources with at least one fully open access offer. <br><br>" + |
@@ -24,7 +22,6 @@
     "Request/Order required: accessing the resource requires an ordering procedure.") |
   = render "statistic", title: _("Other"), amount: @other_count,
     description: _("Number of resources with at least one other offer.")
-
 #statistics.accordion
   = render "pages/card", parent: "statistics",
     name: "providers", title: _("Providers (%{count})") % { count: @providers_count } do
