@@ -4069,8 +4069,8 @@ textarea.form-control.is-invalid {
       padding-left: 0;
 
       li {
-        margin: 0 0 6px 1rem;
-        padding: 0 0.2rem;
+        margin: 0 0 10px 1rem;
+        padding: 0;
         color: $palette-yellow;
         line-height: 1.15;
         font-size: 1.1rem;
@@ -4107,6 +4107,12 @@ textarea.form-control.is-invalid {
         span {
           color: $body-color;
           font-size: 0.875rem;
+
+          &.geographical {
+            padding-top: 15px;
+            float: left;
+            width: 100%;
+          }
         }
       }
     }
