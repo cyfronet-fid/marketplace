@@ -12,10 +12,9 @@
       - elsif field == "geographical_availabilities"
         %span
           = get_only_regions(service.send(field)).join(", ")
-          - unless get_only_regions(service.send(field)).empty?
-            %br
-        %span
-          = get_only_countries(service.send(field)).sort.join(", ")
+        - if get_only_countries(service.send(field)).present?
+          %span.geographical
+            = get_only_countries(service.send(field)).sort.join(", ")
       - else
         - Array(service.send(field)).map.with_index do |element, idx|
           - if nested.present? && nested[field.to_sym].present?
