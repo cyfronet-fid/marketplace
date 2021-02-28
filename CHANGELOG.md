@@ -12,7 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Highcharts scalability for the resource and provider views (@kmarszalek, @jarekzet)
 
 ### Changed
-- Geographical availabilities order in the Resource details view (@kmarszalek)
+- Geographical availabilities order in the Resource details view (@kmarszalek, @jarekzet)
 
 ### Deprecated
 
