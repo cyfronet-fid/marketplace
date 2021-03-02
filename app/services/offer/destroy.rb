@@ -7,7 +7,7 @@ class Offer::Destroy
 
   def call
     if @offer&.project_items.present?
-      Offer::Draft.new(@offer).call
+      @offer.update(status: :deleted)
     else
       @offer.destroy
     end
