@@ -18,8 +18,10 @@ module Service::Categorable
     def init_categories_tree
       @siblings = siblings
       @subcategories = subcategories
-      @siblings_with_counters = siblings_with_counters
-      @subcategories_with_counters = subcategories_with_counters
+      @siblings_with_counters = siblings_with_counters.
+        partition { |cid, c|  c[:category][:name] != "Other" }.flatten(1)
+      @subcategories_with_counters = subcategories_with_counters&.
+        partition { |cid, c|  c[:category][:name] != "Other" }&.flatten(1)
       @services_total ||= counters[nil]
     end
 
@@ -44,7 +46,9 @@ module Service::Categorable
     end
 
     def count_services(category)
-      (counters[category.id] || 0) + category.descendants.reduce(0) { |p, c| p + (counters[c.id] || 0) }
+      services = search_for_categories(scope, all_filters).map { |s| s.id.to_i }
+      (counters[category.id] || 0) + category.descendants.
+        map { |c| c.services.to_a.map(&:id) & services }.flatten.uniq.size
     end
 
     def counters

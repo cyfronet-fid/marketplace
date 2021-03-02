@@ -52,8 +52,6 @@ class Service < ApplicationRecord
   has_many :service_related_platforms, dependent: :destroy
   has_many :platforms, through: :service_related_platforms
   has_many :service_vocabularies, dependent: :destroy
-  has_many :pc_categories, through: :service_vocabularies,
-           source: :vocabulary, source_type: "Vocabulary::PcCategory"
   has_many :funding_bodies, through: :service_vocabularies,
            source: :vocabulary, source_type: "Vocabulary::FundingBody"
   has_many :funding_programs, through: :service_vocabularies,

@@ -97,7 +97,7 @@ class Importers::Service
       use_cases_url: use_cases_url,
       # Classification
       scientific_domains: map_scientific_domains(scientific_domains),
-      pc_categories: map_pc_categories(categories) || [],
+      categories: map_categories(categories) || [],
       target_users: map_target_users(target_users),
       access_types: map_access_types(access_types),
       access_modes: map_access_modes(access_modes),

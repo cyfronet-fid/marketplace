@@ -5,8 +5,8 @@ module Importable
     TargetUser.where(eid: target_users)
   end
 
-  def map_pc_categories(categories)
-    Vocabulary::PcCategory.where(eid: categories)
+  def map_categories(categories)
+    Category.where(eid: categories)
   end
 
   def map_scientific_domains(domains)

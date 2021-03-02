@@ -90,7 +90,7 @@
               = link_to_add_array_field("service", "use_cases_url")
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-              [:scientific_domains, :pc_categories, :categories, :target_users, :access_types,
+              [:scientific_domains, :categories, :target_users, :access_types,
               :access_modes, :tag_list])),
               data: { toggle: "collapse", target: "#classification" },
               aria: { expanded: true, controls: "classification" } }
@@ -104,18 +104,15 @@
                     %i.fas.fa-chevron-up
         .collapse{ id: "classification", "aria-labelledby": "classification-header",
             "data-parent": "#accordion-form",
-            class: ("show" unless collapsed?(service, [:scientific_domains, :pc_categories,
+            class: ("show" unless collapsed?(service, [:scientific_domains,
                               :categories, :target_users, :access_types, :access_modes, :tag_list])) }
           .card-body
             = f.association :scientific_domains, input_html: { data: { choice: true } }, include_hidden: false,
             disabled: cant_edit([scientific_domain_ids: []]),
             collection: ScientificDomain.child_names.map { |name, sd| [name, sd.id] },
             label_method: :first, value_method: :second
-            = f.association :pc_categories, multiple: true, input_html: { data: { choice: true } },
-            disabled: cant_edit([pc_category_ids: []]),
-            collection: Vocabulary.where(type: "Vocabulary::PcCategory").child_names.map { |name, pcc| [name, pcc.id] },
-            label_method: :first, value_method: :second
             = f.association :categories, multiple: true, input_html: { data: { choice: true } },
+                            collection: Category.child_names.map { |name, c| [name, c.id] },
                             disabled: cant_edit([category_ids: []])
             = f.association :target_users,
               label: _("Dedicated For"),
