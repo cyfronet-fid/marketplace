@@ -22,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Differences in the behaviour of the offer UI and API (@kmarszalek)
+- Show no parameters information in `ordering_configuration` page and in backoffice (@goreck888)
 
 ## [3.7.1] 2021-02-26
 
