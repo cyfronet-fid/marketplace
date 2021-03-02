@@ -10,7 +10,8 @@ class Offer < ApplicationRecord
 
   STATUSES = {
     published: "published",
-    draft: "draft"
+    draft: "draft",
+    deleted: "deleted"
   }
 
   def search_data

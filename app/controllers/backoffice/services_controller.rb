@@ -23,7 +23,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def show
     @offer = Offer.new(service: @service, status: :draft)
-    @offers = @service.offers.order(:created_at)
+    @offers = @service.offers.published.order(:created_at)
     if current_user&.executive?
       @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
       @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
