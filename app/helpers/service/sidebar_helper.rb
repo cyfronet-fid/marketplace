@@ -25,7 +25,7 @@ module Service::SidebarHelper
       {
         name: "categorisation",
         template: "array",
-        fields: ["pc_categories"],
+        fields: ["categories"],
         type: "tree",
         nested: {
             pc_categories: "name"

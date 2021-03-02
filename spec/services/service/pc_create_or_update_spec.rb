@@ -9,8 +9,8 @@ RSpec.describe Service::PcCreateOrUpdate do
   let!(:training) { create(:category, name: "Training & Support") }
   let!(:security) { create(:category, name: "Security & Operations") }
   let!(:analytics) { create(:category, name: "Processing & Analysis") }
-  let!(:data) { create(:pc_category, name: "Data management", eid: "category-data") }
-  let!(:data_subcategory) { create(:pc_category, name: "Access", parent: data,
+  let!(:data) { create(:category, name: "Data management", eid: "category-data") }
+  let!(:data_subcategory) { create(:category, name: "Access", parent: data,
                                    eid: "subcategory-access") }
   let!(:compute) { create(:category, name: "Compute") }
   let!(:networking) { create(:category, name: "Networking") }

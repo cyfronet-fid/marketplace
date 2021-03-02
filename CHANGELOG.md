@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - `Provided by` field in `Popular resources`, `Suggested compatible resources` and `Recently added resources` to `Organisation` (@kmarszalek, @jarekzet)
 - Geographical availabilities in the resource details view are links to filters now (@goreck888)
+- Categories imported from Provider's component as `categories` instead of `pc_categories` (@goreck888)
 
 ### Deprecated
 

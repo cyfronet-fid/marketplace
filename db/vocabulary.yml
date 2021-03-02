@@ -1217,125 +1217,154 @@ access_type:
     type: ACCESS_TYPE
 
 category:
+  sharing_and_discovery:
+    eid: supercategory-sharing_and_discovery
+    name: Sharing & Discovery
+    type: SUPERCATEGORY
+  training_and_support:
+    eid: supercategory-training_and_support
+    name: Training & Support
+    type: SUPERCATEGORY
+  security_and_operations:
+    eid: supercategory-security_and_operations
+    name: Security & Operations
+    type: SUPERCATEGORY
+  processing_and_analysis:
+    eid: supercategory-processing_and_analysis
+    name: Processing & Analysis
+    type: SUPERCATEGORY
+  aggregators_and_integrators:
+    eid: supercategory-aggregators_and_integrators
+    name: Aggregators & Integrators
+    type: SUPERCATEGORY
+  other:
+    eid: supercategory-other
+    name: Other
+    type: SUPERCATEGORY
+  access_physical_and_eInfrastructures:
+    eid: supercategory-access_physical_and_eInfrastructures
+    name: Access physical & eInfrastructures
+    description: Ultra-fast connectivity and ubiquitous access, high performance computing, cloud capacity and storage.
+    type: SUPERCATEGORY
   data-management:
     eid: category-processing_and_analysis-data_management
     name: Data Management
     description: Robust, feature-rich and user-friendly data management services.
-    # parentId: supercategory-processing_and_analysis
+    parentId: supercategory-processing_and_analysis
     type: CATEGORY
   development-resources:
     eid: category-sharing_and_discovery-development_resources
     name: Development Resources
     description: Developer tools, development kits, libraries, APIs.
-    # parentId: supercategory-sharing_and_discovery
+    parentId: supercategory-sharing_and_discovery
     type: CATEGORY
   securirty-indentity:
     eid: category-security_and_operations-security_and_identity
     name: Security & Identity
     description: Protect infrastructure and manage user identities and access against advanced threats across devices, data, apps, etc.
-    # parentId: supercategory-security_and_operations
+    parentId: supercategory-security_and_operations
     type: CATEGORY
   data:
     eid: category-sharing_and_discovery-data
     name: Data
     description: Vast range of datasets to facilitate research and scientific activities.
-    # parentId: supercategory-sharing_and_discovery
+    parentId: supercategory-sharing_and_discovery
     type: CATEGORY
   samples:
     eid: category-sharing_and_discovery-samples
     name: Samples
     description: Collection, preparation and delivery of biological, chemical, environmental or other samples.
-    # parentId: supercategory-sharing_and_discovery
+    parentId: supercategory-sharing_and_discovery
     type: CATEGORY
   software:
     eid: category-sharing_and_discovery-software
     name: Software
     description: Software, platforms and tools offered-as-a-service or deployed-on-demand.
-    # parentId: supercategory-sharing_and_discovery
+    parentId: supercategory-sharing_and_discovery
     type: CATEGORY
   operations-infrastructure-management:
     eid: category-security_and_operations-operations_and_infrastructure_management_services
     name: Operations & Infrastructure Management Services
     description: Services for monitoring, scaling, creating, tracking and automating operations on infrastructures and services.
-    # parentId: supercategory-security_and_operations
+    parentId: supercategory-security_and_operations
     type: CATEGORY
   aggregators-integrators:
     eid: category-aggregators_and_integrators-aggregators_and_integrators
     name: Aggregators & Integrators
     description: Thematic, Regional and other Aggregators & Integrators.
-    # parentId: supercategory-aggregators_and_integrators
+    parentId: supercategory-aggregators_and_integrators
     type: CATEGORY
   data-analysis:
     eid: category-processing_and_analysis-data_analysis
     name: Data Analysis
     description: Processes for data with the goal of discovering useful information, informing conclusions, and supporting decision-making.
-    # parentId: supercategory-processing_and_analysis
+    parentId: supercategory-processing_and_analysis
     type: CATEGORY
-  other:
+  other-other:
     eid: category-other-other
     name: Other
     description: null
-    # parentId: supercategory-other
+    parentId: supercategory-other
     type: CATEGORY
   applications:
     eid: category-sharing_and_discovery-applications
     name: Applications
     description: End-user applications offered-as-a-service or deployed-on-demand.
-    # parentId: supercategory-sharing_and_discovery
+    parentId: supercategory-sharing_and_discovery
     type: CATEGORY
   instrument-equipment:
     eid: category-access_physical_and_eInfrastructures-instrument_and_equipment
     name: Instrument & Equipment
     description: Access to instruments and equipment.
-    # parentId: supercategory-access_physical_and_eInfrastructures
+    parentId: supercategory-access_physical_and_eInfrastructures
     type: CATEGORY
   education-training:
     eid: category-training_and_support-education_and_training
     name: Education & Training
     description: Highly-specialized seminars and courses to help advance research knowledge and sharpen scientific skills.
-    # parentId: supercategory-training_and_support
+    parentId: supercategory-training_and_support
     type: CATEGORY
   data-storage:
     eid: category-access_physical_and_eInfrastructures-data_storage
     name: Data Storage
     description: Reliable, secure and scalable cloud storage for scientific data, apps and workloads.
-    # parentId: supercategory-access_physical_and_eInfrastructures
+    parentId: supercategory-access_physical_and_eInfrastructures
     type: CATEGORY
   consultancy-support:
     eid: category-training_and_support-consultancy_and_support
     name: Consultancy & Support
     description: Dedicated professional support for a wide range of scientific disciplines and research activities.
-    # parentId: supercategory-training_and_support
+    parentId: supercategory-training_and_support
     type: CATEGORY
   material-storage:
     eid: category-access_physical_and_eInfrastructures-material_storage
     name: Material Storage
     description: Access to biological, chemical, historical, archeological, cultural, etc. storage. Includes the acquisition, preparation and processing of samples and materials in view of their preservation.
-    # parentId: supercategory-access_physical_and_eInfrastructures
+    parentId: supercategory-access_physical_and_eInfrastructures
     type: CATEGORY
   scholarly-communication:
     eid: category-sharing_and_discovery-scholarly_communication
     name: Scholarly Communication
     description: Research findings available to the wider academic community and beyond.
-    # parentId: supercategory-sharing_and_discovery
+    parentId: supercategory-sharing_and_discovery
     type: CATEGORY
   measurement-materials-analysis:
     eid: category-processing_and_analysis-measurement_and_materials_analysis
     name: Measurement & Materials Analysis
     description: Processess and techiques for material analysis, characterisation and monitoring.
-    # parentId: supercategory-processing_and_analysis
+    parentId: supercategory-processing_and_analysis
     type: CATEGORY
   network:
     eid: category-access_physical_and_eInfrastructures-network
     name: Network
     description: Ultra-fast connectivity and ubiquitous access to eInfrastructures' resources and services.
-    # parentId: supercategory-access_physical_and_eInfrastructures
+    parentId: supercategory-access_physical_and_eInfrastructures
     type: CATEGORY
   compute:
     eid: category-access_physical_and_eInfrastructures-compute
     name: Compute
     description: High-performance computing resources and scalable cloud compute capacity for demanding job processes.
-    # parentId: supercategory-access_physical_and_eInfrastructures
+    parentId: supercategory-access_physical_and_eInfrastructures
     type: CATEGORY
   sharing_and_discovery-software-other:
     eid: subcategory-sharing_and_discovery-software-other
@@ -1572,8 +1601,8 @@ category:
     parentId: category-training_and_support-consultancy_and_support
     type: SUBCATEGORY
   processing_and_analysis-data_analysis-data_exploitation:
-    eid: subcategory-processing_and_analysis-data_analysis-data_exploitation
-    name: Data Exploitation
+    eid: subcategory-processing_and_analysis-data_analysis-data_extrapolation
+    name: Data Extrapolation
     parentId: category-processing_and_analysis-data_analysis
     type: SUBCATEGORY
   processing_and_analysis-data_management-other:
@@ -2028,7 +2057,7 @@ category:
     type: SUBCATEGORY
   processing_and_analysis-data_management-publishing:
     eid: subcategory-processing_and_analysis-data_management-publishing
-    name: processing_and_analysis-data_management-publishing
+    name: Publishing
     parentId: category-processing_and_analysis-data_management
     type: SUBCATEGORY
     extras: {}
@@ -2124,7 +2153,7 @@ category:
     type: SUBCATEGORY
   training_and_support-consultancy_and_support-application_porting:
     eid: subcategory-training_and_support-consultancy_and_support-application_porting
-    name: Application_Porting
+    name: Application Porting
     parentId: category-training_and_support-consultancy_and_support
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-compute-job_execution:
@@ -2134,7 +2163,7 @@ category:
     type: SUBCATEGORY
   processing_and_analysis-measurement_and_materials_analysis-testing_and_validation:
     eid: subcategory-processing_and_analysis-measurement_and_materials_analysis-testing_and_validation
-    name: TEsting & Validation
+    name: Testing & Validation
     parentId: category-processing_and_analysis-measurement_and_materials_analysis
     type: SUBCATEGORY
   processing_and_analysis-data_management-embargo:

@@ -3,6 +3,12 @@
 namespace :rdt do
   desc "Repair language_availability data"
 
+  task remove_vocabularies: :environment do
+    ServiceVocabulary.delete_all
+    ProviderVocabulary.delete_all
+    Vocabulary.delete_all
+  end
+
   task repair_language_data: :environment do
     Service.find_each do |service|
       lang_items = []
@@ -111,12 +117,12 @@ namespace :rdt do
       puts "Created access_mode: #{hash["name"]}, eid: #{hash["eid"]}"
     end
 
-    puts "Creating PC categories from yaml"
+    puts "Creating categories from yaml"
     yaml_hash["category"].each do |_, hash|
-      existing_category = Vocabulary::PcCategory.find_by(name: hash["name"], eid: [hash["eid"], nil])
-      parent = hash["parentId"].blank? ? nil : Vocabulary::PcCategory.find_by(eid: hash["parentId"])
+      existing_category = Category.find_by(name: hash["name"], eid: [hash["eid"], nil])
+      parent = hash["parentId"].blank? ? nil : Category.find_by(eid: hash["parentId"])
       if existing_category.blank?
-        Vocabulary::PcCategory.find_or_initialize_by(eid: hash["eid"]) do |category|
+        Category.find_or_initialize_by(eid: hash["eid"]) do |category|
           category.update!(name: hash["name"],
                            eid: hash["eid"],
                            description: hash["description"],
@@ -131,6 +137,10 @@ namespace :rdt do
         puts "Updated existing category: #{hash["name"]} with eid: #{hash["eid"]}"
       end
     end
+    puts "Remove categories with no eid"
+    to_remove = Category.where(eid: [nil, ""])
+    puts "Removing categories #{to_remove.map(&:name)}"
+    to_remove.destroy_all
 
     puts "Creating scientific_domains from yaml"
     yaml_hash["scientific_domain"].each do |_, hash|

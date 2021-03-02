@@ -59,7 +59,7 @@
         - @services.each do |service|
           %td
             %dl
-              - field_tree(service, :pc_categories).each do |parent, children|
+              - field_tree(service, :categories).each do |parent, children|
                 %dt
                   %span
                     = parent
