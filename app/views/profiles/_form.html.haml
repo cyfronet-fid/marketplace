@@ -6,8 +6,10 @@
           = _("Additional information")
 
       = f.association :categories, multiple: true, include_hidden: false,
+      collection: Category.child_names.map { |name, c| [name, c.id] },
       input_html: { data: { choice: true } }
       = f.association :scientific_domains, multiple: true, include_hidden: false,
+      collection: ScientificDomain.child_names.map { |name, sd| [name, sd.id] },
       input_html: { data: { choice: true } }
     .col-12.col-md-5.profile-edit.ml-auto
       .bordered-header

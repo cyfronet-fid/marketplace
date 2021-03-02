@@ -52,30 +52,9 @@
             .title
               %a{ href: "#{portal_base}/services-resources" }
                 = _("Services & Resources")
-          %li.mb-1
-            %a{ href: "#{root_url}services/c/sharing-discovery?q=&service_id=&sort=_score" }
-              = _("Sharing & Discovery")
-          %li.mb-1
-            %a{ href: "#{root_url}services/c/processing-analysis?q=&service_id=&sort=_score" }
-              = _("Processing & Analysis")
-          %li.mb-1
-            %a{ href: "#{root_url}services/c/data-management?q=&service_id=&sort=_score" }
-              = _("Data Management")
-          %li.mb-1
-            %a{ href: "#{root_url}services/c/compute?q=&service_id=&sort=_score" }
-              = _("Compute")
-          %li.mb-1
-            %a{ href: "#{root_url}services/c/storage?q=&service_id=&sort=_score" }
-              = _("Storage")
-          %li.mb-1
-            %a{ href: "#{root_url}services/c/networking?q=&service_id=&sort=_score" }
-              = _("Networking")
-          %li.mb-1
-            %a{ href: "#{root_url}services/c/training-support?q=&service_id=&sort=_score" }
-              = _("Training & Support")
-          %li.mb-1
-            %a{ href: "#{root_url}services/c/security-operations?q=&service_id=&sort=_score" }
-              = _("Security & Operations")
+          - Category.roots.partition { |sd|  sd.name != "Other" }.flatten(1).each do |category|
+            %li.mb-1
+              = link_to category.name, category_path(category)
           %li.mb-1
             %a{ href: "#{portal_base}/helpdesk" }
               = _("Help Desk")

@@ -6,11 +6,9 @@ class HomeController < ApplicationController
   def index
     @learn_more_section = LeadSection.includes(:leads).find_by(slug: "learn-more")
     @use_cases_section = LeadSection.includes(:leads).find_by(slug: "use-cases")
-    @root_categories = @root_categories.with_attached_logo
+    @root_categories = @root_categories.with_attached_logo.reject { |c| c.name == "Other" }
     @main_scientific_domains =
-      ScientificDomain.with_attached_logo.roots[0...8]
-      .push(ScientificDomain.with_attached_logo.find_by(name: "Other"))
-      .reject(&:nil?)
+      ScientificDomain.with_attached_logo.roots.partition { |sd|  sd.name != "Other" }.flatten(1)
   end
 
   def robots
