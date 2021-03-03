@@ -21,16 +21,16 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [3.8.0] 2021-03-03
 
 ### Added
-- Highcharts scalability for the resource and provider views (@kmarszalek, @jarekzet)
+- Possibility to zoom in or zoom out the map in the Resource/Provider Presentation page (@kmarszalek, @jarekzet)
 
 ### Changed
-- Geographical availabilities order in the Resource details view (@kmarszalek, @jarekzet)
-- Title of section `Related resources` instead of `Suggested compatible resources`  in `details` and `opinions` page (@goreck888)
-- Statistics in executive panel counting resources grouped in access types and MP ordering/No MP ordering (@goreck888) 
+- Countries and regions are listed in the alphabetical order in the Resource details view (@kmarszalek, @jarekzet)
+- Renaming the Suggested compatible resources section to Related resources in resource details page and resource opinions page (@goreck888)
+- New statistics available in the executive panel: statistics regarding resource access types, statistics for participation in MP ordering process among resources(@goreck888)
 
 ### Fixed
 - Differences in the behaviour of the offer UI and API (@kmarszalek)
-- Show no parameters information in `ordering_configuration` page and in backoffice (@goreck888)
+- Unified behaviour in the offer backoffice UI in case of no parameters introduced in the offers (@goreck888)
 
 ## [3.7.1] 2021-02-26
 
