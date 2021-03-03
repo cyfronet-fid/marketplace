@@ -9,16 +9,24 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+## [3.8.0] 2021-03-03
+
+### Added
 - Highcharts scalability for the resource and provider views (@kmarszalek, @jarekzet)
 
 ### Changed
 - Geographical availabilities order in the Resource details view (@kmarszalek, @jarekzet)
 - Title of section `Related resources` instead of `Suggested compatible resources`  in `details` and `opinions` page (@goreck888)
 - Statistics in executive panel counting resources grouped in access types and MP ordering/No MP ordering (@goreck888) 
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Differences in the behaviour of the offer UI and API (@kmarszalek)
