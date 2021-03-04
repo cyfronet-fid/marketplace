@@ -11,10 +11,10 @@ RSpec.describe ApplicationController, type: :controller do
   let!(:providers) { create_list(:provider, 2) }
   let!(:categories) { create_list(:category, 2) }
 
-  let!(:service1) { create(:service, name: "duper super name", providers: providers,
-                           categories: [categories.first], tag_list: "tag1, tag2") }
-  let!(:service2) { create(:service, name: "very different title", providers: [providers.first],
-                           categories: categories, tag_list: "tag2") }
+  let!(:service1) { create(:service, name: "duper super name", resource_organisation: providers.first,
+                           providers: providers, categories: [categories.first], tag_list: "tag1, tag2") }
+  let!(:service2) { create(:service, name: "very different title", resource_organisation: providers.first,
+                           providers: [providers.first], categories: categories, tag_list: "tag2") }
   let!(:offer1) { create(:offer, service: service1, name: "Offer 1") }
   let!(:offer2) { create(:offer, service: service1, name: "Offer 2") }
   let!(:offer3) { create(:offer, service: service1, name: "Offer 3") }
@@ -48,7 +48,7 @@ RSpec.describe ApplicationController, type: :controller do
       end
     end
 
-    context "with filters set" do
+    context "with providers and resource organisation filters set" do
       let!(:params) { ActionController::Parameters.new("providers" => providers.second.id) }
       it "returns correct service list" do
         results = controller.search(Service.all, filters)
@@ -116,7 +116,7 @@ RSpec.describe ApplicationController, type: :controller do
       end
     end
 
-    context "provider set" do
+    context "provider and resource organisation set" do
       let!(:params) { ActionController::Parameters.new("providers" => providers.first.id) }
       it "returns counters for tags when provider filter set but does not limit results" do
         expect(controller.filter_counters(Service.all, filters, tag_filter)).
@@ -124,7 +124,7 @@ RSpec.describe ApplicationController, type: :controller do
       end
     end
 
-    context "provider set" do
+    context "provider and resource organisation set" do
       let!(:params) { ActionController::Parameters.new("providers" => providers.second.id) }
       it "returns counters for tags when provider filter set and limits results" do
         expect(controller.filter_counters(Service.all, filters, tag_filter)).
@@ -195,7 +195,7 @@ RSpec.describe ApplicationController, type: :controller do
     end
 
     context Filter::Provider do
-      it "checks if provider filter works" do
+      it "checks if provider and resource organisation filter works" do
         basic_test
       end
     end

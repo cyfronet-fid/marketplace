@@ -23,7 +23,7 @@ module Service::Search
       rating: rating,
       categories: categories.map(&:id),
       scientific_domains: search_scientific_domains_ids,
-      providers: providers.map(&:id),
+      providers: resource_organisation_and_providers.map(&:id),
       platforms: platforms.map(&:id),
       geographical_availabilities: geographical_availabilities.map(&:alpha2),
       target_users: target_users.map(&:id),
