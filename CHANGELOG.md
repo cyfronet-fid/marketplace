@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Filtering by providers includes both `resource_organisation` and `providers` associations (@goreck888)
 
 ## [3.8.0] 2021-03-03
 
