@@ -7,7 +7,7 @@ module Service::Recommendable
 
   included do
     before_action only: :index do
-      @active_filters = active_filters
+      @params = params
     end
   end
 
@@ -22,16 +22,22 @@ module Service::Recommendable
       return Recommender::SimpleRecommender.new.call size
     end
 
-    Service.where(id: get_recommended_ids_by(get_service_search_state, size))
+    get_recommended_services_by(get_service_search_state, size)
   end
 
   private
-    def get_recommended_ids_by(body, size)
+    def get_recommended_services_by(body, size)
       url = Mp::Application.config.recommender_host + "/recommendations"
-      Unirest.post(url, { "Content-Type" => "application/json" }, body.to_json)
+      response = Unirest.post(url, { "Content-Type" => "application/json" }, body.to_json)
+      if response.nil? || response[:recommendations].nil? || response[:recommendations].length == 0
+        Raven.capture_message("Recommendation service, recommendation endpoint response error")
+        return Recommender::SimpleRecommender.new.call(size)
+      end
+
+      Service.where(id: response[:recommendations].take(size))
       rescue
         Raven.capture_message("Recommendation service, recommendation endpoint response error")
-        Recommender::SimpleRecommender.new.get_records(size)
+        Recommender::SimpleRecommender.new.call(size)
     end
 
     def get_service_search_state
@@ -48,8 +54,7 @@ module Service::Recommendable
       end
 
       unless @active_filters.nil?
-        _, _, active_filters = @active_filters[-1]
-        service_search_state[:filters] = get_filters_by(active_filters)
+        service_search_state[:filters] = get_filters_by(@params)
       end
 
       service_search_state["logged_user"] = false
@@ -72,15 +77,31 @@ module Service::Recommendable
       end
     end
 
-    def get_filters_by(active_filters)
+    def get_filters_by(params)
       filters = {}
-      unless active_filters.nil?
-        active_filters.each do |key, value|
-          if key.match?(/[a-z_]-filter/)
-            filter = key.sub "-filter", ""
-            unless active_filters[filter].nil?
-              filters[filter] = active_filters[filter]
+      unless params.nil?
+        params.each do |key, value|
+          next if key == "controller" || key == "action"
+
+          if key.match?(/[a-z_]_id/)
+            if key == "category_id"
+              filters[key] = Category.find_by(slug: value)[:id]
+              next
             end
+          end
+
+          if key.match?(/[a-z_]-filter/)
+            key = key.sub "-filter", ""
+            value = params[key]
+
+            next if value.nil? || value == "" || value == []
+            filters[key] = value
+            next
+          end
+
+          next if value.nil? || value == "" || value == []
+          if !key.match?(/[a-z_]-filter/) && !key.match?(/[a-z_]-all/)
+            filters[key] = value
           end
         end
       end

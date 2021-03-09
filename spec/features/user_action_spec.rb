@@ -39,6 +39,6 @@ RSpec.feature "User action", js: true do
     end
 
     visit services_path
-    first("[data-probe]").click
+    first("a[data-probe]").click
   end
 end

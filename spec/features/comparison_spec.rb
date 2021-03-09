@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require "raven"
 
 RSpec.feature "Comparison", js: true do
   let!(:service1) { create(:open_access_service, geographical_availabilities: %w( EL )) }

@@ -4,21 +4,35 @@ export default function initProbes(scope = window) {
     scope
         .document
         .querySelectorAll("[data-probe]")
-        .forEach((element) => {
-            element.removeEventListener('click', call_user_action_controller);
-            element.addEventListener('click', async () => await call_user_action_controller(scope, element));
+        .forEach(element => {
+            const action = get_event_action_by(element.tagName);
+            element.addEventListener(action, () => call_user_action_controller(scope, element))
         });
 }
 
-async function call_user_action_controller(scope, element) {
-    return await fetch("/user_action", {
+const call_user_action_controller = (scope, element) => {
+    // prevent call for disabled element
+    if (element.disabled) {
+        return;
+    }
+
+    return fetch("/user_action", {
         method: "POST",
         headers: {
             "X-CSRF-Token": Rails.csrfToken(),
             "Content-type": "application/json"
         },
         body: get_user_action_from(scope, element)
-    });
+    }).then();
+}
+
+function get_event_action_by(tagName) {
+    switch(tagName.toLowerCase()) {
+        case 'input':
+            return 'input';
+        default:
+            return 'click';
+    }
 }
 
 function get_user_action_from(scope, element) {
@@ -33,11 +47,29 @@ function get_user_action_from(scope, element) {
 function get_action_by(scope, element) {
     const is_ordered = scope.location.pathname.includes("summary")
         && element.getAttribute("type") === "submit";
+
     return {
         type: element.tagName,
-        text: element.textContent,
+        text: get_element_text(element),
         order: is_ordered
     };
+}
+
+function get_element_text(element) {
+    switch (element.tagName.toLowerCase()) {
+        case 'textarea':
+            return element.val();
+        case 'input':
+            switch (element.getAttribute("type").toLowerCase()) {
+                case 'text':
+                    return element.value;
+                default: {
+                    return null;
+                }
+            }
+        default:
+            return element.textContent;
+    }
 }
 
 function get_target_by(scope, element) {
@@ -68,17 +100,20 @@ function get_source_root_by(element) {
 }
 
 function get_target_url(actual_url, element) {
-    if (element.getAttribute('href')) {
+    if (element.hasAttribute('href')) {
         return element.getAttribute('href');
     }
 
-    if (element.hasChildNodes()) {
-        const inside_hrefs = Array.prototype.slice.call(element.querySelectorAll('a'))
-            .map(child => child.getAttribute('href'))
-            .filter(href => href != null);
-        if (inside_hrefs != null && inside_hrefs.length === 1) {
-            return inside_hrefs.pop();
-        }
+    const isOnlyChildAnchor = element.hasChildNodes()
+        && element.children.length === 1
+        && element.children[0].hasAttribute('href');
+    if (isOnlyChildAnchor) {
+        return element.children[0].getAttribute('href');
+    }
+
+    const isParentAnchor = element.parentNode.hasAttribute('href');
+    if (isParentAnchor) {
+        return parent.getAttribute('href');
     }
 
     return actual_url;
