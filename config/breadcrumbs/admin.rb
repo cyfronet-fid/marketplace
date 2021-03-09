@@ -38,3 +38,8 @@ crumb :admin_lead_new do
   link "Create new lead", admin_leads_path
   parent :admin_lead
 end
+
+crumb :admin_tour_feedbacks do
+  link "Tour Feedback", admin_tour_feedbacks_path
+  parent :admin_root
+end

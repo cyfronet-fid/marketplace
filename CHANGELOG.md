@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Representation of the Resource Organisation and Resource Providers in the Resource views (@kmarszalek, @jarekzet)
 - Functional recommendation enhancements for the sake of better user experience (@wujuu)
 - Removal of duplicated provider entries in the Resource Provider field in the MP (@kmarszalek)
+- Feature highlight opinions panel in the admin section (@goreck888)
 
 ### Changed
 - `Provided by` field in `Popular resources`, `Suggested compatible resources` and `Recently added resources` to `Organisation` (@kmarszalek, @jarekzet)
