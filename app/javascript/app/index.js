@@ -41,7 +41,6 @@ document.addEventListener("turbolinks:before-render", function(event) {
     dom.i2svg({
         node: event.data.newBody
     });
-
     initSorting(event.data.newBody);
     dom.watch();
 });

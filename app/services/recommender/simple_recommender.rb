@@ -6,11 +6,11 @@ class Recommender::SimpleRecommender
     fill_missing recommended_services, n
   end
 
-  def get_records(n)
-    ActiveRecord::Base.connection.execute(sql_query % { n: n }).to_a
-  end
-
   private
+    def get_records(n)
+      ActiveRecord::Base.connection.execute(sql_query % { n: n }).to_a
+    end
+
     def get_recommended_services(n)
       records2services get_records(n)
     end

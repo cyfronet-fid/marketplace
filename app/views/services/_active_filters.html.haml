@@ -23,9 +23,9 @@
               .fas.fa-times
 
         - if active_filters.present?
-          .filter-tag.clear
+          .filter-tag.clear{ "data-probe": "" }
             = link_to controller: controller.controller_name, action: action_name,
-                    per_page: params[:per_page], sort: params[:sort], "data-probe": "" do
+                    per_page: params[:per_page], sort: params[:sort] do
               %span
                 = _("Clear all filters")
               .fa.fa-times
