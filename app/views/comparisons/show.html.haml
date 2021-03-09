@@ -19,7 +19,8 @@
               %span.helper
               - if service.logo.attached? && service.logo.variable?
                 = image_tag service.logo.variant(resize: "100x100")
-            = link_to comparisons_services_path(slug: service.slug, fromc: params[:fromc]), method: :delete do
+            = link_to comparisons_services_path(slug: service.slug, fromc: params[:fromc]), method: :delete,
+              "data-probe": "" do
               %i.far.fa-trash-alt
             .service-title
               = link_to service.name.truncate(30, separator: " "),

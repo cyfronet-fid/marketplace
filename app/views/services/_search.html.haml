@@ -13,7 +13,8 @@
     = text_field_tag :q, params[:q],  class: "autocomplete-input",
                                      placeholder: "Find resource...",
                                      "data-target": "autocomplete.input",
-                                     "data-toggle": "dropdown"
+                                     "data-toggle": "dropdown",
+                                     "data-probe": ""
     - if params[:q].present? && params.permitted?
       %a.search-clear{ href: url_for(params.except(:q, :sort, :service_id)), title: _("Clear search") }
         .fas.fa-times
