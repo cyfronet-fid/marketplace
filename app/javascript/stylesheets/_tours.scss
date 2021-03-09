@@ -31,6 +31,10 @@ $rating-point-size: 30px;
       cursor: pointer;
       z-index: 1;
 
+      &.no-events {
+        pointer-events: none;
+      }
+
       &.active {
         background-color: $palette-yellow;
       }

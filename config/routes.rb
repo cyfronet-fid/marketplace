@@ -128,6 +128,7 @@ Rails.application.routes.draw do
     resources :help_sections, except: [:index, :show]
     resources :help_items, except: [:index, :show]
     resource :features, only: [:show]
+    resources :tour_feedbacks, except: [:update, :destroy]
     post "features/enable_modal"
     post "features/disable_modal"
     resources :lead_sections, except: :show

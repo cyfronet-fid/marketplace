@@ -26,6 +26,10 @@ class TourFeedbacksController < ApplicationController
       @errors["email"] = "This field is required"
     elsif tour_params["share"] && current_user.nil? && !(tour_params["email"] =~ /^(.+)@(.+)$/)
       @errors["email"] = "Email required"
+    elsif tour_params["share"] && current_user.present?
+      tour_params["email"] = current_user.email
+    elsif !tour_params["share"] && current_user.nil?
+      tour_params["email"] = nil
     end
 
     if @errors.present? || !verify_recaptcha
