@@ -11,10 +11,12 @@
           = service.send(field).to_date
       - elsif field == "geographical_availabilities"
         %span
-          = get_only_regions(service.send(field)).join(", ")
+          = safe_join(get_only_regions(service.send(field)).map { |c| link_to c,
+            services_path(geographical_availabilities: c) }.sort, ", ")
         - if get_only_countries(service.send(field)).present?
           %span.geographical
-            = get_only_countries(service.send(field)).sort.join(", ")
+            = safe_join(get_only_countries(service.send(field)).map { |c| link_to c,
+            services_path(geographical_availabilities: c) }.sort, ", ")
       - else
         - Array(service.send(field)).map.with_index do |element, idx|
           - if nested.present? && nested[field.to_sym].present?
