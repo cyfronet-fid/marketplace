@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Representation of the Resource Organisation and Resource Providers in the Resource views (@kmarszalek, @jarekzet)
 
 ### Changed
 

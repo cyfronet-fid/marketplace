@@ -67,7 +67,10 @@ module ServiceHelper
   end
 
   def providers(service)
-    service.providers.map { |target| link_to(target.name, provider_path(target)) }
+    service.providers
+           .reject(&:blank?)
+           .reject { |p| p == service.resource_organisation }
+           .uniq.map { |target| link_to(target.name, provider_path(target)) }
   end
 
   def providers_text(service)
