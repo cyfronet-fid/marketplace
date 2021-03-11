@@ -42,7 +42,7 @@ RSpec.feature "recommended services panel", type: :feature do
       expect(element.has_css?(".recommend-box"))
       expect(element).to have_text(_("RECOMMENDED"))
       expect(element.has_css?(".image-frame"))
-      expect(element).to have_text(_("Provided by") + ":")
+      expect(element).to have_text(_("Organisation") + ":")
       expect(element).to have_text(_("Dedicated for") + ":")
     end
   end

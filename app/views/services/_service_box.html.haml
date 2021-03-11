@@ -10,9 +10,9 @@
   .card-footer.no-gutters.row.mb-2
     .col.x-small
       %span
-        = _("Provided by") + ":"
-      %strong{ "data-toggle" => "tooltip", "title" => "#{ service.providers.map { |p| p.name }.join(", ") }" }
-        #{service.providers.map { |p| p.name }.join(", ").truncate(26, separator: " ") }
+        = _("Organisation") + ":"
+      %strong{ "data-toggle" => "tooltip", "title" => "#{ providers_text(service).join(", ") }" }
+        = resource_organisation_text(service).truncate(24)
     .col.x-small.no-gutters
       %span.text-right
         = _("Dedicated for") + ":"
