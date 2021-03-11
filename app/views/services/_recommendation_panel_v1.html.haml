@@ -7,5 +7,5 @@
         = _("RECOMMENDED")
 .container
   .row.mb-4.ml-0.mr-0
-    = render partial: "services/recommendation_v1", collection: @recommended_services,
+    = render partial: "services/recommendation_v1", collection: recommended_services,
              locals: { highlights: highlights, category: category }

@@ -5,10 +5,10 @@
     %ul#my-tab.nav.nav-tabs.row.pl-3{ role: "tablist" }
       - if local_assigns[:preview]
         %li.nav-item
-          %a.nav-link.active.text-uppercase{"data-probe" => ""}
+          %a.nav-link.active.text-uppercase{ "data-probe" => "" }
             = _("About")
         %li.nav-item
-          %a.nav-link.disabled.text-uppercase{"data-probe" => ""}
+          %a.nav-link.disabled.text-uppercase{ "data-probe" => "" }
             = _("Reviews (%{ssoc})") % { ssoc: service.service_opinion_count }
       - else
         %li.nav-item
