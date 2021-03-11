@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Representation of the Resource Organisation and Resource Providers in the Resource views (@kmarszalek, @jarekzet)
+- Functional recommendation enhancements for the sake of better user experience (@wujuu)
 - Removal of duplicated provider entries in the Resource Provider field in the MP (@kmarszalek)
 
 ### Changed
