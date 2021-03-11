@@ -74,7 +74,10 @@ module ServiceHelper
   end
 
   def providers_text(service)
-    service.providers.map { |target| target.name }
+    service.providers
+           .reject(&:blank?)
+           .reject { |p| p == service.resource_organisation }
+           .map { |target| target.name }
   end
 
   def filtered_offers(offers)
