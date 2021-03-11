@@ -10,5 +10,5 @@
         %li.page-item{ class: ("active" if per_page == "30") }
           = link_to "30", params.merge(per_page: 30, page: 1).permit!, class: "page-link"
       %li.page-item.disabled
-        %a.page-link.text-dark{"data-probe" => ""}
+        %a.page-link.text-dark{ "data-probe" => "" }
           = _("Items on page")
