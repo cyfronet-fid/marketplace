@@ -10,6 +10,7 @@
       = ("The resource is published but has no published offers. Publish one offer to make possible for a user to " + |
          "Access the service.") |
       -# haml-lint:enable MultilinePipe
+  = render "services/errors", service: @service
 
 .container
   .status-row
