@@ -1,0 +1,7 @@
+- if current_user.present?
+  - has_role_for_message = !(current_user.roles.to_a & [:service_portfolio_manager]).empty?
+  - if has_role_for_message || service.administered_by?(current_user)
+    .container
+      - if service&.sources&.first&.errored.present?
+        .alert.alert-danger.mb-0.text-center
+          = ("This resource is not up to date because of invalid import data. Reason: #{service.sources.first.errored}")

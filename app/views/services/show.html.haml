@@ -3,6 +3,7 @@
 :javascript
   _paq.push(['trackEvent', 'Service', 'Visit', '#{id}']);
 - breadcrumb :service, @service
+= render "services/errors", service: @service
 .container{ "data-controller": "comparison" }
   .pt-4.pl-3.pr-3.shadow-sm.rounded.service-box.service-detail{ "data-shepherd-tour-target": "service-box" }
     = render "services/header", service: @service, comparison_enabled: @comparison_enabled, question: @question
