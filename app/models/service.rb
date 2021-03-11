@@ -224,6 +224,13 @@ class Service < ApplicationRecord
     order_type == "order_required" && order_url.blank?
   end
 
+  def providers?
+    providers
+      .reject(&:blank?)
+      .reject { |p| p == resource_organisation }
+      .empty?
+  end
+
   private
     def remove_empty_array_fields
       array_fields = [:multimedia, :use_cases_url, :certifications,

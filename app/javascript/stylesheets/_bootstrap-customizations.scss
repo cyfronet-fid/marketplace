@@ -2501,7 +2501,8 @@ label[data-multicheckbox].small {
       display: inline;
       float: left;
       color: $palette-solid-100;
-      padding-right: 10px;
+      padding-right: 0;
+      width: 105px;
       margin-bottom: 0;
       font-weight: 300;
     }
@@ -2509,7 +2510,7 @@ label[data-multicheckbox].small {
     dd {
       display: inline;
       float: left;
-      max-width: 83%;
+      max-width: 82%;
       margin-bottom: 0;
 
       a {
@@ -2580,6 +2581,11 @@ label[data-multicheckbox].small {
   }
 
   dl {
+    dt {
+      width: auto;
+      padding-right: 5px;
+    }
+
     dd {
       a {
         font-weight: bold;

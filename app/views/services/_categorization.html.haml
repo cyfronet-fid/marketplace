@@ -1,19 +1,20 @@
 %dl.mb-0
   %dt.x-small
     %span
-      = _("Provided by") + ":"
+      = _("Organisation") + ":"
   %dd.x-small
-    %mr-4= safe_join(resource_organisation_and_providers(service), ", ")
+    %mr-4= resource_organisation(service)
+- unless service.providers?
+  %dl.mb-0
+    %dt.x-small
+      %span
+        = _("Provided by") + ":"
+    %dd.x-small
+      %mr-4= safe_join(providers(service), ", ")
 %dl.mb-0.research
   %dt.x-small
     %span
       = _("Scientific domain") + ":"
   %dd.x-small
     %mr-4= safe_join(scientific_domains_text(service), ", ")
-%dl.mb-0.dedicated
-  %dt.x-small
-    %span
-      = _("Dedicated for") + ":"
-  %dd.x-small
-    %mr-4= safe_join(dedicated_for_text(service), ", ")
 %span.clearfix
