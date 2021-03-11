@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Recommender::ServiceSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :tagline, :countries
+  attributes :id, :name, :description, :tagline, :countries, :order_type, :rating
   attribute :category_ids, key: :categories
   attribute :provider_ids, key: :providers
   attribute :resource_organisation_id, key: :resource_organisation
