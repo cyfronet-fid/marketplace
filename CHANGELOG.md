@@ -25,6 +25,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Filtering by providers includes both `resource_organisation` and `providers` associations (@goreck888)
+- Displaying synchronization issues (if any occurs) in resource page for `data_administrators` (@goreck888)
 
 ## [3.8.0] 2021-03-03
 

@@ -47,7 +47,8 @@ class Service::PcCreateOrUpdate
         service.status = "errored"
         service.save(validate: false)
       end
-      ServiceSource.create!(service_id: service.id, source_type: "eic", eid: @eid)
+      ServiceSource.create!(service_id: service.id, source_type: "eic", eid: @eid,
+                                     errored: service.errors.messages)
       service
     elsif is_newer_update
       if mapped_service && !@is_active
@@ -56,8 +57,12 @@ class Service::PcCreateOrUpdate
         Service::Draft.new(mapped_service).call
         mapped_service
       elsif !source_id.nil?
+        if check_service = Service.new(service_hash).invalid?
+          raise NotUpdatedError.new("Service is not update, because parsed service data is invalid")
+        end
         Importers::Logo.new(mapped_service, @eic_service["logo"]).call
         Service::Update.new(mapped_service, service_hash).call
+        mapped_service.sources.first.update(errored: nil)
         mapped_service
       else
         raise NotUpdatedError.new("Service source_id is unrecognized.")
@@ -67,6 +72,10 @@ class Service::PcCreateOrUpdate
     end
   rescue NotUpdatedError => e
     Rails.logger.warn "#{e} Message arrived, but service is not updated. Message #{@eic_service}"
+    if mapped_service.present? && mapped_service&.sources&.first.present?
+      source = mapped_service&.sources&.first
+      source.update(errored: check_service.errors.messages)
+    end
     mapped_service
   rescue Errno::ECONNREFUSED
     raise ConnectionError.new("[WARN] Connection refused.")

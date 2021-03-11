@@ -3,12 +3,12 @@
 class ServicePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(status: [:published, :unverified])
+      scope.where(status: [:published, :unverified, :errored])
     end
   end
 
   def show?
-    record.published? || record.unverified?
+    record.published? || record.unverified? || record.errored?
   end
 
   def order?
