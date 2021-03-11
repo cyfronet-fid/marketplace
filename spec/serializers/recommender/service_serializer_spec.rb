@@ -8,6 +8,7 @@ RSpec.describe Recommender::ServiceSerializer do
     organisation = create(:provider)
 
     service = create(:service,
+                     rating: 0.0,
                      categories: create_list(:category, 2),
                      providers: [organisation, create(:provider)],
                      resource_organisation: organisation,
@@ -27,6 +28,8 @@ RSpec.describe Recommender::ServiceSerializer do
     expect(serialized[:name]).to eq(service.name)
     expect(serialized[:description]).to eq(service.description)
     expect(serialized[:tagline]).to eq(service.tagline)
+    expect(serialized[:rating]).to eq(service.rating)
+    expect(serialized[:order_type]).to eq(service.order_type)
     expect(serialized[:countries]).to eq(service.geographical_availabilities.map(&:alpha2))
     expect(serialized[:categories]).to match_array(service.category_ids)
     expect(serialized[:providers]).to match_array(service.provider_ids)
