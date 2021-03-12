@@ -32,6 +32,7 @@ FactoryBot.define do
                     "resourceOrganisation" => "bluebridge",
                     "resourceProviders" => [
                         "phenomenal",
+                        "phenomenal",
                         "awesome"
                     ],
                     "version" => "2018.08",
