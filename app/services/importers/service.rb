@@ -85,7 +85,7 @@ class Importers::Service
       resource_organisation: map_provider(@data["resourceOrganisation"],
                                           @eic_base_url,
                                           token: @token),
-      providers: providers.map { |p| map_provider(p, @eic_base_url,
+      providers: providers.uniq.map { |p| map_provider(p, @eic_base_url,
                                                    token: @token) },
       webpage_url: @data["webpage"] || "",
       # Marketing
