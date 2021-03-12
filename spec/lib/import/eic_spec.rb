@@ -110,7 +110,7 @@ describe Import::Eic do
       expect(Service.first.as_json(except: [:created_at, :updated_at])).to eq(service.as_json(except: [:created_at, :updated_at]))
     end
 
-    it "should update service which has upstream to external id" do
+    it "should update service which has upstream to external id and repeated providers" do
       service = create(:service)
       create(:offer, service: service)
       source = create(:service_source, eid: "phenomenal.phenomenal", service_id: service.id, source_type: "eic")
