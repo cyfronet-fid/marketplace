@@ -7,8 +7,9 @@ module Service::Search
     # ELASTICSEARCH
     # scope :search_import working with should_indexe?
     # and define which services are indexed in elasticsearch
-    searchkick word_middle: [:name, :tagline, :description, :offer_names],
-      highlight: [:name, :tagline]
+    searchkick word_middle: [:name, :tagline, :description, :offer_names,
+                             :resource_organisation_name, :provider_names],
+      highlight: [:name, :tagline, :resource_organisation_name, :provider_names]
   end
 
   # search_data are definition whitch
@@ -23,6 +24,7 @@ module Service::Search
       rating: rating,
       categories: categories.map(&:id),
       scientific_domains: search_scientific_domains_ids,
+      resource_organisation_name: resource_organisation.name,
       providers: resource_organisation_and_providers.map(&:id),
       platforms: platforms.map(&:id),
       geographical_availabilities: geographical_availabilities.map(&:alpha2),
@@ -31,7 +33,8 @@ module Service::Search
       tags: tag_list,
       source: upstream&.source_type,
       offers: offers.ids,
-      offer_names:  offers.map(&:name)
+      offer_names: offers.map(&:name),
+      provider_names: [resource_organisation.name] << providers.map(&:name)
     }
   end
 

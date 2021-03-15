@@ -10,3 +10,10 @@
     = render "services/autocomplete/offer_item", offer: elem,
       highlights: highlights,
       service_titles: service_titles
+%li.label
+  = _("Providers")
+- results.each do |elem, highlights|
+  - if highlights[:provider_names]
+    = render "services/autocomplete/provider_item", service: elem,
+     highlights: highlights
+
