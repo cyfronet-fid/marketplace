@@ -9,7 +9,7 @@
     .col-12.col-sm-9.service-details-header
       %h2.font-weight-bolder= service.name
       %p.mb-1= service.tagline
-      = render "services/categorization", service: service
+      = render "services/categorization", service: service, highlights: nil
       .row.mt-2
         .col
           .stars
