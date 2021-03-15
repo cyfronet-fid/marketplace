@@ -7,6 +7,15 @@ class Provider < ApplicationRecord
 
   acts_as_taggable
 
+  searchkick word_middle: [:provider_name]
+
+  def search_data
+    {
+      provider_name: name,
+      service_ids: service_ids
+    }
+  end
+
   has_one_attached :logo
 
   serialize :participating_countries, Country::Array

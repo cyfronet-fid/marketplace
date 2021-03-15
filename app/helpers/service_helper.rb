@@ -49,9 +49,9 @@ module ServiceHelper
     service.scientific_domains.map { |target| target.name }
   end
 
-  def resource_organisation(service)
+  def resource_organisation(service, highlights = nil)
     target = service.resource_organisation
-    link_to(target.name, provider_path(target))
+    link_to(highlighted_for(:resource_organisation_name, service, highlights), provider_path(target))
   end
 
   def resource_organisation_text(service)
@@ -66,11 +66,17 @@ module ServiceHelper
     service.resource_organisation_and_providers.map { |target| target.name }
   end
 
-  def providers(service)
+  def providers(service, highlights = nil)
+    highlighted = highlights.present? ? sanitize(highlights[:provider_names])&.to_str : ""
     service.providers
            .reject(&:blank?)
-           .reject { |p| p == service.resource_organisation }
-           .uniq.map { |target| link_to(target.name, provider_path(target)) }
+           .reject { |p| p == service.resource_organisation }.uniq.map do |target|
+      if highlighted.present? && highlighted.strip == target.name.strip
+        link_to highlights[:provider_names].html_safe, provider_path(target)
+      else
+        link_to target.name, provider_path(target)
+      end
+    end
   end
 
   def providers_text(service)
