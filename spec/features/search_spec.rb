@@ -115,4 +115,32 @@ RSpec.feature "Service searching in top bar", js: true do
     visit :services
     expect(page).to have_selector("#category-select > option:last-child", text: "Other")
   end
+
+  scenario "After starting searching autocomplete are shown with resource organisation", js: true, search: true do
+    provider = create(:provider, name: "Cyfronet")
+    create(:service, name: "DDDD Something 1", resource_organisation: provider)
+    create(:service, name: "DDDD Something 2")
+    create(:service, name: "DDDD Something 3")
+
+    visit services_path
+    fill_in "q", with: "Cyfr"
+
+    expect(page).to have_text ("Cyfronet > DDDD Something 1")
+    expect(page).to_not have_text ("Cyfronet > DDDD Something 2")
+    expect(page).to_not have_text ("Cyfronet > DDDD Something 3")
+  end
+
+  scenario "After starting searching autocomplete are shown with providers", js: true, search: true do
+    provider = create(:provider, name: "Cyfronet")
+    create(:service, name: "DDDD Something 1", providers: [provider])
+    create(:service, name: "DDDD Something 2")
+    create(:service, name: "DDDD Something 3")
+
+    visit services_path
+    fill_in "q", with: "Cyfr"
+
+    expect(page).to have_text ("Cyfronet > DDDD Something 1")
+    expect(page).to_not have_text ("Cyfronet > DDDD Something 2")
+    expect(page).to_not have_text ("Cyfronet > DDDD Something 3")
+  end
 end

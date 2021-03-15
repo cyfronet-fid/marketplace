@@ -3,14 +3,14 @@
     %span
       = _("Organisation") + ":"
   %dd.x-small
-    %mr-4= resource_organisation(service)
+    %mr-4= resource_organisation(service, highlights)
 - unless service.providers?
   %dl.mb-0
     %dt.x-small
       %span
         = _("Provided by") + ":"
     %dd.x-small
-      %mr-4= safe_join(providers(service), ", ")
+      %mr-4= safe_join(providers(service, highlights), ", ")
 %dl.mb-0.research
   %dt.x-small
     %span
