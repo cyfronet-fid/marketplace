@@ -59,9 +59,10 @@ class UsageReport
                                      status: [:published, :unverified]).uniq.count
       else
         Service.joins(:offers)
-            .where(offers: { order_type: types, order_url: ["", nil], status: :published },
-                   status: [:published, :unverified], order_type: types)
-            .uniq.count
+          .where("offers.order_type = ? AND services.status <> ? AND " +
+                   "offers.status = ? AND (offers.order_url = ? OR offers.internal = ?)",
+                 types, "draft", "published", nil, true)
+          .uniq.count
       end
     end
 end
