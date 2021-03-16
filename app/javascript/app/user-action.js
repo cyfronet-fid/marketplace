@@ -1,29 +1,36 @@
 import Rails from '@rails/ujs'
 
 export default function initProbes(scope = window) {
-    scope
-        .document
-        .querySelectorAll("[data-probe]")
+    [
+        ...Array.from(scope.document.querySelectorAll("[data-probe]")),
+
+        // IMPORTANT!!! class should be added to DOM elements only when there are any other option!!!
+        ...Array.from(scope.document.querySelectorAll(".data-probe"))
+    ]
         .forEach(element => {
             const action = get_event_action_by(element.tagName);
-            element.addEventListener(action, () => call_user_action_controller(scope, element))
+            element.addEventListener(action, async () => {
+                // prevent call for disabled element
+                if (element.disabled) {
+                    return;
+                }
+
+                const body = get_dom_action_from(scope, element);
+                await call_user_action_controller(body);
+            });
         });
 }
 
-const call_user_action_controller = (scope, element) => {
-    // prevent call for disabled element
-    if (element.disabled) {
-        return;
-    }
-
-    return fetch("/user_action", {
+const call_user_action_controller = async (body) => {
+    return await fetch("/user_action", {
         method: "POST",
         headers: {
             "X-CSRF-Token": Rails.csrfToken(),
             "Content-type": "application/json"
         },
-        body: get_user_action_from(scope, element)
-    }).then();
+        body: body
+    })
+        .catch(error => console.log(error));
 }
 
 function get_event_action_by(tagName) {
@@ -35,12 +42,12 @@ function get_event_action_by(tagName) {
     }
 }
 
-function get_user_action_from(scope, element) {
+function get_dom_action_from(scope, element) {
     return JSON.stringify({
-        timestamp: new Date().getTime(),
+        timestamp: new Date().toISOString(),
         source: get_source_by(scope, element),
         target: get_target_by(scope, element),
-        action: get_action_by(scope, element)
+        user_action: get_action_by(scope, element)
     });
 }
 
@@ -64,7 +71,7 @@ function get_element_text(element) {
                 case 'text':
                     return element.value;
                 default: {
-                    return null;
+                    return "";
                 }
             }
         default:
@@ -73,15 +80,16 @@ function get_element_text(element) {
 }
 
 function get_target_by(scope, element) {
+    const target_timestamp = new Date().getTime() + Math.floor(Math.random() * (500 - 50)) + 50;
     return {
-        visit_id: scope.tabId + "." + new Date().getTime(),
+        visit_id: scope.tabId + "" + target_timestamp,
         page_id: get_target_url(scope.location.pathname, element)
     };
 }
 
 function get_source_by(scope, element) {
     return {
-        visit_id: scope.tabId + "." + new Date().getTime(),
+        visit_id: scope.tabId + "" + new Date().getTime(),
         page_id: scope.location.pathname,
         root: get_source_root_by(element)
     };
@@ -89,14 +97,14 @@ function get_source_by(scope, element) {
 
 function get_source_root_by(element) {
     const is_recommendation_panel = element.getAttribute('data-probe') === "recommendation-panel";
-    return is_recommendation_panel
-        ? {
-            root: {
-                type: 'recommendation_panel',
-                service_id: element.getAttribute('data-service-id')
-            }
+    if (is_recommendation_panel) {
+        return {
+            type: 'recommendation_panel',
+            service_id: parseInt(element.getAttribute('data-service-id'))
         }
-        : { type: 'other' };
+    }
+
+    return { type: 'other' };
 }
 
 function get_target_url(actual_url, element) {

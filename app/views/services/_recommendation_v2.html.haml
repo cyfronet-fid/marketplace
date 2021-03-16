@@ -3,8 +3,9 @@
     Suggested
   %header
     = link_to truncate(recommendation_v2.send(:name), length: 40, escape: false),
-              service_path(recommendation_v2, category.present? ? { fromc: category.slug } : nil,
-              from_recommendation_panel: true), "data-probe": "recommendation-panel"
+              service_path(recommendation_v2, fromc: category.present? ? category.slug : nil,
+              from_recommendation_panel: true), "data-probe": "recommendation-panel",
+              "data-service-id" => recommendation_v2.id
   %article
     %p
       .image-frame
