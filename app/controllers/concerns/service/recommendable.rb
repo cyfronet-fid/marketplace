@@ -5,6 +5,12 @@ require "net/http"
 module Service::Recommendable
   extend ActiveSupport::Concern
 
+  @@filter_param_transformers = {
+    geographical_availabilities: -> name { Country.convert_to_regions_add_country(name) },
+    scientific_domains: -> ids { ids.map(&:to_i) + ids.map { |id| ScientificDomain.find(id).descendant_ids }.flatten },
+    category_id: -> slug { Category.find_by(slug: slug).id }
+  }
+
   included do
     before_action only: :index do
       @params = params
@@ -81,27 +87,11 @@ module Service::Recommendable
       filters = {}
       unless params.nil?
         params.each do |key, value|
-          next if key == "controller" || key == "action"
+          next if key == "controller" || key == "action" || value.blank?
 
-          if key.match?(/[a-z_]_id/)
-            if key == "category_id"
-              filters[key] = Category.find_by(slug: value)[:id]
-              next
-            end
-          end
-
-          if key.match?(/[a-z_]-filter/)
-            key = key.sub "-filter", ""
-            value = params[key]
-
-            next if value.nil? || value == "" || value == []
-            filters[key] = value
-            next
-          end
-
-          next if value.nil? || value == "" || value == []
-          if !key.match?(/[a-z_]-filter/) && !key.match?(/[a-z_]-all/)
-            filters[key] = value
+          filters[key] = value
+          if @@filter_param_transformers.key? key.to_sym
+            filters[key] = @@filter_param_transformers[key.to_sym].call value
           end
         end
       end
