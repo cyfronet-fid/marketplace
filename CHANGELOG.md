@@ -33,6 +33,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Geographical availabilities in the resource details view are links to filters now (@goreck888)
 - Categories imported from Provider's component as `categories` instead of `pc_categories` (@goreck888)
 - Content order of the Provider's details view (@kmarszalek, @jarekzet)
+- Recommendation API adjustments (@danielkryska)
 
 ### Fixed
 - Filtering by providers includes both `resource_organisation` and `providers` associations (@goreck888)
