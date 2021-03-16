@@ -14,6 +14,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - `Provided by` field in `Popular resources`, `Suggested compatible resources` and `Recently added resources` to `Organisation` (@kmarszalek, @jarekzet)
+- Update user_actions endpoint body call (@danielkryska)
 
 ### Deprecated
 
