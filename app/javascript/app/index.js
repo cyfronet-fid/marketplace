@@ -5,7 +5,6 @@ import initFlash from "app/flash";
 import initChoises from "app/choises";
 import initCookiesPolicy from "app/cookies_policy";
 import handleTabId from "app/tabs";
-import initProbes from "app/user-action";
 import 'bootstrap/dist/js/bootstrap';
 import 'stylesheets/application';
 import "app/nav";
@@ -32,6 +31,7 @@ library.add(fas, far);
 
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
+import initProbes from "./user-action";
 
 const application = Application.start();
 const context = require.context("./controllers", true, /.js$/);
