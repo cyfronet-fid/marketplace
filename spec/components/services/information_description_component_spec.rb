@@ -48,7 +48,7 @@ RSpec.describe Services::InformationDescriptionComponent, type: :component do
                                                                 offer: offer))
 
     expect(page).to have_text("To use this resource you need to request access at the provider’s website." +
-                              "\nPress\nGo to the resource\nbutton to visit it.\n" +
+                              "\nPress\nGo to the order website\nbutton to visit it.\n" +
                               "You may also add the resource to a\nProject\nin order to:\n\n" +
                               "Gain EOSC experts support\nEasily access the selected resource" +
                               "\nOrganise your resources and orders into logical blocks\n\n\n\n" +

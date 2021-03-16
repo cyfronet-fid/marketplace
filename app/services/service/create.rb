@@ -11,6 +11,7 @@ class Service::Create
                                 description: "#{@service.name} Offer",
                                 order_type: @service.order_type || "open_access",
                                 order_url: @service.order_url,
+                                internal: @service.order_url.blank?,
                                 webpage: @service.webpage_url, status: "published", service: @service)).call
     @service
   end
