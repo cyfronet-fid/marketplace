@@ -1,5 +1,9 @@
 en:
   providers:
+    header:
+      list:
+        legal_statuses: Legal status
+        provider_life_cycle_statuses: Life cycle
     sidebar:
       links:
         multimedia: Multimedia %{idx}
@@ -8,7 +12,8 @@ en:
         title:
           statuses: Statuses
           certifications: Certifications
-          esfri_types_and_domains: ESFRI Types & Domains
+          esfri_type: ESFRI Type
+          esfri_domain: ESFRI Domain
           meril_scientific_categorisation: MERIL Scientific Categorisation
           affiliations: Affiliations
           structure_types: Structure Types
@@ -18,7 +23,5 @@ en:
           hosting_legal_entity: Hosting Legal Entity
           national_roadmaps: National Roadmaps
       array:
-        esfri_types: ESFRI Types
-        esfri_domains: ESFRI Domains
         legal_statuses: Legal Status
         provider_life_cycle_statuses: Provider Life Cycle Status

@@ -25,6 +25,11 @@
                     provider: provider,
                     fields: group[:fields],
                     nested: group[:nested] || ""
+      - provider_header_fields.select { |h| h[:name] == "statuses" }.map do |group|
+        = render "providers/header/list",
+                    provider: provider,
+                    fields: group[:fields],
+                    nested: group[:nested] || ""
   .col-12.col-sm-3.question-col
     - if local_assigns[:question] && !provider.public_contacts.empty?
       = render "providers/ask_question", provider: provider, question: question
