@@ -11,9 +11,9 @@ module Service::DetailsHelper
 
   def provider_details_columns
     [
-      [statuses, certifications, esfri_types_and_domains, meril_scientific_domains],
-      [affiliations, structure_types, areas_of_activity, societal_grand_challenges],
-      [hosting_legal_entity, networks, national_roadmaps]
+      [esfri_types, esfri_domains, meril_scientific_domains],
+      [networks, areas_of_activity, affiliations, certifications],
+      [hosting_legal_entity, structure_types, societal_grand_challenges, national_roadmaps]
     ]
   end
 
@@ -172,14 +172,25 @@ module Service::DetailsHelper
       }
     end
 
-    def esfri_types_and_domains
+    def esfri_types
       {
-        name: "esfri_types_and_domains",
-        template: "array",
-        fields: %w[esfri_types esfri_domains],
+        name: "esfri_type",
+        template: "list",
+        fields: %w[esfri_types],
         with_desc: true,
         nested: {
-          esfri_types: "name",
+          esfri_types: "name"
+        }
+      }
+    end
+
+    def esfri_domains
+      {
+        name: "esfri_domain",
+        template: "list",
+        fields: %w[esfri_domains],
+        with_desc: true,
+        nested: {
           esfri_domains: "name"
         }
       }

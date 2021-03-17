@@ -3992,6 +3992,11 @@ textarea.form-control.is-invalid {
   margin-top: 19px;
   padding: 10px 0;
 
+  .status {
+    margin-right: 25px;
+    line-height: 23px;
+  }
+
   .padding {
     padding-top: 3px;
   }
@@ -4005,7 +4010,7 @@ textarea.form-control.is-invalid {
       float: left;
       padding-left: 16px;
       position: relative;
-      margin-right: 20px;
+      margin-right: 25px;
 
       svg {
         font-size: 10px;
