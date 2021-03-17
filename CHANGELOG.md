@@ -9,6 +9,18 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+## [3.9.0] 2021-03-17
+
+### Added
 - Representation of the Resource Organisation and Resource Providers in the Resource views (@kmarszalek, @jarekzet)
 - Functional recommendation enhancements for the sake of better user experience (@wujuu)
 - Removal of duplicated provider entries in the Resource Provider field in the MP (@kmarszalek)
@@ -20,10 +32,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Geographical availabilities in the resource details view are links to filters now (@goreck888)
 - Categories imported from Provider's component as `categories` instead of `pc_categories` (@goreck888)
 - Content order of the Provider's details view (@kmarszalek, @jarekzet)
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Filtering by providers includes both `resource_organisation` and `providers` associations (@goreck888)
