@@ -5,7 +5,7 @@ module Recommender
     def initialize; end
 
     def call
-      { services: Service.where.not(status: "errored").map { |s| Recommender::ServiceSerializer.new(s).as_json },
+      { services: Service.all.map { |s| Recommender::ServiceSerializer.new(s).as_json },
         users: User.all.map { |s| Recommender::UserSerializer.new(s).as_json },
         categories: Category.all.as_json(only: [:id, :name]),
         providers: Provider.all.as_json(only: [:id, :name]),
