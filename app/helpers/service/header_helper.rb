@@ -6,7 +6,7 @@ module Service::HeaderHelper
   end
 
   def provider_header_fields
-    [provider_links]
+    [provider_links, status]
   end
 
   def resource_link(service)
@@ -45,6 +45,18 @@ module Service::HeaderHelper
         name: "links",
         template: "links",
         fields: %w[website]
+      }
+    end
+
+    def status
+      {
+        name: "statuses",
+        template: "list",
+        fields: %w[legal_statuses provider_life_cycle_statuses],
+        nested: {
+          legal_statuses: "name",
+          provider_life_cycle_statuses: "name"
+        }
       }
     end
 end
