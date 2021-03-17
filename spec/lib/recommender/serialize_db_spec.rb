@@ -6,7 +6,6 @@ require "recommender/serialize_db"
 describe Recommender::SerializeDb do
   it "properly serializes the database" do
     create_list(:service, 2)
-    create(:service, status: "errored")
     create_list(:user, 2)
     create_list(:category, 2)
     create_list(:provider, 2)
@@ -20,7 +19,7 @@ describe Recommender::SerializeDb do
 
     serialized = described_class.new.call
 
-    expected_services = Service.where.not(status: "errored")
+    expected_services = Service.all
     expect(serialized["services"].map { |x| x["id"] }).to match_array(expected_services.pluck(:id))
     expect(serialized["services"].map { |x| x["name"] }).to match_array(expected_services.pluck(:name))
     expect(serialized["services"].map { |x| x["description"] }).to match_array(expected_services.pluck(:description))
