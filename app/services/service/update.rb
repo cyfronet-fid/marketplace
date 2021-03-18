@@ -11,7 +11,6 @@ class Service::Update
       Offer::Update.new(@service.offers.first, { order_type: @params[:order_type] || @service.order_type,
                                    order_url: @params[:order_url] || @service.order_url,
                                    webpage: @params[:webpage_url] || @service.webpage_url,
-                                   internal: @params[:webpage_url].blank? && @service.webpage_url.blank?,
                                    status: "published" }).call
     elsif @service.offers.size == 0
       Offer::Create.new(Offer.new(name: "Offer",
@@ -19,7 +18,6 @@ class Service::Update
                                   order_type: @params[:order_type] || @service.order_type,
                                   order_url: @params[:order_url] || @service.order_url,
                                   webpage: @params[:webpage_url] || @service.webpage_url,
-                                  internal: @params[:webpage_url].blank? && @service.webpage_url.blank?,
                                   status: "published",
                                   service: @service)).call
     end
