@@ -26,7 +26,7 @@ class UsageReport
   end
 
   def all_services_count
-    Service.where(status: [:published, :unverified]).count
+    Service.where(status: [:published, :unverified, :errored]).count
   end
 
   def providers
