@@ -472,8 +472,8 @@ li {
 
     img {
       float: none !important;
-      margin: 0 0 0 5%;
-      width: 90%;
+      margin: auto !important;
+      max-width: 90%;
       height: auto;
       vertical-align: middle;
     }
