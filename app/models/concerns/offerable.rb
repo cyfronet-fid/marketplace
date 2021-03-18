@@ -16,7 +16,7 @@ module Offerable
     validates :description, presence: true
 
     def external
-      order_required? && !internal
+      order_required? && !internal && order_url.present?
     end
 
     def open_access?
@@ -28,7 +28,7 @@ module Offerable
     end
 
     def orderable?
-      internal || (order_required? && !external)
+      order_required? && (internal || !external)
     end
   end
 end
