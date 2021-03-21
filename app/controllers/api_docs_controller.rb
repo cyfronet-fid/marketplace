@@ -2,7 +2,6 @@
 
 class ApiDocsController < ApplicationController
   before_action :authenticate_user!
-  before_action :api_docs_authorization!
 
   def show
     @subsection = extract_subsection
@@ -39,9 +38,5 @@ class ApiDocsController < ApplicationController
 
     def revoke_token
       current_user.update(authentication_token: "revoked")
-    end
-
-    def api_docs_authorization!
-      authorize :api_docs, :show?
     end
 end

@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "messages": {
+      "type": "array",
+      "items": {
+        "$ref": "message_read.json"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["messages"]
+}

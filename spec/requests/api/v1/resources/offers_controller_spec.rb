@@ -3,9 +3,9 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe "Offers API" do
+RSpec.describe "Offers API", swagger_doc: "v1/offering/swagger.json" do
   before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
+    Dir.chdir Rails.root.join("swagger", "v1", "offering") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
   end
 
   after(:all) do
