@@ -1,119 +1,11 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "EOSC Marketplace API",
+    "title": "EOSC Marketplace Offering API",
     "version": "v1",
     "description": "Documentation of the EOSC Marketplace REST API for integration of other software systems"
   },
   "paths": {
-    "/api/v1/resources": {
-      "get": {
-        "summary": "lists resources administered by user",
-        "tags": [
-          "Resources"
-        ],
-        "security": [
-          {
-            "authentication_token": [
-
-            ]
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "resources found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "service.json"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "error.json"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "error.json"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/resources/{id}": {
-      "get": {
-        "summary": "retrieves an administered resource",
-        "tags": [
-          "Resources"
-        ],
-        "security": [
-          {
-            "authentication_token": [
-
-            ]
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Resource identifier (id or eid)",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "resource found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "service.json"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "error.json"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "resource not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "error.json"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v1/resources/{resource_id}/offers": {
       "get": {
         "summary": "lists offers for an administered resource",
@@ -395,6 +287,114 @@
         "responses": {
           "200": {
             "description": "offer deleted"
+          }
+        }
+      }
+    },
+    "/api/v1/resources": {
+      "get": {
+        "summary": "lists resources administered by user",
+        "tags": [
+          "Resources"
+        ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "resources found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "service.json"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/resources/{id}": {
+      "get": {
+        "summary": "retrieves an administered resource",
+        "tags": [
+          "Resources"
+        ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Resource identifier (id or eid)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "resource found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "service.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
           }
         }
       }
