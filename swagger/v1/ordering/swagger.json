@@ -1,0 +1,458 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "EOSC Marketplace Ordering API",
+    "version": "v1",
+    "description": "Ordering API"
+  },
+  "paths": {
+    "/api/v1/oms/{oms_id}/events": {
+      "parameters": [
+        {
+          "name": "oms_id",
+          "in": "path",
+          "description": "OMS id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "lists events",
+        "tags": [
+          "Events"
+        ],
+        "parameters": [
+          {
+            "name": "from_timestamp",
+            "in": "query",
+            "required": true,
+            "description": "List events after",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "number of returned elements",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "events found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "event/event_index.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oms/{oms_id}/messages": {
+      "parameters": [
+        {
+          "name": "oms_id",
+          "in": "path",
+          "description": "OMS id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "lists messages",
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "description": "The project to list messages of",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "project_item_id",
+            "in": "query",
+            "required": false,
+            "description": "the project item to list messages items of",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "from_id",
+            "in": "query",
+            "required": false,
+            "description": "List messages with id greater than from_id",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of returned elements",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "messages found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "message/message_index.json"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "creates a message",
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "201": {
+            "description": "message created"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "message/message_write.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oms/{oms_id}/messages/{m_id}": {
+      "parameters": [
+        {
+          "name": "oms_id",
+          "in": "path",
+          "description": "OMS id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "m_id",
+          "in": "path",
+          "description": "Message id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "patch": {
+        "summary": "updates a message",
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "message updated"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "message/message_update.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oms/{oms_id}/projects/{p_id}/project_items": {
+      "parameters": [
+        {
+          "name": "oms_id",
+          "in": "path",
+          "description": "OMS id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "p_id",
+          "in": "path",
+          "description": "Project id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "lists project items",
+        "tags": [
+          "Project items"
+        ],
+        "parameters": [
+          {
+            "name": "from_id",
+            "in": "query",
+            "required": false,
+            "description": "List project items with project_item_id greater than from_id",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of returned elements",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "project items found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "project/project_item/project_item_index.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oms/{oms_id}/projects/{p_id}/project_items/{pi_id}": {
+      "parameters": [
+        {
+          "name": "oms_id",
+          "in": "path",
+          "description": "OMS id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "p_id",
+          "in": "path",
+          "description": "Project id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "pi_id",
+          "in": "path",
+          "description": "Project item id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a project item",
+        "tags": [
+          "Project items"
+        ],
+        "responses": {
+          "200": {
+            "description": "project item found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "project/project_item/project_item_read.json"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "updates a project item",
+        "tags": [
+          "Project items"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "project item updated"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "project/project_item/project_item_write.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oms/{oms_id}/projects": {
+      "parameters": [
+        {
+          "name": "oms_id",
+          "in": "path",
+          "description": "OMS id",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "lists projects",
+        "tags": [
+          "Projects"
+        ],
+        "parameters": [
+          {
+            "name": "from_id",
+            "in": "query",
+            "required": false,
+            "description": "List projects with id greater than from_id",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Limit of projects listed",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "projects found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "project/project_index.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oms/{oms_id}/projects/{p_id}": {
+      "parameters": [
+        {
+          "name": "oms_id",
+          "in": "path",
+          "description": "OMS id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "p_id",
+          "in": "path",
+          "description": "Project id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a project",
+        "tags": [
+          "Projects"
+        ],
+        "responses": {
+          "200": {
+            "description": "project found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "project/project_read.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oms/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "OMS id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves an OMS",
+        "tags": [
+          "OMS"
+        ],
+        "responses": {
+          "200": {
+            "description": "OMS found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "updates an OMS",
+        "tags": [
+          "OMS"
+        ],
+        "responses": {
+          "200": {
+            "description": "OMS updated"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+  }
+}

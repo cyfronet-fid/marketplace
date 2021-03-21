@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "event_read.json"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["events"]
+}
