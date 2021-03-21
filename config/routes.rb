@@ -104,22 +104,31 @@ Rails.application.routes.draw do
     end
   end
 
-  unless Mp::Application.config.offers_api_disabled
-    mount Rswag::Ui::Engine => '/api_docs/swagger'
-    mount Rswag::Api::Engine => '/api_docs/swagger'
+  mount Rswag::Ui::Engine => '/api_docs/swagger'
+  mount Rswag::Api::Engine => '/api_docs/swagger'
 
-    namespace :api do
-      namespace :v1 do
-        resources :resources, only: [:index, :show], constraints: { id: /[^\/]+/ } do
-          scope module: :resources do
-            resources :offers, only: [:index, :create, :show, :destroy, :update]
+  namespace :api do
+    namespace :v1 do
+      resources :resources, only: [:index, :show], constraints: { id: /[^\/]+/ } do
+        scope module: :resources do
+          resources :offers, only: [:index, :create, :show, :destroy, :update]
+        end
+      end
+      resources :oms, only: [:show, :update] do
+        scope module: :oms do
+          resources :events, only: :index
+          resources :projects, only: [:index, :show, :update] do
+            scope module: :projects do
+              resources :project_items, only: [:index, :show, :update]
+            end
           end
+          resources :messages, only: [:index, :create, :update]
         end
       end
     end
-
-    resource :api_docs, only: [:show, :create, :destroy]
   end
+
+  resource :api_docs, only: [:show, :create, :destroy]
 
   resource :admin, only: :show
   namespace :admin do

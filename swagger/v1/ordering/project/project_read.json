@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {"type": "integer"},
+    "owner": {
+      "type": "object",
+      "properties": {
+        "email": {"type": "string"},
+        "name": {"type": "string"}
+      },
+      "additionalProperties": false,
+      "required": ["email", "name"]
+    },
+    "project_items": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "attributes": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "required": ["id", "owner", "project_items"]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "object",
+      "properties":{
+        "value": {"type": "string"},
+        "type": {"type": "string",
+          "enum": ["rejected", "waiting_for_response", "registered", "in_progress", "ready", "closed", "approved"]
+        }
+      },
+      "additionalProperties": false,
+      "required": ["value", "type"]
+    },
+    "user_secrets": {"type": "object"}
+  },
+  "additionalProperties": false,
+  "required": ["status"]
+}

@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "project_items": {
+      "type": "array",
+      "items": {
+        "$ref": "project_item_read.json"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["project_items"]
+}
