@@ -5,9 +5,8 @@ require "rails_helper"
 RSpec.feature "Api docs page" do
   include OmniauthHelper
 
-  context "as a data administrator" do
+  context "as a regular user" do
     let!(:user) { create(:user) }
-    let!(:data_administrator) { create(:data_administrator, email: user.email) }
 
     before { checkin_sign_in_as(user) }
 
@@ -87,37 +86,13 @@ RSpec.feature "Api docs page" do
 
       expect(user.authentication_token).to eq(token)
     end
-
-    scenario "can no longer visit token page after being demoted from data admin" do
-      visit api_docs_path
-      expect(page).to have_text(user.authentication_token)
-      expect(page).to have_link("Revoke token")
-
-      visit root_path
-      data_administrator.destroy
-
-      visit api_docs_path
-
-      expect(page.body).to have_text("You are not authorized to see this page")
-      expect(page).to have_current_path(root_path)
-    end
   end
 
-  context "as a regular user" do
-    let!(:user) { create(:user) }
-    before { checkin_sign_in_as(user) }
-
-    scenario "I can't see Marketplace API link", skip: "Marketplace API link shouldn't be here for now" do
+  context "as anonymous user" do
+    scenario "I don't see my api_docs page" do
       visit root_path
 
-      expect(page.body).to have_no_selector("nav", text: "Marketplace API")
-    end
-
-    scenario "I can't visit token page" do
-      visit api_docs_path
-
-      expect(page.body).to have_text("You are not authorized to see this page")
-      expect(page).to have_current_path(root_path)
+      expect(page).to_not have_text("token")
     end
   end
 end

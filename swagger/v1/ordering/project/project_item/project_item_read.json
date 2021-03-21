@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {"type": "integer"},
+    "project_id": {"type": "integer"},
+    "status": {
+      "type": "object",
+      "properties":{
+        "value": {"type": "string"},
+        "type": {"type": "string",
+          "enum": ["rejected", "waiting_for_response", "registered", "in_progress", "ready", "closed", "approved"]
+        }
+      },
+      "additionalProperties": false,
+      "required": ["value", "type"]
+    },
+    "attributes": {"type": "object"},
+    "user_secrets": {"type": "object"},
+    "oms_params": {"type": "object"}
+  },
+  "additionalProperties": false,
+  "required": ["id", "project_id", "status"]
+}
