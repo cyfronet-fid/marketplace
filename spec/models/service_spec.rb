@@ -110,4 +110,9 @@ RSpec.describe Service do
       expect(Service.administered_by(other_data_admin_user)).to match_array([service_3, service_4])
     end
   end
+
+  context "OMS validations" do
+    subject { build(:service, oms: build_list(:resource_dedicated_oms, 2)) }
+    it { should have_many(:oms) }
+  end
 end

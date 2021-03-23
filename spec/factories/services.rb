@@ -34,6 +34,7 @@ FactoryBot.define do
     sequence(:version) { nil }
     sequence(:trl) { [create(:trl)] }
     sequence(:synchronized_at) { Time.now - 2.days }
+    sequence(:order_target) { "admin@admin.com" }
 
     upstream { nil }
 
