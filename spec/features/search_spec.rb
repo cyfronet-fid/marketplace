@@ -104,4 +104,15 @@ RSpec.feature "Service searching in top bar", js: true do
     expect(page).to have_text("DDDD Something offer 1")
     expect(page).to have_text("DDDD Something offer 2")
   end
+
+  scenario "'Other' category should be at the bottom of the category selection box", js: false do
+    create(:category, name: "Other")
+    create(:category, name: "Research")
+
+    # check services and HOME as there was a bug where home had different list then any other page
+    visit root_path
+    expect(page).to have_selector("#category-select > option:last-child", text: "Other")
+    visit :services
+    expect(page).to have_selector("#category-select > option:last-child", text: "Other")
+  end
 end
