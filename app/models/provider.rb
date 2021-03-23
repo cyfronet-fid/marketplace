@@ -50,6 +50,8 @@ class Provider < ApplicationRecord
            source: :vocabulary, source_type: "Vocabulary::AreaOfActivity"
   has_many :societal_grand_challenges, through: :provider_vocabularies,
            source: :vocabulary, source_type: "Vocabulary::SocietalGrandChallenge"
+  has_many :oms_providers, dependent: :destroy
+  has_many :oms, through: :oms_providers
 
   has_one :main_contact, as: :contactable, dependent: :destroy, autosave: true
   has_many :public_contacts, as: :contactable, dependent: :destroy, autosave: true
