@@ -66,6 +66,7 @@ class Service < ApplicationRecord
            source: :vocabulary, source_type: "Vocabulary::LifeCycleStatus"
   has_many :service_target_users, dependent: :destroy
   has_many :target_users, through: :service_target_users
+  has_many :oms, dependent: :destroy
 
   has_one :main_contact, as: :contactable, dependent: :destroy, autosave: true
   has_many :public_contacts, as: :contactable, dependent: :destroy, autosave: true
@@ -90,6 +91,7 @@ class Service < ApplicationRecord
            foreign_key: "target_id",
            dependent: :destroy,
            inverse_of: :target
+
   has_many :target_relationships,
            class_name: "ServiceRelationship",
            foreign_key: "source_id",

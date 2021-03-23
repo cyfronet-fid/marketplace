@@ -10,6 +10,7 @@ FactoryBot.define do
     sequence(:webpage) { |n| "http://webpage#{n}.invalid" }
     sequence(:order_type) { :order_required }
     sequence(:internal) { true }
+
     factory :offer_with_parameters do
       sequence(:parameters) { [build(:input_parameter)] }
     end

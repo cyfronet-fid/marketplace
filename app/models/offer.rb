@@ -33,15 +33,15 @@ class Offer < ApplicationRecord
     OfferSerializer.new(self).as_json
   end
 
+  counter_culture :service, column_name: proc { |model| model.published? ? "offers_count" : nil },
+                  column_names: {
+                    ["offers.status = ?", "published"] => "offers_count"
+                  }
+
   enum status: STATUSES
 
   belongs_to :service
-
-  counter_culture :service, column_name: proc { |model| model.published? ? "offers_count" : nil },
-                  column_names: {
-                      ["offers.status = ?", "published"] => "offers_count"
-                  }
-
+  belongs_to :primary_oms, class_name: "Oms", optional: true
   has_many :project_items,
            dependent: :restrict_with_error
 
@@ -49,6 +49,14 @@ class Offer < ApplicationRecord
   validates :service, presence: true
   validates :iid, presence: true, numericality: true
   validates :status, presence: true
+
+  validates :oms_params, absence: true, if: -> { current_oms.blank? }
+  validate :check_oms_params, if: -> { current_oms.present? }
+
+
+  def current_oms
+    primary_oms || Oms.find_by(default: true)
+  end
 
   def to_param
     iid.to_s
@@ -62,4 +70,24 @@ class Offer < ApplicationRecord
     def offers_count
       service && service.offers.maximum(:iid).to_i || 0
     end
+
+    def oms_params_match?
+      if (Set.new(oms_params.keys) - Set.new(current_oms.custom_params.keys)).length > 0
+        errors.add(:oms_params, "additional unspecified keys added")
+        return
+      end
+
+      missing_keys = Set.new(current_oms.custom_params.keys) - Set.new(oms_params.keys)
+      if (missing_keys & Set.new(current_oms.mandatory_defaults.keys)).length > 0
+        errors.add(:oms_params, "missing mandatory keys")
+      end
+    end
+
+    def check_oms_params
+      if current_oms.custom_params.present?
+        oms_params.blank? ? errors.add(:oms_params, "can't be blank") : oms_params_match?
+      else
+        errors.add(:oms_params, "must be blank if primary oms' custom params are blank") if oms_params.present?
+      end
+  end
 end
