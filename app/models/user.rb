@@ -20,6 +20,11 @@ class User < ApplicationRecord
   has_many :categories, through: :user_categories
   has_many :user_scientific_domains, dependent: :destroy
   has_many :scientific_domains, through: :user_scientific_domains
+  has_many :oms_administrations, dependent: :destroy
+  has_many :administrated_oms,
+           through: :oms_administrations,
+           source: :oms,
+           class_name: "Oms"
 
   validates :first_name, presence: true
   validates :last_name, presence: true

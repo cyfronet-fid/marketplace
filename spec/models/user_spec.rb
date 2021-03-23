@@ -64,6 +64,11 @@ RSpec.describe User do
     end
   end
 
+  context "OMS validations" do
+    subject { build(:user, administrated_oms: build_list(:oms, 2)) }
+    it { should have_many(:administrated_oms) }
+  end
+
   context "authentication_token" do
     it "is present when creating new user" do
       user = create(:user)
