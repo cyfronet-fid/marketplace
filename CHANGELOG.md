@@ -38,6 +38,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Displaying synchronization issues (if any occurs) in resource page for `data_administrators` (@goreck888)
 - Conditions to get external ordering of resource (@goreck888)
 - Internal ordering statistics in executive panel (@goreck888)
+- Fix showing _Other_ category in search bar select box on HOME page (@michal-szostak)
+- Fix ordering of search bar select box (Other always at the bottom) (@michal-szostak)
+- Redirect non existent categories url to `/services` (@michal-szostak)
 
 ## [3.8.0] 2021-03-03
 

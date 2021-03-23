@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   def index
     @learn_more_section = LeadSection.includes(:leads).find_by(slug: "learn-more")
     @use_cases_section = LeadSection.includes(:leads).find_by(slug: "use-cases")
-    @root_categories = @root_categories.with_attached_logo.reject { |c| c.name == "Other" }
+    @root_categories_with_logos = @root_categories.with_attached_logo.reject { |c| c.name == "Other" }
     @main_scientific_domains =
       ScientificDomain.with_attached_logo.roots.partition { |sd|  sd.name != "Other" }.flatten(1)
   end
