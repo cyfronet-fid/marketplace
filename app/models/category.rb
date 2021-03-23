@@ -2,7 +2,8 @@
 
 class Category < ApplicationRecord
   extend FriendlyId
-  friendly_id :name, use: :slugged
+  friendly_id :slug_candidates, use: :slugged
+
 
   include Parentable
 
@@ -26,6 +27,22 @@ class Category < ApplicationRecord
 
   def to_s
     self.name
+  end
+
+  def slug_candidates
+    [
+      :name,
+      [:parent_name, :name],
+      [:parent_slug, :name]
+    ]
+  end
+
+  def parent_name
+    parent&.name || nil
+  end
+
+  def parent_slug
+    parent&.slug || nil
   end
 
   private
