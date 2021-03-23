@@ -23,11 +23,11 @@
     %span{ "data-target": "search.selected" }
       = _("All resources")
     %select#category-select.container-select{ "data-action": "change->search#refresh",
-                                                    "data-target": "search.categorySelect" }
+                                              "data-target": "search.categorySelect" }
       %option{ value: "", selected: "selected" }
         = _("All resources")
-      = options_for_select categories.map { |category| [category.name, category.slug] }, params[:category]
+      = options_for_select categories.partition { |cat|  cat.name != "Other" }.flatten(1).map { |cat| [cat.name,
+        cat.slug] }, params[:category]
   .input-group-append
     %button#query-submit.input-group-text.bg-white
       %i.fas.fa-search
-
