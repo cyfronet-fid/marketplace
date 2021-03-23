@@ -141,6 +141,13 @@ namespace :rdt do
     to_remove = Category.where(eid: [nil, ""])
     puts "Removing categories #{to_remove.map(&:name)}"
     to_remove.destroy_all
+    puts "Check and repair categories slugs"
+    Category.where("slug ~* ?", "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$").each  do |category|
+      puts "Found category #{category.name} with slug #{category.slug}"
+      category.slug = nil
+      category.save!
+      puts "Category #{category.name} updated with new slug: #{category.slug}"
+    end
 
     puts "Creating scientific_domains from yaml"
     yaml_hash["scientific_domain"].each do |_, hash|
