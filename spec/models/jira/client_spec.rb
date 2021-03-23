@@ -25,7 +25,7 @@ describe Jira::Client do
     project_item = create(:project_item,
           offer: create(:offer, name: "off1", service: create(:service,
                                                               name: "s1",
-                                                        categories: [create(:category, name: "cat1")])),
+                                                              categories: [create(:category, name: "cat1")])),
           project: create(:project, user: user, name: "My Secret Project",
                           user_group_name: "New user group", reason_for_access: "some reason"),
           properties: [
@@ -75,7 +75,7 @@ describe Jira::Client do
                            "Harvesting endpoint" => "aaaaa",
                          }
                        }.to_json,
-                       "SO-ServiceOrderTarget-1" => "",
+                       "SO-ServiceOrderTarget-1" => "admin@admin.com",
                        "SO-OfferType-1" => { "id" => "20005" } }
 
     issue = double(:Issue)
@@ -163,7 +163,7 @@ describe Jira::Client do
                           "offer" => "off1",
                           "attributes" => {}
                         }.to_json,
-                        "SO-ServiceOrderTarget-1" => "",
+                        "SO-ServiceOrderTarget-1" => "admin@admin.com",
                         "SO-OfferType-1" => { "id" => "20006" } }
 
     issue = double(:Issue)
@@ -204,7 +204,7 @@ describe Jira::Client do
                           "offer" => "off1",
                           "attributes" => {}
                         }.to_json,
-                        "SO-ServiceOrderTarget-1" => "",
+                        "SO-ServiceOrderTarget-1" => "admin@admin.com",
                         "SO-OfferType-1" => { "id" => "20006" } }
 
     issue = double(:Issue)
