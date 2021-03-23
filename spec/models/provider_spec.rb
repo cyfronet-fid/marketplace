@@ -16,4 +16,9 @@ RSpec.describe Provider, type: :model do
     subject { create(:provider) }
     it { should validate_uniqueness_of(:name) }
   end
+
+  context "OMS validations" do
+    subject { build(:provider, oms: build_list(:provider_group_oms, 2)) }
+    it { should have_many(:oms) }
+  end
 end
