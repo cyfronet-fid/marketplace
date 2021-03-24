@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- Improved visualisation for the resources recommended by the MP recommendation engine (@kmarszalek, @jarekzet)
 
 ### Deprecated
 
