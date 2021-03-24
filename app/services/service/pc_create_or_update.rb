@@ -47,8 +47,9 @@ class Service::PcCreateOrUpdate
         service.status = "errored"
         service.save(validate: false)
       end
-      ServiceSource.create!(service_id: service.id, source_type: "eic", eid: @eid,
+      source = ServiceSource.create!(service_id: service.id, source_type: "eic", eid: @eid,
                                      errored: service.errors.messages)
+      service.update(upstream_id: source.id)
       service
     elsif is_newer_update
       if mapped_service && !@is_active
@@ -58,10 +59,11 @@ class Service::PcCreateOrUpdate
         mapped_service
       elsif !source_id.nil?
         if check_service = Service.new(service_hash).invalid?
-          raise NotUpdatedError.new("Service is not update, because parsed service data is invalid")
+          raise NotUpdatedError.new("Service is not updated, because parsed service data is invalid")
         end
         Importers::Logo.new(mapped_service, @eic_service["logo"]).call
         Service::Update.new(mapped_service, service_hash).call
+        mapped_service.update(upstream_id: source_id.id)
         mapped_service.sources.first.update(errored: nil)
         mapped_service
       else

@@ -63,6 +63,7 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(offer.order_type).to eq("other")
       expect(offer.status).to eq("published")
       expect(offer.service.id).to eq(service.id)
+      expect(service.upstream_id).to eq(service.sources.first.id)
     end
   end
 
