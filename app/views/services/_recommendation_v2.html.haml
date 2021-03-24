@@ -1,6 +1,6 @@
 .service-info-box.recommendation
   .recommend-box
-    Recommended
+    Suggested
   %header
     = link_to truncate(recommendation_v2.send(:name), length: 40, escape: false),
               service_path(recommendation_v2, category.present? ? { fromc: category.slug } : nil,

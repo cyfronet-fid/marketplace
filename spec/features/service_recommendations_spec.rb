@@ -22,25 +22,25 @@ RSpec.feature "recommended services panel", type: :feature do
     use_ab_test(recommendation_panel: "disabled")
     visit services_path
 
-    expect(page).to_not have_content(_("RECOMMENDED"))
+    expect(page).to_not have_content(_("SUGGESTED"))
   end
 
-  it "has header with 'RECOMMENDED' box in version 1", js: true do
+  it "has header with 'SUGGESTED' box in version 1", js: true do
     use_ab_test(recommendation_panel: "v1")
     visit services_path
 
-    expect(page).to have_content(_("RECOMMENDED"))
-    expect(find(@recommended_services_bar)).to have_content(_("RECOMMENDED"))
+    expect(page).to have_content(_("SUGGESTED"))
+    expect(find(@recommended_services_bar)).to have_content(_("SUGGESTED"))
   end
 
-  it "has 'RECOMMENDED' box in each recommended service in version 2", js: true do
+  it "has 'SUGGESTED' box in each recommended service in version 2", js: true do
     use_ab_test(recommendation_panel: "v2")
     visit services_path
 
-    expect(page).to have_content(_("RECOMMENDED"))
+    expect(page).to have_content(_("SUGGESTED"))
     all(@recommended_services).each do |element|
       expect(element.has_css?(".recommend-box"))
-      expect(element).to have_text(_("RECOMMENDED"))
+      expect(element).to have_text(_("SUGGESTED"))
       expect(element.has_css?(".image-frame"))
       expect(element).to have_text(_("Organisation") + ":")
       expect(element).to have_text(_("Dedicated for") + ":")
