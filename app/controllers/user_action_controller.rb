@@ -26,8 +26,8 @@ class UserActionController < ApplicationController
     end
 
     request_body[:unique_id] = cookies[:client_uid].to_i
-    request_body[:source]["visit_id"] = (request_body[:source]["visit_id"].to_i + request_body[:unique_id]).to_i
-    request_body[:target]["visit_id"] = (request_body[:target]["visit_id"].to_i + request_body[:unique_id]).to_i
+    request_body[:source]["visit_id"] = (request_body[:source]["visit_id"].to_s + request_body[:unique_id].to_s).to_i
+    request_body[:target]["visit_id"] = (request_body[:target]["visit_id"].to_s + request_body[:unique_id].to_s).to_i
 
     unless request_body[:source]["root"]["service_id"].nil?
       request_body[:source]["root"]["service_id"] = request_body[:source]["root"]["service_id"].to_i
