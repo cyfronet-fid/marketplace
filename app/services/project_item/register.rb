@@ -32,7 +32,7 @@ class ProjectItem::Register
     end
 
     def update_status!
-      @project_item.new_status(status: :registered)
+      @project_item.new_status(status: "registered", status_type: :registered)
       true
     end
 

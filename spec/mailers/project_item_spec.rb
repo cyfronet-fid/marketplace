@@ -28,12 +28,12 @@ RSpec.describe ProjectItemMailer, type: :mailer do
   context "project_item change" do
     let(:project_item) { create(:project_item, project: project) }
     before(:each) do
-      project_item.new_status(status: :created)
-      project_item.new_status(status: :registered)
+      project_item.new_status(status: "custom_created", status_type: :created)
+      project_item.new_status(status: "custom_registered", status_type: :registered)
     end
 
     it "notifies about project_item status change to waiting_for_response" do
-      project_item.new_status(status: :waiting_for_response)
+      project_item.new_status(status: "custom_waiting_for_response", status_type: :waiting_for_response)
 
       mail = described_class.waiting_for_response(project_item).deliver_now
       encoded_body = mail.body.encoded
@@ -47,7 +47,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
     end
 
     it "notifies about project_item status change to rejected" do
-      project_item.new_status(status: :rejected)
+      project_item.new_status(status: "custom_rejected", status_type: :rejected)
 
       mail = described_class.rejected(project_item).deliver_now
       encoded_body = mail.body.encoded
@@ -61,7 +61,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
     end
 
     it "notifies about project_item status change to closed" do
-      project_item.new_status(status: :closed)
+      project_item.new_status(status: "custom_closed", status_type: :closed)
 
       mail = described_class.closed(project_item).deliver_now
       encoded_body = mail.body.encoded
@@ -75,7 +75,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
     end
 
     it "notifies about project_item status change to approved" do
-      project_item.new_status(status: :approved)
+      project_item.new_status(status: "custom_approved", status_type: :approved)
 
       mail = described_class.approved(project_item).deliver_now
       encoded_body = mail.body.encoded

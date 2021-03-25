@@ -7,7 +7,7 @@ class ProjectItem < ApplicationRecord
   include Iid
   include Offerable
 
-  STATUSES = {
+  STATUS_TYPES = {
     created: "created",
     registered: "registered",
     in_progress: "in_progress",
@@ -25,7 +25,7 @@ class ProjectItem < ApplicationRecord
       jira_errored: 3
   }
 
-  enum status: STATUSES
+  enum status_type: STATUS_TYPES
   enum issue_status: ISSUE_STATUSES
 
   belongs_to :offer
@@ -39,6 +39,7 @@ class ProjectItem < ApplicationRecord
 
   validates :offer, presence: true
   validates :status, presence: true
+  validates :status_type, presence: true
   validate :scientific_domain_is_a_leaf
   validate :properties_not_nil
 
@@ -58,14 +59,9 @@ class ProjectItem < ApplicationRecord
     !(ready? || rejected?)
   end
 
-  def new_status(status: nil, author: nil)
-    # don't create change when there is not status and message given
-    return unless status
-
-    status ||= self.status
-
-    statuses.create(status: status, author: author).tap do
-      update(status: status)
+  def new_status(status:, status_type:, author: nil)
+    statuses.create(status: status, status_type: status_type, author: author).tap do
+      update(status: status, status_type: status_type)
     end
   end
 
