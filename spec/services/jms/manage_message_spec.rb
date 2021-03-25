@@ -11,9 +11,9 @@ describe Jms::ManageMessage do
   let(:service_resource) { create(:jms_xml_service) }
   let(:provider_resource) { create(:jms_xml_provider) }
   let(:json_service) { double(body: service_resource.to_json,
-                              headers: { "destination"=> "/topic/registry.infra_service.update" }) }
+                              headers: { "destination" => "/topic/registry.infra_service.update" }) }
   let(:json_provider) { double(body: provider_resource.to_json,
-                               headers: { "destination"=> "/topic/registry.infra_service.update" }) }
+                               headers: { "destination" => "/topic/registry.infra_service.update" }) }
   let(:service_create_or_update) { instance_double(Service::PcCreateOrUpdate) }
   let(:provider_create_or_update) { instance_double(Provider::PcCreateOrUpdate) }
 
@@ -51,8 +51,8 @@ describe Jms::ManageMessage do
     create(:service_source, service: service, eid: "tp.openminted_catalogue_of_corpora_2")
     original_stdout = $stdout
     $stdout = StringIO.new
-    json_service  =  double(body: service_resource.to_json,
-                            headers: { "destination"=> "/topic/registry.infra_service.delete" })
+    json_service = double(body: service_resource.to_json,
+                            headers: { "destination" => "/topic/registry.infra_service.delete" })
     expect(Service::DeleteJob).to receive(:perform_later).with("tp.openminted_catalogue_of_corpora_2")
 
     expect {
