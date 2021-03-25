@@ -23,6 +23,13 @@
         "tags": [
           "Events"
         ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
         "parameters": [
           {
             "name": "from_timestamp",
@@ -74,6 +81,13 @@
         "tags": [
           "Messages"
         ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
         "parameters": [
           {
             "name": "project_id",
@@ -122,6 +136,16 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "project item not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
           }
         }
       },
@@ -130,12 +154,46 @@
         "tags": [
           "Messages"
         ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
         "parameters": [
 
         ],
         "responses": {
           "201": {
-            "description": "message created"
+            "description": "message created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "message/message_read.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "message created validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "project item not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -175,12 +233,36 @@
         "tags": [
           "Messages"
         ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
         "parameters": [
 
         ],
         "responses": {
           "200": {
-            "description": "message updated"
+            "description": "message updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "message/message_read.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "message update validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -220,6 +302,13 @@
         "tags": [
           "Project items"
         ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
         "parameters": [
           {
             "name": "from_id",
@@ -247,6 +336,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "project/project_item/project_item_index.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "project not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
                 }
               }
             }
@@ -289,6 +388,13 @@
         "tags": [
           "Project items"
         ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
         "responses": {
           "200": {
             "description": "project item found",
@@ -296,6 +402,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "project/project_item/project_item_read.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "project item not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
                 }
               }
             }
@@ -307,12 +423,36 @@
         "tags": [
           "Project items"
         ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
         "parameters": [
 
         ],
         "responses": {
           "200": {
-            "description": "project item updated"
+            "description": "project item updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "project/project_item/project_item_read.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "project item update validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -343,6 +483,13 @@
         "tags": [
           "Projects"
         ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
         "parameters": [
           {
             "name": "from_id",
@@ -370,6 +517,36 @@
               "application/json": {
                 "schema": {
                   "$ref": "project/project_index.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user unrecognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "oms not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
                 }
               }
             }
@@ -403,6 +580,13 @@
         "tags": [
           "Projects"
         ],
+        "security": [
+          {
+            "authentication_token": [
+
+            ]
+          }
+        ],
         "responses": {
           "200": {
             "description": "project found",
@@ -413,46 +597,28 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/api/v1/oms/{id}": {
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "description": "OMS id",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "get": {
-        "summary": "retrieves an OMS",
-        "tags": [
-          "OMS"
-        ],
-        "responses": {
-          "200": {
-            "description": "OMS found"
-          }
-        }
-      },
-      "patch": {
-        "summary": "updates an OMS",
-        "tags": [
-          "OMS"
-        ],
-        "responses": {
-          "200": {
-            "description": "OMS updated"
+          },
+          "404": {
+            "description": "project not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
           }
         }
       }
     }
   },
   "components": {
+    "securitySchemes": {
+      "authentication_token": {
+        "type": "apiKey",
+        "name": "X-User-Token",
+        "in": "header"
+      }
+    }
   }
 }

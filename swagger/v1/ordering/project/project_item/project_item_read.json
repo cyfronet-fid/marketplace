@@ -8,7 +8,7 @@
       "properties":{
         "value": {"type": "string"},
         "type": {"type": "string",
-          "enum": ["rejected", "waiting_for_response", "registered", "in_progress", "ready", "closed", "approved"]
+          "enum": ["created", "rejected", "waiting_for_response", "registered", "in_progress", "ready", "closed", "approved"]
         }
       },
       "additionalProperties": false,
