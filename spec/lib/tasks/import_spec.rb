@@ -11,6 +11,7 @@ describe "import:eic", type: :task do
   end
 
   it "should pass ENV variables" do
+    allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with("MP_IMPORT_EIC_URL").and_return("https://api.custom")
     allow(ENV).to receive(:[]).with("DRY_RUN").and_return("1")
     allow(ENV).to receive(:[]).with("IDS").and_return("sampleeid,sampleeid2")

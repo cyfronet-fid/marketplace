@@ -24,7 +24,7 @@ class Service::PcCreateOrUpdate
     @unirest = unirest
     @eic_base_url = eic_base_url
     @eid = eic_service["id"]
-    @eic_service =  eic_service
+    @eic_service = eic_service
     @is_active = is_active
     @token = token
     @modified_at = modified_at

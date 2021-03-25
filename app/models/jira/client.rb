@@ -55,7 +55,7 @@ class Jira::Client < JIRA::Client
         site: @jira_config[:url],
         context_path: @jira_config[:context_path],
         auth_type: :basic,
-        use_ssl: (/^https\:\/\// =~ @jira_config[:url])
+        use_ssl: (/^https:\/\// =~ @jira_config[:url])
     }
 
     @jira_project_key = @jira_config[:project]
