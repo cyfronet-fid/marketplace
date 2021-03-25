@@ -8,33 +8,29 @@ RSpec.describe ProjectItem do
   it { should validate_presence_of(:offer) }
   it { should validate_presence_of(:project) }
   it { should validate_presence_of(:status) }
+  it { should validate_presence_of(:status_type) }
 
   it { should belong_to(:project) }
   it { should belong_to(:offer) }
 
-
   describe "#new_status" do
-    it "new status is not created when no message and status is given" do
-      project_item = create(:project_item)
-
-      expect { project_item.new_status }.to_not change { Status.count }
-    end
-
     it "change project_item status" do
-      project_item = create(:project_item, status: :created)
+      project_item = create(:project_item, status: "created", status_type: :created)
 
-      project_item.new_status(status: :registered)
+      project_item.new_status(status: "custom_registered", status_type: :registered)
       new_status = project_item.statuses.last
 
       expect(project_item).to be_registered
+      expect(project_item.status).to eq "custom_registered"
       expect(new_status).to be_registered
+      expect(new_status.status).to eq "custom_registered"
     end
 
     it "set author" do
-      project_item = create(:project_item, status: :created)
+      project_item = create(:project_item, status: "created", status_type: :created)
       author = create(:user)
 
-      project_item.new_status(status: :registered, author: author)
+      project_item.new_status(status: "registered", status_type: :registered, author: author)
       new_status = project_item.statuses.last
 
       expect(new_status.author).to eq(author)
@@ -43,14 +39,14 @@ RSpec.describe ProjectItem do
 
   describe "#active?" do
     it "is true when processing is not done" do
-      expect(build(:project_item, status: :created)).to be_active
-      expect(build(:project_item, status: :registered)).to be_active
-      expect(build(:project_item, status: :in_progress)).to be_active
+      expect(build(:project_item, status_type: :created)).to be_active
+      expect(build(:project_item, status_type: :registered)).to be_active
+      expect(build(:project_item, status_type: :in_progress)).to be_active
     end
 
     it "is false when processing is done" do
-      expect(build(:project_item, status: :ready)).to_not be_active
-      expect(build(:project_item, status: :rejected)).to_not be_active
+      expect(build(:project_item, status_type: :ready)).to_not be_active
+      expect(build(:project_item, status_type: :rejected)).to_not be_active
     end
   end
 

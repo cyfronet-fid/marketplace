@@ -229,7 +229,7 @@ private
     when "CI-DisplayName"
       "#{project.user.first_name} #{project.user.last_name}"
     when "CP-ScientificDiscipline"
-      project.scientific_domains .names.join(", ")
+      project.scientific_domains.names.join(", ")
     when "CI-EOSC-UniqueID"
       project.user.uid
     when "CP-CustomerTypology"

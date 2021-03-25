@@ -68,9 +68,9 @@ RSpec.feature "My Services" do
       project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
-      project_item.new_status(status: :created)
-      project_item.new_status(status: :registered)
-      project_item.new_status(status: :ready)
+      project_item.new_status(status: "created", status_type: :created)
+      project_item.new_status(status: "registered", status_type: :registered)
+      project_item.new_status(status: "ready", status_type: :ready)
 
       visit project_service_timeline_path(project, project_item)
 
@@ -120,7 +120,7 @@ RSpec.feature "My Services" do
 
     scenario "I can see review section" do
       project = create(:project, user: user)
-      project_item = create(:project_item, project: project, offer: offer, status: :ready)
+      project_item = create(:project_item, project: project, offer: offer, status: "ready", status_type: :ready)
       travel 1.day
       visit project_service_path(project, project_item)
 
