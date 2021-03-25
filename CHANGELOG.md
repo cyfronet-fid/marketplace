@@ -9,7 +9,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
-- Extend finding resource in main searchbar including providers (@danielkryska, goreck888)
 
 ### Changed
 - Improved visualisation for the resources recommended by the MP recommendation engine (@kmarszalek, @jarekzet)
@@ -28,6 +27,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Removal of duplicated provider entries in the Resource Provider field in the MP (@kmarszalek)
 - Feature highlight opinions panel in the admin section (@goreck888)
 - `Internal ordering` checkbox in offer's form (@goreck888)
+- Extend finding resource in main searchbar including providers (@danielkryska, goreck888)
 
 ### Changed
 - `Provided by` field in `Popular resources`, `Suggested compatible resources` and `Recently added resources` to `Organisation` (@kmarszalek, @jarekzet)
