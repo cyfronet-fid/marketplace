@@ -11,7 +11,7 @@ RSpec.describe ProjectPolicy do
   end
   let(:project_with_ended_project_item) do
     create(:project) do |project|
-      create(:project_item,  project: project, status: :closed)
+      create(:project_item,  project: project, status: "closed", status_type: :closed)
     end
   end
 

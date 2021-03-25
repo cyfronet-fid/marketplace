@@ -2,7 +2,8 @@
 
 FactoryBot.define do
   factory :project_item do
-    status { :created }
+    status { "created" }
+    status_type { :created }
     voucher_id { "" }
     request_voucher { false }
 
