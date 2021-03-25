@@ -1,68 +1,150 @@
 import Rails from '@rails/ujs'
 
-export default function initProbes(scope = window) {
-    [
-        ...Array.from(scope.document.querySelectorAll("[data-probe]")),
+const WINDOW_EVENTS_HANDLERS = {
+    beforeunload: async () => {
+        if (history.length !== 1) {
+            await handle_any_event();
+        }
+    },
+    popstate: async () => await handle_any_event()
+};
 
-        // IMPORTANT!!! class should be added to DOM elements only when there are any other option!!!
-        ...Array.from(scope.document.querySelectorAll(".data-probe"))
-    ]
-        .forEach(element => {
-            const action = get_event_action_by(element.tagName);
-            element.addEventListener(action, async () => {
-                // prevent call for disabled element
-                if (element.disabled) {
-                    return;
-                }
+export default async function initProbes() {
+    // Handle all internal open in new tab/window that was not handled by click event
+    if (history.length === 1) {
+        await handle_any_event();
+    }
 
-                const body = get_dom_action_from(scope, element);
-                await call_user_action_controller(body);
-            });
-        });
+    handle_browser_events();
+
+    // Handle DOM events
+    const elements = [
+        ...Array.from(window.document.querySelectorAll("[data-probe]")),
+
+        // IMPORTANT!!! class should be added to DOM elements only when there are any other options!!!
+        ...Array.from(window.document.querySelectorAll(".data-probe"))
+    ];
+    const elementsSize = elements.length;
+    let actions, actionsSize;
+    for (let i = 0; i < elementsSize; i++) {
+        actions = get_event_actions_by(elements[i].tagName);
+        actionsSize = actions.length;
+        for (let x = 0; x < actionsSize; x++) {
+            add_dom_event_listener(elements[i], actions[x]);
+        }
+    }
 }
 
-const call_user_action_controller = async (body) => {
-    return await fetch("/user_action", {
+function add_dom_event_listener(element, action) {
+    element.addEventListener(action, async (event) => {
+        // IMPORTANT!!! In case when child dom element "a" (link) can't be tagged directly
+        const isTargetElementLink = event.target.tagName.toLowerCase() === 'a';
+        const targetElement = isTargetElementLink ? event.target : element;
+        if (targetElement.disabled) { return; }
+
+        if (is_new_tab_open(action, event)) {
+            await handle_outside_open_new_tab_event(targetElement);
+            return;
+        }
+
+        await handle_any_event(targetElement);
+    });
+}
+
+function handle_browser_events() {
+    const events = Object.keys(WINDOW_EVENTS_HANDLERS);
+    const windowEventsSize = events.length;
+    remove_browser_events_listeners(window);
+
+    for (let i = 0; i < windowEventsSize; i++) {
+        window.addEventListener(events[i], WINDOW_EVENTS_HANDLERS[events[i]]);
+    }
+}
+
+function remove_browser_events_listeners() {
+    const events = Object.keys(WINDOW_EVENTS_HANDLERS);
+    const windowEventsSize = events.length;
+    for (let i = 0; i < windowEventsSize; i++) {
+        window.removeEventListener(events[i], WINDOW_EVENTS_HANDLERS[events[i]]);
+    }
+}
+
+async function handle_outside_open_new_tab_event(element) {
+    const href = element.getAttribute('href');
+    const isOutsideUrl = !!href && !href.includes(window.location.origin);
+    if (isOutsideUrl) {
+        await handle_any_event(element);
+    }
+}
+
+async function handle_any_event(element = null) {
+    const body = {
+        timestamp: new Date().toISOString(),
+        source: get_source_by(element),
+        target: get_target_by(element),
+        user_action: get_action_by(element)
+    };
+
+    await call_user_action_controller(body);
+
+    localStorage.setItem("lastTargetVisitId", "" + body.target.visit_id);
+    localStorage.setItem("lastPageId", window.location.pathname);
+
+    remove_browser_events_listeners();
+}
+
+const call_user_action_controller = (body) => {
+    return fetch("/user_action", {
         method: "POST",
         headers: {
             "X-CSRF-Token": Rails.csrfToken(),
             "Content-type": "application/json"
         },
-        body: body
+        body: JSON.stringify(body)
     })
+        .then()
         .catch(error => console.log(error));
 }
 
-function get_event_action_by(tagName) {
-    switch(tagName.toLowerCase()) {
-        case 'input':
-            return 'input';
+function is_new_tab_open(action, event) {
+    switch (action) {
+        case 'auxclick':
+            return event.button === 1;
+        case 'click':
+            return event.ctrlKey || event.shiftKey || event.metaKey;
         default:
-            return 'click';
+            return false;
     }
 }
 
-function get_dom_action_from(scope, element) {
-    return JSON.stringify({
-        timestamp: new Date().toISOString(),
-        source: get_source_by(scope, element),
-        target: get_target_by(scope, element),
-        user_action: get_action_by(scope, element)
-    });
+function get_event_actions_by(tagName) {
+    switch(tagName.toLowerCase()) {
+        case 'input':
+            return ['input'];
+        case 'a':
+            return ['click', 'auxclick'];
+        default:
+            return ['click'];
+    }
 }
 
-function get_action_by(scope, element) {
-    const is_ordered = scope.location.pathname.includes("summary")
+function get_action_by(element) {
+    const is_ordered = window.location.pathname.includes("summary")
+        && element
         && element.getAttribute("type") === "submit";
 
     return {
-        type: element.tagName,
+        type: !!element ? element.tagName : "browser action",
         text: get_element_text(element),
         order: is_ordered
     };
 }
 
 function get_element_text(element) {
+    if (!element || !element.tagName) {
+        return "";
+    }
+
     switch (element.tagName.toLowerCase()) {
         case 'textarea':
             return element.val();
@@ -79,23 +161,35 @@ function get_element_text(element) {
     }
 }
 
-function get_target_by(scope, element) {
-    const target_timestamp = new Date().getTime() + Math.floor(Math.random() * (500 - 50)) + 50;
+function get_target_by(element) {
+    console.log(localStorage.getItem("nextPageId"))
+
     return {
-        visit_id: scope.tabId + "" + target_timestamp,
-        page_id: get_target_url(scope.location.pathname, element)
+        visit_id: +window.tabId + new Date().getTime() + 200,
+        page_id: get_target_url(element)
     };
 }
 
-function get_source_by(scope, element) {
+function get_source_by(element) {
+    const storageVisitId = +localStorage.getItem("lastTargetVisitId");
+    const newVisitId = +window.tabId + new Date().getTime();
+    const visitId = !!storageVisitId ? storageVisitId : newVisitId;
+    const lastPageId = localStorage.getItem("lastPageId");
+    const isBrowserEvent = !element;
+    const pageId = !!lastPageId && isBrowserEvent ? lastPageId : window.location.pathname;
+
     return {
-        visit_id: scope.tabId + "" + new Date().getTime(),
-        page_id: scope.location.pathname,
+        visit_id: visitId,
+        page_id: pageId,
         root: get_source_root_by(element)
     };
 }
 
 function get_source_root_by(element) {
+    if (!element) {
+        return { type: 'other' };
+    }
+
     const is_recommendation_panel = element.getAttribute('data-probe') === "recommendation-panel";
     if (is_recommendation_panel) {
         return {
@@ -107,22 +201,12 @@ function get_source_root_by(element) {
     return { type: 'other' };
 }
 
-function get_target_url(actual_url, element) {
-    if (element.hasAttribute('href')) {
-        return element.getAttribute('href');
+function get_target_url(element) {
+    const current_url = window.location.pathname;
+    if (!element) {
+        return current_url.split("?")[0];
     }
 
-    const isOnlyChildAnchor = element.hasChildNodes()
-        && element.children.length === 1
-        && element.children[0].hasAttribute('href');
-    if (isOnlyChildAnchor) {
-        return element.children[0].getAttribute('href');
-    }
-
-    const isParentAnchor = element.parentNode.hasAttribute('href');
-    if (isParentAnchor) {
-        return parent.getAttribute('href');
-    }
-
-    return actual_url;
+    const href = element.getAttribute('href');
+    return (!!href ? href : current_url).split("?")[0];
 }

@@ -19,15 +19,13 @@ class UserActionController < ApplicationController
       action: JSON.parse(params[:user_action].to_json)
     }
 
-    request_body[:logged_user] = false
     unless current_user.nil?
-      request_body[:logged_user] = true
       request_body[:user_id] = current_user.id
     end
 
     request_body[:unique_id] = cookies[:client_uid].to_i
-    request_body[:source]["visit_id"] = (request_body[:source]["visit_id"].to_i + request_body[:unique_id]).to_i
-    request_body[:target]["visit_id"] = (request_body[:target]["visit_id"].to_i + request_body[:unique_id]).to_i
+    request_body[:source]["visit_id"] = request_body[:source]["visit_id"].to_i
+    request_body[:target]["visit_id"] = request_body[:target]["visit_id"].to_i
 
     unless request_body[:source]["root"]["service_id"].nil?
       request_body[:source]["root"]["service_id"] = request_body[:source]["root"]["service_id"].to_i

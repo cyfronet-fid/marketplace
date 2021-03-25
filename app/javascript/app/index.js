@@ -4,7 +4,6 @@ import initSorting from "app/sort_filter";
 import initFlash from "app/flash";
 import initChoises from "app/choises";
 import initCookiesPolicy from "app/cookies_policy";
-import handleTabId from "app/tabs";
 import 'bootstrap/dist/js/bootstrap';
 import 'stylesheets/application';
 import "app/nav";
@@ -32,6 +31,7 @@ library.add(fas, far);
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
 import initProbes from "./user-action";
+import assignTabIdToWindow from "./tabs";
 
 const application = Application.start();
 const context = require.context("./controllers", true, /.js$/);
@@ -45,11 +45,11 @@ document.addEventListener("turbolinks:before-render", function(event) {
     dom.watch();
 });
 
-document.addEventListener("turbolinks:load", function(event) {
+document.addEventListener("turbolinks:load", async function (event) {
     initChoises();
     initCookiesPolicy();
     initBadgeState();
-    initProbes();
+    await initProbes();
 });
 
 document.addEventListener("ajax:success", function(event) {
@@ -64,9 +64,15 @@ document.addEventListener('DOMContentLoaded', function (event) {
     initSorting();
     initFlash();
     initBadgeState();
-    handleTabId();
+    assignTabIdToWindow();
     dom.watch();
 });
+
+window.addEventListener("beforeunload", () => {
+    window.sessionStorage.tabId = window.tabId;
+    return null;
+});
+
 
 require("trix")
 require("@rails/actiontext")

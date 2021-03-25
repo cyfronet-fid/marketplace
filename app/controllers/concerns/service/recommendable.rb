@@ -14,6 +14,9 @@ module Service::Recommendable
     related_platforms: -> ids { ids.instance_of?(Array) ? ids.map(&:to_i) : ids.first.to_i },
     target_users: -> ids { ids.instance_of?(Array) ? ids.map(&:to_i) : ids.first.to_i },
   }
+  @@filter_key_transformers = {
+    category_id: "categories"
+  }
 
   included do
     before_action only: :index do
@@ -92,6 +95,10 @@ module Service::Recommendable
           filters[filter_name] = value
           if @@filter_param_transformers.key? filter_name.to_sym
             filters[filter_name] = @@filter_param_transformers[filter_name.to_sym].call value
+          end
+
+          if @@filter_key_transformers.key? filter_name.to_sym
+            filters[@@filter_key_transformers[filter_name.to_sym]] = filters.delete filter_name
           end
         end
       end
