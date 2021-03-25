@@ -2,7 +2,8 @@
 
 class Api::V1::Oms::ApiController < ActionController::API
   include Pundit
-  before_action :oms_authorization!
+  acts_as_token_authentication_handler_for User, fallback: :exception
+  before_action :find_and_authorize_oms
 
   rescue_from Pundit::NotAuthorizedError do
     render json: not_authorized, status: 403
@@ -22,12 +23,13 @@ class Api::V1::Oms::ApiController < ActionController::API
 
   private
     def not_authorized
-      {
-        error: "You are not authorized to perform this action."
-      }
+      { error: "You are not authorized to perform this action." }
     end
 
-    def oms_authorization!
-      authorize :oms, :show?
+    def find_and_authorize_oms
+      @oms = Oms.find(params[:oms_id])
+      authorize @oms, :this_oms_admin?
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: "Oms not found" }, status: 404
     end
 end

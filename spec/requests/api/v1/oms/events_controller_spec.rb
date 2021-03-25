@@ -19,6 +19,7 @@ RSpec.describe "OMS Events API", swagger_doc: "v1/ordering/swagger.json" do
     get "lists events" do
       tags "Events"
       produces "application/json"
+      security [ authentication_token: [] ]
       parameter name: :from_timestamp, in: :query, type: :string, required: true,
                 description: "List events after"
       parameter name: :limit, in: :query, type: :integer, required: false,
@@ -26,8 +27,11 @@ RSpec.describe "OMS Events API", swagger_doc: "v1/ordering/swagger.json" do
 
       response 200, "events found" do
         schema "$ref" => "event/event_index.json"
+        let(:oms_admin) { create(:user) }
+        let(:oms) { create(:oms, administrators: [oms_admin]) }
 
-        let(:oms_id) { 1 }
+        let(:oms_id) { oms.id }
+        let(:"X-User-Token") { oms_admin.authentication_token }
         let(:from_timestamp) { "2018-09-15T15:53:00+00:00" }
         run_test!
         # TODO: test functionality

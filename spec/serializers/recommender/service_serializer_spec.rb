@@ -2,7 +2,6 @@
 
 require "rails_helper"
 
-
 RSpec.describe Recommender::ServiceSerializer do
   it "properly serializes a service" do
     organisation = create(:provider)
