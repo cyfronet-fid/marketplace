@@ -14,6 +14,8 @@ namespace :dev do
     create_services(yaml_hash["services"])
     create_relations(yaml_hash["relations"])
 
+    OrderingApi::AddSombo.new.call
+
     puts "Done!"
   end
 

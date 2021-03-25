@@ -40,9 +40,14 @@ class Oms < ApplicationRecord
     custom_params&.filter { |_, v| v["mandatory"] }&.transform_values { |v| v["default"] }
   end
 
+  def associated_projects
+    # TODO: implement OMS project association - in authorization task #1883
+    Project.all
+  end
+
   private
     def single_default_oms?
-      if Oms.all.pluck(:default).any?
+      if Oms.where.not(name: name).pluck(:default).any?
         errors.add(:default, "there can't be more than one default OMS")
       end
     end

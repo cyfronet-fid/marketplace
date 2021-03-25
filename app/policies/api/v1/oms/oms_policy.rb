@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-class Api::V1::Oms::OmsPolicy < Struct.new(:user, :oms)
-  def show?
-    true
-    # TODO: Implement this in authorization task
+class Api::V1::Oms::OmsPolicy < ApplicationPolicy
+  def this_oms_admin?
+    user.administrated_oms.include? record
   end
 end
