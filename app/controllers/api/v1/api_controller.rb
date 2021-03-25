@@ -3,7 +3,7 @@
 class Api::V1::ApiController < ActionController::API
   include Pundit
   acts_as_token_authentication_handler_for User, fallback: :exception
-  before_action :api_authorization!
+  before_action :offering_api_authorization!
 
   rescue_from Pundit::NotAuthorizedError do
     render json: not_authorized, status: 403
@@ -28,7 +28,7 @@ class Api::V1::ApiController < ActionController::API
       }
     end
 
-    def api_authorization!
+    def offering_api_authorization!
       authorize :api, :show?
     end
 end

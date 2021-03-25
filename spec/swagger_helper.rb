@@ -44,6 +44,13 @@ RSpec.configure do |config|
       },
       paths: {},
       components: {
+        securitySchemes: {
+          authentication_token: {
+            type: :apiKey,
+            name: "X-User-Token",
+            in: :header
+          }
+        }
       }
     }
   }

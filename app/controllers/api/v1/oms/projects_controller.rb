@@ -1,55 +1,28 @@
 # frozen_string_literal: true
 
 class Api::V1::Oms::ProjectsController < Api::V1::Oms::ApiController
+  before_action :find_and_authorize, only: :show
+
   def index
-    # TODO: implement endpoint functionality
-    render json: {
-      "projects": [
-        {
-          "id": 1,
-          "owner": {
-            "email": "<contact email>",
-            "name": "<displayable name>"
-          },
-          "project_items": [ 1, 2 ],
-          "attributes": {
-            "reason_for_access": "",
-            "country_of_origin": "",
-            "customer_typology": "",
-            "etc": ""
-          }
-      },
-        {
-          "id": 2,
-          "owner": {
-            "email": "<contact email>",
-            "name": "<displayable name>"
-          },
-          "project_items": [ 2, 3 ],
-          "attributes": {
-            "etc1": "",
-            "etc2": ""
-          }
-        }
-      ]
-    }
+    @from_id = params[:from_id].present? ? params[:from_id] : 0
+    @limit = params[:limit].present? ? params[:limit] : 20
+    load_projects!
+    render json: { projects: @projects.map { |p| OrderingApi::V1::ProjectSerializer.new(p) } }
   end
 
   def show
-    # TODO: implement endpoint functionality
-    render json: {
-      "id": 1,
-      "owner": {
-        "email": "<contact email>",
-        "name": "<displayable name>"
-      },
-      "project_items": [ 1, 2 ],
-      "attributes": {
-        "reason_for_access": "",
-        "country_of_origin": "",
-        "customer_typology": "",
-        "etc": ""
-      }
-    }
+    render json: OrderingApi::V1::ProjectSerializer.new(@project).as_json
   end
+
+  private
+    def find_and_authorize
+      @project = @oms.associated_projects.find(params[:id])
+      authorize @project
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: "Project not found" }, status: 404
+    end
+
+    def load_projects!
+      @projects = policy_scope(@oms.associated_projects).where("id > ?", @from_id).order(:id).limit(@limit)
+    end
 end
