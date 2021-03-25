@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Jira::CommentActivity do
   let(:project) { create(:project, name: "Project") }
-  let(:project_item) { create(:project_item, status: :registered) }
+  let(:project_item) { create(:project_item, status: "registered", status_type: :registered) }
 
   context "comment update" do
     context "for project" do

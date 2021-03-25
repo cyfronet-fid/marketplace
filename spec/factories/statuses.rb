@@ -2,7 +2,8 @@
 
 FactoryBot.define do
   factory :status do
-    value { :created }
+    status { "created" }
+    status_type { :created }
     association(:status_holder, factory: :project_item)
   end
 end

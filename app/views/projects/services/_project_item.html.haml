@@ -3,7 +3,7 @@
   .float-right.status
     - if project_item.closed?
       -# TODO: refactor dynamic translation
-      = t("project_items.status.#{project_item.status}")
+      = t("project_items.status.#{project_item.status_type}")
     - elsif !project_item.orderable?
       = link_to _("Visit website"), webpage(project_item)
     - else
