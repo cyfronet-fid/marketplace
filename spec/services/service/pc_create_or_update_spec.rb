@@ -29,9 +29,9 @@ RSpec.describe Service::PcCreateOrUpdate do
                                organisation: "JD company") }
   let!(:public_contacts) {
     build_list(:public_contact, 2) do |contact, i|
-      contact.first_name= "Jane #{i}"
-      contact.last_name= "Doe"
-      contact.email= "jane#{i}@doe.com"
+      contact.first_name = "Jane #{i}"
+      contact.last_name = "Doe"
+      contact.email = "jane#{i}@doe.com"
     end
   }
 

@@ -15,7 +15,7 @@ class Parameter
 
   def initialize(attrs)
     attrs = ActiveSupport::HashWithIndifferentAccess.new(attrs)
-    filtered_attrs = self.class.attribute_names.map { |name| [name, attrs[name]] }.to_h
+    filtered_attrs = self.class.attribute_names.index_with { |name| attrs[name] }
 
     super(filtered_attrs)
   end

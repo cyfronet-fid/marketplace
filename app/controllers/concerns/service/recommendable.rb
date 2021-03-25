@@ -55,7 +55,7 @@ module Service::Recommendable
       service_search_state = {
         timestamp: Time.now.strftime("%Y-%m-%dT%H:%M:%S.%L%z"),
         unique_id: cookies[:client_uid].to_i,
-        visit_id: cookies[:client_uid].to_i  + Time.now.getutc.to_i,
+        visit_id: cookies[:client_uid].to_i + Time.now.getutc.to_i,
         page_id: "/service",
         panel_id: ab_test(:recommendation_panel),
         search_data: get_filters_by(@params),

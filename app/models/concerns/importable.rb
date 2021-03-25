@@ -109,7 +109,7 @@ module Importable
   rescue Errno::ECONNREFUSED
     actual_try += 1
     if actual_try < retry_attempts
-      Rails.logger.warn "Provider mapping connection refused, #{actual_try+1}/#{retry_attempts} try to download"
+      Rails.logger.warn "Provider mapping connection refused, #{actual_try + 1}/#{retry_attempts} try to download"
       map_provider(prov_eid, eic_base_url, token: token, unirest: unirest,
                       retry_attempts: retry_attempts, actual_try: actual_try)
     else
