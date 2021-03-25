@@ -15,7 +15,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       redirect_to backoffice_service_path(Service.find(params["service_id"]),
                                           anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?))
     end
-    @services, @offers= search(scope)
+    @services, @offers = search(scope)
     @pagy = Pagy.new_from_searchkick(@services, items: params[:per_page])
     @highlights = highlights(@services)
     @comparison_enabled = false

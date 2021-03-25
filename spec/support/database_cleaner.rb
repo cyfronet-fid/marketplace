@@ -19,6 +19,7 @@ RSpec.configure do |config|
       MSG
     end
     DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.allow_remote_database_url = true
   end
 
   config.before(:each) do

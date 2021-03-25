@@ -33,27 +33,26 @@ class Import::Providers
 
     output = []
 
-    begin
-      @providers.each do |eid, provider_data|
-        output.append(provider_data)
-        image_url = provider_data["logo"]
-        updated_provider_data = Importers::Provider.new(provider_data, Time.now.to_i, "rest").call
 
-        mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eic",
-          "provider_sources.eid": eid) || Provider.find_by(name: updated_provider_data[:name])
-        if mapped_provider.blank?
-          log "Adding [NEW] provider: #{updated_provider_data[:name]}, eid: #{updated_provider_data[:pid]}"
-          mapped_provider = Provider.create!(updated_provider_data)
-          Importers::Logo.new(mapped_provider, image_url).call
-          ProviderSource.create!(provider_id: mapped_provider.id, source_type: "eic", eid: eid)
-        else
-          log "Updating [EXISTING] provider: #{updated_provider_data[:name]}, eid: #{updated_provider_data[:pid]}"
-          mapped_provider.update!(updated_provider_data)
-          Importers::Logo.new(mapped_provider, image_url).call
-        end
-      rescue ActiveRecord::RecordInvalid => e
-        log "[WARN] Provider #{updated_provider_data[:name]} #{updated_provider_data[:pid]} cannot be created. #{e}"
+    @providers.each do |eid, provider_data|
+      output.append(provider_data)
+      image_url = provider_data["logo"]
+      updated_provider_data = Importers::Provider.new(provider_data, Time.now.to_i, "rest").call
+
+      mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eic",
+        "provider_sources.eid": eid) || Provider.find_by(name: updated_provider_data[:name])
+      if mapped_provider.blank?
+        log "Adding [NEW] provider: #{updated_provider_data[:name]}, eid: #{updated_provider_data[:pid]}"
+        mapped_provider = Provider.create!(updated_provider_data)
+        Importers::Logo.new(mapped_provider, image_url).call
+        ProviderSource.create!(provider_id: mapped_provider.id, source_type: "eic", eid: eid)
+      else
+        log "Updating [EXISTING] provider: #{updated_provider_data[:name]}, eid: #{updated_provider_data[:pid]}"
+        mapped_provider.update!(updated_provider_data)
+        Importers::Logo.new(mapped_provider, image_url).call
       end
+    rescue ActiveRecord::RecordInvalid => e
+      log "[WARN] Provider #{updated_provider_data[:name]} #{updated_provider_data[:pid]} cannot be created. #{e}"
     end
 
     unless @filepath.nil?
