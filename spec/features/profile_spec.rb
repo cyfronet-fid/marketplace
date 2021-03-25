@@ -25,7 +25,7 @@ RSpec.feature "Profile page" do
 
     scenario "I can edit my profile interests" do
       c1, c2 = create_list(:category, 2)
-      sd1, sd2 =  create_list(:scientific_domain, 2)
+      sd1, sd2 = create_list(:scientific_domain, 2)
 
       visit profile_path
 

@@ -8,7 +8,7 @@ module Service::Recommendable
   @@filter_param_transformers = {
     geographical_availabilities: -> name { Country.convert_to_regions_add_country(name) },
     scientific_domains: -> ids { ids.instance_of?(Array) ?
-                ids.map(&:to_i) + ids.map { |id| ScientificDomain.find(id).descendant_ids }.flatten: ids.first.to_i },
+                ids.map(&:to_i) + ids.map { |id| ScientificDomain.find(id).descendant_ids }.flatten : ids.first.to_i },
     category_id: -> slug { [Category.find_by(slug: slug).id] + Category.find_by(slug: slug).descendant_ids },
     providers: -> ids { ids.instance_of?(Array) ? ids.map(&:to_i) : ids.first.to_i },
     related_platforms: -> ids { ids.instance_of?(Array) ? ids.map(&:to_i) : ids.first.to_i },
@@ -56,7 +56,7 @@ module Service::Recommendable
       service_search_state = {
         timestamp: Time.now.strftime("%Y-%m-%dT%H:%M:%S.%L%z"),
         unique_id: cookies[:client_uid].to_i,
-        visit_id: cookies[:client_uid].to_i  + Time.now.getutc.to_i,
+        visit_id: cookies[:client_uid].to_i + Time.now.getutc.to_i,
         page_id: "/service",
         panel_id: ab_test(:recommendation_panel),
         search_data: get_filters_by(@params),

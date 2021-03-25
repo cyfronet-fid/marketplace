@@ -19,22 +19,22 @@ RSpec.describe Project do
   it { should_not allow_value("blah").for(:email) }
 
   describe "#department" do
-    before { subject.department = "a" *256 }
+    before { subject.department = "a" * 256 }
     it { should_not be_valid }
   end
 
   describe "#webpage" do
-    before { subject.webpage = "a" *256 }
+    before { subject.webpage = "a" * 256 }
     it { should_not be_valid }
   end
 
   describe "#organization" do
-    before { subject.organization = "a" *256 }
+    before { subject.organization = "a" * 256 }
     it { should_not be_valid }
   end
 
   describe "#name" do
-    before { subject.name = "a" *256 }
+    before { subject.name = "a" * 256 }
     it { should_not be_valid }
   end
 
@@ -54,7 +54,7 @@ RSpec.describe Project do
     it { is_expected.to validate_presence_of(:webpage) }
 
     describe "#organization" do
-      before { subject.organization = "a" *256 }
+      before { subject.organization = "a" * 256 }
       it { should_not be_valid }
     end
   end
@@ -78,12 +78,12 @@ RSpec.describe Project do
     it { is_expected.to validate_presence_of(:company_website_url) }
 
     describe "#company_name" do
-      before { subject.company_name = "a" *256 }
+      before { subject.company_name = "a" * 256 }
       it { should_not be_valid }
     end
 
     describe "#company_website_url" do
-      before { subject.company_website_url = "a" *256 }
+      before { subject.company_website_url = "a" * 256 }
       it { should_not be_valid }
     end
   end

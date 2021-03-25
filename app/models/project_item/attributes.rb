@@ -29,6 +29,6 @@ class ProjectItem::Attributes
     end
 
     def attributes_hsh
-      @attributes_hsh ||= attributes.map { |p| [p.id, p] }.to_h
+      @attributes_hsh ||= attributes.index_by(&:id)
     end
 end
