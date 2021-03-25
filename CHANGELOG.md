@@ -9,7 +9,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
-- Extend finding resource in main searchbar including providers (@danielkryska, goreck888)
 
 ### Changed
 - Improved visualisation for the resources recommended by the MP recommendation engine (@kmarszalek, @jarekzet)
