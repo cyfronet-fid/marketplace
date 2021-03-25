@@ -1,23 +1,11 @@
-export default function handleTabId() {
-    window.addEventListener("beforeunload", function (e)
-    {
-        window.sessionStorage.tabId = window.tabId;
+export default function assignTabIdToWindow() {
+    if (!window.sessionStorage.tabId) {
+        window.tabId = Math.floor(Math.random() * 1000000);
+    }
+    else {
+        window.tabId = window.sessionStorage.tabId;
+        window.sessionStorage.removeItem("tabId");
+    }
 
-        return null;
-    });
-
-    window.addEventListener("load", function (e)
-    {
-        if (window.sessionStorage.tabId)
-        {
-            window.tabId = window.sessionStorage.tabId;
-            window.sessionStorage.removeItem("tabId");
-        }
-        else
-        {
-            window.tabId = Math.floor(Math.random() * 1000000);
-        }
-
-        return null;
-    });
+    return null;
 }
