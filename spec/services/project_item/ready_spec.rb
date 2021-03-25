@@ -58,7 +58,7 @@ RSpec.describe ProjectItem::Ready do
       offer = create(:offer, service: service)
       project_item = create(:project_item, offer: offer)
 
-      project_item.new_status(status: :created)
+      project_item.new_status(status: "custom_created", status_type: :created)
 
       expect { described_class.new(project_item).call }.
           to change { ActionMailer::Base.deliveries.count }.by(2)
@@ -72,7 +72,7 @@ RSpec.describe ProjectItem::Ready do
       offer = create(:offer, service: service)
       project_item = create(:project_item, offer: offer)
 
-      project_item.new_status(status: :created)
+      project_item.new_status(status: "custom_created", status_type: :created)
 
       expect { described_class.new(project_item).call }.
           to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -94,7 +94,7 @@ RSpec.describe ProjectItem::Ready do
     context "Normal service project item" do
       it "sents ready and rate service emails to owner" do
         # project_item change email is sent only when there is more than 1 change
-        project_item.new_status(status: :created)
+        project_item.new_status(status: "custom_created", status_type: :created)
 
         expect { described_class.new(project_item).call }.
             to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -119,7 +119,7 @@ RSpec.describe ProjectItem::Ready do
       end
 
       it "sends only rate service email to owner" do
-        project_item.new_status(status: :ready)
+        project_item.new_status(status: "custom_ready", status_type: :ready)
 
         expect { described_class.new(project_item).call }.
             to change { ActionMailer::Base.deliveries.count }.by(1)

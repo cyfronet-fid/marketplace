@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_16_161711) do
+ActiveRecord::Schema.define(version: 2021_03_23_162816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -187,20 +187,8 @@ ActiveRecord::Schema.define(version: 2021_03_16_161711) do
     t.index ["name"], name: "index_platforms_on_name", unique: true
   end
 
-  create_table "project_item_changes", force: :cascade do |t|
-    t.string "status"
-    t.text "message"
-    t.bigint "project_item_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "author_id"
-    t.integer "iid"
-    t.index ["author_id"], name: "index_project_item_changes_on_author_id"
-    t.index ["project_item_id"], name: "index_project_item_changes_on_project_item_id"
-  end
-
   create_table "project_items", force: :cascade do |t|
-    t.string "status", null: false
+    t.string "status_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "issue_id"
@@ -218,6 +206,7 @@ ActiveRecord::Schema.define(version: 2021_03_16_161711) do
     t.boolean "voucherable", default: false, null: false
     t.boolean "internal", default: false
     t.string "order_url"
+    t.string "status", default: "created", null: false
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
   end
@@ -482,11 +471,12 @@ ActiveRecord::Schema.define(version: 2021_03_16_161711) do
 
   create_table "statuses", force: :cascade do |t|
     t.bigint "author_id"
-    t.string "status"
+    t.string "status_type"
     t.string "status_holder_type"
     t.bigint "status_holder_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status", null: false
     t.index ["author_id"], name: "index_statuses_on_author_id"
     t.index ["status_holder_type", "status_holder_id"], name: "index_statuses_on_status_holder_type_and_status_holder_id"
   end
@@ -610,7 +600,6 @@ ActiveRecord::Schema.define(version: 2021_03_16_161711) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "project_item_changes", "users", column: "author_id"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
   add_foreign_key "project_scientific_domains", "projects"

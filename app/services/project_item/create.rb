@@ -10,7 +10,7 @@ class ProjectItem::Create
     @project_item.created!
 
     if @project_item.save
-      @project_item.statuses.create(status: :created)
+      @project_item.statuses.create(status: "created", status_type: :created)
 
       unless orderable?
         ProjectItem::ReadyJob.perform_later(@project_item, @message)

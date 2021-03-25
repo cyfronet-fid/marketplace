@@ -51,7 +51,7 @@ RSpec.describe "JIRA Webhook API", type: :request do
       before {
         project_item = create(:project_item, issue_id: issue_id,
                               request_voucher: true,
-                              status: :registered,
+                              status: "registered", status_type: :registered,
                               offer: create(:offer, voucherable: true))
       }
 

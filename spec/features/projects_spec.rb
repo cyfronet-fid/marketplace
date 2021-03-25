@@ -165,7 +165,7 @@ RSpec.feature "Project" do
         service = create(:open_access_service)
         offer = create(:offer, service: service)
 
-        create(:project_item, offer: offer, project: project, status: :closed)
+        create(:project_item, offer: offer, project: project, status: "closed", status_type: :closed)
 
         visit project_path(project)
 
@@ -187,7 +187,7 @@ RSpec.feature "Project" do
         service = create(:open_access_service)
         offer = create(:offer, service: service)
 
-        create(:project_item, offer: offer, project: project, status: :closed)
+        create(:project_item, offer: offer, project: project, status: "closed", status_type: :closed)
 
         allow(project_archive).to receive(:call).and_return(true)
 
