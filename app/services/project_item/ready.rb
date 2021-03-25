@@ -50,7 +50,7 @@ class ProjectItem::Ready
     end
 
     def update_status!
-      @project_item.new_status(status: :ready)
+      @project_item.new_status(status: "ready", status_type: :ready)
     end
 
     def activate_message

@@ -16,7 +16,7 @@
         - if project_item.orderable?
           %p.text-uppercase.text-right.font-weight-bold.text-secondary.mb-0
             -# TODO: refactor dynamic translation
-            %span{ class: "status-#{project_item.status}" }= t("project_items.status.#{project_item.status}")
+            %span{ class: "status-#{project_item.status_type}" }= t("project_items.status.#{project_item.status_type}")
 
         = render Services::InlineOrderUrlComponent.new(offerable: project_item,
           classes: "btn btn-primary float-right pl-3 pr-3")

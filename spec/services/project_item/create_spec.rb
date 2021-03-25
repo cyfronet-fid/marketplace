@@ -20,7 +20,10 @@ RSpec.describe ProjectItem::Create do
   it "creates first project_item status" do
     project_item = described_class.new(project_item_template).call
 
+    expect(project_item.status).to eq("created")
+    expect(project_item).to be_created
     expect(project_item.statuses.count).to eq(1)
+    expect(project_item.statuses.first.status).to eq("created")
     expect(project_item.statuses.first).to be_created
   end
 
