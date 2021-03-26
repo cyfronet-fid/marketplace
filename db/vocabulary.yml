@@ -1794,6 +1794,7 @@ category:
     eid: subcategory-security_and_operations-operations_and_infrastructure_management_services-configuration
     name: Configuration
     parentId: category-security_and_operations-operations_and_infrastructure_management_services
+    slug: operations-infrastructure-management-services-configuration
     type: SUBCATEGORY
   access_physical_and_eInfrastructures-instrument_and_equipment-spectrometer:
     eid: subcategory-access_physical_and_eInfrastructures-instrument_and_equipment-spectrometer
