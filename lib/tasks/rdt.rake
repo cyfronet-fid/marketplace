@@ -122,19 +122,22 @@ namespace :rdt do
       existing_category = Category.find_by(name: hash["name"], eid: [hash["eid"], nil])
       parent = hash["parentId"].blank? ? nil : Category.find_by(eid: hash["parentId"])
       if existing_category.blank?
-        Category.find_or_initialize_by(eid: hash["eid"]) do |category|
+        c = Category.find_or_initialize_by(eid: hash["eid"]) do |category|
           category.update!(name: hash["name"],
                            eid: hash["eid"],
                            description: hash["description"],
+                           slug: hash["slug"],
                            parent: parent)
         end
-        puts "Created category: #{hash["name"]}, eid: #{hash["eid"]}"
+        puts "Created category: #{c.name}, eid: #{c.eid}, slug: #{c.slug}"
       else
         existing_category.update!(name: hash["name"],
-                                   eid: hash["eid"],
-                                   description: hash["description"],
-                                   parent: parent)
-        puts "Updated existing category: #{hash["name"]} with eid: #{hash["eid"]}"
+                                  eid: hash["eid"],
+                                  description: hash["description"],
+                                  slug: hash["slug"],
+                                  parent: parent)
+        puts "Updated existing category: #{existing_category.name}, eid: #{existing_category.eid}, " +
+        "slug: #{existing_category.slug}"
       end
     end
     puts "Remove categories with no eid"
