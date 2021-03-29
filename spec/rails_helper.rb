@@ -17,6 +17,7 @@ require "rspec/rails"
 require "action_dispatch/system_testing/server"
 ActionDispatch::SystemTesting::Server.silence_puma = true
 require "action_dispatch/system_test_case"
+require "rspec/repeat"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -76,6 +77,12 @@ RSpec.configure do |config|
 
   # Use mock of middleware
   config.include Devise::Test::ControllerHelpers, type: :controller
+
+  # Re-run tests on failure to prevent random failures
+  config.include RSpec::Repeat
+  config.around :each do |example|
+    repeat example, 4.times, verbose: true
+  end
 end
 
 OmniAuth.config.test_mode = true
