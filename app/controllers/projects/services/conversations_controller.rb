@@ -11,9 +11,15 @@ class Projects::Services::ConversationsController < ApplicationController
   end
 
   def create
-    @message = Message.
-                new(permitted_attributes(Message).
-                merge(author: current_user, messageable: @project_item))
+    @message = Message.new(
+      permitted_attributes(Message)
+        .merge(
+          author: current_user,
+          author_role: "user",
+          scope: "public",
+          messageable: @project_item
+        )
+    )
 
     if Message::Create.new(@message).call
       flash[:notice] = "Message sent successfully"
@@ -31,6 +37,9 @@ class Projects::Services::ConversationsController < ApplicationController
     end
 
     def load_messages
-      @messages = @project_item.messages.order(:updated_at)
+      @messages = Message.where(
+        messageable_id: @project_item.id,
+        scope: %w[public user_direct],
+      ).order(:created_at)
     end
 end

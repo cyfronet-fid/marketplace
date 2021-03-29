@@ -9,8 +9,13 @@ RSpec.describe Message::Create do
 
   context "valid message" do
     let(:message) do
-      Message.new(author: project_item_owner,
-                          messageable: project_item, message: "message text")
+      Message.new(
+        author: project_item_owner,
+        author_role: "user",
+        scope: "public",
+        messageable: project_item,
+        message: "message text"
+      )
     end
 
     it "returns true" do
@@ -50,7 +55,7 @@ RSpec.describe Message::Create do
         to_not change { project_item.messages.count }
     end
 
-    it "does not triggers message registration" do
+    it "does not trigger message registration" do
       described_class.new(message).call
 
       expect(Message::RegisterMessageJob).

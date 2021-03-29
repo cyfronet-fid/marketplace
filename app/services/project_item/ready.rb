@@ -69,9 +69,13 @@ class ProjectItem::Ready
 
     def create_message
       if @message
-        message_temp = Message.new(author: @project_item.user,
-                                   message: @message,
-                                   messageable: @project_item)
+        message_temp = Message.new(
+          author: @project_item.user,
+          author_role: "user",
+          scope: "public",
+          message: @message,
+          messageable: @project_item
+        )
         Message::Create.new(message_temp).call
       end
       true
