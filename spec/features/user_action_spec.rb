@@ -19,23 +19,23 @@ RSpec.feature "User action", js: true do
 
     services_ids = [1, 2, 3]
     services_ids.each { |id| create(:service, id: id) }
-    allow(Unirest).to receive(:post).and_return(services_ids)
+    allow(Unirest).to receive(:post).and_return(double(code: 200, body: { "recommendations" => services_ids }))
 
-    expect(Probes::ProbesJob).to receive(:perform_later) do |_, body|
+    expect(Probes::ProbesJob).to receive(:perform_later) do |body|
       body = JSON.parse(body)
-      expect(body["timestamp"].to_s).to match(/[0-9]+/)
+      expect(body["timestamp"].to_s).not_to be_nil
 
-      expect(body["source"]["visit_id"].to_s).to match(/[0-9]+\.[0-9]+\.[a-zA-Z0-9]+\.[0-9]+/)
+      expect(body["source"]["visit_id"].to_s).not_to be_nil
       expect(body["source"]["page_id"]).to eq "/services"
       expect(body["source"]["root"]["type"]).to eq "other"
       expect(body["source"]["root"]["panel_id"]).to be_nil
 
-      expect(body["target"]["visit_id"].to_s).to match(/[0-9]+\.[0-9]+\.[a-zA-Z0-9]+\.[0-9]+/)
-      expect(body["target"]["page_id"].to_s).to match(/(\/[a-zA-Z0-9_-])+/)
+      expect(body["target"]["visit_id"].to_s).not_to be_nil
+      expect(body["target"]["page_id"].to_s).not_to be_nil
 
-      expect(body["action"]["order"]).to be_nil
+      expect(body["action"]["order"]).to be false
 
-      expect(body["unique_id"].to_s).to match(/[a-zA-Z0-9]+\.[0-9]+/)
+      expect(body["unique_id"].to_s).not_to be_nil
     end
 
     visit services_path

@@ -1,16 +1,17 @@
 .service-info-box.recommendation
   .recommend-box
-    Recommended
+    Suggested
   %header
-    = link_to highlighted_for(:name, recommendation_v2, highlights[recommendation_v2.id]).truncate(40),
-              service_path(recommendation_v2, category.present? ? { fromc: category.slug } : nil,
-              from_recommendation_panel: true), "data-probe": "recommendation-panel"
+    = link_to truncate(recommendation_v2.send(:name), length: 40, escape: false),
+              service_path(recommendation_v2, fromc: category.present? ? category.slug : nil,
+              from_recommendation_panel: true), "data-probe": "recommendation-panel",
+              "data-service-id" => recommendation_v2.id
   %article
     %p
       .image-frame
         %span.helper
         = service_logo(recommendation_v2)
-      = truncate(highlighted_for(:tagline, recommendation_v2, highlights[recommendation_v2.id]), length: 110)
+      = truncate(recommendation_v2.send(:tagline), length: 110, escape: false)
   %footer
     .column-left
       %p

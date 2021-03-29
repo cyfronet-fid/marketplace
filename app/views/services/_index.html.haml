@@ -11,7 +11,7 @@
       .row.mb-4
         = render "services/active_filters", category: category, active_filters: active_filters
         - if (not defined? show_recommendations) || show_recommendations
-          - if ab_test(:recommendation_panel) == "v1"
+          - if ab_test(:recommendation_panel) == "v1" && !recommended_services.blank?
             = render partial: "services/recommendation_panel_v1",
                      locals: { highlights: highlights, category: category, recommended_services: recommended_services }
         = render "services/pagination", sort_options: sort_options, services: services, pagy: pagy
@@ -25,7 +25,7 @@
                            remote: true }
 
         - if (not defined? show_recommendations) || show_recommendations
-          - if ab_test(:recommendation_panel) == "v2"
+          - if ab_test(:recommendation_panel) == "v2" && !recommended_services.blank?
             = render partial: "services/recommendation_panel_v2",
                      locals: { highlights: highlights, category: category, recommended_services: recommended_services }
         = render partial: "service", collection: services[2..],
