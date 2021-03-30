@@ -6,8 +6,8 @@ class Projects::ConversationsController < ApplicationController
   def show
     @message = Message.new(messageable: @project)
 
-    load_messages
-    load_projects
+    load_messages!
+    load_projects!
   end
 
   def create
@@ -25,18 +25,18 @@ class Projects::ConversationsController < ApplicationController
       flash[:notice] = "Message sent successfully"
       redirect_to project_conversation_path(@project)
     else
-      load_messages
-      load_projects
+      load_messages!
+      load_projects!
       render :show, status: :bad_request
     end
   end
 
   private
-    def load_projects
+    def load_projects!
       @projects = policy_scope(Project).order(:name)
     end
 
-    def load_messages
+    def load_messages!
       @messages = Message.where(
         messageable_id: @project.id,
         scope: %w[public user_direct],
