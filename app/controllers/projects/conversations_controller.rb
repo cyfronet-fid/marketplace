@@ -37,9 +37,6 @@ class Projects::ConversationsController < ApplicationController
     end
 
     def load_messages!
-      @messages = Message.where(
-        messageable_id: @project.id,
-        scope: %w[public user_direct],
-      ).order(:created_at)
+      @messages = policy_scope(@project.messages).order(:created_at)
     end
 end
