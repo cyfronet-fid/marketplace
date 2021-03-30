@@ -12,8 +12,8 @@ RSpec.describe Jira::CommentActivity do
         project.messages.create(
           message: "First message",
           iid: 123,
-          author_role: "provider",
-          scope: "public",
+          author_role: :provider,
+          scope: :public,
         )
       }
 
@@ -58,8 +58,8 @@ RSpec.describe Jira::CommentActivity do
         project_item.messages.create(
           message: "First message",
           iid: 123,
-          author_role: "provider",
-          scope: "public",
+          author_role: :provider,
+          scope: :public,
         )
       }
 
@@ -123,8 +123,8 @@ RSpec.describe Jira::CommentActivity do
         # Than jira webhood with new comment is triggered.
         project_item.messages.create(
           message: "question",
-          author_role: "user",
-          scope: "public",
+          author_role: :user,
+          scope: :public,
         )
 
         expect do
@@ -185,8 +185,8 @@ RSpec.describe Jira::CommentActivity do
         # Than jira webhood with new comment is triggered.
         project.messages.create(
           message: "question",
-          author_role: "user",
-          scope: "public",
+          author_role: :user,
+          scope: :public,
         )
 
         expect do

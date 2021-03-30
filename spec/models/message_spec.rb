@@ -42,7 +42,7 @@ RSpec.describe Message do
 
 
     it "is false when there is not message author" do
-      message = create(:message, author: nil, author_role: "provider")
+      message = create(:message, author: nil, author_role: :provider)
 
       expect(message).to_not be_question
     end
@@ -54,7 +54,7 @@ RSpec.describe Message do
       new_message = create(:message,
                                    messageable: project_item,
                                    author: create(:user),
-                                   author_role: "provider",
+                                   author_role: :provider,
                                    message: "some question")
 
       expect(new_message).to_not be_question
@@ -66,7 +66,7 @@ RSpec.describe Message do
       new_message = create(:message,
                                    messageable: project,
                                    author: create(:user),
-                                   author_role: "provider",
+                                   author_role: :provider,
                                    message: "some question")
 
       expect(new_message).to_not be_question

@@ -11,8 +11,8 @@ RSpec.describe Message::Create do
     let(:message) do
       Message.new(
         author: project_item_owner,
-        author_role: "user",
-        scope: "public",
+        author_role: :user,
+        scope: :public,
         messageable: project_item,
         message: "message text"
       )
