@@ -8,8 +8,8 @@ class WebhookJiraPreview < ActionMailer::Preview
     WebhookJiraMailer.new_message(
       Message.new(
         messageable: ProjectItem.last,
-        author_role: "provider",
-        scope: "public",
+        author_role: :provider,
+        scope: :public,
         message: "message content"
       )
     )
@@ -20,8 +20,8 @@ class WebhookJiraPreview < ActionMailer::Preview
     WebhookJiraMailer.new_message(
       Message.new(
         messageable: Project.last,
-        author_role: "provider",
-        scope: "public",
+        author_role: :provider,
+        scope: :public,
         message: "message content"
       )
     )

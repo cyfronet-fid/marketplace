@@ -81,8 +81,8 @@ class ProjectItem < ApplicationRecord
     messages.create(
       message: message,
       author: author,
-      author_role: "provider",
-      scope: "user_direct",
+      author_role: :provider,
+      scope: :user_direct,
       iid: iid
     ).tap do
       update(voucher_id: voucher_id)

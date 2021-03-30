@@ -10,8 +10,8 @@ class Jira::CommentActivity
     return if body.blank? || reject?
     message = Message.find_or_initialize_by(messageable: @messageable, iid: id)
     message.update(
-      author_role: "provider",
-      scope: "public",
+      author_role: :provider,
+      scope: :public,
       message: body,
       edited: message.persisted?,
     )

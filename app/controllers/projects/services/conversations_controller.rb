@@ -15,8 +15,8 @@ class Projects::Services::ConversationsController < ApplicationController
       permitted_attributes(Message)
         .merge(
           author: current_user,
-          author_role: "user",
-          scope: "public",
+          author_role: :user,
+          scope: :public,
           messageable: @project_item
         )
     )

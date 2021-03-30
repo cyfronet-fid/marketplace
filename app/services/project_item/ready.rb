@@ -71,8 +71,8 @@ class ProjectItem::Ready
       if @message
         message_temp = Message.new(
           author: @project_item.user,
-          author_role: "user",
-          scope: "public",
+          author_role: :user,
+          scope: :public,
           message: @message,
           messageable: @project_item
         )
