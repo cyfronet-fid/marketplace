@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Improved visualisation for the resources recommended by the MP recommendation engine (@kmarszalek, @jarekzet)
+- Upgrade rails to 6.0.3.6 (@jswk)
 
 ### Deprecated
 
