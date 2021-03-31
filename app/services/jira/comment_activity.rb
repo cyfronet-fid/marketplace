@@ -9,7 +9,12 @@ class Jira::CommentActivity
   def call
     return if body.blank? || reject?
     message = Message.find_or_initialize_by(messageable: @messageable, iid: id)
-    message.update(message: body, edited: message.persisted?)
+    message.update(
+      author_role: :provider,
+      scope: :public,
+      message: body,
+      edited: message.persisted?,
+    )
     if message.edited?
       WebhookJiraMailer.message_edited(message).deliver_later
     else
