@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_25_120212) do
+ActiveRecord::Schema.define(version: 2021_03_29_084503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,8 +155,14 @@ ActiveRecord::Schema.define(version: 2021_03_25_120212) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "edited", default: false
+    t.string "author_email"
+    t.string "author_name"
+    t.string "author_role", null: false
+    t.string "scope", null: false
     t.index ["author_id"], name: "index_messages_on_author_id"
+    t.index ["author_role"], name: "index_messages_on_author_role"
     t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id"
+    t.index ["scope"], name: "index_messages_on_scope"
   end
 
   create_table "offers", force: :cascade do |t|

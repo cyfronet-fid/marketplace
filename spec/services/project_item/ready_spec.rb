@@ -67,7 +67,7 @@ RSpec.describe ProjectItem::Ready do
       expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
     end
 
-    it "do not send  email with activate message if not present" do
+    it "do not send email with activate message if not present" do
       service = create(:open_access_service, activate_message: " ")
       offer = create(:offer, service: service)
       project_item = create(:project_item, offer: offer)
@@ -103,11 +103,13 @@ RSpec.describe ProjectItem::Ready do
     end
 
     context "With additional comment" do
-      it "should create first komment message" do
+      it "should create first comment message" do
         expect { described_class.new(project_item, "First message").call }.
           to change { project_item.messages.count }.by(1)
         last_message = project_item.messages.last
 
+        expect(last_message.role_user?).to be_truthy
+        expect(last_message.public_scope?).to be_truthy
         expect(last_message.message).to eq("First message")
       end
     end

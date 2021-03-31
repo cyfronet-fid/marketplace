@@ -10,7 +10,7 @@ module Project::Authorize
 
   private
     def load_and_authorize_project!
-      @project = Project.find(params[:project_id])
+      @project = Project.find_by_id(params[:project_id])
       authorize(@project, :show?)
     end
 end
