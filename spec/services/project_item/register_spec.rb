@@ -57,6 +57,8 @@ RSpec.describe ProjectItem::Register do
           to change { project_item.messages.count }.by(1)
         last_message = project_item.messages.last
 
+        expect(last_message.role_user?).to be_truthy
+        expect(last_message.public_scope?).to be_truthy
         expect(last_message.message).to eq("First message")
       end
     end

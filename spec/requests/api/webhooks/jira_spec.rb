@@ -103,7 +103,9 @@ RSpec.describe "JIRA Webhook API", type: :request do
         expect {
           post(api_webhooks_jira_url + "?secret=secret&issue_id=#{issue_id}", params: data)
         }.to change { project_item.messages.count }.by(1)
-        updated_message = Message.find_by(iid: comment_id)
+        updated_message = Message.find_by_iid(comment_id)
+        expect(updated_message.public_scope?).to be_truthy
+        expect(updated_message.role_provider?).to be_truthy
         expect(updated_message.message).to eq("New message")
       end
     end
