@@ -12,7 +12,9 @@ RSpec.describe Message::RegisterMessageJob do
     create(:message,
            messageable: project_item,
            message: "message msg",
-           author: author)
+           author: author,
+           author_role: author.nil? ? :provider : :user,
+           scope: :public)
   end
 
   it "triggers registration process for project_item owner message" do
