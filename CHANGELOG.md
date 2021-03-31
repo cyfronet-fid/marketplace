@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Fix imported resources rendering for markdown (@michal-szostak)
 
 ## [3.9.0] 2021-03-17
 
