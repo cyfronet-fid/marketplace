@@ -89,9 +89,7 @@ class Importers::Service
                                                    token: @token) },
       webpage_url: @data["webpage"] || "",
       # Marketing
-      description: ReverseMarkdown.convert(@data["description"],
-                                           unknown_tags: :bypass,
-                                           github_flavored: false),
+      description: @data["description"],
       tagline: @data["tagline"].blank? ? "-" : @data["tagline"],
       multimedia: multimedia,
       use_cases_url: use_cases_url,
