@@ -7,21 +7,19 @@ module MarkdownHelper
       Redcarpet::Markdown.new(renderer,
                               no_intra_emphasis: true, tables: true,
                               fenced_code_blocks: true,
+                              filter_html: false,
                               autolink: true, strikethrough: true,
                               lax_html_blocks: true,
                               space_after_headers: true,
                               superscript: true)
 
-    # we can disable cop because Markdown render method ensures its output
-    # is html safe.
-    #
-    # rubocop:disable Rails/OutputSafety
-    @markdown_renderer.render(text || "").html_safe
-    # rubocop:enable Rails/OutputSafety
+    # We do sanitization as the markdown can be a mix of HTML and Markdown and redcarpet itself does not do
+    # proper sanitization
+    sanitize(@markdown_renderer.render(text || ""))
   end
 
   private
     def renderer
-      Redcarpet::Render::HTML.new(filter_html: true)
+      Redcarpet::Render::HTML.new(filter_html: false)
     end
 end
