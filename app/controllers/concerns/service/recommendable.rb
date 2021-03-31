@@ -7,11 +7,12 @@ module Service::Recommendable
 
   @@filter_param_transformers = {
     geographical_availabilities: -> name { Country.convert_to_regions_add_country(name) },
-    scientific_domains: -> ids { ids.map(&:to_i) + ids.map { |id| ScientificDomain.find(id).descendant_ids }.flatten },
+    scientific_domains: -> ids { ids.instance_of?(Array) ?
+                ids.map(&:to_i) + ids.map { |id| ScientificDomain.find(id).descendant_ids }.flatten: ids.first.to_i },
     category_id: -> slug { [Category.find_by(slug: slug).id] + Category.find_by(slug: slug).descendant_ids },
-    providers: -> ids { ids.map(&:to_i) },
-    related_platforms: -> ids { ids.map(&:to_i) },
-    target_users: -> ids { ids.map(&:to_i) }
+    providers: -> ids { ids.instance_of?(Array) ? ids.map(&:to_i) : ids.first.to_i },
+    related_platforms: -> ids { ids.instance_of?(Array) ? ids.map(&:to_i) : ids.first.to_i },
+    target_users: -> ids { ids.instance_of?(Array) ? ids.map(&:to_i) : ids.first.to_i },
   }
 
   included do
