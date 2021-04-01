@@ -35,7 +35,7 @@ module ProjectItemsHelper
 
   def service_providers_list(project_item)
     providers = project_item.service.providers.
-      map { |p| link_to(p.name, services_path(providers: p)) }
+      map { |p| link_to(p.name, services_path(providers: p.id)) }
     safe_join(providers, ", ")
   end
 end
