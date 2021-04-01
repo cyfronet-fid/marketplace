@@ -18,6 +18,7 @@ namespace :import do
     Import::Providers.new(ENV["MP_IMPORT_EIC_URL"] || "https://beta.providers.eosc-portal.eu/api",
                           dry_run: ENV["DRY_RUN"] || false,
                           default_upstream: (ENV["UPSTREAM"] || "mp").to_sym,
+                          ids: (ENV["IDS"] || "").split(","),
                           filepath: ENV["OUTPUT"],
                           token: ENV["MP_IMPORT_TOKEN"]).call
   end
