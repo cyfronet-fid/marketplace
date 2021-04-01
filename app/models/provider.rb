@@ -66,6 +66,8 @@ class Provider < ApplicationRecord
 
   has_many :sources, source: :provider_sources, class_name: "ProviderSource", dependent: :destroy
 
+  belongs_to :upstream, foreign_key: "upstream_id", class_name: "ProviderSource", optional: true
+
   accepts_nested_attributes_for :sources,
                                 reject_if: lambda { |attributes| attributes["eid"].blank? || attributes["source_type"].blank? },
                                 allow_destroy: true
