@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.10.2] 2021-04-13
+
+### Fixed
+- Default upstream source setting for REST and JMS importers in the Provider model (@goreck888)
+
 ## [3.10.1] 21-04-09
 
 ### Fixed

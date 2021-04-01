@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_16_161711) do
+ActiveRecord::Schema.define(version: 2021_04_01_095458) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -619,6 +619,7 @@ ActiveRecord::Schema.define(version: 2021_03_16_161711) do
   add_foreign_key "provider_scientific_domains", "scientific_domains"
   add_foreign_key "provider_vocabularies", "providers"
   add_foreign_key "provider_vocabularies", "vocabularies"
+  add_foreign_key "providers", "provider_sources", column: "upstream_id", on_delete: :nullify
   add_foreign_key "service_providers", "providers"
   add_foreign_key "service_providers", "services"
   add_foreign_key "service_related_platforms", "platforms"

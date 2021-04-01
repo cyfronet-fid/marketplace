@@ -63,9 +63,11 @@ resources with random names and descriptions (this generation is done using
 
 If you need actual production data run:
 ```
+./bin/rake import:providers
 ./bin/rake import:eic
 ```
 to seed the database with it.
+You can download only specific providers/resources by setting an `IDS` environment variable.
 
 ## Run
 To start web application in development mode (with auto refresh capability when

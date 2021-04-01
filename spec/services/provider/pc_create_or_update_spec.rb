@@ -10,7 +10,7 @@ RSpec.describe Provider::PcCreateOrUpdate do
     allow_any_instance_of(Importers::Logo).to receive(:call)
   end
 
-  it "should create provider with source" do
+  it "should create provider with source and upstream" do
     original_stdout = $stdout
     $stdout = StringIO.new
     expect {
@@ -22,6 +22,7 @@ RSpec.describe Provider::PcCreateOrUpdate do
     expect(provider.name).to eq("Test Provider tp")
     expect(provider.sources.length).to eq(1)
     expect(provider.sources[0].eid).to eq("tp")
+    expect(provider.upstream_id).to eq(provider.sources[0].id)
     $stdout = original_stdout
   end
 
@@ -42,6 +43,7 @@ RSpec.describe Provider::PcCreateOrUpdate do
     expect(updated_provider.name).to eq("Supper new name for updated  provider")
     expect(updated_provider.sources.length).to eq(1)
     expect(updated_provider.sources[0].eid).to eq("new.provider")
+    expect(updated_provider.upstream_id).to eq(updated_provider.sources[0].id)
     $stdout = original_stdout
   end
 end
