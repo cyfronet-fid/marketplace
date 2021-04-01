@@ -669,6 +669,7 @@ ActiveRecord::Schema.define(version: 2021_04_06_133857) do
   add_foreign_key "provider_scientific_domains", "scientific_domains"
   add_foreign_key "provider_vocabularies", "providers"
   add_foreign_key "provider_vocabularies", "vocabularies"
+  add_foreign_key "providers", "provider_sources", column: "upstream_id", on_delete: :nullify
   add_foreign_key "service_providers", "providers"
   add_foreign_key "service_providers", "services"
   add_foreign_key "service_related_platforms", "platforms"
