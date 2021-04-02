@@ -1,7 +1,7 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["hasVoucher", "iHaveVaucher", "iDontHaveVoucher"];
+  static targets = ["hasVoucher", "iHaveVoucher", "iDontHaveVoucher"];
 
   voucherChanged(event) {
     if(event.currentTarget.value === "false") {

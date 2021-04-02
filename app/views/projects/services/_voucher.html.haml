@@ -1,14 +1,14 @@
-- unless project_item.voucher_id.blank? && !project_item.request_voucher
+- if project_item.voucher_id.present? || project_item.request_voucher
   %h2.mb-3
     = _("Vouchers")
   .blue-row.form-inline.mb-5
     .d-inline.mr-4
       %i.fas.fa-ticket-alt
-    - if project_item.voucher_id.blank?
+    - if voucher_id(project_item).blank?
       .d-inline
         = _("Requested")
     - else
       .d-inline
         = _("Your voucher ID")
         %br
-        %span.voucher-name= project_item.voucher_id
+        %span.voucher-name= voucher_id(project_item)
