@@ -90,11 +90,24 @@ RSpec.describe Jira::IssueUpdated do
 
       expect(mail.subject).to eq("Elastic Cloud Compute Cluster (EC3) service with voucher rejected")
     end
+
+    it "updates user_secrets if voucher requested and granted" do
+      platform_aod = create(:platform, name: "EGI Applications on Demand")
+      service = create(:service, platforms: [platform_aod])
+      offer = create(:offer, service: service, voucherable: true)
+      project_item = create(:project_item, offer: offer, request_voucher: true)
+
+      described_class.new(project_item, changelog(field: "CP-VoucherID", toString: "123456")).call
+
+      project_item.reload
+
+      expect(project_item.user_secrets).to include("voucher_id" => "123456")
+    end
   end
 
-  def changelog(to:)
+  def changelog(field: "status", to: nil, toString: nil)
     { "items" => [
-      { "field" => "status", "to" => to }
+      { "field" => field, "to" => to, "toString" => toString }
     ] }
   end
 end
