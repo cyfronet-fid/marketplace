@@ -42,6 +42,7 @@ class ProjectItem < ApplicationRecord
   validates :status_type, presence: true
   validate :scientific_domain_is_a_leaf
   validate :properties_not_nil
+  validate :user_secrets_is_simple
 
   delegate :user, to: :project
 
@@ -68,13 +69,13 @@ class ProjectItem < ApplicationRecord
   def new_voucher_change(voucher_id, author: nil, iid: nil)
     voucher_id ||= ""
 
-    return unless voucher_id != self.voucher_id
+    return if voucher_id == user_secrets["voucher_id"]
 
-    message = if self.voucher_id.blank? && !voucher_id.blank?
+    message = if user_secrets["voucher_id"].blank? && voucher_id.present?
       "Voucher has been granted to you, ID: #{voucher_id}"
-    elsif !self.voucher_id.blank? && voucher_id.blank?
+    elsif user_secrets["voucher_id"].present? && voucher_id.blank?
       "Voucher has been revoked"
-    elsif !self.voucher_id.blank? && !voucher_id.blank?
+    elsif user_secrets["voucher_id"].present? && voucher_id.present?
       "Voucher ID has been updated: #{voucher_id}"
     end
 
@@ -85,7 +86,7 @@ class ProjectItem < ApplicationRecord
       scope: :user_direct,
       iid: iid
     ).tap do
-      update(voucher_id: voucher_id)
+      update(user_secrets: user_secrets.merge("voucher_id" => voucher_id))
     end
   end
 
@@ -93,17 +94,23 @@ class ProjectItem < ApplicationRecord
     "\"#{project.name}##{id}\""
   end
 
-  def scientific_domain_is_a_leaf
-    errors.add(:scientific_domain_id, "cannot have children") if scientific_domain&.has_children?
-  end
-
-  def properties_not_nil
-    if self.properties.nil?
-      errors.add :properties, "cannot be nil"
-    end
-  end
-
   private
+    def scientific_domain_is_a_leaf
+      errors.add(:scientific_domain_id, "cannot have children") if scientific_domain&.has_children?
+    end
+
+    def properties_not_nil
+      if self.properties.nil?
+        errors.add :properties, "cannot be nil"
+      end
+    end
+
+    def user_secrets_is_simple
+      unless self.user_secrets&.values.all? { |v| v.is_a? String }
+        errors.add(:user_secrets, "values must be strings")
+      end
+    end
+
     def copy_offer_fields
       self.order_type = offer&.order_type
       self.name = offer&.name

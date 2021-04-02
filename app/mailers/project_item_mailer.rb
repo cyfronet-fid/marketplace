@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ProjectItemMailer < ApplicationMailer
+  include ProjectItemsHelper
+
   def created(project_item)
     load_data(project_item)
     if @project_item.created?
@@ -70,7 +72,7 @@ class ProjectItemMailer < ApplicationMailer
 
   def aod_voucher_accepted(project_item)
     @user = project_item.user
-    @voucher_id = project_item.voucher_id
+    @voucher_id = voucher_id(project_item)
 
     mail(to: @user.email,
        subject: "Elastic Cloud Compute Cluster (EC3) service with voucher approved",
@@ -79,7 +81,7 @@ class ProjectItemMailer < ApplicationMailer
 
   def aod_voucher_rejected(project_item)
     @user = project_item.user
-    @voucher_id = project_item.voucher_id
+    @voucher_id = voucher_id(project_item)
 
     mail(to: @user.email,
          subject: "Elastic Cloud Compute Cluster (EC3) service with voucher rejected",

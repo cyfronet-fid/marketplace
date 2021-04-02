@@ -23,10 +23,9 @@ RSpec.describe "JIRA Webhook API", type: :request do
 
     describe "Correct secret with data" do
       issue_id = 5
-      project_item = nil
+      let!(:project_item) { create(:project_item, issue_id: issue_id) }
 
       before {
-        project_item = create(:project_item, issue_id: issue_id)
         data = create(:jira_webhook_response, issue_id: issue_id, issue_status: 6)
         post(api_webhooks_jira_url + "?secret=secret&issue_id=5", params: data)
       }
@@ -46,32 +45,42 @@ RSpec.describe "JIRA Webhook API", type: :request do
 
     describe "Voucher ID" do
       issue_id = 5
-      project_item = nil
-
-      before {
-        project_item = create(:project_item, issue_id: issue_id,
-                              request_voucher: true,
-                              status: "registered", status_type: :registered,
-                              offer: create(:offer, voucherable: true))
+      let!(:project_item) {
+        create(:project_item, issue_id: issue_id,
+               request_voucher: true,
+               status: "registered", status_type: :registered,
+               offer: create(:offer, voucherable: true))
       }
 
       it "should grant voucher ID" do
         data = create(:jira_webhook_response, :voucher_id_change, issue_id: issue_id, issue_status: 6, voucher_id_to: "1234")
+
         post(api_webhooks_jira_url + "?secret=secret&issue_id=5", params: data)
+
+        project_item.reload
+        expect(project_item.user_secrets).to include("voucher_id" => "1234")
         expect(project_item.messages.last&.message).to eq("Voucher has been granted to you, ID: 1234")
       end
 
       it "should update voucher ID" do
-        project_item.update voucher_id: "4321"
+        project_item.update user_secrets: { "voucher_id": "4321" }
         data = create(:jira_webhook_response, :voucher_id_change, issue_id: issue_id, issue_status: 6, voucher_id_to: "1234")
+
         post(api_webhooks_jira_url + "?secret=secret&issue_id=5", params: data)
+
+        project_item.reload
+        expect(project_item.user_secrets).to include("voucher_id" => "1234")
         expect(project_item.messages.last&.message).to eq("Voucher ID has been updated: 1234")
       end
 
       it "should remove voucher ID" do
-        project_item.update voucher_id: "4321"
+        project_item.update user_secrets: { "voucher_id": "4321" }
         data = create(:jira_webhook_response, :voucher_id_change, issue_id: issue_id, issue_status: 6, voucher_id_to: "")
+
         post(api_webhooks_jira_url + "?secret=secret&issue_id=5", params: data)
+
+        project_item.reload
+        expect(project_item.user_secrets).to include("voucher_id" => "")
         expect(project_item.messages.last&.message).to eq("Voucher has been revoked")
       end
     end
