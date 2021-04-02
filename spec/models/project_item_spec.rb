@@ -5,6 +5,7 @@ require "rails_helper"
 RSpec.describe ProjectItem do
   subject { create(:project_item) }
 
+  it { should be_valid }
   it { should validate_presence_of(:offer) }
   it { should validate_presence_of(:project) }
   it { should validate_presence_of(:status) }
@@ -75,6 +76,26 @@ RSpec.describe ProjectItem do
 
     it "should defaults to []" do
       expect(create(:project_item).reload.properties).to eq([])
+    end
+  end
+
+  context "#user_secrets" do
+    it "should allow empty hash" do
+      expect(create(:project_item, user_secrets: {})).to be_valid
+    end
+
+    it "should default to empty hash" do
+      expect(create(:project_item).reload.user_secrets).to eq({})
+    end
+
+    it "should forbid non-string values" do
+      subject = build(:project_item, user_secrets: { "key" => 123 })
+      subject.valid?
+      expect(subject.errors[:user_secrets].size).to eq(1)
+    end
+
+    it "should allow string values" do
+      expect(build(:project_item, user_secrets: { "key" => "123" })).to be_valid
     end
   end
 end

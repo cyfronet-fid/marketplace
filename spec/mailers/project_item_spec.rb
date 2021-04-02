@@ -5,10 +5,9 @@ require "rails_helper"
 RSpec.describe ProjectItemMailer, type: :mailer do
   let(:user) { create(:user) }
   let(:project) { create(:project, user: user) }
-
+  let(:project_item) { create(:project_item, project: project) }
 
   context "project_item created" do
-    let(:project_item) { build(:project_item, id: 1, project: project) }
     let(:mail) { described_class.created(project_item).deliver_now }
 
     it "sends email to project_item owner" do
@@ -26,7 +25,6 @@ RSpec.describe ProjectItemMailer, type: :mailer do
   end
 
   context "project_item change" do
-    let(:project_item) { create(:project_item, project: project) }
     before(:each) do
       project_item.new_status(status: "custom_created", status_type: :created)
       project_item.new_status(status: "custom_registered", status_type: :registered)
@@ -91,8 +89,6 @@ RSpec.describe ProjectItemMailer, type: :mailer do
 
   context "Rating service" do
     it "notifies about service rating possibility" do
-      project_item = create(:project_item, project: project)
-
       mail = described_class.rate_service(project_item).deliver_now
       encoded_body = mail.body.encoded
 
@@ -104,8 +100,6 @@ RSpec.describe ProjectItemMailer, type: :mailer do
 
   context "aod request" do
     it "notify if accepted" do
-      project_item = create(:project_item, project: project)
-
       mail = described_class.aod_accepted(project_item).deliver_now
       encoded_body = mail.body.encoded
 
@@ -115,7 +109,6 @@ RSpec.describe ProjectItemMailer, type: :mailer do
     end
 
     it "notify if voucher accepted with voucher_id" do
-      project_item = create(:project_item, project: project)
       project_item.voucher_id = "1234"
 
       mail = described_class.aod_voucher_accepted(project_item).deliver_now
@@ -126,8 +119,18 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       expect(encoded_body).to have_content("1234")
     end
 
+    it "notify if voucher accepted with user_secrets voucher_id" do
+      project_item.user_secrets["voucher_id"] = "1234"
+
+      mail = described_class.aod_voucher_accepted(project_item).deliver_now
+      encoded_body = mail.body.encoded
+
+      expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) service with voucher approved/)
+      expect(encoded_body).to match(/To redeem an Exoscale voucher:/)
+      expect(encoded_body).to have_content("1234")
+    end
+
     it "notify if voucher accepted without voucher_id" do
-      project_item = create(:project_item, project: project)
       project_item.voucher_id = "1234"
 
       mail = described_class.aod_voucher_accepted(project_item).deliver_now
@@ -139,8 +142,6 @@ RSpec.describe ProjectItemMailer, type: :mailer do
     end
 
     it "notify if voucher rejected with voucher_id" do
-      project_item = create(:project_item, project: project)
-
       mail = described_class.aod_voucher_rejected(project_item).deliver_now
       encoded_body = mail.body.encoded
 
@@ -149,8 +150,6 @@ RSpec.describe ProjectItemMailer, type: :mailer do
     end
 
     it "notify if voucher rejected without voucher_id" do
-      project_item = create(:project_item, project: project)
-
       mail = described_class.aod_voucher_rejected(project_item).deliver_now
       encoded_body = mail.body.encoded
 
