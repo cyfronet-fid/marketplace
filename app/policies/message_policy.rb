@@ -3,7 +3,7 @@
 class MessagePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(scope: %w[public user_direct])
+      scope.where(scope: %i[public user_direct])
     end
   end
 

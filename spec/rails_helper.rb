@@ -80,7 +80,7 @@ RSpec.configure do |config|
 
   # Re-run tests on failure to prevent random failures
   config.include RSpec::Repeat
-  config.around :each do |example|
+  config.around :each, :js do |example|
     repeat example, 4.times, verbose: true
   end
 end
