@@ -9,6 +9,7 @@ RSpec.feature "My Services" do
     let(:user) { create(:user) }
     let(:service) { create(:service) }
     let(:offer) { create(:offer, service: service) }
+    let(:project) { create(:project, user: user) }
 
     before { checkin_sign_in_as(user) }
 
@@ -25,7 +26,6 @@ RSpec.feature "My Services" do
     end
 
     scenario "I can see my projects services" do
-      project = create(:project, user: user)
       create(:project_item, project: project, offer: offer)
 
       visit project_services_path(project)
@@ -34,7 +34,6 @@ RSpec.feature "My Services" do
     end
 
     scenario "I can see project_item details" do
-      project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
       visit project_service_path(project, project_item)
@@ -65,7 +64,6 @@ RSpec.feature "My Services" do
     end
 
     scenario "I can see project_item change history", js: true do
-      project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
       project_item.new_status(status: "created", status_type: :created)
@@ -81,7 +79,6 @@ RSpec.feature "My Services" do
     end
 
     scenario "I can see voucher id" do
-      project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: create(:offer, voucherable: true),
                             voucher_id: "V123V")
 
@@ -90,8 +87,16 @@ RSpec.feature "My Services" do
       expect(page).to have_text(project_item.voucher_id)
     end
 
+    scenario "I can see voucher id if requested and delivered" do
+      project_item = create(:project_item, project: project, offer: create(:offer, voucherable: true),
+                            request_voucher: true, user_secrets: { "voucher_id" => "V123V" })
+
+      visit project_service_path(project, project_item)
+
+      expect(page).to have_text("V123V")
+    end
+
     scenario "I cannot see voucher entry" do
-      project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
       visit project_service_path(project, project_item)
@@ -100,7 +105,6 @@ RSpec.feature "My Services" do
     end
 
     scenario "I can see that voucher has been requested" do
-      project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: create(:offer, voucherable: true),
                             request_voucher: true)
 
@@ -110,7 +114,6 @@ RSpec.feature "My Services" do
     end
 
     scenario "I cannot see review section" do
-      project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
       visit project_service_path(project, project_item)
@@ -119,7 +122,6 @@ RSpec.feature "My Services" do
     end
 
     scenario "I can see review section" do
-      project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer, status: "ready", status_type: :ready)
       travel 1.day
       visit project_service_path(project, project_item)
@@ -129,7 +131,6 @@ RSpec.feature "My Services" do
     end
 
     scenario "I can ask question about my project_item" do
-      project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
       visit project_service_conversation_path(project, project_item)
@@ -140,7 +141,6 @@ RSpec.feature "My Services" do
     end
 
     scenario "question message is mandatory" do
-      project = create(:project, user: user)
       project_item = create(:project_item, project: project, offer: offer)
 
       visit project_service_conversation_path(project, project_item)

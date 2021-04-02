@@ -13,6 +13,14 @@ module ProjectItemsHelper
     (@project_item.ready? && @project_item.service_opinion.nil?)
   end
 
+  def voucher_id(project_item)
+    if project_item.voucher_id.present?
+      project_item.voucher_id
+    else
+      project_item.user_secrets["voucher_id"]
+    end
+  end
+
   def webpage(project_item)
     if project_item.external
       project_item.order_url
