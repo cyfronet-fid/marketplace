@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_31_110641) do
+ActiveRecord::Schema.define(version: 2021_04_06_133857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,17 @@ ActiveRecord::Schema.define(version: 2021_03_31_110641) do
     t.index ["email"], name: "index_data_administrators_on_email"
     t.index ["first_name"], name: "index_data_administrators_on_first_name"
     t.index ["last_name"], name: "index_data_administrators_on_last_name"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "action", null: false
+    t.string "eventable_type"
+    t.bigint "eventable_id"
+    t.jsonb "updates", array: true
+    t.jsonb "additional_info", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["eventable_type", "eventable_id"], name: "index_events_on_eventable_type_and_eventable_id"
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
