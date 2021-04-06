@@ -1,0 +1,26 @@
+:javascript
+  if (!window.popstateHandler) {
+    window.recommendationSourceId =
+      #{ @recommendation_source_id.nil? ? "null" : ("'" + sanitize(@recommendation_source_id) + "'").html_safe };
+
+    window.recommendationLastPageId =
+      #{ @last_page_id.nil? ? "null" : ("'" + sanitize(@last_page_id) + "'").html_safe };
+
+    window.recommendationPrevious =
+      #{ @recommendation_previous.nil? ? "null" : sanitize(@recommendation_previous) };
+
+    if (window.recommendationSourceId != null) {
+      sessionStorage.setItem('sourceId', window.recommendationSourceId);
+    }
+
+    if (window.recommendationLastPageId != null) {
+      sessionStorage.setItem('lastPageId', window.recommendationLastPageId);
+    }
+
+    if (window.recommendationPrevious != null) {
+      sessionStorage.setItem('previousId', window.recommendationPrevious.visit_id);
+    }
+
+    window.probesInitialized = false;
+  }
+  window.popstateHandler = false;

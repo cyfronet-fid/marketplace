@@ -50,7 +50,7 @@ jobs:
     - name: Setup and run brakeman
       run: |
         gem install brakeman
-        brakeman --exit-on-warn --quiet -f plain
+        brakeman --exit-on-warn --quiet -f plain --safe-methods sanitize
     - name: Setup DB, Run tests
       env:
         RAILS_ENV: test

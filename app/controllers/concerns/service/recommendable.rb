@@ -27,7 +27,7 @@ module Service::Recommendable
   def fetch_recommended
     # Set unique client id per device per system
     if cookies[:client_uid].nil?
-      cookies.permanent[:client_uid] = (SecureRandom.random_number(9e5) + 1e5).to_i + Time.now.getutc.to_i
+      cookies.permanent[:client_uid] = SecureRandom.uuid
     end
 
     size = get_services_size_by(ab_test(:recommendation_panel))
@@ -58,17 +58,15 @@ module Service::Recommendable
     def get_service_search_state
       service_search_state = {
         timestamp: Time.now.strftime("%Y-%m-%dT%H:%M:%S.%L%z"),
-        unique_id: cookies[:client_uid].to_i,
-        visit_id: cookies[:client_uid].to_i + Time.now.getutc.to_i,
+        unique_id: cookies[:client_uid],
+        visit_id: cookies[:targetId],
         page_id: "/service",
         panel_id: ab_test(:recommendation_panel),
         search_data: get_filters_by(@params),
-        logged_user: false
       }
 
       unless current_user.nil?
         service_search_state[:user_id] = current_user.id
-        service_search_state[:logged_user] = true
       end
 
       service_search_state
