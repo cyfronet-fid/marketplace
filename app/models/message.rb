@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class Message < ApplicationRecord
-  belongs_to :author,
-             class_name: "User",
-             optional: true
+  include Eventable
 
   enum author_role: {
     user: "user",
@@ -17,13 +15,18 @@ class Message < ApplicationRecord
     user_direct: "user_direct",
   }, _suffix: true
 
+  belongs_to :author,
+             class_name: "User",
+             optional: true
+  belongs_to :messageable, polymorphic: true
+
   validates :author_role, presence: true
   validates :author, presence: true, if: :role_user?
 
   validates :scope, presence: true
 
   validates :message, presence: true
-  belongs_to :messageable, polymorphic: true
+
 
   def question?
     author == messageable.user

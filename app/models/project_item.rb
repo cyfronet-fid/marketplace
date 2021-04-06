@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ProjectItem < ApplicationRecord
+  include Eventable
   include Customization
   include ProjectValidation
   include VoucherValidation
