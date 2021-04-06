@@ -1,17 +1,48 @@
-import Rails from '@rails/ujs'
+import Rails from '@rails/ujs';
+import Cookies from 'js-cookie';
+import { v1 as uuidv1 } from 'uuid';
 
 const WINDOW_EVENTS_HANDLERS = {
     beforeunload: async () => {
         if (history.length !== 1) {
-            await handle_any_event();
+            setCookies();
         }
+        window.probesInitialized = false;
     },
-    popstate: async () => await handle_any_event()
+    popstate: async (event) => popstate(event)
 };
 
-export default async function initProbes() {
+async function popstate(event) {
+    window.popstateHandler = true;
+
+    const target = get_target_by(null, null, location.pathname);
+
+    await call_user_action_controller({
+        timestamp: new Date().toISOString(),
+        source: get_source_by(),
+        target: target,
+        user_action: get_action_by()
+    });
+    window.recommendationSourceId = target.visit_id;
+    window.recommendationLastPageId = target.page_id;
+    sessionStorage.setItem("sourceId", target.visit_id);
+    sessionStorage.setItem("lastPageId", target.page_id);
+    _initProbes(true, true);
+}
+
+async function _initProbes(force, skipInitial) {
+    if (!force && window.probesInitialized) {
+        return;
+    }
+
+    window.probesInitialized = true;
+
+    setCookies();
+    if (window.recommendationPrevious && !skipInitial) {
+        await handleInitialNavigationEvent();
+    }
     // Handle all internal open in new tab/window that was not handled by click event
-    if (history.length === 1) {
+    else if (window.recommendationSourceId != null && !skipInitial) {
         await handle_any_event();
     }
 
@@ -32,18 +63,58 @@ export default async function initProbes() {
         for (let x = 0; x < actionsSize; x++) {
             add_dom_event_listener(elements[i], actions[x]);
         }
+        elements[i].addEventListener('mousedown', updateCookiesEventHandler);
+        elements[i].addEventListener('mouseup', updateCookiesEventHandler);
+        elements[i].addEventListener('contextmenu', updateCookiesEventHandler);
     }
+}
+
+export default async function initProbes() {
+    if (document.hasFocus()) {
+        await _initProbes();
+    } else {
+        setTimeout(() => _initProbes(), 5000);
+        window.addEventListener('focus', () => _initProbes());
+    }
+}
+
+let currentMouseTarget = null;
+
+function updateCookiesMoveHandler(event) {
+    setCookies(undefined, undefined, currentMouseTarget);
+}
+
+function updateCookiesEventHandler(event) {
+    currentMouseTarget = event.target;
+    setCookies(undefined, undefined, event.target);
+}
+
+function setCookies(targetId, source, element) {
+    if (targetId == null) {
+        targetId = uuidv1();
+    }
+
+    if (source == null) {
+        source = get_source_by(element, true);
+        source.visit_id = window.recommendationSourceId;
+    }
+
+    const expires = new Date(new Date().getTime() + 5000);
+
+    Cookies.set("source", JSON.stringify(source), {expires});
+    Cookies.set("targetId", targetId, {expires});
+    Cookies.set("lastPageId", window.location.pathname, {expires});
 }
 
 function add_dom_event_listener(element, action) {
     element.addEventListener(action, async (event) => {
         // IMPORTANT!!! In case when child dom element "a" (link) can't be tagged directly
         const isTargetElementLink = event.target.tagName.toLowerCase() === 'a';
+        const isTargetButton = event.target.tagName.toLowerCase() === 'button';
         const targetElement = isTargetElementLink ? event.target : element;
         if (targetElement.disabled) { return; }
-
-        if (is_new_tab_open(action, event)) {
-            await handle_outside_open_new_tab_event(targetElement);
+        if ((isTargetElementLink || isTargetButton) && !isOutsideUrl(targetElement)) {
+            setCookies(uuidv1(), get_source_by(element));
             return;
         }
 
@@ -69,31 +140,43 @@ function remove_browser_events_listeners() {
     }
 }
 
-async function handle_outside_open_new_tab_event(element) {
+function isOutsideUrl(element) {
     const href = element.getAttribute('href');
-    const isOutsideUrl = !!href && !href.includes(window.location.origin);
-    if (isOutsideUrl) {
-        await handle_any_event(element);
-    }
+    return !!href && !href.includes(window.location.origin) && !href.startsWith("/");
 }
 
 async function handle_any_event(element = null) {
+    const target = get_target_by(element);
+    const source = get_source_by(element);
     const body = {
         timestamp: new Date().toISOString(),
-        source: get_source_by(element),
-        target: get_target_by(element),
+        source: source,
+        target: target,
         user_action: get_action_by(element)
     };
 
-    await call_user_action_controller(body);
+    setCookies(target.visit_id, source)
 
-    localStorage.setItem("lastTargetVisitId", "" + body.target.visit_id);
-    localStorage.setItem("lastPageId", window.location.pathname);
+    await call_user_action_controller(body);
 
     remove_browser_events_listeners();
 }
 
+async function handleInitialNavigationEvent() {
+    await call_user_action_controller({
+        timestamp: new Date().toISOString(),
+        source: window.recommendationPrevious,
+        target: get_target_by(null, window.recommendationSourceId),
+        user_action: get_action_by()
+    });
+}
+
+
 const call_user_action_controller = (body) => {
+    if(body.source.visit_id == null) {
+        return;
+    }
+
     return fetch("/user_action", {
         method: "POST",
         headers: {
@@ -106,32 +189,21 @@ const call_user_action_controller = (body) => {
         .catch(error => console.log(error));
 }
 
-function is_new_tab_open(action, event) {
-    switch (action) {
-        case 'auxclick':
-            return event.button === 1;
-        case 'click':
-            return event.ctrlKey || event.shiftKey || event.metaKey;
-        default:
-            return false;
-    }
-}
-
 function get_event_actions_by(tagName) {
     switch(tagName.toLowerCase()) {
-        case 'input':
-            return ['input'];
-        case 'a':
-            return ['click', 'auxclick'];
-        default:
-            return ['click'];
+        // for now disable all JS based user actions, they'll return later
+        // case 'a':
+        //     return ['click', 'auxclick'];
+        // default:
+        //     return ['click'];
     }
+    return [];
 }
 
 function get_action_by(element) {
-    const is_ordered = window.location.pathname.includes("summary")
+    const is_ordered = !!(window.location.pathname.includes("summary")
         && element
-        && element.getAttribute("type") === "submit";
+        && element.getAttribute("type") === "submit");
 
     return {
         type: !!element ? element.tagName : "browser action",
@@ -161,22 +233,21 @@ function get_element_text(element) {
     }
 }
 
-function get_target_by(element) {
-    console.log(localStorage.getItem("nextPageId"))
-
+function get_target_by(element, visit_id, page_id) {
     return {
-        visit_id: +window.tabId + new Date().getTime() + 200,
-        page_id: get_target_url(element)
+        // visit_id: +window.tabId + new Date().getTime() + 200,
+        visit_id: visit_id || uuidv1(),
+        page_id: page_id || get_target_url(element)
     };
 }
 
-function get_source_by(element) {
-    const storageVisitId = +localStorage.getItem("lastTargetVisitId");
-    const newVisitId = +window.tabId + new Date().getTime();
+function get_source_by(element, pageIdOverride) {
+    const storageVisitId = sessionStorage.getItem("sourceId");
+    const newVisitId = uuidv1();
     const visitId = !!storageVisitId ? storageVisitId : newVisitId;
-    const lastPageId = localStorage.getItem("lastPageId");
+    const lastPageId = sessionStorage.getItem("lastPageId");
     const isBrowserEvent = !element;
-    const pageId = !!lastPageId && isBrowserEvent ? lastPageId : window.location.pathname;
+    const pageId = !!lastPageId && isBrowserEvent && !pageIdOverride ? lastPageId : window.location.pathname;
 
     return {
         visit_id: visitId,
