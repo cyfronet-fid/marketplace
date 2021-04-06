@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Project < ApplicationRecord
+  include Eventable
+
   CUSTOMER_TYPOLOGIES = {
     single_user: "single_user",
     research: "research",

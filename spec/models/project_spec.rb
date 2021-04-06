@@ -119,4 +119,45 @@ RSpec.describe Project do
                    issue_id: 1, issue_key: "MP-1")).to be_valid
     end
   end
+
+  context "events" do
+    it "should create an event on create" do
+      project = create(:project)
+      expect(Event.count).to eq(1)
+      expect(Event.first.eventable).to eq(project)
+      expect(Event.first.action).to eq("create")
+      expect(Event.first.additional_info).to eq({ eventable_type: "Project", project_id: project.id }.stringify_keys)
+    end
+
+    it "should create an event on update" do
+      project = create(:project, name: "XD", reason_for_access: "coz", webpage: "https://www.cyfronet.krakow.pl/")
+      project.update(name: "new name", reason_for_access: "hmm", webpage: "https://www.cyfronet.krakow.pl/")
+
+      expect(Event.count).to eq(2)
+      expect(Event.first.eventable).to eq(project)
+      expect(Event.first.action).to eq("create")
+      expect(Event.first.additional_info).to eq({ eventable_type: "Project", project_id: project.id }.stringify_keys)
+
+      expect(Event.second.eventable).to eq(project)
+      expect(Event.second.action).to eq("update")
+      expect(Event.second.additional_info).to eq({ eventable_type: "Project", project_id: project.id }.stringify_keys)
+      expect(Event.second.updates).to contain_exactly({ field: "name", before: "XD", after: "new name" }.stringify_keys,
+                                                      { field: "reason_for_access", before: "coz", after: "hmm" }.stringify_keys)
+    end
+
+    it "should create an event on delete" do
+      project = create(:project)
+      p_id = project.id
+      project.destroy
+
+      expect(Event.count).to eq(2)
+      expect(Event.first.eventable).to eq(nil)
+      expect(Event.first.action).to eq("create")
+      expect(Event.first.additional_info).to eq({ eventable_type: "Project", project_id: p_id }.stringify_keys)
+
+      expect(Event.second.eventable).to eq(nil)
+      expect(Event.second.action).to eq("delete")
+      expect(Event.second.additional_info).to eq({ eventable_type: "Project", project_id: p_id }.stringify_keys)
+    end
+  end
 end
