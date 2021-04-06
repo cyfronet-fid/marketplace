@@ -4,7 +4,7 @@
   %article
     %p
       = service_logo(service)
-      = truncate(service.description, length: 120)
+      = truncate(markdown(service.tagline), length: 120, escape: false)
   %footer
     .column-left
       %p
