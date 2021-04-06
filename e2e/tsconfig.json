@@ -1,0 +1,11 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "target": "es2015",
+    "lib": ["es2017", "dom"],
+    "types": ["cypress"],
+    "baseUrl": "./"
+  },
+  "include": ["**/*.ts"]
+}
