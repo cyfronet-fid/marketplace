@@ -1,0 +1,99 @@
+name: Integration tests
+on: [push]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:10.11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: mp_test,mp_development
+        ports:
+        - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      redis:
+        image: redis
+        ports:
+        - 6379:6379
+        
+    steps:
+    - name: Configure sysctl limits
+      run: |
+        sudo swapoff -a
+        sudo sysctl -w vm.swappiness=1
+        sudo sysctl -w fs.file-max=262144
+        sudo sysctl -w vm.max_map_count=262144
+    - name: Runs Elasticsearch
+      uses: elastic/elastic-github-actions/elasticsearch@master
+      with:
+        stack-version: 7.5.0
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.6.5
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '10'
+        check-latest: true
+    - name: Install yarn
+      run: |
+        npm install -g yarn
+        yarn
+    - name: Setup and run rubocop
+      run: |
+        gem install rubocop
+        bundle exec rubocop
+    - name: Setup and run brakeman
+      run: |
+        gem install brakeman
+        brakeman --exit-on-warn --quiet -f plain
+    - name: Install foreman
+      run: |
+        gem install foreman
+    - uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cache/Cypress
+          ./e2e/node_modules
+        key: my-cache-${{ runner.os }}-${{ hashFiles('./e2e/package-lock.json') }}
+    - name: Install e2e dependencies
+      run: npm i --prefix ./e2e
+    - name: Setup and seed db
+      env:
+        RAILS_ENV: development
+        MP_DATABASE_HOST: 127.0.0.1
+        MP_DATABASE_PORT: 5432
+        MP_DATABASE_USERNAME: postgres
+        MP_DATABASE_PASSWORD: password
+        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      run: |
+        bundle exec rake db:drop db:setup searchkick:reindex:all
+        bundle exec rails dev:prime
+    - name: Run cypress
+      uses: cypress-io/github-action@v2
+      env:
+        RAILS_ENV: development
+        MP_DATABASE_HOST: 127.0.0.1
+        MP_DATABASE_PORT: 5432
+        MP_DATABASE_USERNAME: postgres
+        MP_DATABASE_PASSWORD: password
+        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      with:
+        project: ./e2e
+        start: bundle exec rails server -d
+        command: 'npm run cy:run --prefix ./e2e'
+        wait-on: 'http://localhost:3000'
+        browser: chrome
+        headless: true
+        quiet: true
+        record: false
+        install: false
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: cypress-screenshots
+        path: ./e2e/cypress/screenshots
