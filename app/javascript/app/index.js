@@ -30,7 +30,7 @@ library.add(fas, far);
 
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
-import initProbes from "./user-action";
+import initProbes from "./user_action";
 import assignTabIdToWindow from "./tabs";
 
 const application = Application.start();

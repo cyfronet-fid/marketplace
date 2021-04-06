@@ -37,6 +37,7 @@ class Services::SummariesController < Services::ApplicationController
       if @project_item.persisted?
         session.delete(session_key)
         session.delete(:selected_project)
+        send_user_action
         Matomo::SendRequestJob.perform_later(@project_item, "AddToProject")
         redirect_to project_service_path(@project_item.project, @project_item),
                                   notice: "Service ordered successfully"
@@ -61,5 +62,24 @@ class Services::SummariesController < Services::ApplicationController
 
     def message_text
       params[:project_item][:additional_comment]
+    end
+
+    def send_user_action
+      if Mp::Application.config.recommender_host.nil?
+        return
+      end
+
+      source_id = SecureRandom.uuid
+
+      request_body = {
+        timestamp: Time.now.utc.iso8601,
+        source: JSON.parse(@recommendation_previous),
+        target: { page_id: polymorphic_url(@service, routing_type: :path), visit_id: source_id },
+        action: { order: true, type: "button", text: "" },
+        user_id: current_user.id,
+        unique_id: cookies[:client_uid]
+      }
+
+      Probes::ProbesJob.perform_later(request_body.to_json)
     end
 end

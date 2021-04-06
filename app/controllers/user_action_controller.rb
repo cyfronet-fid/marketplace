@@ -3,11 +3,6 @@
 class UserActionController < ApplicationController
   # Store user action in recommendation system
   def create
-    # Set unique client id per device per system
-    if cookies[:client_uid].nil?
-      cookies.permanent[:client_uid] = (SecureRandom.random_number(9e5) + 1e5).to_i + Time.now.getutc.to_i
-    end
-
     if Mp::Application.config.recommender_host.nil?
       return
     end
@@ -23,9 +18,7 @@ class UserActionController < ApplicationController
       request_body[:user_id] = current_user.id
     end
 
-    request_body[:unique_id] = cookies[:client_uid].to_i
-    request_body[:source]["visit_id"] = request_body[:source]["visit_id"].to_i
-    request_body[:target]["visit_id"] = request_body[:target]["visit_id"].to_i
+    request_body[:unique_id] = cookies[:client_uid]
 
     unless request_body[:source]["root"]["service_id"].nil?
       request_body[:source]["root"]["service_id"] = request_body[:source]["root"]["service_id"].to_i

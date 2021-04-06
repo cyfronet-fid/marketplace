@@ -356,6 +356,7 @@ li {
   box-shadow: 0 0.125rem 0.25rem $palette-gray-30;
 
   header {
+    z-index: unset;
     align-items: center;
     padding: 1.4rem 1rem 0;
   }
