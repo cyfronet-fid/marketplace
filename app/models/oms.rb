@@ -45,6 +45,11 @@ class Oms < ApplicationRecord
     Project.all
   end
 
+  def associated_events
+    # TODO: implement OMS project association - in authorization task #1883
+    Event.all
+  end
+
   private
     def single_default_oms?
       if Oms.where.not(name: name).pluck(:default).any?

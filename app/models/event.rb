@@ -19,6 +19,22 @@ class Event < ApplicationRecord
   validates :updates, absence: true, unless: :action_update?
   validate :schema_valid?, if: :action_update?
 
+  def message_project_item?
+    additional_info["eventable_type"] == "Message" && additional_info["project_item_id"].present?
+  end
+
+  def message?
+    additional_info["eventable_type"] == "Message"
+  end
+
+  def project?
+    additional_info["eventable_type"] == "Project"
+  end
+
+  def project_item?
+    additional_info["eventable_type"] == "ProjectItem"
+  end
+
   def schema_valid?
     JSON::Validator.validate!(UPDATES_SCHEME, updates)
   rescue JSON::Schema::ValidationError => e
