@@ -5,7 +5,10 @@ require "rails_helper"
 RSpec.describe OrderingApi::V1::EventSerializer do
   it "it properly serializes a project item event" do
     event = Event.create(action: :update,
-                         updates: [{ field: "name", before: "zxc", after: "qwe" }],
+                         updates: [
+                           { field: "name", before: "zxc", after: "qwe" },
+                           { field: "user_secrets", before: "123", after: "456" },
+                         ],
                          additional_info: { eventable_type: "ProjectItem", project_id: 1, project_item_id: 1 })
 
     serialized = described_class.new(event).as_json
@@ -19,8 +22,13 @@ RSpec.describe OrderingApi::V1::EventSerializer do
         {
           field: "name",
           before: "zxc",
-          after: "qwe"
-        }
+          after: "qwe",
+        },
+        {
+          field: "user_secrets",
+          before: "<OBFUSCATED>",
+          after: "<OBFUSCATED>",
+        },
       ]
     }
 

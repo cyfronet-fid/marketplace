@@ -22,7 +22,13 @@ class OrderingApi::V1::EventSerializer < ActiveModel::Serializer
   end
 
   def changes
-    object.updates
+    object.updates&.map do |update|
+      if update["field"] == "user_secrets"
+        update["after"] = "<OBFUSCATED>"
+        update["before"] = "<OBFUSCATED>"
+      end
+      update
+    end
   end
 
   def project_id

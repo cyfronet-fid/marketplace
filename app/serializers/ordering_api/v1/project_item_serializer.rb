@@ -6,6 +6,7 @@ class OrderingApi::V1::ProjectItemSerializer < ActiveModel::Serializer
   attribute :status
   attribute :attribute_extractor, key: :attributes
   attribute :oms_params, if: -> { object.offer&.oms_params.present? }
+  attribute :user_secrets
 
   def id
     object.iid
@@ -32,5 +33,12 @@ class OrderingApi::V1::ProjectItemSerializer < ActiveModel::Serializer
 
   def oms_params
     object.offer.oms_params
+  end
+
+  def user_secrets
+    non_obfuscated = instance_options[:non_obfuscated_user_secrets] || []
+    object.user_secrets&.map { |k, v|
+      non_obfuscated.include?(k) ? [k, v] : [k, "<OBFUSCATED>"]
+    }.to_h
   end
 end
