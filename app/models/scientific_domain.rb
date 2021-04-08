@@ -2,6 +2,7 @@
 
 class ScientificDomain < ApplicationRecord
   include Parentable
+  include LogoAttachable
 
   has_one_attached :logo
 
@@ -14,6 +15,8 @@ class ScientificDomain < ApplicationRecord
   has_many :users, through: :user_scientific_domains
 
   validates :name, presence: true, uniqueness: { scope: :ancestry }
+  validates :logo, blob: { content_type: :image }
+  validate :logo_variable, on: [:create, :update]
 
   def self.names
     all.map(&:name)
