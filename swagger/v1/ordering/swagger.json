@@ -3,7 +3,7 @@
   "info": {
     "title": "EOSC Marketplace Ordering API",
     "version": "v1",
-    "description": "Ordering API"
+    "description": "API for Order Management Systems to integrate with EOSC Marketplace ordering process"
   },
   "paths": {
     "/api/v1/oms/{oms_id}/events": {
@@ -459,7 +459,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "project/project_item/project_item_write.json"
+                "$ref": "project/project_item/project_item_update.json"
               }
             }
           }

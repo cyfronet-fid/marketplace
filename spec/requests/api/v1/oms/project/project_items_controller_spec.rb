@@ -138,7 +138,7 @@ RSpec.describe "OMS Project items API", swagger_doc: "v1/ordering/swagger.json" 
       produces "application/json"
       consumes "application/json"
       security [ authentication_token: [] ]
-      parameter name: :project_item_payload, in: :body, schema: { "$ref" => "project/project_item/project_item_write.json" }
+      parameter name: :project_item_payload, in: :body, schema: { "$ref" => "project/project_item/project_item_update.json" }
 
       response 200, "project item updated" do
         schema "$ref" => "project/project_item/project_item_read.json"
