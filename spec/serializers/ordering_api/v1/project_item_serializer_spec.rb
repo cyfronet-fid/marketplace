@@ -23,7 +23,8 @@ RSpec.describe OrderingApi::V1::ProjectItemSerializer do
         request_voucher: project_item.request_voucher,
         order_type: project_item.order_type,
       },
-      oms_params: project_item.offer.oms_params
+      oms_params: project_item.offer.oms_params,
+      user_secrets: {},
     }
 
     expect(serialized).to eq(expected)
@@ -49,6 +50,7 @@ RSpec.describe OrderingApi::V1::ProjectItemSerializer do
         request_voucher: project_item.request_voucher,
         order_type: project_item.order_type,
       },
+      user_secrets: {},
     }
 
     expect(serialized).to eq(expected)
@@ -74,8 +76,27 @@ RSpec.describe OrderingApi::V1::ProjectItemSerializer do
         request_voucher: false,
         order_type: nil,
       },
+      user_secrets: {},
     }
 
     expect(serialized).to eq(expected)
+  end
+
+  context "#user_secrets" do
+    it "obfuscates values" do
+      project_item = create(:project_item, user_secrets: { "key-1" => "value", "key-2" => "value" })
+
+      serialized = described_class.new(project_item).as_json
+
+      expect(serialized[:user_secrets]).to eq({ "key-1" => "<OBFUSCATED>", "key-2" => "<OBFUSCATED>" })
+    end
+
+    it "obfuscates non-excluded values" do
+      project_item = create(:project_item, user_secrets: { "key-1" => "value", "key-2" => "value" })
+
+      serialized = described_class.new(project_item, non_obfuscated_user_secrets: %w[key-1 other]).as_json
+
+      expect(serialized[:user_secrets]).to eq({ "key-1" => "value", "key-2" => "<OBFUSCATED>" })
+    end
   end
 end
