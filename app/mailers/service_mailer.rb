@@ -16,7 +16,7 @@ class ServiceMailer < ApplicationMailer
     @service = service
     @common_categories = common_categories
     @common_scientific_domains = common_scientific_domains
-    if @service.logo.attached?
+    if @service.logo.attached? && @service.logo.variable?
       attachments.inline["logo.png"] = File.read(ActiveStorage::Blob.service.send(:path_for, @service.logo.key))
     end
     interests = []
