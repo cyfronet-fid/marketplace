@@ -35,7 +35,7 @@
             "name": "from_timestamp",
             "in": "query",
             "required": true,
-            "description": "List events after",
+            "description": "List events after, ISO8601 format",
             "schema": {
               "type": "string"
             }
@@ -57,6 +57,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "event/event_index.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
                 }
               }
             }
@@ -445,7 +455,7 @@
             }
           },
           "400": {
-            "description": "project item update validation failed",
+            "description": "project item update validation failed wrong user secrets",
             "content": {
               "application/json": {
                 "schema": {
@@ -459,7 +469,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "project/project_item/project_item_write.json"
+                "$ref": "project/project_item/project_item_update.json"
               }
             }
           }

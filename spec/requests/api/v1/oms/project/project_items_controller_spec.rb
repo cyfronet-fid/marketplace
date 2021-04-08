@@ -27,14 +27,13 @@ RSpec.describe "OMS Project items API", swagger_doc: "v1/ordering/swagger.json" 
                 description: "Number of returned elements"
 
       response 200, "project items found" do
-        # TODO: test user_secrets obfuscation
         schema "$ref" => "project/project_item/project_item_index.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project_items) {
           [
             create(:project_item, iid: 1),
-            create(:project_item, iid: 2),
+            create(:project_item, iid: 2, user_secrets: { "key": "value" }),
             create(:project_item, iid: 3),
             create(:project_item, iid: 4)
           ]
@@ -49,7 +48,13 @@ RSpec.describe "OMS Project items API", swagger_doc: "v1/ordering/swagger.json" 
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to eq({ project_items: project_items[1..2].map { |pi| OrderingApi::V1::ProjectItemSerializer.new(pi).as_json } }.deep_stringify_keys)
+          expect(data).to eq({
+                               project_items: project_items[1..2].map { |pi|
+                                 serialized = OrderingApi::V1::ProjectItemSerializer.new(pi).as_json
+                                 serialized[:user_secrets] = serialized[:user_secrets].transform_values { |_| "<OBFUSCATED>" }
+                                 serialized
+                               }
+                             }.deep_stringify_keys)
         end
       end
 
@@ -97,11 +102,10 @@ RSpec.describe "OMS Project items API", swagger_doc: "v1/ordering/swagger.json" 
       security [ authentication_token: [] ]
 
       response 200, "project item found" do
-        # TODO: test user_secrets obfuscation
         schema "$ref" => "project/project_item/project_item_read.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project_item) { create(:project_item) }
+        let(:project_item) { create(:project_item, user_secrets: { "key": "value" }) }
         let(:project) { create(:project, project_items: [project_item]) }
 
         let(:oms_id) { oms.id }
@@ -111,7 +115,11 @@ RSpec.describe "OMS Project items API", swagger_doc: "v1/ordering/swagger.json" 
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to eq(OrderingApi::V1::ProjectItemSerializer.new(project_item).as_json.deep_stringify_keys)
+
+          serialized = OrderingApi::V1::ProjectItemSerializer.new(project_item).as_json
+          serialized[:user_secrets] = serialized[:user_secrets].transform_values { |_| "<OBFUSCATED>" }
+
+          expect(data).to eq(serialized.deep_stringify_keys)
         end
       end
 
@@ -138,14 +146,19 @@ RSpec.describe "OMS Project items API", swagger_doc: "v1/ordering/swagger.json" 
       produces "application/json"
       consumes "application/json"
       security [ authentication_token: [] ]
-      parameter name: :project_item_payload, in: :body, schema: { "$ref" => "project/project_item/project_item_write.json" }
+      parameter name: :project_item_payload, in: :body, schema: { "$ref" => "project/project_item/project_item_update.json" }
 
       response 200, "project item updated" do
         schema "$ref" => "project/project_item/project_item_read.json"
 
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project_item) { create(:project_item, status_type: "created", status: "old value") }
+        let(:project_item) { create(
+          :project_item,
+          status_type: :created,
+          status: "old value",
+          user_secrets: { "other": "something" }
+        ) }
         let(:project) { create(:project, project_items: [project_item]) }
 
         let(:oms_id) { oms.id }
@@ -157,16 +170,21 @@ RSpec.describe "OMS Project items API", swagger_doc: "v1/ordering/swagger.json" 
             "status": {
               "value": "new value",
               "type": "ready"
+            },
+            "user_secrets": {
+              "key": "value"
             }
           }
         }
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data["status"]).to eq({ value: "new value", type: "ready" }.deep_stringify_keys)
+          expect(data["user_secrets"]).to eq({ other: "<OBFUSCATED>", key: "value" }.deep_stringify_keys)
 
           project_item.reload
           expect(project_item.status).to eq("new value")
           expect(project_item.status_type).to eq("ready")
+          expect(project_item.user_secrets).to eq({ other: "something", key: "value" }.deep_stringify_keys)
         end
       end
 
@@ -200,8 +218,38 @@ RSpec.describe "OMS Project items API", swagger_doc: "v1/ordering/swagger.json" 
         end
       end
 
-      response 400, "project item update validation failed wrong user secrets", document: false do
-        # TODO: write this test after we add user secrets to project_item
+      response 400, "project item update validation failed wrong user secrets" do
+        schema "$ref" => "error.json"
+
+        let(:oms_admin) { create(:user) }
+        let(:oms) { create(:oms, administrators: [oms_admin]) }
+        let(:project_item) { create(:project_item) }
+        let(:project) { create(:project, project_items: [project_item]) }
+
+        let(:oms_id) { oms.id }
+        let(:p_id) { project.id }
+        let(:pi_id) { project_item.iid }
+        let(:"X-User-Token") { oms_admin.authentication_token }
+        let(:project_item_payload) {
+          {
+            "user_secrets": {
+              "key": 123
+            }
+          }
+        }
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({
+                               error: {
+                                 user_secrets: [
+                                   "values must be strings"
+                                 ]
+                               }
+                             }.deep_stringify_keys)
+
+          project_item.reload
+          expect(project_item.user_secrets).to eq({})
+        end
       end
     end
   end
