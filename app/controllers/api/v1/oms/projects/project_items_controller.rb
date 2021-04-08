@@ -6,28 +6,22 @@ class Api::V1::Oms::Projects::ProjectItemsController < Api::V1::Oms::ApiControll
   before_action :validate_payload, only: :update
 
   def index
-    # TODO: Obfuscate user secrets
     @from_id = params[:from_id].present? ? params[:from_id] : 0
     @limit = params[:limit].present? ? params[:limit] : 20
     load_project_items
-    render json: { project_items: @project_items.map { |pi| OrderingApi::V1::ProjectItemSerializer.new(pi) } }
+    render json: { project_items: @project_items.map { |pi| serialize_with_obfuscation(pi) } }
   end
 
   def show
-    # TODO: Obfuscate user secrets
-    render json: OrderingApi::V1::ProjectItemSerializer.new(@project_item).as_json
+    render json: serialize_with_obfuscation(@project_item)
   end
 
   def update
-    # TODO: add user_secrets update option
     attributes = permitted_attributes(@project_item)
 
-    transformed = Hash.new
-    transformed[:status] = attributes[:status][:value] if attributes[:status].present?
-    transformed[:status_type] = attributes[:status][:type] if attributes[:status].present?
-
-    if @project_item.update(transformed)
-      render json: OrderingApi::V1::ProjectItemSerializer.new(@project_item).as_json
+    if @project_item.update(transform(attributes))
+      excluded_secret_keys = attributes[:user_secrets].present? ? attributes[:user_secrets].keys : []
+      render json: serialize_with_obfuscation(@project_item, excluded_secret_keys)
     else
       render json: { error: @project_item.errors.messages }, status: 400
     end
@@ -59,5 +53,21 @@ class Api::V1::Oms::Projects::ProjectItemsController < Api::V1::Oms::ApiControll
       )
     rescue JSON::Schema::ValidationError => e
       render json: { error: e.message }, status: 400
+    end
+
+    def transform(attributes)
+      transformed = Hash.new
+      if attributes[:status].present?
+        transformed[:status] = attributes[:status][:value]
+        transformed[:status_type] = attributes[:status][:type]
+      end
+      if attributes[:user_secrets].present?
+        transformed[:user_secrets] = @project_item.user_secrets.merge(attributes[:user_secrets])
+      end
+      transformed
+    end
+
+    def serialize_with_obfuscation(project_item, excluded = [])
+      OrderingApi::V1::ProjectItemSerializer.new(project_item, non_obfuscated_user_secrets: excluded).as_json
     end
 end

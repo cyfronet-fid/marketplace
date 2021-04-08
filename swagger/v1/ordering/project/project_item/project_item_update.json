@@ -14,7 +14,7 @@
     },
     "user_secrets": {"type": "object"}
   },
-  "oneOf": [
+  "anyOf": [
     {
       "required": [
         "status"
