@@ -9,8 +9,14 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- OMS representation (@wujuu)
+- Message author_role and scope (@jswk)
+- ProjectItem user_secrets (@jswk)
+- Events representation (@wujuu)
+- Ordering API endpoints v1 (@wujuu)
 
 ### Changed
+- Generalize ProjectItem status (@jswk)
 
 ### Deprecated
 
