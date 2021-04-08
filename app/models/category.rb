@@ -6,6 +6,7 @@ class Category < ApplicationRecord
 
 
   include Parentable
+  include LogoAttachable
 
   # This callback need to be defined byfore dependent: :destroy
   # relation, because in this case project_item matter. This callback need to be
@@ -22,6 +23,8 @@ class Category < ApplicationRecord
   has_many :users, through: :user_categories
 
   validates :name, presence: true, uniqueness: { scope: :ancestry }
+  validates :logo, blob: { content_type: :image }
+  validate :logo_variable, on: [:create, :update]
 
   after_destroy :update_main_categories!
 
