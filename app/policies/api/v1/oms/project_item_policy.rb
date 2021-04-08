@@ -17,7 +17,7 @@ class Api::V1::Oms::ProjectItemPolicy < ApplicationPolicy
 
   def permitted_attributes
     [
-      :user_secrets,
+      user_secrets: {},
       status: [:value, :type]
     ]
   end
