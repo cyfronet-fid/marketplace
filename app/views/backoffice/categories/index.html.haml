@@ -14,7 +14,7 @@
       - category = record[1]
       %li.list-group-item
         = link_to backoffice_category_path(record.last) do
-          - if category.logo.attached?
+          - if category.logo.attached? && category.logo.variable?
             = image_tag category.logo.variant(resize: "32x32")
           = record.first
         - if policy([:backoffice, category]).destroy?
