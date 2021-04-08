@@ -40,7 +40,7 @@ RSpec.configure do |config|
         title: "EOSC Marketplace Ordering API",
         version: "v1",
         # TODO: Change description
-        description: "Ordering API"
+        description: "API for Order Management Systems to integrate with EOSC Marketplace ordering process"
       },
       paths: {},
       components: {
