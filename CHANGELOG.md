@@ -6,17 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [Unreleased]
-
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
+## [3.10.1] 21-04-09
 
 ### Fixed
+- Provider mapping errors handling in REST and JMS importers (@goreck888)
 
 ## [3.10.0] 2021-04-01
 
