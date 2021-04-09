@@ -95,16 +95,19 @@ module Importable
   end
 
   def map_provider(prov_eid, eic_base_url, token: nil, unirest: Unirest, retry_attempts: 3, actual_try: 0)
-    mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eic",
-                                                       "provider_sources.eid": prov_eid)
-    if mapped_provider.nil?
-      prov = Importers::Request.new(eic_base_url, "provider", unirest: unirest, token: token, id: prov_eid).call
-      provider  = Provider.find_or_create_by(name: prov.body["name"])
-      provider.update(Importers::Provider.new(prov.body, Time.now.to_i, "rest").call)
-      ProviderSource.create!(provider_id: provider.id, source_type: "eic", eid: prov_eid)
-      provider
-    else
-      mapped_provider
+    if prov_eid.present?
+      mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eic",
+                                                         "provider_sources.eid": prov_eid)
+
+      if mapped_provider.nil?
+        prov = Importers::Request.new(eic_base_url, "provider", unirest: unirest, token: token, id: prov_eid).call
+        provider  = Provider.find_or_create_by(name: prov.body["name"])
+        provider.update(Importers::Provider.new(prov.body, Time.now.to_i, "rest").call)
+        ProviderSource.create!(provider_id: provider.id, source_type: "eic", eid: prov_eid)
+        provider
+      else
+        mapped_provider
+      end
     end
   rescue Errno::ECONNREFUSED
     actual_try += 1

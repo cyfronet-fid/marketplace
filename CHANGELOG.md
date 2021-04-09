@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Default upstream source setting for REST and JMS importers in the Provider model (@goreck888)
+- Provider mapping errors handling in REST and JMS importers (@goreck888)
 
 ## [3.10.0] 2021-04-01
 
