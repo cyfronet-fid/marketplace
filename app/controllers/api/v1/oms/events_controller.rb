@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 class Api::V1::Oms::EventsController < Api::V1::Oms::ApiController
-  before_action :handle_timestamp
-  before_action :handle_limit
+  before_action :find_and_authorize_oms
+  before_action :handle_timestamp,  only: [:index]
+  before_action :handle_limit, only: [:index]
+  before_action :load_events, only: [:index]
 
   def index
-    load_events
     render json: { events: @events.map { |e| OrderingApi::V1::EventSerializer.new(e) } }
   end
 
-
   private
     def load_events
-      @events = policy_scope(@oms.associated_events).limit(@limit).where("created_at > ?", @from_timestamp).order(:created_at)
+      @events = policy_scope(@oms.events).limit(@limit).where("events.created_at > ?", @from_timestamp).order("events.created_at")
     end
 
     def handle_timestamp

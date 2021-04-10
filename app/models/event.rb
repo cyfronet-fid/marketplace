@@ -2,6 +2,12 @@
 
 class Event < ApplicationRecord
   belongs_to :eventable, polymorphic: true
+  belongs_to :project, -> { where(events: { eventable_type: "Project" }).includes(:events) },
+             foreign_key: "eventable_id", optional: true
+  belongs_to :project_item, -> { where(events: { eventable_type: "ProjectItem" }).includes(:events) },
+             foreign_key: "eventable_id", optional: true
+  belongs_to :message, -> { where(events: { eventable_type: "Message" }).includes(:events) },
+             foreign_key: "eventable_id", optional: true
 
   enum action: {
     create: "create",

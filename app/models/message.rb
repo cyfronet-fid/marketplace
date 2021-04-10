@@ -19,6 +19,10 @@ class Message < ApplicationRecord
              class_name: "User",
              optional: true
   belongs_to :messageable, polymorphic: true
+  belongs_to :project_item, -> { where(messages: { messageable_type: "ProjectItem" }).includes(:messages) },
+             foreign_key: "messageable_id", optional: true
+  belongs_to :project, -> { where(messages: { messageable_type: "Project" }).includes(:messages) },
+             foreign_key: "messageable_id", optional: true
 
   validates :author_role, presence: true
   validates :author, presence: true, if: :role_user?

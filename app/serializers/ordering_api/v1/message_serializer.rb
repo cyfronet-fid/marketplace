@@ -4,7 +4,7 @@ class OrderingApi::V1::MessageSerializer < ActiveModel::Serializer
   attribute :id
   attribute :author
   attribute :message, key: :content
-  attribute :scope
+  attribute :message_scope, key: :scope
   attributes :created_at, :updated_at
 
   def author
@@ -15,9 +15,8 @@ class OrderingApi::V1::MessageSerializer < ActiveModel::Serializer
     }
   end
 
-  def scope
-    # TODO: absolutely no idea why it doesn't work like attribute :id, :created_at or any other attribute...
-    # TODO: and you have to specify this in this method
+  def message_scope
+    # scope is a reserved keyword in ActiveModel::Serializer
     object.scope
   end
 
