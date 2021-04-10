@@ -14,7 +14,7 @@ describe OrderingApi::AddSombo do
     expect(Oms.first.administrators.first.first_name).to eq("SOMBO admin")
   end
 
-  it "doesnt create SOMBO OMS and SOMBO admin if they exist" do
+  it "doesn't create SOMBO OMS and SOMBO admin if they exist" do
     admin = create(:user, first_name: "SOMBO admin", last_name: "SOMBO admin", email: "sombo@sombo.com", uid: "iamasomboadmin")
     create(:oms, name: "SOMBO", type: :global, default: true, custom_params: { order_target: { mandatory: false } }, administrators: [admin])
     described_class.new.call
@@ -26,7 +26,7 @@ describe OrderingApi::AddSombo do
     expect(Oms.first.administrators.first.first_name).to eq("SOMBO admin")
   end
 
-  it "if updates offers' oms_params properly" do
+  it "updates offers' oms_params properly" do
     offer1 = create(:offer, primary_oms: nil, service: create(:service, order_target: "admin@admin.pl"))
     service = create(:service, order_target: "data@data.pl")
     offer2 = create(:offer, primary_oms: nil, service: service)

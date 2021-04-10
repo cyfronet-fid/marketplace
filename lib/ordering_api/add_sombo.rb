@@ -18,9 +18,11 @@ module OrderingApi
         oms.administrators = [sombo_admin]
       end
 
-      Offer.all.each do |o|
-        if o.current_oms == sombo && o.service.order_target.present?
-          o.update(oms_params: { order_target: o.service.order_target })
+      Service.all.each do |s|
+        s.offers.each do |o|
+          if o.current_oms == sombo && s.order_target.present?
+            o.update(oms_params: { order_target: s.order_target })
+          end
         end
       end
     end
