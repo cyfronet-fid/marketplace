@@ -33,45 +33,72 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
         schema "$ref" => "message/message_index.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:messages) {
+        let(:other_oms) { create(:oms, administrators: [oms_admin]) }
+
+        let(:project_item1) { create(:project_item, offer: build(:offer, primary_oms: oms)) }
+        let(:project_item2) { create(:project_item, offer: build(:offer, primary_oms: other_oms)) }
+        let(:project) { create(:project, project_items: [project_item1, project_item2]) }
+
+        let!(:messages) {
           [
-            create(:message, id: 1),
-            create(:message, id: 2),
-            create(:message, id: 3),
-            create(:message, id: 4)
+            create(:message, id: 1, messageable: project),
+            create(:message, id: 2, messageable: project_item1),
+            create(:message, id: 3, messageable: project_item2),
+            create(:message, id: 4, messageable: project),
+            create(:message, id: 5, messageable: project_item1),
+            create(:message, id: 6, messageable: project_item2)
           ]
         }
-        let(:project) { create(:project, messages: messages) }
 
-        let(:from_id) { 1 }
-        let(:limit) { 2 }
         let(:oms_id) { oms.id }
         let(:project_id) { project.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to eq({ messages: messages[1..2].map { |m| OrderingApi::V1::MessageSerializer.new(m).as_json } }.deep_stringify_keys)
+          expect(data).to eq({ messages: messages.values_at(0, 3).map { |m| OrderingApi::V1::MessageSerializer.new(m).as_json } }.deep_stringify_keys)
         end
       end
 
-      response 200, "project item messages found", document: false do
+      response 200, "project_item messages found", document: false do
         schema "$ref" => "message/message_index.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:messages) {
+        let(:other_oms) { create(:oms, administrators: [oms_admin]) }
+
+        let(:project_item1) { create(:project_item, offer: build(:offer, primary_oms: oms), iid: 1) }
+        let(:project_item2) { create(:project_item, offer: build(:offer, primary_oms: other_oms), iid: 2) }
+        let(:project) { create(:project, project_items: [project_item1, project_item2]) }
+
+        let!(:messages) {
           [
-            create(:message, id: 1),
-            create(:message, id: 2),
-            create(:message, id: 3),
-            create(:message, id: 4)
+            create(:message, id: 1, messageable: project),
+            create(:message, id: 2, messageable: project_item1),
+            create(:message, id: 3, messageable: project_item2),
+            create(:message, id: 4, messageable: project),
+            create(:message, id: 5, messageable: project_item1),
+            create(:message, id: 6, messageable: project_item2)
           ]
         }
-        let(:project_item) { create(:project_item, messages: messages) }
+
+        let(:oms_id) { oms.id }
+        let(:project_id) { project.id }
+        let(:project_item_id) { project_item1.iid }
+        let(:"X-User-Token") { oms_admin.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ messages: messages.values_at(1, 4).map { |m| OrderingApi::V1::MessageSerializer.new(m).as_json } }.deep_stringify_keys)
+        end
+      end
+
+      response 200, "messages found but were empty", document: false do
+        schema "$ref" => "message/message_index.json"
+        let(:oms_admin) { create(:user) }
+        let(:oms) { create(:oms, administrators: [oms_admin]) }
+        let(:project_item) { create(:project_item, offer: create(:offer, primary_oms: oms), iid: 1) }
         let(:project) { create(:project, project_items: [project_item]) }
 
-        let(:from_id) { 1 }
-        let(:limit) { 2 }
         let(:oms_id) { oms.id }
         let(:project_id) { project.id }
         let(:project_item_id) { project_item.iid }
@@ -79,17 +106,59 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to eq({ messages: messages[1..2].map { |m| OrderingApi::V1::MessageSerializer.new(m).as_json } }.deep_stringify_keys)
+          expect(data).to eq({ messages: [] }.deep_stringify_keys)
+        end
+      end
+
+      response 401, "user not recognized" do
+        schema "$ref" => "error.json"
+        let(:oms_id) { 1 }
+        let(:project_id) { 1 }
+        let(:"X-User-Token") { "asdasdasd" }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "You need to sign in or sign up before continuing." }.deep_stringify_keys)
+        end
+      end
+
+      response 403, "OMS not authorized" do
+        schema "$ref" => "error.json"
+        let(:oms_admin) { create(:user) }
+        let(:user) { create(:user) }
+        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+
+        let(:oms_id) { oms.id }
+        let(:project_id) { 9999 }
+        let(:"X-User-Token") { user.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "You are not authorized to perform this action." }.deep_stringify_keys)
+        end
+      end
+
+      response 404, "OMS not found" do
+        schema "$ref" => "error.json"
+        let(:user) { create(:user) }
+
+        let(:oms_id) { 9999 }
+        let(:project_id) { 9999 }
+        let(:"X-User-Token") { user.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "OMS not found" }.deep_stringify_keys)
         end
       end
 
       response 404, "project not found" do
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
-        let(:oms) { create(:oms, administrators: [oms_admin]) }
+        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
 
         let(:oms_id) { oms.id }
-        let(:project_id) { 1 }
+        let(:project_id) { 9999 }
         let(:"X-User-Token") { oms_admin.authentication_token }
 
         run_test! do |response|
@@ -101,12 +170,12 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
       response 404, "project item not found" do
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
-        let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project) { create(:project, project_items: []) }
+        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:project) { create(:project) }
 
         let(:oms_id) { oms.id }
         let(:project_id) { project.id }
-        let(:project_item_id) { 1 }
+        let(:project_item_id) { 9999 }
         let(:"X-User-Token") { oms_admin.authentication_token }
 
         run_test! do |response|
@@ -127,7 +196,7 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
         schema "$ref" => "message/message_read.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project) { create(:project) }
+        let(:project) { create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
@@ -158,7 +227,7 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
         schema "$ref" => "message/message_read.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project_item) { create(:project_item) }
+        let(:project_item) { create(:project_item, offer: create(:offer, primary_oms: oms), iid: 1) }
         let(:project) { create(:project, project_items: [project_item]) }
 
         let(:oms_id) { oms.id }
@@ -191,7 +260,7 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project) { create(:project) }
+        let(:project) { create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
@@ -215,10 +284,99 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
         end
       end
 
-      response 404, "project not found" do
+      response 401, "user not recognized" do
+        schema "$ref" => "error.json"
+        let(:oms_id) { 1 }
+        let(:project_id) { 1 }
+        let(:message_payload) { }
+        let(:"X-User-Token") { "asdasdasd" }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "You need to sign in or sign up before continuing." }.deep_stringify_keys)
+        end
+      end
+
+      response 403, "not authorized" do
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
+        let(:project) { create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }
+
+        let(:oms_id) { oms.id }
+        let(:"X-User-Token") { oms_admin.authentication_token }
+        let(:message_payload) {
+          {
+            "project_id": project.id,
+            "author": {
+              "email": "<email>",
+              "name": "<name>",
+              "role": "provider"
+            },
+            "content": "abc",
+            "scope": "user_direct",
+          }
+        }
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "You are not authorized to perform this action." }.deep_stringify_keys)
+
+          project.reload
+          expect(project.messages.count).to eq(0)
+        end
+      end
+
+      response 403, "project_item message not authorized", document: false do
+        schema "$ref" => "error.json"
+        let(:default_oms_admin) { create(:user) }
+        let(:oms) { create(:oms, default: true, administrators: [default_oms_admin]) }
+        let(:other_oms) { create(:oms) }
+        let(:project_item) { create(:project_item, offer: create(:offer, primary_oms: other_oms), iid: 1) }
+        let(:project) { create(:project, project_items: [project_item]) }
+
+        let(:oms_id) { oms.id }
+        let(:"X-User-Token") { default_oms_admin.authentication_token }
+        let(:message_payload) {
+          {
+            "project_id": project.id,
+            "project_item_id": project_item.iid,
+            "author": {
+              "email": "<email>",
+              "name": "<name>",
+              "role": "provider"
+            },
+            "content": "abc",
+            "scope": "user_direct",
+          }
+        }
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "You are not authorized to perform this action." }.deep_stringify_keys)
+
+          project_item.reload
+          expect(project_item.messages.count).to eq(0)
+        end
+      end
+
+      response 404, "OMS not found" do
+        schema "$ref" => "error.json"
+        let(:user) { create(:user) }
+
+        let(:oms_id) { 9999 }
+        let(:project_id) { 9999 }
+        let(:message_payload) { }
+        let(:"X-User-Token") { user.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "OMS not found" }.deep_stringify_keys)
+        end
+      end
+
+      response 404, "project not found" do
+        schema "$ref" => "error.json"
+        let(:oms_admin) { create(:user) }
+        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
@@ -243,7 +401,7 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
       response 404, "project item not found" do
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
-        let(:oms) { create(:oms, administrators: [oms_admin]) }
+        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
         let(:project) { create(:project, project_items: []) }
 
         let(:oms_id) { oms.id }
@@ -273,6 +431,108 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
     parameter name: :oms_id, in: :path, type: :string, description: "OMS id"
     parameter name: :m_id, in: :path, type: :string, description: "Message id"
 
+    get "retrieves a message" do
+      tags "Messages"
+      produces "application/json"
+      security [ authentication_token: [] ]
+
+      response 200, "message found" do
+        let(:oms_admin) { create(:user) }
+        let(:oms) { create(:oms, administrators: [oms_admin]) }
+        let(:project) { create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }
+        let(:message) { create(:message, message: "Before update", messageable: project) }
+
+        let(:oms_id) { oms.id }
+        let(:m_id) { message.id }
+        let(:"X-User-Token") { oms_admin.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq(OrderingApi::V1::MessageSerializer.new(message).as_json.deep_stringify_keys)
+        end
+      end
+
+      response 401, "user not recognized" do
+        schema "$ref" => "error.json"
+        let(:oms_id) { 1 }
+        let(:m_id) { 1 }
+        let(:"X-User-Token") { "asdasdasd" }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "You need to sign in or sign up before continuing." }.deep_stringify_keys)
+        end
+      end
+
+      response 403, "OMS not authorized" do
+        schema "$ref" => "error.json"
+        let(:oms_admin) { create(:user) }
+        let(:user) { create(:user) }
+        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+
+        let(:oms_id) { oms.id }
+        let(:m_id) { 1 }
+        let(:"X-User-Token") { user.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "You are not authorized to perform this action." }.deep_stringify_keys)
+        end
+      end
+
+      response 403, "not authorized" do
+        schema "$ref" => "error.json"
+        let(:user) { create(:user) }
+        let(:oms) { create(:oms, default: true) }
+        let(:message) { create(:message, messageable: create(:project)) }
+
+        let(:oms_id) { oms.id }
+        let(:m_id) { message.id }
+        let(:"X-User-Token") { user.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "You are not authorized to perform this action." }.deep_stringify_keys)
+        end
+      end
+
+      response 404, "OMS not found" do
+        schema "$ref" => "error.json"
+        let(:user) { create(:user) }
+
+        let(:oms_id) { 9999 }
+        let(:m_id) { 9999 }
+        let(:"X-User-Token") { user.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "OMS not found" }.deep_stringify_keys)
+        end
+      end
+
+      response 404, "message not found" do
+        schema "$ref" => "error.json"
+        let(:oms_admin) { create(:user) }
+        let(:oms) { create(:oms, administrators: [oms_admin]) }
+        let(:other_oms) { create(:oms, administrators: [oms_admin]) }
+
+        let(:project_item1) { create(:project_item, offer: build(:offer, primary_oms: oms), iid: 1) }
+        let(:project_item2) { create(:project_item, offer: build(:offer, primary_oms: other_oms), iid: 2) }
+        let(:project) { create(:project, project_items: [project_item1, project_item2]) }
+
+        let!(:message) { create(:message, messageable: project_item2) }
+
+        let(:oms_id) { oms.id }
+        let(:m_id) { message.id }
+        let(:"X-User-Token") { oms_admin.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "Message not found" }.deep_stringify_keys)
+        end
+      end
+    end
+
     patch "updates a message" do
       tags "Messages"
       produces "application/json"
@@ -284,7 +544,7 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
         schema "$ref" => "message/message_read.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project) { create(:project) }
+        let(:project) { create(:project, project_items: [build(:project_item, offer: build(:offer, primary_oms: oms))]) }
         let(:message) { create(:provider_message, message: "Before update", messageable: project) }
 
         let(:oms_id) { oms.id }
@@ -311,8 +571,9 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
         schema "$ref" => "message/message_read.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project_item) { create(:project_item, project: build(:project)) }
-        let(:message) { create(:provider_message, message: "Before update", messageable: project_item) }
+        let(:project_item) { create(:project_item, project: build(:project), offer: build(:offer, primary_oms: oms)) }
+        let(:message) { create(:message, author_role: "provider", author_email: "email@email.com", author_name: "asd",
+                               scope: "user_direct", message: "Before update", messageable: project_item) }
 
         let(:oms_id) { oms.id }
         let(:m_id) { message.id }
@@ -337,9 +598,9 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
       response 400, "message update validation failed" do
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
-        let(:oms) { create(:oms, administrators: [oms_admin]) }
+        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
         let(:project) { create(:project) }
-        let(:message) { create(:message, message: "Before update", messageable: project) }
+        let(:message) { create(:message, author_role: "mediator", scope: "public", message: "Before update", messageable: project) }
 
         let(:oms_id) { oms.id }
         let(:m_id) { message.id }
@@ -356,6 +617,89 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
           expect(message.message).to eq("Before update")
           expect(project.messages.first.message).to eq("Before update")
           expect(project.messages.count).to eq(1)
+        end
+      end
+
+      response 401, "user not recognized" do
+        schema "$ref" => "error.json"
+        let(:oms_id) { 1 }
+        let(:m_id) { 1 }
+        let(:"X-User-Token") { "asdasdasd" }
+        let(:message_payload) { {} }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "You need to sign in or sign up before continuing." }.deep_stringify_keys)
+        end
+      end
+
+      response 403, "OMS not authorized" do
+        schema "$ref" => "error.json"
+        let(:oms_admin) { create(:user) }
+        let(:user) { create(:user) }
+        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+
+        let(:oms_id) { oms.id }
+        let(:m_id) { 1 }
+        let(:"X-User-Token") { user.authentication_token }
+        let(:message_payload) { {} }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "You are not authorized to perform this action." }.deep_stringify_keys)
+        end
+      end
+
+      response 403, "not authorized" do
+        schema "$ref" => "error.json"
+        let(:oms_admin) { create(:user) }
+        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:other_oms) { create(:oms) }
+        let(:message) { create(:message, message: "before", scope: "user_direct",
+                               messageable: create(:project_item, offer: create(:offer, primary_oms: other_oms))) }
+
+        let(:oms_id) { oms.id }
+        let(:m_id) { message.id }
+        let(:message_payload) { { content: "After update" } }
+        let(:"X-User-Token") { oms_admin.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "You are not authorized to perform this action." }.deep_stringify_keys)
+
+          message.reload
+          expect(message.message).to eq("before")
+        end
+      end
+
+      response 404, "OMS not found" do
+        schema "$ref" => "error.json"
+        let(:user) { create(:user) }
+
+        let(:oms_id) { 9999 }
+        let(:m_id) { 9999 }
+        let(:message_payload) { {} }
+        let(:"X-User-Token") { user.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "OMS not found" }.deep_stringify_keys)
+        end
+      end
+
+      response 404, "message not found" do
+        schema "$ref" => "error.json"
+        let(:oms_admin) { create(:user) }
+        let(:oms) { create(:oms, administrators: [oms_admin]) }
+
+        let(:oms_id) { oms.id }
+        let(:m_id) { 9999 }
+        let(:message_payload) { {} }
+        let(:"X-User-Token") { oms_admin.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "Message not found" }.deep_stringify_keys)
         end
       end
     end

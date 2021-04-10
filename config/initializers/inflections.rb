@@ -18,7 +18,5 @@
 # end
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.uncountable "Oms"
-  inflect.uncountable "OMS"
-  inflect.uncountable "oms"
+  inflect.irregular "oms", "oms"
 end

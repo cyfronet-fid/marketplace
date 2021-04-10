@@ -117,7 +117,7 @@ Rails.application.routes.draw do
           resources :offers, only: [:index, :create, :show, :destroy, :update]
         end
       end
-      resources :oms, only: [:show, :update] do
+      resources :oms, only: [:index, :show, :update] do
         scope module: :oms do
           resources :events, only: :index
           resources :projects, only: [:index, :show, :update] do
@@ -125,7 +125,7 @@ Rails.application.routes.draw do
               resources :project_items, only: [:index, :show, :update]
             end
           end
-          resources :messages, only: [:index, :create, :update]
+          resources :messages, only: [:index, :show, :create, :update]
         end
       end
     end

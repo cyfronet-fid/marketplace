@@ -40,14 +40,49 @@ class Oms < ApplicationRecord
     custom_params&.filter { |_, v| v["mandatory"] }&.transform_values { |v| v["default"] }
   end
 
-  def associated_projects
-    # TODO: implement OMS project association - in authorization task #1883
-    Project.all
+  def project_items_for(project)
+    if default?
+      project.project_items
+    else
+      project.project_items.where(offers: { primary_oms: self }).joins(:offer).distinct
+    end
   end
 
-  def associated_events
-    # TODO: implement OMS project association - in authorization task #1883
-    Event.all
+  def projects
+    if default?
+      Project.all
+    else
+      Project.where(project_items: { offers: { primary_oms: self } }).joins(project_items: :offer).distinct
+    end
+  end
+
+  def messages
+    if default?
+      Message.all
+    else
+      # Outer join Message with ProjectItem OR Project messageables - and look for oms inside their respective offers.primary_oms
+      Message.where("offers.primary_oms_id = ?", self)
+             .or(Message.where("offers_project_items.primary_oms_id = ?", self))
+             .left_outer_joins(project_item: :offer, project:  { project_items: :offer })
+             .distinct
+    end
+  end
+
+  def events
+    if default?
+      Event.all
+    else
+      # Outer join Event with ProjectItem OR Project OR Message eventables - and look for oms inside their respective offers.primary_oms
+      Event.where("offers.primary_oms_id = ?", self)
+           .or(Event.where("offers_project_items.primary_oms_id = ?", self))
+           .or(Event.where("offers_project_items_2.primary_oms_id = ?", self))
+           .or(Event.where("offers_project_items_3.primary_oms_id = ?", self))
+           .left_outer_joins({ project_item: :offer },
+                             { project: { project_items: :offer } },
+                             { message: { project_item: :offer } },
+                             { message: { project: { project_items: :offer } } })
+           .distinct
+    end
   end
 
   private
