@@ -17,11 +17,7 @@ class Api::V1::Oms::MessagesController < Api::V1::Oms::ApiController
 
   def create
     attrs = permitted_attributes(Message)
-
-    # TODO: Not using Message::Create.new.call because it sends the message to JIRA and we don't want this now??
-    # TODO: Messages created here are strictly from providers or mediators!
-
-    message = Message.create(
+    message = Message.new(
       author_email: attrs[:author][:email],
       author_name: attrs[:author][:name],
       author_role: attrs[:author][:role],
@@ -30,7 +26,7 @@ class Api::V1::Oms::MessagesController < Api::V1::Oms::ApiController
       messageable: @project_item.present? ? @project_item : @project
     )
 
-    if message.persisted?
+    if Message::Create.new(message).call
       render json: OrderingApi::V1::MessageSerializer.new(message).as_json, status: 201
     else
       render json: { error: message.errors.messages }, status: 400
@@ -38,8 +34,7 @@ class Api::V1::Oms::MessagesController < Api::V1::Oms::ApiController
   end
 
   def update
-    attrs = permitted_attributes(@message)
-    if @message.update(message: attrs[:content])
+    if Message::Update.new(@message, { message: permitted_attributes(@message)[:content] }).call
       render json: OrderingApi::V1::MessageSerializer.new(@message).as_json
     else
       render json: { error: @message.errors.messages }, status: 400
