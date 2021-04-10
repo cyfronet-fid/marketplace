@@ -48,6 +48,10 @@ class User < ApplicationRecord
     DataAdministrator.where(email: email).count.positive?
   end
 
+  def default_oms_administrator?
+    administrated_oms.where(default: true).present?
+  end
+
   def managed_services
     Service.administered_by(self)
   end

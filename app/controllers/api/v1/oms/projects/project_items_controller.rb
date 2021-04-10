@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::Oms::Projects::ProjectItemsController < Api::V1::Oms::ApiController
+  before_action :find_and_authorize_oms
   before_action :find_project
   before_action :find_and_authorize, only: [:show, :update]
   before_action :validate_payload, only: :update
@@ -29,18 +30,20 @@ class Api::V1::Oms::Projects::ProjectItemsController < Api::V1::Oms::ApiControll
 
   private
     def load_project_items
-      @project_items = policy_scope(@project.project_items).where("iid > ?", @from_id).order(:iid).limit(@limit)
+      @project_items = policy_scope(@oms.project_items_for(@project)).
+        where("project_items.iid > ?", @from_id).
+        order("project_items.iid").limit(@limit)
     end
 
     def find_and_authorize
-      @project_item = @project.project_items.find_by!(iid: params[:id])
+      @project_item = @oms.project_items_for(@project).find_by!(iid: params[:id])
       authorize @project_item
     rescue ActiveRecord::RecordNotFound
       render json: { error: "Project item not found" }, status: 404
     end
 
     def find_project
-      @project = @oms.associated_projects.find(params[:project_id])
+      @project = @oms.projects.find(params[:project_id])
     rescue ActiveRecord::RecordNotFound
       render json: { error: "Project not found" }, status: 404
     end

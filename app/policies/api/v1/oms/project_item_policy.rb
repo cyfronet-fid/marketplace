@@ -3,16 +3,20 @@
 class Api::V1::Oms::ProjectItemPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.all # TODO: index policy logic - in authorization task #1883
+      if user.default_oms_administrator?
+        scope.all
+      else
+        scope.joins(:offer).where(offers: { primary_oms_id: user.administrated_oms_ids }).distinct
+      end
     end
   end
 
   def show?
-    true # TODO: show policy logic - in authorization task #1883
+    project_item_managed_by_user? || user.default_oms_administrator?
   end
 
   def update?
-    true # TODO: update policy logic - in authorization task #1883
+    project_item_managed_by_user?
   end
 
   def permitted_attributes
@@ -21,4 +25,9 @@ class Api::V1::Oms::ProjectItemPolicy < ApplicationPolicy
       status: [:value, :type]
     ]
   end
+
+  private
+    def project_item_managed_by_user?
+      user.administrated_oms.include? record.offer.current_oms
+    end
 end

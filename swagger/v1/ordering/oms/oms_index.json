@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "OMSes": {
+      "type": "array",
+      "items": {
+        "$ref": "oms_read.json"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["OMSes"]
+}

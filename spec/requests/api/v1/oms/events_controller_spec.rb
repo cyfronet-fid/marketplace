@@ -31,13 +31,16 @@ RSpec.describe "OMS Events API", swagger_doc: "v1/ordering/swagger.json" do
         let(:oms) { create(:oms, administrators: [oms_admin]) }
 
         let!(:project) { create(:project) }
-        let!(:project_item) { create(:project_item, project: project) }
+        let!(:other_project) { create(:project) }
+        let!(:project_item) { create(:project_item, project: project, offer: build(:offer, primary_oms: oms)) }
         let!(:message1) { create(:message, messageable: project) }
         let!(:message2) { create(:message, messageable: project_item) }
+        let!(:message3) { create(:message, messageable: project_item) }
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
         let(:from_timestamp) { "2001-04-07T15:31:46+02:00" }
+        let(:limit) { 4 }
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -65,6 +68,33 @@ RSpec.describe "OMS Events API", swagger_doc: "v1/ordering/swagger.json" do
         end
       end
 
+      response 200, "events found but were empty", document: false do
+        schema "$ref" => "event/event_index.json"
+        let(:oms_admin) { create(:user) }
+        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+
+        let(:oms_id) { oms.id }
+        let(:"X-User-Token") { oms_admin.authentication_token }
+        let(:from_timestamp) { "2000-04-07T15:31:46+02:00" }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ events: [] }.deep_stringify_keys)
+        end
+      end
+
+      response 401, "user not recognized" do
+        schema "$ref" => "error.json"
+        let(:oms_id) { 1 }
+        let(:"X-User-Token") { "asdasdasd" }
+        let(:from_timestamp) { "2000-04-07T15:31:46+02:00" }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "You need to sign in or sign up before continuing." }.deep_stringify_keys)
+        end
+      end
+
       response 400, "bad request" do
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
@@ -77,6 +107,36 @@ RSpec.describe "OMS Events API", swagger_doc: "v1/ordering/swagger.json" do
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data).to eq({ error: "invalid date" }.stringify_keys)
+        end
+      end
+
+      response 403, "OMS not authorized" do
+        schema "$ref" => "error.json"
+        let(:oms_admin) { create(:user) }
+        let(:user) { create(:user) }
+        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+
+        let(:oms_id) { oms.id }
+        let(:"X-User-Token") { user.authentication_token }
+        let(:from_timestamp) { "2000-04-07T15:31:46+02:00" }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "You are not authorized to perform this action." }.deep_stringify_keys)
+        end
+      end
+
+      response 404, "OMS not found" do
+        schema "$ref" => "error.json"
+        let(:user) { create(:user) }
+
+        let(:oms_id) { 9999 }
+        let(:"X-User-Token") { user.authentication_token }
+        let(:from_timestamp) { "2000-04-07T15:31:46+02:00" }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: "OMS not found" }.deep_stringify_keys)
         end
       end
     end

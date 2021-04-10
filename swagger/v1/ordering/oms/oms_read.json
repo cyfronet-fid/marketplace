@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {"type": "integer"},
+    "name": {"type": "string"},
+    "type": {"type": "string",
+      "enum": ["global", "providers_group", "resource_dedicated"]
+    },
+    "default": {"type": "boolean"},
+    "trigger_url": {"type": "string"},
+    "custom_params": {"type": "object"}
+  },
+  "additionalProperties": false,
+  "required": ["id", "name", "type", "default"]
+}
