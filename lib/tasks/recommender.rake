@@ -6,7 +6,9 @@ require "pp"
 namespace :recommender do
   desc "serialize database for recommender system"
   task serialize_db: :environment do
+    puts "Generating database dump..."
     serialized_db = Recommender::SerializeDb.new.call.to_json
+    puts "Database dump generated successfully!"
 
     begin
       url = Mp::Application.config.recommender_host + "/database_dumps"
@@ -16,7 +18,7 @@ namespace :recommender do
                               serialized_db
 
       if response.code == 204
-        puts "Database dump sent successfully..."
+        puts "Database dump sent successfully!"
       elsif response.code == 400
         puts "Recommender system validation error, details:"
         pp response.body["errors"]
@@ -27,6 +29,21 @@ namespace :recommender do
       File.open(path, "w") do |f|
         f.write(serialized_db)
       end
+      puts "Database dump saved to file successfully!"
     end
+  end
+
+  task serialize_db_to_file: :environment do
+    puts "Generating database dump..."
+    serialized_db = Recommender::SerializeDb.new.call.to_json
+    puts "Database dump generated successfully!"
+
+    path = Rails.root.join("data.json")
+
+    puts "Saving database dump (to #{path})..."
+    File.open(path, "w") do |f|
+      f.write(serialized_db)
+    end
+    puts "Database dump saved successfully!"
   end
 end
