@@ -1,34 +1,77 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "raven"
 
 RSpec.feature "Favourites" do
   include OmniauthHelper
 
   context "As anonymous user" do
-    scenario "I cannot visit favourites resources page" do
-      visit favourites_path
-
-      expect(page).to_not have_content "Favourite resources"
-    end
-
-    scenario "I cannot see favourite checkbox on resource page" do
+    scenario "I can see favourite checkbox on resource page" do
       service = create(:service)
 
       visit service_path(service)
 
-      expect(page).to_not have_content "Add to favourites"
+      expect(page).to have_content "Add to favourites"
       expect(page).to_not have_content "Remove from favourites"
     end
 
-    scenario "I cannot see favourite checkbox on resource list page" do
+    scenario "I can see favourite checkbox on resource list page" do
       create_list(:service, 2)
 
-      visit services_path()
+      visit services_path
 
-      expect(page).to_not have_content "Add to favourites"
+      expect(page).to have_content "Add to favourites"
       expect(page).to_not have_content "Remove from favourites"
+    end
+
+    scenario "I can see checkbox set to true in other view", js: true do
+      service = create(:service)
+
+      visit services_path
+
+      find("#favourite-#{service.id}", visible: false).click
+
+      visit service_path(service)
+
+      expect(page.find("input#favourite-#{service.id}", visible: false)).to be_checked
+    end
+
+    scenario "I can save my favourites by log in", js: true do
+      services = create_list(:service, 3)
+
+      user = create(:user)
+
+      visit services_path
+
+      find("#favourite-#{services[0].id}", visible: false).click
+      find("#popup-modal-action-btn").click
+      find("#favourite-#{services[2].id}", visible: false).click
+
+      checkin_sign_in_as(user)
+
+      visit favourites_path
+
+      expect(page).to have_text(services[0].name)
+      expect(page).to have_text(services[2].name)
+      expect(page).to_not have_text(services[1].name)
+    end
+
+    scenario "I cannot remove a resource from favourites if after log in it was my favourite resource", js: true do
+      fav1, fav2 = create_list(:service, 2)
+      user = create(:user_with_favourites, favourite_services: [fav1, fav2])
+
+      visit services_path
+
+      find("#favourite-#{fav1.id}", visible: false).click
+      find("#popup-modal-action-btn").click
+      find("#favourite-#{fav1.id}", visible: false).click
+
+      checkin_sign_in_as(user)
+
+      visit favourites_path
+
+      expect(page).to have_text(fav2.name)
+      expect(page).to have_text(fav1.name)
     end
   end
 
@@ -171,7 +214,7 @@ RSpec.feature "Favourites" do
 
         find("#favourite-#{fav2.id}", visible: false).click
 
-        visit favourites_path()
+        visit favourites_path
 
         expect(page).to have_content fav1.name
         expect(page).to_not have_content fav2.name

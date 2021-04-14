@@ -1,8 +1,8 @@
-.row{ "data-controller": "favourite", "data-target": "favourite.result" }
+.row{ id: "box-#{service.id}", "data-target": "favourite.result" }
   = render "service_details", service: service do
     = link_to service.name, service_path(service)
     .row
-      - content_for :checkbox do
+      - content_for :comparison_checkbox do
         .mt-3.compare
           %label{ options(service.slug, comparison_enabled) }
             = check_box_tag "comparison", service.slug, checked?(service.slug), id: "comparison-#{service.id}",
@@ -13,14 +13,14 @@
                   "data-action": "click->comparison#update"
             %span
               = _("Add to comparison")
-      - if user_signed_in?
-        - content_for :checkbox do
-          .mt-3.compare.favourites
-            %label
-              = check_box_tag "favourite", service.slug, favourite?(current_user.favourite_services, service.slug),
-                id: "favourite-#{service.id}",
-                    class: "form-check-input",
-                    "data-target": "favourite.checkbox",
-                    "data-action": "click->favourite#updateFromFav"
-              %span
-                = _("Add to favourites")
+      - content_for :favourite_checkbox do
+        .mt-3.compare.favourites
+          %label
+            = check_box_tag "favourite", service.slug, favourite?(Array(current_user.favourite_services), service.slug),
+              id: "favourite-#{service.id}",
+                  class: "form-check-input",
+                  "data-target": "favourite.checkbox",
+                  "data-action": "click->favourite#updateFromFav",
+                  "data-value": "box-#{service.id}"
+            %span
+              = _("Add to favourites")

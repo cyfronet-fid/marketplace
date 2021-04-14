@@ -15,7 +15,7 @@ body {
 
   > main {
     padding: 0 15px;
-    margin-bottom: 80px;
+    margin-bottom: 8.9rem;
   }
 }
 
@@ -4432,4 +4432,57 @@ textarea.form-control.is-invalid {
   .service-box {
     width: 100%;
   }
+}
+
+.favourites-popup {
+  position: absolute;
+  bottom: 45px;
+  right: 45px;
+  margin: 0;
+
+  .modal-content {
+    background: $home-card-bg;
+    border-radius: 14px;
+    font-size: 16px;
+    box-shadow: $popup-shadow;
+    border: 1px solid $popup-border;
+  }
+
+  .modal-body {
+    padding: 20px 10px 20px 15px;
+
+    .buttons-row {
+      margin-top: 15px;
+
+      .btn-sm {
+        padding-left: 35px;
+        padding-right: 35px;
+        border: none;
+
+        a {
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
+.bordered-box {
+  width: 100%;
+  min-height: 300px;
+  border: 2px dashed $palette-gray-10;
+  padding: 45px 0;
+  font-size: 18px;
+  line-height: 26px;
+  font-style: italic;
+  color: $palette-gray-80;
+  text-align: center;
+
+  .img-responsive {
+    max-width: 90%;
+  }
+}
+
+.modal-backdrop.show {
+  opacity: 0;
 }

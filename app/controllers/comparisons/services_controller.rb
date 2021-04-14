@@ -3,12 +3,13 @@
 class Comparisons::ServicesController < ComparisonsController
   def create
     new_service_slug = params.fetch(:comparison)
-    session[:comparison] = session[:comparison].blank? ? [] : session[:comparison]
-    session[:comparison].include?(new_service_slug) ?
-        session[:comparison].delete(new_service_slug) : session[:comparison] << new_service_slug
+    current_slugs = session[:comparison].blank? ? [] : session[:comparison]
+    current_slugs.include?(new_service_slug) ?
+      current_slugs.delete(new_service_slug) : current_slugs << new_service_slug
+    session[:comparison] = current_slugs
     @services = Service.where(slug: session[:comparison])
     respond_to do |format|
-      format.json { render_json }
+      format.js { render_json }
     end
   end
 

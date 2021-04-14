@@ -1,4 +1,4 @@
-.container
+.container{ "data-controller": "favourite" }
   .row
     .col-lg-3.mb-5
       = render "services/nav/categories", current: category,
@@ -21,6 +21,7 @@
                  locals: { highlights: highlights,
                            category: category,
                            offers: offers,
+                           favourite_services: favourite_services,
                            comparison_enabled: comparison_enabled,
                            remote: true }
 
@@ -32,6 +33,11 @@
                  locals: { highlights: highlights,
                            category: category,
                            offers: offers,
+                           favourite_services: favourite_services,
                            comparison_enabled: comparison_enabled,
                            remote: true }
         = render "services/paginate", pagy: pagy
+
+        #popup-modal.modal.show{ "data-target": "favourite.popup", tabindex: "-1",
+                                  role: "dialog", aria: { hidden: "true" } }
+
