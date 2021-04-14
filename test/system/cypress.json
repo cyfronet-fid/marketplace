@@ -1,20 +1,21 @@
 {
-  "baseUrl": "http://127.0.0.1:3000",
+  "baseUrl": "http://localhost:3000",
   "defaultCommandTimeout": 6000,
   "viewportWidth": 1400,
   "viewportHeight": 1200,
   "testFiles": "**/*.spec.ts",
+  "fileServerFolder": "./",
+  "supportFile": "./cypress/support/index.ts",
+  "chromeWebSecurity" : false,
   "retries": {
     "runMode": 0,
-    "openMode": 1
+    "openMode": 0
   },
   "watchForFileChanges": false,
   "videoUploadOnPasses": false,
   "video": false,
   "env": {
-    "production": false,
-    "development": false,
-    "test": true
+    "debug": false
   }
 }
 

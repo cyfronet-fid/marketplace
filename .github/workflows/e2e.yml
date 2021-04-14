@@ -58,10 +58,10 @@ jobs:
       with:
         path: |
           ~/.cache/Cypress
-          ./e2e/node_modules
-        key: my-cache-${{ runner.os }}-${{ hashFiles('./e2e/package-lock.json') }}
+          ./test/system/node_modules
+        key: my-cache-${{ runner.os }}-${{ hashFiles('./test/system/package-lock.json') }}
     - name: Install e2e dependencies
-      run: npm i --prefix ./e2e
+      run: npm i --prefix ./test/system
     - name: Setup and seed db
       env:
         RAILS_ENV: development
@@ -82,10 +82,19 @@ jobs:
         MP_DATABASE_USERNAME: postgres
         MP_DATABASE_PASSWORD: password
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        AUTH_MOCK: true
+        MP_JIRA_USERNAME: ${{ secrets.JIRA_TEST_USER }}
+        MP_JIRA_PASSWORD: ${{ secrets.JIRA_TEST_USER_PWD }}
+        MP_JIRA_URL: ${{ secrets.MP_JIRA_URL }}
+        MP_JIRA_PROJECT: ${{ secrets.MP_JIRA_PROJECT }}
+        CYPRESS_JIRA_TEST_USER: ${{ secrets.JIRA_TEST_USER }}
+        CYPRESS_JIRA_TEST_USER_PWD: ${{ secrets.JIRA_TEST_USER_PWD }}
+        CYPRESS_MP_JIRA_URL: ${{ secrets.MP_JIRA_URL }}
+        CYPRESS_MP_JIRA_PROJECT: ${{ secrets.MP_JIRA_PROJECT }}
       with:
-        project: ./e2e
+        project: ./test/system
         start: bundle exec rails server -d
-        command: 'npm run cy:run --prefix ./e2e'
+        command: npm run cy:run --prefix ./test/system
         wait-on: 'http://localhost:3000'
         browser: chrome
         headless: true
@@ -96,4 +105,4 @@ jobs:
       if: failure()
       with:
         name: cypress-screenshots
-        path: ./e2e/cypress/screenshots
+        path: ./test/system/cypress/screenshots

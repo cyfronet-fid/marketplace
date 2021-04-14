@@ -23,7 +23,7 @@
 
       .intro-box
         =  _("Describe your use case and get support from our experts")
-        = link_to projects_path do
+        = link_to projects_path, "data-e2e" => "goToProjectsBtn" do
           %i.fas.fa-arrow-right
           = _("Go to your projects")
 

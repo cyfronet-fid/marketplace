@@ -57,5 +57,6 @@ module Mp
       ENV["PROVIDERS_DASHBOARD_URL"] : " https://beta.providers.eosc-portal.eu"
 
     config.recommender_host = ENV["RECOMMENDER_HOST"]
+    config.auth_mock = ENV["AUTH_MOCK"]
   end
 end
