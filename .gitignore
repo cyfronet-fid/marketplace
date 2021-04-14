@@ -5,9 +5,10 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore e2e miscs
-/e2e/node_modules/*
-/e2e/cypress/screenshots/*
-/e2e/cypress/video/*
+/test/system/node_modules/*
+/test/system/cypress/screenshots/*
+/test/system/cypress/video/*
+/test/system/cypress.env.json
 
 # Ignore bundler config.
 /.bundle

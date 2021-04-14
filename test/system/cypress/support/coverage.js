@@ -37,10 +37,11 @@ const getSelector = ($el) => {
         return `[data-cy=${$el.attr('data-cy')}]`
     }
 
-    return finder($el[0], {
-        // a trick to point "finder" at the application's iframe
-        root: cy.state('window').document.body,
-    })
+    // Skip iframes due to error with captcha
+    // return finder($el[0], {
+    //     // a trick to point "finder" at the application's iframe
+    //     root: cy.state('window').document.body,
+    // })
 }
 
 const rememberSelector = ($el) => {
