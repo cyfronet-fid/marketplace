@@ -47,9 +47,9 @@ export default class extends Controller {
         const elements = this.checkboxTargets;
         for (const element of elements) {
             if (element.checked) {
-                element.nextElementSibling.innerText = "Remove from comparison"
+                element.nextElementSibling.innerText = "Remove from comparison";
             } else {
-                element.nextElementSibling.innerText = "Add to comparison"
+                element.nextElementSibling.innerText = "Add to comparison";
             }
         }
     }

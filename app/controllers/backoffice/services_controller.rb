@@ -7,6 +7,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
   before_action :sort_options
+  before_action :favourites
   prepend_before_action :index_authorize, only: :index
   helper_method :cant_edit
 
@@ -83,7 +84,6 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
           @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
           @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
         end
-
         render :preview
       else
         render error_view, status: :bad_request
@@ -189,6 +189,11 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     def find_and_authorize
       @service = Service.friendly.find(params[:id])
       authorize(@service)
+    end
+
+    def favourites
+      @favourite_services = current_user&.favourite_services || Service.
+        where(slug: Array(cookies[:favourites]&.split("&") || []))
     end
 
     def scope

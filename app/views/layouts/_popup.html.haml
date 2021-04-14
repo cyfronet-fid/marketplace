@@ -1,1 +1,18 @@
-ADDED service to the favourites
+.modal-dialog.favourites-popup{ role: "document" }
+  .modal-content
+
+    #ajax-modal-body.modal-body
+      .row
+        .col-4
+          = image_pack_tag "gfx_heart.svg"
+        .col-8
+          %h3#popup-modal-title.modal-title
+            = popup_title
+          = popup_text
+          .buttons-row
+            - unless logged
+              %button#popup-modal-btn.btn-sm.btn-primary.mr-3{ type: "button" }
+                = link_to _("Sign in"), user_checkin_omniauth_authorize_path
+            %button#popup-modal-action-btn.btn-sm.btn-primary{ type: "button", data: { dismiss: "modal" } }
+              = _("Ok")
+

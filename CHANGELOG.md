@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Events representation (@wujuu)
 - Ordering API endpoints v1 (@wujuu)
 - Favourite Resources for logged user (@kmarszalek, @jarekzet)
+- Favourite Resources for unlogged user (@goreck888, @jarekzet)
 
 ### Changed
 - Generalize ProjectItem status (@jswk)
