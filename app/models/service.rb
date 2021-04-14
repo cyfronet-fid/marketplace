@@ -79,6 +79,11 @@ class Service < ApplicationRecord
                                 reject_if: lambda { |attributes| attributes["email"].blank? },
                                 allow_destroy: true
 
+  has_many :user_service, dependent: :destroy
+  has_many :favourite_users,
+           through: :user_service,
+           source: :user,
+           class_name: "User"
 
   has_many :service_user_relationships, dependent: :destroy
   has_many :owners,

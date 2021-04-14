@@ -66,6 +66,9 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :favourites, only: :index
+  post "favourites/services", to: "favourites/services#update"
+
   resource :help, only: :show
 
   resource :backoffice, only: :show

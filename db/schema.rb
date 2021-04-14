@@ -616,6 +616,16 @@ ActiveRecord::Schema.define(version: 2021_04_15_114249) do
     t.index ["user_id"], name: "index_user_scientific_domains_on_user_id"
   end
 
+  create_table "user_services", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["service_id", "user_id"], name: "index_user_services_on_service_id_and_user_id", unique: true
+    t.index ["service_id"], name: "index_user_services_on_service_id"
+    t.index ["user_id"], name: "index_user_services_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -692,4 +702,6 @@ ActiveRecord::Schema.define(version: 2021_04_15_114249) do
   add_foreign_key "user_categories", "users"
   add_foreign_key "user_scientific_domains", "scientific_domains"
   add_foreign_key "user_scientific_domains", "users"
+  add_foreign_key "user_services", "services"
+  add_foreign_key "user_services", "users"
 end

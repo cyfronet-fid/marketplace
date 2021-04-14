@@ -31,8 +31,20 @@
                           "data-probe" => "",
                           "data-target": "comparison.checkbox",
                           "data-action": "click->comparison#update"
-                  %span
+                  %span.smaller
                     = _("Add to comparison")
+          - if user_signed_in?
+            .comparison
+              %span.compare
+                %label
+                  = check_box_tag "favourite", service.slug, favourite?(current_user.favourite_services, service.slug),
+                    id: "favourite-#{service.id}",
+                        class: "form-check-input",
+                        "data-target": "favourite.checkbox",
+                        "data-action": "click->favourite#updateFromRes",
+                        "data-controller": "favourite"
+                  %span.smaller
+                    = _("Add to favourites")
   .col-12.col-lg-3.text-center.vertical-center
     .vertical-center-inner.access-type
       - if policy(service).order?

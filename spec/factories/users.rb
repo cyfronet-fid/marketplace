@@ -25,5 +25,8 @@ FactoryBot.define do
     factory :user_with_services do
       sequence(:owned_services) { |n| [create(:service)] }
     end
+    factory :user_with_favourites do
+      sequence(:favourite_services) { |n| [create(:service)] }
+    end
   end
 end
