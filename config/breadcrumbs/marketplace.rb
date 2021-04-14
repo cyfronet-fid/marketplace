@@ -134,3 +134,8 @@ crumb :api_docs do
   link "Marketplace API", api_docs_path
   parent :marketplace_root
 end
+
+crumb :favourites do
+  link "Favourite resources", favourites_path
+  parent :marketplace_root
+end
