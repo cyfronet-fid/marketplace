@@ -1,0 +1,15 @@
+- content_for :title, _("Favourite resources")
+- breadcrumb(:favourites)
+.container{ "data-controller": "comparison" }
+  %h1.mb-4
+    = _("Favourite resources")
+  .row
+    .col-lg-3.mb-5
+      .favourite-icon
+        = image_pack_tag "gfx_heart.svg"
+    .col-lg-9.favourites
+      = render partial: "service", collection: @favourites,
+        locals: { comparison_enabled: false, remote: true }
+      #comparison-bar.comparison-bar.fixed-bottom{ class: (session[:comparison]&.size || 0) > 0 ? "d-block" : "d-none",
+        "data-target": "comparison.bar" }
+        = render "comparisons/bar", services: @compare_services, category: @category

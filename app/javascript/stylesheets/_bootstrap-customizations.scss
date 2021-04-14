@@ -2471,6 +2471,15 @@ label[data-multicheckbox].small {
     border-right: 1px solid $palette-gray-10;
     position: relative;
 
+    .compare {
+      float: left;
+      margin-bottom: 10px;
+
+      &.favourites {
+        margin-left: 25px;
+      }
+    }
+
     h2 {
       .badge {
         position: absolute;
@@ -2540,6 +2549,7 @@ label[data-multicheckbox].small {
   .offers-box {
     padding: 0.5em 0 0.75em;
     width: 100%;
+    float: left;
     border-top: 1px solid $palette-gray-10;
 
     span {
@@ -3621,6 +3631,10 @@ textarea.form-control.is-invalid {
     color: $link-color;
     padding-top: 1px;
     margin-right: 6px;
+
+    &.smaller {
+      font-size: 12px;
+    }
   }
 
   input[type=checkbox] + span::before {
@@ -4403,5 +4417,19 @@ textarea.form-control.is-invalid {
   &.two {
     -moz-column-count: 2;
     column-count: 2;
+  }
+}
+
+.favourite-icon {
+  background: $edited-comment-background-color;
+  padding: 20px 0;
+  text-align: center;
+  border-top: 1px solid $image-border;
+  border-bottom: 1px solid $image-border;
+}
+
+.favourites {
+  .service-box {
+    width: 100%;
   }
 }

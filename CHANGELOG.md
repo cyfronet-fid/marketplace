@@ -10,8 +10,15 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Reference API for MP orders handling (@wujuu, @jswk)
+- OMS representation (@wujuu)
+- Message author_role and scope (@jswk)
+- ProjectItem user_secrets (@jswk)
+- Events representation (@wujuu)
+- Ordering API endpoints v1 (@wujuu)
+- Favourite Resources for logged user (@kmarszalek, @jarekzet)
 
 ### Changed
+- Generalize ProjectItem status (@jswk)
 
 ### Deprecated
 

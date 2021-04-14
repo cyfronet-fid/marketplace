@@ -25,6 +25,11 @@ class User < ApplicationRecord
            through: :oms_administrations,
            source: :oms,
            class_name: "Oms"
+  has_many :user_service, dependent: :destroy
+  has_many :favourite_services,
+           through: :user_service,
+           source: :service,
+           class_name: "Service"
 
   validates :first_name, presence: true
   validates :last_name, presence: true
