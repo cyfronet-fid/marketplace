@@ -4,8 +4,14 @@
     "allowSyntheticDefaultImports": true,
     "target": "es2015",
     "lib": ["es2017", "dom"],
-    "types": ["cypress"],
-    "baseUrl": "./"
+    "types": [
+      "cypress",
+      "node",
+      "cypress-wait-until"
+    ],
+    "baseUrl": "./",
+    "moduleResolution": "node",
+    "module": "commonjs"
   },
   "include": ["**/*.ts"]
 }

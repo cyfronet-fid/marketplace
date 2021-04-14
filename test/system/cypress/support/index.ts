@@ -13,12 +13,26 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-// Import commands.js using ES2015 syntax:
-require('./commands');
-require('@cypress/skip-test/support');
+/**
+ * Libs
+ */
 require('cypress-terminal-report/src/installLogsCollector')();
+import '@cypress/skip-test/support';
+import 'cypress-promise/register';
+import 'cypress-wait-until';
+
+/**
+ * Custom commands
+ */
+import './auth';
+import './coverage';
+import './utilities';
+
+import './jira';
+import './offers';
 
 /**
  * Don't fail on uncaught exception
  */
 Cypress.on('uncaught:exception', (err, runnable) => false);
+

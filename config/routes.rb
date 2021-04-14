@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  ############################## IMPORTANT!!! ################################
+  # !!! Code of high security risk impact !!!
+  # AAI service authentication is skipped for tests purpose
+  if Rails.env.development? && Mp::Application.config.auth_mock
+    get "users/login" => "users/auth_mock#login"
+  end
+  #############################################################################
+
   devise_for :users,
              controllers: { omniauth_callbacks: "users/omniauth_callbacks" },
              skip: [:sessions]

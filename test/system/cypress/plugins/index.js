@@ -13,10 +13,14 @@
  * @type {Cypress.PluginConfig}
  */
 module.exports = (on, config) => {
+    if (config.env['debug']) {
+        console.log("!!!!!!!!!!!!! You're running cypress in debug mode !!!!!!!!!!!!");
+    }
+
     /**
      * Show full console log on test fail
      */
-    require('cypress-terminal-report/src/installLogsPrinter')(on, {printLogsToConsole: 'always'});
+    require('cypress-terminal-report/src/installLogsPrinter')(on, {printLogsToConsole: !!config.env['debug'] ? 'always' : 'onFail'});
 
     on('before:browser:launch', (browser = {}, launchOptions) => {
         /**
