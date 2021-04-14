@@ -347,4 +347,10 @@ It needs the MP data to learn. Run:
 ```
 ./bin/rails recommender:serialize_db
 ```
-...to send the database dump to the recommender system 
+...to send the database dump to the recommender system.
+
+If you want to save database dump to a json file, use:
+
+```
+./bin/rails recommender:serialize_db_to_file
+```
