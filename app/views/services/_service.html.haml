@@ -2,7 +2,7 @@
   service_offers: filtered_offers(offers[service.id]), comparison_enabled: comparison_enabled do
   = link_to highlighted_for(:name, service, highlights[service.id]),
     service_path(service, category.present? ? { fromc: category.slug } : nil)
-  - content_for :checkbox do
+  - content_for :comparison_checkbox do
     .mt-3.compare
       %label{ options(service.slug, comparison_enabled) }
         = check_box_tag "comparison", service.slug, checked?(service.slug), id: "comparison-#{service.id}",
@@ -13,15 +13,13 @@
                 "data-action": "click->comparison#update"
         %span
           = _("Add to comparison")
-  - if user_signed_in?
-    - content_for :checkbox do
-      .mt-3.compare.favourites
-        %label
-          = check_box_tag "favourite", service.slug, favourite?(current_user.favourite_services, service.slug),
-            id: "favourite-#{service.id}", remote: true,
-                class: "form-check-input",
-                "data-target": "favourite.checkbox",
-                "data-action": "click->favourite#updateFromRes",
-                "data-controller": "favourite"
-          %span
-            = _("Add to favourites")
+  - content_for :favourite_checkbox do
+    .mt-3.compare.favourites
+      %label
+        = check_box_tag "favourite", service.slug, favourite?(Array(favourite_services), service.slug),
+          id: "favourite-#{service.id}",
+              class: "form-check-input",
+              "data-target": "favourite.checkbox",
+              "data-action": "click->favourite#updateFromRes"
+        %span
+          = _("Add to favourites")

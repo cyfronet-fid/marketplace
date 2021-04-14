@@ -18,6 +18,8 @@ class ServicesController < ApplicationController
     @pagy = Pagy.new_from_searchkick(@services, items: params[:per_page])
     @highlights = highlights(@services)
     @recommended_services = fetch_recommended
+    @favourite_services = current_user&.favourite_services || Service.
+      where(slug: Array(cookies[:favourites]&.split("&") || []))
   end
 
   def show
@@ -32,6 +34,8 @@ class ServicesController < ApplicationController
     @service_opinions = ServiceOpinion.joins(project_item: :offer).
                         where(offers: { service_id: @service })
     @question = Service::Question.new(service: @service)
+    @favourite_services = current_user&.favourite_services || Service.
+      where(slug: Array(cookies[:favourites]&.split("&") || []))
     if current_user&.executive?
       @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
       @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)

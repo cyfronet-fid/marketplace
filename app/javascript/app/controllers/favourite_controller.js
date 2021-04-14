@@ -2,25 +2,25 @@ import { Controller } from 'stimulus'
 import Rails from '@rails/ujs'
 
 export default class extends Controller {
-    static targets = ["checkbox", "result"]
+    static targets = ["checkbox", "result", "popup", "serviceBox", "backlink"]
 
     connect() {
         this.updateCheckboxLabels();
     }
 
-    async updateFromRes() {
-        // TODO: check if list empty and show modal
+    async updateFromRes(event) {
         const response = await this.sendRequest(this.updateFavourites());
         const result = await this.getResponse(response);
         this.updateCheckboxLabels();
+        this.showPopup(result);
     }
 
-    async updateFromFav() {
-        // TODO: check if list empty and show modal
+    async updateFromFav(event) {
         const response = await this.sendRequest(this.updateFavourites());
         const result = await this.getResponse(response);
-        this.updateResults()
+        this.updateResults(event);
         this.updateCheckboxLabels();
+        this.showEmptyList(result);
     }
 
     async sendRequest(data) {
@@ -33,7 +33,6 @@ export default class extends Controller {
             },
             body: data
         });
-        console.log(rawResponse)
         return rawResponse;
     }
 
@@ -51,8 +50,9 @@ export default class extends Controller {
         }
     }
 
-    updateResults() {
-        this.resultTarget.remove();
+    updateResults(event) {
+        const serviceBox = document.getElementById(event.target.dataset.value);
+        serviceBox.remove();
     }
 
     updateCheckboxLabels() {
@@ -67,12 +67,25 @@ export default class extends Controller {
     }
 
     updateFavourites() {
-        const elements = this.checkboxTargets;
-        for (const element of elements) {
-            return new URLSearchParams({
-                'favourite': event.currentTarget.getAttribute("value"),
-                'update': element.checked
-            })
+        return new URLSearchParams({
+            'favourite': event.currentTarget.getAttribute("value"),
+            'update': event.currentTarget.checked
+        })
+    }
+
+    showPopup(result) {
+        if (result.html.length > 0 && result.type === "modal") {
+            this.popupTarget.innerHTML = result.html;
+            $("#popup-modal").modal("show")
+        }
+    }
+
+    showEmptyList(result) {
+        if (result.html.length > 0 && result.type === "empty_box") {
+            this.serviceBoxTarget.innerHTML = result.html;
+            this.backlinkTarget.classList.add("d-none");
+            this.backlinkTarget.classList.remove("d-block");
+
         }
     }
 }

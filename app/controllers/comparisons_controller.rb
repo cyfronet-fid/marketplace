@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ComparisonsController < ApplicationController
+  include Service::Comparison
+
   def show
     @services = Service.where(slug: session[:comparison])
     if @services.blank?
@@ -23,7 +25,7 @@ class ComparisonsController < ApplicationController
 
   private
     def render_json
-      render json: { data: session[:comparison], html: bottom_bar }
+      render json: { data: @services&.map(&:slug), html: bottom_bar }
     end
 
     def bottom_bar

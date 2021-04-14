@@ -3,6 +3,6 @@
     - Array(provider.send(field)).map do |entry|
       - if nested.present? && nested[field.to_sym].present?
         %span.status
-          = t(".#{field}") + " : "+ "#{entry.send(nested[field.to_sym])}"
+          = t(".#{field}") + " : " + "#{entry.send(nested[field.to_sym])}"
       - else
         %span= entry

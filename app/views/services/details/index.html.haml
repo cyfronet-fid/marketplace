@@ -7,7 +7,8 @@
     - elsif params[:from] == "backoffice_service"
       = render "backoffice/services/header", service: @service
     - else
-      = render "services/header", service: @service, question: @question, comparison_enabled: @comparison_enabled
+      = render "services/header", service: @service, question: @question, comparison_enabled: @comparison_enabled,
+      favourite_services: @favourite_services
     = render "services/tabs", service: @service
     #comparison-bar.comparison-bar.fixed-bottom{ class: (session[:comparison]&.size || 0) > 0 ? "d-block" : "d-none",
     "data-target": "comparison.bar" }
