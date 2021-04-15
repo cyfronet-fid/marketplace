@@ -14,11 +14,7 @@ module ProjectItemsHelper
   end
 
   def voucher_id(project_item)
-    if project_item.voucher_id.present?
-      project_item.voucher_id
-    else
-      project_item.user_secrets["voucher_id"]
-    end
+    project_item.user_secrets["voucher_id"] || project_item.voucher_id
   end
 
   def webpage(project_item)
