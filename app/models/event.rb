@@ -1,53 +1,25 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
-  belongs_to :eventable, polymorphic: true, optional: true
+  belongs_to :eventable, polymorphic: true
 
   enum action: {
     create: "create",
-    update: "update",
-    delete: "delete"
+    update: "update"
   }, _prefix: true
 
   validates :action, presence: true
-  validates :additional_info, presence: true
-  validate :additional_info_valid?
-
-  validates :eventable, absence: true, if: :action_delete?
-
   validates :updates, presence: true, if: :action_update?
   validates :updates, absence: true, unless: :action_update?
-  validate :schema_valid?, if: :action_update?
-
-  def message_project_item?
-    additional_info["eventable_type"] == "Message" && additional_info["project_item_id"].present?
-  end
-
-  def message?
-    additional_info["eventable_type"] == "Message"
-  end
-
-  def project?
-    additional_info["eventable_type"] == "Project"
-  end
-
-  def project_item?
-    additional_info["eventable_type"] == "ProjectItem"
-  end
-
-  def schema_valid?
-    JSON::Validator.validate!(UPDATES_SCHEME, updates)
-  rescue JSON::Schema::ValidationError => e
-    errors.add(:updates, e.message)
-  end
-
-  def additional_info_valid?
-    JSON::Validator.validate!(ADDITIONAL_INFO_SCHEME, additional_info)
-  rescue JSON::Schema::ValidationError => e
-    errors.add(:additional_info, e.message)
-  end
+  validate :updates_schema?, if: :action_update?
 
   private
+    def updates_schema?
+      JSON::Validator.validate!(UPDATES_SCHEME, updates)
+    rescue JSON::Schema::ValidationError => e
+      errors.add(:updates, e.message)
+    end
+
     UPDATES_SCHEME = {
       type: "array",
       items: {
@@ -55,23 +27,11 @@ class Event < ApplicationRecord
         minItems: 1,
         properties: {
           field: { type: "string" },
-          before: { type: "string" },
-          after: { type: "string" },
+          before: {},
+          after: {},
         },
         additionalProperties: false,
         required: [:field, :before, :after]
       }
-    }
-
-    ADDITIONAL_INFO_SCHEME = {
-      type: "object",
-      properties: {
-        eventable_type: { type: "string", enum: %w[Project ProjectItem Message] },
-        message_id: { type: "integer" },
-        project_id: { type: "integer" },
-        project_item_id: { type: "integer" },
-      },
-      additionalProperties: false,
-      required: [:eventable_type, :project_id]
     }
 end

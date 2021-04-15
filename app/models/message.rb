@@ -27,8 +27,11 @@ class Message < ApplicationRecord
 
   validates :message, presence: true
 
-
   def question?
     author == messageable.user
+  end
+
+  def eventable_identity
+    messageable.eventable_identity.merge({ message_id: id })
   end
 end

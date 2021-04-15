@@ -91,6 +91,10 @@ class ProjectItem < ApplicationRecord
     end
   end
 
+  def eventable_identity
+    { project_id: project.id, project_item_id: iid }
+  end
+
   def to_s
     "\"#{project.name}##{id}\""
   end
