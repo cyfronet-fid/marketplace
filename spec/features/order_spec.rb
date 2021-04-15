@@ -73,7 +73,7 @@ RSpec.feature "Service ordering" do
       expect(page).to have_content(service.name)
     end
 
-    scenario "I can order service with offert containing range" do
+    scenario "I can order service with offer containing range" do
       parameter = build(:range_parameter, name: "Attribute 1", max: 100)
       offer = create(:offer, service: service,
                           parameters: [parameter])

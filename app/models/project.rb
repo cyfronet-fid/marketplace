@@ -86,6 +86,10 @@ class Project < ApplicationRecord
     super(value&.map { |v| Country.for(v) })
   end
 
+  def eventable_identity
+    { project_id: id }
+  end
+
   private
     def require_jira_issue?
       jira_active? || jira_deleted?
