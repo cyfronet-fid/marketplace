@@ -6,8 +6,8 @@ class OrderingApi::V1::EventSerializer < ActiveModel::Serializer
   attribute :resource
   attribute :changes, if: -> { object.action_update? }
   attribute :project_id
-  attribute :message_id, if: -> { object.message? }
-  attribute :project_item_id, if: -> { object.message_project_item? || object.project_item? }
+  attribute :project_item_id, if: :project_item_id
+  attribute :message_id, if: :message_id
 
   def timestamp
     object.created_at.iso8601
@@ -18,7 +18,7 @@ class OrderingApi::V1::EventSerializer < ActiveModel::Serializer
   end
 
   def resource
-    object.additional_info["eventable_type"].underscore
+    object.eventable_type.underscore
   end
 
   def changes
@@ -31,15 +31,9 @@ class OrderingApi::V1::EventSerializer < ActiveModel::Serializer
     end
   end
 
-  def project_id
-    object.additional_info["project_id"]
-  end
-
-  def message_id
-    object.additional_info["message_id"]
-  end
-
-  def project_item_id
-    object.additional_info["project_item_id"]
+  [:project_id, :project_item_id, :message_id].each do |identity_part|
+    define_method identity_part do
+      object.eventable.eventable_identity[identity_part]
+    end
   end
 end

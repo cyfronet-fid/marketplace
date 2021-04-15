@@ -79,7 +79,14 @@ RSpec.describe ProjectItem do
     end
   end
 
-  context "events" do
+  context "eventable" do
+    describe "#eventable_identity" do
+      it "has proper identity" do
+        expect(subject.eventable_identity).to eq({ project_id: subject.project.id,
+                                                   project_item_id: subject.iid })
+      end
+    end
+
     it "should create an event on create" do
       project = create(:project)
       project_item = create(:project_item, project: project)
@@ -89,9 +96,6 @@ RSpec.describe ProjectItem do
       expect(project_item.events.count).to eq(1)
       expect(project_item.events.first.eventable).to eq(project_item)
       expect(project_item.events.first.action).to eq("create")
-      expect(project_item.events.first.additional_info).to eq({ eventable_type: "ProjectItem",
-                                                                project_id: project.id,
-                                                                project_item_id: project_item.iid }.stringify_keys)
     end
 
     it "should create an event on update" do
@@ -105,41 +109,11 @@ RSpec.describe ProjectItem do
       expect(project_item.events.count).to eq(2)
       expect(project_item.events.first.eventable).to eq(project_item)
       expect(project_item.events.first.action).to eq("create")
-      expect(project_item.events.first.additional_info).to eq({ eventable_type: "ProjectItem",
-                                                                project_id: project.id,
-                                                                project_item_id: project_item.iid }.stringify_keys)
 
       expect(project_item.events.second.eventable).to eq(project_item)
       expect(project_item.events.second.action).to eq("update")
       expect(project_item.events.second.updates).to contain_exactly({ field: "status_type", before: "created", after: "ready" }.stringify_keys,
                                                       { field: "status", before: "custom created status", after: "custom ready status" }.stringify_keys)
-      expect(project_item.events.second.additional_info).to eq({ eventable_type: "ProjectItem",
-                                                                project_id: project.id,
-                                                                project_item_id: project_item.iid }.stringify_keys)
-    end
-
-    it "should create an event on delete" do
-      project = create(:project)
-      p_id = project.id
-
-      project_item = create(:project_item, project: project)
-      pi_id = project_item.iid
-      project_item.destroy
-
-      expect(project.events.count).to eq(1)
-
-      expect(Event.count).to eq(3)
-      expect(Event.second.eventable).to eq(nil)
-      expect(Event.second.action).to eq("create")
-      expect(Event.second.additional_info).to eq({ eventable_type: "ProjectItem",
-                                                   project_id: p_id,
-                                                   project_item_id: pi_id }.stringify_keys)
-
-      expect(Event.third.eventable).to eq(nil)
-      expect(Event.third.action).to eq("delete")
-      expect(Event.third.additional_info).to eq({ eventable_type: "ProjectItem",
-                                                   project_id: p_id,
-                                                   project_item_id: pi_id }.stringify_keys)
     end
   end
 
