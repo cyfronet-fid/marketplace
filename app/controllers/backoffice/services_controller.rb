@@ -136,7 +136,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
         update_logo_from_session!
         session.delete(preview_session_key)
         redirect_to backoffice_service_path(@service),
-                    notice: "New service created sucessfully"
+                    notice: "New service created successfully"
       else
         add_missing_nested_models
         render :new, status: :bad_request

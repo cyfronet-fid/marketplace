@@ -22,7 +22,7 @@ class Backoffice::ScientificDomainsController < Backoffice::ApplicationControlle
 
     if @scientific_domain.save
       redirect_to backoffice_scientific_domain_path(@scientific_domain),
-                  notice: "New scientific_domain created sucessfully"
+                  notice: "New scientific_domain created successfully"
     else
       render :new, status: :bad_request
     end

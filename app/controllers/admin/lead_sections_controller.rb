@@ -26,7 +26,7 @@ class Admin::LeadSectionsController < Admin::ApplicationController
   def update
     if @lead_section.update(permitted_attributes(LeadSection))
       redirect_to admin_leads_path,
-        notice: "Lead section was updated sucessfully"
+        notice: "Lead section was updated successfully"
     else
       render :edit, status: :bad_request
     end

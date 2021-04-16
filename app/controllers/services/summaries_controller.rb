@@ -15,7 +15,7 @@ class Services::SummariesController < Services::ApplicationController
   def create
     @step = step(summary_params)
 
-    if @step.valid? & verify_recaptcha(model: @step, attribute: :verified_recapcha)
+    if @step.valid? & verify_recaptcha(model: @step, attribute: :verified_recaptcha)
       do_create(@step.project_item, message_text)
     else
       setup_show_variables!
@@ -39,7 +39,7 @@ class Services::SummariesController < Services::ApplicationController
         session.delete(:selected_project)
         Matomo::SendRequestJob.perform_later(@project_item, "AddToProject")
         redirect_to project_service_path(@project_item.project, @project_item),
-                                  notice: "Service ordered sucessfully"
+                                  notice: "Service ordered successfully"
       else
         redirect_to url_for([@service, prev_visible_step_key]),
                     alert: "Service request configuration is invalid"

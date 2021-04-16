@@ -26,7 +26,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
 
     if @provider.save
       redirect_to backoffice_provider_path(@provider),
-                  notice: "New provider created sucessfully"
+                  notice: "New provider created successfully"
     else
       render :new, status: :bad_request
     end
