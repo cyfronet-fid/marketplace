@@ -49,6 +49,12 @@ class ProjectItem < ApplicationRecord
 
   before_validation :copy_offer_fields, on: :create
 
+  after_save :create_new_status, if: :saved_status_change?
+  after_save :voucher_id_changes!
+  after_save :create_voucher_id_message, if: :saved_voucher_id_change?
+
+  after_commit :dispatch_emails
+
   def service
     offer.service unless offer.nil?
   end
@@ -61,38 +67,20 @@ class ProjectItem < ApplicationRecord
     !(ready? || rejected?)
   end
 
-  def new_status(status:, status_type:, author: nil)
-    statuses.create(status: status, status_type: status_type, author: author).tap do
-      update(status: status, status_type: status_type)
-    end
+  def new_status(status:, status_type:)
+    update(status: status, status_type: status_type)
   end
 
-  def new_voucher_change(voucher_id, author: nil, iid: nil)
-    voucher_id ||= ""
-
-    return if voucher_id == user_secrets["voucher_id"]
-
-    message = if user_secrets["voucher_id"].blank? && voucher_id.present?
-      "Voucher has been granted to you, ID: #{voucher_id}"
-    elsif user_secrets["voucher_id"].present? && voucher_id.blank?
-      "Voucher has been revoked"
-    elsif user_secrets["voucher_id"].present? && voucher_id.present?
-      "Voucher ID has been updated: #{voucher_id}"
-    end
-
-    messages.create(
-      message: message,
-      author: author,
-      author_role: :provider,
-      scope: :user_direct,
-      iid: iid
-    ).tap do
-      update(user_secrets: user_secrets.merge("voucher_id" => voucher_id))
-    end
+  def new_voucher_change(voucher_id)
+    update(user_secrets: user_secrets.merge("voucher_id" => voucher_id))
   end
 
   def eventable_identity
     { project_id: project.id, project_item_id: iid }
+  end
+
+  def eventable_attributes
+    Set.new(%i[status status_type user_secrets])
   end
 
   def to_s
@@ -124,5 +112,47 @@ class ProjectItem < ApplicationRecord
       self.voucherable = offer&.voucherable
       self.order_url = offer&.order_url
       self.internal = offer&.internal
+    end
+
+    def saved_status_change?
+      saved_change_to_status_type? || saved_change_to_status?
+    end
+
+    def create_new_status
+      statuses.create(status: status, status_type: status_type)
+    end
+
+    def voucher_id_changes!
+      return unless saved_change_to_user_secrets?
+      @prev_voucher_id, @curr_voucher_id = saved_change_to_user_secrets.map { |us| us["voucher_id"] }
+      @prev_voucher_id ||= ""
+    end
+
+    def saved_voucher_id_change?
+      @prev_voucher_id != @curr_voucher_id
+    end
+
+    def create_voucher_id_message
+      messages.create(
+        message: voucher_id_message,
+        author_role: :provider,
+        scope: :user_direct
+      )
+    end
+
+    def voucher_id_message
+      if @prev_voucher_id.blank? && @curr_voucher_id.present?
+        "Voucher has been granted to you, ID: #{@curr_voucher_id}"
+      elsif @prev_voucher_id.present? && @curr_voucher_id.blank?
+        "Voucher has been revoked"
+      elsif @prev_voucher_id.present? && @curr_voucher_id.present?
+        "Voucher ID has been updated: #{@curr_voucher_id}"
+      end
+    end
+
+    def dispatch_emails
+      if saved_change_to_status_type?
+        ProjectItem::OnStatusTypeUpdated.new(self).call
+      end
     end
 end

@@ -92,12 +92,14 @@ RSpec.describe ProjectItem::Ready do
     end
 
     context "Normal service project item" do
-      it "sents ready and rate service emails to owner" do
+      it "sends ready and rate service emails to owner" do
         # project_item change email is sent only when there is more than 1 change
         project_item.new_status(status: "custom_created", status_type: :created)
 
         expect { described_class.new(project_item).call }.
-            to change { ActionMailer::Base.deliveries.count }.by(1)
+            to change { ActionMailer::Base.deliveries.count }.by(2)
+        expect(ActionMailer::Base.deliveries[-2].subject)
+          .to eq("Status of your service access request in the EOSC Portal Marketplace has changed to READY TO USE")
         expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
       end
     end

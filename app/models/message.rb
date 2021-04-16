@@ -27,6 +27,11 @@ class Message < ApplicationRecord
 
   validates :message, presence: true
 
+  before_update :set_edited!
+
+  after_commit :dispatch_create_email, on: :create, if: :dispatch_email?
+  after_commit :dispatch_update_email, on: :update, if: [:dispatch_email?, :message_previously_changed?]
+
   def question?
     author == messageable.user
   end
@@ -34,4 +39,25 @@ class Message < ApplicationRecord
   def eventable_identity
     messageable.eventable_identity.merge({ message_id: id })
   end
+
+  def eventable_attributes
+    Set.new(%i[message])
+  end
+
+  private
+    def set_edited!
+      self.edited = true
+    end
+
+    def dispatch_email?
+      !role_user? && !internal_scope?
+    end
+
+    def dispatch_create_email
+      MessageMailer.new_message(self).deliver_later
+    end
+
+    def dispatch_update_email
+      MessageMailer.message_edited(self).deliver_later
+    end
 end

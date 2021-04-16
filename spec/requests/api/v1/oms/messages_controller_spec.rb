@@ -149,6 +149,8 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
 
           data = JSON.parse(response.body)
           expect(data).to eq(OrderingApi::V1::MessageSerializer.new(project.messages[0]).as_json.deep_stringify_keys)
+
+          expect(ActionMailer::Base.deliveries.count).to eq(1)
         end
       end
 
@@ -180,6 +182,8 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
 
           data = JSON.parse(response.body)
           expect(data).to eq(OrderingApi::V1::MessageSerializer.new(project_item.messages[0]).as_json.deep_stringify_keys)
+
+          expect(ActionMailer::Base.deliveries.count).to eq(1)
         end
       end
 
@@ -281,7 +285,7 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project) { create(:project) }
-        let(:message) { create(:message, message: "Before update", messageable: project) }
+        let(:message) { create(:provider_message, message: "Before update", messageable: project) }
 
         let(:oms_id) { oms.id }
         let(:m_id) { message.id }
@@ -298,6 +302,8 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
           expect(message.message).to eq("After update")
           expect(project.messages.first.message).to eq("After update")
           expect(project.messages.count).to eq(1)
+
+          expect(ActionMailer::Base.deliveries.count).to eq(2)
         end
       end
 
@@ -306,7 +312,7 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project_item) { create(:project_item, project: build(:project)) }
-        let(:message) { create(:message, message: "Before update", messageable: project_item) }
+        let(:message) { create(:provider_message, message: "Before update", messageable: project_item) }
 
         let(:oms_id) { oms.id }
         let(:m_id) { message.id }
@@ -323,6 +329,8 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering/swagger.json" do
           expect(message.message).to eq("After update")
           expect(project_item.messages.first.message).to eq("After update")
           expect(project_item.messages.count).to eq(1)
+
+          expect(ActionMailer::Base.deliveries.count).to eq(2)
         end
       end
 

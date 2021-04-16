@@ -14,27 +14,27 @@ RSpec.describe ProjectItem do
   it { should belong_to(:project) }
   it { should belong_to(:offer) }
 
-  describe "#new_status" do
-    it "change project_item status" do
-      project_item = create(:project_item, status: "created", status_type: :created)
+  describe "#create_new_status" do
+    [
+      { status: "other status", status_type: :ready },
+      { status: "other status" },
+      { status_type: :ready },
+    ].each do |changes|
+      it "creates status for update!(#{changes})" do
+        expect {
+          subject.update!(changes)
+        }.to change { subject.statuses.size }.by(1)
 
-      project_item.new_status(status: "custom_registered", status_type: :registered)
-      new_status = project_item.statuses.last
-
-      expect(project_item).to be_registered
-      expect(project_item.status).to eq "custom_registered"
-      expect(new_status).to be_registered
-      expect(new_status.status).to eq "custom_registered"
+        last_status = subject.statuses.last
+        expect(last_status.status).to eq(subject.status)
+        expect(last_status.status_type).to eq(subject.status_type)
+      end
     end
 
-    it "set author" do
-      project_item = create(:project_item, status: "created", status_type: :created)
-      author = create(:user)
-
-      project_item.new_status(status: "registered", status_type: :registered, author: author)
-      new_status = project_item.statuses.last
-
-      expect(new_status.author).to eq(author)
+    it "doesn't create status if status not changed" do
+      expect {
+        subject.update!(user_secrets: { "key": "value" })
+      }.not_to change { subject.statuses.size }
     end
   end
 
@@ -105,8 +105,8 @@ RSpec.describe ProjectItem do
       project_item.update(status_type: "ready", status: "custom ready status")
 
       expect(project.events.count).to eq(1)
-
       expect(project_item.events.count).to eq(2)
+
       expect(project_item.events.first.eventable).to eq(project_item)
       expect(project_item.events.first.action).to eq("create")
 

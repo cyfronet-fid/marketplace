@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class WebhookJiraMailer < ApplicationMailer
+class MessageMailer < ApplicationMailer
   def new_message(message)
     @user = message.messageable.user
     @model = message.messageable

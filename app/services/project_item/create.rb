@@ -7,17 +7,13 @@ class ProjectItem::Create
   end
 
   def call
-    @project_item.created!
-
-    if @project_item.save
-      @project_item.statuses.create(status: "created", status_type: :created)
-
-      unless orderable?
+    if @project_item.update(status: "created", status_type: :created)
+      if orderable?
+        ProjectItem::RegisterJob.perform_later(@project_item, @message)
+        ProjectItemMailer.created(@project_item).deliver_later
+      else
         ProjectItem::ReadyJob.perform_later(@project_item, @message)
         ProjectItemMailer.added_to_project(@project_item).deliver_later
-      else
-        ProjectItemMailer.created(@project_item).deliver_later
-        ProjectItem::RegisterJob.perform_later(@project_item, @message)
       end
     end
 
