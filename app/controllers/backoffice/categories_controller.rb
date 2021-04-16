@@ -22,7 +22,7 @@ class Backoffice::CategoriesController < Backoffice::ApplicationController
 
     if @category.save
       redirect_to backoffice_category_path(@category),
-                  notice: "New category created sucessfully"
+                  notice: "New category created successfully"
     else
       render :new, status: :bad_request
     end

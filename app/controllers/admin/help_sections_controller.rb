@@ -14,7 +14,7 @@ class Admin::HelpSectionsController < Admin::ApplicationController
 
     if @help_section.save
       redirect_to admin_help_path,
-                  notice: "New help category created sucessfully"
+                  notice: "New help category created successfully"
     else
       render :new, status: :bad_request
     end
@@ -26,7 +26,7 @@ class Admin::HelpSectionsController < Admin::ApplicationController
   def update
     if @help_section.update(permitted_attributes(HelpSection))
       redirect_to admin_help_path,
-                  notice: "Help category updated sucessfully"
+                  notice: "Help category updated successfully"
     else
       render :edit, status: :bad_request
     end
