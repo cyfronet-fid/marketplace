@@ -13,13 +13,7 @@ class Jira::CommentActivity
       author_role: :provider,
       scope: :public,
       message: body,
-      edited: message.persisted?,
     )
-    if message.edited?
-      WebhookJiraMailer.message_edited(message).deliver_later
-    else
-      WebhookJiraMailer.new_message(message).deliver_later
-    end
   end
 
   private

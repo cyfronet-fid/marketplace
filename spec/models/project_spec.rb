@@ -133,19 +133,5 @@ RSpec.describe Project do
       expect(Event.first.eventable).to eq(project)
       expect(Event.first.action).to eq("create")
     end
-
-    it "should create an event on update" do
-      project = create(:project, name: "XD", reason_for_access: "coz", webpage: "https://www.cyfronet.krakow.pl/")
-      project.update(name: "new name", reason_for_access: "hmm", webpage: "https://www.cyfronet.krakow.pl/")
-
-      expect(Event.count).to eq(2)
-      expect(Event.first.eventable).to eq(project)
-      expect(Event.first.action).to eq("create")
-
-      expect(Event.second.eventable).to eq(project)
-      expect(Event.second.action).to eq("update")
-      expect(Event.second.updates).to contain_exactly({ field: "name", before: "XD", after: "new name" }.stringify_keys,
-                                                      { field: "reason_for_access", before: "coz", after: "hmm" }.stringify_keys)
-    end
   end
 end

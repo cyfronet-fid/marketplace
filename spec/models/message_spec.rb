@@ -134,4 +134,160 @@ RSpec.describe Message do
       expect(message.events.second.updates).to contain_exactly({ field: "message", before: "old", after: "new" }.stringify_keys)
     end
   end
+
+  describe "#edited" do
+    subject { create(:message) }
+
+    it "should be false" do
+      expect(subject.edited).to be_falsey
+    end
+
+    context "after update" do
+      before do
+        subject.update!(message: "other")
+      end
+
+      it "should be true" do
+        expect(subject.edited).to be_truthy
+      end
+    end
+  end
+
+  describe "#emails" do
+    context "on created" do
+      let(:project) { create(:project, name: "FancyOne") }
+
+      context "for project_item" do
+        let(:project_item) { create(:project_item, project: project) }
+
+        [:provider, :mediator].each do |author_role|
+          context ":role_#{author_role}?" do
+            [:public, :user_direct].each do |scope|
+              context ":#{scope}_scope?" do
+                it "sends email" do
+                  expect {
+                    create(:message, scope: scope, author_role: author_role, messageable: project_item)
+                  }.to change { ActionMailer::Base.deliveries.count }.by(1)
+                  email = ActionMailer::Base.deliveries.last
+
+                  expect(email.to).to contain_exactly(project_item.user.email)
+                  expect(email.body.encoded).to include("A new message was added to your service request")
+                  expect(email.subject).to eq("Question about your resource access request in EOSC Portal Marketplace")
+                end
+              end
+            end
+
+            context ":internal_scope?" do
+              it "doesn't send email" do
+                expect {
+                  create(:message, scope: :internal, author_role: author_role, messageable: project_item)
+                }.not_to change { ActionMailer::Base.deliveries.count }
+              end
+            end
+          end
+        end
+      end
+
+      context "for project" do
+        [:provider, :mediator].each do |author_role|
+          context ":role_#{author_role}?" do
+            [:public, :user_direct].each do |scope|
+              context ":#{scope}_scope?" do
+                it "sends email" do
+                  expect {
+                    create(:message, scope: scope, author_role: author_role, messageable: project)
+                  }.to change { ActionMailer::Base.deliveries.count }.by(1)
+                  email = ActionMailer::Base.deliveries.last
+
+                  expect(email.to).to contain_exactly(project.user.email)
+                  expect(email.body.encoded).to include("You have received a message related to your Project")
+                  expect(email.subject).to eq("Question about your Project FancyOne in EOSC Portal Marketplace")
+                end
+              end
+            end
+
+            context ":internal_scope?" do
+              it "doesn't send email" do
+                expect {
+                  create(:message, scope: :internal, author_role: author_role, messageable: project)
+                }.not_to change { ActionMailer::Base.deliveries.count }
+              end
+            end
+          end
+        end
+      end
+    end
+
+    context "on updated" do
+      let(:project) { create(:project, name: "FancyOne") }
+
+      context "for project_item" do
+        let(:project_item) { create(:project_item, project: project) }
+
+        [:provider, :mediator].each do |author_role|
+          context ":role_#{author_role}?" do
+            [:public, :user_direct].each do |scope|
+              context ":#{scope}_scope?" do
+                let!(:message) { create(:message, scope: scope, author_role: author_role, messageable: project_item) }
+
+                it "sends email" do
+                  expect {
+                    message.update!(message: "something else")
+                  }.to change { ActionMailer::Base.deliveries.count }.by(1)
+                  email = ActionMailer::Base.deliveries.last
+
+                  expect(email.to).to contain_exactly(project_item.user.email)
+                  expect(email.body.encoded).to include("has been modified by the service provider")
+                  expect(email.subject).to eq("Message updated")
+                end
+              end
+            end
+
+            context ":internal_scope?" do
+              let!(:message) { create(:message, scope: :internal, author_role: author_role, messageable: project_item) }
+
+              it "doesn't send email" do
+                expect {
+                  message.update!(message: "something else")
+                }.not_to change { ActionMailer::Base.deliveries.count }
+              end
+            end
+          end
+        end
+      end
+
+      context "for project" do
+        [:provider, :mediator].each do |author_role|
+          context ":role_#{author_role}?" do
+            [:public, :user_direct].each do |scope|
+              context ":#{scope}_scope?" do
+                let!(:message) { create(:message, scope: scope, author_role: author_role, messageable: project) }
+
+                it "sends email" do
+                  expect {
+                    message.update!(message: "something else")
+                  }.to change { ActionMailer::Base.deliveries.count }.by(1)
+                  email = ActionMailer::Base.deliveries.last
+
+                  expect(email.to).to contain_exactly(project.user.email)
+                  expect(email.body.encoded).to include("has been modified by the service provider")
+                  expect(email.subject).to eq("Message updated")
+                end
+              end
+            end
+
+            context ":internal_scope?" do
+              let!(:message) { create(:message, scope: :internal, author_role: author_role, messageable: project) }
+
+              it "doesn't send email" do
+                expect {
+                  message.update!(message: "something else")
+                }.not_to change { ActionMailer::Base.deliveries.count }
+              end
+            end
+          end
+        end
+      end
+    end
+  end
 end

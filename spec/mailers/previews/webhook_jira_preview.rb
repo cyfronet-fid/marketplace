@@ -5,7 +5,7 @@
 # !!! We are using last created project_item to show email previews !!!
 class WebhookJiraPreview < ActionMailer::Preview
   def new_message_for_project_item
-    WebhookJiraMailer.new_message(
+    MessageMailer.new_message(
       Message.new(
         messageable: ProjectItem.last,
         author_role: :provider,
@@ -17,7 +17,7 @@ class WebhookJiraPreview < ActionMailer::Preview
 
 
   def project_new_message
-    WebhookJiraMailer.new_message(
+    MessageMailer.new_message(
       Message.new(
         messageable: Project.last,
         author_role: :provider,

@@ -16,7 +16,7 @@ class Services::SummariesController < Services::ApplicationController
     @step = step(summary_params)
 
     if @step.valid? & verify_recaptcha(model: @step, attribute: :verified_recaptcha)
-      do_create(@step.project_item, message_text)
+      do_create(@step.project_item)
     else
       setup_show_variables!
       flash.now[:alert] = @step.error
@@ -29,7 +29,7 @@ class Services::SummariesController < Services::ApplicationController
       I18n.t("services.summary.#{helpers.map_view_to_order_type(@offer)}.order.title")
     end
 
-    def do_create(project_item_template, message)
+    def do_create(project_item_template)
       authorize(project_item_template)
 
       @project_item = ProjectItem::Create.new(project_item_template, message_text).call
