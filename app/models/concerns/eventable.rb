@@ -15,11 +15,16 @@ module Eventable
       end
 
       def event_on_update
-        unless self.previous_changes.blank?
-          updates = self.previous_changes.map { |attr, change| { field: attr, before: change[0], after: change[1] }  }
-          updates = updates.filter { |update| update[:field] != "updated_at" }
-          Event.create!(action: :update, eventable: self, updates: updates)
+        if filtered_updates.present?
+          Event.create!(action: :update, eventable: self, updates: filtered_updates)
         end
+      end
+
+      def filtered_updates
+        return [] if previous_changes.blank?
+        previous_changes
+          .filter { |attr, _| eventable_attributes.include? attr.to_sym }
+          .map { |attr, change| { field: attr, before: change[0], after: change[1] } }
       end
   end
 end

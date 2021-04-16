@@ -30,7 +30,6 @@ RSpec.describe Jira::IssueUpdated do
     described_class.new(project_item, changelog(to: jira_client.wf_closed_id)).call
     last_status = project_item.statuses.last
 
-
     expect(last_status).to be_closed
   end
 

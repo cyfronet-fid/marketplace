@@ -90,6 +90,10 @@ class Project < ApplicationRecord
     { project_id: id }
   end
 
+  def eventable_attributes
+    Set.new()
+  end
+
   private
     def require_jira_issue?
       jira_active? || jira_deleted?

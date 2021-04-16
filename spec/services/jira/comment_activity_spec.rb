@@ -29,17 +29,6 @@ RSpec.describe Jira::CommentActivity do
         expect(first_message.message).to eq("First edited message")
       end
 
-      it "send email while update message" do
-        expect {
-          described_class.new(project, comment(message: "First edited message", id: 123)).call
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
-        email = ActionMailer::Base.deliveries.last
-
-        expect(email.to).to contain_exactly(project.user.email)
-        expect(email.body.encoded).to match(/has been modified by the service provider/)
-        expect(email.subject).to eq("Message updated")
-      end
-
       it "create new message when spm makes the message available to the user" do
         expect {
           described_class.new(project, comment(message: "New message", id: 124)).call
@@ -73,17 +62,6 @@ RSpec.describe Jira::CommentActivity do
         expect(first_message.role_provider?).to be_truthy
         expect(first_message.public_scope?).to be_truthy
         expect(first_message.message).to eq("First edited message")
-      end
-
-      it "send email while update message" do
-        expect {
-          described_class.new(project_item, comment(message: "First edited message", id: 123)).call
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
-        email = ActionMailer::Base.deliveries.last
-
-        expect(email.to).to contain_exactly(project_item.user.email)
-        expect(email.body.encoded).to match(/has been modified by the service provider/)
-        expect(email.subject).to eq("Message updated")
       end
 
       it "create new message when spm makes the message available to the user" do
@@ -132,16 +110,6 @@ RSpec.describe Jira::CommentActivity do
                               comment(message: "question",
                                       id: "321", name: jira_username)).call
         end.to_not change { project_item.messages.count }
-      end
-
-      it "eand email to user about response" do
-        expect { described_class.new(project_item, comment(message: "response", id: 123)).call }.
-          to change { ActionMailer::Base.deliveries.count }.by(1)
-        email = ActionMailer::Base.deliveries.last
-
-        expect(email.to).to contain_exactly(project_item.user.email)
-        expect(email.body.encoded).to match(/A new message was added to your service request/)
-        expect(email.subject).to eq("Question about your resource access request in EOSC Portal Marketplace")
       end
 
       it "register messages for all and for User" do
@@ -194,16 +162,6 @@ RSpec.describe Jira::CommentActivity do
                               comment(message: "question",
                                       id: "321", name: jira_username)).call
         end.to_not change { project.messages.count }
-      end
-
-      it "sand email to user about response" do
-        expect { described_class.new(project, comment(message: "response", id: 123)).call }.
-          to change { ActionMailer::Base.deliveries.count }.by(1)
-        email = ActionMailer::Base.deliveries.last
-
-        expect(email.to).to contain_exactly(project.user.email)
-        expect(email.body.encoded).to match(/You have received a message related to your Project/)
-        expect(email.subject).to eq("Question about your Project Project in EOSC Portal Marketplace")
       end
 
       it "register messages for all and for User" do

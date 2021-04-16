@@ -30,15 +30,15 @@ RSpec.describe "OMS Project items API", swagger_doc: "v1/ordering/swagger.json" 
         schema "$ref" => "project/project_item/project_item_index.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project_items) {
+        let(:project) { create(:project) }
+        let!(:project_items) {
           [
-            create(:project_item, iid: 1),
-            create(:project_item, iid: 2, user_secrets: { "key": "value" }),
-            create(:project_item, iid: 3),
-            create(:project_item, iid: 4)
+            create(:project_item, iid: 1, project: project),
+            create(:project_item, iid: 2, project: project, user_secrets: { "key": "value" }),
+            create(:project_item, iid: 3, project: project),
+            create(:project_item, iid: 4, project: project),
           ]
         }
-        let(:project) { create(:project, project_items: project_items) }
 
         let(:from_id) { 1 }
         let(:limit) { 2 }
@@ -105,8 +105,8 @@ RSpec.describe "OMS Project items API", swagger_doc: "v1/ordering/swagger.json" 
         schema "$ref" => "project/project_item/project_item_read.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project_item) { create(:project_item, user_secrets: { "key": "value" }) }
-        let(:project) { create(:project, project_items: [project_item]) }
+        let(:project) { create(:project) }
+        let(:project_item) { create(:project_item, project: project, user_secrets: { "key": "value" }) }
 
         let(:oms_id) { oms.id }
         let(:p_id) { project.id }
@@ -153,13 +153,14 @@ RSpec.describe "OMS Project items API", swagger_doc: "v1/ordering/swagger.json" 
 
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
+        let(:project) { create(:project) }
         let(:project_item) { create(
           :project_item,
+          project: project,
           status_type: :created,
           status: "old value",
           user_secrets: { "other": "something" }
         ) }
-        let(:project) { create(:project, project_items: [project_item]) }
 
         let(:oms_id) { oms.id }
         let(:p_id) { project.id }
