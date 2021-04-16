@@ -63,7 +63,7 @@ RSpec.describe ProjectItem::Ready do
       expect { described_class.new(project_item).call }.
           to change { ActionMailer::Base.deliveries.count }.by(2)
 
-      expect(ActionMailer::Base.deliveries[-2].subject).to start_with("[EOSC merketplace]")
+      expect(ActionMailer::Base.deliveries[-2].subject).to start_with("[EOSC marketplace]")
       expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
     end
 

@@ -14,7 +14,7 @@ class Admin::HelpItemsController < Admin::ApplicationController
 
     if @help_item.save
       redirect_to admin_help_path(anchor: @help_item.help_section.slug),
-                  notice: "New help item created sucessfully"
+                  notice: "New help item created successfully"
     else
       render :new, status: :bad_request
     end
@@ -26,7 +26,7 @@ class Admin::HelpItemsController < Admin::ApplicationController
   def update
     if @help_item.update(permitted_attributes(HelpItem))
       redirect_to admin_help_path(anchor: @help_item.help_section.slug),
-                  notice: "New help item created sucessfully"
+                  notice: "New help item created successfully"
     else
       render :edit, status: :bad_request
     end

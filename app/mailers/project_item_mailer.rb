@@ -101,7 +101,7 @@ class ProjectItemMailer < ApplicationMailer
     @activate_message = service.activate_message
 
     mail(to: @user.email,
-         subject: "[EOSC merketplace] #{service.name} is ready - usage instructions",
+         subject: "[EOSC marketplace] #{service.name} is ready - usage instructions",
          template_name: "activate_message")
   end
 

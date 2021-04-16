@@ -31,7 +31,7 @@ class ProjectsController < ApplicationController
                            merge(user: current_user, status: :active))
 
     respond_to do |format|
-      form_valid = @project.valid? & verify_recaptcha(model: @project, attribute: :verified_recapcha)
+      form_valid = @project.valid? & verify_recaptcha(model: @project, attribute: :verified_recaptcha)
       if form_valid && Project::Create.new(@project).call
         format.html { redirect_to project_path(@project) }
         format.js { render :show }

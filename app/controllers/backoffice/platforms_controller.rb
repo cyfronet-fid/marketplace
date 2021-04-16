@@ -22,7 +22,7 @@ class Backoffice::PlatformsController < Backoffice::ApplicationController
 
     if @platform.save
       redirect_to backoffice_platform_path(@platform),
-                  notice: "New platform created sucessfully"
+                  notice: "New platform created successfully"
     else
       render :new, status: :bad_request
     end

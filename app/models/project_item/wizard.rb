@@ -87,7 +87,7 @@ class ProjectItem::Wizard
       include ProjectItem::ProjectValidation
       delegate :properties?, to: :project_item
 
-      attr_accessor :additional_comment, :verified_recapcha
+      attr_accessor :additional_comment, :verified_recaptcha
 
       def error
         "Please select the project where service will be added"
