@@ -241,6 +241,10 @@ class Service < ApplicationRecord
       .empty?
   end
 
+  def available_oms
+    (Oms.where(default: true).to_a + oms.to_a + Oms.where(type: :global).to_a + providers.map(&:oms).flatten).uniq
+  end
+
   private
     def remove_empty_array_fields
       array_fields = [:multimedia, :use_cases_url, :certifications,

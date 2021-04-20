@@ -4,9 +4,9 @@ require "swagger_helper"
 require "rails_helper"
 
 
-RSpec.describe "OMS Project items API", swagger_doc: "v1/ordering/swagger.json" do
+RSpec.describe "OMS Project items API", swagger_doc: "v1/ordering_swagger.json" do
   before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1", "ordering") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
+    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
   end
 
   after(:all) do
@@ -27,7 +27,7 @@ RSpec.describe "OMS Project items API", swagger_doc: "v1/ordering/swagger.json" 
                 description: "Number of returned elements"
 
       response 200, "project items found" do
-        schema "$ref" => "project/project_item/project_item_index.json"
+        schema "$ref" => "project_item/project_item_index.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:other_oms) { create(:oms, administrators: [oms_admin]) }
@@ -61,7 +61,7 @@ RSpec.describe "OMS Project items API", swagger_doc: "v1/ordering/swagger.json" 
       end
 
       response 200, "project items found but were empty", document: false do
-        schema "$ref" => "project/project_item/project_item_index.json"
+        schema "$ref" => "project_item/project_item_index.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
         let(:project) { create(:project) }
@@ -146,7 +146,7 @@ RSpec.describe "OMS Project items API", swagger_doc: "v1/ordering/swagger.json" 
       security [ authentication_token: [] ]
 
       response 200, "project item found" do
-        schema "$ref" => "project/project_item/project_item_read.json"
+        schema "$ref" => "project_item/project_item_read.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project) { create(:project) }
@@ -275,10 +275,10 @@ RSpec.describe "OMS Project items API", swagger_doc: "v1/ordering/swagger.json" 
       produces "application/json"
       consumes "application/json"
       security [ authentication_token: [] ]
-      parameter name: :project_item_payload, in: :body, schema: { "$ref" => "project/project_item/project_item_update.json" }
+      parameter name: :project_item_payload, in: :body, schema: { "$ref" => "project_item/project_item_update.json" }
 
       response 200, "project item updated" do
-        schema "$ref" => "project/project_item/project_item_read.json"
+        schema "$ref" => "project_item/project_item_read.json"
 
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }

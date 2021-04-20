@@ -3,9 +3,13 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe "Offers API", swagger_doc: "v1/offering/swagger.json" do
+RSpec.describe "Offers API", swagger_doc: "v1/offering_swagger.json" do
   before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1", "offering") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
+    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
+  end
+
+  before(:each) do
+    create(:oms, default: true)
   end
 
   after(:all) do
@@ -20,8 +24,7 @@ RSpec.describe "Offers API", swagger_doc: "v1/offering/swagger.json" do
       parameter name: :resource_id, in: :path, type: :string, description: "Resource identifier (id or eid)"
 
       response "200", "offers found" do
-        schema type: :array,
-               items: { "$ref" => "offer/offer_output.json" }
+        schema "$ref" => "offer/offer_index.json"
 
         let(:published_offer1) { build(:offer_with_all_parameters) }
         let(:published_offer2) { build(:offer_with_all_parameters) }
@@ -120,17 +123,17 @@ RSpec.describe "Offers API", swagger_doc: "v1/offering/swagger.json" do
       consumes "application/json"
       security [ authentication_token: [] ]
       parameter name: :resource_id, in: :path, type: :string, description: "Resource identifier (id or eid)"
-      parameter name: :offer_payload, in: :body, schema: { "$ref" => "offer/offer_input.json" }
+      parameter name: :offer_payload, in: :body, schema: { "$ref" => "offer/offer_write.json" }
 
       response "201", "offer created" do
-        schema "$ref" => "offer/offer_output.json"
+        schema "$ref" => "offer/offer_read.json"
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
         let!(:service) { create(:service,
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]))}
-        let(:offer) { create(:offer_with_all_parameters) }
-        let(:offer_payload) { JSON.parse(offer.to_json) }
+        let(:offer) { build(:offer_with_all_parameters) }
+        let(:offer_payload) { JSON.parse(OfferSerializer.new(offer).to_json) }
         let(:resource_id) { service.slug }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
@@ -138,7 +141,7 @@ RSpec.describe "Offers API", swagger_doc: "v1/offering/swagger.json" do
           data = JSON.parse(response.body)
           service.reload
 
-          expect(data).to eq(JSON.parse(service.offers.first.to_json))
+          expect(data).to eq(JSON.parse(OfferSerializer.new(service.offers.first).to_json))
           expect(service.offers.length).to eq(1)
           expect(service.offers.first.name).to eq(offer.name)
           expect(service.offers.first.description).to eq(offer.description)
@@ -149,7 +152,7 @@ RSpec.describe "Offers API", swagger_doc: "v1/offering/swagger.json" do
       end
 
       response "201", "minimalistic offer created", document: false do
-        schema "$ref" => "offer/offer_output.json"
+        schema "$ref" => "offer/offer_read.json"
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -165,12 +168,44 @@ RSpec.describe "Offers API", swagger_doc: "v1/offering/swagger.json" do
           data = JSON.parse(response.body)
           service.reload
 
-          expect(data).to eq(JSON.parse(service.offers.first.to_json))
+          expect(data).to eq(JSON.parse(OfferSerializer.new(service.offers.first).to_json))
           expect(service.offers.length).to eq(1)
           expect(service.offers.first.name).to eq(offer_payload[:name])
           expect(service.offers.first.description).to eq(offer_payload[:description])
           expect(service.offers.first.order_type).to eq(offer_payload[:order_type])
           expect(service.offers.first.status).to eq("published")
+        end
+      end
+
+      response "201", "offer with oms_params created", document: false do
+        schema "$ref" => "offer/offer_read.json"
+
+        let(:oms) { create(:oms, type: :global, custom_params: { "a": { mandatory: true, default: "qwe" } }) }
+        let(:data_admin_user) { create(:user) }
+        let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
+        let!(:service) { create(:service,
+                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
+        let(:offer_payload) { { name: "New offer",
+                                description: "sample description",
+                                order_type: "order_required",
+                                primary_oms_id: oms.id,
+                                oms_params: { "a": "asd" }
+        } }
+        let(:resource_id) { service.slug }
+        let(:"X-User-Token") { data_admin_user.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          service.reload
+
+          expect(data).to eq(JSON.parse(OfferSerializer.new(service.offers.first).to_json))
+          expect(service.offers.length).to eq(1)
+          expect(service.offers.first.name).to eq(offer_payload[:name])
+          expect(service.offers.first.description).to eq(offer_payload[:description])
+          expect(service.offers.first.order_type).to eq(offer_payload[:order_type])
+          expect(service.offers.first.status).to eq("published")
+          expect(service.offers.first.primary_oms).to eq(oms)
+          expect(service.offers.first.oms_params).to eq({ "a": "asd" }.deep_stringify_keys)
         end
       end
 
@@ -191,6 +226,27 @@ RSpec.describe "Offers API", swagger_doc: "v1/offering/swagger.json" do
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data["error"]).to eq("The property '#/' of type object did not match all of the required schemas")
+        end
+      end
+
+      response "400", "primary_oms_id model validation failed", document: false do
+        schema "$ref" => "error.json"
+
+        let(:data_admin_user) { create(:user) }
+        let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
+        let!(:service) { create(:service,
+                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
+        let(:offer_payload) { { name: "New offer",
+                                description: "sample description",
+                                order_type: "order_required",
+                                primary_oms_id: 9999,
+        } }
+        let(:resource_id) { service.slug }
+        let(:"X-User-Token") { data_admin_user.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: { primary_oms: ["doesn't exist"] } }.deep_stringify_keys)
         end
       end
 
@@ -393,7 +449,7 @@ RSpec.describe "Offers API", swagger_doc: "v1/offering/swagger.json" do
       parameter name: :id, in: :path, type: :string, description: "Offer identifier"
 
       response "200", "offer found" do
-        schema "$ref" => "offer/offer_output.json"
+        schema "$ref" => "offer/offer_read.json"
 
         let(:offer) { build(:offer_with_all_parameters) }
         let(:data_admin_user) { create(:user) }
@@ -417,7 +473,7 @@ RSpec.describe "Offers API", swagger_doc: "v1/offering/swagger.json" do
       end
 
       response "200", "retrieves an offer without parameters", document: false do
-        schema "$ref" => "offer/offer_output.json"
+        schema "$ref" => "offer/offer_read.json"
 
         let(:offer) { build(:offer) }
         let(:data_admin_user) { create(:user) }
@@ -487,9 +543,11 @@ RSpec.describe "Offers API", swagger_doc: "v1/offering/swagger.json" do
       parameter name: :offer_payload, in: :body, schema: { "$ref" => "offer/offer_update.json" }
 
       response "200", "offer updated" do
-        schema "$ref" => "offer/offer_output.json"
+        schema "$ref" => "offer/offer_read.json"
 
-        let(:offer) { build(:offer) }
+        let(:previous_oms) { create(:oms, type: :global) }
+        let(:oms) { create(:oms, type: :global, custom_params: { "a": { mandatory: true, default: "qwe" } }) }
+        let(:offer) { build(:offer, primary_oms: previous_oms) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
         let!(:service) { create(:service,
@@ -499,26 +557,29 @@ RSpec.describe "Offers API", swagger_doc: "v1/offering/swagger.json" do
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
         let(:offer_payload) { { name: "New offer",
-                                description: "sample description" } }
-
-
+                                description: "sample description",
+                                primary_oms_id: oms.id,
+                                oms_params: { a: "b" }
+        } }
 
         run_test! do |response|
           data = JSON.parse(response.body)
           service.reload
 
-          expect(data).to eq(JSON.parse(service.offers.first.to_json))
+          expect(data).to eq(JSON.parse(OfferSerializer.new(service.offers.first).to_json))
           expect(service.offers.length).to eq(1)
           expect(service.offers.first.name).to eq(offer_payload[:name])
           expect(service.offers.first.description).to eq(offer_payload[:description])
           expect(service.offers.first.parameters.size).to eq(offer.parameters.size)
           expect(service.offers.first.order_url).to eq(offer.order_url)
+          expect(service.offers.first.primary_oms).to eq(oms)
+          expect(service.offers.first.oms_params).to eq({ a: "b" }.deep_stringify_keys)
         end
       end
 
       response "200", "updates an offers parameters", document: false do
         # TODO: For now - parameters are updated as a whole - can't update individual parameter with some id
-        schema "$ref" => "offer/offer_output.json"
+        schema "$ref" => "offer/offer_read.json"
 
         let(:offer) { build(:offer) }
         let(:data_admin_user) { create(:user) }
@@ -546,7 +607,7 @@ RSpec.describe "Offers API", swagger_doc: "v1/offering/swagger.json" do
           data = JSON.parse(response.body)
           service.reload
 
-          expect(data).to eq(JSON.parse(service.offers.first.to_json))
+          expect(data).to eq(JSON.parse(OfferSerializer.new(service.offers.first).to_json))
           expect(service.offers.length).to eq(1)
           expect(service.offers.first.name).to eq(offer.name)
           expect(service.offers.first.description).to eq(offer.description)
@@ -556,8 +617,31 @@ RSpec.describe "Offers API", swagger_doc: "v1/offering/swagger.json" do
         end
       end
 
+      response "400", "primary_oms model validation failed", document: false do
+        schema "$ref" => "error.json"
+        let(:oms) { create(:oms, type: :global, custom_params: { "a": { mandatory: true, default: "qwe" } }) }
+        let(:offer) { build(:offer) }
+        let(:data_admin_user) { create(:user) }
+        let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
+        let!(:service) { create(:service,
+                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
+                                offers: [offer])}
+        let(:resource_id) { service.slug }
+        let(:id) { offer.iid }
+        let(:"X-User-Token") { data_admin_user.authentication_token }
+        let(:offer_payload) { { name: "New offer",
+                                description: "sample description",
+                                primary_oms_id: oms.id
+        } }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to eq({ error: { "oms_params": ["can't be blank"] } }.deep_stringify_keys)
+        end
+      end
+
       response "200", "deletes offer parameters", document: false do
-        schema "$ref" => "offer/offer_output.json"
+        schema "$ref" => "offer/offer_read.json"
 
         let(:offer) { build(:offer) }
         let(:data_admin_user) { create(:user) }
@@ -576,7 +660,7 @@ RSpec.describe "Offers API", swagger_doc: "v1/offering/swagger.json" do
           data = JSON.parse(response.body)
           service.reload
 
-          expect(data).to eq(JSON.parse(service.offers.first.to_json))
+          expect(data).to eq(JSON.parse(OfferSerializer.new(service.offers.first).to_json))
           expect(service.offers.length).to eq(1)
           expect(service.offers.first.name).to eq(offer.name)
           expect(service.offers.first.description).to eq(offer.description)

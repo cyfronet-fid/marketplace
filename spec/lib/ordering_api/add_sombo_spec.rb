@@ -43,7 +43,7 @@ describe OrderingApi::AddSombo do
     expect(offer2.current_oms.name).to eql("SOMBO")
     expect(offer2.oms_params.symbolize_keys).to eql({ order_target: "data@data.pl" })
 
-    new_oms = build(:oms, custom_params: { a: { mandatory: true, default: "asd" } })
+    new_oms = create(:oms, custom_params: { a: { mandatory: true, default: "asd" } })
     offer1.update(primary_oms: new_oms, oms_params: { a: "qwe" })
     service.update(order_target: "qwe@qwe.pl")
 
