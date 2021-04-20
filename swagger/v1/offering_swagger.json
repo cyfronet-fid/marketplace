@@ -36,10 +36,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "offer/offer_output.json"
-                  }
+                  "$ref": "offer/offer_index.json"
                 }
               }
             }
@@ -105,7 +102,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "offer/offer_output.json"
+                  "$ref": "offer/offer_read.json"
                 }
               }
             }
@@ -125,7 +122,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "offer/offer_input.json"
+                "$ref": "offer/offer_write.json"
               }
             }
           }
@@ -171,7 +168,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "offer/offer_output.json"
+                  "$ref": "offer/offer_read.json"
                 }
               }
             }
@@ -236,7 +233,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "offer/offer_output.json"
+                  "$ref": "offer/offer_read.json"
                 }
               }
             }
@@ -310,10 +307,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "service.json"
-                  }
+                  "$ref": "service/service_index.json"
                 }
               }
             }
@@ -371,7 +365,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "service.json"
+                  "$ref": "service/service_read.json"
                 }
               }
             }

@@ -1,7 +1,7 @@
 {
   "type": "object",
   "properties": {
-    "OMSes": {
+    "OMS": {
       "type": "array",
       "items": {
         "$ref": "oms_read.json"
@@ -9,5 +9,5 @@
     }
   },
   "additionalProperties": false,
-  "required": ["OMSes"]
+  "required": ["OMS"]
 }

@@ -404,6 +404,12 @@
             "other"
           ]
         },
+        "primary_oms_id": {
+          "type": "integer"
+        },
+        "oms_params": {
+          "type": "object"
+        },
         "order_url":{
           "oneOf": [
             {

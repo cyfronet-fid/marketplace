@@ -27,12 +27,6 @@ class Offer < ApplicationRecord
     status == STATUSES[:published] && offers_count > 1
   end
 
-  def as_json(options = nil)
-    # TODO: Offer Serializer works when you do render json: offer, but doesn't trigger when doing offer.as_json, ...
-    # TODO: ... from anywhere in the code. Look into it
-    OfferSerializer.new(self).as_json
-  end
-
   counter_culture :service, column_name: proc { |model| model.published? ? "offers_count" : nil },
                   column_names: {
                     ["offers.status = ?", "published"] => "offers_count"
@@ -50,9 +44,10 @@ class Offer < ApplicationRecord
   validates :iid, presence: true, numericality: true
   validates :status, presence: true
 
+  validate :primary_oms_exists?, if: -> { primary_oms_id.present? }
+  validate :proper_oms?, if: -> { primary_oms.present? }
   validates :oms_params, absence: true, if: -> { current_oms.blank? }
   validate :check_oms_params, if: -> { current_oms.present? }
-
 
   def current_oms
     primary_oms || Oms.find_by(default: true)
@@ -85,9 +80,23 @@ class Offer < ApplicationRecord
 
     def check_oms_params
       if current_oms.custom_params.present?
-        oms_params.blank? ? errors.add(:oms_params, "can't be blank") : oms_params_match?
+        if current_oms.mandatory_defaults.present?
+          oms_params.blank? ? errors.add(:oms_params, "can't be blank") : oms_params_match?
+        end
       else
         errors.add(:oms_params, "must be blank if primary oms' custom params are blank") if oms_params.present?
       end
-  end
+    end
+
+    def primary_oms_exists?
+      unless Oms.find_by_id(primary_oms_id).present?
+        errors.add(:primary_oms, "doesn't exist")
+      end
+    end
+
+    def proper_oms?
+      unless service.available_oms.include? primary_oms
+        errors.add(:primary_oms, "has to be available in the resource scope")
+      end
+    end
 end

@@ -9,6 +9,7 @@
   "required":[
     "name",
     "description",
-    "order_type"
+    "order_type",
+    "primary_oms_id"
   ]
 }

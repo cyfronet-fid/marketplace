@@ -493,7 +493,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "project/project_item/project_item_index.json"
+                  "$ref": "project_item/project_item_index.json"
                 }
               }
             }
@@ -579,7 +579,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "project/project_item/project_item_read.json"
+                  "$ref": "project_item/project_item_read.json"
                 }
               }
             }
@@ -637,7 +637,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "project/project_item/project_item_read.json"
+                  "$ref": "project_item/project_item_read.json"
                 }
               }
             }
@@ -677,7 +677,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "project/project_item/project_item_update.json"
+                "$ref": "project_item/project_item_update.json"
               }
             }
           }
@@ -864,7 +864,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OMSes found",
+            "description": "OMS found",
             "content": {
               "application/json": {
                 "schema": {

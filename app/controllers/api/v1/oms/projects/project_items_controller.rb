@@ -51,7 +51,7 @@ class Api::V1::Oms::Projects::ProjectItemsController < Api::V1::Oms::ApiControll
     def validate_payload
       schema_file = "project_item_update.json"
       JSON::Validator.validate!(
-        Rails.root.join("swagger", "v1", "ordering", "project", "project_item", schema_file).to_s,
+        Rails.root.join("swagger", "v1", "project_item", schema_file).to_s,
         params["project_item"].as_json
       )
     rescue JSON::Schema::ValidationError => e

@@ -3,9 +3,9 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe "Resources API", swagger_doc: "v1/offering/swagger.json" do
+RSpec.describe "Resources API", swagger_doc: "v1/offering_swagger.json" do
   before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1", "offering") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
+    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
   end
 
   after(:all) do
@@ -19,8 +19,7 @@ RSpec.describe "Resources API", swagger_doc: "v1/offering/swagger.json" do
       security [ authentication_token: [] ]
 
       response "200", "resources found" do
-        schema type: :array,
-               items: { "$ref" => "service.json" }
+        schema "$ref" => "service/service_index.json"
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -39,8 +38,7 @@ RSpec.describe "Resources API", swagger_doc: "v1/offering/swagger.json" do
       end
 
       response "200", "resources found but were an empty list", document: false do
-        schema type: :array,
-               items: { "$ref" => "service.json" }
+        schema "$ref" => "service/service_index.json"
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -85,7 +83,7 @@ RSpec.describe "Resources API", swagger_doc: "v1/offering/swagger.json" do
       parameter name: :id, in: :path, type: :string, description: "Resource identifier (id or eid)"
 
       response "200", "resource found" do
-        schema "$ref" => "service.json"
+        schema "$ref" => "service/service_read.json"
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -101,7 +99,7 @@ RSpec.describe "Resources API", swagger_doc: "v1/offering/swagger.json" do
       end
 
       response "200", "resource found with an eid", document: false do
-        schema "$ref" => "service.json"
+        schema "$ref" => "service/service_read.json"
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -114,6 +112,32 @@ RSpec.describe "Resources API", swagger_doc: "v1/offering/swagger.json" do
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data).to eq(JSON.parse(ServiceSerializer.new(service).to_json))
+        end
+      end
+
+      response 200, "resource along with its available oms found", document: false do
+        schema "$ref" => "service/service_read.json"
+
+        let(:data_admin_user) { create(:user) }
+        let!(:data_admin) { create(:data_administrator, email: data_admin_user.email) }
+
+        let(:provider1) { create(:provider, data_administrators: [data_admin]) }
+        let(:provider2) { create(:provider) }
+        let(:service) { create(:service, providers: [provider1, provider2], resource_organisation: provider1) }
+
+        let!(:default_oms) { create(:oms, type: :global, default: true) }
+        let!(:provider_group_oms) { create(:oms, type: :provider_group, providers: [provider1, provider2]) }
+        let!(:resource_oms) { create(:oms, service: service, type: :resource_dedicated) }
+        let!(:other_resource_oms) { create(:oms, type: :resource_dedicated, service: build(:service)) }
+
+        let(:id) { service.slug }
+        let(:"X-User-Token") { data_admin_user.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data["available_oms"])
+            .to eq([default_oms, resource_oms, provider_group_oms]
+                     .map { |oms| OrderingApi::V1::OmsSerializer.new(oms).as_json.deep_stringify_keys })
         end
       end
 

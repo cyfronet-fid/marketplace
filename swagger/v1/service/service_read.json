@@ -29,6 +29,12 @@
           "type": "null"
         }
       ]
+    },
+    "available_oms": {
+      "type": "array",
+      "items": {
+        "$ref": "../oms/oms_read.json"
+      }
     }
   },
   "additionalProperties": false,
@@ -36,6 +42,7 @@
     "id",
     "name",
     "description",
-    "status"
+    "status",
+    "available_oms"
   ]
 }

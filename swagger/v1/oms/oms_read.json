@@ -4,7 +4,7 @@
     "id": {"type": "integer"},
     "name": {"type": "string"},
     "type": {"type": "string",
-      "enum": ["global", "providers_group", "resource_dedicated"]
+      "enum": ["global", "provider_group", "resource_dedicated"]
     },
     "default": {"type": "boolean"},
     "trigger_url": {"type": "string"},

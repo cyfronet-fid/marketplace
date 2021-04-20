@@ -33,6 +33,7 @@ class OrderingApi::V1::ProjectItemSerializer < ActiveModel::Serializer
 
   def oms_params
     object.offer.oms_params
+    # TODO: https://github.com/cyfronet-fid/marketplace/issues/1964
   end
 
   def user_secrets
