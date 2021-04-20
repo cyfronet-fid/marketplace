@@ -2,10 +2,10 @@
 
 class Api::V1::OmsController < Api::V1::Oms::ApiController
   before_action :find_and_authorize, only: [:show, :update]
-  before_action :load_omses, only: [:index]
+  before_action :load_oms, only: [:index]
 
   def index
-    render json: { "OMSes": @omses.map { |oms| OrderingApi::V1::OmsSerializer.new(oms).as_json } }
+    render json: { "OMS": @oms.map { |oms| OrderingApi::V1::OmsSerializer.new(oms).as_json } }
   end
 
   def show
@@ -18,8 +18,8 @@ class Api::V1::OmsController < Api::V1::Oms::ApiController
   end
 
   private
-    def load_omses
-      @omses = policy_scope(Oms).order(:id)
+    def load_oms
+      @oms = policy_scope(Oms).order(:id)
     end
 
     def find_and_authorize

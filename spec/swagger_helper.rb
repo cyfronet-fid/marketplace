@@ -15,7 +15,7 @@ RSpec.configure do |config|
   # document below. You can override this behavior by adding a swagger_doc tag to the
   # the root example_group in your specs, e.g. describe '...', swagger_doc: 'v2/swagger.json'
   config.swagger_docs = {
-    "v1/offering/swagger.json" => {
+    "v1/offering_swagger.json" => {
       openapi: "3.0.1",
       info: {
         title: "EOSC Marketplace Offering API",
@@ -34,12 +34,11 @@ RSpec.configure do |config|
         }
       }
     },
-    "v1/ordering/swagger.json" => {
+    "v1/ordering_swagger.json" => {
       openapi: "3.0.1",
       info: {
         title: "EOSC Marketplace Ordering API",
         version: "v1",
-        # TODO: Change description
         description: "API for Order Management Systems to integrate with EOSC Marketplace ordering process"
       },
       paths: {},

@@ -83,7 +83,7 @@ class Api::V1::Oms::MessagesController < Api::V1::Oms::ApiController
     def validate_payload
       schema_file = (action_name == "create") ? "message_write.json" : "message_update.json"
       JSON::Validator.validate!(
-        Rails.root.join("swagger", "v1", "ordering", "message", schema_file).to_s,
+        Rails.root.join("swagger", "v1", "message", schema_file).to_s,
         params["message"].as_json
       )
     rescue JSON::Schema::ValidationError => e
