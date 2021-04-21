@@ -19,11 +19,27 @@ class Event < ApplicationRecord
   validates :updates, absence: true, unless: :action_update?
   validate :updates_schema?, if: :action_update?
 
+  after_commit :call_triggers, on: :create
+
+  def omses
+    default = Oms.find_by(default: true)
+    other = eventable.eventable_omses
+    if default.blank? || other.any? { |oms| oms.id == default.id }
+      other
+    else
+      other.push(default)
+    end
+  end
+
   private
     def updates_schema?
       JSON::Validator.validate!(UPDATES_SCHEME, updates)
     rescue JSON::Schema::ValidationError => e
       errors.add(:updates, e.message)
+    end
+
+    def call_triggers
+      Event::CallTriggers.new(self).call
     end
 
     UPDATES_SCHEME = {

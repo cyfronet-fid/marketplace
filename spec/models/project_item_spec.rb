@@ -87,6 +87,21 @@ RSpec.describe ProjectItem do
       end
     end
 
+    describe "#eventable_omses" do
+      it "returns an empty list" do
+        expect(subject.eventable_omses).to eq([])
+      end
+
+      context "with offer.primary_oms set" do
+        subject { create(:project_item, offer: create(:offer, primary_oms: primary_oms)) }
+        let(:primary_oms) { create(:oms) }
+
+        it "returns a list with that OMS" do
+          expect(subject.eventable_omses).to eq([primary_oms])
+        end
+      end
+    end
+
     it "should create an event on create" do
       project = create(:project)
       project_item = create(:project_item, project: project)

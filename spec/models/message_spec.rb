@@ -98,6 +98,16 @@ RSpec.describe Message do
       end
     end
 
+    describe "#eventable_omses" do
+      let(:message) { build(:message) }
+
+      it "delegates to the messageable" do
+        ret = double
+        expect(message.messageable).to receive(:eventable_omses).and_return(ret)
+        expect(message.eventable_omses).to eq(ret)
+      end
+    end
+
     it "should create an event on create" do
       project = create(:project)
       message_1 = create(:message, messageable: project)

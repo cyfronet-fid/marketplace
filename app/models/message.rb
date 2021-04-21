@@ -48,6 +48,10 @@ class Message < ApplicationRecord
     Set.new(%i[message])
   end
 
+  def eventable_omses
+    messageable.eventable_omses
+  end
+
   private
     def set_edited!
       self.edited = true
