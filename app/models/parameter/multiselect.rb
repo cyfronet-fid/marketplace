@@ -6,14 +6,14 @@ class Parameter::Multiselect < Parameter
 
   attribute :unit, :string
 
-  validates :min, numericality: { less_than_or_equal_to: ->(p) { p.values&.length || 0 } }
-  validates :max, numericality: { less_than_or_equal_to: ->(p) { p.values&.length || 0 } }
+  validates :min, numericality: { greater_than: 0,  less_than_or_equal_to: ->(p) { p.values&.length || 1 } }
+  validates :max, numericality: { greater_than: 0, less_than_or_equal_to: ->(p) { p.values&.length || 1 } }
   validate :duplicates, if: :values
 
   def dump
     ActiveSupport::HashWithIndifferentAccess.new(
       id: id, type: type, label: name, description: hint,
-      config: { values: cast(values), minItems: (min || 0), maxItems: (max || values.length) },
+      config: { values: cast(values), minItems: (min || 1), maxItems: (max || values.length) },
       value_type: value_type, unit: unit)
   end
 
