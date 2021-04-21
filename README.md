@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.com/cyfronet-fid/marketplace.svg?branch=master)](https://travis-ci.com/cyfronet-fid/marketplace)
+![Build Status](https://github.com/cyfronet-fid/marketplace/actions/workflows/ci.yml/badge.svg?branch=master)
+![Build Status](https://github.com/cyfronet-fid/marketplace/actions/workflows/e2e.yml/badge.svg?branch=master)
 
 # README
 
