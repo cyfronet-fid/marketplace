@@ -83,6 +83,10 @@ class ProjectItem < ApplicationRecord
     Set.new(%i[status status_type user_secrets])
   end
 
+  def eventable_omses
+    offer.primary_oms.present? ? [offer.primary_oms] : []
+  end
+
   def to_s
     "\"#{project.name}##{id}\""
   end

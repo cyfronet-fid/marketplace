@@ -127,6 +127,27 @@ RSpec.describe Project do
       end
     end
 
+    describe "#eventable_omses" do
+      it "handles empty project" do
+        expect(subject.eventable_omses).to eq([])
+      end
+
+      context "with project_items with overlapping primary_oms" do
+        before do
+          @oms1 = create(:oms)
+          @oms2 = create(:oms)
+          create(:project_item, project: subject, offer: create(:offer, primary_oms: @oms1))
+          create(:project_item, project: subject, offer: create(:offer, primary_oms: @oms2))
+          create(:project_item, project: subject, offer: create(:offer, primary_oms: @oms2))
+          subject.reload
+        end
+
+        it "merges the OMSes" do
+          expect(subject.eventable_omses).to contain_exactly(@oms1, @oms2)
+        end
+      end
+    end
+
     it "should create an event on create" do
       project = create(:project)
       expect(Event.count).to eq(1)

@@ -3,22 +3,18 @@
 require "rails_helper"
 
 RSpec.describe Event, type: :model do
-  let(:project) { build(:project, id: 1) }
-
   it { should belong_to(:eventable) }
   it { should validate_presence_of(:action) }
 
   context "create event" do
-    subject { Event.new(action: :create, eventable: project) }
+    subject { create(:event) }
 
     it { should_not validate_presence_of(:updates) }
     it { should be_valid }
   end
 
   context "update event" do
-    subject { Event.new(action: :update,
-                        eventable: project,
-                        updates: [{ field: "name", before: "zxc", after: "qwe" }]) }
+    subject { build(:event, action: :update, updates: [{ field: "name", before: "zxc", after: "qwe" }]) }
 
     it { should validate_presence_of(:updates) }
     it { should be_valid }
@@ -50,6 +46,61 @@ RSpec.describe Event, type: :model do
           expect(subject.errors[:updates].size).to eq(1)
         end
       end
+    end
+  end
+
+  context "#omses" do
+    subject { build(:event) }
+
+    it "handles empty" do
+      allow(subject.eventable).to receive(:eventable_omses).and_return([])
+
+      expect(subject.omses).to eq([])
+    end
+
+    it "handles list" do
+      omses = create_pair(:oms)
+      allow(subject.eventable).to receive(:eventable_omses).and_return(omses)
+
+      expect(subject.omses).to eq(omses)
+    end
+
+    context "with default OMS" do
+      let!(:default_oms) { create(:oms, default: true) }
+
+      it "handles empty" do
+        allow(subject.eventable).to receive(:eventable_omses).and_return([])
+
+        expect(subject.omses).to eq([default_oms])
+      end
+
+      it "handles list" do
+        omses = create_pair(:oms)
+        allow(subject.eventable).to receive(:eventable_omses).and_return(omses)
+
+        expect(subject.omses).to eq(omses.push(default_oms))
+      end
+
+      it "doesn't duplicate default_oms" do
+        oms = create(:oms)
+        allow(subject.eventable).to receive(:eventable_omses).and_return([oms, default_oms])
+
+        expect(subject.omses).to contain_exactly(oms, default_oms)
+      end
+    end
+  end
+
+  context "#after_commit" do
+    it "calls Event::CallTriggers" do
+      allow(Unirest).to receive(:post)
+
+      event = build(:event)
+      allow(event).to receive(:omses)
+                        .and_return(%w[url1 url2].map { |trigger_url| create(:oms, trigger_url: trigger_url) })
+      assert_performed_jobs(2, only: Oms::CallTriggerJob, queue: :orders) { event.save! }
+
+      expect(Unirest).to have_received(:post).with("url1")
+      expect(Unirest).to have_received(:post).with("url2")
     end
   end
 end

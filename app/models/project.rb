@@ -94,6 +94,14 @@ class Project < ApplicationRecord
     Set.new()
   end
 
+  def eventable_omses
+    project_items
+      .map(&:eventable_omses)
+      .map { |omses| omses.index_by(&:id) } # map each to { <id>: oms }
+      .reduce({}) { |memo, oms_h| memo.merge(oms_h) } # merge, removing duplicates
+      .values
+  end
+
   private
     def require_jira_issue?
       jira_active? || jira_deleted?
