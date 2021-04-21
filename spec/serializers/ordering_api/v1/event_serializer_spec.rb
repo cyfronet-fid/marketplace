@@ -7,12 +7,13 @@ RSpec.describe OrderingApi::V1::EventSerializer do
   let(:project_item) { create(:project_item, project: project) }
 
   it "properly serializes a project_item event" do
-    event = Event.create(action: :update,
-                         eventable: project_item,
-                         updates: [
-                           { field: "name", before: "zxc", after: "qwe" },
-                           { field: "user_secrets", before: "123", after: "456" },
-                         ])
+    event = create(:event,
+                   action: :update,
+                   eventable: project_item,
+                   updates: [
+                     { field: "name", before: "zxc", after: "qwe" },
+                     { field: "user_secrets", before: "123", after: "456" },
+                   ])
 
     serialized = described_class.new(event).as_json
     expected = {
@@ -39,7 +40,7 @@ RSpec.describe OrderingApi::V1::EventSerializer do
   end
 
   it "it properly serializes a project event" do
-    event = Event.create(action: :create, eventable: project)
+    event = create(:event, action: :create, eventable: project)
 
     serialized = described_class.new(event).as_json
     expected = {
