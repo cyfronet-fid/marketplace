@@ -23,6 +23,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Change error message at order summary to general - better UX (@danielkryska)
 - Mail delivery for orderable offers (@jswk)
 - Editorial rights for providers are consistent with established editing policy (@kmarszalek)
+- Validation of multiselect parameter configuration in offers management (@goreck888)
 
 ## [3.11.1] 2021-05-11
 
