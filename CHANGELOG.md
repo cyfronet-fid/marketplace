@@ -5,8 +5,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
-
 ## [Unreleased]
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+## [3.11.0] 2021-04-21
 
 ### Added
 - Reference API for MP orders handling (@wujuu, @jswk)
@@ -20,10 +31,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Generalize ProjectItem status (@jswk)
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Default upstream source setting for REST and JMS importers in the Provider model (@goreck888)
