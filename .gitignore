@@ -21,6 +21,7 @@
 # Ignore uploaded files in development
 /storage/*
 
+/package-lock.json
 /node_modules
 /yarn-error.log
 
@@ -32,7 +33,6 @@
 /config/google_api_key.json
 /public/packs
 /public/packs-test
-/node_modules
 yarn-debug.log*
 .yarn-integrity
 
@@ -43,9 +43,3 @@ yarn-debug.log*
 # Ignore IDE configuration
 /.idea
 /.env
-/public/packs
-/public/packs-test
-/node_modules
-/yarn-error.log
-yarn-debug.log*
-.yarn-integrity
