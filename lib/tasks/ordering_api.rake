@@ -10,4 +10,8 @@ namespace :ordering_api do
   task authorization_test_setup: :environment do
     OrderingApi::AuthorizationTestSetup.new.call
   end
+
+  task triggers_test_setup: :environment do
+    OrderingApi::TriggersTestSetup.new.call
+  end
 end
