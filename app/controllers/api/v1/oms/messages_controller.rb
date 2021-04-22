@@ -35,7 +35,7 @@ class Api::V1::Oms::MessagesController < Api::V1::Oms::ApiController
     authorize message
 
     if message.save
-      render json: OrderingApi::V1::MessageSerializer.new(message).as_json, status: 201
+      render json: OrderingApi::V1::MessageSerializer.new(message, keep_content?: true).as_json, status: 201
     else
       render json: { error: message.errors.messages }, status: 400
     end
@@ -44,7 +44,7 @@ class Api::V1::Oms::MessagesController < Api::V1::Oms::ApiController
   def update
     attrs = permitted_attributes(@message)
     if @message.update(message: attrs[:content])
-      render json: OrderingApi::V1::MessageSerializer.new(@message).as_json
+      render json: OrderingApi::V1::MessageSerializer.new(@message, keep_content?: true).as_json
     else
       render json: { error: @message.errors.messages }, status: 400
     end

@@ -23,10 +23,11 @@ class OrderingApi::V1::EventSerializer < ActiveModel::Serializer
 
   def changes
     object.updates&.map do |update|
-      if update["field"] == "user_secrets"
+      if should_obfuscate?(update["field"])
         update["after"] = "<OBFUSCATED>"
         update["before"] = "<OBFUSCATED>"
       end
+      update["field"] = transform_to_api_field(update["field"])
       update
     end
   end
@@ -36,4 +37,29 @@ class OrderingApi::V1::EventSerializer < ActiveModel::Serializer
       object.eventable.eventable_identity[identity_part]
     end
   end
+
+  private
+    def transform_to_api_field(field)
+      mappings = {
+        "Message" => {
+          "message" => "content"
+        },
+        "ProjectItem" => {
+          "status" => "status.value",
+          "status_type" => "status.type"
+        }
+      }
+      mappings.fetch(object.eventable_type, {}).fetch(field, field)
+    end
+
+    def should_obfuscate?(field)
+      case object.eventable_type
+      when "Message"
+        field == "message" && object.eventable.user_direct_scope?
+      when "ProjectItem"
+        field == "user_secrets"
+      else
+        false
+      end
+    end
 end
