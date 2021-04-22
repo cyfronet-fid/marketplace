@@ -18,7 +18,7 @@ class Services::InlineOrderUrlComponent < ApplicationComponent
   end
 
   def link_name
-    if @offerable.external
+    if @offerable.external?
       _("Go to the order website")
     else
       _("Go to the resource")
@@ -26,6 +26,6 @@ class Services::InlineOrderUrlComponent < ApplicationComponent
   end
 
   def render?
-    !url.blank? && (!@offerable.order_required? || @offerable.external)
+    !url.blank? && !@offerable.orderable?
   end
 end

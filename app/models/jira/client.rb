@@ -262,10 +262,10 @@ private
     end
   end
 
-  def map_to_jira_order_type(object)
-    if object.external
+  def map_to_jira_order_type(project_item)
+    if project_item.external?
       "external"
-    elsif object.order_type == "order_required"
+    elsif project_item.order_type == "order_required"
       "orderable"
     else
       "open_access"
