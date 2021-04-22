@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.10.3] 2021-04-23
+
+### Fixed
+- Resource Organisation field is required for creating a resource (@kmarszalek)
+
 ## [3.10.2] 2021-04-13
 
 ### Fixed
