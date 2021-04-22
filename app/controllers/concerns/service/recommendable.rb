@@ -42,14 +42,15 @@ module Service::Recommendable
     def get_recommended_services_by(body, size)
       url = Mp::Application.config.recommender_host + "/recommendations"
       response = Unirest.post(url, { "Content-Type" => "application/json" }, body.to_json)
-      response_body = response.body.transform_keys(&:to_sym)
-      if response.blank? || response_body[:recommendations].blank?
-        Raven.capture_message("Recommendation service, recommendation endpoint response error")
-        return []
+      ids = response.body.transform_keys(&:to_sym)[:recommendations]
+      services = Service.where(id: ids, status: [:published, :unverified]).sort_by { |s| ids.index(s.id) }.take(size)
+
+      if services.size == size
+        services
+      else
+        []
       end
 
-      recommended_services_ids = response_body[:recommendations].take(size)
-      recommended_services_ids.map { |id| Service.find(id) }
       rescue
         Raven.capture_message("Recommendation service, recommendation endpoint response error")
         []
