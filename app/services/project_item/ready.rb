@@ -53,10 +53,6 @@ class ProjectItem::Ready
       @project_item.new_status(status: "ready", status_type: :ready)
     end
 
-    def activate_message
-      service.activate_message || "Your service request is ready"
-    end
-
     def enqueue_rate_service!
       ProjectItemMailer.activate_message(@project_item, @service).deliver_later if service.activate_message.present?
       ProjectItemMailer.rate_service(@project_item).deliver_later(wait_until: RATE_AFTER_PERIOD.from_now)

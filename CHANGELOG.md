@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Resource Organisation field is required for creating a resource (@kmarszalek)
+- Mail delivery for orderable offers (@jswk)
 
 ## [3.11.0] 2021-04-21
 

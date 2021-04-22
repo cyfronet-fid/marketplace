@@ -8,14 +8,14 @@ class ProjectItem::OnStatusTypeUpdated
   def call
     case @project_item.status_type.to_sym
     when :waiting_for_response
-      ProjectItemMailer.waiting_for_response(@project_item).deliver_later if service.orderable?
+      ProjectItemMailer.waiting_for_response(@project_item).deliver_later if orderable?
 
     when :approved
-      ProjectItemMailer.approved(@project_item).deliver_later if service.order_required? && !service.external
+      ProjectItemMailer.approved(@project_item).deliver_later if orderable?
 
     when :ready
-      if service.order_required? && !service.external
-        if !service.aod?
+      if orderable?
+        if !aod?
           ProjectItemMailer.ready_to_use(@project_item).deliver_later
         elsif aod_voucherable?
           ProjectItemMailer.aod_voucher_accepted(@project_item).deliver_later
@@ -40,11 +40,23 @@ class ProjectItem::OnStatusTypeUpdated
   end
 
   private
-    def service
-      @project_item.offer.service
+    def orderable?
+      offer&.orderable?
+    end
+
+    def aod?
+      service&.aod?
     end
 
     def aod_voucherable?
-      service.aod? ? @project_item.voucherable? : false
+      aod? && offer&.voucherable?
+    end
+
+    def offer
+      @project_item.offer
+    end
+
+    def service
+      offer&.service
     end
 end

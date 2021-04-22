@@ -66,7 +66,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
 
       expect(mail.subject)
           .to match("Status of your service access request in the EOSC Portal Marketplace " \
-                    "has changed to Closed")
+                    "has changed to CLOSED")
       expect(encoded_body).to match(/has been closed/)
       expect(encoded_body).to match(/#{project_service_conversation_url(project, project_item)}/)
       expect(mail.to).to contain_exactly(user.email)

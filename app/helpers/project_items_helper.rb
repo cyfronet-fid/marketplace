@@ -18,7 +18,7 @@ module ProjectItemsHelper
   end
 
   def webpage(project_item)
-    if project_item.external
+    if project_item.external?
       project_item.order_url
     else
       project_item.webpage

@@ -226,12 +226,8 @@ class Service < ApplicationRecord
     resource_organisation.name
   end
 
-  def external
-    order_type == "order_required" && order_url.present?
-  end
-
-  def orderable?
-    order_type == "order_required" && order_url.blank?
+  def external?
+    order_required? && order_url.present?
   end
 
   def providers?
@@ -253,10 +249,6 @@ class Service < ApplicationRecord
       array_fields.each do |field|
         send(field).present? ? send(:"#{field}=", send(field).reject(&:blank?)) : send(:"#{field}=", [])
       end
-    end
-
-    def open_access_or_external?
-      open_access? || external
     end
 
     def main_category_missing?
