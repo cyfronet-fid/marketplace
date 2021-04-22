@@ -95,7 +95,7 @@ module ServiceHelper
   end
 
   def map_view_to_order_type(service_or_offer)
-    if service_or_offer.external
+    if service_or_offer.external?
       "external"
     else
       service_or_offer.order_type

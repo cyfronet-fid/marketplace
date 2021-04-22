@@ -57,7 +57,7 @@ class ProjectItemMailer < ApplicationMailer
     load_data(project_item)
 
     mail(to: @user.email,
-         subject: "Status of your service access request in the EOSC Portal Marketplace has changed to Closed",
+         subject: "Status of your service access request in the EOSC Portal Marketplace has changed to CLOSED",
          template_name: "closed")
   end
 
