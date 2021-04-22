@@ -44,7 +44,7 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering_swagger.json" do
             create(:message, id: 1, messageable: project),
             create(:message, id: 2, messageable: project_item1),
             create(:message, id: 3, messageable: project_item2),
-            create(:message, id: 4, messageable: project),
+            create(:provider_message, scope: :user_direct, id: 4, messageable: project),
             create(:message, id: 5, messageable: project_item1),
             create(:message, id: 6, messageable: project_item2)
           ]
@@ -76,7 +76,7 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering_swagger.json" do
             create(:message, id: 2, messageable: project_item1),
             create(:message, id: 3, messageable: project_item2),
             create(:message, id: 4, messageable: project),
-            create(:message, id: 5, messageable: project_item1),
+            create(:provider_message, scope: :user_direct, id: 5, messageable: project_item1),
             create(:message, id: 6, messageable: project_item2)
           ]
         }
@@ -242,7 +242,7 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering_swagger.json" do
               "role": "provider"
             },
             "content": "<content>",
-            "scope": "public",
+            "scope": "user_direct",
           }
         }
         run_test! do |response|
@@ -250,13 +250,13 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering_swagger.json" do
           expect(project_item.messages.count).to eq(1)
 
           data = JSON.parse(response.body)
-          expect(data).to eq(OrderingApi::V1::MessageSerializer.new(project_item.messages[0]).as_json.deep_stringify_keys)
+          expect(data).to eq(OrderingApi::V1::MessageSerializer.new(project_item.messages[0], keep_content?: true).as_json.deep_stringify_keys)
 
           expect(ActionMailer::Base.deliveries.count).to eq(1)
         end
       end
 
-      response 400, "message created validation failed" do
+      response 400, "payload validation failed" do
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
@@ -440,7 +440,7 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering_swagger.json" do
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project) { create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }
-        let(:message) { create(:message, message: "Before update", messageable: project) }
+        let(:message) { create(:message, messageable: project) }
 
         let(:oms_id) { oms.id }
         let(:m_id) { message.id }
@@ -545,7 +545,7 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering_swagger.json" do
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project) { create(:project, project_items: [build(:project_item, offer: build(:offer, primary_oms: oms))]) }
-        let(:message) { create(:provider_message, message: "Before update", messageable: project) }
+        let(:message) { create(:provider_message, scope: :public, message: "Before update", messageable: project) }
 
         let(:oms_id) { oms.id }
         let(:m_id) { message.id }
@@ -572,8 +572,7 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering_swagger.json" do
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project_item) { create(:project_item, project: build(:project), offer: build(:offer, primary_oms: oms)) }
-        let(:message) { create(:message, author_role: "provider", author_email: "email@email.com", author_name: "asd",
-                               scope: "user_direct", message: "Before update", messageable: project_item) }
+        let(:message) { create(:provider_message, scope: :user_direct, message: "Before update", messageable: project_item) }
 
         let(:oms_id) { oms.id }
         let(:m_id) { message.id }
@@ -585,7 +584,7 @@ RSpec.describe "OMS Messages API", swagger_doc: "v1/ordering_swagger.json" do
           project_item.reload
 
           data = JSON.parse(response.body)
-          expect(data).to eq(OrderingApi::V1::MessageSerializer.new(message).as_json.deep_stringify_keys)
+          expect(data).to eq(OrderingApi::V1::MessageSerializer.new(message, keep_content?: true).as_json.deep_stringify_keys)
 
           expect(message.message).to eq("After update")
           expect(project_item.messages.first.message).to eq("After update")
