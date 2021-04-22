@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Resource Organisation field is required for creating a resource (@kmarszalek)
 
 ## [3.11.0] 2021-04-21
 
