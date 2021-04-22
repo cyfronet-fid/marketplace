@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_15_114249) do
+ActiveRecord::Schema.define(version: 2021_04_22_132539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -498,7 +498,7 @@ ActiveRecord::Schema.define(version: 2021_04_15_114249) do
     t.integer "project_items_count", default: 0, null: false
     t.string "version"
     t.float "popularity_ratio"
-    t.bigint "resource_organisation_id"
+    t.bigint "resource_organisation_id", null: false
     t.string "status_monitoring_url"
     t.string "maintenance_url"
     t.string "order_url"

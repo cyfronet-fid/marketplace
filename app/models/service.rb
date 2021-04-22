@@ -128,7 +128,7 @@ class Service < ApplicationRecord
                                 allow_destroy: true
 
   belongs_to :upstream, foreign_key: "upstream_id", class_name: "ServiceSource", optional: true
-  belongs_to :resource_organisation, class_name: "Provider", optional: true
+  belongs_to :resource_organisation, class_name: "Provider", optional: false
 
   serialize :geographical_availabilities, Country::Array
   serialize :resource_geographic_locations, Country::Array
@@ -163,6 +163,7 @@ class Service < ApplicationRecord
   validates :trl, length: { maximum: 1 }
   validates :life_cycle_status, length: { maximum: 1 }
   validates :geographical_availabilities, presence: true
+  validates :resource_organisation, presence: true
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
