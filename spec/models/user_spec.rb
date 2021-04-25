@@ -65,44 +65,14 @@ RSpec.describe User do
   end
 
   context "OMS validations" do
-    subject { build(:user, administrated_oms: build_list(:oms, 2)) }
-    it { should have_many(:administrated_oms) }
+    subject { build(:user, administrated_omses: build_list(:oms, 2)) }
+    it { should have_many(:administrated_omses) }
   end
 
   context "authentication_token" do
     it "is present when creating new user" do
       user = create(:user)
       expect(user.authentication_token).to be_truthy
-    end
-  end
-
-  context "#managed_services" do
-    it "returns all managed services" do
-      user = create(:user)
-      data_administrator1 = create(:data_administrator, email: user.email)
-      data_administrator2 = create(:data_administrator, email: user.email)
-      service1 = create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator1]))
-      service2 = create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator2]))
-
-      expect(user.managed_services).to eq([service1, service2])
-    end
-
-    it "returns all managed services if there are any" do
-      user = create(:user)
-      data_administrator = create(:data_administrator, email: user.email)
-      create(:provider, data_administrators: [data_administrator])
-
-      expect(user.managed_services).to eq([])
-    end
-
-    it "returns all managed services if the user is a data admin" do
-      regular_user = create(:user)
-      data_admin_user = create(:user)
-      data_administrator = create(:data_administrator, email: data_admin_user.email)
-      service = create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator]))
-
-      expect(regular_user.managed_services).to eq([])
-      expect(data_admin_user.managed_services).to eq([service])
     end
   end
 end

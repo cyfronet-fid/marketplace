@@ -1,7 +1,7 @@
-class CreateOmsProviders < ActiveRecord::Migration[6.0]
+class CreateOMSProviders < ActiveRecord::Migration[6.0]
   def change
     create_table :oms_providers do |t|
-      t.references :oms, null: false, foreign_key: true, index: true
+      t.references :oms, null: false, foreign_key: { to_table: :oms }, index: true
       t.references :provider, null: false, foreign_key: true, index: true
 
       t.timestamps null: false

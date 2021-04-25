@@ -8,8 +8,8 @@ module OrderingApi
       oms_admin1 = User.create!(uid: "oms2_admin", first_name: "oms2_admin", last_name: "oms2_admin", email: "email1@email.com")
       oms_admin2 = User.create!(uid: "oms3_admin", first_name: "oms3_admin", last_name: "oms3_admin", email: "email2@email.com")
 
-      oms2 = Oms.create!(name: "OMS2", type: "global", administrators: [oms_admin1])
-      oms3 = Oms.create!(name: "OMS3", type: "global", administrators: [oms_admin2])
+      oms2 = OMS.create!(name: "OMS2", type: "global", administrators: [oms_admin1])
+      oms3 = OMS.create!(name: "OMS3", type: "global", administrators: [oms_admin2])
 
       provider = Provider.create!(name: "provider")
       service1 = Service.create!(name: "s1", description: "asd", tagline: "asd", status: "published", providers: [provider],

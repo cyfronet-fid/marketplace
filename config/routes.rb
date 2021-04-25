@@ -100,32 +100,24 @@ Rails.application.routes.draw do
     resources :statistics, only: :index
   end
 
+  mount Rswag::Ui::Engine => '/api_docs/swagger'
+  mount Rswag::Api::Engine => '/api_docs/swagger'
+
   namespace :api do
     get "/services" => "services#index", defaults: { format: :json }, as: :services_api
     namespace :webhooks do
       post "/jira" => "jiras#create", as: :jira
     end
-  end
 
-  mount Rswag::Ui::Engine => '/api_docs/swagger'
-  mount Rswag::Api::Engine => '/api_docs/swagger'
-
-  namespace :api do
     namespace :v1 do
       resources :resources, only: [:index, :show], constraints: { id: /[^\/]+/ } do
-        scope module: :resources do
-          resources :offers, only: [:index, :create, :show, :destroy, :update]
-        end
+        resources :offers, only: [:index, :create, :show, :destroy, :update], module: :resources
       end
-      resources :oms, only: [:index, :show, :update] do
-        scope module: :oms do
-          resources :events, only: :index
-          resources :projects, only: [:index, :show, :update] do
-            scope module: :projects do
-              resources :project_items, only: [:index, :show, :update]
-            end
-          end
-          resources :messages, only: [:index, :show, :create, :update]
+      resources :oms, controller: :omses, only: [:index, :show, :update] do
+        resources :events, only: :index, module: :omses
+        resources :messages, only: [:index, :show, :create, :update], module: :omses
+        resources :projects, only: [:index, :show, :update], module: :omses do
+          resources :project_items, only: [:index, :show, :update], module: :projects
         end
       end
     end

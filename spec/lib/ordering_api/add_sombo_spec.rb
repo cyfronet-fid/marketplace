@@ -9,9 +9,9 @@ describe OrderingApi::AddSombo do
 
     expect(User.count).to eq(1)
     expect(User.first.first_name).to eq("SOMBO admin")
-    expect(Oms.count).to eq(1)
-    expect(Oms.first.name).to eq("SOMBO")
-    expect(Oms.first.administrators.first.first_name).to eq("SOMBO admin")
+    expect(OMS.count).to eq(1)
+    expect(OMS.first.name).to eq("SOMBO")
+    expect(OMS.first.administrators.first.first_name).to eq("SOMBO admin")
   end
 
   it "doesn't create SOMBO OMS and SOMBO admin if they exist" do
@@ -21,9 +21,9 @@ describe OrderingApi::AddSombo do
 
     expect(User.count).to eq(1)
     expect(User.first.first_name).to eq("SOMBO admin")
-    expect(Oms.count).to eq(1)
-    expect(Oms.first.name).to eq("SOMBO")
-    expect(Oms.first.administrators.first.first_name).to eq("SOMBO admin")
+    expect(OMS.count).to eq(1)
+    expect(OMS.first.name).to eq("SOMBO")
+    expect(OMS.first.administrators.first.first_name).to eq("SOMBO admin")
   end
 
   it "updates offers' oms_params properly" do
@@ -35,11 +35,11 @@ describe OrderingApi::AddSombo do
     offer1.reload
     offer2.reload
 
-    expect(offer1.current_oms).to eql(Oms.find_by(default: true))
+    expect(offer1.current_oms).to eql(OMS.find_by(default: true))
     expect(offer1.current_oms.name).to eql("SOMBO")
     expect(offer1.oms_params.symbolize_keys).to eql({ order_target: "admin@admin.pl" })
 
-    expect(offer2.current_oms).to eql(Oms.find_by(default: true))
+    expect(offer2.current_oms).to eql(OMS.find_by(default: true))
     expect(offer2.current_oms.name).to eql("SOMBO")
     expect(offer2.oms_params.symbolize_keys).to eql({ order_target: "data@data.pl" })
 
@@ -54,7 +54,7 @@ describe OrderingApi::AddSombo do
     expect(offer1.current_oms).to eql(new_oms)
     expect(offer1.oms_params.symbolize_keys).to eql({ a: "qwe" })
 
-    expect(offer2.current_oms).to eql(Oms.find_by(default: true))
+    expect(offer2.current_oms).to eql(OMS.find_by(default: true))
     expect(offer2.current_oms.name).to eql("SOMBO")
     expect(offer2.oms_params.symbolize_keys).to eql({ order_target: "qwe@qwe.pl" })
   end

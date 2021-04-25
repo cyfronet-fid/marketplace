@@ -1,4 +1,4 @@
-class CreateOms < ActiveRecord::Migration[6.0]
+class CreateOMS < ActiveRecord::Migration[6.0]
   def change
     create_table :oms do |t|
       t.string :name, null: false, unique: true

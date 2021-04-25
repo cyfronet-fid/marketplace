@@ -6,10 +6,10 @@ class OrderingApi::TriggersTestSetup
   def call
     oms_admin = User.find_by!(uid: "iamasomboadmin")
 
-    oms1 = Oms.find_by!(default: true)
+    oms1 = OMS.find_by!(default: true)
     oms1.update!(trigger_url: "http://localhost:1080/oms1")
-    oms2 = Oms.create!(name: "OMS2", type: "global", administrators: [oms_admin], trigger_url: "http://localhost:1080/oms2")
-    oms3 = Oms.create!(name: "OMS3", type: "global", administrators: [oms_admin], trigger_url: "http://localhost:1080/oms3")
+    oms2 = OMS.create!(name: "OMS2", type: "global", administrators: [oms_admin], trigger_url: "http://localhost:1080/oms2")
+    oms3 = OMS.create!(name: "OMS3", type: "global", administrators: [oms_admin], trigger_url: "http://localhost:1080/oms3")
 
     provider = Provider.create!(name: "provider")
     service1 = Service.create!(name: "s1", description: "asd", tagline: "asd", status: "published", providers: [provider],

@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
-class Oms < ApplicationRecord
+class OMS < ApplicationRecord
   has_many :oms_administrations, dependent: :destroy
   has_many :administrators,
            through: :oms_administrations,
-           source: :user,
-           class_name: "User"
+           source: :user
   has_many :oms_providers, dependent: :destroy
   has_many :providers, through: :oms_providers
-  has_many :offers, foreign_key: :primary_oms_id, dependent: :nullify
+  has_many :offers, foreign_key: "primary_oms_id", dependent: :nullify
   belongs_to :service, optional: true
 
   self.inheritance_column = nil
@@ -60,7 +59,7 @@ class Oms < ApplicationRecord
     if default?
       Message.all
     else
-      # Outer join Message with ProjectItem OR Project messageables - and look for oms inside their respective offers.primary_oms
+      # Outer join Message with ProjectItem OR Project messageables - and look for OMS inside their respective offers.primary_oms
       Message.where("offers.primary_oms_id = ?", self)
              .or(Message.where("offers_project_items.primary_oms_id = ?", self))
              .left_outer_joins(project_item: :offer, project:  { project_items: :offer })
@@ -72,7 +71,8 @@ class Oms < ApplicationRecord
     if default?
       Event.all
     else
-      # Outer join Event with ProjectItem OR Project OR Message eventables - and look for oms inside their respective offers.primary_oms
+      # Outer join Event with ProjectItem OR Project OR Message eventables
+      # and look for OMS inside their respective offers.primary_oms
       Event.where("offers.primary_oms_id = ?", self)
            .or(Event.where("offers_project_items.primary_oms_id = ?", self))
            .or(Event.where("offers_project_items_2.primary_oms_id = ?", self))
@@ -87,7 +87,7 @@ class Oms < ApplicationRecord
 
   private
     def single_default_oms?
-      if Oms.where.not(name: name).pluck(:default).any?
+      if OMS.where.not(name: name).pluck(:default).any?
         errors.add(:default, "there can't be more than one default OMS")
       end
     end
