@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class OmsAdministration < ApplicationRecord
+class OMSAdministration < ApplicationRecord
   belongs_to :oms
   belongs_to :user
 

@@ -35,7 +35,7 @@ class Offer < ApplicationRecord
   enum status: STATUSES
 
   belongs_to :service
-  belongs_to :primary_oms, class_name: "Oms", optional: true
+  belongs_to :primary_oms, class_name: "OMS", optional: true
   has_many :project_items,
            dependent: :restrict_with_error
 
@@ -50,7 +50,7 @@ class Offer < ApplicationRecord
   validate :check_oms_params, if: -> { current_oms.present? }
 
   def current_oms
-    primary_oms || Oms.find_by(default: true)
+    primary_oms || OMS.find_by(default: true)
   end
 
   def to_param
@@ -89,13 +89,13 @@ class Offer < ApplicationRecord
     end
 
     def primary_oms_exists?
-      unless Oms.find_by_id(primary_oms_id).present?
+      unless OMS.find_by_id(primary_oms_id).present?
         errors.add(:primary_oms, "doesn't exist")
       end
     end
 
     def proper_oms?
-      unless service.available_oms.include? primary_oms
+      unless service.available_omses.include? primary_oms
         errors.add(:primary_oms, "has to be available in the resource scope")
       end
     end

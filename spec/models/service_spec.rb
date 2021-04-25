@@ -88,31 +88,8 @@ RSpec.describe Service do
     end
   end
 
-  context "#self.administered_by" do
-    it "return all services managed by user" do
-      data_admin_user = create(:user)
-      data_admin_1 = create(:data_administrator, email: data_admin_user.email)
-      data_admin_2 = create(:data_administrator, email: data_admin_user.email)
-
-      other_data_admin_user = create(:user)
-      other_data_admin = create(:data_administrator, email: other_data_admin_user.email)
-
-      provider1 = create(:provider, data_administrators: [data_admin_1])
-      provider2 = create(:provider, data_administrators: [data_admin_2, other_data_admin])
-      provider3 = create(:provider, data_administrators: [other_data_admin])
-
-      service_1 = create(:service, resource_organisation: provider1)
-      service_2 = create(:service, resource_organisation: provider1)
-      service_3 = create(:service, resource_organisation: provider2)
-      service_4 = create(:service, resource_organisation: provider3)
-
-      expect(Service.administered_by(data_admin_user)).to match_array([service_1, service_2, service_3])
-      expect(Service.administered_by(other_data_admin_user)).to match_array([service_3, service_4])
-    end
-  end
-
   context "OMS validations" do
-    subject { build(:service, oms: build_list(:resource_dedicated_oms, 2)) }
-    it { should have_many(:oms) }
+    subject { build(:service, omses: build_list(:resource_dedicated_oms, 2)) }
+    it { should have_many(:omses) }
   end
 end

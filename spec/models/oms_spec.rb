@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Oms, type: :model do
+RSpec.describe OMS, type: :model do
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:type) }
 

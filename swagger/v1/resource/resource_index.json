@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "resources": {
+      "type": "array",
+      "items": {
+        "$ref": "resource_read.json"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["resources"]
+}

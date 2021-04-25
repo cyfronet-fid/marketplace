@@ -3,20 +3,16 @@
 class Api::V1::ServicePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.administered_by(user).where.not(status: ["deleted"]).order(:id)
+      scope.where("data_administrators.email = ? AND services.status != ?", user.email, "deleted")
+           .joins(resource_organisation: [provider_data_administrators: [:data_administrator]])
     end
   end
 
   def show?
-    administered_by? && !deleted?
+    administered_by? && !record.deleted?
   end
 
   def administered_by?
     record.administered_by?(user)
   end
-
-  private
-    def deleted?
-      record.deleted?
-    end
 end

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Oms::CallTrigger do
+RSpec.describe OMS::CallTrigger do
   it "doesn't execute if trigger_url.blank?" do
     allow(Unirest).to receive(:post)
 

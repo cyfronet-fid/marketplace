@@ -18,7 +18,7 @@ RSpec.describe Provider, type: :model do
   end
 
   context "OMS validations" do
-    subject { build(:provider, oms: build_list(:provider_group_oms, 2)) }
-    it { should have_many(:oms) }
+    subject { build(:provider, omses: build_list(:provider_group_oms, 2)) }
+    it { should have_many(:omses) }
   end
 end

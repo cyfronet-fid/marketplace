@@ -2,12 +2,12 @@
 
 require "rails_helper"
 
-RSpec.describe Oms::CallTriggerJob, type: :job do
-  let(:call_trigger) { instance_double(Oms::CallTrigger) }
+RSpec.describe OMS::CallTriggerJob, type: :job do
+  let(:call_trigger) { instance_double(OMS::CallTrigger) }
   let(:oms) { build(:oms) }
 
   before do
-    allow(Oms::CallTrigger).to receive(:new).with(oms).and_return(call_trigger)
+    allow(OMS::CallTrigger).to receive(:new).with(oms).and_return(call_trigger)
     allow(call_trigger).to receive(:call)
   end
 

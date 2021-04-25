@@ -66,7 +66,7 @@ class Service < ApplicationRecord
            source: :vocabulary, source_type: "Vocabulary::LifeCycleStatus"
   has_many :service_target_users, dependent: :destroy
   has_many :target_users, through: :service_target_users
-  has_many :oms, dependent: :destroy
+  has_many :omses, dependent: :destroy
 
   has_one :main_contact, as: :contactable, dependent: :destroy, autosave: true
   has_many :public_contacts, as: :contactable, dependent: :destroy, autosave: true
@@ -171,12 +171,6 @@ class Service < ApplicationRecord
     where(status: [:published, :unverified]).includes(:providers).order(popularity_ratio: :desc, name: :asc).limit(count)
   end
 
-
-  def self.administered_by(user)
-    joins(resource_organisation: [provider_data_administrators: [:data_administrator]]).
-      where("data_administrators.email = ?", user.email)
-  end
-
   def main_category
     @main_category ||= categories.joins(:categorizations).
                                   find_by(categorizations: { main: true })
@@ -241,8 +235,8 @@ class Service < ApplicationRecord
       .empty?
   end
 
-  def available_oms
-    (Oms.where(default: true).to_a + oms.to_a + Oms.where(type: :global).to_a + providers.map(&:oms).flatten).uniq
+  def available_omses
+    (OMS.where(default: true).to_a + omses.to_a + OMS.where(type: :global).to_a + providers.map(&:omses).flatten).uniq
   end
 
   private

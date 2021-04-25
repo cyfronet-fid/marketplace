@@ -97,7 +97,7 @@ RSpec.describe Event, type: :model do
       event = build(:event)
       allow(event).to receive(:omses)
                         .and_return(%w[url1 url2].map { |trigger_url| create(:oms, trigger_url: trigger_url) })
-      assert_performed_jobs(2, only: Oms::CallTriggerJob, queue: :orders) { event.save! }
+      assert_performed_jobs(2, only: OMS::CallTriggerJob, queue: :orders) { event.save! }
 
       expect(Unirest).to have_received(:post).with("url1")
       expect(Unirest).to have_received(:post).with("url2")

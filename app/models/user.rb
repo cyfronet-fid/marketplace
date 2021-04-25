@@ -21,10 +21,9 @@ class User < ApplicationRecord
   has_many :user_scientific_domains, dependent: :destroy
   has_many :scientific_domains, through: :user_scientific_domains
   has_many :oms_administrations, dependent: :destroy
-  has_many :administrated_oms,
+  has_many :administrated_omses,
            through: :oms_administrations,
-           source: :oms,
-           class_name: "Oms"
+           source: :oms
   has_many :user_service, dependent: :destroy
   has_many :favourite_services,
            through: :user_service,
@@ -49,11 +48,7 @@ class User < ApplicationRecord
   end
 
   def default_oms_administrator?
-    administrated_oms.where(default: true).present?
-  end
-
-  def managed_services
-    Service.administered_by(self)
+    administrated_omses.where(default: true).present?
   end
 
   def to_s
