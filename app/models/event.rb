@@ -22,7 +22,7 @@ class Event < ApplicationRecord
   after_commit :call_triggers, on: :create
 
   def omses
-    default = Oms.find_by(default: true)
+    default = OMS.find_by(default: true)
     other = eventable.eventable_omses
     if default.blank? || other.any? { |oms| oms.id == default.id }
       other

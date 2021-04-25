@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class OmsProvider < ApplicationRecord
+class OMSProvider < ApplicationRecord
   belongs_to :oms
   belongs_to :provider
 

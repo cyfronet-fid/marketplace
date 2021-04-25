@@ -61,16 +61,6 @@
               }
             }
           },
-          "401": {
-            "description": "user not recognized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "error.json"
-                }
-              }
-            }
-          },
           "400": {
             "description": "bad request",
             "content": {
@@ -81,8 +71,18 @@
               }
             }
           },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
           "403": {
-            "description": "OMS not authorized",
+            "description": "user not authorized to access this OMS",
             "content": {
               "application/json": {
                 "schema": {
@@ -188,7 +188,7 @@
             }
           },
           "403": {
-            "description": "OMS not authorized",
+            "description": "user not authorized to access this OMS",
             "content": {
               "application/json": {
                 "schema": {
@@ -236,7 +236,7 @@
             }
           },
           "400": {
-            "description": "message created validation failed",
+            "description": "bad request",
             "content": {
               "application/json": {
                 "schema": {
@@ -256,7 +256,7 @@
             }
           },
           "403": {
-            "description": "not authorized",
+            "description": "user not authorized",
             "content": {
               "application/json": {
                 "schema": {
@@ -335,7 +335,7 @@
             }
           },
           "403": {
-            "description": "not authorized",
+            "description": "user not authorized",
             "content": {
               "application/json": {
                 "schema": {
@@ -383,7 +383,7 @@
             }
           },
           "400": {
-            "description": "message update validation failed",
+            "description": "bad request",
             "content": {
               "application/json": {
                 "schema": {
@@ -403,7 +403,7 @@
             }
           },
           "403": {
-            "description": "not authorized",
+            "description": "user not authorized",
             "content": {
               "application/json": {
                 "schema": {
@@ -509,7 +509,7 @@
             }
           },
           "403": {
-            "description": "OMS not authorized",
+            "description": "user not authorized to access this OMS",
             "content": {
               "application/json": {
                 "schema": {
@@ -519,7 +519,7 @@
             }
           },
           "404": {
-            "description": "OMS not found",
+            "description": "project not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -595,7 +595,7 @@
             }
           },
           "403": {
-            "description": "OMS not authorized",
+            "description": "user not authorized",
             "content": {
               "application/json": {
                 "schema": {
@@ -605,7 +605,7 @@
             }
           },
           "404": {
-            "description": "OMS not found",
+            "description": "project item not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -643,7 +643,7 @@
             }
           },
           "400": {
-            "description": "project item update validation failed wrong user secrets",
+            "description": "bad request",
             "content": {
               "application/json": {
                 "schema": {
@@ -653,7 +653,7 @@
             }
           },
           "403": {
-            "description": "OMS not authorized",
+            "description": "user not authorized",
             "content": {
               "application/json": {
                 "schema": {
@@ -663,7 +663,7 @@
             }
           },
           "404": {
-            "description": "OMS not found",
+            "description": "project item not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -750,7 +750,7 @@
             }
           },
           "403": {
-            "description": "OMS not authorized",
+            "description": "user not authorized to access this OMS",
             "content": {
               "application/json": {
                 "schema": {
@@ -826,8 +826,8 @@
               }
             }
           },
-          "404": {
-            "description": "OMS not found",
+          "403": {
+            "description": "user not authorized to access this OMS",
             "content": {
               "application/json": {
                 "schema": {
@@ -836,8 +836,8 @@
               }
             }
           },
-          "403": {
-            "description": "user not authorized",
+          "404": {
+            "description": "project not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -851,7 +851,7 @@
     },
     "/api/v1/oms": {
       "get": {
-        "summary": "lists projects",
+        "summary": "lists OMSes",
         "tags": [
           "OMS"
         ],
@@ -864,7 +864,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OMS found",
+            "description": "OMSes found",
             "content": {
               "application/json": {
                 "schema": {
@@ -917,6 +917,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "oms/oms_read.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
                 }
               }
             }

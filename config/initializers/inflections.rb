@@ -18,5 +18,7 @@
 # end
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.irregular "oms", "oms"
+  inflect.acronym 'OMS'
+  inflect.acronym 'OMSes'
+  inflect.irregular 'oms', 'omses'
 end

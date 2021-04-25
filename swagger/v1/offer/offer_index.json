@@ -1,6 +1,13 @@
 {
-  "type": "array",
-  "items": {
-    "$ref": "offer_read.json"
-  }
+  "type": "object",
+  "properties": {
+    "offers": {
+      "type": "array",
+      "items": {
+        "$ref": "offer_read.json"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["offers"]
 }

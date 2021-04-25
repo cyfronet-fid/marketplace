@@ -42,17 +42,7 @@
             }
           },
           "401": {
-            "description": "unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "error.json"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "forbidden",
+            "description": "user not recognized",
             "content": {
               "application/json": {
                 "schema": {
@@ -109,6 +99,36 @@
           },
           "400": {
             "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "resource not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -173,8 +193,18 @@
               }
             }
           },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
           "403": {
-            "description": "forbidden",
+            "description": "user not authorized",
             "content": {
               "application/json": {
                 "schema": {
@@ -237,6 +267,36 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "offer not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -284,6 +344,36 @@
         "responses": {
           "200": {
             "description": "offer deleted"
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "offer not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
           }
         }
       }
@@ -307,23 +397,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "service/service_index.json"
+                  "$ref": "resource/resource_index.json"
                 }
               }
             }
           },
           "401": {
-            "description": "unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "error.json"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "forbidden",
+            "description": "user not recognized",
             "content": {
               "application/json": {
                 "schema": {
@@ -365,13 +445,23 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "service/service_read.json"
+                  "$ref": "resource/resource_read.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
                 }
               }
             }
           },
           "403": {
-            "description": "forbidden",
+            "description": "user not authorized",
             "content": {
               "application/json": {
                 "schema": {

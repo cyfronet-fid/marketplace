@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Oms::CallTrigger
+class OMS::CallTrigger
   def initialize(oms)
     @oms = oms
   end

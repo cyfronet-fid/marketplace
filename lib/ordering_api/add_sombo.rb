@@ -11,7 +11,7 @@ module OrderingApi
         user.email = "sombo@sombo.com"
       end
 
-      sombo = Oms.find_or_create_by(name: "SOMBO") do |oms|
+      sombo = OMS.find_or_create_by(name: "SOMBO") do |oms|
         oms.type = :global
         oms.default = true
         oms.custom_params = { order_target: { mandatory: false } }

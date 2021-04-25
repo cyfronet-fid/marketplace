@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_22_132539) do
+ActiveRecord::Schema.define(version: 2021_04_24_151714) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -198,20 +198,6 @@ ActiveRecord::Schema.define(version: 2021_04_22_132539) do
     t.index ["service_id"], name: "index_offers_on_service_id"
   end
 
-  create_table "oms", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "type", null: false
-    t.jsonb "custom_params"
-    t.boolean "default", default: false, null: false
-    t.string "trigger_url"
-    t.bigint "service_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["default"], name: "index_oms_on_default"
-    t.index ["service_id"], name: "index_oms_on_service_id"
-    t.index ["type"], name: "index_oms_on_type"
-  end
-
   create_table "oms_administrations", force: :cascade do |t|
     t.bigint "oms_id", null: false
     t.bigint "user_id", null: false
@@ -230,6 +216,20 @@ ActiveRecord::Schema.define(version: 2021_04_22_132539) do
     t.index ["oms_id", "provider_id"], name: "index_oms_providers_on_oms_id_and_provider_id", unique: true
     t.index ["oms_id"], name: "index_oms_providers_on_oms_id"
     t.index ["provider_id"], name: "index_oms_providers_on_provider_id"
+  end
+
+  create_table "omses", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "type", null: false
+    t.jsonb "custom_params"
+    t.boolean "default", default: false, null: false
+    t.string "trigger_url"
+    t.bigint "service_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["default"], name: "index_omses_on_default"
+    t.index ["service_id"], name: "index_omses_on_service_id"
+    t.index ["type"], name: "index_omses_on_type"
   end
 
   create_table "platforms", force: :cascade do |t|
@@ -664,12 +664,12 @@ ActiveRecord::Schema.define(version: 2021_04_22_132539) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "offers", "oms", column: "primary_oms_id"
-  add_foreign_key "oms", "services"
-  add_foreign_key "oms_administrations", "oms"
+  add_foreign_key "offers", "omses", column: "primary_oms_id"
+  add_foreign_key "oms_administrations", "omses"
   add_foreign_key "oms_administrations", "users"
-  add_foreign_key "oms_providers", "oms"
+  add_foreign_key "oms_providers", "omses"
   add_foreign_key "oms_providers", "providers"
+  add_foreign_key "omses", "services"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
   add_foreign_key "project_scientific_domains", "projects"
