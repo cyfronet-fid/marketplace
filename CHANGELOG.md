@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Add captcha error message to order summary - better UX (@danielkryska)
 - Resource Organisation field is required for creating a resource (@kmarszalek)
 - Mail delivery for orderable offers (@jswk)
 
