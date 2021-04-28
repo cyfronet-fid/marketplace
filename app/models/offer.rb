@@ -85,9 +85,11 @@ class Offer < ApplicationRecord
 
     def check_oms_params
       if current_oms.custom_params.present?
-        oms_params.blank? ? errors.add(:oms_params, "can't be blank") : oms_params_match?
+        if current_oms.mandatory_defaults.present?
+          oms_params.blank? ? errors.add(:oms_params, "can't be blank") : oms_params_match?
+        end
       else
         errors.add(:oms_params, "must be blank if primary oms' custom params are blank") if oms_params.present?
       end
-  end
+    end
 end
