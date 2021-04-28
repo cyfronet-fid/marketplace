@@ -31,7 +31,7 @@ RSpec.describe Offer do
 
   context "OMS dependencies" do
     it "validates properly against primary oms" do
-      oms = build(:oms, custom_params: { a: { mandatory: false }, b: { mandatory: true, default: "XD" } })
+      oms = create(:oms, custom_params: { a: { mandatory: false }, b: { mandatory: true, default: "XD" } })
 
       expect(build(:offer, oms_params: { a: 1, b: 2 }, primary_oms: oms)).to be_valid
       expect(build(:offer, oms_params: { b: 1 }, primary_oms: oms)).to be_valid
@@ -44,6 +44,9 @@ RSpec.describe Offer do
       expect(build(:offer, oms_params: { c: 1 }, primary_oms: nil)).to_not be_valid
       create(:oms, default: true, custom_params: { c: { mandatory: true, default: "c" } })
       expect(build(:offer, oms_params: { c: 1 }, primary_oms: nil)).to be_valid
+
+      laid_back_oms = create(:oms, custom_params: { d: { mandatory: false } })
+      expect(build(:offer, oms_params: nil, primary_oms: laid_back_oms)).to be_valid
     end
 
     it "returns proper current_oms" do
