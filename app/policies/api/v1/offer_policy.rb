@@ -26,7 +26,7 @@ class Api::V1::OfferPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name, :description, :webpage, :order_type, :order_url, :primary_oms_id, oms_params: {},
+    [:name, :description, :webpage, :order_type, :order_url, :primary_oms_id, :internal, oms_params: {},
      parameters: [:id, :type, :label, :description, :unit, :value_type, :value,
                   config: [:mode, :minimum, :maximum, :minItems, :maxItems, :exclusiveMinimum,
                            :exclusiveMaximum, :start_price, :step_price, :currency, values: []

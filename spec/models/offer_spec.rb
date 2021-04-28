@@ -60,6 +60,51 @@ RSpec.describe Offer do
     end
   end
 
+  context "before_validate hooks" do
+    it "should set primary_oms and oms_params to nil when internal == false on create" do
+      oms = create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "asd" } })
+      offer = create(:offer, order_type: :order_required, internal: false, primary_oms: oms, oms_params: { a: "qwe" })
+      expect(offer.primary_oms).to be_nil
+      expect(offer.oms_params).to be_nil
+    end
+
+    it "should set primary_oms and oms_params to nil when internal == true on update" do
+      oms = create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "asd" } })
+      offer = create(:offer, order_type: :order_required, internal: true, primary_oms: oms, oms_params: { a: "qwe" })
+      expect(offer.primary_oms).to eq(oms)
+      expect(offer.oms_params).to eq({ a: "qwe" }.deep_stringify_keys)
+
+      offer.update(internal: false)
+      offer.reload
+
+      expect(offer.primary_oms).to be_nil
+      expect(offer.oms_params).to be_nil
+    end
+
+    it "should set internal to false and primary_oms, oms_params to nil when order_type != order_required on create" do
+      oms = create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "asd" } })
+      offer = create(:offer, order_type: :open_access, internal: true, primary_oms: oms, oms_params: { a: "qwe" })
+      expect(offer.internal).to be_falsey
+      expect(offer.primary_oms).to be_nil
+      expect(offer.oms_params).to be_nil
+    end
+
+    it "should set internal to false and primary_oms, oms_params to nil when order_type != order_required on update" do
+      oms = create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "asd" } })
+      offer = create(:offer, order_type: :order_required, internal: true, primary_oms: oms, oms_params: { a: "qwe" })
+      expect(offer.internal).to be_truthy
+      expect(offer.primary_oms).to eq(oms)
+      expect(offer.oms_params).to eq({ a: "qwe" }.deep_stringify_keys)
+
+      offer.update(order_type: :open_access)
+      offer.reload
+
+      expect(offer.internal).to be_falsey
+      expect(offer.primary_oms).to be_nil
+      expect(offer.oms_params).to be_nil
+    end
+  end
+
   context "#parameters" do
     it "should defaults to []" do
       expect(create(:offer).reload.parameters).to eq([])
