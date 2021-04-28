@@ -90,11 +90,7 @@ class ProjectItem::Wizard
       attr_accessor :additional_comment, :verified_recaptcha
 
       def error
-        if verified_recaptcha
-          return "Please select the project where service will be added"
-        end
-
-        "Please check captcha before continue"
+        "Please correct errors presented below"
       end
 
       def visible?
