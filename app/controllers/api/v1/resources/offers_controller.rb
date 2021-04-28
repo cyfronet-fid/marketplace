@@ -31,7 +31,7 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
   end
 
   def update
-    template = transform(permitted_attributes(Offer))
+    template = transform(permitted_attributes(@offer))
     if Offer::Update.new(@offer, template).call
       render json: Api::V1::OfferSerializer.new(@offer).as_json, status: 200
     else
@@ -70,8 +70,8 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
     end
 
     def transform(attributes)
-      unless attributes["parameters"].blank?
-        attributes["parameters"] = Parameter::Array.load(attributes["parameters"])
+      if attributes[:parameters].present?
+        attributes[:parameters] = Parameter::Array.load(attributes[:parameters])
       end
       attributes
     end

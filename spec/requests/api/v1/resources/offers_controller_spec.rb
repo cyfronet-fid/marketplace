@@ -44,6 +44,8 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
           expect(data["offers"][0]["id"]).to eq(published_offer1.iid)
           expect(data["offers"][0]["name"]).to eq(published_offer1.name)
           expect(data["offers"][0]["description"]).to eq(published_offer1.description)
+          expect(data["offers"][0]["internal"]).to eq(true)
+          expect(data["offers"][0]["primary_oms_id"]).to eq(OMS.find_by(default: true).id)
           expect(data["offers"][0]["parameters"].length).to eq(published_offer1.parameters.length)
           expect(data["offers"][0]["parameters"][0]["type"]).to eq(published_offer1.parameters.first.type)
           expect(data["offers"][0]["parameters"][-1]["type"]).to eq(published_offer1.parameters.last.type)
@@ -51,6 +53,8 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
           expect(data["offers"][1]["id"]).to eq(published_offer2.iid)
           expect(data["offers"][1]["name"]).to eq(published_offer2.name)
           expect(data["offers"][1]["description"]).to eq(published_offer2.description)
+          expect(data["offers"][0]["internal"]).to eq(true)
+          expect(data["offers"][0]["primary_oms_id"]).to eq(OMS.find_by(default: true).id)
           expect(data["offers"][1]["parameters"].length).to eq(published_offer2.parameters.length)
           expect(data["offers"][1]["parameters"][0]["type"]).to eq(published_offer2.parameters.first.type)
           expect(data["offers"][1]["parameters"][-1]["type"]).to eq(published_offer2.parameters.last.type)
@@ -134,10 +138,12 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
           expect(service.offers.first.status).to eq("published")
           expect(service.offers.first.order_type).to eq(offer.order_type)
           expect(service.offers.first.parameters.size).to eq(offer.parameters.size)
+          expect(service.offers.first.internal).to eq(offer.internal)
+          expect(service.offers.first.primary_oms).to eq(OMS.find_by(default: true))
         end
       end
 
-      response 201, "minimalistic offer created", document: false do
+      response 201, "open_access offer created", document: false do
         schema "$ref" => "offer/offer_read.json"
 
         let(:data_admin_user) { create(:user) }
@@ -146,7 +152,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]))}
         let(:offer_payload) { { name: "New offer",
                                 description: "sample description",
-                                order_type: "order_required" } }
+                                order_type: "open_access" } }
         let(:resource_id) { service.slug }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
@@ -160,6 +166,9 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
           expect(service.offers.first.description).to eq(offer_payload[:description])
           expect(service.offers.first.order_type).to eq(offer_payload[:order_type])
           expect(service.offers.first.status).to eq("published")
+          expect(service.offers.first.internal).to eq(false)
+          expect(service.offers.first.primary_oms).to be_nil
+          expect(service.offers.first.oms_params).to be_nil
         end
       end
 
@@ -174,6 +183,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:offer_payload) { { name: "New offer",
                                 description: "sample description",
                                 order_type: "order_required",
+                                internal: true,
                                 primary_oms_id: oms.id,
                                 oms_params: { "a": "asd" }
         } }
@@ -190,8 +200,75 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
           expect(service.offers.first.description).to eq(offer_payload[:description])
           expect(service.offers.first.order_type).to eq(offer_payload[:order_type])
           expect(service.offers.first.status).to eq("published")
+          expect(service.offers.first.internal).to eq(true)
           expect(service.offers.first.primary_oms).to eq(oms)
           expect(service.offers.first.oms_params).to eq({ "a": "asd" }.deep_stringify_keys)
+        end
+      end
+
+      response 201, "ignores internal, primary_oms and oms_params if open_access", document: false do
+        schema "$ref" => "offer/offer_read.json"
+
+        let(:data_admin_user) { create(:user) }
+        let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
+        let!(:service) { create(:service,
+                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
+        let(:offer_payload) { { name: "New offer",
+                                description: "sample description",
+                                order_type: "open_access",
+                                internal: true,
+                                primary_oms_id: 1,
+                                oms_params: { a: "b" }
+        } }
+        let(:resource_id) { service.slug }
+        let(:"X-User-Token") { data_admin_user.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          service.reload
+
+          expect(data).to eq(JSON.parse(Api::V1::OfferSerializer.new(service.offers.first).to_json))
+          expect(service.offers.length).to eq(1)
+          expect(service.offers.first.name).to eq(offer_payload[:name])
+          expect(service.offers.first.description).to eq(offer_payload[:description])
+          expect(service.offers.first.order_type).to eq(offer_payload[:order_type])
+          expect(service.offers.first.status).to eq("published")
+          expect(service.offers.first.internal).to eq(false)
+          expect(service.offers.first.primary_oms).to be_nil
+          expect(service.offers.first.oms_params).to be_nil
+        end
+      end
+
+      response 201, "ignores primary_oms and oms_params if not internal", document: false do
+        schema "$ref" => "offer/offer_read.json"
+
+        let(:data_admin_user) { create(:user) }
+        let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
+        let!(:service) { create(:service,
+                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
+        let(:offer_payload) { { name: "New offer",
+                                description: "sample description",
+                                order_type: "open_access",
+                                internal: false,
+                                primary_oms_id: 1,
+                                oms_params: { a: "b" }
+        } }
+        let(:resource_id) { service.slug }
+        let(:"X-User-Token") { data_admin_user.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          service.reload
+
+          expect(data).to eq(JSON.parse(Api::V1::OfferSerializer.new(service.offers.first).to_json))
+          expect(service.offers.length).to eq(1)
+          expect(service.offers.first.name).to eq(offer_payload[:name])
+          expect(service.offers.first.description).to eq(offer_payload[:description])
+          expect(service.offers.first.order_type).to eq(offer_payload[:order_type])
+          expect(service.offers.first.status).to eq("published")
+          expect(service.offers.first.internal).to eq(false)
+          expect(service.offers.first.primary_oms).to be_nil
+          expect(service.offers.first.oms_params).to be_nil
         end
       end
 
@@ -215,7 +292,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
       end
 
-      response 400, "fails json validation on non-existent primary_oms_id", document: false do
+      response 400, "fails model validation on non-existent primary_oms_id", document: false do
         schema "$ref" => "error.json"
 
         let(:data_admin_user) { create(:user) }
@@ -225,6 +302,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:offer_payload) { { name: "New offer",
                                 description: "sample description",
                                 order_type: "order_required",
+                                internal: true,
                                 primary_oms_id: 9999,
         } }
         let(:resource_id) { service.slug }
@@ -503,6 +581,8 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
           expect(data["parameters"].length).to eq(offer.parameters.length)
           expect(data["parameters"][0]["type"]).to eq(offer.parameters.first.type)
           expect(data["parameters"][-1]["type"]).to eq(offer.parameters.last.type)
+          expect(data["primary_oms_id"]).to eq(OMS.find_by(default: true).id)
+          expect(data["oms_params"]).to be_nil
         end
       end
 
@@ -525,6 +605,58 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
           expect(data["name"]).to eq(offer.name)
           expect(data["description"]).to eq(offer.description)
           expect(data["parameters"]).to match_array([])
+          expect(data["primary_oms_id"]).to eq(OMS.find_by(default: true).id)
+          expect(data["oms_params"]).to be_nil
+        end
+      end
+
+      response 200, "doesn't show primary_oms_id and oms_params if not internal", document: false do
+        schema "$ref" => "offer/offer_read.json"
+
+        let(:offer) { build(:offer, internal: false, order_type: :order_required) }
+        let(:data_admin_user) { create(:user) }
+        let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
+        let!(:service) { create(:service,
+                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
+                                offers: [offer]) }
+        let(:resource_id) { service.slug }
+        let(:id) { offer.iid }
+        let(:"X-User-Token") { data_admin_user.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data["id"]).to eq(offer.iid)
+          expect(data["name"]).to eq(offer.name)
+          expect(data["description"]).to eq(offer.description)
+          expect(data["parameters"]).to match_array([])
+          expect(data["primary_oms_id"]).to be_nil
+          expect(data["oms_params"]).to be_nil
+          expect(data["internal"]).to eq(false)
+        end
+      end
+
+      response 200, "doesn't show internal, oms_params and primary_oms_id if not order_required", document: false do
+        schema "$ref" => "offer/offer_read.json"
+
+        let(:offer) { build(:offer, order_type: :open_access, internal: false) }
+        let(:data_admin_user) { create(:user) }
+        let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
+        let!(:service) { create(:service,
+                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
+                                offers: [offer]) }
+        let(:resource_id) { service.slug }
+        let(:id) { offer.iid }
+        let(:"X-User-Token") { data_admin_user.authentication_token }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data["id"]).to eq(offer.iid)
+          expect(data["name"]).to eq(offer.name)
+          expect(data["description"]).to eq(offer.description)
+          expect(data["parameters"]).to match_array([])
+          expect(data["primary_oms_id"]).to be_nil
+          expect(data["oms_params"]).to be_nil
+          expect(data["internal"]).to be_nil
         end
       end
 
@@ -607,7 +739,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         schema "$ref" => "offer/offer_read.json"
 
         let(:previous_oms) { create(:oms, type: :global) }
-        let(:oms) { create(:oms, type: :global, custom_params: { "a": { mandatory: true, default: "qwe" } }) }
+        let(:oms) { create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "qwe" } }) }
         let(:offer) { build(:offer, primary_oms: previous_oms) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -707,6 +839,82 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
           expect(service.offers.first.order_url).to eq(offer.order_url)
         end
       end
+
+      response 200, "doesn't update primary_oms and oms_params if not internal" do
+        schema "$ref" => "offer/offer_read.json"
+
+        let(:previous_oms) { create(:oms, type: :global) }
+        let(:oms) { create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "qwe" } }) }
+        let(:offer) { build(:offer, primary_oms: previous_oms) }
+        let(:data_admin_user) { create(:user) }
+        let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
+        let!(:service) { create(:service,
+                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
+                                offers: [offer])}
+        let(:resource_id) { service.slug }
+        let(:id) { offer.iid }
+        let(:"X-User-Token") { data_admin_user.authentication_token }
+        let(:offer_payload) { { name: "New offer",
+                                description: "sample description",
+                                internal: false,
+                                primary_oms_id: oms.id,
+                                oms_params: { a: "b" }
+        } }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          service.reload
+
+          expect(data).to eq(JSON.parse(Api::V1::OfferSerializer.new(service.offers.first).to_json))
+          expect(service.offers.length).to eq(1)
+          expect(service.offers.first.name).to eq(offer_payload[:name])
+          expect(service.offers.first.description).to eq(offer_payload[:description])
+          expect(service.offers.first.parameters.size).to eq(offer.parameters.size)
+          expect(service.offers.first.order_url).to eq(offer.order_url)
+          expect(service.offers.first.primary_oms).to be_nil
+          expect(service.offers.first.oms_params).to be_nil
+        end
+      end
+
+      response 200, "doesn't update primary_oms and oms_params and internal if not order_required" do
+        schema "$ref" => "offer/offer_read.json"
+
+        let(:previous_oms) { create(:oms, type: :global) }
+        let(:oms) { create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "qwe" } }) }
+        let(:offer) { build(:offer, primary_oms: previous_oms) }
+        let(:data_admin_user) { create(:user) }
+        let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
+        let!(:service) { create(:service,
+                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
+                                offers: [offer])}
+        let(:resource_id) { service.slug }
+        let(:id) { offer.iid }
+        let(:"X-User-Token") { data_admin_user.authentication_token }
+        let(:offer_payload) { { name: "New offer",
+                                description: "sample description",
+                                order_type: "open_access",
+                                internal: true,
+                                primary_oms_id: oms.id,
+                                oms_params: { a: "b" }
+        } }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          service.reload
+
+          expect(data).to eq(JSON.parse(Api::V1::OfferSerializer.new(service.offers.first).to_json))
+          expect(service.offers.length).to eq(1)
+          expect(service.offers.first.name).to eq(offer_payload[:name])
+          expect(service.offers.first.description).to eq(offer_payload[:description])
+          expect(service.offers.first.parameters.size).to eq(offer.parameters.size)
+          expect(service.offers.first.order_url).to eq(offer.order_url)
+          expect(service.offers.first.order_type).to eq("open_access")
+          expect(service.offers.first.internal).to be_falsey
+          expect(service.offers.first.primary_oms).to be_nil
+          expect(service.offers.first.oms_params).to be_nil
+        end
+      end
+
 
       response 400, "primary_oms model validation failed", document: false do
         schema "$ref" => "error.json"

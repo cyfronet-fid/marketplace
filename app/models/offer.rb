@@ -39,6 +39,9 @@ class Offer < ApplicationRecord
   has_many :project_items,
            dependent: :restrict_with_error
 
+  before_validation :set_internal
+  before_validation :set_oms_details
+
   validate :set_iid, on: :create
   validates :service, presence: true
   validates :iid, presence: true, numericality: true
@@ -97,6 +100,19 @@ class Offer < ApplicationRecord
     def proper_oms?
       unless service.available_omses.include? primary_oms
         errors.add(:primary_oms, "has to be available in the resource scope")
+      end
+    end
+
+    def set_internal
+      unless self.order_required?
+        self.internal = false
+      end
+    end
+
+    def set_oms_details
+      unless self.internal?
+        self.primary_oms = nil
+        self.oms_params = nil
       end
     end
 end
