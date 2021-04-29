@@ -1,2 +1,28 @@
-User-agent: *
+# Allow search engines bots
+User-agent: Bingbot         # Bing
+User-agent: MSNBot
+User-agent: Googlebot       # Google
+User-agent: googlebot-image
+User-agent: googlebot-mobile
+User-agent: Slurp           # Yahoo
+User-agent: yahoo-mmcrawler
+User-agent: yahoo-blogs/v3.9
+User-agent: DuckDuckBot     # Duck duck
+User-agent: Baiduspider     # Baidu (China)
+User-agent: YandexBot       # Yandex (Russia)
+User-agent: Exabot          # Exabot (France)
+User-agent: facebot         # Facebook (Link img preview)
+User-agent: Applebot        # Apple
+User-agent: Teoma           # Other
+User-agent: ia_archiver
+User-agent: naverbot
+User-agent: yeti
+User-agent: psbot
+User-agent: Robozilla
+User-agent: Nutch
 Disallow:
+
+# Disallow all other
+User-agent: *
+Disallow: /
+Crawl-delay: 360
