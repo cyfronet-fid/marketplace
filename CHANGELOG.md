@@ -17,10 +17,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Change error message at order summary to general - better UX (@danielkryska)
-- Resource Organisation field is required for creating a resource (@kmarszalek)
 - Mail delivery for orderable offers (@jswk)
 
-## [3.11.0] 2021-04-21
+## [3.11.0] 2021-04-29
 
 ### Added
 - Reference API for MP orders handling (@wujuu, @jswk)
@@ -38,6 +37,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Default upstream source setting for REST and JMS importers in the Provider model (@goreck888)
 - Provider mapping errors handling in REST and JMS importers (@goreck888)
+- Resource Organisation field is required for creating a resource (@kmarszalek)
 
 ## [3.10.0] 2021-04-01
 
