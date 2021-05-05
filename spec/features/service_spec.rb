@@ -66,6 +66,33 @@ RSpec.feature "Service browsing" do
     expect(page.body).not_to have_content("Service offers")
   end
 
+  scenario "I cannot see 'Manage the resource' button if i am not an admin provider" do
+    service = create(:service)
+    offer1 = create(:offer, service: service)
+
+    visit service_path(service)
+
+    expect(page).to have_link("Access the resource")
+    expect(page).to_not have_content("Manage the resource")
+    expect(page).to_not have_content(offer1.name)
+  end
+
+  scenario "I can see 'Manage the resource' button if i am an admin provider", js: true do
+    user = create(:user)
+    admin = create(:data_administrator, first_name: user.first_name, last_name: user.last_name, email: user.email)
+    provider = create(:provider, data_administrators: [admin])
+    service = create(:service, resource_organisation: provider)
+    offer1 = create(:offer, service: service)
+
+    checkin_sign_in_as(user)
+
+    visit service_path(service)
+
+    expect(page).to have_link("Access the resource")
+    expect(page).to have_content("Manage the resource")
+    expect(page).to_not have_content(offer1.name)
+  end
+
   scenario "I cannot see offers section when only one is published" do
     service = create(:service)
     offer1 = create(:offer, status: :draft, service: service)
