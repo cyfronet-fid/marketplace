@@ -128,3 +128,7 @@ gem "reverse_markdown"
 
 # Fix for puma memory leak
 gem "puma_worker_killer"
+
+# Beta providers data mock
+gem "webmock", "~> 3.12.2"
+gem "vcr", "~>6.0.0"

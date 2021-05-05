@@ -1,12 +1,22 @@
 # frozen_string_literal: true
 
 require_relative "boot"
-
 require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+
+# Stub Beta providers data
+if ENV['BETA_PROVIDERS_DATA_MOCK']
+  # require_relative "../config/vcr_setup"
+
+  # categories
+  # providers
+  # domain
+  # target_users
+  # offers
+end
 
 module Mp
   class Application < Rails::Application
