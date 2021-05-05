@@ -54,6 +54,10 @@ module ServiceHelper
     link_to(highlighted_for(:resource_organisation_name, service, highlights), provider_path(target))
   end
 
+  def resource_organisation_pid(service)
+    service.resource_organisation.pid
+  end
+
   def resource_organisation_text(service)
     service.resource_organisation.name
   end

@@ -2399,6 +2399,38 @@ label[data-multicheckbox].small {
     font-weight: 400;
     width: 100%;
 
+    &.show {
+      .btn-outline-secondary {
+        background: $footer-color;
+      }
+    }
+
+    .dropdown-menu {
+      top: -20px !important;
+      padding-top: 30px;
+      z-index: 1;
+      width: 228px;
+      padding-bottom: 15px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+
+      ul {
+        padding: 0 0 0 30px;
+        margin: 0;
+
+        li {
+          list-style-type: disc;
+          color: $palette-solid-20;
+          padding-left: 0;
+
+          .dropdown-item {
+            font-size: 15px;
+            padding-left: 0;
+          }
+        }
+      }
+    }
+
     .ordertype-label {
       text-transform: uppercase;
     }
@@ -2409,10 +2441,25 @@ label[data-multicheckbox].small {
     }
 
     .btn-outline-secondary {
-      padding-left:10px;
+      padding-left: 8px;
+      position: relative;
+      z-index: 10;
       padding-right: 10px;
       border: 1px solid $palette-yellow;
       color: $palette-gray-100;
+
+      &:after {
+        position: absolute;
+        top: 12px;
+        right: 15px;
+        content: '';
+        border-style: solid;
+        border-color: $palette-gray-100;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        width: 9px;
+        height: 9px;
+      }
     }
   }
 
