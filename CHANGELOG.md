@@ -8,6 +8,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Add manage resource navigation (@danielkryska)
 
 ### Changed
 
