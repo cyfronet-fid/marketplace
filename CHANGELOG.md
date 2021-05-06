@@ -17,6 +17,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 
+## [3.11.1]
+
+### Changed
+- Upgrade rails to 6.0.3.7 (@jswk)
+
 ## [3.11.0]
 
 ### Added
