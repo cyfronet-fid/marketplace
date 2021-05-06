@@ -16,8 +16,8 @@
           class: ("show" unless collapsed?(provider, [:description, :logo, :multimedia])) }
   .card-body
     .service-description
-      = f.input :description
-    = f.input :logo
+      = f.input :description, disabled: cant_edit(:description)
+    = f.input :logo, disabled: cant_edit(:logo)
     = f.input :multimedia, multiple: true, input_html: { class: "form-control" },
-              wrapper_html: { "data-target" => "form.multimedia" }, as: :array
+              wrapper_html: { "data-target" => "form.multimedia" }, as: :array, disabled: cant_edit([multimedia: []])
     = link_to_add_array_field("provider", "multimedia")

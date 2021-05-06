@@ -21,6 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add error note on a scientific domain with services deletion (@danielkryska)
 - Change error message at order summary to general - better UX (@danielkryska)
 - Mail delivery for orderable offers (@jswk)
+- Editorial rights for providers are consistent with established editing policy (@kmarszalek)
 
 ## [3.11.0] 2021-04-29
 

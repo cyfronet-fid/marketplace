@@ -23,23 +23,23 @@
           = _("Main Contact")
         .contact
           = f.fields_for :main_contact do |main_contact_form|
-            = main_contact_form.hidden_field :id
-            = main_contact_form.input :first_name
-            = main_contact_form.input :last_name
-            = main_contact_form.input :email
-            = main_contact_form.input :phone
-            = main_contact_form.input :position
+            = main_contact_form.hidden_field :id, disabled: provider.upstream_id.present?
+            = main_contact_form.input :first_name, disabled: provider.upstream_id.present?
+            = main_contact_form.input :last_name, disabled: provider.upstream_id.present?
+            = main_contact_form.input :email, disabled: provider.upstream_id.present?
+            = main_contact_form.input :phone, disabled: provider.upstream_id.present?
+            = main_contact_form.input :position, disabled: provider.upstream_id.present?
     .row.service-contact-emails{ "data-target": "service.publicContacts" }
       .col-12
         %h3
           = _("Public contacts")
-        = f.fields_for :public_contacts, multiple: true, as: :array,
+        = f.fields_for :public_contacts, disabled: provider.upstream_id.present?, multiple: true, as: :array,
                 wrapper_html: { "data-target" => "form.publicContact" } do |public_contact_form|
-          = render "backoffice/common_parts/form/public_contact_fields",
-          public_contact_form: public_contact_form, service: nil, provider_form: true
+          = render "backoffice/providers/form/public_contact_fields",
+          public_contact_form: public_contact_form, provider: provider, provider_form: true
         = link_to _("Add additional public contact"), "#", class: "btn btn-primary disablable",
           data: { "target": "form.addContact",
           "action": "click->form#addContact",
           "fields": f.fields_for(:public_contacts, PublicContact.new,
-          child_index: "new_field") { |public_contact_form| render "backoffice/common_parts/form/public_contact_fields",
-          public_contact_form: public_contact_form, service: nil, provider_form: true } }
+          child_index: "new_field") { |public_contact_form| render "backoffice/providers/form/public_contact_fields",
+          public_contact_form: public_contact_form, service: nil, provider: provider, provider_form: true } }
