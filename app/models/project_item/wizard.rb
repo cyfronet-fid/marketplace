@@ -1,26 +1,26 @@
 # frozen_string_literal: true
 
 class ProjectItem::Wizard
-  STEPS = %w(offers information configuration summary)
+  STEPS = %i(offers information configuration summary)
 
   def initialize(service)
     @service = service
   end
 
   def step(step, attrs = {})
-    raise InvalidStep unless step.to_s.in?(step_names)
+    raise InvalidStep unless step.in?(step_names)
 
     "ProjectItem::Wizard::#{step.to_s.camelize}Step"
       .constantize.new(@service, attrs)
   end
 
   def next_step_key(step)
-    index = step_names.index(step.to_s)
+    index = step_names.index(step)
     step_names[index + 1] if index < step_names.length - 1
   end
 
   def prev_step_key(step)
-    index = step_names.index(step.to_s)
+    index = step_names.index(step)
     step_names[index - 1] if index > 0
   end
 

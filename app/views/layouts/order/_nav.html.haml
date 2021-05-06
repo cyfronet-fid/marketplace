@@ -5,6 +5,6 @@
       :ruby
         state = :disabled if state == :next
         state = :next if state == :active
-        state = :active if step_name == step_key.to_s
+        state = :active if step_name == step_key
 
       = order_nav_link(step_title(step_name), url_for([service, step_name]), state)
