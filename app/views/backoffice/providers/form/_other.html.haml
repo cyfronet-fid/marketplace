@@ -22,28 +22,37 @@
   .card-body
     .row
       .col-12
-        = f.input :hosting_legal_entity
+        = f.input :hosting_legal_entity, disabled: cant_edit(:hosting_legal_entity)
     .row
       .col-12
-        = f.input :participating_countries, as: :select,
+        = f.input :participating_countries, disabled: cant_edit([participating_countries: []]), as: :select,
                   collection: Country.options.map { |c| [ c.name, "value" => c.alpha2 ] },
                   input_html: { data: { choice: true },  multiple: true }
     .row
       .col-12
         = f.input :affiliations, multiple: true, input_html: { class: "form-control text optional" },
-              wrapper_html: { "data-target" => "form.affiliations" }, as: :array
+              wrapper_html: { "data-target" => "form.affiliations" },
+              disabled: cant_edit([affiliations: []]), as: :array
         = link_to_add_array_field("provider", "affiliations")
         - msd = Vocabulary.where(type: "Vocabulary::MerilScientificDomain").child_names.map { |name, sd| [name, sd.id] }
         .mt-4
-        = f.association :networks, input_html: { multiple: true, data: { choice: true } }
-        = f.association :structure_types, input_html: { multiple: true, data: { choice: true } }
-        = f.association :esfri_domains, input_html: { multiple: true, data: { choice: true } }
-        = f.association :esfri_types, input_html: { multiple: true, data: { choice: true } }
-        = f.association :meril_scientific_domains, input_html: { multiple: true, data: { choice: true } },
-          collection: msd, label_method: :first, value_method: :second
-        = f.association :areas_of_activity, input_html: { multiple: true, data: { choice: true } }
-        = f.association :societal_grand_challenges, input_html: { multiple: true, data: { choice: true } }
-        = f.input :national_roadmaps, multiple: true, input_html: { class: "form-control text optional" },
+        = f.association :networks, disabled: cant_edit([network_ids: []]),
+              input_html: { multiple: true, data: { choice: true } }
+        = f.association :structure_types, disabled: cant_edit([structure_type_ids: []]),
+              input_html: { multiple: true, data: { choice: true } }
+        = f.association :esfri_domains, disabled: cant_edit([esfri_domain_ids: []]),
+              input_html: { multiple: true, data: { choice: true } }
+        = f.association :esfri_types, disabled: cant_edit([esfri_type_ids: []]),
+              input_html: { multiple: true, data: { choice: true } }
+        = f.association :meril_scientific_domains, disabled: cant_edit([meril_scientific_domain_ids: []]),
+              input_html: { multiple: true, data: { choice: true } }, collection: msd,
+              label_method: :first, value_method: :second
+        = f.association :areas_of_activity, disabled: cant_edit([areas_of_activity_ids: []]),
+              input_html: { multiple: true, data: { choice: true } }
+        = f.association :societal_grand_challenges, disabled: cant_edit([societal_grand_challenge_ids: []]),
+              input_html: { multiple: true, data: { choice: true } }
+        = f.input :national_roadmaps, disabled: cant_edit([national_roadmaps: []]), multiple: true,
+              input_html: { class: "form-control text optional" },
               wrapper_html: { "data-target" => "form.national_roadmaps" }, as: :array
         = link_to_add_array_field("provider", "national_roadmaps")
     .row

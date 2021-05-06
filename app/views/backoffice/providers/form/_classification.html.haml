@@ -14,7 +14,8 @@
           "data-parent": "#accordion-form",
           class: ("show" unless collapsed?(provider, [:scientific_domains, :tag_list])) }
   .card-body
-    = f.association :scientific_domains, input_html: { data: { choice: true } }, include_hidden: false,
+    = f.association :scientific_domains, disabled: cant_edit([scientific_domain_ids: []]),
+                            input_html: { data: { choice: true } }, include_hidden: false,
                             collection: ScientificDomain.child_names.map { |name, sd| [name, sd.id] },
                             label_method: :first, value_method: :second
-    = f.input :tag_list, input_html: { value: provider.tag_list.to_s }
+    = f.input :tag_list, disabled: cant_edit(:tag_list), input_html: { value: provider.tag_list.to_s }

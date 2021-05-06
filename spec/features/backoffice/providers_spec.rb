@@ -57,15 +57,34 @@ RSpec.feature "Providers in backoffice" do
       expect(page).to have_content("My new provider")
     end
 
-    scenario "I can edit provider" do
-      provider = create(:provider, name: "Old name")
+    scenario "I can edit provider when upstream is set to MP (nil)", js: true  do
+      provider = create(:provider, name: "Old name", upstream: nil)
 
       visit edit_backoffice_provider_path(provider)
+
+      click_on "Basic", match: :first
+      expect(page).to have_field "Name", disabled: false
 
       fill_in "Name", with: "New name"
       click_on "Update Provider"
 
       expect(page).to have_content("New name")
+    end
+
+    scenario "I can not edit provider when upstream is not set to MP (nil)", js: true  do
+      provider = create(:provider, name: "Old name")
+      provider_source = create(:provider_source, provider: provider)
+      provider.upstream = provider_source
+      provider.save!
+
+      visit edit_backoffice_provider_path(provider)
+
+      click_on "Basic", match: :first
+
+      expect(page).to have_field "Name", disabled: true
+      expect(page).to have_field "Abbreviation", disabled: true
+      expect(page).to have_field "Website", disabled: true
+      expect(page).to have_field "Legal entity", disabled: true
     end
 
     scenario "I can edit data administrator" do
