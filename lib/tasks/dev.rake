@@ -131,7 +131,7 @@ namespace :dev do
                             description: h["description"],
                             webpage: h["webpage"],
                             parameters: Parameter::Array.load(h["parameters"] || []),
-                            order_type: service.order_type,
+                            order_type: h["order_type"].blank? ? service.order_type : h["order_type"],
                             status: :published)
       puts "    - #{h["name"]} offer generated"
     end

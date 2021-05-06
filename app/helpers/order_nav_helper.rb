@@ -5,7 +5,16 @@ module OrderNavHelper
     content_tag(:li, class: "nav-item") do
       link_to_if(state != :disabled, title, path,
                  class: "nav-link #{"active" if state == :active}",
-                 "data-probe": "") do
+                 "data-probe": "",
+                 onclick: state == :next ?
+                    "
+                      const form = document.getElementById('order-form');
+                      if (typeof(form) != 'undefined' && form != null) {
+                        form.submit();
+                      }
+                    "
+                    : ""
+                ) do
         if state == :active
           content_tag(:a, title, class: "nav-link", href: "#",
                       onclick: "document.getElementById('order-form').submit();")
