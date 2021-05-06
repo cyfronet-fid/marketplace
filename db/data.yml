@@ -4555,6 +4555,60 @@ services:
             gitlab repos and the ability to invoke functions. Please contact eosc-pan-info@desy.de
             in case of special requests for write access to backend storage, cloud functions from
             new gitlab repositories, events streaming from the dCache backend.
+    "da|ra - DOI Registration Service for social science and economic data":
+      name: &daRaDoiRegistrationServiceForSocialScienceAndEconomicData "da|ra - DOI Registration Service for social science and economic data"
+      parents: *sharingAndDicoveryParent
+      providers: [ *desyProvider ]
+      logo: panFaas.png
+      open_access: false
+      webpage_url: https://eosc-pan-git.desy.de/pan/support/
+      manual_url: https://eosc-pan-git.desy.de/support
+      helpdesk_url: https://eosc-pan-git.desy.de/support
+      training_information_url: https://eosc-pan-git.desy.de
+      terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+      access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
+      geographical_availabilities: *poland
+      language_availability: *english
+      target_users: [ *researchers ]
+      domain: *interdisciplinary
+      #restrictions: *notSpecified
+      trl: *trl_9
+      life_cycle_status: *prod
+      tagline: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      platforms: [ *eoscPan ]
+      description: |
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lacinia risus velit,
+        in tempus erat interdum vel. Suspendisse elit metus, lobortis et felis a,
+        tristique rhoncus erat. Vestibulum varius egestas arcu sit amet rhoncus. Sed sem ligula,
+        faucibus ac felis eu, blandit elementum velit. Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit. Etiam at condimentum diam. Cras sed arcu nisl.
+      offers:
+        1:
+          name: Test 1
+          order_type: open_access
+          description: |
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lacinia risus velit,
+            in tempus erat interdum vel. Suspendisse elit metus, lobortis et felis a,
+            tristique rhoncus erat. Vestibulum varius egestas arcu sit amet rhoncus. Sed sem ligula,
+            faucibus ac felis eu, blandit elementum velit. Lorem ipsum dolor sit amet,
+            consectetur adipiscing elit. Etiam at condimentum diam. Cras sed arcu nisl.
+        2:
+          name: Test 2
+          description: |
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lacinia risus velit,
+            in tempus erat interdum vel. Suspendisse elit metus, lobortis et felis a,
+            tristique rhoncus erat. Vestibulum varius egestas arcu sit amet rhoncus. Sed sem ligula,
+            faucibus ac felis eu, blandit elementum velit. Lorem ipsum dolor sit amet,
+            consectetur adipiscing elit. Etiam at condimentum diam. Cras sed arcu nisl.
+        3:
+          name: Test 3
+          description: |
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lacinia risus velit,
+            in tempus erat interdum vel. Suspendisse elit metus, lobortis et felis a,
+            tristique rhoncus erat. Vestibulum varius egestas arcu sit amet rhoncus. Sed sem ligula,
+            faucibus ac felis eu, blandit elementum velit. Lorem ipsum dolor sit amet,
+            consectetur adipiscing elit. Etiam at condimentum diam. Cras sed arcu nisl.
     PAN notebook:
       name: &panNotebook PaN notebook
       parents: *computeParent
