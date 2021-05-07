@@ -35,11 +35,26 @@ class Importers::Logo
       logo_content_type = "image/png"
     end
     if !logo.blank? && logo_content_type.start_with?("image")
-      @object.logo.attach(io: logo, filename: @object.pid, content_type: logo_content_type)
+      filename = @object.pid.blank? ? "logo_" + to_slug(@object.name) : @object.pid
+      @object.logo.attach(io: logo, filename: filename + extension, content_type: logo_content_type)
     end
   rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError => e
     Rails.logger.warn "ERROR - there was a problem processing image for #{@object.pid} #{@image_url}: #{e}"
   rescue => e
     Rails.logger.warn "ERROR - there was a unexpected problem processing image for #{@object.pid} #{@image_url}: #{e}"
   end
+
+  private
+    def to_slug(ret)
+      ret.downcase!.strip!
+        .gsub!(/['`]/, "")
+        .gsub!(/\s*@\s*/, " at ")
+        .gsub!(/\s*&\s*/, " and ")
+        .gsub!(/\s*[^A-Za-z0-9.-]\s*/, "-")
+        .gsub!(/_+/, "_")
+        .gsub!(/\A[_.]+|[_.]+\z/, "")
+        .gsub!(/-+/, "-")
+        .gsub!(/-$/, "")
+      ret
+    end
 end
