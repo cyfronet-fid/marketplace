@@ -65,7 +65,7 @@
                 target: :_blank, "data-probe": "" }
                 = _("Edit resource details")
             %li
-              %a.dropdown-item.dropdown-offers{ href: "/" }
+              %a.dropdown-item.dropdown-offers{ href: service_ordering_configuration_path(service, anchor: "offers") }
                 = _("Set parameters and offers")
       %span.ordertype-label
         %i{ class: "ordertype #{order_type(service)}" }
