@@ -2390,6 +2390,14 @@ label[data-multicheckbox].small {
   -moz-border-radius: 5px;
   border-radius: 5px;
 
+  &.backoffice {
+    .btn-outline-secondary {
+      &:after {
+        display: none;
+      }
+    }
+  }
+
   .access-type {
     font-size: 0.8em;
     padding: 7px 14px;

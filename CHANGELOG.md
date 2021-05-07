@@ -8,6 +8,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Resource provider can navigate to the Provider Component from the Resource Presentation Page (@kmarszalek, @jarekzet)
 - Resource provider can navigate to the ordering parameters management from the Resource Presentation Page (@kmarszalek, @jarekzet)
 
 ### Changed
