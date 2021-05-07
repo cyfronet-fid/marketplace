@@ -27,14 +27,6 @@ module ProviderHelper
     fields.map { |f| record.send(f) }.any? { |v| v.present? }
   end
 
-  def provider_logo(provider, classes = "align-self-center mr-4 float-left img-responsive", resize = "100x67")
-    if provider.logo.attached? && provider.logo.variable?
-      image_tag provider.logo.variant(resize: resize), class: classes
-    else
-      image_pack_tag("eosc-img.png", size: resize, class: classes)
-    end
-  end
-
   def field_tree(service, field)
     parents = service.send(field).map { |f| f.parent.blank? ? f : f.parent }
     Hash[parents.map { |parent| [parent.name, (parent.children & service.send(field)).map(&:name)] } ]
