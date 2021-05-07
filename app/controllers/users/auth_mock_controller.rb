@@ -16,6 +16,7 @@ class Users::AuthMockController < ApplicationController
       "#{params[:password]}#{nil}",
       cost: 11
     ).to_s
+
     @user = User.find_by(
       email: params[:email],
       encrypted_password: encrypted_password,

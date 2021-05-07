@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Change img background at /backoffice/providers/<id> from black to transparent on resize (@danielkryska)
 - Add error note on a scientific domain with services deletion (@danielkryska)
 - Change error message at order summary to general - better UX (@danielkryska)
 - Mail delivery for orderable offers (@jswk)
