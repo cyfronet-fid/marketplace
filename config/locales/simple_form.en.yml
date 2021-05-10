@@ -54,6 +54,9 @@ en:
       provider:
         esfri_types: ESFRI Type
         esfri_domains: ESFRI Domains
+      offer:
+        internal: Use EOSC Portal as an order management platform
+        order_url: Order / access URL
     #   defaults:
     #     password: 'Password'
     #   user:
@@ -110,9 +113,6 @@ en:
         company_website_url: |
           Url should start with http or https [e.g. http://webpage.org]
       offer:
-        webpage: |
-          Url should start with http or https [e.g. http://webpage.org].
-          This url will be available on service order information step
         order_url: |
           Url should start with http or https [e.g. http://webpage.org].
           This url will be available on service order information step

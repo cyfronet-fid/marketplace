@@ -3,14 +3,17 @@ import initChoises from "../choises";
 
 export default class extends Controller {
   static targets = ["parameters", "webpage", "external",
-                    "attributes", "button", "attributeType"];
+                    "attributes", "button", "attributeType",
+                    "orderType", "internal", "primaryOms",
+                    "internalWrapper", "orderUrlWrapper", "primaryOmsWrapper",
+                    "omsParamsContainer"];
 
   initialize() {
-    // this.showWebpage();
     this.indexCounter = 0;
     if (this.attributesTarget.firstElementChild) {
       this.attributesTarget.classList.add("active");
     }
+    this.updateVisibility();
   }
 
   add(event) {
@@ -77,13 +80,33 @@ export default class extends Controller {
     }
   }
 
-  // showWebpage(event){
-  //   const offerType = this.offerTypeTarget.value
-  //   const external = this.externalTarget.checked
-  //   if (offerType !== "order_required" || external ){
-  //     this.webpageTarget.classList.remove("hidden-fields");
-  //   } else {
-  //     this.webpageTarget.classList.add("hidden-fields");
-  //   }
-  // }
+  updateVisibility() {
+    function doShowOrDisable(el, show) {
+      if (show) {
+        el.classList.remove("hidden-fields");
+      } else {
+        el.classList.add("hidden-fields");
+      }
+      el.querySelectorAll("input, select").forEach(el => {
+        if (show) {
+          el.removeAttribute("disabled");
+        } else {
+          el.setAttribute("disabled", "disabled");
+        }
+      });
+    }
+
+    const isOrderRequired = this.orderTypeTarget.value === "order_required";
+    const isInternal = this.internalTarget.checked;
+    doShowOrDisable(this.internalWrapperTarget, isOrderRequired);
+    doShowOrDisable(this.orderUrlWrapperTarget, isOrderRequired && !isInternal);
+    doShowOrDisable(this.primaryOmsWrapperTarget, isOrderRequired && isInternal);
+
+    const selectedId = this.primaryOmsTarget.value;
+    const shouldShow = (isOrderRequired && isInternal && !!selectedId) ?
+        (el) => el.getAttribute("data-oms-id") === selectedId : () => false;
+    this.omsParamsContainerTarget.querySelectorAll("[data-oms-id]").forEach(el => {
+      doShowOrDisable(el, shouldShow(el));
+    });
+  }
 }
