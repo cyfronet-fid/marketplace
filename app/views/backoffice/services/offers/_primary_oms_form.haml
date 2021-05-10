@@ -1,0 +1,17 @@
+= form.input :primary_oms_id, collection: available_omses,
+  value_method: :id,
+  label_method: :name,
+  include_blank: false,
+  wrapper_html: { "data-target": "ordering.primaryOmsWrapper" },
+  input_html: { "data-target": "ordering.primaryOms",
+                "data-action": "ordering#updateVisibility",
+                class: "form-control-lg col-lg-6" }
+%div{ "data-target": "ordering.omsParamsContainer" }
+  = form.simple_fields_for Offer::OMSParams.new(offer.oms_params) do |field|
+    - available_omses.each do |oms|
+      - oms.custom_params&.each do |param, param_options|
+        - is_missing = param_options["mandatory"] && offer.errors[:oms_params].present? && offer.oms_params[param].blank?
+        = field.input param,
+          required: param_options["mandatory"],
+          wrapper_html: { "data-oms-id": oms.id },
+          input_html: { class:  is_missing ? "is-invalid" : "" }
