@@ -8,10 +8,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- OMS configuration on offer creation and update (@jswk)
 - Resource provider can navigate to the Provider Component from the Resource Presentation Page (@kmarszalek, @jarekzet)
 - Resource provider can navigate to the ordering parameters management from the Resource Presentation Page (@kmarszalek, @jarekzet)
 
 ### Changed
+- More consistent form behaviour for ordering configuration (@jswk)
 
 ### Deprecated
 
