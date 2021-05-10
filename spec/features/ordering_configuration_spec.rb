@@ -101,5 +101,78 @@ RSpec.feature "Services in ordering_configuration panel" do
       expect(page).to have_content("Offer removed successfully")
       expect(service.offers.size).to eq(1)
     end
+
+    scenario "I can edit offer OMS", js: true do
+      oms1 = create(:oms, name: "OMS1", custom_params: { "foo": { "mandatory": true, "default": "baz" } })
+      oms2 = create(:oms, name: "OMS2", custom_params: {})
+      service = create(:service, name: "my service", resource_organisation: provider, status: :draft)
+      offer = create(:offer, name: "offer1", description: "desc", service: service, internal: false)
+      create(:offer, service: service)
+
+      service.reload
+
+      visit service_ordering_configuration_path(service)
+      first(".btn.btn-outline-secondary.font-weight-bold").click
+
+      check "Use EOSC Portal as the order management platform"
+      select "OMS1", from: "Order Management System"
+      click_on "Update Offer"
+
+      offer.reload
+      expect(offer.internal).to be_falsey
+
+      fill_in "Foo", with: "bar"
+      click_on "Update Offer"
+
+      offer.reload
+      expect(offer.internal).to be_truthy
+      expect(offer.primary_oms).to eq(oms1)
+      expect(offer.oms_params).to eq({ "foo" => "bar" })
+
+      first(".btn.btn-outline-secondary.font-weight-bold").click
+
+      select "OMS2", from: "Order Management System"
+      click_on "Update Offer"
+
+      offer.reload
+      expect(offer.primary_oms).to eq(oms2)
+      expect(offer.oms_params).to eq({})
+    end
+
+    scenario "I can edit default offer OMS", js: true do
+      oms1 = create(:oms, name: "OMS1", custom_params: { "foo": { "mandatory": true, "default": "baz" } })
+      oms2 = create(:oms, name: "OMS2", custom_params: {})
+      service = create(:service, name: "my service", resource_organisation: provider, status: :draft)
+      offer = create(:offer, name: "offer1", description: "desc", service: service, internal: false)
+
+      service.reload
+
+      visit service_ordering_configuration_path(service)
+      first(".btn.btn-outline-secondary.font-weight-bold").click
+
+      check "Use EOSC Portal as the order management platform"
+      select "OMS1", from: "Order Management System"
+      click_on "Update Offer"
+
+      offer.reload
+      expect(offer.internal).to be_falsey
+
+      fill_in "Foo", with: "bar"
+      click_on "Update Offer"
+
+      offer.reload
+      expect(offer.internal).to be_truthy
+      expect(offer.primary_oms).to eq(oms1)
+      expect(offer.oms_params).to eq({ "foo" => "bar" })
+
+      first(".btn.btn-outline-secondary.font-weight-bold").click
+
+      select "OMS2", from: "Order Management System"
+      click_on "Update Offer"
+
+      offer.reload
+      expect(offer.primary_oms).to eq(oms2)
+      expect(offer.oms_params).to eq({})
+    end
   end
 end

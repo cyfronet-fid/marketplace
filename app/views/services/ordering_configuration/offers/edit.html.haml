@@ -1,6 +1,8 @@
 - content_for :title, _("Edit Offer")
 .container
-  %h2= _("Edit Offer")
+  .mb-4.pb-4.border-header
+    %h1= _("Edit offer")
+
   - if @service.offers.size == 1
     = render "backoffice/services/offers/one_offer_edit_form",
       offer: @offer,
