@@ -16,23 +16,62 @@ class Users::AuthMockController < ApplicationController
       "#{params[:password]}#{nil}",
       cost: 11
     ).to_s
-
-    @user = User.find_by(
+    user = User.find_by(
       email: params[:email],
       encrypted_password: encrypted_password,
       last_name: params[:first_name],
       first_name: params[:last_name]
     )
-    if @user.blank?
-      @user = User.new(
+    if user.blank?
+      user = User.new(
         email: params[:email],
         last_name: params[:first_name],
         first_name: params[:last_name],
         uid: SecureRandom.uuid,
         encrypted_password: encrypted_password
       )
-      @user.save
+      unless params[:roles].blank?
+        user.roles = params[:roles].map(&:to_sym)
+      end
+      user.save!
+
+      unless params[:admin_providers_services].blank?
+        add_data_admin_privilege_to(user, params[:admin_providers_services])
+      end
     end
-    sign_in @user, event: :authentication
+    sign_in user, event: :authentication
+  end
+
+  private def add_data_admin_privilege_to(user, admin_providers_services)
+    user_details = {
+      email: user.email,
+      last_name: user.first_name,
+      first_name: user.last_name
+    }
+    data_admin = DataAdministrator.new(user_details)
+    data_admin.save!
+
+    admin_providers_services.each do |provider_services|
+      provider = Provider.where(name: provider_services[:provider_name]).first
+      if provider.blank?
+        next
+      end
+
+      provider.data_administrators = provider.data_administrators.blank? ?
+                                       [data_admin] :
+                                       provider.data_administrators << data_admin
+
+      provider.save!
+
+      provider_services[:services_slugs].each do |service_slug|
+        service = Service.where(slug: service_slug).first
+        if service.blank?
+          next
+        end
+
+        service.resource_organisation = provider
+        service.save!
+      end
+    end
   end
 end
