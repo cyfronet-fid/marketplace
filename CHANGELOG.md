@@ -17,12 +17,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 
-## [3.11.1]
+## [3.11.1] 2021-05-11
 
 ### Changed
 - Upgrade rails to 6.0.3.7 (@jswk)
 
-## [3.11.0]
+## [3.11.0] 2021-04-29
 
 ### Added
 - Reference API for MP orders handling (@wujuu, @jswk)
