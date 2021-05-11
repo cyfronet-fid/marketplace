@@ -22,7 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Change error message at order summary to general - better UX (@danielkryska)
 - Mail delivery for orderable offers (@jswk)
 
-## [3.11.1]
+## [3.11.1] 2021-05-11
 
 ### Changed
 - Upgrade rails to 6.0.3.7 (@jswk)
