@@ -1,4 +1,4 @@
-= simple_form_for offer_form_source_module, html: { "data-controller": "offer" } do |f|
+= simple_form_for offer_form_source_module, html: { "data-controller": "offer ordering" } do |f|
   .col-lg-8.pl-0
     = f.error_notification
     = f.hidden_field :id
@@ -6,28 +6,28 @@
     = f.input :description, input_html: { rows: 10 }
     = f.input :order_type, collection: Offer.order_types.keys.map(&:to_sym),
       selected: (offer.order_type || service.order_type),
-      input_html: { "data-target": "offer.orderType",
-                    "data-action": "offer#updateVisibility",
+      input_html: { "data-target": "ordering.orderType",
+                    "data-action": "ordering#updateVisibility",
                     class: "form-control-lg col-lg-6" }
     = f.input :webpage, label: _("Offer website"), input_html: { class: "form-control-lg" }
     = f.input :internal,
-      wrapper_html: { "data-target": "offer.internalWrapper" },
-      input_html: { "data-target": "offer.internal",
-                    "data-action": "offer#updateVisibility",
+      wrapper_html: { "data-target": "ordering.internalWrapper" },
+      input_html: { "data-target": "ordering.internal",
+                    "data-action": "ordering#updateVisibility",
                     "checked": true }
     = f.input :order_url,
       required: true,
-      wrapper_html: { "data-target": "offer.orderUrlWrapper" },
+      wrapper_html: { "data-target": "ordering.orderUrlWrapper" },
       input_html: { class: "form-control-lg" }
     = f.input :primary_oms_id, collection: service.available_omses,
       value_method: :id,
       label_method: :name,
       include_blank: false,
-      wrapper_html: { "data-target": "offer.primaryOmsWrapper" },
-      input_html: { "data-target": "offer.primaryOms",
-                    "data-action": "offer#updateVisibility",
+      wrapper_html: { "data-target": "ordering.primaryOmsWrapper" },
+      input_html: { "data-target": "ordering.primaryOms",
+                    "data-action": "ordering#updateVisibility",
                     class: "form-control-lg col-lg-6" }
-    %div{ "data-target": "offer.omsParamsContainer" }
+    %div{ "data-target": "ordering.omsParamsContainer" }
       = f.simple_fields_for Offer::OMSParams.new(offer.oms_params) do |field|
         - service.available_omses.each do |oms|
           - oms.custom_params&.each do |param, param_options|
