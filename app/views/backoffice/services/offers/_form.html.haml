@@ -15,7 +15,6 @@
       input_html: { "data-target": "ordering.internal",
                     "data-action": "ordering#updateVisibility" }
     = f.input :order_url,
-      required: true,
       wrapper_html: { "data-target": "ordering.orderUrlWrapper" },
       input_html: { class: "form-control-lg" }
     = f.input :primary_oms_id, collection: service.available_omses,
@@ -30,9 +29,11 @@
       = f.simple_fields_for Offer::OMSParams.new(offer.oms_params) do |field|
         - service.available_omses.each do |oms|
           - oms.custom_params&.each do |param, param_options|
+            - is_missing = param_options["mandatory"] && offer.errors[:oms_params].present? && offer.oms_params[param].blank?
             = field.input param,
               required: param_options["mandatory"],
-              wrapper_html: { "data-oms-id": oms.id }
+              wrapper_html: { "data-oms-id": oms.id },
+              input_html: { class:  is_missing ? "is-invalid" : "" }
 
   %h4.mt-5.mb-0.text-uppercase
     = _("Offer parameters")

@@ -41,6 +41,7 @@ class Offer < ApplicationRecord
 
   before_validation :set_internal
   before_validation :set_oms_details
+  before_validation :sanitize_oms_params
 
   validate :set_iid, on: :create
   validates :service, presence: true
@@ -87,7 +88,7 @@ class Offer < ApplicationRecord
           oms_params.blank? ? errors.add(:oms_params, "can't be blank") : oms_params_match?
         end
       else
-        errors.add(:oms_params, "must be blank if primary oms' custom params are blank") if oms_params.present?
+        errors.add(:oms_params, "must be blank if primary OMS' custom params are blank") if oms_params.present?
       end
     end
 
@@ -113,6 +114,12 @@ class Offer < ApplicationRecord
       unless self.internal?
         self.primary_oms = nil
         self.oms_params = nil
+      end
+    end
+
+    def sanitize_oms_params
+      if oms_params.present?
+        oms_params.select! { |_, v| v.present? }
       end
     end
 end
