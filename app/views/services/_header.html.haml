@@ -61,6 +61,12 @@
             %li
               %a.dropdown-item.dropdown-details{ href:
                 Mp::Application.config.providers_dashboard_url +
+                "/resource-dashboard/#{resource_organisation_pid(service)}/#{service.pid}/stats",
+                target: :_blank, "data-probe": "" }
+                = _("Resource dashboard")
+            %li
+              %a.dropdown-item.dropdown-details{ href:
+                Mp::Application.config.providers_dashboard_url +
                 "/provider/#{resource_organisation_pid(service)}/resource/update/#{service.pid}",
                 target: :_blank, "data-probe": "" }
                 = _("Edit resource details")
