@@ -31,10 +31,19 @@ export default class extends Controller {
       });
     }
 
-    const isOrderRequired = this.orderTypeTarget.value === "order_required";
+    const isOrderRequired =
+        // The undefined case is that of a default offer with order_type=order_required,
+        // for order_type!=order_required this controller shouldn't be registered at all.
+        !this.hasOrderTypeTarget ||
+        this.orderTypeTarget.value === "order_required";
     const isInternal = this.internalTarget.checked;
+
     doShowOrDisable(this.internalWrapperTarget, isOrderRequired);
-    doShowOrDisable(this.orderUrlWrapperTarget, !(isOrderRequired && isInternal));
+
+    if (this.hasOrderUrlWrapperTarget) {
+      doShowOrDisable(this.orderUrlWrapperTarget, !(isOrderRequired && isInternal));
+    }
+
     doShowOrDisable(this.primaryOmsWrapperTarget, isOrderRequired && isInternal);
 
     const selectedId = this.primaryOmsTarget.value;

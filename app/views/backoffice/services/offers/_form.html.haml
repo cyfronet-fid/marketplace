@@ -1,5 +1,5 @@
-= simple_form_for offer_form_source_module, html: { "data-controller": "offer ordering" } do |f|
-  .col-lg-8.pl-0
+= simple_form_for offer_form_source_module, html: { "data-controller": "offer" } do |f|
+  .col-lg-8.pl-0{ "data-controller": "ordering" }
     = f.error_notification
     = f.hidden_field :id
     = f.input :name, input_html: { class: "form-control-lg" }
