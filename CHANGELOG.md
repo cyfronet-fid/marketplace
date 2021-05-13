@@ -22,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Offer webpage field (@jswk)
 
 ### Fixed
+- Improve consistency of exemplary domains in form hints (@jswk)
 - Change img background at /backoffice/providers/<id> from black to transparent on resize (@danielkryska)
 - Add error note on a scientific domain with services deletion (@danielkryska)
 - Change error message at order summary to general - better UX (@danielkryska)

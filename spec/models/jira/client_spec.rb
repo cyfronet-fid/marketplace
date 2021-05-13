@@ -94,7 +94,7 @@ describe Jira::Client do
                           offer: create(:open_access_offer,
                                         name: "off1",
                                         service: create(:open_access_service,
-                                                        order_target: "email@domain.com",
+                                                        order_target: "email@example.com",
                                                         name: "s1",
                                                         categories: [create(:category, name: "cat1")])),
                           project: create(:project, user: user,
@@ -118,7 +118,7 @@ describe Jira::Client do
                           "offer" => "off1",
                           "attributes" => {}
                         }.to_json,
-                        "SO-ServiceOrderTarget-1" => "email@domain.com",
+                        "SO-ServiceOrderTarget-1" => "email@example.com",
                         "SO-OfferType-1" => { "id" => "20006" } }
 
 
