@@ -7,7 +7,6 @@ FactoryBot.define do
     sequence(:description) { |n| "offer #{n} description" }
     sequence(:service) { |n| create(:service, offers_count: 1) }
     sequence(:status) { :published }
-    sequence(:webpage) { |n| "http://webpage#{n}.invalid" }
     sequence(:order_type) { :order_required }
     sequence(:internal) { true }
 

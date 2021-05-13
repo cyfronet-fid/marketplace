@@ -16,16 +16,11 @@ module Offerable
     validates :description, presence: true
 
     def external?
-      order_required? && !effective_internal?
+      order_required? && !internal
     end
 
     def orderable?
-      order_required? && effective_internal?
+      order_required? && internal
     end
-
-    private
-      def effective_internal?
-        internal || order_url.blank?
-      end
   end
 end

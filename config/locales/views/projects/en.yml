@@ -14,7 +14,7 @@ en:
     empty_project:
       description_html: |
         <h3>
-          You have no resources </br>
+          You have no resources <br/>
           in this project yet.
         </h3>
         <ul class= "simple-list">

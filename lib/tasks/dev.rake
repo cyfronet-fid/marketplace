@@ -87,7 +87,7 @@ namespace :dev do
                       scientific_domains: domain,
                       providers: providers,
                       order_type: order_type,
-                      order_url: hash["order_url"] || hash["webpage_url"],
+                      order_url: hash["order_url"] || "",
                       resource_organisation: resource_organisation,
                       webpage_url: hash["webpage_url"],
                       manual_url: hash["manual_url"],
@@ -127,11 +127,13 @@ namespace :dev do
 
   def create_offers(service, offers_hash)
     offers_hash && offers_hash.each do |_, h|
+      effective_order_url = h["order_url"] || service.order_url
       service.offers.create!(name: h["name"],
                             description: h["description"],
-                            webpage: h["webpage"],
                             parameters: Parameter::Array.load(h["parameters"] || []),
                             order_type: h["order_type"].blank? ? service.order_type : h["order_type"],
+                            order_url: effective_order_url.present? ? effective_order_url : "",
+                            internal: effective_order_url.blank?,
                             status: :published)
       puts "    - #{h["name"]} offer generated"
     end

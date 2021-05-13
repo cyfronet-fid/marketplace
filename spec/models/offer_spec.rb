@@ -14,21 +14,6 @@ RSpec.describe Offer do
     it { should have_many(:project_items).dependent(:restrict_with_error) }
   end
 
-  context "is open access" do
-    subject { build(:offer, order_type: :open_access) }
-    it { should_not validate_presence_of(:webpage) }
-  end
-
-  context "is external" do
-    subject { build(:offer, order_type: :order_required, order_url: "http://order.com") }
-    it { should_not validate_presence_of(:webpage) }
-  end
-
-  context "is orderable" do
-    subject { build(:offer, order_type: :order_required) }
-    it { should_not validate_presence_of(:webpage) }
-  end
-
   context "OMS dependencies" do
     it "validates properly against primary oms" do
       oms = create(:oms, custom_params: { a: { mandatory: false }, b: { mandatory: true, default: "XD" } })
