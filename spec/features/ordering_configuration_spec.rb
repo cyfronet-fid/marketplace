@@ -114,8 +114,8 @@ RSpec.feature "Services in ordering_configuration panel" do
       visit service_ordering_configuration_path(service)
       first(".btn.btn-outline-secondary.font-weight-bold").click
 
-      check "Use EOSC Portal as an order management platform"
-      select "OMS1", from: "Primary OMS"
+      check "Use EOSC Portal as the order management platform"
+      select "OMS1", from: "Order Management System"
       click_on "Update Offer"
 
       offer.reload
@@ -131,7 +131,7 @@ RSpec.feature "Services in ordering_configuration panel" do
 
       first(".btn.btn-outline-secondary.font-weight-bold").click
 
-      select "OMS2", from: "Primary OMS"
+      select "OMS2", from: "Order Management System"
       click_on "Update Offer"
 
       offer.reload
@@ -150,8 +150,8 @@ RSpec.feature "Services in ordering_configuration panel" do
       visit service_ordering_configuration_path(service)
       first(".btn.btn-outline-secondary.font-weight-bold").click
 
-      check "Use EOSC Portal as an order management platform"
-      select "OMS1", from: "Primary OMS"
+      check "Use EOSC Portal as the order management platform"
+      select "OMS1", from: "Order Management System"
       click_on "Update Offer"
 
       offer.reload
@@ -167,7 +167,7 @@ RSpec.feature "Services in ordering_configuration panel" do
 
       first(".btn.btn-outline-secondary.font-weight-bold").click
 
-      select "OMS2", from: "Primary OMS"
+      select "OMS2", from: "Order Management System"
       click_on "Update Offer"
 
       offer.reload

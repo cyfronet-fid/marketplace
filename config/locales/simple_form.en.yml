@@ -55,8 +55,9 @@ en:
         esfri_types: ESFRI Type
         esfri_domains: ESFRI Domains
       offer:
-        internal: Use EOSC Portal as an order management platform
+        internal: Use EOSC Portal as the order management platform
         order_url: Order / access URL
+        primary_oms_id: Order Management System
     #   defaults:
     #     password: 'Password'
     #   user:
