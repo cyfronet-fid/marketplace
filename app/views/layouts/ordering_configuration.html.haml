@@ -10,5 +10,6 @@
       = render "layouts/ordering_configuration/top"
     %main
       .container
+        = render "layouts/breadcrumb"
         = yield
   = render "layouts/footer", root_categories: @root_categories

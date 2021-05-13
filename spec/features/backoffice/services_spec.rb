@@ -276,11 +276,16 @@ RSpec.feature "Services in backoffice" do
       parameters = service.offers.first.parameters
       parameter = parameters.first
 
+      expect(service.offers.count).to eq(1)
+      service.offers.each do |offer|
+        expect(offer.order_url).to_not eq("http://order.com")
+        expect(offer.order_type).to_not eq("fully_open_access")
+      end
+
       visit backoffice_service_path(service)
       click_on "Edit resource"
 
       fill_in "Name", with: "updated name"
-      fill_in "Webpage url", with: "http://service.com"
       fill_in "Order url", with: "http://order.com"
       select "fully_open_access", from: "Order type"
 
@@ -294,9 +299,8 @@ RSpec.feature "Services in backoffice" do
 
       expect(page).to have_text(offer.parameters.first.name)
 
-      expect(offer.webpage).to eq(service.webpage_url)
-      expect(offer.order_url).to eq(service.order_url)
-      expect(offer.order_type).to eq(service.order_type)
+      expect(offer.order_url).to eq("http://order.com")
+      expect(offer.order_type).to eq("fully_open_access")
 
       expect(offer.parameters.size).to eq(1)
 
@@ -352,8 +356,11 @@ RSpec.feature "Services in backoffice" do
 
       service.reload
 
-      expect(service.offers.last.order_type).to eq("order_required")
-      expect(service.offers.last.webpage).to_not eq("http://google.com")
+      expect(service.offers.count).to eq(1)
+      service.offers.each do |offer|
+        expect(offer.order_type).to eq("order_required")
+        expect(offer.order_url).to_not eq("http://google.com")
+      end
 
       visit backoffice_service_path(service)
 
@@ -367,8 +374,10 @@ RSpec.feature "Services in backoffice" do
       click_on "Update Resource"
 
       service.reload
-      expect(service.offers.first.order_type).to eq(service.order_type)
-      expect(service.offers.first.webpage).to eq(service.webpage_url)
+      service.offers.each do |offer|
+        expect(offer.order_type).to eq("open_access")
+        expect(offer.order_url).to eq("http://google.com")
+      end
     end
 
     scenario "I can see warning about no published offers", js: true do

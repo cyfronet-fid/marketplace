@@ -47,6 +47,7 @@ class Offer < ApplicationRecord
   validates :service, presence: true
   validates :iid, presence: true, numericality: true
   validates :status, presence: true
+  validates :order_url, mp_url: true, if: :order_url?
 
   validate :primary_oms_exists?, if: -> { primary_oms_id.present? }
   validate :proper_oms?, if: -> { primary_oms.present? }

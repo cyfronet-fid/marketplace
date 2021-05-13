@@ -18,10 +18,10 @@ module ProjectItemsHelper
   end
 
   def webpage(project_item)
-    if project_item.external?
-      project_item.order_url
+    if project_item.order_url.blank?
+      project_item.service.webpage_url
     else
-      project_item.webpage
+      project_item.order_url
     end
   end
 
