@@ -85,37 +85,41 @@ en:
         body: Preferred length of description is up to 140 characters
       service:
         training_information_url: |
-          Url should start with http or https [e.g. http://webpage.org]
+          Url should start with http or https [e.g. https://example.com]
         helpdesk_url: |
-          Url should start with http or https [e.g. http://webpage.org]
+          Url should start with http or https [e.g. https://example.com]
         manual_url: |
-          Url should start with http or https [e.g. http://webpage.org]
+          Url should start with http or https [e.g. https://example.com]
         webpage_url: |
-          Url should start with http or https [e.g. http://webpage.org]<br/>
+          Url should start with http or https [e.g. https://example.com]<br/>
           This url will be available under "Webpage" in Support section in the service view
         sla_url: |
-          Url should start with http or https [e.g. http://webpage.org]
+          Url should start with http or https [e.g. https://example.com]
         access_policies_url: |
-          Url should start with http or https [e.g. http://webpage.org]
+          Url should start with http or https [e.g. https://example.com]
         terms_of_use_url: |
-          Url should start with http or https [e.g. http://webpage.org]
+          Url should start with http or https [e.g. https://example.com]
         tag_list: |
           Use "," to separate tags
         order_target: |
-          Email address - eg. email@domain.com
+          Email address [e.g. email@example.com]
         logo: |
           Supported logo formats: png, gif, jpg, jpeg, pjpeg, tiff,
           vnd.adobe.photoshop and vnd.microsoft.icon
         helpdesk_email: |
-          Email address - eg. email@domain.com
+          Email address [e.g. email@example.com]
       project:
+        email: |
+          Email address in your institute's domain [e.g. email@example.com]
         project_website_url: |
-          Url should start with http or https [e.g. http://webpage.org]
+          Url should start with http or https [e.g. https://example.com]
+        webpage: |
+          Url should start with http or https [e.g. https://example.com]
         company_website_url: |
-          Url should start with http or https [e.g. http://webpage.org]
+          Url should start with http or https [e.g. https://example.com]
       offer:
         order_url: |
-          Url should start with http or https [e.g. http://webpage.org].<br/>
+          Url should start with http or https [e.g. https://example.com].<br/>
           Given URL will be used in the offer order/access mechanism - on the resource access information step this URL
           will be used under 'Go to the order website' / 'Go to the resource' button (depending on the offer order
           type). If it isn't specified it will fall back to the resource's webpage URL.
