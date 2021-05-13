@@ -22,4 +22,11 @@ namespace :import do
                           filepath: ENV["OUTPUT"],
                           token: ENV["MP_IMPORT_TOKEN"]).call
   end
+
+  task vocabularies: :environment do
+    Import::Vocabularies.new(ENV["MP_IMPORT_EIC_URL"] || "https://beta.providers.eosc-portal.eu/api",
+                             dry_run: ENV["DRY_RUN"] || false,
+                             filepath: ENV["OUTPUT"],
+                             token: ENV["MP_IMPORT_TOKEN"]).call
+  end
 end
