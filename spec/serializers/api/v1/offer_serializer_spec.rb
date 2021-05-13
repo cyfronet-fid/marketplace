@@ -29,7 +29,6 @@ RSpec.describe Api::V1::OfferSerializer do
         }
       ],
       order_type: offer.order_type,
-      webpage: offer.webpage,
       order_url: offer.order_url,
       internal: true,
       primary_oms_id: offer.primary_oms.id,
@@ -59,7 +58,6 @@ RSpec.describe Api::V1::OfferSerializer do
         }
       ],
       order_type: offer.order_type,
-      webpage: offer.webpage,
       order_url: offer.order_url,
       internal: false
     }
@@ -80,7 +78,6 @@ RSpec.describe Api::V1::OfferSerializer do
       description: offer.description,
       order_type: offer.order_type,
       parameters: [],
-      webpage: offer.webpage,
       order_url: offer.order_url
     }
 

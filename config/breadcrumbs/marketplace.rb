@@ -32,6 +32,16 @@ crumb :ordering_configuration do |service|
   parent :service, service
 end
 
+crumb :ordering_configuration_offer_new do |service|
+  link "New", new_service_ordering_configuration_offer_path(service)
+  parent :ordering_configuration, service
+end
+
+crumb :ordering_configuration_offer_edit do |offer|
+  link "Edit", edit_service_ordering_configuration_offer_path(offer)
+  parent :ordering_configuration, offer.service
+end
+
 crumb :resource_details do |service|
   link "Details", service_details_path(service)
   if params[:from]

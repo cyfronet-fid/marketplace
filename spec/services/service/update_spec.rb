@@ -15,10 +15,7 @@ RSpec.describe Service::Update do
     service = create(:service, offers: [create(:offer)])
     offer = service.offers.first
 
-
-
     described_class.new(service, name: "new name",
-                        webpage_url: "http://service.valid",
                         order_url: "http://order.valid",
                         order_type: "fully_open_access").call
 
@@ -26,7 +23,6 @@ RSpec.describe Service::Update do
 
     expect(offer.order_type).to eq("fully_open_access")
     expect(offer.order_url).to eq("http://order.valid")
-    expect(offer.webpage).to eq("http://service.valid")
     expect(offer.status).to eq("published")
   end
 
@@ -36,7 +32,6 @@ RSpec.describe Service::Update do
     expect(service.offers.size).to eq(0)
 
     described_class.new(service, name: "new name",
-                        webpage_url: "http://service.valid",
                         order_url: "http://order.valid",
                         order_type: "fully_open_access").call
 
@@ -48,7 +43,6 @@ RSpec.describe Service::Update do
 
     expect(offer.order_type).to eq("fully_open_access")
     expect(offer.order_url).to eq("http://order.valid")
-    expect(offer.webpage).to eq("http://service.valid")
     expect(offer.status).to eq("published")
   end
 end

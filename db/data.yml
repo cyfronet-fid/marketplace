@@ -1927,7 +1927,7 @@ services:
           1:
             name: GEOSS Portal
             description: *notSpecified
-            webpage: http://geosspublish.uat.esaportal.eu/knowledge-producer
+            order_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
     GEO DAB:
         name: &geossDab GEO DAB
         parents: *sharingAndDicoveryParent
@@ -1969,7 +1969,7 @@ services:
           1:
             name: GEOSS DAB
             description: *notSpecified
-            webpage: http://www.geodab.net
+            order_url: http://www.geodab.net
     VLO:
         name: &vloService Virtual Language Observatory
         parents: *sharingAndDicoveryParent
@@ -2083,7 +2083,7 @@ services:
             name: LRS
             description: |
               A web application that suggests language analysis tools for specific data sets.
-            webpage: https://switchboard.clarin.eu/
+            order_url: https://switchboard.clarin.eu/
     VCR:
         name: &vcrService Virtual Collection Registry
         parents: *sharingAndDicoveryParent
@@ -3066,7 +3066,7 @@ services:
           1:
             name: New Particle Formation Event Analysis
             description: *notSpecified
-            webpage: https://services.d4science.org/web/particleformation/
+            order_url: https://services.d4science.org/web/particleformation/
     ENES Climate Analytics Service:
         name: &enes ENES Climate Analytics Service
         parents: *processingAndAnalysisParent
@@ -3449,7 +3449,7 @@ services:
               and life science area into a virtual research community at a worldwide level and provide them
               with a platform integrating and streamlining the computational approaches
               necessary for data analysis and modelling.
-            webpage: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
+            order_url: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
     PowerFit:
         name: &powerFit PowerFit
         parents: *processingAndAnalysisParent
@@ -3478,7 +3478,7 @@ services:
         offers:
           1:
             <<: *wenMRService
-            webpage: http://haddock.science.uu.nl/enmr/services/POWERFIT
+            order_url: http://haddock.science.uu.nl/enmr/services/POWERFIT
     DisVis:
         name: &disVis DisVis
         parents: *processingAndAnalysisParent
@@ -3509,7 +3509,7 @@ services:
         offers:
           1:
             <<: *wenMRService
-            webpage: http://haddock.science.uu.nl/enmr/services/DISVIS
+            order_url: http://haddock.science.uu.nl/enmr/services/DISVIS
     CS-ROSETTA:
         name: &csRoseta CS-ROSETTA
         parents: *processingAndAnalysisParent
@@ -3539,7 +3539,7 @@ services:
         offers:
           1:
             <<: *wenMRService
-            webpage: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
+            order_url: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
     AMBER:
         name: &amber AMBER
         parents: *processingAndAnalysisParent
@@ -3575,7 +3575,7 @@ services:
         offers:
           1:
             <<: *wenMRService
-            webpage: http://py-enmr.cerm.unifi.it/access/index
+            order_url: http://py-enmr.cerm.unifi.it/access/index
     FANTEN:
         name: &fanten FANTEN
         parents: *processingAndAnalysisParent
@@ -3607,7 +3607,7 @@ services:
         offers:
           1:
             <<: *wenMRService
-            webpage: http://abs.cerm.unifi.it:8080
+            order_url: http://abs.cerm.unifi.it:8080
     SpotOn:
         name: &spotOn SpotOn
         parents: *processingAndAnalysisParent
@@ -3637,7 +3637,7 @@ services:
         offers:
           1:
             <<: *wenMRService
-            webpage: https://haddock.science.uu.nl/enmr/services/SPOTON
+            order_url: https://haddock.science.uu.nl/enmr/services/SPOTON
     GEP - HRCM:
         name: &gepHRCM GEP - High-Resolution Change Monitoring for the Alpine Region
         parents: *processingAndAnalysisParent
@@ -3671,7 +3671,7 @@ services:
             1:
                 name: GEP Portal
                 description: description
-                webpage: https://geohazards-tep.eo.esa.int/
+                order_url: https://geohazards-tep.eo.esa.int/
     GEP - EO:
         name: &gepEO GEP - EO Services for Earthquake Response and Landslides Analysis
         parents: *sharingAndDicoveryParent
@@ -3703,7 +3703,7 @@ services:
             1:
                 name: GEP Portal
                 description: description
-                webpage: https://geohazards-tep.eo.esa.int/#!
+                order_url: https://geohazards-tep.eo.esa.int/#!
 
     EODC JupyterHub for global Copernicus data:
         name: &eodcJH EODC JupyterHub for global Copernicus data
@@ -3738,7 +3738,7 @@ services:
             name: JupyterHub
             description: |
               EODC JupyterHub provides access to the global EODC Copernicus Data Archive.
-            webpage: https://jupyterhub.eodc.eu
+            order_url: https://jupyterhub.eodc.eu
 #              Eliminate the barrier to get access to and to start to develop algorithms in view of remote sensing data.
 #              Full access to EODC Copernicus satellite data archive.
 #              No need to setup a VM to access data archive.Simple python dev. environment.
@@ -3802,7 +3802,7 @@ services:
             name: EODC Data Catalogue Service
             description: |
               Catalog Service for the Web (CSW)
-            webpage: https://csw.eodc.eu
+            order_url: https://csw.eodc.eu
     Sentinel hub:
         name: &sentinelHub Sentinel Hub
         parents: *sharingAndDicoveryParent
@@ -3954,7 +3954,7 @@ services:
                 name: Cloudferro
                 description: |
                     cloudferro
-                webpage: https://discovery.creodias.eu/dataset
+                order_url: https://discovery.creodias.eu/dataset
     CloudFerro Infrastructure:
         name: &cfi CloudFerro Infrastructure
         parents: [*computeParent, *storageParent, *processingAndAnalysisParent]
@@ -3994,7 +3994,7 @@ services:
                 name: Cloudferro2
                 description: |
                     cloudferro
-                webpage: https://creodias.eu
+                order_url: https://creodias.eu
     Cloudferro Data related Services - EO Finder:
         name: &cfdrsEOF Cloudferro Data related Services - EO Finder
         parents: [*dataManagementParent]
@@ -4026,7 +4026,7 @@ services:
                 name: Cloudferro3
                 description: |
                     cloudferro
-                webpage: https://finder.creodias.eu/www
+                order_url: https://finder.creodias.eu/www
     Cloudferro Data related Services - EO browser:
         name: &cfdrsEOB Cloudferro Data related Services - EO browser
         parents: *dataManagementParent
@@ -4069,7 +4069,7 @@ services:
                 name: Cloudferro4
                 description: |
                     cloudferro
-                webpage: https://browser.creodias.eu
+                order_url: https://browser.creodias.eu
     Check-in:
         name: &checkIn EGI Check-in
         parents: *securityAndOperationsParent
@@ -4412,7 +4412,7 @@ services:
         1:
           name: General access
           description: "a"
-          webpage: https://services.d4science.org/web/alienandinvasivespecies
+          order_url: https://services.d4science.org/web/alienandinvasivespecies
 
 #    OpenAIRE:
 #      name: &openAIRE OpenAIRE
