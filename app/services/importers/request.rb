@@ -19,15 +19,16 @@ class Importers::Request
 
   private
     def all
+      command = @suffix == "vocabulary/byType" ? nil : "all?quantity=10000&from=0"
       unless @token.blank?
         http_response = RestClient::Request.execute(method: :get,
-                                                    url: "#{@eic_base_url}/#{@suffix}/all?quantity=10000&from=0",
+                                                    url: "#{@eic_base_url}/#{@suffix}/#{command}",
                                                     headers: { Accept: "application/json",
                                                                Authorization: "Bearer #{@token}" })
 
         Unirest::HttpResponse.new(http_response)
       else
-        @unirest.get("#{@eic_base_url}/#{@suffix}/all?quantity=10000&from=0",
+        @unirest.get("#{@eic_base_url}/#{@suffix}/#{command}",
                      headers: { "Accept" => "application/json" })
       end
     end

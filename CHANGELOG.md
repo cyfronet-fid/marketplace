@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - OMS configuration on offer creation and update (@jswk)
+- Possibility to import vocabularies via PC REST API (@goreck888) 
 
 ### Changed
 - Remove order target field from Resource. It is configurable on Offer only now (@jswk)
