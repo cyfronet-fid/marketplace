@@ -62,9 +62,9 @@ def rename_img(attachment, filename)
     attachment.attach(io: logo, filename: filename + extension, content_type: logo_content_type)
   end
 rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError => e
-  Rails.logger.warn "ERROR - there was a problem processing image for #{@object.pid} #{@image_url}: #{e}"
+  Rails.logger.warn "ERROR - there was a problem processing image for #{filename} #{url_for(attachment)}: #{e}"
 rescue => e
-  Rails.logger.warn "ERROR - there was a unexpected problem processing image for #{@object.pid} #{@image_url}: #{e}"
+  Rails.logger.warn "ERROR - there was a unexpected problem processing image for #{filename} #{url_for(attachment)}: #{e}"
 end
 
 def should_rename(attachment)
