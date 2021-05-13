@@ -563,6 +563,9 @@ ActiveRecord::Schema.define(version: 2021_05_18_101302) do
     t.datetime "updated_at", null: false
     t.text "description"
     t.text "eid"
+    t.string "ancestry"
+    t.integer "ancestry_depth", default: 0
+    t.index ["ancestry"], name: "index_target_users_on_ancestry"
   end
 
   create_table "tour_feedbacks", force: :cascade do |t|
