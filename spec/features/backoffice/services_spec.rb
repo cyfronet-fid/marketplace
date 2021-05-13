@@ -78,7 +78,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Training information url", with: "https://sample.url"
       fill_in "Restrictions", with: "Reaserch affiliation needed"
       fill_in "Activate message", with: "Welcome!!!"
-      fill_in "Resource Order Target", with: "email@domain.com"
+      fill_in "Resource Order Target", with: "email@example.com"
       fill_in "service_certifications_0", with: "ISO-639"
       fill_in "service_standards_0", with: "standard"
       fill_in "service_open_source_technologies_0", with: "opensource"
@@ -100,7 +100,7 @@ RSpec.feature "Services in backoffice" do
                .and change { Offer.count }.by(1)
 
 
-      expect(user.owned_services.last.order_target).to eq("email@domain.com")
+      expect(user.owned_services.last.order_target).to eq("email@example.com")
 
       expect(page).to have_content("service name")
       expect(page).to have_content("service description")

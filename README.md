@@ -191,7 +191,7 @@ configuring JIRA collector in JIRA instance. Sample declaration of this variable
 Note the space separating both scripts sources
 
 ```
-JIRA_COLLECTOR_SCRIPTS="https://jira.domain.com/s/xxx-CDN/xx/00/xxx/x.x.x.x/_/download/batch/com.atlassian.plugins.jquery:jquery/com.atlassian.plugins.jquery:jquery.js?collectorId=00000 https://jira.domain.com/s/xxx/xxx/0/xxx/x.x.x/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-UK&collectorId=yyyyy"
+JIRA_COLLECTOR_SCRIPTS="https://jira.example.com/s/xxx-CDN/xx/00/xxx/x.x.x.x/_/download/batch/com.atlassian.plugins.jquery:jquery/com.atlassian.plugins.jquery:jquery.js?collectorId=00000 https://jira.example.com/s/xxx/xxx/0/xxx/x.x.x/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-UK&collectorId=yyyyy"
 ```
 
 ## Sentry integration
