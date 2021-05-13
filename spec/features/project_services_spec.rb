@@ -22,25 +22,31 @@ RSpec.feature "Project services" do
     expect(page).to have_link("Details")
   end
 
-  [:open_access, :external].each do |type|
-    scenario "I cannot see timeline for #{type} order" do
-      offer = create(:offer, service: service, order_type: type == :external ? :order_required : type,
-                     order_url: type == :external ? "http://order.com" : nil)
-      project_item = create(:project_item, offer: offer, project: project)
+  scenario "I cannot see timeline for open_access order" do
+    offer = create(:open_access_offer, service: service)
+    project_item = create(:project_item, offer: offer, project: project)
 
-      visit project_service_path(project, project_item)
+    visit project_service_path(project, project_item)
 
-      expect(page).to_not have_link("Timeline")
-    end
+    expect(page).to_not have_link("Timeline")
   end
 
-  scenario "Project service is immute to the offer change" do
+  scenario "I cannot see timeline for external order" do
+    offer = create(:external_offer, service: service)
+    project_item = create(:project_item, offer: offer, project: project)
+
+    visit project_service_path(project, project_item)
+
+    expect(page).to_not have_link("Timeline")
+  end
+
+  scenario "Project service is immutable to the offer change" do
     offer = create(:offer, service: service,
                    order_type: :open_access,
-                   webpage: "http://old.pl",
+                   order_url: "http://old.pl",
                    voucherable: false)
     project_item = create(:project_item, offer: offer, project: project)
-    offer.update(order_type: :order_required, voucherable: true, webpage: "http://new.pl")
+    offer.update(order_type: :order_required, voucherable: true, order_url: "http://new.pl")
 
     visit project_service_path(project, project_item)
 

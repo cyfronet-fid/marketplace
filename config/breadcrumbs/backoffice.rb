@@ -56,6 +56,16 @@ crumb :backoffice_service_preview do |service|
   end
 end
 
+crumb :backoffice_offer_new do |service|
+  link "New", new_backoffice_service_offer_path(service)
+  parent :backoffice_service, service
+end
+
+crumb :backoffice_offer_edit do |offer|
+  link "Edit", edit_backoffice_service_offer_path(offer)
+  parent :backoffice_service, offer.service
+end
+
 crumb :backoffice_scientific_domains  do
   link "Scientific Domains", backoffice_scientific_domains_path
   parent :backoffice_root

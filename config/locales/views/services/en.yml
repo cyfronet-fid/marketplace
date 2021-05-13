@@ -138,7 +138,7 @@ en:
           cancel: Cancel order and quit
         description_html: |
           Please select a Project and review the summary below. Once you submit the order,
-          your request will be sent to a resource provider. </br>
+          your request will be sent to a resource provider. <br/>
           The order status will be visible at your Project space.
       other:
         order:

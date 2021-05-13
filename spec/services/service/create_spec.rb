@@ -22,7 +22,6 @@ RSpec.describe Service::Create do
     expect(offer.description).to eq("#{service.name} Offer")
     expect(offer.order_type).to eq(service.order_type)
     expect(offer.order_url).to eq(service.order_url)
-    expect(offer.webpage).to eq(service.webpage_url)
     expect(offer.status).to eq("published")
   end
 end

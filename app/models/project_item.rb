@@ -112,7 +112,6 @@ class ProjectItem < ApplicationRecord
       self.order_type = offer&.order_type
       self.name = offer&.name
       self.description = offer&.description
-      self.webpage = offer&.webpage
       self.voucherable = offer&.voucherable
       self.order_url = offer&.order_url
       self.internal = offer&.internal
