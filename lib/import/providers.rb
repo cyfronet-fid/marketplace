@@ -20,73 +20,51 @@ class Import::Providers
 
     @logger = logger
     @filepath = filepath
+
+    @updated_count = 0
+    @created_count = 0
   end
 
   def call
     log "Importing providers from eInfraCentral..."
-
-    begin
-      rp = Importers::Request.new(@eic_base_url, "provider", unirest: @unirest, token: @token).call
-    rescue Errno::ECONNREFUSED
-      abort("import exited with errors - could not connect to #{@eic_base_url}")
-    end
-
-    @providers = rp.body["results"].index_by { |provider| provider["id"] }
-
-    updated = 0
-    created = 0
-    not_modified = 0
-    total_provider_count = @providers.length
-    output = []
-
-    @providers.select { |_p, bodu| @ids.empty? || @ids.include?(_p) }.each do |eid, provider_data|
-      output.append(provider_data)
-      image_url = provider_data["logo"]
-      updated_provider_data = Importers::Provider.new(provider_data, Time.now.to_i, "rest").call
-
-      mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eic",
-        "provider_sources.eid": eid) || Provider.find_by(name: updated_provider_data[:name])
+    @request_providers = get_external_providers_data.select { |id, _| @ids.empty? || @ids.include?(id) }
+    @request_providers.each do |eid, external_provider_data|
+      parsed_provider_data = Importers::Provider.new(external_provider_data, Time.now.to_i, "rest").call
+      eic_provider = Provider.joins(:sources).
+        find_by("provider_sources.source_type": "eic", "provider_sources.eid": eid)
+      current_provider = eic_provider || Provider.find_by(name: parsed_provider_data[:name])
 
       provider_source = ProviderSource.find_by(source_type: "eic", eid: eid)
 
-      if mapped_provider.blank?
-        created += 1
-        log "Adding [NEW] provider: #{updated_provider_data[:name]}, eid: #{updated_provider_data[:pid]}"
-        unless @dry_run
-          mapped_provider = Provider.create!(updated_provider_data)
-          Importers::Logo.new(mapped_provider, image_url).call
-          provider_source = ProviderSource.create!(provider_id: mapped_provider.id, source_type: "eic", eid: eid)
-        end
-      elsif provider_source.present? && provider_source.id == mapped_provider.upstream_id
-        updated += 1
-        log "Updating [EXISTING] provider: #{updated_provider_data[:name]}, eid: #{updated_provider_data[:pid]}"
-        if mapped_provider.upstream_id == provider_source.id
-          unless @dry_run
-            mapped_provider.update!(updated_provider_data)
-            Importers::Logo.new(mapped_provider, image_url).call
-            if mapped_provider.sources.blank?
-              provider_source = ProviderSource.create!(provider_id: mapped_provider.id, source_type: "eic", eid: eid)
-            end
-          end
-        end
-      else
-        not_modified += 1
-        log "Provider upstream is not set to EIC, not updating #{mapped_provider.name}, id: #{mapped_provider.pid}"
-      end
+      # Bug fix for duplicated sources
       if @default_upstream == :eic && provider_source.present?
-        mapped_provider.update(upstream_id: provider_source.id)
+        current_provider.update(upstream_id: provider_source.id)
       end
-      rescue ActiveRecord::RecordInvalid => e
-        log "[WARN] Provider #{updated_provider_data[:name]} #{updated_provider_data[:pid]} cannot be created. #{e}"
+
+      if @dry_run
+        next
+      end
+
+      if current_provider.blank?
+        create_provider(parsed_provider_data, external_provider_data["logo"], eid)
+      elsif provider_source.present? && provider_source.id == current_provider.upstream_id
+        update_provider(current_provider, parsed_provider_data, external_provider_data["logo"])
+      end
+      rescue ActiveRecord::RecordInvalid
+        log "[WARN] Provider #{parsed_provider_data[:name]},
+                eid: #{parsed_provider_data[:pid]} cannot be updated. #{current_provider.errors.messages}"
+      ensure
+        log_status(current_provider, parsed_provider_data, provider_source)
     end
 
     Provider.reindex
 
-    log "PROCESSED: #{total_provider_count}, CREATED: #{created}, UPDATED: #{updated}, NOT MODIFIED: #{not_modified}"
+    not_modified = @request_providers.length - @created_count - @updated_count
+    log "PROCESSED: #{@request_providers.length}, CREATED: #{@created_count}, UPDATED: #{@updated_count}, NOT MODIFIED: #{not_modified}"
 
     unless @filepath.nil?
       open(@filepath, "w") do |file|
-        file << JSON.pretty_generate(output)
+        file << JSON.pretty_generate(@request_providers.map { |_, request_data| request_data })
       end
     end
   end
@@ -94,5 +72,59 @@ class Import::Providers
   private
     def log(msg)
       @logger.call(msg)
+    end
+
+    def log_status(current_provider, parsed_provider_data, provider_source)
+      if current_provider.blank?
+        @created_count += 1
+        log "Adding [NEW] provider: #{parsed_provider_data[:name]}, eid: #{parsed_provider_data[:pid]}"
+      elsif provider_source.present? && provider_source.id == current_provider.upstream_id
+        @updated_count += 1
+        log "Updating [EXISTING] provider: #{parsed_provider_data[:name]}, eid: #{parsed_provider_data[:pid]}"
+      else
+        log "Provider upstream is not set to EIC, not updating #{current_provider.name}, id: #{current_provider.pid}"
+      end
+    end
+
+    def create_provider(parsed_provider_data, image_url, eid)
+      current_provider = Provider.new(parsed_provider_data)
+      current_provider.set_default_logo
+      current_provider.save(validate: false)
+      provider_source = ProviderSource.create!(
+        provider_id: current_provider.id,
+        source_type: "eic",
+        eid: eid
+      )
+      current_provider.upstream_id = provider_source.id
+      if current_provider.invalid?
+        provider_source.update!(errored: current_provider.errors.messages)
+        log "Provider #{parsed_provider_data[:name]},
+              eid: #{parsed_provider_data[:pid]} saved with errors: #{current_provider.errors.messages}"
+      end
+
+      Importers::Logo.new(current_provider, image_url).call
+      current_provider.save(validate: false)
+    end
+
+    def update_provider(current_provider, parsed_provider_data, image_url)
+      current_provider.update_attributes(parsed_provider_data)
+      if current_provider.valid?
+        current_provider.save!
+
+        Importers::Logo.new(current_provider, image_url).call
+        current_provider.save!
+      else
+        current_provider.sources.first.update!(errored: current_provider.errors.messages)
+      end
+    end
+
+    def get_external_providers_data
+      begin
+        rp = Importers::Request.new(@eic_base_url, "provider", unirest: @unirest, token: @token).call
+      rescue Errno::ECONNREFUSED
+        abort("import exited with errors - could not connect to #{@eic_base_url}")
+      end
+
+      rp.body["results"].index_by { |provider| provider["id"] }
     end
 end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Backoffice::ProvidersController < Backoffice::ApplicationController
+  include UrlHelper
+
   before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -14,17 +16,22 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   def new
     @provider = Provider.new
     @provider.sources.build source_type: "eic"
-    @provider.data_administrators.build
+    @provider.data_administrators << DataAdministrator.new(
+      first_name: current_user.first_name,
+      last_name: current_user.last_name,
+      email: current_user.email
+    )
     @provider.build_main_contact
     @provider.public_contacts.build
     authorize(@provider)
   end
 
   def create
-    @provider = Provider.new(permitted_attributes(Provider))
+    permitted_attributes = permitted_attributes(Provider)
+    @provider = Provider.new(permitted_attributes)
     authorize(@provider)
 
-    if @provider.save
+    if valid_model_and_urls? && @provider.save(validate: false)
       redirect_to backoffice_provider_path(@provider),
                   notice: "New provider created successfully"
     else
@@ -37,10 +44,19 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   end
 
   def update
-    if @provider.update(permitted_attributes(@provider))
+    permitted_attributes = permitted_attributes(@provider)
+    @provider.assign_attributes(permitted_attributes)
+
+    if valid_model_and_urls? && @provider.save(validate: false)
       redirect_to backoffice_provider_path(@provider),
                   notice: "Provider updated correctly"
     else
+      if @provider.public_contacts.all? { |contact| contact.marked_for_destruction? }
+        @provider.public_contacts[0].reload
+      end
+      if @provider.data_administrators.all? { |admin| admin.marked_for_destruction? }
+        @provider.data_administrators[0].reload
+      end
       render :edit, status: :bad_request
     end
   end
@@ -70,5 +86,32 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
       if @provider.public_contacts.blank?
         @provider.public_contacts.build
       end
+    end
+
+    def valid_model_and_urls?
+      # More restricted validation in form instead of ActiveRecord itself
+      # is related to loose validation of importing data from external services
+      valid = @provider.valid?
+      unless UrlHelper.url_valid?(@provider.website)
+        valid = false
+        @provider.errors.add(:website, "isn't valid or website doesn't exist, please check URL")
+      end
+      invalid_multimedia = @provider.multimedia.select { |media| !UrlHelper.url_valid?(media) }
+      if invalid_multimedia.present?
+        valid = false
+        @provider.errors.add(
+          :multimedia,
+          "aren't valid or media don't exist, please check URLs: #{invalid_multimedia.join(", ")}"
+        )
+      end
+
+      if @provider.errors.present? &&
+        @provider.errors.to_hash.length == 1 &&
+        @provider.errors["sources.eid"].present?
+        @provider.errors.clear
+        valid = true
+      end
+
+      valid
     end
 end

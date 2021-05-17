@@ -2,6 +2,8 @@
 
 class Provider < ApplicationRecord
   include LogoAttachable
+  include ImageHelper
+
   extend FriendlyId
   friendly_id :pid
 
@@ -20,8 +22,6 @@ class Provider < ApplicationRecord
 
   serialize :participating_countries, Country::Array
   serialize :country, Country
-
-  before_save :remove_empty_array_fields
 
   has_many :service_providers, dependent: :destroy
   has_many :services, through: :service_providers
@@ -56,31 +56,79 @@ class Provider < ApplicationRecord
   has_one :main_contact, as: :contactable, dependent: :destroy, autosave: true
   has_many :public_contacts, as: :contactable, dependent: :destroy, autosave: true
 
-  accepts_nested_attributes_for :main_contact,
-                                reject_if: lambda { |attributes| attributes["email"].blank? },
-                                allow_destroy: true
-
-  accepts_nested_attributes_for :public_contacts,
-                                reject_if: lambda { |attributes| attributes["email"].blank? },
-                                allow_destroy: true
-
   has_many :sources, source: :provider_sources, class_name: "ProviderSource", dependent: :destroy
 
   belongs_to :upstream, foreign_key: "upstream_id", class_name: "ProviderSource", optional: true
 
+  accepts_nested_attributes_for :main_contact,
+                                allow_destroy: true
+
+  accepts_nested_attributes_for :public_contacts,
+                                allow_destroy: true
+
   accepts_nested_attributes_for :sources,
-                                reject_if: lambda { |attributes| attributes["eid"].blank? || attributes["source_type"].blank? },
                                 allow_destroy: true
 
   accepts_nested_attributes_for :data_administrators,
-                                reject_if: lambda { |attributes| attributes["email"].blank? },
                                 allow_destroy: true
 
+  before_validation do
+    remove_empty_array_fields
+    unless legal_entity
+      self.legal_status = nil
+    end
+  end
+
   validates :name, presence: true, uniqueness: true
-  validates :logo, blob: { content_type: :image }
-  validates :legal_statuses, length: { maximum: 1 }
+  validates :abbreviation, presence: true, uniqueness: true
+  validates :website, presence: true
+  validates :description, presence: true
+  validates :street_name_and_number, presence: true
+  validates :postal_code, presence: true
+  validates :city, presence: true
+  validates :country, presence: true
+  validates :logo, presence: true, blob: { content_type: :image }
   validates :provider_life_cycle_statuses, length: { maximum: 1 }
+  validates :public_contacts, length: { minimum: 1, message: "are required. Please add at least one" }
+  validates :data_administrators, length: { minimum: 1, message: "are required. Please add at least one" }
   validate :logo_variable, on: [:create, :update]
+  validate :validate_array_values_uniqueness
+
+  def legal_status=(status_id)
+    self.legal_statuses = status_id.blank? ? [] : [Vocabulary.find(status_id)]
+  end
+
+  def legal_status
+    if self.legal_statuses.blank?
+      return nil
+    end
+
+    self.legal_statuses[0].id
+  end
+
+  def esfri_type=(type_id)
+    self.esfri_types = type_id.blank? ? [] : [Vocabulary.find(type_id)]
+  end
+
+  def esfri_type
+    if self.esfri_types.blank?
+      return nil
+    end
+
+    self.esfri_types[0].id
+  end
+
+  def provider_life_cycle_status=(status_id)
+    self.provider_life_cycle_statuses = status_id.blank? ? [] : [Vocabulary.find(status_id)]
+  end
+
+  def provider_life_cycle_status
+    if self.provider_life_cycle_statuses.blank?
+      return nil
+    end
+
+    self.provider_life_cycle_statuses[0].id
+  end
 
   def participating_countries=(value)
     super(value&.map { |v| Country.for(v) })
@@ -103,11 +151,35 @@ class Provider < ApplicationRecord
     (service_providers.provider_id = #{self.id} OR resource_organisation_id = #{self.id})")
   end
 
+  def set_default_logo
+    assets_path = File.join(File.dirname(__FILE__), "../javascript/images")
+    default_logo_name = "eosc-img.png"
+    io, extension = ImageHelper.binary_to_blob_stream(assets_path + "/" + default_logo_name)
+    self.logo.attach(
+      io: io,
+      filename: SecureRandom.uuid + extension,
+      content_type: "image/#{extension.gsub(".", "")}"
+    )
+  end
+
   private
     def remove_empty_array_fields
-      array_fields = [:multimedia, :certifications, :affiliations, :national_roadmaps]
+      array_fields = [
+        :multimedia,
+        :certifications,
+        :affiliations,
+        :national_roadmaps,
+        :tag_list
+      ]
       array_fields.each do |field|
         send(field).present? ? send(:"#{field}=", send(field).reject(&:blank?)) : send(:"#{field}=", [])
       end
+    end
+
+    def validate_array_values_uniqueness
+      errors.add(:tag_list, "has duplicates, please remove them to continue") if tag_list.uniq.length != tag_list.length
+      errors.add(:multimedia, "has duplicates, please remove them to continue") if multimedia.uniq.length != multimedia.length
+      errors.add(:certifications, "has duplicates, please remove them to continue") if certifications.uniq.length != certifications.length
+      errors.add(:national_roadmaps, "has duplicates, please remove them to continue") if national_roadmaps.uniq.length != national_roadmaps.length
     end
 end
