@@ -58,5 +58,8 @@ module Mp
 
     config.recommender_host = ENV["RECOMMENDER_HOST"]
     config.auth_mock = ENV["AUTH_MOCK"]
+
+    config.export_provider_component_host = ENV["EXPORT_PROVIDER_COMPONENT_HOST"]
+    config.pc_export_token = ENV["PC_EXPORT_TOKEN"]
   end
 end

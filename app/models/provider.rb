@@ -21,7 +21,8 @@ class Provider < ApplicationRecord
   serialize :participating_countries, Country::Array
   serialize :country, Country
 
-  before_save :remove_empty_array_fields
+  before_validation :remove_empty_array_fields
+  after_commit :update_in_provider_component
 
   has_many :service_providers, dependent: :destroy
   has_many :services, through: :service_providers
@@ -77,10 +78,54 @@ class Provider < ApplicationRecord
                                 allow_destroy: true
 
   validates :name, presence: true, uniqueness: true
-  validates :logo, blob: { content_type: :image }
-  validates :legal_statuses, length: { maximum: 1 }
+  validates :abbreviation, presence: true
+  validates :website, presence: true
+  validates :legal_entity, presence: true
+  validates :description, presence: true
+  validates :street_name_and_number, presence: true
+  validates :postal_code, presence: true
+  validates :city, presence: true
+  validates :country, presence: true
+  validates :logo, presence: true, blob: { content_type: :image }
   validates :provider_life_cycle_statuses, length: { maximum: 1 }
   validate :logo_variable, on: [:create, :update]
+  validate :validate_array_values_uniqueness
+
+  def legal_status=(status_id)
+    self.legal_statuses = status_id.blank? ? [] : [Vocabulary.find(status_id)]
+  end
+
+  def legal_status
+    if self.legal_statuses.blank?
+      return nil
+    end
+
+    self.legal_statuses[0].id
+  end
+
+  def esfri_type=(type_id)
+    self.esfri_types = type_id.blank? ? [] : [Vocabulary.find(type_id)]
+  end
+
+  def esfri_type
+    if self.esfri_types.blank?
+      return nil
+    end
+
+    self.esfri_types[0].id
+  end
+
+  def provider_life_cycle_status=(status_id)
+    self.provider_life_cycle_statuses = status_id.blank? ? [] : [Vocabulary.find(status_id)]
+  end
+
+  def provider_life_cycle_status
+    if self.provider_life_cycle_statuses.blank?
+      return nil
+    end
+
+    self.provider_life_cycle_statuses[0].id
+  end
 
   def participating_countries=(value)
     super(value&.map { |v| Country.for(v) })
@@ -105,9 +150,22 @@ class Provider < ApplicationRecord
 
   private
     def remove_empty_array_fields
-      array_fields = [:multimedia, :certifications, :affiliations, :national_roadmaps]
+      array_fields = [
+        :multimedia,
+        :certifications,
+        :affiliations,
+        :national_roadmaps,
+        :tag_list
+      ]
       array_fields.each do |field|
         send(field).present? ? send(:"#{field}=", send(field).reject(&:blank?)) : send(:"#{field}=", [])
       end
+    end
+
+    def validate_array_values_uniqueness
+      errors.add(:tag_list, "has duplicates, please remove them to continue") if tag_list.uniq.length != tag_list.length
+      errors.add(:multimedia, "has duplicates, please remove them to continue") if multimedia.uniq.length != multimedia.length
+      errors.add(:certifications, "has duplicates, please remove them to continue") if certifications.uniq.length != certifications.length
+      errors.add(:national_roadmaps, "has duplicates, please remove them to continue") if national_roadmaps.uniq.length != national_roadmaps.length
     end
 end

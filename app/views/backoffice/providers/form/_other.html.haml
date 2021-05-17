@@ -34,7 +34,8 @@
               wrapper_html: { "data-target" => "form.affiliations" },
               disabled: cant_edit([affiliations: []]), as: :array
         = link_to_add_array_field("provider", "affiliations")
-        - msd = Vocabulary.where(type: "Vocabulary::MerilScientificDomain").child_names.map { |name, sd| [name, sd.id] }
+        - msd = Vocabulary.where(type: "Vocabulary::MerilScientificDomain").child_names
+        - msd = msd.select {  |_, sd| !sd.parent.blank? }.map { |name, sd| [name, sd.id] }
         .mt-4
         = f.association :networks, disabled: cant_edit([network_ids: []]),
               input_html: { multiple: true, data: { choice: true } }
@@ -42,10 +43,13 @@
               input_html: { multiple: true, data: { choice: true } }
         = f.association :esfri_domains, disabled: cant_edit([esfri_domain_ids: []]),
               input_html: { multiple: true, data: { choice: true } }
-        = f.association :esfri_types, disabled: cant_edit([esfri_type_ids: []]),
-              input_html: { multiple: true, data: { choice: true } }
+        = f.input :esfri_type, disabled: cant_edit([esfri_type_ids: []]),
+              collection: Vocabulary.where(type: "Vocabulary::EsfriType"),
+              label_method: :name, value_method: :id,
+              input_html: { multiple: false, data: { choice: true } }
         = f.association :meril_scientific_domains, disabled: cant_edit([meril_scientific_domain_ids: []]),
-              input_html: { multiple: true, data: { choice: true } }, collection: msd,
+              input_html: { multiple: true, data: { choice: true } },
+              collection: msd,
               label_method: :first, value_method: :second
         = f.association :areas_of_activity, disabled: cant_edit([areas_of_activity_ids: []]),
               input_html: { multiple: true, data: { choice: true } }

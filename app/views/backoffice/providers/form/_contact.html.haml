@@ -1,7 +1,8 @@
 .card.shadow-sm.rounded
   %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(provider,
             ["main_contact.first_name".to_sym, "main_contact.last_name".to_sym,
-            "main_contact.email".to_sym, "public_contacts.email".to_sym])),
+            "main_contact.email".to_sym, "public_contacts.email".to_sym,
+            "main_contact.phone".to_sym, "public_contacts.phone".to_sym])),
               data: { toggle: "collapse", target: "#contact" },
               aria: { expanded: true, controls: "contact" } }
     .card-header.text-left{ id: "contact-header" }
@@ -15,7 +16,8 @@
 .collapse{ id: "contact", "aria-labelledby": "contact-header",
         "data-parent": "#accordion-form",
         class: ("show" unless collapsed?(provider, ["main_contact.first_name".to_sym,
-        "main_contact.last_name".to_sym, "main_contact.email".to_sym, "public_contacts.email".to_sym])) }
+        "main_contact.last_name".to_sym, "main_contact.email".to_sym, "public_contacts.email".to_sym,
+        "main_contact.phone".to_sym, "public_contacts.phone".to_sym])) }
   .card-body
     .row.service-contact-emails
       .col-12

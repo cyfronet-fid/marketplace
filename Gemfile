@@ -128,3 +128,4 @@ gem "reverse_markdown"
 
 # Fix for puma memory leak
 gem "puma_worker_killer"
+gem "timeout"

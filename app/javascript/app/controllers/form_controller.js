@@ -5,7 +5,7 @@ export default class extends Controller {
   static targets = ["array", "form", "input", "publicContacts", "publicContact",
     "destroy", "addContact", "multimedia", "changelog", "grantProjectNames",
     "certifications", "standards", "openSourceTechnologies", "useCasesUrl",
-    "relatedPlatforms", "affiliations", "national_roadmaps", "fixme"]
+    "relatedPlatforms", "affiliations", "national_roadmaps", "fixme", "tag_list"]
 
   initialize() {
     this.addListenersForCollapse();

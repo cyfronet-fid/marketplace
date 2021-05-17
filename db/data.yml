@@ -98,101 +98,836 @@ categories:
 
 
 providers:
-
     EGI Federation:
         name: &egi "EGI Federation"
+        abbreviation: "egi-federation"
+        website: "http://egi-federation.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     EUDAT:
         name: &eudat "EUDAT"
+        abbreviation: "eudat"
+        website: "http://eudat.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     JSC:
         name: &jsc "JSC"
+        abbreviation: "jsc"
+        website: "http://jsc.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     Deutsches Klimarechenzentrum (DKRZ):
         name: &dkrz "Deutsches Klimarechenzentrum (DKRZ)"
+        abbreviation: "dkrz"
+        website: "http://dkrz.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     GRNET:
         name: &grnet "GRNET"
+        abbreviation: "grnet"
+        website: "http://grnet.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     SURFsara:
         name: &surfsara "SURFsara"
+        abbreviation: "surfsara"
+        website: "http://surfsara.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     CERM:
         name: &cerm "Magnetic Resonance Center of the University of Florence - CERM"
+        abbreviation: "CERM"
+        website: "http://cerm.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     BSC:
         name: &bsc "BSC"
+        abbreviation: "bsc"
+        website: "http://bsc.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     All generic CDI Level 1 providers:
         name: &all "all generic CDI Level 1 providers"
+        abbreviation: "cdi-1"
+        website: "http://cdi1.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     CSC:
         name: &csc "CSC"
+        abbreviation: "csc"
+        website: "http://csc.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     CLARIN ERIC:
         name: &clarin "CLARIN ERIC"
+        abbreviation: "clarin-eric"
+        website: "http://egi-federation.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     Euro-Mediterranean Center on Climate Change (CMCC):
         name: &ccmc "Euro-Mediterranean Center on Climate Change (CMCC)"
+        abbreviation: "cmcc"
+        website: "http://cmcc.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     RASDAMAN:
         name: &rasdaman "RASDAMAN"
+        abbreviation: "rasdaman"
+        website: "http://rasdaman.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     EODC:
         name: &eodc "Earth Observation Data Centre for Water Resources Monitoring GmbH (EODC)"
+        abbreviation: "eodc"
+        website: "http://eodc.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     Sinergise:
         name: &sinergise "Sinergise"
+        abbreviation: "sinergise"
+        website: "http://sinergise.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     ASTRON:
         name: &astron "ASTRON, the Netherlands Institute for Radio Astronomy."
+        abbreviation: "astron"
+        website: "http://astron.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     RUG:
         name: &rug "RUG"
+        abbreviation: "rug"
+        website: "http://rug.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     FZJ:
         name: &fzj "FZJ"
+        abbreviation: "fzj"
+        website: "http://fzj.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     PSNC:
         name: &psnc "PSNC"
+        abbreviation: "psnc"
+        website: "http://psnc.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     SmartSMEAR:
         name: &smartSmear "SmartSMEAR"
+        abbreviation: "smart-smear"
+        website: "http://smart-smear.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     RECAS-BARI:
         name: &recas "RECAS-BARI"
+        abbreviation: "recas-bari"
+        website: "http://recas-bari.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     CYFRONET-LCG2:
         name: &cyfro "CYFRONET-LCG2"
+        abbreviation: "cyfronet-lcg2"
+        website: "http://cyfronet-lcg2.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     BEgrid-ULV-VUB:
         name: &begrid "BEgrid-ULV-VUB"
+        abbreviation: "be-grid-ulv-vub"
+        website: "http://be-grid-ulv-vub.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     CESGA:
         name: &cesga "CESGA"
+        abbreviation: "cesga"
+        website: "http://cesga.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     Ruder Boškovic Institute:
         name: &rbi "Ruder Boškovic Institute"
+        abbreviation: "rbi"
+        website: "http://rbi.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     INFN:
         name: &infn "Italian National Institute of Nuclear Physics (INFN)"
+        abbreviation: "infn"
+        website: "http://infn.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     INFN-CATANIA-STACK:
         name: &ics "INFN-CATANIA-STACK"
+        abbreviation: "infn-catania-stack"
+        website: "http://infn-catania-stack.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     INFN-Catania:
         name: &infnc "INFN-Catania"
+        abbreviation: "infn-catania"
+        website: "http://infn-catania.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     INFN-Bari:
         name: &infnb "INFN-Bari"
+        abbreviation: "infn-bari"
+        website: "http://infn-bari.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     D4Science:
         name: &d4science "D4Science.org infrastructure"
+        abbreviation: "d4-science"
+        website: "http://d4-science.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     LifeWatch ERIC:
         name: &lifewatch "LifeWatch ERIC"
+        abbreviation: "life-watch-eric"
+        website: "http://life-watch-eric.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     Terradue:
         name: &terradue "Terradue Srl"
+        abbreviation: "terradue-srl"
+        website: "http://terradue-srl.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     MEEO:
         name: &meeo "MEEO"
+        abbreviation: "meeo"
+        website: "http://meeo.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     CloudFerro:
         name: &cloudFerro "CloudFerro"
+        abbreviation: "cloud-ferro"
+        website: "http://cloud-ferro.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     PNCEL:
         name: &pncel "Portuguese National Civil Engineering Laboratory"
+        abbreviation: "pncel"
+        website: "http://pncel.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     University of Utrecht:
         name: &uou "Bijvoet Center, Utrecht University"
+        abbreviation: "bc-uu"
+        website: "http://bc-uu.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
 #    University of Florence:
 #        name: &uof "University of Florence"
     CIRMMP:
         name: &cirmmp "Interuniversity consortium CIRMMP"
+        abbreviation: "cirmmp"
+        website: "http://cirmmp.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     CESNET:
         name: &cesnet "CESNET"
+        abbreviation: "cesnet"
+        website: "http://cesnet.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     EIDA:
         name: &eida "EIDA"
+        abbreviation: "eida"
+        website: "http://eida.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     ESA:
         name: &esa "European Space Agency (ESA)"
+        abbreviation: "esa"
+        website: "http://esa.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     DESY:
         name: &desyProvider "Deutsches Elektronen-Synchrotron DESY"
+        abbreviation: "desy"
+        website: "http://desy.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     CNR-IIA:
         name: &cnr "Institute of Atmospheric Pollution - National Research Council of Italy (CNR-IIA)"
+        abbreviation: "cnr-iia"
+        website: "http://cnr-iia.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     GryCAP-I3M-UPV:
         name: &grycap "GryCAP-I3M-UPV"
+        abbreviation: "gry-cap-i3m-upv"
+        website: "http://gry-cap-i3m-upv.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     MTA SZTAKI Laboratory of Parallel and Distributed Systems:
         name: &mtaSztaki "MTA SZTAKI Laboratory of Parallel and Distributed Systems"
+        abbreviation: "mta-sztaki"
+        website: "http://mta-sztaki.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     University of Oslo (UiO):
         name: &uioProider "University of Oslo (UiO)"
+        abbreviation: "uio"
+        website: "http://uio.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
     Not specified:
         name: &not "not specified yet"
+        abbreviation: "not-specified-yet"
+        website: "http://not-specified-yet.com"
+        legal_entity: true
+        description: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+          Sed luctus tristique est, nec sollicitudin magna blandit ac.
+          Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+          Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+          Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+          Sed maximus odio neque, sed ullamcorper purus tristique a.
+          Ut gravida venenatis nunc placerat cursus.
+        street_name_and_number: "Malcolm St. 4"
+        postal_code: "332-332"
+        city: "Test City"
+        country_alpha2: "PL"
 
 domain:
 
@@ -4144,7 +4879,7 @@ services:
 #        domain: *interdisciplinary
 #        #restrictions: *notSpecified
 #        trl: *trl_9
-        life_cycle_status: *prod
+#        life_cycle_status: *prod
 #        tagline: ToFill
 #        platforms: [*egiPlatform]
 #        description: |

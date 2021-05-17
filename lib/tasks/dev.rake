@@ -33,7 +33,21 @@ namespace :dev do
   def create_providers(providers_hash)
     puts "Generating providers:"
     providers_hash.each do |_, hash|
-      Provider.find_or_create_by(name: hash["name"])
+      provider = Provider.where(name: hash["name"]).first_or_initialize
+      provider.name = hash["name"]
+      provider.abbreviation = hash["abbreviation"]
+      provider.website = hash["website"]
+      provider.legal_entity = hash["legal_entity"]
+      provider.description = hash["description"]
+      provider.street_name_and_number = hash["street_name_and_number"]
+      provider.postal_code = hash["postal_code"]
+      provider.city = hash["city"]
+      provider.country = Country.for(hash["country_alpha2"])
+      provider.pid = provider.abbreviation
+
+      Importers::Logo.new(provider, "https://picsum.photos/200/300").call
+
+      provider.save!
       puts "  - #{hash["name"]} provider generated"
     end
   end
