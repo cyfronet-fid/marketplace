@@ -44,8 +44,8 @@ module Import
         output.append(service_data)
 
         synchronized_at = service_data["metadata"]["modifiedAt"].to_i
-        service = Importers::Service.new(service, synchronized_at, @eic_base_url, @token, "rest").call
         image_url = service["logo"]
+        service = Importers::Service.new(service, synchronized_at, @eic_base_url, @token, "rest").call
 
         begin
           if (service_source = ServiceSource.find_by(eid: service[:pid], source_type: "eic")).nil?
@@ -53,13 +53,15 @@ module Import
             log "Adding [NEW] service: #{service[:name]}, eid: #{service[:pid]}"
             unless @dry_run
               service = Service.new(service)
-              Importers::Logo.new(service, image_url).call
               if service.valid?
                 service = Service::Create.new(service).call
                 service_source = ServiceSource.create!(service_id: service.id, eid: service.pid, source_type: "eic")
                 if @default_upstream == :eic
                   service.update(upstream_id: service_source.id)
                 end
+
+                Importers::Logo.new(service, image_url).call
+                service.save!
               else
                 service.status = "errored"
                 service.save(validate: false)
@@ -69,6 +71,9 @@ module Import
                   service.save(validate: false)
                 end
                 log "Service #{service.name}, eid: #{service.pid} saved with errors: #{service.errors.messages}"
+
+                Importers::Logo.new(service, image_url).call
+                service.save(validate: false)
               end
             end
           else
@@ -78,6 +83,9 @@ module Import
               log "Updating [EXISTING] service #{service[:name]}, id: #{service_source.id}, eid: #{service[:pid]}"
               unless @dry_run
                 Service::Update.new(existing_service, service).call
+
+                Importers::Logo.new(existing_service, image_url).call
+                existing_service.save!
               end
             else
               not_modified += 1

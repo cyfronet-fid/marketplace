@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Provider::PcCreateOrUpdate do
-  let(:provider_response) { create(:eic_provider_response) }
+  let(:provider_response) { create(:jms_provider_response) }
   let(:logger) { Logger.new($stdout) }
 
   before(:each) do
@@ -29,11 +29,20 @@ RSpec.describe Provider::PcCreateOrUpdate do
   it "should update provider" do
     original_stdout = $stdout
     $stdout = StringIO.new
-    provider = create(:provider, name: "new provider")
-    create(:provider_source, provider: provider, source_type: "eic", eid: "new.provider")
+    provider = create(
+      :provider,
+      name: "new provider",
+      sources: [build(
+                  :provider_source,
+                  provider: provider,
+                  source_type: "eic",
+                  eid: "new.provider"
+                )]
+    )
+
 
     expect {
-      described_class.new(create(:eic_provider_response,
+      described_class.new(create(:jms_provider_response,
                                  eid: "new.provider",
                                  name: "Supper new name for updated  provider"), Time.now.to_i).call
     }.to change { Provider.count }.by(0)

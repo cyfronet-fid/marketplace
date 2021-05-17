@@ -91,6 +91,7 @@ group :development, :test do
   gem "pry-nav"
 
   gem "dotenv-rails"
+  gem "webmock"
 end
 
 group :development do
@@ -128,3 +129,4 @@ gem "reverse_markdown"
 
 # Fix for puma memory leak
 gem "puma_worker_killer"
+gem "timeout"

@@ -17,7 +17,10 @@
   .card-body
     .service-description
       = f.input :description, disabled: cant_edit(:description)
-    = f.input :logo, disabled: cant_edit(:logo)
+    - has_logo = provider.logo.present? && provider.logo.attached? && provider.logo.variable?
+    = f.input :logo, disabled: cant_edit(:logo), as: :file,
+      input_html: { value: has_logo ? url_for(provider.logo) : nil }
     = f.input :multimedia, multiple: true, input_html: { class: "form-control" },
-              wrapper_html: { "data-target" => "form.multimedia" }, as: :array, disabled: cant_edit([multimedia: []])
+              wrapper_html: { "data-target" => "form.multimedia" },
+              as: :array, disabled: cant_edit([multimedia: []])
     = link_to_add_array_field("provider", "multimedia")
