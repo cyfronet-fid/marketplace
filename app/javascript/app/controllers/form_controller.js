@@ -5,11 +5,12 @@ export default class extends Controller {
   static targets = ["array", "form", "input", "publicContacts", "publicContact",
     "destroy", "addContact", "multimedia", "changelog", "grantProjectNames",
     "certifications", "standards", "openSourceTechnologies", "useCasesUrl",
-    "relatedPlatforms", "affiliations", "national_roadmaps", "fixme"]
+    "relatedPlatforms", "affiliations", "national_roadmaps", "fixme", "tag_list"];
 
   initialize() {
     this.addListenersForCollapse();
     this.disableFormButtons();
+    this.handleRelatedFields();
   }
 
   onScroll(event) {
@@ -84,5 +85,40 @@ export default class extends Controller {
     event.preventDefault();
     event.target.parentElement.previousElementSibling.value = "true";
     event.target.closest(".contact").classList.add("d-none");
+  }
+
+  handleRelatedFields() {
+    Array.from(this.formTarget.querySelectorAll("[data-child-field]"))
+        .forEach(parent => {
+          const childId = parent.getAttribute("data-child-field");
+          const child = this.formTarget.querySelector("[class*=" + childId + "]");
+          this._hasInputValue(parent) ? child.classList.remove("d-none") : child.classList.add("d-none");
+        });
+  }
+
+  refreshRelatedFields(event) {
+    const childId = event.target.getAttribute("data-child-field");
+    if (!childId) {
+      return;
+    }
+
+    const child = this.formTarget.querySelector("[class*=" + childId + "]");
+    this._hasInputValue(event.target)
+        ? child.classList.remove("d-none")
+        : child.classList.add("d-none");
+  }
+
+  _hasInputValue(input) {
+    const tag = input.tagName;
+    switch (tag.toLowerCase()) {
+      case "input":
+        return input.type === "checkbox"
+            ? input.checked
+            : !!input.value && input.value !== "";
+      case "textarea":
+        return input.val();
+      default:
+        input.textContent;
+    }
   }
 }

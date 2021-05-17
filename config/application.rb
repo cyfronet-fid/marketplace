@@ -10,6 +10,9 @@ Bundler.require(*Rails.groups)
 
 module Mp
   class Application < Rails::Application
+    # IMPORTANT!!! Prevent crashing workers on thread error !!!
+    Thread.abort_on_exception = true
+
     config.assets.enabled = false
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0

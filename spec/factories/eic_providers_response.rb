@@ -19,9 +19,17 @@ FactoryBot.define do
                   "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
                   "additionalInfo" => "-",
                   "contactInformation" => nil,
-                  "users" => nil,
                   "active" => true,
-                  "status" => "approved"
+                  "status" => "approved",
+                  "abbreviation" => "BlueBRIDGE",
+                  "description" => "test",
+                  "location" => {
+                    "streetNameAndNumber" => "street",
+                    "postalCode" => "00-000",
+                    "city" => "test",
+                    "region" => "WW",
+                    "country" => "N/E"
+                  }
               },
               {
                   "id" => "phenomenal",
@@ -32,9 +40,17 @@ FactoryBot.define do
                   "logo" => "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
                   "additionalInfo" => "-",
                   "contactInformation" => "",
-                  "users" => nil,
                   "active" => true,
-                  "status" => "approved"
+                  "status" => "approved",
+                  "abbreviation" => "Phenomenal",
+                  "description" => "test",
+                  "location" => {
+                    "streetNameAndNumber" => "street",
+                    "postalCode" => "00-000",
+                    "city" => "test",
+                    "region" => "WW",
+                    "country" => "N/E"
+                  }
               },
               {
                   "id" => "West-Life",
@@ -45,9 +61,17 @@ FactoryBot.define do
                   "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
                   "additionalInfo" => "https://about.west-life.eu/network/west-life/about/project. For more information contact chris.morris@stfc.ac.uk",
                   "contactInformation" => "+44 1925 603689",
-                  "users" => nil,
                   "active" => true,
-                  "status" => "approved"
+                  "status" => "approved",
+                  "abbreviation" => "West-Life",
+                  "description" => "test",
+                  "location" => {
+                    "streetNameAndNumber" => "street",
+                    "postalCode" => "00-000",
+                    "city" => "test",
+                    "region" => "WW",
+                    "country" => "N/E"
+                  }
               },
               {
                   "id" => "awesome",
@@ -58,9 +82,17 @@ FactoryBot.define do
                   "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
                   "additionalInfo" => "Nothing, cause I'm avesome",
                   "contactInformation" => nil,
-                  "users" => nil,
                   "active" => true,
-                  "status" => "approved"
+                  "status" => "approved",
+                  "abbreviation" => "Awesome provider",
+                  "description" => "test",
+                  "location" => {
+                    "streetNameAndNumber" => "street",
+                    "postalCode" => "00-000",
+                    "city" => "test",
+                    "region" => "WW",
+                    "country" => "N/E"
+                  }
               },
           ],
           "facets" => [
@@ -95,9 +127,17 @@ FactoryBot.define do
         "logo" => "https://cdn.shopify.com/s/files/1/0553/3925/products/logo_developers_grande.png?v=1432756867",
         "additionalInfo" => "no",
         "contactInformation" => "test phone number",
-        "users" => nil,
         "active" => true,
-        "status" => "approved"
+        "status" => "approved",
+        "abbreviation" => "test",
+        "description" => "test",
+        "location" => {
+          "streetNameAndNumber" => "street",
+          "postalCode" => "00-000",
+          "city" => "test",
+          "region" => "WW",
+          "country" => "N/E"
+        }
       }
     end
   end

@@ -7,8 +7,7 @@ describe Import::Providers do
   let(:test_url) { "https://localhost/api" }
   let(:unirest) { double(Unirest) }
 
-  def make_and_stub_eic(ids: [], dry_run: false, filepath: nil, log: false,
-                        default_upstream: nil)
+  def make_and_stub_eic(ids: [], dry_run: false, filepath: nil, log: false, default_upstream: nil)
     options = {
       dry_run: dry_run,
       ids: ids,
@@ -88,7 +87,7 @@ describe Import::Providers do
 
       eic = make_and_stub_eic(ids: ["phenomenal"], log: true)
 
-      expect { eic.call }.to output(/PROCESSED: 4, CREATED: 0, UPDATED: 0, NOT MODIFIED: 1$/).to_stdout.and change { Provider.count }.by(0)
+      expect { eic.call }.to output(/PROCESSED: 1, CREATED: 0, UPDATED: 0, NOT MODIFIED: 1$/).to_stdout.and change { Provider.count }.by(0)
     end
 
     it "should update provider which has upstream to external id" do
@@ -100,7 +99,7 @@ describe Import::Providers do
 
       eic = make_and_stub_eic(ids: ["phenomenal"], log: true)
 
-      expect { eic.call }.to output(/PROCESSED: 4, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/).to_stdout.and change { Provider.count }.by(0)
+      expect { eic.call }.to output(/PROCESSED: 1, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/).to_stdout.and change { Provider.count }.by(0)
     end
 
     it "should not change db if dry_run is set to true" do
@@ -114,20 +113,21 @@ describe Import::Providers do
       expect(Provider.last.name).to eq("Phenomenal")
     end
 
-    it "should gracefully handle error with logo download" do
+    it "should set default image on error" do
       eic = make_and_stub_eic(ids: ["phenomenal"])
       allow(eic).to receive(:open).with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
                                         ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(OpenURI::HTTPError.new("", status: 404))
       eic.call
-      expect(Provider.first.logo.attached?).to be_falsey
+
+      expect(Provider.first.logo.attached?).to be_truthy
     end
 
-    it "should gracefully handle error with logo download" do
+    it "should set default image on error" do
       eic = make_and_stub_eic(ids: ["phenomenal"])
       allow(eic).to receive(:open).with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
                                         ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(Errno::EHOSTUNREACH.new)
       eic.call
-      expect(Provider.first.logo.attached?).to be_falsey
+      expect(Provider.first.logo.attached?).to be_truthy
     end
   end
 end

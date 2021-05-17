@@ -1,6 +1,6 @@
 .card.shadow-sm.rounded
   %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(provider, [:name, :abbreviation, :website,
-          :legal_entity, :legal_statuses])),
+          :legal_entity, :legal_status])),
               data: { toggle: "collapse", target: "#basic" },
               aria: { expanded: true, controls: "basic" } }
     .card-header.text-left{ id: "basic-header" }
@@ -11,14 +11,20 @@
           .collapse-icon
             %i.fas.fa-chevron-down
             %i.fas.fa-chevron-up
+-# - ls = provider.legal_statuses.blank? ? nil : provider.legal_statuses
 .collapse{ id: "basic", "aria-labelledby": "basic-header",
           "data-parent": "#accordion-form",
           class: ("show" unless collapsed?(provider, [:name, :abbreviation, :website,
-          :legal_entity, :legal_statuses])) }
+          :legal_entity, :legal_status])) }
   .card-body
     = f.input :name, disabled: cant_edit(:name)
     = f.input :abbreviation, disabled: cant_edit(:abbreviation)
     = f.input :website, disabled: cant_edit(:website)
     = f.input :legal_entity, as: :boolean, checked_value: true, unchecked_value: false,
-                disabled: cant_edit(:legal_entity)
-    = f.association :legal_statuses, disabled: cant_edit([legal_status_ids: []]), input_html: { data: { choice: true } }
+                disabled: cant_edit(:legal_entity),
+                boolean_style: :inline,
+                input_html: {  data: { action: "change->form#refreshRelatedFields", "child-field": "legal_status" } }
+    = f.input :legal_status, disabled: cant_edit([legal_status_ids: []]),
+      collection: Vocabulary.where(type: "Vocabulary::LegalStatus"),
+      label_method: :name, value_method: :id,
+      input_html: { multiple: false, data: { choice: true } }

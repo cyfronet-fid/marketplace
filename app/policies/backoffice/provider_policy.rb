@@ -40,8 +40,9 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
     attrs = [
       :name, :abbreviation, :website,
       :legal_entity, [legal_status_ids: []],
+      :legal_status, :esfri_type, :provider_life_cycle_status,
       :description, :logo, [multimedia: []],
-      [scientific_domain_ids: []], :tag_list,
+      [scientific_domain_ids: []], [tag_list: []], [tags: []],
       :street_name_and_number, :postal_code,
       :city, :region, :country,
       [provider_life_cycle_status_ids: []], [certifications: []],

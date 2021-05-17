@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_101302) do
+ActiveRecord::Schema.define(version: 2021_06_08_090039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -325,6 +325,7 @@ ActiveRecord::Schema.define(version: 2021_05_18_101302) do
     t.bigint "provider_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "errored"
     t.index ["eid", "source_type", "provider_id"], name: "index_provider_sources_on_eid_and_source_type_and_provider_id", unique: true
     t.index ["provider_id"], name: "index_provider_sources_on_provider_id"
   end

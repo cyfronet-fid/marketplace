@@ -12,6 +12,7 @@ en:
         related_platforms: related platform
       provider:
         multimedia: multimedia
+        tag_list: tag
         affiliations: affiliation
         certifications: certification
         national_roadmaps: National roadmap

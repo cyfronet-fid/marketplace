@@ -40,7 +40,6 @@ class Service::PcCreateOrUpdate
 
     if mapped_service.nil? && @is_active
       service = Service.new(service_hash)
-      Importers::Logo.new(service, @eic_service["logo"]).call
       if service.valid?
         Service::Create.new(service).call
       else
@@ -50,21 +49,28 @@ class Service::PcCreateOrUpdate
       source = ServiceSource.create!(service_id: service.id, source_type: "eic", eid: @eid,
                                      errored: service.errors.messages)
       service.update(upstream_id: source.id)
+
+      Importers::Logo.new(service, @eic_service["logo"]).call
+      service.save!(validate: false)
       service
     elsif is_newer_update
       if mapped_service && !@is_active
-        Importers::Logo.new(mapped_service, @eic_service["logo"]).call
         Service::Update.new(mapped_service, service_hash).call
         Service::Draft.new(mapped_service).call
+
+        Importers::Logo.new(mapped_service, @eic_service["logo"]).call
+        mapped_service.save!
         mapped_service
       elsif !source_id.nil?
         if check_service = Service.new(service_hash).invalid?
           raise NotUpdatedError.new("Service is not updated, because parsed service data is invalid")
         end
-        Importers::Logo.new(mapped_service, @eic_service["logo"]).call
         Service::Update.new(mapped_service, service_hash).call
         mapped_service.update(upstream_id: source_id.id)
         mapped_service.sources.first.update(errored: nil)
+
+        Importers::Logo.new(mapped_service, @eic_service["logo"]).call
+        mapped_service.save!
         mapped_service
       else
         raise NotUpdatedError.new("Service source_id is unrecognized.")
