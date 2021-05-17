@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "import/eic"
+require "raven"
 
 namespace :import do
   desc "Imports services data from external providers"

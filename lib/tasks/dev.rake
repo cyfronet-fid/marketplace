@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
+require "#{Rails.root}/app/helpers/image_helper"
+
 namespace :dev do
+  include ImageHelper
+
   desc "Sample data for local development environment"
   task prime: "db:setup" do
     yaml_hash = YAML.load_file("db/data.yml")
@@ -33,7 +37,25 @@ namespace :dev do
   def create_providers(providers_hash)
     puts "Generating providers:"
     providers_hash.each do |_, hash|
-      Provider.find_or_create_by(name: hash["name"])
+      provider = Provider.find_or_initialize_by(name: hash["name"])
+      provider.abbreviation = hash["abbreviation"]
+      provider.website = hash["website"]
+      provider.legal_entity = hash["legal_entity"]
+      provider.description = hash["description"]
+      provider.street_name_and_number = hash["street_name_and_number"]
+      provider.postal_code = hash["postal_code"]
+      provider.city = hash["city"]
+      provider.country = Country.for(hash["country_alpha2"])
+      provider.pid = provider.abbreviation
+
+      io, extension = ImageHelper.base_64_to_blob_stream(hash["image_base_64"])
+      provider.logo.attach(
+        io: io,
+        filename: provider.pid + extension,
+        content_type: "image/#{extension.gsub!(".", "")}"
+      )
+
+      provider.save(validate: false)
       puts "  - #{hash["name"]} provider generated"
     end
   end
@@ -82,7 +104,7 @@ namespace :dev do
       target_users = TargetUser.where(name: hash["target_users"])
       order_type = order_type_from(hash)
 
-      service.update!(tagline: hash["tagline"],
+      service.assign_attributes(tagline: hash["tagline"],
                       description: hash["description"],
                       scientific_domains: domain,
                       providers: providers,
@@ -108,6 +130,7 @@ namespace :dev do
                       tag_list: hash["tags"],
                       platforms: platforms,
                       status: :published)
+      service.save(validate: false)
 
       service.logo.attached? && service.logo.purge_later
       hash["logo"] && service.logo.attach(io: File.open("db/logos/#{hash["logo"]}"), filename: hash["logo"])

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "webmock/rspec"
 require "spec_helper"
 require "view_component/test_helpers"
 # require "capybara/rails"
@@ -86,3 +87,5 @@ RSpec.configure do |config|
 end
 
 OmniAuth.config.test_mode = true
+
+WebMock.allow_net_connect!

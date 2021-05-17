@@ -76,7 +76,7 @@ class Importers::Provider
       postal_code: @data.dig("location", "postalCode"),
       city: @data.dig("location", "city"),
       region: @data.dig("location", "region"),
-      country: @data.dig("location", "country"),
+      country: Country.for(@data.dig("location", "country"))&.alpha2,
       # Contact
       main_contact: main_contact,
       public_contacts: public_contacts,

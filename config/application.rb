@@ -10,6 +10,11 @@ Bundler.require(*Rails.groups)
 
 module Mp
   class Application < Rails::Application
+    # IMPORTANT!!! Prevent crashing workers on thread error !!!
+    # The most common errored place is Image Magic conversion to PNG
+    # This flag will influence all threads in the application
+    Thread.abort_on_exception = true
+
     config.assets.enabled = false
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0

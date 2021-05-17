@@ -13,18 +13,20 @@ class Provider::PcCreateOrUpdate
                                                        "provider_sources.eid": @eid)
     if mapped_provider.nil?
       mapped_provider = Provider.new(provider_hash)
+      mapped_provider.set_default_logo
       if mapped_provider.save!
         provider_source = ProviderSource.create!(provider_id: mapped_provider.id, source_type: "eic", eid: @eid)
-        Importers::Logo.new(mapped_provider, @eic_provider["logo"]).call
       end
     else
       mapped_provider.update(provider_hash)
       provider_source = mapped_provider.sources.find_by(source_type: "eic")
-      Importers::Logo.new(mapped_provider, @eic_provider["logo"]).call
     end
     if provider_source.present?
       mapped_provider.update(upstream_id: provider_source.id)
     end
+
+    Importers::Logo.new(mapped_provider, @eic_provider["logo"]).call
+    mapped_provider.save!
     mapped_provider
   end
 end

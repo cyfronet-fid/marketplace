@@ -5,21 +5,12 @@ require "rails_helper"
 RSpec.feature "Question about provider" do
   include OmniauthHelper
 
-  scenario "cannot be send when contact emails are empty" do
-    provider = create(:provider)
-
-    visit provider_path(provider)
-
-    expect(page).to_not have_content "Ask this provider a question"
-  end
-
   context "as logged in user" do
     before { checkin_sign_in_as(create(:user)) }
 
     scenario "I can send question to contact emails", js: true do
       Capybara.page.current_window.resize_to("1600", "1024")
       provider = create(:provider)
-      create_list(:public_contact, 2, contactable: provider)
 
       visit provider_path(provider)
 
@@ -32,7 +23,7 @@ RSpec.feature "Question about provider" do
       expect do
         click_on "SEND"
         expect(page).to have_content("Your message was successfully sent")
-      end.to change { ActionMailer::Base.deliveries.count }.by(2)
+      end.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
 
     scenario "I cannot send message about service with empty message", js: true do
@@ -54,7 +45,6 @@ RSpec.feature "Question about provider" do
     scenario "I can send message about provider", js: true do
       Capybara.page.current_window.resize_to("1600", "1024")
       provider = create(:provider)
-      create_list(:public_contact, 2, contactable: provider)
 
       visit provider_path(provider)
 
@@ -69,7 +59,7 @@ RSpec.feature "Question about provider" do
       expect do
         click_on "SEND"
         expect(page).to have_content("Your message was successfully sent")
-      end.to change { ActionMailer::Base.deliveries.count }.by(2)
+      end.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
 
     scenario "I cannot send message about provider with empty fields", js: true do

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "raven"
+
 class Country
   SCHENGEN = ["AT", "BE", "CH", "CZ", "DE", "DK",
               "EE", "GR", "ES", "FI", "FR", "HU",
@@ -75,8 +77,17 @@ class Country
 
   class << self
     def for(value)
-      return value if value.is_a?(ISO3166::Country)
-      ISO3166::Country.new(value)
+      if value.is_a?(ISO3166::Country)
+        return value
+      end
+
+      searched_country = ISO3166::Country.new(value)
+      if searched_country.present? || value.blank?
+        return searched_country
+      end
+
+      Raven.capture_message("Country with alpha2 code: #{value}, couldn't be found")
+      ISO3166::Country.new("N/E")
     end
 
     def load(code)
