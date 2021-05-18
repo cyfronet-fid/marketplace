@@ -291,7 +291,7 @@ private
     when "SO-1"
       encode_order_properties(project_item)
     when "SO-ServiceOrderTarget"
-      project_item.service.order_target
+      project_item.offer.oms_params&.fetch("order_target", nil) || ""
     when "SO-OfferType"
       { "id" => @jira_config[:custom_fields][:select_values]["SO-OfferType".to_sym][map_to_jira_order_type(project_item).to_sym] }
     else
