@@ -78,7 +78,6 @@ RSpec.feature "Services in backoffice" do
       fill_in "Training information url", with: "https://sample.url"
       fill_in "Restrictions", with: "Reaserch affiliation needed"
       fill_in "Activate message", with: "Welcome!!!"
-      fill_in "Resource Order Target", with: "email@example.com"
       fill_in "service_certifications_0", with: "ISO-639"
       fill_in "service_standards_0", with: "standard"
       fill_in "service_open_source_technologies_0", with: "opensource"
@@ -98,9 +97,6 @@ RSpec.feature "Services in backoffice" do
       expect { click_on "Create Resource" }.
         to change { user.owned_services.count }.by(1)
                .and change { Offer.count }.by(1)
-
-
-      expect(user.owned_services.last.order_target).to eq("email@example.com")
 
       expect(page).to have_content("service name")
       expect(page).to have_content("service description")
@@ -557,7 +553,6 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Owners", disabled: false
       expect(page).to have_field "Funding bodies", disabled: false
       expect(page).to have_field "Funding programs", disabled: false
-      expect(page).to have_field "Resource Order Target", disabled: false
       expect(page).to have_field "Language availability", disabled: false
       expect(page).to have_field "Geographical availabilities", disabled: false
       expect(page).to have_field "Terms of use url", disabled: false
@@ -627,7 +622,6 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Funding programs", disabled: true
       expect(page).to have_field "service_grant_project_names_0", disabled: true
       expect(page).to have_field "Owners", disabled: false
-      expect(page).to have_field "Resource Order Target", disabled: false
       expect(page).to have_field "Language availability", disabled: true
       expect(page).to have_field "Geographical availabilities", disabled: true
       expect(page).to have_field "Resource geographic locations", disabled: true

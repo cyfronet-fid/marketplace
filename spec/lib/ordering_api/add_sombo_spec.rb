@@ -16,7 +16,8 @@ describe OrderingApi::AddSombo do
 
   it "doesn't create SOMBO OMS and SOMBO admin if they exist" do
     admin = create(:user, first_name: "SOMBO admin", last_name: "SOMBO admin", email: "sombo@sombo.com", uid: "iamasomboadmin")
-    create(:oms, name: "SOMBO", type: :global, default: true, custom_params: { order_target: { mandatory: false } }, administrators: [admin])
+    create(:oms, name: "SOMBO", administrators: [admin])
+
     described_class.new.call
 
     expect(User.count).to eq(1)
@@ -26,36 +27,32 @@ describe OrderingApi::AddSombo do
     expect(OMS.first.administrators.first.first_name).to eq("SOMBO admin")
   end
 
-  it "updates offers' oms_params properly" do
-    offer1 = create(:offer, primary_oms: nil, service: create(:service, order_target: "admin@admin.pl"))
-    service = create(:service, order_target: "data@data.pl")
-    offer2 = create(:offer, primary_oms: nil, service: service)
+  it "creates SOMBO OMS, SOMBO admin relationship if they exist" do
+    sombo_admin = create(:user,
+                         first_name: "SOMBO admin",
+                         last_name: "SOMBO admin",
+                         email: "sombo@sombo.com",
+                         uid: "iamasomboadmin")
+    create(:oms, name: "SOMBO")
 
     described_class.new.call
-    offer1.reload
-    offer2.reload
 
-    expect(offer1.current_oms).to eql(OMS.find_by(default: true))
-    expect(offer1.current_oms.name).to eql("SOMBO")
-    expect(offer1.oms_params.symbolize_keys).to eql({ order_target: "admin@admin.pl" })
+    expect(OMS.count).to eq(1)
+    OMS.all.each do |sombo|
+      expect(sombo.administrators.count).to eq(3)
+      expect(sombo.administrators).to include(sombo_admin)
+    end
+  end
 
-    expect(offer2.current_oms).to eql(OMS.find_by(default: true))
-    expect(offer2.current_oms.name).to eql("SOMBO")
-    expect(offer2.oms_params.symbolize_keys).to eql({ order_target: "data@data.pl" })
-
-    new_oms = create(:oms, custom_params: { a: { mandatory: true, default: "asd" } })
-    offer1.update(primary_oms: new_oms, oms_params: { a: "qwe" })
-    service.update(order_target: "qwe@qwe.pl")
+  it "creates SOMBO OMS, SOMBO admin relationship if SOMBO exists and admin doesn't" do
+    create(:oms, name: "SOMBO")
 
     described_class.new.call
-    offer1.reload
-    offer2.reload
 
-    expect(offer1.current_oms).to eql(new_oms)
-    expect(offer1.oms_params.symbolize_keys).to eql({ a: "qwe" })
-
-    expect(offer2.current_oms).to eql(OMS.find_by(default: true))
-    expect(offer2.current_oms.name).to eql("SOMBO")
-    expect(offer2.oms_params.symbolize_keys).to eql({ order_target: "qwe@qwe.pl" })
+    expect(OMS.count).to eq(1)
+    OMS.all.each do |sombo|
+      expect(sombo.administrators.count).to eq(3)
+      expect(sombo.administrators).to include(User.find_by(uid: "iamasomboadmin"))
+    end
   end
 end

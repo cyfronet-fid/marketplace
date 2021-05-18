@@ -58,20 +58,6 @@ RSpec.describe Service do
     expect(s1.related_services).to contain_exactly(s2, s3)
   end
 
-  it "requires service_order_target to be an email" do
-    service = create(:service)
-    service.order_target = "not-valid-email"
-    expect(service.valid?).to be_falsey
-    service.order_target = "valid@email.com"
-    expect(service.valid?).to be_truthy
-  end
-
-  it "allows service_order_target to be blank" do
-    service = create(:service)
-    service.order_target = ""
-    expect(service.valid?).to be_truthy
-  end
-
   context "#owned_by?" do
     it "is true when user is in the owners list" do
       owner = create(:user)
@@ -80,7 +66,7 @@ RSpec.describe Service do
       expect(service.owned_by?(owner)).to be_truthy
     end
 
-    it "is false when user is not in the owers list" do
+    it "is false when user is not in the owners list" do
       stranger = create(:user)
       service = create(:service)
 

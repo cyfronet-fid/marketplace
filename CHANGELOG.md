@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Resource provider can navigate to the ordering parameters management from the Resource Presentation Page (@kmarszalek, @jarekzet)
 
 ### Changed
+- Remove order target field from Resource. It is configurable on Offer only now (@jswk)
 - For an Offer, an empty order URL doesn't imply internal ordering (@jswk)
 - More consistent form behaviour for ordering configuration (@jswk)
 
