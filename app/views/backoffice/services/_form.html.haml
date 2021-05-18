@@ -372,7 +372,7 @@
             = f.input :maintenance_url, disabled: cant_edit(:maintenance_url)
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-              [:order_type, :order_url, :order_target])),
+              [:order_type, :order_url])),
               data: { toggle: "collapse", target: "#order" },
               aria: { expanded: true, controls: "order" } }
             .card-header.text-left{ id: "order-header" }
@@ -385,7 +385,7 @@
                     %i.fas.fa-chevron-up
         .collapse{ id: "order", "aria-labelledby": "order-header",
             "data-parent": "#accordion-form",
-            class: ("show" unless collapsed?(service, [:order_type, :order_url, :order_target])) }
+            class: ("show" unless collapsed?(service, [:order_type, :order_url])) }
           .card-body
             .row
               .col-12
@@ -394,9 +394,6 @@
             .row
               .col-12
                 = f.input :order_url, disabled: cant_edit(:order_url)
-            .row
-              .col-12
-                = f.input :order_target, label: _("Resource Order Target"), disabled: cant_edit(:order_target)
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
               [:payment_model_url, :pricing_url])),
