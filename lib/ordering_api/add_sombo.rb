@@ -15,15 +15,10 @@ module OrderingApi
         oms.type = :global
         oms.default = true
         oms.custom_params = { order_target: { mandatory: false } }
-        oms.administrators = [sombo_admin]
       end
 
-      Service.all.each do |s|
-        s.offers.each do |o|
-          if o.current_oms == sombo && s.order_target.present?
-            o.update(oms_params: { order_target: s.order_target })
-          end
-        end
+      unless sombo.administrators.include?(sombo_admin)
+        sombo.administrators << sombo_admin
       end
     end
   end

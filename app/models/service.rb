@@ -159,7 +159,6 @@ class Service < ApplicationRecord
   validate :logo_variable, on: [:create, :update]
   validates :scientific_domains, presence: true
   validates :status, presence: true
-  validates :order_target, allow_blank: true, email: true
   validates :trl, length: { maximum: 1 }
   validates :life_cycle_status, length: { maximum: 1 }
   validates :geographical_availabilities, presence: true

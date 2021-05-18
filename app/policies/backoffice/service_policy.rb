@@ -18,7 +18,6 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   MP_INTERNAL_FIELDS = [
     [category_ids: []],
     [platform_ids: []],
-    :order_target,
     :restrictions,
     :status,
     :activate_message,
@@ -89,7 +88,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       :webpage_url, :manual_url, :helpdesk_url,
       :helpdesk_email, :security_contact_email, :training_information_url,
       :privacy_policy_url, [use_cases_url: []], :restrictions,
-      :order_target, :status_monitoring_url, :maintenance_url,
+      :status_monitoring_url, :maintenance_url,
       :order_url, :payment_model_url, :pricing_url,
       [funding_body_ids: []], [funding_program_ids: []],
       [access_type_ids: []], [access_mode_ids: []],

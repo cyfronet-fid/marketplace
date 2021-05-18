@@ -23,9 +23,13 @@ describe Jira::Client do
 
     user = create(:user, first_name: "John", last_name: "Doe", uid: "uid1")
     project_item = create(:project_item,
-          offer: create(:offer, name: "off1", service: create(:service,
-                                                              name: "s1",
-                                                              categories: [create(:category, name: "cat1")])),
+          offer: create(:offer,
+                        name: "off1",
+                        service: create(:service,
+                                        name: "s1",
+                                        categories: [create(:category, name: "cat1")]),
+                        primary_oms: create(:oms, custom_params: { "order_target": { "mandatory": false } }),
+                        oms_params: { "order_target": "admin@example.com" }),
           project: create(:project, user: user, name: "My Secret Project",
                           user_group_name: "New user group", reason_for_access: "some reason"),
           properties: [
@@ -75,7 +79,7 @@ describe Jira::Client do
                            "Harvesting endpoint" => "aaaaa",
                          }
                        }.to_json,
-                       "SO-ServiceOrderTarget-1" => "admin@admin.com",
+                       "SO-ServiceOrderTarget-1" => "admin@example.com",
                        "SO-OfferType-1" => { "id" => "20005" } }
 
     issue = double(:Issue)
@@ -94,7 +98,6 @@ describe Jira::Client do
                           offer: create(:open_access_offer,
                                         name: "off1",
                                         service: create(:open_access_service,
-                                                        order_target: "email@example.com",
                                                         name: "s1",
                                                         categories: [create(:category, name: "cat1")])),
                           project: create(:project, user: user,
@@ -118,7 +121,7 @@ describe Jira::Client do
                           "offer" => "off1",
                           "attributes" => {}
                         }.to_json,
-                        "SO-ServiceOrderTarget-1" => "email@example.com",
+                        "SO-ServiceOrderTarget-1" => "",
                         "SO-OfferType-1" => { "id" => "20006" } }
 
 
@@ -140,7 +143,7 @@ describe Jira::Client do
                                         voucherable: true,
                                         service: create(:open_access_service,
                                                         name: "s1",
-                                                                 categories: [create(:category, name: "cat1")])),
+                                                        categories: [create(:category, name: "cat1")])),
                           voucher_id: "123123",
                           project: create(:project, user: user,
                                           name: "My Secret Project",
@@ -163,7 +166,7 @@ describe Jira::Client do
                           "offer" => "off1",
                           "attributes" => {}
                         }.to_json,
-                        "SO-ServiceOrderTarget-1" => "admin@admin.com",
+                        "SO-ServiceOrderTarget-1" => "",
                         "SO-OfferType-1" => { "id" => "20006" } }
 
     issue = double(:Issue)
@@ -204,7 +207,7 @@ describe Jira::Client do
                           "offer" => "off1",
                           "attributes" => {}
                         }.to_json,
-                        "SO-ServiceOrderTarget-1" => "admin@admin.com",
+                        "SO-ServiceOrderTarget-1" => "",
                         "SO-OfferType-1" => { "id" => "20006" } }
 
     issue = double(:Issue)

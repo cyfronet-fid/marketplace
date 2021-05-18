@@ -101,8 +101,6 @@ en:
           Url should start with http or https [e.g. https://example.com]
         tag_list: |
           Use "," to separate tags
-        order_target: |
-          Email address [e.g. email@example.com]
         logo: |
           Supported logo formats: png, gif, jpg, jpeg, pjpeg, tiff,
           vnd.adobe.photoshop and vnd.microsoft.icon

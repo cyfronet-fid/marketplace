@@ -34,7 +34,7 @@ RSpec.describe Backoffice::ServicePolicy do
                                                   [changelog: []],
                                                   :helpdesk_email, :security_contact_email,
                                                   :training_information_url, :restrictions,
-                                                  :order_target, :status_monitoring_url, :maintenance_url,
+                                                  :status_monitoring_url, :maintenance_url,
                                                   :order_url, :payment_model_url, :pricing_url,
                                                   [related_service_ids: []], [required_service_ids: []],
                                                   [manual_related_service_ids: []],
@@ -58,7 +58,7 @@ RSpec.describe Backoffice::ServicePolicy do
       source = create(:service_source, source_type: :eic, service: service)
       service.update!(upstream: source)
       policy = described_class.new(service_owner, service)
-      expect(policy.permitted_attributes).to match_array([:order_target,
+      expect(policy.permitted_attributes).to match_array([
                                                      :restrictions, :activate_message,
                                                      [platform_ids: []], [owner_ids: []],
                                                      [category_ids: []], :status, :upstream_id,
