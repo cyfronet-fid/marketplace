@@ -15,4 +15,8 @@ module ComparisonsHelper
       {}
     end
   end
+
+  def row_class(idx)
+    idx.even? ? nil : "lightgrey-row"
+  end
 end
