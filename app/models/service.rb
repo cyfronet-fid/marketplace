@@ -227,7 +227,7 @@ class Service < ApplicationRecord
     providers
       .reject(&:blank?)
       .reject { |p| p == resource_organisation }
-      .empty?
+      .size.positive?
   end
 
   def available_omses

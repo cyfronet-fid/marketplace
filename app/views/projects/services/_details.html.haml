@@ -25,5 +25,10 @@
     %dd= link_to _("Service Level Agreement"), project_item.service.sla_url
 %dl
   %dt
-    = _("Providers") + ":"
-  %dd= service_providers_list(project_item)
+    = _("Resource Organisation") + ":"
+  %dd= service_resource_organisation(project_item)
+- unless service_providers_list(project_item).blank?
+  %dl
+    %dt
+      = _("Resource Providers") + ":"
+    %dd= service_providers_list(project_item)
