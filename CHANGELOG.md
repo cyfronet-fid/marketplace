@@ -5,17 +5,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
+
 ## [Unreleased]
 
 ### Added
-- Resource provider can navigate to the Provider Component from the Resource Presentation Page (@kmarszalek, @jarekzet)
-- Resource provider can navigate to the ordering parameters management from the Resource Presentation Page (@kmarszalek, @jarekzet)
 
 ### Changed
 
 ### Deprecated
 
 ### Removed
+
+### Fixed
+
+## [3.12.0] 2021-05-19
+
+### Added
+- Resource provider can navigate to the Provider Component from the Resource Presentation Page (@kmarszalek, @jarekzet)
+- Resource provider can navigate to the ordering parameters management from the Resource Presentation Page (@kmarszalek, @jarekzet)
 
 ### Fixed
 - Change img background at /backoffice/providers/<id> from black to transparent on resize (@danielkryska)
