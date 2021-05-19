@@ -20,7 +20,7 @@
         = link_to _("Catalogue & Marketplace"), root_path,
           class: "#{"active" if local_assigns[:section] == nil}"
       %li
-        %a{ href: Mp::Application.config.providers_dashboard_url } Providers Dashboard
+        %a{ href: "#{Mp::Application.config.providers_dashboard_url}/provider/my" } Providers Dashboard
       - if policy([:backoffice, :backoffice]).show?
         %li
           = link_to _("Backoffice"), backoffice_path,
