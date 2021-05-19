@@ -4,7 +4,7 @@
       = _("Organisation") + ":"
   %dd.x-small
     %mr-4= resource_organisation(service, highlights)
-- unless service.providers?
+- if service.providers?
   %dl.mb-0
     %dt.x-small
       %span
