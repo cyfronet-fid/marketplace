@@ -29,7 +29,6 @@ export default class extends Controller {
   disableFormButtons() {
     if (this.formTarget.dataset.disabled === "true") {
       const elements = document.getElementsByClassName("disablable");
-      console.log(elements);
       for (let i = 0; i<elements.length; i++) {
         elements[i].classList.add("disabled");
       }
