@@ -11,7 +11,12 @@ export default class extends Controller {
   }
 
   reload(event) {
-    this.formTarget.submit();
+    let form = this.formTarget;
+    for (const element of form) {
+      if ((element.tagName === "INPUT" && !element.checked) || (element.tagName === "SELECT" && element.value == ""))
+        element.disabled = true;
+    }
+    form.submit();
     document.getElementsByClassName("spinner-background")[0].style.display = 'flex';
   }
 

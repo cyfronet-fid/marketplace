@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - For an Offer, an empty order URL doesn't imply internal ordering (@jswk)
 - More consistent form behaviour for ordering configuration (@jswk)
 - From now after click "Stop showing in the MP" on the resource page, offers aren't deleted (@goreck888) 
+- Remove empty filter parameters in resources search, which makes urls shorter (@goreck888)
 
 ### Deprecated
 

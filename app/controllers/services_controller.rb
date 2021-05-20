@@ -20,6 +20,9 @@ class ServicesController < ApplicationController
     @recommended_services = fetch_recommended
     @favourite_services = current_user&.favourite_services || Service.
       where(slug: Array(cookies[:favourites]&.split("&") || []))
+    if params.values.any? { |v| v.blank? }
+      render services_path(params.reject { |k, v| v.blank? }.permit)
+    end
   end
 
   def show

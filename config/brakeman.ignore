@@ -15,7 +15,7 @@
           "type": "controller",
           "class": "Backoffice::ServicesController",
           "method": "index",
-          "line": 21,
+          "line": 23,
           "file": "app/controllers/backoffice/services_controller.rb",
           "rendered": {
             "name": "backoffice/services/index",
@@ -35,7 +35,7 @@
         {
           "type": "template",
           "name": "services/_index",
-          "line": 14,
+          "line": 17,
           "file": "app/views/services/_index.html.haml",
           "rendered": {
             "name": "services/_pagination",
@@ -76,7 +76,7 @@
           "type": "controller",
           "class": "Backoffice::ServicesController",
           "method": "index",
-          "line": 21,
+          "line": 23,
           "file": "app/controllers/backoffice/services_controller.rb",
           "rendered": {
             "name": "backoffice/services/index",
@@ -96,7 +96,7 @@
         {
           "type": "template",
           "name": "services/_index",
-          "line": 14,
+          "line": 17,
           "file": "app/views/services/_index.html.haml",
           "rendered": {
             "name": "services/_pagination",
@@ -173,7 +173,7 @@
           "type": "controller",
           "class": "Backoffice::ServicesController",
           "method": "index",
-          "line": 21,
+          "line": 23,
           "file": "app/controllers/backoffice/services_controller.rb",
           "rendered": {
             "name": "backoffice/services/index",
@@ -193,7 +193,7 @@
         {
           "type": "template",
           "name": "services/_index",
-          "line": 14,
+          "line": 17,
           "file": "app/views/services/_index.html.haml",
           "rendered": {
             "name": "services/_pagination",
@@ -217,6 +217,47 @@
       },
       "user_input": null,
       "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "553ecfa626988b985eb2fbdf1848ca10457771e73e2205912fd99fa4ff19373a",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped cookie value",
+      "file": "app/views/layouts/_recommendation.html.haml",
+      "line": 7,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "((\"'\" + sanitize(cookies[:lastPageId])) + \"'\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "ApplicationController",
+          "method": "set_follow_context",
+          "line": null,
+          "file": "app/controllers/concerns/recommendation/followable.rb",
+          "rendered": {
+            "name": "layouts/application",
+            "file": "app/views/layouts/application.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "layouts/application",
+          "line": 28,
+          "file": "app/views/layouts/application.html.haml",
+          "rendered": {
+            "name": "layouts/_recommendation",
+            "file": "app/views/layouts/_recommendation.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "layouts/_recommendation"
+      },
+      "user_input": "cookies[:lastPageId]",
+      "confidence": "Weak",
       "note": ""
     },
     {
@@ -256,6 +297,26 @@
       "note": ""
     },
     {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "6383e2bade2574623b8e66218482b80468d6cb2f60e98e86afdb81fb9fe3440f",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/controllers/services_controller.rb",
+      "line": 24,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => services_path(params.reject do\n v.blank?\n end.permit), {})",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ServicesController",
+        "method": "index"
+      },
+      "user_input": "params.reject",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
       "warning_type": "Mass Assignment",
       "warning_code": 70,
       "fingerprint": "d06e1c85551aa02f3f8da3a7d5c309ed69783a1fa39928ea676b0bf9646f3d0c",
@@ -274,8 +335,49 @@
       "user_input": null,
       "confidence": "Medium",
       "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "ea9e64e667e8d4b95163d5642554258eaa674de5f812ee863fa5f885fe843c6a",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped cookie value",
+      "file": "app/views/layouts/_recommendation.html.haml",
+      "line": 4,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "((\"'\" + sanitize(cookies[:targetId])) + \"'\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "ApplicationController",
+          "method": "set_follow_context",
+          "line": null,
+          "file": "app/controllers/concerns/recommendation/followable.rb",
+          "rendered": {
+            "name": "layouts/application",
+            "file": "app/views/layouts/application.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "layouts/application",
+          "line": 28,
+          "file": "app/views/layouts/application.html.haml",
+          "rendered": {
+            "name": "layouts/_recommendation",
+            "file": "app/views/layouts/_recommendation.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "layouts/_recommendation"
+      },
+      "user_input": "cookies[:targetId]",
+      "confidence": "Weak",
+      "note": ""
     }
   ],
-  "updated": "2020-10-08 17:27:44 +0200",
-  "brakeman_version": "4.10.0"
+  "updated": "2021-05-27 10:49:51 +0200",
+  "brakeman_version": "5.0.1"
 }
