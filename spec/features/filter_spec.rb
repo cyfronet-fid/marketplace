@@ -33,7 +33,7 @@ RSpec.feature "Service filter" do
     end
   end
 
-  it "respects seach query", js: true do
+  it "respects search query" do
     visit services_path(q: "Funcy search phrase")
     select "Other"
 

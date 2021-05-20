@@ -14,6 +14,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - From now after click "Stop showing in the MP" on the resource page, offers aren't deleted (@goreck888)
 - Resource organisation and resource providers are separated in the comparison's and Project Item's views (@goreck888)
+- Remove empty filter parameters in resources search, which makes urls shorter (@goreck888)
 
 ### Deprecated
 
