@@ -385,16 +385,6 @@
         "description":{
           "type":"string"
         },
-        "webpage":{
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "order_type":{
           "type":"string",
           "enum":[

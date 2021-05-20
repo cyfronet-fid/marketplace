@@ -259,7 +259,7 @@
         ],
         "responses": {
           "200": {
-            "description": "offer updated",
+            "description": "doesn't update primary_oms and oms_params and internal if not order_required",
             "content": {
               "application/json": {
                 "schema": {
