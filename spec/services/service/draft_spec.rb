@@ -10,6 +10,6 @@ RSpec.describe Service::Draft do
     described_class.new(service).call
 
     expect(service.reload).to be_draft
-    expect(offer.reload).to be_draft
+    expect(offer.reload).to_not be_draft
   end
 end
