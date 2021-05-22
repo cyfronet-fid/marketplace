@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Remove order target field from Resource. It is configurable on Offer only now (@jswk)
 - For an Offer, an empty order URL doesn't imply internal ordering (@jswk)
 - More consistent form behaviour for ordering configuration (@jswk)
+- From now after click "Stop showing in the MP" on the resource page, offers aren't deleted (@goreck888) 
 
 ### Deprecated
 

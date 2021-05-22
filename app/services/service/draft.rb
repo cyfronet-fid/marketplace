@@ -7,6 +7,5 @@ class Service::Draft
 
   def call
     @service.update(status: :draft)
-    @service.offers.each { |o| Offer::Draft.new(o).call }
   end
 end
