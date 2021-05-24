@@ -168,4 +168,22 @@ class Provider < ApplicationRecord
       errors.add(:certifications, "has duplicates, please remove them to continue") if certifications.uniq.length != certifications.length
       errors.add(:national_roadmaps, "has duplicates, please remove them to continue") if national_roadmaps.uniq.length != national_roadmaps.length
     end
+
+    def update_in_provider_component
+      # is_create = self[:pid].blank?
+      #
+      # converted_provider = Exporters::Provider.new(self).call.to_json
+      # url = Mp::Application.config.export_provider_component_host + "/provider"
+      # auth_token = Mp::Application.config.pc_export_token
+      # headers = {
+      #   "Authorization": "Bearer #{auth_token}",
+      #   "Content-Type": "application/json"
+      # }
+      # response = is_create ?
+      #   Unirest.post(url, headers, converted_provider) :
+      #   Unirest.put(url, headers, converted_provider)
+
+      # response
+      # response.body.transform_keys(&:to_sym)
+    end
 end
