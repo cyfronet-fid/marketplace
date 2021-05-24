@@ -6,9 +6,21 @@ class Parameter::Multiselect < Parameter
 
   attribute :unit, :string
 
-  validates :min, numericality: { greater_than: 0,  less_than_or_equal_to: ->(p) { p.values&.length || 1 } }
-  validates :max, numericality: { greater_than: 0, less_than_or_equal_to: ->(p) { p.values&.length || 1 } }
+  validates :min, numericality: { greater_than: 0 }
+  validates :max, numericality: { greater_than: 0 }
+
+  validates :min, numericality: { less_than_or_equal_to: ->(p) { p.values&.length || 1 } }, if: :values_and_max?
+  validates :max, numericality: { less_than_or_equal_to: ->(p) { p.values&.length || 1 } }, if: :values_and_min?
+
   validate :duplicates, if: :values
+
+  def values_and_min?
+    values.present? && min.present?
+  end
+
+  def values_and_max?
+    values.present? && min.present?
+  end
 
   def dump
     ActiveSupport::HashWithIndifferentAccess.new(
