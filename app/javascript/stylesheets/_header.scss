@@ -286,7 +286,7 @@
 @media (max-width: 992px) {
 
   header .navbar {
-    padding-top: 0;
+    padding: 0;
   }
 
   .top-row {
@@ -298,9 +298,10 @@
     max-width: 100%;
     width: 100%;
 
+    /*
     ul:first-child {
       display: none !important;
-    }
+    } */
   }
 
   .home-intro {

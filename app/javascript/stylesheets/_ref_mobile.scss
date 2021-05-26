@@ -31,6 +31,26 @@
     margin: 0 0 20px;
   }
 
+  .navbar-toggler {
+    display: block;
+  }
+
+  .backoffice-menu {
+    margin-top: 15px;
+    border: none;
+    padding: 0;
+  }
+
+  .backoffice-logo {
+    img {
+      margin: 0;
+    }
+  }
+
+  .navbar-brand {
+    padding: 25px 0 0;
+  }
+
   .create-resource {
     margin-bottom: 20px;
   }
@@ -266,11 +286,18 @@
 
   .mobile-bottom-margin {
     margin-bottom: 25px;
+    float: left;
+    width: 100%;
   }
 
 }
 
 @media (max-width: 576px) {
+
+  .container {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
 
   .header {
 
