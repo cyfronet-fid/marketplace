@@ -425,7 +425,15 @@
   }
 
   .footer {
+
+    .container {
+      padding: 0;
+    }
+
     .row {
+      margin-left: 0;
+      margin-right: 0;
+
       .col-md {
         width: 50%;
         margin-bottom: 15px;
@@ -578,5 +586,23 @@
     }
   }
 
+  .service-box {
+    .media-body {
+      .compare {
+        width: 100%;
+        margin: 15px 0 8px;
+
+        &.favourites {
+          margin: 0 0 13px !important;
+        }
+      }
+
+      h2 {
+        .badge {
+          top: -20px;
+        }
+      }
+    }
+  }
 }
 
