@@ -43,9 +43,9 @@
               aria: { expanded: true, controls: "basic" } }
             .card-header.text-left{ id: "basic-header" }
               .row
-                .col-11
+                .col-10
                   = _("Basic")
-                .col-1.text-right
+                .col-2.text-right
                   .collapse-icon
                     %i.fas.fa-chevron-down
                     %i.fas.fa-chevron-up
@@ -65,9 +65,9 @@
               aria: { expanded: true, controls: "marketing" } }
             .card-header.text-left{ id: "marketing-header" }
               .row
-                .col-11
+                .col-10
                   = _("Marketing")
-                .col-1.text-right
+                .col-2.text-right
                   .collapse-icon
                     %i.fas.fa-chevron-down
                     %i.fas.fa-chevron-up
@@ -96,9 +96,9 @@
               aria: { expanded: true, controls: "classification" } }
             .card-header.text-left{ id: "classification-header" }
               .row
-                .col-11
+                .col-10
                   = _("Classification")
-                .col-1.text-right
+                .col-2.text-right
                   .collapse-icon
                     %i.fas.fa-chevron-down
                     %i.fas.fa-chevron-up
@@ -131,9 +131,9 @@
               aria: { expanded: true, controls: "availability" } }
             .card-header.text-left{ id: "availability-header" }
               .row
-                .col-11
+                .col-10
                   = _("Availability")
-                .col-1.text-right
+                .col-2.text-right
                   .collapse-icon
                     %i.fas.fa-chevron-down
                     %i.fas.fa-chevron-up
@@ -156,9 +156,9 @@
                   aria: { expanded: true, controls: "location" } }
             .card-header.text-left{ id: "contact-header" }
               .row
-                .col-11
+                .col-10
                   = _("Location")
-                .col-1.text-right
+                .col-2.text-right
                   .collapse-icon
                     %i.fas.fa-chevron-down
                     %i.fas.fa-chevron-up
@@ -179,9 +179,9 @@
                 aria: { expanded: true, controls: "contact" } }
             .card-header.text-left{ id: "contact-header" }
               .row
-                .col-11
+                .col-10
                   = _("Contact")
-                .col-1.text-right
+                .col-2.text-right
                   .collapse-icon
                     %i.fas.fa-chevron-down
                     %i.fas.fa-chevron-up
@@ -238,9 +238,9 @@
                 aria: { expanded: true, controls: "maturity" } }
             .card-header.text-left{ id: "maturity-header" }
               .row
-                .col-11
+                .col-10
                   = _("Maturity")
-                .col-1.text-right
+                .col-2.text-right
                   .collapse-icon
                     %i.fas.fa-chevron-down
                     %i.fas.fa-chevron-up
@@ -286,9 +286,9 @@
                 aria: { expanded: true, controls: "dependencies" } }
             .card-header.text-left{ id: "dependencies-header" }
               .row
-                .col-11
+                .col-10
                   = _("Dependencies")
-                .col-1.text-right
+                .col-2.text-right
                   .collapse-icon
                     %i.fas.fa-chevron-down
                     %i.fas.fa-chevron-up
@@ -319,9 +319,9 @@
               aria: { expanded: true, controls: "attribution" } }
             .card-header.text-left{ id: "attribution-header" }
               .row
-                .col-11
+                .col-10
                   = _("Attribution")
-                .col-1.text-right
+                .col-2.text-right
                   .collapse-icon
                     %i.fas.fa-chevron-down
                     %i.fas.fa-chevron-up
@@ -348,9 +348,9 @@
               aria: { expanded: true, controls: "management" } }
             .card-header.text-left{ id: "management-header" }
               .row
-                .col-11
+                .col-10
                   = _("Management")
-                .col-1.text-right
+                .col-2.text-right
                   .collapse-icon
                     %i.fas.fa-chevron-down
                     %i.fas.fa-chevron-up
@@ -377,9 +377,9 @@
               aria: { expanded: true, controls: "order" } }
             .card-header.text-left{ id: "order-header" }
               .row
-                .col-11
+                .col-10
                   = _("Order")
-                .col-1.text-right
+                .col-2.text-right
                   .collapse-icon
                     %i.fas.fa-chevron-down
                     %i.fas.fa-chevron-up
@@ -401,9 +401,9 @@
               aria: { expanded: true, controls: "financial" } }
             .card-header.text-left{ id: "financial-header" }
               .row
-                .col-11
+                .col-10
                   = _("Financial")
-                .col-1.text-right
+                .col-2.text-right
                   .collapse-icon
                     %i.fas.fa-chevron-down
                     %i.fas.fa-chevron-up
@@ -421,9 +421,9 @@
                 aria: { expanded: true, controls: "other" } }
             .card-header.text-left{ id: "other-header" }
               .row
-                .col-11
+                .col-10
                   = _("Other")
-                .col-1.text-right
+                .col-2.text-right
                   .collapse-icon
                     %i.fas.fa-chevron-down
                     %i.fas.fa-chevron-up
@@ -471,7 +471,7 @@
           = f.button :button, _("Preview"),
               name: "commit",
               value: "Preview",
-              class: "btn btn-primary pl-5 pr-5 mr-5"
-          = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5"
+              class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin"
+          = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin"
           = back_link_to _("Cancel and back to previous page"), service, prefix: :backoffice,
               class: "text-left flex-grow-1 text-uppercase"
