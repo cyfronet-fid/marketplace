@@ -571,35 +571,6 @@ textarea:-ms-input-placeholder { /* IE 10+ */
     font-size: 16px;
   }
 
-  .service-box {
-    display: block;
-
-    .badge {
-      font-size: 0.8em;
-      padding: 7px 14px;
-      text-transform: uppercase;
-      position: absolute;
-      border-left: 1px solid $palette-solid-10;
-      border-bottom: 1px solid $palette-solid-10;
-      top: 0;
-      color: $palette-solid-50;
-      font-weight: 400;
-      right: 0;
-      -webkit-border-radius: 0;
-      -moz-border-radius: 0;
-      border-radius: 0;
-
-      &.badge-success,
-      &.badge-warning,
-      &.badge-error {
-        color: $white;
-      }
-
-      .service-logo {
-        margin: 20px 0;
-      }
-    }
-  }
 }
 
 .body-color {
@@ -2389,6 +2360,7 @@ label[data-multicheckbox].small {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  overflow: hidden;
 
   &.backoffice {
     .btn-outline-secondary {
@@ -2525,6 +2497,7 @@ label[data-multicheckbox].small {
   .media-body {
     border-right: 1px solid $palette-gray-10;
     position: relative;
+    overflow: hidden;
 
     .compare {
       float: left;

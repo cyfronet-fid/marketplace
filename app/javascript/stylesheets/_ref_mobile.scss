@@ -1,3 +1,5 @@
+@import 'variables';
+
 @media (max-width: 1225px) {
   .standard-list-wrapper {
     flex-wrap: wrap;
@@ -24,11 +26,20 @@
 
 @media (max-width: 992px) {
 
+
+  .backoffice {
+    margin: 0 0 20px;
+  }
+
+  .create-resource {
+    margin-bottom: 20px;
+  }
+
   main {
     padding: 0 10px;
   }
 
-  nav {
+  .top {
     display: none;
   }
 
@@ -135,6 +146,11 @@
 }
 
 @media (max-width: 768px) {
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
   .service-info-box {
     display: block;
     flex: unset;
@@ -164,6 +180,80 @@
   .api-submenu {
     margin-bottom: 30px;
   }
+
+  .service-box {
+    h2 {
+      font-size: 1rem;
+    }
+
+    .media-body {
+      .pl-4 {
+        padding-left: 0.5rem !important;
+      }
+
+      .pr-4 {
+        padding-right: 0.5rem !important;
+      }
+
+      .compare.favourites {
+        margin-right: 0;
+        font-size: 12px;
+        margin-left: 7px;
+      }
+    }
+  }
+  // scss-lint:disable all
+  .compare input[type=checkbox] + span {
+    margin-top: 5px;
+    font-size: 11px;
+  }
+  // scss-lint:enable all
+
+  .media.service-box {
+    display: flex;
+    flex-flow: column;
+
+    .media-body {
+      order: 2;
+    }
+
+    .right-extra-info {
+      order: 1;
+      position: relative;
+      width: 100%;
+
+      .service-logo {
+        margin-top: 10px;
+      }
+
+      .badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-left: 1px solid $palette-solid-10;
+        width: auto;
+      }
+    }
+  }
+
+  .service-info-box.recommendation {
+    margin: 0 0 20px;
+
+    header {
+      font-size: 1rem;
+    }
+
+    article {
+      font-size: 0.8rem;
+      padding: 0 0.5rem 1.3rem;
+    }
+
+    footer {
+      margin: 0 0.5rem 0.45rem;
+      width: calc(100% - 1rem);
+    }
+  }
+
 }
 
 @media (max-width: 576px) {
@@ -184,7 +274,7 @@
 
       .container-select {
         min-width: 115px;
-        width: auto;
+        width: 115px;
       }
     }
 
@@ -367,7 +457,8 @@
   }
   // scss-lint:disable all
   .compare input[type=checkbox] + span {
-    margin-top: 20px;
+    margin-top: 5px;
+    font-size: 12px;
     float: left;
   }
   // scss-lint:enable all
