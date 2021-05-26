@@ -290,6 +290,43 @@
     width: 100%;
   }
 
+  .parameters-section {
+    .parameter-list {
+      width: 100%;
+      position: relative;
+    }
+
+    .parameter-cards {
+      width: 100%;
+      margin-top: 25px;
+      min-height: 300px;
+
+      .offer-attributes {
+        &::before {
+          top: 15%;
+          font-size: 12px;
+        }
+
+        &::after {
+          height: auto;
+        }
+      }
+    }
+  }
+
+  .nav-link {
+    font-size: 12px;
+  }
+
+  .order-nav {
+    li {
+      a {
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 576px) {
