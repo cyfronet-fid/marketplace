@@ -256,8 +256,13 @@
     }
   }
 
-  .service-info-box.recommendation {
-    margin: 0 0 20px;
+  .service-info-box {
+    height: 160px;
+
+    &.recommendation {
+      margin: 10px 0;
+      width: 100%;
+    }
 
     header {
       font-size: 1rem;
@@ -599,7 +604,7 @@
 
       h2 {
         .badge {
-          top: -20px;
+          top: -10px;
         }
       }
     }
