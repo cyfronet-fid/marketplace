@@ -232,6 +232,7 @@
   .media.service-box {
     display: flex;
     flex-flow: column;
+    align-items: unset;
 
     .media-body {
       order: 2;
@@ -335,6 +336,21 @@
 }
 
 @media (max-width: 576px) {
+
+  .pagination {
+    .page-item {
+      &.active {
+        .page-link {
+          padding: 0.36rem 0.46rem;
+        }
+      }
+
+      .page-link {
+        padding: 0.36rem 0.46rem;
+      }
+    }
+
+  }
 
   .container {
     padding-left: 5px;
