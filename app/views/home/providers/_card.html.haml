@@ -3,11 +3,11 @@
 %ul
   - records.each do |record|
     %li
-      = link_to record.name, provider_path(record)
+      = link_to record.name, provider_path(record), "data-e2e": "provider-link"
 
 - if remaining_count > 0
   - if local_assigns[:more_path]
-    = link_to more_path, class: "more-link d-block" do
+    = link_to more_path, "data-e2e": "more-link-providers", class: "more-link d-block" do
       %i.fas.fa-arrow-right
       -# TODO: refactor dynamic translation
       = t(".#{key}.more_html", count: remaining_count)

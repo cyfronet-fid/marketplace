@@ -15,7 +15,7 @@
         = _("Active filters")
       .active-filters
         - active_filters.each do |title, label, p|
-          .filter-tag
+          .filter-tag{ "data-e2e": "filter-tag" }
             %span.text-muted
               #{title}:
             = label

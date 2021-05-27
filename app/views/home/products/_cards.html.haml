@@ -2,7 +2,7 @@
   - if card.present?
     .col-6.col-lg-4
       .branch-box
-        = link_to url.call(card) do
+        = link_to url.call(card), "data-e2e": "branch-link" do
           .branch-icon
             - if card.logo.attached? && card.logo.variable?
               = image_tag card.logo.variant(resize: "84x84"), alt: card.name
