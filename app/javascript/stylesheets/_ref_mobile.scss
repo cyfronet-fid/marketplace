@@ -258,7 +258,10 @@
   }
 
   .service-info-box {
-    height: 160px;
+
+    &.ver-1 {
+      height: 160px;
+    }
 
     &.recommendation {
       margin: 10px 0;
