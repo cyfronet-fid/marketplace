@@ -18,6 +18,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 
+## [3.13.1] 2021-05-28
+
 ## [3.13.0] 2021-05-28
 
 ### Added
