@@ -15,6 +15,7 @@ class RemoveWebpage < ActiveRecord::Migration[6.0]
 
     # Do the same for project_items, but use the values from project_item, not from current offer.
     # This is consistent with our wanting to have a partial "snapshot" of offer saved in the project_item.
+    exec_update "UPDATE project_items SET webpage = '' WHERE webpage IS NULL"
     exec_update "UPDATE project_items SET order_url = webpage WHERE order_url = ''"
     remove_column :project_items, :webpage
   end
