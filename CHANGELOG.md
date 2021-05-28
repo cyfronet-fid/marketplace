@@ -9,6 +9,18 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+## [3.13.0] 2021-05-28
+
+### Added
 - OMS configuration on offer creation and update (@jswk)
 - Possibility to import vocabularies via PC REST API (@goreck888) 
 
@@ -18,8 +30,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - More consistent form behaviour for ordering configuration (@jswk)
 - From now after click "Stop showing in the MP" on the resource page, offers aren't deleted (@goreck888) 
 - Resource organisation and resource providers are separated in the comparison's and Project Item's views (@goreck888)
-
-### Deprecated
 
 ### Removed
 - Offer webpage field (@jswk)
