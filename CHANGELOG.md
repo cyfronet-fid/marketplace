@@ -9,14 +9,24 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+## [3.13.0] 2021-05-28
+
+### Added
 - OMS configuration on offer creation and update (@jswk)
 
 ### Changed
 - Remove order target field from Resource. It is configurable on Offer only now (@jswk)
 - For an Offer, an empty order URL doesn't imply internal ordering (@jswk)
 - More consistent form behaviour for ordering configuration (@jswk)
-
-### Deprecated
 
 ### Removed
 - Offer webpage field (@jswk)
