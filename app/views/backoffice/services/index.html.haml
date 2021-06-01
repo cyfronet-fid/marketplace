@@ -12,7 +12,7 @@
     - if policy([:backoffice, Service]).new?
       = link_to _("Create new Resource"),
                     new_backoffice_service_path,
-                    class: "btn btn-primary"
+                    class: "btn btn-primary create-resource"
 
 
 = render "services/index", services: @services,

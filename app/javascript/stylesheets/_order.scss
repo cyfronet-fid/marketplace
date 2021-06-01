@@ -96,6 +96,7 @@
 
     li {
       width: 100%;
+      margin-bottom: 9px;
 
       a {
         &::after,
@@ -107,12 +108,13 @@
     }
   }
 
+  /*
   .order-top-nav {
     a {
       margin-bottom: 25px;
       float: right;
     }
-  }
+  } */
 
   .order-bottom-nav {
     a {
