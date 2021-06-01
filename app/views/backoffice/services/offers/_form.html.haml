@@ -16,7 +16,8 @@
     = f.input :order_url,
       wrapper_html: { "data-target": "ordering.orderUrlWrapper" },
       input_html: { class: "form-control-lg" }
-    = render "backoffice/services/offers/primary_oms_form", form: f, offer: offer, available_omses: service.available_omses
+    = render "backoffice/services/offers/primary_oms_form", form: f, offer: offer,
+      available_omses: service.available_omses
 
   %h4.mt-5.mb-0.text-uppercase
     = _("Offer parameters")
@@ -32,11 +33,11 @@
   %hr.bottom-hr.mb-5
   .row
     .col-12
-      = f.button :submit, class: "btn btn-primary pl-5 pr-5"
+      = f.button :submit, class: "btn btn-primary pl-5 pr-5 mobile-bottom-margin"
       - if show_delete_button
         = link_to "Delete Offer", offer_delete_link,
           data: { confirm: _("Are you sure?") },
           method: :delete, class: "btn btn-danger pl-5 pr-5"
       = link_to _("cancel and back to previous page"), back_link,
-      class: "btn btn-link text-uppercase"
+      class: "btn btn-link text-uppercase mobile-bottom-margin"
 

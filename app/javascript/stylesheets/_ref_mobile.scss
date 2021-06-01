@@ -1,3 +1,5 @@
+@import 'variables';
+
 @media (max-width: 1225px) {
   .standard-list-wrapper {
     flex-wrap: wrap;
@@ -24,11 +26,40 @@
 
 @media (max-width: 992px) {
 
+
+  .backoffice {
+    margin: 0 0 20px;
+  }
+
+  .navbar-toggler {
+    display: block;
+  }
+
+  .backoffice-menu {
+    margin-top: 15px;
+    border: none;
+    padding: 0;
+  }
+
+  .backoffice-logo {
+    img {
+      margin: 0;
+    }
+  }
+
+  .navbar-brand {
+    padding: 25px 0 0;
+  }
+
+  .create-resource {
+    margin-bottom: 20px;
+  }
+
   main {
     padding: 0 10px;
   }
 
-  nav {
+  .top {
     display: none;
   }
 
@@ -135,6 +166,11 @@
 }
 
 @media (max-width: 768px) {
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
   .service-info-box {
     display: block;
     flex: unset;
@@ -164,9 +200,165 @@
   .api-submenu {
     margin-bottom: 30px;
   }
+
+  .service-box {
+    h2 {
+      font-size: 1rem;
+    }
+
+    .media-body {
+      .pl-4 {
+        padding-left: 0.5rem !important;
+      }
+
+      .pr-4 {
+        padding-right: 0.5rem !important;
+      }
+
+      .compare.favourites {
+        margin-right: 0;
+        font-size: 12px;
+        margin-left: 7px;
+      }
+    }
+  }
+  // scss-lint:disable all
+  .compare input[type=checkbox] + span {
+    margin-top: 5px;
+    font-size: 11px;
+  }
+  // scss-lint:enable all
+
+  .media.service-box {
+    display: flex;
+    flex-flow: column;
+    align-items: unset;
+
+    .media-body {
+      order: 2;
+    }
+
+    .right-extra-info {
+      order: 1;
+      position: relative;
+      width: 100%;
+
+      .service-logo {
+        margin-top: 10px;
+      }
+
+      .badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-left: 1px solid $palette-solid-10;
+        width: auto;
+      }
+    }
+  }
+
+  .service-info-box {
+
+    &.ver-1 {
+      height: 160px;
+    }
+
+    &.recommendation {
+      margin: 10px 0;
+      width: 100%;
+    }
+
+    header {
+      font-size: 1rem;
+    }
+
+    article {
+      font-size: 0.8rem;
+      padding: 0 0.5rem 1.3rem;
+    }
+
+    footer {
+      margin: 0 0.5rem 0.45rem;
+      width: calc(100% - 1rem);
+    }
+  }
+
+  .fixme {
+    display: none;
+  }
+
+  .accordion {
+    .card-body {
+      padding: 0.9rem;
+    }
+  }
+
+  .mobile-bottom-margin {
+    margin-bottom: 25px;
+    float: left;
+    width: 100%;
+  }
+
+  .parameters-section {
+    .parameter-list {
+      width: 100%;
+      position: relative;
+    }
+
+    .parameter-cards {
+      width: 100%;
+      margin-top: 25px;
+      min-height: 300px;
+
+      .offer-attributes {
+        &::before {
+          top: 15%;
+          font-size: 12px;
+        }
+
+        &::after {
+          height: auto;
+        }
+      }
+    }
+  }
+
+  .nav-link {
+    font-size: 12px;
+  }
+
+  .order-nav {
+    li {
+      a {
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 576px) {
+
+  .pagination {
+    .page-item {
+      &.active {
+        .page-link {
+          padding: 0.36rem 0.46rem;
+        }
+      }
+
+      .page-link {
+        padding: 0.36rem 0.46rem;
+      }
+    }
+
+  }
+
+  .container {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
 
   .header {
 
@@ -184,7 +376,7 @@
 
       .container-select {
         min-width: 115px;
-        width: auto;
+        width: 115px;
       }
     }
 
@@ -257,7 +449,15 @@
   }
 
   .footer {
+
+    .container {
+      padding: 0;
+    }
+
     .row {
+      margin-left: 0;
+      margin-right: 0;
+
       .col-md {
         width: 50%;
         margin-bottom: 15px;
@@ -367,7 +567,8 @@
   }
   // scss-lint:disable all
   .compare input[type=checkbox] + span {
-    margin-top: 20px;
+    margin-top: 5px;
+    font-size: 12px;
     float: left;
   }
   // scss-lint:enable all
@@ -409,5 +610,23 @@
     }
   }
 
+  .service-box {
+    .media-body {
+      .compare {
+        width: 100%;
+        margin: 15px 0 8px;
+
+        &.favourites {
+          margin: 0 0 13px !important;
+        }
+      }
+
+      h2 {
+        .badge {
+          top: -10px;
+        }
+      }
+    }
+  }
 }
 

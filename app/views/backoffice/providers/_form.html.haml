@@ -19,6 +19,6 @@
       %hr.bottom-hr.mt-5.mb-4
       .row.mt-5
         .col-12
-          = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5"
-          %a.text-left.flex-grow-1.text-uppercase{ "href": "/backoffice/providers/#{provider.id}" }
+          = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin"
+          %a.text-left.flex-grow-1.text-uppercase.mobile-bottom-margin{ "href": "/backoffice/providers/#{provider.id}" }
             = _("Cancel and back to previous page")
