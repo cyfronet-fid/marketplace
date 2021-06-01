@@ -6,11 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [Unreleased]
+## [3.14.0-milestone]
 
 ### Added
+- Possibility to import vocabularies via PC REST API (@goreck888)
 
 ### Changed
+- From now after click "Stop showing in the MP" on the resource page, offers aren't deleted (@goreck888)
+- Resource organisation and resource providers are separated in the comparison's and Project Item's views (@goreck888)
 
 ### Deprecated
 
@@ -24,14 +27,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - OMS configuration on offer creation and update (@jswk)
-- Possibility to import vocabularies via PC REST API (@goreck888) 
 
 ### Changed
 - Remove order target field from Resource. It is configurable on Offer only now (@jswk)
 - For an Offer, an empty order URL doesn't imply internal ordering (@jswk)
 - More consistent form behaviour for ordering configuration (@jswk)
-- From now after click "Stop showing in the MP" on the resource page, offers aren't deleted (@goreck888) 
-- Resource organisation and resource providers are separated in the comparison's and Project Item's views (@goreck888)
 
 ### Removed
 - Offer webpage field (@jswk)
