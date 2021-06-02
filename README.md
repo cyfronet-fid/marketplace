@@ -355,3 +355,27 @@ If you want to save database dump to a json file, use:
 ```
 ./bin/rails recommender:serialize_db_to_file
 ```
+
+## Rake tasks
+
+### Adding Provider OMS
+
+Task: `ordering_api:add_provider_oms`.
+
+Arguments (envvars):
+- `ARG_OMS_NAME`, for example `organization_x`, then the OMS will be called `Organization X OMS`
+- `ARG_PROVIDER_PID`, the provider must exist for the task to succeed
+- `ARG_AUTHENTICATION_TOKEN`, optional, the task will update the OMS admin's token to this value
+
+The task will look create an OMS with `type=:provider_group` that is associated with passed provider.
+It will also create an admin user for the OMS, setting its token if passed as argument.
+
+If OMS already exists, then the task will append the provider to the OMS.
+
+Example run:
+```
+rake ordering_api:add_provider_oms \
+  ARG_OMS_NAME="extra_provider" \
+  ARG_PROVIDER_PID="ep" \
+  ARG_AUTHENTICATION_TOKEN="a_token"
+```
