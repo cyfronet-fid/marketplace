@@ -5,7 +5,7 @@
         = link_to url.call(card) do
           .branch-icon
             - if card.logo.attached? && card.logo.variable?
-              = image_tag card.logo.variant(resize: "84x84"), alt: card.name
+              = image_tag card.logo, alt: card.name
             - else
               = image_pack_tag(default_logo, alt: "#{card.name}")
           .branch-name
