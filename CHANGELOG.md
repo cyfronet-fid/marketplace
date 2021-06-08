@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.15.0-milestone]
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Don't leak sensitive OMS fields in Offering API (@jswk)
+
 ## [3.14.0-milestone]
 
 ### Added
