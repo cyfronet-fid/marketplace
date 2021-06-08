@@ -5,11 +5,11 @@ class Api::V1::OMSesController < Api::V1::ApplicationController
   before_action :find_and_authorize, only: :show
 
   def index
-    render json: { omses: @omses.map { |oms| Api::V1::OMSSerializer.new(oms).as_json } }
+    render json: { omses: @omses.map { |oms| Api::V1::Ordering::OMSSerializer.new(oms).as_json } }
   end
 
   def show
-    render json: Api::V1::OMSSerializer.new(@oms).as_json
+    render json: Api::V1::Ordering::OMSSerializer.new(@oms).as_json
   end
 
   private

@@ -868,7 +868,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "oms/oms_index.json"
+                  "$ref": "oms/ordering/oms_index.json"
                 }
               }
             }
@@ -916,7 +916,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "oms/oms_read.json"
+                  "$ref": "oms/ordering/oms_read.json"
                 }
               }
             }

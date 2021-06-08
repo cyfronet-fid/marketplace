@@ -33,7 +33,7 @@
     "available_omses": {
       "type": "array",
       "items": {
-        "$ref": "../oms/oms_read.json"
+        "$ref": "../oms/offering/oms_read.json"
       }
     }
   },

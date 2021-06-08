@@ -20,7 +20,7 @@ RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json"
       security [ authentication_token: [] ]
 
       response 200, "OMSes found" do
-        schema "$ref" => "oms/oms_index.json"
+        schema "$ref" => "oms/ordering/oms_index.json"
         let(:oms_admin) { create(:user) }
         let!(:oms) { create_list(:oms, 2, administrators: [oms_admin]) }
 
@@ -28,12 +28,12 @@ RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json"
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to eq({ omses: oms.map { |oms| Api::V1::OMSSerializer.new(oms).as_json } }.deep_stringify_keys)
+          expect(data).to eq({ omses: oms.map { |oms| Api::V1::Ordering::OMSSerializer.new(oms).as_json } }.deep_stringify_keys)
         end
       end
 
       response 200, "user doesn't administrate any OMSes", document: false do
-        schema "$ref" => "oms/oms_index.json"
+        schema "$ref" => "oms/ordering/oms_index.json"
         let(:regular_user) { create(:user) }
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
@@ -67,7 +67,7 @@ RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json"
       security [ authentication_token: [] ]
 
       response 200, "OMS found" do
-        schema "$ref" => "oms/oms_read.json"
+        schema "$ref" => "oms/ordering/oms_read.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
 
@@ -76,7 +76,7 @@ RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json"
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to eq(Api::V1::OMSSerializer.new(oms).as_json.deep_stringify_keys)
+          expect(data).to eq(Api::V1::Ordering::OMSSerializer.new(oms).as_json.deep_stringify_keys)
         end
       end
 
