@@ -133,23 +133,25 @@ RSpec.describe OMS, type: :model do
     let!(:message4) { create(:message, messageable: project_item2) }
 
     it "returns all events when oms is default" do
-      expect(default_oms.events.count).to eq(8)
-      expect(default_oms.events[0].eventable).to eq(project1)
-      expect(default_oms.events[1].eventable).to eq(project2)
-      expect(default_oms.events[2].eventable).to eq(project_item1)
-      expect(default_oms.events[3].eventable).to eq(project_item2)
-      expect(default_oms.events[4].eventable).to eq(message1)
-      expect(default_oms.events[5].eventable).to eq(message2)
-      expect(default_oms.events[6].eventable).to eq(message3)
-      expect(default_oms.events[7].eventable).to eq(message4)
+      events = default_oms.events.order(:created_at)
+      expect(events.count).to eq(8)
+      expect(events[0].eventable).to eq(project1)
+      expect(events[1].eventable).to eq(project2)
+      expect(events[2].eventable).to eq(project_item1)
+      expect(events[3].eventable).to eq(project_item2)
+      expect(events[4].eventable).to eq(message1)
+      expect(events[5].eventable).to eq(message2)
+      expect(events[6].eventable).to eq(message3)
+      expect(events[7].eventable).to eq(message4)
     end
 
     it "returns proper events when oms is not default" do
-      expect(oms.events.count).to eq(4)
-      expect(oms.events[0].eventable).to eq(project2)
-      expect(oms.events[1].eventable).to eq(project_item2)
-      expect(oms.events[2].eventable).to eq(message3)
-      expect(oms.events[3].eventable).to eq(message4)
+      events = oms.events.order(:created_at)
+      expect(events.count).to eq(4)
+      expect(events[0].eventable).to eq(project2)
+      expect(events[1].eventable).to eq(project_item2)
+      expect(events[2].eventable).to eq(message3)
+      expect(events[3].eventable).to eq(message4)
     end
   end
 
