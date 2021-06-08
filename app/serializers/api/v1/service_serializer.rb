@@ -7,6 +7,6 @@ class Api::V1::ServiceSerializer < ActiveModel::Serializer
   attribute :available_omses
 
   def available_omses
-    object.available_omses.map { |oms| Api::V1::OMSSerializer.new(oms).as_json }
+    object.available_omses.map { |oms| Api::V1::Offering::OMSSerializer.new(oms).as_json }
   end
 end

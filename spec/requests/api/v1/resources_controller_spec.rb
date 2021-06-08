@@ -117,7 +117,9 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
         let(:provider2) { create(:provider) }
         let(:service) { create(:service, providers: [provider1, provider2], resource_organisation: provider1) }
 
-        let!(:default_oms) { create(:oms, type: :global, default: true) }
+        let!(:default_oms) { create(:oms, type: :global, default: true,
+                                    custom_params: { param: { mandatory: true, default: "some_default" },
+                                                     other_param: { mandatory: false } }) }
         let!(:provider_group_oms) { create(:oms, type: :provider_group, providers: [provider1, provider2]) }
         let!(:resource_oms) { create(:oms, service: service, type: :resource_dedicated) }
         let!(:other_resource_oms) { create(:oms, type: :resource_dedicated, service: build(:service)) }
@@ -128,8 +130,12 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data["available_omses"])
-            .to eq([default_oms, resource_oms, provider_group_oms]
-                     .map { |oms| Api::V1::OMSSerializer.new(oms).as_json.deep_stringify_keys })
+            .to eq([
+                     { id: default_oms.id, name: default_oms.name, type: default_oms.type,
+                       custom_params: { param: { mandatory: true }, other_param: { mandatory: false } } },
+                     { id: resource_oms.id, name: resource_oms.name, type: resource_oms.type },
+                     { id: provider_group_oms.id, name: provider_group_oms.name, type: provider_group_oms.type }
+                   ].map(&:deep_stringify_keys))
         end
       end
 
