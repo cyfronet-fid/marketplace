@@ -18,7 +18,7 @@ require "rspec/rails"
 require "action_dispatch/system_testing/server"
 ActionDispatch::SystemTesting::Server.silence_puma = true
 require "action_dispatch/system_test_case"
-require "rspec/repeat"
+require "raven"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -67,7 +67,7 @@ RSpec.configure do |config|
   config.include ViewComponent::TestHelpers, type: :component
 
   Capybara.register_driver :chrome do |app|
-    options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox headless disable-gpu])
+    options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox headless disable-gpu window-size=1000,600])
     Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
   end
 
@@ -78,12 +78,6 @@ RSpec.configure do |config|
 
   # Use mock of middleware
   config.include Devise::Test::ControllerHelpers, type: :controller
-
-  # Re-run tests on failure to prevent random failures
-  config.include RSpec::Repeat
-  config.around :each, :js do |example|
-    repeat example, 6.times, verbose: true
-  end
 end
 
 OmniAuth.config.test_mode = true

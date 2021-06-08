@@ -82,7 +82,6 @@ gem "aws-sdk-s3", require: false
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
 
-  gem "rspec-repeat", "~> 1.0.2"
   gem "rspec-rails", "~> 3.8.2"
   gem "rswag-specs"
   gem "pry"

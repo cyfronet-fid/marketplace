@@ -5,32 +5,10 @@ require "rails_helper"
 RSpec.feature "Api docs page" do
   include OmniauthHelper
 
-  context "as a regular user" do
+  context "JS: as a regular user" do
     let!(:user) { create(:user) }
 
     before { checkin_sign_in_as(user) }
-
-    scenario "I can see Marketplace API link", skip: "Marketplace API link shouldn't be here for now" do
-      visit root_path
-
-      click_link("Marketplace API", match: :first)
-      expect(page).to have_text(user.authentication_token)
-      expect(page).to have_link("Revoke token")
-    end
-
-    scenario "I can see see API wiki" do
-      visit api_docs_path
-
-      expect(page).to have_text("This is the API of the EOSC Marketplace.")
-
-      click_link("Authentication", match: :first)
-      expect(page).to have_current_path(api_docs_path(subsection: :authentication))
-      expect(page).to have_text('curl -H "X-User-Token": [YOUR TOKEN HERE]')
-
-      click_link("Introduction", match: :first)
-      expect(page).to have_current_path(api_docs_path(subsection: :introduction))
-      expect(page).to have_text("This is the API of the EOSC Marketplace.")
-    end
 
     scenario "I cannot see my token before clicking 'Show token' button and after clicking 'Hide token'", js: true do
       visit api_docs_path
@@ -85,22 +63,57 @@ RSpec.feature "Api docs page" do
       end
     end
 
-    scenario "My token persists after signing out", skip: "Capybara can't find Logout link, will be repaired in #2049", js: true do
+    scenario "My token persists after signing out", js: true do
       token = user.authentication_token
 
-      click_link("Logout", match: :first)
-      click_link("Login", match: :first)
+      expect(page).to have_content("Welcome to the EOSC")
+      expect(page).to have_content("Successfully authenticated from Checkin account.")
+      find_link("Logout").click
+      expect(page).to have_content("Signed out successfully.")
+
+      find_link("Login").click
+      expect(page).to have_content("Successfully authenticated from Checkin account.")
 
       visit api_docs_path
 
+      expect(page).to have_content("API")
       find("#toggler").click
 
+      expect(page).to_not have_content("********************")
       expect(page).to have_text(token)
       expect(page).to have_link("Regenerate token")
 
       user.reload
 
       expect(user.authentication_token).to eq(token)
+    end
+  end
+
+  context "as a regular user" do
+    let!(:user) { create(:user) }
+
+    before { checkin_sign_in_as(user) }
+
+    scenario "I can see Marketplace API link", skip: "Marketplace API link shouldn't be here for now" do
+      visit root_path
+
+      click_link("Marketplace API", match: :first)
+      expect(page).to have_text(user.authentication_token)
+      expect(page).to have_link("Revoke token")
+    end
+
+    scenario "I can see see API wiki" do
+      visit api_docs_path
+
+      expect(page).to have_text("This is the API of the EOSC Marketplace.")
+
+      click_link("Authentication", match: :first)
+      expect(page).to have_current_path(api_docs_path(subsection: :authentication))
+      expect(page).to have_text('curl -H "X-User-Token": [YOUR TOKEN HERE]')
+
+      click_link("Introduction", match: :first)
+      expect(page).to have_current_path(api_docs_path(subsection: :introduction))
+      expect(page).to have_text("This is the API of the EOSC Marketplace.")
     end
   end
 

@@ -1,38 +1,23 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require "raven"
 
 RSpec.feature "Favourites" do
   include OmniauthHelper
 
-  context "As anonymous user" do
-    scenario "I can see favourite checkbox on resource page" do
-      service = create(:service)
-
-      visit service_path(service)
-
-      expect(page).to have_content "Add to favourites"
-      expect(page).to_not have_content "Remove from favourites"
-    end
-
-    scenario "I can see favourite checkbox on resource list page" do
-      create_list(:service, 2)
-
-      visit services_path
-
-      expect(page).to have_content "Add to favourites"
-      expect(page).to_not have_content "Remove from favourites"
-    end
-
+  context "JS: As anonymous user" do
     scenario "I can see checkbox set to true in other view", js: true do
       service = create(:service)
 
       visit services_path
-
+      expect(page).to have_text(service.name)
       find("#favourite-#{service.id}", visible: false).click
+      expect(page).to have_text("Save your favourites!")
 
       visit service_path(service)
 
+      expect(page).to have_text(service.name)
       expect(page.find("input#favourite-#{service.id}", visible: false)).to be_checked
     end
 
@@ -43,11 +28,16 @@ RSpec.feature "Favourites" do
 
       visit services_path
 
+      expect(page).to have_text(services[0].name)
       find("#favourite-#{services[0].id}", visible: false).click
+      expect(page).to have_text("Save your favourites!")
       find("#popup-modal-action-btn").click
       find("#favourite-#{services[2].id}", visible: false).click
+      expect(page).to have_text("Remove from favourites")
+      expect(page.find("input#favourite-#{services[2].id}", visible: false)).to be_checked
 
       checkin_sign_in_as(user)
+      expect(page).to have_text("Successfully authenticated")
 
       visit favourites_path
 
@@ -72,6 +62,26 @@ RSpec.feature "Favourites" do
 
       expect(page).to have_text(fav2.name)
       expect(page).to have_text(fav1.name)
+    end
+  end
+
+  context "As anonymous user" do
+    scenario "I can see favourite checkbox on resource page" do
+      service = create(:service)
+
+      visit service_path(service)
+
+      expect(page).to have_content "Add to favourites"
+      expect(page).to_not have_content "Remove from favourites"
+    end
+
+    scenario "I can see favourite checkbox on resource list page" do
+      create_list(:service, 2)
+
+      visit services_path
+
+      expect(page).to have_content "Add to favourites"
+      expect(page).to_not have_content "Remove from favourites"
     end
   end
 

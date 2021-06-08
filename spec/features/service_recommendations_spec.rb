@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "recommended services panel", type: :feature do
+RSpec.feature "recommended services panel", type: :feature, js: true do
   include OmniauthHelper
   include SimpleRecommenderSpecHelper
 
@@ -18,14 +18,14 @@ RSpec.feature "recommended services panel", type: :feature do
     @categories, @services = populate_database
   end
 
-  it "has no recommendations if they are disabled", js: true do
+  it "has no recommendations if they are disabled" do
     use_ab_test(recommendation_panel: "disabled")
     visit services_path
 
     expect(page).to_not have_content(_("SUGGESTED"))
   end
 
-  it "has header with 'SUGGESTED' box in version 1", js: true do
+  it "has header with 'SUGGESTED' box in version 1" do
     use_ab_test(recommendation_panel: "v1")
     visit services_path
 
@@ -33,7 +33,7 @@ RSpec.feature "recommended services panel", type: :feature do
     expect(find(@recommended_services_bar)).to have_content(_("SUGGESTED"))
   end
 
-  it "has 'SUGGESTED' box in each recommended service in version 2", js: true do
+  it "has 'SUGGESTED' box in each recommended service in version 2" do
     use_ab_test(recommendation_panel: "v2")
     visit services_path
 
