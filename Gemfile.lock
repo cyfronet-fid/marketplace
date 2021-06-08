@@ -441,10 +441,6 @@ GEM
       nokogiri
     rexml (3.2.5)
     role_model (0.8.2)
-    rspec (3.8.0)
-      rspec-core (~> 3.8.0)
-      rspec-expectations (~> 3.8.0)
-      rspec-mocks (~> 3.8.0)
     rspec-core (3.8.2)
       rspec-support (~> 3.8.0)
     rspec-expectations (3.8.6)
@@ -461,8 +457,6 @@ GEM
       rspec-expectations (~> 3.8.0)
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
-    rspec-repeat (1.0.2)
-      rspec (~> 3.0)
     rspec-support (3.8.3)
     rswag-api (2.4.0)
       railties (>= 3.1, < 7.0)
@@ -719,7 +713,6 @@ DEPENDENCIES
   reverse_markdown
   role_model
   rspec-rails (~> 3.8.2)
-  rspec-repeat (~> 1.0.2)
   rswag-api
   rswag-specs
   rswag-ui
