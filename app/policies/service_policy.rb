@@ -7,10 +7,6 @@ class ServicePolicy < ApplicationPolicy
     end
   end
 
-  def show?
-    record.published? || record.unverified? || record.errored?
-  end
-
   def order?
     record.offers? && record.offers.any? { |s| s.published? }
   end

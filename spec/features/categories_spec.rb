@@ -82,6 +82,6 @@ RSpec.feature "Service categories" do
   scenario "navigating to nonexistent category should redirect to :services" do
     category = build(:category, slug: "noncategory", name: "noncategory")
     visit category_services_path(category, per_page: "1")
-    expect(page).to have_current_path(services_path)
+    expect(page).to have_current_path("/404")
   end
 end

@@ -1,4 +1,6 @@
 = simple_form_for offer_form_source_module, html: { "data-controller": "offer" } do |f|
+  = f.hidden_field :from, value: local_assigns[:from]
+
   .col-lg-8.pl-0{ "data-controller": "ordering" }
     = f.error_notification
     = f.hidden_field :id
