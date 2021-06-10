@@ -3,6 +3,7 @@
 class Services::OrderingConfigurationsController < Services::ApplicationController
   before_action :authenticate_user!
   before_action :data_administrator_authorization!, only: :show
+  before_action { authorize @service, :show?, policy_class: ServicePolicy }
 
   layout "ordering_configuration"
 

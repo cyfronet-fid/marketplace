@@ -2,6 +2,7 @@
 
 class Services::CancelsController < Services::ApplicationController
   skip_before_action :authenticate_user!
+  before_action { authorize @service, :show? }
 
   def destroy
     session.delete(session_key)

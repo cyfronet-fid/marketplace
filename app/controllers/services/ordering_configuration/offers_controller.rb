@@ -3,6 +3,7 @@
 class Services::OrderingConfiguration::OffersController < Services::OrderingConfiguration::ApplicationController
   before_action :find_service
   before_action :find_offer_and_authorize, only: [:edit, :update]
+  before_action { authorize @service, :show? }
   after_action :reindex_and_set_default_offer, only: [:create, :update, :destroy]
 
   def new

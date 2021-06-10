@@ -3,6 +3,7 @@
 class Services::InformationController < Services::ApplicationController
   skip_before_action :authenticate_user!
   before_action :ensure_in_session!
+  before_action { authorize @service, :show? }
 
   def show
     if !prev_visible_step_key || prev_visible_step.valid?
@@ -18,6 +19,7 @@ class Services::InformationController < Services::ApplicationController
   end
 
   def update
+    authorize @offer
     if step.valid?
       redirect_to url_for([@service, next_step_key])
     else

@@ -2,6 +2,7 @@
 
 class Services::OffersController < Services::ApplicationController
   skip_before_action :authenticate_user!
+  before_action { authorize @service, :show? }
 
   def show
     init_step_data

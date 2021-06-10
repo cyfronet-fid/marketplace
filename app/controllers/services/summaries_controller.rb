@@ -2,6 +2,7 @@
 
 class Services::SummariesController < Services::ApplicationController
   before_action :ensure_in_session!
+  before_action { authorize @service, :show? }
 
   def show
     if prev_visible_step.valid?
