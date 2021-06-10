@@ -21,6 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Set `Other` target user at the end of target user list (@goreck888)
 - Add missing connection from Community MP to Offering API in API Docs overview image (@abacz)
 - Allow to create an offer in `ordering_configuration` panel when none exists (@goreck888)
+- Secure the public service endpoints when it's deleted or it's draft (@danielkryska)
 
 ### Security
 

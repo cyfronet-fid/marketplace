@@ -22,6 +22,12 @@ RSpec.describe ServicePolicy do
       expect(resolve.count).to eq(0)
     end
 
+    it "not allows deleted services" do
+      create(:service, status: :deleted)
+
+      expect(resolve.count).to eq(0)
+    end
+
     it "allows published services" do
       create(:service, status: :published)
 
@@ -32,33 +38,6 @@ RSpec.describe ServicePolicy do
       create(:service, status: :unverified)
 
       expect(resolve.count).to eq(1)
-    end
-  end
-
-  permissions :show? do
-    it "is granted for published service" do
-      expect(subject).to permit(user, build(:service, status: :published))
-    end
-
-    it "is granted for unvefiried service" do
-      expect(subject).to permit(user, build(:service, status: :unverified))
-    end
-
-    it "denies for draft service" do
-      expect(subject).to_not permit(user, build(:service, status: :draft))
-    end
-  end
-
-  permissions :order? do
-    it "grants access when there are offers" do
-      service = create(:service)
-      create(:offer, service: service)
-
-      expect(subject).to permit(user, service.reload)
-    end
-
-    it "denies when there is not offers" do
-      expect(subject).to_not permit(user, build(:service))
     end
   end
 

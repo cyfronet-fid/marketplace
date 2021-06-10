@@ -28,7 +28,7 @@ crumb :service do |service|
 end
 
 crumb :ordering_configuration do |service|
-  link "Ordering configuration", service_ordering_configuration_path(service)
+  link "Ordering configuration", service_ordering_configuration_path(service, from: params[:from])
   parent :service, service
 end
 
@@ -38,7 +38,7 @@ crumb :ordering_configuration_offer_new do |service|
 end
 
 crumb :ordering_configuration_offer_edit do |offer|
-  link "Edit", edit_service_ordering_configuration_offer_path(offer)
+  link "Edit", edit_service_ordering_configuration_offer_path(offer, from: params[:from])
   parent :ordering_configuration, offer.service
 end
 

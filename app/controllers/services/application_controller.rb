@@ -26,7 +26,7 @@ class Services::ApplicationController < ApplicationController
 
     def load_and_authenticate_service!
       @service = Service.friendly.find(params[:service_id])
-      authorize(@service, :order?)
+      authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] === "backoffice_service"), :order?)
       @wizard = ProjectItem::Wizard.new(@service)
     end
 

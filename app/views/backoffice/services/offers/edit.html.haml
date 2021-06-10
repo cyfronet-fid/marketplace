@@ -9,7 +9,8 @@
       offer: @offer,
       service: @service,
       offer_form_source_module: [:backoffice, @service, @offer],
-      back_link: backoffice_service_path(@service)
+      back_link: backoffice_service_path(@service),
+      from: params[:from] || local_assigns[:from]
   - else
     = render "form",
       offer: @offer,
@@ -17,6 +18,5 @@
       show_delete_button: true,
       offer_form_source_module: [:backoffice, @service, @offer],
       offer_delete_link: backoffice_service_offer_path(@service, @offer),
-      back_link: backoffice_service_path(@service)
-
-
+      back_link: backoffice_service_path(@service),
+      from: params[:from] || local_assigns[:from]

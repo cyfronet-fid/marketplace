@@ -5,7 +5,6 @@ module Service::Categorable
 
   included do
     before_action :init_categories_tree, only: :index
-    rescue_from ActiveRecord::RecordNotFound, with: :redirect_to_services
   end
 
   def category_counters(scope, filters)
@@ -24,10 +23,6 @@ module Service::Categorable
       @subcategories_with_counters = subcategories_with_counters&.
         partition { |cid, c|  c[:category][:name] != "Other" }&.flatten(1)
       @services_total ||= counters[nil]
-    end
-
-    def redirect_to_services
-      redirect_to :services
     end
 
     def category

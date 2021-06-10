@@ -15,6 +15,10 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
+  rescue_from ActiveRecord::RecordNotFound do |_|
+    redirect_back fallback_location: "/404"
+  end
+
   rescue_from Pundit::NotAuthorizedError do |exception|
     redirect_back fallback_location: root_path,
                   alert: not_authorized_message(exception)

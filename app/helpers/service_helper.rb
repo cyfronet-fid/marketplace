@@ -169,7 +169,7 @@ module ServiceHelper
 
   def edit_offer_link(service, offer, controller_name)
     if controller_name == "ordering_configurations"
-      edit_service_ordering_configuration_offer_path(service, offer)
+      edit_service_ordering_configuration_offer_path(service, offer, from: params[:from])
     elsif controller_name == "services"
       edit_backoffice_service_offer_path(service, offer)
     end
