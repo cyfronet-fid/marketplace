@@ -65,10 +65,7 @@ RSpec.feature "Service browsing" do
       service = create(:service, status: :draft)
       visit service_path(service)
 
-      expect(page).to have_content("This resource is not published in the Marketplace yet, " +
-      "therefore it cannot be accessed. If you are the Resource Owner or Resource Portfolio Manager and wish " +
-      "to manage this resource, please log in and go to the Backoffice tab.")
-      expect(current_path).to eq(root_path)
+      expect(current_path).to eq("/404")
     end
 
     scenario "shows related services" do

@@ -31,7 +31,8 @@ class ServicesController < ApplicationController
     @service = Service.
                includes(:offers, :target_relationships).
                friendly.find(params[:id])
-    authorize @service
+
+    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] === "backoffice_service"))
     @offers = policy_scope(@service.offers.published).order(:created_at)
     @related_services = @service.target_relationships
     @related_services_title = "Suggested compatible resources"

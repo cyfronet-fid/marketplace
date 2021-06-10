@@ -139,7 +139,7 @@ RSpec.feature "Services in ordering_configuration panel" do
 
       service.reload
 
-      visit service_ordering_configuration_path(service)
+      visit service_ordering_configuration_path(service, from: "backoffice_service")
       first(".btn.btn-outline-secondary.font-weight-bold").click
 
       check "Use EOSC Portal as the order management platform"
@@ -175,7 +175,7 @@ RSpec.feature "Services in ordering_configuration panel" do
 
       service.reload
 
-      visit service_ordering_configuration_path(service)
+      visit service_ordering_configuration_path(service, from: "backoffice_service")
       first(".btn.btn-outline-secondary.font-weight-bold").click
 
       check "Use EOSC Portal as the order management platform"

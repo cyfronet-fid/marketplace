@@ -7,6 +7,7 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
 
   def new
     @offer = Offer.new(service: @service)
+    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] === "backoffice_service"), :show?)
     authorize @offer
   end
 
@@ -20,27 +21,27 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
     @offer = Offer::Create.new(template).call
 
     if @offer.persisted?
-      redirect_to service_ordering_configuration_path(@service),
+      redirect_to service_ordering_configuration_path(@service, from: params[:offer][:from]),
                   notice: "New offer has been created"
     else
-      render :new, status: :bad_request
+      render :new, status: :bad_request, locals: { from: params[:offer][:from] }
     end
   end
 
   def update
     template = permitted_attributes(Offer.new)
     if Offer::Update.new(@offer, transform_attributes(template)).call
-      redirect_to service_ordering_configuration_path(@service),
+      redirect_to service_ordering_configuration_path(@service, from:  params[:offer][:from]),
                   notice: "Offer updated correctly"
     else
-      render :edit, status: :bad_request
+      render :edit, status: :bad_request, locals: { from: params[:offer][:from] }
     end
   end
 
   def destroy
     @offer = @service.offers.find_by(iid: params[:id])
     if Offer::Destroy.new(@offer).call
-      redirect_to service_ordering_configuration_path(@service),
+      redirect_to service_ordering_configuration_path(@service, from: params[:from]),
                   notice: "Offer removed successfully"
     end
   end

@@ -186,17 +186,15 @@ Rails.application.routes.draw do
   match "communities", to: "pages#communities", via: "get", as: :communities
   match "about_projects", to: "pages#about_projects", via: "get", as: :about_projects
 
-  if Rails.env.production?
-    match "/404", to: "errors#not_found", via: :all
-    match "/422", to: "errors#unprocessable", via: :all
-    match "/500", to: "errors#internal_server_error", via: :all
-  end
-
   if Rails.env.development?
     get "designsystem" => "designsystem#index"
     get "designsystem/:file" => "designsystem#show",
       constraints: { file: %r{[^/\.]+} }
   end
+
+  match "/404", to: "errors#not_found", via: :all
+  match "/422", to: "errors#unprocessable", via: :all
+  match "/500", to: "errors#internal_server_error", via: :all
 
   root "home#index"
 end
