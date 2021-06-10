@@ -145,3 +145,23 @@ crumb :backoffice_platform_edit do |platform|
   link "Edit", edit_backoffice_platform_path(platform)
   parent :backoffice_platform, platform
 end
+
+crumb :backoffice_vocabularies do |type|
+  link type, send("backoffice_#{type.parameterize(separator: "_").pluralize}_path")
+  parent :backoffice_root
+end
+
+crumb :backoffice_vocabulary do |vocabulary, type|
+  link vocabulary.name, send("backoffice_#{type.parameterize(separator: "_")}_path", vocabulary)
+  parent :backoffice_vocabularies, type
+end
+
+crumb :backoffice_vocabulary_new do |type|
+  link "New", send("new_backoffice_#{type.parameterize(separator: "_")}_path")
+  parent :backoffice_vocabularies, type
+end
+
+crumb :backoffice_vocabulary_edit do |vocabulary, type|
+  link "Edit", send("edit_backoffice_#{type.parameterize(separator: "_")}_path", vocabulary)
+  parent :backoffice_vocabulary, vocabulary, type
+end

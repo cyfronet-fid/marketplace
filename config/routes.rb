@@ -101,6 +101,26 @@ Rails.application.routes.draw do
     resources :categories
     resources :providers
     resources :platforms
+    get :vocabularies, to: "vocabularies/target_users#index", type: "TargetUser", as: :vocabularies
+    scope "/vocabularies" do
+      resources :target_users, controller: "vocabularies", type: "TargetUser"
+      resources :trls, controller: "vocabularies", type: "Vocabulary::Trl"
+      resources :access_types, controller: "vocabularies", type: "Vocabulary::AccessType"
+      resources :access_modes, controller: "vocabularies", type: "Vocabulary::AccessMode"
+      resources :funding_bodies, controller: "vocabularies", type: "Vocabulary::FundingBody"
+      resources :funding_programs, controller: "vocabularies", type: "Vocabulary::FundingProgram"
+      resources :life_cycle_statuses, controller: "vocabularies", type: "Vocabulary::LifeCycleStatus"
+      resources :provider_life_cycle_statuses, controller: "vocabularies", type: "Vocabulary::ProviderLifeCycleStatus"
+      resources :areas_of_activity, controller: "vocabularies", type: "Vocabulary::AreaOfActivity"
+      resources :esfri_types, controller: "vocabularies", type: "Vocabulary::EsfriType"
+      resources :esfri_domains, controller: "vocabularies", type: "Vocabulary::EsfriDomain"
+      resources :legal_statuses, controller: "vocabularies", type: "Vocabulary::LegalStatus"
+      resources :networks, controller: "vocabularies", type: "Vocabulary::Network"
+      resources :societal_grand_challenges, controller: "vocabularies", type: "Vocabulary::SocietalGrandChallenge"
+      resources :structure_types, controller: "vocabularies", type: "Vocabulary::StructureType"
+      resources :meril_scientific_domains, controller: "vocabularies", type: "Vocabulary::MerilScientificDomain"
+    end
+
   end
 
   resource :executive, only: :show
