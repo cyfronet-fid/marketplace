@@ -2315,6 +2315,16 @@ label[data-multicheckbox].small {
 
 // scss-lint:enable all
 .backoffice-list {
+
+  .list-group-item {
+    a {
+      &:first-child {
+        float: left;
+        max-width: 80%;
+      }
+    }
+  }
+
   a {
     font-size: 16px;
     font-weight: 300;

@@ -10,4 +10,8 @@ module FormsHelper
                     name: "#{model}[#{field_name}][]",
                     class: "form-control text optional" })
   end
+
+  def snake_cased(model_name)
+    model_name.parameterize(separator: "_")
+  end
 end
