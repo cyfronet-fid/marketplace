@@ -8,6 +8,7 @@ class Api::V1::ProjectSerializer < ActiveModel::Serializer
 
   def owner
     {
+      uid: object.user.uid,
       email: object.user.email,
       name: object.user.full_name
     }

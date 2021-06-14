@@ -91,6 +91,7 @@ class Api::V1::OMSes::MessagesController < Api::V1::ApplicationController
     def transform(attributes)
       transformed = Hash.new
       if attributes[:author].present?
+        transformed[:author_uid] = attributes[:author][:uid]
         transformed[:author_email] = attributes[:author][:email]
         transformed[:author_name] = attributes[:author][:name]
         transformed[:author_role] = attributes[:author][:role]

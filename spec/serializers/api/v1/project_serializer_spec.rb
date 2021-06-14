@@ -10,6 +10,7 @@ RSpec.describe Api::V1::ProjectSerializer do
     expected = {
       id: project.id,
       owner: {
+        uid: project.user.uid,
         name: project.user.full_name,
         email: project.user.email,
       },
@@ -39,6 +40,7 @@ RSpec.describe Api::V1::ProjectSerializer do
     expected = {
       id: project.id,
       owner: {
+        uid: project.user.uid,
         name: project.user.full_name,
         email: project.user.email,
       },

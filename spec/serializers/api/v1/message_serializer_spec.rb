@@ -10,6 +10,7 @@ RSpec.describe Api::V1::MessageSerializer do
     expected = {
       id: message.id,
       author: {
+        uid: message.author.uid,
         email: message.author.email,
         name: message.author.full_name,
         role: message.author_role
@@ -24,14 +25,33 @@ RSpec.describe Api::V1::MessageSerializer do
   end
 
   it "it properly serializes a provider message" do
-    message = create(:provider_message)
+    message = create(:provider_message, author_uid: "example@idp")
 
     serialized = described_class.new(message).as_json
     expected = {
       id: message.id,
       author: {
+        uid: message.author_uid,
         email: message.author_email,
         name: message.author_name,
+        role: message.author_role
+      },
+      content: message.message,
+      scope: message.scope,
+      created_at: message.created_at.iso8601,
+      updated_at: message.updated_at.iso8601
+    }
+
+    expect(serialized).to eq(expected)
+  end
+
+  it "it properly serializes a provider message with minimal author information" do
+    message = create(:provider_message, author_email: nil, author_name: nil)
+
+    serialized = described_class.new(message).as_json
+    expected = {
+      id: message.id,
+      author: {
         role: message.author_role
       },
       content: message.message,
