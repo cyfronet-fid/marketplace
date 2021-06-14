@@ -322,7 +322,14 @@
         ],
         "responses": {
           "200": {
-            "description": "message found"
+            "description": "message found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "message/message_read.json"
+                }
+              }
+            }
           },
           "401": {
             "description": "user not recognized",

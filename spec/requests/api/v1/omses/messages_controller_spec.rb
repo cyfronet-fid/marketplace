@@ -208,8 +208,9 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
           {
             "project_id": project.id,
             "author": {
-              "email": "<email>",
-              "name": "<name>",
+              "uid": "uid@idp",
+              "email": "smith@example.com",
+              "name": "Joe Smith",
               "role": "provider"
             },
             "content": "<content>",
@@ -219,9 +220,15 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         run_test! do |response|
           project.reload
           expect(project.messages.count).to eq(1)
+          message = project.messages.first
+          expect(message.author_uid).to eq("uid@idp")
+          expect(message.author_email).to eq("smith@example.com")
+          expect(message.author_name).to eq("Joe Smith")
+          expect(message.author_role).to eq("provider")
+          expect(message.scope).to eq("public")
 
           data = JSON.parse(response.body)
-          expect(data).to eq(Api::V1::MessageSerializer.new(project.messages[0]).as_json.deep_stringify_keys)
+          expect(data).to eq(Api::V1::MessageSerializer.new(message).as_json.deep_stringify_keys)
 
           expect(ActionMailer::Base.deliveries.count).to eq(1)
         end
@@ -241,8 +248,8 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
             "project_id": project.id,
             "project_item_id": project_item.iid,
             "author": {
-              "email": "<email>",
-              "name": "<name>",
+              "email": "smith@example.com",
+              "name": "Joe Smith",
               "role": "provider"
             },
             "content": "<content>",
@@ -252,9 +259,14 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         run_test! do |response|
           project_item.reload
           expect(project_item.messages.count).to eq(1)
+          message = project_item.messages.first
+          expect(message.author_email).to eq("smith@example.com")
+          expect(message.author_name).to eq("Joe Smith")
+          expect(message.author_role).to eq("provider")
+          expect(message.scope).to eq("user_direct")
 
           data = JSON.parse(response.body)
-          expect(data).to eq(Api::V1::MessageSerializer.new(project_item.messages[0], keep_content?: true).as_json.deep_stringify_keys)
+          expect(data).to eq(Api::V1::MessageSerializer.new(message, keep_content?: true).as_json.deep_stringify_keys)
 
           expect(ActionMailer::Base.deliveries.count).to eq(1)
         end
@@ -458,6 +470,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
       security [ authentication_token: [] ]
 
       response 200, "message found" do
+        schema "$ref" => "message/message_read.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project) { create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }

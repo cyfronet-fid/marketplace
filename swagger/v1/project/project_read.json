@@ -5,11 +5,12 @@
     "owner": {
       "type": "object",
       "properties": {
+        "uid": {"type": "string"},
         "email": {"type": "string"},
         "name": {"type": "string"}
       },
       "additionalProperties": false,
-      "required": ["email", "name"]
+      "required": ["uid", "email", "name"]
     },
     "project_items": {
       "type": "array",

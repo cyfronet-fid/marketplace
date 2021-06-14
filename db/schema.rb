@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_08_090039) do
+ActiveRecord::Schema.define(version: 2021_06_14_131726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -169,6 +169,7 @@ ActiveRecord::Schema.define(version: 2021_06_08_090039) do
     t.string "author_name"
     t.string "author_role", null: false
     t.string "scope", null: false
+    t.string "author_uid"
     t.index ["author_id"], name: "index_messages_on_author_id"
     t.index ["author_role"], name: "index_messages_on_author_role"
     t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id"

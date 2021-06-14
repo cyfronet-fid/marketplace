@@ -8,11 +8,19 @@ class Api::V1::MessageSerializer < ActiveModel::Serializer
   attributes :created_at, :updated_at
 
   def author
-    {
-      email: object.role_user? ? object.author.email : object.author_email,
-      name: object.role_user? ? object.author.full_name : object.author_name,
-      role: object.author_role
-    }
+    if object.role_user?
+      {
+        uid: object.author&.uid,
+        email: object.author&.email,
+        name: object.author&.full_name
+      }
+    else
+      {
+        uid: object.author_uid,
+        email: object.author_email,
+        name: object.author_name
+      }
+    end.merge({ role: object.author_role }).select { |_, value| value.present? }
   end
 
   def message_scope
