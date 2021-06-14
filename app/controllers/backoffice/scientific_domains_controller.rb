@@ -41,16 +41,21 @@ class Backoffice::ScientificDomainsController < Backoffice::ApplicationControlle
   end
 
   def destroy
-    if @scientific_domain.descendant_ids.blank?
-      @scientific_domain.destroy!
-      redirect_to backoffice_scientific_domains_path,
-                  notice: "Scientific domain removed"
+    if @scientific_domain.descendant_ids.present?
+      redirect_back fallback_location:  backoffice_scientific_domain_path(@scientific_domain),
+                    alert: "This scientific domain has successors connected to it,
+                            therefore is not possible to remove it. If you want to remove it,
+                            edit them so they are not associated with this scientific domain anymore"
+    elsif @scientific_domain.services.present?
+      redirect_back fallback_location:  backoffice_scientific_domain_path(@scientific_domain),
+                    alert: "This scientific domain has resources connected to it, remove associations to delete it."
+    elsif @scientific_domain.providers.present?
+      redirect_back fallback_location:  backoffice_scientific_domain_path(@scientific_domain),
+                    alert: "This scientific domain has providers connected to it, remove associations to delete it."
     else
-      redirect_to backoffice_scientific_domain_path(@scientific_domain),
-                  alert: "This scientific domain has resources connected to it,
-                        therefore is not possible to remove it. If you want to remove it,
-                        please go to the service list view
-                        and edit them so they are not associated with this scientific domain anymore"
+      @scientific_domain.destroy!
+      redirect_to backoffice_categories_path,
+                  notice: "Scientific Domain removed"
     end
   end
 

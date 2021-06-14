@@ -8,8 +8,11 @@ class ScientificDomain < ApplicationRecord
 
   has_many :service_scientific_domains, autosave: true, dependent: :destroy
   has_many :services, through: :service_scientific_domains
+  has_many :provider_scientific_domains, autosave: true, dependent: :destroy
+  has_many :providers, through: :provider_scientific_domains
   has_many :project_scientific_domains, autosave: true, dependent: :destroy
   has_many :projects, through: :project_scientific_domains
+
 
   has_many :user_scientific_domains, autosave: true, dependent: :destroy
   has_many :users, through: :user_scientific_domains
