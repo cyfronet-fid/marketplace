@@ -231,7 +231,7 @@ class Service < ApplicationRecord
   end
 
   def available_omses
-    (OMS.where(default: true).to_a + omses.to_a + OMS.where(type: :global).to_a + providers.map(&:omses).flatten).uniq
+    (OMS.where(default: true).to_a + omses.to_a + OMS.where(type: :global).to_a + resource_organisation&.omses).uniq
   end
 
   private

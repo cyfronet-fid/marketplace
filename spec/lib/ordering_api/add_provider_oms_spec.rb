@@ -6,7 +6,7 @@ require "ordering_api/add_provider_oms"
 describe OrderingApi::AddProviderOMS do
   let!(:provider) { create(:provider, pid: "test.pid") }
   let!(:another_provider) { create(:provider, pid: "another.pid") }
-  let(:service) { create(:service, providers: [provider]) }
+  let(:service) { create(:service, resource_organisation: provider) }
 
   it "fails if provider is not found" do
     expect(provider.omses.count).to eq(0)

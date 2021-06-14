@@ -107,7 +107,7 @@ RSpec.describe Offer do
   context "proper_oms?" do
     it "should validate if set oms is available for current offer" do
       provider = create(:provider)
-      service = create(:service, providers: [provider])
+      service = create(:service, resource_organisation: provider)
 
       default_oms = create(:oms, default: true)
       provider_group_oms = create(:oms, type: :provider_group, providers: [provider])
