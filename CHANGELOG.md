@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Improve consistency between Marketplace provider and Provider Component provider form and data model - improvement of User experience (@danielkryska)
+- Provider group OMS visibility now depends on service's resource_organisation instead of on providers (@jswk)
 
 ### Deprecated
 

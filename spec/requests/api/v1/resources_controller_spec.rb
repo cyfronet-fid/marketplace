@@ -115,12 +115,13 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
 
         let(:provider1) { create(:provider, data_administrators: [data_admin]) }
         let(:provider2) { create(:provider) }
-        let(:service) { create(:service, providers: [provider1, provider2], resource_organisation: provider1) }
+        let(:service) { create(:service, resource_organisation: provider1) }
 
         let!(:default_oms) { create(:oms, type: :global, default: true,
                                     custom_params: { param: { mandatory: true, default: "some_default" },
                                                      other_param: { mandatory: false } }) }
         let!(:provider_group_oms) { create(:oms, type: :provider_group, providers: [provider1, provider2]) }
+        let!(:provider2_group_oms) { create(:oms, type: :provider_group, providers: [provider2]) }
         let!(:resource_oms) { create(:oms, service: service, type: :resource_dedicated) }
         let!(:other_resource_oms) { create(:oms, type: :resource_dedicated, service: build(:service)) }
 

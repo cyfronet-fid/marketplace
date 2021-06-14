@@ -78,4 +78,34 @@ RSpec.describe Service do
     subject { build(:service, omses: build_list(:resource_dedicated_oms, 2)) }
     it { should have_many(:omses) }
   end
+
+  context "#available_omses" do
+    subject { build(:service) }
+
+    it "should return empty if there are no OMSes" do
+      expect(subject.available_omses).to eq([])
+    end
+
+    context "when there are registered OMSes" do
+      before do
+        @global_oms = create(:oms)
+        @default_oms = create(:oms, default: true)
+        @provider_oms = create(:provider_group_oms)
+        @resource_oms = create(:resource_dedicated_oms)
+      end
+
+      it "doesn't return if not associated" do
+        subject.update!(providers: [@provider_oms.providers[0]])
+
+        expect(subject.available_omses).to eq([@default_oms, @global_oms])
+      end
+
+      it "returns all associated" do
+        subject.update!(resource_organisation: @provider_oms.providers[0])
+        @resource_oms.update!(service: subject)
+
+        expect(subject.available_omses).to eq([@default_oms, @resource_oms, @global_oms, @provider_oms])
+      end
+    end
+  end
 end
