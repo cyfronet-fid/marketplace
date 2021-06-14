@@ -28,5 +28,3 @@
             - if policy([:backoffice, Vocabulary]).edit?
               = link_to _("Edit"), send("edit_backoffice_#{snake_cased(@type)}_path", vocabulary),
               class: "btn-sm btn-warning float-right mr-4"
-
-    = render "backoffice/vocabularies/pagy", pagy: @pagy

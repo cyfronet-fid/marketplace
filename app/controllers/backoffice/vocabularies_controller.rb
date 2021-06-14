@@ -5,27 +5,27 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
   before_action :instantiate_type
 
   VOCABULARY_TYPES = {
-    "TargetUser": "Target User",
-    "Vocabulary::AccessMode": "Access Mode",
-    "Vocabulary::AccessType": "Access Type",
-    "Vocabulary::FundingBody": "Funding Body",
-    "Vocabulary::FundingProgram": "Funding Program",
-    "Vocabulary::Trl": "TRL",
-    "Vocabulary::LifeCycleStatus": "Life Cycle Status",
-    "Vocabulary::ProviderLifeCycleStatus": "Provider Life Cycle Status",
-    "Vocabulary::AreaOfActivity": "Area of Activity",
-    "Vocabulary::EsfriDomain": "ESFRI Domain",
-    "Vocabulary::EsfriType": "ESFRI Type",
-    "Vocabulary::LegalStatus": "Legal Status",
-    "Vocabulary::Network": "Network",
-    "Vocabulary::SocietalGrandChallenge": "Societal Grand Challenge",
-    "Vocabulary::StructureType": "Structure Type",
-    "Vocabulary::MerilScientificDomain": "MERIL Scientific Domain"
+    target_user: { name: "Target User", klass: TargetUser },
+    access_mode: { name: "Access Mode", klass: Vocabulary::AccessMode },
+    access_type: { name: "Access Type", klass: Vocabulary::AccessType },
+    funding_body: { name: "Funding Body", klass: Vocabulary::FundingBody },
+    funding_program: { name: "Funding Program", klass: Vocabulary::FundingProgram },
+    trl: { name: "TRL", klass: Vocabulary::Trl },
+    life_cycle_status: { name: "Life Cycle Status", klass: Vocabulary::LifeCycleStatus },
+    provider_life_cycle_status: { name: "Provider Life Cycle Status", klass: Vocabulary::ProviderLifeCycleStatus },
+    area_of_activity: { name: "Area of Activity", klass: Vocabulary::AreaOfActivity },
+    esfri_domain: { name: "ESFRI Domain", klass: Vocabulary::EsfriDomain },
+    esfri_type: { name: "ESFRI Type", klass: Vocabulary::EsfriType },
+    legal_status: { name: "Legal Status", klass: Vocabulary::LegalStatus },
+    network: { name: "Network", klass: Vocabulary::Network },
+    societal_grand_challenge: { name: "Societal Grand Challenge", klass: Vocabulary::SocietalGrandChallenge },
+    structure_type: { name: "Structure Type", klass: Vocabulary::StructureType },
+    meril_scientific_domain: { name: "MERIL Scientific Domain", klass: Vocabulary::MerilScientificDomain }
   }
 
   def index
-    authorize(Vocabulary)
-    @pagy, @vocabularies = pagy(vocabulary_type.all.order(:name))
+    authorize(vocabulary_type)
+    @vocabularies = vocabulary_type.all.order(:name)
   end
 
   def show
@@ -42,7 +42,7 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
 
     if @vocabulary.save
       redirect_to send("backoffice_#{@vocabulary.model_name.element}_path", @vocabulary),
-                  notice: "New access mode created successfully"
+                  notice: "New #{VOCABULARY_TYPES[@vocabulary.model_name.element.to_sym][:name]} created successfully"
     else
       render :new, status: :bad_request
     end
@@ -54,38 +54,42 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
   def update
     if @vocabulary.update(permitted_attributes(@vocabulary))
       redirect_to send("backoffice_#{@vocabulary.model_name.element}_path", @vocabulary),
-                  notice: "#{@vocabulary.model_name.element.humanize} updated correctly"
+                  notice: "#{VOCABULARY_TYPES[@vocabulary.model_name.element.to_sym][:name]} updated correctly"
     else
       render :edit, status: :bad_request
     end
   end
 
   def destroy
-    if @vocabulary.descendant_ids.blank?
+    if @vocabulary.descendant_ids.present?
+      redirect_back fallback_location:  send("backoffice_#{@vocabulary.model_name.element}_path", (@vocabulary)),
+                    alert: "This #{@type} has successors connected to it,
+                            therefore is not possible to remove it. If you want to remove it,
+                            edit them so they are not associated with this #{@type} anymore"
+    elsif @vocabulary.try(:services).present?
+      redirect_back fallback_location:  send("backoffice_#{@vocabulary.model_name.element}_path", (@vocabulary)),
+                    alert: "This vocabulary has resources connected to it, remove associations to delete it."
+    elsif @vocabulary.try(:providers).present?
+      redirect_back fallback_location:  send("backoffice_#{@vocabulary.model_name.element}_path", (@vocabulary)),
+                    alert: "This vocabulary has providers connected to it, remove associations to delete it."
+    else
       @vocabulary.destroy!
       redirect_to send("backoffice_#{@vocabulary.model_name.element.pluralize}_path"),
-                  notice: "#{@vocabulary.model_name.element.humanize} removed"
-    else
-      redirect_to send("backoffice_#{@vocabulary.model_name.element}_path", (@vocabulary)),
-                  alert: "This #{@vocabulary.model_name.element.humanize} has successors connected to it,
-                      therefore is not possible to remove it. If you want to remove it,
-                      please go to the #{@vocabulary.model_name.element.humanize} list view
-                      and edit them so they are not associated
-                      with this #{@vocabulary.model_name.element.humanize} anymore"
+                  notice: "#{@type} removed"
     end
   end
 
   private
     def find_and_authorize
-      @vocabulary = Vocabulary.find(params[:id])
+      @vocabulary = vocabulary_type.find(params[:id])
       authorize(@vocabulary)
     end
 
     def instantiate_type
-      @type = VOCABULARY_TYPES[params[:type].to_sym]
+      @type = VOCABULARY_TYPES[params[:type].to_sym][:name]
     end
 
     def vocabulary_type
-      params[:type].constantize if params[:type].to_sym.in? VOCABULARY_TYPES.keys
+      VOCABULARY_TYPES[params[:type].to_sym][:klass]
     end
 end
