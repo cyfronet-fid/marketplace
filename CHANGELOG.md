@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Message author's and project owner's UID field in the Ordering API (@jswk)
+- Internal vocabularies management panel in the backoffice (@goreck888)
 
 ### Changed
 - Improve consistency between Marketplace provider and Provider Component provider form and data model - improvement of User experience (@danielkryska)

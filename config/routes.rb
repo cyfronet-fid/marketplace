@@ -101,24 +101,24 @@ Rails.application.routes.draw do
     resources :categories
     resources :providers
     resources :platforms
-    get :vocabularies, to: "vocabularies/target_users#index", type: "TargetUser", as: :vocabularies
+    get "vocabularies", to: "vocabularies#index", type: "target_user", as: :vocabularies
     scope "/vocabularies" do
-      resources :target_users, controller: "vocabularies", type: "TargetUser"
-      resources :trls, controller: "vocabularies", type: "Vocabulary::Trl"
-      resources :access_types, controller: "vocabularies", type: "Vocabulary::AccessType"
-      resources :access_modes, controller: "vocabularies", type: "Vocabulary::AccessMode"
-      resources :funding_bodies, controller: "vocabularies", type: "Vocabulary::FundingBody"
-      resources :funding_programs, controller: "vocabularies", type: "Vocabulary::FundingProgram"
-      resources :life_cycle_statuses, controller: "vocabularies", type: "Vocabulary::LifeCycleStatus"
-      resources :provider_life_cycle_statuses, controller: "vocabularies", type: "Vocabulary::ProviderLifeCycleStatus"
-      resources :areas_of_activity, controller: "vocabularies", type: "Vocabulary::AreaOfActivity"
-      resources :esfri_types, controller: "vocabularies", type: "Vocabulary::EsfriType"
-      resources :esfri_domains, controller: "vocabularies", type: "Vocabulary::EsfriDomain"
-      resources :legal_statuses, controller: "vocabularies", type: "Vocabulary::LegalStatus"
-      resources :networks, controller: "vocabularies", type: "Vocabulary::Network"
-      resources :societal_grand_challenges, controller: "vocabularies", type: "Vocabulary::SocietalGrandChallenge"
-      resources :structure_types, controller: "vocabularies", type: "Vocabulary::StructureType"
-      resources :meril_scientific_domains, controller: "vocabularies", type: "Vocabulary::MerilScientificDomain"
+      resources :target_users, controller: "vocabularies", type: "target_user"
+      resources :trls, controller: "vocabularies", type: "trl"
+      resources :access_types, controller: "vocabularies", type: "access_type"
+      resources :access_modes, controller: "vocabularies", type: "access_mode"
+      resources :funding_bodies, controller: "vocabularies", type: "funding_body"
+      resources :funding_programs, controller: "vocabularies", type: "funding_program"
+      resources :life_cycle_statuses, controller: "vocabularies", type: "life_cycle_status"
+      resources :provider_life_cycle_statuses, controller: "vocabularies", type: "provider_life_cycle_status"
+      resources :areas_of_activity, controller: "vocabularies", type: "area_of_activity"
+      resources :esfri_types, controller: "vocabularies", type: "esfri_type"
+      resources :esfri_domains, controller: "vocabularies", type: "esfri_domain"
+      resources :legal_statuses, controller: "vocabularies", type: "legal_status"
+      resources :networks, controller: "vocabularies", type: "network"
+      resources :societal_grand_challenges, controller: "vocabularies", type: "societal_grand_challenge"
+      resources :structure_types, controller: "vocabularies", type: "structure_type"
+      resources :meril_scientific_domains, controller: "vocabularies", type: "meril_scientific_domain"
     end
 
   end

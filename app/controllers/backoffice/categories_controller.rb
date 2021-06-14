@@ -41,9 +41,19 @@ class Backoffice::CategoriesController < Backoffice::ApplicationController
   end
 
   def destroy
-    @category.destroy!
-    redirect_to backoffice_categories_path,
-                notice: "Category destroyed"
+    if @category.descendant_ids.present?
+      redirect_back fallback_location:  backoffice_category_path(@category),
+                    alert: "This category has successors connected to it,
+                            therefore is not possible to remove it. If you want to remove it,
+                            edit them so they are not associated with this category anymore"
+    elsif @category.services.present?
+      redirect_back fallback_location:  backoffice_category_path(@category),
+                    alert: "This category has resources connected to it, remove associations to delete it."
+    else
+      @category.destroy!
+      redirect_to backoffice_categories_path,
+                  notice: "Category removed"
+    end
   end
 
   private
