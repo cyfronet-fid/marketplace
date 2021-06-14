@@ -6,6 +6,7 @@
     "author": {
       "type": "object",
       "properties": {
+        "uid": {"type": "string"},
         "email": {"type": "string"},
         "name": {"type": "string"},
         "role": {"type": "string",

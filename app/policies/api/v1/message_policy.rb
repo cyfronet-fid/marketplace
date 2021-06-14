@@ -34,7 +34,7 @@ class Api::V1::MessagePolicy < ApplicationPolicy
       :project_item_id,
       :content,
       :scope,
-      author: [:email, :name, :role]
+      author: [:uid, :email, :name, :role]
     ]
   end
 
