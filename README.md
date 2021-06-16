@@ -234,6 +234,9 @@ We are currently using the following ENV variables:
   * `ELASTICSEARCH_URL` - elasticsearch url
   * `STORAGE_DIR` - active storage local dir (default set to
     `RAILS_ROOT/storage`)
+  * `S3_STORAGE` - set true to change ActiveStorage to S3
+  * `S3_BUCKET` - active storage S3 bucket
+  * `S3_ENDPOINT` - active storage S3 endpoint
   * `SMTP_ADDRESS` - smtp mail server address
   * `SMTP_USERNAME` - smtp user name or email address
   * `SMTP_PASSWORD` - smtp password
@@ -379,3 +382,41 @@ rake ordering_api:add_provider_oms \
   ARG_PROVIDER_PID="ep" \
   ARG_AUTHENTICATION_TOKEN="a_token"
 ```
+
+## Active Storage
+
+Default ActiveStorage is set to :local with `STORAGE_DIR` env variable (default set to `RAILS_ROOT/storage`).
+You can change it in `production` and `development` to S3-compatible resource by setting `S3_STORAGE` 
+[env variable](#environmental-variables).
+
+To use S3 first, you need:
+* `S3_STORAGE`
+* `S3_ENDPOINT`
+* `S3_BUCKET`
+* s3:access_key_id credentials
+* s3:secret_access_key credentials
+  
+Store s3 access and secret_access keys in encrypted credentials.
+Set env variables and you should be able to run the app.
+  
+### Upload Local ActiveStorage to S3
+
+To upload files registered in db from `local` to `S3` you need:
+* working db with registered `local` files
+* `S3_ENDPOINT`
+* `S3_BUCKET`
+* s3:access_key_id credentials
+* s3:secret_access_key credentials
+
+Task: `rake storage:upload_to_s3`
+
+### Upload S3 ActiveStorage to S3
+
+To upload files registered in db from `S3` to `local` you need:
+* working db with registered `local` files
+* `S3_ENDPOINT`
+* `S3_BUCKET`
+* s3:access_key_id credentials
+* s3:secret_access_key credentials
+
+Task: `rake storage:upload_to_local`

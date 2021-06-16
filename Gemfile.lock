@@ -83,6 +83,22 @@ GEM
     atlassian-jwt (0.2.0)
       jwt (~> 2.1.0)
     attr_required (1.0.1)
+    aws-eventstream (1.1.1)
+    aws-partitions (1.465.0)
+    aws-sdk-core (3.114.1)
+      aws-eventstream (~> 1, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.239.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1.0)
+    aws-sdk-kms (1.43.0)
+      aws-sdk-core (~> 3, >= 3.112.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.96.0)
+      aws-sdk-core (~> 3, >= 3.112.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.1)
+    aws-sigv4 (1.2.3)
+      aws-eventstream (~> 1, >= 1.0.2)
     bcrypt (3.1.16)
     bindata (2.4.8)
     bindex (0.8.1)
@@ -248,6 +264,7 @@ GEM
       atlassian-jwt
       multipart-post
       oauth (~> 0.5, >= 0.5.0)
+    jmespath (1.4.0)
     json (2.5.1)
     json-jwt (1.13.0)
       activesupport (>= 4.2)
@@ -652,6 +669,7 @@ DEPENDENCIES
   activestorage-validator
   acts-as-taggable-on (~> 6.0)
   ancestry
+  aws-sdk-s3
   bootsnap (>= 1.4.2)
   byebug
   capybara
