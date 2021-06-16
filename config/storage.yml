@@ -6,6 +6,14 @@ local:
   service: Disk
   root: <%= ENV["STORAGE_DIR"] || Rails.root.join("storage") %>
 
+s3:
+  service: S3
+  endpoint: <%= ENV["S3_ENDPOINT"] || "https://s3.cloud.cyfronet.pl/" %>
+  access_key_id: <%= Rails.application.credentials.dig(:s3, :access_key_id) %>
+  secret_access_key: <%= Rails.application.credentials.dig(:s3, :secret_access_key) %>
+  bucket: <%= ENV["S3_BUCKET"] || "marketplace-dev" %>
+  region: ack-cyfronet
+
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
 #   service: S3
