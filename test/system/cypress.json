@@ -6,7 +6,7 @@
   "testFiles": "**/*.spec.ts",
   "fileServerFolder": "./",
   "supportFile": "./cypress/support/index.ts",
-  "chromeWebSecurity" : false,
+  "chromeWebSecurity": false,
   "retries": {
     "runMode": 0,
     "openMode": 0
@@ -18,4 +18,3 @@
     "debug": false
   }
 }
-
