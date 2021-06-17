@@ -2,7 +2,7 @@
   - options.each do |option|
     - muted = option[:count].to_i.zero?
     - target = root ? "multicheckbox.element multicheckbox.item" : "multicheckbox.item"
-    %li{ data: { target: target } }
+    %li{ data: { target: target }, "data-e2e": "filter-checkbox" }
       %label{ class: ("text-muted" if muted) }
         %input.form-check-input{ type: "checkbox", name: "#{name}[]",
           multiple: true, checked: values.include?(option[:id].to_s), value: option[:id],
