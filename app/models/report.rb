@@ -5,7 +5,7 @@ class Report
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_accessor :text, :author, :email
+  attr_accessor :text, :author, :email, :verified_recaptcha
 
   validates :text, presence: { message: "Description cannot be blank" }
   validates :author, presence: true

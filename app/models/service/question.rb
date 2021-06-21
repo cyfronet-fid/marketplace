@@ -5,7 +5,7 @@ class Service::Question
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_accessor :text, :author, :service, :email
+  attr_accessor :text, :author, :service, :email, :verified_recaptcha
 
   validates :text, presence: { message: "Question cannot be blank" }
   validates :author, presence: true

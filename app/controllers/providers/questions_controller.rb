@@ -18,7 +18,7 @@ class Providers::QuestionsController < ApplicationController
                                      text: params[:provider_question][:text],
                                      provider: @provider)
     respond_to do |format|
-      if @question.valid? && verify_recaptcha
+      if @question.valid? && verify_recaptcha(model: @question, attribute: :verified_recaptcha)
         @provider.public_contacts.each  do |contact|
           ProviderMailer.new_question(contact.email, @question.author, @question.email,
                                      @question.text, @provider).deliver_later
