@@ -14,4 +14,5 @@
           hint: _("We will send your report to the Service provider. You will receive an answer to " + |
                  "%{email} email address.") % { email: current_user&.email || "your" }  |
   -# haml-lint:enable MultilinePipe
-#recaptcha= recaptcha_tags
+  #recaptcha= recaptcha_tags
+  = f.error :verified_recaptcha, class: "invalid-feedback d-block"
