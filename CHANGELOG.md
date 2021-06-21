@@ -22,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Don't leak sensitive OMS fields in Offering API (@jswk)
+- Forms for questions about providers/resources are working properly (@goreck888)
 
 ## [3.14.0] 2021-06-11
 

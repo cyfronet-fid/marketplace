@@ -18,7 +18,7 @@ class Services::QuestionsController < ApplicationController
                                      text: params[:service_question][:text],
                                      service: @service)
     respond_to do |format|
-      if @question.valid? && verify_recaptcha
+      if @question.valid? && verify_recaptcha(model: @question, attribute: :verified_recaptcha)
         @service.public_contacts.each  do |contact|
           ServiceMailer.new_question(contact.email, @question.author, @question.email,
                                      @question.text, @service).deliver_later

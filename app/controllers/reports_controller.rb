@@ -15,7 +15,7 @@ class ReportsController < ApplicationController
                               email: user&.email || params[:report][:email],
                               text: params[:report][:text])
     respond_to do |format|
-      if @report.valid? && verify_recaptcha
+      if @report.valid? && verify_recaptcha(model: @report, attribute: :verified_recaptcha)
         Report::Create.new(@report).call
         format.js { render js: "window.top.location.reload(true);" }
         flash[:notice] = "Your report was successfully sent"
