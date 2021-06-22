@@ -107,7 +107,7 @@
             class: ("show" unless collapsed?(service, [:scientific_domains,
                               :categories, :target_users, :access_types, :access_modes, :tag_list])) }
           .card-body
-            = f.association :scientific_domains, input_html: { data: { choice: true } }, include_hidden: false,
+            = f.association :scientific_domains, input_html: { data: { choice: true } },
             disabled: cant_edit([scientific_domain_ids: []]),
             collection: ScientificDomain.child_names.map { |name, sd| [name, sd.id] },
             label_method: :first, value_method: :second
@@ -117,7 +117,6 @@
             = f.association :target_users,
               label: _("Dedicated For"),
               input_html: { data: { choice: true }, class: "target_users" },
-              include_hidden: false,
               disabled: cant_edit([target_user_ids: []])
             = f.association :access_types, input_html: { data: { choice: true } },
                             disabled: cant_edit([access_type_ids: []])
@@ -146,7 +145,7 @@
                 disabled: cant_edit([geographical_availabilities: []]),
                 input_html: { data: { choice: true },  "multiple" => "true" }
             = f.input :language_availability, input_html: { multiple: true, data: { choice: true } },
-            include_hidden: false, collection: I18nData.languages.map { |k, v| [v, k] },
+            collection: I18nData.languages.map { |k, v| [v, k] },
             disabled: cant_edit([language_availability: []])
 
         .card.shadow-sm.rounded
