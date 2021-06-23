@@ -3,7 +3,6 @@
 FactoryBot.define do
   factory :oms do
     sequence(:name) { |n| "OMS #{n}" }
-    sequence(:trigger_url) { |n| "http://webhook#{n}.com" }
     sequence(:administrators) { build_list(:user, 2) }
     type { "global" }
 
@@ -15,6 +14,10 @@ FactoryBot.define do
     factory :resource_dedicated_oms do
       type { "resource_dedicated" }
       sequence(:service) { build(:service) }
+    end
+
+    factory :oms_with_trigger do
+      sequence(:trigger) { build(:trigger) }
     end
   end
 end

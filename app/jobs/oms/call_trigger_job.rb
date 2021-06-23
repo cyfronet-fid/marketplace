@@ -4,6 +4,6 @@ class OMS::CallTriggerJob < ApplicationJob
   queue_as :orders
 
   def perform(oms)
-    OMS::CallTrigger.new(oms).call
+    Trigger::Call.new(oms.trigger).call if oms.trigger.present?
   end
 end
