@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe OMS, type: :model do
+  it { should have_one(:trigger).dependent(:destroy) }
+
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:type) }
 
@@ -47,7 +49,7 @@ RSpec.describe OMS, type: :model do
       expect(build(:resource_dedicated_oms, offers: [])).to be_valid
       expect(build(:resource_dedicated_oms, offers: build_list(:offer, 2))).to be_valid
       expect(build(:resource_dedicated_oms, providers: build_list(:provider, 2))).to_not be_valid
-      expect(build(:resource_dedicated_oms, service: nil)).to_not be_valid
+      expect(build(:resource_dedicated_oms, service: nil)).to be_valid
     end
   end
 
@@ -57,7 +59,7 @@ RSpec.describe OMS, type: :model do
       expect(build(:provider_group_oms, offers: [])).to be_valid
       expect(build(:provider_group_oms, offers: build_list(:offer, 2))).to be_valid
       expect(build(:provider_group_oms, service: build(:service))).to_not be_valid
-      expect(build(:provider_group_oms, providers: [])).to_not be_valid
+      expect(build(:provider_group_oms, providers: [])).to be_valid
     end
   end
 

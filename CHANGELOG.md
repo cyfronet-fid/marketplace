@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.16.0-milestone]
+
+### Added
+
+### Changed
+- Enhance the Ordering API OMS trigger (@jswk)
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
 ## [3.15.0] 2021-06-28
 
 ### Added
