@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_14_131726) do
+ActiveRecord::Schema.define(version: 2021_06_18_130500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -218,12 +218,20 @@ ActiveRecord::Schema.define(version: 2021_06_14_131726) do
     t.index ["provider_id"], name: "index_oms_providers_on_provider_id"
   end
 
+  create_table "oms_triggers", force: :cascade do |t|
+    t.bigint "oms_id", null: false
+    t.string "url", null: false
+    t.string "method", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["oms_id"], name: "index_oms_triggers_on_oms_id"
+  end
+
   create_table "omses", force: :cascade do |t|
     t.string "name", null: false
     t.string "type", null: false
     t.jsonb "custom_params"
     t.boolean "default", default: false, null: false
-    t.string "trigger_url"
     t.bigint "service_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -671,6 +679,7 @@ ActiveRecord::Schema.define(version: 2021_06_14_131726) do
   add_foreign_key "oms_administrations", "users"
   add_foreign_key "oms_providers", "omses"
   add_foreign_key "oms_providers", "providers"
+  add_foreign_key "oms_triggers", "omses"
   add_foreign_key "omses", "services"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"

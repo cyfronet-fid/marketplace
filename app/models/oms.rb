@@ -10,6 +10,8 @@ class OMS < ApplicationRecord
   has_many :offers, foreign_key: "primary_oms_id", dependent: :nullify
   belongs_to :service, optional: true
 
+  has_one :trigger, class_name: "OMS::Trigger", dependent: :destroy
+
   self.inheritance_column = nil
   enum type: {
     global: "global",
@@ -20,13 +22,9 @@ class OMS < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :type, presence: true, inclusion: { in: types }
 
-  validates_associated :service, if: :resource_dedicated?
-  validates :service, presence: true, if: :resource_dedicated?
   validates :providers, absence: true, if: :resource_dedicated?
 
-  validates_associated :providers, if: :provider_group?
   validates :service, absence: true, if: :provider_group?
-  validates :providers, presence: true, if: :provider_group?
 
   validates :service, absence: true, if: :global?
   validates :providers, absence: true, if: :global?
@@ -34,6 +32,8 @@ class OMS < ApplicationRecord
   validate :single_default_oms?, if: :default?
 
   validate :validate_custom_params, if: :custom_params?
+
+  validates_associated :trigger
 
   def mandatory_defaults
     custom_params&.filter { |_, v| v["mandatory"] }&.transform_values { |v| v["default"] }
