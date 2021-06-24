@@ -13,6 +13,14 @@
         "url": {"type": "string"},
         "method": {"type": "string",
           "enum": ["get", "post", "put"]
+        },
+        "authorization": {"type": "object",
+          "properties": {
+            "type": {"type": "string", "const": "basic" },
+            "user": {"type": "string"},
+            "password": {"type": "string"}
+          },
+          "required": ["type", "user", "password"]
         }
       },
       "additionalProperties": false,

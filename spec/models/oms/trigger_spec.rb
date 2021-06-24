@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe OMS::Trigger, type: :model do
   it { should belong_to(:oms) }
+  it { should have_one(:authorization).dependent(:destroy) }
 
   it { should validate_presence_of(:url) }
   it { should validate_presence_of(:method) }
