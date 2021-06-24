@@ -8,7 +8,20 @@ class Api::V1::Ordering::OMSSerializer < ActiveModel::Serializer
   def trigger
     {
       url: object.trigger.url,
-      method: object.trigger.method
-    }
+      method: object.trigger.method,
+      authorization: trigger_authorization
+    }.select { |_, value| value.present? }
   end
+
+  private
+    def trigger_authorization
+      auth = object.trigger&.authorization
+      return nil if auth.blank?
+      if auth.is_a?(OMS::Authorization::Basic)
+        {
+          user: auth.user,
+          password: auth.password
+        }
+      end
+    end
 end

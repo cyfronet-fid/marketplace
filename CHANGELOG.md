@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [3.16.0-milestone]
 
 ### Added
+- OMS trigger basic authentication (@jswk)
 
 ### Changed
 - Enhance the Ordering API OMS trigger (@jswk)

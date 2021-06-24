@@ -7,28 +7,35 @@ class OrderingApi::TriggersTestSetup
     oms_admin = User.find_by!(uid: "iamasomboadmin")
 
     oms1 = OMS.find_by!(default: true)
-    oms1.update!(trigger_url: "http://localhost:1080/oms1")
-    oms2 = OMS.create!(name: "OMS2", type: "global", administrators: [oms_admin], trigger_url: "http://localhost:1080/oms2")
-    oms3 = OMS.create!(name: "OMS3", type: "global", administrators: [oms_admin], trigger_url: "http://localhost:1080/oms3")
+    add_trigger(oms1, url: "http://localhost:1080/oms1")
+    oms2 = OMS.create!(name: "OMS2", type: "global", administrators: [oms_admin])
+    add_trigger(oms2, url: "http://localhost:1080/oms2", method: :get)
+    oms3 = OMS.create!(name: "OMS3", type: "global", administrators: [oms_admin])
+    add_trigger(oms3, url: "http://localhost:1080/oms3", user: "magic", password: "mushroom")
 
-    provider = Provider.create!(name: "provider")
-    service1 = Service.create!(name: "s1", description: "asd", tagline: "asd", status: "published", providers: [provider],
-                         resource_organisation: provider, scientific_domains: [ScientificDomain.first], geographical_availabilities: ["PL"])
-    service2 = Service.create!(name: "s2", description: "asd", tagline: "asd", status: "published", providers: [provider],
-                         resource_organisation: provider, scientific_domains: [ScientificDomain.first], geographical_availabilities: ["PL"])
-    Offer.create!(name: "s1_o", order_type: "open_access", description: "asd", service: service1,
-                  status: "published", primary_oms: oms2)
-    Offer.create!(name: "s2_o", order_type: "open_access", description: "asd", service: service2,
-                  status: "published", primary_oms: oms3)
+    service = Service.find_by(name: "EGI Cloud compute")
+    Offer.create!(name: "offer_oms_2", description: "asd", service: service, status: "published",
+                  order_type: :order_required, internal: true, primary_oms: oms2)
+    Offer.create!(name: "offer_oms_3", description: "asd", service: service, status: "published",
+                  order_type: :order_required, internal: true, primary_oms: oms3)
 
     # The test scenario:
     # Create project p1 (triggers: OMS1)
     # Write a message in p1 (triggers: OMS1)
-    # Create project_item pi1_1 from s1_o (triggers: OMS1, OMS2)
+    # Create project_item pi1_1 from offer_oms_2 (triggers: OMS1, OMS2)
     # Write a message in pi1_1 (triggers: OMS1, OMS2)
     # Write a message in p1 (triggers: OMS1, OMS2)
-    # Create project_item pi1_2 from s2_o (triggers: OMS1, OMS3)
+    # Create project_item pi1_2 from offer_oms_2 (triggers: OMS1, OMS3)
     # Write a message in pi1_2 (triggers: OMS1, OMS3)
     # Write a message in p1 (triggers: OMS1, OMS2, OMS3)
   end
+
+  private
+    def add_trigger(oms, url:, method: :post, user: nil, password: nil)
+      oms.trigger = OMS::Trigger.new(url: url, method: method)
+      if user.present? && password.present?
+        oms.trigger.authorization = OMS::Authorization::Basic.new(user: user, password: password)
+      end
+      oms.trigger
+    end
 end
