@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_18_130500) do
+ActiveRecord::Schema.define(version: 2021_06_23_105544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -206,6 +206,16 @@ ActiveRecord::Schema.define(version: 2021_06_18_130500) do
     t.index ["oms_id", "user_id"], name: "index_oms_administrations_on_oms_id_and_user_id", unique: true
     t.index ["oms_id"], name: "index_oms_administrations_on_oms_id"
     t.index ["user_id"], name: "index_oms_administrations_on_user_id"
+  end
+
+  create_table "oms_authorizations", force: :cascade do |t|
+    t.bigint "oms_trigger_id", null: false
+    t.string "type", null: false
+    t.string "user"
+    t.string "password"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["oms_trigger_id"], name: "index_oms_authorizations_on_oms_trigger_id"
   end
 
   create_table "oms_providers", force: :cascade do |t|
@@ -677,6 +687,7 @@ ActiveRecord::Schema.define(version: 2021_06_18_130500) do
   add_foreign_key "offers", "omses", column: "primary_oms_id"
   add_foreign_key "oms_administrations", "omses"
   add_foreign_key "oms_administrations", "users"
+  add_foreign_key "oms_authorizations", "oms_triggers"
   add_foreign_key "oms_providers", "omses"
   add_foreign_key "oms_providers", "providers"
   add_foreign_key "oms_triggers", "omses"
