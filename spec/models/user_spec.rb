@@ -44,22 +44,24 @@ RSpec.describe User do
     end
   end
 
+  # This is relevant for users who where created before introducing simple_token_authentication, they will have null
+  # authentication_tokens.
   context "#valid_token?" do
-    it "is false when token is nil or 'revoked'" do
-      user = create(:user)
-      user.update(authentication_token: "revoked")
+    it "is false when token is nil" do
+      user = build(:user)
 
-      expect(user.valid_token?).to be false
-
-      # Workaround of the fact that 'simple_authentication_token' automatically generates token when you try to save
-      # model object to database and model.authentication_token = nil.
-      # Workaround is that we don't do 'user model.update(attribute: value)', but rather 'model.attribute = value'
-      user.authentication_token = nil
       expect(user.valid_token?).to be false
     end
 
-    it "is true when token is not nil or 'revoked'" do
-      user = create(:user)
+    it "is false when token is empty" do
+      user = build(:user_with_empty_token)
+
+      expect(user.valid_token?).to be false
+    end
+
+    it "is true when token is present" do
+      user = build(:user_with_token)
+
       expect(user.valid_token?).to be true
     end
   end

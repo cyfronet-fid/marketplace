@@ -32,43 +32,37 @@ RSpec.feature "Api docs page" do
       expect(page).to have_text("This is the API of the EOSC Marketplace.")
     end
 
-    scenario "I can revoke my token" do
-      visit api_docs_path
-      click_link("Revoke token")
-
-      user.reload
-
-      expect(user.authentication_token).to eq("revoked")
-      expect(page).to have_text("You don't have an authentication token yet.")
-      expect(page).to have_link("Generate token")
-    end
-
-    scenario "I can revoke and then generate my token" do
-      visit api_docs_path
-
+    scenario "I can regenerate my token" do
       prev_token = user.authentication_token
 
-      click_link("Revoke token")
-      click_link("Generate token")
+      visit api_docs_path
+      click_link("Regenerate token")
 
       user.reload
 
-      expect(user.authentication_token).to_not eq("revoked")
       expect(user.authentication_token).to_not eq(prev_token)
 
       expect(page).to have_text(user.authentication_token)
-      expect(page).to have_link("Revoke token")
+      expect(page).to have_link("Regenerate token")
     end
 
-    scenario "I can't regenerate valid token" do
-      prev_token = user.authentication_token
+    context "with nil token" do
+      before do
+        user.update_column(:authentication_token, nil)
+      end
 
-      rack_test_session_wrapper = Capybara.current_session.driver
-      rack_test_session_wrapper.submit :post, api_docs_path, nil
+      scenario "I can generate token" do
+        visit api_docs_path
+        expect(page).to have_text("You don't have an authentication token yet")
+        click_link("Generate token")
 
-      user.reload
+        user.reload
 
-      expect(user.authentication_token).to eq(prev_token)
+        expect(user.authentication_token).to_not be_nil
+
+        expect(page).to have_text(user.authentication_token)
+        expect(page).to have_link("Regenerate token")
+      end
     end
 
     scenario "My token persists after signing out" do
@@ -80,7 +74,7 @@ RSpec.feature "Api docs page" do
       visit api_docs_path
 
       expect(page).to have_text(token)
-      expect(page).to have_link("Revoke token")
+      expect(page).to have_link("Regenerate token")
 
       user.reload
 

@@ -28,5 +28,12 @@ FactoryBot.define do
     factory :user_with_favourites do
       sequence(:favourite_services) { |n| [create(:service)] }
     end
+
+    factory :user_with_token do
+      sequence(:authentication_token) { |n| "token_#{n}" }
+    end
+    factory :user_with_empty_token do
+      authentication_token { "  " }
+    end
   end
 end
