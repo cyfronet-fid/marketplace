@@ -151,7 +151,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :api_docs, only: [:show, :create, :destroy]
+  resource :api_docs, only: [:show, :create]
 
   resource :admin, only: :show
   namespace :admin do

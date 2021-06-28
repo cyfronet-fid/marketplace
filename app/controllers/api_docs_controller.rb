@@ -11,14 +11,7 @@ class ApiDocsController < ApplicationController
   end
 
   def create
-    unless current_user.valid_token?
-      generate_token
-    end
-    redirect_to api_docs_path
-  end
-
-  def destroy
-    revoke_token
+    regenerate_token
     redirect_to api_docs_path
   end
 
@@ -32,11 +25,7 @@ class ApiDocsController < ApplicationController
       end
     end
 
-    def generate_token
-      current_user.update(authentication_token: User.generate_token)
-    end
-
-    def revoke_token
-      current_user.update(authentication_token: "revoked")
+    def regenerate_token
+      current_user.update!(authentication_token: nil)
     end
 end

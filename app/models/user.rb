@@ -56,10 +56,6 @@ class User < ApplicationRecord
   end
 
   def valid_token?
-    authentication_token != "revoked" && authentication_token.present?
-  end
-
-  def self.generate_token
-    Devise.friendly_token
+    authentication_token.present?
   end
 end
