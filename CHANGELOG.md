@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.15.0-milestone]
+## [3.15.0] 2021-06-28
 
 ### Added
 - Message author's and project owner's UID field in the Ordering API (@jswk)
@@ -15,10 +15,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - Improve consistency between Marketplace provider and Provider Component provider form and data model - improvement of User experience (@danielkryska)
 - Provider group OMS visibility now depends on service's resource_organisation instead of on providers (@jswk)
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Don't leak sensitive OMS fields in Offering API (@jswk)
