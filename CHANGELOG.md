@@ -13,12 +13,16 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Enhance the Ordering API OMS trigger (@jswk)
+- API authorization token can now only be revoked by regenerating it (@jswk)
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+
+### Security
+- Don't allow to authorize as a user with revoked token (@jswk)
 
 ## [3.15.0] 2021-06-28
 
