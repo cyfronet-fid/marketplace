@@ -10,10 +10,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - OMS trigger basic authentication (@jswk)
+- API authorization token reveal by "Show token" button on the `api_docs` page (@goreck888, @jarekzet, @kmarszalek)
 
 ### Changed
 - Enhance the Ordering API OMS trigger (@jswk)
 - API authorization token can now only be revoked by regenerating it (@jswk)
+- `api_docs` page is available for unlogged user (@goreck888)
 
 ### Deprecated
 

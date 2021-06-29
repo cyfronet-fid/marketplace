@@ -32,7 +32,21 @@ RSpec.feature "Api docs page" do
       expect(page).to have_text("This is the API of the EOSC Marketplace.")
     end
 
-    scenario "I can regenerate my token" do
+    scenario "I cannot see my token before clicking 'Show token' button and after clicking 'Hide token'", js: true do
+      visit api_docs_path
+
+      expect(page).to_not have_text(user.authentication_token)
+
+      find("#toggler").click
+
+      expect(page).to have_text(user.authentication_token)
+
+      find("#toggler").click
+
+      expect(page).to_not have_text(user.authentication_token)
+    end
+
+    scenario "I can regenerate my token", js: true do
       prev_token = user.authentication_token
 
       visit api_docs_path
@@ -41,6 +55,10 @@ RSpec.feature "Api docs page" do
       user.reload
 
       expect(user.authentication_token).to_not eq(prev_token)
+
+      save_page
+
+      find("#toggler").click
 
       expect(page).to have_text(user.authentication_token)
       expect(page).to have_link("Regenerate token")
@@ -51,7 +69,7 @@ RSpec.feature "Api docs page" do
         user.update_column(:authentication_token, nil)
       end
 
-      scenario "I can generate token" do
+      scenario "I can generate token", js: true do
         visit api_docs_path
         expect(page).to have_text("You don't have an authentication token yet")
         click_link("Generate token")
@@ -60,18 +78,22 @@ RSpec.feature "Api docs page" do
 
         expect(user.authentication_token).to_not be_nil
 
+        find("#toggler").click
+
         expect(page).to have_text(user.authentication_token)
         expect(page).to have_link("Regenerate token")
       end
     end
 
-    scenario "My token persists after signing out" do
+    scenario "My token persists after signing out", skip: "Capybara can't find Logout link, will be repaired in #2049", js: true do
       token = user.authentication_token
 
       click_link("Logout", match: :first)
       click_link("Login", match: :first)
 
       visit api_docs_path
+
+      find("#toggler").click
 
       expect(page).to have_text(token)
       expect(page).to have_link("Regenerate token")
@@ -83,10 +105,12 @@ RSpec.feature "Api docs page" do
   end
 
   context "as anonymous user" do
-    scenario "I don't see my api_docs page" do
-      visit root_path
+    scenario "I can visit the api_docs page with login prompt" do
+      visit api_docs_path
 
-      expect(page).to_not have_text("token")
+      expect(page).to have_text("API")
+      expect(page).to have_text("Log in to access your authentication token.")
+      expect(page).to have_link("Log in")
     end
   end
 end
