@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApiDocsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: :create
 
   def show
     @subsection = extract_subsection

@@ -4417,6 +4417,13 @@ textarea.form-control.is-invalid {
     font-weight: bold;
     font-size: 20px;
     line-height: 27px;
+    margin-bottom: 5px;
+  }
+
+  .token-visibility {
+    color: $palette-gray-70;
+    font-size: 12px;
+    font-weight: bold;
   }
 }
 
