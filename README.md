@@ -347,7 +347,13 @@ needs to be restarted.
 Marketplace is connected to an [external app](https://github.com/cyfronet-fid/recommender-system) 
 which recommends services to users. 
 
-It needs the MP data to learn. Run:
+It needs the MP data to learn. The recommended way to update recommender is via `/update` task:
+```
+./bin/rails recommender:update
+```
+It sends DB dump to recommender, starts training and reload agent.
+
+If you want only sent a DB dump, use:
 ```
 ./bin/rails recommender:serialize_db
 ```
