@@ -32,6 +32,7 @@ import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
 import initProbes from "./user_action";
 import assignTabIdToWindow from "./tabs";
+import redirect_to_login from "./autologin";
 
 const application = Application.start();
 const context = require.context("./controllers", true, /.js$/);
@@ -61,6 +62,7 @@ document.addEventListener("ajax:success", function(event) {
  */
 document.addEventListener('DOMContentLoaded', function (event) {
     dom.i2svg();
+    redirect_to_login();
     initSorting();
     initFlash();
     initBadgeState();

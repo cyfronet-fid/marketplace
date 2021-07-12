@@ -251,6 +251,7 @@ We are currently using the following ENV variables:
     (e.g. ASSET_HOST = marketplace.eosc-portal.eu/ and ASSET_PROTOCOL = https )
   * `RATE_AFTER_PERIOD` - number of days after which user can rate resource (default is set to 90 days)
   * `ATTRIBUTES_DOCS_URL` - offer attributes definition documentation (external link)
+  * `AUTOLOGIN_DOMAIN` - parent domain in which the autologin scheme should work (see [autologin](#autologin-across-eosc-portaleu-domains))
   * ENV Variables connected to JIRA integration are described in [JIRA integration manual](./docs/jira_integration.md)
 
 ## Commits
@@ -427,3 +428,19 @@ To upload files registered in db from `S3` to `local` you need:
 * s3:secret_access_key credentials
 
 Task: `rake storage:upload_to_local`
+
+### Autologin across `.eosc-portal.eu` domains
+
+We are using a simple scheme to implemented autologin across `.eosc-portal.eu` domains.
+It's done via cookies - the user is redirected to `/user/auth/checkin` through JS function call if certain conditions are met (see below)
+(this should eventually be done in [EOSC Commons](https://github.com/cyfronet-fid/eosc-portal-common) component).
+
+2 cookies are being set or deleted respectively to the Portal component or the Portal AAI session state:
+- `eosc_logged_in` (value: `true`, domain: `.eosc.portal.eu`, expires: `<SAME AS AAI SESSION>`)
+- `internal_session` (value: `true`, expires: `<SAME AS INTERNAL SESSION>`) 
+
+Basically the user is redirected `if eosc_logged_in && !internal_session`.
+
+After the logout, both of the cookies are set to `false`.
+
+For more info, click [here](https://docs.cyfronet.pl/pages/viewpage.action?spaceKey=FID&title=.eosc-portal.eu+domain+level+auto-login+%28SSO%29+research)

@@ -9,9 +9,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [3.18.0-milestone]
 
 ### Added
+- SSO basic functionality (@wujuu)
 
 ### Changed
-
 ### Deprecated
 
 ### Removed
