@@ -7,7 +7,10 @@
         wrapper_html: { "data-target": "ordering.internalWrapper" },
         input_html: { "data-target": "ordering.internal",
                       "data-action": "ordering#updateVisibility" }
-      = render "backoffice/services/offers/primary_oms_form", form: f, offer: offer, available_omses: service.available_omses
+      = render "backoffice/services/offers/primary_oms_form",
+                form: f,
+                offer: offer,
+                available_omses: service.available_omses
 
   %h4.mt-5.mb-0.text-uppercase
     = _("Offer parameters")
