@@ -21,6 +21,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
           cookies.delete(:favourites)
         end
         set_flash_message(:notice, :success, kind: "Checkin") if is_navigational_format?
+        add_autologin_cookies
       else
         flash[:alert] = "Cannot register user #{@user.errors.inspect}"
         session["devise.checkin_data"] = auth
@@ -32,4 +33,16 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def after_omniauth_failure_path_for(scope)
     root_path
   end
+
+  private
+    def add_autologin_cookies
+      cookies[:eosc_logged_in] = {
+        value: true,
+        domain: Mp::Application.config.autologin_domain
+      }
+
+      cookies[:internal_session] = {
+        value: true
+      }
+    end
 end
