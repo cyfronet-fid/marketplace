@@ -16,6 +16,8 @@
       = link_to _("Browse resources"),
                     services_path(providers: provider.id),
                     class: "btn btn-primary d-block mb-3", "data-e2e": "btn-browse-resource"
+      - if user_signed_in? && policy(provider).data_administrator?
+        = render "providers/header/drop_down_menu", provider: provider
 .row.service-links
   .col-12.col-lg-9.row
     .col-12.col-sm-3

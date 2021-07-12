@@ -196,7 +196,7 @@ class Service < ApplicationRecord
   end
 
   def administered_by?(user)
-    resource_organisation.data_administrators.where(email: user.email).count.positive?
+    resource_organisation.administered_by?(user)
   end
 
   def geographical_availabilities=(value)
