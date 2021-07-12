@@ -63,5 +63,8 @@ module Mp
 
     config.recommender_host = ENV["RECOMMENDER_HOST"]
     config.auth_mock = ENV["AUTH_MOCK"]
+
+    config.autologin_domain = ENV["AUTOLOGIN_DOMAIN"].present? ?
+                                ENV["AUTOLOGIN_DOMAIN"] : ".eosc-portal.eu"
   end
 end
