@@ -162,6 +162,10 @@ class Provider < ApplicationRecord
     )
   end
 
+  def administered_by?(user)
+    data_administrators.where(email: user.email).count.positive?
+  end
+
   private
     def remove_empty_array_fields
       array_fields = [
