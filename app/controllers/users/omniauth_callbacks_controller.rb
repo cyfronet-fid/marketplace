@@ -44,8 +44,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       cookies[:internal_session] = {
         value: true,
-        expires: 4.hours,
-        domain: request.domain
+        expires: 4.hours
       }
     end
 end
