@@ -14,11 +14,10 @@
           Below we show parameters specified by #{oms.name}, which values will be sent to it alongside
           the orders for your offer.
         - oms.custom_params.each do |param, param_options|
-          - is_missing = param_options["mandatory"] && offer.errors[:oms_params].present? && offer.oms_params[param].blank?
           = field.input param,
             required: param_options["mandatory"],
             wrapper_html: { "data-oms-id": oms.id },
-            input_html: { class:  is_missing ? "is-invalid" : "" }
+            input_html: { class: is_offer_missing(param, param_options) ? "is-invalid" : "" }
       - else
         %label{ "data-oms-id": oms.id }
           #{oms.name} doesn't specify any parameters.
