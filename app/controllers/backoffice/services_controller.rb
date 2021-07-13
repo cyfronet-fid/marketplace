@@ -33,7 +33,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def new
     @service = Service.new(attributes_from_session || {})
-    @service.sources.build source_type: "eic"
+    @service.sources.build source_type: "eosc_registry"
     @service.build_main_contact
     @service.public_contacts.build
     authorize(@service)
@@ -109,7 +109,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
     def add_missing_nested_models
       if @service.sources.empty?
-        @service.sources.build source_type: "eic"
+        @service.sources.build source_type: "eosc_registry"
       end
       if @service.main_contact.blank?
         @service.build_main_contact

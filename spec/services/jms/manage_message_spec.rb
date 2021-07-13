@@ -5,7 +5,7 @@ require "stomp"
 require "nori"
 
 describe Jms::ManageMessage do
-  let(:eic_base) { "localhost" }
+  let(:eosc_registry_base) { "localhost" }
   let(:logger) { Logger.new($stdout) }
   let(:parser) { Nori.new(strip_namespaces: true) }
   let(:service_resource) { create(:jms_xml_service) }
@@ -22,12 +22,12 @@ describe Jms::ManageMessage do
     $stdout = StringIO.new
     resource = parser.parse(service_resource["resource"])
     expect(Service::PcCreateOrUpdateJob).to receive(:perform_later).with(resource["infraService"]["service"],
-                                                                         eic_base,
+                                                                         eosc_registry_base,
                                                                          true,
                                                                          Time.at(resource["infraService"]["metadata"]["modifiedAt"].to_i&./1000),
                                                                          nil)
     expect {
-      described_class.new(json_service, eic_base, logger).call
+      described_class.new(json_service, eosc_registry_base, logger).call
     }.to_not raise_error
     $stdout = original_stdout
   end
@@ -41,7 +41,7 @@ describe Jms::ManageMessage do
            Time.at(resource["providerBundle"]["metadata"]["modifiedAt"].to_i&./1000))
 
     expect {
-      described_class.new(json_provider, eic_base, logger, nil).call
+      described_class.new(json_provider, eosc_registry_base, logger, nil).call
     }.to_not raise_error
     $stdout = original_stdout
   end
@@ -56,7 +56,7 @@ describe Jms::ManageMessage do
     expect(Service::DeleteJob).to receive(:perform_later).with("tp.openminted_catalogue_of_corpora_2")
 
     expect {
-      described_class.new(json_service, eic_base, logger).call
+      described_class.new(json_service, eosc_registry_base, logger).call
     }.to_not raise_error
     $stdout = original_stdout
   end
@@ -68,7 +68,7 @@ describe Jms::ManageMessage do
     error_service_message = double(body: service_hash.to_json, headers: { "destination" => "aaaa.update" })
 
     expect {
-      described_class.new(error_service_message, eic_base, logger).call
+      described_class.new(error_service_message, eosc_registry_base, logger).call
     }.to raise_error(StandardError)
     $stdout = original_stdout
   end

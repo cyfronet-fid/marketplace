@@ -15,26 +15,26 @@ class Service::PcCreateOrUpdate
     end
   end
 
-  def initialize(eic_service,
-                 eic_base_url,
+  def initialize(eosc_registry_service,
+                 eosc_registry_base_url,
                  is_active,
                  modified_at,
                  token,
                  unirest: Unirest)
     @unirest = unirest
-    @eic_base_url = eic_base_url
-    @eid = eic_service["id"]
-    @eic_service = eic_service
+    @eosc_registry_base_url = eosc_registry_base_url
+    @eid = eosc_registry_service["id"]
+    @eosc_registry_service = eosc_registry_service
     @is_active = is_active
     @token = token
     @modified_at = modified_at
   end
 
   def call
-    service_hash = Importers::Service.new(@eic_service, @modified_at, @eic_base_url, @token).call
-    mapped_service = Service.joins(:sources).find_by("service_sources.source_type": "eic",
+    service_hash = Importers::Service.new(@eosc_registry_service, @modified_at, @eosc_registry_base_url, @token).call
+    mapped_service = Service.joins(:sources).find_by("service_sources.source_type": "eosc_registry",
                                                      "service_sources.eid": @eid)
-    source_id = mapped_service.nil? ? nil : mapped_service.sources.find_by(source_type: "eic")
+    source_id = mapped_service.nil? ? nil : mapped_service.sources.find_by(source_type: "eosc_registry")
 
     is_newer_update = mapped_service&.synchronized_at.present? ? (@modified_at >= mapped_service.synchronized_at) : true
 
@@ -46,11 +46,11 @@ class Service::PcCreateOrUpdate
         service.status = "errored"
         service.save(validate: false)
       end
-      source = ServiceSource.create!(service_id: service.id, source_type: "eic", eid: @eid,
+      source = ServiceSource.create!(service_id: service.id, source_type: "eosc_registry", eid: @eid,
                                      errored: service.errors.messages)
       service.update(upstream_id: source.id)
 
-      Importers::Logo.new(service, @eic_service["logo"]).call
+      Importers::Logo.new(service, @eosc_registry_service["logo"]).call
       service.save!(validate: false)
       service
     elsif is_newer_update
@@ -58,7 +58,7 @@ class Service::PcCreateOrUpdate
         Service::Update.new(mapped_service, service_hash).call
         Service::Draft.new(mapped_service).call
 
-        Importers::Logo.new(mapped_service, @eic_service["logo"]).call
+        Importers::Logo.new(mapped_service, @eosc_registry_service["logo"]).call
         mapped_service.save!
         mapped_service
       elsif !source_id.nil?
@@ -69,7 +69,7 @@ class Service::PcCreateOrUpdate
         mapped_service.update(upstream_id: source_id.id)
         mapped_service.sources.first.update(errored: nil)
 
-        Importers::Logo.new(mapped_service, @eic_service["logo"]).call
+        Importers::Logo.new(mapped_service, @eosc_registry_service["logo"]).call
         mapped_service.save!
         mapped_service
       else
@@ -79,7 +79,7 @@ class Service::PcCreateOrUpdate
       raise NotUpdatedError.new("Service is not updated because there is a newer version imported.")
     end
   rescue NotUpdatedError => e
-    Rails.logger.warn "#{e} Message arrived, but service is not updated. Message #{@eic_service}"
+    Rails.logger.warn "#{e} Message arrived, but service is not updated. Message #{@eosc_registry_service}"
     if mapped_service.present? && mapped_service&.sources&.first.present?
       source = mapped_service&.sources&.first
       source.update(errored: check_service.errors.messages)

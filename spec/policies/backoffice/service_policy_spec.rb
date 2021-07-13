@@ -53,9 +53,9 @@ RSpec.describe Backoffice::ServicePolicy do
                                                 ])
     end
 
-    it "should filter eic managed fields if upstream is set to eic source" do
+    it "should filter EOSC Registry managed fields if upstream is set to eosc_registry source" do
       service = create(:service)
-      source = create(:service_source, source_type: :eic, service: service)
+      source = create(:service_source, source_type: :eosc_registry, service: service)
       service.update!(upstream: source)
       policy = described_class.new(service_owner, service)
       expect(policy.permitted_attributes).to match_array([

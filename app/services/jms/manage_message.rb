@@ -7,11 +7,11 @@ class Jms::ManageMessage
 
   class WrongMessageError < StandardError; end
 
-  def initialize(message, eic_base_url, logger, token = nil)
+  def initialize(message, eosc_registry_base_url, logger, token = nil)
     @parser = Nori.new(strip_namespaces: true)
     @message = message
     @logger = logger
-    @eic_base_url = eic_base_url
+    @eosc_registry_base_url = eosc_registry_base_url
     @token = token
   end
 
@@ -28,7 +28,7 @@ class Jms::ManageMessage
       modified_at = modified_at(resource, "infraService")
       if action != "delete" && resource["infraService"]["latest"]
         Service::PcCreateOrUpdateJob.perform_later(resource["infraService"]["service"],
-                                                   @eic_base_url,
+                                                   @eosc_registry_base_url,
                                                    resource["infraService"]["active"],
                                                    modified_at,
                                                    @token)

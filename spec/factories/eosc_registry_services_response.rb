@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :eic_services_response, class: Hash do
+  factory :eosc_registry_services_response, class: Hash do
     skip_create
     transient do
       trl { "trl-7" }

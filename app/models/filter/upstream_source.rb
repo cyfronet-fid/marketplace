@@ -12,7 +12,7 @@ class Filter::UpstreamSource < Filter
       [
           { name: "Any", id: "" },
           { name: "Internal", id: "mp" },
-          { name: "eInfraCentral", id: "eic" }
+          { name: "EOSC Registry", id: "eosc_registry" }
       ]
     end
 

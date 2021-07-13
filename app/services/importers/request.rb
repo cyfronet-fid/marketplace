@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Importers::Request
-  def initialize(eic_base_url, suffix, unirest: Unirest, token: nil, id: nil)
-    @eic_base_url = eic_base_url
+  def initialize(eosc_registry_base_url, suffix, unirest: Unirest, token: nil, id: nil)
+    @eosc_registry_base_url = eosc_registry_base_url
     @suffix = suffix
     @token = token
     @id = id
@@ -22,13 +22,13 @@ class Importers::Request
       command = @suffix == "vocabulary/byType" ? nil : "all?quantity=10000&from=0"
       unless @token.blank?
         http_response = RestClient::Request.execute(method: :get,
-                                                    url: "#{@eic_base_url}/#{@suffix}/#{command}",
+                                                    url: "#{@eosc_registry_base_url}/#{@suffix}/#{command}",
                                                     headers: { Accept: "application/json",
                                                                Authorization: "Bearer #{@token}" })
 
         Unirest::HttpResponse.new(http_response)
       else
-        @unirest.get("#{@eic_base_url}/#{@suffix}/#{command}",
+        @unirest.get("#{@eosc_registry_base_url}/#{@suffix}/#{command}",
                      headers: { "Accept" => "application/json" })
       end
     end
@@ -36,13 +36,13 @@ class Importers::Request
     def specific
       unless @token.blank?
         http_response = RestClient::Request.execute(method: :get,
-                                                    url: "#{@eic_base_url}/#{@suffix}/#{@id}",
+                                                    url: "#{@eosc_registry_base_url}/#{@suffix}/#{@id}",
                                                     headers: { Accept: "application/json",
                                                                Authorization: "Bearer #{@token}" })
 
         Unirest::HttpResponse.new(http_response)
       else
-        @unirest.get("#{@eic_base_url}/#{@suffix}/#{@id}",
+        @unirest.get("#{@eosc_registry_base_url}/#{@suffix}/#{@id}",
                      headers: { "Accept" => "application/json" })
       end
     end

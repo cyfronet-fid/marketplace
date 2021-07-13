@@ -15,7 +15,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
 
   def new
     @provider = Provider.new
-    @provider.sources.build source_type: "eic"
+    @provider.sources.build source_type: "eosc_registry"
     @provider.data_administrators << DataAdministrator.new(
       first_name: current_user.first_name,
       last_name: current_user.last_name,
@@ -77,7 +77,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
 
     def add_missing_nested_models
       if @provider.sources.empty?
-        @provider.sources.build source_type: "eic"
+        @provider.sources.build source_type: "eosc_registry"
       end
       if @provider.data_administrators.blank?
         @provider.data_administrators.build

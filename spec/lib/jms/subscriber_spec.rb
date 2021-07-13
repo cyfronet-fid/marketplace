@@ -6,7 +6,7 @@ require "stomp"
 require "nori"
 
 describe Jms::Subscriber do
-  let(:eic_base) { "localhost" }
+  let(:eosc_registry_base) { "localhost" }
   let(:logger) { Logger.new($stdout) }
   let(:parser) { Nori.new(strip_namespaces: true) }
   let(:client) { double("Stomp::Client", config_hash) }
@@ -52,7 +52,7 @@ describe Jms::Subscriber do
                                                 .and_yield(json_service)
 
     allow(client).to receive(:ack).with(json_service)
-    allow(Jms::ManageMessage).to receive(:new).with(json_service, eic_base, logger, nil).and_return(manage_message_service)
+    allow(Jms::ManageMessage).to receive(:new).with(json_service, eosc_registry_base, logger, nil).and_return(manage_message_service)
     allow(manage_message_service).to receive(:call).and_return(true)
   end
 
@@ -96,7 +96,7 @@ describe Jms::Subscriber do
                                                 "activemq.subscriptionName": "mpSubscription" })
                                                 .and_yield({})
 
-    allow(Jms::ManageMessage).to receive(:new).with({}, eic_base, logger, nil).and_return(manage_message_service)
+    allow(Jms::ManageMessage).to receive(:new).with({}, eosc_registry_base, logger, nil).and_return(manage_message_service)
     allow(manage_message_service).to receive(:call).and_raise(StandardError)
     subscriber = mock_subscriber
 

@@ -67,7 +67,7 @@ RSpec.feature "Providers in backoffice" do
 
     scenario "I can delete external source", js: true do
       provider = create(:provider)
-      _external_source = create(:provider_source, eid: "777abc", source_type: "eic", provider: provider)
+      _external_source = create(:provider_source, eid: "777abc", source_type: "eosc_registry", provider: provider)
       stub_website_check(provider)
       count = ProviderSource.count
 
@@ -193,12 +193,12 @@ RSpec.feature "Providers in backoffice" do
       expect { click_on "Create Provider" }.to change { Provider.count }.by(1)
 
       expect(page).to have_content(provider.name)
-      expect(page).to have_content("eic: #{ provider.sources.first.eid }")
+      expect(page).to have_content("eosc_registry: #{ provider.sources.first.eid }")
     end
 
     scenario "I can change external id of the provider" do
       provider = create(:provider, name: "Old name")
-      _external_source = create(:provider_source, eid: "777abc", source_type: "eic", provider: provider)
+      _external_source = create(:provider_source, eid: "777abc", source_type: "eosc_registry", provider: provider)
 
       visit edit_backoffice_provider_path(provider)
 
@@ -206,7 +206,7 @@ RSpec.feature "Providers in backoffice" do
       page.attach_file("provider_logo", "#{Rails.root}/app/javascript/images/eosc-img.png")
       fill_in "provider_sources_attributes_0_eid", with: provider.sources.first.eid
       click_on "Update Provider"
-      expect(page).to have_content("eic: #{ provider.sources.first.eid }")
+      expect(page).to have_content("eosc_registry: #{ provider.sources.first.eid }")
     end
   end
 end

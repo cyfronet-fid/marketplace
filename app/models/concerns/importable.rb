@@ -26,7 +26,7 @@ module Importable
   end
 
   def map_related_services(services)
-    Service.joins(:sources).where("service_sources.source_type": "eic",
+    Service.joins(:sources).where("service_sources.source_type": "eosc_registry",
                                   "service_sources.eid": services)
   end
 
@@ -94,16 +94,16 @@ module Importable
     Vocabulary::SocietalGrandChallenge.where(eid: challenges)
   end
 
-  def map_provider(prov_eid, eic_base_url, token: nil, unirest: Unirest, retry_attempts: 3, actual_try: 0)
+  def map_provider(prov_eid, eosc_registry_base_url, token: nil, unirest: Unirest, retry_attempts: 3, actual_try: 0)
     if prov_eid.present?
-      mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eic",
+      mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eosc_registry",
                                                          "provider_sources.eid": prov_eid)
 
       if mapped_provider.nil?
-        prov = Importers::Request.new(eic_base_url, "provider", unirest: unirest, token: token, id: prov_eid).call
+        prov = Importers::Request.new(eosc_registry_base_url, "provider", unirest: unirest, token: token, id: prov_eid).call
         provider  = Provider.find_or_create_by(name: prov.body["name"])
         provider.update(Importers::Provider.new(prov.body, Time.now.to_i, "rest").call)
-        ProviderSource.create!(provider_id: provider.id, source_type: "eic", eid: prov_eid)
+        ProviderSource.create!(provider_id: provider.id, source_type: "eosc_registry", eid: prov_eid)
         provider
       else
         mapped_provider
@@ -113,7 +113,7 @@ module Importable
     actual_try += 1
     if actual_try < retry_attempts
       Rails.logger.warn "Provider mapping connection refused, #{actual_try + 1}/#{retry_attempts} try to download"
-      map_provider(prov_eid, eic_base_url, token: token, unirest: unirest,
+      map_provider(prov_eid, eosc_registry_base_url, token: token, unirest: unirest,
                       retry_attempts: retry_attempts, actual_try: actual_try)
     else
       Rails.logger.error "Maximum retry connection attempts exceeded. No mapped provider return"
