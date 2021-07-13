@@ -3,7 +3,7 @@
 require "mini_magick"
 
 class Import::Providers
-  def initialize(eic_base_url,
+  def initialize(eosc_registry_base_url,
                  dry_run: true,
                  filepath: nil,
                  unirest: Unirest,
@@ -11,7 +11,7 @@ class Import::Providers
                  ids: [],
                  default_upstream: :mp,
                  token: nil)
-    @eic_base_url = eic_base_url
+    @eosc_registry_base_url = eosc_registry_base_url
     @dry_run = dry_run
     @unirest = unirest
     @default_upstream = default_upstream
@@ -26,18 +26,18 @@ class Import::Providers
   end
 
   def call
-    log "Importing providers from eInfraCentral..."
+    log "Importing providers from EOSC Registry..."
     @request_providers = get_external_providers_data.select { |id, _| @ids.empty? || @ids.include?(id) }
     @request_providers.each do |eid, external_provider_data|
       parsed_provider_data = Importers::Provider.new(external_provider_data, Time.now.to_i, "rest").call
-      eic_provider = Provider.joins(:sources).
-        find_by("provider_sources.source_type": "eic", "provider_sources.eid": eid)
-      current_provider = eic_provider || Provider.find_by(name: parsed_provider_data[:name])
+      eosc_registry_provider = Provider.joins(:sources).
+        find_by("provider_sources.source_type": "eosc_registry", "provider_sources.eid": eid)
+      current_provider = eosc_registry_provider || Provider.find_by(name: parsed_provider_data[:name])
 
-      provider_source = ProviderSource.find_by(source_type: "eic", eid: eid)
+      provider_source = ProviderSource.find_by(source_type: "eosc_registry", eid: eid)
 
       # Bug fix for duplicated sources
-      if @default_upstream == :eic && provider_source.present?
+      if @default_upstream == :eosc_registry && provider_source.present?
         current_provider.update(upstream_id: provider_source.id)
       end
 
@@ -82,7 +82,7 @@ class Import::Providers
         @updated_count += 1
         log "Updating [EXISTING] provider: #{parsed_provider_data[:name]}, eid: #{parsed_provider_data[:pid]}"
       else
-        log "Provider upstream is not set to EIC, not updating #{current_provider.name}, id: #{current_provider.pid}"
+        log "Provider upstream is not set to EOSC Registry, not updating #{current_provider.name}, id: #{current_provider.pid}"
       end
     end
 
@@ -92,7 +92,7 @@ class Import::Providers
       current_provider.save(validate: false)
       provider_source = ProviderSource.create!(
         provider_id: current_provider.id,
-        source_type: "eic",
+        source_type: "eosc_registry",
         eid: eid
       )
       current_provider.upstream_id = provider_source.id
@@ -120,9 +120,9 @@ class Import::Providers
 
     def get_external_providers_data
       begin
-        rp = Importers::Request.new(@eic_base_url, "provider", unirest: @unirest, token: @token).call
+        rp = Importers::Request.new(@eosc_registry_base_url, "provider", unirest: @unirest, token: @token).call
       rescue Errno::ECONNREFUSED
-        abort("import exited with errors - could not connect to #{@eic_base_url}")
+        abort("import exited with errors - could not connect to #{@eosc_registry_base_url}")
       end
 
       rp.body["results"].index_by { |provider| provider["id"] }

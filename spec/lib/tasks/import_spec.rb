@@ -2,8 +2,8 @@
 
 require "rails_helper"
 
-describe "import:eic", type: :task do
-  let(:resource_importer) { double("Import::Eic") }
+describe "import:resources", type: :task do
+  let(:resource_importer) { double("Import::Resources") }
   let(:provider_importer) { double("Import::Providers") }
 
   it "preloads the Rails environment" do
@@ -12,29 +12,29 @@ describe "import:eic", type: :task do
 
   it "should pass ENV variables" do
     allow(ENV).to receive(:[]).and_call_original
-    allow(ENV).to receive(:[]).with("MP_IMPORT_EIC_URL").and_return("https://api.custom")
+    allow(ENV).to receive(:[]).with("MP_IMPORT_EOSC_REGISTRY_URL").and_return("https://api.custom")
     allow(ENV).to receive(:[]).with("DRY_RUN").and_return("1")
     allow(ENV).to receive(:[]).with("IDS").and_return("sampleeid,sampleeid2")
     allow(ENV).to receive(:[]).with("OUTPUT").and_return("/tmp/output.json")
-    allow(ENV).to receive(:[]).with("UPSTREAM").and_return("eic")
+    allow(ENV).to receive(:[]).with("UPSTREAM").and_return("eosc_registry")
     allow(ENV).to receive(:[]).with("MP_IMPORT_TOKEN").and_return("password")
 
     allow(resource_importer).to receive(:call)
-    import_class_stub = class_double(Import::Eic).as_stubbed_const(transfer_nested_constants: true)
+    import_class_stub = class_double(Import::Resources).as_stubbed_const(transfer_nested_constants: true)
     allow(import_class_stub).to receive(:new).with("https://api.custom",
                                                    dry_run: "1",
                                                    ids: ["sampleeid", "sampleeid2"],
                                                    filepath: "/tmp/output.json",
-                                                   default_upstream: :eic,
+                                                   default_upstream: :eosc_registry,
                                                    token: "password")
                                     .and_return(resource_importer)
 
     subject.invoke
   end
 
-  it "should call Import::EIC.call" do
+  it "should call Import::Resources.call" do
     allow(resource_importer).to receive(:call)
-    import_class_stub = class_double(Import::Eic).as_stubbed_const(transfer_nested_constants: true)
+    import_class_stub = class_double(Import::Resources).as_stubbed_const(transfer_nested_constants: true)
     allow(import_class_stub).
       to receive(:new).
       with("https://beta.providers.eosc-portal.eu/api",

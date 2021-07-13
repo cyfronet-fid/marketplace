@@ -452,7 +452,7 @@
                 = f.fields_for :sources do |sources_form|
                   = sources_form.hidden_field :id
                   = sources_form.input :source_type, collection: ServiceSource.source_types.keys.map(&:to_sym)
-                  = sources_form.input :eid, label: _("eInfraCentral External ID")
+                  = sources_form.input :eid, label: _("EOSC Registry External ID")
                   - unless sources_form.object.id.nil?
                     = sources_form.check_box :_destroy
                     = sources_form.label :_destroy, _("Remove external source")

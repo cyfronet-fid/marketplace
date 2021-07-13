@@ -64,8 +64,9 @@ resources with random names and descriptions (this generation is done using
 
 If you need actual production data run:
 ```
+./bin/rake import:vocabularies
 ./bin/rake import:providers
-./bin/rake import:eic
+./bin/rake import:resources
 ```
 to seed the database with it.
 You can download only specific providers/resources by setting an `IDS` environment variable.

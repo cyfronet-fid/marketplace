@@ -506,7 +506,7 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I can change external id of the service" do
       service = create(:service, name: "my service")
-      _external_source = create(:service_source, eid: "777", source_type: "eic", service: service)
+      _external_source = create(:service_source, eid: "777", source_type: "eosc_registry", service: service)
 
       visit backoffice_service_path(service)
       click_on "Edit"
@@ -535,7 +535,7 @@ RSpec.feature "Services in backoffice" do
 
     scenario "if upstream is set to MP (nil) all fields should be enabled" do
       service = create(:service, name: "my service", upstream: nil)
-      create(:service_source, service: service, source_type: :eic)
+      create(:service_source, service: service, source_type: :eosc_registry)
 
       visit backoffice_service_path(service)
       click_on "Edit"
@@ -567,9 +567,9 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Activate message", disabled: false
     end
 
-    scenario "If EIC is selected as upstream fields imported from there should be disabled" do
+    scenario "If eosc_registry is selected as upstream fields imported from there should be disabled" do
       service = create(:service, name: "my service")
-      external_source = create(:service_source, service: service, source_type: :eic)
+      external_source = create(:service_source, service: service, source_type: :eosc_registry)
       service.upstream = external_source
       service.save!
 

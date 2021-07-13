@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :eic_providers_response, class: Hash do
+  factory :eosc_registry_providers_response, class: Hash do
     skip_create
     initialize_with do
       # noinspection RubyStringKeysInHashInspection
@@ -111,7 +111,7 @@ FactoryBot.define do
       }
     end
   end
-  factory :eic_provider_response, class: Hash do
+  factory :eosc_registry_provider_response, class: Hash do
     skip_create
     transient do
       eid { "tp" }
