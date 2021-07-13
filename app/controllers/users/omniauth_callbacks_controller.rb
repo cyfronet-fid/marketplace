@@ -38,13 +38,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     def add_autologin_cookies
       cookies[:eosc_logged_in] = {
         value: true,
-        expires: 4.hours,
-        domain: ".docker-fid.grid.cyf-kr.edu.pl"
+        domain: Mp::Application.config.autologin_domain
       }
 
       cookies[:internal_session] = {
-        value: true,
-        expires: 4.hours
+        value: true
       }
     end
 end
