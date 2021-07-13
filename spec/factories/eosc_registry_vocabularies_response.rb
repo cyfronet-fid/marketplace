@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :eic_vocabularies_response, class: Hash do
+  factory :eosc_registry_vocabularies_response, class: Hash do
     skip_create
     initialize_with do
       # noinspection RubyStringKeysInHashInspection

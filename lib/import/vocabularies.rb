@@ -28,13 +28,13 @@ class Import::Vocabularies
     PROVIDER_MERIL_SCIENTIFIC_SUBDOMAIN: Vocabulary::MerilScientificDomain
   }
 
-  def initialize(eic_base_url,
+  def initialize(eosc_registry_base_url,
                  dry_run: true,
                  filepath: nil,
                  unirest: Unirest,
                  logger: ->(msg) { puts msg },
                  token: nil)
-    @eic_base_url = eic_base_url
+    @eosc_registry_base_url = eosc_registry_base_url
     @dry_run = dry_run
     @unirest = unirest
     @token = token
@@ -44,12 +44,12 @@ class Import::Vocabularies
   end
 
   def call
-    log "Importing vocabularies from eInfraCentral..."
+    log "Importing vocabularies from EOSC Registry..."
 
     begin
-      r = Importers::Request.new(@eic_base_url, "vocabulary/byType", unirest: @unirest, token: @token).call
+      r = Importers::Request.new(@eosc_registry_base_url, "vocabulary/byType", unirest: @unirest, token: @token).call
     rescue Errno::ECONNREFUSED
-      abort("import exited with errors - could not connect to #{@eic_base_url}")
+      abort("import exited with errors - could not connect to #{@eosc_registry_base_url}")
     end
 
     @vocabularies = r.body

@@ -39,7 +39,7 @@ RSpec.describe Service::PcCreateOrUpdate do
   let(:provider_eid) { "ten" }
 
   before(:each) do
-    provider_response = double(code: 200, body: create(:eic_provider_response, eid: provider_eid))
+    provider_response = double(code: 200, body: create(:eosc_registry_provider_response, eid: provider_eid))
     allow_any_instance_of(Importers::Request).to receive(:call).and_return(provider_response)
   end
 
@@ -47,9 +47,9 @@ RSpec.describe Service::PcCreateOrUpdate do
     it "should create new service with new default offer" do
       provider = create(:provider, name: "Test Provider 3")
       provider_tp = create(:provider, name: "Test Provider tp")
-      create(:provider_source, source_type: "eic", eid: "new.prov", provider: provider)
+      create(:provider_source, source_type: "eosc_registry", eid: "new.prov", provider: provider)
 
-      create(:provider_source, source_type: "eic", eid: "tp", provider: provider_tp)
+      create(:provider_source, source_type: "eosc_registry", eid: "tp", provider: provider_tp)
 
       service = create(:jms_service, prov_eid: "new.prov", name: "New supper service")
       expect {

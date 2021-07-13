@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Import
-  class Eic
-    def initialize(eic_base_url,
+  class Resources
+    def initialize(eosc_registry_base_url,
                    dry_run: true,
                    ids: [],
                    filepath: nil,
@@ -10,7 +10,7 @@ module Import
                    logger: ->(msg) { puts msg },
                    default_upstream: :mp,
                    token: nil)
-      @eic_base_url = eic_base_url
+      @eosc_registry_base_url = eosc_registry_base_url
       @dry_run = dry_run
       @unirest = unirest
       @default_upstream = default_upstream
@@ -22,12 +22,12 @@ module Import
     end
 
     def call
-      log "Importing services from eInfraCentral..."
+      log "Importing resources from EOSC Registry..."
 
       begin
-        r = Importers::Request.new(@eic_base_url, "resource/rich", unirest: @unirest, token: @token).call
+        r = Importers::Request.new(@eosc_registry_base_url, "resource/rich", unirest: @unirest, token: @token).call
       rescue Errno::ECONNREFUSED
-        abort("import exited with errors - could not connect to #{@eic_base_url}")
+        abort("import exited with errors - could not connect to #{@eosc_registry_base_url}")
       end
 
       updated = 0
@@ -36,7 +36,7 @@ module Import
       total_service_count = r.body["results"].length
       output = []
 
-      log "EIC - all services #{total_service_count}"
+      log "EOSC Registry - all services #{total_service_count}"
 
       r.body["results"].select { |_r| @ids.empty? || @ids.include?(_r["service"]["id"]) }
           .each do |service_data|
@@ -45,18 +45,18 @@ module Import
 
         synchronized_at = service_data["metadata"]["modifiedAt"].to_i
         image_url = service["logo"]
-        service = Importers::Service.new(service, synchronized_at, @eic_base_url, @token, "rest").call
+        service = Importers::Service.new(service, synchronized_at, @eosc_registry_base_url, @token, "rest").call
 
         begin
-          if (service_source = ServiceSource.find_by(eid: service[:pid], source_type: "eic")).nil?
+          if (service_source = ServiceSource.find_by(eid: service[:pid], source_type: "eosc_registry")).nil?
             created += 1
             log "Adding [NEW] service: #{service[:name]}, eid: #{service[:pid]}"
             unless @dry_run
               service = Service.new(service)
               if service.valid?
                 service = Service::Create.new(service).call
-                service_source = ServiceSource.create!(service_id: service.id, eid: service.pid, source_type: "eic")
-                if @default_upstream == :eic
+                service_source = ServiceSource.create!(service_id: service.id, eid: service.pid, source_type: "eosc_registry")
+                if @default_upstream == :eosc_registry
                   service.update(upstream_id: service_source.id)
                 end
 
@@ -65,8 +65,8 @@ module Import
               else
                 service.status = "errored"
                 service.save(validate: false)
-                service_source = ServiceSource.create!(service_id: service.id, eid: service.pid, source_type: "eic")
-                if @default_upstream == :eic
+                service_source = ServiceSource.create!(service_id: service.id, eid: service.pid, source_type: "eosc_registry")
+                if @default_upstream == :eosc_registry
                   service.upstream_id = service_source.id
                   service.save(validate: false)
                 end
@@ -89,7 +89,7 @@ module Import
               end
             else
               not_modified += 1
-              log "Service upstream is not set to EIC, not updating #{existing_service.name}, id: #{service_source.id}"
+              log "Service upstream is not set to EOSC Registry, not updating #{existing_service.name}, id: #{service_source.id}"
             end
           end
         rescue ActiveRecord::RecordInvalid => invalid

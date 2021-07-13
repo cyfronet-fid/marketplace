@@ -3,11 +3,11 @@
 class Importers::Service
   include Importable
 
-  def initialize(data, synchronized_at, eic_base_url, token = nil, source = "jms")
+  def initialize(data, synchronized_at, eosc_registry_base_url, token = nil, source = "jms")
     @data = data
     @synchronized_at = synchronized_at
     @source = source
-    @eic_base_url = eic_base_url
+    @eosc_registry_base_url = eosc_registry_base_url
     @token = token
   end
 
@@ -83,9 +83,9 @@ class Importers::Service
       # Basic
       name: @data["name"],
       resource_organisation: map_provider(@data["resourceOrganisation"],
-                                          @eic_base_url,
+                                          @eosc_registry_base_url,
                                           token: @token),
-      providers: providers.uniq.map { |p| map_provider(p, @eic_base_url,
+      providers: providers.uniq.map { |p| map_provider(p, @eosc_registry_base_url,
                                                    token: @token) },
       webpage_url: @data["webpage"] || "",
       # Marketing

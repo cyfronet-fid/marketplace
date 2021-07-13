@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Enhance the Ordering API OMS trigger (@jswk)
 - API authorization token can now only be revoked by regenerating it (@jswk)
 - `api_docs` page is available for unlogged user (@goreck888)
+- All references to `eIC` are changed to the `EOSC Registry` (@goreck888)
 
 ### Deprecated
 

@@ -7,7 +7,7 @@ describe Import::Providers do
   let(:test_url) { "https://localhost/api" }
   let(:unirest) { double(Unirest) }
 
-  def make_and_stub_eic(dry_run: false, filepath: nil, log: false)
+  def make_and_stub_eosc_registry(dry_run: false, filepath: nil, log: false)
     options = {
       dry_run: dry_run,
       filepath: filepath,
@@ -21,8 +21,8 @@ describe Import::Providers do
     Import::Vocabularies.new(test_url, options)
   end
 
-  let(:eic) { make_and_stub_eic(log: true) }
-  let(:log_less_eic) { make_and_stub_eic(log: false) }
+  let(:eosc_registry) { make_and_stub_eosc_registry(log: true) }
+  let(:log_less_eosc_registry) { make_and_stub_eosc_registry(log: false) }
 
   def expect_responses(unirest, test_url, vocabularies_response = nil)
     unless vocabularies_response.nil?
@@ -35,22 +35,22 @@ describe Import::Providers do
     it "should abort if /api/services errored" do
       response = double(code: 500, body: {})
       expect_responses(unirest, test_url, response)
-      expect { log_less_eic.call }.to raise_error(SystemExit).and output.to_stderr
+      expect { log_less_eosc_registry.call }.to raise_error(SystemExit).and output.to_stderr
     end
   end
 
   describe "#standard responses" do
     before(:each) do
-      response = double(code: 200, body: create(:eic_vocabularies_response))
+      response = double(code: 200, body: create(:eosc_registry_vocabularies_response))
       expect_responses(unirest, test_url, response)
     end
 
     let!(:esfri_type) { create(:esfri_type, name: "TEST", eid: "provider_esfri_type-landmark") }
 
     it "should create and update vocabularies" do
-      eic = make_and_stub_eic(log: true)
+      eosc_registry = make_and_stub_eosc_registry(log: true)
 
-      expect { eic.call }.to output(/TOTAL: 26, CREATED: 21, UPDATED: 1, UNPROCESSED: 4$/).to_stdout.
+      expect { eosc_registry.call }.to output(/TOTAL: 26, CREATED: 21, UPDATED: 1, UNPROCESSED: 4$/).to_stdout.
         and change { Vocabulary.count }.by(15).
         and change { Category.count }.by(3).
         and change { ScientificDomain.count }.by(2).
@@ -62,8 +62,8 @@ describe Import::Providers do
     end
 
     it "should not change db if dry_run is set to true" do
-      eic = make_and_stub_eic(dry_run: true, log: true)
-      expect { eic.call }.to output(/TOTAL: 26, CREATED: 21, UPDATED: 1, UNPROCESSED: 4$/).to_stdout.
+      eosc_registry = make_and_stub_eosc_registry(dry_run: true, log: true)
+      expect { eosc_registry.call }.to output(/TOTAL: 26, CREATED: 21, UPDATED: 1, UNPROCESSED: 4$/).to_stdout.
         and change { Vocabulary.count }.by(0).
         and change { Category.count }.by(0).
         and change { ScientificDomain.count }.by(0).

@@ -6,7 +6,7 @@ RSpec.describe Service::Delete do
   it "Set delete status for service" do
     service = create(:service)
     create(:service_source,
-           source_type: :eic,
+           source_type: :eosc_registry,
            service: service,
            eid: service.id)
 

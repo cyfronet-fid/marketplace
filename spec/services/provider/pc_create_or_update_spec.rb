@@ -35,7 +35,7 @@ RSpec.describe Provider::PcCreateOrUpdate do
       sources: [build(
                   :provider_source,
                   provider: provider,
-                  source_type: "eic",
+                  source_type: "eosc_registry",
                   eid: "new.provider"
                 )]
     )
