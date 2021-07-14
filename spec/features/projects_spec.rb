@@ -31,6 +31,18 @@ RSpec.feature "Project" do
       expect(new_project.name).to eq("First test")
     end
 
+    scenario "Scientific domains are displayed as nested tree" do
+      parent = create(:scientific_domain)
+      child = create(:scientific_domain, parent: parent)
+
+      visit projects_path
+
+      click_on "Create new project"
+
+      expect(page).to have_content(parent.name)
+      expect(page).to have_content("#{parent.name} ⇒ #{child.name}")
+    end
+
     scenario "I can see first project services when entering My projects" do
       project = create(:project, user: user)
       service = create(:service, name: "The best service ever")
