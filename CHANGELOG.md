@@ -24,6 +24,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Don't display opinions for unpublished resources on the home page (@goreck888)
+- Show a tree structure of scientific domains to choose in the project form (@goreck888)
 
 ### Security
 - Don't allow to authorize as a user with revoked token (@jswk)
