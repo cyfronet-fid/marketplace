@@ -7,7 +7,9 @@
   = f.input :name, input_html: { class: "col-lg-6 form-control-lg" }
   = f.input :reason_for_access, input_html: { class: "col-lg-8 form-control-lg textarea-lg" }
   = f.association :scientific_domains, multiple: true,
-    wrapper_html: { class: "col-lg-8 pl-0 pr-0" }, input_html: { data: { choice: true } }
+    wrapper_html: { class: "col-lg-8 pl-0 pr-0" }, input_html: { data: { choice: true } },
+                collection: ScientificDomain.child_names.map { |name, sd| [name, sd.id] },
+                label_method: :first, value_method: :second
   = f.input :additional_information,
   input_html: { class: "col-lg-8 form-control-lg textarea-md" }
   %h4
