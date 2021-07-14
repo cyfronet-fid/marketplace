@@ -36,3 +36,8 @@ import './offers';
  */
 Cypress.on('uncaught:exception', (err, runnable) => false);
 
+beforeEach(() => {
+  // hide cookie policy box
+  cy.setCookie('cookieconsent_status', 'dismiss')
+  cy.setCookie('tours-marketplace-services-show-service_about_intro', "later")
+});

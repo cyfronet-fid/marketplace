@@ -24,5 +24,5 @@
                              recommended_services: @recommended_services,
                              favourite_services: @favourite_services
   #comparison-bar.comparison-bar.fixed-bottom{ class: (session[:comparison]&.size || 0) > 0 ? "d-block" : "d-none",
-  "data-target": "comparison.bar" }
+  "data-target": "comparison.bar", "data-e2e": "comparison-bar" }
     = render "comparisons/bar", services: @compare_services, category: @category
