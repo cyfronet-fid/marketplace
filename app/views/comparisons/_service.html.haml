@@ -8,5 +8,6 @@
       %span.middle
         = service.name.truncate(25, separator: " ")
     .comparison-link.float-right
-      %a{ "value": "#{service.slug}", "data-probe": "", "data-action": "click->comparison#update" }
+      %a{ "value": "#{service.slug}", "data-probe": "", "data-e2e": "delete-service-btn",
+      "data-action": "click->comparison#update" }
         %i.far.fa-trash-alt

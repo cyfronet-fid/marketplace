@@ -29,6 +29,7 @@
                           class: "form-check-input",
                           disabled: !checked?(service.slug) && comparison_enabled,
                           "data-probe" => "",
+                          "data-e2e": "comparison-checkbox",
                           "data-target": "comparison.checkbox",
                           "data-action": "click->comparison#update"
                   %span.smaller
@@ -49,6 +50,7 @@
         = link_to _("Access the resource"),
                       service_offers_path(service),
                       class: "btn btn-primary d-block mb-3",
+                      "data-e2e": "access-resource-btn",
                       "data-probe": ""
       - if user_signed_in? && policy(service).data_administrator?
         %a#dropdown-menu-button.dropdown-toggle.btn.btn-outline-secondary.d-block.mb-3{ "aria-expanded" => "false",

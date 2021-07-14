@@ -1,7 +1,7 @@
 = render "service_details", service: service, highlights: highlights[service.id],
   service_offers: filtered_offers(offers[service.id]), comparison_enabled: comparison_enabled do
   = link_to highlighted_for(:name, service, highlights[service.id]),
-    service_path(service, category.present? ? { fromc: category.slug } : nil)
+    service_path(service, category.present? ? { fromc: category.slug } : nil), "data-e2e": "service-name"
   - content_for :comparison_checkbox do
     .mt-3.compare
       %label{ options(service.slug, comparison_enabled) }
@@ -9,6 +9,7 @@
                 class: "form-check-input",
                 disabled: !checked?(service.slug) && comparison_enabled,
                 "data-probe": "",
+                "data-e2e": "comparison-checkbox",
                 "data-target": "comparison.checkbox",
                 "data-action": "click->comparison#update"
         %span
