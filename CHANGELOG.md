@@ -37,6 +37,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Don't display opinions for unpublished resources on the home page (@goreck888)
 
 ### Security
 - Don't allow to authorize as a user with revoked token (@jswk)

@@ -15,6 +15,26 @@ RSpec.feature "Home" do
     expect(page).to have_selector("#q[value='Something']")
   end
 
+  context "service opinions" do
+    let(:service_opinion_published) { create(:service_opinion) }
+    let(:service_opinion_draft) { create(:service_opinion) }
+
+    [:draft, :deleted].each do |status|
+      it "should show service opinions only for published resources" do
+        draft = service_opinion_draft.project_item.service
+        draft.update(status: status)
+        service = service_opinion_published.project_item.service
+
+        visit root_path
+
+        expect(page).to_not have_text("There are no reviews available.")
+
+        expect(page).to_not have_css("#opinion-link", text: draft.name)
+        expect(page).to have_css("#opinion-link", text: service.name)
+      end
+    end
+  end
+
   context "services carousel" do
     let!(:service1) { create(:service, description: "published-service-1", status: :published) }
     let!(:service2) { create(:service, description: "published-service-2", status: :published) }
@@ -70,8 +90,8 @@ RSpec.feature "Home" do
     end
 
     context "user" do
-      let(:admin) { create(:user) }
-      before { checkin_sign_in_as(admin) }
+      let(:user) { create(:user) }
+      before { checkin_sign_in_as(user) }
 
       it "shouldn't see warning" do
         visit "/"
