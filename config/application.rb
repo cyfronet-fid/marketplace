@@ -65,6 +65,6 @@ module Mp
     config.auth_mock = ENV["AUTH_MOCK"]
 
     config.autologin_domain = ENV["AUTOLOGIN_DOMAIN"].present? ?
-                                ENV["AUTOLOGIN_DOMAIN"] : ".docker-fid.grid.cyf-kr.edu.pl"
+                                ENV["AUTOLOGIN_DOMAIN"] : ".eosc-portal.eu"
   end
 end
