@@ -40,6 +40,9 @@ class HomeController < ApplicationController
     end
 
     def load_opinion
-      @opinion = ServiceOpinion.all.sample
+      @opinion = ServiceOpinion.joins(project_item: { offer: :service }).
+        where(project_item: { offer: { services: { status: [:published,
+                                                            :unverified,
+                                                            :errored] } } }).sample
     end
 end
