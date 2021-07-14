@@ -4,7 +4,7 @@
   row_idx = 0
   breadcrumb :comparison
 .container
-  %table.services-comparison.bordered.shadow-sm.table-responsive
+  %table.services-comparison.bordered.shadow-sm.table-responsive{ "data-e2e": "services-comparison-table" }
     %thead
       %tr
         %th{ colspan: 4 }
@@ -21,7 +21,7 @@
               - if service.logo.attached? && service.logo.variable?
                 = image_tag service.logo.variant(resize: "100x100")
             = link_to comparisons_services_path(slug: service.slug, fromc: params[:fromc]), method: :delete,
-              "data-probe": "" do
+              "data-e2e": "delete-service-btn", "data-probe": "" do
               %i.far.fa-trash-alt
             .service-title
               = link_to service.name.truncate(30, separator: " "),
@@ -31,7 +31,7 @@
               = service.description.truncate(80, separator: " ")
         - i.times do
           %td.title-col.empty.text-uppercase
-            = link_to _("Add next resource"), services_path, "data-probe": ""
+            = link_to _("Add next resource"), services_path, "data-e2e": "add-next-resource-btn", "data-probe": ""
       %tr{ class: row_class(row_idx) }
         %th{ "data-toggle": "tooltip",
         title: "The name(s) (or abbreviation(s)) of Provider that manage the Resource in |
