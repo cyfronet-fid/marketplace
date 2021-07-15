@@ -426,3 +426,17 @@ To upload files registered in db from `S3` to `local` you need:
 * s3:secret_access_key credentials
 
 Task: `rake storage:upload_to_local`
+
+### Autologin across `.eosc-portal.eu` domains
+
+We are using a simple scheme to implemented autologin across `.eosc-portal.eu` domains.
+It's done via cookies and the user is redirected to `/user/auth/checkin` through JS function call 
+(this should eventually be done in [EOSC Commons](https://github.com/cyfronet-fid/eosc-portal-common) component).
+
+2 cookies are set and deleted:
+- `eosc_logged_in` (domain: '.eosc.portal.eu', expires: <SAME AS AAI SESSION>)
+- `internal_session` (expires: <SAME AS INTERNAL SESSION>) 
+
+Basically the user is redirected `if eosc_logged_in && !internal_session`.
+
+After the logout, both of the cookies are destroyed are set to `false`.
