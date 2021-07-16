@@ -17,12 +17,19 @@
     %header
       = render "layouts/navbar",
         categories: @siblings || @root_categories
+
+
     %main
       = render "layouts/breadcrumb"
       = yield
+
   = render "layouts/report", report: @report
   = render "layouts/modal"
-  = render "layouts/footer", root_categories: @root_categories
+  %eosc-common-main-footer
   = render "layouts/jira_collector"
   = tour @show_popup
   = render "layouts/recommendation"
+
+  %script{ src: "https://s3.cloud.cyfronet.pl/eosc-portal-common/index.production.min.js" }
+  %link{ rel: "stylesheet", href: "https://s3.cloud.cyfronet.pl/pr-105/eosc-portal-common/index.production.min.css" }
+
