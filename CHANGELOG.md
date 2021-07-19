@@ -9,23 +9,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [3.17.0-milestone]
 
 ### Added
-- Resource provider can navigate to the Provider Component from the Provider Presentation Page (@kmarszalek)
-
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
-
-## [3.16.0-milestone]
-
-### Added
 - OMS trigger basic authentication (@jswk)
 - API authorization token reveal by "Show token" button on the `api_docs` page (@goreck888, @jarekzet, @kmarszalek)
+- Resource provider can navigate to the Provider Component from the Provider Presentation Page (@kmarszalek)
 
 ### Changed
 - Enhance the Ordering API OMS trigger (@jswk)
