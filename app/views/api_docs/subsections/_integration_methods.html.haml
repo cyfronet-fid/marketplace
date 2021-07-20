@@ -5,10 +5,7 @@
   %br
   The interoperability layer is based on the Ordering API with asynchronous triggers, that can be accessed by interested
   parties.
-%p
-  We provide a
-  %a{ href: "https://github.com/cyfronet-fid/oms-adapter-jira/", target: "_blank" } reference OMS adapter
-  that integrates with Jira for order handling.
+%p We provide a reference OMS adapter that integrates with Jira for order handling.
 
 %p.image-placeholder
   = image_pack_tag "api_docs/integrations_methods.png", alt: "Example ordering integration methods"
@@ -23,3 +20,28 @@
       %span Connect your instance of an OMS adapter (you can use our reference Jira implementation for this),
     %li
       %span Switch to the production environment.
+
+%h3 OMS Adapter (General)
+%p
+  OMS adapter functions as a way to generalize communication with ticket management systems. Reference implementation
+  supports integration with JIRA. But any integrator can develop its own compatibility layer with their current
+  ticketing system.
+%p
+  Marketplace has a very simple way of communicating with the Adapter (trigger). Everything else is done proactively
+  by the OMS adapter itself. Usually ticket management system with which integration occurs informs OMS adapter
+  about some changes, then OMS adapter calls Marketplace's API. In case when change occurs in the marketplace
+  (new Project / Project Item is created, Message is posted) the MP triggers OMS adapter (every registered OMS adapter
+  has corresponding trigger configuration) and adapter then makes any necessary calls to the ticketing system to enact
+  that change.
+%p
+  It is in the scope of the OMS adapter to store mappings between Marketplace's IDs and ticketing system IDs.
+
+%h3 Reference Adapter (JIRA)
+%p
+  Provided
+  %a{ href: "https://github.com/cyfronet-fid/oms-adapter-jira/", target: "_blank" } reference implementation
+  contains Marketplace API client which is responsible for communication with ordering API. It also contains thin
+  translation layer which translates Project Item parameters to fields in JIRA.
+  The core philosophy enshrined in the system is that it should not, under any circumstances, lose information
+  about ordering changes. To fulfill this purpose all actions are scheduled to the celery queue, this way they can
+  be retried if network errors occur, or in case they fail they can be reviewed manually by the operator.
