@@ -27,6 +27,7 @@ class Api::V1::ProjectItemSerializer < ActiveModel::Serializer
       offer_properties: object.properties || [],
       platforms: object.service&.platforms&.pluck(:name) || [],
       request_voucher: object.request_voucher,
+      voucher_id: object.voucher_id,
       order_type: object.order_type,
     }
   end
