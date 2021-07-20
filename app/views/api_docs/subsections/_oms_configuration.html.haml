@@ -1,0 +1,119 @@
+%p The following applies to the Ordering API.
+
+%h3 OMS registration
+%p The OMS registration is performed by the MP team, and it consists of the following fields.
+%table.table
+  %thead
+    %th{ scope: "col" } Field
+    %th{ scope: "col" } Description
+    %th{ scope: "col" } Values (example)
+  %tbody
+    %tr
+      %td id
+      %td Auto-assigned, integer
+      %td
+    %tr
+      %td name
+      %td Used for display
+      %td
+    %tr
+      %td type
+      %td Determines visibility to EOSC Resources
+      %td global, provider_group, resource_dedicated
+    %tr
+      %td custom_params
+      %td Extra parameters set by EOSC Resource and sent with Project Item
+      %td
+        e.g.
+        %code { "order_target": { "mandatory": false } }
+    %tr
+      %th{ colspan: 3 } Extension for type=provider_group
+    %tr
+      %td providers
+      %td EOSC Resources of these providers can select the OMS
+      %td
+    %tr
+      %th{ colspan: 3 } Extension for type=resource_dedicated
+    %tr
+      %td resource
+      %td The EOSC resource which can select the OMS
+      %td
+
+%p
+  A trigger can also be optionally specified.
+  It is a specification of an endpoint (url, method, authorization) to be called when a new event is created.
+  Event is created every time a resource field changes.
+%table.table
+  %thead
+    %th{ scope: "col" } Field
+    %th{ scope: "col" } Description
+    %th{ scope: "col" } Values (example)
+  %tbody
+    %tr
+      %td url
+      %td URL to call
+      %td
+    %tr
+      %td method
+      %td HTTP method
+      %td GET, POST, PUT
+
+%p
+  Optionally, trigger can be sent with authorization, we only support HTTP Basic scheme for now, e.g. user and password
+  can be specified. In that case, they will be sent, base64-encoded, in the Authorization header of trigger requests.
+
+%h3 Custom params
+%p
+  An OMS can require EOSC Resources that use it for handling orders to have configured a set of extra fields. Such
+  fields will be attached to the Project Item payload.
+
+%p
+  A custom param must have a name.
+  It can have a mandatory flag. If the flag is set to true, then it must also have a default value. (This is to allow
+  a transitional period when not all EOSC Resources has yet filled-in the field.)
+
+%p
+  When the provider selects this OMS for order handling, she will be presented with the list of custom params to fill
+  in.
+
+%h3 Visibility to EOSC Resources
+%p
+  An OMS can have three visibility types: global, provider_group or resource_dedicated.
+  %ul
+    %li
+      %span Global: available to all,
+    %li
+      %span
+        Provider group: available only for the ones with resource organisation set to one of the specified providers,
+    %li
+      %span Resource dedicated: available only to a specified one.
+
+%p
+  There is an OMS that is always available to handle any EOSC Resource's orders, it is SOMBO, which is the default OMS.
+  It also has global visibility, obviously, and it selected to handle orders by default.
+
+%h4 Example
+%p Let's say we have three OMSes in the system: "Community OMS", "Resource C OMS" and "Provider 3 OMS".
+%p
+  "Community OMS" is provider_group, with "Provider 1" and "Provider 2" on the list. Then it will be available to all
+  EOSC Resources provided by them, but not to resources from "Provider 3".
+%p "Provider 3 OMS", on the other hand, will only be available to Resources E and F.
+%p
+  Finally, "Resource C OMS", which is resource_dedicated for "Resource C", will only be made available to
+  "Resource C".
+
+%p
+  Note that for an OMS to actually handle orders the EOSC Resource's provider must select it in the ordering
+  configuration.
+
+= image_pack_tag "api_docs/oms_visibility_example.png", alt: "OMS visibility example"
+
+%h3 Trigger
+%p
+  An OMS can have a specified URL that will be called on every created event, i.e. creation or change of a Project,
+  Project Item or Message.
+%p Only objects that OMS has access to activate its trigger.
+%p
+  It can be sent either with GET, POST or PUT, depending on the OMS configuration.
+  A trigger can be also sent with an authorization method to avoid opening an unsecured endpoint to the world. We
+  support HTTP Basic authorization scheme.

@@ -45,7 +45,15 @@
           - api_wiki_subsections.each do |subsection|
             %li{ class: ("active" if subsection == @subsection) }
               %span
-                = link_to subsection.capitalize, api_docs_path(subsection: subsection)
+                = link_to humanized_subsection(subsection), api_docs_path(subsection: subsection)
 
-      .col-12.col-md-8.float-right.ml-auto.mr-auto
+      .col-12.col-md-8.float-right.ml-auto.mr-auto.api-docs
+        %h2
+          = humanized_subsection(@subsection)
         = render "api_docs/subsections/#{@subsection}"
+        - _next_subsection = next_subsection(@subsection)
+        - if _next_subsection.present?
+          %hr.bottom-hr.mb-4
+          %p.next
+            Next:
+            #{link_to humanized_subsection(_next_subsection), api_docs_path(subsection: _next_subsection)}

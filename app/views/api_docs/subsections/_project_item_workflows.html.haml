@@ -1,0 +1,35 @@
+%p The following applies to the Ordering API.
+
+%p The Ordering API supports different order handling methods in part by being agnostic to internal OMS order statuses.
+
+%p
+  Each Project Item has status, which has two fields: value and type.
+  Type must come from a set of predefined statuses:
+  %code created
+  ,
+  %code registered
+  ,
+  %code in_progress
+  ,
+  %code waiting_for_response
+  ,
+  %code rejected
+  ,
+  %code approved
+  ,
+  %code ready
+  ,
+  %code closed
+  \.
+%p The transitions between status types must follow the finite state machine presented below.
+= image_pack_tag "api_docs/project_item_workflow.png", alt: "The Project Item's status type state machine"
+%p
+  The
+  %code created
+  state is meta-stable, and shortly after Project Item creation it will change to
+  %code registered
+  \.
+
+%p
+  The value of the status value can come from an external workflow. It can change independently from the status type
+  and represent states internal to a particular OMS.
