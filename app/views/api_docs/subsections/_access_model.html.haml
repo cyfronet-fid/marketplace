@@ -1,0 +1,102 @@
+%p The following applies to the Ordering API.
+
+%h3 OMS roles
+%p
+  An OMS can have two roles in the context of Project Item:
+  %ul
+    %li
+      %span primary: if selected by the EOSC Resource provider to handle that offering orders,
+    %li
+      %span secondary: the default OMS.
+%p In case the primary OMS wasn't selected, then the default OMS is considered both as primary and secondary OMS.
+%p
+  An OMS can have two roles in the context of a Project:
+  %ul
+    %li
+      %span mediator: the default OMS,
+    %li
+      %span provider: every OMS, which is a Primary OMS of any Project Item of the Project.
+
+%h3 Read access
+%p
+  If OMS has any role in Project or Project Item, it can read it. The Project Item's field
+  %code user_secrets
+  will have obfuscated values (keys will be visible).
+%p
+  Every OMS with a role in Project or Project Item has read access to all associated Messages. However, the content of
+  Messages with
+  %code user_direct
+  scope will be obfuscated.
+  Messages with
+  %code internal
+  scope will not be disclosed to users.
+
+%h3 Write access
+%p A Project cannot be changed by API.
+%p A Project Item can be changed by its primary OMS.
+
+%p
+  Messages have fields scope and role, which determine their write access.
+  The scope can have values
+  %code public
+  ,
+  %code internal
+  or
+  %code user_direct
+  \.
+  The role can have values
+  %code user
+  ,
+  %code provider
+  or
+  %code mediator.
+%p
+  The write permissions for different combinations of scope and role are as follows. They also differ slightly
+  for Project and Project Item Messages.
+%table.table
+  %caption Project Message write permissions
+  %thead
+    %th scope \ role
+    %th{ scope: "col" } user
+    %th{ scope: "col" } provider
+    %th{ scope: "col" } mediator
+  %tbody
+    %tr
+      %th{ scope: "row" } public
+      %td false
+      %td is provider OMS?
+      %td is mediator OMS?
+    %tr
+      %th{ scope: "row" } internal
+      %td false
+      %td is provider OMS?
+      %td is mediator OMS?
+    %tr
+      %th{ scope: "row" } user_direct
+      %td false
+      %td false
+      %td is mediator OMS?
+
+%table.table
+  %caption Project Item Message write permissions
+  %thead
+    %th scope \ role
+    %th{ scope: "col" } user
+    %th{ scope: "col" } provider
+    %th{ scope: "col" } mediator
+  %tbody
+    %tr
+      %th{ scope: "row" } public
+      %td false
+      %td is primary OMS?
+      %td is secondary OMS?
+    %tr
+      %th{ scope: "row" } internal
+      %td false
+      %td is primary OMS?
+      %td is secondary OMS?
+    %tr
+      %th{ scope: "row" } user_direct
+      %td false
+      %td is primary OMS?
+      %td false

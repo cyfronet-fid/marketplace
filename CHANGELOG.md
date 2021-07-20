@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - OMS trigger basic authentication (@jswk)
 - API authorization token reveal by "Show token" button on the `api_docs` page (@goreck888, @jarekzet, @kmarszalek)
 - Resource provider can navigate to the Provider Component from the Provider Presentation Page (@kmarszalek)
+- Extended API documentation (@jswk)
 
 ### Changed
 - Enhance the Ordering API OMS trigger (@jswk)
