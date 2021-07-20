@@ -4428,14 +4428,14 @@ textarea.form-control.is-invalid {
 }
 
 .api-submenu {
-  background-color: $home-card-bg;
-  border-top: 1px solid $palette-solid-10;
-  border-bottom: 1px solid $palette-solid-10;
-  padding: 23px 0 10px;
+  padding-left: 0;
 
   ul {
-    margin: 0 0 0 20px;
-    padding: 0 0 0 20px;
+    margin: 0;
+    padding: 23px 0 10px 40px;
+    border-top: 1px solid $palette-solid-10;
+    border-bottom: 1px solid $palette-solid-10;
+    background-color: $home-card-bg;
 
     li {
       margin-bottom: 15px;
@@ -4531,4 +4531,81 @@ textarea.form-control.is-invalid {
 
 .modal-backdrop.show {
   opacity: 0;
+}
+
+.api-docs {
+  h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1.06rem;
+    font-weight: 500;
+  }
+
+  h3 {
+    margin-top: 2rem;
+    font-weight: 500;
+  }
+
+  h4 {
+    border: none;
+    padding: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 25px 0 13px;
+  }
+
+  h5 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 15px 0 10px;
+  }
+
+  .image-placeholder {
+    text-align: center;
+  }
+
+  img {
+    margin: 30px auto 40px;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .next {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .table {
+    border-top: 3px solid $border-color;
+
+    thead {
+      th {
+        border-bottom: 0;
+        text-transform: none;
+      }
+    }
+  }
+
+  .code-snippet {
+    background: $palette-gray-5;
+    border-radius: 5px;
+    border: 1px solid $palette-gray-30;
+    padding: 20px 30px;
+    font-weight: bold;
+  }
+
+  ul {
+    margin-left: 20px;
+
+    li {
+      list-style-type: disc !important;
+      padding-left: 0;
+      font-size: 20px;
+      color: $palette-yellow;
+
+      span {
+        color: $body-color;
+        font-size: 0.875rem;
+      }
+    }
+  }
 }
