@@ -1,5 +1,45 @@
 %p
-  This is the API of the EOSC Marketplace. Please visit
-  = link_to "EOSC Marketplace OpenAPI Specification", rswag_api_path, data: { turbolinks: false }
-  to check the detailed specification of the available REST endpoints and messages.
-  The documentation was generated using OpenAPI Specification 3.0 compliant software.
+  This is the API of the EOSC Marketplace. It enables integration in two areas: offering and ordering. Their audience is
+  providers and communities.
+%p
+  Below, we present an overview of the EOSC Marketplace APIs in scope of interoperability patterns regarding order
+  management. Users are presented with a consistent EOSC Marketplace user interface, while communities, providers and
+  operations team can leverage the APIs to achieve high interoperability level and provide value to the users in a way
+  they see fit.
+
+%p.image-placeholder
+  = image_pack_tag "api_docs/inter_patterns.png",
+    alt: "Overview of EOSC Marketplace interfaces concerning ordering, including interoperability patterns"
+
+%p
+  Integrators (providers and communities) can choose from a range of integration levels, adding flexibility.
+%p
+  In a minimal setup, a provider can use Marketplace UI to configure their offerings and leverage SOMBO for order
+  management, avoiding any implementation and integration cost whatsoever.
+%p
+  On the other hand, one can choose to use an in-house system, that fully integrates with EOSC Marketplace APIs both
+  for offering and order management. Existing community systems can be extended this way, exposing the communities to
+  EOSC users while maintaining the same set of tools for operations.
+
+%h3.mt-1 Offering
+%p
+  Exposes functions that are necessary to manage offerings, including their technical parameters and ordering
+  configuration.
+  Its
+  %a{ href: "/api_docs/swagger/index.html?urls.primaryName=Offering API V1 Docs", target: "_blank" }
+    OpenAPI Specification is available here.
+
+%h3 Ordering
+%p
+  It is an API that enables integration with the ordering process. External Order Management Systems (OMSes) can use it
+  to keep order processing on their side, but still providing users with a consistent order workflow and support.
+
+%p.image-placeholder
+  = image_pack_tag "api_docs/ordering.png",
+    alt: "EOSC Marketplace as a Message bus for Project and Project Item channels"
+
+%p
+  Its
+  %a{ href: "/api_docs/swagger/index.html?urls.primaryName=Ordering API V1 Docs", target: "_blank" }
+    OpenAPI Specification is available here.
+  although it consists also of an asynchronous part (trigger).

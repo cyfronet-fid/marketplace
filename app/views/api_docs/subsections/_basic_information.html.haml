@@ -1,0 +1,165 @@
+%p
+  Both Offering API and Ordering API are HTTP APIs.
+  %br
+  They are available under
+  %code /api/v1
+  prefix. The Offering API endpoints are grouped under
+  %code /api/v1/resources/
+  prefix and the Ordering API endpoints under
+  %code /api/v1/oms/
+  \.
+
+%h3 HTTP methods
+%p
+  API resources can be accessed using the following methods:
+
+  %table.table
+    %tr
+      %td
+        %strong GET
+      %td To get the state of a resource,
+    %tr
+      %td
+        %strong POST
+      %td To create a resource,
+    %tr
+      %td
+        %strong PATCH
+      %td To update selected fields of a resource,
+    %tr
+      %td
+        %strong DELETE
+      %td To remove a resource.
+
+
+%h3 Request and response format
+%p
+  API expects requests in JSON format and returns JSON too. Its content-type is
+  %code application/json
+  \.
+
+%h3 Authorization
+%p
+  Authorization tokens are used to authorize both APIs. Such a token can be retrieved above at this page and will be
+  similar to:
+  %code ios_Bg6L1hsvDyvfYK_C
+  \. In the case of Ordering API, such token will be issued upon OMS registration.
+%p
+  To provide integration support for other software systems the token is long-lived, but can be revoked and regenerated.
+  Contact support to do this for the OMS token.
+%p
+  To authenticate your HTTP requests, set the
+  %code X-User-Token
+  request header.
+
+%p
+  %i For example:
+
+.code-snippet
+  %code curl -H "X-User-Token: ios_Bg6L1hsvDyvfYK_C" [...]
+
+%h3 HTTP statuses
+%p
+  The following HTTP statuses are used:
+
+  %table.table
+    %tr
+      %td
+        %strong 200
+      %td The operation completed successfully.
+    %tr
+      %td
+        %strong 201
+      %td Resource created successfully.
+    %tr
+      %td
+        %strong 400
+      %td
+        %p
+          Incorrect request, specific information about the error will be provided in the returned payload.
+        %p
+          %i For example:
+        .code-snippet
+          %code
+            :preserve
+              $ curl -X GET \
+                -H "X-User-Token: ios_Bg6L1hsvDyvfYK_C"
+                "https://marketplace.eosc-portal.eu/api/v1/oms/1/events?from_timestamp=invalid"
+              {"error":"invalid date"}
+    %tr
+      %td
+        %strong 401
+      %td Unauthenticated, you didn't provide the necessary authorization token or the token is invalid.
+    %tr
+      %td
+        %strong 403
+      %td Operation forbidden, you don't have permission to perform an action.
+    %tr
+      %td
+        %strong 404
+      %td Resource specified by the requests not found.
+
+
+%h3 Ordering API specific
+
+%h4 Paging
+%p
+  In Ordering API the list endpoints paginate their results, with exception of
+  %code GET /api/v1/oms
+  \.
+
+%h5 Page size
+%p
+  The default page size is 20 elements, and other values are passed by query parameter
+  %code limit
+  \.
+
+%h5 Offset
+%p
+  Offset is set by
+  %code from_id
+  query param. For
+  %code GET /api/v1/events
+  the query param is named
+  %code from_timestamp
+  , and is required.
+
+%p
+  The
+  %code from_timestamp
+  requires an ISO8601 format, for example
+  %code 2020-01-01T00:00:00Z
+  \.
+
+%p
+  The filter is exclusive (i.e. for
+  %code from_id=1
+  one gets ids 2, 3, etc.).
+
+%h4 Trigger
+%p
+  In order to receive asynchronous notifications about new and changed resources, an OMS needs to expose a HTTP trigger
+  endpoint. HTTP (GET, POST or PUT) request will be issued on this endpoint each time the OMS needs to be notified of
+  any changes.
+%p
+  A trigger call is issued with each change to resources (Projects, Project Items, Messages), that the OMS has access
+  to.
+%p
+  After handling a trigger call, the adapter should send a request to the
+  %code GET /events
+  endpoint for updates.
+
+%h4 Data model
+%p
+  In the EOSC Marketplace every user can create Projects to organize their actions and get guidance from the operations
+  team.
+%p
+  Within a Project, the user will create resource orders and add open-access resources. Both are represented as a single
+  resource type in the API: the Project Item.
+  A Project Item's status and user details are mutable by an owning OMS.
+%p
+  In scope of both a Project and a Project Item, a conversation between parties is held as Messages associated with
+  either a Project or a Project Item.
+
+%p.image-placeholder
+  = image_pack_tag "api_docs/data_model.png", alt: "API resources data model"

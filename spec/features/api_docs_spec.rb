@@ -107,9 +107,9 @@ RSpec.feature "Api docs page" do
 
       expect(page).to have_text("This is the API of the EOSC Marketplace.")
 
-      click_link("Authentication", match: :first)
-      expect(page).to have_current_path(api_docs_path(subsection: :authentication))
-      expect(page).to have_text('curl -H "X-User-Token": [YOUR TOKEN HERE]')
+      click_link("Basic information", match: :first)
+      expect(page).to have_current_path(api_docs_path(subsection: :basic_information))
+      expect(page).to have_text("curl -H \"X-User-Token: ios_Bg6L1hsvDyvfYK_C\" [...]")
 
       click_link("Introduction", match: :first)
       expect(page).to have_current_path(api_docs_path(subsection: :introduction))
