@@ -5,6 +5,19 @@ require "net/http"
 module Service::Recommendable
   extend ActiveSupport::Concern
 
+  ALLOWED_SEARCH_DATA_FIELDS = [
+    :scientific_domains,
+    :providers,
+    :sort,
+    :q,
+    :order_type,
+    :rating,
+    :related_platforms,
+    :target_users,
+    :geographical_availabilities,
+    :category_id
+  ]
+
   @@filter_param_transformers = {
     geographical_availabilities: -> name { Country.convert_to_regions_add_country(name) },
     scientific_domains: -> ids { ids.instance_of?(Array) ?
@@ -88,7 +101,7 @@ module Service::Recommendable
       filters = {}
       unless params.nil?
         params.each do |key, value|
-          next if key == "controller" || key == "action" || value.blank?
+          next if ALLOWED_SEARCH_DATA_FIELDS.exclude?(key.to_sym) || value.blank?
 
           filter_name = key.sub "-filter", ""
           filters[filter_name] = value
