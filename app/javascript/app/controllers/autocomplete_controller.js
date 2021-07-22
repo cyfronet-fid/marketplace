@@ -5,7 +5,7 @@ import debounce from 'lodash.debounce'
 
 export default class extends Controller {
 
-  static targets = [ 'form', 'input', 'hidden',
+  static targets = [ 'form', 'input', 'hidden', 'type',
                     'results', 'anchor' ]
 
   connect() {
@@ -124,12 +124,14 @@ export default class extends Controller {
 
     const textValue = selected.textContent.trim()
     const value = selected.getAttribute('data-autocomplete-value') || textValue
+    const type = selected.getAttribute("data-autocomplete-type")
     const anchor = selected.getAttribute('data-autocomplete-anchor') || null
 
     this.inputTarget.value = textValue
 
     if ( this.hiddenTarget ) {
       this.hiddenTarget.value = value
+      this.typeTarget.value = type
       this.anchorTarget.value = anchor
     } else {
       this.inputTarget.value = value
