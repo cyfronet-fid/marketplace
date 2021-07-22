@@ -1,5 +1,3 @@
 %li.dropdown-item{ "role": "option",
-  "data-autocomplete-value": "#{service.id}" }
-  = highlights[:provider_names].html_safe
-  >
-  = service.name
+  "data-autocomplete-value": "#{provider.id}", "data-autocomplete-type": "provider" }
+  = highlights[:provider_name].html_safe

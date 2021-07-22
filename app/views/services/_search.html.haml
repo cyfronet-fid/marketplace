@@ -1,10 +1,11 @@
-= form_tag "#{services_path}", method: :get, role: "search",
+= form_tag url_for, method: :get, role: "search",
            "data-target": "autocomplete.form search.form",
            "data-controller": "search autocomplete",
            "data-autocomplete-url": "service_autocomplete",
            "data-search-services-path": services_path,
            "data-search-categories-path": "/services/c", class: "searchbar" do
-  = hidden_field_tag "service_id", nil, "data-target": "autocomplete.hidden"
+  = hidden_field_tag "object_id", nil, "data-target": "autocomplete.hidden"
+  = hidden_field_tag "type", nil, "data-target": "autocomplete.type search.type"
   = hidden_field_tag "anchor", nil, "data-target": "autocomplete.anchor"
   = hidden_field_tag "sort", "_score", id: nil
 
