@@ -2,6 +2,7 @@
 
 module Recommendation::Followable
   extend ActiveSupport::Concern
+  include ValidationHelper
 
   included do
     before_action :set_follow_context
@@ -15,8 +16,9 @@ module Recommendation::Followable
       end
 
       # Set unique client id per device per system
-      if cookies[:client_uid].nil?
-        cookies.permanent[:client_uid] = SecureRandom.uuid
+      client_uid = cookies[:client_uid]
+      if client_uid.nil? || !validate_uuid_format(client_uid)
+        cookies[:client_uid] = { value: SecureRandom.uuid, expires: 1.week.from_now }
       end
 
       @recommendation_previous = cookies[:source]
