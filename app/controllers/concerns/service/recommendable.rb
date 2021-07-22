@@ -4,6 +4,7 @@ require "net/http"
 
 module Service::Recommendable
   extend ActiveSupport::Concern
+  include ValidationHelper
 
   ALLOWED_SEARCH_DATA_FIELDS = [
     :scientific_domains,
@@ -39,8 +40,9 @@ module Service::Recommendable
 
   def fetch_recommended
     # Set unique client id per device per system
-    if cookies[:client_uid].nil?
-      cookies.permanent[:client_uid] = SecureRandom.uuid
+    client_uid = cookies[:client_uid]
+    if client_uid.nil? || !validate_uuid_format(client_uid)
+      cookies[:client_uid] = { value: SecureRandom.uuid, expires: 1.week.from_now }
     end
 
     size = get_services_size_by(ab_test(:recommendation_panel))
