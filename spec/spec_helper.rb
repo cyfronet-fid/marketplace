@@ -23,6 +23,7 @@ RSpec.configure do |config|
   config.before(:suite) do
     # reindex models
     Service.reindex
+    Provider.reindex
     Offer.reindex
 
     # and disable callbacks

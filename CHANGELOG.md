@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.18.0-milestone]
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Provider section in search autocomplete redirects to the provider's page (@goreck888)
+
+### Security
+
 ## [3.17.0] 2021-07-27
 
 ### Added

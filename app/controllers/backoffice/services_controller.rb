@@ -12,9 +12,14 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   helper_method :cant_edit
 
   def index
-    if params["service_id"].present?
-      redirect_to backoffice_service_path(Service.find(params["service_id"]),
-                                          anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?))
+    if params["object_id"].present?
+      if params["type"] == "provider"
+        redirect_to backoffice_provider_path(Provider.friendly.find(params["object_id"]),
+                                  anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?))
+      elsif params["type"] == "service"
+        redirect_to backoffice_service_path(Service.friendly.find(params["object_id"]),
+                                 anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?))
+      end
     end
     @services, @offers = search(scope)
     @pagy = Pagy.new_from_searchkick(@services, items: params[:per_page])
@@ -198,6 +203,10 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
     def scope
       policy_scope(Service).with_attached_logo
+    end
+
+    def provider_scope
+      policy_scope(Provider).with_attached_logo
     end
 
     def tmp_path

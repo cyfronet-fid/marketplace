@@ -13,6 +13,7 @@ class Provider < ApplicationRecord
 
   def search_data
     {
+      provider_id: id,
       provider_name: name,
       service_ids: service_ids
     }

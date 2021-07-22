@@ -40,17 +40,43 @@ RSpec.feature "Service searching in top bar", js: true do
     expect(page).to_not have_css(".categories", text: "Looking for: DDDD Something")
   end
 
-  scenario "redirect when selecting service_id by autocomplete controller", js: true, search: true do
+  scenario "redirect to service path when selecting service_id by autocomplete controller", js: true, search: true do
     service = create(:service)
     fill_in "q", with: service.name
+    expect(page).to have_css("#-option-0")
     find(:css, "li[id='-option-0']").click
+    expect(page).to have_content(service.name)
     expect(current_path).to eq(service_path(service))
   end
 
-  scenario "redirect when selecting service_id by autocomplete controller", js: true, search: true do
+  scenario "doesn't show unpublished records", js: true, search: true do
+    draft_service = create(:service, name: "Awesome 1", status: :draft)
+    published_service = create(:service, name: "Awesome 2")
+    fill_in "q", with: draft_service.name.truncate(5)
+
+    expect(page).to_not have_content(draft_service.name)
+    expect(page).to have_content(published_service.name)
+  end
+
+  scenario "redirect to provider path from services path when selecting provider_id by autocomplete controller", js: true, search: true do
+    provider = create(:provider)
+    fill_in "q", with: provider.name
+    expect(page).to have_css("#-option-0")
+    find(:css, "li[id='-option-0']").click
+    expect(page).to have_content(provider.name)
+    expect(current_path).to eq(provider_path(provider))
+  end
+
+  scenario "redirect to service path from services path when selecting service_id by autocomplete controller", js: true, search: true do
     service = create(:service)
-    visit services_path(service_id: service.id)
+    visit services_path(object_id: service.id, type: "service")
     expect(current_path).to eq(service_path(service))
+  end
+
+  scenario "redirect to provider path when selecting provider_id by autocomplete controller", js: true, search: true do
+    provider = create(:provider)
+    visit services_path(object_id: provider.id, type: "provider")
+    expect(current_path).to eq(provider_path(provider))
   end
 
   scenario "After starting searching autocomplete are shown", js: true, search: true do
@@ -116,7 +142,7 @@ RSpec.feature "Service searching in top bar", js: true do
     expect(page).to have_selector("#category-select > option:last-child", text: "Other")
   end
 
-  scenario "After starting searching autocomplete are shown with resource organisation", js: true, search: true do
+  scenario "After starting searching autocomplete shows provider with resource organisation", js: true, search: true do
     provider = create(:provider, name: "Cyfronet")
     create(:service, name: "DDDD Something 1", resource_organisation: provider)
     create(:service, name: "DDDD Something 2")
@@ -125,12 +151,13 @@ RSpec.feature "Service searching in top bar", js: true do
     visit services_path
     fill_in "q", with: "Cyfr"
 
-    expect(page).to have_text ("Cyfronet > DDDD Something 1")
+    expect(page).to have_text ("Cyfronet")
+    expect(page).to_not have_text ("Cyfronet > DDDD Something 1")
     expect(page).to_not have_text ("Cyfronet > DDDD Something 2")
     expect(page).to_not have_text ("Cyfronet > DDDD Something 3")
   end
 
-  scenario "After starting searching autocomplete are shown with providers", js: true, search: true do
+  scenario "After starting searching autocomplete shows provider without service", js: true, search: true do
     provider = create(:provider, name: "Cyfronet")
     create(:service, name: "DDDD Something 1", providers: [provider])
     create(:service, name: "DDDD Something 2")
@@ -139,7 +166,8 @@ RSpec.feature "Service searching in top bar", js: true do
     visit services_path
     fill_in "q", with: "Cyfr"
 
-    expect(page).to have_text ("Cyfronet > DDDD Something 1")
+    expect(page).to have_text ("Cyfronet")
+    expect(page).to_not have_text ("Cyfronet > DDDD Something 1")
     expect(page).to_not have_text ("Cyfronet > DDDD Something 2")
     expect(page).to_not have_text ("Cyfronet > DDDD Something 3")
   end
