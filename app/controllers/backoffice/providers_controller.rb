@@ -44,7 +44,10 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   end
 
   def update
-    permitted_attributes = permitted_attributes(@provider)
+    provider_duplicate = @provider.dup
+    # IMPORTANT!!! Writing upstream_id from params is required to inject context to policy
+    provider_duplicate.upstream_id = params[:provider][:upstream_id]
+    permitted_attributes = permitted_attributes(provider_duplicate)
     @provider.assign_attributes(permitted_attributes)
 
     if valid_model_and_urls? && @provider.save(validate: false)
@@ -94,12 +97,13 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
       # More restricted validation in form instead of ActiveRecord itself
       # is related to loose validation of importing data from external services
       valid = @provider.valid?
-      unless UrlHelper.url_valid?(@provider.website)
+      if @provider.website_changed? && !UrlHelper.url_valid?(@provider.website)
         valid = false
         @provider.errors.add(:website, "isn't valid or website doesn't exist, please check URL")
       end
+
       invalid_multimedia = @provider.multimedia.select { |media| !UrlHelper.url_valid?(media) }
-      if invalid_multimedia.present?
+      if @provider.multimedia_changed? && invalid_multimedia.present?
         valid = false
         @provider.errors.add(
           :multimedia,

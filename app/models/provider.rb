@@ -73,6 +73,7 @@ class Provider < ApplicationRecord
   accepts_nested_attributes_for :data_administrators,
                                 allow_destroy: true
 
+  before_validation :strip_input_fields
   before_validation do
     remove_empty_array_fields
     unless legal_entity
@@ -179,6 +180,23 @@ class Provider < ApplicationRecord
       array_fields.each do |field|
         send(field).present? ? send(:"#{field}=", send(field).reject(&:blank?)) : send(:"#{field}=", [])
       end
+
+      send(
+        :data_administrators=,
+        data_administrators.
+          reject { |administrator|
+            administrator.attributes["created_at"].blank? &&
+            administrator.attributes.all? { |_, value| value.blank? }
+          }
+      )
+      send(
+        :public_contacts=,
+        public_contacts.
+          reject { |contact|
+            contact.attributes["created_at"].blank? &&
+            contact.attributes.except("contactable_type", "type", "contactable_id").all? { |_, value| value.blank? }
+          }
+      )
     end
 
     def validate_array_values_uniqueness
@@ -186,5 +204,31 @@ class Provider < ApplicationRecord
       errors.add(:multimedia, "has duplicates, please remove them to continue") if multimedia.uniq.length != multimedia.length
       errors.add(:certifications, "has duplicates, please remove them to continue") if certifications.uniq.length != certifications.length
       errors.add(:national_roadmaps, "has duplicates, please remove them to continue") if national_roadmaps.uniq.length != national_roadmaps.length
+    end
+
+    def strip_input_fields
+      self.attributes.each do |key, value|
+        self[key] = value.strip if value.respond_to?("strip")
+      end
+    end
+
+    def logo_changed?
+      if Provider.where(id: id).blank?
+        return false
+      end
+
+      has_new_logo = logo.attached? && logo.variable?
+      previous_logo = Provider.find(id).logo
+      has_previous_logo = previous_logo.attached? && previous_logo.variable?
+
+      if !has_previous_logo && !has_new_logo
+        return false
+      end
+
+      if (has_new_logo && !has_previous_logo) || (!has_new_logo && has_previous_logo)
+        return true
+      end
+
+      logo.attachment.blob != previous_logo.attachment.blob
     end
 end

@@ -56,7 +56,7 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
       data_administrators_attributes: [:id, :first_name, :last_name, :email, :_destroy]
     ]
 
-    if !@record.is_a?(Provider) || @record.upstream.nil?
+    if !@record.is_a?(Provider) || @record.upstream_id.blank?
       attrs
     else
       attrs & MP_INTERNAL_FIELDS
