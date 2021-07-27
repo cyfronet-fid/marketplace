@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.17.0-milestone]
+## [3.17.0] 2021-07-27
 
 ### Added
 - OMS trigger basic authentication (@jswk)
@@ -19,10 +19,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - API authorization token can now only be revoked by regenerating it (@jswk)
 - `api_docs` page is available for unlogged user (@goreck888)
 - All references to `eIC` are changed to the `EOSC Registry` (@goreck888)
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Don't display opinions for unpublished resources on the home page (@goreck888)
