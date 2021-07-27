@@ -57,7 +57,7 @@ Cypress.Commands.add('loginAs', function (user: IUser) {
 Cypress.Commands.add('logout', () => {
     cy.clearCookie(APP_SESSION_COOKIE_NAME);
     cy.reload();
-    cy.get('a[data-e2e="login"]').should('be.visible');
+    cy.get('a[data-e2e="login"]').should('exist');
 });
 
 /**
