@@ -11,37 +11,3 @@
         %i.fab.fa-youtube
 
 = render "layouts/eosc_common_nav"
-
--# %nav.top
--#  .container
--#    %ul.right-links
--#      %li
--#        %a{ href: "https://www.eosc-portal.eu/contact-us" } Contact us
--#      %li
--#        %a{ href: Mp::Application.config.portal_base_url } Portal Home
--#      %li
--#        = link_to _("Catalogue & Marketplace"), root_path,
--#          class: "#{"active" if local_assigns[:section] == nil}"
--#      %li
--#        %a{ href: Mp::Application.config.providers_dashboard_url } Providers Dashboard
--#      - if policy([:backoffice, :backoffice]).show?
--#        %li
--#          = link_to _("Backoffice"), backoffice_path,
--#            class: "#{"active" if local_assigns[:section] == :backoffice}"
--#      - if policy([:admin, :admin]).show?
--#        %li
--#          = link_to _("Admin"), admin_path, section: "admin",
--#            class: "#{"active" if local_assigns[:section] == :admin}"
--#      - if policy([:executive, :executive]).show?
--#        %li
--#          = link_to _("Executive"), executive_path, section: "admin",
--#            class: "#{"active" if local_assigns[:section] == :executive}"
--#      - if !user_signed_in?
--#        %li
--#          %strong= link_to _("Login"), user_checkin_omniauth_authorize_path, "data-e2e": "login"
--#      - else
--#        %li
--#          %i.fas.fa-user.mr-1
--#          #{"%s %s" % [current_user.first_name, current_user.last_name]}
--#        %li
--#          %strong= link_to _("Logout"), destroy_user_session_path, method: :delete, "data-e2e": "logout"
