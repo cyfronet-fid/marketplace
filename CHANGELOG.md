@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Provider section in search autocomplete redirects to the provider's page (@goreck888)
+- Set `Other` target user at the end of target user list (@goreck888)
 
 ### Security
 
