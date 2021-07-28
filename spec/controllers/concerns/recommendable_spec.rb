@@ -13,6 +13,75 @@ RSpec.describe ApplicationController, type: :controller do
 
   before(:each) { controller.params = params }
 
+  transformer = Service::Recommendable::FILTER_PARAM_TRANSFORMERS
+
+  it "Should return proper IDs for single roots" do
+    scientific_domain = create(:scientific_domain)
+    category = create(:category, name: "root")
+    provider = create(:provider)
+    target_user = create(:target_user)
+
+    expect(transformer.length).to eq(6)
+    expect(transformer[:scientific_domains].call(scientific_domain.id)).to match_array([scientific_domain.id])
+    expect(transformer[:category_id].call(category.slug)).to match_array([category.id])
+    expect(transformer[:providers].call(provider.id)).to match_array([provider.id])
+    expect(transformer[:target_users].call(target_user.id)).to match_array([target_user.id])
+  end
+
+  it "Should return proper IDs for multiple roots" do
+    scientific_domains = create_list(:scientific_domain, 10)
+    scientific_domains_id = []
+    scientific_domains.each { |sd| scientific_domains_id << sd.id }
+
+    categories = create_list(:category, 10)
+    categories_slug = []
+    categories_id = []
+    categories.each do |cat|
+      categories_slug << cat.slug
+      categories_id << cat.id
+    end
+
+    providers = create_list(:provider, 10)
+    providers_id = []
+    providers.each { |provider| providers_id << provider.id }
+
+    target_users = create_list(:target_user, 10)
+    target_users_id = []
+    target_users.each { |tg| target_users_id << tg.id }
+
+    expect(transformer[:scientific_domains].call(scientific_domains_id)).to match_array(scientific_domains_id)
+
+    # It is impossible to choose multiple root categories - only one ID of the first slug should be returned
+    expect(transformer[:category_id].call(categories_slug)).to match_array(categories_id[0])
+    expect(transformer[:providers].call(providers_id)).to match_array(providers_id)
+    expect(transformer[:target_users].call(target_users_id)).to match_array(target_users_id)
+  end
+
+  it "Should return proper IDs for a tree of scientific domains and categories" do
+    sd_parent = create(:scientific_domain, name: "parent")
+    sd_child = create(:scientific_domain, name: "child", parent: sd_parent)
+    cat_parent = create(:category, name: "parent")
+    cat_child = create(:category, name: "child", parent: cat_parent)
+
+    expect(transformer[:scientific_domains].call(sd_parent.id)).to match_array([sd_parent.id, sd_child.id])
+    expect(transformer[:scientific_domains].call(sd_child.id)).to match_array([sd_child.id])
+    expect(transformer[:scientific_domains].call([sd_parent.id, sd_child.id])).to match_array(
+      [sd_parent.id, sd_child.id]
+    )
+
+    expect(transformer[:category_id].call(cat_parent.slug)).to match_array([cat_parent.id, cat_child.id])
+    expect(transformer[:category_id].call(cat_child.slug)).to match_array([cat_child.id])
+    expect(transformer[:category_id].call([cat_parent.slug, cat_child.slug])).to match_array(
+      [cat_parent.id, cat_child.id]
+    )
+  end
+
+  it "Should return proper IDs for categories that name includes spaces" do
+    transformer = transformer[:category_id]
+    category = create(:category, name: "name which includes spaces")
+    expect(transformer.call(category.slug)).to match_array([category.id])
+  end
+
   it "Should use simple recommender on unknown recommender host" do
     allow(Mp::Application.config).to(receive(:recommender_host).and_return(nil))
     expect(Recommender::SimpleRecommender).to receive(:new).and_call_original

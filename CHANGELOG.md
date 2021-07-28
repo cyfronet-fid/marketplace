@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Show 'Manage the provider/resource' button only when upstream set to 'eosc_registry' (@kmarszalek)
+- Make a recommendation panel visible even 1 or 2 recommended services by recommender do not exist in MP database. (@Michal-Kolomanski)
 
 ### Deprecated
 
