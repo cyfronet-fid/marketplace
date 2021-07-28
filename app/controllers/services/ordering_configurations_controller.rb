@@ -2,13 +2,13 @@
 
 class Services::OrderingConfigurationsController < Services::ApplicationController
   before_action :authenticate_user!
-  before_action :data_administrator_authorization!, only: :show
+  before_action :load_and_authenticate_service!, only: :show
 
   layout "ordering_configuration"
 
   def show
     @service = Service.includes(:offers).friendly.find(params[:service_id])
-    @offers = @service.offers.published.order(:iid)
+    @offers = @service&.offers&.published&.order(:iid)
     @related_services = @service.related_services
     @related_services_title = "Related resources"
     if current_user&.executive?
@@ -18,7 +18,8 @@ class Services::OrderingConfigurationsController < Services::ApplicationControll
   end
 
   private
-    def data_administrator_authorization!
+    def load_and_authenticate_service!
+      @service = Service.friendly.find(params[:service_id])
       authorize @service, policy_class: OrderingConfigurationPolicy
     end
 end

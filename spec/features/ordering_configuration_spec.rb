@@ -83,6 +83,34 @@ RSpec.feature "Services in ordering_configuration panel" do
       expect(page).to_not have_link("Delete Offer")
     end
 
+    scenario "I can add an offer if none exists", js: true do
+      service_without_offers = create(:service, resource_organisation: provider, offers: [])
+
+      visit service_ordering_configuration_path(service_without_offers)
+
+      expect(page).to have_content("Add new offer")
+
+      click_on "Add new offer"
+
+      expect {
+        fill_in "Name", with: "new offer 1"
+        fill_in "Description", with: "test offer"
+        find("li", text: "Input").click
+        find("#attributes-list-button").first("svg").click
+
+        within("div.card-text") do
+          fill_in "Name", with: "new input parameter"
+          fill_in "Hint", with: "test"
+          fill_in "Unit", with: "days"
+          select "integer", from: "Value type"
+        end
+        click_on "Create Offer"
+      }.to change { service_without_offers.offers.count }.by(1)
+
+      service_without_offers.reload
+      expect(service_without_offers.offers.last.name).to eq("new offer 1")
+    end
+
     scenario "I can delete offer if there are more than 1" do
       create(:offer, service: service)
 
