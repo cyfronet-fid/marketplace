@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Provider section in search autocomplete redirects to the provider's page (@goreck888)
 - Set `Other` target user at the end of target user list (@goreck888)
 - Add missing connection from Community MP to Offering API in API Docs overview image (@abacz)
+- Allow to create an offer in `ordering_configuration` panel when none exists (@goreck888)
 
 ### Security
 
