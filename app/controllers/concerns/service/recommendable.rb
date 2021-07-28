@@ -23,15 +23,15 @@ module Service::Recommendable
     geographical_availabilities: ->(name) { Country.convert_to_regions_add_country(name) },
     scientific_domains: ->(ids) do
       if ids.instance_of?(Array)
-        ids.map(&:to_i) + ids.map { |id| ScientificDomain.find(id).descendant_ids }.flatten
+        ids.map(&:to_i) | ids.map { |id| ScientificDomain.find(id).descendant_ids }.flatten
       else
-        ids.first.to_i
+        Array(ScientificDomain.find(ids.to_i).id) + Array(ScientificDomain.find(ids.to_i).descendant_ids.flatten)
       end
     end,
     category_id: ->(slug) { [Category.find_by(slug: slug).id] + Category.find_by(slug: slug).descendant_ids },
-    providers: ->(ids) { ids.instance_of?(Array) ? ids.map(&:to_i) : ids.first.to_i },
-    related_platforms: ->(ids) { ids.instance_of?(Array) ? ids.map(&:to_i) : ids.first.to_i },
-    target_users: ->(ids) { ids.instance_of?(Array) ? ids.map(&:to_i) : ids.first.to_i }
+    providers: ->(ids) { ids.instance_of?(Array) ? ids.map(&:to_i) : Array(ids.to_i) },
+    related_platforms: ->(ids) { ids.instance_of?(Array) ? ids.map(&:to_i) : Array(ids.to_i) },
+    target_users: ->(ids) { ids.instance_of?(Array) ? ids.map(&:to_i) : Array(ids.to_i) }
   }.freeze
   FILTER_KEY_TRANSFORMERS = { category_id: "categories" }.freeze
 
@@ -62,9 +62,9 @@ module Service::Recommendable
     url = Mp::Application.config.recommender_host + "/recommendations"
     response = Faraday.post(url, body.to_json, { "Content-Type": "application/json", Accept: "application/json" })
     ids = JSON.parse(response.body)["recommendations"]
-    services = Service.where(id: ids, status: %i[published unverified]).sort_by { |s| ids.index(s.id) }.take(size)
 
-    services.size == size ? services : []
+    services = Service.where(id: ids, status: %i[published unverified]).sort_by { |s| ids.index(s.id) }.take(size)
+    services.empty? ? [] : services
   rescue StandardError
     Sentry.capture_message("Recommendation service, recommendation endpoint response error")
     []
