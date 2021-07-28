@@ -12,6 +12,6 @@ class PagesController < ApplicationController
   end
 
   def target_users
-    @target_users = TargetUser.all.order(:name)
+    @target_users = TargetUser.all.order(:name).partition { |tu|  tu.name != "Other" }.flatten(1)
   end
 end
