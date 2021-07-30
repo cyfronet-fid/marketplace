@@ -18,7 +18,7 @@ export default class extends Controller {
     const region = element.dataset.region;
     var map = this.returnRegion(region);
 
-    let width = 300
+    let width = 250
     if("about" === element.dataset.type) {
       width = 840;
     }
@@ -52,7 +52,8 @@ export default class extends Controller {
         },
         tooltip: {
           headerFormat: '',
-          pointFormat: '{point.name}'
+          pointFormat: '{point.name}',
+          outside: false
         }
       }]
     })
