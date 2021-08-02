@@ -1,4 +1,4 @@
-= render "layouts/sections", section: :backoffice
+= render "layouts/sections"
 .container
   %nav.navbar.navbar-expand-lg.navbar-light
     = link_to root_path, class: "navbar-brand col-8 col-lg-3 pl-0 backoffice-logo" do
@@ -32,6 +32,3 @@
         - if policy([:backoffice, Vocabulary]).index?
           = nav_link controller: :platforms, html_options: { class: "nav-item" } do
             = link_to _("Vocabularies"), backoffice_vocabularies_path, class: "nav-link px-2 py-1"
-        %li.nav-item
-          = link_to _("Logout"), destroy_user_session_path, method: :delete, class: "nav-link px-2 py-1"
-
