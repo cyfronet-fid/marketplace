@@ -29,7 +29,7 @@
                   = _("Admin")
             - if policy([:executive, :executive]).show?
               %li
-                %a.simple-item{ href: admin_path }
+                %a.simple-item{ href: executive_path }
                   = _("Executive")
           %li
             = link_to _("Logout"), destroy_user_session_path, method: :delete,
@@ -99,7 +99,7 @@
                   = _("Admin")
             - if policy([:executive, :executive]).show?
               %li
-                %a.dropdown-item.dropdown-profile{ href: admin_path }
+                %a.dropdown-item.dropdown-profile{ href: executive_path }
                   = _("Executive")
 
       .menu__hamburger{ "onclick": "openNav()" }
