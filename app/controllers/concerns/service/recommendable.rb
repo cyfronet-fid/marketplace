@@ -55,7 +55,9 @@ module Service::Recommendable
   private
     def get_recommended_services_by(body, size)
       url = Mp::Application.config.recommender_host + "/recommendations"
-      response = Unirest.post(url, { "Content-Type" => "application/json" }, body.to_json)
+      response = Unirest.post(url,
+                              { "Content-Type": "application/json", "Accept": "application/jason" },
+                              body.to_json)
       ids = response.body.transform_keys(&:to_sym)[:recommendations]
       services = Service.where(id: ids, status: [:published, :unverified]).sort_by { |s| ids.index(s.id) }.take(size)
 

@@ -3,7 +3,7 @@ describe("Scientific domain", () => {
     cy.visit("/");
   });
 
-  it("should service page with selected filter", () => {
+  it("should service page with selected scientific_domains", () => {
     cy.intercept("GET", "/services*").as("services");
     cy.get("a[href*='services'][data-e2e='branch-link']")
           .eq(0)
@@ -13,6 +13,11 @@ describe("Scientific domain", () => {
           .should("include", "services?scientific_domains");
         cy.get("[data-e2e='filter-tag']")
           .should("be.visible");
+        cy.get("[data-e2e='filter-tag']").should("exist")
+        cy.get("h1").contains("Resources").should("be.visible")
+    
+   
+
   });
   it("should go to services page with selected category", () => {
     cy.intercept("GET", "/categories/*").as("categories");

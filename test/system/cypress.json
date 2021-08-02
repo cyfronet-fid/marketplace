@@ -12,9 +12,11 @@
     "openMode": 0
   },
   "watchForFileChanges": false,
-  "videoUploadOnPasses": false,
-  "video": false,
+  "videoUploadOnPasses": true,
+  "video": true,
+  "videoCompression": false,
   "env": {
     "debug": false
-  }
+  },
+  "projectId": "pz45r4"
 }

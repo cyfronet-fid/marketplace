@@ -91,6 +91,7 @@ jobs:
         CYPRESS_JIRA_TEST_USER_PWD: ${{ secrets.JIRA_TEST_USER_PWD }}
         CYPRESS_MP_JIRA_URL: ${{ secrets.MP_JIRA_URL }}
         CYPRESS_MP_JIRA_PROJECT: ${{ secrets.MP_JIRA_PROJECT }}
+        RECOMMENDER_HOST: 5000
       with:
         project: ./test/system
         start: bundle exec rails server -d
