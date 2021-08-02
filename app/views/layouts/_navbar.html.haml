@@ -19,6 +19,18 @@
           %li
             %a.simple-item{ href: "/profile" }
               = _("Profile")
+          - if policy([:backoffice, :backoffice]).show?
+            %li
+              %a.simple-item{ href: backoffice_path }
+                = _("Backoffice")
+            - if policy([:admin, :admin]).show?
+              %li
+                %a.simple-item{ href: admin_path }
+                  = _("Admin")
+            - if policy([:executive, :executive]).show?
+              %li
+                %a.simple-item{ href: admin_path }
+                  = _("Executive")
           %li
             = link_to _("Logout"), destroy_user_session_path, method: :delete,
             class: "btn btn-primary font-weight-bold mt-5 logout-link"
@@ -38,14 +50,6 @@
           %li.list-inline-item.ml-2
             %a{ href: Mp::Application.config.providers_dashboard_url }
               = _("Providers Dashboard")
-          - if policy([:backoffice, :backoffice]).show?
-            %li.list-inline-item.ml-2
-              = link_to "Backoffice", backoffice_path,
-                class: "#{"active" if local_assigns[:section] == :backoffice}"
-          - if policy([:admin, :admin]).show?
-            %li.list-inline-item.ml-2
-              = link_to "Admin", admin_path, section: "admin",
-                class: "#{"active" if local_assigns[:section] == :admin}"
 
 .container
   %section.header
@@ -83,6 +87,8 @@
             %li
               %a.dropdown-item.dropdown-profile{ href: "/profile", "data-e2e": "profile" }
                 = _("Profile")
+            - if show_administrative_sections?
+              .border-top
             - if policy([:backoffice, :backoffice]).show?
               %li
                 %a.dropdown-item.dropdown-profile{ href: backoffice_path }

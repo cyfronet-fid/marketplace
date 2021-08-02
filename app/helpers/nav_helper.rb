@@ -122,4 +122,10 @@ module NavHelper
       end
       [act, ctrl]
     end
+
+    def show_administrative_sections?
+      policy([:backoffice, :backoffice]).show? ||
+        policy([:admin, :admin]).show? ||
+        policy([:executive, :executive]).show?
+    end
 end
