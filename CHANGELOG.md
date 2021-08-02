@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - [Ordering API] `supplied_voucher_id` project item attribute (@jswk)
 
 ### Changed
+- Replace header, footer and eu information about financing - improvement of consistency between the EOSC services (@danielkryska) 
 
 ### Deprecated
 
