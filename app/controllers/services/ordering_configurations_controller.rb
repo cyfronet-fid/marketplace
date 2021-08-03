@@ -20,6 +20,6 @@ class Services::OrderingConfigurationsController < Services::ApplicationControll
   private
     def load_and_authenticate_service!
       @service = Service.friendly.find(params[:service_id])
-      authorize @service, policy_class: OrderingConfigurationPolicy
+      authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"), :show?)
     end
 end
