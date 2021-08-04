@@ -28,7 +28,7 @@
       = link_to _("Set parameters and offers"), service_ordering_configuration_path(service,
                                                                                     anchor: "offers",
                                                                                     from: params[:from]),
-        class: "btn btn-outline-secondary d-block mb-3"
+        class: "btn btn-outline-secondary d-block mb-3 no-arrow"
       %span.ordertype-label
         %i{ class: "ordertype #{order_type(service)}" }
         -# TODO: refactor dynamic translation

@@ -21,7 +21,7 @@
               = link_to "#{service.service_opinion_count} reviews", service_opinions_path(service),
               class: "ml-1 default-color"
   .col-12.col-lg-3.text-center.vertical-center
-    .vertical-center-inner.access-type
+    .vertical-center-inner.access-type.backoffice
       = link_to _("Edit resource"), edit_backoffice_service_path(service),
         class: "btn btn-outline-primary d-block mb-3"
       = link_to _("Set parameters and offers"), backoffice_service_path(service, anchor: "offers"),
