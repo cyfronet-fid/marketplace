@@ -269,7 +269,7 @@ li {
   min-height: 145px;
 
   .body {
-    padding: 1rem 45% 1rem 0;
+    padding: 0 45% 1rem 0;
     position: relative;
     font-size: 0.875rem;
     flex: 1 1 auto;
@@ -439,7 +439,7 @@ li {
   }
 
   .title {
-    margin-bottom: 15px;
+    margin: 20px 0 15px;
     font-size: 1rem;
     color: $color-primary;
     font-weight: 400;
@@ -868,7 +868,7 @@ li {
   }
 
   input {
-    padding: 10px;
+    padding: 10px 25px 10px 10px;
     font-size: 1rem;
     margin-right: -1px;
     width: 100%;
