@@ -223,6 +223,7 @@ ENV[VAR]
 
 We are currently using the following ENV variables:
 
+  * `MP_VERSION` (Optional) - the application's version (default taken from the file `./VERSION`)
   * `PORT` (Optional) - http server port (default 5000)
   * `CHECKIN_HOST` (Optional) - checkin IDP host (default `aai-dev.egi.eu`)
   * `CHECKIN_IDENTIFIER` (Optional) - checkin IDP identifier (default taken from
