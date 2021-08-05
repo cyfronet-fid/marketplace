@@ -1,11 +1,5 @@
 - breadcrumb :admin_root
 
-- if ENV["MP_VERSION"]
-  .alert.alert-info.text-center
-    = _("Marketplace version:")
-    %code= ENV["MP_VERSION"]
-- else
-  .alert.alert-warning.text-center
-    = _("Marketplace version not defined in")
-    %code MP_VERSION
-    = _("environment variable")
+.alert.alert-info.text-center
+  = _("Marketplace version:")
+  %code= MP_VERSION
