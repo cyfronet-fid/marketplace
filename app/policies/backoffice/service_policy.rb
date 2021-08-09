@@ -16,7 +16,6 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   end
 
   MP_INTERNAL_FIELDS = [
-    [category_ids: []],
     [platform_ids: []],
     :restrictions,
     :status,
@@ -109,7 +108,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
     if !@record.is_a?(Service) || @record.upstream.nil?
       attrs
     else
-      attrs & MP_INTERNAL_FIELDS
+      MP_INTERNAL_FIELDS
     end
   end
 
