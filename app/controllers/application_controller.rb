@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   include FastGettext::Translation
   include Recommendation::Followable
 
-  before_action :welcome_popup, :load_root_categories!, :report, :set_locale, :set_gettext_locale
+  before_action :welcome_popup, :load_root_categories!, :report, :set_locale, :set_gettext_locale, :check_autocomplete_redirects
 
   protect_from_forgery
 
@@ -38,6 +38,18 @@ class ApplicationController < ActionController::Base
 
     def report
       @report = Report.new
+    end
+
+    def check_autocomplete_redirects
+      if params["object_id"].present?
+        if params["type"] == "provider"
+          redirect_to provider_path(Provider.friendly.find(params["object_id"]),
+                                    anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?))
+        elsif params["type"] == "service"
+          redirect_to service_path(Service.friendly.find(params["object_id"]),
+                                   anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?))
+        end
+      end
     end
 
     def load_root_categories!
