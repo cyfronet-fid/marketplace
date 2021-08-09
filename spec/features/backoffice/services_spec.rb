@@ -586,7 +586,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "service_use_cases_url_0", disabled: true
       expect(page).to have_field "Order type", disabled: true
       expect(page).to have_field "Order url", disabled: true
-      expect(page).to have_field "Categories", disabled: false
+      expect(page).to have_field "Categories", disabled: true
       expect(page).to have_field "Access types", disabled: true
       expect(page).to have_field "Access modes", disabled: true
       expect(page).to have_field "Providers", disabled: true

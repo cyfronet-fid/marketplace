@@ -67,7 +67,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   def cant_edit(attribute)
-    !policy([:backoffice, @service]).permitted_attributes.include?(attribute)
+    policy([:backoffice, @service]).permitted_attributes.exclude?(attribute)
   end
 
   private

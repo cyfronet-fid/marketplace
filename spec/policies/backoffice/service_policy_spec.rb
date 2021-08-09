@@ -61,7 +61,7 @@ RSpec.describe Backoffice::ServicePolicy do
       expect(policy.permitted_attributes).to match_array([
                                                      :restrictions, :activate_message,
                                                      [platform_ids: []], [owner_ids: []],
-                                                     [category_ids: []], :status, :upstream_id,
+                                                     :status, :upstream_id,
                                                      sources_attributes: [:id, :source_type, :eid, :_destroy]])
     end
   end
