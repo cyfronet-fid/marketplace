@@ -6,7 +6,6 @@ export default class extends Controller {
     connect() {
         this.SERVICES_URL = this.data.get("servicesPath");
         this.CATEGORIES_URL = this.data.get("categoriesPath");
-        this.PROVIDERS_URL = this.data.get("providersPath");
 
         this.categorySelectTarget.value = "";
         let match = window.location.pathname.match(new RegExp(`^.*${this.CATEGORIES_URL}/([^/]+$)`));
@@ -21,8 +20,6 @@ export default class extends Controller {
 
         if (this.categorySelectTarget.value !== "")
             actionURL = `${this.CATEGORIES_URL}/${this.categorySelectTarget.value}`;
-        if (this.typeTarget.value === "provider")
-            actionURL = this.PROVIDERS_URL;
 
         this.selectedTarget.innerHTML = this.getSelectedText();
         this.formTarget.setAttribute("action", actionURL);
