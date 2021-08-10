@@ -22,6 +22,35 @@ RSpec.feature "Project services" do
     expect(page).to have_link("Details")
   end
 
+  context "#created_at display" do
+    scenario "The label reads 'Order date' for orderable project_item" do
+      offer = create(:offer, service: service)
+      project_item = create(:project_item, offer: offer, project: project)
+
+      visit project_service_path(project, project_item)
+
+      expect(page).to have_text("Order date:")
+    end
+
+    scenario "The label reads 'Added to the project' for external project_item" do
+      offer = create(:external_offer, service: service)
+      project_item = create(:project_item, offer: offer, project: project)
+
+      visit project_service_path(project, project_item)
+
+      expect(page).to have_text("Added to the project:")
+    end
+
+    scenario "The label reads 'Added to the project' for open_access project_item" do
+      offer = create(:open_access_offer, service: service)
+      project_item = create(:project_item, offer: offer, project: project)
+
+      visit project_service_path(project, project_item)
+
+      expect(page).to have_text("Added to the project:")
+    end
+  end
+
   scenario "I cannot see timeline for open_access order" do
     offer = create(:open_access_offer, service: service)
     project_item = create(:project_item, offer: offer, project: project)

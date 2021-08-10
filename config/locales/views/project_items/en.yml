@@ -1,13 +1,5 @@
 en:
   project_items:
-    service:
-      label:
-        open_access:
-          "Added to the project:"
-        external:
-          "Added to the project:"
-        orderable:
-          "Order date:"
     opinion:
       prompt:
         Thank you for using EOSC marketplace.
