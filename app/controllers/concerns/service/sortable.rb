@@ -27,7 +27,7 @@ module Service::Sortable
             end
           end
         else
-          sort_options[:name] = :asc
+          sort_options[:sort_name] = :asc
         end
       end
     end

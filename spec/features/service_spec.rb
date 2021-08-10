@@ -201,12 +201,29 @@ RSpec.feature "Service browsing" do
 
     scenario "should by default sort services by name, ascending" do
       create(:service, name: "Service c")
-      create(:service, name: "Service b")
+      create(:service, name: "service b")
       create(:service, name: "Service a")
 
       visit services_path
 
-      names = ["Service a", "Service b", "Service c"]
+      names = ["Service a", "service b", "Service c"]
+      all(@services_selector).each_with_index do |service_box, i|
+        expect(service_box).to have_content(names[i])
+      end
+
+      # Above implementation can be replaced with below after fixing split gem use_ab_test
+      # expect(page.body.index("Service a")).to be < page.body.index("Service b")
+      # expect(page.body.index("Service b")).to be < page.body.index("Service c")
+    end
+
+    scenario "should sort services by name, descending" do
+      create(:service, name: "Service c")
+      create(:service, name: "service b")
+      create(:service, name: "Service a")
+
+      visit services_path(sort: "-sort_name")
+
+      names = ["Service c", "service b", "Service a"]
       all(@services_selector).each_with_index do |service_box, i|
         expect(service_box).to have_content(names[i])
       end
