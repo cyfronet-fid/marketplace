@@ -8,8 +8,11 @@
       = _("Resource offer") + ":"
     %dd= project_item.name
 %dl
-  -# TODO: refactor dynamic translation
-  %dt= t("project_items.service.label.#{map_view_to_order_type(project_item)}")
+  %dt
+    - if project_item.orderable?
+      = _("Order date:")
+    - else
+      = _("Added to the project:")
   %dd= l project_item.created_at, format: :short
 %dl
   %dt= _("Resource access") + ":"
