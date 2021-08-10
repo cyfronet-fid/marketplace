@@ -12,12 +12,13 @@ module Service::Search
       highlight: [:name, :tagline, :resource_organisation_name, :provider_names]
   end
 
-  # search_data are definition whitch
+  # search_data are definition which
   # fields are mapped to elasticsearch
   def search_data
     {
       service_id: id,
       name: name,
+      sort_name: name.downcase,
       tagline: tagline,
       description: description,
       status: status,

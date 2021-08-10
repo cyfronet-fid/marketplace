@@ -52,8 +52,8 @@ class ServicesController < ApplicationController
 
   private
     def sort_options
-      @sort_options = [["by name A-Z", "name"],
-                       ["by name Z-A", "-name"],
+      @sort_options = [["by name A-Z", "sort_name"],
+                       ["by name Z-A", "-sort_name"],
                        ["by rate 1-5", "rating"],
                        ["by rate 5-1", "-rating"],
                        ["Best match", "_score"]]
