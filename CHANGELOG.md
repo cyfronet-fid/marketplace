@@ -23,6 +23,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Disable reloading search autocomplete list after click on its element (@goreck888)
 - Keep search input after redirect from autocomplete (@goreck888)
 - Fix incorrect classification value on PC sync - better User Experience (@danielkryska)
+- Alphabetical sorting by name for the Resources (@kmarszalek, @goreck888)
 
 ### Security
 
