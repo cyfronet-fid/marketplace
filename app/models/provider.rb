@@ -156,7 +156,8 @@ class Provider < ApplicationRecord
   def set_default_logo
     assets_path = File.join(File.dirname(__FILE__), "../javascript/images")
     default_logo_name = "eosc-img.png"
-    io, extension = ImageHelper.binary_to_blob_stream(assets_path + "/" + default_logo_name)
+    extension = ".png"
+    io = ImageHelper.binary_to_blob_stream(assets_path + "/" + default_logo_name)
     self.logo.attach(
       io: io,
       filename: SecureRandom.uuid + extension,

@@ -202,8 +202,8 @@ RSpec.feature "Services in backoffice" do
 
       expect(page).to have_content("service name")
 
-      expect { click_on "Confirm changes" }.
-        to change { Service.count }.by(1)
+      click_on "Go back to edit"
+      expect { click_on "Create Resource" }.to change { Service.count }.by(1)
       expect(page).to have_content("service name")
     end
 
