@@ -7,10 +7,10 @@
 
       = f.association :categories, multiple: true,
       collection: Category.child_names.map { |name, c| [name, c.id] },
-      input_html: { data: { choice: true } }
+      input_html: { data: { choice: true }, "data-e2e": "categories-select" }
       = f.association :scientific_domains, multiple: true,
       collection: ScientificDomain.child_names.map { |name, sd| [name, sd.id] },
-      input_html: { data: { choice: true } }
+      input_html: { data: { choice: true }, "data-e2e": "scientific-domain-select" }
     .col-12.col-md-5.profile-edit.ml-auto
       .bordered-header
         %h3
@@ -19,14 +19,14 @@
       %h5.mb-4
         = _("Keep me regularly informed on all our updates.")
       = f.input :categories_updates, as: :boolean, include_hidden: false
-      = f.input :scientific_domains_updates, as: :boolean, include_hidden: false
+      = f.input :scientific_domains_updates, as: :boolean, include_hidden: false     
 
 
   %hr.bottom-hr.mt-5.mb-4
   .row.mt-5
     .col-12.col-md-7
       = f.button :submit, method: :patch, class: "btn btn-primary pl-5 pr-5 mr-5",
-        "data-shepherd-tour-target": "profile-submit"
+        "data-shepherd-tour-target": "profile-submit", "data-e2e": "submit-btn"
       = link_to _("Cancel and back to previous page"), profile_path,
         class: "text-left flex-grow-1 text-uppercase"
     .col-12.col-md-5.delete-info
@@ -36,5 +36,5 @@
             "your profile by clicking the button") |
         -# haml-lint:enable MultilinePipe
 
-      = link_to _("Delete"), profile_path(user), method: :delete, class: "btn-sm btn-danger",
+      = link_to _("Delete"), profile_path(user), method: :delete, class: "btn-sm btn-danger", "data-e2e": "delete-btn",
       data: { confirm: _("Are you sure?") }
