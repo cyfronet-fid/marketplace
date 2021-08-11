@@ -67,6 +67,7 @@
       - else
         %a#dropdown-menu-button.dropdown-toggle{ "aria-expanded" => "false",
                                                       "aria-haspopup" => "true",
+                                                      "data-e2e" => "my-eosc-button",
                                                       "data-toggle" => "dropdown",
                                                       type: "button" }
           .menu__label My EOSC Marketplace
@@ -79,7 +80,7 @@
               %a.dropdown-item.dropdown-profile{ href: "/favourites" }
                 = _("Favourite resources")
             %li
-              %a.dropdown-item.dropdown-profile{ href: "/profile" }
+              %a.dropdown-item.dropdown-profile{ href: "/profile", "data-e2e": "profile" }
                 = _("Profile")
 
       .menu__hamburger{ "onclick": "openNav()" }
