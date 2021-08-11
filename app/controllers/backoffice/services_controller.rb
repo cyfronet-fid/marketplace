@@ -81,6 +81,13 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       @service ||= Service.new(status: :draft)
       @service.assign_attributes(attributes_from_session)
 
+      logo = session[preview_session_key]["logo"]
+      if logo.present? && !ImageHelper.image_ext_permitted?(Rack::Mime::MIME_TYPES.invert[logo["type"]])
+        @service.errors.add(:logo, ImageHelper.permitted_ext_message)
+        render error_view, status: :bad_request
+        return
+      end
+
       if @service.valid?
         @offers = @service.offers.where(status: :published).order(:created_at)
         @related_services = @service.target_relationships
@@ -99,14 +106,10 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       attributes = permitted_attributes(@service || Service)
       logo = attributes.delete(:logo)
       session[preview_session_key] = { "attributes" => attributes }
-
       if logo
-        logo_path = tmp_path
-        FileUtils.cp logo.tempfile, logo_path
-
         session[preview_session_key]["logo"] = {
           "filename" => logo.original_filename,
-          "path" => logo_path,
+          "base64" => ImageHelper.to_base_64(logo.path),
           "type" => logo.content_type
         }
       end
@@ -164,7 +167,11 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
     def update_logo_from_session!
       logo = logo_from_session
-      @service.logo.attach(io: File.open(logo["path"]), filename: logo["filename"]) if logo
+      if logo
+        blob, ext = ImageHelper.base_64_to_blob_stream(logo["base64"])
+        path = ImageHelper.to_temp_file(blob, ext)
+        @service.logo.attach(io: File.open(path), filename: logo["filename"]) if logo
+      end
     end
 
     def index_authorize
@@ -207,13 +214,5 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
     def provider_scope
       policy_scope(Provider).with_attached_logo
-    end
-
-    def tmp_path
-      tmp_logo = Tempfile.new
-      tmp_path = tmp_logo.path
-      tmp_logo.close
-
-      tmp_path
     end
 end

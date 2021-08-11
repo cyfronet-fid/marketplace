@@ -26,6 +26,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Fix display of modals that are shown after failed form validation (@wujuu)
 - Fix incorrect classification value on PC sync - better User Experience (@danielkryska)
 - Alphabetical sorting by name for the Resources (@kmarszalek, @goreck888)
+- Fix new resource preview error - show default eosc icon, imporved admin experience (@danielkryska)
 
 ### Security
 

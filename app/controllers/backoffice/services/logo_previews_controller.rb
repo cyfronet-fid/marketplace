@@ -3,6 +3,8 @@
 require "image_processing/mini_magick"
 
 class Backoffice::Services::LogoPreviewsController < Backoffice::ApplicationController
+  include ImageHelper
+
   def show
     if params[:service_id] == "new"
       authorize(Service, :new?)
@@ -16,25 +18,27 @@ class Backoffice::Services::LogoPreviewsController < Backoffice::ApplicationCont
 
   private
     def show_logo_preview
-      logo = logo_from_session
-
-      if logo && File.exist?(logo["path"])
-        processed = ImageProcessing::MiniMagick.source(logo["path"])
-                    .resize_to_limit!(180, 120)
-        send_file processed.path, type: logo["type"]
-      elsif @service&.logo
+      logo = get_session_logo
+      has_service_logo = @service&.logo && @service.logo.attached? && @service.logo.variable?
+      if logo.present? && !ImageHelper.image_ext_permitted?(File.extname(logo["filename"]))
+        @service.errors.add(:logo, ImageHelper.permitted_ext_message)
+        redirect_to ImageHelper.default_logo_path
+      elsif logo.present?
+        blob, ext = ImageHelper.base_64_to_blob_stream(logo["base64"])
+        path = ImageHelper.to_temp_file(blob, ext)
+        resized_logo = ImageProcessing::MiniMagick.source(path).resize_to_limit!(180, 120)
+        send_file resized_logo.path, type: ext
+      elsif has_service_logo
         redirect_to url_for(@service.logo.variant(resize: "180x120"))
       else
-        raise ActionController::RoutingError.new("Not Found")
+        redirect_to ImageHelper.default_logo_path
       end
     end
 
-    def preview_session_key
-      "service-#{@service&.id}-preview"
-    end
-
-    def logo_from_session
-      preview = session[preview_session_key]
-      preview["logo"] if preview
+    def get_session_logo
+      preview_session = session["service-#{@service&.id}-preview"]
+      preview_session["logo"] if preview_session.present? &&
+        preview_session["logo"].present? &&
+        preview_session["logo"]["base64"].present?
     end
 end
