@@ -10,7 +10,7 @@ module Importable
   end
 
   def map_scientific_domains(domains)
-    ScientificDomain.where(eid: domains)
+    domains.present? ? ScientificDomain.where(eid: domains) : []
   end
 
   def map_contact(contact)
