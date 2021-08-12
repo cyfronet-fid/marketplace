@@ -142,7 +142,6 @@ export default class extends Controller {
       detail: { value: value, textValue: textValue }
     }))
 
-    this.inputTarget.focus()
     this.resultsTarget.hidden = true
   }
 

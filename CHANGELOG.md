@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Correct ProjectItem's created date label display (@jswk)
 - Proper displaying questions in the resource opinion form (@goreck888)
 - Service owners cannot edit categories in the backoffice view when service upstream is other than MP (@wujuu)
+- Disable reloading search autocomplete list after click on its element (@goreck888)
 
 ### Security
 
