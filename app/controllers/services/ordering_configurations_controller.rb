@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-class Services::OrderingConfigurationsController < Services::ApplicationController
-  before_action :authenticate_user!
+class Services::OrderingConfigurationsController < Services::OrderingConfiguration::ApplicationController
   before_action :load_and_authenticate_service!, only: :show
 
   layout "ordering_configuration"
