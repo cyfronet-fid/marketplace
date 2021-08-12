@@ -12,10 +12,10 @@ class ServicesController < ApplicationController
   def index
     if params["object_id"].present?
       if params["type"] == "provider"
-        redirect_to provider_path(Provider.friendly.find(params["object_id"]),
+        redirect_to provider_path(Provider.friendly.find(params["object_id"]), q: params["q"],
                                  anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?))
       elsif params["type"] == "service"
-        redirect_to service_path(Service.friendly.find(params["object_id"]),
+        redirect_to service_path(Service.friendly.find(params["object_id"]), q: params["q"],
                                  anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?))
       end
     end
