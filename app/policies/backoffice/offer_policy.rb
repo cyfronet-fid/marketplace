@@ -35,14 +35,6 @@ class Backoffice::OfferPolicy < ApplicationPolicy
     managed? && orderless? && !service_deleted?
   end
 
-  def publish?
-    service_portfolio_manager? && record.draft? && !service_deleted?
-  end
-
-  def draft?
-    service_portfolio_manager? && record.published? && !service_deleted?
-  end
-
   def permitted_attributes
     [:id, :name, :description, :order_type, :order_url, :internal,
      :primary_oms_id, oms_params: {},

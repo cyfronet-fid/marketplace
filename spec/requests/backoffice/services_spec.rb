@@ -33,24 +33,6 @@ RSpec.describe "Backoffice service" do
       expect(service).to be_draft
     end
 
-    it "I can't publish a offer when a service has a deleted status" do
-      service = create(:service, owners: [user], status: :deleted)
-      offer = create(:offer, service: service)
-
-      post backoffice_service_offer_publish_path(service, offer)
-      expect(response).to redirect_to root_path
-      expect(flash[:alert]).to eq(I18n.t("default", scope: :pundit))
-    end
-
-    it "I can't change a offer to draft when a service has a deleted status" do
-      service = create(:service, owners: [user], status: :deleted)
-      offer = create(:offer, service: service)
-
-      post backoffice_service_offer_draft_path(service, offer)
-      expect(response).to redirect_to root_path
-      expect(flash[:alert]).to eq(I18n.t("default", scope: :pundit))
-    end
-
     it "I can't publish a service with deleted status" do
       service = create(:service, owners: [user], status: :deleted)
 
