@@ -82,7 +82,7 @@ class Service::PcCreateOrUpdate
     Rails.logger.warn "#{e} Message arrived, but service is not updated. Message #{@eosc_registry_service}"
     if mapped_service.present? && mapped_service&.sources&.first.present?
       source = mapped_service&.sources&.first
-      source.update(errored: check_service.errors.messages)
+      source.update(errored: check_service)
     end
     mapped_service
   rescue Errno::ECONNREFUSED
