@@ -85,12 +85,6 @@ Rails.application.routes.draw do
       scope module: :services do
         resource :logo_preview, only: :show
         resources :offers
-        resources :offers do
-          scope module: :offers do
-            resource :publish, only: :create
-            resource :draft, only: :create
-          end
-        end
         resource :publish, only: :create
         resource :draft, only: :create
       end

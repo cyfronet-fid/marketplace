@@ -77,7 +77,7 @@ RSpec.describe Backoffice::OfferPolicy do
     let(:service) { create(:service, owners: [owner], status: :deleted) }
     let(:offer) { build(:offer, service: service, status: :published) }
 
-    permissions :create?, :edit?, :update?, :destroy?, :draft? do
+    permissions :create?, :edit?, :update?, :destroy? do
       it "danies access to service portfolio manager" do
         expect(subject).to_not permit(service_portfolio_manager, offer)
       end
@@ -95,7 +95,7 @@ RSpec.describe Backoffice::OfferPolicy do
     let(:service) { create(:service, owners: [owner], status: :deleted) }
     let(:offer) { build(:offer, service: service, status: :draft) }
 
-    permissions :create?, :edit?, :update?, :destroy?, :publish? do
+    permissions :create?, :edit?, :update?, :destroy? do
       it "danies access to service portfolio manager" do
         expect(subject).to_not permit(service_portfolio_manager, offer)
       end
