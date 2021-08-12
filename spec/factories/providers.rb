@@ -61,5 +61,9 @@ FactoryBot.define do
         content_type: "image/png"
       )
     end
+
+    after(:create) do |provider, _evaluator|
+      provider.reindex(refresh: true)
+    end
   end
 end
