@@ -171,4 +171,24 @@ RSpec.feature "Service searching in top bar", js: true do
     expect(page).to_not have_text ("Cyfronet > DDDD Something 2")
     expect(page).to_not have_text ("Cyfronet > DDDD Something 3")
   end
+
+  [:service, :provider].each do |type|
+    scenario "doesn't show the autocomplete results after clicking an #{type} item", js: true, search: true do
+      object = create(type)
+      fill_in "q", with: object.name
+      expect(page).to have_css("#-option-0")
+      find(:css, "li[id='-option-0']").click
+      expect(page).to have_selector(".autocomplete-results", visible: false)
+    end
+
+    scenario "it preserves the query input after redirect to the #{type} item", js: true, search: true do
+      object = create(type)
+      fill_in "q", with: object.name
+      expect(page).to have_css("#-option-0")
+      find(:css, "li[id='-option-0']").click
+      expect(page).to have_current_path(send("#{type}_path", object, q: object.name))
+
+      expect(page).to have_selector("#q[value='#{object.name}']")
+    end
+  end
 end
