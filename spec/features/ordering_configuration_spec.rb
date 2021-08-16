@@ -203,4 +203,30 @@ RSpec.feature "Services in ordering_configuration panel" do
       expect(offer.oms_params).to eq({})
     end
   end
+
+  { no: false, service_portfolio_manager: false, admin: false, executive: false }.
+    each do |role, authorized|
+    context "as an user with #{role} role" do
+      let(:user) { create(:user, roles: role == :no ? [] : [role]) }
+      let(:provider) { create(:provider) }
+      let(:service) { create(:service, resource_organisation: provider, offers: [create(:offer)]) }
+
+      before { checkin_sign_in_as(user) }
+
+      scenario "I am#{authorized ? nil : " not"} authorized to see the ordering_configuration panel" do
+        visit service_ordering_configuration_path(service)
+
+        if authorized
+          expect(page).to_not have_content("You are not authorized to see this page")
+          expect(page).to have_content("Ordering configuration")
+          expect(page).to have_content(service.name)
+          expect(page).to have_link("Back to the resource")
+          expect(page).to have_link("Set parameters and offers")
+        else
+          expect(page.current_path).to_not eq(service_ordering_configuration_path(service))
+          expect(page).to have_content("You are not authorized to see this page")
+        end
+      end
+    end
+  end
 end
