@@ -13,6 +13,8 @@ RSpec.describe Api::V1::ProjectSerializer do
         uid: project.user.uid,
         name: project.user.full_name,
         email: project.user.email,
+        first_name: project.user.first_name,
+        last_name: project.user.last_name,
       },
       project_items: project.project_items.pluck(:iid),
       attributes: {
@@ -43,6 +45,8 @@ RSpec.describe Api::V1::ProjectSerializer do
         uid: project.user.uid,
         name: project.user.full_name,
         email: project.user.email,
+        first_name: project.user.first_name,
+        last_name: project.user.last_name,
       },
       project_items: [],
       attributes: {
