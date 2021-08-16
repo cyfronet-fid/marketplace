@@ -6,15 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.18.0-milestone]
+## [3.18.0] 2021-08-16
 
 ### Added
 - SSO basic functionality (@wujuu)
-
-### Changed
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Provider section in search autocomplete redirects to the provider's page (@goreck888)
@@ -23,8 +18,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Allow to create an offer in `ordering_configuration` panel when none exists (@goreck888)
 - Secure the public service endpoints when it's deleted or it's draft (@danielkryska)
 - Fit a map not aligned to a parent element - the all countries in the service site map should be visible (@danielkryska)
-
-### Security
 
 ## [3.17.0] 2021-07-27
 
