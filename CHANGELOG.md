@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [3.19.0-milestone]
 
 ### Added
+- First and last name to Ordering API project owner (@michal-szostak, @jswk)
 
 ### Changed
 

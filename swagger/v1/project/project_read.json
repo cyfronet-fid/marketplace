@@ -7,10 +7,12 @@
       "properties": {
         "uid": {"type": "string"},
         "email": {"type": "string"},
-        "name": {"type": "string"}
+        "name": {"type": "string"},
+        "first_name": {"type": "string"},
+        "last_name": {"type": "string"}
       },
       "additionalProperties": false,
-      "required": ["uid", "email", "name"]
+      "required": ["uid", "email", "name", "first_name", "last_name"]
     },
     "project_items": {
       "type": "array",

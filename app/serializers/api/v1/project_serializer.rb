@@ -10,7 +10,9 @@ class Api::V1::ProjectSerializer < ActiveModel::Serializer
     {
       uid: object.user.uid,
       email: object.user.email,
-      name: object.user.full_name
+      name: object.user.full_name,
+      first_name: object.user.first_name,
+      last_name: object.user.last_name,
     }
   end
 
