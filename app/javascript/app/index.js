@@ -2,7 +2,7 @@ import "app/sort_filter"
 import initBadgeState from "app/badge";
 import initSorting from "app/sort_filter";
 import initFlash from "app/flash";
-import initChoises from "app/choises";
+import initChoices from "app/choices";
 import initCookiesPolicy from "app/cookies_policy";
 import 'bootstrap/dist/js/bootstrap';
 import 'stylesheets/application';
@@ -47,14 +47,14 @@ document.addEventListener("turbolinks:before-render", function(event) {
 });
 
 document.addEventListener("turbolinks:load", async function (event) {
-    initChoises();
+    initChoices();
     initCookiesPolicy();
     initBadgeState();
     await initProbes();
 });
 
 document.addEventListener("ajax:success", function(event) {
-    initChoises();
+    initChoices();
 });
 
 /**

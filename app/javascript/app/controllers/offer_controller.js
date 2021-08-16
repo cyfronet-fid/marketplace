@@ -1,5 +1,5 @@
 import {Controller} from 'stimulus'
-import initChoises from "../choises";
+import initChoices from "../choices";
 
 export default class extends Controller {
   static targets = ["parameters", "external",
@@ -18,7 +18,7 @@ export default class extends Controller {
     const newElement = document.createRange().createContextualFragment(template).firstChild;
 
     this.attributesTarget.appendChild(newElement);
-    initChoises(newElement);
+    initChoices(newElement);
 
     this.buttonTarget.disabled = true;
     this.fromArrayRemoveSelect();
