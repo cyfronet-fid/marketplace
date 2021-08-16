@@ -81,12 +81,13 @@ class ProjectsController < ApplicationController
 
     def render_modal_form
       render "layouts/show_modal",
-              locals: {
-                title: "New project",
-                action_btn: t("projects.buttons.create"),
-                form: "projects/form",
-                form_locals: { project: @project, show_as_modal: true, show_recaptcha: true }
-              }
+             content_type: "text/javascript",
+             locals: {
+               title: "New project",
+               action_btn: t("projects.buttons.create"),
+               form: "projects/form",
+               form_locals: { project: @project, show_as_modal: true, show_recaptcha: true }
+             }
     end
 
     def find_and_authorize
