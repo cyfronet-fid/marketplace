@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - First and last name to Ordering API project owner (@michal-szostak, @jswk)
+- Storing resource query parameters by visiting the comparison page (@goreck888)
 
 ### Changed
 

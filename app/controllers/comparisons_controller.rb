@@ -2,7 +2,7 @@
 
 class ComparisonsController < ApplicationController
   include Service::Comparison
-  before_action :query_params, only: [:show, :destroy]
+  before_action :load_query_params_from_session
 
   def show
     @services = Service.where(slug: session[:comparison])
@@ -25,7 +25,7 @@ class ComparisonsController < ApplicationController
   end
 
   private
-    def query_params
+    def load_query_params_from_session
       @query_params = session[:query] || {}
     end
 

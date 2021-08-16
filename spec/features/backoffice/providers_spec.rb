@@ -204,9 +204,9 @@ RSpec.feature "Providers in backoffice" do
 
       expect(page).to have_selector("input[value='777abc']")
       page.attach_file("provider_logo", "#{Rails.root}/app/javascript/images/eosc-img.png")
-      fill_in "provider_sources_attributes_0_eid", with: provider.sources.first.eid
+      fill_in "provider_sources_attributes_0_eid", with: "abc777"
       click_on "Update Provider"
-      expect(page).to have_content("eosc_registry: #{ provider.sources.first.eid }")
+      expect(page).to have_content("eosc_registry: abc777")
     end
   end
 end
