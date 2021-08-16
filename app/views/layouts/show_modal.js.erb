@@ -2,3 +2,5 @@ $("#ajax-modal-title").html("<%= title %>")
 $("#ajax-modal-action-btn").html("<%= action_btn %>")
 $("#ajax-modal-body").html("<%= j render(form, form_locals) %>")
 $("#ajax-modal").modal("show")
+
+document.dispatchEvent(new Event("MP:modalLoaded"))

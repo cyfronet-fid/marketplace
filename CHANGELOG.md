@@ -22,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service owners cannot edit categories in the backoffice view when service upstream is other than MP (@wujuu)
 - Disable reloading search autocomplete list after click on its element (@goreck888)
 - Keep search input after redirect from autocomplete (@goreck888)
+- Fix display of modals that are shown after failed form validation (@wujuu)
 - Fix incorrect classification value on PC sync - better User Experience (@danielkryska)
 - Alphabetical sorting by name for the Resources (@kmarszalek, @goreck888)
 
