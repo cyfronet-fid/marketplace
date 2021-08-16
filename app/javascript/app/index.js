@@ -57,6 +57,10 @@ document.addEventListener("ajax:success", function(event) {
     initChoices();
 });
 
+document.addEventListener("MP:modalLoaded", function (event) {
+    initChoices();
+})
+
 /**
  * Apart from turbolinks we need to replace FA for the first page load
  */
