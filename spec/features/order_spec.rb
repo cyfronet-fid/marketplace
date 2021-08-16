@@ -22,7 +22,7 @@ RSpec.feature "Service ordering" do
       expect(page).to have_text("Access the resource")
     end
 
-    scenario "I see order open acces service button" do
+    scenario "I see order open access service button" do
       open_access_service = create(:open_access_service)
       create(:offer, service: open_access_service)
 
@@ -231,7 +231,7 @@ RSpec.feature "Service ordering" do
       expect(page).to have_text("Project can't be blank")
     end
 
-    scenario "I can order open acces service" do
+    scenario "I can order open access service" do
       open_access_service = create(:open_access_service)
       offer = create(:open_access_offer, service: open_access_service)
       default_project = user.projects.find_by(name: "Services")
@@ -339,11 +339,15 @@ RSpec.feature "Service ordering" do
       click_on "Create new project"
       within("#ajax-modal") do
         expect(page).to have_button("Create new project")
+        expect(page).to have_selector("input[placeholder='+ start typing to add']")
       end
 
+      # fail form validation by not filling any fields
       click_on "Create new project"
+
       within("#ajax-modal") do
         expect(page).to have_button("Create new project")
+        expect(page).to have_selector("input[placeholder='+ start typing to add']")
       end
     end
 

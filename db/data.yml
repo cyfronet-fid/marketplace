@@ -2567,7 +2567,7 @@ services:
                 value_type:  "integer"
               - id:  "id2"
                 label:  "Access type"
-                description:  "Choose acces type"
+                description:  "Choose access type"
                 type:  "select"
                 value_type:  "string"
                 config:
@@ -2613,7 +2613,7 @@ services:
                   values: ["CDMI", "POSIX", "SWIFT", "Others"]
               - id:  "id3"
                 label:  "Access type"
-                description:  "Choose acces type"
+                description:  "Choose access type"
                 type:  "select"
                 value_type:  "string"
                 config:
@@ -2659,7 +2659,7 @@ services:
                   values: ["DPM", "DCache", "Storm",  "Others"]
               - id:  "id3"
                 label:  "Access type"
-                description:  "Choose acces type"
+                description:  "Choose access type"
                 type:  "select"
                 value_type:  "string"
                 config:
