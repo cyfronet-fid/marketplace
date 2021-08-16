@@ -7,7 +7,7 @@
     else
       _("All resources")
     end
-.container{ "data-controller": "comparison" }
+.container
   - @category ? breadcrumb(:category, @category) : breadcrumb(:services)
   = render "services/index", services: @services,
                              pagy: @pagy,
@@ -22,7 +22,5 @@
                              offers: @offers,
                              comparison_enabled: @comparison_enabled,
                              recommended_services: @recommended_services,
-                             favourite_services: @favourite_services
-  #comparison-bar.comparison-bar.fixed-bottom{ class: (session[:comparison]&.size || 0) > 0 ? "d-block" : "d-none",
-  "data-target": "comparison.bar", "data-e2e": "comparison-bar" }
-    = render "comparisons/bar", services: @compare_services, category: @category
+                             favourite_services: @favourite_services,
+                             compare_services: @compare_services
