@@ -122,6 +122,7 @@ module Service::Searchable
       session[:query][:q] = params[:q] unless params[:q].blank?
       session[:query][:sort] = params[:sort] unless params[:sort].blank?
       session[:query][:per_page] = params[:per_page] unless params[:per_page].blank?
+      session[:query][:page] = params[:page] unless  params[:page].blank?
     end
 
     def filter_classes
