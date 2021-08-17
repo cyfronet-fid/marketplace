@@ -28,6 +28,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Storing resource query parameters by visiting the comparison page (@goreck888)
 
 ### Changed
+- Migrate Scientific Domains to the listed in EOSC Profiles documentation - improve consistency between services (@danielkryska)
 
 ### Deprecated
 
