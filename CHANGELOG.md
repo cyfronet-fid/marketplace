@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.20.0-milestone]
+
+### Added
+- [Ordering API] `supplied_voucher_id` project item attribute (@jswk)
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
 ## [3.19.0-milestone]
 
 ### Added
