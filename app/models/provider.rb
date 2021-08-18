@@ -57,7 +57,7 @@ class Provider < ApplicationRecord
   has_one :main_contact, as: :contactable, dependent: :destroy, autosave: true
   has_many :public_contacts, as: :contactable, dependent: :destroy, autosave: true
 
-  has_many :sources, source: :provider_sources, class_name: "ProviderSource", dependent: :destroy
+  has_many :sources, class_name: "ProviderSource", dependent: :destroy
 
   belongs_to :upstream, foreign_key: "upstream_id", class_name: "ProviderSource", optional: true
 
@@ -161,7 +161,7 @@ class Provider < ApplicationRecord
     self.logo.attach(
       io: io,
       filename: SecureRandom.uuid + extension,
-      content_type: "image/#{extension.gsub(".", "")}"
+      content_type: "image/#{extension.delete(".", "")}"
     )
   end
 

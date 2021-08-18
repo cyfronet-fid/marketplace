@@ -5,7 +5,7 @@ module WebsiteHelper
     stub_request(:get, source.website).
       with(headers: {
         "Accept": "*/*",
-        "User-Agent": "unirest-ruby/1.0",
+        "User-Agent": "faraday-my-app",
         "Accept-Encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
         "Host": source.website.gsub(/http(s?):\/\//, "")
       }).

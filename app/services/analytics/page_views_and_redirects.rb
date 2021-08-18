@@ -15,13 +15,16 @@ class Analytics::PageViewsAndRedirects
     metrics << Google::Apis::AnalyticsreportingV4::Metric.new(expression: "ga:pageviews")
     metrics << Google::Apis::AnalyticsreportingV4::Metric.new(expression: "ga:exits")
 
-    request = Google::Apis::AnalyticsreportingV4::GetReportsRequest.new(report_requests: [
-        Google::Apis::AnalyticsreportingV4::ReportRequest.new(view_id: @analytics.view_id.to_s,
-                                                              dimensions: [dimension],
-                                                              metrics: metrics,
-                                                              date_ranges: [date_range],
-                                                              filters_expression: "ga:pagePath=~^#{page_path}($|[^/])"
-        )]
+    request = Google::Apis::AnalyticsreportingV4::GetReportsRequest.new(
+      report_requests: [
+        Google::Apis::AnalyticsreportingV4::ReportRequest.new(
+          view_id: @analytics.view_id.to_s,
+          dimensions: [dimension],
+          metrics: metrics,
+          date_ranges: [date_range],
+          filters_expression: "ga:pagePath=~^#{page_path}($|[^/])"
+        )
+      ]
     )
 
     response = @analytics.service.batch_get_reports(request)

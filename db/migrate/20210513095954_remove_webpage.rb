@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveWebpage < ActiveRecord::Migration[6.0]
   def change
     exec_update "UPDATE services SET order_url = '' WHERE order_url IS NULL"

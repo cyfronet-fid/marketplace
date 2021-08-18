@@ -52,7 +52,7 @@ namespace :dev do
       provider.logo.attach(
         io: io,
         filename: provider.pid + extension,
-        content_type: "image/#{extension.gsub!(".", "")}"
+        content_type: "image/#{extension.delete!(".", "")}"
       )
 
       provider.save(validate: false)

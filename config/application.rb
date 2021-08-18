@@ -17,7 +17,7 @@ module Mp
 
     config.assets.enabled = false
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
+    config.load_defaults 6.1
 
     # fix ssl verify error caused by old version of the gem
     OpenIDConnect.http_config do |config|
@@ -46,7 +46,7 @@ module Mp
 
     # Hierachical locales file structure
     # see https://guides.rubyonrails.org/i18n.html#configure-the-i18n-module
-    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+    config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}")]
 
     # Views and locales customization
     # The dir structure pointed by `$CUSTOMIZATION_PATH` should looks as follow:
@@ -54,9 +54,9 @@ module Mp
     #   - javascript     // custom scss files (see `config/webpack/environment.js`)
     #   - config/locales // custom locales
     if ENV["CUSTOMIZATION_PATH"].present?
-      config.paths['app/views'].unshift(File.join(ENV["CUSTOMIZATION_PATH"], "views"))
+      config.paths["app/views"].unshift(File.join(ENV["CUSTOMIZATION_PATH"], "views"))
       config.i18n.load_path +=
-        Dir[Pathname.new(ENV["CUSTOMIZATION_PATH"]).join('config', 'locales', '**', '*.{rb,yml}')]
+        Dir[Pathname.new(ENV["CUSTOMIZATION_PATH"]).join("config", "locales", "**", "*.{rb,yml}")]
     end
 
 

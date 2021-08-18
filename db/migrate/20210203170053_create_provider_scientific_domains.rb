@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateProviderScientificDomains < ActiveRecord::Migration[6.0]
   def change
     create_table :provider_scientific_domains do |t|

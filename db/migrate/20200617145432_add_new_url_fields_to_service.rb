@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddNewUrlFieldsToService < ActiveRecord::Migration[6.0]
   def change
     add_column :services, :status_monitoring_url, :string

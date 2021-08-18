@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateHelpItems < ActiveRecord::Migration[6.0]
   def change
     create_table :help_items do |t|

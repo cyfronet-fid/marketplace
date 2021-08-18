@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateLeadSections < ActiveRecord::Migration[6.0]
   def change
     create_table :lead_sections do |t|

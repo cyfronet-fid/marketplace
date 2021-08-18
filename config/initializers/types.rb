@@ -1,3 +1,5 @@
 # frozen_string_literal: true
 
-ActiveModel::Type.register(:array, ArrayType)
+Rails.application.reloader.to_prepare do
+  ActiveModel::Type.register(:array, ArrayType)
+end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeUniquenessOfNamesInCategoriesProvidersPlatformsAndResearchAreas < ActiveRecord::Migration[5.2]
   def change
     remove_index :categories, :name

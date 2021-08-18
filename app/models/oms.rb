@@ -87,7 +87,7 @@ class OMS < ApplicationRecord
 
   private
     def single_default_oms?
-      if OMS.where.not(name: name).pluck(:default).any?
+      if OMS.default_scoped.where.not(name: name).pluck(:default).any?
         errors.add(:default, "there can't be more than one default OMS")
       end
     end

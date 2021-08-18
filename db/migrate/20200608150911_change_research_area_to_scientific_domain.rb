@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeResearchAreaToScientificDomain < ActiveRecord::Migration[6.0]
   def change
     remove_index :service_research_areas,
@@ -27,6 +29,5 @@ class ChangeResearchAreaToScientificDomain < ActiveRecord::Migration[6.0]
               unique: true, name: "index_psd_on_service_id_and_sd_id"
     add_index :user_scientific_domains, [:user_id, :scientific_domain_id],
               unique: true, name: "index_usd_on_service_id_and_sd_id"
-
   end
 end

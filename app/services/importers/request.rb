@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 class Importers::Request
-  def initialize(eosc_registry_base_url, suffix, unirest: Unirest, token: nil, id: nil)
+  def initialize(eosc_registry_base_url, suffix, faraday: Faraday, token: nil, id: nil)
     @eosc_registry_base_url = eosc_registry_base_url
     @suffix = suffix
     @token = token
     @id = id
-    @unirest = unirest
+    @faraday = faraday
   end
 
   def call
     request = @id.blank? ? all : specific
-    if request.blank? || request.code != 200
+    if request.blank? || request.status != 200
       raise Errno::ECONNREFUSED
     end
     request
@@ -26,9 +26,9 @@ class Importers::Request
                                                     headers: { Accept: "application/json",
                                                                Authorization: "Bearer #{@token}" })
 
-        Unirest::HttpResponse.new(http_response)
+        Faraday::HttpResponse.new(http_response)
       else
-        @unirest.get("#{@eosc_registry_base_url}/#{@suffix}/#{command}",
+        @faraday.get("#{@eosc_registry_base_url}/#{@suffix}/#{command}",
                      headers: { "Accept" => "application/json" })
       end
     end
@@ -40,9 +40,9 @@ class Importers::Request
                                                     headers: { Accept: "application/json",
                                                                Authorization: "Bearer #{@token}" })
 
-        Unirest::HttpResponse.new(http_response)
+        Faraday::HttpResponse.new(http_response)
       else
-        @unirest.get("#{@eosc_registry_base_url}/#{@suffix}/#{@id}",
+        @faraday.get("#{@eosc_registry_base_url}/#{@suffix}/#{@id}",
                      headers: { "Accept" => "application/json" })
       end
     end

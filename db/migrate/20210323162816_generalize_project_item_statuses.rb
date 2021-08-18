@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GeneralizeProjectItemStatuses < ActiveRecord::Migration[6.0]
   def change
     drop_table :project_item_changes

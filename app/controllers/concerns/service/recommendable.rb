@@ -56,8 +56,8 @@ module Service::Recommendable
   private
     def get_recommended_services_by(body, size)
       url = Mp::Application.config.recommender_host + "/recommendations"
-      response = Unirest.post(url, { "Content-Type" => "application/json" }, body.to_json)
-      ids = response.body.transform_keys(&:to_sym)[:recommendations]
+      response = Faraday.post(url, body.to_json, { "Content-Type" => "application/json", "Accept": "application/json" })
+      ids = JSON.parse(response.body)["recommendations"]
       services = Service.where(id: ids, status: [:published, :unverified]).sort_by { |s| ids.index(s.id) }.take(size)
 
       if services.size == size
@@ -66,9 +66,9 @@ module Service::Recommendable
         []
       end
 
-      rescue
-        Raven.capture_message("Recommendation service, recommendation endpoint response error")
-        []
+    rescue
+      Raven.capture_message("Recommendation service, recommendation endpoint response error")
+      []
     end
 
     def get_service_search_state

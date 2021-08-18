@@ -3,9 +3,9 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "2.6.5"
+ruby "3.0.2"
 
-gem "rails", "6.0.3.7"
+gem "rails", "6.1.4.1"
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma", "~> 4.3"
 gem "nori"
@@ -25,11 +25,11 @@ gem "gretel"
 gem "pagy"
 gem "simple_form"
 gem "friendly_id", "~> 5.2.0"
-gem "acts-as-taggable-on", "~> 6.0"
+gem "acts-as-taggable-on"
 gem "countries"
 
 gem "activestorage-validator"
-gem "image_processing", "~> 1.9.2"
+gem "image_processing"
 
 # translations
 gem "fast_gettext"
@@ -87,7 +87,6 @@ group :development, :test do
   gem "pry"
   gem "pry-byebug"
   gem "pry-rails"
-  gem "pry-doc"
   gem "pry-nav"
 
   gem "dotenv-rails"
@@ -96,7 +95,7 @@ end
 
 group :development do
   gem "web-console", ">= 3.3.0"
-  gem "listen", ">= 3.0.5", "< 3.2"
+  gem "listen"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "spring-commands-rspec"
@@ -124,7 +123,7 @@ group :production do
   gem "newrelic_rpm"
 end
 
-gem "unirest"
+gem "faraday"
 gem "reverse_markdown"
 
 # Fix for puma memory leak

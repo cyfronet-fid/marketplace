@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
   def up
     execute(
@@ -9,7 +11,7 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
       END
       WHERE order_type <> 'open_access';
     SQL
-    )
+      )
 
     execute(
         <<~SQL
@@ -20,7 +22,7 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
       END
       WHERE order_type <> 'open_access';
     SQL
-    )
+      )
 
     execute(
         <<~SQL
@@ -28,7 +30,7 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
       SET order_type = 'order_required'
       WHERE order_type <> 'open_access';
     SQL
-    )
+      )
 
     execute(
         <<~SQL
@@ -36,7 +38,7 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
       SET order_type = 'order_required'
       WHERE order_type <> 'open_access';
     SQL
-    )
+      )
 
     execute(
         <<~SQL
@@ -44,7 +46,7 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
       SET order_type = 'order_required'
       WHERE order_type <> 'open_access';
     SQL
-    )
+      )
   end
 
   def down
@@ -57,7 +59,7 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
       END
       WHERE order_type <> 'open_access';
     SQL
-    )
+      )
 
     execute(
         <<~SQL
@@ -68,7 +70,7 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
       END
       WHERE order_type <> 'open_access';
     SQL
-    )
+      )
 
     execute(
         <<~SQL
@@ -79,7 +81,7 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
       END
       WHERE order_type <> 'open_access';
     SQL
-    )
+      )
 
     execute(
         <<~SQL
@@ -90,6 +92,6 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
       END
       WHERE order_type <> 'open_access';
     SQL
-    )
+      )
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateProjectResearchAreas < ActiveRecord::Migration[5.2]
   def change
     create_table :project_research_areas do |t|

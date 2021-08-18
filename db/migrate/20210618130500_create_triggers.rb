@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateTriggers < ActiveRecord::Migration[6.0]
   def change
     create_table :oms_triggers do |t|

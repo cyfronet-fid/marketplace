@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MigrateOffersToDeleted < ActiveRecord::Migration[6.0]
   def change
     execute(

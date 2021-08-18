@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateServiceSources < ActiveRecord::Migration[5.2]
   def change
     create_table :service_sources do |t|

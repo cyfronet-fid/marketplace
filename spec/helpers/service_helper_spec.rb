@@ -17,7 +17,7 @@ RSpec.describe ServiceHelper, type: :helper do
 
   it "return list of providers" do
     list = create_list(:provider, 4)
-    expect(get_providers_list).to eq(list)
+    expect(get_providers_list.order(:created_at)).to eq(list)
   end
 
   it "return trl description" do

@@ -92,7 +92,7 @@ RSpec.describe Event, type: :model do
 
   context "#after_commit" do
     it "calls Event::CallTriggers" do
-      allow(Unirest).to receive(:post)
+      allow(Faraday).to receive(:post)
 
       event = build(:event)
       allow(event).to receive(:omses).and_return(%w[url1 url2].map { |trigger_url|
@@ -101,8 +101,8 @@ RSpec.describe Event, type: :model do
 
       assert_performed_jobs(2, only: OMS::CallTriggerJob, queue: :orders) { event.save! }
 
-      expect(Unirest).to have_received(:post).with("url1")
-      expect(Unirest).to have_received(:post).with("url2")
+      expect(Faraday).to have_received(:post).with("url1")
+      expect(Faraday).to have_received(:post).with("url2")
     end
   end
 end

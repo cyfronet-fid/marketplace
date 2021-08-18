@@ -31,8 +31,8 @@ RSpec.describe ApplicationController, type: :controller do
     )
 
     services_ids = [1, 2, 3, 4, 5]
-    allow(Unirest).to receive(:post).and_return(double(code: 200, body: { "recommendations" => services_ids }))
-    expect(Unirest).to receive(:post) do |_, _, body|
+    allow(Faraday).to receive(:post).and_return(double(status: 200, body: { "recommendations" => services_ids }))
+    expect(Faraday).to receive(:post) do |_, _, body|
       body = JSON.parse(body)
       expect(body["timestamp"]).not_to be_nil
       expect(body["unique_id"].to_i).not_to be_nil

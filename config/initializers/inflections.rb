@@ -18,10 +18,10 @@
 # end
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.acronym 'OMS'
-  inflect.acronym 'OMSes'
-  inflect.irregular 'oms', 'omses'
-  inflect.irregular 'area_of_activity', 'areas_of_activity'
-  inflect.irregular 'AreaOfActivity', 'AreasOfActivity'
-  inflect.irregular 'Area of Activity', 'Areas of Activity'
+  inflect.acronym "OMS"
+  inflect.acronym "OMSes"
+  inflect.irregular "oms", "omses"
+  inflect.irregular "area_of_activity", "areas_of_activity"
+  inflect.irregular "AreaOfActivity", "AreasOfActivity"
+  inflect.irregular "Area of Activity", "Areas of Activity"
 end

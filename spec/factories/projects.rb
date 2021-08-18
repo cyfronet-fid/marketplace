@@ -8,7 +8,7 @@ FactoryBot.define do
     sequence(:customer_typology) { |n| "single_user" }
     sequence(:organization) { |n| "organization #{n}" }
     sequence(:department) { |n| "department #{n}" }
-    sequence(:webpage) { |n| "http://webpage#{n}.pl" }
+    sequence(:webpage) { "http://webpage.pl" }
     sequence(:user_group_name) { |n| "User group #{n}" }
     sequence(:project_name) { |n| "Project name #{n}" }
     sequence(:scientific_domains) { |n| [create(:scientific_domain)] }

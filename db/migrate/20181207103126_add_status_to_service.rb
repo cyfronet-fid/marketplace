@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddStatusToService < ActiveRecord::Migration[5.2]
   def up
     add_column :services, :status, :string
