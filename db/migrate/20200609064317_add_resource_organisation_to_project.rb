@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddResourceOrganisationToProject < ActiveRecord::Migration[6.0]
   def up
     add_reference :services, :resource_organisation, foreign_key: { to_table: :providers }

@@ -6,13 +6,13 @@ module Import
                    dry_run: true,
                    ids: [],
                    filepath: nil,
-                   unirest: Unirest,
+                   faraday: Faraday,
                    logger: ->(msg) { puts msg },
                    default_upstream: :mp,
                    token: nil)
       @eosc_registry_base_url = eosc_registry_base_url
       @dry_run = dry_run
-      @unirest = unirest
+      @faraday = faraday
       @default_upstream = default_upstream
       @token = token
 
@@ -25,7 +25,7 @@ module Import
       log "Importing resources from EOSC Registry..."
 
       begin
-        r = Importers::Request.new(@eosc_registry_base_url, "resource/rich", unirest: @unirest, token: @token).call
+        r = Importers::Request.new(@eosc_registry_base_url, "resource/rich", faraday: @faraday, token: @token).call
       rescue Errno::ECONNREFUSED
         abort("import exited with errors - could not connect to #{@eosc_registry_base_url}")
       end

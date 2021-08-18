@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UpdateServicePhaseValues < ActiveRecord::Migration[5.2]
   def change
     execute("UPDATE services SET phase = 'discovery' where phase = 'Discovery (min. TRL 1)'")

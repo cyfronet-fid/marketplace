@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddOfferFieldsToProjectItem < ActiveRecord::Migration[5.2]
   def up
     add_column :project_items, :name, :string
@@ -6,7 +8,8 @@ class AddOfferFieldsToProjectItem < ActiveRecord::Migration[5.2]
     add_column :project_items, :webpage, :string
     add_column :project_items, :voucherable, :boolean, default: false, null: false
 
-    execute(<<~SQL
+    execute(
+      <<~SQL
       UPDATE project_items
       SET
         offer_type = (SELECT offer.offer_type FROM offers offer WHERE offer.id = offer_id),
@@ -14,7 +17,7 @@ class AddOfferFieldsToProjectItem < ActiveRecord::Migration[5.2]
         description = (SELECT offer.description FROM offers offer WHERE offer.id = offer_id),
         webpage = (SELECT offer.webpage FROM offers offer WHERE offer.id = offer_id),
         voucherable = (SELECT offer.voucherable FROM offers offer WHERE offer.id = offer_id)
-    SQL
+      SQL
     )
 
     change_column :project_items, :name, :string, null: false

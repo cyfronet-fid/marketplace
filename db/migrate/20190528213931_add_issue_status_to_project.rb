@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddIssueStatusToProject < ActiveRecord::Migration[5.2]
   def change
     # We want to have existing project_items to have 'jira_to_migrate' state, which should require manual handling

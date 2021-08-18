@@ -46,7 +46,7 @@
               label_method: :name, value_method: :id,
               input_html: { multiple: false, data: { choice: true } }
         - msd_child_names = Vocabulary.where(type: "Vocabulary::MerilScientificDomain").child_names
-        - msd_non_root_names = msd_child_names.select {  |_, sd| sd.parent.present? }.map { |name, sd| [name, sd.id] }
+        - msd_non_root_names = msd_child_names.filter_map { |name, sd| [name, sd.id] if sd.parent.present? }
         = f.association :meril_scientific_domains, disabled: cant_edit([meril_scientific_domain_ids: []]),
               input_html: { multiple: true, data: { choice: true } },
               collection: msd_non_root_names,

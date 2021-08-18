@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :provider do
     sequence(:name) { |n| "provider #{n}" }
     sequence(:abbreviation) { |n| "provider #{n}" }
-    sequence(:website) { |n| "https://website-#{n}.com" }
+    sequence(:website) { "https://website.com" }
     sequence(:legal_entity) { |n| true }
     sequence(:description) { |n| "description #{n}" }
     sequence(:street_name_and_number) { |n| "Saint St. #{n}" }

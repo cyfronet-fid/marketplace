@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddOrderUrlToOfferAndProjectItem < ActiveRecord::Migration[6.0]
   def up
     add_column :offers, :order_url, :string
@@ -11,7 +13,7 @@ class AddOrderUrlToOfferAndProjectItem < ActiveRecord::Migration[6.0]
         WHERE s.id = service_id
       )
     SQL
-    )
+           )
 
     execute(<<~SQL
       UPDATE project_items
@@ -21,7 +23,7 @@ class AddOrderUrlToOfferAndProjectItem < ActiveRecord::Migration[6.0]
         WHERE o.id = offer_id
       )
     SQL
-    )
+           )
   end
 
   def down

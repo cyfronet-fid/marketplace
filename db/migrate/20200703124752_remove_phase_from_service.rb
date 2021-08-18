@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class RemovePhaseFromService < ActiveRecord::Migration[6.0]
   def up
     production_id = execute(
       <<~SQL
         INSERT INTO vocabularies(name, type, eid, created_at, updated_at)
-        VALUES ('Production', 'LifeCycleStatus', 'life_cycle_status-production', '#{Time.now.to_s}', '#{Time.now.to_s}')
+        VALUES ('Production', 'LifeCycleStatus', 'life_cycle_status-production', '#{Time.now}', '#{Time.now}')
         RETURNING id;
       SQL
     )
@@ -11,7 +13,7 @@ class RemovePhaseFromService < ActiveRecord::Migration[6.0]
     beta_id = execute(
       <<~SQL
         INSERT INTO vocabularies(name, type, eid, created_at, updated_at)
-        VALUES ('Beta', 'LifeCycleStatus', 'life_cycle_status-beta', '#{Time.now.to_s}', '#{Time.now.to_s}')
+        VALUES ('Beta', 'LifeCycleStatus', 'life_cycle_status-beta', '#{Time.now}', '#{Time.now}')
         RETURNING id;
       SQL
     )
@@ -21,16 +23,16 @@ class RemovePhaseFromService < ActiveRecord::Migration[6.0]
         if d["phase"] == "production"
           execute(
             <<~SQL
-              INSERT INTO service_vocabularies(service_id, vocabulary_id, vocabulary_type, created_at, updated_at)
-              VALUES ( #{d["id"]}, #{production_id[0]["id"]}, 'LifeCycleStatus', '#{Time.now.to_s}', '#{Time.now.to_s}')
-              SQL
+            INSERT INTO service_vocabularies(service_id, vocabulary_id, vocabulary_type, created_at, updated_at)
+            VALUES ( #{d["id"]}, #{production_id[0]["id"]}, 'LifeCycleStatus', '#{Time.now}', '#{Time.now}')
+            SQL
           )
         elsif  d["phase"] == "beta"
           execute(
             <<~SQL
-              INSERT INTO service_vocabularies(service_id, vocabulary_id, vocabulary_type, created_at, updated_at)
-              VALUES ( #{d["id"]}, #{beta_id[0]["id"]}, 'LifeCycleStatus', '#{Time.now.to_s}', '#{Time.now.to_s}')
-              SQL
+            INSERT INTO service_vocabularies(service_id, vocabulary_id, vocabulary_type, created_at, updated_at)
+            VALUES ( #{d["id"]}, #{beta_id[0]["id"]}, 'LifeCycleStatus', '#{Time.now}', '#{Time.now}')
+            SQL
           )
         end
       }

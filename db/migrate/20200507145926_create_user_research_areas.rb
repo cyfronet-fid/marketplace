@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateUserResearchAreas < ActiveRecord::Migration[6.0]
   def change
     create_table :user_research_areas do |t|

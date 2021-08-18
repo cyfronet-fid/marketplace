@@ -23,18 +23,18 @@
 
 # Elasticsearch Rails extra: Paginate `ElasticsearchRails::Results` objects
 # See https://ddnexus.github.io/pagy/extras/elasticsearch_rails
-require 'pagy/extras/elasticsearch_rails'
+require "pagy/extras/elasticsearch_rails"
 
 # Searchkick extra: Paginate `Searchkick::Results` objects
 # See https://ddnexus.github.io/pagy/extras/searchkick
-require 'pagy/extras/searchkick'
+require "pagy/extras/searchkick"
 
 
 # Frontend Extras
 
 # Bootstrap extra: Add nav, nav_js and combo_nav_js helpers and templates for Bootstrap pagination
 # See https://ddnexus.github.io/pagy/extras/bootstrap
-require 'pagy/extras/bootstrap'
+require "pagy/extras/bootstrap"
 
 # Bulma extra: Add nav, nav_js and combo_nav_js helpers and templates for Bulma pagination
 # See https://ddnexus.github.io/pagy/extras/bulma

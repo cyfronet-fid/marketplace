@@ -31,12 +31,12 @@ class Import::Vocabularies
   def initialize(eosc_registry_base_url,
                  dry_run: true,
                  filepath: nil,
-                 unirest: Unirest,
+                 faraday: Faraday,
                  logger: ->(msg) { puts msg },
                  token: nil)
     @eosc_registry_base_url = eosc_registry_base_url
     @dry_run = dry_run
-    @unirest = unirest
+    @faraday = faraday
     @token = token
 
     @logger = logger
@@ -47,7 +47,7 @@ class Import::Vocabularies
     log "Importing vocabularies from EOSC Registry..."
 
     begin
-      r = Importers::Request.new(@eosc_registry_base_url, "vocabulary/byType", unirest: @unirest, token: @token).call
+      r = Importers::Request.new(@eosc_registry_base_url, "vocabulary/byType", faraday: @faraday, token: @token).call
     rescue Errno::ECONNREFUSED
       abort("import exited with errors - could not connect to #{@eosc_registry_base_url}")
     end

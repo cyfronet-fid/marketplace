@@ -13,13 +13,13 @@ namespace :recommender do
     begin
       url = Mp::Application.config.recommender_host + "/database_dumps"
       puts "Sending database dump to recommender host (#{url})..."
-      response = Unirest.post url,
-                              { "Content-Type": "application/json", "Accept": "application/json" },
-                              serialized_db
+      response = Faraday.post url,
+                              serialized_db,
+                              { "Content-Type": "application/json", "Accept": "application/json" }
 
-      if response.code == 204
+      if response.status == 204
         puts "Database dump sent successfully!"
-      elsif response.code == 400
+      elsif response.status == 400
         puts "Recommender system validation error, details:"
         pp response.body["errors"]
       end
@@ -41,13 +41,13 @@ namespace :recommender do
     begin
       url = Mp::Application.config.recommender_host + "/update"
       puts "Sending database dump to recommender host (#{url})..."
-      response = Unirest.post url,
-                              { "Content-Type": "application/json", "Accept": "application/json" },
-                              serialized_db
+      response = Faraday.post url,
+                              serialized_db,
+                              { "Content-Type": "application/json", "Accept": "application/json" }
 
-      if response.code == 204
+      if response.status == 204
         puts "Database dump sent successfully!"
-      elsif response.code == 400
+      elsif response.status == 400
         puts "Recommender system validation error, details:"
         pp response.body["errors"]
       end

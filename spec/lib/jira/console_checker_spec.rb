@@ -75,21 +75,21 @@ describe Jira::ConsoleChecker do
     expect(checker.client).to receive_message_chain("Issuetype.all").and_return([])
     expect { con_checker.show_available_issue_types }.to output("AVAILABLE ISSUE TYPES: ".yellow + "\n" +
                                                                 "  - NO ISSUE TYPES\n"
-                                                         ).to_stdout
+                                                               ).to_stdout
   end
 
   it "show_available_issue_types should print list of issue types" do
     expect(checker.client).to receive_message_chain("Issuetype.all").and_return([double("Issue", name: "ISSUE", id: 1)])
     expect { con_checker.show_available_issue_types }.to output("AVAILABLE ISSUE TYPES: ".yellow + "\n" +
                                                                 "  - ISSUE [id: 1]\n"
-                                                         ).to_stdout
+                                                               ).to_stdout
   end
 
   it "show_available_issue_states should print list of issue states" do
     expect(checker.client).to receive_message_chain("Status.all").and_return([double("Status", name: "NAME", id: 1)])
     expect { con_checker.show_available_issue_states }.to output("AVAILABLE ISSUE STATES:".yellow + "\n" +
                                                                   "  - NAME [id: 1]\n"
-                                                          ).to_stdout
+                                                                ).to_stdout
   end
 
   it "check_webhook should print warning if MP_HOST env is not set" do
@@ -144,7 +144,7 @@ describe Jira::ConsoleChecker do
                                            "  - update issue..." + " OK".green + "\n" +
                                            "  - delete issue..." + " OK".green + "\n" +
                                            "WARNING: Webhook won't be check, set MP_HOST env variable if you want to check it".yellow + "\n"
-                                    ).to_stdout
+                                          ).to_stdout
   end
 
   it "all checks should execute it's error blocks when errored" do

@@ -6,14 +6,14 @@ class Import::Providers
   def initialize(eosc_registry_base_url,
                  dry_run: true,
                  filepath: nil,
-                 unirest: Unirest,
+                 faraday: Faraday,
                  logger: ->(msg) { puts msg },
                  ids: [],
                  default_upstream: :mp,
                  token: nil)
     @eosc_registry_base_url = eosc_registry_base_url
     @dry_run = dry_run
-    @unirest = unirest
+    @faraday = faraday
     @default_upstream = default_upstream
     @token = token
     @ids = ids
@@ -107,7 +107,7 @@ class Import::Providers
     end
 
     def update_provider(current_provider, parsed_provider_data, image_url)
-      current_provider.update_attributes(parsed_provider_data)
+      current_provider.update(parsed_provider_data)
       if current_provider.valid?
         current_provider.save!
 
@@ -120,7 +120,7 @@ class Import::Providers
 
     def get_external_providers_data
       begin
-        rp = Importers::Request.new(@eosc_registry_base_url, "provider", unirest: @unirest, token: @token).call
+        rp = Importers::Request.new(@eosc_registry_base_url, "provider", faraday: @faraday, token: @token).call
       rescue Errno::ECONNREFUSED
         abort("import exited with errors - could not connect to #{@eosc_registry_base_url}")
       end

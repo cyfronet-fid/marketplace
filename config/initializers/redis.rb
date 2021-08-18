@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-Redis.exists_returns_integer = false
+Redis.exists_returns_integer = true

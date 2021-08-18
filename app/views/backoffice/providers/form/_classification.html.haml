@@ -10,7 +10,7 @@
           .collapse-icon
             %i.fas.fa-chevron-down
             %i.fas.fa-chevron-up
-- sd = ScientificDomain.child_names.select { |_, sd| !sd.parent.blank? }.map { |name, sd| [name, sd.id] }
+- sd = ScientificDomain.child_names.filter_map { |name, sd| [name, sd.id] if sd.parent.present? }
 .collapse{ id: "classification", "aria-labelledby": "classification-header",
           "data-parent": "#accordion-form",
           class: ("show" unless collapsed?(provider, [:scientific_domains, :tag_list])) }

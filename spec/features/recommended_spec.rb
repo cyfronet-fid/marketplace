@@ -14,20 +14,20 @@ RSpec.feature "Recommended services" do
 
     services_ids = [1, 2, 3]
     services_ids.each { |id| create(:service, id: id) }
-    allow(Unirest).to receive(:post).and_return(double(code: 200, body: { "recommendations" => services_ids }))
+    allow(Faraday).to receive(:post).and_return(double(status: 200, body: { "recommendations" => services_ids }))
     expect(Recommender::SimpleRecommender).not_to receive(:new)
 
     visit services_path
     expect(all("[data-probe=\"recommendation-panel\"]").length).to be services_ids.length
   end
 
-  it "should not display recommended on unirest error", js: true do
+  it "should not display recommended on faraday error", js: true do
     use_ab_test(recommendation_panel: "v1")
     allow(Mp::Application.config).to(
       receive(:recommender_host).and_return("localhost:5000")
     )
 
-    allow(Unirest).to receive(:post).and_raise(ArgumentError)
+    allow(Faraday).to receive(:post).and_raise(ArgumentError)
     allow(Raven).to receive(:capture_message)
 
     services_ids = [1, 2, 3]

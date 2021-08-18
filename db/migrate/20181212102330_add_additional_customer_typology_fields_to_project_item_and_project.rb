@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddAdditionalCustomerTypologyFieldsToProjectItemAndProject < ActiveRecord::Migration[5.2]
   def up
     add_column :project_items, :user_group_name, :text

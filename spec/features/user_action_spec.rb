@@ -20,7 +20,7 @@ RSpec.feature "User action", js: true do
 
     services_ids = [1, 2, 3]
     services_ids.each { |id| create(:service, id: id) }
-    allow(Unirest).to receive(:post).and_return(double(code: 200, body: { "recommendations" => services_ids }))
+    allow(Faraday).to receive(:post).and_return(double(status: 200, body: { "recommendations" => services_ids }))
 
     expect(Probes::ProbesJob).to receive(:perform_later) do |body|
       body = JSON.parse(body)
