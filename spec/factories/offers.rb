@@ -34,5 +34,9 @@ FactoryBot.define do
       sequence(:order_type) { :order_required }
       sequence(:order_url) { "http://order.com" }
     end
+
+    factory :voucherable_offer do
+      voucherable { true }
+    end
   end
 end

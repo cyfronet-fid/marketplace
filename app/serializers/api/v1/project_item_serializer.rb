@@ -20,7 +20,7 @@ class Api::V1::ProjectItemSerializer < ActiveModel::Serializer
   end
 
   def attribute_extractor
-    {
+    hash = {
       category: object.service&.categories&.first&.name,
       service: object.service&.name,
       offer: object.name,
@@ -29,6 +29,8 @@ class Api::V1::ProjectItemSerializer < ActiveModel::Serializer
       request_voucher: object.request_voucher,
       order_type: object.order_type,
     }
+    hash[:supplied_voucher_id] = object.voucher_id if object.voucher_id.present?
+    hash
   end
 
   def oms_params

@@ -82,6 +82,32 @@ RSpec.describe Api::V1::ProjectItemSerializer do
     expect(serialized).to eq(expected)
   end
 
+  context "#supplied_voucher_id" do
+    it "doesn't serialize it if voucher_id is absent" do
+      project_item = create(:project_item)
+
+      serialized = described_class.new(project_item).as_json
+
+      expect(serialized[:attributes]).not_to have_key(:supplied_voucher_id)
+    end
+
+    it "serializes it if voucher_id is present" do
+      project_item = create(:project_item_with_voucher)
+
+      serialized = described_class.new(project_item).as_json
+
+      expect(serialized[:attributes]).to include(supplied_voucher_id: project_item.voucher_id)
+    end
+
+    it "serializes the original value if user_secrets.voucher_id is present" do
+      project_item = create(:project_item_with_voucher, user_secrets: { voucher_id: "some_other_value" })
+
+      serialized = described_class.new(project_item).as_json
+
+      expect(serialized[:attributes]).to include(supplied_voucher_id: project_item.voucher_id)
+    end
+  end
+
   context "#user_secrets" do
     it "obfuscates values" do
       project_item = create(:project_item, user_secrets: { "key-1" => "value", "key-2" => "value" })
