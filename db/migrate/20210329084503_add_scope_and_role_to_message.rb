@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddScopeAndRoleToMessage < ActiveRecord::Migration[6.0]
   def change
     add_column :messages, :author_email, :string

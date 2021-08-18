@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateServiceVocabulary < ActiveRecord::Migration[6.0]
   def change
     create_table :service_vocabularies do |t|

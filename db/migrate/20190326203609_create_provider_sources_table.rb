@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateProviderSourcesTable < ActiveRecord::Migration[5.2]
   def change
     create_table :provider_sources do |t|

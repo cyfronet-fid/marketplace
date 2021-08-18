@@ -22,7 +22,7 @@ module Backoffice::ServicesHelper
   end
 
   def collapsed?(service, fields)
-    (service.errors.keys & fields).blank?
+    (service.errors.attribute_names & fields).blank?
   end
 
   def is_offer_missing(param, param_options)

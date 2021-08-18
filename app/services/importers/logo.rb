@@ -18,7 +18,7 @@ class Importers::Logo
   def call
     Timeout.timeout(10) {
       begin
-        logo = open(@image_url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
+        logo = URI.open(@image_url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
         logo_content_type = logo.content_type
         extension = Rack::Mime::MIME_TYPES.invert[logo_content_type]
         filename = @object.pid.present? ? @object.pid : to_slug(@object.name)

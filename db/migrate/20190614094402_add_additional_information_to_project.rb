@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddAdditionalInformationToProject < ActiveRecord::Migration[5.2]
   def up
     add_column :projects, :additional_information, :text

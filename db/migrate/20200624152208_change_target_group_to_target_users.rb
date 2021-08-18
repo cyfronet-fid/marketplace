@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeTargetGroupToTargetUsers < ActiveRecord::Migration[6.0]
   def change
     rename_table :target_groups, :target_users

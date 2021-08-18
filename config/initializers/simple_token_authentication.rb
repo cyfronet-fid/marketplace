@@ -1,6 +1,6 @@
+# frozen_string_literal: true
 
 SimpleTokenAuthentication.configure do |config|
-
   # Configure the session persistence policy after a successful sign in,
   # in other words, if the authentication token acts as a signin token.
   # If true, user is stored in the session and the authentication token and
@@ -11,7 +11,7 @@ SimpleTokenAuthentication.configure do |config|
   # Configure the name of the HTTP headers watched for authentication.
   #
   # Default header names for a given token authenticatable entity follow the pattern:
-  #   { entity: { authentication_token: 'X-Entity-Token', email: 'X-Entity-Email'} }
+  #   { entity: { authentication_token: "X-Entity-Token", email: "X-Entity-Email"} }
   #
   # When several token authenticatable models are defined, custom header names
   # can be specified for none, any, or all of them.
@@ -23,7 +23,7 @@ SimpleTokenAuthentication.configure do |config|
   #
   #   Given User and SuperAdmin are token authenticatable,
   #   When the following configuration is used:
-  #     `config.header_names = { super_admin: { authentication_token: 'X-Admin-Auth-Token' } }`
+  #     `config.header_names = { super_admin: { authentication_token: "X-Admin-Auth-Token" } }`
   #   Then the token authentification handler for User watches the following headers:
   #     `X-User-Token, X-User-Email`
   #   And the token authentification handler for SuperAdmin watches the following headers:
@@ -32,15 +32,15 @@ SimpleTokenAuthentication.configure do |config|
   #   When the identifiers option is set:
   #     `config.identifiers = { super_admin: :phone_number }`
   #   Then both the header names identifier key and default value are modified accordingly:
-  #     `config.header_names = { super_admin: { phone_number: 'X-SuperAdmin-PhoneNumber' } }`
+  #     `config.header_names = { super_admin: { phone_number: "X-SuperAdmin-PhoneNumber" } }`
   #
-  config.header_names = { user: { authentication_token: 'X-User-Token'} }
+  config.header_names = { user: { authentication_token: "X-User-Token" } }
 
   # Configure the name of the attribute used to identify the user for authentication.
   # That attribute must exist in your model.
   #
   # The default identifiers follow the pattern:
-  # { entity: 'email' }
+  # { entity: "email" }
   #
   # Note: the identifer must match your Devise configuration,
   # see https://github.com/plataformatec/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address#tell-devise-to-use-username-in-the-authentication_keys
@@ -50,14 +50,14 @@ SimpleTokenAuthentication.configure do |config|
   #
   # Example:
   #
-  #   `config.identifiers = { super_admin: 'phone_number', user: 'uuid' }`
+  #   `config.identifiers = { super_admin: "phone_number", user: "uuid" }`
   #
-  config.identifiers = { user: 'authentication_token' }
+  config.identifiers = { user: "authentication_token" }
 
   # Configure the Devise trackable strategy integration.
   #
   # If true, tracking is disabled for token authentication: signing in through
-  # token authentication won't modify the Devise trackable statistics.
+  # token authentication won"t modify the Devise trackable statistics.
   #
   # If false, given Devise trackable is configured for the relevant model,
   # then signing in through token authentication will be tracked as any other sign in.

@@ -23,8 +23,9 @@ module Eventable
       def filtered_updates
         return [] if previous_changes.blank?
         previous_changes
-          .filter { |attr, _| eventable_attributes.include? attr.to_sym }
-          .map { |attr, change| { field: attr, before: change[0], after: change[1] } }
+          .filter_map do |attr, change|
+          { field: attr, before: change[0], after: change[1] } if eventable_attributes.include? attr.to_sym
+        end
       end
   end
 end

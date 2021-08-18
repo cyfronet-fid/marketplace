@@ -20,8 +20,8 @@ class Service::PcCreateOrUpdate
                  is_active,
                  modified_at,
                  token,
-                 unirest: Unirest)
-    @unirest = unirest
+                 faraday: Faraday)
+    @faraday = faraday
     @eosc_registry_base_url = eosc_registry_base_url
     @eid = eosc_registry_service["id"]
     @eosc_registry_service = eosc_registry_service

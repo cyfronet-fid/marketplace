@@ -17,11 +17,11 @@ class Trigger::Call
 
   private
     def handle_no_auth
-      Unirest.public_send(@trigger.method, @trigger.url)
+      Faraday.public_send(@trigger.method, @trigger.url)
     end
 
     def handle_basic_auth(basic_auth)
-      Unirest.public_send(@trigger.method, @trigger.url, authorization: encode_header(basic_auth))
+      Faraday.public_send(@trigger.method, @trigger.url, authorization: encode_header(basic_auth))
     end
 
     def encode_header(basic_auth)

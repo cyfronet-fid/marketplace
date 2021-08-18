@@ -14,7 +14,7 @@ module OrderNavHelper
                       }
                     "
                     : ""
-                ) do
+      ) do
         if state == :active
           content_tag(:a, title, class: "nav-link", href: "#",
                       onclick: "document.getElementById('order-form').submit();")

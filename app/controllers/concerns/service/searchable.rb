@@ -15,7 +15,7 @@ module Service::Searchable
   end
 
   def search(scope, filters = all_filters)
-    services = Service.search(query, common_params.
+    services = Service.search(query, **common_params.
                               merge(where: filter_constr(filters, scope_constr(scope, category_constr)),
                                     page: params[:page],
                                     per_page: per_page,
@@ -35,14 +35,14 @@ module Service::Searchable
 
   def search_for_filters(scope, filters, current_filter)
     filters = filters - [current_filter]
-    Service.search(query, common_params.
+    Service.search(query, **common_params.
         merge(where: filter_constr(filters, scope_constr(scope, category_constr)),
               aggs: [current_filter.index],
               load: false))
   end
 
   def search_for_categories(scope, filters)
-    Service.search(query, common_params.
+    Service.search(query, **common_params.
         merge(where: filter_constr(filters, scope_constr(scope)),
               aggs: [:categories],
               load: false))

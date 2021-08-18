@@ -35,11 +35,11 @@ RSpec.describe Service::PcCreateOrUpdate do
     end
   }
 
-  let(:unirest) { double(Unirest) }
+  let(:faraday) { double(Faraday) }
   let(:provider_eid) { "ten" }
 
   before(:each) do
-    provider_response = double(code: 200, body: create(:eosc_registry_provider_response, eid: provider_eid))
+    provider_response = double(status: 200, body: create(:eosc_registry_provider_response, eid: provider_eid))
     allow_any_instance_of(Importers::Request).to receive(:call).and_return(provider_response)
   end
 
@@ -53,7 +53,7 @@ RSpec.describe Service::PcCreateOrUpdate do
 
       service = create(:jms_service, prov_eid: "new.prov", name: "New supper service")
       expect {
-        stub_described_class(service, unirest: unirest)
+        stub_described_class(service, faraday: faraday)
       }.to change { Offer.count }.by(1)
       offer = Offer.last
       service = Service.last
@@ -69,8 +69,9 @@ RSpec.describe Service::PcCreateOrUpdate do
 
 
   private
-    def stub_described_class(jms_service, is_active: true, modified_at: Time.now, unirest: Unirest)
-      described_service = Service::PcCreateOrUpdate.new(jms_service, test_url, is_active, modified_at, unirest: unirest)
+    def stub_described_class(jms_service, is_active: true, modified_at: Time.now, faraday: Faraday)
+      described_service = Service::PcCreateOrUpdate.new(jms_service, test_url, is_active, modified_at, nil,
+                                                        faraday: faraday)
 
       stub_http_file(described_service, "PhenoMeNal_logo.png",
                      "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png")

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddPolymorphicAssociationsServicesToServices < ActiveRecord::Migration[6.0]
   def change
     add_column :service_relationships, :type, :string

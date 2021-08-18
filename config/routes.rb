@@ -114,7 +114,6 @@ Rails.application.routes.draw do
       resources :structure_types, controller: "vocabularies", type: "structure_type"
       resources :meril_scientific_domains, controller: "vocabularies", type: "meril_scientific_domain"
     end
-
   end
 
   resource :executive, only: :show
@@ -122,8 +121,8 @@ Rails.application.routes.draw do
     resources :statistics, only: :index
   end
 
-  mount Rswag::Ui::Engine => '/api_docs/swagger'
-  mount Rswag::Api::Engine => '/api_docs/swagger'
+  mount Rswag::Ui::Engine => "/api_docs/swagger"
+  mount Rswag::Api::Engine => "/api_docs/swagger"
 
   namespace :api do
     get "/services" => "services#index", defaults: { format: :json }, as: :services_api
@@ -188,7 +187,7 @@ Rails.application.routes.draw do
   if Rails.env.development?
     get "designsystem" => "designsystem#index"
     get "designsystem/:file" => "designsystem#show",
-      constraints: { file: %r{[^/\.]+} }
+      constraints: { file: %r{[^/.]+} }
   end
 
   match "/404", to: "errors#not_found", via: :all

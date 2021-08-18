@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateServiceUserRelationships < ActiveRecord::Migration[5.2]
   def change
     create_table :service_user_relationships do |t|

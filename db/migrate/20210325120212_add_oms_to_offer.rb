@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddOMSToOffer < ActiveRecord::Migration[6.0]
   def change
     add_column :offers, :oms_params, :jsonb

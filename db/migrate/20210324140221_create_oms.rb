@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateOMS < ActiveRecord::Migration[6.0]
   def change
     create_table :oms do |t|

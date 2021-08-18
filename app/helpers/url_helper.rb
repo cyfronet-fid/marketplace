@@ -11,8 +11,8 @@ module UrlHelper
     end
 
     headers = { "Content-Type" => content_type }
-    response = Unirest.get(url, headers)
-    response.code == 200
+    response = Faraday.get(url, headers)
+    response.status == 200
   rescue URI::InvalidURIError, NoMethodError
     false
   end
@@ -23,8 +23,8 @@ module UrlHelper
       return false
     end
 
-    response = Unirest.get(url)
-    response.code == 200
+    response = Faraday.get(url)
+    response.status == 200
   rescue URI::InvalidURIError, NoMethodError
     false
   end

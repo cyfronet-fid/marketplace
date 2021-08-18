@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateProviderDataAdministrators < ActiveRecord::Migration[6.0]
   def change
     create_table :provider_data_administrators do |t|

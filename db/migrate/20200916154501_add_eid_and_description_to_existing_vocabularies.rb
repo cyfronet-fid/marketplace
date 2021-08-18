@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddEidAndDescriptionToExistingVocabularies < ActiveRecord::Migration[6.0]
   def up
     add_column :categories, :eid, :string

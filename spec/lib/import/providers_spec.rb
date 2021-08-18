@@ -5,14 +5,14 @@ require "jira/setup"
 
 describe Import::Providers do
   let(:test_url) { "https://localhost/api" }
-  let(:unirest) { double(Unirest) }
+  let(:faraday) { double(Faraday) }
 
   def make_and_stub_eosc_registry(ids: [], dry_run: false, filepath: nil, log: false, default_upstream: nil)
     options = {
       dry_run: dry_run,
       ids: ids,
       filepath: filepath,
-      unirest: unirest
+      faraday: faraday
     }
 
     unless log
@@ -23,7 +23,7 @@ describe Import::Providers do
       options[:default_upstream] = default_upstream
     end
 
-    eosc_registry = Import::Providers.new(test_url, options)
+    eosc_registry = Import::Providers.new(test_url, **options)
 
     def stub_http_file(eosc_registry, file_fixture_name, url, content_type: "image/png")
       r = open(file_fixture(file_fixture_name))
@@ -60,25 +60,25 @@ describe Import::Providers do
   let!(:networking) { create(:category, name: "Networking") }
   let!(:provider) { create(:provider, name: "BlueBRIDGE") }
 
-  def expect_responses(unirest, test_url, providers_response = nil)
+  def expect_responses(faraday, test_url, providers_response = nil)
     unless providers_response.nil?
-      expect(unirest).to receive(:get).with("#{test_url}/provider/all?quantity=10000&from=0",
+      expect(faraday).to receive(:get).with("#{test_url}/provider/all?quantity=10000&from=0",
                                             headers: { "Accept" => "application/json" }).and_return(providers_response)
     end
   end
 
   describe "#error responses" do
     it "should abort if /api/services errored" do
-      response = double(code: 500, body: {})
-      expect_responses(unirest, test_url, response)
+      response = double(status: 500, body: {})
+      expect_responses(faraday, test_url, response)
       expect { log_less_eosc_registry.call }.to raise_error(SystemExit).and output.to_stderr
     end
   end
 
   describe "#standard responses" do
     before(:each) do
-      response = double(code: 200, body: create(:eosc_registry_providers_response))
-      expect_responses(unirest, test_url, response)
+      response = double(status: 200, body: create(:eosc_registry_providers_response))
+      expect_responses(faraday, test_url, response)
     end
 
     it "should not update provider which has upstream to null" do

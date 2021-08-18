@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 if ENV["CUSTOMIZATION_PATH"].present?
   require "#{Rails.root}/lib/core_extensions/webpacker/helper.rb"
 end
