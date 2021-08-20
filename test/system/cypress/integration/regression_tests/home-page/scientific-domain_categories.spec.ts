@@ -1,6 +1,6 @@
 describe("Scientific domain", () => {
   beforeEach(() => {
-    cy.visit("/");
+    cy.visit("/")
   });
 
   it("should service page with selected filter", () => {

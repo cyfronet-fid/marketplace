@@ -4,7 +4,7 @@
   "description": "Integration tests",
   "main": "",
   "scripts": {
-    "cy:run": "TZ=Europe/Warsaw cypress run --browser chrome --headless --quiet",
+    "cy:run": "TZ=Europe/Warsaw cypress run --browser chrome --headless --quiet --record --key 314b411f-a972-463f-ab50-f7889f6091b7",
     "cy:run-debug": "DEBUG=cypress:* TZ=Europe/Warsaw cypress run --browser chrome --headless --quiet",
     "cy:run-browser": "TZ=Europe/Warsaw cypress run --browser chrome --quiet",
     "cy:run-regression-tests": "TZ=Europe/Warsaw cypress run --browser chrome --headless --quiet --spec 'cypress/integration/regression_tests/*/*.spec.ts'"
