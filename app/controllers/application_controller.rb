@@ -29,6 +29,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+    def load_query_params_from_session
+      @query_params = session[:query] || {}
+    end
+
     def welcome_popup
       @show_popup = current_user&.show_welcome_popup || false
       if @show_popup && !tour_disabled

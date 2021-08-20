@@ -6,8 +6,7 @@
 
   = form_tag "", method: :get, role: "search", class: "filters", "data-controller": "filter",
     "data-target": "filter.form" do
-    = hidden_field_tag :q, params[:q] if params[:q].present?
-    = hidden_field_tag :sort, params[:sort] if params[:sort].present?
-    = hidden_field_tag :per_page, params[:per_page] if params[:per_page].present?
+    - query_params.slice(:q, :sort, :per_page).each do |key, value|
+      = hidden_field_tag key, value, "data-indelible": true if params[key].present?
     - filters.each do |filter|
       = render "services/filters/#{filter.type}", filter: filter

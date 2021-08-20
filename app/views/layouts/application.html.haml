@@ -16,9 +16,8 @@
     = render "layouts/welcome_modal"
     %header
       = render "layouts/navbar",
-        categories: @siblings || @root_categories
-
-
+        categories: @siblings || @root_categories,
+        query_params: @query_params || {}
     %main
       = render "layouts/breadcrumb"
       = yield

@@ -4,7 +4,7 @@
   %i.control-label.search-results
     = (pagy_info pagy).html_safe
 .col-md-4
-  = render "services/order", sort_options: sort_options
+  = render "services/order", sort_options: sort_options, query_params: query_params
 .col-md-5
   .float-right
-    = render "services/paginate_simple", services: services
+    = render "services/paginate_simple", services: services, query_params: query_params

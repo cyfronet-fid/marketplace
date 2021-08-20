@@ -25,10 +25,6 @@ class ComparisonsController < ApplicationController
   end
 
   private
-    def load_query_params_from_session
-      @query_params = session[:query] || {}
-    end
-
     def render_json
       render json: { data: @services&.map(&:slug), html: bottom_bar }
     end

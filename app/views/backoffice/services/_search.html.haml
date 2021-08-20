@@ -16,6 +16,8 @@
     = hidden_field_tag "type", nil, "data-target": "autocomplete.type"
     = hidden_field_tag "sort", "_score", id: nil
     = hidden_field_tag "anchor", nil, "data-target": "autocomplete.anchor"
+    - query_params.except(:q, :sort).each do |key, value|
+      = render "services/hidden_fields", key: key, value: value
     %ul.autocomplete-results{ "data-target": "autocomplete.results" }
   .input-group-append
     %button#query-submit.input-group-text.bg-white
