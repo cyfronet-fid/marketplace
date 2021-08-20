@@ -13,7 +13,8 @@ export default class extends Controller {
   reload(event) {
     let form = this.formTarget;
     for (const element of form) {
-      if ((element.tagName === "INPUT" && !element.checked) || (element.tagName === "SELECT" && element.value == "")) {
+      if (!element.dataset.indelible && ((element.tagName === "INPUT" && !element.checked) ||
+          (element.tagName === "SELECT" && element.value == ""))) {
         element.disabled = true;
       }
     }

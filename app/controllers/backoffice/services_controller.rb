@@ -6,8 +6,8 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   include Service::Autocomplete
 
   before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
-  before_action :sort_options
-  before_action :favourites
+  before_action :sort_options, :favourites
+  before_action :load_query_params_from_session, only: :index
   prepend_before_action :index_authorize, only: :index
   helper_method :cant_edit
 

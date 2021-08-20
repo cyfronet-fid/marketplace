@@ -1,10 +1,11 @@
-= form_tag url_for, method: :get, role: "search", "data-controller": "order" do
-  = hidden_field_tag :q, params[:q] if params[:q].present?
-  = hidden_field_tag :per_page, params[:per_page] if params[:per_page].present?
+= form_tag url_for, method: :get, role: "search", "data-controller": "order", "data-target": "order.form" do
+  - query_params.except(:sort).each do |key, value|
+    = render "hidden_fields", key: key, value: value
   .form-group.row.sort-box
     %label.col-sm-3.control-label.pr-0
       = _("Sort by") + ":"
     .col-sm-9.pl-0
-      %select#sort.query-sort.form-control.form-control-sm{ "data-target": "order.select",
-                                                            "data-submit-on-change": "data-submit-on-change" }
+      %select#sort.query-sort.form-control.form-control-sm{ name: "sort",
+                                                            "data-target": "order.select",
+                                                            "data-action": "change->order#reload" }
         = options_for_select(sort_options, params[:sort])
