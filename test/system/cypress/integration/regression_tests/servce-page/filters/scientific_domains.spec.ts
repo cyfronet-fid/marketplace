@@ -6,7 +6,7 @@ describe("Filter scientific domains", () => {
   it("should select filter", () => {
     cy.get("[data-e2e='filter-tag']")
       .should("not.exist")
-    cy.get("#collapse_scientific_domains [data-e2e='filter-checkbox']")
+    cy.get("#collapse_scientific_domains [data-e2e='filter-checkbox'] li input")
       .eq(0)
       .click();
     cy.location("href")

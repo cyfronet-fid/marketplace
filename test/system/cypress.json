@@ -13,7 +13,7 @@
   },
   "watchForFileChanges": false,
   "videoUploadOnPasses": false,
-  "video": false,
+  "video": true,
   "env": {
     "debug": false
   },
