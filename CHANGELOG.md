@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Storing query parameters on the services page by changing filters (@goreck888)
 
 ### Security
 

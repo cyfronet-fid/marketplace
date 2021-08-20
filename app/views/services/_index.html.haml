@@ -7,7 +7,7 @@
                                           categories: categories,
                                           subcategories: subcategories,
                                           services_count: services_count
-      = render "services/filters", filters: filters
+      = render "services/filters", filters: filters, query_params: query_params
 
     .col-lg-9{ "data-controller": "favourite #{effective_show_comparison ? "comparison" : ""}" }
       .row.mb-4
@@ -16,7 +16,8 @@
           - if ab_test(:recommendation_panel) == "v1" && !recommended_services.blank?
             = render partial: "services/recommendation_panel_v1",
                      locals: { highlights: highlights, category: category, recommended_services: recommended_services }
-        = render "services/pagination", sort_options: sort_options, services: services, pagy: pagy
+        = render "services/pagination", sort_options: sort_options, services: services,
+          pagy: pagy, query_params: query_params
 
       %p
         = render partial: "service", collection: services[0..1],

@@ -174,6 +174,17 @@ RSpec.feature "Service filter" do
       expect(page).to have_text("Show 1 more")
     end
 
+    it "respects query input on filter change", js: true do
+      scientific_domains = create_list(:scientific_domain, 3)
+      create(:service, name: "abc", scientific_domains: [scientific_domains[0]])
+
+      visit services_path(q: "abc")
+
+      find(:css, "input[name='scientific_domains[]'][value='#{scientific_domains[0].id}']", visible: false).set(true)
+
+      expect(page).to have_current_path(services_path(q: "abc", scientific_domains: [scientific_domains[0].id]))
+    end
+
     it "respect selected child", js: true do
       scientific_domains = create_list(:scientific_domain, 7)
       child = create(:scientific_domain, parent: scientific_domains[6])

@@ -8,6 +8,7 @@ class ServicesController < ApplicationController
   include Service::Recommendable
 
   before_action :sort_options
+  before_action :load_query_params_from_session, only: :index
 
   def index
     if params["object_id"].present?

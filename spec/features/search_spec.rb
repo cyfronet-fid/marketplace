@@ -172,6 +172,21 @@ RSpec.feature "Service searching in top bar", js: true do
     expect(page).to_not have_text ("Cyfronet > DDDD Something 3")
   end
 
+  scenario "Search query respects active filters", js: true, search: true do
+    provider = create(:provider, name: "Cyfronet")
+    create(:service, name: "abc", resource_organisation: provider)
+    create(:service, name: "def", providers: [provider])
+
+    visit services_path(providers: [provider.id])
+
+    fill_in "q", with: "abc"
+    click_on(id: "query-submit")
+
+    expect(page).to have_content("Active filters")
+    expect(page).to have_content("Providers: #{provider.name}")
+    expect(page).to have_current_path("/services?object_id=&type=&anchor=&sort=_score&providers%5B%5D=1&q=abc")
+  end
+
   [:service, :provider].each do |type|
     scenario "doesn't show the autocomplete results after clicking an #{type} item", js: true, search: true do
       object = create(type)
