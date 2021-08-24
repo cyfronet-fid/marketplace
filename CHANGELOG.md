@@ -21,7 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
-## [3.19.0-milestone]
+## [3.19.0] 2021-08-24
 
 ### Added
 - First and last name to Ordering API project owner (@michal-szostak, @jswk)
@@ -29,10 +29,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Migrate Scientific Domains to the listed in EOSC Profiles documentation - improve consistency between services (@danielkryska)
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Correct ProjectItem's created date label display (@jswk)
@@ -45,8 +41,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Alphabetical sorting by name for the Resources (@kmarszalek, @goreck888)
 - Fix new resource preview error - show default eosc icon, imporved admin experience (@danielkryska)
 - CSS styles (@jarekzet)
-
-### Security
 
 ## [3.18.0] 2021-08-16
 
