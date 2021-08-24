@@ -6,17 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.19.0-milestone]
+## [3.19.0] 2021-08-24
 
 ### Added
 - First and last name to Ordering API project owner (@michal-szostak, @jswk)
 - Storing resource query parameters by visiting the comparison page (@goreck888)
-
-### Changed
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Correct ProjectItem's created date label display (@jswk)
@@ -29,8 +23,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Alphabetical sorting by name for the Resources (@kmarszalek, @goreck888)
 - Fix new resource preview error - show default eosc icon, imporved admin experience (@danielkryska)
 - CSS styles (@jarekzet)
-
-### Security
 
 ## [3.18.0] 2021-08-16
 
