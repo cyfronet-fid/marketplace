@@ -15,20 +15,23 @@
                                      placeholder: "Find resource...",
                                      "data-target": "autocomplete.input",
                                      "data-toggle": "dropdown",
+                                     "data-e2e": "searchbar-input",
                                      "data-probe": ""
     - if params[:q].present? && params.permitted?
-      %a.search-clear{ href: url_for(params.except(:q, :sort, :service_id)), title: _("Clear search") }
+      %a.search-clear{ href: url_for(params.except(:q, :sort, :service_id)), title: _("Clear search"),
+      "data-e2e": "search-clear-btn" }
         .fas.fa-times
-    %ul.autocomplete-results{ "data-target": "autocomplete.results" }
+    %ul.autocomplete-results{ "data-target": "autocomplete.results", "data-e2e": "autocomplete-results" }
   .searchbar__select{ "data-probe": "" }
     %span{ "data-target": "search.selected" }
       = _("All resources")
     %select#category-select.container-select{ "data-action": "change->search#refresh",
+                                              "data-e2e": "category-select",
                                               "data-target": "search.categorySelect" }
       %option{ value: "", selected: "selected" }
         = _("All resources")
       = options_for_select categories.partition { |cat|  cat.name != "Other" }.flatten(1).map { |cat| [cat.name,
         cat.slug] }, params[:category]
   .input-group-append
-    %button#query-submit.input-group-text.bg-white
+    %button#query-submit.input-group-text.bg-white{ "data-e2e": "query-submit-btn" }
       %i.fas.fa-search
