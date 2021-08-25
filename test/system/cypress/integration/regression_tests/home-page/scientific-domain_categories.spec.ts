@@ -3,7 +3,7 @@ describe("Scientific domain", () => {
     cy.visit("/");
   });
 
-  it("should service page with selected filter", () => {
+  it("should go to services page with selected scientific domain", () => {
     cy.intercept("GET", "/services*").as("services");
     cy.get("a[href*='services'][data-e2e='branch-link']")
           .eq(0)
