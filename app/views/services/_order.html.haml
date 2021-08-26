@@ -1,6 +1,6 @@
 = form_tag url_for, method: :get, role: "search", "data-controller": "order", "data-target": "order.form" do
   - query_params.except(:sort).each do |key, value|
-    = render "hidden_fields", key: key, value: value
+    = render "layouts/hidden_fields", key: key, value: value
   .form-group.row.sort-box
     %label.col-sm-3.control-label.pr-0
       = _("Sort by") + ":"

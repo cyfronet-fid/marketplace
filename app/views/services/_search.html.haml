@@ -9,7 +9,7 @@
   = hidden_field_tag "anchor", nil, "data-target": "autocomplete.anchor"
   = hidden_field_tag "sort", "_score", id: nil
   - query_params.except(:q, :sort).each do |key, value|
-    = render "hidden_fields", key: key, value: value
+    = render "layouts/hidden_fields", key: key, value: value
 
   .searchbar__input
     %label.sr-only{ for: "search" }= _("Search")
