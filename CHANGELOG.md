@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Replace header, footer and eu information about financing - improvement of consistency between the EOSC services (@danielkryska) 
+- Replace 'Page not found' with new design (@jarekzet)
 
 ### Deprecated
 
