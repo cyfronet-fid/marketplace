@@ -4644,3 +4644,22 @@ abbr[title] {
     font-weight: 200;
   }
 }
+
+.special-list {
+  margin-left: 0;
+  margin-top: 20px;
+  column-count: 2;
+
+  .special-list-item {
+    border: none;
+    margin: 0 0 0.35rem;
+    padding: 0 0.2rem;
+    color: $palette-yellow;
+    list-style-type: disc !important;
+    display: list-item;
+
+    a {
+      white-space: normal;
+    }
+  }
+}
