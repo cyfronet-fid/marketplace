@@ -13,7 +13,7 @@ Rails.application.routes.draw do
              controllers: { omniauth_callbacks: "users/omniauth_callbacks" },
              skip: [:sessions]
   as :user do
-    delete "users/logout", to: "users/sessions#destroy", as: :destroy_user_session
+    delete "users/logout", to: "devise/sessions#destroy", as: :destroy_user_session
   end
 
   get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
