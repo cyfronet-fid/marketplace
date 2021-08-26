@@ -253,6 +253,8 @@ We are currently using the following ENV variables:
   * `RATE_AFTER_PERIOD` - number of days after which user can rate resource (default is set to 90 days)
   * `ATTRIBUTES_DOCS_URL` - offer attributes definition documentation (external link)
   * `AUTOLOGIN_DOMAIN` - parent domain in which the autologin scheme should work (see [autologin](#autologin-across-eosc-portaleu-domains))
+  * `EOSC_COMMONS_ENV` - EOSC commons environment type enum: 'production' | 'development'
+  * `EOSC_COMMONS_BASE_URL` - EOSC commons base URL: s3 instance + bucket 
   * ENV Variables connected to JIRA integration are described in [JIRA integration manual](./docs/jira_integration.md)
 
 ## Commits
