@@ -363,6 +363,14 @@
       margin-top: 30px;
     }
   }
+
+  .card-columns {
+    &.two {
+      &.recently {
+        column-count: 1;
+      }
+    }
+  }
 }
 
 @media (max-width: 576px) {
