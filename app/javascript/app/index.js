@@ -79,6 +79,14 @@ window.addEventListener("beforeunload", () => {
     return null;
 });
 
+window.addEventListener('pageshow', event => {
+    application.controllers.forEach(controller => {
+        if (typeof controller.pageShow === 'function') {
+            controller.pageShow(event.persisted)
+        }
+    })
+})
+
 
 require("trix")
 require("@rails/actiontext")
