@@ -343,6 +343,26 @@
       height: auto;
     }
   }
+
+  .not-found {
+    padding-top: 0;
+    text-align: center;
+
+    h1 {
+      font-size: 40px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    p {
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .not-found-pic {
+      margin-top: 30px;
+    }
+  }
 }
 
 @media (max-width: 576px) {

@@ -4629,3 +4629,18 @@ abbr[title] {
     }
   }
 }
+
+.not-found {
+  padding-top: 40px;
+
+  h1 {
+    font-size: 68px;
+    margin-top: 90px;
+    font-weight: 700;
+  }
+
+  p {
+    font-size: 20px;
+    font-weight: 200;
+  }
+}
