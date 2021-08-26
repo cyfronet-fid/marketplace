@@ -668,5 +668,29 @@
     -moz-column-count: 1;
     column-count: 1;
   }
+
+  .lead-manager {
+    h1 {
+      overflow: hidden;
+
+      .btn {
+        margin-top: 25px;
+      }
+    }
+  }
+
+  .subsection {
+    margin: 3rem 0 1.1rem;
+  }
+
+  .learn-more {
+    .body {
+      padding: 0 32% 1.5rem 0;
+
+      .title {
+        font-size: 1rem;
+      }
+    }
+  }
 }
 
