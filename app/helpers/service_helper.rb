@@ -107,7 +107,7 @@ module ServiceHelper
   end
 
   def order_type(service)
-    types = service&.offers.map { |o| o.order_type }.uniq
+    types = ([service&.order_type] + service&.offers.published.map { |o| o.order_type }).compact.uniq
     if types.size > 1
       "various"
     else
