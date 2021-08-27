@@ -30,7 +30,7 @@ module Service::Search
       platforms: platforms.map(&:id),
       geographical_availabilities: geographical_availabilities.map(&:alpha2),
       target_users: target_users.map(&:id),
-      order_type: [order_type] << offers.map(&:order_type),
+      order_type: [order_type] << offers.published.map(&:order_type),
       tags: tag_list,
       source: upstream&.source_type,
       offers: offers.ids,

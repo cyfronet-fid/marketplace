@@ -376,6 +376,22 @@ RSpec.feature "Services in backoffice" do
       end
     end
 
+    scenario "I can update offer's order_type from service by removing second offer" do
+      service = create(:service, order_type: :other)
+      other_offer = create(:offer, order_type: :other, service: service)
+      offer_to_update = create(:offer, order_type: :order_required, service: service)
+
+      visit edit_backoffice_service_offer_path(service, other_offer)
+
+      click_on "Delete Offer"
+
+      expect(page).to have_content("Offer removed successfully")
+      service.reload
+      expect(service.order_type).to eq("other")
+      offer_to_update.reload
+      expect(offer_to_update.order_type).to eq("other")
+    end
+
     scenario "I can see warning about no published offers", js: true do
       service = create(:service)
 
@@ -728,6 +744,8 @@ RSpec.feature "Services in backoffice" do
 
       visit backoffice_service_path(service)
       click_on "Edit"
+
+      expect(page).to have_content("Name")
 
       fill_in "Name", with: "Owner can edit service draft"
       click_on "Update Resource"
