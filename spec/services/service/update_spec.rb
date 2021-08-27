@@ -27,7 +27,7 @@ RSpec.describe Service::Update do
   end
 
   it "creates new offer by service update if offers_count equals 0" do
-    service = create(:service)
+    service = create(:service, order_type: "fully_open_access")
 
     expect(service.offers.size).to eq(0)
 

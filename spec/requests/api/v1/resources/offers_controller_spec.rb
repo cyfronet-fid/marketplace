@@ -148,7 +148,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
+        let!(:service) { create(:service, order_type: "open_access",
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]))}
         let(:offer_payload) { { name: "New offer",
                                 description: "sample description",
@@ -211,7 +211,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
+        let!(:service) { create(:service, order_type: "open_access",
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]))}
         let(:offer_payload) { { name: "New offer",
                                 description: "sample description",
@@ -244,7 +244,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
+        let!(:service) { create(:service, order_type: "open_access",
                                 resource_organisation: create(:provider, data_administrators: [data_administrator]))}
         let(:offer_payload) { { name: "New offer",
                                 description: "sample description",

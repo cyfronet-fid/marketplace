@@ -111,7 +111,7 @@ describe Import::Resources do
     end
 
     it "should update service which has upstream to external id and repeated providers" do
-      service = create(:service)
+      service = create(:service, order_type: :other)
       create(:offer, service: service)
       source = create(:service_source, eid: "phenomenal.phenomenal", service_id: service.id, source_type: "eosc_registry")
       service.update!(upstream_id: source.id)

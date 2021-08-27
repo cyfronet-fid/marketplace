@@ -63,7 +63,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
       if template["primary_oms_id"].present? && template["oms_params"].nil?
         template["oms_params"] = {}
       end
-      template
+      template.except(:from)
     end
 
     def find_service
