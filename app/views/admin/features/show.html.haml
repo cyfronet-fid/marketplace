@@ -1,7 +1,11 @@
 .container
-  .row.mt-5
-    .col-12.col-md-5
-      = _("Welcome modal for all users:")
-    .col-12.btn-group
-      = button_to _("Enable welcome modal"), admin_features_enable_modal_path, class: "btn btn-primary pl-5 pr-5 mr-5"
-      = button_to _("Disable welcome modal"), admin_features_disable_modal_path, class: "btn btn-warning pl-5 pr-5 mr-5"
+  %h1 Features
+  .row.mt-4
+    .col-12
+      %h3
+        = _("Welcome modal for all users:")
+    .col-sm-12.btn-group.flex-wrap.mt-2
+      = button_to _("Enable welcome modal"), admin_features_enable_modal_path,
+      class: "btn btn-primary pl-4 pr-4 mr-5  mb-3"
+      = button_to _("Disable welcome modal"), admin_features_disable_modal_path,
+      class: "btn btn-warning pl-4 pr-4 mr-5 mb-3"
