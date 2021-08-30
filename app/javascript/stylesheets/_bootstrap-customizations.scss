@@ -4663,3 +4663,17 @@ abbr[title] {
     }
   }
 }
+
+.feedback-table {
+
+  .rating-column {
+    min-width: 195px;
+  }
+
+  td {
+    &:last-child {
+      min-width: 180px;
+    }
+  }
+}
+
