@@ -63,14 +63,13 @@ module Mp
 
     config.recommender_host = ENV["RECOMMENDER_HOST"]
     config.auth_mock = ENV["AUTH_MOCK"]
+
     config.autologin_domain = ENV["AUTOLOGIN_DOMAIN"].present? ?
                                 ENV["AUTOLOGIN_DOMAIN"] : ".eosc-portal.eu"
     config.base_url = ENV["EOSC_COMMONS_BASE_URL"].present? ? ENV["EOSC_COMMONS_BASE_URL"] :
+                        "https://s3.cloud.cyfronet.pl/eosc-portal-common/index.production.min.js"
     config.eosc_commons_base_url = ENV["EOSC_COMMONS_BASE_URL"].present? ? ENV["EOSC_COMMONS_BASE_URL"] :
-                                   "https://s3.cloud.cyfronet.pl/eosc-portal-common/"
-    config.eosc_commons_env = ENV["EOSC_COMMONS_ENV"].present? ? ENV["EOSC_COMMON_ENV"] : "production"
-                               "https://s3.cloud.cyfronet.pl/eosc-portal-common/index.production.min.js"
-    config.eosc_commons_css_url = ENV["EOSC_COMMONS_CSS_URL"].present? ? ENV["EOSC_COMMONS_JS_URL"] :
-                                "https://s3.cloud.cyfronet.pl/eosc-portal-common/index.production.min.css"
+                                     "https://s3.cloud.cyfronet.pl/eosc-portal-common/"
+    config.eosc_commons_env = ENV["EOSC_COMMONS_ENV"].present? ? ENV["EOSC_COMMONS_ENV"] : "production"
   end
 end
