@@ -24,8 +24,7 @@
 }
 
 
-@media (max-width: 959px) {
-
+@media (max-width: 990px) {
 
   .backoffice {
     margin: 0 0 20px;
@@ -38,7 +37,6 @@
   .backoffice-menu {
     margin-top: 15px;
     border: none;
-    padding: 0;
   }
 
   .backoffice-logo {
@@ -174,6 +172,7 @@
   .service-info-box {
     display: block;
     flex: unset;
+    width: 100%;
   }
 
   .profile {
@@ -361,6 +360,14 @@
 
     .not-found-pic {
       margin-top: 30px;
+    }
+  }
+
+  .card-columns {
+    &.two {
+      &.recently {
+        column-count: 1;
+      }
     }
   }
 }
@@ -652,6 +659,35 @@
         .badge {
           top: -10px;
         }
+      }
+    }
+  }
+
+  .special-list {
+    -moz-column-count: 1;
+    column-count: 1;
+  }
+
+  .lead-manager {
+    h1 {
+      overflow: hidden;
+
+      .btn {
+        margin-top: 25px;
+      }
+    }
+  }
+
+  .subsection {
+    margin: 3rem 0 1.1rem;
+  }
+
+  .learn-more {
+    .body {
+      padding: 0 32% 1.5rem 0;
+
+      .title {
+        font-size: 1rem;
       }
     }
   }
