@@ -117,3 +117,52 @@ $modal-background: #fff;
     }
   }
 }
+
+@media (max-width: 959px) {
+
+  .shepherd-element {
+    width: 95% !important;
+    max-width: 95% !important;
+    margin: 0 !important;
+  }
+
+  .tour-welcome {
+    > .shepherd-content {
+      width: auto !important;
+      padding-right: 0;
+      padding-top: 220px;
+
+      > .shepherd-text {
+        padding: 0 20px;
+        z-index: 10;
+      }
+
+      > .shepherd-header {
+        padding: 0 0 20px 20px;
+
+        .shepherd-title {
+          font-size: 16px;
+          z-index: 100;
+        }
+      }
+
+      > .shepherd-footer {
+        padding: 20px 0 0 20px;
+
+        .shepherd-button {
+          font-size: 15px;
+          line-height: 1.2;
+        }
+      }
+
+      > .new-feature {
+        top: 0;
+        left: calc(50% - 160px);
+        z-index: 1;
+      }
+    }
+
+
+  }
+
+}

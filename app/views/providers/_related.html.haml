@@ -2,7 +2,7 @@
   %h2.mb-4.mt-5
     = _("Recently added resources")
 
-  .card-columns.two
+  .card-columns.two.recently
     = render partial: "providers/service_box",
              collection: related_services,
              as: :service

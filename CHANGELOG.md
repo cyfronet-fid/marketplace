@@ -21,6 +21,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Storing query parameters on the services page by changing filters (@goreck888)
+- Graphical problems with drop down menu - My EOSC Marketplace (@jarekzet)
+- RWD CSS styles (@jarekzet)
 
 ### Security
 
