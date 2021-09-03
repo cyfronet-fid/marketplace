@@ -20,7 +20,7 @@
                                      "data-e2e": "searchbar-input",
                                      "data-probe": ""
     - if params[:q].present? && params.permitted?
-      %a.search-clear{ href: url_for(params.except(:q, :sort, :service_id)), title: _("Clear search"),
+      %a.search-clear{ href: url_for(params.except(:q, :sort, :page)), title: _("Clear search"),
       "data-e2e": "search-clear-btn" }
         .fas.fa-times
     %ul.autocomplete-results{ "data-target": "autocomplete.results", "data-e2e": "autocomplete-results" }

@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.22.0-milestone]
+
+### Added
+- Button to query clear in the Backoffice (@goreck888)
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
 ## [3.21.0-milestone]
 
 ### Added
