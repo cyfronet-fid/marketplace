@@ -12,6 +12,10 @@
                                      placeholder: _("Find resource..."),
                                      "data-target": "autocomplete.input",
                                      "data-toggle": "dropdown"
+    - if params[:q].present? && params.permitted?
+      %a.search-clear{ href: url_for(params.except(:q, :sort, :page)), title: _("Clear search"),
+      "data-e2e": "search-clear-btn" }
+        .fas.fa-times
     = hidden_field_tag "object_id", nil, "data-target": "autocomplete.hidden"
     = hidden_field_tag "type", nil, "data-target": "autocomplete.type"
     = hidden_field_tag "sort", "_score", id: nil
