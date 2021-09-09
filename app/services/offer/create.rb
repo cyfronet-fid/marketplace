@@ -7,9 +7,6 @@ class Offer::Create
 
   def call
     @offer.save
-    if @offer.service.offers.published.size == 1
-      @offer.update(order_type: @offer.service.order_type)
-    end
     @offer.service.reindex
     @offer
   end
