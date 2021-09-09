@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Reindexing and update resource `order type` by offers update or remove (@goreck888)
+- Default offer's `order type` correct mapping from a resource (@goreck888)
 
 ### Security
 
