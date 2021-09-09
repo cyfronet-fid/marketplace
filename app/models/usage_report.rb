@@ -54,15 +54,15 @@ class UsageReport
     end
 
     def service_count_by_order_type(*types, internal: false)
+      statuses = %w[published unverified errored]
       unless internal
-        Service.joins(:offers).where(offers: { order_type: types, status: :published },
-                                     status: [:published, :unverified, :errored]).uniq.count
+        Service.left_outer_joins(:offers).where("(services.order_type IN (?) OR (offers.order_type IN (?) AND " +
+                                       "offers.status = ?)) AND services.status IN (?)",
+                                     types.to_a, types.to_a, "published", statuses).uniq.count
       else
-        statuses = %w[published unverified errored]
-        empty = [nil, ""]
-        Service.joins(:offers).where("offers.order_type = ? AND services.status IN (?) AND offers.status IN (?) AND " +
-                                     "(offers.internal = ? OR (offers.internal = ? AND offers.order_url IN (?)))",
-                                     types, statuses, "published", true, false, empty).uniq.count
+        Service.joins(:offers).where("offers.order_type IN (?) AND services.status IN (?) AND " +
+                                                "offers.status IN (?) AND offers.internal = ?",
+                                     types.to_a, statuses, "published", true).uniq.count
       end
     end
 end
