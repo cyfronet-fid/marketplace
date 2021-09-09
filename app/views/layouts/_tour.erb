@@ -1,143 +1,34 @@
 <%- unless controller.tour_disabled %>
   <script>
-    var showWelcome = <%= show_popup %>;
-
-    var tour = new Shepherd.Tour(<%= Rails.configuration.tours.tour_options.html_safe unless Rails.configuration.tours.tour_options.nil? %>);
-    var hasNext = <%= next_tour.present? ? 'true' : 'false' %>;
-    tour.on("complete", function() {
-     var list = Cookies.get('<%= cookie_prefix %>-completed')
-     list = list ? JSON.parse(list) : []
-     list.push('<%= tour_name %>')
-     Cookies.set('<%= cookie_prefix %>-completed', list, { domain: '<%= tours_domain %>' });
-      <% if current_user %>
-        $.ajax({
-          url: "/tour_histories/",
-          type: "POST",
-          dataType: "json",
-          contentType: "application/json",
-          data: JSON.stringify({
-            authenticity_token: '<%= form_authenticity_token %>',
-            controller_name: '<%= controller_name %>',
-            action_name: '<%= action_name %>',
-            tour_name: '<%= tour_name %>'
-          })
-        });
-      <% end %>
-      <% if next_tour.present? %>
-        window.location.replace("<%= next_tour_link(next_tour['redirect_to'], next_tour['controller_params_map'] || {}) %>")
-      <% end %>
-    });
-
-    tour.on("cancel", function() {
-      Cookies.set('<%= cookie_prefix %>-<%= tour_name %>', 'later', { domain: '<%= tours_domain %>' });
-    });
-
-    <% steps.each_with_index do |(key, step), index| %>
-      tour.addStep({
-        modalOverlayOpeningRadius: 20,
-        modalOverlayOpeningPadding: 10,
-        when: {
-            show: function() {
-                if (<%= step['welcome'] ? 'true' : 'false' %>) {
-                    const img = document.createElement('div');
-                    img.classList.add('new-feature')
-
-                    document.querySelector(`[data-shepherd-step-id="${Shepherd.activeTour.currentStep.id}"] .shepherd-content`).appendChild(img);
-                }
-
-                // if (Shepherd.activeTour.steps.indexOf(Shepherd.activeTour.currentStep) === Shepherd.activeTour.steps.length - 1 && !hasNext) {
-                //     return;
-                // }
-                // const counter = document.createElement('div')
-                // counter.classList.add('steps-counter')
-                // counter.textContent = `${Shepherd.activeTour.steps.indexOf(Shepherd.activeTour.currentStep) + 1} of ${Shepherd.activeTour.steps.length}`;
-                // const footer = document.querySelector(`[data-shepherd-step-id="${Shepherd.activeTour.currentStep.id}"] .shepherd-footer`);
-                // footer.insertBefore(
-                //     counter,
-                //     footer.querySelector(':last-child')
-                // )
-            }
-        },
-        id: 'step-<%= key %>',
-        classes: '<%= step['welcome'] ? 'tour-welcome' : '' %>',
-        <% if step.key?('title') %>
-        title: "<%= step['title'] %>",
-        <% end %>
-        text: `<%= markdown(step['text']) %>`,
-        <% if step.key?('advanceOn') %>
-          advanceOn: { selector: "<%= step['advanceOn']['selector'].html_safe %>", event: "<%= step['advanceOn']['event'] %>" },
-        <% end %>
-        <% if step.key?('attachTo') %>
-          attachTo: { element: "<%= step['attachTo']['element'].html_safe %>", on: "<%= step['attachTo']['placement'].html_safe %>" },
-          showOn: () => document.querySelector("<%= step['attachTo']['element'].html_safe %>") ? true : false,
-        <% end %>
-        buttons: [
-        <% unless step.key?('buttons') %>
-          <% if index == 0 && step['welcome'] %>
-            { text: '<%= t('tours.taketour') %>', action: tour.next },
-            { text: '<%= t('tours.later') %>', action: tour.cancel, classes: 'close close-link' },
-          <% elsif index < steps.size - 1 || next_tour.present? %>
-            { text: '<%= t('tours.skip') %>', action: tour.cancel, classes: 'close close-link' },
-            { text: '<%= t('tours.continue') %>', action: tour.next },
-          <% elsif feedback %>
-            { text: '<%= t('tours.gotofeedback') %>', action: () => {
-                    tour.complete();
-                    $("#tour-feedback-modal").modal("show");
-                }
-            },
-          <% else %>
-            { text: '<%= t('tours.done') %>', action: tour.complete },
-          <% end %>
-        <% else %>
-          <% step['buttons'].each_with_index do |(key, button)| %>
-            <% case button['action'] when 'done'%>
-              { text: '<%= button["text"] || t('tours.done') %>', action: tour.complete },
-            <% when 'later'%>
-              { text: '<%= t('tours.skip') %>', action: tour.cancel, classes: 'shepherd-button-secondary' },
-            <% when 'continue'%>
-              { text: '<%= t('tours.continue') %>', action: tour.next },
-            <% when 'next'%>
-              { text: '<%= t('tours.next') %>', action: tour.next },
-            <% when 'exit'%>
-            { text: '<%= t('tours.exit') %>', action: tour.cancel, classes: 'shepherd-button-secondary' },
-            <% end %>
-          <% end %>
-        <% end %>
-        ],
-        <% if step['canClickTarget'] %>
-          canClickTarget: false,
-        <% end %>
-      });
-    <% end %>
-
-
-
-    tour.start = function (start) {
-      return function () {
-        <% if steps.length > 0 %>
-          var tourMayStart = !Cookies.get('<%= cookie_prefix %>-<%= tour_name %>', {domain: '<%= tours_domain %>'});
-          <% if steps.first[1]['attachTo'] %>
-          // Don't start the tour if the first step's element is missing
-          tourMayStart = tourMayStart && document.querySelector("<%= steps.first[1]['attachTo']['element'].html_safe %>");
-          <% end %>
-
-          if (tourMayStart) {
-            start();
+      (function() {
+          const tour = new Shepherd.Tour(<%= Rails.configuration.tours.tour_options&.html_safe %>);
+          function getEventDispatcher(action) {
+              return function () {
+                  const event = new CustomEvent("MP:tourEvent", {
+                      detail: {
+                          data: <%= data.to_json.html_safe %>,
+                          action: action,
+                      }
+                  });
+                  document.dispatchEvent(event);
+              };
           }
-        <% end %>
-      }
-    }(tour.start)
-
-    if (showWelcome) {
-        $("#welcome-modal").modal("show");
-        $("#welcome-modal").on("hidden.bs.modal", () => tour.start());
-    } else {
-        tour.start();
-    }
-
+          tour.on("complete", getEventDispatcher("complete"));
+          tour.on("cancel", getEventDispatcher("cancel"));
+          document.dispatchEvent(new CustomEvent("MP:tourEvent", {
+              detail: {
+                  data: {...<%= data.to_json.html_safe %>, tour},
+                  action: 'init',
+              }
+          }));
+      })();
   </script>
 
-  <% if feedback %>
-    <%= render "layouts/tours/feedback_modal", tour_controller_action: action_name, tour_controller_name: controller_name, tour_name: tour_name, feedback: feedback %>
+  <% if data[:feedback] %>
+    <%= render "layouts/tours/feedback_modal",
+               tour_controller_action: data[:action_name],
+               tour_controller_name: data[:controller_name],
+               tour_name: data[:tour_name],
+               feedback: data[:feedback] %>
   <% end %>
 <% end %>

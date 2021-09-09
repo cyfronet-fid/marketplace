@@ -17,7 +17,6 @@ service_about_intro:
 
         The new layout of the resource  presentation page highlights the most necessary information,
         to ensure the presentation of a resource is helping users finding the ones, that are most relevant to their work.
-
     2:
       title: Main section
       text: |-

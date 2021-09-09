@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "recommended services panel", type: :feature, js: true do
+RSpec.feature "recommended services panel", js: true do
   include OmniauthHelper
   include SimpleRecommenderSpecHelper
 
