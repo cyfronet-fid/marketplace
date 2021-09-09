@@ -327,6 +327,9 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
       click_on "Add new offer"
 
+      expect(page).to have_field("Name")
+      expect(page).to have_field("Description")
+
       expect {
         fill_in "Name", with: "new offer 1"
         fill_in "Description", with: "test offer"
@@ -339,6 +342,7 @@ RSpec.feature "Services in backoffice" do
           fill_in "Unit", with: "days"
           select "integer", from: "Value type"
         end
+
         click_on "Create Offer"
       }.to change { service.offers.count }.by(1)
 
@@ -731,6 +735,27 @@ RSpec.feature "Services in backoffice" do
       offer.reload
       expect(offer.primary_oms).to eq(oms2)
       expect(offer.oms_params).to eq({})
+    end
+
+    scenario "I see disabled order type if service has no offers" do
+      service = create(:service)
+
+      visit backoffice_service_path(service)
+
+      click_on "Add new offer"
+
+      expect(page).to have_field("Order type", with: service.order_type, readonly: true)
+    end
+
+    scenario "I see enabled order type field if service has an offer" do
+      service = create(:service)
+      create(:offer, order_type: service.order_type, service: service)
+
+      visit backoffice_service_path(service)
+
+      click_on "Add new offer"
+
+      expect(page).to have_field("Order type", with: service.order_type, readonly: false)
     end
   end
 

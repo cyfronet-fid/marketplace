@@ -5,7 +5,7 @@
     %h1= _("Edit offer")
 
   - from = params[:from] || from
-  - if @service.offers.size == 1
+  - if @service.offers.published.size == 1
     = render "backoffice/services/offers/one_offer_edit_form",
       offer: @offer,
       service: @service,

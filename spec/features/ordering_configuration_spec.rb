@@ -56,6 +56,9 @@ RSpec.feature "Services in ordering_configuration panel" do
 
       click_on "Add new offer"
 
+      expect(page).to have_field("Name")
+      expect(page).to have_field("Description")
+
       expect {
         fill_in "Name", with: "new offer 1"
         fill_in "Description", with: "test offer"
@@ -68,6 +71,7 @@ RSpec.feature "Services in ordering_configuration panel" do
           fill_in "Unit", with: "days"
           select "integer", from: "Value type"
         end
+
         click_on "Create Offer"
       }.to change { service.offers.count }.by(1)
 
@@ -91,6 +95,8 @@ RSpec.feature "Services in ordering_configuration panel" do
       expect(page).to have_content("Add new offer")
 
       click_on "Add new offer"
+
+      expect(page).to have_field("Name")
 
       expect {
         fill_in "Name", with: "new offer 1"
