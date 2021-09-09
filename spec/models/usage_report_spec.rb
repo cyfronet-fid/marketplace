@@ -4,11 +4,12 @@ require "rails_helper"
 
 RSpec.describe UsageReport do
   context ".orderable_count" do
-    it "counts orderable services with published offer" do
+    it "counts orderable services" do
       s1 = create(:service, status: :published)
       s2 = create(:service, status: :published)
       s3 = create(:service, status: :unverified)
       s4 = create(:service, status: :draft)
+      create(:service, status: :published)
 
       create(:offer, service: s1, order_type: :order_required, status: :draft)
       create(:offer, service: s1, order_type: :open_access, status: :published)
@@ -22,11 +23,13 @@ RSpec.describe UsageReport do
   end
 
   context ".not_orderable_count" do
-    it "counts open access and external services with published offer" do
+    it "counts open access and external services" do
       s1 = create(:service, status: :published)
       s2 = create(:service, status: :published)
       s3 = create(:service, status: :unverified)
       s4 = create(:service, status: :draft)
+      create(:service, status: :published)
+
       create(:offer, service: s1, order_type: :order_required, status: :published)
       create(:offer, service: s1, order_type: :open_access, status: :draft)
       create(:offer, service: s1, order_type: :order_required, order_url: "http://order.com", status: :draft)
@@ -34,7 +37,7 @@ RSpec.describe UsageReport do
       create(:offer, service: s3, order_type: :order_required, order_url: "http://order.com", status: :published)
       create(:offer, service: s4, order_type: :order_required, order_url: "http://order.com", status: :published)
 
-      expect(subject.not_orderable_count).to eq(1)
+      expect(subject.not_orderable_count).to eq(2)
     end
   end
 
