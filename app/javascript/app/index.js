@@ -32,6 +32,7 @@ import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
 import initProbes from "./user_action";
 import assignTabIdToWindow from "./tabs";
+import {handleTourFor} from "./tours";
 
 const application = Application.start();
 const context = require.context("./controllers", true, /.js$/);
@@ -59,6 +60,10 @@ document.addEventListener("ajax:success", function(event) {
 document.addEventListener("MP:modalLoaded", function (event) {
     initChoices();
 })
+
+document.addEventListener("MP:tourEvent", function (event) {
+    handleTourFor(event);
+});
 
 /**
  * Apart from turbolinks we need to replace FA for the first page load
