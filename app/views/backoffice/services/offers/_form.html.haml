@@ -10,7 +10,8 @@
       selected: (offer.order_type || service.order_type),
       input_html: { "data-target": "ordering.orderType",
                     "data-action": "ordering#updateVisibility",
-                    class: "form-control-lg col-lg-6" }
+                    class: "form-control-lg col-lg-6" },
+                    readonly: service.offers.published.size == 0 && service.order_type.present?
     = f.input :internal,
       wrapper_html: { "data-target": "ordering.internalWrapper" },
       input_html: { "data-target": "ordering.internal",
