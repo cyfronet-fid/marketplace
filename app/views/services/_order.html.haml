@@ -7,5 +7,6 @@
     .col-sm-9.pl-0
       %select#sort.query-sort.form-control.form-control-sm{ name: "sort",
                                                             "data-target": "order.select",
+                                                            "data-e2e": "select-order",
                                                             "data-action": "change->order#reload" }
         = options_for_select(sort_options, params[:sort])
