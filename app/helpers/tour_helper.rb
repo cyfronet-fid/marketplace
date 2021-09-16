@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
 module TourHelper
-  def tour(show_popup)
+  def tour(show_welcome_modal)
     # Do we have tours for this controller/action in the user's locale?
     tours = Rails.configuration.tours.list["#{controller_name}.#{action_name}.#{I18n.locale}"]
     tours ||= Rails.configuration.tours.list["#{controller_name}.#{action_name}.#{I18n.default_locale}"]
     tours ||= {}
 
-    if !controller.tour_disabled && (!tours.empty? || show_popup)
+    if controller.tour_disabled
+      return
+    end
+
+    if !tours.empty? || show_welcome_modal
       remaining = tours.keys - finished_tours
       to_show = tours.select { |t| show_tour?(t, tours[t]) }.keys
       to_render = to_show & remaining
@@ -16,7 +20,7 @@ module TourHelper
              locals: { data: {
                is_logged_in: !!current_user,
                tour_name: to_render.first,
-               show_popup: show_popup,
+               show_welcome_modal: show_welcome_modal,
                steps: (!tours.empty? && tours[to_render.first]) ?
                         tours[to_render.first]["steps"].values.map { |step| { **step.transform_keys(&:to_sym), text: markdown(step["text"]) } } :
                         nil,
