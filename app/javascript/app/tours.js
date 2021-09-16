@@ -71,7 +71,7 @@ function handleStartFor(data) {
         }
     }(data.tour.start)
 
-    if (!!data.show_popup) {
+    if (!!data.show_welcome_modal) {
         const welcomeModal = $("#welcome-modal");
         welcomeModal.modal("show");
         welcomeModal.on("hidden.bs.modal", () => data.tour.start());

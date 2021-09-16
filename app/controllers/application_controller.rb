@@ -34,8 +34,8 @@ class ApplicationController < ActionController::Base
     end
 
     def welcome_popup
-      @show_popup = current_user&.show_welcome_popup || false
-      if @show_popup && !tour_disabled
+      @show_welcome_modal = current_user&.show_welcome_popup || false
+      if @show_welcome_modal && !tour_disabled
         current_user.update(show_welcome_popup: false)
       end
     end
