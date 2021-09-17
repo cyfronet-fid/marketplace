@@ -6,7 +6,7 @@ export function handleTourFor(event) {
             handleCompleteFor(event.detail.data)
             break;
         case 'cancel':
-            Cookies.set(event.detail.data.cookies_names.skip, 'later', {domain: window.location.hostname});
+            handleCancelFor(event.detail.data);
             break;
         case 'init':
             handleInitFor(event.detail.data);
@@ -17,29 +17,45 @@ export function handleTourFor(event) {
     }
 }
 
-function handleCompleteFor(data) {
-    // set cookie
-    const completedTours = Cookies.get(data.cookies_names.completed);
-    const finishedTours = JSON.parse(!!completedTours ? completedTours : "[]");
-    Cookies.set(data.cookies_names.completed, [...finishedTours, data.tour_name], {domain: window.location.hostname});
+function handleCancelFor(data) {
+    if (data.activation_strategy === "default") {
+        Cookies.set(data.cookies_names.skip, "later", {domain: window.location.hostname});
+    } else if (data.activation_strategy === "query_param") {
+        window.location.search = stripTourParam(window.location.search);
+    }
+}
 
-    // create new history record
-    if (data.is_logged_in) {
-        fetch("/tour_histories", {
-            method: "POST",
-            headers: {
-                "X-CSRF-Token": Rails.csrfToken(),
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify({
-                authenticity_token: data.form_authenticity_token,
-                controller_name: data.controller_name,
-                action_name: data.action_name,
-                tour_name: data.tour_name
+function stripTourParam(search) {
+    const params = new URLSearchParams(search);
+    params.delete("tour");
+    return params;
+}
+
+function handleCompleteFor(data) {
+    if (data.activation_strategy === "default") {
+        // set cookie
+        const completedTours = Cookies.get(data.cookies_names.completed);
+        const finishedTours = JSON.parse(!!completedTours ? completedTours : "[]");
+        Cookies.set(data.cookies_names.completed, [...finishedTours, data.tour_name], {domain: window.location.hostname});
+
+        // create new history record
+        if (data.is_logged_in) {
+            fetch("/tour_histories", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-Token": Rails.csrfToken(),
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({
+                    authenticity_token: data.form_authenticity_token,
+                    controller_name: data.controller_name,
+                    action_name: data.action_name,
+                    tour_name: data.tour_name
+                })
             })
-        })
-            .then()
-            .catch(error => console.log(error))
+                .then()
+                .catch(error => console.log(error))
+        }
     }
 
     if (!!data.next_tour_link) {
@@ -54,8 +70,10 @@ function handleStartFor(data) {
                 return;
             }
 
-            if (Cookies.get(data.cookies_names.skip, {domain: window.location.hostname})) {
-                return;
+            if (data.activation_strategy === "default") {
+                if (Cookies.get(data.cookies_names.skip, {domain: window.location.hostname})) {
+                    return;
+                }
             }
 
             const firstStep = data.steps[0];

@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   include Devise::StoreLocation
   include FastGettext::Translation
   include Recommendation::Followable
+  include Tourable
 
   before_action :welcome_popup, :load_root_categories!, :report, :set_locale, :set_gettext_locale
 

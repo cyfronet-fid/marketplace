@@ -1,34 +1,32 @@
-<%- unless controller.tour_disabled %>
-  <script>
-      (function() {
-          const tour = new Shepherd.Tour(<%= Rails.configuration.tours.tour_options&.html_safe %>);
-          function getEventDispatcher(action) {
-              return function () {
-                  const event = new CustomEvent("MP:tourEvent", {
-                      detail: {
-                          data: <%= data.to_json.html_safe %>,
-                          action: action,
-                      }
-                  });
-                  document.dispatchEvent(event);
-              };
-          }
-          tour.on("complete", getEventDispatcher("complete"));
-          tour.on("cancel", getEventDispatcher("cancel"));
-          document.dispatchEvent(new CustomEvent("MP:tourEvent", {
-              detail: {
-                  data: {...<%= data.to_json.html_safe %>, tour},
-                  action: 'init',
-              }
-          }));
-      })();
-  </script>
+<script>
+    (function() {
+        const tour = new Shepherd.Tour(<%= Rails.configuration.tours.tour_options&.html_safe %>);
+        function getEventDispatcher(action) {
+            return function () {
+                const event = new CustomEvent("MP:tourEvent", {
+                    detail: {
+                        data: <%= data.to_json.html_safe %>,
+                        action: action,
+                    }
+                });
+                document.dispatchEvent(event);
+            };
+        }
+        tour.on("complete", getEventDispatcher("complete"));
+        tour.on("cancel", getEventDispatcher("cancel"));
+        document.dispatchEvent(new CustomEvent("MP:tourEvent", {
+            detail: {
+                data: {...<%= data.to_json.html_safe %>, tour},
+                action: 'init',
+            }
+        }));
+    })();
+</script>
 
-  <% if data[:feedback] %>
-    <%= render "layouts/tours/feedback_modal",
-               tour_controller_action: data[:action_name],
-               tour_controller_name: data[:controller_name],
-               tour_name: data[:tour_name],
-               feedback: data[:feedback] %>
-  <% end %>
+<% if data[:feedback] %>
+  <%= render "layouts/tours/feedback_modal",
+             tour_controller_action: data[:action_name],
+             tour_controller_name: data[:controller_name],
+             tour_name: data[:tour_name],
+             feedback: data[:feedback] %>
 <% end %>
