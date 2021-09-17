@@ -17,12 +17,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- Reindexing and update resource `order type` by offers update or remove (@goreck888)
-- Default offer's `order type` correct mapping from a resource (@goreck888)
 
 ### Security
 
-## [3.20.0-milestone]
+## [3.20.0] 2021-09-17
 
 ### Added
 - [Ordering API] `supplied_voucher_id` project item attribute (@jswk)
@@ -31,16 +29,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Replace header, footer and eu information about financing - improvement of consistency between the EOSC services (@danielkryska) 
 - Replace 'Page not found' with new design (@jarekzet)
 
-### Deprecated
-
-### Removed
-
 ### Fixed
+- Reindexing and update resource `order type` by offers update or remove (@goreck888)
+- Default offer's `order type` correct mapping from a resource (@goreck888)
 - Storing query parameters on the services page by changing filters (@goreck888)
 - Graphical problems with drop down menu - My EOSC Marketplace (@jarekzet)
 - RWD CSS styles (@jarekzet)
-
-### Security
 
 ## [3.19.0] 2021-08-24
 
