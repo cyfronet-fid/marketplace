@@ -4,7 +4,7 @@
   .mb-4.pb-4.border-header
     %h1= _("Edit offer")
 
-  - if @service.offers.size == 1
+  - if @service.offers.published.size == 1
     = render "one_offer_edit_form",
       offer: @offer,
       service: @service,
