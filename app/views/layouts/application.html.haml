@@ -27,7 +27,8 @@
   %eosc-common-main-footer
   %eosc-common-eu-information
   = render "layouts/jira_collector"
-  = tour @show_welcome_modal
+  - unless controller.tour_disabled
+    = tour @tour, @show_welcome_modal
   = render "layouts/recommendation"
 
   - file_base = Mp::Application.config.eosc_commons_base_url + "index." + Mp::Application.config.eosc_commons_env

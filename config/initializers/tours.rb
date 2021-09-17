@@ -12,7 +12,12 @@ Rails.application.configure do
         action = file_parts[0]
         locale = file_parts[1]
         t = YAML.load_file(yml)
-        tours["#{controller}.#{action}.#{locale}"] = t
+        unless Rails.env.test?
+          t = t.select { |_, tour| !tour["test"] }
+        end
+        if t.present?
+          tours["#{controller}.#{action}.#{locale}"] = t
+        end
       end
     end
   end

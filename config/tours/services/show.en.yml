@@ -64,3 +64,31 @@ service_about_intro:
         element: "[data-shepherd-tour-target='service-more-about']"
         placement: "right"
 
+query_param_1:
+  test: true
+  activation_strategy: query_param
+
+  next:
+    tour_name: "query_param_2"
+    controller_name: "details"
+    action_name: "index"
+    redirect_to: "service_details_path"
+    controller_params:
+      tour: query_param_2
+    controller_params_map:
+      id: service_id
+
+  steps:
+    1:
+      welcome: true
+      title: qp1-1 title
+      text: |-
+        qp1-1 text
+    2:
+      title: qp1-2 title
+      text: |-
+        qp1-2 text
+
+      attachTo:
+        element: "[data-shepherd-tour-target='service-box']"
+        placement: "bottom"
