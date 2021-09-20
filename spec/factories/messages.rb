@@ -13,8 +13,15 @@ FactoryBot.define do
     factory :provider_message do
       sequence(:author) { nil }
       author_role { "provider" }
-      author_name { |n| "provider #{n}" }
-      author_email { |n| "provider#{n}@provider.pl" }
+      sequence(:author_name) { |n| "provider #{n}" }
+      sequence(:author_email) { |n| "provider#{n}@provider.pl" }
+    end
+
+    factory :mediator_message do
+      sequence(:author) { nil }
+      author_role { "mediator" }
+      sequence(:author_name) { |n| "customer service #{n}" }
+      sequence(:author_email) { |n| "cs#{n}@customer.service.pl" }
     end
   end
 end

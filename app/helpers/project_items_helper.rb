@@ -2,10 +2,25 @@
 
 module ProjectItemsHelper
   def label_message(message)
-    if message.question?
-      t("conversations.message.question")
-    else
-      t("conversations.message.answer")
+    date = message.created_at.to_s(:db)
+
+    case message.author_role
+    when "user"
+      "#{_('You')}, #{date}"
+    when "provider"
+      "#{date}#{author_identity(message)}, #{_('Provider')}"
+    else # mediator
+      "#{date}#{author_identity(message)}, #{_('Customer service')}"
+    end
+  end
+
+  def author_identity(message)
+    if message.author_name.present? && message.author_email.present?
+      ", #{message.author_name} (#{message.author_email})"
+    elsif message.author_name.present? && message.author_email.blank?
+      ", #{message.author_name}"
+    elsif message.author_name.blank? && message.author_email.present?
+      ", #{message.author_email}"
     end
   end
 

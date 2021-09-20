@@ -9,10 +9,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [3.26.0-milestone]
 
 ### Added
+- New conversation labels, which now reflect the identity of the author (@wujuu)
 
 ### Changed
 - Fix RWD CSS Styles (@jarekzet)
 - Move authentication to the last step of the Access Wizard - User Experience improvement (@danielkryska)
+- Improved conversation view and styles (@jarekzet, @wujuu)
 
 ### Deprecated
 

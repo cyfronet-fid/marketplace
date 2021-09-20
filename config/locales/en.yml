@@ -46,9 +46,6 @@ en:
       new_message: |
         Question about your resource access request in EOSC Portal Marketplace
   conversations:
-    message:
-      question: "Your message to the resource provider"
-      answer: "Message from the resource provider"
     status:
       info:
         created: "Your resource request has been created"
