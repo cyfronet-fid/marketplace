@@ -7,11 +7,11 @@ RSpec.feature "Project" do
 
   let(:user) { create(:user) }
 
-  context "As logged in user" do
+  context "As a logged-in user" do
     let(:project_create) { double("Project::Create") }
     before { checkin_sign_in_as(user) }
 
-    scenario "I can create new project" do
+    scenario "I can create a new project" do
       visit projects_path
 
       click_on "Create new project"
@@ -31,7 +31,7 @@ RSpec.feature "Project" do
       expect(new_project.name).to eq("First test")
     end
 
-    scenario "Scientific domains are displayed as nested tree" do
+    scenario "Scientific domains are displayed as a nested tree" do
       parent = create(:scientific_domain)
       child = create(:scientific_domain, parent: parent)
 
@@ -43,7 +43,7 @@ RSpec.feature "Project" do
       expect(page).to have_content("#{parent.name} ⇒ #{child.name}")
     end
 
-    scenario "I can see first project services when entering My projects" do
+    scenario "I can see the services of my first project when entering 'My projects'" do
       project = create(:project, user: user)
       service = create(:service, name: "The best service ever")
       offer = create(:offer, service: service)
@@ -54,7 +54,7 @@ RSpec.feature "Project" do
       expect(page).to have_text("The best service ever")
     end
 
-    scenario "After successful creation new project I'm redirected to projects page" do
+    scenario "I'm redirected to projects page after the successful creation of a new project" do
       visit projects_path
 
       click_on "Create new project"
@@ -71,7 +71,7 @@ RSpec.feature "Project" do
       expect(current_url).to eq(project_url(Project.last))
     end
 
-    scenario "I can create project duplicate" do
+    scenario "I can create a duplicate of a project" do
       allow(project_create).to receive(:call)
       project = create(:project, user: user)
 
@@ -89,7 +89,7 @@ RSpec.feature "Project" do
       expect(new_project).to be_jira_uninitialized
     end
 
-    scenario "I cannot use other user project as duplicate source" do
+    scenario "I cannot use other user's project as a duplicate source" do
       project = create(:project)
 
       visit new_project_path(source: project.id)
@@ -98,7 +98,7 @@ RSpec.feature "Project" do
       expect { click_on "Create" }.to_not change { user.projects.count }
     end
 
-    scenario "I can edit project" do
+    scenario "I can edit a project" do
       project = create(:project, name: "First Project", user: user)
       visit project_path(project)
 
@@ -112,7 +112,7 @@ RSpec.feature "Project" do
       expect(page).to have_text(project.name)
     end
 
-    scenario "I cannot update project with invalid fields" do
+    scenario "I cannot update the project with invalid fields" do
       project = create(:project, name: "First Project", user: user)
 
       visit project_path(project)
@@ -127,7 +127,7 @@ RSpec.feature "Project" do
       expect(page.status_code).to eq(400)
     end
 
-    scenario "I can delete project without any project_item" do
+    scenario "I can delete a project without any project items" do
       project = create(:project, name: "First Project", user: user)
 
       visit project_path(project)
@@ -136,7 +136,7 @@ RSpec.feature "Project" do
         to change { user.projects.count }.by(-1)
     end
 
-    scenario "I cannot delete project with project_item" do
+    scenario "I cannot delete a project with a project item" do
       project = create(:project, name: "First Project", user: user)
       service = create(:open_access_service)
       offer = create(:offer, service: service)
@@ -148,7 +148,7 @@ RSpec.feature "Project" do
       expect(page).to_not have_selector(:link_or_button, "Delete")
     end
 
-    scenario "I cannot see not my projects" do
+    scenario "I cannot see projects that I do not own" do
       project = create(:project)
 
       visit project_path(project)
@@ -165,7 +165,7 @@ RSpec.feature "Project" do
         allow(project_archive_class_stub).to receive(:new).and_return(project_archive)
       }
 
-      scenario "I cannot see archive button when are no services" do
+      scenario "I cannot see the archive button when there are no services" do
         project = create(:project, name: "First Project", user: user)
 
         visit project_path(project)
@@ -173,7 +173,7 @@ RSpec.feature "Project" do
         expect(page).to_not have_selector(:link_or_button, "Archive")
       end
 
-      scenario "I see archive button when all project_items are ended" do
+      scenario "I can see the archive button when all project_items have a 'closed' status" do
         project = create(:project, name: "First Project", user: user)
         service = create(:open_access_service)
         offer = create(:offer, service: service)
@@ -185,7 +185,7 @@ RSpec.feature "Project" do
         expect(page).to have_selector(:link_or_button, "Archive")
       end
 
-      scenario "I cannot see archive button when all project_items are not ended" do
+      scenario "I cannot see the archive button while there is a project item that is not 'closed'" do
         project = create(:project, name: "First Project", user: user)
         service = create(:open_access_service)
         create(:offer, service: service)
@@ -195,7 +195,7 @@ RSpec.feature "Project" do
         expect(page).to_not have_selector(:link_or_button, "Archive")
       end
 
-      scenario "I see archive status after archivisation" do
+      scenario "I can see the archived status after archivization" do
         project = create(:project, name: "First Project", user: user)
         service = create(:open_access_service)
         offer = create(:offer, service: service)
@@ -209,11 +209,21 @@ RSpec.feature "Project" do
         click_on "Archive"
         expect(page).to have_text("Project archived")
       end
+
+      scenario "I can have a question for the project support" do
+        project = create(:project, user: user)
+        visit project_conversation_path(project)
+        fill_in "message_message", with: "This is my question"
+        click_button "Send message"
+
+        expect(page).to have_text("This is my question")
+        expect(page).to have_text(I18n.t("conversations.message.project.question"))
+      end
     end
   end
 
   context "As anonymous user" do
-    scenario "I cannot visit My projects" do
+    scenario "I cannot visit 'My projects'" do
       visit root_path
 
       expect(page.body).to have_no_selector("nav", text: "My projects")
