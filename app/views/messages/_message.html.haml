@@ -1,12 +1,5 @@
-%li.step-progress-item.current.ml-5
-  .time.x-small
-    = time_ago_in_words(message.created_at) + " " + _("ago")
-
-  .ml-4
-    %p.frame{ class: ("edited" if message.edited?) }= message.message
-    .d-block.message-info= label_message(message)
-
-
-
-
-
+%li.step-progress-item.ml-3{ class: (message.role_user? ? "align-self-end" : "align-self-start") }
+  %p.frame{ class: ("user-directed-message" unless message.role_user?) }= message.message
+  .d-inline-block.message-info= label_message(message)
+  - if message.user_direct_scope?
+    .d-inline-block.message-info.visible= "Visible only to you"

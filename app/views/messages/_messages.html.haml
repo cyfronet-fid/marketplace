@@ -1,6 +1,6 @@
-.col-12.col-md-9.mx-auto
-  #scrollbar.progress-box.mt-4{ "data-controller": "scroller" }
-    %ul.step-progress
+.col-12.pl-0.pr-0.mx-auto
+  #scrollbar.progress-box.mt-4.pr-3{ "data-controller": "scroller" }
+    %ul.d-flex.flex-column
       - if messages.count.positive?
         - messages.each do |message|
           = render "messages/message", message: message

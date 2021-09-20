@@ -389,7 +389,7 @@ describe('Offers messages', () => {
                         cy.fillFormProject(project);
 
                         cy.get(".services-menu")
-                            .contains("a", "contact with project support", {matchCase: false})
+                            .contains("a", "contact with eosc experts", {matchCase: false})
                             .click({force: true});
 
                         const message = Utilities.getRandomString();
