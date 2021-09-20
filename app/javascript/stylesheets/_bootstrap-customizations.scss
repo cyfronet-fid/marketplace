@@ -279,7 +279,7 @@ textarea:-ms-input-placeholder { /* IE 10+ */
 }
 
 .textarea-md {
-  height: 125px !important;
+  height: 90px !important;
 }
 
 .control-label {
@@ -1988,13 +1988,13 @@ h5 {
 }
 
 .progress-box {
-  max-height: 315px;
+  max-height: 540px;
   overflow-y: auto;
 }
 
 // scss-lint:disable all
 .question-box {
-  border-top: 1px solid $border-header;
+  border-top: 6px solid $border-header;
 
   .message_message {
 
@@ -2057,7 +2057,7 @@ h5 {
 
 .contact-row {
   background: $home-card-bg;
-  border: 1px solid $edited-comment-border-color;
+  border: 1px solid $user-directed-message-border-color;
   padding: 17px 15px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
@@ -2068,20 +2068,22 @@ h5 {
 }
 
 .step-progress-item {
-  margin-left: 5em !important;
+  max-width: 70%;
 
-  .edited {
-    background: $edited-comment-background-color;
-    border-color: $edited-comment-border-color !important;
+  .user-directed-message {
+    background: $user-directed-message-background-color;
+    border-color: $user-directed-message-border-color !important;
   }
 
   .frame {
     padding: 14px 15px 12px;
     margin-top: 10px;
-    border: 1px solid $palette-gray-30;
+    border: 1px solid $message-frame;
     font-size: 14px;
+    border-radius: 5px;
     margin-bottom: 5px;
     line-height: 1.55;
+    word-wrap: break-word;
   }
 
   .message-info {
@@ -2089,7 +2091,19 @@ h5 {
     color: $palette-gray-50;
     text-align: right;
     font-size: 12px;
-    max-width: 90%;
+    padding: 0 15px;
+
+    &.visible {
+      font-style: normal;
+
+      &::before {
+        font-family: 'Font Awesome 5 Free';
+        content: '\f502';
+        display: inline-block;
+        margin-right: 6px;
+        font-weight: 900;
+      }
+    }
   }
 }
 
@@ -4293,7 +4307,7 @@ abbr[title] {
 
     svg {
       font-size: 19px;
-      color: $edited-comment-border-color;
+      color: $user-directed-message-border-color;
       position: absolute;
       top: 5px;
       left: 10px;
@@ -4497,7 +4511,7 @@ abbr[title] {
 }
 
 .favourite-icon {
-  background: $edited-comment-background-color;
+  background: $user-directed-message-background-color;
   padding: 20px 0;
   text-align: center;
   border-top: 1px solid $image-border;

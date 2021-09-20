@@ -130,7 +130,7 @@ RSpec.feature "My Services" do
       expect(page).to have_text("please share your experience so far")
     end
 
-    scenario "I can ask question about my project_item" do
+    scenario "I can ask a question about my project_item" do
       project_item = create(:project_item, project: project, offer: offer)
 
       visit project_service_conversation_path(project, project_item)
@@ -138,6 +138,69 @@ RSpec.feature "My Services" do
       click_button "Send message"
 
       expect(page).to have_text("This is my question")
+      expect(page).to have_text("You, #{Message.last.created_at.to_s(:db)}")
+    end
+
+    scenario "I see messages from the fully identified provider" do
+      project_item = create(:project_item, project: project, offer: offer)
+      provider_message = create(:provider_message, messageable: project_item)
+
+      visit project_service_conversation_path(project, project_item)
+
+      message_label = "#{Message.last.created_at.to_s(:db)}, "\
+                      "#{provider_message.author_name} "\
+                      "(#{provider_message.author_email}), Provider"
+
+      expect(page).to have_text(provider_message.message)
+      expect(page).to have_text(message_label)
+    end
+
+    scenario "I see messages from the provider identified only by name" do
+      project_item = create(:project_item, project: project, offer: offer)
+      provider_message = create(:provider_message, author_email: nil, messageable: project_item)
+
+      visit project_service_conversation_path(project, project_item)
+
+      message_label = "#{Message.last.created_at.to_s(:db)}, "\
+                      "#{provider_message.author_name}, Provider"
+
+      expect(page).to have_text(provider_message.message)
+      expect(page).to have_text(message_label)
+    end
+
+    scenario "I see messages from the provider identified only by email" do
+      project_item = create(:project_item, project: project, offer: offer)
+      provider_message = create(:provider_message, author_name: nil, messageable: project_item)
+
+      visit project_service_conversation_path(project, project_item)
+
+      message_label = "#{Message.last.created_at.to_s(:db)}, "\
+                      "#{provider_message.author_email}, Provider"
+
+      expect(page).to have_text(provider_message.message)
+      expect(page).to have_text(message_label)
+    end
+
+    scenario "I see messages from the anonymous provider" do
+      project_item = create(:project_item, project: project, offer: offer)
+      provider_message = create(:provider_message, author_name: "", author_email: nil, messageable: project_item)
+
+      visit project_service_conversation_path(project, project_item)
+
+      message_label = "#{Message.last.created_at.to_s(:db)}, Provider"
+
+      expect(page).to have_text(provider_message.message)
+      expect(page).to have_text(message_label)
+    end
+
+    scenario "I see label that the message is for my eyes only" do
+      project_item = create(:project_item, project: project, offer: offer)
+      provider_message = create(:provider_message, scope: "user_direct", messageable: project_item)
+
+      visit project_service_conversation_path(project, project_item)
+
+      expect(page).to have_text(provider_message.message)
+      expect(page).to have_text("Visible only to you")
     end
 
     scenario "question message is mandatory" do

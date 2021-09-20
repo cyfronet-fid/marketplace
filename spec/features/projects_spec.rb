@@ -217,7 +217,69 @@ RSpec.feature "Project" do
         click_button "Send message"
 
         expect(page).to have_text("This is my question")
-        expect(page).to have_text(I18n.t("conversations.message.project.question"))
+        expect(page).to have_text("You, #{Message.last.created_at.to_s(:db)}")
+      end
+
+      scenario "I see messages from the fully identified mediator" do
+        project = create(:project, user: user)
+        mediator_message = create(:mediator_message, messageable: project)
+
+        visit project_conversation_path(project)
+
+        message_label = "#{Message.last.created_at.to_s(:db)}, "\
+                      "#{mediator_message.author_name} "\
+                      "(#{mediator_message.author_email}), Customer service"
+
+        expect(page).to have_text(mediator_message.message)
+        expect(page).to have_text(message_label)
+      end
+
+      scenario "I see messages from the mediator identified by name" do
+        project = create(:project, user: user)
+        mediator_message = create(:mediator_message, author_email: nil, messageable: project)
+
+        visit project_conversation_path(project)
+
+        message_label = "#{Message.last.created_at.to_s(:db)}, "\
+                      "#{mediator_message.author_name}, Customer service"
+
+        expect(page).to have_text(mediator_message.message)
+        expect(page).to have_text(message_label)
+      end
+
+      scenario "I see messages from the mediator identified by email" do
+        project = create(:project, user: user)
+        mediator_message = create(:mediator_message, author_name: nil, messageable: project)
+
+        visit project_conversation_path(project)
+
+        message_label = "#{Message.last.created_at.to_s(:db)}, "\
+                      "#{mediator_message.author_email}, Customer service"
+
+        expect(page).to have_text(mediator_message.message)
+        expect(page).to have_text(message_label)
+      end
+
+      scenario "I see messages from the anonymous mediator" do
+        project = create(:project, user: user)
+        mediator_message = create(:mediator_message, author_name: nil, author_email: "", messageable: project)
+
+        visit project_conversation_path(project)
+
+        message_label = "#{Message.last.created_at.to_s(:db)}, Customer service"
+
+        expect(page).to have_text(mediator_message.message)
+        expect(page).to have_text(message_label)
+      end
+
+      scenario "I see label that the message is for my eyes only" do
+        project = create(:project, user: user)
+        provider_message = create(:mediator_message, scope: "user_direct", messageable: project)
+
+        visit project_conversation_path(project)
+
+        expect(page).to have_text(provider_message.message)
+        expect(page).to have_text("Visible only to you")
       end
     end
   end

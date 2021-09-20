@@ -44,7 +44,7 @@
         = link_to _("Project details"), project_path(project),
           class: "nav-link #{"active" if controller.controller_name == "projects"} text-uppercase"
       %li.nav-item
-        = link_to _("Contact with project support"), project_conversation_path(project),
+        = link_to _("Contact with EOSC experts"), project_conversation_path(project),
           class: "nav-link #{"active" if controller.controller_name == "conversations"} text-uppercase"
         -# TODO: Commented, because we don't have notification mechanism yet : .message %i.comment
   .container.p-0
