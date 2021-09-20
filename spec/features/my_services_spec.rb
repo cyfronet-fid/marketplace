@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.feature "My Services" do
   include OmniauthHelper
 
-  context "as logged in user" do
+  context "as a logged-in user" do
     let(:user) { create(:user) }
     let(:service) { create(:service) }
     let(:offer) { create(:offer, service: service) }
@@ -14,7 +14,7 @@ RSpec.feature "My Services" do
     before { checkin_sign_in_as(user) }
 
 
-    scenario "I can see only my projects" do
+    scenario "I can only see projects that I own" do
       p1, p2 = create_list(:project, 2, user: user)
       not_owned = create(:project)
 
@@ -25,7 +25,7 @@ RSpec.feature "My Services" do
       expect(page).to_not have_text(not_owned.name)
     end
 
-    scenario "I can see my projects services" do
+    scenario "I can see the services of my project" do
       create(:project_item, project: project, offer: offer)
 
       visit project_services_path(project)
@@ -33,7 +33,7 @@ RSpec.feature "My Services" do
       expect(page).to have_text(service.name)
     end
 
-    scenario "I can see project_item details" do
+    scenario "I can see the project_item details" do
       project_item = create(:project_item, project: project, offer: offer)
 
       visit project_service_path(project, project_item)
@@ -42,7 +42,7 @@ RSpec.feature "My Services" do
     end
 
     # Test added after hotfix for a bug in `project_items/show.html.haml:30` (v1.2.0)
-    scenario "I can see project_item details without scientific_domain" do
+    scenario "I can see project_item details without a scientific_domain" do
       offer = create(:offer, service: create(:open_access_service))
       project = create(:project, user: user, scientific_domains: [])
       project_item = create(:project_item, project: project, offer: offer)
@@ -52,7 +52,7 @@ RSpec.feature "My Services" do
       expect(page).to have_text(project_item.service.name)
     end
 
-    scenario "I cannot see other users project_items" do
+    scenario "I cannot see other users' project_items" do
       other_user_project_item = create(:project_item, offer: offer)
 
       visit project_service_path(other_user_project_item.project,
@@ -63,7 +63,7 @@ RSpec.feature "My Services" do
       expect(page).to have_text("not authorized")
     end
 
-    scenario "I can see project_item change history", js: true do
+    scenario "I can see the project_item change history", js: true do
       project_item = create(:project_item, project: project, offer: offer)
 
       project_item.new_status(status: "created", status_type: :created)
@@ -87,7 +87,7 @@ RSpec.feature "My Services" do
       expect(page).to have_text(project_item.voucher_id)
     end
 
-    scenario "I can see voucher id if requested and delivered" do
+    scenario "I can see voucher id if the voucher is requested and delivered" do
       project_item = create(:project_item, project: project, offer: create(:offer, voucherable: true),
                             request_voucher: true, user_secrets: { "voucher_id" => "V123V" })
 
@@ -104,7 +104,7 @@ RSpec.feature "My Services" do
       expect(page).to_not have_text("Voucher")
     end
 
-    scenario "I can see that voucher has been requested" do
+    scenario "I can see that the voucher has been requested" do
       project_item = create(:project_item, project: project, offer: create(:offer, voucherable: true),
                             request_voucher: true)
 
@@ -113,7 +113,7 @@ RSpec.feature "My Services" do
       expect(page).to have_text("Vouchers\nRequested")
     end
 
-    scenario "I cannot see review section" do
+    scenario "I cannot see the review section" do
       project_item = create(:project_item, project: project, offer: offer)
 
       visit project_service_path(project, project_item)
@@ -151,7 +151,7 @@ RSpec.feature "My Services" do
   end
 
   context "as anonymous user" do
-    scenario "I don't see my services page" do
+    scenario "I don't see 'My projects' page" do
       visit root_path
 
       expect(page).to_not have_text("My projects")
