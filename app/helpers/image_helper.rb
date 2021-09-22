@@ -3,7 +3,7 @@
 require "mini_magick"
 
 module ImageHelper
-  @@PERMITTED_EXT_MESSAGE = "^The logo format you're trying to attach is not supported.
+  @@PERMITTED_EXT_MESSAGE = "format you're trying to attach is not supported.
            Supported formats: png, gif, jpg, jpeg, pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon."
   @@DEFAULT_LOGO_PATH = Webpacker.manifest.lookup("media/images/eosc-img.png")
 

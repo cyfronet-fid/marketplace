@@ -14,11 +14,13 @@ RSpec.feature "Recommended services" do
 
     services_ids = [1, 2, 3]
     services_ids.each { |id| create(:service, id: id) }
-    allow(Faraday).to receive(:post).and_return(double(status: 200, body: { "recommendations" => services_ids }))
+    response = double(Faraday::Response, status: 200, body: "{ \"recommendations\": #{services_ids} }")
+
+    allow_any_instance_of(Faraday::Connection).to receive(:post).and_return(response)
     expect(Recommender::SimpleRecommender).not_to receive(:new)
 
     visit services_path
-    expect(all("[data-probe=\"recommendation-panel\"]").length).to be services_ids.length
+    expect(all("[data-probe='recommendation-panel']").length).to eq services_ids.length
   end
 
   it "should not display recommended on faraday error", js: true do

@@ -52,7 +52,7 @@ class Import::Providers
       end
       rescue ActiveRecord::RecordInvalid
         log "[WARN] Provider #{parsed_provider_data[:name]},
-                eid: #{parsed_provider_data[:pid]} cannot be updated. #{current_provider.errors.messages}"
+                eid: #{parsed_provider_data[:pid]} cannot be updated. #{current_provider.errors.full_messages}"
       ensure
         log_status(current_provider, parsed_provider_data, provider_source)
     end
@@ -97,9 +97,9 @@ class Import::Providers
       )
       current_provider.upstream_id = provider_source.id
       if current_provider.invalid?
-        provider_source.update!(errored: current_provider.errors.messages)
+        provider_source.update!(errored: current_provider.errors.full_messages)
         log "Provider #{parsed_provider_data[:name]},
-              eid: #{parsed_provider_data[:pid]} saved with errors: #{current_provider.errors.messages}"
+              eid: #{parsed_provider_data[:pid]} saved with errors: #{current_provider.errors.full_messages}"
       end
 
       Importers::Logo.new(current_provider, image_url).call
@@ -114,7 +114,7 @@ class Import::Providers
         Importers::Logo.new(current_provider, image_url).call
         current_provider.save!
       else
-        current_provider.sources.first.update!(errored: current_provider.errors.messages)
+        current_provider.sources.first.update!(errored: current_provider.errors.full_messages)
       end
     end
 
@@ -124,7 +124,6 @@ class Import::Providers
       rescue Errno::ECONNREFUSED
         abort("import exited with errors - could not connect to #{@eosc_registry_base_url}")
       end
-
       rp.body["results"].index_by { |provider| provider["id"] }
     end
 end
