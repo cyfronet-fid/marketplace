@@ -1,0 +1,61 @@
+overview:
+  activation_strategy: query_param
+
+  next:
+    tour_name: "overview"
+    controller_name: "services"
+    action_name: "index"
+    redirect_to: "services_path"
+    controller_params:
+      tour: overview
+
+  steps:
+    0:
+      welcome: true
+      title: Welcome!
+      text: |-
+        Welcome to the EOSC Portal Catalogue and Marketplace! We offer resources and services to discover, store, share, compose and analyse research data.
+
+        Are you curious to find out how we can support your research?
+    1:
+      title: Navigation info
+      text: |-
+        There are different ways to navigate our catalogue.
+
+        Do you want to browse all our resources? Then click “Browse through catalogue”
+
+      attachTo:
+        element: "[data-shepherd-tour-target='overview_1']"
+        placement: "auto"
+    2:
+      title: Catalogue options
+      text: |-
+        Want to narrow down the selection to resources for your field?
+        No problem! Simply click “scientific domains” and select the academic field that best describes your work.
+
+        Or are you looking for a specific type of resource?
+        You can also click “categories” to filter our catalogue.
+
+      attachTo:
+        element: "[data-shepherd-tour-target='overview_2']"
+        placement: "auto"
+    3:
+      title: More catalogue options
+      text: |-
+        We also offer more advanced browsing options. You can use this menu to select resources by specific
+        - communities or infrastructures
+        - providers
+
+        You can also filter resources based on the audience they serve.
+
+      attachTo:
+        element: "[data-shepherd-tour-target='overview_3']"
+        placement: "auto"
+    4:
+      title: Browse all resources
+      text: |-
+        Let’s first take a look at the unfiltered view of the catalogue.
+
+      attachTo:
+        element: "[data-shepherd-tour-target='overview_4']"
+        placement: "auto"

@@ -1,6 +1,6 @@
 <script>
     (function() {
-        const tour = new Shepherd.Tour(<%= Rails.configuration.tours.tour_options&.html_safe %>);
+        const tour = new Shepherd.Tour(<%= Rails.configuration.tours.tour_options.to_json.html_safe %>);
         function getEventDispatcher(action) {
             return function () {
                 const event = new CustomEvent("MP:tourEvent", {
