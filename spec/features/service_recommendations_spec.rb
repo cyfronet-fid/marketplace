@@ -26,6 +26,10 @@ RSpec.feature "recommended services panel", js: true do
   end
 
   it "has header with 'SUGGESTED' box in version 1" do
+    services_ids = [@services[0].id, @services[1].id, @services[2].id]
+    response = double(Faraday::Response, status: 200, body: "{ \"recommendations\": #{services_ids} }")
+    allow_any_instance_of(Faraday::Connection).to receive(:post).and_return(response)
+
     use_ab_test(recommendation_panel: "v1")
     visit services_path
 
@@ -34,6 +38,10 @@ RSpec.feature "recommended services panel", js: true do
   end
 
   it "has 'SUGGESTED' box in each recommended service in version 2" do
+    services_ids = [@services[0].id, @services[1].id]
+    response = double(Faraday::Response, status: 200, body: "{ \"recommendations\": #{services_ids} }")
+    allow_any_instance_of(Faraday::Connection).to receive(:post).and_return(response)
+
     use_ab_test(recommendation_panel: "v2")
     visit services_path
 

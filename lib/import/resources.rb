@@ -70,7 +70,7 @@ module Import
                   service.upstream_id = service_source.id
                   service.save(validate: false)
                 end
-                log "Service #{service.name}, eid: #{service.pid} saved with errors: #{service.errors.messages}"
+                log "Service #{service.name}, eid: #{service.pid} saved with errors: #{service.errors.full_messages}"
 
                 Importers::Logo.new(service, image_url).call
                 service.save(validate: false)

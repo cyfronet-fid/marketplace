@@ -94,13 +94,13 @@ module Importable
     Vocabulary::SocietalGrandChallenge.where(eid: challenges)
   end
 
-  def map_provider(prov_eid, eosc_registry_base_url, token: nil, faraday: Faraday, retry_attempts: 3, actual_try: 0)
+  def map_provider(prov_eid, eosc_registry_base_url, token: nil, retry_attempts: 3, actual_try: 0)
     if prov_eid.present?
       mapped_provider = Provider.joins(:sources).find_by("provider_sources.source_type": "eosc_registry",
                                                          "provider_sources.eid": prov_eid)
 
       if mapped_provider.nil?
-        prov = Importers::Request.new(eosc_registry_base_url, "provider", faraday: faraday, token: token, id: prov_eid).call
+        prov = Importers::Request.new(eosc_registry_base_url, "provider", token: token, id: prov_eid).call
         provider  = Provider.find_or_create_by(name: prov.body["name"])
         provider.update(Importers::Provider.new(prov.body, Time.now.to_i, "rest").call)
         ProviderSource.create!(provider_id: provider.id, source_type: "eosc_registry", eid: prov_eid)
@@ -113,7 +113,7 @@ module Importable
     actual_try += 1
     if actual_try < retry_attempts
       Rails.logger.warn "Provider mapping connection refused, #{actual_try + 1}/#{retry_attempts} try to download"
-      map_provider(prov_eid, eosc_registry_base_url, token: token, faraday: faraday,
+      map_provider(prov_eid, eosc_registry_base_url, token: token,
                    retry_attempts: retry_attempts, actual_try: actual_try)
     else
       Rails.logger.error "Maximum retry connection attempts exceeded. No mapped provider return"
