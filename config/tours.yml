@@ -1,5 +1,10 @@
 defaults: &defaults
-  :tour_options: '{ defaultStepOptions: { classes: "theme-dark", scrollTo: true, arrow: true }, useModalOverlay: true }'
+  tour_options:
+    defaultStepOptions:
+      classes: theme-dark
+      scrollTo: true
+      arrow: true
+    useModalOverlay: true
 
 development:
   <<: *defaults

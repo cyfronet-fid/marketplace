@@ -1,0 +1,73 @@
+overview:
+  activation_strategy: query_param
+
+  previous:
+    tour_name: "overview"
+    controller_name: "home"
+    action_name: "index"
+    redirect_to: "root_path"
+    controller_params:
+      tour: overview
+
+  next:
+    tour_name: "overview"
+    controller_name: "services"
+    action_name: "show"
+    redirect_to: "overview_tour_first_service_path"
+    controller_params:
+      tour: overview
+
+  steps:
+    5:
+      title: Resources list
+      text: |-
+        This page shows all the items we have in our catalogue.
+
+        You can use the navigation at the top of the page to decide how many items you want to show on each page and whether you want to order them by name, ranking or the best match with your profile.
+
+        Are you looking for something a bit more specific? The side bar can help you narrow down the selection of resources.
+
+      attachTo:
+        element: "[data-shepherd-tour-target='overview_5']"
+        placement: "auto"
+    6:
+      title: Categories
+      text: |-
+        The “Categories” section can help you find specific types of resources.
+
+        You can, for instance, choose to see only training materials or resources to help you process and analyse data.
+
+      attachTo:
+        element: "[data-shepherd-tour-target='overview_6']"
+        placement: "auto"
+    7:
+      title: Filters
+      text: |-
+        You can also use filters to find resources that are:
+
+        - suited for your academic discipline
+        - offered by specific providers
+        - targeted at a specific group of users
+        - related to specific infrastructures or communities
+
+        You can also limit the results based on their rating and accessibility.
+
+      attachTo:
+        element: "[data-shepherd-tour-target='overview_7']"
+        placement: "auto"
+    8:
+      title: Search bar
+      text: |-
+        Do you prefer to use the search bar?
+
+      attachTo:
+        element: "[data-shepherd-tour-target='overview_8']"
+        placement: "auto"
+    9:
+      title: Resources
+      text: |-
+        If you want to find out more about a specific resource, you can click to reveal more details.
+
+      attachTo:
+        element: "[data-shepherd-tour-target='overview_9']"
+        placement: "auto"
