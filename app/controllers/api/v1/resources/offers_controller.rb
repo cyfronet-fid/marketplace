@@ -26,7 +26,7 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
     if @offer.persisted?
       render json: Api::V1::OfferSerializer.new(@offer).as_json, status: 201
     else
-      render json: { error: @offer.errors.messages }, status: 400
+      render json: { error: @offer.errors.to_hash }, status: 400
     end
   end
 
@@ -35,7 +35,7 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
     if Offer::Update.new(@offer, template).call
       render json: Api::V1::OfferSerializer.new(@offer).as_json, status: 200
     else
-      render json: { error: @offer.errors.messages }, status: 400
+      render json: { error: @offer.errors.to_hash }, status: 400
     end
   end
 

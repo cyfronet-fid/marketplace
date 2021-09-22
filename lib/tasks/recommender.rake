@@ -21,7 +21,7 @@ namespace :recommender do
         puts "Database dump sent successfully!"
       elsif response.status == 400
         puts "Recommender system validation error, details:"
-        pp response.body["errors"]
+        pp JSON.parse(response.body)["errors"]
       end
     rescue StandardError
       path = Rails.root.join("data.json")
@@ -49,7 +49,7 @@ namespace :recommender do
         puts "Database dump sent successfully!"
       elsif response.status == 400
         puts "Recommender system validation error, details:"
-        pp response.body["errors"]
+        pp JSON.parse(response.body)["errors"]
       end
     rescue StandardError
       path = Rails.root.join("data.json")

@@ -124,6 +124,7 @@ group :production do
 end
 
 gem "faraday"
+gem "faraday_middleware"
 gem "reverse_markdown"
 
 # Fix for puma memory leak

@@ -5,7 +5,7 @@ require "jira/setup"
 
 describe Import::Providers do
   let(:test_url) { "https://localhost/api" }
-  let(:faraday) { double(Faraday) }
+  let(:faraday) { Faraday }
 
   def make_and_stub_eosc_registry(ids: [], dry_run: false, filepath: nil, log: false, default_upstream: nil)
     options = {
@@ -60,17 +60,16 @@ describe Import::Providers do
   let!(:networking) { create(:category, name: "Networking") }
   let!(:provider) { create(:provider, name: "BlueBRIDGE") }
 
-  def expect_responses(faraday, test_url, providers_response = nil)
+  def expect_responses(test_url, providers_response = nil)
     unless providers_response.nil?
-      expect(faraday).to receive(:get).with("#{test_url}/provider/all?quantity=10000&from=0",
-                                            headers: { "Accept" => "application/json" }).and_return(providers_response)
+      allow_any_instance_of(Faraday::Connection).to receive(:get).with("#{test_url}/provider/all?quantity=10000&from=0").and_return(providers_response)
     end
   end
 
   describe "#error responses" do
     it "should abort if /api/services errored" do
       response = double(status: 500, body: {})
-      expect_responses(faraday, test_url, response)
+      expect_responses(test_url, response)
       expect { log_less_eosc_registry.call }.to raise_error(SystemExit).and output.to_stderr
     end
   end
@@ -78,7 +77,7 @@ describe Import::Providers do
   describe "#standard responses" do
     before(:each) do
       response = double(status: 200, body: create(:eosc_registry_providers_response))
-      expect_responses(faraday, test_url, response)
+      expect_responses(test_url, response)
     end
 
     it "should not update provider which has upstream to null" do

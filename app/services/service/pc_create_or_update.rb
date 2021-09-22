@@ -47,7 +47,7 @@ class Service::PcCreateOrUpdate
         service.save(validate: false)
       end
       source = ServiceSource.create!(service_id: service.id, source_type: "eosc_registry", eid: @eid,
-                                     errored: service.errors.messages)
+                                     errored: service.errors.full_messages)
       service.update(upstream_id: source.id)
 
       Importers::Logo.new(service, @eosc_registry_service["logo"]).call

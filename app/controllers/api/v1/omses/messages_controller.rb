@@ -26,7 +26,7 @@ class Api::V1::OMSes::MessagesController < Api::V1::ApplicationController
     if @message.save
       render json: Api::V1::MessageSerializer.new(@message, keep_content?: true).as_json, status: 201
     else
-      render json: { error: @message.errors.messages }, status: 400
+      render json: { error: @message.errors.to_hash }, status: 400
     end
   end
 
@@ -34,7 +34,7 @@ class Api::V1::OMSes::MessagesController < Api::V1::ApplicationController
     if @message.update(transform(permitted_attributes(@message)))
       render json: Api::V1::MessageSerializer.new(@message, keep_content?: true).as_json
     else
-      render json: { error: @message.errors.messages }, status: 400
+      render json: { error: @message.errors.to_hash }, status: 400
     end
   end
 

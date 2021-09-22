@@ -25,7 +25,7 @@ class Api::V1::OMSes::Projects::ProjectItemsController < Api::V1::ApplicationCon
       excluded_secret_keys = attributes[:user_secrets].present? ? attributes[:user_secrets].keys : []
       render json: serialize_with_obfuscation(@project_item, excluded_secret_keys)
     else
-      render json: { error: @project_item.errors.messages }, status: 400
+      render json: { error: @project_item.errors.to_hash  }, status: 400
     end
   end
 
