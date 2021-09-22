@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Include resources without offers in statistics in the executive panel (@goreck888)
+- Max width to 989px for mobile view (@jarekzet)
 
 ### Security
 
