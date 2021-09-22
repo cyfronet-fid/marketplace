@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Button to query clear in the Backoffice (@goreck888)
 
 ### Changed
+- In mobile view max-width of page is set to 989px (@jarekzet)
 
 ### Deprecated
 
@@ -19,7 +20,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Include resources without offers in statistics in the executive panel (@goreck888)
-- Max width to 989px for mobile view (@jarekzet)
 
 ### Security
 
