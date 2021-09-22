@@ -9,7 +9,8 @@
                                           services_count: services_count
       = render "services/filters", filters: filters, query_params: query_params
 
-    .col-lg-9{ "data-controller": "favourite #{effective_show_comparison ? "comparison" : ""}" }
+    .col-lg-9{ "data-controller": "favourite #{effective_show_comparison ? "comparison" : ""}",
+               "data-shepherd-tour-target": "overview_5" }
       .row.mb-4
         = render "services/active_filters", category: category, active_filters: active_filters
         - if effective_show_recommendations
@@ -26,7 +27,8 @@
                            offers: offers,
                            favourite_services: favourite_services,
                            comparison_enabled: comparison_enabled,
-                           remote: true }
+                           remote: true,
+                           tour_overview_9_target_on_counter: 0 }
 
         - if effective_show_recommendations
           - if ab_test(:recommendation_panel) == "v2" && !recommended_services.blank?

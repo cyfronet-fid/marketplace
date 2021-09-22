@@ -172,6 +172,11 @@ Rails.application.routes.draw do
   resource :tour_histories, only: :create
   resource :tour_feedbacks, only: :create
 
+  direct :overview_tour_first_service do |params|
+    service = Service.where(status: [:published, :unverified, :errored]).order(:name).first
+    service_path(service, params)
+  end
+
   get "errors/not_found"
   get "errors/unprocessable"
   get "errors/internal_server_error"
