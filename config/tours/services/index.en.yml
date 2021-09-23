@@ -23,7 +23,7 @@ overview:
       text: |-
         This page shows all the items we have in our catalogue.
 
-        You can use the navigation at the top of the page to decide how many items you want to show on each page and whether you want to order them by name, ranking or the best match with your profile.
+        You can use the navigation at the top of the page to decide how many items you want to show on each page and whether you want to **order them by name, ranking or the best match with your profile.**
 
         Are you looking for something a bit more specific? The side bar can help you narrow down the selection of resources.
 
@@ -33,7 +33,7 @@ overview:
     6:
       title: Categories
       text: |-
-        The “Categories” section can help you find specific types of resources.
+        The **Categories** section can help you find specific types of resources.
 
         You can, for instance, choose to see only training materials or resources to help you process and analyse data.
 
@@ -43,14 +43,14 @@ overview:
     7:
       title: Filters
       text: |-
-        You can also use filters to find resources that are:
+        You can also **use filters** to find resources that are:
 
-        - suited for your academic discipline
-        - offered by specific providers
-        - targeted at a specific group of users
-        - related to specific infrastructures or communities
-
-        You can also limit the results based on their rating and accessibility.
+        - **suited for your academic discipline**
+        - **offered by specific providers**
+        - **targeted at a specific group of users**
+        - **related to specific infrastructures or communities**
+        
+        You can also limit the results based on their **rating, order type** and **accessibility.**
 
       attachTo:
         element: "[data-shepherd-tour-target='overview_7']"
@@ -59,6 +59,10 @@ overview:
       title: Search bar
       text: |-
         Do you prefer to use the search bar?
+        
+        The **search uses** an **approximate string matching** technique that will help you find the desired resource.
+        Thanks to the **autocomplete function** after typing a keyword, a **list of matches will be presented**, you can go directly to the **resource, provider profile**
+        or be redirected to the **offer you are interested in.**        
 
       attachTo:
         element: "[data-shepherd-tour-target='overview_8']"
@@ -66,7 +70,7 @@ overview:
     9:
       title: Resources
       text: |-
-        If you want to find out more about a specific resource, you can click to reveal more details.
+        If you want to find out more about a specific resource, you can **click to reveal more details**.
 
       attachTo:
         element: "[data-shepherd-tour-target='overview_9']"

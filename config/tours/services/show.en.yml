@@ -79,7 +79,7 @@ overview:
     10:
       title: Resource details
       text: |-
-        For each resource, you’ll find a short description of the resource as well as more detailed information such as the maturity level of a resource, contact information, accessibility or other resources this one relies on.
+        For each resource, you’ll find a **short description** of the resource as well as more **detailed information** such as the **maturity level of a resource, contact information, accessibility** or **other resources this one relies on.**
 
       attachTo:
         element: "[data-shepherd-tour-target='overview_10']"
@@ -97,7 +97,7 @@ overview:
     title: Congratulations!
     text: |-
       You have completed the available resources tour guide. We hope you like our presentation for new researchers and find the provided information useful.
-      **Please take a moment and tell us how do you like the new layout of this page?**
+      **Please take a moment and tell us how helpful this tour was?**
     questions:
       -
         name: rating
