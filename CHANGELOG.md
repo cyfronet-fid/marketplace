@@ -6,19 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.21.0-milestone]
+## [3.21.0 ] 2021-09-23
 
 ### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
+- Extend tour capabilities
 
 ## [3.20.0] 2021-09-17
 
