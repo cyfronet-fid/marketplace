@@ -22,7 +22,7 @@ $rating-point-size: 30px;
     position: relative;
 
     > .feedback-point {
-      border: 1px solid $palette-solid-30;
+      border: 1px solid $palette-solid-10;
       border-radius: 50%;
       background-color: $white;
       width: $rating-point-size;
@@ -37,6 +37,7 @@ $rating-point-size: 30px;
 
       &.active {
         background-color: $palette-yellow;
+        border: none;
       }
 
       &:hover {
