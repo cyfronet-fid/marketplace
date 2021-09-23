@@ -4,6 +4,7 @@ defaults: &defaults
       classes: theme-dark
       scrollTo: true
       arrow: true
+      popperOptions: { modifiers: [{ name: 'offset', options: { offset: [30, 30] } }] }
     useModalOverlay: true
 
 development:
