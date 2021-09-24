@@ -25,7 +25,7 @@
             = link_to _("Publish"),
                       backoffice_service_publish_path(@service),
                       method: :post,
-                      data: { confirm: _("Are you sure you want to publish this resource?") },
+                      data: { confirm: _("Are you sure you want to publish this resource?"), e2e: "publish-btn" },
                       class: "btn btn-success btn-sm"
           - if policy([:backoffice, @service]).publish_unverified?
             = link_to _("Publish as unverified resource"),
@@ -37,7 +37,7 @@
             = link_to _("Stop showing in the MP"),
                       backoffice_service_draft_path(@service),
                       method: :post,
-                      data: { confirm: _("Are you sure you want to stop showing this resource?") },
+                      data: { confirm: _("Are you sure you want to stop showing this resource?"), e2e: "draft-btn" },
                       class: "btn btn-error btn-sm"
 
 

@@ -1,7 +1,7 @@
 .media.mb-3.service-box.shadow-sm
   .media-body.pt-4
     .pl-4.pr-4.mb-3
-      %h2.mb-3{ "data-probe" => "", "data-service-id" => service.id }= yield
+      %h2.mb-3{ "data-probe" => "", "data-service-id" => service.id, "data-e2e" => "service-id" }= yield
       %p.mb-3= highlighted_for(:tagline, service, highlights)
       = render "services/categorization", service: service, highlights: highlights
       - if content_for(:comparison_checkbox)
