@@ -21,14 +21,8 @@ function handleCancelFor(data) {
     if (data.activation_strategy === "default") {
         Cookies.set(data.cookies_names.skip, "later", {domain: window.location.hostname});
     } else if (data.activation_strategy === "query_param") {
-        window.location.search = stripTourParam(window.location.search);
+        window.history.pushState(null, "", stripTourParam(window.location));
     }
-}
-
-function stripTourParam(search) {
-    const params = new URLSearchParams(search);
-    params.delete("tour");
-    return params;
 }
 
 function handleCompleteFor(data) {
@@ -59,8 +53,16 @@ function handleCompleteFor(data) {
     }
 
     if (!!data.next_tour_link) {
-        window.location.replace(data.next_tour_link)
+        Turbolinks.visit(data.next_tour_link);
+    } else if (data.activation_strategy === "query_param") {
+        window.history.pushState(null, "", stripTourParam(window.location));
     }
+}
+
+function stripTourParam(location) {
+    const url = new URL(location);
+    url.searchParams.delete("tour");
+    return url;
 }
 
 function handleStartFor(data) {
