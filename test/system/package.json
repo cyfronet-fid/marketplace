@@ -19,6 +19,7 @@
     "@cypress/skip-test": "^2.6.0",
     "@medv/finder": "^2.0.0",
     "@types/node": "^14.14.37",
+    "cypress-file-upload": "^5.0.8",
     "cypress-promise": "^1.1.0",
     "cypress-terminal-report": "^3.0.3",
     "cypress-wait-until": "^1.7.1"

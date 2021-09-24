@@ -1,4 +1,4 @@
-.col-md-6.edit-offer{ id: "offer-#{offer.id}" }
+.col-md-6.edit-offer{ id: "offer-#{offer.id}", "data-e2e": "offer" }
   .card.m-0.mb-5
     = render "services/offers/description", offer: offer
     = render "layouts/common_parts/services/parameters", technical_parameters: offer.attributes.map(&:to_json)

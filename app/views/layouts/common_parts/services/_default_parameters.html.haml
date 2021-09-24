@@ -1,6 +1,6 @@
 - technical_parameters = offer.attributes.map(&:to_json)
 - published_offers_size = offer.service.offers_count
-.col-md-6.edit-offer
+.col-md-6.edit-offer{ "data-e2e": "offer" }
   .card.m-0.mb-5{ class: offer.default ? "default" : nil }
     - if published_offers_size > 1
       - if offer.default && published_offers_size == 2

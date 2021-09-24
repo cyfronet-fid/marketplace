@@ -7,6 +7,6 @@
     .card-button.text-center
       %label
         = link_to service_offers_path(offer.service, project_item: { offer_id: offer.iid }), "data-probe": "",
-          method: :put do
+          "data-e2e": "select-offer-btn", method: :put do
           %span.btn.btn-primary.font-weight-bold
             = _("Select an offer")
