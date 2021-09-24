@@ -20,6 +20,7 @@ require('cypress-terminal-report/src/installLogsCollector')();
 import '@cypress/skip-test/support';
 import 'cypress-promise/register';
 import 'cypress-wait-until';
+import 'cypress-file-upload';
 
 /**
  * Custom commands
@@ -30,6 +31,7 @@ import './utilities';
 
 import './jira';
 import './offers';
+import './resources';
 
 /**
  * Don't fail on uncaught exception

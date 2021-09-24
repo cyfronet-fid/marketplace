@@ -6,10 +6,11 @@ export interface IUser {
     last_name?: string;
     email?: string;
     password: string;
-}
+    roles?:string[];
+  }
 
 export const UserFactory = {
-    create: (args: {[field: string]: string} = {}) => ({
+    create: (args: {[field: string]: string | string[]} = {}) => ({
         name: "name_" + Utilities.getRandomString(8),
         first_name: "first_name_" + Utilities.getRandomString(8),
         last_name: "last_name_" + Utilities.getRandomString(8),

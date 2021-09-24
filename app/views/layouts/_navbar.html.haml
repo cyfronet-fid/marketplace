@@ -96,7 +96,7 @@
               .border-top
             - if policy([:backoffice, :backoffice]).show?
               %li
-                %a.dropdown-item.dropdown-profile{ href: backoffice_path }
+                %a.dropdown-item.dropdown-profile{ href: backoffice_path, "data-e2e": "backoffice" }
                   = _("Backoffice")
             - if policy([:admin, :admin]).show?
               %li
