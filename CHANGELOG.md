@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Include resources without offers in statistics in the executive panel (@goreck888)
+- Clear query param on completion for query param activated tours (@jswk)
 
 ### Security
 
