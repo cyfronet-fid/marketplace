@@ -21,8 +21,8 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from Pundit::NotAuthorizedError do |exception|
-    redirect_back fallback_location: root_path,
-                  alert: not_authorized_message(exception)
+    redirect_to root_path(anchor: ""),
+                alert: not_authorized_message(exception)
   end
 
   def tour_disabled
