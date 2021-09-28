@@ -37,7 +37,7 @@ RSpec.describe "Backoffice service" do
       service = create(:service, owners: [user], status: :deleted)
 
       post backoffice_service_publish_path(service)
-      expect(response).to redirect_to root_path
+      expect(response).to redirect_to root_path(anchor: "")
       expect(flash[:alert]).to eq(I18n.t("default", scope: :pundit))
     end
 
@@ -45,7 +45,7 @@ RSpec.describe "Backoffice service" do
       service = create(:service, owners: [user], status: :deleted)
 
       post backoffice_service_draft_path(service)
-      expect(response).to redirect_to root_path
+      expect(response).to redirect_to root_path(anchor: "")
       expect(flash[:alert]).to eq(I18n.t("default", scope: :pundit))
     end
   end
