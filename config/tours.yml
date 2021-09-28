@@ -1,5 +1,11 @@
 defaults: &defaults
-  :tour_options: '{ defaultStepOptions: { classes: "theme-dark", scrollTo: true, arrow: true }, useModalOverlay: true }'
+  tour_options:
+    defaultStepOptions:
+      classes: theme-dark
+      scrollTo: true
+      arrow: true
+      popperOptions: { modifiers: [{ name: 'offset', options: { offset: [30, 30] } }] }
+    useModalOverlay: true
 
 development:
   <<: *defaults

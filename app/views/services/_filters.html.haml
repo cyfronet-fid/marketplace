@@ -5,7 +5,7 @@
         = _("Filters")
 
   = form_tag "", method: :get, role: "search", class: "filters", "data-controller": "filter",
-    "data-target": "filter.form" do
+    "data-target": "filter.form", "data-shepherd-tour-target": "overview_7" do
     - query_params.slice(:q, :sort, :per_page).each do |key, value|
       = hidden_field_tag key, value, "data-indelible": true if params[key].present?
     - filters.each do |filter|

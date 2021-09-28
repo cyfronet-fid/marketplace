@@ -1,25 +1,46 @@
 $modal-background: #fff;
 
+// scss-lint:disable PlaceholderInExtend
 .shepherd-element {
-  margin: 40px !important;
   max-width: 500px;
+
+  &[aria-labelledby="step-1-label"] {
+    .shepherd-content {
+      .shepherd-footer::before {
+        margin-bottom: 30px;
+      }
+    }
+  }
 }
 
 .shepherd-content {
-  // scss-lint:disable PlaceholderInExtend
+
   @extend .modal-content;
   background-color: $modal-background;
+  border: none;
 
   ul {
-    padding-left: 20px;
+    padding-left: 0;
+    margin-bottom: 12px;
 
     > li {
-      list-style: disc;
+      list-style: none;
+      position: relative;
+      padding-left: 15px;
+
+      &::before {
+        content: '•';
+        color: $palette-yellow;
+        position: absolute;
+        left: 0;
+        top: 2px;
+        font-size: 1.5rem;
+      }
     }
   }
 
   .shepherd-header {
-    padding: 1em;
+    padding-bottom: 0 !important;
     background: unset !important;
 
     .shepherd-title {
@@ -29,16 +50,25 @@ $modal-background: #fff;
 
   .shepherd-text {
     padding: 1em;
-    font-size: 0.8rem;
+    font-size: 0.875rem;
     overflow-y: auto;
     overflow-x: hidden;
   }
 
   .shepherd-footer {
     padding: 1em;
-    display: grid;
+    display: block;
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
+
+    &::before {
+      content: '';
+      width: 100%;
+      height: 7px;
+      margin-bottom: 11px;
+      float: left;
+      border-top: 7px solid $border-header;
+    }
 
     :first-child {
       text-align: left;
@@ -51,6 +81,14 @@ $modal-background: #fff;
     .shepherd-button:not(.close-link) {
       @extend .btn;
       @extend .btn-primary;
+      float: left;
+      margin-right: 30px;
+
+      &:last-child {
+        @extend .btn-sm;
+        float: right;
+        margin: 0;
+      }
     }
 
     .close-link {
@@ -61,12 +99,17 @@ $modal-background: #fff;
       text-transform: uppercase;
       font-size: 14px;
       font-weight: 300;
+      margin-top: 12px;
       color: $palette-blue;
       float: left;
       opacity: 1;
 
       &:hover {
         background: unset !important;
+      }
+
+      &:first-child {
+        margin-top: 7px;
       }
     }
 
@@ -86,7 +129,7 @@ $modal-background: #fff;
 .tour-welcome {
   width: 900px !important;
   max-width: 900px !important;
-
+  // scss-lint:disable all
   > .shepherd-content {
     padding-top: 40px;
     padding-right: 40px;
@@ -97,12 +140,20 @@ $modal-background: #fff;
       padding-left: 300px;
 
       .shepherd-title {
-        font-size: 20px;
+        font-size: 1.125rem;
+
+        &#step-1-label {
+          font-size: 1.5rem;
+        }
       }
     }
 
     > .shepherd-text {
       padding-left: 300px;
+
+      &#step-1-description {
+        font-size: 1rem;
+      }
     }
 
     > .shepherd-footer {
@@ -112,10 +163,12 @@ $modal-background: #fff;
     > .new-feature {
       background-image: url('../images/new-feature.png');
       width: 300px;
-      height: 290px;
+      height: 305px;
+      top: 20px;
       position: absolute;
     }
   }
+  // scss-lint:enable all
 }
 
 @media (max-width: 959px) {
@@ -152,6 +205,10 @@ $modal-background: #fff;
         .shepherd-button {
           font-size: 15px;
           line-height: 1.2;
+        }
+
+        .close-link {
+          margin-top: 6px;
         }
       }
 
