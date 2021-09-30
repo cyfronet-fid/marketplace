@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.22.0-milestone]
+## [3.22.0] 2021-09-30
 
 ### Added
 - Button to query clear in the Backoffice (@goreck888)
@@ -15,16 +15,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - In mobile view max-width of page is set to 989px (@jarekzet)
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 - Include resources without offers in statistics in the executive panel (@goreck888)
 - Clear query param on completion for query param activated tours (@jswk)
 - Fix anchor tag url persistence in redirect after trying to access a forbidden resource (@wujuu)
-
-### Security
 
 ## [3.21.0] 2021-09-23
 
