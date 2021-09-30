@@ -79,7 +79,7 @@ class Offer < ApplicationRecord
   end
 
   def attributes
-    (parameters || []).map { |param| Attribute.from_json(param) }
+    parameters
   end
 
   def offer_type

@@ -1,6 +1,6 @@
 .col-md-6.bundle-item
   %strong
-    = offer.service.title
+    = offer.service.name
   - if offer.service.description.size > 10
     = markdown(offer.service.description.truncate(100, separator: " "))
     = link_to "Read more", "#", class: "btn-link"
