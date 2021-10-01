@@ -1,5 +1,6 @@
 .col-md-6.d-flex.align-items-stretch{ id: "offer-#{offer.id}" }
   .card.m-0.mb-5
+    = local_assigns[:preview]
     = render "services/offers/description", offer: offer
     = render "services/offers/parameters",
       technical_parameters: filter_technical_parameters(offer.attributes.map(&:to_json))
@@ -9,6 +10,7 @@
     .card-button.text-center
       %label
         = link_to service_offers_path(offer.service, customizable_project_item: { offer_id: offer.iid }),
-        "data-probe": "", "data-e2e": "select-offer-btn", method: :put do
+        "data-probe": "", "data-e2e": "select-offer-btn", "data-target": local_assigns[:preview] ? "preview.link" : "",
+        method: :put do
           %span.btn.btn-primary.font-weight-bold
             = _("Select an offer")

@@ -3,8 +3,8 @@
     %span
       = _("Organisation") + ":"
   %dd.x-small
-    %mr-4= resource_organisation(service, highlights)
-- active_providers = safe_join(providers(service, highlights), ", ")
+    %mr-4= resource_organisation(service, highlights, local_assigns[:preview])
+- active_providers = safe_join(providers(service, highlights, local_assigns[:preview]), ", ")
 - if active_providers.present?
   %dl.mb-0
     %dt.x-small

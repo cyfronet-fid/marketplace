@@ -49,12 +49,14 @@ module ServiceHelper
     service.scientific_domains.map { |target| target.name }
   end
 
-  def resource_organisation(service, highlights = nil)
+  def resource_organisation(service, highlights = nil, preview = false)
     target = service.resource_organisation
+    preview_options = preview ? { "data-target": "preview.link" } : {}
     link_to_unless(
       target.deleted?,
       highlighted_for(:resource_organisation_name, service, highlights),
-      provider_path(target)
+      provider_path(target),
+      preview_options
     )
   end
 
@@ -76,16 +78,17 @@ module ServiceHelper
       map { |target| target.name }
   end
 
-  def providers(service, highlights = nil)
+  def providers(service, highlights = nil, preview = false)
     highlighted = highlights.present? ? sanitize(highlights[:provider_names])&.to_str : ""
+    preview_options = preview ? { "data-target": "preview.link" } : {}
     service.providers
            .reject(&:blank?)
            .reject(&:deleted?)
            .reject { |p| p == service.resource_organisation }.uniq.map do |target|
       if highlighted.present? && highlighted.strip == target.name.strip
-        link_to_unless target.deleted?, highlights[:provider_names].html_safe, provider_path(target)
+        link_to_unless target.deleted?, highlights[:provider_names].html_safe, provider_path(target), preview_options
       else
-        link_to_unless target.deleted?, target.name, provider_path(target)
+        link_to_unless target.deleted?, target.name, provider_path(target), preview_options
       end
     end
   end
