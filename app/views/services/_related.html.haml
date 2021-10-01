@@ -4,4 +4,5 @@
   .card-columns
     = render partial: "services/service_box",
             collection: related_services,
-            as: :service
+            as: :service,
+            locals: { preview: local_assigns[:preview] }

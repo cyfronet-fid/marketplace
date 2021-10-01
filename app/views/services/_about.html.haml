@@ -6,7 +6,7 @@
       - if service.pid == (ENV["OPENAIRE_NOTEBOOKS__ACTIVATION_PID"] || "egi-fed.notebook")
         = render "notebook_openaire_explore"
       - if policy(service).order? && (policy(service).offers_show? || policy(service).bundles_show?)
-        = render "services/offers", offers: offers, service: service, bundles: bundles
+        = render "services/offers", offers: offers, service: service, bundles: bundles, preview: local_assigns[:preview]
     %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
       - service_sidebar_fields.each do |group|
         - if any_present?(service, *group[:fields])

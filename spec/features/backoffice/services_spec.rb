@@ -207,6 +207,26 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("service name")
     end
 
+    scenario "I cannot do any action on service preview", js: true do
+      service = create(:service, related_services: [create(:service)], tag_list: ["tag"],
+                       public_contacts: [build(:public_contact)], offers: [create(:offer)])
+
+      visit edit_backoffice_service_path(service)
+
+      click_on "Preview"
+
+      expect(page).to have_link(service.resource_organisation.name, href: "javascript:;")
+      expect(page).to have_link(service.providers.first.name, href: "javascript:;")
+      expect(page).to have_link("Webpage", href: "javascript:;")
+      expect(page).to have_link("Manual", href: "javascript:;")
+      expect(page).to have_link("Helpdesk", href: "javascript:;")
+      expect(page).to have_link("Training information", href: "javascript:;")
+      expect(page).to have_link("Ask a question about this resource?", href: "javascript:;")
+      expect(page).to have_link("Access the resource", href: "javascript:;")
+      expect(page).to have_link("tag", href: "javascript:;")
+      expect(page).to have_link(service.related_services.first.name, href: "javascript:;")
+    end
+
     scenario "I cannot create service with wrong logo file" do
       provider = create(:provider)
       scientific_domain = create(:scientific_domain)

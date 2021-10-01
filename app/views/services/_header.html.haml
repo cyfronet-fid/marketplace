@@ -9,7 +9,7 @@
     .col-12.col-sm-9.service-details-header
       %h2.font-weight-bolder= service.name
       %p.mb-1= service.tagline
-      = render "services/categorization", service: service, highlights: nil
+      = render "services/categorization", service: service, highlights: nil, preview: local_assigns[:preview]
 
       .row.mt-2
         .col
@@ -21,12 +21,12 @@
             - if service.persisted?
               = link_to "#{service.service_opinion_count} reviews", service_opinions_path(service),
               class: "ml-1 default-color"
-          .comparison
-            - unless local_assigns[:preview]
+          %fieldset{ preview_link_parameters(local_assigns[:preview]) }
+            .comparison
               %span.compare
-                %label{ options(service.slug, comparison_enabled) }
+                %label{ local_assigns[:preview] ? {} : options(service.slug, comparison_enabled) }
                   = check_box_tag "comparison", service.slug, checked?(service.slug), id: "comparison-#{service.id}",
-                          class: "form-check-input",
+                          class: local_assigns[:preview] ? "form-check-input disabled" : "form-check-input",
                           disabled: !checked?(service.slug) && comparison_enabled,
                           "data-probe" => "",
                           "data-e2e": "comparison-checkbox",
@@ -34,25 +34,26 @@
                           "data-action": "click->comparison#update"
                   %span.smaller
                     = _("Add to comparison")
-          .comparison
-            %span.compare
-              %label
-                = check_box_tag "favourite", service.slug, favourite?(Array(favourite_services), service.slug),
-                  id: "favourite-#{service.id}",
-                      class: "form-check-input",
-                      "data-target": "favourite.checkbox",
-                      "data-action": "click->favourite#updateFromRes"
-                %span.smaller
-                  = _("Add to favourites")
+            .comparison
+              %span.compare
+                %label
+                  = check_box_tag "favourite", service.slug, favourite?(Array(favourite_services), service.slug),
+                    id: "favourite-#{service.id}",
+                        class: "form-check-input",
+                        "data-target": "favourite.checkbox",
+                        "data-action": "click->favourite#updateFromRes"
+                  %span.smaller
+                    = _("Add to favourites")
   .col-12.col-lg-3.text-center.vertical-center
     .vertical-center-inner.access-type
-      - if policy(service).order?
+      - if policy(service).order? || local_assigns[:preview]
         = link_to _("Access the resource"),
                       service_offers_path(service),
                       class: "btn btn-primary d-block mb-3",
                       "data-e2e": "access-resource-btn",
-                      "data-probe": ""
-      - if user_signed_in? && policy(service).data_administrator?
+                      "data-probe": "",
+                      "data-target": local_assigns[:preview] ? "preview.link" : ""
+      - if user_signed_in? && policy(service).data_administrator? && !local_assigns[:preview]
         %a#dropdown-menu-button.dropdown-toggle.btn.btn-outline-secondary.d-block.mb-3{ "aria-expanded" => "false",
                                                       "aria-haspopup" => "true",
                                                       "data-toggle" => "dropdown",
@@ -89,7 +90,9 @@
           = render "services/sidebar/simple_links",
                       service: service,
                       fields: group[:fields],
-                      nested: group[:nested] || ""
+                      nested: group[:nested] || "",
+                      preview: local_assigns[:preview]
   .col-12.col-sm-3.question-col
-    - if local_assigns[:question] && !service.public_contacts.empty?
-      = render "services/ask_question", service: service, question: question
+    - if !service.public_contacts.empty? && (local_assigns[:question] || local_assigns[:preview])
+      = render "services/ask_question", service: service, question: local_assigns[:question],
+        preview: local_assigns[:preview]
