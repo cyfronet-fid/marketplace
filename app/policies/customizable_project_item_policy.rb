@@ -21,13 +21,12 @@ class CustomizableProjectItemPolicy < ApplicationPolicy
     [:service_id, :project_id, :affiliation_id, :customer_typology,
      :access_reason, :additional_information, :user_group_name,
      :project_name, :project_website_url, :company_name, :research_area_id,
-     :company_website_url, :voucher_id, :request_voucher,
+     :company_website_url, :voucher_id, :request_voucher, :parent_id,
      property_values: permitted_offer_attributes,
      bundled_property_values: permitted_bundled_offers_attributes]
   end
 
   private
-
     def permitted_offer_attributes
       to_permitted_attributes(record.offer.attributes)
     end
@@ -43,7 +42,7 @@ class CustomizableProjectItemPolicy < ApplicationPolicy
     end
 
     def to_permitted_attribute(attribute)
-      if (attribute.value_schema[:type] == "array" || attribute.type == "select")
+      if attribute.value_schema[:type] == "array" || attribute.type == "select"
         { attribute.id => [] }
       else
         attribute.id

@@ -1,6 +1,10 @@
-.col-md-6.bundle-item
-  %strong
-    = offer.service.name
-  - if offer.service.description.size > 10
-    = markdown(offer.service.description.truncate(100, separator: " "))
-    = link_to "Read more", "#", class: "btn-link"
+.col-md-6.bundle-item.mb-5.d-flex.align-items-stretch
+  .card
+    .card-body
+      %h4.card-title
+        = offer.name
+      - if offer.description.size > 10
+        = markdown(offer.description.truncate(100, separator: " "))
+        = link_to _("Show more"), "#", class: "btn-link"
+        = render "services/offers/bundle_parameters",
+              technical_parameters: filter_technical_parameters(offer.attributes.map(&:to_json))

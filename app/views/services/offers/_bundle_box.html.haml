@@ -1,0 +1,22 @@
+.col-12
+  .card.m-0.col-12.mb-5
+    = render "services/offers/bundle_description", offer: offer
+    %a.bundle-more.collapsed{ href: "#collapse-example",
+                  "data-toggle" => "collapse",
+                  "role" => "button",
+                  "aria-expanded" => "false",
+                  type: "button" }
+      Read technical parameters
+    = render "services/offers/bundle_parameters",
+      technical_parameters: filter_technical_parameters(offer.attributes.map(&:to_json))
+    = render "services/bundle", bundled_offers: offer.bundled_offers, parent: offer
+
+    .card-button.text-center
+      %label
+        = f.radio_button :offer_id, offer.iid, checked: project_item.offer == offer
+        %span.btn.btn-light.border.border-secondary.font-weight-bold
+          .unchecked
+            = _("Select a bundle")
+          .checked
+            = _("Selected bundle")
+          %i.fas.fa-check

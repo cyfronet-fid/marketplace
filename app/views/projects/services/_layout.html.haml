@@ -7,17 +7,21 @@
         .box-wrapper
           %h1.flex-grow-1.text-break
             #{project_item.service.name}
-          .row
-            .col-md-12.back-link
-              %i.fas.fa-chevron-left.fa-xs.mr-1
-              = link_to _("back to %{pn} project services") % { pn: project.name }, [project, :services]
+          .col-md-12.back-link
+          %i.fas.fa-chevron-left.fa-xs.mr-1
+          - if project_item.is_root?
+            = link_to _("back to %{pn} project resources") % { pn: project.name }, [project, :services]
+          - else
+            = link_to _("back to %{pn}") % { pn: project_item.parent.name },
+                project_service_path(project, project_item.parent)
       .col-md-4.float-right.justify-content-center
-
         - if project_item.orderable?
-          %p.text-uppercase.text-right.font-weight-bold.text-secondary.mb-0
+          .project-badge.text-uppercase.d-inline.float-right.font-weight-bold.text-secondary.mb-0
             -# TODO: refactor dynamic translation
             %span{ class: "status-#{project_item.status_type}" }= t("project_items.status.#{project_item.status_type}")
-
+        - if project_item.offer.bundle?
+          .project-badge.text-uppercase.d-inline.float-right.font-weight-bold.mb-0
+            = _("BUNDLE")
         = render Services::InlineOrderUrlComponent.new(offerable: project_item,
           classes: "btn btn-primary float-right pl-3 pr-3")
     %ul.nav.nav-tabs.mt-4.pl-3.row.services-menu

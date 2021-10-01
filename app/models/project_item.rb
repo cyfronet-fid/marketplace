@@ -8,6 +8,7 @@ class ProjectItem < ApplicationRecord
   include VoucherValidation
   include Iid
   include Offerable
+  include Parentable
 
   STATUS_TYPES = {
     created: "created",

@@ -6,8 +6,7 @@
       - if service.pid == "egi-fed.notebook"
         = render "notebook_openaire_explore"
       - if policy(service).order? && !offers&.empty?
-        = render "services/offers", offers: offers, service: service
-
+        = render "services/offers", offers: offers, service: service, bundles: bundles
     %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
       - service_sidebar_fields.each do |group|
         - if any_present?(service, *group[:fields])

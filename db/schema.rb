@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_17_055554) do
+ActiveRecord::Schema.define(version: 2021_10_05_073915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -176,6 +176,16 @@ ActiveRecord::Schema.define(version: 2021_08_17_055554) do
     t.index ["scope"], name: "index_messages_on_scope"
   end
 
+  create_table "offer_links", force: :cascade do |t|
+    t.bigint "source_id", null: false
+    t.bigint "target_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_id", "target_id"], name: "index_offer_links_on_source_id_and_target_id", unique: true
+    t.index ["source_id"], name: "index_offer_links_on_source_id"
+    t.index ["target_id"], name: "index_offer_links_on_target_id"
+  end
+
   create_table "offers", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -192,6 +202,7 @@ ActiveRecord::Schema.define(version: 2021_08_17_055554) do
     t.boolean "default", default: false
     t.jsonb "oms_params"
     t.bigint "primary_oms_id"
+    t.integer "bundled_offers_count", default: 0, null: false
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["primary_oms_id"], name: "index_offers_on_primary_oms_id"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
@@ -278,6 +289,9 @@ ActiveRecord::Schema.define(version: 2021_08_17_055554) do
     t.string "order_url", default: "", null: false
     t.string "status", default: "created", null: false
     t.jsonb "user_secrets", default: {}, null: false
+    t.string "ancestry"
+    t.integer "ancestry_depth", default: 0
+    t.index ["ancestry"], name: "index_project_items_on_ancestry"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
   end
@@ -684,6 +698,8 @@ ActiveRecord::Schema.define(version: 2021_08_17_055554) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "offer_links", "offers", column: "source_id"
+  add_foreign_key "offer_links", "offers", column: "target_id"
   add_foreign_key "offers", "omses", column: "primary_oms_id"
   add_foreign_key "oms_administrations", "omses"
   add_foreign_key "oms_administrations", "users"

@@ -235,4 +235,18 @@
     margin-top: 25px;
   }
 
+  .bundle-configuration-title {
+    font-size: 22px;
+    text-transform: none;
+    font-weight: 400;
+    margin: 15px 0 10px;
+  }
+
+  .bundle-info {
+    margin: 35px 0 20px;
+
+    p {
+      color: $palette-gray-70;
+    }
+  }
 }

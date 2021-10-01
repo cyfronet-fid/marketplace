@@ -6,7 +6,7 @@ class ProjectItem::Part
   def initialize(offer:, parameters: nil)
     @offer = offer
 
-    parameters = parameters&.[]("attributes") || offer.parameters.dup || []
+    parameters = parameters || offer.parameters.dup || []
     @attributes = attributes_from_params(parameters)
   end
 
@@ -33,9 +33,8 @@ class ProjectItem::Part
   end
 
   private
-
     def attributes_from_params(parameters)
-      parameters.map { |p| Attribute.from_json(p) }
+      parameters.map { |p| Attribute.from_json(p.dump) }
     end
 
     def update_attribute(id, value)
@@ -43,6 +42,6 @@ class ProjectItem::Part
     end
 
     def attributes_hsh
-      @attributes_hsh ||= attributes.map { |p| [p.id, p] }.to_h
+      @attributes_hsh ||= attributes.index_by { |p| p.id }
     end
 end
