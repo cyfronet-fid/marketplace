@@ -12,7 +12,11 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def offers_show?
-    record.offers_count > 1
+    record.offers? && record.offers.any? { |s| s.bundled_offers_count == 0 }
+  end
+
+  def bundles_show?
+    record.offers? && record.offers.any? { |s| s.bundled_offers_count > 1 }
   end
 
   def data_administrator?

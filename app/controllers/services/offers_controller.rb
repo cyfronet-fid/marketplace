@@ -42,7 +42,8 @@ class Services::OffersController < Services::ApplicationController
     end
 
     def init_step_data
-      @offers = policy_scope(@service.offers).order(:created_at)
+      @offers = policy_scope(@service.offers).order(:created_at).select { |o| o.bundle? == false }
+      @bundles = policy_scope(@service.offers).order(:created_at).select { |o| o.bundle? }
       @step = step(session[session_key])
     end
 end

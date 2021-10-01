@@ -6,7 +6,7 @@ class ProjectItem::OfferValues
   def initialize(offer:, parameters: nil)
     @offer = offer
     @main = ProjectItem::Part.new(offer: offer, parameters: parameters)
-    @parts = bundled_parts(parameters&.[]("bundled_services") || [])
+    @parts = bundled_parts(parameters || [])
   end
 
   def attributes_map
@@ -14,7 +14,7 @@ class ProjectItem::OfferValues
   end
 
   def update(values)
-    id_to_part = all_parts.map { |p| [p.id.to_s, p] }.to_h
+    id_to_part = all_parts.index_by { |p| p.id.to_s }
     values.each do |id, part_values|
       part = id_to_part[id.to_s]
       part.update(part_values) if part
@@ -32,13 +32,12 @@ class ProjectItem::OfferValues
   end
 
   private
-
     def all_parts
       @parts + [@main]
     end
 
     def bundled_parts(parameters)
-      id_to_part_parameters = parameters.map { |p| [p["offer_id"], p] }.to_h
+      id_to_part_parameters = parameters.index_by { |p| p["offer_id"] }
       offer.bundled_offers.map do |offer|
         ProjectItem::Part.new(offer: offer,
                               parameters: id_to_part_parameters[offer.id])

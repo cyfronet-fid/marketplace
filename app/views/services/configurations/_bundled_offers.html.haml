@@ -1,16 +1,21 @@
 - if project_item.offer.bundle?
-  %h2.mt-5 Bundled services
+  %h2.mt-5 Bundle configuration
   %p Your service will be configured to work with following services:
   - project_item.bundled_property_values.each do |offer, property_values|
-    %h3.mb-3.mt-4.font-weight-bold.configuration-title.text-uppercase= offer.service.title
-    = markdown(offer.description)
 
+    .row.bundle-info
+      .col-12.col-md-2
+        = service_logo(offer.service, "align-self-center img-fluid", "180x120")
+      .col-12.col-md-10
+        %h3.bundle-configuration-title
+          = offer.service.name
+        = markdown(offer.description)
 
-    .row
-      .col-6
-        - property_values.each do |attr|
-          = f.simple_fields_for "bundled_property_values[o#{offer.id}]", attr do |field|
-            - begin
+    .card.offer-description.mb-4
+      .card-body.p-4
+        .col-12.col-lg-12.pl-0.additional-information.technical
+          - property_values.each do |attr|
+            = f.simple_fields_for "bundled_property_values[o#{offer.id}]", attr do |field|
               = render "services/configurations/attributes/#{attr.type}", attr: attr, field: field
             - rescue => e
               = e.message

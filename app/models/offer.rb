@@ -78,10 +78,6 @@ class Offer < ApplicationRecord
     iid.to_s
   end
 
-  def attributes
-    parameters
-  end
-
   def offer_type
     super || service.service_type
   end

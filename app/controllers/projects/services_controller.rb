@@ -6,7 +6,7 @@ class Projects::ServicesController < ApplicationController
   before_action :load_projects
 
   def index
-    @project_items = @project.project_items
+    @project_items = @project.project_items.roots
   end
 
   def show

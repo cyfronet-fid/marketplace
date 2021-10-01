@@ -34,6 +34,14 @@ class Services::SummariesController < Services::ApplicationController
 
       @project_item = ProjectItem::Create.new(project_item_template, message_text).call
 
+      if @project_item&.offer.bundle?
+        @project_item&.offer.bundled_offers.each do |offer|
+          ProjectItem::Create.new(project_item_template.bundled_property_values[offer.id].
+                                  merge(parent_id: @project_item.id),
+                                  message_text).call
+        end
+      end
+
       if @project_item.persisted?
         session.delete(session_key)
         session.delete(:selected_project)
