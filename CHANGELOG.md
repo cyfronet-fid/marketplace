@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.22.1] 2021-10-01
+
+### Fixed
+- Fix openssl verify certificate error (@michal-szostak)
+
 ## [3.22.0] 2021-09-30
 
 ### Added
