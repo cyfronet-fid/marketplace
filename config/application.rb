@@ -19,11 +19,6 @@ module Mp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
 
-    # fix ssl verify error caused by old version of the gem
-    OpenIDConnect.http_config do |config|
-      config.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    end
-
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
