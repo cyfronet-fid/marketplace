@@ -24,8 +24,11 @@
       = render "services/tabs", service: @service, preview: true
 
   .tab-content
-    = render "services/about", service: @service, offers: @offers, analytics: @analytics, preview: true
-    = render "taggable/details_section", service: @service, preview: true
+    #about{ "data-target": "preview.content" }
+      = render "services/about", service: @service, offers: @offers, analytics: @analytics, preview: true
+      = render "taggable/details_section", taggable: @service, preview: true
+    #details.d-none{ "data-target": "preview.content" }
+      = render "services/details", service: @service, preview: true
 
   .container.mt-4.pt-4.related-container
     = render "services/related", related_services: @related_services, title: @related_services_title, preview: true

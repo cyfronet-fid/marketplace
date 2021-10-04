@@ -105,7 +105,9 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     def store_in_session!
       attributes = permitted_attributes(@service || Service)
       logo = attributes.delete(:logo)
-      session[preview_session_key] = { "attributes" => attributes }
+      compact_attributes = attributes.each { |k, v| v.reject!(&:blank?) if v.instance_of? Array }
+                                     .reject { |k, v| v.blank? }
+      session[preview_session_key] = { "attributes" => compact_attributes }
       if logo
         session[preview_session_key]["logo"] = {
           "filename" => logo.original_filename,
