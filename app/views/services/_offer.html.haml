@@ -1,6 +1,5 @@
 .col-md-6.d-flex.align-items-stretch{ id: "offer-#{offer.id}" }
   .card.m-0.mb-5
-    = local_assigns[:preview]
     = render "services/offers/description", offer: offer
     = render "services/offers/parameters",
       technical_parameters: filter_technical_parameters(offer.attributes.map(&:to_json))

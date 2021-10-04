@@ -112,7 +112,6 @@ Cypress.Commands.add("fillFormCreateResource", (resource: IResources, logo) => {
     .type("{esc}");
 
   cy.get("#contact-header.card-header")
-    .eq(1)
     .click();
 
   if (resource.contactsFirstname) {

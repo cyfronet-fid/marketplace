@@ -24,10 +24,12 @@ module ImageHelper
   end
 
   def self.to_base_64(path)
-    content_type = MIME::Types.type_for(path).first.content_type
+    content_type = MiniMagick::Image.open(path).mime_type
     File.open(path, "rb") do |img|
       "data:" + content_type + ";base64," + Base64.strict_encode64(img.read)
     end
+    rescue Exception
+      "Not recognized or not permitted file type"
   end
 
   def self.binary_to_blob_stream(file_path)

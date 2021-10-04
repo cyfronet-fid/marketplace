@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Project duplication includes scientific domains associated with source (@goreck888)
+- The backoffice resource preview should be displayed identically as resource page - improve user experience (@danielkryska)
 
 ### Security
 
