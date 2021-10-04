@@ -5,8 +5,17 @@
     %ul#my-tab.nav.nav-tabs.row.pl-3{ role: "tablist" }
       - if local_assigns[:preview]
         %li.nav-item
-          %a.nav-link.active.text-uppercase{ "data-probe" => "" }
+          %a.nav-link.active.text-uppercase{ "data-probe": "",
+                                             "data-target": "preview.tab",
+                                             "data-action": "click->preview#toggle",
+                                             "data-value": "about" }
             = _("About")
+        %li.nav-item
+          %a.nav-link.text-uppercase{ "data-probe": "",
+                                      "data-target": "preview.tab preview.details",
+                                      "data-action": "click->preview#toggle",
+                                      "data-value": "details" }
+            = _("Details")
         %li.nav-item
           %a.nav-link.disabled.text-uppercase{ "data-probe" => "" }
             = _("Reviews (%{ssoc})") % { ssoc: service.service_opinion_count }

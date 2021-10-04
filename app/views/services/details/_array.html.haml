@@ -12,26 +12,30 @@
       - elsif field == "geographical_availabilities"
         %span
           = safe_join(get_only_regions(service.send(field)).map { |c| link_to c,
-            services_path(geographical_availabilities: c) }.sort, ", ")
+            services_path(geographical_availabilities: c),
+            "data-target": local_assigns[:preview] ? "preview.link" : "" }.sort, ", ")
         - if get_only_countries(service.send(field)).present?
           %span.geographical
             = safe_join(get_only_countries(service.send(field)).map { |c| link_to c,
-            services_path(geographical_availabilities: c) }.sort, ", ")
+            services_path(geographical_availabilities: c),
+            "data-target": local_assigns[:preview] ? "preview.link" : "" }.sort, ", ")
       - else
         - Array(service.send(field)).map.with_index do |element, idx|
           - if nested.present? && nested[field.to_sym].present?
             - if nested[field.to_sym] == "link"
               %li.links
                 %i.fas.fa-arrow-right
-                = link_to field.humanize, element, "data-probe": ""
+                = link_to field.humanize, element, "data-probe": "",
+                "data-target": local_assigns[:preview] ? "preview.link" : ""
             - elsif nested[field.to_sym] == "service"
               %li.links
                 %i.fas.fa-arrow-right
-                = link_to(element.name, service_path(element), "data-probe": "")
+                = link_to(element.name, service_path(element), "data-probe": "",
+                "data-target": local_assigns[:preview] ? "preview.link" : "")
             - elsif nested[field.to_sym] == "tag"
               %span
                 = link_to element, services_path(tag: element), class: "badge badge-light",
-                "data-probe": ""
+                "data-probe": "", "data-target": local_assigns[:preview] ? "preview.link" : ""
             - elsif nested[field.to_sym] == "label"
               %span
                 -# TODO: refactor dynamic translation
