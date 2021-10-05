@@ -81,7 +81,7 @@ describe("Owned resources", () => {
       .click();
     cy.get("div.invalid-feedback")
       .should("be.visible")
-    cy.contains("div.invalid-feedback", "Logo is not a valid file format and The logo format you're trying to attach is not supported")
+    cy.contains("div.invalid-feedback", "Logo is not a valid file format and Logo format you're trying to attach is not supported")
       .should("be.visible")
     cy.contains("div.invalid-feedback", "Email is not a valid email address")
       .should("be.visible") 
