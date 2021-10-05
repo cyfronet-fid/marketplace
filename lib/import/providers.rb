@@ -97,7 +97,7 @@ class Import::Providers
       )
       current_provider.upstream_id = provider_source.id
       if current_provider.invalid?
-        provider_source.update!(errored: current_provider.errors.full_messages)
+        provider_source.update!(errored: current_provider.errors.to_hash)
         log "Provider #{parsed_provider_data[:name]},
               eid: #{parsed_provider_data[:pid]} saved with errors: #{current_provider.errors.full_messages}"
       end
@@ -114,7 +114,7 @@ class Import::Providers
         Importers::Logo.new(current_provider, image_url).call
         current_provider.save!
       else
-        current_provider.sources.first.update!(errored: current_provider.errors.full_messages)
+        current_provider.sources.first.update!(errored: current_provider.errors.to_hash)
       end
     end
 

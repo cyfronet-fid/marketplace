@@ -47,7 +47,7 @@ class Service::PcCreateOrUpdate
         service.save(validate: false)
       end
       source = ServiceSource.create!(service_id: service.id, source_type: "eosc_registry", eid: @eid,
-                                     errored: service.errors.full_messages)
+                                     errored: service.errors.to_hash)
       service.update(upstream_id: source.id)
 
       Importers::Logo.new(service, @eosc_registry_service["logo"]).call
@@ -62,7 +62,8 @@ class Service::PcCreateOrUpdate
         mapped_service.save!
         mapped_service
       elsif !source_id.nil?
-        if check_service = Service.new(service_hash).invalid?
+        checked_service = Service.new(service_hash)
+        if checked_service.invalid?
           raise NotUpdatedError.new("Service is not updated, because parsed service data is invalid")
         end
         Service::Update.new(mapped_service, service_hash).call
@@ -82,7 +83,7 @@ class Service::PcCreateOrUpdate
     Rails.logger.warn "#{e} Message arrived, but service is not updated. Message #{@eosc_registry_service}"
     if mapped_service.present? && mapped_service&.sources&.first.present?
       source = mapped_service&.sources&.first
-      source.update(errored: check_service)
+      source.update(errored: checked_service&.errors&.to_hash)
     end
     mapped_service
   rescue Errno::ECONNREFUSED
