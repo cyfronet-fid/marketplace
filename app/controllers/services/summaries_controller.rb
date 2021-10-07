@@ -14,9 +14,10 @@ class Services::SummariesController < Services::ApplicationController
 
   def create
     @step = step(summary_params)
+    @bundle_params = session[:bundle]
 
     if @step.valid? & verify_recaptcha(model: @step, attribute: :verified_recaptcha)
-      do_create(@step.project_item)
+      do_create(@step.project_item, @bundle_params)
     else
       setup_show_variables!
       flash.now[:alert] = @step.error
@@ -29,15 +30,18 @@ class Services::SummariesController < Services::ApplicationController
       I18n.t("services.summary.#{helpers.map_view_to_order_type(@offer)}.order.title")
     end
 
-    def do_create(project_item_template)
+    def do_create(project_item_template, bundle_params)
       authorize(project_item_template)
 
       @project_item = ProjectItem::Create.new(project_item_template, message_text).call
 
       if @project_item&.offer.bundle?
         @project_item&.offer.bundled_offers.each do |offer|
-          ProjectItem::Create.new(project_item_template.bundled_property_values[offer.id].
-                                  merge(parent_id: @project_item.id),
+          ProjectItem::Create.new(ProjectItem.new(status_type: "created",
+                                                  parent_id: @project_item.id,
+                                                  project_id: @project_item.project_id,
+                                                  offer_id: offer.id,
+                                                  properties: bundle_params[offer.id]),
                                   message_text).call
         end
       end
@@ -66,6 +70,7 @@ class Services::SummariesController < Services::ApplicationController
     def setup_show_variables!
       @projects = policy_scope(current_user.projects.active)
       @offer = @step.offer
+      @bundle_params = session[:bundle]
     end
 
     def message_text

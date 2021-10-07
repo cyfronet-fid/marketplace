@@ -1,6 +1,6 @@
 %li.projects-list
   - if project_item.offer.bundle?
-    %a.bundle-more.collapsed{ href: "#collapse-example",
+    %a.bundle-more.collapsed.dropdown{ href: "#collapse-example",
                     "data-toggle" => "collapse",
                     "role" => "button",
                     "aria-expanded" => "false",
@@ -18,7 +18,7 @@
     - else
       = project_item_status(project_item)
 - project_item.children.each do |child|
-  #collapse-example.bundle-box.collapse
+  #collapse-example.bundle-box.padding.collapse
     %li.projects-list
       = link_to child.service.name, project_service_path(project, child)
       .float-right.status

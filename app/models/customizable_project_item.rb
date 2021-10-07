@@ -26,7 +26,6 @@ class CustomizableProjectItem < ProjectItem
   end
 
   private
-
     def validate_property_values
       offer_values.validate
     end
@@ -37,6 +36,6 @@ class CustomizableProjectItem < ProjectItem
     end
 
     def id_to_bundled_offer
-      @id_to_offer ||= offer.bundled_offers.map { |o| ["o#{o.id}", o] }.to_h
+      @id_to_offer ||= offer.bundled_offers.index_by { |o| "o#{o.id}" }
     end
 end

@@ -7,7 +7,7 @@
       - property_values.each do |attr|
         %tr
           %td.pl-0
-            = attr.label
+            = attr.label || attr["label"]
           %td
             - begin
               = render "attributes/#{attr.type}", attr: attr
