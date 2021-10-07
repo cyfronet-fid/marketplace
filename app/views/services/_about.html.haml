@@ -3,6 +3,8 @@
     %main.col-12.col-xl-9.pr-5.mb-4{ "data-shepherd-tour-target": "service-about" }
 
       = markdown(service.description)
+      - if service.pid == "egi-fed.notebook"
+        = render "notebook_openaire_explore"
       - if policy(service).order? && !offers&.empty?
         = render "services/offers", offers: offers, service: service
 

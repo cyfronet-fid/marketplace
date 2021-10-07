@@ -104,7 +104,8 @@ namespace :dev do
       target_users = TargetUser.where(name: hash["target_users"])
       order_type = order_type_from(hash)
 
-      service.assign_attributes(tagline: hash["tagline"],
+      service.assign_attributes(pid: hash["pid"] || nil,
+                      tagline: hash["tagline"],
                       description: hash["description"],
                       scientific_domains: domain,
                       providers: providers,
