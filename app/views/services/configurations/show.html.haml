@@ -6,4 +6,4 @@
   = render "services/configurations/voucher", project_item: @step, f: f
   = render "services/configurations/attributes", project_item: @step, service: @service, form: f
   - if @step.offer.bundle?
-    = render "services/configurations/bundled_offers", project_item: @project_item, service: @service, f: f
+    = render "services/configurations/bundled_offers", project_item: @step, service: @service, f: f

@@ -1138,9 +1138,11 @@ li {
 }
 
 .bundle-more {
-  margin: 0 8px 0 -23px;
-  color: $dropdown-arrow;
-  font-size: 12px;
+  &.dropdown {
+    margin: 0 8px 0 -23px;
+    color: $dropdown-arrow;
+    font-size: 12px;
+  }
 
   &::after {
     font-family: 'Font Awesome 5 Free';

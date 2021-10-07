@@ -2863,7 +2863,9 @@ label[data-multicheckbox].small {
 }
 
 .bundle-box {
-  padding-left: 30px;
+  &.padding {
+    padding-left: 30px;
+  }
 }
 
 .buttons-panel {

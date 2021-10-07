@@ -20,7 +20,7 @@ class ProjectItem::Part
 
   def to_hash
     {
-      "service" => offer.service.title,
+      "service" => offer.service.name,
       "offer" => offer.name,
       "offer_id" => offer.id,
       "category" => offer.service.categories.first.name,
@@ -34,7 +34,7 @@ class ProjectItem::Part
 
   private
     def attributes_from_params(parameters)
-      parameters.map { |p| Attribute.from_json(p.dump) }
+      parameters.map { |p| Attribute.from_json(p) }
     end
 
     def update_attribute(id, value)

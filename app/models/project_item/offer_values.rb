@@ -37,10 +37,9 @@ class ProjectItem::OfferValues
     end
 
     def bundled_parts(parameters)
-      id_to_part_parameters = parameters.index_by { |p| p["offer_id"] }
       offer.bundled_offers.map do |offer|
         ProjectItem::Part.new(offer: offer,
-                              parameters: id_to_part_parameters[offer.id])
+                              parameters: offer.parameters.map { |p| p.dump })
       end
     end
 end
