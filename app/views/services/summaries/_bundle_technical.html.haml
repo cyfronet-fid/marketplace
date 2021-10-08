@@ -1,7 +1,9 @@
 - if offer.attributes.present?
   .card.offer-description.mb-4
     .card-body.p-4
-      %h4.card-title= offer.name
+      %h4.card-title.mb-1= offer.name
+      .text-muted.mb-3
+        = _("Provided by #{ offer.service.name}")
       .card-text= markdown(offer.description)
 
       - if session[:bundle][offer.id].present?

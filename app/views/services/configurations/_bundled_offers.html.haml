@@ -1,6 +1,6 @@
 - if project_item.offer.bundle?
   %h2.mt-5 Bundle configuration
-  %p Your service will be configured to work with following services:
+  %p Your resource will be configured to work with following resources:
   - project_item.bundled_property_values.each do |offer, property_values|
 
     .row.bundle-info
@@ -8,8 +8,9 @@
         = service_logo(offer.service, "align-self-center img-fluid", "180x120")
       .col-12.col-md-10
         %h3.bundle-configuration-title
-          = offer.service.name
-        = markdown(offer.description)
+          = offer.name
+        %span.text-muted
+          = _("Provided by #{ offer.service.name}")
 
     .card.offer-description.mb-4
       .card-body.p-4
