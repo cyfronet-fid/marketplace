@@ -119,7 +119,8 @@ describe Jira::Client do
                           "category" => "cat1",
                           "service" => "s1",
                           "offer" => "off1",
-                          "attributes" => {}
+                          "attributes" => {},
+                          "bundled_services" => {}
                         }.to_json,
                         "SO-ServiceOrderTarget-1" => "",
                         "SO-OfferType-1" => { "id" => "20006" } }
@@ -164,7 +165,8 @@ describe Jira::Client do
                           "category" => "cat1",
                           "service" => "s1",
                           "offer" => "off1",
-                          "attributes" => {}
+                          "attributes" => {},
+                          "bundled_services" => {}
                         }.to_json,
                         "SO-ServiceOrderTarget-1" => "",
                         "SO-OfferType-1" => { "id" => "20006" } }
@@ -205,7 +207,8 @@ describe Jira::Client do
                           "category" => "cat1",
                           "service" => "s1",
                           "offer" => "off1",
-                          "attributes" => {}
+                          "attributes" => {},
+                          "bundled_services" => {}
                         }.to_json,
                         "SO-ServiceOrderTarget-1" => "",
                         "SO-OfferType-1" => { "id" => "20006" } }

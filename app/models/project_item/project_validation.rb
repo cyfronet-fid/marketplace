@@ -5,7 +5,7 @@ module ProjectItem::ProjectValidation
 
   included do
     validates :project, presence: true
-    # validate :one_per_project, unless: :properties?
+    validate :one_per_project, unless: :properties?
   end
 
   def one_per_project

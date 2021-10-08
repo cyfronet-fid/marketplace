@@ -80,12 +80,15 @@ end
 
 crumb :project_item do |project_item|
   if project_item.is_root?
-    link "Resource (#{project_item.service.name})",
-      project_service_path(project_item.project, project_item)
-    parent :project, project_item.project
+    if project_item.has_children?
+      link "Bundle (#{project_item.service.name})", project_service_path(project_item.project, project_item)
+      parent :project, project_item.project
+    else
+      link "Resource (#{project_item.service.name})", project_service_path(project_item.project, project_item)
+      parent :project, project_item.project
+    end
   else
-    link "Resource (#{project_item.service.name})",
-         project_service_path(project_item.project, project_item)
+    link "Resource (#{project_item.service.name})", project_service_path(project_item.project, project_item)
     parent :project_item, project_item.parent
   end
 end
