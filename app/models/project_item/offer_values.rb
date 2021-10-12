@@ -6,7 +6,7 @@ class ProjectItem::OfferValues
   def initialize(offer:, parameters: nil)
     @offer = offer
     @main = ProjectItem::Part.new(offer: offer, parameters: parameters)
-    @parts = bundled_parts(parameters || [])
+    @parts = bundled_parts
   end
 
   def attributes_map
@@ -36,7 +36,7 @@ class ProjectItem::OfferValues
       @parts + [@main]
     end
 
-    def bundled_parts(parameters)
+    def bundled_parts
       offer.bundled_offers.map do |offer|
         ProjectItem::Part.new(offer: offer,
                               parameters: offer.parameters.map { |p| p.dump })
