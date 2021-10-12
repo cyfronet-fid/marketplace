@@ -6,10 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.22.x]
+## [3.22.2] 2021-10-12
 
 ### Added
 - OpenAIRE integration for EGI Notebooks (@jswk)
+
+### Fixed
+- Fix Resource offer bundles (@kmarszalek, @goreck888, @jarekzet)
 
 ## [3.22.1] 2021-10-01
 
