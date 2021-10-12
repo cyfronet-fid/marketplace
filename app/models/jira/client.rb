@@ -206,9 +206,7 @@ private
       "category" => project_item.service.categories.first&.name,
       "service" => project_item.service.name,
       "offer" => project_item.name,
-      "attributes" => encode_properties(project_item.properties),
-      # TODO handle bundles
-      "bundled_services" => encode_properties(project_item.properties)
+      "attributes" => encode_properties(project_item.properties)
     }.to_json
   end
 
