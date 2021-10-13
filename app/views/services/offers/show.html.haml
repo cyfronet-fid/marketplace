@@ -2,13 +2,14 @@
 = simple_form_for @step, url: service_offers_path(@service), method: :put,
   html: { id: "order-form", role: "form", class: "btn-group-toogle", data: { toogle: "buttons" } } do |f|
 
-  %h2.mb-4.mt-5.font-weight-normal
-    = _("Offers")
-  %p.mb-4
-    = _("To gain the access to the resource, please select an offer that suits your needs best.")
-  .card-deck.row
-    = render partial: "services/offers/offer",
-      collection: @offers, as: :offer, locals: { f: f, project_item: @step }
+  - if policy(@service).offers_show?
+    %h2.mb-4.mt-5.font-weight-normal
+      = _("Offers")
+    %p.mb-4
+      = _("To gain the access to the resource, please select an offer that suits your needs best.")
+    .card-deck.row
+      = render partial: "services/offers/offer",
+        collection: @offers, as: :offer, locals: { f: f, project_item: @step }
   - if policy(@service).bundles_show?
     .row
       .col-12
