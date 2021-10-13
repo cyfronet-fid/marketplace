@@ -153,7 +153,7 @@ Cypress.Commands.add("fillFormCreateResource", (resource: IResources, logo) => {
   }
 });
 
-Cypress.Commands.add("fillFormCreateOffer", (offer: IOffers, parameters = false) => {
+Cypress.Commands.add("fillFormCreateOffer", (offer: IOffers) => {
   if (offer.name) {
     cy.get("#offer_name")
       .clear({ force: true })
