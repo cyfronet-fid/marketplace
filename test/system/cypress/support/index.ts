@@ -32,6 +32,7 @@ import './utilities';
 import './jira';
 import './offers';
 import './resources';
+import './category'
 
 /**
  * Don't fail on uncaught exception
