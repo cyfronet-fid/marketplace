@@ -33,36 +33,17 @@ class Services::SummariesController < Services::ApplicationController
     def do_create(project_item_template, bundle_params)
       authorize(project_item_template)
 
-      ProjectItem.transaction do
-        @project_item = ProjectItem::Create.new(project_item_template, message_text).call
+      project_item = ProjectItem::Create.new(project_item_template, message_text, bundle_params: bundle_params).call
 
-        if @project_item&.offer.bundle?
-          @project_item&.offer.bundled_offers.each do |offer|
-            bundled_project_item = ProjectItem.new(status_type: "created",
-                                                   parent_id: @project_item.id,
-                                                   project_id: @project_item.project_id,
-                                                   offer_id: offer.id,
-                                                   properties: bundle_params[offer.id])
-            if bundled_project_item.valid?
-              ProjectItem::Create.new(bundled_project_item,
-                                      message_text).call
-            else
-              raise ActiveRecord::Rollback
-            end
-          end
-        end
-      end
-
-      if @project_item.persisted?
+      if project_item.persisted?
         session.delete(session_key)
         session.delete(:selected_project)
         session.delete(:bundle)
         send_user_action
-        Matomo::SendRequestJob.perform_later(@project_item, "AddToProject")
-        redirect_to project_service_path(@project_item.project, @project_item),
+        Matomo::SendRequestJob.perform_later(project_item, "AddToProject")
+        redirect_to project_service_path(project_item.project, project_item),
                                   notice: "Service ordered successfully"
       else
-        @project_item.delete if @project_item.persisted?
         redirect_to url_for([@service, prev_visible_step_key]),
                     alert: "Service request configuration is invalid"
       end
