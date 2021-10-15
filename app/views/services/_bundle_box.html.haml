@@ -1,0 +1,19 @@
+.col-md-12.d-flex.align-items-stretch{ id: "offer-#{offer.id}" }
+  .card.col-md-12.m-0.mb-5
+    = render "services/offers/bundle_description", offer: offer
+    - if offer.bundle?
+      %a.bundle-more.collapsed{ href: "#collapse-example",
+                  "data-toggle" => "collapse",
+                  "role" => "button",
+                  "aria-expanded" => "false",
+                  type: "button" }
+        Read technical parameters
+    = render "services/offers/bundle_parameters",
+      technical_parameters: filter_technical_parameters(offer.attributes.map(&:to_json))
+    = render "services/bundle", bundled_offers: offer.bundled_offers, parent: offer
+    .card-button.text-center
+      %label
+        = link_to service_offers_path(offer.service, project_item: { offer_id: offer.iid }), "data-probe": "",
+          method: :put do
+          %span.btn.btn-primary.font-webtn-linkight-bold
+            = _("Select a bundle")

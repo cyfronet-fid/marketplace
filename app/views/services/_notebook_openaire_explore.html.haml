@@ -1,0 +1,12 @@
+.row.p-2.notebooks-explore-info
+  .col-12.col-sm-5.col-md-4.vertical-middle
+    %a{ href: ENV["OPENAIRE_NOTEBOOKS__HARDCODED_LINK"] || "https://beta.explore.openaire.eu/search/advanced/
+    research-outcomes?f0=resultsubject&fv0=%2522EOSC%2520Jupyter%2520Notebook%2522", target: "_blank" }
+      = image_pack_tag "openaire-explore-for-notebooks.png", class: "full-width pb-sm-1"
+  .col-12.col-sm-7.col-md-8.vertical-middle
+    %p.mb-0
+      = _("See Jupyter notebooks compatible with the EGI Notebook service at")
+      %a{ href: ENV["OPENAIRE_NOTEBOOKS__HARDCODED_LINK"] || "https://beta.explore.openaire.eu/search/advanced/
+      research-outcomes?f0=resultsubject&fv0=%2522EOSC%2520Jupyter%2520Notebook%2522", target: "_blank" }
+        OpenAIRE Explore
+      = _("(opens in a new window)")

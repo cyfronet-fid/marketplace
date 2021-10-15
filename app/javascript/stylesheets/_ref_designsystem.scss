@@ -1137,5 +1137,54 @@ li {
   }
 }
 
+.bundle-more {
+  &.dropdown {
+    margin: 0 8px 0 -23px;
+    color: $dropdown-arrow;
+    font-size: 12px;
+  }
+
+  &::after {
+    font-family: 'Font Awesome 5 Free';
+    content: '\f077';
+    display: inline-block;
+    padding-left: 3px;
+    vertical-align: middle;
+    font-weight: 900;
+  }
+
+  &.collapsed {
+    &::after {
+      content: '\f078';
+    }
+  }
+}
+
+.bundle-item {
+  .card {
+    border-color: $palette-gray-10;
+    margin: 0;
+  }
+}
+
+.bundle-logo {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  .bundle-img {
+    margin-left: 15px;
+    max-height: 65px;
+    width: auto;
+  }
+}
+
+
+.bundle-status {
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
 @import 'ref_mobile';
 

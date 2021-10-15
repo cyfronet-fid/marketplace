@@ -75,7 +75,7 @@ class ProjectItem::Wizard
       delegate :created?, to: :project_item
 
       def visible?
-        offer.nil? || project_item.property_values.count.positive? || voucherable?
+        offer.nil? || offer.bundle? || project_item.property_values.count.positive? || voucherable?
       end
 
       def error

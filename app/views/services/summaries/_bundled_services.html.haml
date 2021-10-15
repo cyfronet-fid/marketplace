@@ -1,0 +1,9 @@
+- if project_item.offer.bundle?
+  %h3.mt-4 Bundled services:
+  - project_item.bundled_property_values.each do |offer, property_values|
+    .card.offer-description.mb-5
+      .card-body.p-4
+        %h4.card-title #{offer.service.title} (#{offer.name})
+        .card-text= offer.description
+        = render "project_items/attributes",
+          property_values: property_values

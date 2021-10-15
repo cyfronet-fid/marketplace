@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 class ProjectItem < ApplicationRecord
+  include Customizations
   include Eventable
   include Customization
   include ProjectValidation
   include VoucherValidation
   include Iid
   include Offerable
+  include Parentable
 
   STATUS_TYPES = {
     created: "created",

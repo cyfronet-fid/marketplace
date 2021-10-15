@@ -1,6 +1,15 @@
 %li.projects-list
+  - if project_item.offer.bundle?
+    %a.bundle-more.collapsed.dropdown{ href: "#collapse-example_#{project_item.id}",
+                    "data-toggle" => "collapse",
+                    "role" => "button",
+                    "aria-expanded" => "false",
+                    type: "button" }
   = link_to project_item.service.name, project_service_path(project, project_item)
   .float-right.status
+    - if project_item.offer.bundle?
+      %span.bundle-status
+        = _("BUNDLE")
     - if project_item.closed?
       -# TODO: refactor dynamic translation
       = t("project_items.status.#{project_item.status_type}")
@@ -8,3 +17,18 @@
       = link_to _("Visit website"), webpage(project_item)
     - else
       = project_item_status(project_item)
+- project_item.children.each do |child|
+  #collapse-example.bundle-box.padding.collapse{ "id": "#{project_item.id}" }
+    %li.projects-list
+      = link_to child.service.name, project_service_path(project, child)
+      .float-right.status
+        - if child.offer.bundle?
+          %span.bundle-status
+            = _("BUNDLE")
+        - if child.closed?
+          -# TODO: refactor dynamic translation
+          = t("project_items.status.#{child.status_type}")
+        - elsif !child.orderable?
+          = link_to _("Visit website"), webpage(child)
+        - else
+          = project_item_status(child)

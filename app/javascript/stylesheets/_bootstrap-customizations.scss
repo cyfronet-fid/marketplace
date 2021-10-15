@@ -2378,6 +2378,10 @@ label[data-multicheckbox].small {
   border-radius: 5px;
   overflow: hidden;
 
+  .project-badge {
+    margin: 15px 20px 0 0;
+  }
+
   &.backoffice {
     .btn-outline-secondary {
       &:after {
@@ -2836,7 +2840,7 @@ label[data-multicheckbox].small {
 
 .projects-list {
   border: none;
-  padding: 15px 25px;
+  padding: 15px 25px 15px 37px;
   margin-bottom: 4px;
   border-radius: 2px;
   background: $services-list;
@@ -2855,6 +2859,12 @@ label[data-multicheckbox].small {
     .rejected {
       color: $red;
     }
+  }
+}
+
+.bundle-box {
+  &.padding {
+    padding-left: 30px;
   }
 }
 
@@ -4677,3 +4687,7 @@ abbr[title] {
   }
 }
 
+.notebooks-explore-info {
+  background-color: $palette-lightblue2;
+  border: 1px solid $palette-lightblue3;
+}

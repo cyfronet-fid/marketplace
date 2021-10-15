@@ -3534,6 +3534,7 @@ services:
 #            description: AutoDock Vina is an open-source software for doing molecular docking.
 #            parameters: *appParameters
     EGI Notebooks:
+      pid: egi-fed.notebook
       name: &notebook EGI Notebooks
       parents: *processingAndAnalysisParent
       providers: [*egi]

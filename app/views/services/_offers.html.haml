@@ -15,7 +15,17 @@
               "best offer for their needs.") |
           -# haml-lint:enable MultilinePipe
 - if policy(service).offers_show?
-  %h2.mb-4.mt-5.font-weight-normal
+  %h2.mb-3.mt-5.font-weight-normal
     = _("Resource offers")
   .row
     = render partial: "services/offer", collection: offers, as: :offer
+- if policy(service).bundles_show?
+  %h2.mb-4.mt-5.font-weight-normal
+    = _("Bundles")
+  %p.mb-5
+    -# haml-lint:disable MultilinePipe
+    = _("You can order this resource in a bundle, with resources connected by scientific domain or type " + |
+              "of research. The bundle is configured to make your research easier and done more efficiently.") |
+    -# haml-lint:enable MultilinePipe
+  .row
+    = render partial: "services/bundle_box", collection: bundles, as: :offer

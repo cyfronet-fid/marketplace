@@ -7,7 +7,7 @@ class Services::OffersController < Services::ApplicationController
     init_step_data
 
     unless step.visible?
-      params[:project_item] = { offer_id: @offers.first.iid }
+      params[:project_item] = { offer_id: (@offers + @bundles).first.iid }
       update
     end
   end
@@ -36,13 +36,14 @@ class Services::OffersController < Services::ApplicationController
 
     def offer
       form_params = params
-        .fetch(:project_item, session[session_key] || {})
-        .permit(:offer_id)
+                      .fetch(:project_item, session[session_key] || {})
+                      .permit(:offer_id)
       @service.offers.find_by(iid: form_params[:offer_id])
     end
 
     def init_step_data
-      @offers = policy_scope(@service.offers).order(:created_at)
+      @offers = policy_scope(@service.offers.published).order(:created_at).select { |o| o.bundle? == false }
+      @bundles = policy_scope(@service.offers.published).order(:created_at).select { |o| o.bundle? }
       @step = step(session[session_key])
     end
 end

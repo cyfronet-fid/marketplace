@@ -118,12 +118,18 @@ RSpec.feature "Service browsing" do
     end
 
     scenario "Offer are converted from markdown to html" do
-      offer = create(:offer, description: "# Test offer\r\n\rDescription offer")
+      # one offer for service is always default and is not shown in mp
+      service = create(:service)
+      default = create(:offer, description: "# Test default\r\n\rDescription default", service: service)
+      offer = create(:offer, description: "# Test offer\r\n\rDescription offer", service: service)
 
       visit service_path(offer.service)
 
       find(".card-body h1", text: "Test offer")
       find(".card-body p", text: "Description offer")
+      find(".card-body h1", text: "Test default")
+      find(".card-body p", text: "Description default")
+      expect(page).to have_text(default.name)
     end
 
     scenario "Unpublished offers are not showed" do
@@ -136,7 +142,9 @@ RSpec.feature "Service browsing" do
 
     scenario "show parameters" do
       # waiting for select parameter type
-      offer = create(:offer, parameters: [ build(:select_parameter,
+      service = create(:service)
+      offer1 = create(:offer, service: service)
+      offer = create(:offer, service: service, parameters: [ build(:select_parameter,
                                                  name: "Number of CPU Cores",
                                                  hint: "Select number of cores you want",
                                                  mode: "buttons",
@@ -173,6 +181,8 @@ RSpec.feature "Service browsing" do
 
 
       visit service_path(offer.service)
+
+      expect(page).to have_text(offer1.name)
       expect(page.body).to have_content("Number of CPU Cores")
       expect(page.body).to have_content("1 - 8")
       expect(page.body).to have_content("Amount of RAM per CPU core")
@@ -243,6 +253,21 @@ RSpec.feature "Service browsing" do
       all(@services_selector).each do |element|
         expect(element).to_not have_text("Service b")
       end
+    end
+
+    scenario "OpenAIRE explore integration for EGI Notebooks" do
+      notebook_service = create(:service, pid: "egi-fed.notebook")
+      other_service_with_pid = create(:service, pid: "other.pid")
+      other_service_without_pid = create(:service, pid: nil)
+
+      visit service_path(notebook_service)
+      expect(page).to have_text("See Jupyter notebooks compatible with the EGI Notebook service")
+
+      visit service_path(other_service_with_pid)
+      expect(page).not_to have_text("See Jupyter notebooks compatible with the EGI Notebook service")
+
+      visit service_path(other_service_without_pid)
+      expect(page).not_to have_text("See Jupyter notebooks compatible with the EGI Notebook service")
     end
   end
 end

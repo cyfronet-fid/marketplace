@@ -1,9 +1,18 @@
 - content_for :title, _("Configuration")
 -# TODO: refactor dynamic translation
-%p.mb-4= t("services.configuration.#{@service.order_type}.description")
-
-
-= simple_form_for @step, url: service_configuration_path(@service), method: :put,
+= simple_form_for @step, as: :customizable_project_item, url: service_configuration_path(@service), method: :put,
   html: { id: "order-form", "data-controller" => "project-item", "data-project-item-url" => projects_path } do |f|
+  -# %p.mb-4= t("services.configuration.#{@service.order_type}.description")
+  - if @step.offer.bundle?
+    .row.bundle-info
+      .col-12.col-md-2
+        = service_logo(@step.offer.service, "align-self-center img-fluid", "180x120")
+      .col-12.col-md-10
+        %h3.bundle-configuration-title
+          = @step.offer.name
+        %span.text-muted
+          = _("Provided by #{ @step.offer.service.name}")
   = render "services/configurations/voucher", project_item: @step, f: f
-  = render "services/configurations/attributes", project_item: @step, form: f
+  = render "services/configurations/attributes", project_item: @step, service: @service, form: f
+  - if @step.offer.bundle?
+    = render "services/configurations/bundled_offers", project_item: @step, service: @service, f: f
