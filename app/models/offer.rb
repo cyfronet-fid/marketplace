@@ -43,6 +43,22 @@ class Offer < ApplicationRecord
   before_validation :set_oms_details
   before_validation :sanitize_oms_params
 
+  has_many :target_offer_links,
+           class_name: "OfferLink",
+           foreign_key: "source_id",
+           inverse_of: "source",
+           dependent: :destroy
+
+  has_many :source_offer_links,
+           class_name: "OfferLink",
+           foreign_key: "target_id",
+           inverse_of: "target",
+           dependent: :destroy
+
+  has_many :bundled_offers,
+           through: :target_offer_links,
+           source: :target
+
   validate :set_iid, on: :create
   validates :service, presence: true
   validates :iid, presence: true, numericality: true
@@ -60,6 +76,26 @@ class Offer < ApplicationRecord
 
   def to_param
     iid.to_s
+  end
+
+  def offer_type
+    super || service.service_type
+  end
+
+  def open_access?
+    offer_type == "open_access"
+  end
+
+  def normal?
+    offer_type == "normal"
+  end
+
+  def catalog?
+    offer_type == "catalog"
+  end
+
+  def bundle?
+    bundled_offers_count.positive?
   end
 
   private

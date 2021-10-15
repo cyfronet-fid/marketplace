@@ -518,6 +518,59 @@ RSpec.feature "Service ordering" do
         expect(page).to have_link("Go to the order website")
       end
     end
+
+    context "#bundles" do
+      scenario "I can order a service bundle" do
+        parent = create(:offer, service: service)
+        child1 = create(:offer_with_parameters, service: service)
+        child2 = create(:offer_with_parameters, service: service)
+        OfferLink.create!(source: parent, target: child1)
+        OfferLink.create!(source: parent, target: child2)
+
+        visit service_path(service)
+
+        click_on "Select a bundle"
+
+        # Step 1 is skipped
+        # Step 2
+        expect(page).to have_current_path(service_information_path(service))
+        click_on "Next", match: :first
+
+        # Step 3
+        expect(page).to have_current_path(service_configuration_path(service))
+        expect(page).to have_text("Bundle configuration")
+
+        fill_in "parameter_#{child1.parameters[0].id}", with: "value1"
+        fill_in "parameter_#{child2.parameters[0].id}", with: "value2"
+
+        click_on "Next - Final details", match: :first
+
+        # Step 4
+        expect(page).to have_current_path(service_summary_path(service))
+        expect(page).to have_text("value1")
+        expect(page).to have_text("value2")
+
+        select "Services"
+
+        expect do
+          click_on "Send access request", match: :first
+        end.to change { ProjectItem.count }.by(3)
+
+        pi1, pi2, pi3 = ProjectItem.all
+        expect(pi1.offer_id).to eq(parent.id)
+        expect(pi1.properties).to eq([])
+        expect(pi2.offer_id).to eq(child1.id)
+        expect(pi2.properties.length).to eq(1)
+        expect(pi2.properties[0]["value"]).to eq("value1")
+        expect(pi3.offer_id).to eq(child2.id)
+        expect(pi3.properties.length).to eq(1)
+        expect(pi3.properties[0]["value"]).to eq("value2")
+
+        # Project item page
+        expect(page).to have_current_path(project_service_path(pi1.project, pi1))
+        expect(page).to have_content(service.name)
+      end
+    end
   end
 
   context "as anonymous user" do

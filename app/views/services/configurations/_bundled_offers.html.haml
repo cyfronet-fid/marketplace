@@ -1,0 +1,22 @@
+- if project_item.offer.bundle?
+  %h2.mt-5 Bundle configuration
+  %p Your resource will be configured to work with following resources:
+  - project_item.bundled_property_values.each do |offer, property_values|
+
+    .row.bundle-info
+      .col-12.col-md-2
+        = service_logo(offer.service, "align-self-center img-fluid", "180x120")
+      .col-12.col-md-10
+        %h3.bundle-configuration-title
+          = offer.name
+        %span.text-muted
+          = _("Provided by #{ offer.service.name}")
+
+    .card.offer-description.mb-4
+      .card-body.p-4
+        .col-12.col-lg-12.pl-0.additional-information.technical
+          - property_values.each do |attr|
+            = f.simple_fields_for "bundled_property_values[o#{offer.id}]", attr do |field|
+              = render "services/configurations/attributes/#{attr.type}", attr: attr, field: field
+            - rescue => e
+              = e.message

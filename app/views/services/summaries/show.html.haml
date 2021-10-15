@@ -4,6 +4,8 @@
 
 = render "services/summaries/technical_configuration",
          service: @service, project_item: @step
+- if @offer.bundle?
+  = render partial: "services/summaries/bundle_technical", collection: @offer.bundled_offers, as: :offer
 
 = simple_form_for @step, url: service_summary_path(@service), html: { id: "order-form" } do |f|
   .additional-information.mb-4

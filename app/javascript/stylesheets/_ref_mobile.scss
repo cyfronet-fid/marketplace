@@ -370,6 +370,21 @@
       }
     }
   }
+
+  .bundle-logo {
+    top: 7px;
+    right: 7px;
+
+    .bundle-img {
+      margin-left: 8px;
+      max-height: 35px;
+      width: auto;
+    }
+  }
+
+  .bundle-more {
+    margin-bottom: 20px;
+  }
 }
 
 @media (max-width: 576px) {
