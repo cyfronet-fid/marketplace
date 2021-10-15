@@ -51,11 +51,47 @@ RSpec.describe ProjectItem::Create do
     end
   end
 
-
   context "when orderable service has been ordered" do
     it "sends email to project_item owner" do
       expect { described_class.new(project_item_template).call }.
         to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+  end
+
+  context "#bundle" do
+    let(:offer) { create(:offer, service: service) }
+    let(:service1) { create(:service) }
+    let(:child1) { create(:offer, service: service1) }
+    let(:service2) { create(:service) }
+    let(:child2) { create(:offer, service: service2) }
+
+    let(:project_item_template) { build(:project_item, project: project, offer: offer) }
+
+    before do
+      OfferLink.create!(source: offer, target: child1)
+      OfferLink.create!(source: offer, target: child2)
+    end
+
+    it "creates bundled project_items" do
+      expect { described_class.new(project_item_template, "test-msg", bundle_params: {}).call }
+        .to change { ActionMailer::Base.deliveries.count }.by(3).
+          and change { ProjectItem.count }.by(3)
+
+      ProjectItem.all.each do |project_item|
+        expect(ProjectItem::RegisterJob).to have_been_enqueued.with(project_item, "test-msg")
+      end
+    end
+
+    context "with error" do
+      let(:child2) { create(:offer, service: service) }
+
+      it "creates nothing" do
+        expect { described_class.new(project_item_template, "test-msg", bundle_params: {}).call }
+          .to change { ActionMailer::Base.deliveries.count }.by(0).
+            and change { ProjectItem.count }.by(0)
+
+        expect(ProjectItem::RegisterJob).not_to have_been_enqueued
+      end
     end
   end
 end
