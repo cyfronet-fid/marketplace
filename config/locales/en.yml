@@ -107,3 +107,10 @@ en:
       no_items: "No %{item_name}"
       single_page: "Displaying <b>%{count}</b> %{item_name}"
       multiple_pages: "<b>%{from}-%{to}</b> of <b>%{count}</b> results"
+  activemodel:
+    errors:
+      models:
+        project_item/wizard/summary_step:
+          attributes:
+            project:
+              repeated_in_project: "can only have one of this resource. Please choose another project"
