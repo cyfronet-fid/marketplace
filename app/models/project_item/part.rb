@@ -20,10 +20,7 @@ class ProjectItem::Part
 
   def to_hash
     {
-      "service" => offer.service.name,
-      "offer" => offer.name,
       "offer_id" => offer.id,
-      "category" => offer.service.categories.first.name,
       "attributes" => attributes.map { |a| a.to_json }
     }
   end
