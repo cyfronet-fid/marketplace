@@ -73,7 +73,6 @@ gem "google-api-client", "~> 0.34", require: "google/apis/analyticsreporting_v4"
 gem "redis-rails"
 gem "sidekiq"
 
-gem "custom_error_message", git: "https://github.com/thethanghn/custom-err-msg.git"
 gem "stomp"
 
 gem "split", require: "split/dashboard"
