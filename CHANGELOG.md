@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.23.0] 2021-10-20
+
+### Changed
+- Validation error message for multiple orders of the offer without any parameters (@kmarszalek)
+
 ## [3.22.4] 2021-10-15
 
 ### Fixed
