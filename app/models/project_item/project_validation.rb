@@ -14,6 +14,6 @@ module ProjectItem::ProjectValidation
       .where.not(offers: { project_items: { id: id } })
       .count.positive?
 
-    errors.add(:project, :repited_in_project, message: "^Please note that this resource can be added to the Project only once. Please choose another project") unless !project_items_services.present?
+    errors.add(:project, :repeated_in_project) unless !project_items_services.present?
   end
 end
