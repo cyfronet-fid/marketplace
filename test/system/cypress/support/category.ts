@@ -16,9 +16,9 @@
  Cypress.Commands.add("fillFormCreateCategory", (category: ICategory, logo = true) => {
 
   if (logo){
-  cy.get("#category_logo")
-    .click()
-    .attachFile(logo)
+    cy.get("#category_logo")
+      .click()
+      .attachFile(logo);
   }
 
   if (category.name) {
