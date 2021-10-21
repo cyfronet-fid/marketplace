@@ -69,7 +69,7 @@ describe("Category", () => {
 
   it("should add new category without logo", () => {
     cy.loginAs(user);
-    cy.visit("/backoffice/categories/new")
+    cy.visit("/backoffice/categories/new");
     cy.fillFormCreateCategory(category2, false);
     cy.get("[data-e2e='create-category-btn']")
       .click();
@@ -96,7 +96,8 @@ describe("Category", () => {
     cy.fillFormCreateCategory({...category3, name:""}, wrongLogo);
     cy.get("[data-e2e='create-category-btn']")
       .click();
-    cy.contains("div.invalid-feedback", "Logo is not a valid file format and Logo format you're trying to attach is not supported")
+    cy.contains("div.invalid-feedback", 
+      "Logo is not a valid file format and Logo format you're trying to attach is not supported")
       .should("be.visible");
     cy.contains("div.invalid-feedback", "Name can't be blank")
       .should("be.visible");
@@ -110,7 +111,8 @@ describe("Category", () => {
       .find("a.delete-icon")
       .click();
     cy.get(".alert-danger")
-      .contains("This category has successors connected to it, therefore is not possible to remove it. If you want to remove it, edit them so they are not associated with this category anymore")
+      .contains("This category has successors connected to it, therefore is not possible to remove it. "+
+      "If you want to remove it, edit them so they are not associated with this category anymore")
       .should("be.visible");
   });
 
@@ -137,7 +139,7 @@ describe("Category", () => {
   it("should edit category", () => {
     cy.loginAs(user);
     cy.visit("/backoffice/categories")
-    cy.get(".list-group.backoffice-list li")
+    cy.get("[data-e2e='backoffice-categories-list'] li")
       .eq(0)
       .find("a")
       .contains("Edit")
