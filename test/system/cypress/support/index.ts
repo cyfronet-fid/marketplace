@@ -32,7 +32,8 @@ import './utilities';
 import './jira';
 import './offers';
 import './resources';
-import './category'
+import './category';
+import './scientific-domain';
 
 /**
  * Don't fail on uncaught exception
