@@ -2,14 +2,14 @@
 
 require "stomp"
 require "json"
-require "raven"
+require "sentry-ruby"
 
 module Jms
   class Subscriber
     class ConnectionError < StandardError
       def initialize(msg)
-        Raven.capture_exception(msg)
         super(msg)
+        Sentry.capture_exception(self)
       end
     end
 
@@ -49,7 +49,7 @@ module Jms
       def error_block(msg, e)
         @logger.error("Error occured while processing message:\n #{msg}")
         @logger.error(e)
-        Raven.capture_exception(e)
+        Sentry.capture_exception(e)
         abort(e.full_message)
       end
 

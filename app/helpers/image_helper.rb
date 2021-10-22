@@ -83,7 +83,7 @@ module ImageHelper
     extension = "." + metadata[/image\/[a-zA-Z]+/].gsub!(/image\//, "")
     unless ImageHelper.image_ext_permitted?(extension)
       msg = "Conversion of binary image to base64 can't be done on file with extension #{extension}"
-      Raven.capture_message(msg)
+      Sentry.capture_message(msg)
       raise msg
     end
 
@@ -96,7 +96,7 @@ module ImageHelper
       extension = "." + file_name.split(".")[-1]
       unless ImageHelper.image_ext_permitted?(extension)
         msg = "Conversion of binary image to base64 can't be done on file with extension #{extension}"
-        Raven.capture_message(msg)
+        Sentry.capture_message(msg)
         raise msg
       end
 
