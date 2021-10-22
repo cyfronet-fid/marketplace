@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 if Rails.env.production? && ENV["SENTRY_DSN"]
-  require "raven"
+  require "sentry-ruby"
 
-  Raven.configure do |config|
+  Sentry.init do |config|
     config.dsn = ENV["SENTRY_DSN"]
-    config.environments = [ENV["SENTRY_ENVIRONMENT"] || "production"]
-    config.sanitize_fields =
-      Rails.application.config.filter_parameters.map(&:to_s)
+    config.environment = ENV["SENTRY_ENVIRONMENT"] || "production"
+    config.traces_sample_rate = 0.5
+    config.send_default_pii = true
   end
 end

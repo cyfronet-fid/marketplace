@@ -4,20 +4,17 @@ module Sentryable
   extend ActiveSupport::Concern
 
   included do
-    before_action :set_raven_context, if: :sentry_enabled?
+    before_action :set_sentry_context, if: :sentry_enabled?
   end
 
   private
-    def set_raven_context
+    def set_sentry_context
       if current_user
-        Raven.user_context(id: current_user.id,
-                          email: current_user.email,
-                          username: current_user.full_name)
+        Sentry.set_user(id: current_user.id, uid: current_user.uid)
       end
-      Raven.extra_context(params: params.permit!.to_h, url: request.url)
     end
 
     def sentry_enabled?
-      Rails.env.production?
+      Rails.env.production? && ENV["SENTRY_DSN"]
     end
 end

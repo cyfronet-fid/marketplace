@@ -46,7 +46,7 @@ class Jms::ManageMessage
     end
   rescue WrongMessageError => e
     warn "[WARN] Message arrived, but the type is unknown: #{body["resourceType"]}, #{e}"
-    Raven.capture_exception(e)
+    Sentry.capture_exception(e)
   end
 
   private

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "raven"
+require "sentry-ruby"
 
 RSpec.feature "Recommended services" do
   include OmniauthHelper
@@ -30,7 +30,7 @@ RSpec.feature "Recommended services" do
     )
 
     allow(Faraday).to receive(:post).and_raise(ArgumentError)
-    allow(Raven).to receive(:capture_message)
+    allow(Sentry).to receive(:capture_message)
 
     services_ids = [1, 2, 3]
     services = services_ids.map { |id| create(:service, id: id) }

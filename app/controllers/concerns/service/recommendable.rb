@@ -67,7 +67,7 @@ module Service::Recommendable
       end
 
     rescue
-      Raven.capture_message("Recommendation service, recommendation endpoint response error")
+      Sentry.capture_message("Recommendation service, recommendation endpoint response error")
       []
     end
 

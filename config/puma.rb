@@ -44,7 +44,7 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
 
-require "raven"
+require "sentry-ruby"
 
 before_fork do
   require "puma_worker_killer"
@@ -61,7 +61,7 @@ before_fork do
     config.rolling_restart_frequency = false
 
     config.pre_term = -> (worker) {
-      Raven.capture_message(
+      Sentry.capture_message(
         "Puma worker #{worker.instance_variable_get("@index")} "\
         "(pid: #{worker.instance_variable_get("@pid")}) "\
         "#{worker.instance_variable_get("@stage")}, "\
