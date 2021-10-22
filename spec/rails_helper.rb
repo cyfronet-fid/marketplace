@@ -18,7 +18,6 @@ require "rspec/rails"
 require "action_dispatch/system_testing/server"
 ActionDispatch::SystemTesting::Server.silence_puma = true
 require "action_dispatch/system_test_case"
-require "raven"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

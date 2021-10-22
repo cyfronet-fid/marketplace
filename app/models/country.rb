@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "raven"
-
 class Country
   SCHENGEN = ["AT", "BE", "CH", "CZ", "DE", "DK",
               "EE", "GR", "ES", "FI", "FR", "HU",
@@ -86,7 +84,7 @@ class Country
         return searched_country
       end
 
-      Raven.capture_message("Country with alpha2 code: #{value}, couldn't be found")
+      Sentry.capture_message("Country with alpha2 code: #{value}, couldn't be found")
       ISO3166::Country.new("N/E")
     end
 
