@@ -5,5 +5,6 @@ class Providers::DetailsController < ApplicationController
     # @service = Service.friendly.find(params[:service_id])
     # @related_services = @service.related_services
     @provider = Provider.with_attached_logo.friendly.find(params[:provider_id])
+    authorize(@provider, :show?)
   end
 end

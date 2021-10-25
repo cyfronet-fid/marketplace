@@ -51,7 +51,11 @@ module ServiceHelper
 
   def resource_organisation(service, highlights = nil)
     target = service.resource_organisation
-    link_to(highlighted_for(:resource_organisation_name, service, highlights), provider_path(target))
+    link_to_unless(
+      target.deleted?,
+      highlighted_for(:resource_organisation_name, service, highlights),
+      provider_path(target)
+    )
   end
 
   def resource_organisation_pid(service)
@@ -63,22 +67,25 @@ module ServiceHelper
   end
 
   def resource_organisation_and_providers(service)
-    service.resource_organisation_and_providers.map { |target| link_to(target.name, provider_path(target)) }
+    service.resource_organisation_and_providers.
+      map { |target| link_to(target.name, provider_path(target)) }
   end
 
   def resource_organisation_and_providers_text(service)
-    service.resource_organisation_and_providers.map { |target| target.name }
+    service.resource_organisation_and_providers.
+      map { |target| target.name }
   end
 
   def providers(service, highlights = nil)
     highlighted = highlights.present? ? sanitize(highlights[:provider_names])&.to_str : ""
     service.providers
            .reject(&:blank?)
+           .reject(&:deleted?)
            .reject { |p| p == service.resource_organisation }.uniq.map do |target|
       if highlighted.present? && highlighted.strip == target.name.strip
-        link_to highlights[:provider_names].html_safe, provider_path(target)
+        link_to_unless target.deleted?, highlights[:provider_names].html_safe, provider_path(target)
       else
-        link_to target.name, provider_path(target)
+        link_to_unless target.deleted?, target.name, provider_path(target)
       end
     end
   end

@@ -126,9 +126,11 @@ module Service::Searchable
     end
 
     def filter_classes
+      url_path = URI.parse(request.path).path
+      backoffice = url_path.start_with?("/backoffice")
       [
           Filter::ScientificDomain,
-          Filter::Provider,
+          backoffice ? Filter::BackofficeProvider : Filter::Provider,
           Filter::TargetUser,
           Filter::Platform,
           Filter::Rating,

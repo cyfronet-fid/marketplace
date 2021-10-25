@@ -47,6 +47,7 @@ namespace :dev do
       provider.city = hash["city"]
       provider.country = Country.for(hash["country_alpha2"])
       provider.pid = provider.abbreviation
+      provider.status = hash["status"]
 
       io, extension = ImageHelper.base_64_to_blob_stream(hash["image_base_64"])
       provider.logo.attach(
