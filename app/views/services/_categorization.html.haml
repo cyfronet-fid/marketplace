@@ -4,13 +4,14 @@
       = _("Organisation") + ":"
   %dd.x-small
     %mr-4= resource_organisation(service, highlights)
-- if service.providers?
+- active_providers = safe_join(providers(service, highlights), ", ")
+- if active_providers.present?
   %dl.mb-0
     %dt.x-small
       %span
         = _("Provided by") + ":"
     %dd.x-small
-      %mr-4= safe_join(providers(service, highlights), ", ")
+      %mr-4= active_providers
 %dl.mb-0.research
   %dt.x-small
     %span

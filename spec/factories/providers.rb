@@ -12,6 +12,7 @@ FactoryBot.define do
     sequence(:city) { |n| "city #{n}" }
     sequence(:country) { |n| "N/E" }
     sequence(:pid) { |n| "provider-pid#{n}" }
+    sequence(:status) { :published }
 
     public_contacts { [build(:public_contact)] }
     main_contact { build(:main_contact) }

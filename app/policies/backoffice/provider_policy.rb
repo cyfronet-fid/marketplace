@@ -28,17 +28,21 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
     service_portfolio_manager?
   end
 
+  def edit?
+    service_portfolio_manager? && !record.deleted?
+  end
+
   def update?
-    service_portfolio_manager?
+    service_portfolio_manager? && !record.deleted?
   end
 
   def destroy?
-    service_portfolio_manager?
+    service_portfolio_manager? && !record.deleted?
   end
 
   def permitted_attributes
     attrs = [
-      :name, :abbreviation, :website,
+      :name, :abbreviation, :website, :status,
       :legal_entity, [legal_status_ids: []],
       :legal_status, :esfri_type, :provider_life_cycle_status,
       :description, :logo, [multimedia: []],
