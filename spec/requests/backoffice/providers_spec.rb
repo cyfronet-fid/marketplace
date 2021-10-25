@@ -8,11 +8,41 @@ RSpec.describe "Backoffice: manage providers" do
 
     before { login_as(user) }
 
-    it "I can delete provider" do
-      category = create(:provider)
+    context "I can delete provider" do
+      it "without any service" do
+        provider = create(:provider)
 
-      expect { delete backoffice_provider_path(category) }.
-        to change { Provider.count }.by(-1)
+        expect { delete backoffice_provider_path(provider) }.
+          to change { Provider.where.not(status: :deleted).count }.by(-1)
+      end
+
+      it "with all deleted services" do
+        provider = create(:provider)
+        create(:service, resource_organisation: provider, status: :deleted)
+
+        expect { delete backoffice_provider_path(provider) }.
+          to change { Provider.where.not(status: :deleted).count }.by(-1)
+      end
+    end
+
+    it "I can't delete provider having service with status different than deleted" do
+      provider = create(:provider)
+      create(:service, status: :unverified, resource_organisation: provider)
+
+      expect { delete backoffice_provider_path(provider) }.
+        to change { Provider.where.not(status: :deleted).count }.by(0)
+
+      provider = create(:provider)
+      create(:service, status: :errored, resource_organisation: provider)
+
+      expect { delete backoffice_provider_path(provider) }.
+        to change { Provider.where.not(status: :deleted).count }.by(0)
+
+      provider = create(:provider)
+      create(:service, status: :draft, resource_organisation: provider)
+
+      expect { delete backoffice_provider_path(provider) }.
+        to change { Provider.where.not(status: :deleted).count }.by(0)
     end
 
     it "should call permitted_attributes with provider with form upstream_id" do

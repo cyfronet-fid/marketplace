@@ -3,8 +3,14 @@
 class ProviderPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope
+      scope.where(status: [:published, :unverified, :errored])
     end
+  end
+
+  def show?
+    has_permission = !record.deleted?
+    raise ActiveRecord::RecordNotFound unless has_permission
+    true
   end
 
   def data_administrator?

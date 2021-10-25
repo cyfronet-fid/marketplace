@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add the tags to a provider page (@danielkryska)
 
 ### Changed
+- Extend providers with soft delete - keep information's for analytics purposes or for data recovery (@danielkryska)
 
 ### Deprecated
 

@@ -15,8 +15,8 @@ class Filter::Multiselect < Filter
   protected
     def fetch_options
       @model.distinct
-          .map { |e| { name: e.name, id: e.id, count: @counters[e.id] || 0 } }
-          .sort_by! { |e| [-e[:count], e[:name] ] }
+            .map { |e| { name: e.name, id: e.id, count: @counters[e.id] || 0 } }
+            .sort_by! { |e| [-e[:count], e[:name]] }
     end
 
     def where_constraint

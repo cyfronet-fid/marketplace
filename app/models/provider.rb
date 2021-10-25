@@ -11,6 +11,13 @@ class Provider < ApplicationRecord
 
   searchkick word_middle: [:provider_name]
 
+  STATUSES = {
+    published: "published",
+    deleted: "deleted"
+  }
+
+  enum status: STATUSES
+
   def search_data
     {
       provider_id: id,
@@ -18,6 +25,8 @@ class Provider < ApplicationRecord
       service_ids: service_ids
     }
   end
+
+  scope :active, -> { where.not(status: :deleted) }
 
   has_one_attached :logo
 
@@ -79,6 +88,7 @@ class Provider < ApplicationRecord
     unless legal_entity
       self.legal_status = nil
     end
+    self.status ||= :published
   end
 
   validates :name, presence: true, uniqueness: true
@@ -93,6 +103,7 @@ class Provider < ApplicationRecord
   validates :provider_life_cycle_statuses, length: { maximum: 1 }
   validates :public_contacts, length: { minimum: 1, message: "are required. Please add at least one" }
   validates :data_administrators, length: { minimum: 1, message: "are required. Please add at least one" }
+  validates :status, presence: true
   validate :logo_variable, on: [:create, :update]
   validate :validate_array_values_uniqueness
 
