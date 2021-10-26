@@ -120,8 +120,6 @@ group :production do
   gem "sentry-ruby"
   gem "sentry-rails"
   gem "sentry-sidekiq"
-  gem "faker", require: false
-  gem "newrelic_rpm"
 end
 
 gem "faraday"
