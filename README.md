@@ -52,14 +52,8 @@ Data comes from the actual official version of the marketplace.
 If you want to update the data or add new resources/categories, you can add new records by editing `db/data.yml`.
 It is important to remember that if some record is a parent for another, it must be written above its child.
 
-If necessary, there is an other option to fill the database:
-To simplify development `dev:prime` rake task is created. Right now it generates
-resources with random names and descriptions (this generation is done using
-`faker` gem). In the future this task will be extended with additional data.
-
 ```
-./bin/rails dev:prime     # Remove existing resources and generate 100 new resources
-./bin/rails dev:prime[50] # Remove existing resources and generate 50 new resources
+./bin/rails dev:prime 
 ```
 
 If you need actual production data run:
@@ -202,12 +196,6 @@ In production environment sentry integration can be turned on. To do so create
 dedicated [env variable](#environmental-variables) `SENTRY_DSN` with details how to connect to sentry
 server. Sentry environment can also be configured using `SENTRY_ENVIRONMENT`
 [env variable](#environmental-variables) (default set to `production`).
-
-## New relic integration
-
-Newrelic rpm gem is added into `production` dependencies. The only thing you
-need to do to turn newrelic on production is to get `newrelic.yml` and put it
-into rails root directory.
 
 ## Environmental variables
 
