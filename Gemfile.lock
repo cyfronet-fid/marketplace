@@ -162,8 +162,6 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
-    faker (2.19.0)
-      i18n (>= 1.6, < 2)
     faraday (1.8.0)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
@@ -301,7 +299,6 @@ GEM
     multipart-post (2.1.1)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    newrelic_rpm (8.0.0)
     nio4r (2.5.8)
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
@@ -672,7 +669,6 @@ DEPENDENCIES
   devise
   dotenv-rails
   factory_bot_rails
-  faker
   faraday
   faraday_middleware
   fast_gettext
@@ -688,7 +684,6 @@ DEPENDENCIES
   jira-ruby
   json-schema
   listen
-  newrelic_rpm
   nori
   omniauth
   omniauth_openid_connect
