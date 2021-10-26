@@ -17,7 +17,7 @@
     = render "comparisons/bar", services: @compare_services, category: @category
 .tab-content
   = render "services/about", service: @service, offers: @offers, bundles: @bundles, analytics: @analytics
-  = render "services/tags", service: @service
+  = render "taggable/details_section", taggable: @service
 
 .container.mt-4.pt-4.related-container
   = render "services/related", related_services: @related_services, title: @related_services_title

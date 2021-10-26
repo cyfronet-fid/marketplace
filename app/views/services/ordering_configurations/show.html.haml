@@ -7,7 +7,7 @@
     = render "services/tabs", service: @service, params: { from: "ordering_configuration" }
 .tab-content
   = render "services/ordering_configurations/about", service: @service, offers: @offers, analytics: @analytics
-  = render "services/tags", service: @service
+  = render "taggable/details_section", taggable: @service
 
 .container.mt-4.pt-4.related-container
   = render "services/related", related_services: @related_services, title: @related_services_title
