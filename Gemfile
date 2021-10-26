@@ -10,9 +10,8 @@ gem "pg", ">= 0.18", "< 2.0"
 gem "puma"
 gem "nori"
 
-gem "sass-rails", ">= 6"
 gem "uglifier", ">= 1.3.0"
-gem "webpacker", "~> 4.0"
+gem "webpacker", "~> 5.0"
 gem "view_component", require: "view_component/engine"
 gem "haml-rails"
 gem "turbolinks", "~> 5", require: false
@@ -68,7 +67,7 @@ gem "jira-ruby"
 # soap
 gem "savon", "~> 2.12.0"
 
-gem "google-api-client", "~> 0.34", require: "google/apis/analyticsreporting_v4"
+gem "google-apis-analyticsreporting_v4", "~> 0.5"
 
 gem "redis-rails"
 gem "sidekiq"
