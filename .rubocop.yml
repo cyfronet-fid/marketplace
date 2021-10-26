@@ -1,6 +1,24 @@
+require:
+  - rubocop-rails
+
 AllCops:
-   TargetRubyVersion: 3.0.2
+  TargetRubyVersion: 3.0.2
+  NewCops: enable
 
 inherit_gem:
-  rubocop-rails_config:
-    - config/rails.yml
+  rubocop-rails:
+    - config/default.yml
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Metrics/BlockLength:
+  IgnoredMethods:
+    # By default, exclude the `#refine` method, as it tends to have larger
+    # associated blocks.
+    - refine
+    - configure
+    - describe

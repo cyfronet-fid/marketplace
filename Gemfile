@@ -78,7 +78,7 @@ gem "split", require: "split/dashboard"
 gem "aws-sdk-s3", require: false
 
 group :development, :test do
-  gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
+  gem "byebug", platforms: %i[mri mingw x64_mingw]
 
   gem "rspec-rails", "~> 3.8.2"
   gem "rswag-specs"
@@ -97,7 +97,8 @@ group :development do
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "spring-commands-rspec"
-  gem "rubocop-rails_config"
+  gem "rubocop-rails", require: false
+  gem "rubocop-rspec", require: false
   gem "overcommit", require: false
   gem "haml_lint", require: false
   gem "scss_lint", require: false
@@ -113,7 +114,7 @@ group :test do
   gem "webdrivers"
 end
 
-gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
 group :production do
   gem "sentry-ruby"
