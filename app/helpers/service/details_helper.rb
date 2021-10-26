@@ -11,7 +11,7 @@ module Service::DetailsHelper
 
   def provider_details_columns
     [
-      [esfri_types, esfri_domains, meril_scientific_domains],
+      [provider_classification, esfri_types, esfri_domains, meril_scientific_domains],
       [networks, areas_of_activity, affiliations, certifications],
       [hosting_legal_entity, structure_types, societal_grand_challenges, national_roadmaps]
     ]
@@ -48,6 +48,18 @@ module Service::DetailsHelper
   end
 
   private
+    def provider_classification
+      {
+        name: "classification",
+        template: "array",
+        fields: %w[tag_list],
+        with_desc: true,
+        nested: {
+          tag_list: "tag"
+        }
+      }
+    end
+
     def classification
       {
         name: "classification",
