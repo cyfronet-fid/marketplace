@@ -23,6 +23,11 @@
   }
 }
 
+@media (max-width: 991px) {
+  .top {
+    display: none;
+  }
+}
 
 @media (max-width: 992px) {
 
@@ -55,10 +60,6 @@
 
   main {
     padding: 0 10px;
-  }
-
-  .top {
-    display: none;
   }
 
   .header {
