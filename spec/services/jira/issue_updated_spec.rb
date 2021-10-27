@@ -96,7 +96,7 @@ RSpec.describe Jira::IssueUpdated do
       offer = create(:offer, service: service, voucherable: true)
       project_item = create(:project_item, offer: offer, request_voucher: true)
 
-      described_class.new(project_item, changelog(field: "CP-VoucherID", toString: "123456")).call
+      described_class.new(project_item, changelog(field: "CP-VoucherID", to_string: "123456")).call
 
       project_item.reload
 

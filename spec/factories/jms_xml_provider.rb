@@ -58,10 +58,9 @@ FactoryBot.define do
                       "</tns:mainContact>" \
                       "<tns:merilScientificDomains>" \
                       "<tns:merilScientificDomain>" \
-                      "<tns:merilScientificDomain>
-                            provider_meril_scientific_domain-other</tns:merilScientificDomain>" \
-                      "<tns:merilScientificSubdomain>provider_meril_scientific_subdomain-other-other
-                      </tns:merilScientificSubdomain>" \
+                      "<tns:merilScientificDomain>provider_meril_scientific_domain-other</tns:merilScientificDomain>" \
+                      "<tns:merilScientificSubdomain>provider_meril_scientific_subdomain-other-other" \
+                      "</tns:merilScientificSubdomain>" \
                       "</tns:merilScientificDomain>" \
                       "</tns:merilScientificDomains>" \
                       "<tns:multimedia/>" \
@@ -87,8 +86,8 @@ FactoryBot.define do
                       "</tns:scientificDomain>" \
                       "</tns:scientificDomains>" \
                       "<tns:societalGrandChallenges>" \
-                      "<tns:societalGrandChallenge>provider_societal_grand_challenge-secure_societies
-                      </tns:societalGrandChallenge>" \
+                      "<tns:societalGrandChallenge>provider_societal_grand_challenge-secure_societies" \
+                      "</tns:societalGrandChallenge>" \
                       "</tns:societalGrandChallenges>" \
                       "<tns:structureTypes>" \
                       "<tns:structureType>provider_structure_type-mobile</tns:structureType>" \
