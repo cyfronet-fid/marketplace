@@ -11,7 +11,7 @@
     "@rails/actiontext": "^6.0.2",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
-    "@rails/webpacker": "^4.0.7",
+    "@rails/webpacker": "^5.0.0",
     "bootstrap": "^4.1.1",
     "bootstrap-datepicker": "^1.8.0",
     "choices.js": "^6.0.0",
