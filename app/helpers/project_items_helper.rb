@@ -9,8 +9,8 @@ module ProjectItemsHelper
     end
   end
 
-  def ratingable?
-    (@project_item.ready? && @project_item.service_opinion.nil?)
+  def ratingable?(project_item)
+    (project_item.ready? && project_item.service_opinion.nil?)
   end
 
   def voucher_id(project_item)

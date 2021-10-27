@@ -11,7 +11,8 @@ module Service::HeaderHelper
 
   def resource_link(service)
     if service.pid.present?
-      "#{Mp::Application.config.providers_dashboard_url}/resource-dashboard/#{service.pid.split('.').first}/#{service.pid}/stats"
+      "#{Mp::Application.config.providers_dashboard_url}/resource-dashboard/" \
+        "#{service.pid.split('.').first}/#{service.pid}/stats"
     else
       service_path(service)
     end

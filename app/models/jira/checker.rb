@@ -54,12 +54,10 @@ class Jira::Checker
   def check_connection!
     client.Project.all
   rescue JIRA::HTTPError => e
-    if e.response.code == "401"
-      raise CriticalCheckerError,
-            "Could not authenticate #{client.jira_config['username']} on #{client.jira_config['url']}"
-    else
-      raise e
-    end
+    raise e unless e.response.code == "401"
+
+    raise CriticalCheckerError,
+          "Could not authenticate #{client.jira_config['username']} on #{client.jira_config['url']}"
   end
 
   def check_issue_type!
@@ -67,7 +65,8 @@ class Jira::Checker
   rescue JIRA::HTTPError => e
     if e.response.code == "404"
       raise CheckerError,
-            "It seems that ticket with id #{client.jira_issue_type_id} does not exist, make sure to add existing issue type into configuration"
+            "It seems that ticket with id #{client.jira_issue_type_id} does not exist, " \
+            "make sure to add existing issue type into configuration"
     end
 
     raise e
@@ -78,7 +77,8 @@ class Jira::Checker
   rescue JIRA::HTTPError => e
     if e.response.code == "404"
       raise CheckerError,
-            "It seems that ticket with id #{client.jira_project_issue_type_id} does not exist, make sure to add existing issue type into configuration"
+            "It seems that ticket with id #{client.jira_project_issue_type_id} does not exist, " \
+            "make sure to add existing issue type into configuration"
     end
 
     raise e
@@ -87,12 +87,11 @@ class Jira::Checker
   def check_project!
     client.mp_project
   rescue JIRA::HTTPError => e
-    if e.response.code == "404"
-      raise CriticalCheckerError,
-            "Could not find project #{client.jira_project_key}, make sure it exists and user #{client.jira_config['username']} has access to it"
-    else
-      raise e
-    end
+    raise e unless e.response.code == "404"
+
+    raise CriticalCheckerError,
+          "Could not find project #{client.jira_project_key}, " \
+          "make sure it exists and user #{client.jira_config['username']} has access to it"
   end
 
   def check_create_issue!(issue = nil)
@@ -114,16 +113,17 @@ class Jira::Checker
                issuetype: { id: client.jira_project_issue_type_id } }
     fields[client.custom_fields[:"Epic Name"]] = "TEST EPIC"
 
-    unless issue.save(fields: fields)
-      raise CriticalCheckerError,
-            "Could not create product issue in project: #{client.jira_project_key} and issuetype: #{client.jira_project_issue_type_id}"
-    end
+    return if issue.save(fields: fields)
+
+    raise CriticalCheckerError,
+          "Could not create product issue in project: #{client.jira_project_key} " \
+          "and issuetype: #{client.jira_project_issue_type_id}"
   end
 
   def check_update_issue!(issue)
-    unless issue.save(fields: { description: "TEST DESCRIPTION" })
-      raise CheckerError, "Could not update issue description"
-    end
+    return if issue.save(fields: { description: "TEST DESCRIPTION" })
+
+    raise CheckerError, "Could not update issue description"
   end
 
   def check_add_comment!(issue)
@@ -134,30 +134,28 @@ class Jira::Checker
   def check_delete_issue!(issue)
     issue.delete
   rescue JIRA::HTTPError => e
-    if e.response.code == "403"
-      raise CheckerWarning,
-            "Could not delete issue #{issue.key}, this is not critical but you will have to delete it manually from the project"
-    else
+    unless e.response.code == "403"
       raise CheckerError, "Could not delete issue, reason: #{e.response.code}: #{e.response.body}"
     end
+
+    raise CheckerWarning,
+          "Could not delete issue #{issue.key}, " \
+          "this is not critical but you will have to delete it manually from the project"
   end
 
   def check_workflow!(id)
     client.Status.find(id)
   rescue JIRA::HTTPError => e
-    if e.response.code == "404"
-      raise CheckerError, "STATUS WITH ID: #{id} DOES NOT EXIST IN JIRA"
-    else
-      raise e
-    end
+    raise CheckerError, "STATUS WITH ID: #{id} DOES NOT EXIST IN JIRA" if e.response.code == "404"
+
+    raise e
   end
 
   def check_workflow_transitions!(issue)
     trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_done_id }
-    if trs.length.zero?
-      raise CheckerError, "Could not transition from 'TODO' to 'DONE' state, " \
-                          "this will affect open access services "
-    end
+    return unless trs.length.zero?
+
+    raise CheckerError, "Could not transition from 'TODO' to 'DONE' state, this will affect open access services"
   end
 
   def check_custom_fields!
@@ -167,10 +165,9 @@ class Jira::Checker
       [field_name, fields.any? { |f| f.id == field_id && f.name.to_sym == field_name }]
     end.to_h
 
-    if statuses.any? { |_k, v| !v }
-      raise CheckerCompositeError.new("CUSTOM FIELD mapping have some problems",
-                                      statuses)
-    end
+    return unless statuses.any? { |_k, v| !v }
+
+    raise CheckerCompositeError.new("CUSTOM FIELD mapping have some problems", statuses)
   end
 
   def check_webhook!(host)
@@ -184,7 +181,8 @@ class Jira::Checker
         webhook = wh
       else
         raise CheckerWarning, "Webhook \"#{wh.name}\" does not define proper \"Issue related events\" - required: " \
-                              "\"project = #{client.jira_project_key}\", current: \"#{wh.filters['issue-related-events-section']}\""
+                              "\"project = #{client.jira_project_key}\", " \
+                              "current: \"#{wh.filters['issue-related-events-section']}\""
       end
     end.empty? && begin
       raise CheckerWarning, "JIRA instance has no defined webhooks"
@@ -192,7 +190,8 @@ class Jira::Checker
 
     if webhook.nil?
       raise CheckerWarning,
-            "Could not find Webhook for this application, please confirm manually that webhook is defined for this host"
+            "Could not find Webhook for this application," \
+            " please confirm manually that webhook is defined for this host"
     end
 
     check_webhook_params!(webhook)
@@ -208,9 +207,9 @@ class Jira::Checker
       comment_deleted: webhook.events.include?("comment_deleted")
     }
 
-    if statuses.reject { |_key, val| val }.length.positive?
-      # noinspection RubyArgCount
-      raise CheckerCompositeError.new("Webhook notifications are lacking", statuses)
-    end
+    return unless statuses.reject { |_key, val| val }.length.positive?
+
+    # noinspection RubyArgCount
+    raise CheckerCompositeError.new("Webhook notifications are lacking", statuses)
   end
 end

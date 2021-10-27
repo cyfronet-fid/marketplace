@@ -296,7 +296,12 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         end
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to eq({ error: "The property '#/' did not contain a required property of 'content'" }.as_json.deep_stringify_keys)
+          expect(data).to eq(
+            {
+              error:
+                "The property '#/' did not contain a required property of 'content'"
+            }.as_json.deep_stringify_keys
+          )
 
           project.reload
           expect(project.messages.count).to eq(0)
@@ -658,7 +663,11 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
           project.reload
 
           data = JSON.parse(response.body)
-          expect(data).to eq({ error: "The property '#/' did not contain a required property of 'content'" }.deep_stringify_keys)
+          expect(data).to eq(
+            {
+              error: "The property '#/' did not contain a required property of 'content'"
+            }.deep_stringify_keys
+          )
 
           expect(message.message).to eq("Before update")
           expect(project.messages.first.message).to eq("Before update")

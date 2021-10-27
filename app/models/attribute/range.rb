@@ -21,18 +21,18 @@ class Attribute::Range < Attribute
   end
 
   def value_from_param(param)
-    if param.present?
-      @value = case value_type
-               when "integer"
-                 begin
-                   Integer(param)
-                 rescue StandardError
-                   String(param)
-                 end
-               else
-                 param
+    return if param.blank?
+
+    @value = case value_type
+             when "integer"
+               begin
+                 Integer(param)
+               rescue StandardError
+                 String(param)
                end
-    end
+             else
+               param
+             end
   end
 
   def config_schema

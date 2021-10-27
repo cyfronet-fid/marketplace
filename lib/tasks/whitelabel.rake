@@ -56,7 +56,7 @@ namespace :whitelabel do
     "app/assets/images/ico_#{name}.png".underscore
   end
 
-  def has_logo?(record)
+  def logo?(record)
     File.exist?(logo_path(record))
   end
 end

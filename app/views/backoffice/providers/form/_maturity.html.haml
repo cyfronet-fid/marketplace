@@ -17,11 +17,11 @@
   .card-body
     = f.input :provider_life_cycle_status,
               collection: Vocabulary.where(type: "Vocabulary::ProviderLifeCycleStatus"),
-              disabled: cant_edit([provider_life_cycle_status_ids: []]),
+              disabled: cant_edit([provider_life_cycle_status_ids: []], provider),
               label_method: :name, value_method: :id,
               input_html: { multiple: false, data: { choice: true } }
     = f.input :certifications,
-              disabled: cant_edit([certifications: []]), multiple: true,
+              disabled: cant_edit([certifications: []], provider), multiple: true,
               input_html: { class: "form-control text optional" },
               wrapper_html: { "data-target" => "form.certifications" }, as: :array
     = link_to_add_array_field("provider", "certifications")

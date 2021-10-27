@@ -104,9 +104,9 @@ RSpec.describe Jira::IssueUpdated do
     end
   end
 
-  def changelog(field: "status", to: nil, toString: nil)
+  def changelog(field: "status", to: nil, to_string: nil)
     { "items" => [
-      { "field" => field, "to" => to, "toString" => toString }
+      { "field" => field, "to" => to, "toString" => to_string }
     ] }
   end
 end

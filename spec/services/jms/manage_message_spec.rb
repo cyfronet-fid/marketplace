@@ -25,11 +25,12 @@ describe Jms::ManageMessage do
     original_stdout = $stdout
     $stdout = StringIO.new
     resource = parser.parse(service_resource["resource"])
-    expect(Service::PcCreateOrUpdateJob).to receive(:perform_later).with(resource["infraService"]["service"],
-                                                                         eosc_registry_base,
-                                                                         true,
-                                                                         Time.zone.at(resource["infraService"]["metadata"]["modifiedAt"].to_i&./1000),
-                                                                         nil)
+    expect(Service::PcCreateOrUpdateJob).to receive(:perform_later)
+      .with(resource["infraService"]["service"],
+            eosc_registry_base,
+            true,
+            Date.at(resource["infraService"]["metadata"]["modifiedAt"].to_i&./1000),
+            nil)
     expect do
       described_class.new(json_service, eosc_registry_base, logger).call
     end.to_not raise_error
@@ -42,7 +43,7 @@ describe Jms::ManageMessage do
     resource = parser.parse(provider_resource["resource"])
     expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later)
       .with(resource["providerBundle"]["provider"],
-            Time.zone.at(resource["providerBundle"]["metadata"]["modifiedAt"].to_i&./1000))
+            Date.at(resource["providerBundle"]["metadata"]["modifiedAt"].to_i&./1000))
 
     expect do
       described_class.new(json_provider, eosc_registry_base, logger, nil).call

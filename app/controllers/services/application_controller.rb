@@ -20,15 +20,14 @@ class Services::ApplicationController < ApplicationController
   end
 
   def ensure_in_session!
-    unless saved_state
-      redirect_to service_offers_path(@service),
-                  alert: "Service request template not found"
-    end
+    return if saved_state
+
+    redirect_to service_offers_path(@service), alert: "Service request template not found"
   end
 
   def load_and_authenticate_service!
     @service = Service.friendly.find(params[:service_id])
-    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] === "backoffice_service"), :order?)
+    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"), :order?)
     @wizard = ProjectItem::Wizard.new(@service)
   end
 

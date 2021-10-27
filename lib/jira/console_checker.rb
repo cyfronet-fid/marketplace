@@ -13,36 +13,36 @@ module Jira
       abort("jira:check exited with errors")
     end
 
-    def error_and_abort!(e, indent = 1)
+    def error_and_abort!(error, indent = 1)
       Rails.logger.debug " FAIL".red << "\n"
 
-      case e
+      case error
       when Errno::ECONNREFUSED
         Rails.logger.debug "ERROR".red + ": Could not connect to JIRA: #{@checker.client.jira_config['url']}"
         abort!
 
       when Jira::Checker::CheckerError
-        Rails.logger.debug(("  " * indent) + "- ERROR".red + ": #{e.message}")
+        Rails.logger.debug(("  " * indent) + "- ERROR".red + ": #{error.message}")
         false
 
       when Jira::Checker::CheckerWarning
-        Rails.logger.debug(("  " * indent) + "- WARNING".yellow + ": #{e.message}")
+        Rails.logger.debug(("  " * indent) + "- WARNING".yellow + ": #{error.message}")
         false
 
       when Jira::Checker::CheckerCompositeError
-        Rails.logger.debug(("  " * indent) + "- ERROR".red + ": #{e.message}")
+        Rails.logger.debug(("  " * indent) + "- ERROR".red + ": #{error.message}")
 
-        e.statuses.each do |hash, value|
+        error.statuses.each do |hash, value|
           Rails.logger.debug(("  " * (indent + 1)) + "- #{hash}:")
           value ? ok! : Rails.logger.debug(" ✕".red)
         end
         false
       when Jira::Checker::CriticalCheckerError
-        Rails.logger.debug(("  " * indent) + "- ERROR".red + ": #{e.message}")
+        Rails.logger.debug(("  " * indent) + "- ERROR".red + ": #{error.message}")
         abort!
 
       else
-        Rails.logger.debug "ERROR".red + ": Unexpected error ocurred #{e.message}\n\n#{e.backtrace}"
+        Rails.logger.debug "ERROR".red + ": Unexpected error ocurred #{error.message}\n\n#{error.backtrace}"
         abort!
       end
     end
@@ -68,7 +68,7 @@ module Jira
 
       Rails.logger.debug "SUGGESTED MAPPINGS"
       mismatched_fields.each do |field_name|
-        suggested_field_description = if (f = fields.find { |_f| _f.name == field_name.to_s })
+        suggested_field_description = if (f = fields.find { |field| field.name == field_name.to_s })
                                         "#{f.id.yellow} (export MP_JIRA_FIELD_#{f.name.gsub(/[- ]/, '_')}='#{f.id}')"
                                       else
                                         "NO MATCH FOUND".red

@@ -15,7 +15,7 @@ module ServiceHelper
     result.html_safe
   end
 
-  def get_providers_list
+  def providers_list
     Provider.all
   end
 
@@ -141,7 +141,7 @@ module ServiceHelper
   end
 
   def data_for_region(countries)
-    if is_any_non_european(countries) &&
+    if any_non_european?(countries) &&
        (countries != ["EO"]) &&
        (countries != ["EU"])
       countries.append("WW")
@@ -149,7 +149,7 @@ module ServiceHelper
     countries
   end
 
-  def is_any_non_european(countries)
+  def any_non_european?(countries)
     (countries -
      Country.countries_for_region("Europe").map(&:alpha2))
       .present?

@@ -7,7 +7,7 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
 
   def new
     @offer = Offer.new(service: @service)
-    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] === "backoffice_service"), :show?)
+    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"), :show?)
     authorize @offer
   end
 
@@ -39,10 +39,9 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
 
   def destroy
     @offer = @service.offers.find_by(iid: params[:id])
-    if Offer::Destroy.new(@offer).call
-      redirect_to service_ordering_configuration_path(@service, from: params[:from]),
-                  notice: "Offer removed successfully"
-    end
+    return unless Offer::Destroy.new(@offer).call
+
+    redirect_to service_ordering_configuration_path(@service, from: params[:from]), notice: "Offer removed successfully"
   end
 
   private

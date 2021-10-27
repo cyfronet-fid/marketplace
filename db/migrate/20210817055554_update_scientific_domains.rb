@@ -110,7 +110,7 @@ class UpdateScientificDomains < ActiveRecord::Migration[6.0]
         cast_and_remove_sources(ProjectScientificDomain, source_id, target_id, "project_id")
         source.delete
       end
-    rescue Exception
+    rescue StandardError
       raise ActiveRecord::Rollback
     end
   end
@@ -129,7 +129,8 @@ class UpdateScientificDomains < ActiveRecord::Migration[6.0]
     skip_update = source_relation_ids.blank?
     return if skip_update
 
-    source_relation_ids_to_update = (source_relation_ids - target_relation_ids) | (target_relation_ids - source_relation_ids)
+    source_relation_ids_to_update =
+      (source_relation_ids - target_relation_ids) | (target_relation_ids - source_relation_ids)
     only_remove = source_relation_ids_to_update.blank?
     if only_remove
       domains_group

@@ -10,10 +10,10 @@ class Services::OrderingConfigurationsController < Services::OrderingConfigurati
     @offers = @service&.offers&.published&.order(:iid)
     @related_services = @service.related_services
     @related_services_title = "Related resources"
-    if current_user&.executive?
-      @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
-      @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
-    end
+    return unless current_user&.executive?
+
+    @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
+    @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
   end
 
   private

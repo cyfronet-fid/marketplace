@@ -27,11 +27,12 @@ class Import::Providers
 
   def call
     log "Importing providers from EOSC Registry..."
-    @request_providers = get_external_providers_data.select { |id, _| @ids.empty? || @ids.include?(id) }
+    @request_providers = external_providers_data.select { |id, _| @ids.empty? || @ids.include?(id) }
     @request_providers.each do |eid, external_provider_data|
       parsed_provider_data = Importers::Provider.new(external_provider_data, Time.now.to_i, "rest").call
       eosc_registry_provider = Provider.joins(:sources)
-                                       .find_by("provider_sources.source_type": "eosc_registry", "provider_sources.eid": eid)
+                                       .find_by("provider_sources.source_type": "eosc_registry",
+                                                "provider_sources.eid": eid)
       current_provider = eosc_registry_provider || Provider.find_by(name: parsed_provider_data[:name])
 
       provider_source = ProviderSource.find_by(source_type: "eosc_registry", eid: eid)
@@ -58,12 +59,13 @@ class Import::Providers
     Provider.reindex
 
     not_modified = @request_providers.length - @created_count - @updated_count
-    log "PROCESSED: #{@request_providers.length}, CREATED: #{@created_count}, UPDATED: #{@updated_count}, NOT MODIFIED: #{not_modified}"
+    log "PROCESSED: #{@request_providers.length}, CREATED: #{@created_count}," \
+        " UPDATED: #{@updated_count}, NOT MODIFIED: #{not_modified}"
 
-    unless @filepath.nil?
-      open(@filepath, "w") do |file|
-        file << JSON.pretty_generate(@request_providers.map { |_, request_data| request_data })
-      end
+    return if @filepath.nil?
+
+    open(@filepath, "w") do |file|
+      file << JSON.pretty_generate(@request_providers.map { |_, request_data| request_data })
     end
   end
 
@@ -81,7 +83,8 @@ class Import::Providers
       @updated_count += 1
       log "Updating [EXISTING] provider: #{parsed_provider_data[:name]}, eid: #{parsed_provider_data[:pid]}"
     else
-      log "Provider upstream is not set to EOSC Registry, not updating #{current_provider.name}, id: #{current_provider.pid}"
+      log "Provider upstream is not set to EOSC Registry, not updating #{current_provider.name}," \
+          " id: #{current_provider.pid}"
     end
   end
 
@@ -117,7 +120,7 @@ class Import::Providers
     end
   end
 
-  def get_external_providers_data
+  def external_providers_data
     begin
       rp = Importers::Request.new(@eosc_registry_base_url, "provider", faraday: @faraday, token: @token).call
     rescue Errno::ECONNREFUSED

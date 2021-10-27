@@ -8,7 +8,9 @@ class TourFeedbacksController < ApplicationController
     @tour_controller_action = tour_params[:tour_controller_action]
     @tour_name = tour_params[:tour_name]
     @feedback = Rails.configuration.tours.list["#{@tour_controller_name}.#{@tour_controller_action}.#{I18n.locale}"]
-    @feedback ||= Rails.configuration.tours.list["#{@tour_controller_name}.#{@tour_controller_action}.#{I18n.default_locale}"]
+    @feedback ||= Rails.configuration
+                       .tours
+                       .list["#{@tour_controller_name}.#{@tour_controller_action}.#{I18n.default_locale}"]
     return head :not_found unless @feedback
 
     @feedback = @feedback.dig(@tour_name, "feedback")

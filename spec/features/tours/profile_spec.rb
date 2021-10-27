@@ -5,8 +5,6 @@ require "rails_helper"
 RSpec.feature "Profile tour" do
   include OmniauthHelper
 
-  LATER_COOKIE_NAME = "tours-marketplace-services-show-service_about_intro"
-
   let(:user) { create(:user) }
 
   before { checkin_sign_in_as(user) }

@@ -19,7 +19,7 @@ module Service::Recommendable
     category_id
   ].freeze
 
-  @@filter_param_transformers = {
+  @filter_param_transformers = {
     geographical_availabilities: ->(name) { Country.convert_to_regions_add_country(name) },
     scientific_domains: lambda { |ids|
                           if ids.instance_of?(Array)
@@ -33,7 +33,7 @@ module Service::Recommendable
     related_platforms: ->(ids) { ids.instance_of?(Array) ? ids.map(&:to_i) : ids.first.to_i },
     target_users: ->(ids) { ids.instance_of?(Array) ? ids.map(&:to_i) : ids.first.to_i }
   }
-  @@filter_key_transformers = {
+  @filter_key_transformers = {
     category_id: "categories"
   }
 
@@ -55,7 +55,7 @@ module Service::Recommendable
       return Rails.env.production? ? [] : Recommender::SimpleRecommender.new.call(size)
     end
 
-    get_recommended_services_by(get_service_search_state, size)
+    get_recommended_services_by(service_search_state, size)
   end
 
   private
@@ -76,9 +76,9 @@ module Service::Recommendable
     []
   end
 
-  def get_service_search_state
+  def service_search_state
     service_search_state = {
-      timestamp: Time.zone.now.strftime("%Y-%m-%dT%H:%M:%S.%L%z"),
+      timestamp: Date.now.strftime("%Y-%m-%dT%H:%M:%S.%L%z"),
       unique_id: cookies[:client_uid],
       visit_id: cookies[:targetId],
       page_id: "/service",
@@ -109,12 +109,12 @@ module Service::Recommendable
 
       filter_name = key.sub "-filter", ""
       filters[filter_name] = value
-      if @@filter_param_transformers.key? filter_name.to_sym
-        filters[filter_name] = @@filter_param_transformers[filter_name.to_sym].call value
+      if @filter_param_transformers.key? filter_name.to_sym
+        filters[filter_name] = @filter_param_transformers[filter_name.to_sym].call value
       end
 
-      if @@filter_key_transformers.key? filter_name.to_sym
-        filters[@@filter_key_transformers[filter_name.to_sym]] = filters.delete filter_name
+      if @filter_key_transformers.key? filter_name.to_sym
+        filters[@filter_key_transformers[filter_name.to_sym]] = filters.delete filter_name
       end
     end
     filters

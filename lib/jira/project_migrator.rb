@@ -11,14 +11,16 @@ module Jira
     def call
       Project.where(issue_status: :jira_require_migration).each do |project|
         issue = @client.create_project_issue project
-        project.update_columns(issue_id: issue.id, issue_key: issue.key,
-                               issue_status: :jira_active)
+        project.update(issue_id: issue.id, issue_key: issue.key,
+                       issue_status: :jira_active)
 
         Rails.logger.debug { "Created issue for Project with ID '#{project.id}' - JIRA issue: #{issue.key}" }
 
         project.project_items.each do |pi|
           if pi.issue_id.nil?
-            Rails.logger.debug "WARNING".yellow + " Project Item with id #{pi.id} does not have issue_id! Please review it manually"
+            Rails.logger
+                 .debug "WARNING".yellow + " Project Item with id #{pi.id}" \
+                                           " does not have issue_id! Please review it manually"
             next
           end
 
@@ -29,10 +31,14 @@ module Jira
           end
         rescue JIRA::HTTPError => e
           if e.code == "404"
-            Rails.logger.debug "WARNING".yellow + " Issue with jira id: #{pi.issue_id} does not exist in JIRA, skipping..."
+            Rails.logger
+                 .debug "WARNING".yellow + " Issue with jira id: #{pi.issue_id} " \
+                                           "does not exist in JIRA, skipping..."
             pi.jira_deleted!
           else
-            Rails.logger.debug "ERROR".red + " Issue for Project Item with id #{pi.id} could not be updated! Please review it manually"
+            Rails.logger
+                 .debug "ERROR".red + " Issue for Project Item with id #{pi.id}" \
+                                      " could not be updated! Please review it manually"
             pi.jira_errored!
           end
         end

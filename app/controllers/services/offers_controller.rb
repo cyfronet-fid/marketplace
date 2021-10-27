@@ -6,10 +6,10 @@ class Services::OffersController < Services::ApplicationController
   def show
     init_step_data
 
-    unless step.visible?
-      params[:project_item] = { offer_id: (@offers + @bundles).first.iid }
-      update
-    end
+    return if step.visible?
+
+    params[:project_item] = { offer_id: (@offers + @bundles).first.iid }
+    update
   end
 
   def update

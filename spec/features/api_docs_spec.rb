@@ -44,7 +44,8 @@ RSpec.feature "Api docs page" do
 
     context "with nil token" do
       before do
-        user.update_column(:authentication_token, nil)
+        # user.update_column(:authentication_token, nil)
+        user.update(authentication_token: nil)
       end
 
       scenario "I can generate token", js: true do

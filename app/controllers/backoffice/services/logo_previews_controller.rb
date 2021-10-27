@@ -19,7 +19,7 @@ class Backoffice::Services::LogoPreviewsController < Backoffice::ApplicationCont
   private
 
   def show_logo_preview
-    logo = get_session_logo
+    logo = session_logo
     has_service_logo = @service&.logo && @service.logo.attached? && @service.logo.variable?
     if logo.present? && !ImageHelper.image_ext_permitted?(File.extname(logo["filename"]))
       @service.errors.add(:logo, ImageHelper.permitted_ext_message)
@@ -36,7 +36,7 @@ class Backoffice::Services::LogoPreviewsController < Backoffice::ApplicationCont
     end
   end
 
-  def get_session_logo
+  def session_logo
     preview_session = session["service-#{@service&.id}-preview"]
     preview_session["logo"] if preview_session.present? &&
                                preview_session["logo"].present? &&

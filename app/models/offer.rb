@@ -115,9 +115,9 @@ class Offer < ApplicationRecord
     end
 
     missing_keys = Set.new(current_oms.custom_params.keys) - Set.new(oms_params.keys)
-    if (missing_keys & Set.new(current_oms.mandatory_defaults.keys)).length.positive?
-      errors.add(:oms_params, "missing mandatory keys")
-    end
+    return unless (missing_keys & Set.new(current_oms.mandatory_defaults.keys)).length.positive?
+
+    errors.add(:oms_params, "missing mandatory keys")
   end
 
   def check_oms_params
@@ -135,9 +135,9 @@ class Offer < ApplicationRecord
   end
 
   def proper_oms?
-    unless service.available_omses.include? primary_oms
-      errors.add(:primary_oms, "has to be available in the resource scope")
-    end
+    return if service.available_omses.include? primary_oms
+
+    errors.add(:primary_oms, "has to be available in the resource scope")
   end
 
   def set_internal
@@ -145,10 +145,10 @@ class Offer < ApplicationRecord
   end
 
   def set_oms_details
-    unless internal?
-      self.primary_oms = nil
-      self.oms_params = nil
-    end
+    return if internal?
+
+    self.primary_oms = nil
+    self.oms_params = nil
   end
 
   def sanitize_oms_params

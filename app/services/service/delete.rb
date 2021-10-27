@@ -7,10 +7,10 @@ class Service::Delete
   end
 
   def call
-    if @service
-      @service.update(status: :deleted)
-      @service.offers.each { |o| Offer::Draft.new(o).call }
-      @service
-    end
+    return unless @service
+
+    @service.update(status: :deleted)
+    @service.offers.each { |o| Offer::Draft.new(o).call }
+    @service
   end
 end

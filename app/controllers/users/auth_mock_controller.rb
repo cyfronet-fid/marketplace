@@ -34,7 +34,9 @@ class Users::AuthMockController < ApplicationController
     sign_in user, event: :authentication
   end
 
-  private def add_data_admin_privilege_to(user, admin_providers_services)
+  private
+
+  def add_data_admin_privilege_to(user, admin_providers_services)
     user_details = {
       email: user.email,
       last_name: user.first_name,

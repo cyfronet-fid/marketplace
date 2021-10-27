@@ -149,13 +149,11 @@ RSpec.feature "Service ordering" do
           expect(page).to have_text("Project can only have one of this resource. Please choose another project")
         end.to change { ProjectItem.count }.by(0)
       end
-    end
 
-    %i[open_access_service external_service].each do |type|
       scenario "I can order #{type} service twice in one project if offer has parameters" do
         service = create(type)
-        _offer = create(:offer_with_parameters, service: service, internal: false,
-                                                order_type: service.order_type, order_url: service.order_url)
+        offer = create(:offer_with_parameters, service: service, internal: false,
+                                               order_type: service.order_type, order_url: service.order_url)
         _default_project = user.projects.find_by(name: "Services")
 
         visit service_path(service)
@@ -164,7 +162,7 @@ RSpec.feature "Service ordering" do
         click_on "Next", match: :first
 
         # Configuration step
-        fill_in "parameter_#{_offer.parameters[0].id}", with: "test"
+        fill_in "parameter_#{offer.parameters[0].id}", with: "test"
 
         click_on "Next - Final details", match: :first
         select "Services", from: "project_item_project_id"
@@ -178,7 +176,7 @@ RSpec.feature "Service ordering" do
         click_on "Access the resource"
         click_on "Next", match: :first
 
-        fill_in "parameter_#{_offer.parameters[0].id}", with: "test"
+        fill_in "parameter_#{offer.parameters[0].id}", with: "test"
         click_on "Next - Final details", match: :first
         select "Services", from: "project_item_project_id"
 

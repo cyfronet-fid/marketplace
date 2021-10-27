@@ -350,7 +350,13 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
         end
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to eq({ error: %(The property '#/status/type' value "LOL" did not match one of the following values: rejected, waiting_for_response, registered, in_progress, ready, closed, approved) }.deep_stringify_keys)
+          expect(data).to eq(
+            {
+              error:
+                %(The property '#/status/type' value "LOL" did not match one of the following values:
+                 rejected, waiting_for_response, registered, in_progress, ready, closed, approved)
+            }.deep_stringify_keys
+          )
 
           project_item.reload
           expect(project_item.status).to eq("old value")

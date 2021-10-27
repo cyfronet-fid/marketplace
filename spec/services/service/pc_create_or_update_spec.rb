@@ -76,7 +76,7 @@ RSpec.describe Service::PcCreateOrUpdate do
 
   private
 
-  def stub_described_class(jms_service, is_active: true, modified_at: Time.zone.now, faraday: Faraday)
+  def stub_described_class(jms_service, is_active: true, modified_at: Date.now, faraday: Faraday)
     described_service = Service::PcCreateOrUpdate.new(jms_service, test_url, is_active, modified_at, nil,
                                                       faraday: faraday)
 
@@ -87,14 +87,13 @@ RSpec.describe Service::PcCreateOrUpdate do
                    "http://metalweb.cerm.unifi.it/global/images/MetalPDB.png")
 
     allow(described_service).to receive(:open).with("http://phenomenal-h2020.eu/home/wp-content/logo.png",
-                                                    ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(OpenURI::HTTPError.new(
-                                                                                                            "", status: 404
-                                                                                                          ))
+                                                    ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
+                                              .and_raise(OpenURI::HTTPError.new("", status: 404))
     described_service.call
   end
 
   def stub_http_file(service, file_fixture_name, url, content_type: "image/png")
-    r = open(file_fixture(file_fixture_name))
+    r = File.open(file_fixture(file_fixture_name))
     r.define_singleton_method(:content_type) { content_type }
     allow(service).to receive(:open).with(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_return(r)
   end

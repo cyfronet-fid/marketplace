@@ -16,9 +16,9 @@
           class: ("show" unless collapsed?(provider, [:street_name_and_number, :postal_code,
                                                       :city, :region, :country])) }
   .card-body
-    = f.input :street_name_and_number, disabled: cant_edit(:street_name_and_number)
-    = f.input :postal_code, disabled: cant_edit(:postal_code)
-    = f.input :city, disabled: cant_edit(:city)
-    = f.input :region, disabled: cant_edit(:region)
-    = f.input :country, disabled: cant_edit(:country), as: :select,
+    = f.input :street_name_and_number, disabled: cant_edit(:street_name_and_number, provider)
+    = f.input :postal_code, disabled: cant_edit(:postal_code, provider)
+    = f.input :city, disabled: cant_edit(:city, provider)
+    = f.input :region, disabled: cant_edit(:region, provider)
+    = f.input :country, disabled: cant_edit(:country, provider), as: :select,
               collection: Country.options.map { |c| [ c.name, "value" => c.alpha2 ] }

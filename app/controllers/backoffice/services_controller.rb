@@ -9,7 +9,6 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   before_action :sort_options, :favourites
   before_action :load_query_params_from_session, only: :index
   prepend_before_action :index_authorize, only: :index
-  helper_method :cant_edit
 
   def index
     if params["object_id"].present?
@@ -31,10 +30,10 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   def show
     @offer = Offer.new(service: @service, status: :draft)
     @offers = @service.offers.published.order(:created_at)
-    if current_user&.executive?
-      @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
-      @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
-    end
+    return unless current_user&.executive?
+
+    @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
+    @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
   end
 
   def new
@@ -65,10 +64,6 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     Service::Destroy.new(@service).call
     redirect_to backoffice_services_path,
                 notice: "Service destroyed"
-  end
-
-  def cant_edit(attribute)
-    policy([:backoffice, @service]).permitted_attributes.exclude?(attribute)
   end
 
   private
@@ -108,13 +103,13 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     attributes = permitted_attributes(@service || Service)
     logo = attributes.delete(:logo)
     session[preview_session_key] = { "attributes" => attributes }
-    if logo
-      session[preview_session_key]["logo"] = {
-        "filename" => logo.original_filename,
-        "base64" => ImageHelper.to_base_64(logo.path),
-        "type" => logo.content_type
-      }
-    end
+    return unless logo
+
+    session[preview_session_key]["logo"] = {
+      "filename" => logo.original_filename,
+      "base64" => ImageHelper.to_base64(logo.path),
+      "type" => logo.content_type
+    }
   end
 
   def add_missing_nested_models
@@ -163,11 +158,11 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def update_logo_from_session!
     logo = logo_from_session
-    if logo
-      blob, ext = ImageHelper.base_64_to_blob_stream(logo["base64"])
-      path = ImageHelper.to_temp_file(blob, ext)
-      @service.logo.attach(io: File.open(path), filename: logo["filename"]) if logo
-    end
+    return unless logo
+
+    blob, ext = ImageHelper.base_64_to_blob_stream(logo["base64"])
+    path = ImageHelper.to_temp_file(blob, ext)
+    @service.logo.attach(io: File.open(path), filename: logo["filename"]) if logo
   end
 
   def index_authorize

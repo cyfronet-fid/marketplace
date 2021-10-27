@@ -9,7 +9,7 @@ class RewriteContactEmailsToPublicContacts < ActiveRecord::Migration[6.0]
         execute(
           <<~SQL.squish
             INSERT INTO contacts(email, type, contactable_id, contactable_type, created_at, updated_at)
-            VALUES ('#{email}', 'PublicContact', '#{service['id']}', 'Service', '#{Time.zone.now}', '#{Time.zone.now}')
+            VALUES ('#{email}', 'PublicContact', '#{service['id']}', 'Service', '#{Date.now}', '#{Date.now}')
             RETURNING id
           SQL
         )

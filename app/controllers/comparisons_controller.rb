@@ -6,13 +6,13 @@ class ComparisonsController < ApplicationController
 
   def show
     @services = Service.where(slug: session[:comparison])
-    if @services.blank?
-      if params[:fromc]
-        category = Category.find_by(slug: params[:fromc])
-        redirect_to category_services_path(category, params: @query_params)
-      else
-        redirect_to services_path(params: @query_params)
-      end
+    return if @services.present?
+
+    if params[:fromc]
+      category = Category.find_by(slug: params[:fromc])
+      redirect_to category_services_path(category, params: @query_params)
+    else
+      redirect_to services_path(params: @query_params)
     end
   end
 

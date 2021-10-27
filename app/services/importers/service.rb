@@ -42,7 +42,7 @@ class Importers::Service
       certifications = Array(@data.dig("certifications", "certification"))
       standards = Array(@data.dig("standards", "standard"))
       open_source_technologies = Array(@data.dig("openSourceTechnologies", "openSourceTechnology"))
-      last_update = @data["lastUpdate"].present? ? Time.zone.at(@data["lastUpdate"].to_i) : nil
+      last_update = @data["lastUpdate"].present? ? Date.at(@data["lastUpdate"].to_i) : nil
       changelog = Array(@data.dig("changeLog", "changeLog"))
       required_services = map_related_services(Array(@data.dig("requiredResources", "requiredResource")))
       related_services = map_related_services(Array(@data.dig("relatedResources", "relatedResource")))

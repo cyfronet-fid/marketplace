@@ -37,7 +37,7 @@ class ProjectItem < ApplicationRecord
   belongs_to :scientific_domain, optional: true
   has_one :service_opinion, dependent: :restrict_with_error
   has_many :messages, as: :messageable, dependent: :destroy
-  has_many :statuses, as: :status_holder
+  has_many :statuses, as: :status_holder, dependent: :destroy
   counter_culture %i[offer service], column_name: "project_items_count"
 
   validates :offer, presence: true

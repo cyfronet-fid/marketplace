@@ -13,7 +13,7 @@ class Favourites::ServicesController < FavouritesController
       else
         added << @service.slug
       end
-      unless has_many?
+      unless many?
         respond_to do |format|
           format.js { render_popup_json(title, text, logged?) }
         end
@@ -33,7 +33,7 @@ class Favourites::ServicesController < FavouritesController
 
   private
 
-  def has_many?
+  def many?
     UserService.where(user: current_user).size > 1 || cookies[:favourites]&.size > 1
   end
 

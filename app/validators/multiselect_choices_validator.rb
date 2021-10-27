@@ -7,8 +7,8 @@ class MultiselectChoicesValidator < ActiveModel::EachValidator
     return unless options.key?(:collection)
 
     collection = options[:collection]
-    if !value.is_a?(Array) || value.detect { |v| collection.exclude?(v) }
-      record.errors.add(attribute, "isn't included on the list")
-    end
+    return unless !value.is_a?(Array) || value.detect { |v| collection.exclude?(v) }
+
+    record.errors.add(attribute, "isn't included on the list")
   end
 end

@@ -13,11 +13,9 @@ RSpec.describe Filter do
     protected
 
     def fetch_options
-      if @my_options
-        raise "boom! fetching options for the second time"
-      else
-        @my_options = [{ name: "A", id: "1", count: 1 }, { name: "B", id: "2", count: 2 }]
-      end
+      raise "boom! fetching options for the second time" if @my_options
+
+      @my_options = [{ name: "A", id: "1", count: 1 }, { name: "B", id: "2", count: 2 }]
     end
 
     def where_constraint

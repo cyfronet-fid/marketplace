@@ -9,21 +9,14 @@ inherit_gem:
   rubocop-rails:
     - config/default.yml
 
-Style/StringLiterals:
-  EnforcedStyle: double_quotes
-
 Bundler/OrderedGems:
   Enabled: false
 
-Metrics/BlockLength:
-  IgnoredMethods:
-    # By default, exclude the `#refine` method, as it tends to have larger
-    # associated blocks.
-    - refine
-    - configure
-    - describe
-    - context
-    - it
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/StringConcatenation:
+  Enabled: false
 
 Style/ClassAndModuleChildren:
   Description: 'Checks style of children classes and modules.'
@@ -33,8 +26,183 @@ Style/ClassAndModuleChildren:
 Style/Documentation:
   Enabled: false
 
+Style/EmptyElse:
+  Exclude:
+    - 'app/services/project_item/on_status_type_updated.rb'
+
+Style/MultilineBlockChain:
+  Exclude:
+    - 'app/models/filter/ancestry_multiselect.rb'
+    - 'app/helpers/scientific_domains_helper.rb'
+    - 'app/controllers/tour_feedbacks_controller.rb'
+
+Rails/FilePath:
+  Enabled: false
+
+#Check DB - schema - migration
+Rails/SkipsModelValidations:
+  Exclude:
+    - 'db/migrate/**/*'
+    - 'app/models/project_item/part.rb'
+    - 'app/models/project_item/attributes.rb'
+
+#Check DB - schema - migration
+Rails/BulkChangeTable:
+  Exclude:
+    - 'db/migrate/**/*'
+
+#Check DB - schema - migration
+Rails/ReversibleMigration:
+  Exclude:
+    - 'db/migrate/**/*'
+
+#Check DB - schema - migration
+Rails/CreateTableWithTimestamps:
+  Exclude:
+    - 'db/migrate/**/*'
+
+#Check DB - schema - migration
+Rails/NotNullColumn:
+  Exclude:
+    - 'db/migrate/**/*'
+
+Rails/OutputSafety:
+  Exclude:
+    - 'app/inputs/attributes_input.rb'
+    - 'app/inputs/array_input.rb'
+    - 'app/helpers/service_helper.rb'
+    - 'app/helpers/backoffice/parameters_helper.rb'
+    - 'app/helpers/ancestry_helper.rb'
+
+Rails/Date:
+  Exclude:
+    - 'spec/models/parameter/date_spec.rb'
+    - 'spec/models/attribute/date_spec.rb'
+    - 'app/services/analytics/total_services_views.rb'
+    - 'app/services/analytics/page_views_and_redirects.rb'
+    - 'app/models/attribute/date.rb'
+
+Rails/LexicallyScopedActionFilter:
+  Exclude:
+    - 'app/controllers/concerns/service/comparison.rb'
+    - 'app/controllers/concerns/service/categorable.rb'
+
+Rails/UniqueValidationWithoutIndex:
+  Exclude:
+    - 'app/models/provider.rb'
+    - 'app/models/service_opinion.rb'
+    - 'app/models/target_user.rb'
+    - 'app/models/lead_section.rb'
+
+#Check DB - schema - migration
+Style/CaseEquality:
+  Exclude:
+    - 'db/migrate/**/*'
+
+Security/Open:
+  Enabled: false
+
+Metrics/BlockLength:
+  Max: 200
+  IgnoredMethods:
+    # By default, exclude the `#refine` method, as it tends to have larger
+    # associated blocks.
+    - refine
+    - configure
+    - describe
+    - context
+    - it
+    - task
+    - namespace
+  Exclude:
+    - '**/*.gemspec'
+    - 'spec/**/*'
+    - 'lib/tasks/dev.rake'
+    - 'config/initializers/simple_form_bootstrap.rb'
+
 Metrics/MethodLength:
   Description: 'Avoid methods longer than 30 lines of code.'
   StyleGuide: '#short-methods'
   Enabled: true
-  Max: 30
+  Max: 150
+  Exclude:
+    - 'lib/tasks/dev.rake'
+
+Metrics/BlockNesting:
+  Exclude:
+    - 'lib/import/**/*'
+    - 'app/controllers/users/omniauth_callbacks_controller.rb'
+
+Metrics/CyclomaticComplexity:
+  Max: 60
+
+Metrics/PerceivedComplexity:
+  Max: 60
+
+Metrics/ParameterLists:
+  Max: 10
+
+Metrics/ClassLength:
+  Max: 210
+
+Metrics/ModuleLength:
+  Max: 260
+
+Metrics/AbcSize:
+  Enabled: false
+
+Lint/EmptyBlock:
+  Exclude:
+    - 'spec/**/*'
+    - 'app/jobs/probes/probes_job.rb'
+
+Lint/SafeNavigationChain:
+  Exclude:
+    - 'spec/**/*'
+    - 'app/services/project_item/create.rb'
+    - 'app/models/project_item.rb'
+    - 'app/models/jira/client.rb'
+    - 'app/helpers/service_helper.rb'
+    - 'app/controllers/favourites/services_controller.rb'
+    - 'app/controllers/favourites/services_controller.rb'
+
+Lint/NonLocalExitFromIterator:
+  Exclude:
+    - 'app/controllers/concerns/service/sortable.rb'
+
+Lint/ConstantDefinitionInBlock:
+  Enabled: false
+
+Lint/Void:
+  Enabled: false
+
+Lint/ShadowedException:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/**/*'
+
+Lint/LiteralAsCondition:
+  Exclude:
+    - 'app/services/importers/service.rb'
+    - 'app/services/importers/provider.rb'
+
+Lint/RescueException:
+  Exclude:
+    - 'app/services/importers/logo.rb'
+    - 'app/helpers/image_helper.rb'
+
+Lint/DuplicateBranch:
+  Exclude:
+    - 'app/helpers/image_helper.rb'
+    - 'app/controllers/concerns/service/recommendable.rb'
+
+Lint/DuplicateMethods:
+  Exclude:
+    - 'app/models/attribute.rb'
+
+Naming/MemoizedInstanceVariableName:
+  Exclude:
+    - 'app/models/project_item.rb'
+    - 'app/controllers/concerns/service/categorable.rb'

@@ -23,6 +23,7 @@ class Services::InlineOrderTypeComponent < ApplicationComponent
   }.freeze
 
   def initialize(tag, order_type)
+    super()
     @tag = tag
     @order_type = order_type
   end

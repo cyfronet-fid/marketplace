@@ -491,12 +491,12 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I can delete offer if they are more than 2" do
       service = create(:service, name: "my service")
-      _offer = create(:offer, name: "offer1", description: "desc", service: service)
+      offer = create(:offer, name: "offer1", description: "desc", service: service)
       _second_offer = create(:offer, service: service)
 
       service.reload
 
-      visit edit_backoffice_service_offer_path(service, _offer)
+      visit edit_backoffice_service_offer_path(service, offer)
 
       click_on "Delete Offer"
 

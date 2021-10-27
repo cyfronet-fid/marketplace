@@ -4,6 +4,7 @@ class ArrayType < ActiveModel::Type::Value
   attr_reader :delimiter
 
   def initialize(delimiter = ",")
+    super()
     @delimiter = delimiter
   end
 

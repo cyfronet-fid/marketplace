@@ -5,12 +5,12 @@ require "rails_helper"
 RSpec.feature "Service tour" do
   include CookieHelper
 
-  LATER_COOKIE_NAME = "tours-marketplace-services-show-service_about_intro"
+  later_cookie_name = "tours-marketplace-services-show-service_about_intro"
 
   let(:service) { create(:service) }
 
   scenario "shouldn't display first step if later cookie is set", js: true do
-    set_cookie(LATER_COOKIE_NAME, "later")
+    set_cookie(later_cookie_name, "later")
 
     visit service_path(service)
 
@@ -43,7 +43,7 @@ RSpec.feature "Service tour" do
 
     click_on "I'll do it later"
 
-    expect(cookie(LATER_COOKIE_NAME)[:value]).to eq("later")
+    expect(cookie(later_cookie_name)[:value]).to eq("later")
   end
 
   scenario "should skip tour in second step", js: true do
@@ -52,7 +52,7 @@ RSpec.feature "Service tour" do
     click_on "Let's take a tour"
     click_on "Skip tour"
 
-    expect(cookie(LATER_COOKIE_NAME)[:value]).to eq("later")
+    expect(cookie(later_cookie_name)[:value]).to eq("later")
   end
 
   scenario "should take a full tour", js: true do

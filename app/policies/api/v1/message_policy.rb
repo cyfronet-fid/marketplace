@@ -87,7 +87,8 @@ class Api::V1::MessagePolicy < ApplicationPolicy
       user.administrated_omses.include? record.messageable.offer.current_oms
     when "Project"
       # Using .map instead of .joins, because we need .current_oms method and not .primary_oms relation
-      Set.new(user.administrated_omses).intersect?(Set.new(record.messageable.project_items.map(&:offer).map(&:current_oms)))
+      Set.new(user.administrated_omses)
+         .intersect?(Set.new(record.messageable.project_items.map(&:offer).map(&:current_oms)))
     end
   end
 end

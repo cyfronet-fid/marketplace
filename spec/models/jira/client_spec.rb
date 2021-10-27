@@ -31,8 +31,11 @@ describe Jira::Client do
                                         primary_oms: create(:oms,
                                                             custom_params: { order_target: { mandatory: false } }),
                                         oms_params: { order_target: "admin@example.com" }),
-                          project: create(:project, user: user, name: "My Secret Project",
-                                                    user_group_name: "New user group", reason_for_access: "some reason"),
+                          project: create(:project,
+                                          user: user,
+                                          name: "My Secret Project",
+                                          user_group_name: "New user group",
+                                          eason_for_access: "some reason"),
                           properties: [
                             {
                               id: "id1",
@@ -113,7 +116,10 @@ describe Jira::Client do
                         project: { key: "MP" },
                         issuetype: { id: 10_000 },
                         "Order reference-1" => Rails.application.routes.url_helpers
-                                                    .project_service_url(project_item.project, project_item, host: "https://mp.edu"),
+                                                    .project_service_url(
+                                                      project_item.project,
+                                                      project_item, host: "https://mp.edu"
+                                                    ),
                         "Epic Link-1" => "MP-1",
                         "CP-Platforms-1" => "",
                         "CP-INeedAVoucher-1" => { "id" => "20004" },
@@ -191,14 +197,21 @@ describe Jira::Client do
                                                         name: "s1",
                                                         categories: [create(:category, name: "cat1")])),
                           request_voucher: true,
-                          project: create(:project, user: user, name: "My Secret Project",
-                                                    user_group_name: "New user group", reason_for_access: "Some reason"))
+                          project: create(:project,
+                                          user: user,
+                                          name: "My Secret Project",
+                                          user_group_name: "New user group",
+                                          reason_for_access: "Some reason"))
 
     expected_fields = { summary: "Service order, John Doe, s1",
                         project: { key: "MP" },
                         issuetype: { id: 10_000 },
                         "Order reference-1" => Rails.application.routes.url_helpers
-                                                    .project_service_url(project_item.project, project_item, host: "https://mp.edu"),
+                                                    .project_service_url(
+                                                      project_item.project,
+                                                      project_item,
+                                                      host: "https://mp.edu"
+                                                    ),
                         "Epic Link-1" => "MP-1",
                         "CP-Platforms-1" => "",
                         "CP-INeedAVoucher-1" => { "id" => "20003" },
@@ -296,7 +309,8 @@ describe Jira::Client do
                                 "SO-ProjectName-1" => "My Updated Project Name (#{project.id})",
                                 "CP-UserGroupName-1" => "User Group Name 1",
                                 "CP-CustomerCountry-1" => project.country_of_origin.name.to_s,
-                                "CP-CollaborationCountry-1" => project.countries_of_partnership.map(&:name).join(", ").to_s }
+                                "CP-CollaborationCountry-1" =>
+                                  project.countries_of_partnership.map(&:name).join(", ").to_s }
 
     expect(issue).to receive("save").with(fields: expected_updated_fields).and_return(true)
     expect(client).to receive_message_chain("Issue.find").and_return(issue)

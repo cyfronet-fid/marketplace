@@ -19,7 +19,7 @@ class Offer::OMSParams
     end
   end
 
-  def has_attribute?(attr)
-    @object.key? attr
+  def respond_to_missing?(method)
+    @object.key? method or @object.respond_to? method
   end
 end

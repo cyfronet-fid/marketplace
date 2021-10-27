@@ -37,7 +37,8 @@ RSpec.feature "Executive stistics" do
       visit executive_statistics_path
 
       expect(page.body).to have_selector("h1", text: "Statistics")
-      expect(page.body).to have_text("1\nNumber of EOSC resources with offerings using EOSC Marketplace ordering process")
+      expect(page.body)
+        .to have_text("1\nNumber of EOSC resources with offerings using EOSC Marketplace ordering process")
       expect(page.body).to have_text("2\nNumber of EOSC resources not using EOSC Marketplace ordering process")
       expect(page.body).to have_text("3\nNumber of all EOSC resources registered in the EOSC Marketplace")
       expect(page.body).to have_text("0\nNumber of resources with at least one fully open access offer")

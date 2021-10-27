@@ -36,12 +36,14 @@ FactoryBot.define do
                                      "parentId" => "scientific_domain-agricultural_sciences",
                                      "type" => "Scientific subdomain",
                                      "extras" => {} }],
-        "PROVIDER_MERIL_SCIENTIFIC_SUBDOMAIN" => [{ "id" => "provider_meril_scientific_subdomain-biological_and_medical_sciences-agronomy_forestry_plant_breeding_centres",
-                                                    "name" => "Agronomy, Forestry, Plant Breeding Centres",
-                                                    "description" => "Facilities that enable open field and forest experiments",
-                                                    "parentId" => "provider_meril_scientific_domain-biological_and_medical_sciences",
-                                                    "type" => "Provider meril scientific subdomain",
-                                                    "extras" => {} }],
+        "PROVIDER_MERIL_SCIENTIFIC_SUBDOMAIN" =>
+          [{ "id" => "provider_meril_scientific_subdomain-biological_and_
+                      medical_sciences-agronomy_forestry_plant_breeding_centres",
+             "name" => "Agronomy, Forestry, Plant Breeding Centres",
+             "description" => "Facilities that enable open field and forest experiments",
+             "parentId" => "provider_meril_scientific_domain-biological_and_medical_sciences",
+             "type" => "Provider meril scientific subdomain",
+             "extras" => {} }],
         "FUNDING_BODY" => [{ "id" => "funding_body-ademe",
                              "name" => "Agency for Environment and Energy Management (ADEME)",
                              "description" => "France",
@@ -50,11 +52,13 @@ FactoryBot.define do
                              "extras" => {} }],
         "TARGET_USER" => [{ "id" => "target_user-businesses",
                             "name" => "Businesses",
-                            "description" => "An organization or economic system where goods and services are exchanged.",
+                            "description" =>
+                              "An organization or economic system where goods and services are exchanged.",
                             "parentId" => nil,
                             "type" => "Target user",
                             "extras" => {} }],
-        "PROVIDER_MERIL_SCIENTIFIC_DOMAIN" => [{ "id" => "provider_meril_scientific_domain-biological_and_medical_sciences",
+        "PROVIDER_MERIL_SCIENTIFIC_DOMAIN" => [{ "id" =>
+                                                   "provider_meril_scientific_domain-biological_and_medical_sciences",
                                                  "name" => "Biological & Medical Sciences",
                                                  "description" => nil,
                                                  "parentId" => nil,
@@ -86,7 +90,9 @@ FactoryBot.define do
                                           "extras" => {} }],
         "CATEGORY" => [{ "id" => "category-access_physical_and_eInfrastructures-compute",
                          "name" => "Compute",
-                         "description" => "High-performance computing resources and scalable cloud compute capacity for demanding job processes.",
+                         "description" =>
+                           "High-performance computing resources and
+                            scalable cloud compute capacity for demanding job processes.",
                          "parentId" => "supercategory-access_physical_and_eInfrastructures",
                          "type" => "Category",
                          "extras" => { icon: "ic_compute.svg",
@@ -123,7 +129,8 @@ FactoryBot.define do
                                  "extras" => {} }],
         "ACCESS_MODE" => [{ "id" => "access_mode-free",
                             "name" => "Free",
-                            "description" => "Users can freely access the Resource provided, registration may be needed.",
+                            "description" =>
+                              "Users can freely access the Resource provided, registration may be needed.",
                             "parentId" => nil,
                             "type" => "Access mode",
                             "extras" => {} }],
@@ -133,31 +140,42 @@ FactoryBot.define do
                          "parentId" => nil,
                          "type" => "Language",
                          "extras" => {} }],
-        "PROVIDER_ESFRI_DOMAIN" => [{ "id" => "provider_esfri_domain-data_computing_and_digital_research_infrastructures",
-                                      "name" => "Data, Computing & Digital Research Infrastructures",
-                                      "description" => "In research, as in all fields of society, Information and Communications Technology (ICT) has become a key enabling factor for progress.",
-                                      "parentId" => nil,
-                                      "type" => "Provider esfri domain",
-                                      "extras" => {} }],
+        "PROVIDER_ESFRI_DOMAIN" =>
+          [{ "id" => "provider_esfri_domain-data_computing_and_digital_research_infrastructures",
+             "name" => "Data, Computing & Digital Research Infrastructures",
+             "description" =>
+               "In research, as in all fields of society, Information and Communications Technology (ICT)
+                has become a key enabling factor for progress.",
+             "parentId" => nil,
+             "type" => "Provider esfri domain",
+             "extras" => {} }],
         "SUPERCATEGORY" => [{ "id" => "supercategory-access_physical_and_eInfrastructures",
                               "name" => "Access physical & eInfrastructures",
-                              "description" => "Ultra-fast connectivity and ubiquitous access, high performance computing, cloud capacity and storage.",
+                              "description" =>
+                                "Ultra-fast connectivity and ubiquitous access,
+                                high performance computing, cloud capacity and storage.",
                               "parentId" => nil,
                               "type" => "Supercategory",
                               "extras" => { icon: "ic_security.svg", icon_active: "ic_security_active.svg" } }],
         "ORDER_TYPE" => [{ "id" => "order_type-fully_open_access",
                            "name" => "Fully Open Access",
-                           "description" => "No ordering procedure necessary to access the resource and no user authentication required.",
+                           "description" =>
+                             "No ordering procedure necessary to access the resource
+                              and no user authentication required.",
                            "parentId" => nil, "type" => "Order type", "extras" => {} }],
-        "PROVIDER_STRUCTURE_TYPE" => [{ "id" => "provider_structure_type-distributed",
-                                        "name" => "Distributed",
-                                        "description" => "The Provider has multiple physical locations but a unified management structure and a single coordination centre.",
-                                        "parentId" => nil,
-                                        "type" => "Provider structure type",
-                                        "extras" => {} }],
+        "PROVIDER_STRUCTURE_TYPE" =>
+          [{ "id" => "provider_structure_type-distributed",
+             "name" => "Distributed",
+             "description" =>
+               "The Provider has multiple physical locations but a unified management structure
+                and a single coordination centre.",
+             "parentId" => nil,
+             "type" => "Provider structure type",
+             "extras" => {} }],
         "ACCESS_TYPE" => [{ "id" => "access_type-mail_in",
                             "name" => "Mail-In",
-                            "description" => "Samples are sent in to for e.g. analysis and the results are returned I.",
+                            "description" =>
+                              "Samples are sent in to for e.g. analysis and the results are returned I.",
                             "parentId" => nil,
                             "type" => "Access type",
                             "extras" => {} }]

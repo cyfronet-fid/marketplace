@@ -51,11 +51,11 @@ module Jms
 
     private
 
-    def error_block(msg, e)
+    def error_block(msg, error)
       @logger.error("Error occured while processing message:\n #{msg}")
-      @logger.error(e)
-      Sentry.capture_exception(e)
-      abort(e.full_message)
+      @logger.error(error)
+      Sentry.capture_exception(error)
+      abort(error.full_message)
     end
 
     def conf_hash(login, pass, host_des, client_name, ssl)

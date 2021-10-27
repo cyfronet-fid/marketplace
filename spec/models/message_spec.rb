@@ -109,21 +109,21 @@ RSpec.describe Message do
 
     it "should create an event on create" do
       project = create(:project)
-      message_1 = create(:message, messageable: project)
+      message1 = create(:message, messageable: project)
 
       project_item = create(:project_item, project: project)
-      message_2 = create(:message, messageable: project_item)
+      message2 = create(:message, messageable: project_item)
 
       expect(project.events.count).to eq(1)
       expect(project_item.events.count).to eq(1)
 
-      expect(message_1.events.count).to eq(1)
-      expect(message_1.events.first.eventable).to eq(message_1)
-      expect(message_1.events.first.action).to eq("create")
+      expect(message1.events.count).to eq(1)
+      expect(message1.events.first.eventable).to eq(message1)
+      expect(message1.events.first.action).to eq("create")
 
-      expect(message_2.events.count).to eq(1)
-      expect(message_2.events.first.eventable).to eq(message_2)
-      expect(message_2.events.first.action).to eq("create")
+      expect(message2.events.count).to eq(1)
+      expect(message2.events.first.eventable).to eq(message2)
+      expect(message2.events.first.action).to eq("create")
     end
 
     it "should create an event on update" do

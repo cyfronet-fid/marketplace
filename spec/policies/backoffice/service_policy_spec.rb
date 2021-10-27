@@ -21,7 +21,8 @@ RSpec.describe Backoffice::ServicePolicy do
                                                            :tagline, :order_type,
                                                            [multimedia: []],
                                                            [provider_ids: []], [geographical_availabilities: []],
-                                                           [language_availability: []], [resource_geographic_locations: []],
+                                                           [language_availability: []],
+                                                           [resource_geographic_locations: []],
                                                            [target_user_ids: []], :terms_of_use_url,
                                                            :access_policies_url, :sla_url,
                                                            :webpage_url, :manual_url, :helpdesk_url,
@@ -38,14 +39,16 @@ RSpec.describe Backoffice::ServicePolicy do
                                                            :order_url, :payment_model_url, :pricing_url,
                                                            [related_service_ids: []], [required_service_ids: []],
                                                            [manual_related_service_ids: []],
-                                                           :activate_message, :logo, [trl_ids: []], [life_cycle_status_ids: []],
+                                                           :activate_message, :logo, [trl_ids: []],
+                                                           [life_cycle_status_ids: []],
                                                            [scientific_domain_ids: []],
                                                            [platform_ids: []], [related_platforms: []],
                                                            :tag_list, [category_ids: []], [pc_category_ids: []],
                                                            [owner_ids: []], :status, :upstream_id, :version,
                                                            :resource_organisation_id,
-                                                           { main_contact_attributes: %i[id first_name last_name
-                                                                                         email phone organisation position] },
+                                                           { main_contact_attributes:
+                                                               %i[id first_name last_name email phone
+                                                                  organisation position] },
                                                            { sources_attributes: %i[id source_type eid _destroy] },
                                                            { public_contacts_attributes: %i[id first_name last_name
                                                                                             email phone organisation

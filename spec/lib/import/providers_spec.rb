@@ -21,12 +21,6 @@ describe Import::Providers do
 
     eosc_registry = Import::Providers.new(test_url, **options)
 
-    def stub_http_file(eosc_registry, file_fixture_name, url, content_type: "image/png")
-      r = open(file_fixture(file_fixture_name))
-      r.define_singleton_method(:content_type) { content_type }
-      allow(eosc_registry).to receive(:open).with(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_return(r)
-    end
-
     stub_http_file(eosc_registry, "PhenoMeNal_logo.png",
                    "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png")
 
@@ -38,6 +32,12 @@ describe Import::Providers do
                    content_type: "image/svg+xml")
 
     eosc_registry
+  end
+
+  def stub_http_file(eosc_registry, file_fixture_name, url, content_type: "image/png")
+    r = File.open(file_fixture(file_fixture_name))
+    r.define_singleton_method(:content_type) { content_type }
+    allow(eosc_registry).to receive(:open).with(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_return(r)
   end
 
   let(:eosc_registry) { make_and_stub_eosc_registry(log: true) }
@@ -59,9 +59,10 @@ describe Import::Providers do
   let!(:provider) { create(:provider, name: "BlueBRIDGE") }
 
   def expect_responses(test_url, providers_response = nil)
-    unless providers_response.nil?
-      allow_any_instance_of(Faraday::Connection).to receive(:get).with("#{test_url}/provider/all?quantity=10000&from=0").and_return(providers_response)
-    end
+    return if providers_response.nil?
+
+    allow_any_instance_of(Faraday::Connection)
+      .to receive(:get).with("#{test_url}/provider/all?quantity=10000&from=0").and_return(providers_response)
   end
 
   describe "#error responses" do
@@ -124,10 +125,12 @@ describe Import::Providers do
 
     it "should set default image on error" do
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"])
-      allow(eosc_registry).to receive(:open).with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-                                                  ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(OpenURI::HTTPError.new(
-                                                                                                          "", status: 404
-                                                                                                        ))
+      allow(eosc_registry)
+        .to receive(:open)
+        .with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
+              ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(OpenURI::HTTPError.new(
+                                                                      "", status: 404
+                                                                    ))
       eosc_registry.call
 
       expect(Provider.first.logo.attached?).to be_truthy
@@ -135,8 +138,10 @@ describe Import::Providers do
 
     it "should set default image on error" do
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"])
-      allow(eosc_registry).to receive(:open).with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-                                                  ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(Errno::EHOSTUNREACH.new)
+      allow(eosc_registry)
+        .to receive(:open)
+        .with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
+              ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(Errno::EHOSTUNREACH.new)
       eosc_registry.call
       expect(Provider.first.logo.attached?).to be_truthy
     end

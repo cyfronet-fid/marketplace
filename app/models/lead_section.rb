@@ -9,7 +9,7 @@ class LeadSection < ApplicationRecord
 
   enum template: TEMPLATES
   friendly_id :title, use: :slugged
-  has_many :leads, -> { order(:position) }, dependent: :destroy
+  has_many :leads, -> { order(:position) }, dependent: :destroy, inverse_of: :lead_section
 
   validates :title, presence: true
   validates :slug, presence: true

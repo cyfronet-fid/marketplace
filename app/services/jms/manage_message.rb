@@ -53,7 +53,7 @@ class Jms::ManageMessage
 
   def modified_at(resource, resource_type)
     metadata = resource[resource_type]["metadata"]
-    Time.zone.at(metadata["modifiedAt"].to_i&./1000)
+    Date.at(metadata["modifiedAt"].to_i&./1000)
   end
 
   def log(msg)

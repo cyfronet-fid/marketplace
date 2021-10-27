@@ -35,7 +35,8 @@ class Jira::Client < JIRA::Client
   end
 
   attr_reader :jira_config, :jira_project_key, :jira_issue_type_id, :jira_project_issue_type_id, :webhook_secret,
-              :custom_fields, :wf_todo_id, :wf_in_progress_id, :wf_done_id, :wf_rejected_id, :wf_waiting_for_response_id, :wf_closed_id, :wf_ready_id, :wf_approved_id, :wf_archived_id
+              :custom_fields, :wf_todo_id, :wf_in_progress_id, :wf_done_id, :wf_rejected_id,
+              :wf_waiting_for_response_id, :wf_closed_id, :wf_ready_id, :wf_approved_id, :wf_archived_id
 
   def initialize
     # read required options and initialize jira client
@@ -114,11 +115,9 @@ class Jira::Client < JIRA::Client
       fields[field_id.to_s] = value unless value.nil?
     end
 
-    if issue.save(fields: fields)
-      issue
-    else
-      raise JIRAProjectIssueCreateError.new(project, issue.errors)
-    end
+    raise JIRAProjectIssueCreateError.new(project, issue.errors) unless issue.save(fields: fields)
+
+    issue
   end
 
   def create_service_issue(project_item)
@@ -137,11 +136,9 @@ class Jira::Client < JIRA::Client
       fields[field_id.to_s] = value unless value.nil?
     end
 
-    if issue.save(fields: fields)
-      issue
-    else
-      raise JIRAProjectItemIssueCreateError.new(project_item, issue.errors)
-    end
+    raise JIRAProjectItemIssueCreateError.new(project_item, issue.errors) unless issue.save(fields: fields)
+
+    issue
   end
 
   def update_project_issue(project)
@@ -157,11 +154,9 @@ class Jira::Client < JIRA::Client
       fields[field_id.to_s] = value unless value.nil?
     end
 
-    if issue.save(fields: fields)
-      issue
-    else
-      raise JIRAProjectIssueUpdateError.new(project, issue.errors)
-    end
+    raise JIRAProjectIssueUpdateError.new(project, issue.errors) unless issue.save(fields: fields)
+
+    issue
   end
 
   def mp_issue_type
@@ -215,7 +210,8 @@ class Jira::Client < JIRA::Client
       project.user.uid
     when "CP-CustomerTypology"
       if project.customer_typology
-        { "id" => @jira_config[:custom_fields][:select_values][:"CP-CustomerTypology"][project.customer_typology.to_sym] }
+        { "id" =>
+            @jira_config[:custom_fields][:select_values][:"CP-CustomerTypology"][project.customer_typology.to_sym] }
       end
     when "CP-CustomerCountry"
       project.country_of_origin&.name || "N/A"
@@ -262,7 +258,8 @@ class Jira::Client < JIRA::Client
     when "CP-Platforms"
       project_item.offer.service.platforms.pluck(:name).join(", ")
     when "CP-INeedAVoucher"
-      { "id" => @jira_config[:custom_fields][:select_values][:"CP-INeedAVoucher"][project_item.request_voucher ? :yes : :no] }
+      { "id" =>
+          @jira_config[:custom_fields][:select_values][:"CP-INeedAVoucher"][project_item.request_voucher ? :yes : :no] }
     when "CP-VoucherID"
       project_item.voucher_id || nil
     when "SO-1"
@@ -270,7 +267,8 @@ class Jira::Client < JIRA::Client
     when "SO-ServiceOrderTarget"
       project_item.offer.oms_params&.fetch("order_target", nil) || ""
     when "SO-OfferType"
-      { "id" => @jira_config[:custom_fields][:select_values][:"SO-OfferType"][map_to_jira_order_type(project_item).to_sym] }
+      { "id" =>
+          @jira_config[:custom_fields][:select_values][:"SO-OfferType"][map_to_jira_order_type(project_item).to_sym] }
     end
   end
 end

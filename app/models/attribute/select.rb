@@ -25,18 +25,18 @@ class Attribute::Select < Attribute
 
   def value_from_param(param)
     param = param.reject(&:blank?)
-    if param.length.positive?
-      @value = case @value_type
-               when "integer"
-                 begin
-                   Integer(param.first)
-                 rescue StandardError
-                   param.first
-                 end
-               else
+    return unless param.length.positive?
+
+    @value = case @value_type
+             when "integer"
+               begin
+                 Integer(param.first)
+               rescue StandardError
                  param.first
                end
-    end
+             else
+               param.first
+             end
   end
 
   TYPE = "select"

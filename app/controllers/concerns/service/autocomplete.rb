@@ -17,10 +17,10 @@ module Service::Autocomplete
 
     service_titles = Service.where(id: scope.ids).pluck(:id, :name).to_h
 
-    if request.xhr?
-      render(template: "services/autocomplete/list",
-             locals: { results: query.with_highlights, service_titles: service_titles },
-             layout: false)
-    end
+    return unless request.xhr?
+
+    render(template: "services/autocomplete/list",
+           locals: { results: query.with_highlights, service_titles: service_titles },
+           layout: false)
   end
 end

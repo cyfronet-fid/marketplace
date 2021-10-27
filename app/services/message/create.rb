@@ -6,9 +6,9 @@ class Message::Create
   end
 
   def call
-    if @message.save
-      Message::RegisterMessageJob.perform_later(@message)
-      true
-    end
+    return unless @message.save
+
+    Message::RegisterMessageJob.perform_later(@message)
+    true
   end
 end

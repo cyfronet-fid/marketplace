@@ -2,7 +2,7 @@
 
 module MarkdownHelper
   def markdown(text)
-    @markdown_renderer ||=
+    markdown_renderer ||=
       # see https://github.com/vmg/redcarpet#and-its-like-really-simple-to-use
       Redcarpet::Markdown.new(renderer,
                               no_intra_emphasis: true, tables: true,
@@ -15,7 +15,7 @@ module MarkdownHelper
 
     # We do sanitization as the markdown can be a mix of HTML and Markdown and redcarpet itself does not do
     # proper sanitization
-    sanitize(@markdown_renderer.render(text || ""))
+    sanitize(markdown_renderer.render(text || ""))
   end
 
   private

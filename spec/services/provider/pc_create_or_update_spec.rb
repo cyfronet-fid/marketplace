@@ -14,7 +14,7 @@ RSpec.describe Provider::PcCreateOrUpdate do
     original_stdout = $stdout
     $stdout = StringIO.new
     expect do
-      described_class.new(provider_response, Time.zone.now).call
+      described_class.new(provider_response, Date.now).call
     end.to change { Provider.count }.by(1)
 
     provider = Provider.last

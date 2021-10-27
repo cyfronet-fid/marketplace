@@ -22,9 +22,8 @@ class ProfilesController < ApplicationController
 
   def destroy
     @user = current_user
-    if Profile::Destroy.new(@user).call
-      redirect_to profile_path,
-                  notice: "Profile information deleted successfully"
-    end
+    return unless Profile::Destroy.new(@user).call
+
+    redirect_to profile_path, notice: "Profile information deleted successfully"
   end
 end

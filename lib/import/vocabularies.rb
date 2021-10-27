@@ -93,10 +93,10 @@ class Import::Vocabularies
     log "TOTAL: #{total_vocabularies_count}, CREATED: #{created}, " \
         "UPDATED: #{updated}, UNPROCESSED: #{not_implemented_count}"
 
-    unless @filepath.nil?
-      open(@filepath, "w") do |file|
-        file << JSON.pretty_generate(output)
-      end
+    return if @filepath.nil?
+
+    open(@filepath, "w") do |file|
+      file << JSON.pretty_generate(output)
     end
   end
 

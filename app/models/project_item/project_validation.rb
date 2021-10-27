@@ -10,7 +10,8 @@ module ProjectItem::ProjectValidation
 
   def one_per_project
     project_items_services = Service.joins(offers: { project_items: :project })
-                                    .where(id: offer&.service_id, offers: { project_items: { project_id: [project_id] } })
+                                    .where(id: offer&.service_id,
+                                           offers: { project_items: { project_id: [project_id] } })
                                     .where.not(offers: { project_items: { id: id } })
                                     .count.positive?
 

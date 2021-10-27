@@ -49,8 +49,10 @@ describe Jira::Checker do
                                                                                                         code: "401")))
     expect do
       checker.check_connection!
-    end.to raise_error(Jira::Checker::CriticalCheckerError,
-                       "Could not authenticate #{checker.client.jira_config['username']} on #{checker.client.jira_config['url']}")
+    end.to raise_error(
+      Jira::Checker::CriticalCheckerError,
+      "Could not authenticate #{checker.client.jira_config['username']} on #{checker.client.jira_config['url']}"
+    )
   end
 
   it "check_issue_type! should call client.mp_issue_type" do
@@ -63,7 +65,8 @@ describe Jira::Checker do
     expect do
       checker.check_issue_type!
     end.to raise_error(Jira::Checker::CheckerError,
-                       "It seems that ticket with id #{checker.client.jira_issue_type_id} does not exist, make sure to add existing issue type into configuration")
+                       "It seems that ticket with id #{checker.client.jira_issue_type_id} does not exist,
+                        make sure to add existing issue type into configuration")
   end
 
   it "check_project! should call client.mp_project" do
@@ -76,7 +79,8 @@ describe Jira::Checker do
     expect do
       checker.check_project!
     end.to raise_error(Jira::Checker::CriticalCheckerError,
-                       "Could not find project #{checker.client.jira_project_key}, make sure it exists and user #{checker.client.jira_config['username']} has access to it")
+                       "Could not find project #{checker.client.jira_project_key},
+                        make sure it exists and user #{checker.client.jira_config['username']} has access to it")
   end
 
   describe "issue" do
@@ -183,32 +187,23 @@ describe Jira::Checker do
       it "should raise CheckerWarning if no webhook was matched" do
         webhook = MockWebhook.new("AAA")
         expect(checker.client).to receive_message_chain("Webhook.all").and_return([webhook])
-        expect { checker.check_webhook!("http://nonexistent") }.to raise_error(Jira::Checker::CheckerWarning,
-                                                                               "Could not find Webhook for this application, " \
-                                                                               "please confirm manually that webhook is defined for this host")
+        expect { checker.check_webhook!("http://nonexistent") }
+          .to raise_error(Jira::Checker::CheckerWarning,
+                          "Could not find Webhook for this application, " \
+                          "please confirm manually that webhook is defined for this host")
       end
     end
 
     describe "check_webhook_params!" do
       it "should not rise if webhook has all required events" do
-        events = [
-          "jira:issue_updated",
-          "comment_created",
-          "jira:issue_created",
-          "comment_updated",
-          "jira:issue_deleted",
-          "comment_deleted"
-        ]
+        events = %w[jira:issue_updated comment_created jira:issue_created
+                    comment_updated jira:issue_deleted comment_deleted]
 
         checker.check_webhook_params!(MockWebhook.new(checker.client.jira_project_key, events))
       end
 
       it "should rise CheckerCompositeError detailing which event was not set" do
-        events = [
-          "jira:issue_updated",
-          "comment_created",
-          "jira:issue_created"
-        ]
+        events = %w[jira:issue_updated comment_created jira:issue_created]
 
         expected_statuses = {
           issue_updated: true,

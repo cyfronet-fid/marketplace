@@ -5,12 +5,12 @@ require "rails_helper"
 RSpec.feature "Query param tour" do
   include CookieHelper
 
-  LATER_COOKIE_NAME = "tours-marketplace-services-show-query_param_1"
+  later_cookie_name = "tours-marketplace-services-show-query_param_1"
 
   let(:service) { create(:service) }
 
   scenario "should display first step even if later cookie is set", js: true do
-    set_cookie(LATER_COOKIE_NAME, "later")
+    set_cookie(later_cookie_name, "later")
 
     visit service_path(service, tour: "query_param_1")
 

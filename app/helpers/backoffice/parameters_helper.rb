@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module Backoffice::ParametersHelper
+  def cant_edit(attribute, record)
+    policy([:backoffice, record]).permitted_attributes.exclude?(attribute)
+  end
+
   def parameter_templates(form)
     content_tag(:div, class: "parameter-wrapper") do
       concat content_tag(:ul, parameter_menu_items(form),

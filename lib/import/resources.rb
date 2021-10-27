@@ -25,7 +25,10 @@ module Import
       log "Importing resources from EOSC Registry..."
 
       begin
-        r = Importers::Request.new(@eosc_registry_base_url, "resource/rich", faraday: @faraday, token: @token).call
+        r = Importers::Request.new(@eosc_registry_base_url,
+                                   "resource/rich",
+                                   faraday: @faraday,
+                                   token: @token).call
       rescue Errno::ECONNREFUSED
         abort("import exited with errors - could not connect to #{@eosc_registry_base_url}")
       end
@@ -38,7 +41,7 @@ module Import
 
       log "EOSC Registry - all services #{total_service_count}"
 
-      r.body["results"].select { |_r| @ids.empty? || @ids.include?(_r["service"]["id"]) }
+      r.body["results"].select { |result| @ids.empty? || @ids.include?(result["service"]["id"]) }
        .each do |service_data|
         service = service_data["service"]
         output.append(service_data)
@@ -89,23 +92,26 @@ module Import
               end
             else
               not_modified += 1
-              log "Service upstream is not set to EOSC Registry, not updating #{existing_service.name}, id: #{service_source.id}"
+              log "Service upstream is not set to EOSC Registry, not updating #{existing_service.name}," \
+                  " id: #{service_source.id}"
             end
           end
         rescue ActiveRecord::RecordInvalid => e
-          log "ERROR - #{e}! #{service[:name]} (eid: #{service[:pid]}) will NOT be created (please contact catalog manager)"
+          log "ERROR - #{e}! #{service[:name]} (eid: #{service[:pid]}) " \
+              "will NOT be created (please contact catalog manager)"
         rescue StandardError => e
           log "ERROR - Unexpected #{e}! #{service[:name]} (eid: #{service[:pid]}) will NOT be created!"
         end
       end
-      log "PROCESSED: #{total_service_count}, CREATED: #{created}, UPDATED: #{updated}, NOT MODIFIED: #{not_modified}"
+      log "PROCESSED: #{total_service_count}, CREATED: #{created}, " \
+          "UPDATED: #{updated}, NOT MODIFIED: #{not_modified}"
 
       Service.reindex
 
-      unless @filepath.nil?
-        open(@filepath, "w") do |file|
-          file << JSON.pretty_generate(output)
-        end
+      return if @filepath.nil?
+
+      open(@filepath, "w") do |file|
+        file << JSON.pretty_generate(output)
       end
     end
 

@@ -32,11 +32,11 @@ class CustomizableProjectItem < ProjectItem
   end
 
   def offer_values
-    @offers_values ||= ProjectItem::OfferValues.new(offer: offer,
-                                                    parameters: properties)
+    @offer_values ||= ProjectItem::OfferValues.new(offer: offer,
+                                                   parameters: properties)
   end
 
   def id_to_bundled_offer
-    @id_to_offer ||= offer.bundled_offers.index_by { |o| "o#{o.id}" }
+    @id_to_bundled_offer ||= offer.bundled_offers.index_by { |o| "o#{o.id}" }
   end
 end

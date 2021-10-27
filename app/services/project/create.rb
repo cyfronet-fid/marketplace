@@ -6,9 +6,9 @@ class Project::Create
   end
 
   def call
-    if @project.save
-      Project::ProjectRegisterJob.perform_later(@project)
-      true
-    end
+    return unless @project.save
+
+    Project::ProjectRegisterJob.perform_later(@project)
+    true
   end
 end

@@ -53,11 +53,11 @@
             "data-parent": "#accordion-form",
             class: ("show" unless collapsed?(service, [:name, :resource_organisation, :providers, :webpage_url])) }
           .card-body
-            = f.input :name, disabled: cant_edit(:name)
-            = f.association :resource_organisation, disabled: cant_edit(:resource_organisation_id)
+            = f.input :name, disabled: cant_edit(:name, service)
+            = f.association :resource_organisation, disabled: cant_edit(:resource_organisation_id, service)
             = f.association :providers, multiple: true, input_html: { data: { choice: true } },
-                              disabled: cant_edit([provider_ids: []])
-            = f.input :webpage_url, disabled: cant_edit(:webpage_url)
+                              disabled: cant_edit([provider_ids: []], service)
+            = f.input :webpage_url, disabled: cant_edit(:webpage_url, service)
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
               [:description, :tagline, :logo, :multimedia, :use_cases_url])),
@@ -76,17 +76,17 @@
             class: ("show" unless collapsed?(service, [:description, :tagline, :logo, :multimedia, :use_cases_url])) }
           .card-body
             .service-description
-              = f.input :description, disabled: cant_edit(:description)
-            = f.input :tagline, disabled: cant_edit(:tagline)
-            = f.input :logo, disabled: cant_edit(:logo)
+              = f.input :description, disabled: cant_edit(:description, service)
+            = f.input :tagline, disabled: cant_edit(:tagline, service)
+            = f.input :logo, disabled: cant_edit(:logo, service)
             = f.input :multimedia, multiple: true, input_html: { class: "form-control" },
                 wrapper_html: { "data-target" => "service.multimedia" },
-                disabled: cant_edit([multimedia: []]), as: :array
+                disabled: cant_edit([multimedia: []], service), as: :array
             = link_to_add_array_field("service", "multimedia")
             .mt-4
               = f.input :use_cases_url, multiple: true, as: :array, input_html: { class: "form-control text optional" },
                   wrapper_html: { "data-target" => "service.useCasesUrl" },
-                  disabled: cant_edit([use_cases_url: []])
+                  disabled: cant_edit([use_cases_url: []], service)
               = link_to_add_array_field("service", "use_cases_url")
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
@@ -108,21 +108,21 @@
                               :categories, :target_users, :access_types, :access_modes, :tag_list])) }
           .card-body
             = f.association :scientific_domains, input_html: { data: { choice: true } },
-            disabled: cant_edit([scientific_domain_ids: []]),
+            disabled: cant_edit([scientific_domain_ids: []], service),
             collection: ScientificDomain.child_names.map { |name, sd| [name, sd.id] },
             label_method: :first, value_method: :second
             = f.association :categories, multiple: true, input_html: { data: { choice: true } },
                             collection: Category.child_names.map { |name, c| [name, c.id] },
-                            disabled: cant_edit([category_ids: []])
+                            disabled: cant_edit([category_ids: []], service)
             = f.association :target_users,
               label: _("Dedicated For"),
               input_html: { data: { choice: true }, class: "target_users" },
-              disabled: cant_edit([target_user_ids: []])
+              disabled: cant_edit([target_user_ids: []], service)
             = f.association :access_types, input_html: { data: { choice: true } },
-                            disabled: cant_edit([access_type_ids: []])
+                            disabled: cant_edit([access_type_ids: []], service)
             = f.association :access_modes, input_html: { data: { choice: true } },
-                            disabled: cant_edit([access_mode_ids: []])
-            = f.input :tag_list, input_html: { value: service.tag_list.to_s }, disabled: cant_edit(:tag_list)
+                            disabled: cant_edit([access_mode_ids: []], service)
+            = f.input :tag_list, input_html: { value: service.tag_list.to_s }, disabled: cant_edit(:tag_list, service)
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
               [:geographical_availabilities, :language_availability])),
@@ -142,11 +142,11 @@
           .card-body
             = f.input :geographical_availabilities, as: :select,
                 collection: Country.options.map { |c| [ c.name, "value" => c.alpha2 ] },
-                disabled: cant_edit([geographical_availabilities: []]),
+                disabled: cant_edit([geographical_availabilities: []], service),
                 input_html: { data: { choice: true },  "multiple" => "true" }
             = f.input :language_availability, input_html: { multiple: true, data: { choice: true } },
             collection: I18nData.languages.map { |k, v| [v, k] },
-            disabled: cant_edit([language_availability: []])
+            disabled: cant_edit([language_availability: []], service)
 
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
@@ -167,7 +167,7 @@
           .card-body
             = f.input :resource_geographic_locations, as: :select,
                   collection: Country.options.map { |c| [ c.name, "value" => c.alpha2 ] },
-                  disabled: cant_edit([resource_geographic_locations: []]),
+                  disabled: cant_edit([resource_geographic_locations: []], service),
                   input_html: { data: { choice: true },  "multiple" => "true" }
 
         .card.shadow-sm.rounded
@@ -225,9 +225,9 @@
                   public_contact_form: pcf, service: service, provider_form: false } }
             .row.mt-5
               .col-12
-                = f.input :helpdesk_email, input_html: { type: "text" }, disabled: cant_edit(:helpdesk_email)
+                = f.input :helpdesk_email, input_html: { type: "text" }, disabled: cant_edit(:helpdesk_email, service)
                 = f.input :security_contact_email, input_html: { type: "text" },
-                    disabled: cant_edit(:security_contact_email)
+                    disabled: cant_edit(:security_contact_email, service)
 
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
@@ -250,30 +250,30 @@
                                                       :last_update, :changelog])) }
           .card-body
             = f.association :trl, input_html: { data: { choice: true } },
-                          disabled: cant_edit([trl_ids: []])
+                          disabled: cant_edit([trl_ids: []], service)
             = f.association :life_cycle_status, input_html: { data: { choice: true } },
-                              disabled: cant_edit([life_cycle_status_ids: []])
+                              disabled: cant_edit([life_cycle_status_ids: []], service)
             = f.input :certifications, multiple: true, input_html: { class: "form-control text optional" },
                 wrapper_html: { "data-target" => "service.certifications" },
-                disabled: cant_edit([certifications: []]), as: :array
+                disabled: cant_edit([certifications: []], service), as: :array
             = link_to_add_array_field("service", "certifications")
             .mt-4
               = f.input :standards, multiple: true, input_html: { class: "form-control text optional" },
                   wrapper_html: { "data-target" => "service.standards" },
-                  disabled: cant_edit([standards: []]), as: :array
+                  disabled: cant_edit([standards: []], service), as: :array
               = link_to_add_array_field("service", "standards")
             .mt-4
               = f.input :open_source_technologies, multiple: true, input_html: { class: "form-control text optional" },
                   wrapper_html: { "data-target" => "service.openSourceTechnologies" },
-                  disabled: cant_edit([open_source_technologies: []]), as: :array
+                  disabled: cant_edit([open_source_technologies: []], service), as: :array
               = link_to_add_array_field("service", "open_source_technologies")
             .mt-4
-              = f.input :version, disabled: cant_edit(:version)
-            = f.input :last_update, as: :date_time_picker, disabled: cant_edit(:last_update)
+              = f.input :version, disabled: cant_edit(:version, service)
+            = f.input :last_update, as: :date_time_picker, disabled: cant_edit(:last_update, service)
 
             .row.service-changelog
               .col-12
-                = f.input :changelog, multiple: true, as: :array, disabled: cant_edit([changelog: []]),
+                = f.input :changelog, multiple: true, as: :array, disabled: cant_edit([changelog: []], service),
                    wrapper_html: { "data-target" => "service.changelog" },
                    input_html: { class: "form-control text optional" }
             = link_to_add_array_field("service", "changelog")
@@ -297,18 +297,18 @@
                                                       :related_platforms, :platforms])) }
           .card-body
             = f.association :required_services, multiple: true, input_html: { data: { choice: true } },
-            disabled: cant_edit([required_service_ids: []])
+            disabled: cant_edit([required_service_ids: []], service)
 
             = f.association :related_services, multiple: true, input_html: { data: { choice: true } },
-            disabled: cant_edit([related_service_ids: []])
+            disabled: cant_edit([related_service_ids: []], service)
 
             = f.association :platforms, label: _("Platforms (internal)"),
                                multiple: true, input_html: { data: { choice: true } },
-                               disabled: cant_edit([platform_ids: []])
+                               disabled: cant_edit([platform_ids: []], service)
             = f.input :related_platforms, label: _("Related platforms (PC data)"), multiple: true,
                 input_html: { class: "form-control" },
                 wrapper_html: { "data-target" => "service.relatedPlatforms" },
-                disabled: cant_edit([related_platforms: []]), as: :array
+                disabled: cant_edit([related_platforms: []], service), as: :array
             = link_to_add_array_field("service", "related_platforms")
 
         .card.shadow-sm.rounded
@@ -329,14 +329,14 @@
             class: ("show" unless collapsed?(service, [:funding_bodies, :funding_programs, :grant_project_names])) }
           .card-body
             = f.association :funding_bodies, input_html: { data: { choice: true } },
-                          disabled: cant_edit([funding_body_ids: []])
+                          disabled: cant_edit([funding_body_ids: []], service)
             = f.association :funding_programs, input_html: { data: { choice: true } },
-                              disabled: cant_edit([funding_program_ids: []])
+                              disabled: cant_edit([funding_program_ids: []], service)
             .row
               .col-12
                 = f.input :grant_project_names, input_html: { class: "form-control text optional" },
                     wrapper_html: { "data-target" => "service.grantProjectNames" },
-                    disabled: cant_edit([grant_project_names: []]), as: :array
+                    disabled: cant_edit([grant_project_names: []], service), as: :array
                 = link_to_add_array_field("service", "grant_project_names")
 
         .card.shadow-sm.rounded
@@ -360,15 +360,15 @@
                                                       :access_policies_url, :training_information_url,
                                                       :status_monitoring_url, :maintenance_url])) }
           .card-body
-            = f.input :helpdesk_url, disabled: cant_edit(:helpdesk_url)
-            = f.input :manual_url, disabled: cant_edit(:manual_url)
-            = f.input :terms_of_use_url, disabled: cant_edit(:terms_of_use_url)
-            = f.input :privacy_policy_url, disabled: cant_edit(:privacy_policy_url)
-            = f.input :access_policies_url, disabled: cant_edit(:access_policies_url)
-            = f.input :sla_url, disabled: cant_edit(:sla_url)
-            = f.input :training_information_url, disabled: cant_edit(:training_information_url)
-            = f.input :status_monitoring_url, disabled: cant_edit(:status_monitoring_url)
-            = f.input :maintenance_url, disabled: cant_edit(:maintenance_url)
+            = f.input :helpdesk_url, disabled: cant_edit(:helpdesk_url, service)
+            = f.input :manual_url, disabled: cant_edit(:manual_url, service)
+            = f.input :terms_of_use_url, disabled: cant_edit(:terms_of_use_url, service)
+            = f.input :privacy_policy_url, disabled: cant_edit(:privacy_policy_url, service)
+            = f.input :access_policies_url, disabled: cant_edit(:access_policies_url, service)
+            = f.input :sla_url, disabled: cant_edit(:sla_url, service)
+            = f.input :training_information_url, disabled: cant_edit(:training_information_url, service)
+            = f.input :status_monitoring_url, disabled: cant_edit(:status_monitoring_url, service)
+            = f.input :maintenance_url, disabled: cant_edit(:maintenance_url, service)
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
               [:order_type, :order_url])),
@@ -389,10 +389,10 @@
             .row
               .col-12
                 = f.input :order_type, collection: Service.order_types.keys.map(&:to_sym),
-                    disabled: cant_edit(:order_type)
+                    disabled: cant_edit(:order_type, service)
             .row
               .col-12
-                = f.input :order_url, disabled: cant_edit(:order_url)
+                = f.input :order_url, disabled: cant_edit(:order_url, service)
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
               [:payment_model_url, :pricing_url])),
@@ -410,8 +410,8 @@
             "data-parent": "#accordion-form",
             class: ("show" unless collapsed?(service, [:payment_model_url, :pricing_url])) }
           .card-body
-            = f.input :payment_model_url, disabled: cant_edit(:payment_model_url)
-            = f.input :pricing_url, disabled: cant_edit(:pricing_url)
+            = f.input :payment_model_url, disabled: cant_edit(:payment_model_url, service)
+            = f.input :pricing_url, disabled: cant_edit(:pricing_url, service)
 
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
@@ -434,13 +434,13 @@
             .row
               .col-12
                 = f.association :owners, multiple: true, input_html: { data: { choice: true } },
-                                  disabled: cant_edit([owner_ids: []])
+                                  disabled: cant_edit([owner_ids: []], service)
             .row
               .col-12
-                = f.input :restrictions, disabled: cant_edit(:restrictions)
+                = f.input :restrictions, disabled: cant_edit(:restrictions, service)
             .row.service-activate-message
               .col-12
-                = f.input :activate_message, disabled: cant_edit(:activate_message)
+                = f.input :activate_message, disabled: cant_edit(:activate_message, service)
             .row
               .col-12
                 = f.input :upstream_id, collection: f.object.sources.reject { |source| source.id.nil? },

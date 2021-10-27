@@ -14,10 +14,10 @@ class Attribute
   end
 
   def value_validity
-    unless value_valid?
-      # this needs to be like that - simple form is based on the f.input :id
-      errors.add(:id, "Invalid attribute value")
-    end
+    return if value_valid?
+
+    # this needs to be like that - simple form is based on the f.input :id
+    errors.add(:id, "Invalid attribute value")
     # TODO: add more speciffic errors under type speciffic fieds eg. :min, :max, and handle them in views
     # examples
     # errors.add(:min, "Minimum value not met")
@@ -69,20 +69,20 @@ class Attribute
   end
 
   def value_from_param(param)
-    if param.present?
-      @value = case value_type
-               when "integer"
-                 begin
-                   Integer(param)
-                 rescue StandardError
-                   String(param)
-                 end
-               when "string"
+    return if param.blank?
+
+    @value = case value_type
+             when "integer"
+               begin
+                 Integer(param)
+               rescue StandardError
                  String(param)
-               else
-                 param
                end
-    end
+             when "string"
+               String(param)
+             else
+               param
+             end
   end
 
   def value_type_schema

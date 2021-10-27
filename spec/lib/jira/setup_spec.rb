@@ -21,7 +21,8 @@ describe Jira::Setup do
 
     expect(project).to receive(:save).with(key: jira_client.jira_project_key,
                                            name: jira_client.jira_project_key,
-                                           projectTemplateKey: "com.atlassian.jira-core-project-templates:jira-core-project-management",
+                                           projectTemplateKey:
+                                             "com.atlassian.jira-core-project-templates:jira-core-project-management",
                                            projectTypeKey: "business",
                                            lead: jira_client.jira_config["username"]).and_return(true)
 

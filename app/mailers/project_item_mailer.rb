@@ -5,11 +5,11 @@ class ProjectItemMailer < ApplicationMailer
 
   def created(project_item)
     load_data(project_item)
-    if @project_item.created?
-      mail(to: @user.email,
-           subject: "New request for the service access in the EOSC Marketplace - CREATED",
-           template_name: "created")
-    end
+    return unless @project_item.created?
+
+    mail(to: @user.email,
+         subject: "New request for the service access in the EOSC Marketplace - CREATED",
+         template_name: "created")
   end
 
   def added_to_project(project_item)

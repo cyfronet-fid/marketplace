@@ -105,7 +105,6 @@ RSpec.feature "Providers in backoffice" do
       page.attach_file("provider_logo", "#{Rails.root}/app/javascript/images/eosc-img.png")
 
       click_on "Location", match: :first
-      save_and_open_screenshot
       expect(page).to have_content("Street name and number")
       # fill_in "Street name and number", with: provider.street_name_and_number
       fill_in "provider_street_name_and_number", with: provider.street_name_and_number

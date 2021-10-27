@@ -28,7 +28,7 @@ class Provider < ApplicationRecord
   has_many :services, through: :service_providers
   has_many :categorizations, through: :services
   has_many :categories, through: :categorizations
-  has_many :provider_data_administrators
+  has_many :provider_data_administrators, dependent: :destroy
   has_many :provider_scientific_domains, dependent: :destroy
   has_many :scientific_domains, through: :provider_scientific_domains
   has_many :data_administrators, through: :provider_data_administrators, dependent: :destroy, autosave: true
@@ -203,10 +203,9 @@ class Provider < ApplicationRecord
       errors.add(:certifications,
                  "has duplicates, please remove them to continue")
     end
-    if national_roadmaps.uniq.length != national_roadmaps.length
-      errors.add(:national_roadmaps,
-                 "has duplicates, please remove them to continue")
-    end
+    return unless national_roadmaps.uniq.length != national_roadmaps.length
+
+    errors.add(:national_roadmaps, "has duplicates, please remove them to continue")
   end
 
   def strip_input_fields
