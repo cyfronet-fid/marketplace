@@ -5,13 +5,13 @@ module ProjectItem::Customization
 
   included do
     validate do
-      # if offer.bundle?
-      #   bundled_property_values.each do |offer, parameters|
-      #     parameters
-      #       .select { |pv| pv.invalid? }
-      #       .each { |pv| errors.add(:property_values, :invalid, value: pv) }
-      #   end
-      # end
+      if self.offer.bundle?
+        bundled_property_values.each do |offer, parameters|
+          parameters
+            .select { |pv| pv.invalid? }
+            .each { |pv| errors.add(:bundled_property_values, :invalid, value: pv) }
+        end
+      end
       property_values
         .select { |pv| pv.invalid? }
         .each { |pv| errors.add(:property_values, :invalid, value: pv) }
@@ -29,7 +29,11 @@ module ProjectItem::Customization
   end
 
   def bundled_property_values
-    offer_values.attributes_map.reject { |o, _| o == offer }
+    self.bundled_parameters.present? ?
+      self.bundled_parameters
+          .transform_keys { |offer| offer.instance_of?(Offer) ? offer : Offer.find(offer) } : offer_values
+                                                                                          .attributes_map
+                                                                                          .reject { |o, _| o == offer }
   end
 
   def bundled_property_values=(bundled_property_values)
@@ -37,7 +41,7 @@ module ProjectItem::Customization
       offer = id_to_bundled_offer[offer_id]
       offer_values.update(offer.id => property_values) if offer
     end
-    self.properties
+    self.bundled_parameters = offer_values.to_json
   end
 
   private

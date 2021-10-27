@@ -42,7 +42,7 @@ class ProjectItem::Wizard
 
       def initialize(service, project_item_attributes)
         @service = service
-        @project_item = ::ProjectItem.new(project_item_attributes)
+        @project_item = ::CustomizableProjectItem.new(project_item_attributes)
       end
 
       def model_name
@@ -72,7 +72,7 @@ class ProjectItem::Wizard
       include ProjectItem::Customization
       include ProjectItem::VoucherValidation
 
-      delegate :created?, to: :project_item
+      delegate :created?, :bundled_parameters, to: :project_item
 
       def visible?
         offer.nil? || offer.bundle? || project_item.property_values.count.positive? || voucherable?

@@ -6,16 +6,16 @@
         = _("Provided by #{ offer.service.name}")
       .card-text= markdown(offer.description)
 
-      - if session[:bundle][offer.id].present?
+      - if bundle_params[offer.id].present?
         %table.table.mb-5
           %thead
             %tr
               %th.pl-0{ scope: "col", colspan: "2" } Parameters
           %tbody
-            - session[:bundle][offer.id].each do |attr|
+            - bundle_params[offer.id].each do |attr|
               %tr
                 %td.pl-0
-                  = attr["label"]
+                  = attr.label
                 %td
                   %span.font-weight-bold
-                    #{attr["value"]} #{attr["unit"]}
+                    #{attr.value} #{attr.unit}
