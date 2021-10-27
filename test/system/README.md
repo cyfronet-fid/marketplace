@@ -1,7 +1,7 @@
 # README
 
 ### Instalation requirements
-- `nodejs` 10.19.0
+- `nodejs` 16.13.0
 
 ### Installation
 ```bash
