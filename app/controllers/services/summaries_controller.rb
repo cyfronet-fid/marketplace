@@ -14,7 +14,7 @@ class Services::SummariesController < Services::ApplicationController
 
   def create
     @step = step(summary_params)
-    @bundle_params = session[:bundle]
+    @bundle_params = session[session_key][:bundled_parameters] || []
 
     if @step.valid? & verify_recaptcha(model: @step, attribute: :verified_recaptcha)
       do_create(@step.project_item, @bundle_params)
@@ -38,7 +38,6 @@ class Services::SummariesController < Services::ApplicationController
       if project_item.persisted?
         session.delete(session_key)
         session.delete(:selected_project)
-        session.delete(:bundle)
         send_user_action
         Matomo::SendRequestJob.perform_later(project_item, "AddToProject")
         redirect_to project_service_path(project_item.project, project_item),
@@ -54,7 +53,7 @@ class Services::SummariesController < Services::ApplicationController
     end
 
     def summary_params
-      session[session_key].merge(params.require(:project_item).permit(:project_id))
+      session[session_key].merge(params.require(:customizable_project_item).permit(:project_id))
     end
 
     def setup_show_variables!
@@ -64,7 +63,7 @@ class Services::SummariesController < Services::ApplicationController
     end
 
     def message_text
-      params[:project_item][:additional_comment]
+      params[:customizable_project_item][:additional_comment]
     end
 
     def project_item_template

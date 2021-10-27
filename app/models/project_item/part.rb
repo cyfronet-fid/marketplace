@@ -25,6 +25,10 @@ class ProjectItem::Part
     }
   end
 
+  def to_json
+    attributes.map { |a| a.to_json }
+  end
+
   def id
     offer.id.to_s
   end
