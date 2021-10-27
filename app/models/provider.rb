@@ -34,23 +34,23 @@ class Provider < ApplicationRecord
   has_many :data_administrators, through: :provider_data_administrators, dependent: :destroy, autosave: true
   has_many :provider_vocabularies, dependent: :destroy
   has_many :legal_statuses, through: :provider_vocabularies,
-           source: :vocabulary, source_type: "Vocabulary::LegalStatus"
+                            source: :vocabulary, source_type: "Vocabulary::LegalStatus"
   has_many :provider_life_cycle_statuses, through: :provider_vocabularies,
-           source: :vocabulary, source_type: "Vocabulary::ProviderLifeCycleStatus"
+                                          source: :vocabulary, source_type: "Vocabulary::ProviderLifeCycleStatus"
   has_many :networks, through: :provider_vocabularies,
-           source: :vocabulary, source_type: "Vocabulary::Network"
+                      source: :vocabulary, source_type: "Vocabulary::Network"
   has_many :structure_types, through: :provider_vocabularies,
-           source: :vocabulary, source_type: "Vocabulary::StructureType"
+                             source: :vocabulary, source_type: "Vocabulary::StructureType"
   has_many :esfri_domains, through: :provider_vocabularies,
-           source: :vocabulary, source_type: "Vocabulary::EsfriDomain"
+                           source: :vocabulary, source_type: "Vocabulary::EsfriDomain"
   has_many :esfri_types, through: :provider_vocabularies,
-           source: :vocabulary, source_type: "Vocabulary::EsfriType"
+                         source: :vocabulary, source_type: "Vocabulary::EsfriType"
   has_many :meril_scientific_domains, through: :provider_vocabularies,
-           source: :vocabulary, source_type: "Vocabulary::MerilScientificDomain"
+                                      source: :vocabulary, source_type: "Vocabulary::MerilScientificDomain"
   has_many :areas_of_activity, through: :provider_vocabularies,
-           source: :vocabulary, source_type: "Vocabulary::AreaOfActivity"
+                               source: :vocabulary, source_type: "Vocabulary::AreaOfActivity"
   has_many :societal_grand_challenges, through: :provider_vocabularies,
-           source: :vocabulary, source_type: "Vocabulary::SocietalGrandChallenge"
+                                       source: :vocabulary, source_type: "Vocabulary::SocietalGrandChallenge"
   has_many :oms_providers, dependent: :destroy
   has_many :omses, through: :oms_providers
 
@@ -59,7 +59,7 @@ class Provider < ApplicationRecord
 
   has_many :sources, class_name: "ProviderSource", dependent: :destroy
 
-  belongs_to :upstream, foreign_key: "upstream_id", class_name: "ProviderSource", optional: true
+  belongs_to :upstream, class_name: "ProviderSource", optional: true
 
   accepts_nested_attributes_for :main_contact,
                                 allow_destroy: true
@@ -76,9 +76,7 @@ class Provider < ApplicationRecord
   before_validation :strip_input_fields
   before_validation do
     remove_empty_array_fields
-    unless legal_entity
-      self.legal_status = nil
-    end
+    self.legal_status = nil unless legal_entity
   end
 
   validates :name, presence: true, uniqueness: true
@@ -93,7 +91,7 @@ class Provider < ApplicationRecord
   validates :provider_life_cycle_statuses, length: { maximum: 1 }
   validates :public_contacts, length: { minimum: 1, message: "are required. Please add at least one" }
   validates :data_administrators, length: { minimum: 1, message: "are required. Please add at least one" }
-  validate :logo_variable, on: [:create, :update]
+  validate :logo_variable, on: %i[create update]
   validate :validate_array_values_uniqueness
 
   def legal_status=(status_id)
@@ -101,11 +99,9 @@ class Provider < ApplicationRecord
   end
 
   def legal_status
-    if self.legal_statuses.blank?
-      return nil
-    end
+    return nil if legal_statuses.blank?
 
-    self.legal_statuses[0].id
+    legal_statuses[0].id
   end
 
   def esfri_type=(type_id)
@@ -113,11 +109,9 @@ class Provider < ApplicationRecord
   end
 
   def esfri_type
-    if self.esfri_types.blank?
-      return nil
-    end
+    return nil if esfri_types.blank?
 
-    self.esfri_types[0].id
+    esfri_types[0].id
   end
 
   def provider_life_cycle_status=(status_id)
@@ -125,11 +119,9 @@ class Provider < ApplicationRecord
   end
 
   def provider_life_cycle_status
-    if self.provider_life_cycle_statuses.blank?
-      return nil
-    end
+    return nil if provider_life_cycle_statuses.blank?
 
-    self.provider_life_cycle_statuses[0].id
+    provider_life_cycle_statuses[0].id
   end
 
   def participating_countries=(value)
@@ -150,18 +142,18 @@ class Provider < ApplicationRecord
 
   def services
     Service.left_joins(:service_providers).where("(status = 'unverified' OR status = 'published') AND
-    (service_providers.provider_id = #{self.id} OR resource_organisation_id = #{self.id})")
+    (service_providers.provider_id = #{id} OR resource_organisation_id = #{id})")
   end
 
   def set_default_logo
     assets_path = File.join(File.dirname(__FILE__), "../javascript/images")
     default_logo_name = "eosc-img.png"
     extension = ".png"
-    io = ImageHelper.binary_to_blob_stream(assets_path + "/" + default_logo_name)
-    self.logo.attach(
+    io = ImageHelper.binary_to_blob_stream("#{assets_path}/#{default_logo_name}")
+    logo.attach(
       io: io,
       filename: SecureRandom.uuid + extension,
-      content_type: "image/#{extension.delete(".", "")}"
+      content_type: "image/#{extension.delete('.', '')}"
     )
   end
 
@@ -170,66 +162,70 @@ class Provider < ApplicationRecord
   end
 
   private
-    def remove_empty_array_fields
-      array_fields = [
-        :multimedia,
-        :certifications,
-        :affiliations,
-        :national_roadmaps,
-        :tag_list
-      ]
-      array_fields.each do |field|
-        send(field).present? ? send(:"#{field}=", send(field).reject(&:blank?)) : send(:"#{field}=", [])
-      end
 
-      send(
-        :data_administrators=,
-        data_administrators.
-          reject { |administrator|
-            administrator.attributes["created_at"].blank? &&
-            administrator.attributes.all? { |_, value| value.blank? }
-          }
-      )
-      send(
-        :public_contacts=,
-        public_contacts.
-          reject { |contact|
-            contact.attributes["created_at"].blank? &&
-            contact.attributes.except("contactable_type", "type", "contactable_id").all? { |_, value| value.blank? }
-          }
-      )
+  def remove_empty_array_fields
+    array_fields = %i[
+      multimedia
+      certifications
+      affiliations
+      national_roadmaps
+      tag_list
+    ]
+    array_fields.each do |field|
+      send(field).present? ? send(:"#{field}=", send(field).reject(&:blank?)) : send(:"#{field}=", [])
     end
 
-    def validate_array_values_uniqueness
-      errors.add(:tag_list, "has duplicates, please remove them to continue") if tag_list.uniq.length != tag_list.length
-      errors.add(:multimedia, "has duplicates, please remove them to continue") if multimedia.uniq.length != multimedia.length
-      errors.add(:certifications, "has duplicates, please remove them to continue") if certifications.uniq.length != certifications.length
-      errors.add(:national_roadmaps, "has duplicates, please remove them to continue") if national_roadmaps.uniq.length != national_roadmaps.length
+    send(
+      :data_administrators=,
+      data_administrators
+        .reject do |administrator|
+          administrator.attributes["created_at"].blank? &&
+          administrator.attributes.all? { |_, value| value.blank? }
+        end
+    )
+    send(
+      :public_contacts=,
+      public_contacts
+        .reject do |contact|
+          contact.attributes["created_at"].blank? &&
+          contact.attributes.except("contactable_type", "type", "contactable_id").all? { |_, value| value.blank? }
+        end
+    )
+  end
+
+  def validate_array_values_uniqueness
+    errors.add(:tag_list, "has duplicates, please remove them to continue") if tag_list.uniq.length != tag_list.length
+    if multimedia.uniq.length != multimedia.length
+      errors.add(:multimedia,
+                 "has duplicates, please remove them to continue")
     end
-
-    def strip_input_fields
-      self.attributes.each do |key, value|
-        self[key] = value.strip if value.respond_to?("strip")
-      end
+    if certifications.uniq.length != certifications.length
+      errors.add(:certifications,
+                 "has duplicates, please remove them to continue")
     end
-
-    def logo_changed?
-      if Provider.where(id: id).blank?
-        return false
-      end
-
-      has_new_logo = logo.attached? && logo.variable?
-      previous_logo = Provider.find(id).logo
-      has_previous_logo = previous_logo.attached? && previous_logo.variable?
-
-      if !has_previous_logo && !has_new_logo
-        return false
-      end
-
-      if (has_new_logo && !has_previous_logo) || (!has_new_logo && has_previous_logo)
-        return true
-      end
-
-      logo.attachment.blob != previous_logo.attachment.blob
+    if national_roadmaps.uniq.length != national_roadmaps.length
+      errors.add(:national_roadmaps,
+                 "has duplicates, please remove them to continue")
     end
+  end
+
+  def strip_input_fields
+    attributes.each do |key, value|
+      self[key] = value.strip if value.respond_to?("strip")
+    end
+  end
+
+  def logo_changed?
+    return false if Provider.where(id: id).blank?
+
+    has_new_logo = logo.attached? && logo.variable?
+    previous_logo = Provider.find(id).logo
+    has_previous_logo = previous_logo.attached? && previous_logo.variable?
+
+    return false if !has_previous_logo && !has_new_logo
+
+    return true if (has_new_logo && !has_previous_logo) || (!has_new_logo && has_previous_logo)
+
+    logo.attachment.blob != previous_logo.attachment.blob
+  end
 end

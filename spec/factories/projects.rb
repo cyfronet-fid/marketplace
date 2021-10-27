@@ -5,15 +5,15 @@ FactoryBot.define do
     sequence(:name) { |n| "project #{n}" }
     sequence(:email) { |n| "username#{n}@email.com" }
     sequence(:reason_for_access) { |n| "reason #{n}" }
-    sequence(:customer_typology) { |n| "single_user" }
+    sequence(:customer_typology) { |_n| "single_user" }
     sequence(:organization) { |n| "organization #{n}" }
     sequence(:department) { |n| "department #{n}" }
     sequence(:webpage) { "http://webpage.pl" }
     sequence(:user_group_name) { |n| "User group #{n}" }
     sequence(:project_name) { |n| "Project name #{n}" }
-    sequence(:scientific_domains) { |n| [create(:scientific_domain)] }
+    sequence(:scientific_domains) { |_n| [create(:scientific_domain)] }
     sequence(:country_of_origin) { Country.all.sample }
-    sequence(:countries_of_partnership) { [ Country.all.sample ] }
+    sequence(:countries_of_partnership) { [Country.all.sample] }
     sequence(:project_website_url) { "htpps://project_website.url" }
     sequence(:company_name) { |n| "company name #{n}" }
     sequence(:company_website_url) { "https://company_website.url" }

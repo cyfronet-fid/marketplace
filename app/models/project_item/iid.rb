@@ -1,4 +1,3 @@
-
 # frozen_string_literal: true
 
 module ProjectItem::Iid
@@ -14,9 +13,8 @@ module ProjectItem::Iid
   end
 
   private
-    def set_iid
-      if project && iid.blank?
-        self.iid = project.project_items.maximum(:iid).to_i + 1
-      end
-    end
+
+  def set_iid
+    self.iid = project.project_items.maximum(:iid).to_i + 1 if project && iid.blank?
+  end
 end

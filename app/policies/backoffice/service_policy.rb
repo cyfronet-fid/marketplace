@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
-
 class Backoffice::ServicePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if user.service_portfolio_manager?
         scope
       elsif user.service_owner?
-        scope.joins(:service_user_relationships).
-          where(service_user_relationships: { user: user })
+        scope.joins(:service_user_relationships)
+             .where(service_user_relationships: { user: user })
       else
         Service.none
       end
@@ -22,8 +21,8 @@ class Backoffice::ServicePolicy < ApplicationPolicy
     :activate_message,
     :upstream_id,
     [owner_ids: []],
-    sources_attributes: [:id, :source_type, :eid, :_destroy]
-  ]
+    { sources_attributes: %i[id source_type eid _destroy] }
+  ].freeze
 
   def index?
     service_portfolio_manager? || service_owner?
@@ -44,7 +43,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   def update?
     (service_portfolio_manager? ||
      owned_service?) &&
-    !record.deleted?
+      !record.deleted?
   end
 
   def publish?
@@ -71,13 +70,13 @@ class Backoffice::ServicePolicy < ApplicationPolicy
 
   def destroy?
     service_portfolio_manager? &&
-      (project_items && project_items.count.zero?) &&
+      project_items&.count&.zero? &&
       record.draft?
   end
 
   def permitted_attributes
     attrs = [
-      { sources_attributes: [:id, :source_type, :eid, :_destroy] },
+      { sources_attributes: %i[id source_type eid _destroy] },
       :name, :description,
       :tagline, :order_type,
       [provider_ids: []], [geographical_availabilities: []],
@@ -101,8 +100,8 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       [manual_related_service_ids: []],
       [owner_ids: []], :status, :upstream_id, :version,
       [life_cycle_status_ids: []], :resource_organisation_id,
-      { main_contact_attributes: [:id, :first_name, :last_name, :email, :phone, :organisation, :position] },
-      { public_contacts_attributes: [:id, :first_name, :last_name, :email, :phone, :organisation, :position, :_destroy] }
+      { main_contact_attributes: %i[id first_name last_name email phone organisation position] },
+      { public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy] }
     ]
 
     if !@record.is_a?(Service) || @record.upstream.nil?
@@ -113,19 +112,20 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   end
 
   private
-    def service_portfolio_manager?
-      user&.service_portfolio_manager?
-    end
 
-    def service_owner?
-      user&.service_owner?
-    end
+  def service_portfolio_manager?
+    user&.service_portfolio_manager?
+  end
 
-    def owned_service?
-      record.owned_by?(user)
-    end
+  def service_owner?
+    user&.service_owner?
+  end
 
-    def project_items
-      ProjectItem.joins(:offer).where(offers: { service_id: record })
-    end
+  def owned_service?
+    record.owned_by?(user)
+  end
+
+  def project_items
+    ProjectItem.joins(:offer).where(offers: { service_id: record })
+  end
 end

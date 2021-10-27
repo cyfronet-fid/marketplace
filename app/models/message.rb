@@ -6,13 +6,13 @@ class Message < ApplicationRecord
   enum author_role: {
     user: "user",
     provider: "provider",
-    mediator: "mediator",
+    mediator: "mediator"
   }, _prefix: :role
 
   enum scope: {
     public: "public",
     internal: "internal",
-    user_direct: "user_direct",
+    user_direct: "user_direct"
   }, _suffix: true
 
   belongs_to :author,
@@ -34,7 +34,7 @@ class Message < ApplicationRecord
   before_update :set_edited!
 
   after_commit :dispatch_create_email, on: :create, if: :dispatch_email?
-  after_commit :dispatch_update_email, on: :update, if: [:dispatch_email?, :message_previously_changed?]
+  after_commit :dispatch_update_email, on: :update, if: %i[dispatch_email? message_previously_changed?]
 
   def question?
     author == messageable.user
@@ -48,24 +48,23 @@ class Message < ApplicationRecord
     Set.new(%i[message])
   end
 
-  def eventable_omses
-    messageable.eventable_omses
-  end
+  delegate :eventable_omses, to: :messageable
 
   private
-    def set_edited!
-      self.edited = true
-    end
 
-    def dispatch_email?
-      !role_user? && !internal_scope?
-    end
+  def set_edited!
+    self.edited = true
+  end
 
-    def dispatch_create_email
-      MessageMailer.new_message(self).deliver_later
-    end
+  def dispatch_email?
+    !role_user? && !internal_scope?
+  end
 
-    def dispatch_update_email
-      MessageMailer.message_edited(self).deliver_later
-    end
+  def dispatch_create_email
+    MessageMailer.new_message(self).deliver_later
+  end
+
+  def dispatch_update_email
+    MessageMailer.message_edited(self).deliver_later
+  end
 end

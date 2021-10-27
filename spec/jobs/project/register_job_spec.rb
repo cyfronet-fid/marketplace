@@ -4,12 +4,12 @@ require "rails_helper"
 
 RSpec.describe Project::ProjectRegisterJob do
   let(:project_owner) { create(:user) }
-  let(:project) {
+  let(:project) do
     project = create(:project, user: project_owner)
-    expect(Project::Register).to receive(:new).
-        with(project).and_return(register_service)
+    expect(Project::Register).to receive(:new)
+      .with(project).and_return(register_service)
     next project
-  }
+  end
   let(:register_service) { instance_double(Project::Register) }
 
   it "triggers registration process for project" do

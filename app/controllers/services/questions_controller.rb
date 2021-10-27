@@ -34,14 +34,15 @@ class Services::QuestionsController < ApplicationController
   end
 
   private
-    def render_modal_form
-      render "layouts/show_modal",
-             content_type: "text/javascript",
-             locals: {
-               title: "Ask provider",
-               action_btn: t("simple_form.labels.question.new"),
-               form: "services/questions/form",
-               form_locals: { service: @service, question: @question }
-             }
-    end
+
+  def render_modal_form
+    render "layouts/show_modal",
+           content_type: "text/javascript",
+           locals: {
+             title: "Ask provider",
+             action_btn: t("simple_form.labels.question.new"),
+             form: "services/questions/form",
+             form_locals: { service: @service, question: @question }
+           }
+  end
 end

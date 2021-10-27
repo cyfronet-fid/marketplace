@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ProjectItem::Wizard
-  STEPS = %i(offers information configuration summary)
+  STEPS = %i[offers information configuration summary].freeze
 
   def initialize(service)
     @service = service
@@ -21,7 +21,7 @@ class ProjectItem::Wizard
 
   def prev_step_key(step)
     index = step_names.index(step)
-    step_names[index - 1] if index > 0
+    step_names[index - 1] if index.positive?
   end
 
   def step_names
@@ -30,71 +30,68 @@ class ProjectItem::Wizard
 
   class InvalidStep < StandardError; end
 
-  private
-    class Base
-      include ActiveModel::Model
-      attr_accessor :project_item, :service
+  class Base
+    include ActiveModel::Model
+    attr_accessor :project_item, :service
 
-      delegate(*::ProjectItem.attribute_names.map { |a| [a, "#{a}="] }.flatten,
-              to: :project_item)
+    delegate(*::ProjectItem.attribute_names.map { |a| [a, "#{a}="] }.flatten,
+             to: :project_item)
 
-      delegate :offer, :project, to: :project_item
+    delegate :offer, :project, to: :project_item
 
-      def initialize(service, project_item_attributes)
-        @service = service
-        @project_item = ::ProjectItem.new(project_item_attributes)
-      end
-
-      def model_name
-        project_item.model_name
-      end
+    def initialize(service, project_item_attributes)
+      @service = service
+      @project_item = ::ProjectItem.new(project_item_attributes)
     end
 
-    class OffersStep < Base
-      validates :offer, presence: true
+    delegate :model_name, to: :project_item
+  end
 
-      def visible?
-        service.offers_count > 1
-      end
+  class OffersStep < Base
+    validates :offer, presence: true
 
-      def error
-        "Please select one of the offer"
-      end
+    def visible?
+      service.offers_count > 1
     end
 
-    class InformationStep < OffersStep
-      def visible?
-        true
-      end
+    def error
+      "Please select one of the offer"
+    end
+  end
+
+  class InformationStep < OffersStep
+    def visible?
+      true
+    end
+  end
+
+  class ConfigurationStep < OffersStep
+    include ProjectItem::Customization
+    include ProjectItem::VoucherValidation
+
+    delegate :created?, to: :project_item
+
+    def visible?
+      offer.nil? || offer.bundle? || project_item.property_values.count.positive? || voucherable?
     end
 
-    class ConfigurationStep < OffersStep
-      include ProjectItem::Customization
-      include ProjectItem::VoucherValidation
+    def error
+      "Please correct errors presented below"
+    end
+  end
 
-      delegate :created?, to: :project_item
+  class SummaryStep < ConfigurationStep
+    include ProjectItem::ProjectValidation
+    delegate :properties?, to: :project_item
 
-      def visible?
-        offer.nil? || offer.bundle? || project_item.property_values.count.positive? || voucherable?
-      end
+    attr_accessor :additional_comment, :verified_recaptcha
 
-      def error
-        "Please correct errors presented below"
-      end
+    def error
+      "Please correct errors presented below"
     end
 
-    class SummaryStep < ConfigurationStep
-      include ProjectItem::ProjectValidation
-      delegate :properties?, to: :project_item
-
-      attr_accessor :additional_comment, :verified_recaptcha
-
-      def error
-        "Please correct errors presented below"
-      end
-
-      def visible?
-        true
-      end
+    def visible?
+      true
     end
+  end
 end

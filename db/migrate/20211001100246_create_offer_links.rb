@@ -8,6 +8,6 @@ class CreateOfferLinks < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
-    add_index :offer_links, [:source_id, :target_id], unique: true
+    add_index :offer_links, %i[source_id target_id], unique: true
   end
 end

@@ -4,9 +4,7 @@ Rails.application.routes.draw do
   ############################## IMPORTANT!!! ################################
   # !!! Code of high security risk impact !!!
   # AAI service authentication is skipped for tests purpose
-  if Rails.env.development? && Mp::Application.config.auth_mock
-    get "users/login" => "users/auth_mock#login"
-  end
+  get "users/login" => "users/auth_mock#login" if Rails.env.development? && Mp::Application.config.auth_mock
   #############################################################################
 
   devise_for :users,
@@ -20,56 +18,56 @@ Rails.application.routes.draw do
   get "/robots.txt" => "home#robots"
   post "user_action", to: "user_action#create"
 
-  resources :services, only: [:index, :show], constraints: { id: /[^\/]+/ } do
+  resources :services, only: %i[index show], constraints: { id: %r{[^/]+} } do
     scope module: :services do
-      resource :offers, only: [:show, :update]
-      resource :configuration, only: [:show, :update]
-      resource :information, only: [:show, :update]
-      resource :summary, only: [:show, :create]
+      resource :offers, only: %i[show update]
+      resource :configuration, only: %i[show update]
+      resource :information, only: %i[show update]
+      resource :summary, only: %i[show create]
       resource :cancel, only: :destroy
-      resource :question, only: [:new, :create], constraints: lambda { |req| req.format == :js }
+      resource :question, only: %i[new create], constraints: ->(req) { req.format == :js }
       resources :opinions, only: :index
       resources :details, only: :index
       resource :ordering_configuration, only: :show do
         scope module: :ordering_configuration do
-          resources :offers, only: [:new, :edit, :create, :update, :destroy]
+          resources :offers, only: %i[new edit create update destroy]
         end
       end
     end
   end
 
-  resource :comparisons, only: [:show, :destroy] do
+  resource :comparisons, only: %i[show destroy] do
     scope module: :comparisons do
-      resource :services, only: [:create, :destroy]
+      resource :services, only: %i[create destroy]
     end
   end
 
   get "services/c/:category_id" => "services#index", as: :category_services
   resources :categories, only: :show
 
-  resource :reports, only: [:new, :create], constraints: lambda { |req| req.format == :js }
+  resource :reports, only: %i[new create], constraints: ->(req) { req.format == :js }
 
   resources :projects do
     scope module: :projects do
       resource :add, only: :create
       resource :archive, only: :create
       resources :about, only: :index
-      resources :services, only: [:show, :index] do
+      resources :services, only: %i[show index] do
         scope module: :services do
-          resource :opinion, only: [:new, :create]
-          resource :conversation, only: [:show, :create]
+          resource :opinion, only: %i[new create]
+          resource :conversation, only: %i[show create]
           resource :timeline, only: :show
         end
       end
-      resource :conversation, only: [:show, :create]
+      resource :conversation, only: %i[show create]
     end
   end
 
-  resource :profile, only: [:show, :edit, :update, :destroy]
+  resource :profile, only: %i[show edit update destroy]
 
-  resources :providers, only: [:index, :show] do
+  resources :providers, only: %i[index show] do
     scope module: :providers do
-      resource :question, only: [:new, :create], constraints: lambda { |req| req.format == :js }
+      resource :question, only: %i[new create], constraints: ->(req) { req.format == :js }
       resources :details, only: :index
     end
   end
@@ -81,7 +79,7 @@ Rails.application.routes.draw do
 
   resource :backoffice, only: :show
   namespace :backoffice do
-    resources :services, constraints: { id: /[^\/]+/ } do
+    resources :services, constraints: { id: %r{[^/]+} } do
       scope module: :services do
         resource :logo_preview, only: :show
         resources :offers
@@ -131,29 +129,29 @@ Rails.application.routes.draw do
     end
 
     namespace :v1 do
-      resources :resources, only: [:index, :show], constraints: { id: /[^\/]+/ } do
-        resources :offers, only: [:index, :create, :show, :destroy, :update], module: :resources
+      resources :resources, only: %i[index show], constraints: { id: %r{[^/]+} } do
+        resources :offers, only: %i[index create show destroy update], module: :resources
       end
-      resources :oms, controller: :omses, only: [:index, :show, :update] do
+      resources :oms, controller: :omses, only: %i[index show update] do
         resources :events, only: :index, module: :omses
-        resources :messages, only: [:index, :show, :create, :update], module: :omses
-        resources :projects, only: [:index, :show, :update], module: :omses do
-          resources :project_items, only: [:index, :show, :update], module: :projects
+        resources :messages, only: %i[index show create update], module: :omses
+        resources :projects, only: %i[index show update], module: :omses do
+          resources :project_items, only: %i[index show update], module: :projects
         end
       end
     end
   end
 
-  resource :api_docs, only: [:show, :create]
+  resource :api_docs, only: %i[show create]
 
   resource :admin, only: :show
   namespace :admin do
     resources :jobs, only: :index
     resource :help, only: :show
-    resources :help_sections, except: [:index, :show]
-    resources :help_items, except: [:index, :show]
+    resources :help_sections, except: %i[index show]
+    resources :help_items, except: %i[index show]
     resource :features, only: [:show]
-    resources :tour_feedbacks, except: [:update, :destroy]
+    resources :tour_feedbacks, except: %i[update destroy]
     post "features/enable_modal"
     post "features/disable_modal"
     resources :lead_sections, except: :show
@@ -172,22 +170,22 @@ Rails.application.routes.draw do
   resource :tour_feedbacks, only: :create
 
   direct :overview_tour_first_service do |params|
-    service = Service.where(status: [:published, :unverified, :errored]).order(:name).first
+    service = Service.where(status: %i[published unverified errored]).order(:name).first
     service_path(service, params)
   end
 
   get "errors/not_found"
   get "errors/unprocessable"
   get "errors/internal_server_error"
-  match "about", to: "pages#about", via: "get", as: :about
-  match "target_users", to: "pages#target_users", via: "get", as: :target_users
-  match "communities", to: "pages#communities", via: "get", as: :communities
-  match "about_projects", to: "pages#about_projects", via: "get", as: :about_projects
+  get "about", to: "pages#about", as: :about
+  get "target_users", to: "pages#target_users", as: :target_users
+  get "communities", to: "pages#communities", as: :communities
+  get "about_projects", to: "pages#about_projects", as: :about_projects
 
   if Rails.env.development?
     get "designsystem" => "designsystem#index"
     get "designsystem/:file" => "designsystem#show",
-      constraints: { file: %r{[^/.]+} }
+        constraints: { file: %r{[^/.]+} }
   end
 
   match "/404", to: "errors#not_found", via: :all

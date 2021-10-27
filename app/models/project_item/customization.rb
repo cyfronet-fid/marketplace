@@ -13,11 +13,10 @@ module ProjectItem::Customization
       #   end
       # end
       property_values
-        .select { |pv| pv.invalid? }
+        .select(&:invalid?)
         .each { |pv| errors.add(:property_values, :invalid, value: pv) }
     end
   end
-
 
   def property_values
     part.attributes
@@ -37,20 +36,21 @@ module ProjectItem::Customization
       offer = id_to_bundled_offer[offer_id]
       offer_values.update(offer.id => property_values) if offer
     end
-    self.properties
+    properties
   end
 
   private
-    def part
-      @part ||= ProjectItem::Attributes.new(offer: offer, parameters: properties)
-    end
 
-    def offer_values
-      @offers_values ||= ProjectItem::OfferValues.new(offer: offer,
-                                                      parameters: properties)
-    end
+  def part
+    @part ||= ProjectItem::Attributes.new(offer: offer, parameters: properties)
+  end
 
-    def id_to_bundled_offer
-      @id_to_offer ||= offer.bundled_offers.index_by { |o| "o#{o.id}" }
-    end
+  def offer_values
+    @offers_values ||= ProjectItem::OfferValues.new(offer: offer,
+                                                    parameters: properties)
+  end
+
+  def id_to_bundled_offer
+    @id_to_offer ||= offer.bundled_offers.index_by { |o| "o#{o.id}" }
+  end
 end

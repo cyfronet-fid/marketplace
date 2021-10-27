@@ -24,13 +24,14 @@ class Admin::HelpSectionPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [
-      :title, :position
+    %i[
+      title position
     ]
   end
 
   private
-    def admin?
-      user&.admin?
-    end
+
+  def admin?
+    user&.admin?
+  end
 end

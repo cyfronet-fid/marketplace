@@ -3,7 +3,7 @@
 task default: ["test:system", "test", "test:js"]
 
 namespace :test do
-  task :js do
+  task js: :environment do
     sh "yarn test"
   end
 end

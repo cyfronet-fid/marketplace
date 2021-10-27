@@ -13,7 +13,6 @@ RSpec.feature "My Services" do
 
     before { checkin_sign_in_as(user) }
 
-
     scenario "I can see only my projects" do
       p1, p2 = create_list(:project, 2, user: user)
       not_owned = create(:project)
@@ -80,7 +79,7 @@ RSpec.feature "My Services" do
 
     scenario "I can see voucher id" do
       project_item = create(:project_item, project: project, offer: create(:offer, voucherable: true),
-                            voucher_id: "V123V")
+                                           voucher_id: "V123V")
 
       visit project_service_path(project, project_item)
 
@@ -89,7 +88,7 @@ RSpec.feature "My Services" do
 
     scenario "I can see voucher id if requested and delivered" do
       project_item = create(:project_item, project: project, offer: create(:offer, voucherable: true),
-                            request_voucher: true, user_secrets: { "voucher_id" => "V123V" })
+                                           request_voucher: true, user_secrets: { "voucher_id" => "V123V" })
 
       visit project_service_path(project, project_item)
 
@@ -106,7 +105,7 @@ RSpec.feature "My Services" do
 
     scenario "I can see that voucher has been requested" do
       project_item = create(:project_item, project: project, offer: create(:offer, voucherable: true),
-                            request_voucher: true)
+                                           request_voucher: true)
 
       visit project_service_path(project, project_item)
 

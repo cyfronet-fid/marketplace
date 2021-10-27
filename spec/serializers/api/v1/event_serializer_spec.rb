@@ -15,7 +15,7 @@ RSpec.describe Api::V1::EventSerializer do
                    updates: [
                      { field: "status", before: "aaaa", after: "bbbb" },
                      { field: "status_type", before: "cccc", after: "dddd" },
-                     { field: "user_secrets", before: "eeee", after: "ffff" },
+                     { field: "user_secrets", before: "eeee", after: "ffff" }
                    ])
 
     serialized = described_class.new(event).as_json
@@ -29,18 +29,18 @@ RSpec.describe Api::V1::EventSerializer do
         {
           field: "status.value",
           before: "aaaa",
-          after: "bbbb",
+          after: "bbbb"
         },
         {
           field: "status.type",
           before: "cccc",
-          after: "dddd",
+          after: "dddd"
         },
         {
           field: "user_secrets",
           before: "<OBFUSCATED>",
-          after: "<OBFUSCATED>",
-        },
+          after: "<OBFUSCATED>"
+        }
       ]
     }
 
@@ -63,9 +63,9 @@ RSpec.describe Api::V1::EventSerializer do
 
   it "it properly serializes message event" do
     event = create(:event, action: :update, eventable: message,
-                         updates: [
-                           { field: "message", before: "aaaa", after: "bbbb" },
-                         ])
+                           updates: [
+                             { field: "message", before: "aaaa", after: "bbbb" }
+                           ])
 
     serialized = described_class.new(event).as_json
     expected = {
@@ -79,8 +79,8 @@ RSpec.describe Api::V1::EventSerializer do
         {
           field: "content",
           before: "aaaa",
-          after: "bbbb",
-        },
+          after: "bbbb"
+        }
       ]
     }
 
@@ -89,9 +89,9 @@ RSpec.describe Api::V1::EventSerializer do
 
   it "it properly serializes message (user_direct scope) event" do
     event = create(:event, action: :update, eventable: user_direct_message,
-                         updates: [
-                           { field: "message", before: "aaaa", after: "bbbb" },
-                         ])
+                           updates: [
+                             { field: "message", before: "aaaa", after: "bbbb" }
+                           ])
 
     serialized = described_class.new(event).as_json
     expected = {
@@ -105,8 +105,8 @@ RSpec.describe Api::V1::EventSerializer do
         {
           field: "content",
           before: "<OBFUSCATED>",
-          after: "<OBFUSCATED>",
-        },
+          after: "<OBFUSCATED>"
+        }
       ]
     }
 

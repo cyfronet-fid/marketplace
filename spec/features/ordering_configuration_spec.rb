@@ -59,7 +59,7 @@ RSpec.feature "Services in ordering_configuration panel" do
       expect(page).to have_field("Name")
       expect(page).to have_field("Description")
 
-      expect {
+      expect do
         fill_in "Name", with: "new offer 1"
         fill_in "Description", with: "test offer"
         find("li", text: "Input").click
@@ -73,7 +73,7 @@ RSpec.feature "Services in ordering_configuration panel" do
         end
 
         click_on "Create Offer"
-      }.to change { service.offers.count }.by(1)
+      end.to change { service.offers.count }.by(1)
 
       service.reload
       expect(service.offers.last.name).to eq("new offer 1")
@@ -98,7 +98,7 @@ RSpec.feature "Services in ordering_configuration panel" do
 
       expect(page).to have_field("Name")
 
-      expect {
+      expect do
         fill_in "Name", with: "new offer 1"
         fill_in "Description", with: "test offer"
         find("li", text: "Input").click
@@ -111,7 +111,7 @@ RSpec.feature "Services in ordering_configuration panel" do
           select "integer", from: "Value type"
         end
         click_on "Create Offer"
-      }.to change { service_without_offers.offers.count }.by(1)
+      end.to change { service_without_offers.offers.count }.by(1)
 
       service_without_offers.reload
       expect(service_without_offers.offers.last.name).to eq("new offer 1")
@@ -137,7 +137,7 @@ RSpec.feature "Services in ordering_configuration panel" do
     end
 
     scenario "I can edit offer OMS", js: true do
-      oms1 = create(:oms, name: "OMS1", custom_params: { "foo": { "mandatory": true, "default": "baz" } })
+      oms1 = create(:oms, name: "OMS1", custom_params: { foo: { mandatory: true, default: "baz" } })
       oms2 = create(:oms, name: "OMS2", custom_params: {})
       service = create(:service, name: "my service", resource_organisation: provider, status: :draft)
       offer = create(:offer, name: "offer1", description: "desc", service: service, internal: false)
@@ -174,7 +174,7 @@ RSpec.feature "Services in ordering_configuration panel" do
     end
 
     scenario "I can edit default offer OMS", js: true do
-      oms1 = create(:oms, name: "OMS1", custom_params: { "foo": { "mandatory": true, "default": "baz" } })
+      oms1 = create(:oms, name: "OMS1", custom_params: { foo: { mandatory: true, default: "baz" } })
       oms2 = create(:oms, name: "OMS2", custom_params: {})
       service = create(:service, name: "my service", resource_organisation: provider, status: :draft)
       offer = create(:offer, name: "offer1", description: "desc", service: service, internal: false)
@@ -210,8 +210,8 @@ RSpec.feature "Services in ordering_configuration panel" do
     end
   end
 
-  { no: false, service_portfolio_manager: false, admin: false, executive: false }.
-    each do |role, authorized|
+  { no: false, service_portfolio_manager: false, admin: false, executive: false }
+    .each do |role, authorized|
     context "as an user with #{role} role" do
       let(:user) { create(:user, roles: role == :no ? [] : [role]) }
       let(:provider) { create(:provider) }
@@ -219,7 +219,7 @@ RSpec.feature "Services in ordering_configuration panel" do
 
       before { checkin_sign_in_as(user) }
 
-      scenario "I am#{authorized ? nil : " not"} authorized to see the ordering_configuration panel" do
+      scenario "I am#{authorized ? nil : ' not'} authorized to see the ordering_configuration panel" do
         visit service_ordering_configuration_path(service)
 
         if authorized

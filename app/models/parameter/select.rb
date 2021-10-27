@@ -12,7 +12,8 @@ class Parameter::Select < Parameter
     ActiveSupport::HashWithIndifferentAccess.new(
       id: id, type: type, label: name, description: hint,
       config: { values: cast(values), mode: mode }, value_type: value_type,
-      unit: unit)
+      unit: unit
+    )
   end
 
   def self.load(hsh)

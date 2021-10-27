@@ -31,7 +31,7 @@ class Analytics::PageViewsAndRedirects
     { views: response.reports.first.data.totals.first.values.first,
       redirects: response.reports.first.data.totals.first.values.second }
   rescue StandardError => e
-    puts e
+    Rails.logger.debug e
     { views: "GA not initialized",
       redirects: "GA not initialized" }
   end

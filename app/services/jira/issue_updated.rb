@@ -11,7 +11,8 @@ class Jira::IssueUpdated
     @changelog.fetch("items", []).each do |change|
       status_type = nil
 
-      if change["field"] == "status"
+      case change["field"]
+      when "status"
         case change["to"].to_i
         when @jira_client.wf_rejected_id
           status_type = :rejected
@@ -28,11 +29,11 @@ class Jira::IssueUpdated
         when @jira_client.wf_approved_id
           status_type = :approved
         else
-          Rails.logger.warn("Unknown issue status_type (#{change["to"]}")
+          Rails.logger.warn("Unknown issue status_type (#{change['to']}")
         end
 
         @project_item.new_status(status: status_type.to_s, status_type: status_type) if status_type
-      elsif change["field"] == "CP-VoucherID"
+      when "CP-VoucherID"
         @project_item.new_voucher_change(change["toString"])
       end
     end

@@ -12,8 +12,8 @@ RSpec.feature "recommended services panel", js: true do
     bar_selector = "div.row.mb-4 div:nth-child(2).mb-4"
     recommended_service_selector = "div.container div.row mb-4 div:nth-child(1).service-info-box.recommendation"
 
-    @recommended_services_bar = resources_selector + " " + bar_selector
-    @recommended_services = resources_selector + " " + recommended_service_selector
+    @recommended_services_bar = "#{resources_selector} #{bar_selector}"
+    @recommended_services = "#{resources_selector} #{recommended_service_selector}"
 
     @categories, @services = populate_database
   end
@@ -50,8 +50,8 @@ RSpec.feature "recommended services panel", js: true do
       expect(element.has_css?(".recommend-box"))
       expect(element).to have_text(_("SUGGESTED"))
       expect(element.has_css?(".image-frame"))
-      expect(element).to have_text(_("Organisation") + ":")
-      expect(element).to have_text(_("Dedicated for") + ":")
+      expect(element).to have_text("#{_('Organisation')}:")
+      expect(element).to have_text("#{_('Dedicated for')}:")
     end
   end
 end

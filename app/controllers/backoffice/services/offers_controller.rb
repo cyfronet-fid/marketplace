@@ -2,8 +2,8 @@
 
 class Backoffice::Services::OffersController < Backoffice::ApplicationController
   before_action :find_service
-  before_action :find_offer_and_authorize, only: [:edit, :update]
-  after_action :reindex_offer, only: [:create, :update, :destroy]
+  before_action :find_offer_and_authorize, only: %i[edit update]
+  after_action :reindex_offer, only: %i[create update destroy]
 
   def new
     @offer = Offer.new(service: @service)
@@ -24,8 +24,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     template = permitted_attributes(Offer.new)
@@ -45,33 +44,28 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   end
 
   private
-    def reindex_offer
-      if @service.offers.size > 1
-        @service.offers.reindex
-      end
-    end
 
-    def offer_template
-      temp = transform_attributes(permitted_attributes(Offer))
-      Offer.new(temp.merge(service: @service, status: :published))
-    end
+  def reindex_offer
+    @service.offers.reindex if @service.offers.size > 1
+  end
 
-    def transform_attributes(template)
-      if template["parameters_attributes"].blank?
-        template["parameters_attributes"] = []
-      end
-      if template["primary_oms_id"].present? && template["oms_params"].nil?
-        template["oms_params"] = {}
-      end
-      template.except(:from)
-    end
+  def offer_template
+    temp = transform_attributes(permitted_attributes(Offer))
+    Offer.new(temp.merge(service: @service, status: :published))
+  end
 
-    def find_service
-      @service = Service.friendly.find(params[:service_id])
-    end
+  def transform_attributes(template)
+    template["parameters_attributes"] = [] if template["parameters_attributes"].blank?
+    template["oms_params"] = {} if template["primary_oms_id"].present? && template["oms_params"].nil?
+    template.except(:from)
+  end
 
-    def find_offer_and_authorize
-      @offer = @service.offers.find_by(iid: params[:id])
-      authorize(@offer)
-    end
+  def find_service
+    @service = Service.friendly.find(params[:service_id])
+  end
+
+  def find_offer_and_authorize
+    @offer = @service.offers.find_by(iid: params[:id])
+    authorize(@offer)
+  end
 end

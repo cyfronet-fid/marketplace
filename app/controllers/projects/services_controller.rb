@@ -10,9 +10,9 @@ class Projects::ServicesController < ApplicationController
   end
 
   def show
-    @project_item = @project.project_items.
-                    joins(offer: :service, project: :user).
-                    find_by!(iid: params[:id])
+    @project_item = @project.project_items
+                            .joins(offer: :service, project: :user)
+                            .find_by!(iid: params[:id])
 
     authorize(@project_item)
   end
@@ -22,7 +22,8 @@ class Projects::ServicesController < ApplicationController
   end
 
   private
-    def load_projects
-      @projects = policy_scope(Project).order(:name)
-    end
+
+  def load_projects
+    @projects = policy_scope(Project).order(:name)
+  end
 end

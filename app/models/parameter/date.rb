@@ -4,7 +4,8 @@ class Parameter::Date < Parameter
   def dump
     ActiveSupport::HashWithIndifferentAccess.new(
       id: id, type: type, label: name,
-      description: hint, value_type: "string")
+      description: hint, value_type: "string"
+    )
   end
 
   def self.load(hsh)

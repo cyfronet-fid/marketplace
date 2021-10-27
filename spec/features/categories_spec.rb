@@ -10,7 +10,7 @@ RSpec.feature "Service categories" do
   before do
     resources_selector = "body main div:nth-child(2).container div.container div.row div.col-lg-9"
     service_selector = "div.media.mb-3.service-box.shadow-sm"
-    @services_selector = resources_selector + " " + service_selector
+    @services_selector = "#{resources_selector} #{service_selector}"
 
     checkin_sign_in_as(user)
   end

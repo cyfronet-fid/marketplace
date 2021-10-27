@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.feature "Service opinions" do
   include OmniauthHelper
 
-  [:open_access, :fully_open_access, :other].each do |type|
+  %i[open_access fully_open_access other].each do |type|
     context "for #{type} service" do
       let(:user) { create(:user, first_name: "John", last_name: "Doe") }
       let(:project) { create(:project, user: user) }
@@ -29,10 +29,10 @@ RSpec.feature "Service opinions" do
 
         click_on "Review resource"
 
-        expect(page).to have_content("1. How satisfied you are with the #{service.name} resource on a scale " +
+        expect(page).to have_content("1. How satisfied you are with the #{service.name} resource on a scale " \
                                      "of 1 - dissatisfied to 5 - very satisfied?")
 
-        expect(page).to have_content("2. Was adding the resource to the project useful for you on a scale " +
+        expect(page).to have_content("2. Was adding the resource to the project useful for you on a scale " \
                                      "of 1 - not useful at all to 5 - very useful?")
       end
     end
@@ -51,13 +51,13 @@ RSpec.feature "Service opinions" do
 
         click_on "Review resource"
 
-        expect(page).to have_content("1. How satisfied you are with the #{service.name} resource on a scale " +
-                                       "of 1 - dissatisfied to 5 - very satisfied?")
+        expect(page).to have_content("1. How satisfied you are with the #{service.name} resource on a scale " \
+                                     "of 1 - dissatisfied to 5 - very satisfied?")
         if internal
-          expect(page).to have_content("2. How satisfied you are with the ordering process on a scale " +
+          expect(page).to have_content("2. How satisfied you are with the ordering process on a scale " \
                                        "of 1 - dissatisfied to 5 - very satisfied?")
         else
-          expect(page).to have_content("2. Was adding the resource to the project useful for you on a scale " +
+          expect(page).to have_content("2. Was adding the resource to the project useful for you on a scale " \
                                        "of 1 - not useful at all to 5 - very useful?")
         end
       end

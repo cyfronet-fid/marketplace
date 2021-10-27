@@ -9,11 +9,12 @@ class Projects::Services::TimelinesController < ApplicationController
   end
 
   private
-    def load_projects
-      @projects = policy_scope(Project).order(:name)
-    end
 
-    def load_timeline
-      @statuses = @project_item.public_statuses.order(:updated_at)
-    end
+  def load_projects
+    @projects = policy_scope(Project).order(:name)
+  end
+
+  def load_timeline
+    @statuses = @project_item.public_statuses.order(:updated_at)
+  end
 end

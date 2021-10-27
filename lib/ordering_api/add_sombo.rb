@@ -17,9 +17,7 @@ module OrderingApi
         oms.custom_params = { order_target: { mandatory: false } }
       end
 
-      unless sombo.administrators.include?(sombo_admin)
-        sombo.administrators << sombo_admin
-      end
+      sombo.administrators << sombo_admin unless sombo.administrators.include?(sombo_admin)
     end
   end
 end

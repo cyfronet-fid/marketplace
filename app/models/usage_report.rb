@@ -26,7 +26,7 @@ class UsageReport
   end
 
   def all_services_count
-    Service.where(status: [:published, :unverified, :errored]).count
+    Service.where(status: %i[published unverified errored]).count
   end
 
   def providers
@@ -35,8 +35,8 @@ class UsageReport
 
   def domains
     ScientificDomain.joins(:projects)
-      .where(projects: { id: used_projects.map { |p| p.id } }).uniq
-      .pluck(:name)
+                    .where(projects: { id: used_projects.map(&:id) }).uniq
+                    .pluck(:name)
   end
 
   def countries
@@ -47,22 +47,23 @@ class UsageReport
   end
 
   private
-    def used_projects
-      @used_projects ||= Project.joins(:project_items)
-        .select("projects.id, projects.country_of_origin, count(project_items.id) as pi_count")
-        .group("projects.id")
-    end
 
-    def service_count_by_order_type(*types, internal: false)
-      statuses = %w[published unverified errored]
-      unless internal
-        Service.left_outer_joins(:offers).where("(services.order_type IN (?) OR (offers.order_type IN (?) AND " +
-                                       "offers.status = ?)) AND services.status IN (?)",
-                                     types.to_a, types.to_a, "published", statuses).uniq.count
-      else
-        Service.joins(:offers).where("offers.order_type IN (?) AND services.status IN (?) AND " +
-                                                "offers.status IN (?) AND offers.internal = ?",
-                                     types.to_a, statuses, "published", true).uniq.count
-      end
+  def used_projects
+    @used_projects ||= Project.joins(:project_items)
+                              .select("projects.id, projects.country_of_origin, count(project_items.id) as pi_count")
+                              .group("projects.id")
+  end
+
+  def service_count_by_order_type(*types, internal: false)
+    statuses = %w[published unverified errored]
+    if internal
+      Service.joins(:offers).where("offers.order_type IN (?) AND services.status IN (?) AND " \
+                                   "offers.status IN (?) AND offers.internal = ?",
+                                   types.to_a, statuses, "published", true).uniq.count
+    else
+      Service.left_outer_joins(:offers).where("(services.order_type IN (?) OR (offers.order_type IN (?) AND " \
+                                              "offers.status = ?)) AND services.status IN (?)",
+                                              types.to_a, types.to_a, "published", statuses).uniq.count
     end
+  end
 end

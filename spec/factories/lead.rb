@@ -9,8 +9,8 @@ FactoryBot.define do
     end
     sequence(:header) { |n| "Lead item #{n}" }
     sequence(:body) { |n| "Lead item #{n}" }
-    sequence(:url) { |n| "https://test.test" }
-    sequence(:position) { |n| 1 }
+    sequence(:url) { |_n| "https://test.test" }
+    sequence(:position) { |_n| 1 }
     lead_section
   end
 end

@@ -29,9 +29,9 @@ RSpec.feature "Executive stistics" do
                                fully_open_access_count: 0,
                                open_access_count: 1,
                                other_count: 1,
-                               providers: ["p_a", "p_b", "p_c"],
-                               domains: ["d_a", "d_b", "d_c", "d_d"],
-                               countries: ["c_a", "c_b", "c_c", "c_d", "c_e"])
+                               providers: %w[p_a p_b p_c],
+                               domains: %w[d_a d_b d_c d_d],
+                               countries: %w[c_a c_b c_c c_d c_e])
       allow(UsageReport).to receive(:new).and_return(report)
 
       visit executive_statistics_path
@@ -44,7 +44,6 @@ RSpec.feature "Executive stistics" do
       expect(page.body).to have_text("1\nNumber of resources with at least one open access offer")
       expect(page.body).to have_text("1\nNumber of resources with at least one offer requiring ordering")
       expect(page.body).to have_text("1\nNumber of resources with at least one other offer.")
-
 
       expect(page.body).to have_text("Providers (3)")
       expect(page.body).to have_text("Domains (4)")

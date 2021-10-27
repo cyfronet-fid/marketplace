@@ -10,7 +10,7 @@ class Services::InlineOrderUrlComponent < ApplicationComponent
 
   def call
     link_to link_name, url,
-            class: @classes, target: "_blank", title: "External link", "data-probe": ""
+            class: @classes, target: "_blank", title: "External link", "data-probe": "", rel: "noopener"
   end
 
   def url
@@ -26,6 +26,6 @@ class Services::InlineOrderUrlComponent < ApplicationComponent
   end
 
   def render?
-    !url.blank? && !@offerable.orderable?
+    url.present? && !@offerable.orderable?
   end
 end

@@ -9,40 +9,39 @@ class Attribute::Multiselect < Attribute::Select
 
   def config_schema
     {
-        "type": "object",
-        "properties": {
-            "values": {
-                "type": "array",
-                "items": @value_type
-            },
-            "minItems": {
-              "type": "integer"
-            }
+      type: "object",
+      properties: {
+        values: {
+          type: "array",
+          items: @value_type
+        },
+        minItems: {
+          type: "integer"
         }
+      }
     }
   end
 
   def value_schema
     {
-        "type": "array",
-        "items": {
-            "type": @value_type,
-        },
-        "minItems": config["minItems"] || 0,
-        "maxItems": config["maxItems"] || config["values"].size,
+      type: "array",
+      items: {
+        type: @value_type
+      },
+      minItems: config["minItems"] || 0,
+      maxItems: config["maxItems"] || config["values"].size
     }
   end
 
   def value_from_param(param)
     param = param.reject(&:blank?)
-    case @value_type
-    when "integer"
-      @value = param.map { |p| Integer(p) }
-    else
-      @value = param
-    end
+    @value = case @value_type
+             when "integer"
+               param.map { |p| Integer(p) }
+             else
+               param
+             end
   end
 
-  protected
-    TYPE = "multiselect"
+  TYPE = "multiselect"
 end

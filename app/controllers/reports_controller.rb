@@ -12,8 +12,8 @@ class ReportsController < ApplicationController
   def create
     user = current_user
     @report = Report.new(author: user&.full_name || params[:report][:author],
-                              email: user&.email || params[:report][:email],
-                              text: params[:report][:text])
+                         email: user&.email || params[:report][:email],
+                         text: params[:report][:text])
     respond_to do |format|
       if @report.valid? && verify_recaptcha(model: @report, attribute: :verified_recaptcha)
         Report::Create.new(@report).call
@@ -26,14 +26,15 @@ class ReportsController < ApplicationController
   end
 
   private
-    def render_modal_form
-      render "layouts/show_modal",
-             content_type: "text/javascript",
-             locals: {
-                 title: "Report a technical issue",
-                 action_btn: t("simple_form.labels.question.new"),
-                 form: "reports/form",
-                 form_locals: { report: @report }
-             }
-    end
+
+  def render_modal_form
+    render "layouts/show_modal",
+           content_type: "text/javascript",
+           locals: {
+             title: "Report a technical issue",
+             action_btn: t("simple_form.labels.question.new"),
+             form: "reports/form",
+             form_locals: { report: @report }
+           }
+  end
 end

@@ -24,13 +24,14 @@ class Admin::HelpItemPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [
-      :title, :help_section_id, :content, :position
+    %i[
+      title help_section_id content position
     ]
   end
 
   private
-    def admin?
-      user&.admin?
-    end
+
+  def admin?
+    user&.admin?
+  end
 end

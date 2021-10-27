@@ -3,8 +3,7 @@
 module CategoriesHelper
   def category_query_params
     params.permit!.reject do |p|
-      p == "action" || p == "controller" ||
-        p == "category_id" || p == "utf8"
+      %w[action controller category_id utf8].include?(p)
     end
   end
 end

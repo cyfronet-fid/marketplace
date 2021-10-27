@@ -25,7 +25,7 @@ class ProjectItemMailer < ApplicationMailer
 
     mail(to: @user.email,
          subject: "Status of your service access request " \
-                             "in the EOSC Portal Marketplace has changed to WAITING FOR RESPONSE",
+                  "in the EOSC Portal Marketplace has changed to WAITING FOR RESPONSE",
          template_name: "waiting_for_response")
   end
 
@@ -75,8 +75,8 @@ class ProjectItemMailer < ApplicationMailer
     @voucher_id = voucher_id(project_item)
 
     mail(to: @user.email,
-       subject: "Elastic Cloud Compute Cluster (EC3) service with voucher approved",
-       template_name: "aod_voucher_accepted")
+         subject: "Elastic Cloud Compute Cluster (EC3) service with voucher approved",
+         template_name: "aod_voucher_accepted")
   end
 
   def aod_voucher_rejected(project_item)
@@ -106,9 +106,10 @@ class ProjectItemMailer < ApplicationMailer
   end
 
   private
-    def load_data(project_item)
-      @project_item = project_item
-      @project = project_item.project
-      @user = project_item.user
-    end
+
+  def load_data(project_item)
+    @project_item = project_item
+    @project = project_item.project
+    @user = project_item.user
+  end
 end

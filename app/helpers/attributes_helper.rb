@@ -3,16 +3,14 @@
 # Used to convert Postgres JSON to list of elements, which can be rendered
 # in views
 module AttributesHelper
-  EXCLUDED_TYPES = ["date", "input"]
+  EXCLUDED_TYPES = %w[date input].freeze
 
   def filter_technical_parameters(parameters)
     parameters.select do |parameter|
       if EXCLUDED_TYPES.include?(parameter["type"])
         false
-      elsif parameter["value_type"] == "string" then
-        false
       else
-        true
+        parameter["value_type"] != "string"
       end
     end
   end
@@ -21,25 +19,26 @@ module AttributesHelper
     return unless parameter
 
     value = if parameter["value"]
-      parameter["value"] # .to_s if needed
-    elsif parameter["type"] == "input"
-      "#{parameter["value_type"]}"
-    elsif parameter["type"] == "date"
-      "#{parameter["type"]}"
-    elsif parameter["config"]
-      config = parameter["config"]
-      if config["minimum"] || config["maximum"]
-        from_to(config["minimum"], config["maximum"])
-      elsif config["values"]
-        from_to(config["values"][0], config["values"][-1])
-      end
-    end
+              parameter["value"] # .to_s if needed
+            elsif parameter["type"] == "input"
+              (parameter["value_type"]).to_s
+            elsif parameter["type"] == "date"
+              (parameter["type"]).to_s
+            elsif parameter["config"]
+              config = parameter["config"]
+              if config["minimum"] || config["maximum"]
+                from_to(config["minimum"], config["maximum"])
+              elsif config["values"]
+                from_to(config["values"][0], config["values"][-1])
+              end
+            end
 
-    "#{value} #{parameter["unit"]}"
+    "#{value} #{parameter['unit']}"
   end
 
   private
-    def from_to(from, to)
-      "#{from || "?"} - #{to || "?"}"
-    end
+
+  def from_to(from, to)
+    "#{from || '?'} - #{to || '?'}"
+  end
 end

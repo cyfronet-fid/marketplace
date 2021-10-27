@@ -15,9 +15,9 @@ RSpec.describe Filter::TargetUser do
       filter = described_class.new
       filter.counters = counters
 
-      expect(filter.options).
-        to contain_exactly({ name: target_user1.name, id: target_user1.id, count: 2 },
-                           { name: target_user2.name, id: target_user2.id, count: 1 })
+      expect(filter.options)
+        .to contain_exactly({ name: target_user1.name, id: target_user1.id, count: 2 },
+                            { name: target_user2.name, id: target_user2.id, count: 1 })
     end
   end
 end

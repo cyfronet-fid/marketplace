@@ -9,7 +9,7 @@ class CreateProjectResearchAreas < ActiveRecord::Migration[5.2]
       t.timestamps null: false
     end
 
-    add_index :project_research_areas, [:project_id, :research_area_id], unique: true
+    add_index :project_research_areas, %i[project_id research_area_id], unique: true
 
     execute("UPDATE project_research_areas SET ( project_id, research_area_id ) =
                 ( project_items.project_id, project_items.research_area_id )

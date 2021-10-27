@@ -7,7 +7,7 @@ module Import
                    ids: [],
                    filepath: nil,
                    faraday: Faraday,
-                   logger: ->(msg) { puts msg },
+                   logger: ->(msg) { Rails.logger.debug msg },
                    default_upstream: :mp,
                    token: nil)
       @eosc_registry_base_url = eosc_registry_base_url
@@ -39,7 +39,7 @@ module Import
       log "EOSC Registry - all services #{total_service_count}"
 
       r.body["results"].select { |_r| @ids.empty? || @ids.include?(_r["service"]["id"]) }
-          .each do |service_data|
+       .each do |service_data|
         service = service_data["service"]
         output.append(service_data)
 
@@ -55,17 +55,17 @@ module Import
               service = Service.new(service)
               if service.valid?
                 service = Service::Create.new(service).call
-                service_source = ServiceSource.create!(service_id: service.id, eid: service.pid, source_type: "eosc_registry")
-                if @default_upstream == :eosc_registry
-                  service.update(upstream_id: service_source.id)
-                end
+                service_source = ServiceSource.create!(service_id: service.id, eid: service.pid,
+                                                       source_type: "eosc_registry")
+                service.update(upstream_id: service_source.id) if @default_upstream == :eosc_registry
 
                 Importers::Logo.new(service, image_url).call
                 service.save!
               else
                 service.status = "errored"
                 service.save(validate: false)
-                service_source = ServiceSource.create!(service_id: service.id, eid: service.pid, source_type: "eosc_registry")
+                service_source = ServiceSource.create!(service_id: service.id, eid: service.pid,
+                                                       source_type: "eosc_registry")
                 if @default_upstream == :eosc_registry
                   service.upstream_id = service_source.id
                   service.save(validate: false)
@@ -92,10 +92,10 @@ module Import
               log "Service upstream is not set to EOSC Registry, not updating #{existing_service.name}, id: #{service_source.id}"
             end
           end
-        rescue ActiveRecord::RecordInvalid => invalid
-          log "ERROR - #{invalid}! #{service[:name]} (eid: #{service[:pid]}) will NOT be created (please contact catalog manager)"
-        rescue StandardError => error
-          log "ERROR - Unexpected #{error}! #{service[:name]} (eid: #{service[:pid]}) will NOT be created!"
+        rescue ActiveRecord::RecordInvalid => e
+          log "ERROR - #{e}! #{service[:name]} (eid: #{service[:pid]}) will NOT be created (please contact catalog manager)"
+        rescue StandardError => e
+          log "ERROR - Unexpected #{e}! #{service[:name]} (eid: #{service[:pid]}) will NOT be created!"
         end
       end
       log "PROCESSED: #{total_service_count}, CREATED: #{created}, UPDATED: #{updated}, NOT MODIFIED: #{not_modified}"
@@ -110,8 +110,9 @@ module Import
     end
 
     private
-      def log(msg)
-        @logger.call(msg)
-      end
+
+    def log(msg)
+      @logger.call(msg)
+    end
   end
 end

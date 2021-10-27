@@ -43,27 +43,27 @@ describe ApplicationHelper, type: :helper do
 
   context "#back_link_to" do
     it "returns to index for not persisted object" do
-      expect(back_link_to("Back", build(:service))).
-        to eq("<a href=\"#{services_path}\">Back</a>")
+      expect(back_link_to("Back", build(:service)))
+        .to eq("<a href=\"#{services_path}\">Back</a>")
     end
 
     it "returns to show for persisted object" do
       service = create(:service)
 
-      expect(back_link_to("Back", service)).
-        to eq("<a href=\"#{service_path(service)}\">Back</a>")
+      expect(back_link_to("Back", service))
+        .to eq("<a href=\"#{service_path(service)}\">Back</a>")
     end
 
     it "respects prefix" do
       service = create(:service)
 
-      expect(back_link_to("Back", service, prefix: :backoffice)).
-        to eq("<a href=\"#{backoffice_service_path(service)}\">Back</a>")
+      expect(back_link_to("Back", service, prefix: :backoffice))
+        .to eq("<a href=\"#{backoffice_service_path(service)}\">Back</a>")
     end
 
     it "passes html options" do
-      expect(back_link_to("Back", build(:service), class: "btn")).
-        to eq("<a class=\"btn\" href=\"#{services_path}\">Back</a>")
+      expect(back_link_to("Back", build(:service), class: "btn"))
+        .to eq("<a class=\"btn\" href=\"#{services_path}\">Back</a>")
     end
   end
 end

@@ -5,6 +5,6 @@ FactoryBot.define do
     sequence(:name) { |n| "access mode #{n}" }
     sequence(:eid) { |n| "access_mode-#{n}" }
     sequence(:description) { |n| "Description #{n}" }
-    sequence(:extras) { |n| {} }
+    sequence(:extras) { |_n| {} }
   end
 end

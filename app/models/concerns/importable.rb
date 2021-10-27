@@ -47,7 +47,7 @@ module Importable
   end
 
   def map_order_type(order_type)
-    order_type.gsub("order_type-", "") unless order_type.blank?
+    order_type.gsub("order_type-", "") if order_type.present?
   end
 
   def map_legal_statuses(statuses)
@@ -101,7 +101,7 @@ module Importable
 
       if mapped_provider.nil?
         prov = Importers::Request.new(eosc_registry_base_url, "provider", token: token, id: prov_eid).call
-        provider  = Provider.find_or_create_by(name: prov.body["name"])
+        provider = Provider.find_or_create_by(name: prov.body["name"])
         provider.update(Importers::Provider.new(prov.body, Time.now.to_i, "rest").call)
         ProviderSource.create!(provider_id: provider.id, source_type: "eosc_registry", eid: prov_eid)
         provider
@@ -114,7 +114,7 @@ module Importable
     if actual_try < retry_attempts
       Rails.logger.warn "Provider mapping connection refused, #{actual_try + 1}/#{retry_attempts} try to download"
       map_provider(prov_eid, eosc_registry_base_url, token: token,
-                   retry_attempts: retry_attempts, actual_try: actual_try)
+                                                     retry_attempts: retry_attempts, actual_try: actual_try)
     else
       Rails.logger.error "Maximum retry connection attempts exceeded. No mapped provider return"
       nil

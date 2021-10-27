@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 FactoryBot.define do
   factory :jms_xml_service, class: String do
     skip_create
@@ -73,7 +72,7 @@ FactoryBot.define do
               <tns:accessPolicy/>
             </tns:service>
           </tns:infraService>",
-        "payloadFormat" =>  "xml"
+        "payloadFormat" => "xml"
       }
     end
   end

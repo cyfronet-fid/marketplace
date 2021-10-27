@@ -7,15 +7,15 @@ RSpec.describe Project::JiraUpdate do
   let(:issue) { double("Issue", id: 1, key: "MP-1") }
 
   context "(JIRA works without errors)" do
-    before(:each) {
+    before(:each) do
       jira_client = double("Jira::Client", jira_project_key: "MP", jira_issue_type_id: 5)
-      jira_class_stub = class_double(Jira::Client).
-          as_stubbed_const(transfer_nested_constants: true)
+      jira_class_stub = class_double(Jira::Client)
+                        .as_stubbed_const(transfer_nested_constants: true)
 
       allow(jira_class_stub).to receive(:new).and_return(jira_client)
       allow(jira_client).to receive_message_chain(:Issue, :find) { issue }
       allow(jira_client).to receive(:update_project_issue).and_return(issue)
-    }
+    end
 
     it "update jira issue" do
       jira_client = Jira::Client.new
@@ -32,8 +32,8 @@ RSpec.describe Project::JiraUpdate do
   context "(JIRA raises Errors)" do
     let!(:jira_client) do
       client = double("Jira::Client", jira_project_key: "MP")
-      jira_class_stub = class_double(Jira::Client).
-          as_stubbed_const(transfer_nested_constants: true)
+      jira_class_stub = class_double(Jira::Client)
+                        .as_stubbed_const(transfer_nested_constants: true)
       allow(jira_class_stub).to receive(:new).and_return(client)
       client
     end

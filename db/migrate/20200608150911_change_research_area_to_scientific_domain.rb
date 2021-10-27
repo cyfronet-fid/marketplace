@@ -23,11 +23,11 @@ class ChangeResearchAreaToScientificDomain < ActiveRecord::Migration[6.0]
     rename_column :users,
                   :research_areas_updates, :scientific_domains_updates
 
-    add_index :service_scientific_domains, [:service_id, :scientific_domain_id],
+    add_index :service_scientific_domains, %i[service_id scientific_domain_id],
               unique: true, name: "index_ssd_on_service_id_and_sd_id"
-    add_index :project_scientific_domains, [:project_id, :scientific_domain_id],
+    add_index :project_scientific_domains, %i[project_id scientific_domain_id],
               unique: true, name: "index_psd_on_service_id_and_sd_id"
-    add_index :user_scientific_domains, [:user_id, :scientific_domain_id],
+    add_index :user_scientific_domains, %i[user_id scientific_domain_id],
               unique: true, name: "index_usd_on_service_id_and_sd_id"
   end
 end

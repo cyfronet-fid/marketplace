@@ -17,8 +17,9 @@ class Api::V1::ProjectPolicy < ApplicationPolicy
   end
 
   private
-    def project_managed_by_user?
-      # Using .map instead of .joins, because we need .current_oms method and not .primary_oms relation
-      Set.new(user.administrated_omses).intersect?(Set.new(record.project_items.map(&:offer).map(&:current_oms)))
-    end
+
+  def project_managed_by_user?
+    # Using .map instead of .joins, because we need .current_oms method and not .primary_oms relation
+    Set.new(user.administrated_omses).intersect?(Set.new(record.project_items.map(&:offer).map(&:current_oms)))
+  end
 end

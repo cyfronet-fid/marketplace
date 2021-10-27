@@ -6,24 +6,23 @@ class Project::Register
   end
 
   def call
-    unless @project.jira_active?
-      register_in_jira!
-    end
+    register_in_jira! unless @project.jira_active?
   end
 
   private
-    def register_in_jira!
-      client = Jira::Client.new
-      @project.save!
 
-      begin
-        issue = client.create_project_issue(@project)
-        @project.update(issue_id: issue.id, issue_key: issue.key, issue_status: :jira_active)
-        @project.save
-        true
-        rescue Jira::Client::JIRAIssueCreateError => e
-          @project.jira_errored!
-          raise e
-      end
+  def register_in_jira!
+    client = Jira::Client.new
+    @project.save!
+
+    begin
+      issue = client.create_project_issue(@project)
+      @project.update(issue_id: issue.id, issue_key: issue.key, issue_status: :jira_active)
+      @project.save
+      true
+    rescue Jira::Client::JIRAIssueCreateError => e
+      @project.jira_errored!
+      raise e
     end
+  end
 end

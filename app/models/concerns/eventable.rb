@@ -10,22 +10,22 @@ module Eventable
     after_commit :event_on_update, on: :update
 
     private
-      def event_on_create
-        Event.create!(action: :create, eventable: self)
-      end
 
-      def event_on_update
-        if filtered_updates.present?
-          Event.create!(action: :update, eventable: self, updates: filtered_updates)
-        end
-      end
+    def event_on_create
+      Event.create!(action: :create, eventable: self)
+    end
 
-      def filtered_updates
-        return [] if previous_changes.blank?
-        previous_changes
-          .filter_map do |attr, change|
-          { field: attr, before: change[0], after: change[1] } if eventable_attributes.include? attr.to_sym
-        end
+    def event_on_update
+      Event.create!(action: :update, eventable: self, updates: filtered_updates) if filtered_updates.present?
+    end
+
+    def filtered_updates
+      return [] if previous_changes.blank?
+
+      previous_changes
+        .filter_map do |attr, change|
+        { field: attr, before: change[0], after: change[1] } if eventable_attributes.include? attr.to_sym
       end
+    end
   end
 end

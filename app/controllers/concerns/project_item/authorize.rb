@@ -9,12 +9,13 @@ module ProjectItem::Authorize
   end
 
   private
-    def load_and_authorize_project_item!
-      @project_item = ProjectItem.joins(:project).
-                      find_by(iid: params[:service_id],
-                              project_id: params[:project_id])
-      @project = @project_item.project
 
-      authorize(@project_item, :show?)
-    end
+  def load_and_authorize_project_item!
+    @project_item = ProjectItem.joins(:project)
+                               .find_by(iid: params[:service_id],
+                                        project_id: params[:project_id])
+    @project = @project_item.project
+
+    authorize(@project_item, :show?)
+  end
 end

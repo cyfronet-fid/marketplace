@@ -14,8 +14,8 @@ RSpec.describe OrderingConfiguration::OfferPolicy do
 
   permissions :new?, :edit?, :create?, :update?, :destroy? do
     it "grants access for data_administrator of service" do
-      expect(subject).
-        to permit(user, offer)
+      expect(subject)
+        .to permit(user, offer)
     end
 
     it "denies for other users" do

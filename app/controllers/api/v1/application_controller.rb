@@ -5,7 +5,7 @@ class Api::V1::ApplicationController < ActionController::API
   acts_as_token_authentication_handler_for User, fallback: :exception
 
   rescue_from Pundit::NotAuthorizedError do
-    render json: not_authorized, status: 403
+    render json: not_authorized, status: :forbidden
   end
 
   def policy_scope(scope)
@@ -21,25 +21,27 @@ class Api::V1::ApplicationController < ActionController::API
   end
 
   protected
-    def find_and_authorize_oms
-      @oms = OMS.find(params[:oms_id])
-      authorize @oms, :show?
-    rescue ActiveRecord::RecordNotFound
-      render json: { error: "OMS not found" }, status: 404
-    end
 
-    def validate_from_id
-      @from_id = params[:from_id].present? ? params[:from_id].to_i : 0
-      render json: { error: "'from_id' must be a non-negative integer" }, status: 400 if @from_id < 0
-    end
+  def find_and_authorize_oms
+    @oms = OMS.find(params[:oms_id])
+    authorize @oms, :show?
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "OMS not found" }, status: :not_found
+  end
 
-    def validate_limit
-      @limit = params[:limit].present? ? params[:limit].to_i : 20
-      render json: { error: "'limit' must be a positive integer" }, status: 400 if @limit <= 0
-    end
+  def validate_from_id
+    @from_id = params[:from_id].present? ? params[:from_id].to_i : 0
+    render json: { error: "'from_id' must be a non-negative integer" }, status: :bad_request if @from_id.negative?
+  end
+
+  def validate_limit
+    @limit = params[:limit].present? ? params[:limit].to_i : 20
+    render json: { error: "'limit' must be a positive integer" }, status: :bad_request if @limit <= 0
+  end
 
   private
-    def not_authorized
-      { error: "You are not authorized to perform this action." }
-    end
+
+  def not_authorized
+    { error: "You are not authorized to perform this action." }
+  end
 end

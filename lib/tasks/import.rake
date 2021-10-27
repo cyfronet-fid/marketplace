@@ -7,11 +7,11 @@ namespace :import do
 
   task resources: :environment do
     Import::Resources.new(ENV["MP_IMPORT_EOSC_REGISTRY_URL"] || "https://beta.providers.eosc-portal.eu/api",
-                    dry_run: ENV["DRY_RUN"] || false,
-                    default_upstream: (ENV["UPSTREAM"] || "mp").to_sym,
-                    ids: (ENV["IDS"] || "").split(","),
-                    filepath: ENV["OUTPUT"],
-                    token: ENV["MP_IMPORT_TOKEN"]).call
+                          dry_run: ENV["DRY_RUN"] || false,
+                          default_upstream: (ENV["UPSTREAM"] || "mp").to_sym,
+                          ids: (ENV["IDS"] || "").split(","),
+                          filepath: ENV["OUTPUT"],
+                          token: ENV["MP_IMPORT_TOKEN"]).call
   end
 
   task providers: :environment do

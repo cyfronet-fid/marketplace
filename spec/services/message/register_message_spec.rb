@@ -21,15 +21,15 @@ RSpec.describe Message::RegisterMessage do
   end
 
   it "creates jira comment from message" do
-    expect(comment).
-      to receive(:save).with(body: message.message).and_return(comment)
+    expect(comment)
+      .to receive(:save).with(body: message.message).and_return(comment)
 
     described_class.new(message).call
   end
 
   it "sets jira internal comment id" do
-    expect(comment).
-      to receive(:save).with(body: message.message).and_return(comment)
+    expect(comment)
+      .to receive(:save).with(body: message.message).and_return(comment)
 
     described_class.new(message).call
     message.reload
@@ -40,7 +40,7 @@ RSpec.describe Message::RegisterMessage do
   it "raises JIRACommentCreateError if comment was not created" do
     allow(comment).to receive(:save).and_return(nil)
 
-    expect { described_class.new(message).call }.
-      to raise_error(Message::RegisterMessage::JIRACommentCreateError)
+    expect { described_class.new(message).call }
+      .to raise_error(Message::RegisterMessage::JIRACommentCreateError)
   end
 end

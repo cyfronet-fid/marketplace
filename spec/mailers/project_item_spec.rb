@@ -37,8 +37,8 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       encoded_body = mail.body.encoded
 
       expect(mail.subject)
-          .to match("Status of your service access request " \
-                    "in the EOSC Portal Marketplace has changed to WAITING FOR RESPONSE")
+        .to match("Status of your service access request " \
+                  "in the EOSC Portal Marketplace has changed to WAITING FOR RESPONSE")
       expect(encoded_body).to match(/You have received a message from a customer service expert related/)
       expect(encoded_body).to match(/#{project_services_url(project)}/)
       expect(mail.to).to contain_exactly(user.email)
@@ -51,8 +51,8 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       encoded_body = mail.body.encoded
 
       expect(mail.subject)
-          .to match("Status of your service access request in the EOSC Portal Marketplace " \
-                    "has changed to REJECTED")
+        .to match("Status of your service access request in the EOSC Portal Marketplace " \
+                  "has changed to REJECTED")
       expect(encoded_body).to match("n rejected.=0D")
       expect(encoded_body).to match(/#{project_service_conversation_url(project, project_item)}/)
       expect(mail.to).to contain_exactly(user.email)
@@ -65,8 +65,8 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       encoded_body = mail.body.encoded
 
       expect(mail.subject)
-          .to match("Status of your service access request in the EOSC Portal Marketplace " \
-                    "has changed to CLOSED")
+        .to match("Status of your service access request in the EOSC Portal Marketplace " \
+                  "has changed to CLOSED")
       expect(encoded_body).to match(/has been closed/)
       expect(encoded_body).to match(/#{project_service_conversation_url(project, project_item)}/)
       expect(mail.to).to contain_exactly(user.email)
@@ -79,8 +79,8 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       encoded_body = mail.body.encoded
 
       expect(mail.subject)
-          .to match("Status of your service access request in the EOSC Portal Marketplace " \
-                    "has changed to APPROVED")
+        .to match("Status of your service access request in the EOSC Portal Marketplace " \
+                  "has changed to APPROVED")
       expect(encoded_body).to match(/is approved/)
       expect(encoded_body).to match(/#{project_service_url(project, project_item)}/)
       expect(mail.to).to contain_exactly(user.email)
@@ -104,7 +104,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       encoded_body = mail.body.encoded
 
       expect(mail.subject).to match(/EGI Applications on Demand service approved/)
-      expect(encoded_body).to include("This email is to inform you that your request to access the EGI\r\n" + \
+      expect(encoded_body).to include("This email is to inform you that your request to access the EGI\r\n" \
                                       "Applications on Demand (AoD) service has been approved.")
     end
 

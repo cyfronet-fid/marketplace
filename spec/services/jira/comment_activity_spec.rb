@@ -8,19 +8,19 @@ RSpec.describe Jira::CommentActivity do
 
   context "comment update" do
     context "for project" do
-      before(:each) {
+      before(:each) do
         project.messages.create(
           message: "First message",
           iid: 123,
           author_role: :provider,
-          scope: :public,
+          scope: :public
         )
-      }
+      end
 
       it "update message" do
-        expect {
+        expect do
           described_class.new(project, comment(message: "First edited message", id: 123)).call
-        }.not_to change { project.messages.count }
+        end.not_to change { project.messages.count }
 
         first_message = project.messages.last
 
@@ -30,9 +30,9 @@ RSpec.describe Jira::CommentActivity do
       end
 
       it "create new message when spm makes the message available to the user" do
-        expect {
+        expect do
           described_class.new(project, comment(message: "New message", id: 124)).call
-        }.to change { project.messages.count }.by(1)
+        end.to change { project.messages.count }.by(1)
 
         new_message = project.messages.last
 
@@ -43,19 +43,19 @@ RSpec.describe Jira::CommentActivity do
     end
 
     context "for project_item" do
-      before(:each) {
+      before(:each) do
         project_item.messages.create(
           message: "First message",
           iid: 123,
           author_role: :provider,
-          scope: :public,
+          scope: :public
         )
-      }
+      end
 
       it "update message" do
-        expect {
+        expect do
           described_class.new(project_item, comment(message: "First edited message", id: 123)).call
-        }.not_to change { project.messages.count }
+        end.not_to change { project.messages.count }
 
         first_message = project_item.messages.last
 
@@ -65,9 +65,9 @@ RSpec.describe Jira::CommentActivity do
       end
 
       it "create new message when spm makes the message available to the user" do
-        expect {
+        expect do
           described_class.new(project_item, comment(message: "New message", id: 124)).call
-        }.to change { project_item.messages.count }.by(1)
+        end.to change { project_item.messages.count }.by(1)
 
         new_message = project_item.messages.last
 
@@ -81,8 +81,8 @@ RSpec.describe Jira::CommentActivity do
   context "create message" do
     context "for project_item" do
       it "creates new project_item message" do
-        expect { described_class.new(project_item, comment(message: "msg", id: 123)).call }.
-          to change { project_item.messages.count }.by(1)
+        expect { described_class.new(project_item, comment(message: "msg", id: 123)).call }
+          .to change { project_item.messages.count }.by(1)
       end
 
       it "sets message and comment id" do
@@ -102,7 +102,7 @@ RSpec.describe Jira::CommentActivity do
         project_item.messages.create(
           message: "question",
           author_role: :user,
-          scope: :public,
+          scope: :public
         )
 
         expect do
@@ -134,8 +134,8 @@ RSpec.describe Jira::CommentActivity do
 
     context "for project" do
       it "creates new project message" do
-        expect { described_class.new(project, comment(message: "msg", id: 124)).call }.
-          to change { project.messages.count }.by(1)
+        expect { described_class.new(project, comment(message: "msg", id: 124)).call }
+          .to change { project.messages.count }.by(1)
       end
 
       it "sets message and comment id" do
@@ -154,7 +154,7 @@ RSpec.describe Jira::CommentActivity do
         project.messages.create(
           message: "question",
           author_role: :user,
-          scope: :public,
+          scope: :public
         )
 
         expect do

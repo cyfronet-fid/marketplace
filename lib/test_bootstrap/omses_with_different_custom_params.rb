@@ -5,7 +5,7 @@ module TestBootstrap
     def initialize; end
 
     def call
-      puts "Creating OMS2 (with two params, mandatory and not) and OMS3 (without params)"
+      Rails.logger.debug "Creating OMS2 (with two params, mandatory and not) and OMS3 (without params)"
       OMS.create!(name: "OMS2", type: "global",
                   custom_params: {
                     other_param_mandatory: {

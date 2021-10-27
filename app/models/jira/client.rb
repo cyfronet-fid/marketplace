@@ -34,15 +34,8 @@ class Jira::Client < JIRA::Client
     end
   end
 
-  attr_reader :jira_config
-  attr_reader :jira_project_key
-  attr_reader :jira_issue_type_id, :jira_project_issue_type_id
-  attr_reader :webhook_secret
-  attr_reader :custom_fields
-  attr_reader :wf_todo_id, :wf_in_progress_id, :wf_done_id,
-              :wf_rejected_id, :wf_waiting_for_response_id,
-              :wf_closed_id, :wf_ready_id, :wf_approved_id,
-              :wf_archived_id
+  attr_reader :jira_config, :jira_project_key, :jira_issue_type_id, :jira_project_issue_type_id, :webhook_secret,
+              :custom_fields, :wf_todo_id, :wf_in_progress_id, :wf_done_id, :wf_rejected_id, :wf_waiting_for_response_id, :wf_closed_id, :wf_ready_id, :wf_approved_id, :wf_archived_id
 
   def initialize
     # read required options and initialize jira client
@@ -50,12 +43,12 @@ class Jira::Client < JIRA::Client
     @webhook_secret = @jira_config[:webhook_secret]
 
     options = {
-        username: @jira_config[:username],
-        password: @jira_config[:password],
-        site: @jira_config[:url],
-        context_path: @jira_config[:context_path],
-        auth_type: :basic,
-        use_ssl: (/^https:\/\// =~ @jira_config[:url])
+      username: @jira_config[:username],
+      password: @jira_config[:password],
+      site: @jira_config[:url],
+      context_path: @jira_config[:context_path],
+      auth_type: :basic,
+      use_ssl: (%r{^https://} =~ @jira_config[:url])
     }
 
     @jira_project_key = @jira_config[:project]
@@ -74,34 +67,34 @@ class Jira::Client < JIRA::Client
     fields_config = @jira_config[:custom_fields]
 
     @custom_fields = {
-      "Epic Link": fields_config["Epic Link".to_sym],
-      "Epic Name": fields_config["Epic Name".to_sym],
-      "Order reference": fields_config["Order reference".to_sym],
-      "CI-Name": fields_config["CI-Name".to_sym],
-      "CI-Surname": fields_config["CI-Surname".to_sym],
-      "CI-Email": fields_config["CI-Email".to_sym],
-      "CI-DisplayName": fields_config["CI-DisplayName".to_sym],
-      "CI-EOSC-UniqueID": fields_config["CI-EOSC-UniqueID".to_sym],
-      "CI-Institution": fields_config["CI-Institution".to_sym],
-      "CI-Department": fields_config["CI-Department".to_sym],
-      "CI-DepartmentalWebPage": fields_config["CI-DepartmentalWebPage".to_sym],
-      "CI-SupervisorName": fields_config["CI-SupervisorName".to_sym],
-      "CI-SupervisorProfile": fields_config["CI-SupervisorProfile".to_sym],
-      "CP-CustomerCountry": fields_config["CP-CustomerCountry".to_sym],
-      "CP-CustomerTypology": fields_config["CP-CustomerTypology".to_sym],
-      "CP-CollaborationCountry": fields_config["CP-CollaborationCountry".to_sym],
-      "CP-ReasonForAccess": fields_config["CP-ReasonForAccess".to_sym],
-      "CP-UserGroupName": fields_config["CP-UserGroupName".to_sym],
-      "CP-ProjectInformation": fields_config["CP-ProjectInformation".to_sym],
-      "CP-ScientificDiscipline": fields_config["CP-ScientificDiscipline".to_sym],
-      "CP-Platforms": fields_config["CP-Platforms".to_sym],
-      "CP-INeedAVoucher": fields_config["CP-INeedAVoucher".to_sym],
-      "CP-VoucherID": fields_config["CP-VoucherID".to_sym],
+      "Epic Link": fields_config[:"Epic Link"],
+      "Epic Name": fields_config[:"Epic Name"],
+      "Order reference": fields_config[:"Order reference"],
+      "CI-Name": fields_config[:"CI-Name"],
+      "CI-Surname": fields_config[:"CI-Surname"],
+      "CI-Email": fields_config[:"CI-Email"],
+      "CI-DisplayName": fields_config[:"CI-DisplayName"],
+      "CI-EOSC-UniqueID": fields_config[:"CI-EOSC-UniqueID"],
+      "CI-Institution": fields_config[:"CI-Institution"],
+      "CI-Department": fields_config[:"CI-Department"],
+      "CI-DepartmentalWebPage": fields_config[:"CI-DepartmentalWebPage"],
+      "CI-SupervisorName": fields_config[:"CI-SupervisorName"],
+      "CI-SupervisorProfile": fields_config[:"CI-SupervisorProfile"],
+      "CP-CustomerCountry": fields_config[:"CP-CustomerCountry"],
+      "CP-CustomerTypology": fields_config[:"CP-CustomerTypology"],
+      "CP-CollaborationCountry": fields_config[:"CP-CollaborationCountry"],
+      "CP-ReasonForAccess": fields_config[:"CP-ReasonForAccess"],
+      "CP-UserGroupName": fields_config[:"CP-UserGroupName"],
+      "CP-ProjectInformation": fields_config[:"CP-ProjectInformation"],
+      "CP-ScientificDiscipline": fields_config[:"CP-ScientificDiscipline"],
+      "CP-Platforms": fields_config[:"CP-Platforms"],
+      "CP-INeedAVoucher": fields_config[:"CP-INeedAVoucher"],
+      "CP-VoucherID": fields_config[:"CP-VoucherID"],
       # For now only single Service Offer is supported
-      "SO-ProjectName": fields_config["SO-ProjectName".to_sym],
-      "SO-1": fields_config["SO-1".to_sym],
-      "SO-ServiceOrderTarget": fields_config["SO-ServiceOrderTarget".to_sym],
-      "SO-OfferType": fields_config["SO-OfferType".to_sym]
+      "SO-ProjectName": fields_config[:"SO-ProjectName"],
+      "SO-1": fields_config[:"SO-1"],
+      "SO-ServiceOrderTarget": fields_config[:"SO-ServiceOrderTarget"],
+      "SO-OfferType": fields_config[:"SO-OfferType"]
     }
 
     super(options)
@@ -110,18 +103,15 @@ class Jira::Client < JIRA::Client
   def create_project_issue(project)
     issue = self.Issue.build
 
-    fields = { summary: "Project, #{project.user.first_name} " +
+    fields = { summary: "Project, #{project.user.first_name} " \
                         "#{project.user.last_name}, " +
-                        "#{project.name}",
+                        project.name.to_s,
                project: { key: @jira_project_key },
-               issuetype: { id: @jira_project_issue_type_id },
-    }
+               issuetype: { id: @jira_project_issue_type_id } }
 
-    @custom_fields.reject { |k, v| v.empty? }.each do |field_name, field_id|
+    @custom_fields.reject { |_k, v| v.empty? }.each do |field_name, field_id|
       value = generate_project_custom_field_value(field_name.to_s, project)
-      unless value.nil?
-        fields[field_id.to_s] = value
-      end
+      fields[field_id.to_s] = value unless value.nil?
     end
 
     if issue.save(fields: fields)
@@ -131,26 +121,20 @@ class Jira::Client < JIRA::Client
     end
   end
 
-
   def create_service_issue(project_item)
-    unless project_item.project.jira_active?
-      raise ProjectIssueDoesNotExist.new(project_item.project)
-    end
+    raise ProjectIssueDoesNotExist, project_item.project unless project_item.project.jira_active?
 
     issue = self.Issue.build
 
-    fields = { summary: "Service order, #{project_item.project.user.first_name} " +
-                       "#{project_item.project.user.last_name}, " +
-                       "#{project_item.service.name}",
-              project: { key: @jira_project_key },
-              issuetype: { id: @jira_issue_type_id },
-    }
+    fields = { summary: "Service order, #{project_item.project.user.first_name} " \
+                        "#{project_item.project.user.last_name}, " +
+                        project_item.service.name.to_s,
+               project: { key: @jira_project_key },
+               issuetype: { id: @jira_issue_type_id } }
 
-    @custom_fields.reject { |k, v| v.empty? }.each do |field_name, field_id|
+    @custom_fields.reject { |_k, v| v.empty? }.each do |field_name, field_id|
       value = generate_project_item_custom_field_value(field_name.to_s, project_item)
-      unless value.nil?
-        fields[field_id.to_s] = value
-      end
+      fields[field_id.to_s] = value unless value.nil?
     end
 
     if issue.save(fields: fields)
@@ -161,20 +145,16 @@ class Jira::Client < JIRA::Client
   end
 
   def update_project_issue(project)
-    unless project.jira_active?
-      raise ProjectIssueDoesNotExist.new(project)
-    end
+    raise ProjectIssueDoesNotExist, project unless project.jira_active?
 
     issue = self.Issue.find(project.issue_id)
 
-    fields = { summary: "Project, #{project.user.first_name} " +
-                       "#{project.user.last_name}, " +
-                       "#{project.name}" }
-    @custom_fields.reject { |k, v| v.empty? }.each do |field_name, field_id|
+    fields = { summary: "Project, #{project.user.first_name} " \
+                        "#{project.user.last_name}, " +
+                        project.name.to_s }
+    @custom_fields.reject { |_k, v| v.empty? }.each do |field_name, field_id|
       value = generate_project_custom_field_value(field_name.to_s, project)
-      unless value.nil?
-        fields[field_id.to_s] = value
-      end
+      fields[field_id.to_s] = value unless value.nil?
     end
 
     if issue.save(fields: fields)
@@ -196,9 +176,10 @@ class Jira::Client < JIRA::Client
     self.Project.find(@jira_project_key)
   end
 
-private
+  private
+
   def encode_properties(properties)
-    properties.map { |p| [ p["label"],  p["value"] ] }.to_h
+    properties.map { |p| [p["label"], p["value"]] }.to_h
   end
 
   def encode_order_properties(project_item)
@@ -234,9 +215,7 @@ private
       project.user.uid
     when "CP-CustomerTypology"
       if project.customer_typology
-        { "id" => @jira_config[:custom_fields][:select_values]["CP-CustomerTypology".to_sym][project.customer_typology.to_sym] }
-      else
-        nil
+        { "id" => @jira_config[:custom_fields][:select_values][:"CP-CustomerTypology"][project.customer_typology.to_sym] }
       end
     when "CP-CustomerCountry"
       project.country_of_origin&.name || "N/A"
@@ -254,11 +233,9 @@ private
       project.user_group_name
     when "SO-ProjectName"
       "#{project&.name} (#{project&.id})"
-    # this is not a property of project
-    # when "CP-ScientificDiscipline"
-    #   project.scientific_domain&.name
-    else
-      nil
+      # this is not a property of project
+      # when "CP-ScientificDiscipline"
+      #   project.scientific_domain&.name
     end
   end
 
@@ -285,7 +262,7 @@ private
     when "CP-Platforms"
       project_item.offer.service.platforms.pluck(:name).join(", ")
     when "CP-INeedAVoucher"
-      { "id" => @jira_config[:custom_fields][:select_values]["CP-INeedAVoucher".to_sym][project_item.request_voucher ? :yes : :no] }
+      { "id" => @jira_config[:custom_fields][:select_values][:"CP-INeedAVoucher"][project_item.request_voucher ? :yes : :no] }
     when "CP-VoucherID"
       project_item.voucher_id || nil
     when "SO-1"
@@ -293,9 +270,7 @@ private
     when "SO-ServiceOrderTarget"
       project_item.offer.oms_params&.fetch("order_target", nil) || ""
     when "SO-OfferType"
-      { "id" => @jira_config[:custom_fields][:select_values]["SO-OfferType".to_sym][map_to_jira_order_type(project_item).to_sym] }
-    else
-      nil
+      { "id" => @jira_config[:custom_fields][:select_values][:"SO-OfferType"][map_to_jira_order_type(project_item).to_sym] }
     end
   end
 end

@@ -66,7 +66,7 @@ crumb :backoffice_offer_edit do |offer|
   parent :backoffice_service, offer.service
 end
 
-crumb :backoffice_scientific_domains  do
+crumb :backoffice_scientific_domains do
   link "Scientific Domains", backoffice_scientific_domains_path
   parent :backoffice_root
 end
@@ -147,21 +147,21 @@ crumb :backoffice_platform_edit do |platform|
 end
 
 crumb :backoffice_vocabularies do |type|
-  link type, send("backoffice_#{type.parameterize(separator: "_").pluralize}_path")
+  link type, send("backoffice_#{type.parameterize(separator: '_').pluralize}_path")
   parent :backoffice_root
 end
 
 crumb :backoffice_vocabulary do |vocabulary, type|
-  link vocabulary.name, send("backoffice_#{type.parameterize(separator: "_")}_path", vocabulary)
+  link vocabulary.name, send("backoffice_#{type.parameterize(separator: '_')}_path", vocabulary)
   parent :backoffice_vocabularies, type
 end
 
 crumb :backoffice_vocabulary_new do |type|
-  link "New", send("new_backoffice_#{type.parameterize(separator: "_")}_path")
+  link "New", send("new_backoffice_#{type.parameterize(separator: '_')}_path")
   parent :backoffice_vocabularies, type
 end
 
 crumb :backoffice_vocabulary_edit do |vocabulary, type|
-  link "Edit", send("edit_backoffice_#{type.parameterize(separator: "_")}_path", vocabulary)
+  link "Edit", send("edit_backoffice_#{type.parameterize(separator: '_')}_path", vocabulary)
   parent :backoffice_vocabulary, vocabulary, type
 end

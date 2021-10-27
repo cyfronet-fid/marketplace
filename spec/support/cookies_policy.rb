@@ -8,6 +8,7 @@ RSpec.configure do |config|
     # be clicked because cookie policy popup is above the element.
     visit root_path
     page.driver.browser.manage.add_cookie(
-      name: :cookieconsent_status, value: "dismiss")
+      name: :cookieconsent_status, value: "dismiss"
+    )
   end
 end

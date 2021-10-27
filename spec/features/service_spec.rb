@@ -8,7 +8,7 @@ RSpec.feature "Service browsing" do
   before do
     resources_selector = "body main div:nth-child(2).container div.container div.row div.col-lg-9"
     service_selector = "div.media.mb-3.service-box.shadow-sm"
-    @services_selector = resources_selector + " " + service_selector
+    @services_selector = "#{resources_selector} #{service_selector}"
   end
 
   context "with JS:" do
@@ -144,41 +144,40 @@ RSpec.feature "Service browsing" do
       # waiting for select parameter type
       service = create(:service)
       offer1 = create(:offer, service: service)
-      offer = create(:offer, service: service, parameters: [ build(:select_parameter,
-                                                 name: "Number of CPU Cores",
-                                                 hint: "Select number of cores you want",
-                                                 mode: "buttons",
-                                                 value_type: "integer",
-                                                 values: [1, 2, 4, 8]),
-                                           build(:select_parameter,
-                                                 unit: "GB",
-                                                 name: "Amount of RAM per CPU core",
-                                                 hint: "Select amount of RAM per core",
-                                                 mode: "buttons",
-                                                 value_type: "integer",
-                                                 values: [1, 2, 4]),
-                                           build(:select_parameter,
-                                                 name: "Local disk",
-                                                 hint: "Amount of local disk space",
-                                                 unit: "GB",
-                                                 value_type: "integer",
-                                                 mode: "buttons",
-                                                 values: [10, 20, 40]),
-                                           build(:range_parameter,
-                                                 name: "Number of VM instances",
-                                                 hint: "Type number of VM instances from 1-50",
-                                                 min: 1,
-                                                 max: 50),
-                                           build(:select_parameter,
-                                                 name: "Access type",
-                                                 hint: "Choose access type",
-                                                 mode: "buttons",
-                                                 value_type: "string",
-                                                 values: ["opportunistic", "reserved"]),
-                                           build(:date_parameter,
-                                                 name: "Start of service",
-                                                 hint: "Please choose start date")])
-
+      offer = create(:offer, service: service, parameters: [build(:select_parameter,
+                                                                  name: "Number of CPU Cores",
+                                                                  hint: "Select number of cores you want",
+                                                                  mode: "buttons",
+                                                                  value_type: "integer",
+                                                                  values: [1, 2, 4, 8]),
+                                                            build(:select_parameter,
+                                                                  unit: "GB",
+                                                                  name: "Amount of RAM per CPU core",
+                                                                  hint: "Select amount of RAM per core",
+                                                                  mode: "buttons",
+                                                                  value_type: "integer",
+                                                                  values: [1, 2, 4]),
+                                                            build(:select_parameter,
+                                                                  name: "Local disk",
+                                                                  hint: "Amount of local disk space",
+                                                                  unit: "GB",
+                                                                  value_type: "integer",
+                                                                  mode: "buttons",
+                                                                  values: [10, 20, 40]),
+                                                            build(:range_parameter,
+                                                                  name: "Number of VM instances",
+                                                                  hint: "Type number of VM instances from 1-50",
+                                                                  min: 1,
+                                                                  max: 50),
+                                                            build(:select_parameter,
+                                                                  name: "Access type",
+                                                                  hint: "Choose access type",
+                                                                  mode: "buttons",
+                                                                  value_type: "string",
+                                                                  values: %w[opportunistic reserved]),
+                                                            build(:date_parameter,
+                                                                  name: "Start of service",
+                                                                  hint: "Please choose start date")])
 
       visit service_path(offer.service)
 

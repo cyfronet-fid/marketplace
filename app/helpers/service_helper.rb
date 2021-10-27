@@ -10,7 +10,7 @@ module ServiceHelper
     result += content_tag(:i, "", class: "fas fa-star-half-alt fa-lg") if rating % 1 != 0
 
     # empty stars
-    (0...5 - rating.ceil).each { result += content_tag(:i, "", class: "far fa-star fa-lg") }
+    (0...(5 - rating.ceil)).each { result += content_tag(:i, "", class: "far fa-star fa-lg") }
 
     result.html_safe
   end
@@ -20,12 +20,12 @@ module ServiceHelper
   end
 
   def any_present?(record, *fields)
-    fields.map { |f| record.send(f) }.any? { |v| v.present? }
+    fields.map { |f| record.send(f) }.any?(&:present?)
   end
 
   def get_terms_and_condition_hint_text(service)
     "You are about to order #{service.name} service. Please accept " \
-      "#{link_to service.name, service.terms_of_use_url} terms and conditions to proceed.".html_safe
+    "#{link_to service.name, service.terms_of_use_url} terms and conditions to proceed.".html_safe
   end
 
   def dedicated_for_links(service)
@@ -33,7 +33,7 @@ module ServiceHelper
   end
 
   def dedicated_for_text(service)
-    service.target_users.map { |target| target.name }
+    service.target_users.map(&:name)
   end
 
   def scientific_domains(service)
@@ -41,12 +41,12 @@ module ServiceHelper
   end
 
   def field_tree(service, field)
-    parents = service.send(field).map { |f| f.parent.blank? ? f : f.parent }
-    Hash[parents.map { |parent| [parent.name, (parent.children & service.send(field)).map(&:name)] } ]
+    parents = service.send(field).map { |f| f.parent.presence || f }
+    parents.map { |parent| [parent.name, (parent.children & service.send(field)).map(&:name)] }.to_h
   end
 
   def scientific_domains_text(service)
-    service.scientific_domains.map { |target| target.name }
+    service.scientific_domains.map(&:name)
   end
 
   def resource_organisation(service, highlights = nil)
@@ -67,7 +67,7 @@ module ServiceHelper
   end
 
   def resource_organisation_and_providers_text(service)
-    service.resource_organisation_and_providers.map { |target| target.name }
+    service.resource_organisation_and_providers.map(&:name)
   end
 
   def providers(service, highlights = nil)
@@ -87,12 +87,12 @@ module ServiceHelper
     service.providers
            .reject(&:blank?)
            .reject { |p| p == service.resource_organisation }
-           .map { |target| target.name }
+           .map(&:name)
   end
 
   def filtered_offers(offers)
     if params[:service_type] && offers
-      offers&.each.reject { |o| o.first.dig("offer_type") != params[:service_type] }
+      offers&.each.select { |o| o.first["offer_type"] == params[:service_type] }
     else
       offers
     end
@@ -107,7 +107,7 @@ module ServiceHelper
   end
 
   def order_type(service)
-    types = ([service&.order_type] + service&.offers.published.map { |o| o.order_type }).compact.uniq
+    types = ([service&.order_type] + service&.offers.published.map(&:order_type)).compact.uniq
     if types.size > 1
       "various"
     else
@@ -129,21 +129,21 @@ module ServiceHelper
 
   def data_for_map(geographical_availabilities)
     countries = []
-    geographical_availabilities.each { |place|
+    geographical_availabilities.each do |place|
       co = []
       co = Country.countries_for_region(place&.name) if place
       co = [place] if co.empty?
-      countries = countries | co if co.any?
-    }
+      countries |= co if co.any?
+    end
     countries.map(&:alpha2).map { |c| [c.downcase, 1] }
-                           .map { |c| c == ["uk", 1] ? ["gb", 1] : c }
-                           .map { |c| c == ["el", 1] ? ["gr", 1] : c }
+             .map { |c| c == ["uk", 1] ? ["gb", 1] : c }
+             .map { |c| c == ["el", 1] ? ["gr", 1] : c }
   end
 
   def data_for_region(countries)
     if is_any_non_european(countries) &&
-        (countries != ["EO"]) &&
-        (countries != ["EU"])
+       (countries != ["EO"]) &&
+       (countries != ["EU"])
       countries.append("WW")
     end
     countries
@@ -168,9 +168,10 @@ module ServiceHelper
   end
 
   def edit_offer_link(service, offer, controller_name)
-    if controller_name == "ordering_configurations"
+    case controller_name
+    when "ordering_configurations"
       edit_service_ordering_configuration_offer_path(service, offer, from: params[:from])
-    elsif controller_name == "services"
+    when "services"
       edit_backoffice_service_offer_path(service, offer)
     end
   end

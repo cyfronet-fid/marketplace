@@ -15,13 +15,9 @@ describe Import::Providers do
       faraday: faraday
     }
 
-    unless log
-      options[:logger] = ->(_msg) { }
-    end
+    options[:logger] = ->(_msg) {} unless log
 
-    if default_upstream
-      options[:default_upstream] = default_upstream
-    end
+    options[:default_upstream] = default_upstream if default_upstream
 
     eosc_registry = Import::Providers.new(test_url, **options)
 
@@ -46,8 +42,10 @@ describe Import::Providers do
 
   let(:eosc_registry) { make_and_stub_eosc_registry(log: true) }
   let(:log_less_eosc_registry) { make_and_stub_eosc_registry(log: false) }
-  let!(:scientific_domain_other) { create(:scientific_domain, name: "Other",
-                                          eid: "scientific_subdomain-other-other") }
+  let!(:scientific_domain_other) do
+    create(:scientific_domain, name: "Other",
+                               eid: "scientific_subdomain-other-other")
+  end
   let!(:target_user_other) { create(:target_user, name: "Other", eid: "target_user-other") }
   let!(:storage) { create(:category, name: "Storage") }
   let!(:training) { create(:category, name: "Training & Support") }
@@ -86,7 +84,11 @@ describe Import::Providers do
 
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"], log: true)
 
-      expect { eosc_registry.call }.to output(/PROCESSED: 1, CREATED: 0, UPDATED: 0, NOT MODIFIED: 1$/).to_stdout.and change { Provider.count }.by(0)
+      expect do
+        eosc_registry.call
+      end.to output(/PROCESSED: 1, CREATED: 0, UPDATED: 0, NOT MODIFIED: 1$/).to_stdout.and change {
+                                                                                              Provider.count
+                                                                                            }.by(0)
     end
 
     it "should update provider which has upstream to external id" do
@@ -98,12 +100,20 @@ describe Import::Providers do
 
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"], log: true)
 
-      expect { eosc_registry.call }.to output(/PROCESSED: 1, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/).to_stdout.and change { Provider.count }.by(0)
+      expect do
+        eosc_registry.call
+      end.to output(/PROCESSED: 1, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/).to_stdout.and change {
+                                                                                              Provider.count
+                                                                                            }.by(0)
     end
 
     it "should not change db if dry_run is set to true" do
       eosc_registry = make_and_stub_eosc_registry(dry_run: true, log: true)
-      expect { eosc_registry.call }.to output(/PROCESSED: 4, CREATED: 3, UPDATED: 0, NOT MODIFIED: 1$/).to_stdout.and change { Provider.count }.by(0)
+      expect do
+        eosc_registry.call
+      end.to output(/PROCESSED: 4, CREATED: 3, UPDATED: 0, NOT MODIFIED: 1$/).to_stdout.and change {
+                                                                                              Provider.count
+                                                                                            }.by(0)
     end
 
     it "should filter by ids if they are provided" do
@@ -115,7 +125,9 @@ describe Import::Providers do
     it "should set default image on error" do
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"])
       allow(eosc_registry).to receive(:open).with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-                                        ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(OpenURI::HTTPError.new("", status: 404))
+                                                  ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(OpenURI::HTTPError.new(
+                                                                                                          "", status: 404
+                                                                                                        ))
       eosc_registry.call
 
       expect(Provider.first.logo.attached?).to be_truthy
@@ -124,7 +136,7 @@ describe Import::Providers do
     it "should set default image on error" do
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"])
       allow(eosc_registry).to receive(:open).with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-                                        ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(Errno::EHOSTUNREACH.new)
+                                                  ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(Errno::EHOSTUNREACH.new)
       eosc_registry.call
       expect(Provider.first.logo.attached?).to be_truthy
     end

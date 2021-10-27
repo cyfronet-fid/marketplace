@@ -3,7 +3,6 @@
 require "swagger_helper"
 require "rails_helper"
 
-
 RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json" do
   before(:all) do
     Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
@@ -17,7 +16,7 @@ RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json"
     get "lists OMSes" do
       tags "OMS"
       produces "application/json"
-      security [ authentication_token: [] ]
+      security [authentication_token: []]
 
       response 200, "OMSes found" do
         schema "$ref" => "oms/ordering/oms_index.json"
@@ -28,7 +27,9 @@ RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json"
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to eq({ omses: oms.map { |oms| Api::V1::Ordering::OMSSerializer.new(oms).as_json } }.deep_stringify_keys)
+          expect(data).to eq({ omses: oms.map do |oms|
+                                        Api::V1::Ordering::OMSSerializer.new(oms).as_json
+                                      end }.deep_stringify_keys)
         end
       end
 
@@ -64,7 +65,7 @@ RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json"
     get "retrieves an OMS" do
       tags "OMS"
       produces "application/json"
-      security [ authentication_token: [] ]
+      security [authentication_token: []]
 
       response 200, "OMS found" do
         schema "$ref" => "oms/ordering/oms_read.json"

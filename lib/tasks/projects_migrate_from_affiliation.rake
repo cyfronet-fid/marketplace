@@ -7,11 +7,10 @@ namespace :projects do
   task migrate_from_affiliation: :environment do
     Project.transaction do
       Project.includes(:project_items, user: :affiliations)
-            .find_each do |project|
-        case
-        when to_remove?(project)
+             .find_each do |project|
+        if to_remove?(project)
           destroy!(project)
-        when to_fill_in?(project)
+        elsif to_fill_in?(project)
           fill_in!(project)
         end
       end
@@ -31,7 +30,7 @@ namespace :projects do
   end
 
   def fill_in!(project)
-    if project.user.affiliations.size == 0
+    if project.user.affiliations.size.zero?
       puts "Unable to fill in project #{project.name} for #{project.user.full_name} (#{project.user.email})"
     else
       project.customer_typology = "single_user" if project.customer_typology.nil?

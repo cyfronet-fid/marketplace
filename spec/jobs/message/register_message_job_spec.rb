@@ -19,8 +19,8 @@ RSpec.describe Message::RegisterMessageJob do
 
   it "triggers registration process for project_item owner message" do
     message = make_message(project_item_owner)
-    allow(Message::RegisterMessage).to receive(:new).
-      with(message).and_return(register_service)
+    allow(Message::RegisterMessage).to receive(:new)
+      .with(message).and_return(register_service)
 
     expect(register_service).to receive(:call)
 
@@ -36,11 +36,11 @@ RSpec.describe Message::RegisterMessageJob do
 
   it "handles exception thrown by Message::RegisterMessage" do
     message = make_message(project_item_owner)
-    allow(Message::RegisterMessage).to receive(:new).
-        with(message).and_return(register_service)
+    allow(Message::RegisterMessage).to receive(:new)
+      .with(message).and_return(register_service)
 
-    expect(register_service).to receive(:call).
-      and_raise(Message::RegisterMessage::JIRACommentCreateError.new(project_item))
+    expect(register_service).to receive(:call)
+      .and_raise(Message::RegisterMessage::JIRACommentCreateError.new(project_item))
 
     described_class.perform_now(message)
   end

@@ -4,7 +4,7 @@ module Service::Comparison
   extend ActiveSupport::Concern
 
   included do
-    before_action :init_comparison_variables, only: [:index, :show]
+    before_action :init_comparison_variables, only: %i[index show]
   end
 
   def init_comparison_variables

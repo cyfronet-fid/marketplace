@@ -6,8 +6,8 @@ class Backoffice::OfferPolicy < ApplicationPolicy
       if user.service_portfolio_manager?
         scope
       elsif user.service_owner?
-        scope.joins(:service_user_relationships).
-          where(service_user_relationships: { user: user })
+        scope.joins(:service_user_relationships)
+             .where(service_user_relationships: { user: user })
       else
         Service.none
       end
@@ -37,27 +37,28 @@ class Backoffice::OfferPolicy < ApplicationPolicy
 
   def permitted_attributes
     [:id, :name, :description, :order_type, :order_url, :internal, :from,
-     :primary_oms_id, oms_params: {},
-     parameters_attributes: [:type, :name, :hint, :min, :max,
-                             :unit, :value_type, :start_price, :step_price, :currency,
-                             :exclusive_min, :exclusive_max, :mode, :values, :value]]
+     :primary_oms_id, { oms_params: {},
+                        parameters_attributes: %i[type name hint min max
+                                                  unit value_type start_price step_price currency
+                                                  exclusive_min exclusive_max mode values value] }]
   end
 
   private
-    def managed?
-      service_portfolio_manager? ||
-        record.service.owned_by?(user)
-    end
 
-    def service_portfolio_manager?
-      user&.service_portfolio_manager?
-    end
+  def managed?
+    service_portfolio_manager? ||
+      record.service.owned_by?(user)
+  end
 
-    def orderless?
-      record.project_items.count.zero?
-    end
+  def service_portfolio_manager?
+    user&.service_portfolio_manager?
+  end
 
-    def service_deleted?
-      record.service.deleted?
-    end
+  def orderless?
+    record.project_items.count.zero?
+  end
+
+  def service_deleted?
+    record.service.deleted?
+  end
 end

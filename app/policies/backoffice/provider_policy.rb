@@ -9,8 +9,8 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
 
   MP_INTERNAL_FIELDS = [
     :upstream_id,
-    sources_attributes: [:id, :source_type, :eid, :_destroy]
-  ]
+    { sources_attributes: %i[id source_type eid _destroy] }
+  ].freeze
 
   def index?
     service_portfolio_manager?
@@ -50,10 +50,10 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
       [structure_type_ids: []], [esfri_type_ids: []], [esfri_domain_ids: []], [meril_scientific_domain_ids: []],
       :upstream_id,
       [areas_of_activity_ids: []], [societal_grand_challenge_ids: []], [national_roadmaps: []],
-      sources_attributes: [:id, :source_type, :eid, :_destroy],
-      main_contact_attributes: [:id, :first_name, :last_name, :email, :phone, :organisation, :position],
-      public_contacts_attributes: [:id, :first_name, :last_name, :email, :phone, :organisation, :position, :_destroy],
-      data_administrators_attributes: [:id, :first_name, :last_name, :email, :_destroy]
+      { sources_attributes: %i[id source_type eid _destroy],
+        main_contact_attributes: %i[id first_name last_name email phone organisation position],
+        public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy],
+        data_administrators_attributes: %i[id first_name last_name email _destroy] }
     ]
 
     if !@record.is_a?(Provider) || @record.upstream_id.blank?
@@ -64,7 +64,8 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
   end
 
   private
-    def service_portfolio_manager?
-      user&.service_portfolio_manager?
-    end
+
+  def service_portfolio_manager?
+    user&.service_portfolio_manager?
+  end
 end

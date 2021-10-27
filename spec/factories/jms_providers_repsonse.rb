@@ -32,10 +32,10 @@ FactoryBot.define do
             },
             "publicContacts" => { "publicContact" => [{ "email" => "test@mail.pl" }] },
             "users" => { "user" => [{
-                                      "email" => "test@mail.pl",
-                                      "name" => "test",
-                                      "surname" => "test"
-                                    }] }
+              "email" => "test@mail.pl",
+              "name" => "test",
+              "surname" => "test"
+            }] }
           },
           {
             "id" => "phenomenal",
@@ -59,10 +59,10 @@ FactoryBot.define do
             },
             "publicContacts" => { "publicContact" => [{ "email" => "test@mail.pl" }] },
             "users" => { "user" => [{
-                                      "email" => "test@mail.pl",
-                                      "name" => "test",
-                                      "surname" => "test"
-                                    }] }
+              "email" => "test@mail.pl",
+              "name" => "test",
+              "surname" => "test"
+            }] }
           },
           {
             "id" => "West-Life",
@@ -86,10 +86,10 @@ FactoryBot.define do
             },
             "publicContacts" => { "publicContact" => [{ "email" => "test@mail.pl" }] },
             "users" => { "user" => [{
-                                      "email" => "test@mail.pl",
-                                      "name" => "test",
-                                      "surname" => "test"
-                                    }] }
+              "email" => "test@mail.pl",
+              "name" => "test",
+              "surname" => "test"
+            }] }
           },
           {
             "id" => "awesome",
@@ -113,11 +113,11 @@ FactoryBot.define do
             },
             "publicContacts" => { "publicContact" => [{ "email" => "test@mail.pl" }] },
             "users" => { "user" => [{
-                                      "email" => "test@mail.pl",
-                                      "name" => "test",
-                                      "surname" => "test"
-                                    }] }
-          },
+              "email" => "test@mail.pl",
+              "name" => "test",
+              "surname" => "test"
+            }] }
+          }
         ],
         "facets" => [
           {
@@ -164,10 +164,10 @@ FactoryBot.define do
         },
         "publicContacts" => { "publicContact" => { "email" => "test@mail.pl" } },
         "users" => { "user" => {
-                                  "email" => "test@mail.pl",
-                                  "name" => "test",
-                                  "surname" => "test"
-                                } }
+          "email" => "test@mail.pl",
+          "name" => "test",
+          "surname" => "test"
+        } }
       }
     end
   end

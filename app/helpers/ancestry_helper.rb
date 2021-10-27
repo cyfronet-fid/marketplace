@@ -11,16 +11,17 @@ module AncestryHelper
   end
 
   private
-    def create_ancestry_tree(records, parent, level)
-      records.select { |r| r.ancestry_depth == level && r.child_of?(parent) }.
-              flat_map do |r|
-                [[indented_name(r.name, level), r],
-                 *create_ancestry_tree(records, r, level + 1)]
-              end
-    end
 
-    def indented_name(name, level)
-      indentation = "&nbsp;&nbsp;" * level
-      "#{indentation}#{ERB::Util.html_escape(name)}".html_safe
+  def create_ancestry_tree(records, parent, level)
+    records.select { |r| r.ancestry_depth == level && r.child_of?(parent) }
+           .flat_map do |r|
+      [[indented_name(r.name, level), r],
+       *create_ancestry_tree(records, r, level + 1)]
     end
+  end
+
+  def indented_name(name, level)
+    indentation = "&nbsp;&nbsp;" * level
+    "#{indentation}#{ERB::Util.html_escape(name)}".html_safe
+  end
 end

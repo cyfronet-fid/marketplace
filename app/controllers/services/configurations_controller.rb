@@ -9,9 +9,7 @@ class Services::ConfigurationsController < Services::ApplicationController
     if prev_visible_step.valid?
       @step = step(saved_state)
 
-      unless @step.visible?
-        redirect_to url_for([@service, next_step_key])
-      end
+      redirect_to url_for([@service, next_step_key]) unless @step.visible?
     else
       redirect_to url_for([@service, pref_visible_step_key]), alert: prev_visible_step.error
     end
@@ -21,12 +19,12 @@ class Services::ConfigurationsController < Services::ApplicationController
     @step = step(configuration_params)
     @project_item = CustomizableProjectItem.new(configuration_params)
 
-    @bundled_parameters = @project_item.properties["bundled_services"]&.
-      map { |o| [o["offer_id"].to_i, o["attributes"]] }.to_h unless @project_item.properties.empty?
-
-    if @step.request_voucher
-      @step.voucher_id = ""
+    unless @project_item.properties.empty?
+      @bundled_parameters = @project_item.properties["bundled_services"]
+        &.map { |o| [o["offer_id"].to_i, o["attributes"]] }.to_h
     end
+
+    @step.voucher_id = "" if @step.request_voucher
 
     if @step.valid?
       save_in_session(@step)
@@ -39,20 +37,21 @@ class Services::ConfigurationsController < Services::ApplicationController
   end
 
   private
-    def configuration_params
-      template = CustomizableProjectItem.new(saved_state)
-      saved_state
-          .merge(permitted_attributes(template))
-          .merge(status: :created)
-    end
 
-    def step_key
-      :configuration
-    end
+  def configuration_params
+    template = CustomizableProjectItem.new(saved_state)
+    saved_state
+      .merge(permitted_attributes(template))
+      .merge(status: :created)
+  end
 
-    def setup_show_variables!
-      @projects = current_user.projects
-      # @affiliations = current_user.active_affiliations
-      # @customer_topologies = ProjectItem.customer_typologies.keys.map(&:to_sym)
-    end
+  def step_key
+    :configuration
+  end
+
+  def setup_show_variables!
+    @projects = current_user.projects
+    # @affiliations = current_user.active_affiliations
+    # @customer_topologies = ProjectItem.customer_typologies.keys.map(&:to_sym)
+  end
 end

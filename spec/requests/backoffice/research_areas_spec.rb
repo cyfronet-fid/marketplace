@@ -11,8 +11,8 @@ RSpec.describe "Backoffice scientific domain" do
     it "I can delete scientific domain" do
       scientific_domain = create(:scientific_domain)
 
-      expect { delete backoffice_scientific_domain_path(scientific_domain) }.
-        to change { ScientificDomain.count }.by(-1)
+      expect { delete backoffice_scientific_domain_path(scientific_domain) }
+        .to change { ScientificDomain.count }.by(-1)
     end
   end
 end

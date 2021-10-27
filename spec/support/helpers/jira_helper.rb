@@ -15,8 +15,8 @@ module JiraHelper
                          options: { username: "" },
                          wf_approved_id: 12,
                          wf_archived_id: 13)
-    jira_class_stub = class_double(Jira::Client).
-                      as_stubbed_const(transfer_nested_constants: true)
+    jira_class_stub = class_double(Jira::Client)
+                      .as_stubbed_const(transfer_nested_constants: true)
     allow(jira_class_stub).to receive(:new).and_return(jira_client)
 
     jira_client

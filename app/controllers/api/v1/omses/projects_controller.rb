@@ -16,17 +16,18 @@ class Api::V1::OMSes::ProjectsController < Api::V1::ApplicationController
   end
 
   private
-    def load_projects
-      @projects = policy_scope(@oms.projects).
-        where("projects.id > ?", @from_id).
-        order("projects.id").
-        limit(@limit)
-    end
 
-    def find_and_authorize
-      @project = @oms.projects.find(params[:id])
-      authorize @project
-    rescue ActiveRecord::RecordNotFound
-      render json: { error: "Project not found" }, status: 404
-    end
+  def load_projects
+    @projects = policy_scope(@oms.projects)
+                .where("projects.id > ?", @from_id)
+                .order("projects.id")
+                .limit(@limit)
+  end
+
+  def find_and_authorize
+    @project = @oms.projects.find(params[:id])
+    authorize @project
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Project not found" }, status: :not_found
+  end
 end

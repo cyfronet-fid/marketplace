@@ -26,7 +26,7 @@ module ImageHelper
   def self.to_base_64(path)
     content_type = MIME::Types.type_for(path).first.content_type
     File.open(path, "rb") do |img|
-      "data:" + content_type + ";base64," + Base64.strict_encode64(img.read)
+      "data:#{content_type};base64,#{Base64.strict_encode64(img.read)}"
     end
   end
 
@@ -45,7 +45,7 @@ module ImageHelper
 
   def self.base_64_to_blob_stream(base_64)
     extension = ImageHelper.base_64_extension(base_64)
-    decoded_image = Base64.decode64(base_64[(base_64.index("base64,") + "base64,".size)..-1])
+    decoded_image = Base64.decode64(base_64[(base_64.index("base64,") + "base64,".size)..])
     blob = MiniMagick::Image.read(decoded_image, extension).to_blob
     logo = StringIO.new
     logo.write(blob)
@@ -55,21 +55,17 @@ module ImageHelper
   end
 
   def self.image_valid?(url)
-    Timeout.timeout(10) {
-      begin
-        logo = open(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
-        extension = Rack::Mime::MIME_TYPES.invert[logo.content_type]
-        unless ImageHelper.image_ext_permitted?(extension)
-          return false
-        end
+    Timeout.timeout(10) do
+      logo = open(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
+      extension = Rack::Mime::MIME_TYPES.invert[logo.content_type]
+      return false unless ImageHelper.image_ext_permitted?(extension)
 
-        true
-        rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError
-          return false
-        rescue Exception
-          return false
-      end
-    }
+      true
+    rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError
+      return false
+    rescue Exception
+      return false
+    end
   rescue Timeout::Error
     false
   end
@@ -80,7 +76,7 @@ module ImageHelper
 
   def self.base_64_extension(base_64)
     metadata = base_64.split("base64,")[0]
-    extension = "." + metadata[/image\/[a-zA-Z]+/].gsub!(/image\//, "")
+    extension = ".#{metadata[%r{image/[a-zA-Z]+}].gsub!(%r{image/}, '')}"
     unless ImageHelper.image_ext_permitted?(extension)
       msg = "Conversion of binary image to base64 can't be done on file with extension #{extension}"
       Sentry.capture_message(msg)
@@ -90,16 +86,15 @@ module ImageHelper
     extension
   end
 
-  private
-    def self.get_file_extension(file_path)
-      file_name = file_path.split("/")[-1]
-      extension = "." + file_name.split(".")[-1]
-      unless ImageHelper.image_ext_permitted?(extension)
-        msg = "Conversion of binary image to base64 can't be done on file with extension #{extension}"
-        Sentry.capture_message(msg)
-        raise msg
-      end
-
-      extension
+  def self.get_file_extension(file_path)
+    file_name = file_path.split("/")[-1]
+    extension = ".#{file_name.split('.')[-1]}"
+    unless ImageHelper.image_ext_permitted?(extension)
+      msg = "Conversion of binary image to base64 can't be done on file with extension #{extension}"
+      Sentry.capture_message(msg)
+      raise msg
     end
+
+    extension
+  end
 end

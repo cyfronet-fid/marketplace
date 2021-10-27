@@ -4,7 +4,7 @@ require "public_suffix"
 
 class MpUrlValidator < ActiveModel::EachValidator
   def initialize(options)
-    options.reverse_merge!(schemes: %w(http https))
+    options.reverse_merge!(schemes: %w[http https])
     options.reverse_merge!(message: :url)
 
     super(options)
@@ -24,7 +24,6 @@ class MpUrlValidator < ActiveModel::EachValidator
       unless valid_scheme && valid_no_local && valid_suffix
         record.errors.add(attribute, options.fetch(:message), value: value)
       end
-
     rescue URI::InvalidURIError
       record.errors.add(attribute, options.fetch(:message), value: value)
     end

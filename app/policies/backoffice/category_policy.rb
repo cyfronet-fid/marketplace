@@ -32,13 +32,14 @@ class Backoffice::CategoryPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [
-      :name, :description, :eid, :parent_id, :logo
+    %i[
+      name description eid parent_id logo
     ]
   end
 
   private
-    def service_portfolio_manager?
-      user&.service_portfolio_manager?
-    end
+
+  def service_portfolio_manager?
+    user&.service_portfolio_manager?
+  end
 end

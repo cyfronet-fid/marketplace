@@ -8,7 +8,7 @@ module Jira
 
     def call
       @client.mp_project
-      puts "Project #{@client.jira_project_key} already exists"
+      Rails.logger.debug { "Project #{@client.jira_project_key} already exists" }
     rescue JIRA::HTTPError => e
       if e.response.code == "404"
         p = @client.Project.build
@@ -19,7 +19,7 @@ module Jira
                       lead: @client.jira_config["username"])
           abort("ERROR: Could not create project")
         end
-        puts "Created project #{@client.jira_project_key}"
+        Rails.logger.debug { "Created project #{@client.jira_project_key}" }
       else
         abort("ERROR: Could not find project [#{e.response.code}]")
       end

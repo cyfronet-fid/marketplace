@@ -39,15 +39,16 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   private
-    def owner?
-      record.user == user
-    end
 
-    def has_project_item?
-      record.project_items.count.positive?
-    end
+  def owner?
+    record.user == user
+  end
 
-    def project_items_closed?
-      record.project_items.all? { |p_i| p_i.closed? || p_i.rejected? }
-    end
+  def has_project_item?
+    record.project_items.count.positive?
+  end
+
+  def project_items_closed?
+    record.project_items.all? { |p_i| p_i.closed? || p_i.rejected? }
+  end
 end

@@ -71,61 +71,62 @@ module NavHelper
   end
 
   private
-    def html_options(options)
-      klass = extract_klass(options)
-      # Add our custom class into the html_options, which may or may not exist
-      # and which may or may not already have a :class key
-      o = options.delete(:html_options) || {}
-      o[:class] ||= ""
-      o[:class] += " " + klass
-      o[:class].strip!
-      o
-    end
 
-    def extract_klass(options)
-      act, ctrl = extract_controller_and_action(options)
-      active_class = options.fetch(:active_class, "active")
-      if ctrl && act
-        # When given both options, make sure BOTH are active
-        current_controller_and_action?(act, ctrl) ? active_class : ""
-      else
-        # Otherwise check EITHER option
-        current_controller_or_action(act, ctrl) ? active_class : ""
-      end
-    end
+  def html_options(options)
+    klass = extract_klass(options)
+    # Add our custom class into the html_options, which may or may not exist
+    # and which may or may not already have a :class key
+    o = options.delete(:html_options) || {}
+    o[:class] ||= ""
+    o[:class] += " #{klass}"
+    o[:class].strip!
+    o
+  end
 
-    def current_controller_or_action(act, ctrl)
-      current_controller?(*ctrl) || current_action?(*act)
+  def extract_klass(options)
+    act, ctrl = extract_controller_and_action(options)
+    active_class = options.fetch(:active_class, "active")
+    if ctrl && act
+      # When given both options, make sure BOTH are active
+      current_controller_and_action?(act, ctrl) ? active_class : ""
+    else
+      # Otherwise check EITHER option
+      current_controller_or_action(act, ctrl) ? active_class : ""
     end
+  end
 
-    def current_controller_and_action?(act, ctrl)
-      current_controller?(*ctrl) && current_action?(*act)
-    end
+  def current_controller_or_action(act, ctrl)
+    current_controller?(*ctrl) || current_action?(*act)
+  end
 
-    def extract_controller_and_action(options)
-      path = options.delete(:path)
-      if path
-        act, ctrl = extract_ctrl_and_action_from_path(path)
-      else
-        ctrl = options.delete(:controller)
-        act = options.delete(:action)
-      end
-      [act, ctrl]
-    end
+  def current_controller_and_action?(act, ctrl)
+    current_controller?(*ctrl) && current_action?(*act)
+  end
 
-    def extract_ctrl_and_action_from_path(path)
-      if path.respond_to?(:each)
-        ctrl = path.map { |p| p.split("#").first }
-        act = path.map { |p| p.split("#").last }
-      else
-        ctrl, act, = path.split("#")
-      end
-      [act, ctrl]
+  def extract_controller_and_action(options)
+    path = options.delete(:path)
+    if path
+      act, ctrl = extract_ctrl_and_action_from_path(path)
+    else
+      ctrl = options.delete(:controller)
+      act = options.delete(:action)
     end
+    [act, ctrl]
+  end
 
-    def show_administrative_sections?
-      policy([:backoffice, :backoffice]).show? ||
-        policy([:admin, :admin]).show? ||
-        policy([:executive, :executive]).show?
+  def extract_ctrl_and_action_from_path(path)
+    if path.respond_to?(:each)
+      ctrl = path.map { |p| p.split("#").first }
+      act = path.map { |p| p.split("#").last }
+    else
+      ctrl, act, = path.split("#")
     end
+    [act, ctrl]
+  end
+
+  def show_administrative_sections?
+    policy(%i[backoffice backoffice]).show? ||
+      policy(%i[admin admin]).show? ||
+      policy(%i[executive executive]).show?
+  end
 end

@@ -9,28 +9,39 @@ RSpec.describe Importers::Provider do
   let(:area_of_activity) { create(:area_of_activity, eid: "provider_area_of_activity-applied_research") }
   let(:esfri_domain) { create(:esfri_domain, eid: "provider_esfri_domain-energy") }
   let(:esfri_type) { create(:esfri_type, eid: "provider_esfri_type-landmark") }
-  let(:meril_scientific_domain) { create(:meril_scientific_domain,
-                                         eid: "provider_meril_scientific_subdomain-other-other") }
+  let(:meril_scientific_domain) do
+    create(:meril_scientific_domain,
+           eid: "provider_meril_scientific_subdomain-other-other")
+  end
   let(:scientific_domain) { create(:scientific_domain, eid: "scientific_subdomain-generic-generic") }
   let(:network) { create(:network, eid: "provider_network-aegis") }
-  let(:provider_life_cycle_status) { create(:provider_life_cycle_status,
-                                            eid: "provider_life_cycle_status-operational") }
-  let(:societal_grand_challenge) { create(:societal_grand_challenge,
-                                          eid: "provider_societal_grand_challenge-secure_societies") }
+  let(:provider_life_cycle_status) do
+    create(:provider_life_cycle_status,
+           eid: "provider_life_cycle_status-operational")
+  end
+  let(:societal_grand_challenge) do
+    create(:societal_grand_challenge,
+           eid: "provider_societal_grand_challenge-secure_societies")
+  end
   let(:structure_type) { create(:structure_type, eid: "provider_structure_type-mobile") }
-  let(:main_contact) { build(:main_contact, first_name: "John", last_name: "Doe", email: "john@doe.pl",
-                             position: nil, organisation: nil) }
-  let(:public_contact) { build(:public_contact, first_name: nil, last_name: nil, email: "g.porczyca@cyfronet.pl",
-                                position: nil, organisation: nil) }
-  let(:data_administrator) { build(:data_administrator, first_name: "Gaweł",
-                                   last_name: "Porczyca",
-                                   email: "grck@qmail.com") }
-
+  let(:main_contact) do
+    build(:main_contact, first_name: "John", last_name: "Doe", email: "john@doe.pl",
+                         position: nil, organisation: nil)
+  end
+  let(:public_contact) do
+    build(:public_contact, first_name: nil, last_name: nil, email: "g.porczyca@cyfronet.pl",
+                           position: nil, organisation: nil)
+  end
+  let(:data_administrator) do
+    build(:data_administrator, first_name: "Gaweł",
+                               last_name: "Porczyca",
+                               email: "grck@qmail.com")
+  end
 
   it "should return provider hash from jms" do
     response = create(:jms_xml_provider)
     resource = parser.parse(response["resource"])
-    current_time = 1613193818577
+    current_time = 1_613_193_818_577
     provider_mapper = described_class.new(resource["providerBundle"]["provider"], current_time)
 
     correct_hash = {
@@ -95,8 +106,8 @@ RSpec.describe Importers::Provider do
     expect(imported_hash[:region]).to eq(correct_hash[:region])
     expect(imported_hash[:country]).to eq(correct_hash[:country])
     expect(imported_hash[:main_contact].attributes).to eq(correct_hash[:main_contact].attributes)
-    expect(imported_hash[:public_contacts]&.map(&:attributes)).
-      to match_array(correct_hash[:public_contacts]&.map(&:attributes))
+    expect(imported_hash[:public_contacts]&.map(&:attributes))
+      .to match_array(correct_hash[:public_contacts]&.map(&:attributes))
 
     expect(imported_hash[:provider_life_cycle_statuses]).to match_array(correct_hash[:provider_life_cycle_statuses])
     expect(imported_hash[:certifications]).to match_array(correct_hash[:certifications])
@@ -110,8 +121,8 @@ RSpec.describe Importers::Provider do
     expect(imported_hash[:areas_of_activity]).to match_array(correct_hash[:areas_of_activity])
     expect(imported_hash[:societal_grand_challenges]).to match_array(correct_hash[:societal_grand_challenges])
     expect(imported_hash[:national_roadmaps]).to match_array(correct_hash[:national_roadmaps])
-    expect(imported_hash[:data_administrators]&.map(&:attributes)).
-      to match_array(correct_hash[:data_administrators]&.map(&:attributes))
+    expect(imported_hash[:data_administrators]&.map(&:attributes))
+      .to match_array(correct_hash[:data_administrators]&.map(&:attributes))
     expect(imported_hash[:synchronized_at]).to eq(correct_hash[:synchronized_at])
   end
 end

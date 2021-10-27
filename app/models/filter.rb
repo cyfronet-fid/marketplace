@@ -4,7 +4,7 @@ class Filter
   attr_accessor :counters
   attr_reader :title, :field_name, :type, :index
 
-  def initialize(params: {}, field_name:, type:, title:, index:)
+  def initialize(field_name:, type:, title:, index:, params: {})
     @params = params
     @field_name = field_name
     @title = title
@@ -17,14 +17,12 @@ class Filter
   end
 
   def active_filters
-    values.
-      map { |v| [ title, name(v), remove_filter_params(v)] }.
-      reject { |f| f[0].blank? }
+    values
+      .map { |v| [title, name(v), remove_filter_params(v)] }
+      .reject { |f| f[0].blank? }
   end
 
-  def present?
-    values.present?
-  end
+  delegate :present?, to: :values
 
   def visible?
     true
@@ -39,34 +37,36 @@ class Filter
   end
 
   protected
-    def fetch_options
-      raise "Need to be implemented in descendent class!!!"
-    end
 
-    def where_constraint
-      raise "Need to be implemented in descendent class!!!"
-    end
+  def fetch_options
+    raise "Need to be implemented in descendent class!!!"
+  end
 
-    def value
-      @value ||= @params[field_name]
-    end
+  def where_constraint
+    raise "Need to be implemented in descendent class!!!"
+  end
 
-    def active?
-      value.present?
-    end
+  def value
+    @value ||= @params[field_name]
+  end
+
+  def active?
+    value.present?
+  end
 
   private
-    def name(val)
-      options.find { |option| val == option[:id].to_s }&.[](:name)
-    end
 
-    def remove_filter_params(val)
-      params = @params.permit!.to_h
-      if value.is_a?(Array)
-        params[field_name].delete(val.to_s)
-        params
-      else
-        params.except(field_name)
-      end
+  def name(val)
+    options.find { |option| val == option[:id].to_s }&.[](:name)
+  end
+
+  def remove_filter_params(val)
+    params = @params.permit!.to_h
+    if value.is_a?(Array)
+      params[field_name].delete(val.to_s)
+      params
+    else
+      params.except(field_name)
     end
+  end
 end

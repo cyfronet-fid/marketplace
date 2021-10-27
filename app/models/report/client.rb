@@ -20,10 +20,10 @@ class Report::Client
 
   def create!(report)
     @client.call(:op_create,
-              message: { "XGS_Subject" => "EOSC-MP issue report",
-                         "XGS_Description" => report.text,
-                         "XGS_Name" => report.author,
-                         "XGS_Email" => report.email })
+                 message: { "XGS_Subject" => "EOSC-MP issue report",
+                            "XGS_Description" => report.text,
+                            "XGS_Name" => report.author,
+                            "XGS_Email" => report.email })
   rescue Error => e
     raise XGUSIssueCreateError => e.message
   end

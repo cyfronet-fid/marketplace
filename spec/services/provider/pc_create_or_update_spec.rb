@@ -13,9 +13,9 @@ RSpec.describe Provider::PcCreateOrUpdate do
   it "should create provider with source and upstream" do
     original_stdout = $stdout
     $stdout = StringIO.new
-    expect {
-      described_class.new(provider_response, Time.now).call
-    }.to change { Provider.count }.by(1)
+    expect do
+      described_class.new(provider_response, Time.zone.now).call
+    end.to change { Provider.count }.by(1)
 
     provider = Provider.last
 
@@ -33,19 +33,18 @@ RSpec.describe Provider::PcCreateOrUpdate do
       :provider,
       name: "new provider",
       sources: [build(
-                  :provider_source,
-                  provider: provider,
-                  source_type: "eosc_registry",
-                  eid: "new.provider"
-                )]
+        :provider_source,
+        provider: provider,
+        source_type: "eosc_registry",
+        eid: "new.provider"
+      )]
     )
 
-
-    expect {
+    expect do
       described_class.new(create(:jms_provider_response,
                                  eid: "new.provider",
                                  name: "Supper new name for updated  provider"), Time.now.to_i).call
-    }.to change { Provider.count }.by(0)
+    end.to change { Provider.count }.by(0)
 
     updated_provider = Provider.find(provider.id)
 

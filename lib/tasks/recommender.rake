@@ -11,15 +11,16 @@ namespace :recommender do
     puts "Database dump generated successfully!"
 
     begin
-      url = Mp::Application.config.recommender_host + "/database_dumps"
+      url = "#{Mp::Application.config.recommender_host}/database_dumps"
       puts "Sending database dump to recommender host (#{url})..."
       response = Faraday.post url,
                               serialized_db,
-                              { "Content-Type": "application/json", "Accept": "application/json" }
+                              { "Content-Type": "application/json", Accept: "application/json" }
 
-      if response.status == 204
+      case response.status
+      when 204
         puts "Database dump sent successfully!"
-      elsif response.status == 400
+      when 400
         puts "Recommender system validation error, details:"
         pp JSON.parse(response.body)["errors"]
       end
@@ -39,15 +40,16 @@ namespace :recommender do
     puts "Database dump generated successfully!"
 
     begin
-      url = Mp::Application.config.recommender_host + "/update"
+      url = "#{Mp::Application.config.recommender_host}/update"
       puts "Sending database dump to recommender host (#{url})..."
       response = Faraday.post url,
                               serialized_db,
-                              { "Content-Type": "application/json", "Accept": "application/json" }
+                              { "Content-Type": "application/json", Accept: "application/json" }
 
-      if response.status == 204
+      case response.status
+      when 204
         puts "Database dump sent successfully!"
-      elsif response.status == 400
+      when 400
         puts "Recommender system validation error, details:"
         pp JSON.parse(response.body)["errors"]
       end

@@ -21,7 +21,7 @@ class Jms::ManageMessage
     log body
     resource = @parser.parse(body["resource"])
 
-    raise ResourceParseError.new("Cannot parse resource") if resource.empty?
+    raise ResourceParseError, "Cannot parse resource" if resource.empty?
 
     case body["resourceType"]
     when "infra_service"
@@ -45,21 +45,22 @@ class Jms::ManageMessage
       raise WrongMessageError
     end
   rescue WrongMessageError => e
-    warn "[WARN] Message arrived, but the type is unknown: #{body["resourceType"]}, #{e}"
+    warn "[WARN] Message arrived, but the type is unknown: #{body['resourceType']}, #{e}"
     Sentry.capture_exception(e)
   end
 
   private
-    def modified_at(resource, resource_type)
-      metadata  = resource[resource_type]["metadata"]
-      Time.at(metadata["modifiedAt"].to_i&./1000)
-    end
 
-    def log(msg)
-      @logger.info(msg)
-    end
+  def modified_at(resource, resource_type)
+    metadata = resource[resource_type]["metadata"]
+    Time.zone.at(metadata["modifiedAt"].to_i&./1000)
+  end
 
-    def warn(msg)
-      @logger.warn(msg)
-    end
+  def log(msg)
+    @logger.info(msg)
+  end
+
+  def warn(msg)
+    @logger.warn(msg)
+  end
 end

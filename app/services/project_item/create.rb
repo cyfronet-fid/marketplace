@@ -12,7 +12,7 @@ class ProjectItem::Create
     bundled_project_items = []
 
     ProjectItem.transaction do
-      if !@project_item.update(status: "created", status_type: :created)
+      unless @project_item.update(status: "created", status_type: :created)
         rolled_back = true
         raise ActiveRecord::Rollback
       end
@@ -34,7 +34,7 @@ class ProjectItem::Create
       end
     end
 
-    if !rolled_back
+    unless rolled_back
       ([@project_item] + bundled_project_items).each do |project_item|
         if orderable?(project_item)
           ProjectItem::RegisterJob.perform_later(project_item, @message)
@@ -50,7 +50,8 @@ class ProjectItem::Create
   end
 
   private
-    def orderable?(project_item)
-      project_item.offer.orderable?
-    end
+
+  def orderable?(project_item)
+    project_item.offer.orderable?
+  end
 end

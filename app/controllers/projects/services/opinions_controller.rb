@@ -23,19 +23,19 @@ class Projects::Services::OpinionsController < ApplicationController
     end
   end
 
-
   private
-    def load_and_authorize_project_item!
-      @project_item = ProjectItem.joins(:project).
-                      find_by(iid: params[:service_id],
-                              project_id: params[:project_id])
-      @project = @project_item.project
 
-      authorize(@project_item, :show?)
-    end
+  def load_and_authorize_project_item!
+    @project_item = ProjectItem.joins(:project)
+                               .find_by(iid: params[:service_id],
+                                        project_id: params[:project_id])
+    @project = @project_item.project
 
-    def service_opinion_template
-      ServiceOpinion.new(permitted_attributes(ServiceOpinion).
-                         merge(project_item: @project_item))
-    end
+    authorize(@project_item, :show?)
+  end
+
+  def service_opinion_template
+    ServiceOpinion.new(permitted_attributes(ServiceOpinion)
+                       .merge(project_item: @project_item))
+  end
 end

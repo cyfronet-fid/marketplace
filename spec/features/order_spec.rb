@@ -5,7 +5,6 @@ require "rails_helper"
 RSpec.feature "Service ordering" do
   include OmniauthHelper
 
-
   context "as logged in user" do
     let(:user) do
       create(:user).tap { |u| create(:project, name: "Services", user: u, reason_for_access: "To pass test") }
@@ -76,8 +75,7 @@ RSpec.feature "Service ordering" do
     scenario "I can order service with offer containing range" do
       parameter = build(:range_parameter, name: "Attribute 1", max: 100)
       offer = create(:offer, service: service,
-                          parameters: [parameter])
-
+                             parameters: [parameter])
 
       visit service_path(service)
 
@@ -115,11 +113,11 @@ RSpec.feature "Service ordering" do
       expect(page).to have_content(service.name)
     end
 
-    [:open_access_service, :external_service].each do |type|
+    %i[open_access_service external_service].each do |type|
       scenario "I cannot order #{type} service twice in one project if offer has no parameters" do
         service = create(type)
         _offer = create(:offer, service: service, internal: false,
-                        order_type: service.order_type, order_url: service.order_url)
+                                order_type: service.order_type, order_url: service.order_url)
         _default_project = user.projects.find_by(name: "Services")
 
         visit service_path(service)
@@ -153,11 +151,11 @@ RSpec.feature "Service ordering" do
       end
     end
 
-    [:open_access_service, :external_service].each do |type|
+    %i[open_access_service external_service].each do |type|
       scenario "I can order #{type} service twice in one project if offer has parameters" do
         service = create(type)
         _offer = create(:offer_with_parameters, service: service, internal: false,
-                        order_type: service.order_type, order_url: service.order_url)
+                                                order_type: service.order_type, order_url: service.order_url)
         _default_project = user.projects.find_by(name: "Services")
 
         visit service_path(service)
@@ -274,9 +272,9 @@ RSpec.feature "Service ordering" do
                                     "Add to a project", exact: true)
       select "Services"
 
-      expect {
+      expect do
         click_on "Add to a project", match: :first
-      }.to change { ProjectItem.count }.by(1)
+      end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
 
       expect(project_item.offer).to eq(offer)
@@ -372,7 +370,6 @@ RSpec.feature "Service ordering" do
           find("label", text: "Scientific domains").click
           find("div", class: "choices__item", text: scientific_domain.name).click
         end
-
 
         select "Representing a private company", from: "Customer typology"
         fill_in "Email", with: "john@doe.com"

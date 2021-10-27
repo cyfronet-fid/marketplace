@@ -3,39 +3,40 @@
 class RemovePhaseFromService < ActiveRecord::Migration[6.0]
   def up
     production_id = execute(
-      <<~SQL
+      <<~SQL.squish
         INSERT INTO vocabularies(name, type, eid, created_at, updated_at)
-        VALUES ('Production', 'LifeCycleStatus', 'life_cycle_status-production', '#{Time.now}', '#{Time.now}')
+        VALUES ('Production', 'LifeCycleStatus', 'life_cycle_status-production', '#{Time.zone.now}', '#{Time.zone.now}')
         RETURNING id;
       SQL
     )
 
     beta_id = execute(
-      <<~SQL
+      <<~SQL.squish
         INSERT INTO vocabularies(name, type, eid, created_at, updated_at)
-        VALUES ('Beta', 'LifeCycleStatus', 'life_cycle_status-beta', '#{Time.now}', '#{Time.now}')
+        VALUES ('Beta', 'LifeCycleStatus', 'life_cycle_status-beta', '#{Time.zone.now}', '#{Time.zone.now}')
         RETURNING id;
       SQL
     )
 
-    execute("SELECT phase, id FROM services").
-      each { |d|
-        if d["phase"] == "production"
+    execute("SELECT phase, id FROM services")
+      .each do |d|
+        case d["phase"]
+        when "production"
           execute(
-            <<~SQL
-            INSERT INTO service_vocabularies(service_id, vocabulary_id, vocabulary_type, created_at, updated_at)
-            VALUES ( #{d["id"]}, #{production_id[0]["id"]}, 'LifeCycleStatus', '#{Time.now}', '#{Time.now}')
+            <<~SQL.squish
+              INSERT INTO service_vocabularies(service_id, vocabulary_id, vocabulary_type, created_at, updated_at)
+              VALUES ( #{d['id']}, #{production_id[0]['id']}, 'LifeCycleStatus', '#{Time.zone.now}', '#{Time.zone.now}')
             SQL
           )
-        elsif  d["phase"] == "beta"
+        when "beta"
           execute(
-            <<~SQL
-            INSERT INTO service_vocabularies(service_id, vocabulary_id, vocabulary_type, created_at, updated_at)
-            VALUES ( #{d["id"]}, #{beta_id[0]["id"]}, 'LifeCycleStatus', '#{Time.now}', '#{Time.now}')
+            <<~SQL.squish
+              INSERT INTO service_vocabularies(service_id, vocabulary_id, vocabulary_type, created_at, updated_at)
+              VALUES ( #{d['id']}, #{beta_id[0]['id']}, 'LifeCycleStatus', '#{Time.zone.now}', '#{Time.zone.now}')
             SQL
           )
         end
-      }
+      end
     remove_column :services, :phase
   end
 

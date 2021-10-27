@@ -18,12 +18,12 @@ RSpec.describe ProjectItem do
     [
       { status: "other status", status_type: :ready },
       { status: "other status" },
-      { status_type: :ready },
+      { status_type: :ready }
     ].each do |changes|
       it "creates status for update!(#{changes})" do
-        expect {
+        expect do
           subject.update!(changes)
-        }.to change { subject.statuses.size }.by(1)
+        end.to change { subject.statuses.size }.by(1)
 
         last_status = subject.statuses.last
         expect(last_status.status).to eq(subject.status)
@@ -32,9 +32,9 @@ RSpec.describe ProjectItem do
     end
 
     it "doesn't create status if status not changed" do
-      expect {
-        subject.update!(user_secrets: { "key": "value" })
-      }.not_to change { subject.statuses.size }
+      expect do
+        subject.update!(user_secrets: { key: "value" })
+      end.not_to change { subject.statuses.size }
     end
   end
 
@@ -128,7 +128,8 @@ RSpec.describe ProjectItem do
       expect(project_item.events.second.eventable).to eq(project_item)
       expect(project_item.events.second.action).to eq("update")
       expect(project_item.events.second.updates).to contain_exactly({ field: "status_type", before: "created", after: "ready" }.stringify_keys,
-                                                      { field: "status", before: "custom created status", after: "custom ready status" }.stringify_keys)
+                                                                    { field: "status", before: "custom created status",
+                                                                      after: "custom ready status" }.stringify_keys)
     end
   end
 

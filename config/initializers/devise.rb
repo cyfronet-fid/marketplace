@@ -262,7 +262,7 @@ Devise.setup do |config|
   root_url = ENV["ROOT_URL"] || "http://localhost:#{ENV['PORT'] || 3000}"
   config.omniauth :openid_connect,
                   name: :checkin,
-                  scope: [:openid, :profile, :email, :refeds_edu],
+                  scope: %i[openid profile email refeds_edu],
                   response_type: :code,
                   issuer: "https://#{checkin_host}/oidc/",
                   discovery: true,
@@ -279,7 +279,6 @@ Devise.setup do |config|
                     userinfo_endpoint: "/oidc/userinfo",
                     jwks_uri: "/oidc/jwk"
                   }
-
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

@@ -17,11 +17,11 @@ RSpec.describe Filter::Provider do
       filter = described_class.new
       filter.counters = counters
 
-      expect(filter.options).
-        to contain_exactly({ name: provider1.name, id: provider1.id, count: 2 },
-                           { name: provider2.name, id: provider2.id, count: 1 },
-                           { name: provider3.name, id: provider3.id, count: 0 },
-                           { name: provider4.name, id: provider4.id, count: 0 })
+      expect(filter.options)
+        .to contain_exactly({ name: provider1.name, id: provider1.id, count: 2 },
+                            { name: provider2.name, id: provider2.id, count: 1 },
+                            { name: provider3.name, id: provider3.id, count: 0 },
+                            { name: provider4.name, id: provider4.id, count: 0 })
     end
   end
 end

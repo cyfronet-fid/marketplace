@@ -13,7 +13,7 @@ module Jms
       end
     end
 
-    def initialize(topic, login, pass,  host,
+    def initialize(topic, login, pass, host,
                    client_name, eosc_registry_base_url,
                    ssl_enabled,
                    token = nil,
@@ -30,51 +30,56 @@ module Jms
 
     def run
       log "Start subscriber on destination: #{@destination}"
-      @client.subscribe("/topic/#{@destination}.>", { "ack": "client-individual", "activemq.subscriptionName": "mpSubscription" }) do |msg|
+      @client.subscribe("/topic/#{@destination}.>",
+                        { ack: "client-individual", "activemq.subscriptionName": "mpSubscription" }) do |msg|
         log "Arrived message"
         Jms::ManageMessage.new(msg, @eosc_registry_base_url, @logger, @token).call
         @client.ack(msg)
-      rescue Jms::ManageMessage::ResourceParseError, Jms::ManageMessage::WrongMessageError, JSON::ParserError, StandardError => e
+      rescue Jms::ManageMessage::ResourceParseError, Jms::ManageMessage::WrongMessageError, JSON::ParserError,
+             StandardError => e
         @client.unreceive(msg)
         error_block(msg, e)
       end
 
-      raise ConnectionError.new("Connection failed!!") unless @client.open?()
-      raise ConnectionError.new("Connection error: #{@client.connection_frame().body}") if @client.connection_frame().command == Stomp::CMD_ERROR
+      raise ConnectionError, "Connection failed!!" unless @client.open?
+      if @client.connection_frame.command == Stomp::CMD_ERROR
+        raise ConnectionError, "Connection error: #{@client.connection_frame.body}"
+      end
 
       @client.join
     end
 
     private
-      def error_block(msg, e)
-        @logger.error("Error occured while processing message:\n #{msg}")
-        @logger.error(e)
-        Sentry.capture_exception(e)
-        abort(e.full_message)
-      end
 
-      def conf_hash(login, pass, host_des, client_name, ssl)
-        {
-          hosts: [
-            {
-              login: login,
-              passcode: pass,
-              host:  "#{host_des}",
-              port: 61613,
-              ssl: ssl
-            }
-          ],
-          connect_headers: {
-            "client-id": client_name,
-            "heart-beat": "0,20000",
-            "accept-version": "1.2",
-            "host": "localhost"
+    def error_block(msg, e)
+      @logger.error("Error occured while processing message:\n #{msg}")
+      @logger.error(e)
+      Sentry.capture_exception(e)
+      abort(e.full_message)
+    end
+
+    def conf_hash(login, pass, host_des, client_name, ssl)
+      {
+        hosts: [
+          {
+            login: login,
+            passcode: pass,
+            host: host_des.to_s,
+            port: 61_613,
+            ssl: ssl
           }
+        ],
+        connect_headers: {
+          "client-id": client_name,
+          "heart-beat": "0,20000",
+          "accept-version": "1.2",
+          host: "localhost"
         }
-      end
+      }
+    end
 
-      def log(msg)
-        @logger.info(msg)
-      end
+    def log(msg)
+      @logger.info(msg)
+    end
   end
 end

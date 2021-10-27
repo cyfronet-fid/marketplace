@@ -2,7 +2,6 @@
 
 require "active_support/core_ext/integer/time"
 
-
 Rails.application.configure do
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = false
@@ -44,9 +43,7 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
-  if ENV["S3_STORAGE"] == "true"
-    config.active_storage.service = :s3
-  end
+  config.active_storage.service = :s3 if ENV["S3_STORAGE"] == "true"
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
@@ -61,7 +58,7 @@ Rails.application.configure do
   config.log_level = :info
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -97,7 +94,7 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger           = ActiveSupport::Logger.new($stdout)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
@@ -132,21 +129,22 @@ Rails.application.configure do
 
   raise "Missing ASSET_HOST" if ENV["ASSET_HOST"].blank?
   raise "Missing ASSET_PROTOCOL" if ENV["ASSET_PROTOCOL"].blank?
-  config.action_controller.asset_host = "#{ENV["ASSET_HOST"]}"
-  config.action_mailer.asset_host = "#{ENV["ASSET_PROTOCOL"]}://#{ENV["ASSET_HOST"]}"
+
+  config.action_controller.asset_host = (ENV["ASSET_HOST"]).to_s
+  config.action_mailer.asset_host = "#{ENV['ASSET_PROTOCOL']}://#{ENV['ASSET_HOST']}"
 
   # SMTP settings
   config.action_mailer.smtp_settings = {
-      address: ENV["SMPT_ADDRESS"],
-      port: 587,
-      user_name: ENV["SMPT_USERNAME"],
-      password: ENV["SMPT_PASSWORD"],
-      authentication: "plain",
-      enable_starttls_auto: true
+    address: ENV["SMPT_ADDRESS"],
+    port: 587,
+    user_name: ENV["SMPT_USERNAME"],
+    password: ENV["SMPT_PASSWORD"],
+    authentication: "plain",
+    enable_starttls_auto: true
   }
 
   # custom error pages with webpage layout
-  config.exceptions_app = self.routes
+  config.exceptions_app = routes
 
   config.robots = ENV["MP_INSTANCE"].present? ? "development" : "production"
 end

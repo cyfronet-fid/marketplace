@@ -21,8 +21,8 @@ class ServiceMailer < ApplicationMailer
     end
     interests = []
     interests << ("categories" if @common_categories.present?) <<
-        ("scientific domains" if @common_scientific_domains.present?)
-    subject = "New service in your #{interests.join(" and ")} of interests"
+      ("scientific domains" if @common_scientific_domains.present?)
+    subject = "New service in your #{interests.join(' and ')} of interests"
     mail(to: subscriber_email,
          subject: subject,
          template_name: "new_service")

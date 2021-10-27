@@ -13,17 +13,22 @@ module Parameter::Values
   end
 
   private
-    def correct_values_type
-      values.each { |v| Integer(v) } if value_type == "integer"
-    rescue
-      errors.add(:values, "has elements with wrong type")
-    end
 
-    def cast(values)
-      if value_type == "integer"
-        values.map { |v| Integer(v) rescue String(v) }
-      else
-        values
+  def correct_values_type
+    values.each { |v| Integer(v) } if value_type == "integer"
+  rescue StandardError
+    errors.add(:values, "has elements with wrong type")
+  end
+
+  def cast(values)
+    if value_type == "integer"
+      values.map do |v|
+        Integer(v)
+      rescue StandardError
+        String(v)
       end
+    else
+      values
     end
+  end
 end

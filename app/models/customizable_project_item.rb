@@ -26,16 +26,17 @@ class CustomizableProjectItem < ProjectItem
   end
 
   private
-    def validate_property_values
-      offer_values.validate
-    end
 
-    def offer_values
-      @offers_values ||= ProjectItem::OfferValues.new(offer: offer,
-                                                      parameters: properties)
-    end
+  def validate_property_values
+    offer_values.validate
+  end
 
-    def id_to_bundled_offer
-      @id_to_offer ||= offer.bundled_offers.index_by { |o| "o#{o.id}" }
-    end
+  def offer_values
+    @offers_values ||= ProjectItem::OfferValues.new(offer: offer,
+                                                    parameters: properties)
+  end
+
+  def id_to_bundled_offer
+    @id_to_offer ||= offer.bundled_offers.index_by { |o| "o#{o.id}" }
+  end
 end

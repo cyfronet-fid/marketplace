@@ -15,8 +15,8 @@ RSpec.describe Service::DeleteJob do
 
   it "triggers ready process for project_item" do
     ActiveJob::Base.queue_adapter = :test
-    expect {
+    expect do
       described_class.perform_later(service.id)
-    }.to have_enqueued_job.on_queue("pc_subscriber")
+    end.to have_enqueued_job.on_queue("pc_subscriber")
   end
 end

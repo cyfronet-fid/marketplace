@@ -8,11 +8,11 @@ module TestBootstrap
     end
 
     def call
-      puts "Adding role '#{@role}' to user with email '#{@email}'"
+      Rails.logger.debug { "Adding role '#{@role}' to user with email '#{@email}'" }
       user = User.find_by!(email: @email)
 
       if User.valid_roles.exclude?(@role.to_sym)
-        puts "Role must be a valid role, i.e. one of #{User.valid_roles}"
+        Rails.logger.debug { "Role must be a valid role, i.e. one of #{User.valid_roles}" }
         return
       end
 

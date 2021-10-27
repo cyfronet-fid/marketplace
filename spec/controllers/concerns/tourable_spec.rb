@@ -34,7 +34,7 @@ RSpec.describe Tourable, type: :controller do
       controller.available_tours = {
         "explicitly_default_tour" => { "activation_strategy" => "default" },
         "implicitly_default_tour" => {},
-        "some_tour" => { "activation_strategy" => "query_param" },
+        "some_tour" => { "activation_strategy" => "query_param" }
       }
 
       controller.send(:determine_tour)

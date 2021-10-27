@@ -4,7 +4,7 @@ class AddResourceOrganisationToProject < ActiveRecord::Migration[6.0]
   def up
     add_reference :services, :resource_organisation, foreign_key: { to_table: :providers }
     execute(
-      <<~SQL
+      <<~SQL.squish
         UPDATE services
         SET resource_organisation_id =
         (

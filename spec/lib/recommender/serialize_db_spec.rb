@@ -42,20 +42,42 @@ describe Recommender::SerializeDb do
     expect(serialized["target_users"].map { |x| x["name"] }).to match_array(TargetUser.all.pluck(:name))
     expect(serialized["target_users"].map { |x| x["description"] }).to match_array(TargetUser.all.pluck(:description))
 
-    expect(serialized["access_types"].map { |x| x["id"] }).to match_array(Vocabulary.where(type: "Vocabulary::AccessType").pluck(:id))
-    expect(serialized["access_types"].map { |x| x["name"] }).to match_array(Vocabulary.where(type: "Vocabulary::AccessType").pluck(:name))
-    expect(serialized["access_types"].map { |x| x["description"] }).to match_array(Vocabulary.where(type: "Vocabulary::AccessType").pluck(:description))
+    expect(serialized["access_types"].map do |x|
+             x["id"]
+           end).to match_array(Vocabulary.where(type: "Vocabulary::AccessType").pluck(:id))
+    expect(serialized["access_types"].map do |x|
+             x["name"]
+           end).to match_array(Vocabulary.where(type: "Vocabulary::AccessType").pluck(:name))
+    expect(serialized["access_types"].map do |x|
+             x["description"]
+           end).to match_array(Vocabulary.where(type: "Vocabulary::AccessType").pluck(:description))
 
-    expect(serialized["access_modes"].map { |x| x["id"] }).to match_array(Vocabulary.where(type: "Vocabulary::AccessMode").pluck(:id))
-    expect(serialized["access_modes"].map { |x| x["name"] }).to match_array(Vocabulary.where(type: "Vocabulary::AccessMode").pluck(:name))
-    expect(serialized["access_modes"].map { |x| x["description"] }).to match_array(Vocabulary.where(type: "Vocabulary::AccessMode").pluck(:description))
+    expect(serialized["access_modes"].map do |x|
+             x["id"]
+           end).to match_array(Vocabulary.where(type: "Vocabulary::AccessMode").pluck(:id))
+    expect(serialized["access_modes"].map do |x|
+             x["name"]
+           end).to match_array(Vocabulary.where(type: "Vocabulary::AccessMode").pluck(:name))
+    expect(serialized["access_modes"].map do |x|
+             x["description"]
+           end).to match_array(Vocabulary.where(type: "Vocabulary::AccessMode").pluck(:description))
 
     expect(serialized["trls"].map { |x| x["id"] }).to match_array(Vocabulary.where(type: "Vocabulary::Trl").pluck(:id))
-    expect(serialized["trls"].map { |x| x["name"] }).to match_array(Vocabulary.where(type: "Vocabulary::Trl").pluck(:name))
-    expect(serialized["trls"].map { |x| x["description"] }).to match_array(Vocabulary.where(type: "Vocabulary::Trl").pluck(:description))
+    expect(serialized["trls"].map do |x|
+             x["name"]
+           end).to match_array(Vocabulary.where(type: "Vocabulary::Trl").pluck(:name))
+    expect(serialized["trls"].map do |x|
+             x["description"]
+           end).to match_array(Vocabulary.where(type: "Vocabulary::Trl").pluck(:description))
 
-    expect(serialized["life_cycle_statuses"].map { |x| x["id"] }).to match_array(Vocabulary.where(type: "Vocabulary::LifeCycleStatus").pluck(:id))
-    expect(serialized["life_cycle_statuses"].map { |x| x["name"] }).to match_array(Vocabulary.where(type: "Vocabulary::LifeCycleStatus").pluck(:name))
-    expect(serialized["life_cycle_statuses"].map { |x| x["description"] }).to match_array(Vocabulary.where(type: "Vocabulary::LifeCycleStatus").pluck(:description))
+    expect(serialized["life_cycle_statuses"].map do |x|
+             x["id"]
+           end).to match_array(Vocabulary.where(type: "Vocabulary::LifeCycleStatus").pluck(:id))
+    expect(serialized["life_cycle_statuses"].map do |x|
+             x["name"]
+           end).to match_array(Vocabulary.where(type: "Vocabulary::LifeCycleStatus").pluck(:name))
+    expect(serialized["life_cycle_statuses"].map do |x|
+             x["description"]
+           end).to match_array(Vocabulary.where(type: "Vocabulary::LifeCycleStatus").pluck(:description))
   end
 end

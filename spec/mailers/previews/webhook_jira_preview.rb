@@ -15,7 +15,6 @@ class WebhookJiraPreview < ActionMailer::Preview
     )
   end
 
-
   def project_new_message
     MessageMailer.new_message(
       Message.new(

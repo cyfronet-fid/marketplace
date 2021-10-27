@@ -2,6 +2,6 @@
 
 module Backoffice::ProvidersHelper
   def cant_edit(attribute)
-    !policy([:backoffice, @provider]).permitted_attributes.include?(attribute)
+    policy([:backoffice, @provider]).permitted_attributes.exclude?(attribute)
   end
 end

@@ -10,12 +10,16 @@ class Filter::Location < Filter
   end
 
   private
-    def fetch_options
-      [{ name: "Any", id: "" }] + Service.where(status: [:published, :unverified])
-             .pluck(:geographical_availabilities).flatten.uniq.sort.map { |s| { name: s, id: s } }
-    end
 
-    def where_constraint
-      { @index.to_sym => Country.convert(value) }
-    end
+  def fetch_options
+    [{ name: "Any", id: "" }] + Service.where(status: %i[published unverified])
+                                       .pluck(:geographical_availabilities).flatten.uniq.sort.map do |s|
+                                  { name: s,
+                                    id: s }
+                                end
+  end
+
+  def where_constraint
+    { @index.to_sym => Country.convert(value) }
+  end
 end

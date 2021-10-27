@@ -17,13 +17,12 @@ class Analytics::TotalServicesViews
                  dimensions: [dimension],
                  metrics: metrics,
                  date_ranges: [date_range],
-                 filters_expression: "ga:pagePath=~^/services/[^(c/)][^(service_id=)]"
-                )
+                 filters_expression: "ga:pagePath=~^/services/[^(c/)][^(service_id=)]")
       ]
     )
     response = @analytics.service.batch_get_reports(request)
     response.reports.first.data.totals.first.values.first
   rescue StandardError => e
-    print e
+    Rails.logger.debug e
   end
 end

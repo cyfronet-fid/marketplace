@@ -12,13 +12,14 @@ class Filter::Tag < Filter
   end
 
   private
-    def fetch_options
-      ActsAsTaggableOn::Tag.all.
-        map { |t| { name: t.name, id: t.name } }.
-        sort { |x, y| x[:name] <=> y[:name] }
-    end
 
-    def where_constraint
-      { @index.to_sym => values }
-    end
+  def fetch_options
+    ActsAsTaggableOn::Tag.all
+                         .map { |t| { name: t.name, id: t.name } }
+                         .sort { |x, y| x[:name] <=> y[:name] }
+  end
+
+  def where_constraint
+    { @index.to_sym => values }
+  end
 end

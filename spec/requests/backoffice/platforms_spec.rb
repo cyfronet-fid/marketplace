@@ -11,8 +11,8 @@ RSpec.describe "Backoffice: platforms" do
     it "I can delete platform" do
       platfrom = create(:platform)
 
-      expect { delete backoffice_platform_path(platfrom) }.
-        to change { Platform.count }.by(-1)
+      expect { delete backoffice_platform_path(platfrom) }
+        .to change { Platform.count }.by(-1)
     end
   end
 end

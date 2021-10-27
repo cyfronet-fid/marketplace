@@ -40,23 +40,24 @@ class ProjectItem::OnStatusTypeUpdated
   end
 
   private
-    def orderable?
-      offer&.orderable?
-    end
 
-    def aod?
-      service&.aod?
-    end
+  def orderable?
+    offer&.orderable?
+  end
 
-    def aod_voucherable?
-      aod? && offer&.voucherable?
-    end
+  def aod?
+    service&.aod?
+  end
 
-    def offer
-      @project_item.offer
-    end
+  def aod_voucherable?
+    aod? && offer&.voucherable?
+  end
 
-    def service
-      offer&.service
-    end
+  def offer
+    @project_item.offer
+  end
+
+  def service
+    offer&.service
+  end
 end

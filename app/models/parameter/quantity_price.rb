@@ -17,7 +17,8 @@ class Parameter::QuantityPrice < Parameter
       config: {
         start_price: start_price, step_price: step_price,
         max: max, currency: currency
-      })
+      }
+    )
   end
 
   def self.load(hsh)

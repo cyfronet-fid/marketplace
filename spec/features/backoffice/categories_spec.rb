@@ -39,8 +39,8 @@ RSpec.feature "Categories in backoffice" do
       fill_in "Name", with: "My new category"
       select "parent", from: "Parent"
 
-      expect { click_on "Create Category" }.
-        to change { Category.count }.by(1)
+      expect { click_on "Create Category" }
+        .to change { Category.count }.by(1)
 
       expect(page).to have_content("My new category")
       expect(page).to have_content("parent")

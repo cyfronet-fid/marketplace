@@ -7,11 +7,12 @@ class Service::Update
   end
 
   def call
-    if @service.offers.published.size == 1
+    case @service.offers.published.size
+    when 1
       Offer::Update.new(@service.offers.first, { order_type: @params[:order_type] || @service.order_type,
-                                   order_url: @params[:order_url] || @service.order_url,
-                                   status: "published" }).call
-    elsif @service.offers.published.size == 0
+                                                 order_url: @params[:order_url] || @service.order_url,
+                                                 status: "published" }).call
+    when 0
       Offer::Create.new(Offer.new(name: "Offer",
                                   description: "#{@params[:name] || @service.name} Offer",
                                   order_type: @params[:order_type] || @service.order_type,

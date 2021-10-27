@@ -26,7 +26,8 @@ RSpec.describe Filter::ScientificDomain do
 
       expect(first_option[:children]).to contain_exactly(
         { name: child1.name, id: child1.id, count: 1, children: [] },
-        { name: child2.name, id: child2.id, count: 2, children: [] })
+        { name: child2.name, id: child2.id, count: 2, children: [] }
+      )
     end
   end
 
@@ -41,9 +42,9 @@ RSpec.describe Filter::ScientificDomain do
       filter = described_class.new(params: params)
       filter.counters = { child2.id => 1 }
 
-      expect(filter.active_filters).
-          to include(["Scientific Domains", parent.name, "scientific_domains" => [child1.id.to_s]],
-                     ["Scientific Domains", child1.name, "scientific_domains" => [parent.id.to_s]])
+      expect(filter.active_filters)
+        .to include(["Scientific Domains", parent.name, { "scientific_domains" => [child1.id.to_s] }],
+                    ["Scientific Domains", child1.name, { "scientific_domains" => [parent.id.to_s] }])
     end
   end
 
@@ -55,8 +56,8 @@ RSpec.describe Filter::ScientificDomain do
 
       filter = described_class.new(params: { "scientific_domains" => [child.id.to_s] })
 
-      expect(filter.constraint).
-         to eq(scientific_domains: [child.id])
+      expect(filter.constraint)
+        .to eq(scientific_domains: [child.id])
     end
 
     it "use only parent and selected children when parent and children is selected" do
@@ -66,8 +67,8 @@ RSpec.describe Filter::ScientificDomain do
 
       filter = described_class.new(params: { "scientific_domains" => [parent.id.to_s, child1.id.to_s] })
 
-      expect(filter.constraint).
-          to eq(scientific_domains: [parent.id, child1.id])
+      expect(filter.constraint)
+        .to eq(scientific_domains: [parent.id, child1.id])
     end
   end
 end

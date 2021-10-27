@@ -17,28 +17,32 @@ class Importers::Service
       providers = Array(@data.dig("resourceProviders", "resourceProvider"))
       multimedia = Array(@data.dig("multimedia", "multimedia")) || []
       use_cases_url = Array(@data.dig("useCases", "useCase")) || []
-      scientific_domains = @data.dig("scientificDomains", "scientificDomain").is_a?(Array) ?
-        @data.dig("scientificDomains", "scientificDomain").map { |sd|  sd["scientificSubdomain"] } :
-        @data.dig("scientificDomains", "scientificDomain", "scientificSubdomain")
-      categories = @data.dig("categories", "category").is_a?(Array) ?
-        @data.dig("categories", "category").map { |c| c["subcategory"] } :
-        @data.dig("categories", "category", "subcategory")
+      scientific_domains = if @data.dig("scientificDomains", "scientificDomain").is_a?(Array)
+                             @data.dig("scientificDomains", "scientificDomain").map { |sd| sd["scientificSubdomain"] }
+                           else
+                             @data.dig("scientificDomains", "scientificDomain", "scientificSubdomain")
+                           end
+      categories = if @data.dig("categories", "category").is_a?(Array)
+                     @data.dig("categories", "category").map { |c| c["subcategory"] }
+                   else
+                     @data.dig("categories", "category", "subcategory")
+                   end
       target_users = @data.dig("targetUsers", "targetUser")
       access_types = Array(@data.dig("accessTypes", "accessType"))
       access_modes = Array(@data.dig("accessModes", "accessMode"))
       tag_list = Array(@data.dig("tags", "tag")) || []
       geographical_availabilities = Array(@data.dig("geographicalAvailabilities",
                                                     "geographicalAvailability") || "WW")
-      language_availability = Array(@data.dig("languageAvailabilities", "languageAvailability")).
-        map { |lang| lang.upcase } || ["EN"]
+      language_availability = Array(@data.dig("languageAvailabilities", "languageAvailability"))
+                              .map(&:upcase) || ["EN"]
       resource_geographic_locations = Array(@data.dig("resourceGeographicLocations",
                                                       "resourceGeographicLocation")) || []
-      public_contacts = Array.wrap(@data.dig("publicContacts", "publicContact")).
-        map { |c| PublicContact.new(map_contact(c)) } || []
+      public_contacts = Array.wrap(@data.dig("publicContacts", "publicContact"))
+                             .map { |c| PublicContact.new(map_contact(c)) } || []
       certifications = Array(@data.dig("certifications", "certification"))
       standards = Array(@data.dig("standards", "standard"))
       open_source_technologies = Array(@data.dig("openSourceTechnologies", "openSourceTechnology"))
-      last_update = @data["lastUpdate"].present? ? Time.at(@data["lastUpdate"].to_i) : nil
+      last_update = @data["lastUpdate"].present? ? Time.zone.at(@data["lastUpdate"].to_i) : nil
       changelog = Array(@data.dig("changeLog", "changeLog"))
       required_services = map_related_services(Array(@data.dig("requiredResources", "requiredResource")))
       related_services = map_related_services(Array(@data.dig("relatedResources", "relatedResource")))
@@ -58,7 +62,7 @@ class Importers::Service
       access_modes = Array(@data["accessModes"])
       tag_list = Array(@data["tags"]) || []
       geographical_availabilities = Array(@data["geographicalAvailabilities"] || "WW")
-      language_availability = @data["languageAvailabilities"].map { |lang| lang.upcase } || ["EN"]
+      language_availability = @data["languageAvailabilities"].map(&:upcase) || ["EN"]
       resource_geographic_locations = Array(@data["resourceGeographicLocations"]) || []
       public_contacts = Array(@data["publicContacts"])&.map { |c| PublicContact.new(map_contact(c)) } || []
       certifications = Array(@data["certifications"])
@@ -85,12 +89,14 @@ class Importers::Service
       resource_organisation: map_provider(@data["resourceOrganisation"],
                                           @eosc_registry_base_url,
                                           token: @token),
-      providers: providers.uniq.map { |p| map_provider(p, @eosc_registry_base_url,
-                                                   token: @token) },
+      providers: providers.uniq.map do |p|
+                   map_provider(p, @eosc_registry_base_url,
+                                token: @token)
+                 end,
       webpage_url: @data["webpage"] || "",
       # Marketing
       description: @data["description"],
-      tagline: @data["tagline"].blank? ? "-" : @data["tagline"],
+      tagline: @data["tagline"].presence || "-",
       multimedia: multimedia,
       use_cases_url: use_cases_url,
       # Classification

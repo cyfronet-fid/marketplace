@@ -8,7 +8,7 @@ RSpec.describe ProjectItem::Ready do
   let(:transition) { double("Transition") }
 
   context "(JIRA works without errors)" do
-    before(:each) {
+    before(:each) do
       wf_ready_id = 6
       wf_in_progress_id = 7
 
@@ -18,11 +18,11 @@ RSpec.describe ProjectItem::Ready do
                            wf_in_progress_id: wf_in_progress_id,
                            wf_ready_id: wf_ready_id)
       transition_start = double("Transition", id: "1", name: "____Start Progress____",
-                                to: double(id: wf_in_progress_id.to_s))
+                                              to: double(id: wf_in_progress_id.to_s))
       transition_done = double("Transition", id: "2", name: "____Done____",
-                               to: double(id: wf_ready_id.to_s))
-      jira_class_stub = class_double(Jira::Client).
-          as_stubbed_const(transfer_nested_constants: true)
+                                             to: double(id: wf_ready_id.to_s))
+      jira_class_stub = class_double(Jira::Client)
+                        .as_stubbed_const(transfer_nested_constants: true)
 
       message_class = double("Message",
                              message: "test1",
@@ -39,7 +39,7 @@ RSpec.describe ProjectItem::Ready do
       allow(issue).to receive_message_chain(:transitions, :build) { transition }
       allow(transition).to receive(:save!).and_return(transition)
       allow(message_create_class_stub).to receive(:call).and_return(message_class)
-    }
+    end
 
     it "creates new project_item status change" do
       described_class.new(project_item).call
@@ -60,8 +60,8 @@ RSpec.describe ProjectItem::Ready do
 
       project_item.new_status(status: "custom_created", status_type: :created)
 
-      expect { described_class.new(project_item).call }.
-          to change { ActionMailer::Base.deliveries.count }.by(3)
+      expect { described_class.new(project_item).call }
+        .to change { ActionMailer::Base.deliveries.count }.by(3)
 
       expect(ActionMailer::Base.deliveries[-3].subject)
         .to eq("Status of your service access request in the EOSC Portal Marketplace has changed to READY TO USE")
@@ -77,8 +77,8 @@ RSpec.describe ProjectItem::Ready do
 
       project_item.new_status(status: "custom_created", status_type: :created)
 
-      expect { described_class.new(project_item).call }.
-          to change { ActionMailer::Base.deliveries.count }.by(2)
+      expect { described_class.new(project_item).call }
+        .to change { ActionMailer::Base.deliveries.count }.by(2)
 
       expect(ActionMailer::Base.deliveries[-2].subject)
         .to eq("Status of your service access request in the EOSC Portal Marketplace has changed to READY TO USE")
@@ -101,8 +101,8 @@ RSpec.describe ProjectItem::Ready do
         # project_item change email is sent only when there is more than 1 change
         project_item.new_status(status: "custom_created", status_type: :created)
 
-        expect { described_class.new(project_item).call }.
-            to change { ActionMailer::Base.deliveries.count }.by(2)
+        expect { described_class.new(project_item).call }
+          .to change { ActionMailer::Base.deliveries.count }.by(2)
         expect(ActionMailer::Base.deliveries[-2].subject)
           .to eq("Status of your service access request in the EOSC Portal Marketplace has changed to READY TO USE")
         expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
@@ -111,8 +111,8 @@ RSpec.describe ProjectItem::Ready do
 
     context "With additional comment" do
       it "should create first comment message" do
-        expect { described_class.new(project_item, "First message").call }.
-          to change { project_item.messages.count }.by(1)
+        expect { described_class.new(project_item, "First message").call }
+          .to change { project_item.messages.count }.by(1)
         last_message = project_item.messages.last
 
         expect(last_message.role_user?).to be_truthy
@@ -130,8 +130,8 @@ RSpec.describe ProjectItem::Ready do
       it "sends only rate service email to owner" do
         project_item.new_status(status: "custom_ready", status_type: :ready)
 
-        expect { described_class.new(project_item).call }.
-            to change { ActionMailer::Base.deliveries.count }.by(1)
+        expect { described_class.new(project_item).call }
+          .to change { ActionMailer::Base.deliveries.count }.by(1)
         expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
         expect(ActionMailer::Base.deliveries.last.subject).to_not start_with("[ProjectItem #")
       end
@@ -139,11 +139,11 @@ RSpec.describe ProjectItem::Ready do
 
     context "no project issue set" do
       let(:project_register_service) { double("Project:Register") }
-      before(:each) {
-        project_register_class_stub = class_double(Project::Register).
-            as_stubbed_const(transfer_nested_constants: true)
+      before(:each) do
+        project_register_class_stub = class_double(Project::Register)
+                                      .as_stubbed_const(transfer_nested_constants: true)
         allow(project_register_class_stub).to receive(:new).and_return(project_register_service)
-      }
+      end
 
       it "should call Project::Register" do
         project_item.project.jira_uninitialized!
@@ -156,8 +156,8 @@ RSpec.describe ProjectItem::Ready do
   context "(JIRA raises Errors)" do
     let!(:jira_client) do
       client = double("Jira::Client", jira_project_key: "MP")
-      jira_class_stub = class_double(Jira::Client).
-          as_stubbed_const(transfer_nested_constants: true)
+      jira_class_stub = class_double(Jira::Client)
+                        .as_stubbed_const(transfer_nested_constants: true)
       allow(jira_class_stub).to receive(:new).and_return(client)
       client
     end

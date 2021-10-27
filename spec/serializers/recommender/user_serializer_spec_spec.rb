@@ -7,7 +7,7 @@ RSpec.describe Recommender::UserSerializer do
     service1 = create(:service)
     service3 = create(:service)
     project1 = create(:project, project_items: [create(:project_item, offer: create(:offer, service: service1)),
-                                          create(:project_item, offer: create(:offer, service: service3))])
+                                                create(:project_item, offer: create(:offer, service: service3))])
 
     service2 = create(:service)
     project2 = create(:project, project_items: [create(:project_item, offer: create(:offer, service: service2))])
@@ -16,7 +16,6 @@ RSpec.describe Recommender::UserSerializer do
                   projects: [project1, project2],
                   categories: create_list(:category, 2),
                   scientific_domains: create_list(:scientific_domain, 2))
-
 
     serialized = described_class.new(user).as_json
 

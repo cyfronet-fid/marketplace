@@ -19,7 +19,8 @@ module MarkdownHelper
   end
 
   private
-    def renderer
-      Redcarpet::Render::HTML.new(filter_html: false)
-    end
+
+  def renderer
+    Redcarpet::Render::HTML.new(filter_html: false)
+  end
 end

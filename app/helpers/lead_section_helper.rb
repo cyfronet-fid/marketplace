@@ -5,8 +5,8 @@ module LeadSectionHelper
     sec = LeadSection.find_by(slug: section)
     if sec
       render "leads/section", section: sec
-    else
-      render "leads/error", slug: section if policy(LeadSection).error?
+    elsif policy(LeadSection).error?
+      render "leads/error", slug: section
     end
   end
 end

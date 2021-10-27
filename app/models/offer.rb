@@ -5,14 +5,14 @@ class Offer < ApplicationRecord
   include Offerable
   include Offer::Parameters
 
-  searchkick word_middle: [:offer_name, :description],
-            highlight: [:offer_name, :description]
+  searchkick word_middle: %i[offer_name description],
+             highlight: %i[offer_name description]
 
   STATUSES = {
     published: "published",
     draft: "draft",
     deleted: "deleted"
-  }
+  }.freeze
 
   def search_data
     {
@@ -28,9 +28,9 @@ class Offer < ApplicationRecord
   end
 
   counter_culture :service, column_name: proc { |model| model.published? ? "offers_count" : nil },
-                  column_names: {
-                    ["offers.status = ?", "published"] => "offers_count"
-                  }
+                            column_names: {
+                              ["offers.status = ?", "published"] => "offers_count"
+                            }
 
   enum status: STATUSES
 
@@ -99,64 +99,59 @@ class Offer < ApplicationRecord
   end
 
   private
-    def set_iid
-      self.iid = offers_count + 1 if iid.blank?
+
+  def set_iid
+    self.iid = offers_count + 1 if iid.blank?
+  end
+
+  def offers_count
+    (service && service.offers.maximum(:iid).to_i) || 0
+  end
+
+  def oms_params_match?
+    if (Set.new(oms_params.keys) - Set.new(current_oms.custom_params.keys)).length.positive?
+      errors.add(:oms_params, "additional unspecified keys added")
+      return
     end
 
-    def offers_count
-      service && service.offers.maximum(:iid).to_i || 0
+    missing_keys = Set.new(current_oms.custom_params.keys) - Set.new(oms_params.keys)
+    if (missing_keys & Set.new(current_oms.mandatory_defaults.keys)).length.positive?
+      errors.add(:oms_params, "missing mandatory keys")
     end
+  end
 
-    def oms_params_match?
-      if (Set.new(oms_params.keys) - Set.new(current_oms.custom_params.keys)).length > 0
-        errors.add(:oms_params, "additional unspecified keys added")
-        return
+  def check_oms_params
+    if current_oms.custom_params.present?
+      if current_oms.mandatory_defaults.present?
+        oms_params.blank? ? errors.add(:oms_params, "can't be blank") : oms_params_match?
       end
-
-      missing_keys = Set.new(current_oms.custom_params.keys) - Set.new(oms_params.keys)
-      if (missing_keys & Set.new(current_oms.mandatory_defaults.keys)).length > 0
-        errors.add(:oms_params, "missing mandatory keys")
-      end
+    elsif oms_params.present?
+      errors.add(:oms_params, "must be blank if primary OMS' custom params are blank")
     end
+  end
 
-    def check_oms_params
-      if current_oms.custom_params.present?
-        if current_oms.mandatory_defaults.present?
-          oms_params.blank? ? errors.add(:oms_params, "can't be blank") : oms_params_match?
-        end
-      else
-        errors.add(:oms_params, "must be blank if primary OMS' custom params are blank") if oms_params.present?
-      end
-    end
+  def primary_oms_exists?
+    errors.add(:primary_oms, "doesn't exist") if OMS.find_by(id: primary_oms_id).blank?
+  end
 
-    def primary_oms_exists?
-      unless OMS.find_by_id(primary_oms_id).present?
-        errors.add(:primary_oms, "doesn't exist")
-      end
+  def proper_oms?
+    unless service.available_omses.include? primary_oms
+      errors.add(:primary_oms, "has to be available in the resource scope")
     end
+  end
 
-    def proper_oms?
-      unless service.available_omses.include? primary_oms
-        errors.add(:primary_oms, "has to be available in the resource scope")
-      end
-    end
+  def set_internal
+    self.internal = false unless order_required?
+  end
 
-    def set_internal
-      unless self.order_required?
-        self.internal = false
-      end
+  def set_oms_details
+    unless internal?
+      self.primary_oms = nil
+      self.oms_params = nil
     end
+  end
 
-    def set_oms_details
-      unless self.internal?
-        self.primary_oms = nil
-        self.oms_params = nil
-      end
-    end
-
-    def sanitize_oms_params
-      if oms_params.present?
-        oms_params.select! { |_, v| v.present? }
-      end
-    end
+  def sanitize_oms_params
+    oms_params.select! { |_, v| v.present? } if oms_params.present?
+  end
 end

@@ -26,7 +26,7 @@ RSpec.describe Message do
       project = create(:project, user: owner)
       project_item = create(:project_item, project: project)
       new_message = create(:message, messageable: project_item, author: owner,
-                            message: "some question")
+                                     message: "some question")
 
       expect(new_message).to be_question
     end
@@ -35,11 +35,10 @@ RSpec.describe Message do
       owner = create(:user)
       project = create(:project, user: owner)
       new_message = create(:message, messageable: project, author: owner,
-                            message: "some question")
+                                     message: "some question")
 
       expect(new_message).to be_question
     end
-
 
     it "is false when there is not message author" do
       message = create(:message, author: nil, author_role: :provider)
@@ -52,10 +51,10 @@ RSpec.describe Message do
       project = create(:project, user: owner)
       project_item = create(:project_item, project: project)
       new_message = create(:message,
-                                   messageable: project_item,
-                                   author: create(:user),
-                                   author_role: :provider,
-                                   message: "some question")
+                           messageable: project_item,
+                           author: create(:user),
+                           author_role: :provider,
+                           message: "some question")
 
       expect(new_message).to_not be_question
     end
@@ -64,10 +63,10 @@ RSpec.describe Message do
       owner = create(:user)
       project = create(:project, user: owner)
       new_message = create(:message,
-                                   messageable: project,
-                                   author: create(:user),
-                                   author_role: :provider,
-                                   message: "some question")
+                           messageable: project,
+                           author: create(:user),
+                           author_role: :provider,
+                           message: "some question")
 
       expect(new_message).to_not be_question
     end
@@ -141,7 +140,8 @@ RSpec.describe Message do
 
       expect(message.events.second.eventable).to eq(message)
       expect(message.events.second.action).to eq("update")
-      expect(message.events.second.updates).to contain_exactly({ field: "message", before: "old", after: "new" }.stringify_keys)
+      expect(message.events.second.updates).to contain_exactly({ field: "message", before: "old",
+                                                                 after: "new" }.stringify_keys)
     end
   end
 
@@ -170,14 +170,14 @@ RSpec.describe Message do
       context "for project_item" do
         let(:project_item) { create(:project_item, project: project) }
 
-        [:provider, :mediator].each do |author_role|
+        %i[provider mediator].each do |author_role|
           context ":role_#{author_role}?" do
-            [:public, :user_direct].each do |scope|
+            %i[public user_direct].each do |scope|
               context ":#{scope}_scope?" do
                 it "sends email" do
-                  expect {
+                  expect do
                     create(:message, scope: scope, author_role: author_role, messageable: project_item)
-                  }.to change { ActionMailer::Base.deliveries.count }.by(1)
+                  end.to change { ActionMailer::Base.deliveries.count }.by(1)
                   email = ActionMailer::Base.deliveries.last
 
                   expect(email.to).to contain_exactly(project_item.user.email)
@@ -189,9 +189,9 @@ RSpec.describe Message do
 
             context ":internal_scope?" do
               it "doesn't send email" do
-                expect {
+                expect do
                   create(:message, scope: :internal, author_role: author_role, messageable: project_item)
-                }.not_to change { ActionMailer::Base.deliveries.count }
+                end.not_to change { ActionMailer::Base.deliveries.count }
               end
             end
           end
@@ -199,14 +199,14 @@ RSpec.describe Message do
       end
 
       context "for project" do
-        [:provider, :mediator].each do |author_role|
+        %i[provider mediator].each do |author_role|
           context ":role_#{author_role}?" do
-            [:public, :user_direct].each do |scope|
+            %i[public user_direct].each do |scope|
               context ":#{scope}_scope?" do
                 it "sends email" do
-                  expect {
+                  expect do
                     create(:message, scope: scope, author_role: author_role, messageable: project)
-                  }.to change { ActionMailer::Base.deliveries.count }.by(1)
+                  end.to change { ActionMailer::Base.deliveries.count }.by(1)
                   email = ActionMailer::Base.deliveries.last
 
                   expect(email.to).to contain_exactly(project.user.email)
@@ -218,9 +218,9 @@ RSpec.describe Message do
 
             context ":internal_scope?" do
               it "doesn't send email" do
-                expect {
+                expect do
                   create(:message, scope: :internal, author_role: author_role, messageable: project)
-                }.not_to change { ActionMailer::Base.deliveries.count }
+                end.not_to change { ActionMailer::Base.deliveries.count }
               end
             end
           end
@@ -234,16 +234,16 @@ RSpec.describe Message do
       context "for project_item" do
         let(:project_item) { create(:project_item, project: project) }
 
-        [:provider, :mediator].each do |author_role|
+        %i[provider mediator].each do |author_role|
           context ":role_#{author_role}?" do
-            [:public, :user_direct].each do |scope|
+            %i[public user_direct].each do |scope|
               context ":#{scope}_scope?" do
                 let!(:message) { create(:message, scope: scope, author_role: author_role, messageable: project_item) }
 
                 it "sends email" do
-                  expect {
+                  expect do
                     message.update!(message: "something else")
-                  }.to change { ActionMailer::Base.deliveries.count }.by(1)
+                  end.to change { ActionMailer::Base.deliveries.count }.by(1)
                   email = ActionMailer::Base.deliveries.last
 
                   expect(email.to).to contain_exactly(project_item.user.email)
@@ -257,9 +257,9 @@ RSpec.describe Message do
               let!(:message) { create(:message, scope: :internal, author_role: author_role, messageable: project_item) }
 
               it "doesn't send email" do
-                expect {
+                expect do
                   message.update!(message: "something else")
-                }.not_to change { ActionMailer::Base.deliveries.count }
+                end.not_to change { ActionMailer::Base.deliveries.count }
               end
             end
           end
@@ -267,16 +267,16 @@ RSpec.describe Message do
       end
 
       context "for project" do
-        [:provider, :mediator].each do |author_role|
+        %i[provider mediator].each do |author_role|
           context ":role_#{author_role}?" do
-            [:public, :user_direct].each do |scope|
+            %i[public user_direct].each do |scope|
               context ":#{scope}_scope?" do
                 let!(:message) { create(:message, scope: scope, author_role: author_role, messageable: project) }
 
                 it "sends email" do
-                  expect {
+                  expect do
                     message.update!(message: "something else")
-                  }.to change { ActionMailer::Base.deliveries.count }.by(1)
+                  end.to change { ActionMailer::Base.deliveries.count }.by(1)
                   email = ActionMailer::Base.deliveries.last
 
                   expect(email.to).to contain_exactly(project.user.email)
@@ -290,9 +290,9 @@ RSpec.describe Message do
               let!(:message) { create(:message, scope: :internal, author_role: author_role, messageable: project) }
 
               it "doesn't send email" do
-                expect {
+                expect do
                   message.update!(message: "something else")
-                }.not_to change { ActionMailer::Base.deliveries.count }
+                end.not_to change { ActionMailer::Base.deliveries.count }
               end
             end
           end

@@ -9,8 +9,8 @@ class MessageMailer < ApplicationMailer
     @model_name = message.messageable_type.underscore
 
     mail(to: @user.email,
-                    subject: t("#{@model_name}.mail.new_message", project_name: @project_name).chomp,
-                    template_name: "#{@model_name}_new_message")
+         subject: t("#{@model_name}.mail.new_message", project_name: @project_name).chomp,
+         template_name: "#{@model_name}_new_message")
   end
 
   def message_edited(message)
@@ -24,7 +24,13 @@ class MessageMailer < ApplicationMailer
 
   def get_link_to_messageable(message)
     elem = message.messageable
-    message.messageable_type == "Project" ? project_conversation_url(elem) : project_service_conversation_url(elem.project, elem)
+    if message.messageable_type == "Project"
+      project_conversation_url(elem)
+    else
+      project_service_conversation_url(
+        elem.project, elem
+      )
+    end
   end
 
   def get_project_name(elem)

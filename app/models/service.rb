@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 class Service < ApplicationRecord
   include Service::Search
   include LogoAttachable
@@ -15,10 +14,10 @@ class Service < ApplicationRecord
   has_one_attached :logo
 
   enum order_type: {
-      open_access: "open_access",
-      fully_open_access: "fully_open_access",
-      order_required: "order_required",
-      other: "other"
+    open_access: "open_access",
+    fully_open_access: "fully_open_access",
+    order_required: "order_required",
+    other: "other"
   }
 
   enum phase: {
@@ -36,7 +35,7 @@ class Service < ApplicationRecord
     draft: "draft",
     errored: "errored",
     deleted: "deleted"
-  }
+  }.freeze
 
   enum status: STATUSES
 
@@ -53,17 +52,17 @@ class Service < ApplicationRecord
   has_many :platforms, through: :service_related_platforms
   has_many :service_vocabularies, dependent: :destroy
   has_many :funding_bodies, through: :service_vocabularies,
-           source: :vocabulary, source_type: "Vocabulary::FundingBody"
+                            source: :vocabulary, source_type: "Vocabulary::FundingBody"
   has_many :funding_programs, through: :service_vocabularies,
-           source: :vocabulary, source_type: "Vocabulary::FundingProgram"
+                              source: :vocabulary, source_type: "Vocabulary::FundingProgram"
   has_many :access_modes, through: :service_vocabularies,
-           source: :vocabulary, source_type: "Vocabulary::AccessMode"
+                          source: :vocabulary, source_type: "Vocabulary::AccessMode"
   has_many :access_types, through: :service_vocabularies,
-           source: :vocabulary, source_type: "Vocabulary::AccessType"
+                          source: :vocabulary, source_type: "Vocabulary::AccessType"
   has_many :trl, through: :service_vocabularies,
-           source: :vocabulary, source_type: "Vocabulary::Trl"
+                 source: :vocabulary, source_type: "Vocabulary::Trl"
   has_many :life_cycle_status, through: :service_vocabularies,
-           source: :vocabulary, source_type: "Vocabulary::LifeCycleStatus"
+                               source: :vocabulary, source_type: "Vocabulary::LifeCycleStatus"
   has_many :service_target_users, dependent: :destroy
   has_many :target_users, through: :service_target_users
   has_many :omses, dependent: :destroy
@@ -72,11 +71,11 @@ class Service < ApplicationRecord
   has_many :public_contacts, as: :contactable, dependent: :destroy, autosave: true
 
   accepts_nested_attributes_for :main_contact,
-                                reject_if: lambda { |attributes| attributes["email"].blank? },
+                                reject_if: ->(attributes) { attributes["email"].blank? },
                                 allow_destroy: true
 
   accepts_nested_attributes_for :public_contacts,
-                                reject_if: lambda { |attributes| attributes["email"].blank? },
+                                reject_if: ->(attributes) { attributes["email"].blank? },
                                 allow_destroy: true
 
   has_many :user_services, dependent: :destroy
@@ -124,10 +123,12 @@ class Service < ApplicationRecord
   has_many :sources, class_name: "ServiceSource", dependent: :destroy
 
   accepts_nested_attributes_for :sources,
-                                reject_if: lambda { |attributes| attributes["eid"].blank? || attributes["source_type"].blank? },
+                                reject_if: lambda { |attributes|
+                                             attributes["eid"].blank? || attributes["source_type"].blank?
+                                           },
                                 allow_destroy: true
 
-  belongs_to :upstream, foreign_key: "upstream_id", class_name: "ServiceSource", optional: true
+  belongs_to :upstream, class_name: "ServiceSource", optional: true
   belongs_to :resource_organisation, class_name: "Provider", optional: false
 
   serialize :geographical_availabilities, Country::Array
@@ -156,7 +157,7 @@ class Service < ApplicationRecord
   validates :training_information_url, mp_url: true, if: :training_information_url?
   validates :language_availability, array: true
   validates :logo, blob: { content_type: :image }
-  validate :logo_variable, on: [:create, :update]
+  validate :logo_variable, on: %i[create update]
   validates :scientific_domains, presence: true
   validates :status, presence: true
   validates :trl, length: { maximum: 1 }
@@ -167,12 +168,13 @@ class Service < ApplicationRecord
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
   def self.popular(count)
-    where(status: [:published, :unverified]).includes(:providers).order(popularity_ratio: :desc, name: :asc).limit(count)
+    where(status: %i[published unverified]).includes(:providers).order(popularity_ratio: :desc,
+                                                                       name: :asc).limit(count)
   end
 
   def main_category
-    @main_category ||= categories.joins(:categorizations).
-                                  find_by(categorizations: { main: true })
+    @main_category ||= categories.joins(:categorizations)
+                                 .find_by(categorizations: { main: true })
   end
 
   def set_first_category_as_main!
@@ -195,9 +197,7 @@ class Service < ApplicationRecord
     service_user_relationships.where(user: user).count.positive?
   end
 
-  def administered_by?(user)
-    resource_organisation.administered_by?(user)
-  end
+  delegate :administered_by?, to: :resource_organisation
 
   def geographical_availabilities=(value)
     super(value&.map { |v| Country.for(v) })
@@ -215,9 +215,7 @@ class Service < ApplicationRecord
     ([resource_organisation] + Array(providers)).reject(&:blank?).uniq
   end
 
-  def resource_organisation_name
-    resource_organisation.name
-  end
+  delegate :name, to: :resource_organisation, prefix: true
 
   def external?
     order_required? && order_url.present?
@@ -235,16 +233,17 @@ class Service < ApplicationRecord
   end
 
   private
-    def remove_empty_array_fields
-      array_fields = [:multimedia, :use_cases_url, :certifications,
-                      :standards, :open_source_technologies,
-                      :changelog, :related_platforms, :grant_project_names]
-      array_fields.each do |field|
-        send(field).present? ? send(:"#{field}=", send(field).reject(&:blank?)) : send(:"#{field}=", [])
-      end
-    end
 
-    def main_category_missing?
-      categorizations.where(main: true).count.zero?
+  def remove_empty_array_fields
+    array_fields = %i[multimedia use_cases_url certifications
+                      standards open_source_technologies
+                      changelog related_platforms grant_project_names]
+    array_fields.each do |field|
+      send(field).present? ? send(:"#{field}=", send(field).reject(&:blank?)) : send(:"#{field}=", [])
     end
+  end
+
+  def main_category_missing?
+    categorizations.where(main: true).count.zero?
+  end
 end

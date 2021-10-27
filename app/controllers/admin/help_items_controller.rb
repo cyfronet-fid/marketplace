@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::HelpItemsController < Admin::ApplicationController
-  before_action :find_and_authorize, except: [:new, :create]
+  before_action :find_and_authorize, except: %i[new create]
 
   def new
     @help_item = HelpItem.new(help_section: HelpSection.find_by(slug: params["section"]))
@@ -20,8 +20,7 @@ class Admin::HelpItemsController < Admin::ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @help_item.update(permitted_attributes(HelpItem))
@@ -40,8 +39,9 @@ class Admin::HelpItemsController < Admin::ApplicationController
   end
 
   private
-    def find_and_authorize
-      @help_item = HelpItem.find(params[:id])
-      authorize(@help_item)
-    end
+
+  def find_and_authorize
+    @help_item = HelpItem.find(params[:id])
+    authorize(@help_item)
+  end
 end

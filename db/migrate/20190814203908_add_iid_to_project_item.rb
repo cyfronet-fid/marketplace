@@ -2,9 +2,10 @@
 
 class AddIidToProjectItem < ActiveRecord::Migration[5.2]
   def up
-    add_column :project_items, :iid, :integer, index: true
+    add_column :project_items, :iid, :integer
+    add_index :project_items, :iid
     execute(
-      <<~SQL
+      <<~SQL.squish
         UPDATE project_items
         SET iid =
         (

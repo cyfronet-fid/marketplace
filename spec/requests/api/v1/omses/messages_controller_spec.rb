@@ -3,7 +3,6 @@
 require "swagger_helper"
 require "rails_helper"
 
-
 RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swagger.json" do
   before(:all) do
     Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
@@ -19,7 +18,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
     get "lists messages" do
       tags "Messages"
       produces "application/json"
-      security [ authentication_token: [] ]
+      security [authentication_token: []]
       parameter name: :project_id, in: :query, type: :integer, required: true,
                 description: "The project to list messages of"
       parameter name: :project_item_id, in: :query, type: :integer, required: false,
@@ -39,7 +38,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         let(:project_item2) { create(:project_item, offer: build(:offer, primary_oms: other_oms)) }
         let(:project) { create(:project, project_items: [project_item1, project_item2]) }
 
-        let!(:messages) {
+        let!(:messages) do
           [
             create(:message, id: 1, messageable: project),
             create(:message, id: 2, messageable: project_item1),
@@ -48,7 +47,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
             create(:message, id: 5, messageable: project_item1),
             create(:message, id: 6, messageable: project_item2)
           ]
-        }
+        end
 
         let(:oms_id) { oms.id }
         let(:project_id) { project.id }
@@ -72,7 +71,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         let(:project_item2) { create(:project_item, offer: build(:offer, primary_oms: other_oms), iid: 2) }
         let(:project) { create(:project, project_items: [project_item1, project_item2]) }
 
-        let!(:messages) {
+        let!(:messages) do
           [
             create(:message, id: 1, messageable: project),
             create(:message, id: 2, messageable: project_item1),
@@ -81,7 +80,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
             create(:provider_message, scope: :user_direct, id: 5, messageable: project_item1),
             create(:message, id: 6, messageable: project_item2)
           ]
-        }
+        end
 
         let(:oms_id) { oms.id }
         let(:project_id) { project.id }
@@ -193,30 +192,32 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
       tags "Messages"
       produces "application/json"
       consumes "application/json"
-      security [ authentication_token: [] ]
+      security [authentication_token: []]
       parameter name: :message_payload, in: :body, schema: { "$ref" => "message/message_write.json" }
 
       response 201, "message created" do
         schema "$ref" => "message/message_read.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project) { create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }
+        let(:project) do
+          create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))])
+        end
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
-        let(:message_payload) {
+        let(:message_payload) do
           {
-            "project_id": project.id,
-            "author": {
-              "uid": "uid@idp",
-              "email": "smith@example.com",
-              "name": "Joe Smith",
-              "role": "provider"
+            project_id: project.id,
+            author: {
+              uid: "uid@idp",
+              email: "smith@example.com",
+              name: "Joe Smith",
+              role: "provider"
             },
-            "content": "<content>",
-            "scope": "public",
+            content: "<content>",
+            scope: "public"
           }
-        }
+        end
         run_test! do |response|
           project.reload
           expect(project.messages.count).to eq(1)
@@ -243,19 +244,19 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
-        let(:message_payload) {
+        let(:message_payload) do
           {
-            "project_id": project.id,
-            "project_item_id": project_item.iid,
-            "author": {
-              "email": "smith@example.com",
-              "name": "Joe Smith",
-              "role": "provider"
+            project_id: project.id,
+            project_item_id: project_item.iid,
+            author: {
+              email: "smith@example.com",
+              name: "Joe Smith",
+              role: "provider"
             },
-            "content": "<content>",
-            "scope": "user_direct",
+            content: "<content>",
+            scope: "user_direct"
           }
-        }
+        end
         run_test! do |response|
           project_item.reload
           expect(project_item.messages.count).to eq(1)
@@ -276,21 +277,23 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project) { create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }
+        let(:project) do
+          create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))])
+        end
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
-        let(:message_payload) {
+        let(:message_payload) do
           {
-            "project_id": project.id,
-            "author": {
-              "email": "<email>",
-              "name": "<name>",
-              "role": "provider"
+            project_id: project.id,
+            author: {
+              email: "<email>",
+              name: "<name>",
+              role: "provider"
             },
-            "scope": "public",
+            scope: "public"
           }
-        }
+        end
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data).to eq({ error: "The property '#/' did not contain a required property of 'content'" }.as_json.deep_stringify_keys)
@@ -304,7 +307,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         schema "$ref" => "error.json"
         let(:oms_id) { 1 }
         let(:project_id) { 1 }
-        let(:message_payload) { }
+        let(:message_payload) {}
         let(:"X-User-Token") { "asdasdasd" }
 
         run_test! do |response|
@@ -321,7 +324,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
 
         let(:oms_id) { oms.id }
         let(:project_id) { 9999 }
-        let(:message_payload) { }
+        let(:message_payload) {}
         let(:"X-User-Token") { user.authentication_token }
 
         run_test! do |response|
@@ -334,22 +337,24 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project) { create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }
+        let(:project) do
+          create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))])
+        end
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
-        let(:message_payload) {
+        let(:message_payload) do
           {
-            "project_id": project.id,
-            "author": {
-              "email": "<email>",
-              "name": "<name>",
-              "role": "provider"
+            project_id: project.id,
+            author: {
+              email: "<email>",
+              name: "<name>",
+              role: "provider"
             },
-            "content": "abc",
-            "scope": "user_direct",
+            content: "abc",
+            scope: "user_direct"
           }
-        }
+        end
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data).to eq({ error: "You are not authorized to perform this action." }.deep_stringify_keys)
@@ -369,19 +374,19 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { default_oms_admin.authentication_token }
-        let(:message_payload) {
+        let(:message_payload) do
           {
-            "project_id": project.id,
-            "project_item_id": project_item.iid,
-            "author": {
-              "email": "<email>",
-              "name": "<name>",
-              "role": "provider"
+            project_id: project.id,
+            project_item_id: project_item.iid,
+            author: {
+              email: "<email>",
+              name: "<name>",
+              role: "provider"
             },
-            "content": "abc",
-            "scope": "user_direct",
+            content: "abc",
+            scope: "user_direct"
           }
-        }
+        end
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data).to eq({ error: "You are not authorized to perform this action." }.deep_stringify_keys)
@@ -397,7 +402,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
 
         let(:oms_id) { 9999 }
         let(:project_id) { 9999 }
-        let(:message_payload) { }
+        let(:message_payload) {}
         let(:"X-User-Token") { user.authentication_token }
 
         run_test! do |response|
@@ -413,18 +418,18 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
-        let(:message_payload) {
+        let(:message_payload) do
           {
-            "project_id": 1,
-            "author": {
-              "email": "<email>",
-              "name": "<name>",
-              "role": "provider"
+            project_id: 1,
+            author: {
+              email: "<email>",
+              name: "<name>",
+              role: "provider"
             },
-            "content": "<content>",
-            "scope": "public",
+            content: "<content>",
+            scope: "public"
           }
-        }
+        end
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data).to eq({ error: "Project not found" }.as_json.deep_stringify_keys)
@@ -439,19 +444,19 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
-        let(:message_payload) {
+        let(:message_payload) do
           {
-            "project_id": project.id,
-            "project_item_id": 1,
-            "author": {
-              "email": "<email>",
-              "name": "<name>",
-              "role": "provider"
+            project_id: project.id,
+            project_item_id: 1,
+            author: {
+              email: "<email>",
+              name: "<name>",
+              role: "provider"
             },
-            "content": "<content>",
-            "scope": "public",
+            content: "<content>",
+            scope: "public"
           }
-        }
+        end
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data).to eq({ error: "Project item not found" }.as_json.deep_stringify_keys)
@@ -467,13 +472,15 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
     get "retrieves a message" do
       tags "Messages"
       produces "application/json"
-      security [ authentication_token: [] ]
+      security [authentication_token: []]
 
       response 200, "message found" do
         schema "$ref" => "message/message_read.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project) { create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }
+        let(:project) do
+          create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))])
+        end
         let(:message) { create(:message, messageable: project) }
 
         let(:oms_id) { oms.id }
@@ -571,14 +578,16 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
       tags "Messages"
       produces "application/json"
       consumes "application/json"
-      security [ authentication_token: [] ]
+      security [authentication_token: []]
       parameter name: :message_payload, in: :body, schema: { "$ref" => "message/message_update.json" }
 
       response 200, "message updated" do
         schema "$ref" => "message/message_read.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project) { create(:project, project_items: [build(:project_item, offer: build(:offer, primary_oms: oms))]) }
+        let(:project) do
+          create(:project, project_items: [build(:project_item, offer: build(:offer, primary_oms: oms))])
+        end
         let(:message) { create(:provider_message, scope: :public, message: "Before update", messageable: project) }
 
         let(:oms_id) { oms.id }
@@ -606,7 +615,9 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project_item) { create(:project_item, project: build(:project), offer: build(:offer, primary_oms: oms)) }
-        let(:message) { create(:provider_message, scope: :user_direct, message: "Before update", messageable: project_item) }
+        let(:message) do
+          create(:provider_message, scope: :user_direct, message: "Before update", messageable: project_item)
+        end
 
         let(:oms_id) { oms.id }
         let(:m_id) { message.id }
@@ -633,7 +644,9 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
         let(:project) { create(:project) }
-        let(:message) { create(:message, author_role: "mediator", scope: "public", message: "Before update", messageable: project) }
+        let(:message) do
+          create(:message, author_role: "mediator", scope: "public", message: "Before update", messageable: project)
+        end
 
         let(:oms_id) { oms.id }
         let(:m_id) { message.id }
@@ -688,8 +701,10 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
         let(:other_oms) { create(:oms) }
-        let(:message) { create(:message, message: "before", scope: "user_direct",
-                               messageable: create(:project_item, offer: create(:offer, primary_oms: other_oms))) }
+        let(:message) do
+          create(:message, message: "before", scope: "user_direct",
+                           messageable: create(:project_item, offer: create(:offer, primary_oms: other_oms)))
+        end
 
         let(:oms_id) { oms.id }
         let(:m_id) { message.id }

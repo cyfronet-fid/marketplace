@@ -23,64 +23,67 @@ describe Jira::Client do
 
     user = create(:user, first_name: "John", last_name: "Doe", uid: "uid1")
     project_item = create(:project_item,
-          offer: create(:offer,
-                        name: "off1",
-                        service: create(:service,
-                                        name: "s1",
-                                        categories: [create(:category, name: "cat1")]),
-                        primary_oms: create(:oms, custom_params: { "order_target": { "mandatory": false } }),
-                        oms_params: { "order_target": "admin@example.com" }),
-          project: create(:project, user: user, name: "My Secret Project",
-                          user_group_name: "New user group", reason_for_access: "some reason"),
-          properties: [
-            {
-                "id": "id1",
-                "type": "input",
-                "label": "Data repository name",
-                "value": "aaaaaa",
-                "value_type": "string",
-                "description": "Type data repository name" },
-            {
-                "id": "id2",
-                "type": "select",
-                "label": "Harvesting method",
-                "value": "OAI-PMH",
-                "config": { "mode": "buttons", "values": ["OAI-PMH", "JSON-API", "CSW 2.0", "Other"] },
-                "value_type": "string",
-                "description": "Choose harvesting method"
-            },
-            {
-                "id": "id3",
-                "type": "input",
-                "label": "Harvesting endpoint",
-                "value": "aaaaa",
-                "value_type": "string",
-                "description": "Type harvesting endpoint" }
-        ])
+                          offer: create(:offer,
+                                        name: "off1",
+                                        service: create(:service,
+                                                        name: "s1",
+                                                        categories: [create(:category, name: "cat1")]),
+                                        primary_oms: create(:oms,
+                                                            custom_params: { order_target: { mandatory: false } }),
+                                        oms_params: { order_target: "admin@example.com" }),
+                          project: create(:project, user: user, name: "My Secret Project",
+                                                    user_group_name: "New user group", reason_for_access: "some reason"),
+                          properties: [
+                            {
+                              id: "id1",
+                              type: "input",
+                              label: "Data repository name",
+                              value: "aaaaaa",
+                              value_type: "string",
+                              description: "Type data repository name"
+                            },
+                            {
+                              id: "id2",
+                              type: "select",
+                              label: "Harvesting method",
+                              value: "OAI-PMH",
+                              config: { mode: "buttons", values: ["OAI-PMH", "JSON-API", "CSW 2.0", "Other"] },
+                              value_type: "string",
+                              description: "Choose harvesting method"
+                            },
+                            {
+                              id: "id3",
+                              type: "input",
+                              label: "Harvesting endpoint",
+                              value: "aaaaa",
+                              value_type: "string",
+                              description: "Type harvesting endpoint"
+                            }
+                          ])
 
     expected_fields = { summary: "Service order, John Doe, s1",
-                       project: { key: "MP" },
-                       issuetype: { id: 10000 },
-                       "Order reference-1" => Rails.application.routes.url_helpers.
-                                              project_service_url(project_item.project, project_item, host: "https://mp.edu"),
-                       # "CI-EOSC-UniqueID-1" => "uid1",
-                       # "CI-Institution-1" => "organization 1",
-                       "Epic Link-1" => "MP-1",
-                       "CP-Platforms-1" => "",
-                       "CP-INeedAVoucher-1" => { "id" => "20004" },
-                       "CP-VoucherID-1" => "",
-                       "SO-1-1" => {
-                         "category" => "cat1",
-                         "service" => "s1",
-                         "offer" => "off1",
-                         "attributes" => {
-                           "Data repository name" => "aaaaaa",
-                           "Harvesting method" => "OAI-PMH",
-                           "Harvesting endpoint" => "aaaaa",
-                         }
-                       }.to_json,
-                       "SO-ServiceOrderTarget-1" => "admin@example.com",
-                       "SO-OfferType-1" => { "id" => "20005" } }
+                        project: { key: "MP" },
+                        issuetype: { id: 10_000 },
+                        "Order reference-1" => Rails.application.routes.url_helpers
+                                                    .project_service_url(project_item.project, project_item, host: "https://mp.edu"),
+                        # "CI-EOSC-UniqueID-1" => "uid1",
+                        # "CI-Institution-1" => "organization 1",
+                        "Epic Link-1" => "MP-1",
+                        "CP-Platforms-1" => "",
+                        "CP-INeedAVoucher-1" => { "id" => "20004" },
+                        "CP-VoucherID-1" => "",
+                        "SO-1-1" => {
+                          "category" => "cat1",
+                          "service" => "s1",
+                          "offer" => "off1",
+                          "attributes" => {
+                            "Data repository name" => "aaaaaa",
+                            "Harvesting method" => "OAI-PMH",
+                            "Harvesting endpoint" => "aaaaa"
+                          }
+                        }.to_json,
+                        "SO-ServiceOrderTarget-1" => "admin@example.com",
+                        "SO-OfferType-1" => { "id" => "20005" } }
 
     issue = double(:Issue)
     expect(issue).to receive("save").with(fields: expected_fields).and_return(true)
@@ -101,16 +104,16 @@ describe Jira::Client do
                                                         name: "s1",
                                                         categories: [create(:category, name: "cat1")])),
                           project: create(:project, user: user,
-                                          name: "My Secret Project",
-                                          user_group_name: nil,
-                                          reason_for_access: "Some reason",
-                                          customer_typology: "single_user"))
+                                                    name: "My Secret Project",
+                                                    user_group_name: nil,
+                                                    reason_for_access: "Some reason",
+                                                    customer_typology: "single_user"))
 
     expected_fields = { summary: "Service order, John Doe, s1",
                         project: { key: "MP" },
-                        issuetype: { id: 10000 },
-                        "Order reference-1" => Rails.application.routes.url_helpers.
-                                               project_service_url(project_item.project, project_item, host: "https://mp.edu"),
+                        issuetype: { id: 10_000 },
+                        "Order reference-1" => Rails.application.routes.url_helpers
+                                                    .project_service_url(project_item.project, project_item, host: "https://mp.edu"),
                         "Epic Link-1" => "MP-1",
                         "CP-Platforms-1" => "",
                         "CP-INeedAVoucher-1" => { "id" => "20004" },
@@ -123,7 +126,6 @@ describe Jira::Client do
                         }.to_json,
                         "SO-ServiceOrderTarget-1" => "",
                         "SO-OfferType-1" => { "id" => "20006" } }
-
 
     issue = double(:Issue)
     expect(issue).to receive("save").with(fields: expected_fields).and_return(true)
@@ -146,16 +148,16 @@ describe Jira::Client do
                                                         categories: [create(:category, name: "cat1")])),
                           voucher_id: "123123",
                           project: create(:project, user: user,
-                                          name: "My Secret Project",
-                                          user_group_name: "New user group",
-                                          reason_for_access: "Some reason",
-                                          customer_typology: "single_user"))
+                                                    name: "My Secret Project",
+                                                    user_group_name: "New user group",
+                                                    reason_for_access: "Some reason",
+                                                    customer_typology: "single_user"))
 
     expected_fields = { summary: "Service order, John Doe, s1",
                         project: { key: "MP" },
-                        issuetype: { id: 10000 },
-                        "Order reference-1" => Rails.application.routes.url_helpers.
-                                               project_service_url(project_item.project, project_item, host: "https://mp.edu"),
+                        issuetype: { id: 10_000 },
+                        "Order reference-1" => Rails.application.routes.url_helpers
+                                                    .project_service_url(project_item.project, project_item, host: "https://mp.edu"),
                         "Epic Link-1" => "MP-1",
                         "CP-Platforms-1" => "",
                         "CP-INeedAVoucher-1" => { "id" => "20004" },
@@ -190,13 +192,13 @@ describe Jira::Client do
                                                         categories: [create(:category, name: "cat1")])),
                           request_voucher: true,
                           project: create(:project, user: user, name: "My Secret Project",
-                                          user_group_name: "New user group", reason_for_access: "Some reason"))
+                                                    user_group_name: "New user group", reason_for_access: "Some reason"))
 
     expected_fields = { summary: "Service order, John Doe, s1",
                         project: { key: "MP" },
-                        issuetype: { id: 10000 },
-                        "Order reference-1" => Rails.application.routes.url_helpers.
-                                               project_service_url(project_item.project, project_item, host: "https://mp.edu"),
+                        issuetype: { id: 10_000 },
+                        "Order reference-1" => Rails.application.routes.url_helpers
+                                                    .project_service_url(project_item.project, project_item, host: "https://mp.edu"),
                         "Epic Link-1" => "MP-1",
                         "CP-Platforms-1" => "",
                         "CP-INeedAVoucher-1" => { "id" => "20003" },
@@ -222,20 +224,20 @@ describe Jira::Client do
     allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
 
     user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2",
-                  email: "john.doe@email.eu")
+                         email: "john.doe@email.eu")
     project = create(:project, user: user, name: "My Secret Project",
-                     email: "project@email.com",
-                     user_group_name: "User Group Name 1",
-                     customer_typology: "research",
-                     reason_for_access: "some reason",
-                     department: "dep",
-                     webpage: "http://dep-wwww.pl",
-                     organization: "org",
-                     scientific_domains: [create(:scientific_domain, name: "My RA")])
+                               email: "project@email.com",
+                               user_group_name: "User Group Name 1",
+                               customer_typology: "research",
+                               reason_for_access: "some reason",
+                               department: "dep",
+                               webpage: "http://dep-wwww.pl",
+                               organization: "org",
+                               scientific_domains: [create(:scientific_domain, name: "My RA")])
 
     expected_fields = { summary: "Project, John Doe, My Secret Project",
                         project: { key: "MP" },
-                        issuetype: { id: 10001 },
+                        issuetype: { id: 10_001 },
                         "Epic Name-1" => "My Secret Project",
                         "CI-Name-1" => "John",
                         "CI-Surname-1" => "Doe",
@@ -249,11 +251,10 @@ describe Jira::Client do
                         "CP-CustomerTypology-1" => { "id" => "20001" },
                         "SO-ProjectName-1" => "My Secret Project (#{project.id})",
                         "CP-UserGroupName-1" => "User Group Name 1",
-                        "CP-CustomerCountry-1" => "#{project.country_of_origin.name}",
-                        "CP-CollaborationCountry-1" => "#{project.countries_of_partnership.map(&:name).join(", ")}"
-                          # "CP-ReasonForAccess-1" => "some reason",
-                          # "CP-ProjectInformation-1" => "My Secret Project",
-                        }
+                        "CP-CustomerCountry-1" => project.country_of_origin.name.to_s,
+                        "CP-CollaborationCountry-1" => project.countries_of_partnership.map(&:name).join(", ").to_s }
+    # "CP-ReasonForAccess-1" => "some reason",
+    # "CP-ProjectInformation-1" => "My Secret Project",
 
     issue = double(:Issue)
     expect(issue).to receive("save").with(fields: expected_fields).and_return(true)
@@ -267,17 +268,17 @@ describe Jira::Client do
     allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
 
     user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2",
-                  email: "john.doe@email.eu")
+                         email: "john.doe@email.eu")
     project = create(:project, user: user, name: "My Updated Project Name",
-                     email: "project@email.com",
-                     user_group_name: "User Group Name 1",
-                     customer_typology: "research",
-                     reason_for_access: "some reason",
-                     department: "dep",
-                     webpage: "http://dep-wwww.pl",
-                     organization: "org",
-                     issue_id: "1234",
-                     scientific_domains: [create(:scientific_domain, name: "My RA")])
+                               email: "project@email.com",
+                               user_group_name: "User Group Name 1",
+                               customer_typology: "research",
+                               reason_for_access: "some reason",
+                               department: "dep",
+                               webpage: "http://dep-wwww.pl",
+                               organization: "org",
+                               issue_id: "1234",
+                               scientific_domains: [create(:scientific_domain, name: "My RA")])
 
     issue = double(:Issue)
     expected_updated_fields = { summary: "Project, John Doe, My Updated Project Name",
@@ -294,9 +295,8 @@ describe Jira::Client do
                                 "CP-CustomerTypology-1" => { "id" => "20001" },
                                 "SO-ProjectName-1" => "My Updated Project Name (#{project.id})",
                                 "CP-UserGroupName-1" => "User Group Name 1",
-                                "CP-CustomerCountry-1" => "#{project.country_of_origin.name}",
-                                "CP-CollaborationCountry-1" => "#{project.countries_of_partnership.map(&:name).join(", ")}"
-                                }
+                                "CP-CustomerCountry-1" => project.country_of_origin.name.to_s,
+                                "CP-CollaborationCountry-1" => project.countries_of_partnership.map(&:name).join(", ").to_s }
 
     expect(issue).to receive("save").with(fields: expected_updated_fields).and_return(true)
     expect(client).to receive_message_chain("Issue.find").and_return(issue)

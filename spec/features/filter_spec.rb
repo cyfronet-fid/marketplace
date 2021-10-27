@@ -8,7 +8,7 @@ RSpec.feature "Service filter" do
   before do
     resources_selector = "body main div:nth-child(2).container div.container div.row div.col-lg-9"
     service_selector = "div.media.mb-3.service-box.shadow-sm"
-    @services_selector = resources_selector + " " + service_selector
+    @services_selector = "#{resources_selector} #{service_selector}"
   end
 
   context "wrapper" do
@@ -235,7 +235,7 @@ RSpec.feature "Service filter" do
       internal_ordering_service = create(:service, offers: [create(:offer)])
       external_service = create(:external_service, offers: [create(:external_offer)])
       mixed_offers_services = create(:service, offers: [create(:open_access_offer, iid: 1),
-                                                               create(:offer, iid: 2)])
+                                                        create(:offer, iid: 2)])
       visit services_path(order_type: "open_access")
       expect(page).to have_text(open_access_service.name)
       expect(page).to have_text(mixed_offers_services.name)
@@ -249,7 +249,7 @@ RSpec.feature "Service filter" do
   context "invisible filters" do
     it "shows services with tag" do
       create(:service, tag_list: ["a"], name: "ATag")
-      create(:service, tag_list: ["a", "b"], name: "ABTag")
+      create(:service, tag_list: %w[a b], name: "ABTag")
       create(:service, tag_list: ["c"], name: "CTag")
 
       visit services_path(tag: "a")
@@ -259,14 +259,14 @@ RSpec.feature "Service filter" do
         expect(element).to_not have_text("CTag")
       end
 
-      visit services_path(tag: ["a", "b"])
+      visit services_path(tag: %w[a b])
       expect(page).to have_text("ATag")
       expect(page).to have_text("ABTag")
       all(@services_selector).each do |element|
         expect(element).to_not have_text("CTag")
       end
 
-      visit services_path(tag: ["a", "b", "c"])
+      visit services_path(tag: %w[a b c])
       expect(page).to have_text("ATag")
       expect(page).to have_text("ABTag")
       expect(page).to have_text("CTag")

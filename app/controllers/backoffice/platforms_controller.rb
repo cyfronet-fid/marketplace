@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
 class Backoffice::PlatformsController < Backoffice::ApplicationController
-  before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
+  before_action :find_and_authorize, only: %i[show edit update destroy]
 
   def index
     authorize(Platform)
     @pagy, @platforms = pagy(policy_scope(Platform).order(:name))
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @platform = Platform.new
@@ -28,8 +27,7 @@ class Backoffice::PlatformsController < Backoffice::ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @platform.update(permitted_attributes(@platform))
@@ -47,8 +45,9 @@ class Backoffice::PlatformsController < Backoffice::ApplicationController
   end
 
   private
-    def find_and_authorize
-      @platform = Platform.find(params[:id])
-      authorize(@platform)
-    end
+
+  def find_and_authorize
+    @platform = Platform.find(params[:id])
+    authorize(@platform)
+  end
 end

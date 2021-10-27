@@ -10,17 +10,18 @@ class Filter::OrderType < Filter
   end
 
   protected
-    def fetch_options
-      [
-          { name: "Any", id: "" },
-          { name: "Open Access", id: "open_access" },
-          { name: "Fully open access", id: "fully_open_access" },
-          { name: "Order required", id: "order_required" },
-          { name: "Other", id: "other" }
-      ]
-    end
 
-    def where_constraint
-      { @index.to_sym => values }
-    end
+  def fetch_options
+    [
+      { name: "Any", id: "" },
+      { name: "Open Access", id: "open_access" },
+      { name: "Fully open access", id: "fully_open_access" },
+      { name: "Order required", id: "order_required" },
+      { name: "Other", id: "other" }
+    ]
+  end
+
+  def where_constraint
+    { @index.to_sym => values }
+  end
 end

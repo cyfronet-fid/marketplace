@@ -16,8 +16,8 @@ RSpec.describe Service::Update do
     offer = service.offers.first
 
     described_class.new(service, name: "new name",
-                        order_url: "http://order.valid",
-                        order_type: "fully_open_access").call
+                                 order_url: "http://order.valid",
+                                 order_type: "fully_open_access").call
 
     expect(service.offers.size).to eq(1)
 
@@ -32,8 +32,8 @@ RSpec.describe Service::Update do
     expect(service.offers.size).to eq(0)
 
     described_class.new(service, name: "new name",
-                        order_url: "http://order.valid",
-                        order_type: "fully_open_access").call
+                                 order_url: "http://order.valid",
+                                 order_type: "fully_open_access").call
 
     service.reload
 

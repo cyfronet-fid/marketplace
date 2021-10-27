@@ -13,14 +13,15 @@ class Api::V1::ResourcesController < Api::V1::ApplicationController
   end
 
   private
-    def load_services
-      @services = policy_scope(Service).order(:id)
-    end
 
-    def find_and_authorize
-      @service = Service.friendly.find(params[:id])
-      authorize @service
-    rescue ActiveRecord::RecordNotFound
-      render json: { error: "Resource not found" }, status: 404
-    end
+  def load_services
+    @services = policy_scope(Service).order(:id)
+  end
+
+  def find_and_authorize
+    @service = Service.friendly.find(params[:id])
+    authorize @service
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Resource not found" }, status: :not_found
+  end
 end

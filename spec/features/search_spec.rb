@@ -2,7 +2,6 @@
 
 require "rails_helper"
 
-
 RSpec.feature "Service searching in top bar", js: true do
   include OmniauthHelper
 
@@ -58,7 +57,8 @@ RSpec.feature "Service searching in top bar", js: true do
     expect(page).to have_content(published_service.name)
   end
 
-  scenario "redirect to provider path from services path when selecting provider_id by autocomplete controller", js: true, search: true do
+  scenario "redirect to provider path from services path when selecting provider_id by autocomplete controller",
+           js: true, search: true do
     provider = create(:provider)
     fill_in "q", with: provider.name
     expect(page).to have_css("#-option-0")
@@ -67,7 +67,8 @@ RSpec.feature "Service searching in top bar", js: true do
     expect(current_path).to eq(provider_path(provider))
   end
 
-  scenario "redirect to service path from services path when selecting service_id by autocomplete controller", js: true, search: true do
+  scenario "redirect to service path from services path when selecting service_id by autocomplete controller",
+           js: true, search: true do
     service = create(:service)
     visit services_path(object_id: service.id, type: "service")
     expect(current_path).to eq(service_path(service))
@@ -151,10 +152,10 @@ RSpec.feature "Service searching in top bar", js: true do
     visit services_path
     fill_in "q", with: "Cyfr"
 
-    expect(page).to have_text ("Cyfronet")
-    expect(page).to_not have_text ("Cyfronet > DDDD Something 1")
-    expect(page).to_not have_text ("Cyfronet > DDDD Something 2")
-    expect(page).to_not have_text ("Cyfronet > DDDD Something 3")
+    expect(page).to have_text("Cyfronet")
+    expect(page).to_not have_text("Cyfronet > DDDD Something 1")
+    expect(page).to_not have_text("Cyfronet > DDDD Something 2")
+    expect(page).to_not have_text("Cyfronet > DDDD Something 3")
   end
 
   scenario "After starting searching autocomplete shows provider without service", js: true, search: true do
@@ -166,10 +167,10 @@ RSpec.feature "Service searching in top bar", js: true do
     visit services_path
     fill_in "q", with: "Cyfr"
 
-    expect(page).to have_text ("Cyfronet")
-    expect(page).to_not have_text ("Cyfronet > DDDD Something 1")
-    expect(page).to_not have_text ("Cyfronet > DDDD Something 2")
-    expect(page).to_not have_text ("Cyfronet > DDDD Something 3")
+    expect(page).to have_text("Cyfronet")
+    expect(page).to_not have_text("Cyfronet > DDDD Something 1")
+    expect(page).to_not have_text("Cyfronet > DDDD Something 2")
+    expect(page).to_not have_text("Cyfronet > DDDD Something 3")
   end
 
   scenario "Search query respects active filters", js: true, search: true do
@@ -187,7 +188,7 @@ RSpec.feature "Service searching in top bar", js: true do
     expect(page).to have_current_path("/services?object_id=&type=&anchor=&sort=_score&providers%5B%5D=1&q=abc")
   end
 
-  [:service, :provider].each do |type|
+  %i[service provider].each do |type|
     scenario "doesn't show the autocomplete results after clicking an #{type} item", js: true, search: true do
       object = create(type)
       fill_in "q", with: object.name

@@ -38,7 +38,6 @@ RSpec.describe Project do
     it { should_not be_valid }
   end
 
-
   describe "single user" do
     subject { build(:project, customer_typology: "single_user") }
 
@@ -89,11 +88,11 @@ RSpec.describe Project do
   end
 
   describe "#countries_of_partnership" do
-    subject { create(:project, countries_of_partnership: [ "PL", "N/E" ]) }
+    subject { create(:project, countries_of_partnership: ["PL", "N/E"]) }
 
     it "uses Country model for serialization" do
-      expect(subject.countries_of_partnership).
-        to contain_exactly(Country.for("PL"), Country.for("N/E"))
+      expect(subject.countries_of_partnership)
+        .to contain_exactly(Country.for("PL"), Country.for("N/E"))
     end
   end
 
@@ -114,9 +113,9 @@ RSpec.describe Project do
       expect(build(:project, issue_status: :jira_active, issue_id: nil, issue_key: nil)).to_not be_valid
 
       expect(build(:project, issue_status: :jira_active,
-                   issue_id: 1, issue_key: "MP-1")).to be_valid
+                             issue_id: 1, issue_key: "MP-1")).to be_valid
       expect(build(:project, issue_status: :jira_deleted,
-                   issue_id: 1, issue_key: "MP-1")).to be_valid
+                             issue_id: 1, issue_key: "MP-1")).to be_valid
     end
   end
 

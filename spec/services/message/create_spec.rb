@@ -23,8 +23,8 @@ RSpec.describe Message::Create do
     end
 
     it "creates new project_item" do
-      expect { described_class.new(message).call }.
-        to change { project_item.messages.count }.by(1)
+      expect { described_class.new(message).call }
+        .to change { project_item.messages.count }.by(1)
       last_history_entry = project_item.messages.last
 
       expect(last_history_entry.message).to eq("message text")
@@ -35,15 +35,15 @@ RSpec.describe Message::Create do
       described_class.new(message).call
       last_history_entry = project_item.messages.last
 
-      expect(Message::RegisterMessageJob).
-        to have_been_enqueued.with(last_history_entry)
+      expect(Message::RegisterMessageJob)
+        .to have_been_enqueued.with(last_history_entry)
     end
   end
 
   context "invalid message" do
     let(:message) do
       Message.new(author: project_item_owner,
-                          messageable: project_item, message: nil)
+                  messageable: project_item, message: nil)
     end
 
     it "returns false" do
@@ -51,15 +51,15 @@ RSpec.describe Message::Create do
     end
 
     it "does not create new project_item change" do
-      expect { described_class.new(message).call }.
-        to_not change { project_item.messages.count }
+      expect { described_class.new(message).call }
+        .to_not change { project_item.messages.count }
     end
 
     it "does not trigger message registration" do
       described_class.new(message).call
 
-      expect(Message::RegisterMessageJob).
-        to_not have_been_enqueued
+      expect(Message::RegisterMessageJob)
+        .to_not have_been_enqueued
     end
   end
 end

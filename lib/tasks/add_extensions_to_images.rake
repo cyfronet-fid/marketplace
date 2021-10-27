@@ -20,9 +20,6 @@ ensure
 end
 
 class LogoNotAvailableError < StandardError
-  def initialize(msg)
-    super(msg)
-  end
 end
 
 def add_extension_to_images
@@ -32,7 +29,7 @@ def add_extension_to_images
                              .push(*ScientificDomain.all.to_a)
   objects_with_img.each do |object|
     if should_rename(object.logo)
-      filename = object.pid.blank? ? "logo_" + to_slug(object.name) : object.pid
+      filename = object.pid.presence || "logo_#{to_slug(object.name)}"
       rename_img(object.logo, filename)
     end
   end
@@ -58,22 +55,20 @@ def rename_img(attachment, filename)
     logo.seek(0)
     logo_content_type = "image/png"
   end
-  if !logo.blank? && logo_content_type.start_with?("image")
+  if logo.present? && logo_content_type.start_with?("image")
     attachment.attach(io: logo, filename: filename + extension, content_type: logo_content_type)
   end
 rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError => e
   Rails.logger.warn "ERROR - there was a problem processing image for #{filename} #{url_for(attachment)}: #{e}"
-rescue => e
+rescue StandardError => e
   Rails.logger.warn "ERROR - there was a unexpected problem processing image for #{filename} #{url_for(attachment)}: #{e}"
 end
 
 def should_rename(attachment)
-  if attachment.blank? || attachment.filename.blank?
-    return false
-  end
+  return false if attachment.blank? || attachment.filename.blank?
 
   has_ext = attachment.filename.to_s
-                          .match(/\.(jpg|jpeg|pjpeg|png|gif|tiff")$/)
+                      .match(/\.(jpg|jpeg|pjpeg|png|gif|tiff")$/)
   attachment.attached? && !has_ext
 end
 

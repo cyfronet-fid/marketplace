@@ -24,8 +24,8 @@ RSpec.feature "Project" do
       fill_in "Organization", with: "Home corp."
       fill_in "Webpage", with: "http://home.corp.com"
 
-      expect { click_on "Create" }.
-        to change { user.projects.count }.by(1)
+      expect { click_on "Create" }
+        .to change { user.projects.count }.by(1)
       new_project = Project.last
 
       expect(new_project.name).to eq("First test")
@@ -78,8 +78,8 @@ RSpec.feature "Project" do
       visit new_project_path(source: project.id)
 
       fill_in "Project name", with: "Copy", match: :first
-      expect { click_on "Create" }.
-        to change { user.projects.count }.by(1)
+      expect { click_on "Create" }
+        .to change { user.projects.count }.by(1)
       new_project = Project.last
 
       expect(new_project.name).to eq("Copy")
@@ -131,8 +131,8 @@ RSpec.feature "Project" do
 
       visit project_path(project)
 
-      expect { click_on "Delete" }.
-        to change { user.projects.count }.by(-1)
+      expect { click_on "Delete" }
+        .to change { user.projects.count }.by(-1)
     end
 
     scenario "I cannot delete project with project_item" do
@@ -158,11 +158,11 @@ RSpec.feature "Project" do
     context "archive" do
       let(:project_archive) { double("Project::Archive") }
 
-      before(:each) {
-        project_archive_class_stub = class_double(Project::Archive).
-            as_stubbed_const(transfer_nested_constants: true)
+      before(:each) do
+        project_archive_class_stub = class_double(Project::Archive)
+                                     .as_stubbed_const(transfer_nested_constants: true)
         allow(project_archive_class_stub).to receive(:new).and_return(project_archive)
-      }
+      end
 
       scenario "I cannot see archive button when are no services" do
         project = create(:project, name: "First Project", user: user)

@@ -7,6 +7,6 @@ class CreateProjects < ActiveRecord::Migration[5.2]
       t.belongs_to :user, null: false, index: true
     end
 
-    add_index :projects, [:name, :user_id], unique: true
+    add_index :projects, %i[name user_id], unique: true
   end
 end

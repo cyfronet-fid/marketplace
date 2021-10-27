@@ -15,13 +15,13 @@ class ProjectItem::Part
   end
 
   def validate
-    attributes.map { |a| a.validate }.all?
+    attributes.map(&:validate).all?
   end
 
   def to_hash
     {
       "offer_id" => offer.id,
-      "attributes" => attributes.map { |a| a.to_json }
+      "attributes" => attributes.map(&:to_json)
     }
   end
 
@@ -30,15 +30,16 @@ class ProjectItem::Part
   end
 
   private
-    def attributes_from_params(parameters)
-      parameters.map { |p| Attribute.from_json(p) }
-    end
 
-    def update_attribute(id, value)
-      attributes_hsh[id]&.value_from_param(value)
-    end
+  def attributes_from_params(parameters)
+    parameters.map { |p| Attribute.from_json(p) }
+  end
 
-    def attributes_hsh
-      @attributes_hsh ||= attributes.index_by { |p| p.id }
-    end
+  def update_attribute(id, value)
+    attributes_hsh[id]&.value_from_param(value)
+  end
+
+  def attributes_hsh
+    @attributes_hsh ||= attributes.index_by(&:id)
+  end
 end

@@ -37,8 +37,8 @@ RSpec.describe ProjectItem::Create do
     let(:service) { create(:open_access_service) }
 
     it "sends email to project_item owner - added to the project" do
-      expect { described_class.new(project_item_template).call }.
-        to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect { described_class.new(project_item_template).call }
+        .to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
 
@@ -46,15 +46,15 @@ RSpec.describe ProjectItem::Create do
     let(:service) { create(:external_service) }
 
     it "sends email to project_item owner - added to the project" do
-      expect { described_class.new(project_item_template).call }.
-        to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect { described_class.new(project_item_template).call }
+        .to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
 
   context "when orderable service has been ordered" do
     it "sends email to project_item owner" do
-      expect { described_class.new(project_item_template).call }.
-        to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect { described_class.new(project_item_template).call }
+        .to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
 
@@ -74,8 +74,8 @@ RSpec.describe ProjectItem::Create do
 
     it "creates bundled project_items" do
       expect { described_class.new(project_item_template, "test-msg", bundle_params: {}).call }
-        .to change { ActionMailer::Base.deliveries.count }.by(3).
-          and change { ProjectItem.count }.by(3)
+        .to change { ActionMailer::Base.deliveries.count }.by(3)
+                                                          .and change { ProjectItem.count }.by(3)
 
       ProjectItem.all.each do |project_item|
         expect(ProjectItem::RegisterJob).to have_been_enqueued.with(project_item, "test-msg")
@@ -87,8 +87,8 @@ RSpec.describe ProjectItem::Create do
 
       it "creates nothing" do
         expect { described_class.new(project_item_template, "test-msg", bundle_params: {}).call }
-          .to change { ActionMailer::Base.deliveries.count }.by(0).
-            and change { ProjectItem.count }.by(0)
+          .to change { ActionMailer::Base.deliveries.count }.by(0)
+                                                            .and change { ProjectItem.count }.by(0)
 
         expect(ProjectItem::RegisterJob).not_to have_been_enqueued
       end

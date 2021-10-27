@@ -15,13 +15,16 @@ module Service::Searchable
   end
 
   def search(scope, filters = all_filters)
-    services = Service.search(query, **common_params.
-                              merge(where: filter_constr(filters, scope_constr(scope, category_constr)),
-                                    page: params[:page],
-                                    per_page: per_page,
-                                    order: ordering,
-                                    highlight: { tag: "<mark>" },
-                                    scope_results: ->(r) { r.includes(:scientific_domains, :providers, :target_users, :offers).with_attached_logo }))
+    services = Service.search(query, **common_params
+                              .merge(where: filter_constr(filters, scope_constr(scope, category_constr)),
+                                     page: params[:page],
+                                     per_page: per_page,
+                                     order: ordering,
+                                     highlight: { tag: "<mark>" },
+                                     scope_results: lambda { |r|
+                                                      r.includes(:scientific_domains, :providers, :target_users,
+                                                                 :offers).with_attached_logo
+                                                    }))
 
     offers = Offer.search(query,
                           where: { service_id: services.results.map(&:id) },
@@ -34,107 +37,112 @@ module Service::Searchable
   end
 
   def search_for_filters(scope, filters, current_filter)
-    filters = filters - [current_filter]
-    Service.search(query, **common_params.
-        merge(where: filter_constr(filters, scope_constr(scope, category_constr)),
-              aggs: [current_filter.index],
-              load: false))
+    filters -= [current_filter]
+    Service.search(query, **common_params
+        .merge(where: filter_constr(filters, scope_constr(scope, category_constr)),
+               aggs: [current_filter.index],
+               load: false))
   end
 
   def search_for_categories(scope, filters)
-    Service.search(query, **common_params.
-        merge(where: filter_constr(filters, scope_constr(scope)),
-              aggs: [:categories],
-              load: false))
+    Service.search(query, **common_params
+        .merge(where: filter_constr(filters, scope_constr(scope)),
+               aggs: [:categories],
+               load: false))
   end
 
   def filter_counters(scope, filters, current_filter)
     {}.tap do |hash|
-      unless current_filter.index.blank?
+      if current_filter.index.present?
         services = search_for_filters(scope, filters, current_filter)
-        services.aggregations[current_filter.index][current_filter.index]["buckets"].
-            inject(hash) { |h, e| h[e["key"]] = e["doc_count"]; h }
+        services.aggregations[current_filter.index][current_filter.index]["buckets"]
+                .each_with_object(hash) do |e, h|
+          h[e["key"]] = e["doc_count"]
+        end
       end
     end
   end
 
   private
-    def service_offers(services, offers)
-      offers.with_highlights.group_by { |o, _| o.service_id }.to_h
-    end
 
-    def query_present?
-      params[:q].present?
-    end
+  def service_offers(_services, offers)
+    offers.with_highlights.group_by { |o, _| o.service_id }.to_h
+  end
 
-    def query
-      query_present? ? params[:q] : "*"
-    end
+  def query_present?
+    params[:q].present?
+  end
 
-    def common_params
-      {
-          fields: [ "name^7", "tagline^3", "description", "offer_names", "provider_names",
-                    "resource_organisation_name"],
-          operator: "or",
-          match: :word_middle
-      }
-    end
+  def query
+    query_present? ? params[:q] : "*"
+  end
 
-    def scope_constr(scope, constr = {})
-      constr.tap { |c| c[:id] = scope.ids.uniq }
-    end
+  def common_params
+    {
+      fields: ["name^7", "tagline^3", "description", "offer_names", "provider_names",
+               "resource_organisation_name"],
+      operator: "or",
+      match: :word_middle
+    }
+  end
 
-    def category_constr(constr = {})
-      constr.tap { |c| c[:categories] = category.descendant_ids + [category.id] unless category.nil? }
-    end
+  def scope_constr(scope, constr = {})
+    constr.tap { |c| c[:id] = scope.ids.uniq }
+  end
 
-    def filter_constr(filters, constr = {})
-      filters.reduce(constr) { |c, f| c.merge(f.constraint) }
-    end
+  def category_constr(constr = {})
+    constr.tap { |c| c[:categories] = category.descendant_ids + [category.id] unless category.nil? }
+  end
 
-    def highlights(from_search)
-      result = from_search.try(:with_highlights) if (params[:q]&.size || 0) > 2
+  def filter_constr(filters, constr = {})
+    filters.reduce(constr) { |c, f| c.merge(f.constraint) }
+  end
 
-      Hash[result || []].transform_keys { |s| s.id } || {}
-    end
+  def highlights(from_search)
+    result = from_search.try(:with_highlights) if (params[:q]&.size || 0) > 2
 
-    def visible_filters
-      all_filters.select(&:visible?)
-    end
+    result || [].to_h.transform_keys(&:id) || {}
+  end
 
-    def all_filters
-      @all_filters ||= filter_classes.
-          map { |f| f.new(params: params) }.
-          tap { |all| all.each { |f| f.counters = filter_counters(scope, all, f) } }
-    end
+  def visible_filters
+    all_filters.select(&:visible?)
+  end
 
-    def active_filters
-      @active_filters ||= all_filters.flat_map { |f| f.active_filters }
-    end
+  def all_filters
+    @all_filters ||= filter_classes
+                     .map { |f| f.new(params: params) }
+                     .tap { |all| all.each { |f| f.counters = filter_counters(scope, all, f) } }
+  end
 
-    def store_query_params
-      session[:query] = {}
-      @filters.each do |filter|
-        session[:query][filter.field_name] = params[filter.field_name] unless params[filter.field_name].blank?
+  def active_filters
+    @active_filters ||= all_filters.flat_map(&:active_filters)
+  end
+
+  def store_query_params
+    session[:query] = {}
+    @filters.each do |filter|
+      session[:query][filter.field_name] = params[filter.field_name] if params[filter.field_name].present?
+      if params["#{filter.field_name}-all"].present?
         session[:query]["#{filter.field_name}-all"] =
-            params["#{filter.field_name}-all"] unless params["#{filter.field_name}-all"].blank?
+          params["#{filter.field_name}-all"]
       end
-      session[:query][:q] = params[:q] unless params[:q].blank?
-      session[:query][:sort] = params[:sort] unless params[:sort].blank?
-      session[:query][:per_page] = params[:per_page] unless params[:per_page].blank?
-      session[:query][:page] = params[:page] unless  params[:page].blank?
     end
+    session[:query][:q] = params[:q] if params[:q].present?
+    session[:query][:sort] = params[:sort] if params[:sort].present?
+    session[:query][:per_page] = params[:per_page] if params[:per_page].present?
+    session[:query][:page] = params[:page] if params[:page].present?
+  end
 
-    def filter_classes
-      [
-          Filter::ScientificDomain,
-          Filter::Provider,
-          Filter::TargetUser,
-          Filter::Platform,
-          Filter::Rating,
-          Filter::OrderType,
-          Filter::Location,
-          Filter::Tag
-      ]
-    end
+  def filter_classes
+    [
+      Filter::ScientificDomain,
+      Filter::Provider,
+      Filter::TargetUser,
+      Filter::Platform,
+      Filter::Rating,
+      Filter::OrderType,
+      Filter::Location,
+      Filter::Tag
+    ]
+  end
 end

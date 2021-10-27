@@ -14,7 +14,7 @@ class Project::Archive
 
   def call
     ready_in_jira! &&
-    archive!
+      archive!
   end
 
   def ready_in_jira!
@@ -22,13 +22,13 @@ class Project::Archive
     issue = client.Issue.find(@project.issue_key)
     trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_archived_id }
 
-    if trs.length > 0
+    if trs.length.positive?
       transition = issue.transitions.build
       transition.save!("transition" => { "id" => trs.first.id })
       @project.update(issue_id: issue.id, issue_status: :jira_active)
     else
       @project.jira_errored!
-      raise JIRATransitionSaveError.new(@project)
+      raise JIRATransitionSaveError, @project
     end
   end
 

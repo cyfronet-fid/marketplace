@@ -9,6 +9,6 @@ class CreateOMSAdministrations < ActiveRecord::Migration[6.0]
       t.timestamps null: false
     end
 
-    add_index :oms_administrations, [:oms_id, :user_id], unique: true
+    add_index :oms_administrations, %i[oms_id user_id], unique: true
   end
 end

@@ -8,21 +8,17 @@ describe Import::Resources do
   let(:faraday) { Faraday }
 
   def make_and_stub_eosc_registry(ids: [], dry_run: false, filepath: nil, log: false,
-                        default_upstream: nil)
+                                  default_upstream: nil)
     options = {
-        dry_run: dry_run,
-        ids: ids,
-        filepath: filepath,
-        faraday: faraday
+      dry_run: dry_run,
+      ids: ids,
+      filepath: filepath,
+      faraday: faraday
     }
 
-    unless log
-      options[:logger] = ->(_msg) { }
-    end
+    options[:logger] = ->(_msg) {} unless log
 
-    if default_upstream
-      options[:default_upstream] = default_upstream
-    end
+    options[:default_upstream] = default_upstream if default_upstream
 
     eosc_registry = Import::Resources.new(test_url, **options)
 
@@ -47,8 +43,10 @@ describe Import::Resources do
 
   let(:eosc_registry) { make_and_stub_eosc_registry(log: true) }
   let(:log_less_eosc_registry) { make_and_stub_eosc_registry(log: false) }
-  let!(:scientific_domain_other) { create(:scientific_domain, name: "Other",
-                                          eid: "scientific_subdomain-other-other") }
+  let!(:scientific_domain_other) do
+    create(:scientific_domain, name: "Other",
+                               eid: "scientific_subdomain-other-other")
+  end
   let!(:target_user_other) { create(:target_user, name: "Other", eid: "target_user-other") }
   let!(:storage) { create(:category, name: "Storage") }
   let!(:training) { create(:category, name: "Training & Support") }
@@ -83,7 +81,13 @@ describe Import::Resources do
     end
 
     it "should create an offer for a new services" do
-      expect { eosc_registry.call }.to output(/PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(3).and change { Offer.count }.by(3)
+      expect do
+        eosc_registry.call
+      end.to output(/PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/).to_stdout.and change {
+                                                                                              Service.count
+                                                                                            }.by(3).and change {
+                                                                                                          Offer.count
+                                                                                                        }.by(3)
       service = Service.first
 
       expect(service.offers).to_not be_nil
@@ -105,38 +109,62 @@ describe Import::Resources do
 
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal.phenomenal"], log: true)
 
-      expect { eosc_registry.call }.to output(/PROCESSED: 3, CREATED: 0, UPDATED: 0, NOT MODIFIED: 1$/).to_stdout.and change { Service.count }.by(0)
-      expect(Service.first.as_json(except: [:created_at, :updated_at])).to eq(service.as_json(except: [:created_at, :updated_at]))
+      expect do
+        eosc_registry.call
+      end.to output(/PROCESSED: 3, CREATED: 0, UPDATED: 0, NOT MODIFIED: 1$/).to_stdout.and change {
+                                                                                              Service.count
+                                                                                            }.by(0)
+      expect(Service.first.as_json(except: %i[created_at
+                                              updated_at])).to eq(service.as_json(except: %i[created_at updated_at]))
     end
 
     it "should update service which has upstream to external id and repeated providers" do
       service = create(:service, order_type: :other)
       create(:offer, service: service)
-      source = create(:service_source, eid: "phenomenal.phenomenal", service_id: service.id, source_type: "eosc_registry")
+      source = create(:service_source, eid: "phenomenal.phenomenal", service_id: service.id,
+                                       source_type: "eosc_registry")
       service.update!(upstream_id: source.id)
 
       service.reload
 
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal.phenomenal"], log: true)
 
-      expect { eosc_registry.call }.to output(/PROCESSED: 3, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(0)
-      expect(Service.first.as_json(except: [:created_at, :updated_at])).to eq(service.as_json(except: [:created_at, :updated_at]))
+      expect do
+        eosc_registry.call
+      end.to output(/PROCESSED: 3, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/).to_stdout.and change {
+                                                                                              Service.count
+                                                                                            }.by(0)
+      expect(Service.first.as_json(except: %i[created_at
+                                              updated_at])).to eq(service.as_json(except: %i[created_at updated_at]))
     end
 
     it "should not create an offer for updated services with offers" do
       service = create(:service, status: :published)
       create(:offer, service: service)
-      source = create(:service_source, eid: "phenomenal.phenomenal", service_id: service.id, source_type: "eosc_registry")
+      source = create(:service_source, eid: "phenomenal.phenomenal", service_id: service.id,
+                                       source_type: "eosc_registry")
       service.update!(upstream_id: source.id)
 
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal.phenomenal"], log: true)
 
-      expect { eosc_registry.call }.to output(/PROCESSED: 3, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(0).and change { Offer.count }.by(0)
+      expect do
+        eosc_registry.call
+      end.to output(/PROCESSED: 3, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/).to_stdout.and change {
+                                                                                              Service.count
+                                                                                            }.by(0).and change {
+                                                                                                          Offer.count
+                                                                                                        }.by(0)
     end
 
     it "should not change db if dry_run is set to true" do
       eosc_registry = make_and_stub_eosc_registry(dry_run: true, log: true)
-      expect { eosc_registry.call }.to output(/PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/).to_stdout.and change { Service.count }.by(0).and change { Provider.count }.by(0)
+      expect do
+        eosc_registry.call
+      end.to output(/PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/).to_stdout.and change {
+                                                                                              Service.count
+                                                                                            }.by(0).and change {
+                                                                                                          Provider.count
+                                                                                                        }.by(0)
     end
 
     it "should filter by ids if they are provided" do
@@ -157,7 +185,9 @@ describe Import::Resources do
     it "should gracefully handle error with logo download" do
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal.phenomenal"])
       allow(eosc_registry).to receive(:open).with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-                                        ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(OpenURI::HTTPError.new("", status: 404))
+                                                  ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(OpenURI::HTTPError.new(
+                                                                                                          "", status: 404
+                                                                                                        ))
       eosc_registry.call
       expect(Service.first.logo.attached?).to be_falsey
     end
@@ -165,7 +195,7 @@ describe Import::Resources do
     it "should gracefully handle error with logo download" do
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal.phenomenal"])
       allow(eosc_registry).to receive(:open).with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-                                        ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(Errno::EHOSTUNREACH.new)
+                                                  ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(Errno::EHOSTUNREACH.new)
       eosc_registry.call
       expect(Service.first.logo.attached?).to be_falsey
     end

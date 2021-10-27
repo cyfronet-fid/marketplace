@@ -14,14 +14,15 @@
 module FriendlyIdExtensions
   FriendlyId::FinderMethods.module_eval do
     private
-      def first_by_friendly_id(id)
-        field = (self.column_names & ["pid", "eid"]).first
-        unless field.blank?
-          find_by("#{friendly_id_config.query_field} = ? OR #{field} = ?", id, id)
-        else
-          find_by("#{friendly_id_config.query_field} = ?", id)
-        end
+
+    def first_by_friendly_id(id)
+      field = (column_names & %w[pid eid]).first
+      if field.blank?
+        find_by("#{friendly_id_config.query_field} = ?", id)
+      else
+        find_by("#{friendly_id_config.query_field} = ? OR #{field} = ?", id, id)
       end
+    end
   end
 end
 
@@ -32,8 +33,8 @@ FriendlyId.defaults do |config|
   # undesirable to allow as slugs. Edit this list as needed for your app.
   config.use :reserved
 
-  config.reserved_words = %w(new edit index session login logout users admin
-    stylesheets assets javascripts images)
+  config.reserved_words = %w[new edit index session login logout users admin
+                             stylesheets assets javascripts images]
 
   # This adds an option to to treat reserved words as conflicts rather than exceptions.
   # When there is no good candidate, a UUID will be appended, matching the existing

@@ -10,10 +10,10 @@ module ProjectItem::ProjectValidation
 
   def one_per_project
     project_items_services = Service.joins(offers: { project_items: :project })
-      .where(id: offer&.service_id, offers: { project_items: { project_id: [ project_id] } })
-      .where.not(offers: { project_items: { id: id } })
-      .count.positive?
+                                    .where(id: offer&.service_id, offers: { project_items: { project_id: [project_id] } })
+                                    .where.not(offers: { project_items: { id: id } })
+                                    .count.positive?
 
-    errors.add(:project, :repeated_in_project) unless !project_items_services.present?
+    errors.add(:project, :repeated_in_project) if project_items_services.present?
   end
 end

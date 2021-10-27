@@ -26,7 +26,8 @@ class Parameter::Multiselect < Parameter
     ActiveSupport::HashWithIndifferentAccess.new(
       id: id, type: type, label: name, description: hint,
       config: { values: cast(values), minItems: (min || 1), maxItems: (max || values.length) },
-      value_type: value_type, unit: unit)
+      value_type: value_type, unit: unit
+    )
   end
 
   def self.load(hsh)
@@ -36,9 +37,8 @@ class Parameter::Multiselect < Parameter
   end
 
   private
-    def duplicates
-      if values.uniq.length != values.length
-        errors.add(:values, "there are duplicate elements")
-      end
-    end
+
+  def duplicates
+    errors.add(:values, "there are duplicate elements") if values.uniq.length != values.length
+  end
 end

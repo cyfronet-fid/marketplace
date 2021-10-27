@@ -17,29 +17,30 @@ class ProjectItem::OfferValues
     id_to_part = all_parts.index_by { |p| p.id.to_s }
     values.each do |id, part_values|
       part = id_to_part[id.to_s]
-      part.update(part_values) if part
+      part&.update(part_values)
     end
   end
 
   def validate
-    all_parts.map { |p| p.validate }.all?
+    all_parts.map(&:validate).all?
   end
 
   def to_hash
     @main.to_hash.tap do |hsh|
-      hsh["bundled_services"] = @parts.map { |p| p.to_hash } if @parts.present?
+      hsh["bundled_services"] = @parts.map(&:to_hash) if @parts.present?
     end
   end
 
   private
-    def all_parts
-      @parts + [@main]
-    end
 
-    def bundled_parts
-      offer.bundled_offers.map do |offer|
-        ProjectItem::Part.new(offer: offer,
-                              parameters: offer.parameters.map { |p| p.dump })
-      end
+  def all_parts
+    @parts + [@main]
+  end
+
+  def bundled_parts
+    offer.bundled_offers.map do |offer|
+      ProjectItem::Part.new(offer: offer,
+                            parameters: offer.parameters.map(&:dump))
     end
+  end
 end

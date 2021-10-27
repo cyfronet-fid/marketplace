@@ -5,7 +5,7 @@ class LeadSection < ApplicationRecord
   TEMPLATES = {
     learn_more: "learn_more",
     use_case: "use_case"
-  }
+  }.freeze
 
   enum template: TEMPLATES
   friendly_id :title, use: :slugged

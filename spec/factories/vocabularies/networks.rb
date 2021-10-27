@@ -5,6 +5,6 @@ FactoryBot.define do
     sequence(:name) { |n| "Network #{n}" }
     sequence(:eid) { |n| "provider_network-#{n}" }
     sequence(:description) { |n| "Description #{n}" }
-    sequence(:extras) { |n| {} }
+    sequence(:extras) { |_n| {} }
   end
 end

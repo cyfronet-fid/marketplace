@@ -4,15 +4,9 @@ require "mini_magick"
 
 class Service::PcCreateOrUpdate
   class ConnectionError < StandardError
-    def initialize(msg)
-      super(msg)
-    end
   end
 
   class NotUpdatedError < StandardError
-    def initialize(msg)
-      super(msg)
-    end
   end
 
   def initialize(eosc_registry_service,
@@ -64,8 +58,9 @@ class Service::PcCreateOrUpdate
       elsif !source_id.nil?
         checked_service = Service.new(service_hash)
         if checked_service.invalid?
-          raise NotUpdatedError.new("Service is not updated, because parsed service data is invalid")
+          raise NotUpdatedError, "Service is not updated, because parsed service data is invalid"
         end
+
         Service::Update.new(mapped_service, service_hash).call
         mapped_service.update(upstream_id: source_id.id)
         mapped_service.sources.first.update(errored: nil)
@@ -74,10 +69,10 @@ class Service::PcCreateOrUpdate
         mapped_service.save!
         mapped_service
       else
-        raise NotUpdatedError.new("Service source_id is unrecognized.")
+        raise NotUpdatedError, "Service source_id is unrecognized."
       end
     else
-      raise NotUpdatedError.new("Service is not updated because there is a newer version imported.")
+      raise NotUpdatedError, "Service is not updated because there is a newer version imported."
     end
   rescue NotUpdatedError => e
     Rails.logger.warn "#{e} Message arrived, but service is not updated. Message #{@eosc_registry_service}"
@@ -87,6 +82,6 @@ class Service::PcCreateOrUpdate
     end
     mapped_service
   rescue Errno::ECONNREFUSED
-    raise ConnectionError.new("[WARN] Connection refused.")
+    raise ConnectionError, "[WARN] Connection refused."
   end
 end

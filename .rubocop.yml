@@ -22,3 +22,19 @@ Metrics/BlockLength:
     - refine
     - configure
     - describe
+    - context
+    - it
+
+Style/ClassAndModuleChildren:
+  Description: 'Checks style of children classes and modules.'
+  Enabled: false
+  EnforcedStyle: compact
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/MethodLength:
+  Description: 'Avoid methods longer than 30 lines of code.'
+  StyleGuide: '#short-methods'
+  Enabled: true
+  Max: 30

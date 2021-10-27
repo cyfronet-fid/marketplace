@@ -5,10 +5,10 @@ module Offerable
 
   included do
     enum order_type: {
-        open_access: "open_access",
-        fully_open_access: "fully_open_access",
-        order_required: "order_required",
-        other: "other"
+      open_access: "open_access",
+      fully_open_access: "fully_open_access",
+      order_required: "order_required",
+      other: "other"
     }
 
     validates :order_type, presence: true

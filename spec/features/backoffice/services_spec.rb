@@ -42,7 +42,6 @@ RSpec.feature "Services in backoffice" do
       access_type = create(:access_type)
       access_mode = create(:access_mode)
 
-
       visit backoffice_services_path
       click_on "Create new Resource"
 
@@ -94,9 +93,9 @@ RSpec.feature "Services in backoffice" do
 
       fill_in "service_sources_attributes_0_eid", with: "12345a"
 
-      expect { click_on "Create Resource" }.
-        to change { user.owned_services.count }.by(1)
-               .and change { Offer.count }.by(1)
+      expect { click_on "Create Resource" }
+        .to change { user.owned_services.count }.by(1)
+                                                .and change { Offer.count }.by(1)
 
       expect(page).to have_content("service name")
       expect(page).to have_content("service description")
@@ -149,7 +148,6 @@ RSpec.feature "Services in backoffice" do
 
       click_on "Details"
 
-
       expect(page).to have_content("jane@doe.com")
       expect(page).to have_content("johny@does.com")
       expect(page).to have_content("john@doe.com")
@@ -178,8 +176,8 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
 
       expect(page)
-          .to have_content("This resource has no offers. " \
-                           "Add one offer to make possible for a user to Access the service.")
+        .to have_content("This resource has no offers. " \
+                         "Add one offer to make possible for a user to Access the service.")
     end
 
     scenario "I can preview service before create" do
@@ -221,8 +219,8 @@ RSpec.feature "Services in backoffice" do
       select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
 
-      expect { click_on "Create Resource" }.
-        to change { user.owned_services.count }.by(0)
+      expect { click_on "Create Resource" }
+        .to change { user.owned_services.count }.by(0)
 
       expect(page).to have_content("Logo format you're trying to attach is not supported.")
     end
@@ -330,7 +328,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field("Name")
       expect(page).to have_field("Description")
 
-      expect {
+      expect do
         fill_in "Name", with: "new offer 1"
         fill_in "Description", with: "test offer"
         find("li", text: "Input").click
@@ -344,7 +342,7 @@ RSpec.feature "Services in backoffice" do
         end
 
         click_on "Create Offer"
-      }.to change { service.offers.count }.by(1)
+      end.to change { service.offers.count }.by(1)
 
       service.reload
       expect(service.offers.last.name).to eq("new offer 1")
@@ -426,20 +424,20 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
       click_on "Add new offer"
 
-      expect {
+      expect do
         fill_in "Description", with: "test offer"
         click_on "Create Offer"
-      }.to change { service.offers.count }.by(0)
+      end.to change { service.offers.count }.by(0)
     end
 
     scenario "I can edit offer", js: true do
       service = create(:service, name: "my service", status: :draft)
       parameter = build(:input_parameter,
-                         name: "Number of CPU Cores",
-                         hint: "Select number of cores you want",
-                         value_type: "integer")
+                        name: "Number of CPU Cores",
+                        hint: "Select number of cores you want",
+                        value_type: "integer")
       offer = create(:offer, name: "offer1", description: "desc", service: service,
-                     parameters: [parameter])
+                             parameters: [parameter])
       create(:offer, service: service)
 
       service.reload
@@ -457,11 +455,11 @@ RSpec.feature "Services in backoffice" do
     scenario "I can delete existed parameters", js: true do
       service = create(:service, name: "my service", status: :draft)
       parameter = build(:input_parameter,
-                         name: "Number of CPU Cores",
-                         hint: "Select number of cores you want",
-                         value_type: "integer")
+                        name: "Number of CPU Cores",
+                        hint: "Select number of cores you want",
+                        value_type: "integer")
       offer = create(:offer, name: "offer1", description: "desc", service: service,
-                     parameters: [parameter, parameter])
+                             parameters: [parameter, parameter])
       create(:offer, service: service)
 
       visit backoffice_service_path(service)
@@ -490,7 +488,6 @@ RSpec.feature "Services in backoffice" do
 
       expect(service.offers.first.reload.parameters).to eq([])
     end
-
 
     scenario "I can delete offer if they are more than 2" do
       service = create(:service, name: "my service")
@@ -665,7 +662,7 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "I can edit offer OMS", js: true do
-      oms1 = create(:oms, name: "OMS1", custom_params: { "foo": { "mandatory": true, "default": "baz" } })
+      oms1 = create(:oms, name: "OMS1", custom_params: { foo: { mandatory: true, default: "baz" } })
       oms2 = create(:oms, name: "OMS2", custom_params: {})
       service = create(:service, name: "my service", status: :draft)
       offer = create(:offer, name: "offer1", description: "desc", service: service, internal: false)
@@ -702,7 +699,7 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "I can edit default offer OMS", js: true do
-      oms1 = create(:oms, name: "OMS1", custom_params: { "foo": { "mandatory": true, "default": "baz" } })
+      oms1 = create(:oms, name: "OMS1", custom_params: { foo: { mandatory: true, default: "baz" } })
       oms2 = create(:oms, name: "OMS2", custom_params: {})
       service = create(:service, name: "my service", status: :draft)
       offer = create(:offer, name: "offer1", description: "desc", service: service, internal: false)

@@ -11,7 +11,8 @@ class Parameter::Constant < Parameter
   def dump
     ActiveSupport::HashWithIndifferentAccess.new(
       id: id, type: type, label: name, description: hint,
-      value: value, value_type: value_type)
+      value: value, value_type: value_type
+    )
   end
 
   def self.load(hsh)
@@ -24,9 +25,10 @@ class Parameter::Constant < Parameter
   end
 
   private
-    def correct_value_type
-      Integer(value) if value_type == "integer"
-    rescue
-      errors.add(:value, "is not an integer")
-    end
+
+  def correct_value_type
+    Integer(value) if value_type == "integer"
+  rescue StandardError
+    errors.add(:value, "is not an integer")
+  end
 end

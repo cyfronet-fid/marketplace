@@ -11,8 +11,8 @@ RSpec.describe "Backoffice: manage providers" do
     it "I can delete provider" do
       category = create(:provider)
 
-      expect { delete backoffice_provider_path(category) }.
-        to change { Provider.count }.by(-1)
+      expect { delete backoffice_provider_path(category) }
+        .to change { Provider.count }.by(-1)
     end
 
     it "should call permitted_attributes with provider with form upstream_id" do

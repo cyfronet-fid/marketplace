@@ -7,7 +7,7 @@ class Probes::ProbesJob < ApplicationJob
   end
 
   def perform(body)
-    url = Mp::Application.config.recommender_host + "/user_actions"
-    Faraday.post url, body, { "Content-Type": "application/json", "Accept": "application/json" }
+    url = "#{Mp::Application.config.recommender_host}/user_actions"
+    Faraday.post url, body, { "Content-Type": "application/json", Accept: "application/json" }
   end
 end

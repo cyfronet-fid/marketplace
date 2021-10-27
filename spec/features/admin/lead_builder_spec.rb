@@ -60,8 +60,8 @@ RSpec.feature "Marketplace lead builder" do
       fill_in "Body", with: "New body"
       fill_in "Url", with: "https://test.test"
       attach_file("lead[picture]",
-                   File.join(Rails.root, "spec", "factories",
-                             "images", "test.png"), visible: false)
+                  File.join(Rails.root, "spec", "factories",
+                            "images", "test.png"), visible: false)
       click_on "Create Lead"
 
       expect(page).to have_current_path(admin_leads_path)

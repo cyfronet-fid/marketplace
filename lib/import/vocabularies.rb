@@ -26,13 +26,13 @@ class Import::Vocabularies
     PROVIDER_STRUCTURE_TYPE: Vocabulary::StructureType,
     PROVIDER_MERIL_SCIENTIFIC_DOMAIN: Vocabulary::MerilScientificDomain,
     PROVIDER_MERIL_SCIENTIFIC_SUBDOMAIN: Vocabulary::MerilScientificDomain
-  }
+  }.freeze
 
   def initialize(eosc_registry_base_url,
                  dry_run: true,
                  filepath: nil,
                  faraday: Faraday,
-                 logger: ->(msg) { puts msg },
+                 logger: ->(msg) { Rails.logger.debug msg },
                  token: nil)
     @eosc_registry_base_url = eosc_registry_base_url
     @dry_run = dry_run
@@ -58,8 +58,8 @@ class Import::Vocabularies
 
     updated = 0
     created = 0
-    total_vocabularies_count = (@vocabularies&.reduce(0) { |p, (k, v)| p + v.size }).to_i
-    not_implemented_count = (@not_implemented&.reduce(0) { |p, (k, v)| p + v.size }).to_i
+    total_vocabularies_count = (@vocabularies&.reduce(0) { |p, (_k, v)| p + v.size }).to_i
+    not_implemented_count = (@not_implemented&.reduce(0) { |p, (_k, v)| p + v.size }).to_i
     output = []
 
     log "[INFO] Vocabularies types #{@not_implemented.keys} are not implemented and won't be imported"
@@ -75,27 +75,23 @@ class Import::Vocabularies
 
         if mapped_vocabulary.blank?
           created += 1
-          log "Adding [NEW] vocabulary type: #{clazz(type)}, " +
+          log "Adding [NEW] vocabulary type: #{clazz(type)}, " \
               "name: #{updated_vocabulary_data[:name]}, eid: #{updated_vocabulary_data[:eid]}"
-          unless @dry_run
-            clazz(type).create!(updated_vocabulary_data)
-          end
+          clazz(type).create!(updated_vocabulary_data) unless @dry_run
         else
           updated += 1
-          log "Updating [EXISTING] vocabulary type: #{clazz(type)}, " +
-                "name: #{updated_vocabulary_data[:name]}, eid: #{updated_vocabulary_data[:eid]}"
-          unless @dry_run
-            mapped_vocabulary.update!(updated_vocabulary_data)
-          end
+          log "Updating [EXISTING] vocabulary type: #{clazz(type)}, " \
+              "name: #{updated_vocabulary_data[:name]}, eid: #{updated_vocabulary_data[:eid]}"
+          mapped_vocabulary.update!(updated_vocabulary_data) unless @dry_run
         end
       rescue ActiveRecord::RecordInvalid => e
-        log "[WARN] Vocabulary type: #{clazz(type)}, " +
-              "name: #{updated_vocabulary_data[:name]} eid: #{updated_vocabulary_data[:eid]} cannot be created. #{e}"
+        log "[WARN] Vocabulary type: #{clazz(type)}, " \
+            "name: #{updated_vocabulary_data[:name]} eid: #{updated_vocabulary_data[:eid]} cannot be created. #{e}"
       end
     end
 
-    log "TOTAL: #{total_vocabularies_count}, CREATED: #{created}, " +
-          "UPDATED: #{updated}, UNPROCESSED: #{not_implemented_count}"
+    log "TOTAL: #{total_vocabularies_count}, CREATED: #{created}, " \
+        "UPDATED: #{updated}, UNPROCESSED: #{not_implemented_count}"
 
     unless @filepath.nil?
       open(@filepath, "w") do |file|
@@ -105,11 +101,12 @@ class Import::Vocabularies
   end
 
   private
-    def clazz(type)
-      ACCEPTED_VOCABULARIES[type.to_sym]
-    end
 
-    def log(msg)
-      @logger.call(msg)
-    end
+  def clazz(type)
+    ACCEPTED_VOCABULARIES[type.to_sym]
+  end
+
+  def log(msg)
+    @logger.call(msg)
+  end
 end

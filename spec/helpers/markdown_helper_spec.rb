@@ -8,7 +8,7 @@ describe MarkdownHelper do
   end
 
   it "produces safe html" do
-    expect(markdown("<script>alert('js injected')</script>")).
-      to match(/alert\('js injected'\)/)
+    expect(markdown("<script>alert('js injected')</script>"))
+      .to match(/alert\('js injected'\)/)
   end
 end

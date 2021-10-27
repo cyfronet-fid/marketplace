@@ -8,17 +8,18 @@ class Filter::Status < Filter
   end
 
   private
-    def fetch_options
-      [ { name: "Any", id: nil } ] +
+
+  def fetch_options
+    [{ name: "Any", id: nil }] +
       Service.statuses.map do |key, value|
         {
           name: I18n.t("simple_form.options.service.status.#{key}"),
           id: value
         }
       end
-    end
+  end
 
-    def where_constraint
-      { @index.to_sym => value  }
-    end
+  def where_constraint
+    { @index.to_sym => value }
+  end
 end

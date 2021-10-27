@@ -10,7 +10,7 @@ RSpec.describe Attribute do
                                "value_type" => "string",
                                "value" => "b",
                                "config" => {
-                                   "values" => ["a", "b", "c"]
+                                 "values" => %w[a b c]
                                })
     expect(attr.config_valid?).to be true
     expect(attr.value_valid?).to be true
@@ -22,7 +22,7 @@ RSpec.describe Attribute do
                                "type" => "select",
                                "value_type" => "string",
                                "config" => {
-                                   "values" => ["a", "b", "c"]
+                                 "values" => %w[a b c]
                                })
     attr.value_from_param(["a"])
   end
@@ -37,7 +37,7 @@ RSpec.describe Attribute do
     expect(attr.value_valid?).to be true
   end
 
-  # TODO - known issue for now. Rails auto-coerces to numeric types. Bring this test back once fixed
+  # TODO: - known issue for now. Rails auto-coerces to numeric types. Bring this test back once fixed
   # it "creates attribute number string assigned to string" do
   #   attr = Attribute.from_json({
   #                                  "id" => "id7",
@@ -69,16 +69,16 @@ RSpec.describe Attribute do
   end
 
   it "fails on invalid attribute type" do
-    expect {
+    expect do
       Attribute.from_json("id" => "id1",
                           "label" => "Attribute 1",
                           "type" => "select",
                           "value_type" => "fail",
                           "value" => "b",
                           "config" => {
-                              "values" => ["a", "b", "c"]
+                            "values" => %w[a b c]
                           })
-    }.to raise_exception(JSON::Schema::ValidationError)
+    end.to raise_exception(JSON::Schema::ValidationError)
   end
 
   it "creates correct integer select with value from json" do
@@ -88,7 +88,7 @@ RSpec.describe Attribute do
                                "value_type" => "integer",
                                "value" => 1,
                                "config" => {
-                                   "values" => [1, 2, 3]
+                                 "values" => [1, 2, 3]
                                })
     expect(attr.config_valid?).to be true
     expect(attr.value_valid?).to be true
@@ -101,7 +101,7 @@ RSpec.describe Attribute do
                                "value_type" => "integer",
                                "value" => [1, 2, 3],
                                "config" => {
-                                   "values" => [1, 2, 3]
+                                 "values" => [1, 2, 3]
                                })
     expect(attr.config_valid?).to be true
     expect(attr.value_valid?).to be true
@@ -112,9 +112,9 @@ RSpec.describe Attribute do
                                "label" => "Attribute 1",
                                "type" => "multiselect",
                                "value_type" => "string",
-                               "value" => ["1", "2"],
+                               "value" => %w[1 2],
                                "config" => {
-                                   "values" => ["1", "2", "3"]
+                                 "values" => %w[1 2 3]
                                })
     expect(attr.config_valid?).to be true
     expect(attr.value_valid?).to be true
@@ -126,12 +126,11 @@ RSpec.describe Attribute do
                                "type" => "range-property",
                                "value_type" => "string",
                                "value" => {
-                                   "minimum" => "1312",
-                                   "maximum" => "312312"
+                                 "minimum" => "1312",
+                                 "maximum" => "312312"
                                })
     expect(attr.value_valid?).to be true
   end
-
 
   it "creates correct number range with value from json" do
     attr = Attribute.from_json("id" => "id1",
@@ -140,27 +139,26 @@ RSpec.describe Attribute do
                                "value_type" => "integer",
                                "value" => 1,
                                "config" => {
-                                   "minimum" => 1,
-                                   "maximum" => 100,
+                                 "minimum" => 1,
+                                 "maximum" => 100
                                })
     expect(attr.value_valid?).to be true
   end
 
   it "creates correct number range with invalid value from json" do
-    expect {
+    expect do
       Attribute.from_json("id" => "id1",
                           "label" => "Attribute 1",
                           "type" => "range",
                           "value_type" => "number",
                           "value" => 0,
                           "config" => {
-                              "minimum" => 1,
-                              "maximum" => 100,
-                              "exclusiveMinimum" => true
+                            "minimum" => 1,
+                            "maximum" => 100,
+                            "exclusiveMinimum" => true
                           })
-    }.to raise_exception(JSON::Schema::ValidationError)
+    end.to raise_exception(JSON::Schema::ValidationError)
   end
-
 
   it "integer attribute should not raise when created with non integer value [,], should not validate" do
     expect(Attribute.from_json("id" => "id1",
@@ -169,7 +167,6 @@ RSpec.describe Attribute do
                                "value_type" => "integer",
                                "value" => "13,2").value_valid?).to be_falsey
   end
-
 
   it "integer attribute should not raise when created with non integer value [.], should not validate" do
     expect(Attribute.from_json("id" => "id1",
@@ -186,9 +183,9 @@ RSpec.describe Attribute do
                                "value_type" => "integer",
                                "value" => "13,2",
                                "config" => {
-                                   "minimum" => 1,
-                                   "maximum" => 100,
-                                   "exclusiveMinimum" => true
+                                 "minimum" => 1,
+                                 "maximum" => 100,
+                                 "exclusiveMinimum" => true
                                }).value_valid?).to be_falsey
   end
 
@@ -199,9 +196,9 @@ RSpec.describe Attribute do
                                "value_type" => "integer",
                                "value" => "13.2",
                                "config" => {
-                                   "minimum" => 1,
-                                   "maximum" => 100,
-                                   "exclusiveMinimum" => true
+                                 "minimum" => 1,
+                                 "maximum" => 100,
+                                 "exclusiveMinimum" => true
                                }).value_valid?).to be_falsey
   end
 
@@ -212,7 +209,7 @@ RSpec.describe Attribute do
                                "value_type" => "string",
                                "value" => "1,2",
                                "config" => {
-                                   "values" => [1, 2, 3]
+                                 "values" => [1, 2, 3]
                                })
     expect(attr.value_valid?).to be_falsey
   end
@@ -221,6 +218,6 @@ RSpec.describe Attribute do
     expect { Attribute.from_json("id" => "id1") }.to raise_exception(JSON::Schema::ValidationError)
   end
 
-  # TODO test individual attribute types in their respective specs
+  # TODO: test individual attribute types in their respective specs
   # TODO much more testing
 end

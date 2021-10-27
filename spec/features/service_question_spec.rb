@@ -46,7 +46,6 @@ RSpec.feature "Question about service" do
       # close shepherd's tour
       click_on "I'll do it later"
 
-
       click_on "Ask a question about this resource?"
 
       click_on "SEND"

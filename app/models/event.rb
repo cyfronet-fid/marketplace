@@ -32,28 +32,29 @@ class Event < ApplicationRecord
   end
 
   private
-    def updates_schema?
-      JSON::Validator.validate!(UPDATES_SCHEME, updates)
-    rescue JSON::Schema::ValidationError => e
-      errors.add(:updates, e.message)
-    end
 
-    def call_triggers
-      Event::CallTriggers.new(self).call
-    end
+  def updates_schema?
+    JSON::Validator.validate!(UPDATES_SCHEME, updates)
+  rescue JSON::Schema::ValidationError => e
+    errors.add(:updates, e.message)
+  end
 
-    UPDATES_SCHEME = {
-      type: "array",
-      items: {
-        type: "object",
-        minItems: 1,
-        properties: {
-          field: { type: "string" },
-          before: {},
-          after: {},
-        },
-        additionalProperties: false,
-        required: [:field, :before, :after]
-      }
+  def call_triggers
+    Event::CallTriggers.new(self).call
+  end
+
+  UPDATES_SCHEME = {
+    type: "array",
+    items: {
+      type: "object",
+      minItems: 1,
+      properties: {
+        field: { type: "string" },
+        before: {},
+        after: {}
+      },
+      additionalProperties: false,
+      required: %i[field before after]
     }
+  }.freeze
 end

@@ -18,22 +18,18 @@ module ProjectItemsHelper
   end
 
   def webpage(project_item)
-    if project_item.order_url.blank?
-      project_item.service.webpage_url
-    else
-      project_item.order_url
-    end
+    project_item.order_url.presence || project_item.service.webpage_url
   end
 
   def project_item_status(project_item)
     if project_item.in_progress?
       content_tag(:i, nil, class: "fas fa-spinner",
-                  "data-toggle": "tooltip", "data-placement": "auto left",
-                  "title": "Status: #{t "project_items.status.#{project_item.status_type}"}")
+                           "data-toggle": "tooltip", "data-placement": "auto left",
+                           title: "Status: #{t "project_items.status.#{project_item.status_type}"}")
     else
       content_tag(:i, nil, class: "fas fa-circle status-#{project_item.status_type}",
-                  "data-toggle": "tooltip", "data-placement": "auto left",
-                  "title": "Status: #{t "project_items.status.#{project_item.status_type}"}")
+                           "data-toggle": "tooltip", "data-placement": "auto left",
+                           title: "Status: #{t "project_items.status.#{project_item.status_type}"}")
     end
   end
 
@@ -44,8 +40,8 @@ module ProjectItemsHelper
 
   def service_providers_list(project_item)
     organisation = project_item.service.resource_organisation
-    providers = project_item.service.providers.reject { |p| p == organisation }.
-      map { |p| link_to(p.name, services_path(providers: p.id)) }
+    providers = project_item.service.providers.reject { |p| p == organisation }
+                            .map { |p| link_to(p.name, services_path(providers: p.id)) }
     safe_join(providers, ", ")
   end
 end

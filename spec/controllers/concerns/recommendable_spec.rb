@@ -5,6 +5,7 @@ require "rails_helper"
 RSpec.describe ApplicationController, type: :controller do
   controller do
     attr_accessor :params
+
     include Service::Recommendable
   end
 

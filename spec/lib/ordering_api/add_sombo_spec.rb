@@ -15,7 +15,8 @@ describe OrderingApi::AddSombo do
   end
 
   it "doesn't create SOMBO OMS and SOMBO admin if they exist" do
-    admin = create(:user, first_name: "SOMBO admin", last_name: "SOMBO admin", email: "sombo@sombo.com", uid: "iamasomboadmin")
+    admin = create(:user, first_name: "SOMBO admin", last_name: "SOMBO admin", email: "sombo@sombo.com",
+                          uid: "iamasomboadmin")
     create(:oms, name: "SOMBO", administrators: [admin])
 
     described_class.new.call

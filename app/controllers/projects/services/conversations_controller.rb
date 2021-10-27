@@ -32,11 +32,12 @@ class Projects::Services::ConversationsController < ApplicationController
   end
 
   private
-    def load_projects!
-      @projects = policy_scope(Project).order(:name)
-    end
 
-    def load_messages!
-      @messages = policy_scope(@project_item.messages).order(:created_at)
-    end
+  def load_projects!
+    @projects = policy_scope(Project).order(:name)
+  end
+
+  def load_messages!
+    @messages = policy_scope(@project_item.messages).order(:created_at)
+  end
 end

@@ -9,10 +9,14 @@ RSpec.describe Api::V1::OfferPolicy, type: :policy do
   let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
   let!(:other_data_admin_user) { create(:user) }
   let(:other_data_admin) { create(:data_administrator, email: other_data_admin_user.email) }
-  let!(:service) { create(:service,
-                          resource_organisation: create(:provider, data_administrators: [data_administrator])) }
-  let!(:deleted_service) { create(:service, status: :deleted,
-                                  resource_organisation: create(:provider, data_administrators: [data_administrator])) }
+  let!(:service) do
+    create(:service,
+           resource_organisation: create(:provider, data_administrators: [data_administrator]))
+  end
+  let!(:deleted_service) do
+    create(:service, status: :deleted,
+                     resource_organisation: create(:provider, data_administrators: [data_administrator]))
+  end
   let!(:offer) { create(:offer, service: service, status: "published") }
   let!(:draft_offer) { create(:offer, service: service, status: "draft") }
   let!(:deleted_offer) { create(:offer, service: service, status: "deleted") }

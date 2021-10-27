@@ -8,6 +8,6 @@ class CreateServiceResearchAreas < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
-    add_index :service_research_areas, [:service_id, :research_area_id], unique: true
+    add_index :service_research_areas, %i[service_id research_area_id], unique: true
   end
 end

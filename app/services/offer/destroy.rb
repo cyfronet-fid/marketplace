@@ -12,9 +12,7 @@ class Offer::Destroy
     else
       @offer.destroy
     end
-    if @service.offers.published.size == 1
-      @service.offers.published.last.update(order_type: @service&.order_type)
-    end
+    @service.offers.published.last.update(order_type: @service&.order_type) if @service.offers.published.size == 1
     @service.reindex
     true
   end

@@ -11,8 +11,8 @@ namespace :whitelabel do
 
   task migrate_learn_more: :environment do
     learn_more = LeadSection.find_or_create_by(slug: I18n.t("lead.learn_more.slug"),
-                                    title: I18n.t("lead.learn_more.title"),
-                                    template: "learn_more")
+                                               title: I18n.t("lead.learn_more.title"),
+                                               template: "learn_more")
 
     lead1 = build_new_lead("lead.learn_more.initiative", learn_more, 1)
     lead2 = build_new_lead("lead.learn_more.project", learn_more, 2)
@@ -28,8 +28,8 @@ namespace :whitelabel do
 
   task migrate_use_cases: :environment do
     use_cases = LeadSection.find_or_create_by(slug: I18n.t("lead.use_cases.slug"),
-                                 title: I18n.t("lead.use_cases.title"),
-                                 template: "use_case")
+                                              title: I18n.t("lead.use_cases.title"),
+                                              template: "use_case")
 
     lead1 = build_new_lead("lead.use_cases.clarin", use_cases, 1)
     lead2 = build_new_lead("lead.use_cases.earth_observation", use_cases, 2)
@@ -38,18 +38,15 @@ namespace :whitelabel do
     lead2.save!
   end
 
-
   def attach_logos(collection)
     collection.each do |record|
-      if has_logo?(record)
-        record.logo.attach(io: File.open(logo_path(record.name.split.first)), filename: "logo.png")
-      end
+      record.logo.attach(io: File.open(logo_path(record.name.split.first)), filename: "logo.png") if has_logo?(record)
     end
   end
 
   def build_new_lead(name, section, position)
     Lead.new(header: I18n.t("#{name}.header"),
-             body:  I18n.t("#{name}.body"),
+             body: I18n.t("#{name}.body"),
              url: I18n.t("#{name}.url"),
              position: position,
              lead_section: section)

@@ -1,54 +1,60 @@
 # frozen_string_literal: true
 
 class Country
-  SCHENGEN = ["AT", "BE", "CH", "CZ", "DE", "DK",
-              "EE", "GR", "ES", "FI", "FR", "HU",
-              "IS", "IT", "LI", "LT", "LU", "LV",
-              "MT", "NL", "NO", "PL", "PT", "SE", "SI", "SK"].freeze
+  SCHENGEN = %w[AT BE CH CZ DE DK
+                EE GR ES FI FR HU
+                IS IT LI LT LU LV
+                MT NL NO PL PT SE SI SK].freeze
 
-  REGIONS = ["WW", "EO", "EU", "EZ", "AH"].freeze
+  REGIONS = %w[WW EO EU EZ AH].freeze
 
   ISO3166::Data.register(
     alpha2: "WW",
     name: "World",
     translations: {
-        "en" => "Worldwide"
-    })
+      "en" => "Worldwide"
+    }
+  )
 
   ISO3166::Data.register(
     alpha2: "EO",
     name: "Europe",
     translations: {
-        "en" => "Europe"
-    })
+      "en" => "Europe"
+    }
+  )
 
   ISO3166::Data.register(
     alpha2: "EU",
     name: "European Union",
     translations: {
-        "en" => "European Union"
-    })
+      "en" => "European Union"
+    }
+  )
 
   ISO3166::Data.register(
     alpha2: "EZ",
     name: "Euro Zone",
     translations: {
-        "en" => "Euro Zone"
-    })
+      "en" => "Euro Zone"
+    }
+  )
 
   ISO3166::Data.register(
     alpha2: "AH",
     name: "Schengen Area",
     translations: {
-        "en" => "Schengen Area"
-    })
+      "en" => "Schengen Area"
+    }
+  )
 
   ISO3166::Data.register(
     alpha2: "N/E",
     name: "non-European",
     translations: {
-        "en" => "non-European"
-    })
+      "en" => "non-European"
+    }
+  )
 
   ISO3166::Data.unregister("GB")
   ISO3166::Data.unregister("GR")
@@ -60,8 +66,9 @@ class Country
     eu_member: false,
     eea_member: false,
     translations: {
-        "en" => "United Kingdom of Great Britain and Northern Ireland"
-    })
+      "en" => "United Kingdom of Great Britain and Northern Ireland"
+    }
+  )
 
   ISO3166::Data.register(
     alpha2: "EL",
@@ -70,19 +77,16 @@ class Country
     eu_member: true,
     eea_member: true,
     translations: {
-        "en" => "Greece"
-    })
+      "en" => "Greece"
+    }
+  )
 
   class << self
     def for(value)
-      if value.is_a?(ISO3166::Country)
-        return value
-      end
+      return value if value.is_a?(ISO3166::Country)
 
       searched_country = ISO3166::Country.new(value)
-      if searched_country.present? || value.blank?
-        return searched_country
-      end
+      return searched_country if searched_country.present? || value.blank?
 
       Sentry.capture_message("Country with alpha2 code: #{value}, couldn't be found")
       ISO3166::Country.new("N/E")
@@ -90,11 +94,13 @@ class Country
 
     def load(code)
       return nil if code.blank?
+
       Country.for(code)
     end
 
     def dump(obj)
       return nil if obj.blank?
+
       obj.alpha2
     end
 
@@ -108,23 +114,24 @@ class Country
     end
 
     def countries_for_region(region)
-      if region == "World"
+      case region
+      when "World"
         Country.world
-      elsif region == "European Union"
+      when "European Union"
         Country.european_union
-      elsif region == "Schengen Area"
+      when "Schengen Area"
         Country.schengen_area
-      elsif region == "Europe"
+      when "Europe"
         ISO3166::Country.find_all_countries_by_region("Europe")
-      elsif region == "Euro Zone"
-        ISO3166::Country.find_all_countries_by_currency_code("EUR").select { |c| c.in_eu? }
+      when "Euro Zone"
+        ISO3166::Country.find_all_countries_by_currency_code("EUR").select(&:in_eu?)
       else
         ISO3166::Country.find_all_countries_by_region(region)
       end
     end
 
     def european_union
-      ISO3166::Country.all.select { |c| c.in_eu? }
+      ISO3166::Country.all.select(&:in_eu?)
     end
 
     def world
@@ -148,7 +155,7 @@ class Country
     end
 
     def convert_name_to_code(name)
-      Country.dump(Country.find_by_name(name))
+      Country.dump(Country.find_by(name: name))
     end
 
     def convert_to_regions_add_country(name)
@@ -157,16 +164,14 @@ class Country
 
     def regions_for_country(country)
       regions = []
-      if Country.world.include?(Country.find_by_name(country))
-        regions.push(convert_name_to_code("World"))
-      end
-      if Country.european_union.include?(Country.find_by_name(country))
+      regions.push(convert_name_to_code("World")) if Country.world.include?(Country.find_by(name: country))
+      if Country.european_union.include?(Country.find_by(name: country))
         regions.push(convert_name_to_code("European Union"))
       end
-      if Country.schengen_area.include?(Country.find_by_name(country))
+      if Country.schengen_area.include?(Country.find_by(name: country))
         regions.push(convert_name_to_code("Schengen Area"))
       end
-      if ISO3166::Country.find_all_countries_by_region("Europe").include?(Country.find_by_name(country))
+      if ISO3166::Country.find_all_countries_by_region("Europe").include?(Country.find_by(name: country))
         regions.push(convert_name_to_code("Europe"))
       end
       regions.map { |r| r }
@@ -177,12 +182,14 @@ class Country
     class << self
       def load(code)
         return nil if code.blank?
+
         code.map { |c| Country.for(c) }
       end
 
       def dump(obj)
         return nil if obj.blank?
-        obj.compact.map { |o| o.alpha2 }
+
+        obj.compact.map(&:alpha2)
       end
 
       # def push(obj)

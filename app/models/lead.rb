@@ -12,10 +12,11 @@ class Lead < ApplicationRecord
   validates :body, presence: true
   validates :picture, blob: { content_type: :image }
   validates :picture, presence: true
-  validate :picture_variable?, on: [:create, :update]
+  validate :picture_variable?, on: %i[create update]
 
   private
-    def picture_variable?
-      picture.variable? if picture.present?
-    end
+
+  def picture_variable?
+    picture.variable? if picture.present?
+  end
 end

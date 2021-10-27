@@ -15,23 +15,22 @@ module Parentable
     object_array = [self]
     i = 0
     current = self
-    begin
+    loop do
       if current.parent.present?
-        object_array << current.parent unless current.parent.blank?
+        object_array << current.parent if current.parent.present?
         current = current.parent
       end
       i += 1
-    end while i < level_up && current.parent.present?
+      break unless i < level_up && current.parent.present?
+    end
     method.present? ? object_array.map(&method.to_sym).join(separator) : object_array
   end
 
   module ClassMethods
-    def child_names(records = self.arrange, parent_name = "", result = [])
+    def child_names(records = arrange, parent_name = "", result = [])
       records.each do |r, sub_r|
         result << [name_with_path(parent_name, r.name), r]
-        unless sub_r.blank?
-          child_names(sub_r, name_with_path(parent_name, r.name), result)
-        end
+        child_names(sub_r, name_with_path(parent_name, r.name), result) if sub_r.present?
       end
       result
     end

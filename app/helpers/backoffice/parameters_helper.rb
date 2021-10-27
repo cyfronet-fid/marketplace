@@ -9,7 +9,7 @@ module Backoffice::ParametersHelper
       concat content_tag(:button, content_tag(:i, "", class: "fas fa-chevron-right"),
                          class: "float-right add-button", type: "button",
                          id: "attributes-list-button",
-                         "disabled": true,
+                         disabled: true,
                          "data-target": "offer.button",
                          "data-action": "click->offer#add")
       concat content_tag(:span)
