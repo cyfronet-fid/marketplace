@@ -7,7 +7,7 @@ class Services::OffersController < Services::ApplicationController
     init_step_data
 
     unless step.visible?
-      params[:project_item] = { offer_id: (@offers + @bundles).first.iid }
+      params[:customizable_project_item] = { offer_id: (@offers + @bundles).first.iid }
       update
     end
   end
@@ -36,7 +36,7 @@ class Services::OffersController < Services::ApplicationController
 
     def offer
       form_params = params
-                      .fetch(:project_item, session[session_key] || {})
+                      .fetch(:customizable_project_item, session[session_key] || {})
                       .permit(:offer_id)
       @service.offers.find_by(iid: form_params[:offer_id])
     end

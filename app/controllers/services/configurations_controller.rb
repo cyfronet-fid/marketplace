@@ -21,16 +21,12 @@ class Services::ConfigurationsController < Services::ApplicationController
     @step = step(configuration_params)
     @project_item = CustomizableProjectItem.new(configuration_params)
 
-    @bundled_parameters = @project_item.properties["bundled_services"]&.
-      map { |o| [o["offer_id"].to_i, o["attributes"]] }.to_h unless @project_item.properties.empty?
-
     if @step.request_voucher
       @step.voucher_id = ""
     end
 
     if @step.valid?
       save_in_session(@step)
-      session[:bundle] = @bundled_parameters
       redirect_to url_for([@service, next_step_key])
     else
       flash.now[:alert] = @step.error

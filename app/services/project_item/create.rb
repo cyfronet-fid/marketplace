@@ -24,7 +24,7 @@ class ProjectItem::Create
                              parent_id: @project_item.id,
                              project_id: @project_item.project_id,
                              offer_id: offer.id,
-                             properties: @bundle_params[offer.id] || [])
+                             properties: @bundle_params[offer.id].map(&:to_json) || [])
         end
 
         if bundled_project_items.any? { |pi| !pi.persisted? }

@@ -44,7 +44,7 @@ RSpec.feature "Service ordering" do
       expect(page).to have_selector(:link_or_button,
                                     "Next", exact: true)
 
-      choose "project_item_offer_id_#{offer.iid}"
+      choose "customizable_project_item_offer_id_#{offer.iid}"
       click_on "Next", match: :first
 
       # Step 2
@@ -130,7 +130,7 @@ RSpec.feature "Service ordering" do
         click_on "Next", match: :first
 
         # Project selection
-        select "Services", from: "project_item_project_id"
+        select "Services", from: "customizable_project_item_project_id"
 
         expect do
           click_on "Add to a project", match: :first
@@ -144,7 +144,7 @@ RSpec.feature "Service ordering" do
         click_on "Next", match: :first
 
         # Project selection
-        select "Services", from: "project_item_project_id"
+        select "Services", from: "customizable_project_item_project_id"
 
         expect do
           click_on "Add to a project", match: :first
@@ -169,7 +169,7 @@ RSpec.feature "Service ordering" do
         fill_in "parameter_#{_offer.parameters[0].id}", with: "test"
 
         click_on "Next - Final details", match: :first
-        select "Services", from: "project_item_project_id"
+        select "Services", from: "customizable_project_item_project_id"
 
         expect do
           click_on "Add to a project", match: :first
@@ -182,7 +182,7 @@ RSpec.feature "Service ordering" do
 
         fill_in "parameter_#{_offer.parameters[0].id}", with: "test"
         click_on "Next - Final details", match: :first
-        select "Services", from: "project_item_project_id"
+        select "Services", from: "customizable_project_item_project_id"
 
         expect do
           click_on "Add to a project", match: :first
@@ -315,7 +315,7 @@ RSpec.feature "Service ordering" do
       end
       click_on "Create new project"
 
-      expect(page).to have_select("project_item_project_id", selected: "New project")
+      expect(page).to have_select("customizable_project_item_project_id", selected: "New project")
 
       new_project = Project.all.last
       expect(new_project.name).to eq("New project")
@@ -386,7 +386,7 @@ RSpec.feature "Service ordering" do
 
         click_on "Create new project"
       end
-      expect(page).to have_select("project_item_project_id", selected: "New project")
+      expect(page).to have_select("customizable_project_item_project_id", selected: "New project")
       expect(page).to have_text(scientific_domain.name)
       expect(page).to have_text("New company name")
       expect(page).to have_text("https://www.company.name")
