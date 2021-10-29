@@ -68,10 +68,10 @@ module Service::DetailsHelper
       fields: %w[target_users access_types access_modes tag_list],
       with_desc: true,
       nested: {
-          target_users: "name",
-          access_types: "name",
-          access_modes: "name",
-          tag_list: "tag"
+        target_users: "name",
+        access_types: "name",
+        access_modes: "name",
+        tag_list: "tag"
       }
     }
   end

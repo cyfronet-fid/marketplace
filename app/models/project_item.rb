@@ -104,7 +104,7 @@ class ProjectItem < ApplicationRecord
   end
 
   def user_secrets_is_simple
-    errors.add(:user_secrets, "values must be strings") unless user_secrets&.values.all? { |v| v.is_a? String }
+    errors.add(:user_secrets, "values must be strings") unless user_secrets&.values.all?(String)
   end
 
   def copy_offer_fields

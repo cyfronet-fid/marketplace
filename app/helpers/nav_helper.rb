@@ -47,7 +47,7 @@ module NavHelper
   def nav_link(options = {}, &block)
     o = html_options(options)
 
-    if block_given?
+    if block
       content_tag(:li, capture(&block), o)
     else
       content_tag(:li, nil, o)
@@ -63,7 +63,7 @@ module NavHelper
     active_class = options.fetch(:active_class, "active")
     o = { class: params[key] == value ? " #{active_class}" : "" }
 
-    if block_given?
+    if block
       content_tag(:li, capture(&block), o)
     else
       content_tag(:li, nil, o)

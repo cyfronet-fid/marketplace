@@ -33,7 +33,7 @@ FactoryBot.define do
     sequence(:status) { :published }
     sequence(:version) { nil }
     sequence(:trl) { [create(:trl)] }
-    sequence(:synchronized_at) { Date.now - 2.days }
+    sequence(:synchronized_at) { Time.now - 2.days }
 
     upstream { nil }
 

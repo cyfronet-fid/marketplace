@@ -10,7 +10,7 @@ module ScientificDomainsHelper
       k, v = record
       acc[k] ||= []
       acc[k] << v
-    end.map { |k, v| [k, v] }.sort { |v1, v2| v1.first <=> v2.first }
+    end.map { |k, v| [k, v] }.sort_by(&:first)
   end
 
   private

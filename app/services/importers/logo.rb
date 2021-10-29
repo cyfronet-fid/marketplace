@@ -63,10 +63,8 @@ class Importers::Logo
       .gsub(/['`]/, "")
       .gsub(/\s*@\s*/, " at ")
       .gsub(/\s*&\s*/, " and ")
-      .gsub(/\s*[^A-Za-z0-9.-]\s*/, "-")
-      .gsub(/_+/, "_")
-      .gsub(/\A[_.]+|[_.]+\z/, "")
-      .gsub(/-+/, "-")
+      .gsub(/\s*[^A-Za-z0-9.-]\s*/, "-").squeeze("_")
+      .gsub(/\A[_.]+|[_.]+\z/, "").squeeze("-")
       .gsub(/-$/, "")
   end
 end

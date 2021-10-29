@@ -16,7 +16,7 @@ module FriendlyIdExtensions
     private
 
     def first_by_friendly_id(id)
-      field = (column_names & %w[pid eid]).first
+      field = (self.column_names & %w[pid eid]).first
       if field.blank?
         find_by("#{friendly_id_config.query_field} = ?", id)
       else

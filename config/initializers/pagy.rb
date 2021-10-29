@@ -1,23 +1,19 @@
-# encoding: utf-8
 # frozen_string_literal: true
 
 # Pagy initializer file (5.1.3)
 # Customize only what you really need and notice that Pagy works also without any of the following lines.
 # Should you just cherry pick part of this file, please maintain the require-order of the extras
 
-
 # Pagy Variables
 # See https://ddnexus.github.io/pagy/api/pagy#variables
 # All the Pagy::DEFAULT are set for all the Pagy instances but can be overridden
 # per instance by just passing them to Pagy.new or the #pagy controller method
-
 
 # Instance variables
 # See https://ddnexus.github.io/pagy/api/pagy#instance-variables
 # Pagy::DEFAULT[:page]   = 1                                  # default
 # Pagy::DEFAULT[:items]  = 20                                 # default
 # Pagy::DEFAULT[:outset] = 0                                  # default
-
 
 # Other Variables
 # See https://ddnexus.github.io/pagy/api/pagy#other-variables
@@ -28,7 +24,6 @@
 # Pagy::DEFAULT[:link_extra] = 'data-remote="true"'            # example
 # Pagy::DEFAULT[:i18n_key]   = 'pagy.item_name'                # default
 # Pagy::DEFAULT[:cycle]      = true                            # example
-
 
 # Extras
 # See https://ddnexus.github.io/pagy/extras
@@ -200,7 +195,6 @@ Pagy::I18n.load(locale: "en", filepath: "config/locales/en.yml")
 
 # Default i18n key
 # Pagy::DEFAULT[:i18n_key] = 'pagy.item_name'   # default
-
 
 # When you are done setting your own defaults freeze it,
 # so it will not changed accidentally

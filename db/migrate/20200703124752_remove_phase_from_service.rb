@@ -5,7 +5,7 @@ class RemovePhaseFromService < ActiveRecord::Migration[6.0]
     production_id = execute(
       <<~SQL.squish
         INSERT INTO vocabularies(name, type, eid, created_at, updated_at)
-        VALUES ('Production', 'LifeCycleStatus', 'life_cycle_status-production', '#{Date.now}', '#{Date.now}')
+        VALUES ('Production', 'LifeCycleStatus', 'life_cycle_status-production', '#{Time.zone.now}', '#{Time.zone.now}')
         RETURNING id;
       SQL
     )
@@ -13,7 +13,7 @@ class RemovePhaseFromService < ActiveRecord::Migration[6.0]
     beta_id = execute(
       <<~SQL.squish
         INSERT INTO vocabularies(name, type, eid, created_at, updated_at)
-        VALUES ('Beta', 'LifeCycleStatus', 'life_cycle_status-beta', '#{Date.now}', '#{Date.now}')
+        VALUES ('Beta', 'LifeCycleStatus', 'life_cycle_status-beta', '#{Time.zone.now}', '#{Time.zone.now}')
         RETURNING id;
       SQL
     )
@@ -25,14 +25,14 @@ class RemovePhaseFromService < ActiveRecord::Migration[6.0]
           execute(
             <<~SQL.squish
               INSERT INTO service_vocabularies(service_id, vocabulary_id, vocabulary_type, created_at, updated_at)
-              VALUES ( #{d['id']}, #{production_id[0]['id']}, 'LifeCycleStatus', '#{Date.now}', '#{Date.now}')
+              VALUES ( #{d['id']}, #{production_id[0]['id']}, 'LifeCycleStatus', '#{Time.zone.now}', '#{Time.zone.now}')
             SQL
           )
         when "beta"
           execute(
             <<~SQL.squish
               INSERT INTO service_vocabularies(service_id, vocabulary_id, vocabulary_type, created_at, updated_at)
-              VALUES ( #{d['id']}, #{beta_id[0]['id']}, 'LifeCycleStatus', '#{Date.now}', '#{Date.now}')
+              VALUES ( #{d['id']}, #{beta_id[0]['id']}, 'LifeCycleStatus', '#{Time.zone.now}', '#{Time.zone.now}')
             SQL
           )
         end

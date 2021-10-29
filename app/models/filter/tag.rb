@@ -16,7 +16,7 @@ class Filter::Tag < Filter
   def fetch_options
     ActsAsTaggableOn::Tag.all
                          .map { |t| { name: t.name, id: t.name } }
-                         .sort { |x, y| x[:name] <=> y[:name] }
+                         .sort_by { |a| a[:name] }
   end
 
   def where_constraint

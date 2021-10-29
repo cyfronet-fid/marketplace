@@ -1,9 +1,11 @@
 require:
+  - rubocop-performance
   - rubocop-rails
 
 AllCops:
   TargetRubyVersion: 3.0.2
   NewCops: enable
+  SuggestExtensions: false
 
 inherit_gem:
   rubocop-rails:
@@ -66,6 +68,7 @@ Rails/NotNullColumn:
   Exclude:
     - 'db/migrate/**/*'
 
+#Disabled rubocops for haml files
 Rails/OutputSafety:
   Exclude:
     - 'app/inputs/attributes_input.rb'
@@ -73,6 +76,7 @@ Rails/OutputSafety:
     - 'app/helpers/service_helper.rb'
     - 'app/helpers/backoffice/parameters_helper.rb'
     - 'app/helpers/ancestry_helper.rb'
+    - 'app/views/**/*'
 
 Rails/Date:
   Exclude:
@@ -146,7 +150,7 @@ Metrics/ClassLength:
   Max: 210
 
 Metrics/ModuleLength:
-  Max: 260
+  Max: 270
 
 Metrics/AbcSize:
   Enabled: false
@@ -206,3 +210,184 @@ Naming/MemoizedInstanceVariableName:
   Exclude:
     - 'app/models/project_item.rb'
     - 'app/controllers/concerns/service/categorable.rb'
+
+Performance/CollectionLiteralInLoop:
+  Exclude:
+    - 'spec/models/message_spec.rb'
+    - 'app/helpers/categories_helper.rb'
+
+Performance/Count:
+  Exclude:
+    - 'app/models/jira/checker.rb'
+    - 'app/models/service.rb'
+
+Performance/FixedSize:
+  Exclude:
+    - 'app/helpers/image_helper.rb'
+
+Style/RedundantSelf:
+  Exclude:
+    - 'config/initializers/friendly_id.rb'
+
+Style/ClassVars:
+  Exclude:
+    - 'app/controllers/concerns/service/recommendable.rb'
+
+
+#Disabled rubocops for haml files
+Lint/SymbolConversion:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/StringLiteralsInInterpolation:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/RedundantInterpolation:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/RescueStandardError:
+  Exclude:
+    - 'app/views/**/*'
+
+Layout/SpaceInsideStringInterpolation:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/SymbolProc:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/FormatString:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/SymbolArray:
+  Exclude:
+    - 'app/views/**/*'
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/RedundantParentheses:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/FormatStringToken:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/HashAsLastArrayItem:
+  Exclude:
+    - 'app/views/**/*'
+
+Layout/SpaceInLambdaLiteral:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/RedundantArgument:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/CaseLikeIf:
+  Exclude:
+    - 'app/views/**/*'
+
+Layout/SpaceAroundMethodCallOperator:
+  Exclude:
+    - 'app/views/**/*'
+
+Layout/ExtraSpacing:
+  Exclude:
+    - 'app/views/**/*'
+
+Rails/Present:
+  Exclude:
+    - 'app/views/**/*'
+
+Rails/TimeZone:
+  Exclude:
+    - 'spec/services/provider/pc_create_or_update_spec.rb'
+    - 'spec/factories/services.rb'
+    - 'app/controllers/concerns/service/recommendable.rb'
+    - 'spec/services/service/pc_create_or_update_spec.rb'
+    - 'app/services/importers/service.rb'
+    - 'app/services/jms/manage_message.rb'
+
+Lint/UnusedBlockArgument:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/SoleNestedConditional:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/NumericPredicate:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/IdenticalConditionalBranches:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/UnlessElse:
+  Exclude:
+    - 'app/views/**/*'
+
+Rails/Presence:
+  Exclude:
+    - 'app/views/**/*'
+
+Lint/DuplicateHashKey:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/TrailingCommaInArguments:
+  Exclude:
+    - 'app/views/**/*'
+
+Lint/ParenthesesAsGroupedExpression:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/NegatedIfElseCondition:
+  Exclude:
+    - 'app/views/**/*'
+
+Lint/ImplicitStringConcatenation:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/WordArray:
+  Exclude:
+  - 'app/views/**/*'
+
+Style/SafeNavigation:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/NegatedIf:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/IfInsideElse:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/NilComparison:
+  Exclude:
+    - 'app/views/**/*'
+
+Style/ZeroLengthPredicate:
+  Exclude:
+    - 'app/views/**/*'
+
+Lint/ShadowingOuterLocalVariable:
+  Exclude:
+    - 'app/views/**/*'
+
+Lint/UnderscorePrefixedVariableName:
+  Exclude:
+    - 'app/views/**/*'

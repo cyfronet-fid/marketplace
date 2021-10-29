@@ -76,7 +76,7 @@ RSpec.describe Service::PcCreateOrUpdate do
 
   private
 
-  def stub_described_class(jms_service, is_active: true, modified_at: Date.now, faraday: Faraday)
+  def stub_described_class(jms_service, is_active: true, modified_at: Time.now, faraday: Faraday)
     described_service = Service::PcCreateOrUpdate.new(jms_service, test_url, is_active, modified_at, nil,
                                                       faraday: faraday)
 

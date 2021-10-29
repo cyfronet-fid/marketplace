@@ -98,7 +98,7 @@ group :development do
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "spring-commands-rspec"
   gem "rubocop-rails", require: false
-  gem "rubocop-rspec", require: false
+  gem "rubocop-performance", require: false
   gem "overcommit", require: false
   gem "haml_lint", require: false
   gem "scss_lint", require: false
