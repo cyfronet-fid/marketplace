@@ -19,6 +19,6 @@ describe("Communities and infrastructures", () => {
       .should("eq", Cypress.config().baseUrl + "/communities");
     cy.get("[data-e2e='communities-list']")
       .contains("Communities and infrastructures")
-      .should("be.visible");
+      .should("be.visible")
   });
 });
