@@ -141,7 +141,8 @@ RSpec.describe Message do
 
       expect(message.events.second.eventable).to eq(message)
       expect(message.events.second.action).to eq("update")
-      expect(message.events.second.updates).to contain_exactly({ field: "message", before: "old", after: "new" }.stringify_keys)
+      expect(message.events.second.updates).to contain_exactly({ field: "message", before: "old",
+after: "new" }.stringify_keys)
     end
   end
 

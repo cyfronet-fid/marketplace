@@ -138,7 +138,8 @@ module Jira
 
       print "Checking Project issue type presence..."
 
-      self.show_available_issue_types unless @checker.check_project_issue_type { |e| self.error_and_abort!(e) } && self.ok!
+      self.show_available_issue_types unless
+        @checker.check_project_issue_type { |e| self.error_and_abort!(e) } && self.ok!
 
       puts "Trying to manipulate project issue..."
       print "  - create issue..."

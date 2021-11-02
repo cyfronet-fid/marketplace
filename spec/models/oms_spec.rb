@@ -66,13 +66,16 @@ RSpec.describe OMS, type: :model do
   context "#projects" do
     let(:project1) { create(:project) }
     let(:project2) { create(:project) }
-    let(:default_oms) { create(:oms, offers: [create(:offer),
-                                 create(:offer, project_items: [create(:project_item, project: project1)]),
-                                 create(:offer, project_items: [create(:project_item, project: project1),
-                                                                create(:project_item, project: project2)])]) }
+    let(:default_oms) { create(:oms,
+                               offers: [create(:offer),
+                                        create(:offer, project_items: [create(:project_item, project: project1)]),
+                                        create(:offer, project_items: [create(:project_item, project: project1),
+                                                                       create(:project_item, project: project2)])]) }
 
-    let(:oms) { create(:oms, default: true, offers: [create(:offer, project_items: [create(:project_item, project: project1)]),
-                                                     create(:offer, project_items: [create(:project_item, project: project1)])]) }
+    let(:oms) { create(:oms,
+                       default: true,
+                       offers: [create(:offer, project_items: [create(:project_item, project: project1)]),
+                                create(:offer, project_items: [create(:project_item, project: project1)])]) }
     let(:other_oms) { create(:oms, offers: create_list(:offer, 2)) }
 
     it "should return all project when oms is default" do
@@ -104,7 +107,8 @@ RSpec.describe OMS, type: :model do
     let(:other_project) { create(:project, project_items: project_items2) }
 
     it "returns only associated project_items for a single project" do
-      expect(oms1.project_items_for(project)).to contain_exactly(project_items1[0], project_items1[1], project_items1[3])
+      expect(oms1.project_items_for(project)).to contain_exactly(project_items1[0], project_items1[1],
+project_items1[3])
       expect(oms2.project_items_for(project)).to contain_exactly(project_items1[2], project_items1[4])
 
       expect(oms1.project_items_for(other_project)).to eq(project_items2)
@@ -124,8 +128,14 @@ RSpec.describe OMS, type: :model do
     let!(:project1) { create(:project) }
     let!(:project2) { create(:project) }
 
-    let!(:project_item1) { create(:project_item, project: project1, offer: build(:offer, primary_oms: default_oms)) }
-    let!(:project_item2) { create(:project_item, project: project2, offer: build(:offer, primary_oms: oms)) }
+    let!(:project_item1) {
+      create(:project_item,
+             project: project1,
+             offer: build(:offer, primary_oms: default_oms)) }
+    let!(:project_item2) {
+      create(:project_item,
+             project: project2,
+             offer: build(:offer, primary_oms: oms)) }
 
     let!(:message1) { create(:message, messageable: project1) }
     let!(:message2) { create(:message, messageable: project_item1) }

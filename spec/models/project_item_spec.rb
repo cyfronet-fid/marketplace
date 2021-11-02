@@ -127,8 +127,10 @@ RSpec.describe ProjectItem do
 
       expect(project_item.events.second.eventable).to eq(project_item)
       expect(project_item.events.second.action).to eq("update")
-      expect(project_item.events.second.updates).to contain_exactly({ field: "status_type", before: "created", after: "ready" }.stringify_keys,
-                                                      { field: "status", before: "custom created status", after: "custom ready status" }.stringify_keys)
+      expect(project_item.events.second.updates)
+        .to contain_exactly(
+              { field: "status_type", before: "created", after: "ready" }.stringify_keys,
+              { field: "status", before: "custom created status", after: "custom ready status" }.stringify_keys)
     end
   end
 

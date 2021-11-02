@@ -53,7 +53,11 @@ RSpec.describe "JIRA Webhook API", type: :request do
       }
 
       it "should grant voucher ID" do
-        data = create(:jira_webhook_response, :voucher_id_change, issue_id: issue_id, issue_status: 6, voucher_id_to: "1234")
+        data = create(:jira_webhook_response,
+                      :voucher_id_change,
+                      issue_id: issue_id,
+                      issue_status: 6,
+                      voucher_id_to: "1234")
 
         post(api_webhooks_jira_url + "?secret=secret&issue_id=5", params: data)
 
@@ -64,7 +68,11 @@ RSpec.describe "JIRA Webhook API", type: :request do
 
       it "should update voucher ID" do
         project_item.update user_secrets: { "voucher_id": "4321" }
-        data = create(:jira_webhook_response, :voucher_id_change, issue_id: issue_id, issue_status: 6, voucher_id_to: "1234")
+        data = create(:jira_webhook_response,
+                      :voucher_id_change,
+                      issue_id: issue_id,
+                      issue_status: 6,
+                      voucher_id_to: "1234")
 
         post(api_webhooks_jira_url + "?secret=secret&issue_id=5", params: data)
 
@@ -75,7 +83,11 @@ RSpec.describe "JIRA Webhook API", type: :request do
 
       it "should remove voucher ID" do
         project_item.update user_secrets: { "voucher_id": "4321" }
-        data = create(:jira_webhook_response, :voucher_id_change, issue_id: issue_id, issue_status: 6, voucher_id_to: "")
+        data = create(:jira_webhook_response,
+                      :voucher_id_change,
+                      issue_id: issue_id,
+                      issue_status: 6,
+                      voucher_id_to: "")
 
         post(api_webhooks_jira_url + "?secret=secret&issue_id=5", params: data)
 
@@ -100,7 +112,11 @@ RSpec.describe "JIRA Webhook API", type: :request do
       }
 
       it "should update comment" do
-        data = create(:jira_webhook_response, :comment_update, id: comment_id, issue_id: issue_id, message: "New message")
+        data = create(:jira_webhook_response,
+                      :comment_update,
+                      id: comment_id,
+                      issue_id: issue_id,
+                      message: "New message")
         post(api_webhooks_jira_url + "?secret=secret&issue_id=#{issue_id}", params: data)
         updated_message = Message.find_by(iid: comment_id)
         expect(updated_message.message).to eq("New message")
@@ -108,7 +124,11 @@ RSpec.describe "JIRA Webhook API", type: :request do
 
       it "should create comment" do
         comment_id = 12345
-        data = create(:jira_webhook_response, :comment_update, id: comment_id, issue_id: issue_id, message: "New message")
+        data = create(:jira_webhook_response,
+                      :comment_update,
+                      id: comment_id,
+                      issue_id: issue_id,
+                      message: "New message")
         expect {
           post(api_webhooks_jira_url + "?secret=secret&issue_id=#{issue_id}", params: data)
         }.to change { project_item.messages.count }.by(1)

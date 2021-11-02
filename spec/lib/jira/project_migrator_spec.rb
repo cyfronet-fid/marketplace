@@ -59,7 +59,8 @@ describe Jira::Setup do
 
     expect(jira_client).to receive(:create_project_issue).with(project).and_return(project_issue)
 
-    expect(jira_client).to receive_message_chain("Issue.find").with(pi.issue_id).and_raise(JIRA::HTTPError.new(double(message: "", code: "404")))
+    expect(jira_client).to receive_message_chain("Issue.find")
+                             .with(pi.issue_id).and_raise(JIRA::HTTPError.new(double(message: "", code: "404")))
 
     project_migrator.call
 
@@ -76,7 +77,8 @@ describe Jira::Setup do
 
     expect(jira_client).to receive(:create_project_issue).with(project).and_return(project_issue)
 
-    expect(jira_client).to receive_message_chain("Issue.find").with(pi.issue_id).and_raise(JIRA::HTTPError.new(double(message: "", code: "405")))
+    expect(jira_client).to receive_message_chain("Issue.find")
+                             .with(pi.issue_id).and_raise(JIRA::HTTPError.new(double(message: "", code: "405")))
 
     project_migrator.call
 

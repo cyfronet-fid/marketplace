@@ -49,7 +49,10 @@ RSpec.feature "Provider browsing" do
 
   scenario "I can see 'Manage the resource' button if i am an admin provider" do
     admin = create(:user)
-    dataAdmin = create(:data_administrator, first_name: admin.first_name, last_name: admin.last_name, email: admin.email)
+    dataAdmin = create(:data_administrator,
+                       first_name: admin.first_name,
+                       last_name: admin.last_name,
+                       email: admin.email)
     provider = create(:provider, data_administrators: [dataAdmin])
 
     checkin_sign_in_as(admin)
@@ -62,7 +65,10 @@ RSpec.feature "Provider browsing" do
 
   scenario "I cannnot see 'Manage the resource' button if i am not an admin provider" do
     user, admin = create_list(:user, 2)
-    dataAdmin = create(:data_administrator, first_name: admin.first_name, last_name: admin.last_name, email: admin.email)
+    dataAdmin = create(:data_administrator,
+                       first_name: admin.first_name,
+                       last_name: admin.last_name,
+                       email: admin.email)
     provider = create(:provider, data_administrators: [dataAdmin])
 
     checkin_sign_in_as(user)

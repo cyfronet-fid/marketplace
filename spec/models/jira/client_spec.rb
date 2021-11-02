@@ -62,7 +62,8 @@ describe Jira::Client do
                        project: { key: "MP" },
                        issuetype: { id: 10000 },
                        "Order reference-1" => Rails.application.routes.url_helpers.
-                                              project_service_url(project_item.project, project_item, host: "https://mp.edu"),
+                                              project_service_url(project_item.project,
+                                                                  project_item, host: "https://mp.edu"),
                        # "CI-EOSC-UniqueID-1" => "uid1",
                        # "CI-Institution-1" => "organization 1",
                        "Epic Link-1" => "MP-1",
@@ -110,7 +111,8 @@ describe Jira::Client do
                         project: { key: "MP" },
                         issuetype: { id: 10000 },
                         "Order reference-1" => Rails.application.routes.url_helpers.
-                                               project_service_url(project_item.project, project_item, host: "https://mp.edu"),
+                                               project_service_url(project_item.project,
+                                                                   project_item, host: "https://mp.edu"),
                         "Epic Link-1" => "MP-1",
                         "CP-Platforms-1" => "",
                         "CP-INeedAVoucher-1" => { "id" => "20004" },
@@ -155,7 +157,8 @@ describe Jira::Client do
                         project: { key: "MP" },
                         issuetype: { id: 10000 },
                         "Order reference-1" => Rails.application.routes.url_helpers.
-                                               project_service_url(project_item.project, project_item, host: "https://mp.edu"),
+                                               project_service_url(project_item.project,
+                                                                   project_item, host: "https://mp.edu"),
                         "Epic Link-1" => "MP-1",
                         "CP-Platforms-1" => "",
                         "CP-INeedAVoucher-1" => { "id" => "20004" },
@@ -196,7 +199,8 @@ describe Jira::Client do
                         project: { key: "MP" },
                         issuetype: { id: 10000 },
                         "Order reference-1" => Rails.application.routes.url_helpers.
-                                               project_service_url(project_item.project, project_item, host: "https://mp.edu"),
+                                               project_service_url(project_item.project,
+                                                                   project_item, host: "https://mp.edu"),
                         "Epic Link-1" => "MP-1",
                         "CP-Platforms-1" => "",
                         "CP-INeedAVoucher-1" => { "id" => "20003" },
@@ -280,23 +284,24 @@ describe Jira::Client do
                      scientific_domains: [create(:scientific_domain, name: "My RA")])
 
     issue = double(:Issue)
-    expected_updated_fields = { summary: "Project, John Doe, My Updated Project Name",
-                                "Epic Name-1" => "My Updated Project Name",
-                                "CI-Name-1" => "John",
-                                "CI-Surname-1" => "Doe",
-                                "CI-DisplayName-1" => "John Doe",
-                                "CI-Email-1" => "project@email.com",
-                                "CI-Institution-1" => "org",
-                                "CI-Department-1" => "dep",
-                                "CI-DepartmentalWebPage-1" => "http://dep-wwww.pl",
-                                "CI-EOSC-UniqueID-1" => "uid2",
-                                "CP-ScientificDiscipline-1" => "My RA",
-                                "CP-CustomerTypology-1" => { "id" => "20001" },
-                                "SO-ProjectName-1" => "My Updated Project Name (#{project.id})",
-                                "CP-UserGroupName-1" => "User Group Name 1",
-                                "CP-CustomerCountry-1" => "#{project.country_of_origin.name}",
-                                "CP-CollaborationCountry-1" => "#{project.countries_of_partnership.map(&:name).join(", ")}"
-                                }
+    expected_updated_fields =
+      { summary: "Project, John Doe, My Updated Project Name",
+        "Epic Name-1" => "My Updated Project Name",
+        "CI-Name-1" => "John",
+        "CI-Surname-1" => "Doe",
+        "CI-DisplayName-1" => "John Doe",
+        "CI-Email-1" => "project@email.com",
+        "CI-Institution-1" => "org",
+        "CI-Department-1" => "dep",
+        "CI-DepartmentalWebPage-1" => "http://dep-wwww.pl",
+        "CI-EOSC-UniqueID-1" => "uid2",
+        "CP-ScientificDiscipline-1" => "My RA",
+        "CP-CustomerTypology-1" => { "id" => "20001" },
+        "SO-ProjectName-1" => "My Updated Project Name (#{project.id})",
+        "CP-UserGroupName-1" => "User Group Name 1",
+        "CP-CustomerCountry-1" => "#{project.country_of_origin.name}",
+        "CP-CollaborationCountry-1" => "#{project.countries_of_partnership.map(&:name).join(", ")}"
+      }
 
     expect(issue).to receive("save").with(fields: expected_updated_fields).and_return(true)
     expect(client).to receive_message_chain("Issue.find").and_return(issue)

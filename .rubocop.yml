@@ -1,6 +1,25 @@
-AllCops:
-   TargetRubyVersion: 3.0.2
-
 inherit_gem:
   rubocop-rails_config:
     - config/rails.yml
+
+AllCops:
+  TargetRubyVersion: 3.0.2
+
+Layout/LineLength:
+  Enabled: true
+  Exclude:
+    - 'app/models/jira/checker.rb'
+    - 'app/models/jira/client.rb'
+    - 'config/initializers/devise.rb'
+    - 'db/migrate/**/*'
+    - 'lib/jms/subscriber.rb'
+    - 'spec/factories/jms_xml_provider.rb'
+    - 'spec/factories/jms_xml_service.rb'
+    - 'spec/factories/jms_service.rb'
+    - 'spec/factories/jms_providers_repsonse.rb'
+    - 'spec/factories/eosc_registry_vocabularies_response.rb'
+    - 'spec/factories/eosc_registry_services_response.rb'
+    - 'spec/factories/eosc_registry_providers_response.rb'
+    - 'spec/helpers/service_helper_spec.rb'
+    - 'spec/lib/jira/console_checker_spec.rb'
+    - 'spec/requests/api/v1/omses/projects/project_items_controller_spec.rb'

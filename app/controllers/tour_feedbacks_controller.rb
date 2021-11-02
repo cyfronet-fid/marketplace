@@ -8,7 +8,8 @@ class TourFeedbacksController < ApplicationController
     @tour_controller_action = tour_params[:tour_controller_action]
     @tour_name = tour_params[:tour_name]
     @feedback = Rails.configuration.tours.list["#{@tour_controller_name}.#{@tour_controller_action}.#{I18n.locale}"]
-    @feedback ||= Rails.configuration.tours.list["#{@tour_controller_name}.#{@tour_controller_action}.#{I18n.default_locale}"]
+    @feedback ||= Rails.configuration
+                       .tours.list["#{@tour_controller_name}.#{@tour_controller_action}.#{I18n.default_locale}"]
     unless @feedback
       return head 404
     end
@@ -20,7 +21,9 @@ class TourFeedbacksController < ApplicationController
     end
 
     @form = params.require(:content).permit(@feedback["questions"].map { |question| question["name"].to_sym })
-    @errors = Hash[@feedback["questions"].select { |question| !@form[question["name"]].present? }.collect { |question| [question["name"], "This field is required"] }]
+    @errors = Hash[@feedback["questions"]
+                     .select { |question| !@form[question["name"]].present? }
+                     .collect { |question| [question["name"], "This field is required"] }]
 
     if tour_params["share"] && tour_params["email"].blank? && current_user.nil?
       @errors["email"] = "This field is required"

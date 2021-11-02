@@ -102,7 +102,14 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       [owner_ids: []], :status, :upstream_id, :version,
       [life_cycle_status_ids: []], :resource_organisation_id,
       { main_contact_attributes: [:id, :first_name, :last_name, :email, :phone, :organisation, :position] },
-      { public_contacts_attributes: [:id, :first_name, :last_name, :email, :phone, :organisation, :position, :_destroy] }
+      { public_contacts_attributes: [:id,
+                                     :first_name,
+                                     :last_name,
+                                     :email,
+                                     :phone,
+                                     :organisation,
+                                     :position,
+                                     :_destroy] }
     ]
 
     if !@record.is_a?(Service) || @record.upstream.nil?

@@ -124,7 +124,9 @@ class Service < ApplicationRecord
   has_many :sources, class_name: "ServiceSource", dependent: :destroy
 
   accepts_nested_attributes_for :sources,
-                                reject_if: lambda { |attributes| attributes["eid"].blank? || attributes["source_type"].blank? },
+                                reject_if: lambda {
+                                  |attributes| attributes["eid"].blank? || attributes["source_type"].blank?
+                                },
                                 allow_destroy: true
 
   belongs_to :upstream, foreign_key: "upstream_id", class_name: "ServiceSource", optional: true
@@ -167,7 +169,8 @@ class Service < ApplicationRecord
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
   def self.popular(count)
-    where(status: [:published, :unverified]).includes(:providers).order(popularity_ratio: :desc, name: :asc).limit(count)
+    where(status: [:published, :unverified]).includes(:providers).order(popularity_ratio: :desc,
+                                                                        name: :asc).limit(count)
   end
 
   def main_category
