@@ -166,6 +166,8 @@ RSpec.feature "Service ordering" do
         click_on "Next", match: :first
 
         # Configuration step
+
+        expect(page).to have_css("#parameter_#{_offer.parameters[0].id}")
         fill_in "parameter_#{_offer.parameters[0].id}", with: "test"
 
         click_on "Next - Final details", match: :first
@@ -539,6 +541,10 @@ RSpec.feature "Service ordering" do
         # Step 3
         expect(page).to have_current_path(service_configuration_path(service))
         expect(page).to have_text("Bundle configuration")
+
+        expect(page).to have_css("#parameter_#{child1.parameters[0].id}")
+        expect(page).to have_css("#parameter_#{child2.parameters[0].id}")
+
 
         fill_in "parameter_#{child1.parameters[0].id}", with: "value1"
         fill_in "parameter_#{child2.parameters[0].id}", with: "value2"

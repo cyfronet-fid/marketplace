@@ -5,7 +5,7 @@ module ProjectItem::ProjectValidation
 
   included do
     validates :project, presence: true
-    validate :one_per_project, unless: :properties?
+    validate :one_per_project, unless: :properties_or_bundled_offer?
   end
 
   def one_per_project
@@ -15,5 +15,9 @@ module ProjectItem::ProjectValidation
       .count.positive?
 
     errors.add(:project, :repeated_in_project) unless !project_items_services.present?
+  end
+
+  def properties_or_bundled_offer?
+    properties? || (offer.present? && (offer.bundle? || parent.present?))
   end
 end

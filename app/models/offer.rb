@@ -59,6 +59,7 @@ class Offer < ApplicationRecord
            through: :target_offer_links,
            source: :target
 
+
   validate :set_iid, on: :create
   validates :service, presence: true
   validates :iid, presence: true, numericality: true
@@ -96,6 +97,10 @@ class Offer < ApplicationRecord
 
   def bundle?
     bundled_offers_count.positive?
+  end
+
+  def bundle_parameters?
+    bundle? && (parameters.present? || bundled_offers.map(&:parameters).any?(&:present?))
   end
 
   private

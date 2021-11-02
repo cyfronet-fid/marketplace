@@ -13,7 +13,7 @@
     = render "services/bundle", bundled_offers: offer.bundled_offers, parent: offer
     .card-button.text-center
       %label
-        = link_to service_offers_path(offer.service, project_item: { offer_id: offer.iid }), "data-probe": "",
-          method: :put do
+        = link_to service_offers_path(offer.service, customizable_project_item: { offer_id: offer.iid }),
+        "data-probe": "", method: :put do
           %span.btn.btn-primary.font-webtn-linkight-bold
             = _("Select a bundle")
