@@ -200,7 +200,8 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         schema "$ref" => "message/message_read.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project) { create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }
+        let(:project) { create(:project,
+                               project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
@@ -276,7 +277,8 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project) { create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }
+        let(:project) { create(:project,
+                               project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
@@ -293,7 +295,9 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         }
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to eq({ error: "The property '#/' did not contain a required property of 'content'" }.as_json.deep_stringify_keys)
+          expect(data).to eq(
+                            { error: "The property '#/' did not contain a required property of 'content'" }
+                              .as_json.deep_stringify_keys)
 
           project.reload
           expect(project.messages.count).to eq(0)
@@ -334,7 +338,8 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project) { create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }
+        let(:project) { create(:project,
+                               project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
@@ -473,7 +478,8 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         schema "$ref" => "message/message_read.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project) { create(:project, project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }
+        let(:project) { create(:project,
+                               project_items: [create(:project_item, offer: create(:offer, primary_oms: oms))]) }
         let(:message) { create(:message, messageable: project) }
 
         let(:oms_id) { oms.id }
@@ -578,7 +584,8 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         schema "$ref" => "message/message_read.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project) { create(:project, project_items: [build(:project_item, offer: build(:offer, primary_oms: oms))]) }
+        let(:project) { create(:project,
+                               project_items: [build(:project_item, offer: build(:offer, primary_oms: oms))]) }
         let(:message) { create(:provider_message, scope: :public, message: "Before update", messageable: project) }
 
         let(:oms_id) { oms.id }
@@ -606,7 +613,9 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project_item) { create(:project_item, project: build(:project), offer: build(:offer, primary_oms: oms)) }
-        let(:message) { create(:provider_message, scope: :user_direct, message: "Before update", messageable: project_item) }
+        let(:message) { create(:provider_message,
+                               scope: :user_direct,
+                               message: "Before update", messageable: project_item) }
 
         let(:oms_id) { oms.id }
         let(:m_id) { message.id }
@@ -633,7 +642,11 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
         let(:project) { create(:project) }
-        let(:message) { create(:message, author_role: "mediator", scope: "public", message: "Before update", messageable: project) }
+        let(:message) { create(:message,
+                               author_role: "mediator",
+                               scope: "public",
+                               message: "Before update",
+                               messageable: project) }
 
         let(:oms_id) { oms.id }
         let(:m_id) { message.id }
@@ -645,7 +658,8 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
           project.reload
 
           data = JSON.parse(response.body)
-          expect(data).to eq({ error: "The property '#/' did not contain a required property of 'content'" }.deep_stringify_keys)
+          expect(data)
+            .to eq({ error: "The property '#/' did not contain a required property of 'content'" }.deep_stringify_keys)
 
           expect(message.message).to eq("Before update")
           expect(project.messages.first.message).to eq("Before update")

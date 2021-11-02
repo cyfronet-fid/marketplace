@@ -278,8 +278,14 @@ RSpec.describe ApplicationController, type: :controller do
 
     context Filter::Location do
       let!(:collection) { ["PL", "BR", "EO"] }
-      let!(:service1) { create(:service, geographical_availabilities: Array.wrap([Country.load(collection.first), Country.load(collection.third)])) }
-      let!(:service2) { create(:service, geographical_availabilities: Array.wrap([Country.load(collection.second), Country.load(collection.third)])) }
+      let!(:service1) {
+        create(:service,
+               geographical_availabilities:
+                 Array.wrap([Country.load(collection.first), Country.load(collection.third)])) }
+      let!(:service2) {
+        create(:service,
+               geographical_availabilities:
+                 Array.wrap([Country.load(collection.second), Country.load(collection.third)])) }
       let!(:service4) { create(:service, geographical_availabilities: Array.wrap(Country.load(collection.second))) }
       let!(:field_name) { :geographical_availabilities }
       let!(:param_name) { :geographical_availabilities }

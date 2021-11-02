@@ -35,7 +35,11 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
         let!(:project_items) {
           [
             create(:project_item, offer: build(:offer, primary_oms: oms), project: project, iid: 1),
-            create(:project_item, offer: build(:offer, primary_oms: oms), project: project, iid: 2, user_secrets: { "key": "value" }),
+            create(:project_item,
+                   offer: build(:offer, primary_oms: oms),
+                   project: project,
+                   iid: 2,
+                   user_secrets: { "key": "value" }),
             create(:project_item, offer: build(:offer, primary_oms: other_oms), project: project, iid: 3),
             create(:project_item, offer: build(:offer, primary_oms: oms), project: project, iid: 4),
             create(:project_item, offer: build(:offer, primary_oms: oms), project: project, iid: 5)
@@ -53,7 +57,8 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
           expect(data).to eq({
                                project_items: project_items.values_at(1, 3).map { |pi|
                                  serialized = Api::V1::ProjectItemSerializer.new(pi).as_json
-                                 serialized[:user_secrets] = serialized[:user_secrets].transform_values { |_| "<OBFUSCATED>" }
+                                 serialized[:user_secrets] =
+                                   serialized[:user_secrets].transform_values { |_| "<OBFUSCATED>" }
                                  serialized
                                }
                              }.deep_stringify_keys)
@@ -150,7 +155,10 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project) { create(:project) }
-        let(:project_item) { create(:project_item, project: project, user_secrets: { "key": "value" }, offer: create(:offer, primary_oms: oms)) }
+        let(:project_item) { create(:project_item,
+                                    project: project,
+                                    user_secrets: { "key": "value" },
+                                    offer: create(:offer, primary_oms: oms)) }
 
         let(:oms_id) { oms.id }
         let(:p_id) { project.id }
@@ -323,7 +331,10 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
 
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project_item) { create(:project_item, status_type: "created", status: "old value", offer: create(:offer, primary_oms: oms)) }
+        let(:project_item) { create(:project_item,
+                                    status_type: "created",
+                                    status: "old value",
+                                    offer: create(:offer, primary_oms: oms)) }
         let(:project) { create(:project, project_items: [project_item]) }
 
         let(:oms_id) { oms.id }

@@ -28,7 +28,8 @@ RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json"
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to eq({ omses: oms.map { |oms| Api::V1::Ordering::OMSSerializer.new(oms).as_json } }.deep_stringify_keys)
+          expect(data).to eq({ omses: oms.map { |oms| Api::V1::Ordering::OMSSerializer.new(oms).as_json } }
+                               .deep_stringify_keys)
         end
       end
 

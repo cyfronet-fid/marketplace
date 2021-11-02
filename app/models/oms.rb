@@ -59,7 +59,8 @@ class OMS < ApplicationRecord
     if default?
       Message.all
     else
-      # Outer join Message with ProjectItem OR Project messageables - and look for OMS inside their respective offers.primary_oms
+      # Outer join Message with ProjectItem OR Project messageables
+      # and look for OMS inside their respective offers.primary_oms
       Message.where("offers.primary_oms_id = ?", self)
              .or(Message.where("offers_project_items.primary_oms_id = ?", self))
              .left_outer_joins(project_item: :offer, project:  { project_items: :offer })
@@ -94,7 +95,10 @@ class OMS < ApplicationRecord
 
     def validate_custom_params
       unless custom_params.values.all? { |param| JSON::Validator.validate(CUSTOM_PARAMS_SCHEMA, param) }
-        errors.add(:custom_params, "custom_params values must be either {mandatory: false}, or {mandatory: true, default: 'value'}")
+        errors.add(
+          :custom_params,
+          "custom_params values must be either {mandatory: false}, or {mandatory: true, default: 'value'}"
+        )
       end
     end
 

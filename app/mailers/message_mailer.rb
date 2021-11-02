@@ -24,7 +24,8 @@ class MessageMailer < ApplicationMailer
 
   def get_link_to_messageable(message)
     elem = message.messageable
-    message.messageable_type == "Project" ? project_conversation_url(elem) : project_service_conversation_url(elem.project, elem)
+    message.messageable_type == "Project" ?
+      project_conversation_url(elem) : project_service_conversation_url(elem.project, elem)
   end
 
   def get_project_name(elem)

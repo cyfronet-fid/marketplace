@@ -15,7 +15,8 @@ module Recommender
         access_modes: Vocabulary.where(type: "Vocabulary::AccessMode").as_json(only: [:id, :name, :description]),
         access_types: Vocabulary.where(type: "Vocabulary::AccessType").as_json(only: [:id, :name, :description]),
         trls: Vocabulary.where(type: "Vocabulary::Trl").as_json(only: [:id, :name, :description]),
-        life_cycle_statuses: Vocabulary.where(type: "Vocabulary::LifeCycleStatus").as_json(only: [:id, :name, :description])
+        life_cycle_statuses: Vocabulary
+                               .where(type: "Vocabulary::LifeCycleStatus").as_json(only: [:id, :name, :description])
       }.as_json
     end
   end
