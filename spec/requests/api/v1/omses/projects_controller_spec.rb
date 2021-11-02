@@ -34,7 +34,9 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
           [
             create(:project, project_items: [build(:project_item, offer: build(:offer, primary_oms: oms))], id: 1),
             create(:project, project_items: [build(:project_item, offer: build(:offer, primary_oms: oms))], id: 2),
-            create(:project, project_items: [build(:project_item, offer: build(:offer, primary_oms: other_oms))], id: 3),
+            create(:project,
+                   project_items: [build(:project_item, offer: build(:offer, primary_oms: other_oms))],
+                   id: 3),
             create(:project, project_items: [build(:project_item, offer: build(:offer, primary_oms: oms))], id: 4),
             create(:project, project_items: [build(:project_item, offer: build(:offer, primary_oms: oms))], id: 5)
           ]
@@ -46,7 +48,10 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to eq({ projects: projects.values_at(1, 3).map { |p| Api::V1::ProjectSerializer.new(p).as_json } }.deep_stringify_keys)
+          expect(data).to eq({
+                               projects:
+                                 projects.values_at(1, 3)
+                                         .map { |p| Api::V1::ProjectSerializer.new(p).as_json } }.deep_stringify_keys)
         end
       end
 
@@ -118,7 +123,8 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
         schema "$ref" => "project/project_read.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project) { create(:project, project_items: [build(:project_item, offer: build(:offer, primary_oms: oms))]) }
+        let(:project) { create(:project,
+                               project_items: [build(:project_item, offer: build(:offer, primary_oms: oms))]) }
 
         let(:oms_id) { oms.id }
         let(:p_id) { project.id }
@@ -148,7 +154,8 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
         let(:oms2_admin) { create(:user) }
         let(:oms1) { create(:oms, administrators: [oms1_admin]) }
         let(:oms2) { create(:oms, administrators: [oms2_admin]) }
-        let(:project) { create(:project, project_items: [build(:project_item, offer: build(:offer, primary_oms: oms1))]) }
+        let(:project) { create(:project,
+                               project_items: [build(:project_item, offer: build(:offer, primary_oms: oms1))]) }
 
         let(:oms_id) { oms1.id }
         let(:p_id) { project.id }
@@ -195,7 +202,8 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:other_oms) { create(:oms) }
-        let(:project) { create(:project, project_items: [build(:project_item, offer: build(:offer, primary_oms: other_oms))]) }
+        let(:project) { create(:project,
+                               project_items: [build(:project_item, offer: build(:offer, primary_oms: other_oms))]) }
 
         let(:oms_id) { oms.id }
         let(:p_id) { project.id }

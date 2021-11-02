@@ -21,11 +21,12 @@ describe Jms::ManageMessage do
     original_stdout = $stdout
     $stdout = StringIO.new
     resource = parser.parse(service_resource["resource"])
-    expect(Service::PcCreateOrUpdateJob).to receive(:perform_later).with(resource["infraService"]["service"],
-                                                                         eosc_registry_base,
-                                                                         true,
-                                                                         Time.at(resource["infraService"]["metadata"]["modifiedAt"].to_i&./1000),
-                                                                         nil)
+    expect(Service::PcCreateOrUpdateJob)
+      .to receive(:perform_later).with(resource["infraService"]["service"],
+                                       eosc_registry_base,
+                                       true,
+                                       Time.at(resource["infraService"]["metadata"]["modifiedAt"].to_i&./1000),
+                                       nil)
     expect {
       described_class.new(json_service, eosc_registry_base, logger).call
     }.to_not raise_error

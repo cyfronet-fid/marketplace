@@ -55,7 +55,9 @@ module Import
               service = Service.new(service)
               if service.valid?
                 service = Service::Create.new(service).call
-                service_source = ServiceSource.create!(service_id: service.id, eid: service.pid, source_type: "eosc_registry")
+                service_source = ServiceSource.create!(service_id: service.id,
+                                                       eid: service.pid,
+                                                       source_type: "eosc_registry")
                 if @default_upstream == :eosc_registry
                   service.update(upstream_id: service_source.id)
                 end
@@ -65,7 +67,9 @@ module Import
               else
                 service.status = "errored"
                 service.save(validate: false)
-                service_source = ServiceSource.create!(service_id: service.id, eid: service.pid, source_type: "eosc_registry")
+                service_source = ServiceSource.create!(service_id: service.id,
+                                                       eid: service.pid,
+                                                       source_type: "eosc_registry")
                 if @default_upstream == :eosc_registry
                   service.upstream_id = service_source.id
                   service.save(validate: false)
@@ -89,11 +93,13 @@ module Import
               end
             else
               not_modified += 1
-              log "Service upstream is not set to EOSC Registry, not updating #{existing_service.name}, id: #{service_source.id}"
+              log "Service upstream is not set to EOSC Registry," +
+                    " not updating #{existing_service.name}, id: #{service_source.id}"
             end
           end
         rescue ActiveRecord::RecordInvalid => invalid
-          log "ERROR - #{invalid}! #{service[:name]} (eid: #{service[:pid]}) will NOT be created (please contact catalog manager)"
+          log "ERROR - #{invalid}! #{service[:name]} (eid: #{service[:pid]}) " +
+                "will NOT be created (please contact catalog manager)"
         rescue StandardError => error
           log "ERROR - Unexpected #{error}! #{service[:name]} (eid: #{service[:pid]}) will NOT be created!"
         end

@@ -21,11 +21,13 @@ RSpec.describe Api::V1::ProjectItemPolicy, type: :policy do
 
   permissions ".scope" do
     it "shows all project items when user is a default oms admin" do
-      expect(subject::Scope.new(default_oms_admin, project1.project_items).resolve).to contain_exactly(project_item1, project_item2)
+      expect(subject::Scope.new(default_oms_admin, project1.project_items).resolve).to contain_exactly(project_item1,
+                                                                                                       project_item2)
     end
 
     it "shows project_items which offers' primary_oms is administered by user" do
-      expect(subject::Scope.new(default_oms_admin, project2.project_items).resolve).to contain_exactly(project_item3, project_item4)
+      expect(subject::Scope.new(default_oms_admin, project2.project_items).resolve).to contain_exactly(project_item3,
+                                                                                                       project_item4)
       expect(subject::Scope.new(oms_admin, project1.project_items).resolve).to contain_exactly(project_item2)
       expect(subject::Scope.new(oms_admin, project2.project_items).resolve).to eq([])
     end

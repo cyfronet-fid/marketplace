@@ -58,7 +58,8 @@ RSpec.feature "Service searching in top bar", js: true do
     expect(page).to have_content(published_service.name)
   end
 
-  scenario "redirect to provider path from services path when selecting provider_id by autocomplete controller", js: true, search: true do
+  scenario "redirect to provider path from services path when selecting provider_id by autocomplete controller",
+           js: true, search: true do
     provider = create(:provider)
     fill_in "q", with: provider.name
     expect(page).to have_css("#-option-0")
@@ -67,7 +68,8 @@ RSpec.feature "Service searching in top bar", js: true do
     expect(current_path).to eq(provider_path(provider))
   end
 
-  scenario "redirect to service path from services path when selecting service_id by autocomplete controller", js: true, search: true do
+  scenario "redirect to service path from services path when selecting service_id by autocomplete controller",
+           js: true, search: true do
     service = create(:service)
     visit services_path(object_id: service.id, type: "service")
     expect(current_path).to eq(service_path(service))

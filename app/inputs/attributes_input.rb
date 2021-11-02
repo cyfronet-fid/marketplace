@@ -24,10 +24,12 @@ class AttributesInput < SimpleForm::Inputs::TextInput
 
     unless object.errors.present?
       number = Array(object.public_send(attribute_name)).length
-      existing_value.push @builder.text_area(nil, merged_input_options.merge(value: nil,
-                                                                           name: "#{object_name}[#{attribute_name}][]",
-                                                                           id: "#{object_name}_#{attribute_name}_#{number}",
-                                                                           class: "form-control text"))
+      existing_value.push @builder
+                            .text_area(nil,
+                                       merged_input_options.merge(value: nil,
+                                                                  name: "#{object_name}[#{attribute_name}][]",
+                                                                  id: "#{object_name}_#{attribute_name}_#{number}",
+                                                                  class: "form-control text"))
     end
     existing_value.join.html_safe
   end

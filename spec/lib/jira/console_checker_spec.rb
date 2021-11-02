@@ -34,39 +34,47 @@ describe Jira::ConsoleChecker do
   describe "error_and_abort!" do
     it "should print FAIL and error type to stdout" do
       expect(con_checker).to receive(:abort!)
-      expect { con_checker.error_and_abort!(StandardError.new) }.to output(" FAIL".red + "\n" + "ERROR".red + ": Unexpected error ocurred StandardError\n\n").to_stdout
+      expect { con_checker.error_and_abort!(StandardError.new) }
+        .to output(" FAIL".red + "\n" + "ERROR".red + ": Unexpected error ocurred StandardError\n\n").to_stdout
     end
 
     it "should handle Errno::ECONNREFUSED" do
       expect(con_checker).to receive(:abort!)
-      expect { con_checker.error_and_abort!(Errno::ECONNREFUSED.new) }.to output(" FAIL".red + "\n" + "ERROR".red + ": Could not connect to JIRA: #{ checker.client.jira_config["url"] }\n").to_stdout
+      expect { con_checker.error_and_abort!(Errno::ECONNREFUSED.new) }
+        .to output(" FAIL".red + "\n" + "ERROR".red +
+                     ": Could not connect to JIRA: #{ checker.client.jira_config["url"] }\n").to_stdout
     end
 
     it "should handle Jira::Checker::CheckerError and return false" do
       message = "MSG"
       output  = true
-      expect { output = con_checker.error_and_abort!(Jira::Checker::CheckerError.new(message)) }.to output(" FAIL".red + "\n" + "  " + "- ERROR".red + ": #{ message }\n").to_stdout
+      expect { output = con_checker.error_and_abort!(Jira::Checker::CheckerError.new(message)) }
+        .to output(" FAIL".red + "\n" + "  " + "- ERROR".red + ": #{ message }\n").to_stdout
       expect(output).to be_falsey
     end
 
     it "should handle Jira::Checker::CheckerWarning and return false" do
       message = "MSG"
       output  = true
-      expect { output = con_checker.error_and_abort!(Jira::Checker::CheckerWarning.new(message)) }.to output(" FAIL".red + "\n" + "  " + "- WARNING".yellow + ": #{ message }\n").to_stdout
+      expect { output = con_checker.error_and_abort!(Jira::Checker::CheckerWarning.new(message)) }
+        .to output(" FAIL".red + "\n" + "  " + "- WARNING".yellow + ": #{ message }\n").to_stdout
       expect(output).to be_falsey
     end
 
     it "should handle Jira::Checker::CriticalCheckerError and abort" do
       message = "MSG"
       expect(con_checker).to receive(:abort!)
-      expect { con_checker.error_and_abort!(Jira::Checker::CriticalCheckerError.new(message)) }.to output(" FAIL".red + "\n" + "  " + "- ERROR".red + ": #{ message }\n").to_stdout
+      expect { con_checker.error_and_abort!(Jira::Checker::CriticalCheckerError.new(message)) }
+        .to output(" FAIL".red + "\n" + "  " + "- ERROR".red + ": #{ message }\n").to_stdout
     end
 
     it "should handle Jira::Checker::CheckerCompositeError and return false" do
       message = "MSG"
       output  = true
       # noinspection RubyArgCount
-      expect { output = con_checker.error_and_abort!(Jira::Checker::CheckerCompositeError.new(message, status: false)) }.to output(" FAIL".red + "\n" + "  " + "- ERROR".red + ": #{ message }\n    - status:" + " ✕".red + "\n").to_stdout
+      expect { output = con_checker.error_and_abort!(Jira::Checker::CheckerCompositeError.new(message, status: false)) }
+        .to output(" FAIL".red + "\n" + "  " + "- ERROR".red + ": #{ message }\n    - status:" + " ✕".red + "\n")
+              .to_stdout
       expect(output).to be_falsey
     end
   end
@@ -93,7 +101,9 @@ describe Jira::ConsoleChecker do
   end
 
   it "check_webhook should print warning if MP_HOST env is not set" do
-    expect { con_checker.check_webhook }.to output("WARNING: Webhook won't be check, set MP_HOST env variable if you want to check it".yellow + "\n").to_stdout
+    expect { con_checker.check_webhook }
+      .to output("WARNING: Webhook won't be check, set MP_HOST env variable if you want to check it".yellow + "\n")
+            .to_stdout
   end
 
   it "check_webhook should call checker with MP_HOST env if it's set" do
@@ -101,7 +111,8 @@ describe Jira::ConsoleChecker do
     # noinspection RubyStringKeysInHashInspection
     con_checker = Jira::ConsoleChecker.new(checker, "MP_HOST" => host)
     expect(checker).to receive(:check_webhook).with(host).and_return(true)
-    expect { con_checker.check_webhook }.to output("Checking webhooks for hostname \"#{host}\"..." + " OK".green + "\n").to_stdout
+    expect { con_checker.check_webhook }
+      .to output("Checking webhooks for hostname \"#{host}\"..." + " OK".green + "\n").to_stdout
   end
 
   it "check should print to stdout" do

@@ -212,10 +212,22 @@ class Provider < ApplicationRecord
     end
 
     def validate_array_values_uniqueness
-      errors.add(:tag_list, "has duplicates, please remove them to continue") if tag_list.uniq.length != tag_list.length
-      errors.add(:multimedia, "has duplicates, please remove them to continue") if multimedia.uniq.length != multimedia.length
-      errors.add(:certifications, "has duplicates, please remove them to continue") if certifications.uniq.length != certifications.length
-      errors.add(:national_roadmaps, "has duplicates, please remove them to continue") if national_roadmaps.uniq.length != national_roadmaps.length
+      errors.add(
+        :tag_list,
+        "has duplicates, please remove them to continue"
+      ) if tag_list.uniq.length != tag_list.length
+      errors.add(
+        :multimedia,
+        "has duplicates, please remove them to continue"
+      ) if multimedia.uniq.length != multimedia.length
+      errors.add(
+        :certifications,
+        "has duplicates, please remove them to continue"
+      ) if certifications.uniq.length != certifications.length
+      errors.add(
+        :national_roadmaps,
+        "has duplicates, please remove them to continue"
+      ) if national_roadmaps.uniq.length != national_roadmaps.length
     end
 
     def strip_input_fields

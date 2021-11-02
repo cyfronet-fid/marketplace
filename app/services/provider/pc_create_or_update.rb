@@ -15,7 +15,9 @@ class Provider::PcCreateOrUpdate
       mapped_provider = Provider.new(provider_hash)
       mapped_provider.set_default_logo
       if mapped_provider.save!
-        provider_source = ProviderSource.create!(provider_id: mapped_provider.id, source_type: "eosc_registry", eid: @eid)
+        provider_source = ProviderSource.create!(provider_id: mapped_provider.id,
+                                                 source_type: "eosc_registry",
+                                                 eid: @eid)
       end
     else
       mapped_provider.update(provider_hash)

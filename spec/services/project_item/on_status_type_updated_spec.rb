@@ -14,7 +14,9 @@ RSpec.describe ProjectItem::OnStatusTypeUpdated do
         project_item.update!(status_type: :waiting_for_response)
       }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      expect(ActionMailer::Base.deliveries.last.subject).to eq("Status of your service access request in the EOSC Portal Marketplace has changed to WAITING FOR RESPONSE")
+      expect(ActionMailer::Base.deliveries.last.subject)
+        .to eq("Status of your service access request in the " +
+                 "EOSC Portal Marketplace has changed to WAITING FOR RESPONSE")
     end
 
     it "sends email on :approved" do
@@ -22,7 +24,8 @@ RSpec.describe ProjectItem::OnStatusTypeUpdated do
         project_item.update!(status_type: :approved)
       }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      expect(ActionMailer::Base.deliveries.last.subject).to eq("Status of your service access request in the EOSC Portal Marketplace has changed to APPROVED")
+      expect(ActionMailer::Base.deliveries.last.subject)
+        .to eq("Status of your service access request in the EOSC Portal Marketplace has changed to APPROVED")
     end
 
     it "sends email on :ready" do
@@ -30,7 +33,8 @@ RSpec.describe ProjectItem::OnStatusTypeUpdated do
         project_item.update!(status_type: :ready)
       }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      expect(ActionMailer::Base.deliveries.last.subject).to eq("Status of your service access request in the EOSC Portal Marketplace has changed to READY TO USE")
+      expect(ActionMailer::Base.deliveries.last.subject)
+        .to eq("Status of your service access request in the EOSC Portal Marketplace has changed to READY TO USE")
     end
 
     it "sends email on :rejected" do
@@ -38,7 +42,8 @@ RSpec.describe ProjectItem::OnStatusTypeUpdated do
         project_item.update!(status_type: :rejected)
       }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      expect(ActionMailer::Base.deliveries.last.subject).to eq("Status of your service access request in the EOSC Portal Marketplace has changed to REJECTED")
+      expect(ActionMailer::Base.deliveries.last.subject)
+        .to eq("Status of your service access request in the EOSC Portal Marketplace has changed to REJECTED")
     end
 
     it "sends email on :closed" do
@@ -46,7 +51,8 @@ RSpec.describe ProjectItem::OnStatusTypeUpdated do
         project_item.update!(status_type: :closed)
       }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      expect(ActionMailer::Base.deliveries.last.subject).to eq("Status of your service access request in the EOSC Portal Marketplace has changed to CLOSED")
+      expect(ActionMailer::Base.deliveries.last.subject)
+        .to eq("Status of your service access request in the EOSC Portal Marketplace has changed to CLOSED")
     end
 
     context "for aod?" do
@@ -72,7 +78,8 @@ RSpec.describe ProjectItem::OnStatusTypeUpdated do
             project_item.update!(status_type: :ready)
           }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-          expect(ActionMailer::Base.deliveries.last.subject).to eq("Elastic Cloud Compute Cluster (EC3) service with voucher approved")
+          expect(ActionMailer::Base.deliveries.last.subject)
+            .to eq("Elastic Cloud Compute Cluster (EC3) service with voucher approved")
         end
 
         it "sends email on :rejected" do
@@ -80,7 +87,8 @@ RSpec.describe ProjectItem::OnStatusTypeUpdated do
             project_item.update!(status_type: :rejected)
           }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-          expect(ActionMailer::Base.deliveries.last.subject).to eq("Elastic Cloud Compute Cluster (EC3) service with voucher rejected")
+          expect(ActionMailer::Base.deliveries.last.subject)
+            .to eq("Elastic Cloud Compute Cluster (EC3) service with voucher rejected")
         end
       end
     end

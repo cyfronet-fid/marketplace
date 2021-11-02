@@ -62,7 +62,8 @@ describe Import::Providers do
 
   def expect_responses(test_url, providers_response = nil)
     unless providers_response.nil?
-      allow_any_instance_of(Faraday::Connection).to receive(:get).with("#{test_url}/provider/all?quantity=10000&from=0").and_return(providers_response)
+      allow_any_instance_of(Faraday::Connection)
+        .to receive(:get).with("#{test_url}/provider/all?quantity=10000&from=0").and_return(providers_response)
     end
   end
 
@@ -86,7 +87,9 @@ describe Import::Providers do
 
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"], log: true)
 
-      expect { eosc_registry.call }.to output(/PROCESSED: 1, CREATED: 0, UPDATED: 0, NOT MODIFIED: 1$/).to_stdout.and change { Provider.count }.by(0)
+      expect { eosc_registry.call }
+        .to output(/PROCESSED: 1, CREATED: 0, UPDATED: 0, NOT MODIFIED: 1$/)
+              .to_stdout.and change { Provider.count }.by(0)
     end
 
     it "should update provider which has upstream to external id" do
@@ -98,12 +101,16 @@ describe Import::Providers do
 
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"], log: true)
 
-      expect { eosc_registry.call }.to output(/PROCESSED: 1, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/).to_stdout.and change { Provider.count }.by(0)
+      expect { eosc_registry.call }
+        .to output(/PROCESSED: 1, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/)
+              .to_stdout.and change { Provider.count }.by(0)
     end
 
     it "should not change db if dry_run is set to true" do
       eosc_registry = make_and_stub_eosc_registry(dry_run: true, log: true)
-      expect { eosc_registry.call }.to output(/PROCESSED: 4, CREATED: 3, UPDATED: 0, NOT MODIFIED: 1$/).to_stdout.and change { Provider.count }.by(0)
+      expect { eosc_registry.call }
+        .to output(/PROCESSED: 4, CREATED: 3, UPDATED: 0, NOT MODIFIED: 1$/)
+              .to_stdout.and change { Provider.count }.by(0)
     end
 
     it "should filter by ids if they are provided" do
@@ -114,8 +121,10 @@ describe Import::Providers do
 
     it "should set default image on error" do
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"])
-      allow(eosc_registry).to receive(:open).with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-                                        ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(OpenURI::HTTPError.new("", status: 404))
+      allow(eosc_registry).to receive(:open)
+                                .with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
+                                      ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
+                                .and_raise(OpenURI::HTTPError.new("", status: 404))
       eosc_registry.call
 
       expect(Provider.first.logo.attached?).to be_truthy
@@ -123,8 +132,10 @@ describe Import::Providers do
 
     it "should set default image on error" do
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"])
-      allow(eosc_registry).to receive(:open).with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-                                        ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(Errno::EHOSTUNREACH.new)
+      allow(eosc_registry).to receive(:open)
+                                .with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
+                                      ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
+                                .and_raise(Errno::EHOSTUNREACH.new)
       eosc_registry.call
       expect(Provider.first.logo.attached?).to be_truthy
     end
