@@ -159,7 +159,7 @@ describe('Offers', () => {
                             .click({force: true});
                         cy.location('pathname')
                             .should("include", "/summary");
-                        cy.get("#project_item_project_id")
+                        cy.get("#customizable_project_item_project_id")
                             .select(project.name);
                         cy.checkCaptcha();
                         cy.get("button.btn-primary")
@@ -221,7 +221,7 @@ describe('Offers', () => {
                             .click();
                         cy.location('pathname')
                             .should("include", "/summary");
-                        cy.get("#project_item_project_id")
+                        cy.get("#customizable_project_item_project_id")
                             .select(project.name);
                         cy.checkCaptcha();
                         cy.get("button.btn-primary")

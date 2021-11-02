@@ -5,7 +5,7 @@ module ProjectItem::Customization
 
   included do
     validate do
-      if self.offer.bundle?
+      if offer&.bundle?
         bundled_property_values.each do |offer, parameters|
           parameters
             .select { |pv| pv.invalid? }
@@ -29,11 +29,16 @@ module ProjectItem::Customization
   end
 
   def bundled_property_values
-    self.bundled_parameters.present? ?
-      self.bundled_parameters
-          .transform_keys { |offer| offer.instance_of?(Offer) ? offer : Offer.find(offer) } : offer_values
-                                                                                          .attributes_map
-                                                                                          .reject { |o, _| o == offer }
+    if defined?(self.bundled_parameters)
+      if self&.bundled_parameters.present?
+        self.bundled_parameters
+          .transform_keys { |offer| offer.instance_of?(Offer) ? offer : Offer.find(offer) }
+      else
+        offer_values.attributes_map.reject { |o, _| o == offer }
+      end
+    else
+      []
+    end
   end
 
   def bundled_property_values=(bundled_property_values)

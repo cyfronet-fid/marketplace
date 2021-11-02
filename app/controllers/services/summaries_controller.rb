@@ -59,7 +59,7 @@ class Services::SummariesController < Services::ApplicationController
     def setup_show_variables!
       @projects = policy_scope(current_user.projects.active)
       @offer = @step.offer
-      @bundle_params = session[:bundle]
+      @bundle_params = session[session_key][:bundled_parameters] || []
     end
 
     def message_text
