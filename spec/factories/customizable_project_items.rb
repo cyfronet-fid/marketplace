@@ -9,11 +9,5 @@ FactoryBot.define do
 
     offer
     project
-
-    factory :customizable_project_item_with_voucher do
-      voucher_id { "some_voucher_id" }
-
-      offer { build(:voucherable_offer) }
-    end
   end
 end

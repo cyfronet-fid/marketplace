@@ -7,7 +7,7 @@ RSpec.describe ProjectItem::Create do
   let(:project) { create(:project, user: user) }
   let(:service) { create(:service) }
   let(:offer) { create(:offer, service: service) }
-  let(:project_item_template) { build(:project_item, project: project, offer: offer) }
+  let(:project_item_template) { build(:customizable_project_item, project: project, offer: offer) }
 
   it "creates project_item and set initial project_item status" do
     project_item = described_class.new(project_item_template).call
@@ -83,7 +83,7 @@ RSpec.describe ProjectItem::Create do
     end
 
     context "with error" do
-      let(:child2) { create(:offer, service: service) }
+      let(:child2) { create(:offer_with_parameters, service: service) }
 
       it "creates nothing" do
         expect { described_class.new(project_item_template, "test-msg", bundle_params: {}).call }

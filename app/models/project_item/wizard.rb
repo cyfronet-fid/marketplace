@@ -38,7 +38,7 @@ class ProjectItem::Wizard
       delegate(*::ProjectItem.attribute_names.map { |a| [a, "#{a}="] }.flatten,
               to: :project_item)
 
-      delegate :offer, :project, to: :project_item
+      delegate :offer, :project, :parent, to: :project_item
 
       def initialize(service, project_item_attributes)
         @service = service
@@ -75,7 +75,7 @@ class ProjectItem::Wizard
       delegate :created?, :bundled_parameters, to: :project_item
 
       def visible?
-        offer.nil? || offer.bundle? || project_item.property_values.count.positive? || voucherable?
+        offer.nil? || offer.bundle_parameters? || project_item.property_values.count.positive? || voucherable?
       end
 
       def error
