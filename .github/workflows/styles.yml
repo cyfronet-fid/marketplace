@@ -9,10 +9,15 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - name: Setup and run rubocop
+    - name: Sign overcommit
       run: |
-        gem install rubocop
-        bundle exec rubocop
+        bundle exec overcommit --sign
+    - name: Run overcommit
+      run: |
+        bundle exec overcommit --run
+      env:
+        GIT_AUTHOR_NAME: John Doe
+        GIT_AUTHOR_EMAIL: john@example.com
     - name: Setup and run brakeman
       run: |
         gem install brakeman
