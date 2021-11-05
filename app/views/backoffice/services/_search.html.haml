@@ -11,6 +11,7 @@
     = text_field_tag :q, params[:q],
                                      placeholder: _("Find resource..."),
                                      "data-target": "autocomplete.input",
+                                     "data-e2e": "searchbar-input",
                                      "data-toggle": "dropdown"
     - if params[:q].present? && params.permitted?
       %a.search-clear{ href: url_for(params.except(:q, :sort, :page)), title: _("Clear search"),
@@ -22,7 +23,7 @@
     = hidden_field_tag "anchor", nil, "data-target": "autocomplete.anchor"
     - query_params.except(:q, :sort).each do |key, value|
       = render "layouts/hidden_fields", key: key, value: value
-    %ul.autocomplete-results{ "data-target": "autocomplete.results" }
+    %ul.autocomplete-results{ "data-target": "autocomplete.results", "data-e2e": "autocomplete-results" }
   .input-group-append
     %button#query-submit.input-group-text.bg-white
       %i.fas.fa-search
