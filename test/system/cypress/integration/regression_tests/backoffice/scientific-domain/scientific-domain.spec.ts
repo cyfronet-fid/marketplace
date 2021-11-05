@@ -110,7 +110,7 @@ describe("Scientific Domain", () => {
       .should("be.visible");
   });
 
-  it.only("shouldn't delete scientific domain with successors connected to it", () => {
+  it("shouldn't delete scientific domain with successors connected to it", () => {
     cy.loginAs(user);
     cy.visit("/backoffice/scientific_domains");
     cy.get("[data-e2e='backoffice-scientific-domains-list'] li")

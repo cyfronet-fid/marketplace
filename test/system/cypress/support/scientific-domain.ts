@@ -7,7 +7,7 @@
    namespace Cypress {
      interface Chainable {
       
-       fillFormCreateScientificDomain(resource: IScientificDomain, logo:any): Cypress.Chainable<void>;
+       fillFormCreateScientificDomain(scientificDomain: Partial<IScientificDomain>, logo:any): Cypress.Chainable<void>;
  
      }
    }

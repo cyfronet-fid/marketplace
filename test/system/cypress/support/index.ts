@@ -22,6 +22,8 @@ import 'cypress-promise/register';
 import 'cypress-wait-until';
 import 'cypress-file-upload';
 
+
+
 /**
  * Custom commands
  */
@@ -34,6 +36,7 @@ import './offers';
 import './resources';
 import './category';
 import './scientific-domain';
+import './providers';
 
 /**
  * Don't fail on uncaught exception
