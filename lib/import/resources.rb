@@ -58,9 +58,7 @@ module Import
                 service_source = ServiceSource.create!(service_id: service.id,
                                                        eid: service.pid,
                                                        source_type: "eosc_registry")
-                if @default_upstream == :eosc_registry
-                  service.update(upstream_id: service_source.id)
-                end
+                update_from_eosc_registry(service, service_source, true)
 
                 Importers::Logo.new(service, image_url).call
                 service.save!
@@ -70,10 +68,7 @@ module Import
                 service_source = ServiceSource.create!(service_id: service.id,
                                                        eid: service.pid,
                                                        source_type: "eosc_registry")
-                if @default_upstream == :eosc_registry
-                  service.upstream_id = service_source.id
-                  service.save(validate: false)
-                end
+                update_from_eosc_registry(service, service_source, false)
                 log "Service #{service.name}, eid: #{service.pid} saved with errors: #{service.errors.full_messages}"
 
                 Importers::Logo.new(service, image_url).call
@@ -116,6 +111,13 @@ module Import
     end
 
     private
+      def update_from_eosc_registry(service, service_source, validate)
+        if @default_upstream == :eosc_registry
+          service.upstream_id = service_source.id
+          service.save(validate: validate)
+        end
+      end
+
       def log(msg)
         @logger.call(msg)
       end
