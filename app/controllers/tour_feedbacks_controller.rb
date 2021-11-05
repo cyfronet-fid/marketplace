@@ -25,15 +25,7 @@ class TourFeedbacksController < ApplicationController
                      .select { |question| !@form[question["name"]].present? }
                      .collect { |question| [question["name"], "This field is required"] }]
 
-    if tour_params["share"] && tour_params["email"].blank? && current_user.nil?
-      @errors["email"] = "This field is required"
-    elsif tour_params["share"] && current_user.nil? && !(tour_params["email"] =~ /^(.+)@(.+)$/)
-      @errors["email"] = "Email required"
-    elsif tour_params["share"] && current_user.present?
-      tour_params["email"] = current_user.email
-    elsif !tour_params["share"] && current_user.nil?
-      tour_params["email"] = nil
-    end
+    check_and_set_email(tour_params)
 
     if @errors.present? || !verify_recaptcha
       @form["share"] = tour_params["share"]
@@ -63,6 +55,18 @@ class TourFeedbacksController < ApplicationController
   end
 
   private
+    def check_and_set_email(tour_params)
+      if tour_params["share"] && tour_params["email"].blank? && current_user.nil?
+        @errors["email"] = "This field is required"
+      elsif tour_params["share"] && current_user.nil? && !(tour_params["email"] =~ /^(.+)@(.+)$/)
+        @errors["email"] = "Email required"
+      elsif tour_params["share"] && current_user.present?
+        tour_params["email"] = current_user.email
+      elsif !tour_params["share"] && current_user.nil?
+        tour_params["email"] = nil
+      end
+    end
+
     def tour_feedback_params
       params.permit(:tour_controller_name, :tour_controller_action, :tour_name, :email, :share)
     end
