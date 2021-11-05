@@ -23,3 +23,21 @@ Layout/LineLength:
     - 'spec/helpers/service_helper_spec.rb'
     - 'spec/lib/jira/console_checker_spec.rb'
     - 'spec/requests/api/v1/omses/projects/project_items_controller_spec.rb'
+
+Metrics/BlockNesting:
+  Enabled: true
+  Exclude:
+    - 'app/controllers/users/omniauth_callbacks_controller.rb'
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+  # 39
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+  # 45
+
+Metrics/AbcSize:
+  Enabled: false
+  # 124
+
