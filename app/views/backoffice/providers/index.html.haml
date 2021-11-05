@@ -7,9 +7,10 @@
       .float-right
         = link_to _("Add new Provider"),
                   new_backoffice_provider_path,
-                  class: "btn btn-primary"
+                  class: "btn btn-primary",
+                  "data-e2e": "add-new-provider"
       .clearfix
-  %ul.list-group.backoffice-list.mt-3.mb-3
+  %ul.list-group.backoffice-list.mt-3.mb-3{ "data-e2e": "backoffice-providers-list" }
     - @providers.each do |provider|
       %li.list-group-item
         = link_to provider.name, backoffice_provider_path(provider)

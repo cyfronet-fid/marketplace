@@ -7,7 +7,7 @@
    namespace Cypress {
      interface Chainable {
       
-       fillFormCreateCategory(resource: ICategory, logo:any): Cypress.Chainable<void>;
+       fillFormCreateCategory(category: Partial<ICategory>, logo:any): Cypress.Chainable<void>;
  
      }
    }

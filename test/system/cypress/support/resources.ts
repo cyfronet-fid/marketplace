@@ -9,11 +9,11 @@ declare global {
   namespace Cypress {
     interface Chainable {
      
-      fillFormCreateResource(resource: IResources, logo:any): Cypress.Chainable<void>;
+      fillFormCreateResource(resource: Partial<IResources>, logo:any): Cypress.Chainable<void>;
 
-      fillFormCreateOffer(offer:IOffers):Cypress.Chainable<void>;
+      fillFormCreateOffer(offer: Partial<IOffers>):Cypress.Chainable<void>;
 
-      fillFormCreateParameter(parameter:IParameters):Cypress.Chainable<void>;
+      fillFormCreateParameter(parameter: Partial<IParameters>):Cypress.Chainable<void>;
 
     }
   }
@@ -68,7 +68,7 @@ Cypress.Commands.add("fillFormCreateResource", (resource: IResources, logo) => {
   cy.get("#marketing-header")
     .click();
 
-  if (resource.basicName) {
+  if (resource.marketingDescription) {
     cy.get("#service_description")
       .clear()
       .type(resource.marketingDescription);
