@@ -47,6 +47,21 @@ describe Jms::ManageMessage do
     $stdout = original_stdout
   end
 
+  it "should receive provider delete message" do
+    provider = create(:provider)
+    create(:provider_source, provider: provider, eid: "cyfronet")
+    original_stdout = $stdout
+    $stdout = StringIO.new
+    json_provider = double(body: provider_resource.to_json,
+                          headers: { "destination" => "/topic/registry.provider.delete" })
+    expect(Provider::DeleteJob).to receive(:perform_later).with("cyfronet")
+
+    expect {
+      described_class.new(json_provider, eosc_registry_base, logger).call
+    }.to_not raise_error
+    $stdout = original_stdout
+  end
+
   it "should receive service delete message" do
     service = create(:service)
     create(:service_source, service: service, eid: "tp.openminted_catalogue_of_corpora_2")

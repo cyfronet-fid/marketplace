@@ -38,7 +38,9 @@ class Jms::ManageMessage
       end
     when "provider"
       modified_at = modified_at(resource, "providerBundle")
-      if resource["providerBundle"]["active"]
+      if action == "delete"
+        Provider::DeleteJob.perform_later(resource["providerBundle"]["provider"]["id"])
+      elsif resource["providerBundle"]["active"]
         Provider::PcCreateOrUpdateJob.perform_later(resource["providerBundle"]["provider"], modified_at)
       end
     else

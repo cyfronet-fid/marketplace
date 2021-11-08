@@ -67,9 +67,9 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   end
 
   def destroy
-    if Provider::Destroy.new(@provider).call
+    if Provider::Delete.new(@provider.id).call
       redirect_to backoffice_providers_path,
-                  notice: "Provider have been removed"
+                  notice: "Provider has been removed"
     else
       redirect_to backoffice_providers_path,
                   alert: "This Provider has resources connected to it, therefore is not possible to remove it."

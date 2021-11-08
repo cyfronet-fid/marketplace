@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Add the tags to a provider page (@danielkryska)
+- Possibility to delete a provider via Provider's Component (@goreck888)
 
 ### Changed
 - Extend providers with soft delete - keep information's for analytics purposes or for data recovery (@danielkryska)
