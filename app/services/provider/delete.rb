@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class Provider::Destroy
-  def initialize(provider)
-    @provider = provider
+class Provider::Delete
+  def initialize(provider_id)
+    @provider = Provider.friendly.find(provider_id)
   end
 
   def call

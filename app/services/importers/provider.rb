@@ -96,7 +96,8 @@ class Importers::Provider
       societal_grand_challenges: map_societal_grand_challenges(societal_grand_challenges),
       national_roadmaps: national_roadmaps,
       data_administrators: data_administrators,
-      synchronized_at: @synchronized_at
+      synchronized_at: @synchronized_at,
+      status: :published
     }
   end
 end
