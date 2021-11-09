@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.25.0-milestone]
+## [3.25.0] 2021-11-09
 
 ### Added
 - Add the tags to a provider page (@danielkryska)
@@ -15,14 +15,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - Extend providers with soft delete - keep information's for analytics purposes or for data recovery (@danielkryska)
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 - Bundle parameters validation (@goreck888)
-
-### Security
 
 ## [3.24.0] 2021-11-02
 
