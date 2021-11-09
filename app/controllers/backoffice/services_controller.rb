@@ -38,6 +38,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def new
     @service = Service.new(attributes_from_session || {})
+    clear_session_attributes!
     @service.sources.build source_type: "eosc_registry"
     @service.build_main_contact
     @service.public_contacts.build
@@ -53,6 +54,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def edit
     @service.assign_attributes(attributes_from_session || {})
+    clear_session_attributes!
     add_missing_nested_models
   end
 
@@ -115,6 +117,10 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
           "type" => logo.content_type
         }
       end
+    end
+
+    def clear_session_attributes!
+      session[preview_session_key].delete("attributes") if session[preview_session_key]
     end
 
     def add_missing_nested_models
