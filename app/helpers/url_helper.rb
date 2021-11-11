@@ -25,7 +25,7 @@ module UrlHelper
 
     response = Faraday.get(url)
     response.status == 200
-  rescue URI::InvalidURIError, NoMethodError
+  rescue URI::InvalidURIError, NoMethodError, Faraday::Error
     false
   end
 end
