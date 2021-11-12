@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Move authentication to the last step of the Access Wizard - User Experience improvement (@danielkryska)
 - Improved conversation view and styles (@jarekzet, @wujuu)
 - More descriptive error when adding open access to the project second time - User Experience improvement (@danielkryska)
+- Disabled possibility to send an empty resource's review (@goreck888)
 
 ### Deprecated
 

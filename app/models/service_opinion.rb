@@ -3,18 +3,14 @@
 class ServiceOpinion < ApplicationRecord
   belongs_to :project_item
 
-  validates :service_rating,
+  validates :service_rating, :order_rating,
             presence: true,
             numericality: {
               only_integer: true,
-              greater_than_or_equal_to: 0,
-              less_than_or_equal_to: 5 }
-  validates :order_rating,
-            presence: true,
-            numericality: {
-                only_integer: true,
-                greater_than_or_equal_to: 0,
-                less_than_or_equal_to: 5 }
+              greater_than_or_equal_to: 1,
+              less_than_or_equal_to: 5,
+              message: "Please rate this question to help other users" }
+
   validates :project_item, uniqueness: true
 
   after_save :update_service_rating
