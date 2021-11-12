@@ -85,6 +85,7 @@ RSpec.feature "Project" do
       expect(new_project.name).to eq("Copy")
       expect(new_project.reason_for_access).to eq(project.reason_for_access)
       expect(new_project.issue_key).to be_nil
+      expect(new_project.scientific_domains).to eq(project.scientific_domains)
       expect(new_project).to be_jira_uninitialized
     end
 

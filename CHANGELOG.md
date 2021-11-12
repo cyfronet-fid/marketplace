@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Project duplication includes scientific domains associated with source (@goreck888)
 
 ### Security
 
