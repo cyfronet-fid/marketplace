@@ -73,7 +73,7 @@ class ProjectsController < ApplicationController
       if source
         source.attributes.
           reject { |a| IGNORED_ATTRIBUTES.include?(a) }.
-          merge(user: current_user)
+          merge(user: current_user, scientific_domain_ids: source.scientific_domain_ids)
       else
         { user: current_user }
       end
