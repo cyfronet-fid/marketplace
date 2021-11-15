@@ -227,6 +227,13 @@
   }
 }
 
+@media (max-width: 1200px) {
+  .navbar-brand img {
+    width: 176px;
+    margin-left: 15px;
+  }
+}
+
 @media (max-width: 992px) {
 
   header .bg-light {
@@ -260,11 +267,6 @@
 
   .navbar-brand {
     padding: 25px 10px 33px 0;
-  }
-
-  .navbar-brand img {
-    width: 176px;
-    margin-left: 15px;
   }
 
   .navbar-brand .logo-bg {
