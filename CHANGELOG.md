@@ -8,8 +8,18 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ## [3.26.0-milestone]
 
+### Added
+
 ### Changed
 - Fix RWD CSS Styles (@jarekzet)
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
 
 ## [3.25.0] 2021-11-15
 
