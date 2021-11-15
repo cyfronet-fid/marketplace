@@ -4706,6 +4706,28 @@ abbr[title] {
   border: 1px solid $palette-lightblue3;
 }
 
+.new-message-separator {
+  display: flex;
+  flex-direction: row;
+  color: $danger;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1 1;
+    border-bottom: 1px solid;
+    margin: auto;
+  }
+
+  &::before {
+    margin-right: 10px;
+  }
+
+  &::after {
+    margin-left: 10px;
+  }
+}
+
 .comment-log-frame {
   text-align: center;
   padding: 10px 10px 20px;

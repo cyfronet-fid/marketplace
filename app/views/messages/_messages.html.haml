@@ -3,6 +3,8 @@
     %ul.d-flex.flex-column
       - if messages.count.positive?
         - messages.each do |message|
+          - if message == earliest_new_message
+            .new-message-separator{ "data-target": "conversation.separator" }= _("NEW")
           = render "messages/message", message: message
       - else
         .contact-row.form-inline

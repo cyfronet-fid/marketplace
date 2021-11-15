@@ -2,6 +2,7 @@
 
 class Project < ApplicationRecord
   include Eventable
+  include Messageable
 
   CUSTOMER_TYPOLOGIES = {
     single_user: "single_user",
@@ -32,7 +33,6 @@ class Project < ApplicationRecord
   has_many :project_items, dependent: :destroy
   has_many :project_scientific_domains, dependent: :destroy
   has_many :scientific_domains, through: :project_scientific_domains
-  has_many :messages, as: :messageable, dependent: :destroy
 
   serialize :country_of_origin, Country
   serialize :countries_of_partnership, Country::Array
@@ -92,6 +92,10 @@ class Project < ApplicationRecord
 
   def eventable_attributes
     Set.new()
+  end
+
+  def items_have_new_messages?
+    project_items.map(&:user_has_new_messages?).any?
   end
 
   def eventable_omses
