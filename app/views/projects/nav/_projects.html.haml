@@ -2,10 +2,13 @@
 - if projects.active.any?
   %ul.nav.flex-column.project-menu.pb-2
     - projects.active.each do |project|
-      %li.nav-item.text-break
-        = link_to project.name, [project, :services],
+      %li.nav-item.text-break.project-listing-item
+        = link_to project.name,
+          [project, :services],
           class: "nav-link #{"active" if project == current}"
-        -# TODO: Commented since we don't have notification mechanism yet  .message  %i.comment
+        - if project.user_has_new_messages? || project.items_have_new_messages?
+          = image_pack_tag "ico_message.svg", class: "new-message-icon"
+
 = link_to ("+ " + _("Create new project")), new_project_path, class: "simple-link text-uppercase d-block mt-3",
   "data-e2e" => "goToNewProjectFormBtn"
 

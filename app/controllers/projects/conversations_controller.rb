@@ -5,9 +5,7 @@ class Projects::ConversationsController < ApplicationController
 
   def show
     @message = Message.new(messageable: @project)
-
-    load_messages!
-    load_projects!
+    prepare_models
   end
 
   def create
@@ -17,7 +15,7 @@ class Projects::ConversationsController < ApplicationController
           author: current_user,
           author_role: :user,
           scope: :public,
-          messageable: @project
+          messageable: @project,
         )
     )
 
@@ -25,9 +23,8 @@ class Projects::ConversationsController < ApplicationController
       flash[:notice] = "Message sent successfully"
       redirect_to project_conversation_path(@project)
     else
-      load_messages!
-      load_projects!
-      render :show, status: :bad_request
+      prepare_models
+      render "show", status: :bad_request
     end
   end
 
@@ -38,5 +35,12 @@ class Projects::ConversationsController < ApplicationController
 
     def load_messages!
       @messages = policy_scope(@project.messages).order(:created_at)
+      @earliest_new_message = @project.earliest_new_message_to_user
+    end
+
+    def prepare_models
+      load_projects!
+      load_messages!
+      @project.update(conversation_last_seen: Time.now)
     end
 end

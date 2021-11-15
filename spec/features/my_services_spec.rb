@@ -13,7 +13,6 @@ RSpec.feature "My Services" do
 
     before { checkin_sign_in_as(user) }
 
-
     scenario "I can only see projects that I own" do
       p1, p2 = create_list(:project, 2, user: user)
       not_owned = create(:project)
@@ -130,86 +129,151 @@ RSpec.feature "My Services" do
       expect(page).to have_text("please share your experience so far")
     end
 
-    scenario "I can ask a question about my project_item" do
-      project_item = create(:project_item, project: project, offer: offer)
+    context "message labels" do
+      scenario "I see messages from the fully identified provider" do
+        project_item = create(:project_item, project: project, offer: offer)
+        provider_message = create(:provider_message, messageable: project_item)
 
-      visit project_service_conversation_path(project, project_item)
-      fill_in "message_message", with: "This is my question"
-      click_button "Send message"
+        visit project_service_conversation_path(project, project_item)
 
-      expect(page).to have_text("This is my question")
-      expect(page).to have_text("You, #{Message.last.created_at.to_s(:db)}")
+        message_label = "#{Message.last.created_at.to_s(:db)}, "\
+                        "#{provider_message.author_name} "\
+                        "(#{provider_message.author_email}), Provider"
+
+        expect(page).to have_text(provider_message.message)
+        expect(page).to have_text(message_label)
+      end
+
+      scenario "I see messages from the provider identified only by name" do
+        project_item = create(:project_item, project: project, offer: offer)
+        provider_message = create(:provider_message, author_email: nil, messageable: project_item)
+
+        visit project_service_conversation_path(project, project_item)
+
+        message_label = "#{Message.last.created_at.to_s(:db)}, "\
+                        "#{provider_message.author_name}, Provider"
+
+        expect(page).to have_text(provider_message.message)
+        expect(page).to have_text(message_label)
+      end
+
+      scenario "I see messages from the provider identified only by email" do
+        project_item = create(:project_item, project: project, offer: offer)
+        provider_message = create(:provider_message, author_name: nil, messageable: project_item)
+
+        visit project_service_conversation_path(project, project_item)
+
+        message_label = "#{Message.last.created_at.to_s(:db)}, "\
+                        "#{provider_message.author_email}, Provider"
+
+        expect(page).to have_text(provider_message.message)
+        expect(page).to have_text(message_label)
+      end
+
+      scenario "I see messages from the anonymous provider" do
+        project_item = create(:project_item, project: project, offer: offer)
+        provider_message = create(:provider_message, author_name: "", author_email: nil, messageable: project_item)
+
+        visit project_service_conversation_path(project, project_item)
+
+        message_label = "#{Message.last.created_at.to_s(:db)}, Provider"
+
+        expect(page).to have_text(provider_message.message)
+        expect(page).to have_text(message_label)
+      end
+
+      scenario "I see label that the message is for my eyes only" do
+        project_item = create(:project_item, project: project, offer: offer)
+        provider_message = create(:provider_message, scope: "user_direct", messageable: project_item)
+
+        visit project_service_conversation_path(project, project_item)
+
+        expect(page).to have_text(provider_message.message)
+        expect(page).to have_text("Visible only to you")
+      end
     end
 
-    scenario "I see messages from the fully identified provider" do
-      project_item = create(:project_item, project: project, offer: offer)
-      provider_message = create(:provider_message, messageable: project_item)
+    context "new messages" do
+      scenario "question message is mandatory" do
+        project_item = create(:project_item, project: project, offer: offer)
 
-      visit project_service_conversation_path(project, project_item)
+        visit project_service_conversation_path(project, project_item)
+        click_button "Send message"
 
-      message_label = "#{Message.last.created_at.to_s(:db)}, "\
-                      "#{provider_message.author_name} "\
-                      "(#{provider_message.author_email}), Provider"
+        expect(page).to have_text("Message can't be blank")
+        expect(page).to_not have_selector(".new-message-icon")
+        expect(page).to_not have_selector(".new-message-separator")
+      end
 
-      expect(page).to have_text(provider_message.message)
-      expect(page).to have_text(message_label)
-    end
+      scenario "I can ask a question about my project_item" do
+        project_item = create(:project_item, project: project, offer: offer)
 
-    scenario "I see messages from the provider identified only by name" do
-      project_item = create(:project_item, project: project, offer: offer)
-      provider_message = create(:provider_message, author_email: nil, messageable: project_item)
+        visit project_service_conversation_path(project, project_item)
+        fill_in "message_message", with: "This is my question"
+        click_button "Send message"
 
-      visit project_service_conversation_path(project, project_item)
+        expect(page).to have_text("This is my question")
+        expect(page).to have_text("You, #{Message.last.created_at.to_s(:db)}")
+        expect(page).to_not have_selector(".new-message-icon")
+        expect(page).to_not have_selector(".new-message-separator")
+      end
 
-      message_label = "#{Message.last.created_at.to_s(:db)}, "\
-                      "#{provider_message.author_name}, Provider"
+      scenario "I see new message icon if I have some new project item messages" do
+        project_item = create(:project_item, project: project, offer: offer)
+        create(:provider_message, messageable: project_item)
 
-      expect(page).to have_text(provider_message.message)
-      expect(page).to have_text(message_label)
-    end
+        visit project_services_path(project)
+        expect(page).to_not have_selector(".contact-nav > .new-message-icon")
+        expect(page).to have_selector(".project-listing-item > .new-message-icon")
+        expect(page).to have_text("You have a new message")
+        expect(page).to have_selector(".new-message-icon", count: 2)
 
-    scenario "I see messages from the provider identified only by email" do
-      project_item = create(:project_item, project: project, offer: offer)
-      provider_message = create(:provider_message, author_name: nil, messageable: project_item)
+        click_link project_item.service.name
+        expect(page).to have_selector(".contact-nav > .new-message-icon")
+        expect(page).to have_selector(".project-listing-item > .new-message-icon")
+        expect(page).to have_selector(".new-message-icon", count: 2)
 
-      visit project_service_conversation_path(project, project_item)
+        click_link "Contact with resource provider"
+        expect(page).to_not have_selector(".new-message-icon")
+        expect(page).to have_selector(".new-message-separator")
+      end
 
-      message_label = "#{Message.last.created_at.to_s(:db)}, "\
-                      "#{provider_message.author_email}, Provider"
+      scenario "I see new message separator appearing and disappearing appropriately", js: true do
+        project_item = create(:project_item, project: project, offer: offer)
+        create(:provider_message, messageable: project_item)
 
-      expect(page).to have_text(provider_message.message)
-      expect(page).to have_text(message_label)
-    end
+        visit project_service_conversation_path(project, project_item)
+        expect(page).to have_selector(".new-message-separator")
 
-    scenario "I see messages from the anonymous provider" do
-      project_item = create(:project_item, project: project, offer: offer)
-      provider_message = create(:provider_message, author_name: "", author_email: nil, messageable: project_item)
+        find("#message_message").click
+        expect(page).to_not have_selector(".new-message-separator")
+      end
 
-      visit project_service_conversation_path(project, project_item)
+      scenario "I don't see the new message icon when I don't have any new project_item messages" do
+        project_item = create(:project_item, project: project, offer: offer)
 
-      message_label = "#{Message.last.created_at.to_s(:db)}, Provider"
+        visit project_service_path(project, project_item)
+        expect(page).to_not have_selector(".new-message-icon")
 
-      expect(page).to have_text(provider_message.message)
-      expect(page).to have_text(message_label)
-    end
+        click_link "Contact with resource provider"
+        create(:provider_message, messageable: project_item, scope: "internal")
 
-    scenario "I see label that the message is for my eyes only" do
-      project_item = create(:project_item, project: project, offer: offer)
-      provider_message = create(:provider_message, scope: "user_direct", messageable: project_item)
+        visit current_path
+        expect(page).to_not have_selector(".new-message-icon")
+        expect(page).to_not have_selector(".new-message-separator")
+      end
 
-      visit project_service_conversation_path(project, project_item)
+      scenario "I don't see the project_item new message label if I don't have any new project_item messages" do
+        create(:project_item, project: project, offer: offer)
+        project.update(conversation_last_seen: Time.now)
+        create(:provider_message, messageable: project)
 
-      expect(page).to have_text(provider_message.message)
-      expect(page).to have_text("Visible only to you")
-    end
-
-    scenario "question message is mandatory" do
-      project_item = create(:project_item, project: project, offer: offer)
-
-      visit project_service_conversation_path(project, project_item)
-      click_button "Send message"
-
-      expect(page).to have_text("Message can't be blank")
+        visit project_services_path(project)
+        expect(page).to have_selector(".contact-nav > .new-message-icon")
+        expect(page).to have_selector(".project-listing-item > .new-message-icon")
+        expect(page).to have_selector(".new-message-icon", count: 2)
+        expect(page).to_not have_text("You have a new message")
+      end
     end
   end
 

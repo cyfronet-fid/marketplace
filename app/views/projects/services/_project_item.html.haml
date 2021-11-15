@@ -7,6 +7,9 @@
                     type: "button" }
   = link_to project_item.service.name, project_service_path(project, project_item)
   .float-right.status
+    - if project_item.user_has_new_messages?
+      = image_pack_tag "ico_message.svg", class: "new-message-icon"
+      = _("You have a new message")
     - if project_item.offer.bundle?
       %span.bundle-status
         = _("BUNDLE")
@@ -17,6 +20,7 @@
       = link_to _("Visit website"), webpage(project_item)
     - else
       = project_item_status(project_item)
+
 - project_item.children.each do |child|
   #collapse-example.bundle-box.padding.collapse{ "id": "#{project_item.id}" }
     %li.projects-list

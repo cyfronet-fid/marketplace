@@ -209,17 +209,9 @@ RSpec.feature "Project" do
         click_on "Archive"
         expect(page).to have_text("Project archived")
       end
+    end
 
-      scenario "I can have a question for the project support" do
-        project = create(:project, user: user)
-        visit project_conversation_path(project)
-        fill_in "message_message", with: "This is my question"
-        click_button "Send message"
-
-        expect(page).to have_text("This is my question")
-        expect(page).to have_text("You, #{Message.last.created_at.to_s(:db)}")
-      end
-
+    context "message labels" do
       scenario "I see messages from the fully identified mediator" do
         project = create(:project, user: user)
         mediator_message = create(:mediator_message, messageable: project)
@@ -227,8 +219,8 @@ RSpec.feature "Project" do
         visit project_conversation_path(project)
 
         message_label = "#{Message.last.created_at.to_s(:db)}, "\
-                      "#{mediator_message.author_name} "\
-                      "(#{mediator_message.author_email}), Customer service"
+                    "#{mediator_message.author_name} "\
+                    "(#{mediator_message.author_email}), Customer service"
 
         expect(page).to have_text(mediator_message.message)
         expect(page).to have_text(message_label)
@@ -241,7 +233,7 @@ RSpec.feature "Project" do
         visit project_conversation_path(project)
 
         message_label = "#{Message.last.created_at.to_s(:db)}, "\
-                      "#{mediator_message.author_name}, Customer service"
+                    "#{mediator_message.author_name}, Customer service"
 
         expect(page).to have_text(mediator_message.message)
         expect(page).to have_text(message_label)
@@ -254,7 +246,7 @@ RSpec.feature "Project" do
         visit project_conversation_path(project)
 
         message_label = "#{Message.last.created_at.to_s(:db)}, "\
-                      "#{mediator_message.author_email}, Customer service"
+                    "#{mediator_message.author_email}, Customer service"
 
         expect(page).to have_text(mediator_message.message)
         expect(page).to have_text(message_label)
@@ -280,6 +272,76 @@ RSpec.feature "Project" do
 
         expect(page).to have_text(provider_message.message)
         expect(page).to have_text("Visible only to you")
+      end
+    end
+
+    context "new messages" do
+      scenario "question message is mandatory" do
+        project = create(:project, user: user)
+
+        visit project_conversation_path(project)
+        click_button "Send message"
+
+        expect(page).to have_text("Message can't be blank")
+        expect(page).to_not have_selector(".new-message-icon")
+        expect(page).to_not have_selector(".new-message-separator")
+      end
+
+      scenario "I can have a question for the project support" do
+        project = create(:project, user: user)
+        visit project_conversation_path(project)
+        fill_in "message_message", with: "This is my question"
+        click_button "Send message"
+
+        expect(page).to have_text("This is my question")
+        expect(page).to have_text("You, #{Message.last.created_at.to_s(:db)}")
+        expect(page).to_not have_selector(".new-message-separator")
+        expect(page).to_not have_selector(".new-message-icon")
+      end
+
+      scenario "I see new message icon when I have new messages" do
+        project = create(:project, user: user)
+        create(:provider_message, messageable: project)
+
+        visit project_path(project)
+        expect(page).to have_selector(".contact-nav > .new-message-icon")
+        expect(page).to have_selector(".project-listing-item > .new-message-icon")
+        expect(page).to have_selector(".new-message-icon", count: 2)
+
+        click_link "Contact with EOSC experts"
+        expect(page).to_not have_selector(".new-message-icon")
+        expect(page).to have_selector(".new-message-separator")
+
+        create(:provider_message, messageable: project)
+        visit project_path(project)
+        expect(page).to have_selector(".contact-nav > .new-message-icon")
+        expect(page).to have_selector(".project-listing-item > .new-message-icon")
+        expect(page).to have_selector(".new-message-icon", count: 2)
+      end
+
+      scenario "I don't see the new message icon when I don't have any new messages" do
+        project = create(:project, user: user)
+
+        visit project_services_path(project)
+        expect(page).to_not have_selector(".new-message-icon")
+
+        click_link "Contact with EOSC experts"
+        create(:provider_message, messageable: project, scope: "internal")
+
+        visit current_path
+        expect(page).to_not have_selector(".new-message-icon")
+        expect(page).to_not have_selector(".new-message-separator")
+      end
+
+      scenario "I new message separator appears and disappears accordingly", js: true do
+        project = create(:project, user: user)
+        create(:provider_message, messageable: project)
+
+        visit project_conversation_path(project)
+        expect(page).to have_selector(".new-message-separator")
+
+        find("#message_message").click
+        expect(page).to_not have_selector(".new-message-separator")
       end
     end
   end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require_relative "messageable_spec"
 
 RSpec.describe Project do
   subject { create(:project, name: "New Project") }
@@ -17,6 +18,8 @@ RSpec.describe Project do
   it { should validate_length_of(:name).is_at_most(255) }
   it { should validate_length_of(:organization).is_at_most(255) }
   it { should_not allow_value("blah").for(:email) }
+
+  include_examples "messageable"
 
   describe "#department" do
     before { subject.department = "a" * 256 }
@@ -37,7 +40,6 @@ RSpec.describe Project do
     before { subject.name = "a" * 256 }
     it { should_not be_valid }
   end
-
 
   describe "single user" do
     subject { build(:project, customer_typology: "single_user") }
@@ -102,6 +104,42 @@ RSpec.describe Project do
 
     it "uses Country model for serialization" do
       expect(subject.country_of_origin).to eq(Country.for("PL"))
+    end
+  end
+
+  describe "#items_have_new_messages?" do
+    it "returns true if any of the project items messages are new" do
+      project_item1 = create(:project_item, project: subject)
+      project_item2 = create(:project_item, project: subject, conversation_last_seen: Time.now)
+      create(:provider_message, messageable: project_item1)
+      create(:provider_message, messageable: project_item1)
+      create(:provider_message, messageable: project_item2)
+      subject.reload
+
+      expect(subject.items_have_new_messages?).to be_truthy
+    end
+
+    it "returns false if all of the project items messages are viewed" do
+      project_item1 = create(:project_item, project: subject, conversation_last_seen: Time.now)
+      project_item2 = create(:project_item, project: subject, conversation_last_seen: Time.now)
+      create(:provider_message, messageable: project_item1)
+      create(:provider_message, messageable: project_item1)
+      create(:provider_message, messageable: project_item2)
+      subject.update(conversation_last_seen: Time.now)
+
+      expect(subject.items_have_new_messages?).to be_falsey
+    end
+
+    it "returns false if the project doesn't have any project items" do
+      expect(subject.items_have_new_messages?).to be_falsey
+    end
+
+    it "returns false if none of the project's project items have any messages" do
+      create(:project_item, project: subject)
+      create(:project_item, project: subject)
+      subject.reload
+
+      expect(subject.items_have_new_messages?).to be_falsey
     end
   end
 
