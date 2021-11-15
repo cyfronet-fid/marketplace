@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.26.0-milestone]
+
+### Changed
+- Fix RWD CSS Styles (@jarekzet)
+
 ## [3.25.0] 2021-11-15
 
 ### Added
@@ -14,7 +19,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Extend providers with soft delete - keep information's for analytics purposes or for data recovery (@danielkryska)
-- Fix RWD CSS Styles (@jarekzet)
 
 ### Fixed
 - Bundle parameters validation (@goreck888)
