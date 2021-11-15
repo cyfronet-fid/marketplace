@@ -43,9 +43,11 @@
       %li.nav-item
         = link_to _("Project details"), project_path(project),
           class: "nav-link #{"active" if controller.controller_name == "projects"} text-uppercase"
-      %li.nav-item
-        = link_to _("Contact with EOSC experts"), project_conversation_path(project),
+      %li.nav-item.contact-nav
+        = link_to _("Contact with EOSC experts"),
+          project_conversation_path(project),
           class: "nav-link #{"active" if controller.controller_name == "conversations"} text-uppercase"
-        -# TODO: Commented, because we don't have notification mechanism yet : .message %i.comment
+        - if project.user_has_new_messages?
+          = image_pack_tag "ico_message.svg", class: "new-message-icon"
   .container.p-0
     = yield

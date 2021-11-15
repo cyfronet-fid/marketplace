@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_25_064757) do
+ActiveRecord::Schema.define(version: 2021_11_16_143044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -179,7 +179,7 @@ ActiveRecord::Schema.define(version: 2021_10_25_064757) do
     t.string "author_uid"
     t.index ["author_id"], name: "index_messages_on_author_id"
     t.index ["author_role"], name: "index_messages_on_author_role"
-    t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable"
+    t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id"
     t.index ["scope"], name: "index_messages_on_scope"
   end
 
@@ -298,6 +298,7 @@ ActiveRecord::Schema.define(version: 2021_10_25_064757) do
     t.jsonb "user_secrets", default: {}, null: false
     t.string "ancestry"
     t.integer "ancestry_depth", default: 0
+    t.datetime "conversation_last_seen", null: false
     t.index ["ancestry"], name: "index_project_items_on_ancestry"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
@@ -336,6 +337,7 @@ ActiveRecord::Schema.define(version: 2021_10_25_064757) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "conversation_last_seen", null: false
     t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -571,7 +573,7 @@ ActiveRecord::Schema.define(version: 2021_10_25_064757) do
     t.datetime "updated_at", null: false
     t.string "status", null: false
     t.index ["author_id"], name: "index_statuses_on_author_id"
-    t.index ["status_holder_type", "status_holder_id"], name: "index_statuses_on_status_holder"
+    t.index ["status_holder_type", "status_holder_id"], name: "index_statuses_on_status_holder_type_and_status_holder_id"
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|

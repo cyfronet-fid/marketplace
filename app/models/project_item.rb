@@ -3,6 +3,7 @@
 class ProjectItem < ApplicationRecord
   include Customizations
   include Eventable
+  include Messageable
   include Customization
   include ProjectValidation
   include VoucherValidation
@@ -36,7 +37,6 @@ class ProjectItem < ApplicationRecord
   belongs_to :project
   belongs_to :scientific_domain, required: false
   has_one :service_opinion, dependent: :restrict_with_error
-  has_many :messages, as: :messageable, dependent: :destroy
   has_many :statuses, as: :status_holder
   counter_culture [:offer, :service], column_name: "project_items_count"
 
@@ -88,6 +88,7 @@ class ProjectItem < ApplicationRecord
   def eventable_omses
     offer.primary_oms.present? ? [offer.primary_oms] : []
   end
+
 
   def to_s
     "\"#{project.name}##{id}\""

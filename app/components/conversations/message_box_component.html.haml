@@ -1,0 +1,8 @@
+.question-box.col-12.mx-auto.mt-4.pt-3
+  = simple_form_for @message, url: @message_post_path do |f|
+    = f.input :message,
+              label: @message_input_label,
+              input_html: { class: "textarea-md",
+                            "data-action": "click->conversation#hide_separator" }
+    %button.btn.btn-primary.btn-sm.mt-2{ type: "submit" }
+      = _("Send message")

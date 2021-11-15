@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require_relative "messageable_spec"
 
 RSpec.describe ProjectItem do
   subject { create(:project_item) }
@@ -13,6 +14,8 @@ RSpec.describe ProjectItem do
 
   it { should belong_to(:project) }
   it { should belong_to(:offer) }
+
+  include_examples "messageable"
 
   describe "#create_new_status" do
     [
