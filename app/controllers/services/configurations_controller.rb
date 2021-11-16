@@ -2,9 +2,9 @@
 
 class Services::ConfigurationsController < Services::ApplicationController
   before_action :ensure_in_session!
+  skip_before_action :authenticate_user!
 
   def show
-    setup_show_variables!
     @project_item = CustomizableProjectItem.new(session[session_key])
     if prev_visible_step.valid?
       @step = step(saved_state)
@@ -44,11 +44,5 @@ class Services::ConfigurationsController < Services::ApplicationController
 
     def step_key
       :configuration
-    end
-
-    def setup_show_variables!
-      @projects = current_user.projects
-      # @affiliations = current_user.active_affiliations
-      # @customer_topologies = ProjectItem.customer_typologies.keys.map(&:to_sym)
     end
 end
