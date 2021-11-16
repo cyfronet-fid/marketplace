@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Fix RWD CSS Styles (@jarekzet)
+- Move authentication to the last step of the Access Wizard - User Experience improvement (@danielkryska)
 
 ### Deprecated
 
