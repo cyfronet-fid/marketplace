@@ -110,4 +110,4 @@ en:
         project_item/wizard/summary_step:
           attributes:
             project:
-              repeated_in_project: "can only have one of this resource. Please choose another project"
+              repeated_in_project: "already pinned with this offer"
