@@ -10,8 +10,14 @@ FactoryBot.define do
     factory :open_access_service do
       sequence(:order_type) { :open_access }
     end
-    factory :fully_open_access_servoce do
+    factory :fully_open_access_service do
       sequence(:order_type) { :fully_open_access }
+    end
+    factory :other_service do
+      sequence(:order_type) { :other }
+    end
+    factory :order_required_service do
+      sequence(:order_type) { :order_required }
     end
     sequence(:webpage_url) { "https://wabpage.url"  }
     sequence(:manual_url) { "https://manual.url"  }

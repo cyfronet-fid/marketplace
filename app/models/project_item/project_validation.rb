@@ -5,19 +5,19 @@ module ProjectItem::ProjectValidation
 
   included do
     validates :project, presence: true
-    validate :one_per_project, unless: :properties_or_bundled_offer?
+    validate :one_per_project, unless: :excluded?
   end
 
-  def one_per_project
-    project_items_services = Service.joins(offers: { project_items: :project })
-      .where(id: offer&.service_id, offers: { project_items: { project_id: [ project_id] } })
-      .where.not(offers: { project_items: { id: id } })
-      .count.positive?
+  private
+    def one_per_project
+      return if project.blank?
 
-    errors.add(:project, :repeated_in_project) unless !project_items_services.present?
-  end
+      offer_duplicated = project.project_items.count { |pi| pi.offer.id == offer.id }
 
-  def properties_or_bundled_offer?
-    properties? || (offer.present? && (offer.bundle? || parent.present?))
-  end
+      errors.add(:project, :repeated_in_project) if offer_duplicated.positive?
+    end
+
+    def excluded?
+      offer.blank? || offer.internal? || offer.bundle? || parent.present?
+    end
 end
