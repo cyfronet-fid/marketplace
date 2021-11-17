@@ -8,8 +8,8 @@ module Service::Search
     # scope :search_import working with should_indexe?
     # and define which services are indexed in elasticsearch
     searchkick word_middle: [:name, :tagline, :description, :offer_names,
-                             :resource_organisation_name, :provider_names],
-      highlight: [:name, :tagline, :resource_organisation_name, :provider_names]
+                             :resource_organisation_name, :provider_names, :related_platforms],
+      highlight: [:name, :tagline, :resource_organisation_name, :provider_names, :related_platforms]
   end
 
   # search_data are definition which
