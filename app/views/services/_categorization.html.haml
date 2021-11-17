@@ -12,10 +12,18 @@
         = _("Provided by") + ":"
     %dd.x-small
       %mr-4= active_providers
-%dl.mb-0.research
+%dl.mb-0.service-details-header__hide
   %dt.x-small
     %span
       = _("Scientific domain") + ":"
   %dd.x-small
     %mr-4= safe_join(scientific_domains_text(service), ", ")
+- related_platforms = safe_join(related_platforms(service, highlights), ", ")
+- if related_platforms.present?
+  %dl.mb-0.service-details-header__hide
+    %dt.x-small
+      %span
+        = _("Related platforms") + ":"
+    %dd.x-small
+      %mr-4= related_platforms
 %span.clearfix

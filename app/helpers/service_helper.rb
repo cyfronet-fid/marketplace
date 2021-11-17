@@ -93,6 +93,23 @@ module ServiceHelper
     end
   end
 
+  def related_platforms(service, highlights = nil)
+    not_blank_related_platforms = service.related_platforms.map(&:strip).reject(&:blank?)
+
+    return [] if not_blank_related_platforms.blank?
+    return service.related_platforms if highlights.blank? || highlights[:related_platforms].blank?
+
+    highlighted = sanitize(highlights[:related_platforms]).to_str.strip
+
+    not_blank_related_platforms.map do |related_platform|
+      if highlighted == related_platform
+        sanitize(highlights[:related_platforms], tags: %w[mark])
+      else
+        related_platform
+      end
+    end
+  end
+
   def providers_text(service)
     service.providers
            .reject(&:blank?)
