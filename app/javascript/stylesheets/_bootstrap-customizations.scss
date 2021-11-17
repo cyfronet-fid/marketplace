@@ -4705,3 +4705,33 @@ abbr[title] {
   background-color: $palette-lightblue2;
   border: 1px solid $palette-lightblue3;
 }
+
+.comment-log-frame {
+  text-align: center;
+  padding: 10px 10px 20px;
+  border: 1px solid $palette-gray-10;
+}
+
+.comment-row {
+  padding: 15px 0 15px 5px;
+  margin: 0;
+  background: $palette-lightblue2;
+
+  &.error {
+    border: 1px solid $error-border;
+  }
+}
+
+.stars-row {
+  .list-inline {
+    .list-inline-item {
+      margin-right: 0;
+    }
+  }
+}
+
+.resource-review {
+  .invalid-feedback {
+    font-size: 100%;
+  }
+}
