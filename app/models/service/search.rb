@@ -35,7 +35,8 @@ module Service::Search
       source: upstream&.source_type,
       offers: offers.ids,
       offer_names: offers.map(&:name),
-      provider_names: [resource_organisation.name] << providers.map(&:name)
+      provider_names: [resource_organisation.name] << providers.map(&:name),
+      related_platforms: related_platforms
     }
   end
 
