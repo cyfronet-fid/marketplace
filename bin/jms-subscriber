@@ -4,7 +4,7 @@ APP_ROOT = File.expand_path("..", __dir__)
 require_relative "../config/boot"
 require_relative "../config/environment"
 
-stomp_config = Mp::Application.config_for(:stomp)
+stomp_config = Mp::Application.config_for(:stomp_subscriber)
 
 Jms::Subscriber.new(stomp_config["destination"],
                     stomp_config["login"],

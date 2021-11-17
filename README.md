@@ -244,7 +244,9 @@ We are currently using the following ENV variables:
   * `EOSC_COMMONS_ENV` - EOSC commons environment type enum: 'production' | 'development'
   * `EOSC_COMMONS_BASE_URL` - EOSC commons base URL: s3 instance + bucket 
   * ENV Variables connected to JIRA integration are described in [JIRA integration manual](./docs/jira_integration.md)
-
+  * `STOMP_PUBLISHER_ENABLED` (Optional) - turn on publishing with JMS
+  * `MP_STOMP_LOGGER_PATH` (Optional) - path to the JMS log file
+  * `MP_STOMP_PUBLISHER_TOPIC` - topic of a new message to be published
 ## Commits
 
 Running `./bin/setup` automatically installs githooks (using `overcommit` gem) for code linting. But if you're using
