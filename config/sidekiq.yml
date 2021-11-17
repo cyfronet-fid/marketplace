@@ -18,3 +18,4 @@ staging:
   - matomo
   - probes
   - default
+  - pc_publisher
