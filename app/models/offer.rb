@@ -83,18 +83,6 @@ class Offer < ApplicationRecord
     super || service.service_type
   end
 
-  def open_access?
-    offer_type == "open_access"
-  end
-
-  def normal?
-    offer_type == "normal"
-  end
-
-  def catalog?
-    offer_type == "catalog"
-  end
-
   def bundle?
     bundled_offers_count.positive?
   end

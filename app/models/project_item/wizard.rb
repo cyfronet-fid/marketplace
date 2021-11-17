@@ -85,7 +85,6 @@ class ProjectItem::Wizard
 
     class SummaryStep < ConfigurationStep
       include ProjectItem::ProjectValidation
-      delegate :properties?, to: :project_item
 
       attr_accessor :additional_comment, :verified_recaptcha
 
