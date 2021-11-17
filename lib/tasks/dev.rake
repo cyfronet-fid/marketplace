@@ -97,6 +97,7 @@ namespace :dev do
       domain = ScientificDomain.where(name: hash["domain"])
       resource_organisation = Provider.find_by(name: "not specified yet")
       platforms = Platform.where(name: hash["platforms"])
+      related_platforms = hash["related_platforms"]
       funding_bodies = Vocabulary::FundingBody.where(eid: hash["funding_bodies"])
       funding_programs = Vocabulary::FundingProgram.where(eid: hash["funding_programs"])
       service = Service.find_or_initialize_by(name: hash["name"])
@@ -131,6 +132,7 @@ namespace :dev do
                       categories: categories,
                       tag_list: hash["tags"],
                       platforms: platforms,
+                      related_platforms: related_platforms,
                       status: :published)
       service.save(validate: false)
 

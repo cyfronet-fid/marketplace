@@ -5121,6 +5121,7 @@ services:
     life_cycle_status: *prod
     tagline: Learn how to manage IT services with a pragmatic and lightweight standard
     platforms: [ *egiPlatform ]
+    related_platforms: [ "Scopus", "European Language Grid" ]
     description: |
       FitSM is a lightweight standards family aimed at facilitating service management in IT service provision,
       including federated scenarios. FitSM training aims at providing those involved in operating
@@ -5217,6 +5218,10 @@ services:
       A web-based, collaborative working environment enacting to predict the spread of an invasive species
       (possibly alien) in a new environment
     platforms: [ *egiPlatform, *gbif, *obis, *d4sciencePlatform, *gCube, *seaDataCloud ]
+    related_platforms:
+      - "https://eliademy.com/opensciencemooc"
+      - "GBIF Integrate Data from more than 1700 institutions (https://www.gbif.org/publisher/search) "
+      - "The NOMAD Laboratory https://nomad-coe.eu/"
     description: |
       Alien and Invasive Species Virtual Research Environment (VRE) is a web-based, comprehensive,
       collaborative working environment supporting decision makers and scientists in predicting the spread
