@@ -115,8 +115,8 @@ RSpec.feature "Service ordering" do
       expect(page).to have_content(service.name)
     end
 
-    [:open_access_service, :external_service].each do |type|
-      scenario "I cannot order #{type} service twice in one project if offer has no parameters" do
+    [:open_access_service, :fully_open_access_service, :other_service, :order_required_service].each do |type|
+      scenario "I cannot order #{type} resource twice in one project" do
         service = create(type)
         _offer = create(:offer, service: service, internal: false,
                         order_type: service.order_type, order_url: service.order_url)
@@ -153,10 +153,10 @@ RSpec.feature "Service ordering" do
       end
     end
 
-    [:open_access_service, :external_service].each do |type|
-      scenario "I can order #{type} service twice in one project if offer has parameters" do
+    [:order_required_service].each do |type|
+      scenario "I can order #{type} resource twice in one project" do
         service = create(type)
-        _offer = create(:offer_with_parameters, service: service, internal: false,
+        _offer = create(:offer, service: service, internal: true,
                         order_type: service.order_type, order_url: service.order_url)
         _default_project = user.projects.find_by(name: "Services")
 
@@ -165,16 +165,10 @@ RSpec.feature "Service ordering" do
         click_on "Access the resource"
         click_on "Next", match: :first
 
-        # Configuration step
-
-        expect(page).to have_css("#parameter_#{_offer.parameters[0].id}")
-        fill_in "parameter_#{_offer.parameters[0].id}", with: "test"
-
-        click_on "Next - Final details", match: :first
         select "Services", from: "customizable_project_item_project_id"
 
         expect do
-          click_on "Add to a project", match: :first
+          click_on "Send access request", match: :first
         end.to change { ProjectItem.count }.by(1)
 
         visit service_path(service)
@@ -182,14 +176,212 @@ RSpec.feature "Service ordering" do
         click_on "Access the resource"
         click_on "Next", match: :first
 
-        fill_in "parameter_#{_offer.parameters[0].id}", with: "test"
-        click_on "Next - Final details", match: :first
         select "Services", from: "customizable_project_item_project_id"
 
         expect do
-          click_on "Add to a project", match: :first
+          click_on "Send access request", match: :first
         end.to change { ProjectItem.count }.by(1)
       end
+    end
+
+    scenario "I can order bundle resource twice in one project" do
+      service = create(:service)
+      service2 = create(:service)
+      bundled = create(:offer, service: service2, internal: false,
+                        order_type: service2.order_type, order_url: service2.order_url)
+      _bundle = create(:offer, service: service, internal: false,
+                      order_type: service.order_type, order_url: service.order_url, bundled_offers: [bundled])
+
+      _default_project = user.projects.find_by(name: "Services")
+
+      visit service_path(service)
+
+      click_on "Access the resource"
+      click_on "Next", match: :first
+
+      select "Services", from: "customizable_project_item_project_id"
+
+      expect do
+        click_on "Add to a project", match: :first
+      end.to change { ProjectItem.count }.by(2)
+
+      visit service_path(service)
+
+      click_on "Access the resource"
+      click_on "Next", match: :first
+
+      select "Services", from: "customizable_project_item_project_id"
+
+      expect do
+        click_on "Add to a project", match: :first
+      end.to change { ProjectItem.count }.by(2)
+    end
+
+    scenario "I can order bundle resource and its bundled resource" do
+      service = create(:service)
+      service2 = create(:service)
+      bundled = create(:offer, service: service2, internal: true,
+                       order_type: service2.order_type, order_url: service2.order_url)
+      _bundle = create(:offer, service: service, internal: true,
+                       order_type: service.order_type, order_url: service.order_url, bundled_offers: [bundled])
+
+      _default_project = user.projects.find_by(name: "Services")
+
+      visit service_path(service)
+
+      click_on "Access the resource"
+      click_on "Next", match: :first
+
+      select "Services", from: "customizable_project_item_project_id"
+
+      expect do
+        click_on "Send access request", match: :first
+      end.to change { ProjectItem.count }.by(2)
+
+      visit service_path(service2)
+
+      click_on "Access the resource"
+      click_on "Next", match: :first
+
+      select "Services", from: "customizable_project_item_project_id"
+
+      expect do
+        click_on "Send access request", match: :first
+      end.to change { ProjectItem.count }.by(1)
+    end
+
+    scenario "I cannot order every 'open_access' type offer twice" do
+      service = create(:service)
+      open_access = create(:offer, service: service, internal: false, iid: 1,
+                      order_type: :open_access, order_url: service.order_url)
+      fully_open_access = create(:offer, service: service, internal: false, iid: 2,
+                           order_type: :fully_open_access, order_url: service.order_url)
+      other = create(:offer, service: service, internal: false, iid: 3,
+                                 order_type: :other, order_url: service.order_url)
+      order_required_external = create(:offer, service: service, internal: false, iid: 4,
+                     order_type: :order_required, order_url: service.order_url)
+      _default_project = user.projects.find_by(name: "Services")
+      service.offers_count = 4
+
+      visit service_path(service)
+
+      click_on "Access the resource"
+
+      expect(page).to have_text "Offer selection"
+      # Information step - open_access
+      choose "customizable_project_item_offer_id_#{open_access.iid}"
+      click_on "Next", match: :first
+      click_on "Next - Final details", match: :first
+
+      select "Services", from: "customizable_project_item_project_id"
+
+      expect do
+        click_on "Add to a project", match: :first
+      end.to change { ProjectItem.count }.by(1)
+
+      visit service_path(service)
+
+      click_on "Access the resource"
+
+      choose "customizable_project_item_offer_id_#{open_access.iid}"
+      click_on "Next", match: :first
+      click_on "Next - Final details", match: :first
+
+      select "Services", from: "customizable_project_item_project_id"
+
+      expect do
+        click_on "Add to a project", match: :first
+        expect(page).to have_text("already pinned with this offer")
+      end.to change { ProjectItem.count }.by(0)
+
+      visit service_path(service)
+
+      click_on "Access the resource"
+
+      # Information step - fully_open_access
+      choose "customizable_project_item_offer_id_#{fully_open_access.iid}"
+      click_on "Next", match: :first
+      click_on "Next - Final details", match: :first
+
+      select "Services", from: "customizable_project_item_project_id"
+
+      expect do
+        click_on "Add to a project", match: :first
+      end.to change { ProjectItem.count }.by(1)
+
+      visit service_path(service)
+
+      click_on "Access the resource"
+
+      choose "customizable_project_item_offer_id_#{fully_open_access.iid}"
+      click_on "Next", match: :first
+      click_on "Next - Final details", match: :first
+
+      select "Services", from: "customizable_project_item_project_id"
+
+      expect do
+        click_on "Add to a project", match: :first
+        expect(page).to have_text("already pinned with this offer")
+      end.to change { ProjectItem.count }.by(0)
+
+      visit service_path(service)
+
+      click_on "Access the resource"
+
+      # Information step - other
+      choose "customizable_project_item_offer_id_#{other.iid}"
+      click_on "Next", match: :first
+      click_on "Next - Final details", match: :first
+
+      select "Services", from: "customizable_project_item_project_id"
+
+      expect do
+        click_on "Add to a project", match: :first
+      end.to change { ProjectItem.count }.by(1)
+
+      visit service_path(service)
+
+      click_on "Access the resource"
+
+      choose "customizable_project_item_offer_id_#{other.iid}"
+      click_on "Next", match: :first
+      click_on "Next - Final details", match: :first
+
+      select "Services", from: "customizable_project_item_project_id"
+
+      expect do
+        click_on "Add to a project", match: :first
+        expect(page).to have_text("already pinned with this offer")
+      end.to change { ProjectItem.count }.by(0)
+
+      visit service_path(service)
+      click_on "Access the resource"
+
+      # Information step - order_required_external
+      choose "customizable_project_item_offer_id_#{order_required_external.iid}"
+      click_on "Next", match: :first
+      click_on "Next - Final details", match: :first
+
+      select "Services", from: "customizable_project_item_project_id"
+
+      expect do
+        click_on "Add to a project", match: :first
+      end.to change { ProjectItem.count }.by(1)
+
+      visit service_path(service)
+
+      click_on "Access the resource"
+
+      choose "customizable_project_item_offer_id_#{order_required_external.iid}"
+      click_on "Next", match: :first
+      click_on "Next - Final details", match: :first
+
+      select "Services", from: "customizable_project_item_project_id"
+
+      expect do
+        click_on "Add to a project", match: :first
+        expect(page).to have_text("already pinned with this offer")
+      end.to change { ProjectItem.count }.by(0)
     end
 
     scenario "Skip offers selection when only one offer" do
