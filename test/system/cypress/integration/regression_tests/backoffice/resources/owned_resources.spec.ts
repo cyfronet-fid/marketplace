@@ -5,19 +5,20 @@ import { ParametersFactory } from "../../../../factories/resource.factory";
 
 describe("Owned resources", () => {
   const user = UserFactory.create({roles: ["service_portfolio_manager"]});
-  const resource = ResourcesFactory.create();
-  const resource2 = ResourcesFactory.create();
+  const [resource, resource2, resource3] = [...Array(4)].map(() =>
+    ResourcesFactory.create()
+  );
   const offer = OfferFactory.create();
   const parameter = ParametersFactory.create();
   const correctLogo = "logo.jpg"
-  const wrongLogo = "logo.tif"
+  const wrongLogo = "logo.svg"
  
   beforeEach(() => {
     cy.visit("/");
+    cy.loginAs(user);
   });
   
   it("should go to Owned resources in Backoffice and select one of resources", () => {
-    cy.loginAs(user);
     cy.get("[data-e2e='my-eosc-button']")
       .click();
     cy.get("[data-e2e='backoffice']")
@@ -36,7 +37,6 @@ describe("Owned resources", () => {
   });
 
   it("should add new resource and published it", () => {
-    cy.loginAs(user);
     cy.visit("/backoffice")
     cy.get("[data-e2e='owned-resources']")
       .click();
@@ -46,6 +46,8 @@ describe("Owned resources", () => {
       .should("contain", "/services/new")
     cy.fillFormCreateResource(resource, correctLogo);
     cy.get("[data-e2e='submit-btn']").click()
+    cy.contains("div.alert-success", "New service created successfully")
+      .should("be.visible");
     cy.contains("a","Edit resource")
       .should("be.visible") 
     cy.contains("a","Set parameters and offers")
@@ -74,7 +76,6 @@ describe("Owned resources", () => {
   });
 
   it("shouldn't add new resource", ()=> {
-    cy.loginAs(user);
     cy.visit("/backoffice/services/new")
     cy.fillFormCreateResource({...resource, basicWebpage_url:"wrongFormat", contactsEmail:"wrongFormat"}, wrongLogo);
     cy.get("[data-e2e='submit-btn']")
@@ -84,11 +85,12 @@ describe("Owned resources", () => {
     cy.contains("div.invalid-feedback", "Logo is not a valid file format and Logo format you're trying to attach is not supported")
       .should("be.visible")
     cy.contains("div.invalid-feedback", "Email is not a valid email address")
-      .should("be.visible") 
+      .should("be.visible")
+    cy.contains("div.invalid-feedback", "Webpage url is not a valid URL")
+      .should("be.visible"); 
   });
 
   it("should add new offers", ()=>{
-    cy.loginAs(user);
     cy.visit("/backoffice/services/new");
     cy.fillFormCreateResource(resource2, correctLogo);
     cy.get("[data-e2e='submit-btn']")
@@ -166,6 +168,61 @@ describe("Owned resources", () => {
         cy.contains("a", "Configuration")
           .should("be.visible")
     });
-  })
+  });
+
+  it("should go to Preview mode, back to edit and create resource", ()=> {
+    cy.visit("/backoffice/services/new")
+    cy.fillFormCreateResource(resource3, correctLogo);
+    cy.get("[data-e2e='preview-btn']")
+      .click();
+    cy.contains("div", "Service preview")
+      .should("be.visible")
+    cy.get("[data-e2e='go-back-edit-btn']")
+      .click();
+    cy.get("[data-e2e='submit-btn']")
+      .click()
+    cy.contains("div.alert-success", "New service created successfully")
+      .should("be.visible");
+    cy.contains("a","Edit resource")
+      .should("be.visible") 
+    cy.contains("a","Set parameters and offers")
+      .should("be.visible")   
+  });
+
+  it("should go to Preview mode and confirm changes", ()=> {
+    cy.visit("/backoffice/services/new")
+    cy.fillFormCreateResource(resource3, correctLogo);
+    cy.get("[data-e2e='preview-btn']")
+      .click();
+    cy.contains("div", "Service preview")
+      .should("be.visible")
+    cy.get("[data-e2e='confirm-changes-btn']")
+      .click();
+    cy.contains("div.alert-success", "New service created successfully")
+      .should("be.visible");
+    cy.contains("a","Edit resource")
+      .should("be.visible");
+    cy.contains("a","Set parameters and offers")
+      .should("be.visible");
+  });
+
+  it("shouldn't go to Preview mode", ()=> {;
+    cy.visit("/backoffice/services/new");
+    cy.fillFormCreateResource({basicWebpage_url:"wrongFormat", contactsEmail:"wrongFormat"}, wrongLogo);
+    cy.get("[data-e2e='preview-btn']")
+      .click();
+    cy.contains(
+      "div.invalid-feedback",
+      "Logo format you're trying to attach is not supported. " +
+      "Supported formats: png, gif, jpg, jpeg, pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon")
+      .should("be.visible");
+    cy.fillFormCreateResource({}, correctLogo);
+    cy.get("[data-e2e='preview-btn']")
+        .click();
+    cy.contains("div.invalid-feedback", "Email is not a valid email address")
+        .should("be.visible");
+    cy.contains("div.invalid-feedback", "Webpage url is not a valid URL")
+      .should("be.visible");
+  });
 });
 

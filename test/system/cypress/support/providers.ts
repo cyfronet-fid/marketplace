@@ -67,8 +67,7 @@
    }
 
    cy.get("#provider_logo")
-     .click()
-     .attachFile(logo)
+     .attachFile(logo);
  
    if (provider.marketingMultimedia) {
      cy.get("#provider_multimedia_0")

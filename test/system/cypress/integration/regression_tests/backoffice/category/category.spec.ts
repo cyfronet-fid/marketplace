@@ -6,14 +6,14 @@ describe("Category", () => {
   const [category, category1, category2, category3,category4] = [...Array(5)].map(()=> CategoryFactory.create())
 
   const correctLogo = "logo.jpg"
-  const wrongLogo = "logo.tif"
+  const wrongLogo = "logo.svg"
 
   beforeEach(() => {
     cy.visit("/");
+    cy.loginAs(user);
   });
   
   it("should create new category without parent", () => {
-    cy.loginAs(user);
     cy.get("[data-e2e='my-eosc-button']")
       .click();
     cy.get("[data-e2e='backoffice']")
@@ -47,7 +47,6 @@ describe("Category", () => {
   });
 
   it("should create new category with parent", () => {
-    cy.loginAs(user);
     cy.visit("/backoffice/categories/new")
     cy.fillFormCreateCategory({...category1, parent: "Sharing & Discovery"}, correctLogo);
     cy.get("[data-e2e='create-category-btn']")
@@ -68,8 +67,7 @@ describe("Category", () => {
   });
 
   it("should add new category without logo", () => {
-    cy.loginAs(user);
-    cy.visit("/backoffice/categories/new");
+    cy.visit("/backoffice/categories/new")
     cy.fillFormCreateCategory(category2, false);
     cy.get("[data-e2e='create-category-btn']")
       .click();
@@ -91,7 +89,6 @@ describe("Category", () => {
   });
 
   it("shouldn't create new category", () => {
-    cy.loginAs(user);
     cy.visit("/backoffice/categories/new")
     cy.fillFormCreateCategory({...category3, name:""}, wrongLogo);
     cy.get("[data-e2e='create-category-btn']")
@@ -104,7 +101,6 @@ describe("Category", () => {
   });
 
   it("shouldn't delete category with resources connected to it", () => {
-    cy.loginAs(user);
     cy.visit("/backoffice/categories");
     cy.get("[data-e2e='backoffice-categories-list'] li")
       .eq(0)
@@ -117,7 +113,6 @@ describe("Category", () => {
   });
 
   it("should delete category without resources", () => {
-    cy.loginAs(user);
     cy.visit("/backoffice/categories/new");
     cy.fillFormCreateCategory(category4, correctLogo);
     cy.get("[data-e2e='create-category-btn']")
@@ -137,7 +132,6 @@ describe("Category", () => {
   })
 
   it("should edit category", () => {
-    cy.loginAs(user);
     cy.visit("/backoffice/categories")
     cy.get("[data-e2e='backoffice-categories-list'] li")
       .eq(0)
