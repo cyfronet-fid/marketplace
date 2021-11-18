@@ -1,6 +1,7 @@
 {
   "baseUrl": "http://localhost:3000",
-  "defaultCommandTimeout": 6000,
+  "defaultCommandTimeout": 8000,
+  "pageLoadTimeout": 120000,
   "viewportWidth": 1400,
   "viewportHeight": 1200,
   "testFiles": "**/*.spec.ts",
