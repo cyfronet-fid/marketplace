@@ -99,7 +99,7 @@ module ServiceHelper
     return [] if not_blank_related_platforms.blank?
     return service.related_platforms if highlights.blank? || highlights[:related_platforms].blank?
 
-    highlighted = sanitize(highlights[:related_platforms]).to_str.strip
+    highlighted = sanitize(highlights[:related_platforms], tags: []).to_str.strip
 
     not_blank_related_platforms.map do |related_platform|
       if highlighted == related_platform

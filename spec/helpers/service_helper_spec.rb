@@ -20,6 +20,39 @@ RSpec.describe ServiceHelper, type: :helper do
     expect(get_providers_list.order(:created_at)).to eq(list)
   end
 
+  context "#related_platforms" do
+    it "for empty returns empty" do
+      service = double(related_platforms: [])
+      expect(related_platforms(service)).to eq([])
+    end
+
+    it "rejects entries which are empty after trim" do
+      service = double(related_platforms: ["  ", "\t\n"])
+      expect(related_platforms(service)).to eq([])
+    end
+
+    it "returns same if no highlights" do
+      service = double(related_platforms: ["abc"])
+      expect(related_platforms(service)).to eq(["abc"])
+    end
+
+    it "returns same if no matching highlights" do
+      service = double(related_platforms: ["abc"])
+      expect(related_platforms(service, { related_platforms: "<mark>ab</mark>" })).to eq(["abc"])
+    end
+
+    it "returns highlights if matching highlights" do
+      service = double(related_platforms: ["abc", "bc"])
+      expect(related_platforms(service, { related_platforms: "<mark>abc</mark>" })).to eq(["<mark>abc</mark>", "bc"])
+    end
+
+    it "returns highlights if matching highlights but stripping tags other than <mark>" do
+      service = double(related_platforms: ["abc"])
+      expect(related_platforms(service, { related_platforms: "<mark><strong>abc</strong></mark>" }))
+        .to eq(["<mark>abc</mark>"])
+    end
+  end
+
   it "return trl description" do
     service = create(:service)
     expect(trl_description_text(service)).to eq("Super description")
