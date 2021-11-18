@@ -3,19 +3,19 @@ import { UserFactory } from "../../../../factories/user.factory";
 
 describe("Providers", () => {
   const user = UserFactory.create({ roles: ["service_portfolio_manager"] });
-  const [provider, provider2, provider3, provider4] = [...Array(4)].map(() =>
+  const [provider, provider2, provider3] = [...Array(4)].map(() =>
     ProvidersFactory.create()
   );
 
   const correctLogo = "logo.jpg";
-  const wrongLogo = "logo.tif";
+  const wrongLogo = "logo.svg";
 
   beforeEach(() => {
     cy.visit("/");
+    cy.loginAs(user);
   });
 
   it("should go to Providers in Backoffice and select one of providers", () => {
-    cy.loginAs(user);
     cy.get("[data-e2e='my-eosc-button']")
       .click();
     cy.get("[data-e2e='backoffice']")
@@ -36,7 +36,6 @@ describe("Providers", () => {
   });
 
   it("should add new provider and find in filter and autocomplete in front and backoffice", () => {
-    cy.loginAs(user);
     cy.visit("/backoffice/providers");
     cy.get("[data-e2e='add-new-provider']")
       .click();
@@ -104,32 +103,32 @@ describe("Providers", () => {
   });
 
   it("shouldn't add new provider", () => {
-    cy.loginAs(user);
     cy.visit("/backoffice/providers");
     cy.get("[data-e2e='add-new-provider']")
       .click();
     cy.location("href")
       .should("contain", "/providers/new");
-    cy.fillFormCreateProvider(provider2, wrongLogo);
+    cy.fillFormCreateProvider({basicWebpage_url:"wrongFormat", adminEmail:"wrongFormat"}, wrongLogo);
     cy.get("[data-e2e='create-provider-btn']")
       .click();
-    cy.get("div.invalid-feedback")
-      .should("be.visible");
     cy.contains(
       "div.invalid-feedback",
       "Logo is not a valid file format and Logo format you're trying to attach is not supported. " +
       "Supported formats: png, gif, jpg, jpeg, pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon")
       .should("be.visible");
+    cy.contains("div.invalid-feedback", "Website isn't valid or website doesn't exist, please check URL")
+      .should("be.visible");
+    cy.contains("div.invalid-feedback", "Email is not a valid email address")
+      .should("be.visible");
   });
 
   it("should deleted provider without resource and find only in filter and autocomplete in backoffice", () => {
-    cy.loginAs(user);
     cy.visit("/backoffice/providers");
     cy.get("[data-e2e='add-new-provider']")
       .click();
     cy.location("href")
       .should("contain", "/providers/new");
-    cy.fillFormCreateProvider(provider3, correctLogo);
+    cy.fillFormCreateProvider(provider2, correctLogo);
     cy.get("[data-e2e='create-provider-btn']")
       .click();
     cy.get("h1")
@@ -178,24 +177,13 @@ describe("Providers", () => {
   });
 
   it("should go to Providers in Backoffice and edit one of providers", () => {
-    cy.loginAs(user);
-    cy.visit("/backoffice/providers");
-    cy.get("[data-e2e='backoffice-providers-list'] a")
-      .eq(3)
-      .parent()
-      .find("a")
-      .contains("Edit")
+    cy.visit("/backoffice/providers/new");
+    cy.fillFormCreateProvider(provider3, correctLogo);
+    cy.get("[data-e2e='create-provider-btn']")
       .click();
-    cy.fillFormCreateProvider(
-      {
-        ...provider4,
-        basicName: "Edited provider",
-        adminFirstName: "test",
-        adminLastName: "test",
-        adminEmail: "test@mail.pl",
-      },
-      correctLogo
-    );
+    cy.contains("a","Edit")
+      .click();
+    cy.fillFormCreateProvider({basicName: "Edited provider"}, correctLogo);
     cy.get("[data-e2e='create-provider-btn']")
       .click();
     cy.get(".alert-success")

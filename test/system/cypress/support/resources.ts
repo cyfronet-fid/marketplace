@@ -81,8 +81,7 @@ Cypress.Commands.add("fillFormCreateResource", (resource: IResources, logo) => {
   }
 
   cy.get("#service_logo")
-    .click()
-    .attachFile(logo)
+    .attachFile(logo);
 
   cy.get("#classification-header").click();
 
@@ -111,7 +110,7 @@ Cypress.Commands.add("fillFormCreateResource", (resource: IResources, logo) => {
   cy.get("body")
     .type("{esc}");
 
-  cy.get("#contact-header.card-header")
+  cy.get("#contact-header")
     .click();
 
   if (resource.contactsFirstname) {
