@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - New conversation labels, which now reflect the identity of the author (@wujuu)
 - "New message" visual notifications (@wujuu)
+- JMS publisher for pushing information to PC (@danielkryska, @jswk)
 
 ### Changed
 - Fix RWD CSS Styles (@jarekzet)
