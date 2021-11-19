@@ -5,12 +5,19 @@ require "rails_helper"
 RSpec.feature "Question about provider" do
   include OmniauthHelper
 
+  let(:provider) { create(:provider) }
+  let(:upstream) { build(:eosc_registry_provider_source) }
+
+  before do
+    upstream.update!(provider: provider)
+    provider.update!(upstream: upstream)
+  end
+
   context "as logged in user" do
     before { checkin_sign_in_as(create(:user)) }
 
     scenario "I can send question to contact emails", js: true do
       Capybara.page.current_window.resize_to("1600", "1024")
-      provider = create(:provider)
 
       visit provider_path(provider)
 
@@ -24,11 +31,12 @@ RSpec.feature "Question about provider" do
         click_on "SEND"
         expect(page).to have_content("Your message was successfully sent")
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
+
+      expect(Jms::PublishJob).to have_been_enqueued
     end
 
     scenario "I cannot send message about service with empty message", js: true do
       Capybara.page.current_window.resize_to("1600", "1024")
-      provider = create(:provider)
       create_list(:public_contact, 2, contactable: provider)
 
       visit provider_path(provider)
@@ -38,13 +46,14 @@ RSpec.feature "Question about provider" do
       click_on "SEND"
 
       expect(page).to have_content("Text Question cannot be blank")
+
+      expect(Jms::PublishJob).not_to have_been_enqueued
     end
   end
 
   context "as not logged in user" do
     scenario "I can send message about provider", js: true do
       Capybara.page.current_window.resize_to("1600", "1024")
-      provider = create(:provider)
 
       visit provider_path(provider)
 
@@ -60,11 +69,12 @@ RSpec.feature "Question about provider" do
         click_on "SEND"
         expect(page).to have_content("Your message was successfully sent")
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
+
+      expect(Jms::PublishJob).to have_been_enqueued
     end
 
     scenario "I cannot send message about provider with empty fields", js: true do
       Capybara.page.current_window.resize_to("1600", "1024")
-      provider = create(:provider)
       create_list(:public_contact, 2, contactable: provider)
 
       visit provider_path(provider)
@@ -76,6 +86,8 @@ RSpec.feature "Question about provider" do
       expect(page).to have_content("Author can't be blank")
       expect(page).to have_content("Email can't be blank and Email is not a valid email address")
       expect(page).to have_content("Text Question cannot be blank")
+
+      expect(Jms::PublishJob).not_to have_been_enqueued
     end
   end
 end
