@@ -244,13 +244,20 @@ We are currently using the following ENV variables:
   * `EOSC_COMMONS_ENV` - EOSC commons environment type enum: 'production' | 'development'
   * `EOSC_COMMONS_BASE_URL` - EOSC commons base URL: s3 instance + bucket 
   * ENV Variables connected to JIRA integration are described in [JIRA integration manual](./docs/jira_integration.md)
-  * `STOMP_PUBLISHER_ENABLED` (Optional) - turn on publishing with JMS
-  * `MP_STOMP_LOGGER_PATH` (Optional) - path to the JMS log file
-  * `MP_STOMP_PUBLISHER_TOPIC` - topic of a new message to be published
+  * `MP_STOMP_CLIENT_NAME` (Optional) - stomp client name (default `MPClient`)
+  * `MP_STOMP_LOGIN` (Optional) - stomp client login (default from `credentials.stomp.login`)
+  * `MP_STOMP_PASS` (Optional) - stomp client password (default from `credentials.stomp.password`)
+  * `MP_STOMP_HOST` (Optional) - stomp client host (default from `credentials.stomp.host`)
+  * `MP_STOMP_DESTINATION` (Optional) - stomp client destination (default from `credentials.stomp.subscriber.destination`)
+  * `MP_STOMP_SSL` (Optional) - stomp connection SSL (default `false`)
+  * `MP_STOMP_PUBLISHER_ENABLED` (Optional) - turn on publishing with JMS if set to `true` (default `false`)
+  * `MP_STOMP_PUBLISHER_LOGGER_PATH` (Optional) - path to the JMS log file (default `"RAILS_ROOT/log/jms.publisher.log"`)
+  * `MP_STOMP_PUBLISHER_TOPIC` (Optional) - topic of a new message to be published (default `credentials.stomp.publisher.topic`)
+
 ## Commits
 
 Running `./bin/setup` automatically installs githooks (using `overcommit` gem) for code linting. But if you're using
-an IDE for repository management then you will probably experience problems with commiting
+an IDE for repository management then you will probably experience problems with committing
 code changes. This is related to the fact that some IDE's do not inherit user's `.bash_profile`
 or any other scripts which traditionally set OS environmental variables.
 
