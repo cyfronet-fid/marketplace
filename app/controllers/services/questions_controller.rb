@@ -21,10 +21,7 @@ class Services::QuestionsController < ApplicationController
                                       service: @service)
     respond_to do |format|
       if @question.valid? && verify_recaptcha(model: @question, attribute: :verified_recaptcha)
-        @service.public_contacts.each do |contact|
-          ServiceMailer.new_question(contact.email, @question.author, @question.email,
-                                     @question.text, @service).deliver_later
-        end
+        Service::Question::Deliver.new(@question).call
         format.html { redirect_to service_path(@service) }
         flash[:notice] = "Your message was successfully sent"
       else

@@ -19,10 +19,7 @@ class Providers::QuestionsController < ApplicationController
                                      provider: @provider)
     respond_to do |format|
       if @question.valid? && verify_recaptcha(model: @question, attribute: :verified_recaptcha)
-        @provider.public_contacts.each  do |contact|
-          ProviderMailer.new_question(contact.email, @question.author, @question.email,
-                                     @question.text, @provider).deliver_later
-        end
+        Provider::Question::Deliver.new(@question).call
         format.html { redirect_to provider_path(@provider) }
         flash[:notice] = "Your message was successfully sent"
       else

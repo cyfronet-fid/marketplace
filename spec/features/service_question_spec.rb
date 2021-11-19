@@ -5,9 +5,15 @@ require "rails_helper"
 RSpec.feature "Question about service" do
   include OmniauthHelper
 
-  scenario "cannot be send when contact emails are empty" do
-    service = create(:service)
+  let(:service) { create(:service) }
+  let(:upstream) { build(:eosc_registry_service_source) }
 
+  before do
+    upstream.update!(service: service)
+    service.update!(upstream: upstream)
+  end
+
+  scenario "cannot be send when contact emails are empty" do
     visit service_path(service)
 
     expect(page).to_not have_content "Ask a question about this resource?"
@@ -18,7 +24,6 @@ RSpec.feature "Question about service" do
 
     scenario "I can send question to contact emails", js: true do
       Capybara.page.current_window.resize_to("1600", "1024")
-      service = create(:service)
       create_list(:public_contact, 2, contactable: service)
 
       visit service_path(service)
@@ -35,11 +40,12 @@ RSpec.feature "Question about service" do
         click_on "SEND"
         expect(page).to have_content("Your message was successfully sent")
       end.to change { ActionMailer::Base.deliveries.count }.by(2)
+
+      expect(Jms::PublishJob).to have_been_enqueued
     end
 
     scenario "I cannot send message about service with empty message", js: true do
       Capybara.page.current_window.resize_to("1600", "1024")
-      service = create(:service)
       create_list(:public_contact, 2, contactable: service)
 
       visit service_path(service)
@@ -52,13 +58,14 @@ RSpec.feature "Question about service" do
       click_on "SEND"
 
       expect(page).to have_content("Text Question cannot be blank")
+
+      expect(Jms::PublishJob).not_to have_been_enqueued
     end
   end
 
   context "as not logged in user" do
     scenario "I can send message about service", js: true do
       Capybara.page.current_window.resize_to("1600", "1024")
-      service = create(:service)
       create_list(:public_contact, 2, contactable: service)
 
       visit service_path(service)
@@ -77,11 +84,12 @@ RSpec.feature "Question about service" do
         click_on "SEND"
         expect(page).to have_content("Your message was successfully sent")
       end.to change { ActionMailer::Base.deliveries.count }.by(2)
+
+      expect(Jms::PublishJob).to have_been_enqueued
     end
 
     scenario "I cannot send message about service with empty fields", js: true do
       Capybara.page.current_window.resize_to("1600", "1024")
-      service = create(:service)
       create_list(:public_contact, 2, contactable: service)
 
       visit service_path(service)
@@ -95,6 +103,8 @@ RSpec.feature "Question about service" do
       expect(page).to have_content("Author can't be blank")
       expect(page).to have_content("Email can't be blank and Email is not a valid email address")
       expect(page).to have_content("Text Question cannot be blank")
+
+      expect(Jms::PublishJob).not_to have_been_enqueued
     end
   end
 end
