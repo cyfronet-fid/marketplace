@@ -3,6 +3,7 @@
 class ProjectItem::Create
   def initialize(project_item, message = nil, bundle_params: nil)
     @project_item = project_item
+    @project = project_item.project
     @message = message
     @bundle_params = bundle_params.respond_to?(:[]) ? bundle_params : {}
   end
@@ -24,7 +25,7 @@ class ProjectItem::Create
           ProjectItem.create(status: "created",
                              status_type: :created,
                              parent_id: @project_item.id,
-                             project_id: @project_item.project_id,
+                             project_id: @project.id,
                              offer_id: offer.id,
                              properties: bundled_parameters)
         end
@@ -37,7 +38,9 @@ class ProjectItem::Create
     end
 
     if !rolled_back
-      ([@project_item] + bundled_project_items).each do |project_item|
+      persisted_project_items = [@project_item] + bundled_project_items
+
+      persisted_project_items.each do |project_item|
         if orderable?(project_item)
           ProjectItem::RegisterJob.perform_later(project_item, @message)
           ProjectItemMailer.created(project_item).deliver_later
@@ -46,6 +49,10 @@ class ProjectItem::Create
           ProjectItemMailer.added_to_project(project_item).deliver_later
         end
       end
+
+      updated_project = Project.find_by(id: @project.id)
+      ProjectItem::OnCreated::PublishAddition.call(updated_project, persisted_project_items)
+      ProjectItem::OnCreated::PublishCoexistence.call(updated_project)
     end
 
     @project_item
