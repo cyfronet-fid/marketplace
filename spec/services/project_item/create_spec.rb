@@ -33,6 +33,28 @@ RSpec.describe ProjectItem::Create do
     expect(ProjectItem::RegisterJob).to have_been_enqueued.with(project_item, nil)
   end
 
+  context "for service with :eosc_registry upstream" do
+    let(:service) { create(:service, pid: "foo") }
+    let(:upstream) { build(:eosc_registry_service_source) }
+
+    before do
+      upstream.update!(service: service)
+      service.update!(upstream: upstream)
+    end
+
+    it "enqueues publish jobs" do
+      described_class.new(project_item_template).call
+
+      expect(Jms::PublishJob).to have_been_enqueued.twice
+    end
+  end
+
+  it "doesn't enqueue publish jobs" do
+    described_class.new(project_item_template).call
+
+    expect(Jms::PublishJob).not_to have_been_enqueued
+  end
+
   context "when open_access service has been added to Project" do
     let(:service) { create(:open_access_service) }
 
