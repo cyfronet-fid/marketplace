@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - "New message" visual notifications (@wujuu)
 - JMS publisher for pushing information to PC (@danielkryska, @jswk)
 - Push new questions to providers and resources to an outbound JMS queue (@jswk)
+- Push information about resource coexistence to an outbound JMS queue (@jswk)
 
 ### Changed
 - Fix RWD CSS Styles (@jarekzet)
