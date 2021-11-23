@@ -710,5 +710,18 @@
       }
     }
   }
+
+  .projects-list {
+    padding: 15px;
+    margin-bottom: 15px;
+
+    .status {
+      text-align: right;
+
+      .new-message {
+        margin-right: 0;
+      }
+    }
+  }
 }
 

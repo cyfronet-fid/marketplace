@@ -8,14 +8,17 @@
   = link_to project_item.service.name, project_service_path(project, project_item)
   .float-right.status
     - if project_item.user_has_new_messages?
-      = image_pack_tag "ico_message.svg", class: "new-message-icon"
-      = _("You have a new message")
+      %span.new-message
+        = image_pack_tag "ico_message.svg", class: "new-message-icon"
+        = _("You have a new message")
     - if project_item.offer.bundle?
       %span.bundle-status
         = _("BUNDLE")
     - if project_item.closed?
       -# TODO: refactor dynamic translation
-      = t("project_items.status.#{project_item.status_type}")
+      .status-box.status-bg-closed
+        = t("project_items.status.#{project_item.status_type}",
+        class: "status-box status-bg-#{project_item.status_type}")
     - elsif !project_item.orderable?
       = link_to _("Visit website"), webpage(project_item)
     - else
@@ -31,7 +34,8 @@
             = _("BUNDLE")
         - if child.closed?
           -# TODO: refactor dynamic translation
-          = t("project_items.status.#{child.status_type}")
+          .status-box.status-bg-closed
+            = t("project_items.status.#{child.status_type}")
         - elsif !child.orderable?
           = link_to _("Visit website"), webpage(child)
         - else

@@ -42,13 +42,11 @@ module ProjectItemsHelper
 
   def project_item_status(project_item)
     if project_item.in_progress?
-      content_tag(:i, nil, class: "fas fa-spinner",
-                  "data-toggle": "tooltip", "data-placement": "auto left",
-                  "title": "Status: #{t "project_items.status.#{project_item.status_type}"}")
+      content_tag(:div,  "#{t "project_items.status.#{project_item.status_type}"}",
+                  class: "status-box status-bg-progress")
     else
-      content_tag(:i, nil, class: "fas fa-circle status-#{project_item.status_type}",
-                  "data-toggle": "tooltip", "data-placement": "auto left",
-                  "title": "Status: #{t "project_items.status.#{project_item.status_type}"}")
+      content_tag(:div,  "#{t "project_items.status.#{project_item.status_type}"}",
+                  class: "status-box status-bg-#{project_item.status_type}")
     end
   end
 
