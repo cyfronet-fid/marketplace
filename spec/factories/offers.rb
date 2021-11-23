@@ -29,6 +29,15 @@ FactoryBot.define do
     factory :open_access_offer do
       sequence(:order_type) { :open_access }
     end
+
+    factory :fully_open_access_offer do
+      sequence(:order_type) { :fully_open_access }
+    end
+
+    factory :other_offer do
+      sequence(:order_type) { :other }
+    end
+
     factory :external_offer do
       sequence(:internal) { false }
       sequence(:order_type) { :order_required }

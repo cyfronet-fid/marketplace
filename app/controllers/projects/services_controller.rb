@@ -7,6 +7,9 @@ class Projects::ServicesController < ApplicationController
 
   def index
     @project_items = @project.project_items.roots
+    @order_required_items = @project_items.where(order_type: "order_required")
+    @open_access_items = @project_items.where(order_type: %w[open_access fully_open_access])
+    @other_items = @project_items.where(order_type: "other")
   end
 
   def show
