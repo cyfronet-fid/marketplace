@@ -32,6 +32,68 @@ RSpec.feature "My Services" do
       expect(page).to have_text(service.name)
     end
 
+    context "project item sections" do
+      scenario "I can see order_required section" do
+        create(:project_item, project: project, offer: offer)
+        visit project_services_path(project)
+
+        expect(page).to have_text("Ordered resources")
+        expect(page).to_not have_text("Open access resources")
+        expect(page).to_not have_text("Other resources")
+      end
+
+      scenario "I can see open_access section with a open_access project item" do
+        create(:project_item, project: project, offer: build(:open_access_offer))
+        visit project_services_path(project)
+
+        expect(page).to_not have_text("Ordered resources")
+        expect(page).to have_text("Open access resources")
+        expect(page).to_not have_text("Other resources")
+      end
+
+      scenario "I can see open_access section with a fully_open_access project item" do
+        create(:project_item, project: project, offer: build(:fully_open_access_offer))
+        visit project_services_path(project)
+
+        expect(page).to_not have_text("Ordered resources")
+        expect(page).to have_text("Open access resources")
+        expect(page).to_not have_text("Other resources")
+      end
+
+      scenario "I can see other section with an other project item" do
+        create(:project_item, project: project, offer: build(:other_offer))
+        visit project_services_path(project)
+
+        expect(page).to_not have_text("Ordered resources")
+        expect(page).to_not have_text("Open access resources")
+        expect(page).to have_text("Other resources")
+      end
+
+      scenario "proper items are in a proper sections" do
+        ordered_pi = create(:project_item, project: project, offer: offer)
+        open_access_pi = create(:project_item, project: project, offer: build(:open_access_offer))
+        fully_open_access_pi = create(:project_item, project: project, offer: build(:fully_open_access_offer))
+        other_pi = create(:project_item, project: project, offer: build(:other_offer))
+
+        visit project_services_path(project)
+
+        expect(find(".ordered-resources")).to have_text(ordered_pi.service.name)
+        expect(find(".ordered-resources")).to_not have_text(open_access_pi.service.name)
+        expect(find(".ordered-resources")).to_not have_text(fully_open_access_pi.service.name)
+        expect(find(".ordered-resources")).to_not have_text(other_pi.service.name)
+
+        expect(find(".open-access-resources")).to_not have_text(ordered_pi.service.name)
+        expect(find(".open-access-resources")).to have_text(open_access_pi.service.name)
+        expect(find(".open-access-resources")).to have_text(fully_open_access_pi.service.name)
+        expect(find(".open-access-resources")).to_not have_text(other_pi.service.name)
+
+        expect(find(".other-resources")).to_not have_text(ordered_pi.service.name)
+        expect(find(".other-resources")).to_not have_text(open_access_pi.service.name)
+        expect(find(".other-resources")).to_not have_text(fully_open_access_pi.service.name)
+        expect(find(".other-resources")).to have_text(other_pi.service.name)
+      end
+    end
+
     scenario "I can see the project_item details" do
       project_item = create(:project_item, project: project, offer: offer)
 
