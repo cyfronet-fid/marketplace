@@ -37,6 +37,7 @@
           project_service_conversation_path(project, project_item),
           class: "nav-link #{"active" if controller.controller_name == "conversations"} text-uppercase"
         - if project_item.user_has_new_messages?
-          = image_pack_tag "ico_message.svg", class: "new-message-icon"
+          .new-message-icon
+            = image_pack_tag "ico_message.svg"
   .container.p-0
     = yield
