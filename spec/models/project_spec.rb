@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require_relative "messageable_spec"
+require_relative "messageable"
 
 RSpec.describe Project do
   subject { create(:project, name: "New Project") }
