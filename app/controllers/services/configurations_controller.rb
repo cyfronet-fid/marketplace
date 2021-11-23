@@ -8,6 +8,7 @@ class Services::ConfigurationsController < Services::ApplicationController
     @project_item = CustomizableProjectItem.new(session[session_key])
     if prev_visible_step.valid?
       @step = step(saved_state)
+      @offer = @step.offer
 
       unless @step.visible?
         redirect_to url_for([@service, next_step_key])

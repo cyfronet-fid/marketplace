@@ -27,7 +27,7 @@ class Services::SummariesController < Services::ApplicationController
 
   private
     def next_title
-      I18n.t("services.summary.#{helpers.map_view_to_order_type(@offer)}.order.title")
+      @offer.orderable? ? _("Send access request") : _("Pin!")
     end
 
     def do_create(project_item_template, bundle_params)

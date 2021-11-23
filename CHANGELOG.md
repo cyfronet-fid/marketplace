@@ -24,6 +24,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Disabled possibility to send an empty resource's review (@goreck888)
 - Clearing logic of adding offers to a project (@kmarszalek)
 - Project view styles overhaul (@jarekzet)
+- More intuitive labels and texts in the ordering wizard (@goreck888)
 
 ### Deprecated
 
