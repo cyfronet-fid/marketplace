@@ -2,7 +2,7 @@
 -# TODO: refactor dynamic translation
 = simple_form_for @step, as: :customizable_project_item, url: service_configuration_path(@service), method: :put,
   html: { id: "order-form", "data-controller" => "project-item", "data-project-item-url" => projects_path } do |f|
-  -# %p.mb-4= t("services.configuration.#{@service.order_type}.description")
+  %p.mb-4= _("Please specify parameters. It is necessary to handle your request.")
   - if @step.offer.bundle?
     .row.bundle-info
       .col-12.col-md-2

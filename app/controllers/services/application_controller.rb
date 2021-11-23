@@ -12,6 +12,13 @@ class Services::ApplicationController < ApplicationController
   helper_method :step_key, :prev_visible_step_key
   helper_method :step_title, :prev_title, :next_title
 
+  STEP_TITLES = {
+    offers: "Offer selection",
+    information: "Access instructions",
+    configuration: "Configuration",
+    summary: "Final details"
+  }
+
   private
     def session_key
       @service.id.to_s
@@ -94,19 +101,19 @@ class Services::ApplicationController < ApplicationController
     end
 
     def step_title(step_name = step_key)
-      I18n.t("services.#{step_name}.title")
-    end
-
-    def next_title
-      if next_visible_step_key == wizard.step_names.last
-        "#{I18n.t("services.order.wizard.next", step_title: step_title(next_visible_step_key))}"
+      if step_name == :summary && !@step.offer&.orderable?
+        "Pin to a project"
       else
-        I18n.t("next")
+        STEP_TITLES[step_name]
       end
     end
 
+    def next_title
+      _("Next")
+    end
+
     def prev_title
-      "#{I18n.t("services.order.wizard.previous", step_title: step_title(prev_visible_step_key))}"
+      _("Back to previous step - %{step_title}") % { step_title: step_title(prev_visible_step_key) }
     end
 
     def wizard_title

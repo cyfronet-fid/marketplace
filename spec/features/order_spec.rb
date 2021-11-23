@@ -50,9 +50,9 @@ RSpec.feature "Service ordering" do
       # Step 2
       expect(page).to have_current_path(service_information_path(service))
       expect(page).to have_selector(:link_or_button,
-                                    "Next - Final details", exact: true)
+                                    "Next", exact: true)
 
-      click_on "Next - Final details", match: :first
+      click_on "Next", match: :first
 
       # Step 4
       expect(page).to have_current_path(service_summary_path(service))
@@ -92,11 +92,11 @@ RSpec.feature "Service ordering" do
       # Step 3
       expect(page).to have_current_path(service_configuration_path(service))
       expect(page).to have_selector(:link_or_button,
-                                    "Next - Final details", exact: true)
+                                    "Next", exact: true)
 
       fill_in "parameter_#{offer.parameters[0].id}", with: "95"
 
-      click_on "Next - Final details", match: :first
+      click_on "Next", match: :first
 
       # Step 4
       expect(page).to have_current_path(service_summary_path(service))
@@ -133,7 +133,7 @@ RSpec.feature "Service ordering" do
         select "Services", from: "customizable_project_item_project_id"
 
         expect do
-          click_on "Add to a project", match: :first
+          click_on "Pin!", match: :first
         end.to change { ProjectItem.count }.by(1)
 
         visit service_path(service)
@@ -147,7 +147,7 @@ RSpec.feature "Service ordering" do
         select "Services", from: "customizable_project_item_project_id"
 
         expect do
-          click_on "Add to a project", match: :first
+          click_on "Pin!", match: :first
           expect(page).to have_text("already pinned with this offer")
         end.to change { ProjectItem.count }.by(0)
       end
@@ -187,9 +187,9 @@ RSpec.feature "Service ordering" do
     scenario "I can order bundle resource twice in one project" do
       service = create(:service)
       service2 = create(:service)
-      bundled = create(:offer, service: service2, internal: false,
+      bundled = create(:offer, service: service2, internal: true,
                         order_type: service2.order_type, order_url: service2.order_url)
-      _bundle = create(:offer, service: service, internal: false,
+      _bundle = create(:offer, service: service, internal: true,
                       order_type: service.order_type, order_url: service.order_url, bundled_offers: [bundled])
 
       _default_project = user.projects.find_by(name: "Services")
@@ -202,7 +202,7 @@ RSpec.feature "Service ordering" do
       select "Services", from: "customizable_project_item_project_id"
 
       expect do
-        click_on "Add to a project", match: :first
+        click_on "Send access request", match: :first
       end.to change { ProjectItem.count }.by(2)
 
       visit service_path(service)
@@ -213,7 +213,7 @@ RSpec.feature "Service ordering" do
       select "Services", from: "customizable_project_item_project_id"
 
       expect do
-        click_on "Add to a project", match: :first
+        click_on "Send access request", match: :first
       end.to change { ProjectItem.count }.by(2)
     end
 
@@ -271,12 +271,12 @@ RSpec.feature "Service ordering" do
       # Information step - open_access
       choose "customizable_project_item_offer_id_#{open_access.iid}"
       click_on "Next", match: :first
-      click_on "Next - Final details", match: :first
+      click_on "Next", match: :first
 
       select "Services", from: "customizable_project_item_project_id"
 
       expect do
-        click_on "Add to a project", match: :first
+        click_on "Pin!", match: :first
       end.to change { ProjectItem.count }.by(1)
 
       visit service_path(service)
@@ -285,12 +285,12 @@ RSpec.feature "Service ordering" do
 
       choose "customizable_project_item_offer_id_#{open_access.iid}"
       click_on "Next", match: :first
-      click_on "Next - Final details", match: :first
+      click_on "Next", match: :first
 
       select "Services", from: "customizable_project_item_project_id"
 
       expect do
-        click_on "Add to a project", match: :first
+        click_on "Pin!", match: :first
         expect(page).to have_text("already pinned with this offer")
       end.to change { ProjectItem.count }.by(0)
 
@@ -301,12 +301,12 @@ RSpec.feature "Service ordering" do
       # Information step - fully_open_access
       choose "customizable_project_item_offer_id_#{fully_open_access.iid}"
       click_on "Next", match: :first
-      click_on "Next - Final details", match: :first
+      click_on "Next", match: :first
 
       select "Services", from: "customizable_project_item_project_id"
 
       expect do
-        click_on "Add to a project", match: :first
+        click_on "Pin!", match: :first
       end.to change { ProjectItem.count }.by(1)
 
       visit service_path(service)
@@ -315,12 +315,12 @@ RSpec.feature "Service ordering" do
 
       choose "customizable_project_item_offer_id_#{fully_open_access.iid}"
       click_on "Next", match: :first
-      click_on "Next - Final details", match: :first
+      click_on "Next", match: :first
 
       select "Services", from: "customizable_project_item_project_id"
 
       expect do
-        click_on "Add to a project", match: :first
+        click_on "Pin!", match: :first
         expect(page).to have_text("already pinned with this offer")
       end.to change { ProjectItem.count }.by(0)
 
@@ -331,12 +331,12 @@ RSpec.feature "Service ordering" do
       # Information step - other
       choose "customizable_project_item_offer_id_#{other.iid}"
       click_on "Next", match: :first
-      click_on "Next - Final details", match: :first
+      click_on "Next", match: :first
 
       select "Services", from: "customizable_project_item_project_id"
 
       expect do
-        click_on "Add to a project", match: :first
+        click_on "Pin!", match: :first
       end.to change { ProjectItem.count }.by(1)
 
       visit service_path(service)
@@ -345,12 +345,12 @@ RSpec.feature "Service ordering" do
 
       choose "customizable_project_item_offer_id_#{other.iid}"
       click_on "Next", match: :first
-      click_on "Next - Final details", match: :first
+      click_on "Next", match: :first
 
       select "Services", from: "customizable_project_item_project_id"
 
       expect do
-        click_on "Add to a project", match: :first
+        click_on "Pin!", match: :first
         expect(page).to have_text("already pinned with this offer")
       end.to change { ProjectItem.count }.by(0)
 
@@ -360,12 +360,12 @@ RSpec.feature "Service ordering" do
       # Information step - order_required_external
       choose "customizable_project_item_offer_id_#{order_required_external.iid}"
       click_on "Next", match: :first
-      click_on "Next - Final details", match: :first
+      click_on "Next", match: :first
 
       select "Services", from: "customizable_project_item_project_id"
 
       expect do
-        click_on "Add to a project", match: :first
+        click_on "Pin!", match: :first
       end.to change { ProjectItem.count }.by(1)
 
       visit service_path(service)
@@ -374,12 +374,12 @@ RSpec.feature "Service ordering" do
 
       choose "customizable_project_item_offer_id_#{order_required_external.iid}"
       click_on "Next", match: :first
-      click_on "Next - Final details", match: :first
+      click_on "Next", match: :first
 
       select "Services", from: "customizable_project_item_project_id"
 
       expect do
-        click_on "Add to a project", match: :first
+        click_on "Pin!", match: :first
         expect(page).to have_text("already pinned with this offer")
       end.to change { ProjectItem.count }.by(0)
     end
@@ -440,11 +440,11 @@ RSpec.feature "Service ordering" do
       # Summary page
       expect(page).to have_current_path(service_summary_path(open_access_service))
       expect(page).to have_selector(:link_or_button,
-                                    "Add to a project", exact: true)
+                                    "Pin!", exact: true)
       select "Services"
 
       expect do
-        click_on "Add to a project", match: :first
+        click_on "Pin!", match: :first
       end.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
 
@@ -465,11 +465,11 @@ RSpec.feature "Service ordering" do
       # Summary page
       expect(page).to have_current_path(service_summary_path(external_service))
       expect(page).to have_selector(:link_or_button,
-                                    "Add to a project", exact: true)
+                                    "Pin!", exact: true)
       select "Services"
 
       expect {
-        click_on "Add to a project", match: :first
+        click_on "Pin!", match: :first
       }.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
 
@@ -741,7 +741,7 @@ RSpec.feature "Service ordering" do
         fill_in "parameter_#{child1.parameters[0].id}", with: "value1"
         fill_in "parameter_#{child2.parameters[0].id}", with: "value2"
 
-        click_on "Next - Final details", match: :first
+        click_on "Next", match: :first
 
         # Step 4
         expect(page).to have_current_path(service_summary_path(service))
