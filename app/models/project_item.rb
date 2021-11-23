@@ -5,7 +5,6 @@ class ProjectItem < ApplicationRecord
   include Eventable
   include Messageable
   include Customization
-  include ProjectValidation
   include VoucherValidation
   include Iid
   include Offerable
@@ -43,6 +42,7 @@ class ProjectItem < ApplicationRecord
   validates :offer, presence: true
   validates :status, presence: true
   validates :status_type, presence: true
+  validates :project, presence: true
   validate :scientific_domain_is_a_leaf
   validate :properties_not_nil
   validate :user_secrets_is_simple
