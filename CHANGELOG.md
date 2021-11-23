@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - New conversation labels, which now reflect the identity of the author (@wujuu)
 - "New message" visual notifications (@wujuu)
+- Project items seen in project view are now separated into sections based on order_type (@wujuu)
 - JMS publisher for pushing information to PC (@danielkryska, @jswk)
 - Push new questions to providers and resources to an outbound JMS queue (@jswk)
 - Push information about resource coexistence to an outbound JMS queue (@jswk)
