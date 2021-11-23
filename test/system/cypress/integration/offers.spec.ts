@@ -154,7 +154,8 @@ describe('Offers', () => {
                         cy.get(".access-type")
                             .contains("a", "Access the resource", {matchCase: false})
                             .click({force: true});
-                        cy.contains("Next - Final details")
+                        cy.contains("a", "Pin to a project").should("be.visible")
+                        cy.contains("Next")
                             .first()
                             .click({force: true});
                         cy.location('pathname')
@@ -163,7 +164,7 @@ describe('Offers', () => {
                             .select(project.name);
                         cy.checkCaptcha();
                         cy.get("button.btn-primary")
-                            .contains("Add to a project", {matchCase: false})
+                            .contains("Pin!", {matchCase: false})
                             .first()
                             .click();
                         cy.getCookie('resources')
@@ -216,7 +217,8 @@ describe('Offers', () => {
                         cy.get(".access-type")
                             .contains("a", "Access the resource", {matchCase: false})
                             .click({force: true});
-                        cy.contains("Next - Final details")
+                        cy.contains("a", "Final details").should("be.visible")
+                        cy.contains("Next")
                             .first()
                             .click();
                         cy.location('pathname')

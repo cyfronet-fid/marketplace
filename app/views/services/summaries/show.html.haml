@@ -1,6 +1,12 @@
 - content_for :title, _("Final details")
-%p.mb-4= t("services.summary.#{map_view_to_order_type(@offer)}.description_html")
--# TODO: refactor dynamic translation (above)
+%p.mb-4
+  = _("Please select a Project and review the summary below.")
+  - if @offer.orderable?
+    = _("Once you submit the order, your request will be sent to a resource provider.")
+    %br
+    = _("The order status will be visible at your Project space.")
+  - else
+    = _("Once added to the project, your resource will be accessible via URL at your Project space.")
 
 = render "services/summaries/technical_configuration",
          service: @service, project_item: @step
