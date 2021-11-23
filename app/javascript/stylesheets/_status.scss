@@ -18,4 +18,24 @@
 .status-rejected {
   color: $red;
 }
+
+.status-bg-registered,
+.status-bg-approved,
+.status-bg-waiting_for_response,
+.status-bg-progress,
+.status-bg-created {
+  background: $status-bg-registered;
+}
+
+.status-bg-ready {
+  background: $status-bg-ready;
+}
+
+.status-bg-rejected {
+  background: $status-bg-rejected;
+}
+
+.status-bg-closed {
+  background: $white;
+}
 // scss-lint:enable all
