@@ -12,7 +12,10 @@ module ProjectItem::ProjectValidation
     def one_per_project
       return if project.blank?
 
-      offer_duplicated = project.project_items.count { |pi| pi.offer.id == offer.id }
+      offer_duplicated = project
+                           .project_items
+                           .reject { |pi| pi.parent.present? }
+                           .count { |pi| pi.offer.id == offer.id }
 
       errors.add(:project, :repeated_in_project) if offer_duplicated.positive?
     end

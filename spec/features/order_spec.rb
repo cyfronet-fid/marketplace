@@ -220,7 +220,7 @@ RSpec.feature "Service ordering" do
     scenario "I can order bundle resource and its bundled resource" do
       service = create(:service)
       service2 = create(:service)
-      bundled = create(:offer, service: service2, internal: true,
+      bundled = create(:offer, service: service2, internal: false,
                        order_type: service2.order_type, order_url: service2.order_url)
       _bundle = create(:offer, service: service, internal: true,
                        order_type: service.order_type, order_url: service.order_url, bundled_offers: [bundled])
@@ -246,7 +246,7 @@ RSpec.feature "Service ordering" do
       select "Services", from: "customizable_project_item_project_id"
 
       expect do
-        click_on "Send access request", match: :first
+        click_on "Pin!", match: :first
       end.to change { ProjectItem.count }.by(1)
     end
 
