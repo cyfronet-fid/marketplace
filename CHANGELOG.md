@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.27.0-milestone]
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Logic for multiple ordering of bundle and bundled offers (@kmarszalek)
+
+### Security
+
 ## [3.26.0-milestone]
 
 ### Added
