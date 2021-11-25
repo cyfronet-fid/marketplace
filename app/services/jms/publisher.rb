@@ -57,7 +57,7 @@ class Jms::Publisher
     end
 
     def msg_destination
-      "/topic/#{@topic}.>"
+      "/topic/#{@topic}"
     end
 
     def msg_headers
