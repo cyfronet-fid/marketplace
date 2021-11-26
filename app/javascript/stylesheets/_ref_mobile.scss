@@ -22,6 +22,18 @@
   }
 }
 
+@media (max-width: 1040px) {
+  header {
+    .navbar-collapse {
+      .navbar-nav {
+        .nav-link {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 991px) {
   .top {
     display: none;
@@ -732,6 +744,10 @@
         margin-right: 0;
       }
     }
+  }
+
+  .img-service-detail {
+    margin-bottom: 30px;
   }
 }
 
