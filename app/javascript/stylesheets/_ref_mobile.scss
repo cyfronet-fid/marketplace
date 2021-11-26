@@ -30,6 +30,16 @@
 
 @media (max-width: 991px) {
 
+  .service-info-box {
+    .title {
+      font-size: 1.1em;
+    }
+  }
+
+  .service-info-box {
+    height: 260px;
+  }
+
   .backoffice {
     margin: 0 0 20px;
   }
