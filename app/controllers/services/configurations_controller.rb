@@ -14,13 +14,14 @@ class Services::ConfigurationsController < Services::ApplicationController
         redirect_to url_for([@service, next_step_key])
       end
     else
-      redirect_to url_for([@service, pref_visible_step_key]), alert: prev_visible_step.error
+      redirect_to url_for([@service, prev_visible_step_key]), alert: prev_visible_step.error
     end
   end
 
   def update
     @step = step(configuration_params)
     @project_item = CustomizableProjectItem.new(configuration_params)
+    @offer = @step.offer
 
     if @step.request_voucher
       @step.voucher_id = ""
