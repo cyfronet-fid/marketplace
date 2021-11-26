@@ -40,7 +40,6 @@ class Jms::Publish
                          stomp_config["login"],
                          stomp_config["password"],
                          stomp_config["host"],
-                         stomp_config["client-name"],
                          stomp_config["ssl-enabled"],
                          @logger)
     end

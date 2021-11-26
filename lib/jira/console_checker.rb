@@ -42,7 +42,7 @@ module Jira
         self.abort!
 
       else
-        puts "ERROR".red + ": Unexpected error ocurred #{e.message}\n\n#{e.backtrace}"
+        puts "ERROR".red + ": Unexpected error occurred #{e.message}\n\n#{e.backtrace}"
         self.abort!
       end
     end

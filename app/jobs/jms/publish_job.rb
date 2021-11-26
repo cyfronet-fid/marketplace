@@ -5,7 +5,9 @@ require "sentry-ruby"
 class Jms::PublishJob < ApplicationJob
   queue_as :pc_publisher
 
-  rescue_from ArgumentError, Jms::Publisher::ConnectionError, Stomp::Error do |e|
+  # stomp gem doesn't use a common custom subclass for its Errors, instead it's necessary
+  # to catch RuntimeError to handle them all.
+  rescue_from ArgumentError, Jms::Publisher::ConnectionError, RuntimeError do |e|
     logger.warn("Exception occurred: #{e}")
     Sentry.capture_exception(e)
   end

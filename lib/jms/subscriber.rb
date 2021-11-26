@@ -48,7 +48,7 @@ module Jms
 
     private
       def error_block(msg, e)
-        @logger.error("Error occured while processing message:\n #{msg}")
+        @logger.error("Error occurred while processing message:\n #{msg}")
         @logger.error(e)
         Sentry.capture_exception(e)
         abort(e.full_message)
@@ -60,11 +60,13 @@ module Jms
             {
               login: login,
               passcode: pass,
-              host:  "#{host_des}",
+              host: host_des,
               port: 61613,
               ssl: ssl
             }
           ],
+          connect_timeout: 5,
+          max_reconnect_attempts: 5,
           connect_headers: {
             "client-id": client_name,
             "heart-beat": "0,20000",

@@ -35,7 +35,7 @@ describe Jira::ConsoleChecker do
     it "should print FAIL and error type to stdout" do
       expect(con_checker).to receive(:abort!)
       expect { con_checker.error_and_abort!(StandardError.new) }
-        .to output(" FAIL".red + "\n" + "ERROR".red + ": Unexpected error ocurred StandardError\n\n").to_stdout
+        .to output(" FAIL".red + "\n" + "ERROR".red + ": Unexpected error occurred StandardError\n\n").to_stdout
     end
 
     it "should handle Errno::ECONNREFUSED" do
