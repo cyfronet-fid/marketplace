@@ -44,12 +44,23 @@
 
   .service-info-box {
     .title {
-      font-size: 1.1em;
+      font-size: 1em;
+      line-height: 1.2rem;
     }
   }
 
   .service-info-box {
     height: 260px;
+
+    img {
+      width: 85px;
+      height: auto;
+      margin-right: 0.5rem !important;
+    }
+
+    p {
+      font-size: 0.7rem;
+    }
   }
 
   .backoffice {
