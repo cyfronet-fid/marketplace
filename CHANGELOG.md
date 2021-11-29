@@ -21,7 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
-## [3.26.0-milestone]
+## [3.26.0] 2021-11-29
 
 ### Added
 - New conversation labels, which now reflect the identity of the author (@wujuu)
@@ -41,16 +41,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Project view styles overhaul (@jarekzet)
 - More intuitive labels and texts in the ordering wizard (@goreck888)
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 - Project duplication includes scientific domains associated with source (@goreck888)
 - The backoffice resource preview should be displayed identically as resource page - improve user experience (@danielkryska)
 - Store resource's parameters from an edit form instead of parameters stored in preview mode (@goreck888)
-
-### Security
 
 ## [3.25.0] 2021-11-15
 

@@ -7,10 +7,10 @@ class Jms::Publisher
     end
   end
 
-  def initialize(topic, login, pass, host, client_name, ssl_enabled, logger)
+  def initialize(topic, login, pass, host, ssl_enabled, logger)
     @logger = logger
 
-    conf_hash_res = conf_hash(login, pass, host, client_name, ssl_enabled)
+    conf_hash_res = conf_hash(login, pass, host, ssl_enabled)
     @client = Stomp::Client.new(conf_hash_res)
     @topic = topic
 
@@ -27,22 +27,23 @@ class Jms::Publisher
   end
 
   private
-    def conf_hash(login, pass, host, client_name, ssl)
+    def conf_hash(login, pass, host, ssl)
       {
         hosts: [
           {
             login: login,
             passcode: pass,
-            host: "#{host}",
+            host: host,
             port: 61613,
-            ssl: ssl
+            ssl: ssl,
           }
         ],
+        connect_timeout: 5,
+        max_reconnect_attempts: 5,
         connect_headers: {
-          "client-id": client_name,
+          "accept-version": "1.2", # mandatory
+          "host": "localhost", # mandatory
           "heart-beat": "0,20000",
-          "accept-version": "1.2",
-          "host": "localhost"
         }
       }
     end
@@ -52,19 +53,20 @@ class Jms::Publisher
         raise ConnectionError.new("Connection failed!!")
       end
       if @client.connection_frame.command == Stomp::CMD_ERROR
-        raise ConnectionError.new("Connection error: #{@connection.connection_frame.body}")
+        raise ConnectionError.new("Connection error: #{@client.connection_frame.body}")
       end
     end
 
     def msg_destination
-      "/topic/#{@topic}.>"
+      "/topic/#{@topic}"
     end
 
     def msg_headers
       {
-        "ack": "client-individual",
-        # without persistent, suppress_content_length and content-type the queue truncates messages to 256 chars
         "persistent": true,
+        # Without suppress_content_length ActiveMQ interprets the message as a BytesMessage, instead of a TextMessage.
+        # See https://github.com/stompgem/stomp/blob/v1.4.10/lib/connection/netio.rb#L245
+        # and https://activemq.apache.org/stomp.html.
         "suppress_content_length": true,
         "content-type": "application/json"
       }
