@@ -50,7 +50,11 @@
   }
 
   .service-info-box {
-    height: 260px;
+    height: 270px;
+
+    header {
+      padding: 1.4rem 0.7rem 0;
+    }
 
     img {
       width: 85px;
@@ -60,6 +64,16 @@
 
     p {
       font-size: 0.7rem;
+    }
+
+    footer {
+      margin: 0 0.8rem 0.45rem;
+      width: calc(100% - 1.6rem);
+
+      p,
+      small {
+        font-size: 0.65rem;
+      }
     }
   }
 
