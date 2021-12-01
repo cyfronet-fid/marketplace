@@ -9,7 +9,7 @@
                   type: "button" }
         Read technical parameters
     = render "services/offers/bundle_parameters",
-      technical_parameters: filter_technical_parameters(offer.attributes.map(&:to_json))
+      technical_parameters: offer.attributes.map(&:to_json)
     = render "services/bundle", bundled_offers: offer.bundled_offers, parent: offer
     .card-button.text-center
       %label

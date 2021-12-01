@@ -3,20 +3,6 @@
 # Used to convert Postgres JSON to list of elements, which can be rendered
 # in views
 module AttributesHelper
-  EXCLUDED_TYPES = ["date", "input"]
-
-  def filter_technical_parameters(parameters)
-    parameters.select do |parameter|
-      if EXCLUDED_TYPES.include?(parameter["type"])
-        false
-      elsif parameter["value_type"] == "string" then
-        false
-      else
-        true
-      end
-    end
-  end
-
   def parse_offer_parameter_value(parameter)
     return unless parameter
 
@@ -36,6 +22,14 @@ module AttributesHelper
     end
 
     "#{value} #{parameter["unit"]}"
+  end
+
+  def hideable_options(index)
+    if index > 3
+      { class: "d-none", "data-target": "parameter.hideableParameter" }
+    else
+      {}
+    end
   end
 
   private

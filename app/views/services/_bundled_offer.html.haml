@@ -16,4 +16,4 @@
           - else
             = markdown(offer.description)
         = render "services/offers/bundle_parameters",
-              technical_parameters: filter_technical_parameters(offer.attributes.map(&:to_json))
+              technical_parameters: offer.attributes.map(&:to_json)

@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- Show all offer's technical parameters in a resource view (@goreck888)
 
 ### Deprecated
 
