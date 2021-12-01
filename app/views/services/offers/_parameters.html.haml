@@ -1,11 +1,14 @@
 - if technical_parameters.present?
-  .card-body.pt-0.collapse-group
+  .card-body.pt-0.collapse-group{ "data-controller": "parameter" }
     %h5.text-uppercase.parameters-title.mb-0
       %i.fas.fa-tachometer-alt
       = _("Technical Parameters")
     %table.offer-params.table.table-hover
       %tbody
-        - technical_parameters.each do |parameter|
-          %tr
+        - technical_parameters.each_with_index do |parameter, idx|
+          %tr{ hideable_options(idx) }
             %td= parameter["label"]
             %td.text-right.text-nowrap.font-weight-bold= parse_offer_parameter_value(parameter)
+    - if technical_parameters.size > 4
+      = link_to "Show more parameters", "#", { data: { "action" => "click->parameter#toggleParameters",
+                                             "state": "hidden" } }

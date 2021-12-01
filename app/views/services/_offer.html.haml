@@ -2,7 +2,7 @@
   .card.m-0.mb-5.w-100
     = render "services/offers/description", offer: offer
     = render "services/offers/parameters",
-      technical_parameters: filter_technical_parameters(offer.attributes.map(&:to_json))
+      technical_parameters: offer.attributes.map(&:to_json)
     - if offer.bundle?
       = link_to _("Read technical parameters"), "#", class: "btn-link"
       = render "services/bundle", bundled_offers: offer.bundled_offers, parent: offer

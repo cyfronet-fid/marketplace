@@ -191,8 +191,10 @@ RSpec.feature "Service browsing" do
       expect(page.body).to have_content("10 - 40 GB")
       expect(page.body).to have_content("Number of VM instances")
       expect(page.body).to have_content("10 - 40 GB")
-      expect(page.body).to_not have_content("Access type")
-      expect(page.body).to_not have_content("Start of service")
+      expect(page.body).to have_content("Access type")
+      expect(page.body).to have_content("opportunistic - reserved")
+      expect(page.body).to have_content("Start of service")
+      expect(page.body).to have_content("date")
     end
 
     scenario "I cannot order serice if there is no published offer" do
