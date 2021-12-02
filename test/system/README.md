@@ -49,6 +49,10 @@ npx cypress open
 ```bash
 npm run cy:run
 ```
+- Run to seed the database
+```bash
+./bin/rails dev:prime_e2e
+```
 
 ### Testing different instances
 To run e2e tests on URL other than `localhost` preset variable `base url` by:

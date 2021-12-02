@@ -7,7 +7,18 @@ namespace :dev do
 
   desc "Sample data for local development environment"
   task prime: "db:setup" do
-    yaml_hash = YAML.load_file("db/data.yml")
+    create_all_from_path("db/data.yml")
+    puts "Done!"
+  end
+
+  desc "Sample data for e2e tests"
+  task prime_e2e: "db:setup" do
+    create_all_from_path("db/data_e2e.yml")
+    puts "Done!"
+  end
+
+  def create_all_from_path(path)
+    yaml_hash = YAML.load_file(path)
 
     create_vocabularies
     create_categories(yaml_hash["categories"])
@@ -19,8 +30,6 @@ namespace :dev do
     create_relations(yaml_hash["relations"])
 
     OrderingApi::AddSombo.new.call
-
-    puts "Done!"
   end
 
   def create_categories(categories_hash)
