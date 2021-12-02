@@ -3969,12 +3969,22 @@ abbr[title] {
   .services-comparison {
     display: block;
 
+    .service-title {
+      font-size: 0.8rem;
+    }
+
     td,
     th {
       padding: 5px;
+      font-size: 11px;
     }
 
     .title-col {
+      min-width: 100px;
+
+      &:first-child {
+        min-width: 70px;
+      }
 
       .fa-trash {
         float: none;

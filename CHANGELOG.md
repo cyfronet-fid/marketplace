@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Logic for multiple ordering of bundle and bundled offers (@kmarszalek)
+- Fix RWD CSS Styles (@jarekzet)
 
 ### Security
 
