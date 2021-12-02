@@ -216,12 +216,6 @@
     font-size: 1.5rem;
   }
 
-  .service-info-box {
-    display: block;
-    flex: unset;
-    width: 100%;
-  }
-
   .profile {
     padding: 10px 0 !important;
 
@@ -304,6 +298,9 @@
   }
 
   .service-info-box {
+    display: block;
+    flex: unset;
+    height: 230px;
 
     &.ver-1 {
       height: 160px;
@@ -315,6 +312,7 @@
     }
 
     header {
+      padding: 1.4rem 0.7rem 0;
       font-size: 1rem;
     }
 
@@ -323,9 +321,29 @@
       padding: 0 0.5rem 1.3rem;
     }
 
+    .title {
+      font-size: 1em;
+      line-height: 1.2rem;
+    }
+
+    img {
+      width: 100px;
+      height: auto;
+      margin-right: 0.7rem !important;
+    }
+
+    p {
+      font-size: 0.85rem;
+    }
+
     footer {
       margin: 0 0.5rem 0.45rem;
       width: calc(100% - 1rem);
+
+      p,
+      small {
+        font-size: 0.65rem;
+      }
     }
   }
 
