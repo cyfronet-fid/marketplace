@@ -61,7 +61,7 @@ jobs:
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
       run: |
         bundle exec rake db:drop db:setup searchkick:reindex:all
-        bundle exec rails dev:prime
+        bundle exec rails dev:prime_e2e
     - name: Run cypress
       uses: cypress-io/github-action@v2
       env:
