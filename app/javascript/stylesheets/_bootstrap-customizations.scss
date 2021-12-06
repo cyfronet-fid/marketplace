@@ -1202,6 +1202,12 @@ Service detail
   }
 }
 
+.offer-params {
+  td {
+    width: 50%;
+  }
+}
+
 .card {
   border-color: $palette-yellow;
   border-radius: $radius-common;
@@ -4819,5 +4825,13 @@ abbr[title] {
 .resource-review {
   .invalid-feedback {
     font-size: 100%;
+  }
+}
+
+.resource-offers {
+  .card-button {
+    width: 100%;
+    bottom: 0;
+    position: absolute;
   }
 }
