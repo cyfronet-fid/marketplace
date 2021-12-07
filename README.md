@@ -22,6 +22,9 @@ We will need:
   * elasticsearch (specific version can be found in [.tool-versions](.tool-versions)).
     Recommended way to manage elasticsearch versions is to use [asdf](https://github.com/asdf-vm/asdf)
     with [asdf-elasticsearch](https://github.com/asdf-community/asdf-elasticsearch) plugin.
+  * [imagemagick](https://imagemagick.org/script/install-source.php). After installation use `convert --version`
+    to verify your delegates. If `png` is missing please refer to the
+    [related issue](https://askubuntu.com/questions/745660/imagemagick-png-delegate-install-problems).
   * [postgresql](https://www.postgresql.org)
   * [redis](https://redis.io)
   * [yarn](https://classic.yarnpkg.com/en/docs/install#debian-stable)
