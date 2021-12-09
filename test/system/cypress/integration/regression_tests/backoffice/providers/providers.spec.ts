@@ -3,7 +3,7 @@ import { UserFactory } from "../../../../factories/user.factory";
 
 describe("Providers", () => {
   const user = UserFactory.create({ roles: ["service_portfolio_manager"] });
-  const [provider, provider2, provider3] = [...Array(4)].map(() =>
+  const [provider, provider2, provider3] = [...Array(3)].map(() =>
     ProvidersFactory.create()
   );
 
@@ -174,6 +174,64 @@ describe("Providers", () => {
         cy.contains("a", "Delete")
           .should("not.exist");
       });
+  });
+
+  it("should delete provider with resources with deleted status", () => {
+    cy.visit("/backoffice/providers");
+    cy.contains("a", "D4Science Infrastructure")
+      .next()
+      .click();
+    cy.contains("div.alert-success", "Provider has been removed")
+      .should("be.visible");
+  });
+
+  it("shouldn't delete provider with resources with draft status", () => {
+    cy.visit("/backoffice/providers");
+    cy.contains("a", "European Space Agency (ESA)")
+      .next()
+      .click();
+    cy.contains("div.alert-danger", 
+      "This Provider has resources connected to it, therefore is not possible to remove it.")
+      .should("be.visible");
+  });
+
+  it("shouldn't delete provider with resources with published status", () => {
+    cy.visit("/backoffice/providers");
+    cy.contains("a", "EUDAT")
+      .next()
+      .click();
+    cy.contains("div.alert-danger", 
+      "This Provider has resources connected to it, therefore is not possible to remove it.")
+      .should("be.visible");
+  });
+
+  it("shouldn't delete provider with resources with errored status", () => {
+    cy.visit("/backoffice/providers");
+    cy.contains("a", "CSC")
+      .next()
+      .click();
+    cy.contains("div.alert-danger", 
+      "This Provider has resources connected to it, therefore is not possible to remove it.")
+      .should("be.visible");
+  });
+
+  it("shouldn't delete provider with resources with unverified status", () => {
+    cy.visit("/backoffice/providers");
+    cy.contains("a", "Institute of Atmospheric Pollution - National Research Council of Italy (CNR-IIA)")
+      .next()
+      .click();
+    cy.contains("div.alert-danger", 
+      "This Provider has resources connected to it, therefore is not possible to remove it.")
+      .should("be.visible");
+  });
+
+  it("should delete provider which is resources provider for published resources", () => {
+    cy.visit("/backoffice/providers");
+    cy.contains("a", "Interuniversity consortium CIRMMP")
+      .next()
+      .click();
+    cy.contains("div.alert-success", "Provider has been removed")
+      .should("be.visible");
   });
 
   it("should go to Providers in Backoffice and edit one of providers", () => {

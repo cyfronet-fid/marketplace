@@ -5,7 +5,7 @@ import { ParametersFactory } from "../../../../factories/resource.factory";
 
 describe("Owned resources", () => {
   const user = UserFactory.create({roles: ["service_portfolio_manager"]});
-  const [resource, resource2, resource3] = [...Array(4)].map(() =>
+  const [resource, resource2, resource3, resource4, resource5] = [...Array(5)].map(() =>
     ResourcesFactory.create()
   );
   const offer = OfferFactory.create();
@@ -191,7 +191,7 @@ describe("Owned resources", () => {
 
   it("should go to Preview mode and confirm changes", ()=> {
     cy.visit("/backoffice/services/new")
-    cy.fillFormCreateResource(resource3, correctLogo);
+    cy.fillFormCreateResource(resource4, correctLogo);
     cy.get("[data-e2e='preview-btn']")
       .click();
     cy.contains("div", "Service preview")
@@ -206,22 +206,26 @@ describe("Owned resources", () => {
       .should("be.visible");
   });
 
-  it("shouldn't go to Preview mode", ()=> {;
+  it("shouldn't go to Preview mode with wrong data format", ()=> {;
     cy.visit("/backoffice/services/new");
-    cy.fillFormCreateResource({basicWebpage_url:"wrongFormat", contactsEmail:"wrongFormat"}, wrongLogo);
+    cy.fillFormCreateResource({basicWebpage_url:"wrongFormat", contactsEmail:"wrongFormat"}, correctLogo);
+    cy.get("[data-e2e='preview-btn']")
+      .click();
+    cy.contains("div.invalid-feedback", "Email is not a valid email address")
+        .should("be.visible");
+    cy.contains("div.invalid-feedback", "Webpage url is not a valid URL")
+      .should("be.visible");
+  });
+
+  it("shouldn't go to Preview mode with wrong logo", ()=> {
+    cy.visit("/backoffice/services/new");
+    cy.fillFormCreateResource(resource5, wrongLogo);
     cy.get("[data-e2e='preview-btn']")
       .click();
     cy.contains(
       "div.invalid-feedback",
       "Logo format you're trying to attach is not supported. " +
       "Supported formats: png, gif, jpg, jpeg, pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon")
-      .should("be.visible");
-    cy.fillFormCreateResource({}, correctLogo);
-    cy.get("[data-e2e='preview-btn']")
-        .click();
-    cy.contains("div.invalid-feedback", "Email is not a valid email address")
-        .should("be.visible");
-    cy.contains("div.invalid-feedback", "Webpage url is not a valid URL")
       .should("be.visible");
   });
 });
