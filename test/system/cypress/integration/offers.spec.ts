@@ -154,7 +154,8 @@ describe('Offers', () => {
                         cy.get(".access-type")
                             .contains("a", "Access the resource", {matchCase: false})
                             .click({force: true});
-                        cy.contains("a", "Pin to a project").should("be.visible")
+                        cy.contains("a", "Access instructions")
+                          .should("be.visible")
                         cy.contains("Next")
                             .first()
                             .click({force: true});
@@ -217,7 +218,8 @@ describe('Offers', () => {
                         cy.get(".access-type")
                             .contains("a", "Access the resource", {matchCase: false})
                             .click({force: true});
-                        cy.contains("a", "Final details").should("be.visible")
+                        cy.contains("a", "Access instructions")
+                          .should("be.visible")
                         cy.contains("Next")
                             .first()
                             .click();

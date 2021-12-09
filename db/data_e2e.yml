@@ -18,8 +18,6 @@ platforms:
     name: &instruct "INSTRUCT-ERIC"
   BIOEXCEL:
     name: &bioexcel "BIOEXCEL"
-  ECOPOTENTIAL:
-    name: &ecopotential "ECOPOTENTIAL Virtual Laboratory"
   GEOSS:
     name: &geossPlatform "Global Earth Observation system of Systems (GEOSS)"
   Europeana:
@@ -30,14 +28,6 @@ platforms:
     name: &enesPlatform "IS-ENES"
   ELIXIR:
     name: &elixirPlatform "ELIXIR"
-  GBIF:
-    name: &gbif "GBIF"
-  OBIS:
-    name: &obis "OBIS"
-  SeaDataCloud:
-    name: &seaDataCloud "SeaDataCloud"
-  gCube:
-    name: &gCube "gCube System"
   EOSC PAN:
     name: &eoscPan "EOSC PaN"
   GEO:
@@ -83,19 +73,6 @@ categories:
   Security & Operations:
     name: &securityAndOperationsParent "Security & Operations"
     description: Services to integrate identity management, authorisation and other security services to comply with policies and regulations or access services to support the operations of your infrastructures and services
-#    Data discovery & access:
-#        name: &dataDiscoveryAndAccess Data discovery & access
-#        parent: *sharingAndDicoveryParent
-#    Applications repository:
-#        name: &appRepository Applications repository
-#        parent: *sharingAndDicoveryParent
-#    Analytics:
-#        name: &analyticsParent Analytics
-#        parent: *processingAndAnalysisParent
-#    Science gateway:
-#        name: &scienceGateway Science gateway
-#        parent: *processingAndAnalysisParent
-
 
 providers:
   EGI Federation:
@@ -170,85 +147,6 @@ providers:
     city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
-  JSC:
-    status: "published"
-    name: &jsc "JSC"
-    abbreviation: "jsc"
-    website: "http://jsc.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  Deutsches Klimarechenzentrum (DKRZ):
-    name: &dkrz "Deutsches Klimarechenzentrum (DKRZ)"
-    abbreviation: "dkrz"
-    website: "http://dkrz.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  GRNET:
-    status: "published"
-    name: &grnet "GRNET"
-    abbreviation: "grnet"
-    website: "http://grnet.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  SURFsara:
-    status: "published"
-    name: &surfsara "SURFsara"
-    abbreviation: "surfsara"
-    website: "http://surfsara.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
   CERM:
     status: "published"
     name: &cerm "Magnetic Resonance Center of the University of Florence - CERM"
@@ -269,50 +167,10 @@ providers:
     city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
-  BSC:
-    status: "published"
-    name: &bsc "BSC"
-    abbreviation: "bsc"
-    website: "http://bsc.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  All generic CDI Level 1 providers:
-    status: "published"
-    name: &all "all generic CDI Level 1 providers"
-    abbreviation: "cdi-1"
-    website: "http://cdi1.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
   CSC:
     status: "published"
     name: &csc "CSC"
-    abbreviation: "csc"
+    abbreviation: "CSC – IT CENTER FOR SCIENCE"
     website: "http://csc.com"
     legal_entity: true
     description: |
@@ -349,251 +207,11 @@ providers:
     city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
-  Euro-Mediterranean Center on Climate Change (CMCC):
-    status: "published"
-    name: &ccmc "Euro-Mediterranean Center on Climate Change (CMCC)"
-    abbreviation: "cmcc"
-    website: "http://cmcc.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  RASDAMAN:
-    status: "published"
-    name: &rasdaman "RASDAMAN"
-    abbreviation: "rasdaman"
-    website: "http://rasdaman.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
   EODC:
     status: "published"
     name: &eodc "Earth Observation Data Centre for Water Resources Monitoring GmbH (EODC)"
     abbreviation: "eodc"
     website: "http://eodc.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  Sinergise:
-    status: "published"
-    name: &sinergise "Sinergise"
-    abbreviation: "sinergise"
-    website: "http://sinergise.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  ASTRON:
-    status: "published"
-    name: &astron "ASTRON, the Netherlands Institute for Radio Astronomy."
-    abbreviation: "astron"
-    website: "http://astron.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  RUG:
-    status: "published"
-    name: &rug "RUG"
-    abbreviation: "rug"
-    website: "http://rug.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  FZJ:
-    status: "published"
-    name: &fzj "FZJ"
-    abbreviation: "fzj"
-    website: "http://fzj.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  PSNC:
-    status: "published"
-    name: &psnc "PSNC"
-    abbreviation: "psnc"
-    website: "http://psnc.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  SmartSMEAR:
-    status: "published"
-    name: &smartSmear "SmartSMEAR"
-    abbreviation: "smart-smear"
-    website: "http://smart-smear.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  RECAS-BARI:
-    status: "published"
-    name: &recas "RECAS-BARI"
-    abbreviation: "recas-bari"
-    website: "http://recas-bari.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  CYFRONET-LCG2:
-    status: "published"
-    name: &cyfro "CYFRONET-LCG2"
-    abbreviation: "cyfronet-lcg2"
-    website: "http://cyfronet-lcg2.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  BEgrid-ULV-VUB:
-    status: "published"
-    name: &begrid "BEgrid-ULV-VUB"
-    abbreviation: "be-grid-ulv-vub"
-    website: "http://be-grid-ulv-vub.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  CESGA:
-    status: "published"
-    name: &cesga "CESGA"
-    abbreviation: "cesga"
-    website: "http://cesga.com"
     legal_entity: true
     description: |
       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -649,70 +267,10 @@ providers:
     city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
-  INFN-CATANIA-STACK:
-    status: "published"
-    name: &ics "INFN-CATANIA-STACK"
-    abbreviation: "infn-catania-stack"
-    website: "http://infn-catania-stack.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  INFN-Catania:
-    status: "published"
-    name: &infnc "INFN-Catania"
-    abbreviation: "infn-catania"
-    website: "http://infn-catania.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  INFN-Bari:
-    status: "published"
-    name: &infnb "INFN-Bari"
-    abbreviation: "infn-bari"
-    website: "http://infn-bari.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
   D4Science:
     status: "published"
-    name: &d4science "D4Science.org infrastructure"
-    abbreviation: "d4-science"
+    name: &d4science "D4Science Infrastructure"
+    abbreviation: "D4Science"
     website: "http://d4-science.com"
     legal_entity: true
     description: |
@@ -769,26 +327,6 @@ providers:
     city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
-  MEEO:
-    status: "published"
-    name: &meeo "MEEO"
-    abbreviation: "meeo"
-    website: "http://meeo.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
   CloudFerro:
     status: "published"
     name: &cloudFerro "CloudFerro"
@@ -809,29 +347,9 @@ providers:
     city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
-  PNCEL:
+  Bijvoet Center - Utrecht University:
     status: "published"
-    name: &pncel "Portuguese National Civil Engineering Laboratory"
-    abbreviation: "pncel"
-    website: "http://pncel.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  University of Utrecht:
-    status: "published"
-    name: &uou "Bijvoet Center, Utrecht University"
+    name: &uou "Bijvoet Center - Utrecht University"
     abbreviation: "bc-uu"
     website: "http://bc-uu.com"
     legal_entity: true
@@ -849,53 +367,11 @@ providers:
     city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
-  #    University of Florence:
-  #        name: &uof "University of Florence"
   CIRMMP:
     status: "published"
     name: &cirmmp "Interuniversity consortium CIRMMP"
     abbreviation: "cirmmp"
     website: "http://cirmmp.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  CESNET:
-    status: "published"
-    name: &cesnet "CESNET"
-    abbreviation: "cesnet"
-    website: "http://cesnet.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  EIDA:
-    status: "published"
-    name: &eida "EIDA"
-    abbreviation: "eida"
-    website: "http://eida.com"
     legal_entity: true
     description: |
       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -971,46 +447,6 @@ providers:
     city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
-  GryCAP-I3M-UPV:
-    status: "published"
-    name: &grycap "GryCAP-I3M-UPV"
-    abbreviation: "gry-cap-i3m-upv"
-    website: "http://gry-cap-i3m-upv.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
-  MTA SZTAKI Laboratory of Parallel and Distributed Systems:
-    status: "published"
-    name: &mtaSztaki "MTA SZTAKI Laboratory of Parallel and Distributed Systems"
-    abbreviation: "mta-sztaki"
-    website: "http://mta-sztaki.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
   University of Oslo (UiO):
     status: "published"
     name: &uioProider "University of Oslo (UiO)"
@@ -1036,6 +472,86 @@ providers:
     name: &not "not specified yet"
     abbreviation: "not-specified-yet"
     website: "http://not-specified-yet.com"
+    legal_entity: true
+    description: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+      Sed luctus tristique est, nec sollicitudin magna blandit ac.
+      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+      Sed maximus odio neque, sed ullamcorper purus tristique a.
+      Ut gravida venenatis nunc placerat cursus.
+    street_name_and_number: "Malcolm St. 4"
+    postal_code: "332-332"
+    city: "Test City"
+    country_alpha2: "PL"
+    image_base_64: *provider_default_logo
+  A Worldwide e-Infrastructure for Structural Biology:
+    status: "published"
+    name: &WeNMR "A Worldwide e-Infrastructure for Structural Biology"
+    abbreviation: "WeNMR"
+    website: "http://example.com"
+    legal_entity: true
+    description: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+      Sed luctus tristique est, nec sollicitudin magna blandit ac.
+      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+      Sed maximus odio neque, sed ullamcorper purus tristique a.
+      Ut gravida venenatis nunc placerat cursus.
+    street_name_and_number: "Malcolm St. 4"
+    postal_code: "332-332"
+    city: "Test City"
+    country_alpha2: "PL"
+    image_base_64: *provider_default_logo
+  Institute of Instrumentation for Molecular Imaging - GRyCAP:
+    status: "published"
+    name: &GRyCAP "Institute of Instrumentation for Molecular Imaging - GRyCAP"
+    abbreviation: "GRyCAP"
+    website: "http://example.com"
+    legal_entity: true
+    description: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+      Sed luctus tristique est, nec sollicitudin magna blandit ac.
+      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+      Sed maximus odio neque, sed ullamcorper purus tristique a.
+      Ut gravida venenatis nunc placerat cursus.
+    street_name_and_number: "Malcolm St. 4"
+    postal_code: "332-332"
+    city: "Test City"
+    country_alpha2: "PL"
+    image_base_64: *provider_default_logo
+  UK Atomic Energy Authority:
+    status: "published"
+    name: &UKAEA "UK Atomic Energy Authority"
+    abbreviation: "UKAEA"
+    website: "http://example.com"
+    legal_entity: true
+    description: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+      Sed luctus tristique est, nec sollicitudin magna blandit ac.
+      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+      Sed maximus odio neque, sed ullamcorper purus tristique a.
+      Ut gravida venenatis nunc placerat cursus.
+    street_name_and_number: "Malcolm St. 4"
+    postal_code: "332-332"
+    city: "Test City"
+    country_alpha2: "PL"
+    image_base_64: *provider_default_logo
+  RASDAMAN:
+    status: "published"
+    name: &rasdaman "RASDAMAN"
+    abbreviation: "RASDAMAN"
+    website: "http://example.com"
     legal_entity: true
     description: |
       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -1182,7 +698,7 @@ services:
   Cloud compute:
     name: &egiCloud EGI Cloud compute
     parents: *computeParent
-    providers: [ *egi ]
+    resource_organisation: *egi
     logo: cloud-compute.png
     open_access: false
     webpage_url: https://www.egi.eu/services/cloud-compute/
@@ -1487,7 +1003,7 @@ services:
   High-Throughput compute:
     name: &egiHTC EGI High-Throughput compute
     parents: *computeParent
-    providers: [ *egi ]
+    resource_organisation: *egi
     logo: high-throughput-compute.png
     open_access: false
     webpage_url: https://www.egi.eu/services/high-throughput-compute/
@@ -1654,7 +1170,7 @@ services:
   Cloud container compute:
     name: EGI Cloud container compute BETA
     parents: *computeParent
-    providers: [ *egi ]
+    resource_organisation: *egi
     logo: cloud-container-compute.png
     open_access: false
     webpage_url: https://www.egi.eu/services/cloud-compute/
@@ -1689,7 +1205,7 @@ services:
   B2DROP:
     name: &b2drop B2DROP
     parents: [ *storageParent, *sharingAndDicoveryParent ]
-    providers: [ *eudat, *jsc ]
+    resource_organisation: *eudat
     logo: b2drop.png
     open_access: false
     webpage_url: https://b2drop.eudat.eu
@@ -1700,7 +1216,7 @@ services:
     sla_url:
     access_policies_url: https://eudat.eu/policy
     language_availability: *english
-    geographical_availabilities: *poland
+    geographical_availabilities: &world WW
     domain: *otherOther
     target_users: [ *researchers, *research_organisations ]
     #        #restrictions: *notSpecified
@@ -1822,7 +1338,7 @@ services:
   B2FIND:
     name: &b2find B2FIND
     parents: [ *sharingAndDicoveryParent, *dataManagementParent ]
-    providers: [ *eudat, *dkrz ]
+    resource_organisation: *eudat
     logo: b2find.png
     open_access: false
     webpage_url: http://b2find.eudat.eu/
@@ -1833,7 +1349,7 @@ services:
     sla_url:
     access_policies_url: http://eudat.eu/policy
     language_availability: *english
-    geographical_availabilities: *poland
+    geographical_availabilities: &europeanUnion EU
     domain: *otherOther
     target_users: [ *researchers, *providers, *research_organisations ]
     #        #restrictions: *notSpecified
@@ -1952,7 +1468,7 @@ services:
   B2HANDLE:
     name: &b2handle B2HANDLE
     parents: [ *dataManagementParent, *sharingAndDicoveryParent ]
-    providers: [ *eudat, *surfsara, *grnet ]
+    resource_organisation: *eudat
     logo: b2handle.png
     open_access: false
     webpage_url: https://www.eudat.eu/services/b2handle
@@ -2074,7 +1590,7 @@ services:
   B2NOTE:
     name: &b2note B2NOTE
     parents: [ *sharingAndDicoveryParent, *dataManagementParent ]
-    providers: [ *eudat, *bsc ]
+    resource_organisation: *eudat
     logo: b2note.png
     open_access: false
     webpage_url: https://www.eudat.eu/catalogue/B2NOTE
@@ -2162,7 +1678,7 @@ services:
   B2SAFE:
     name: &b2safe B2SAFE
     parents: [ *dataManagementParent, *storageParent ]
-    providers: [ *eudat, *all ]
+    resource_organisation: *eudat
     logo: b2safe.png
     open_access: false
     webpage_url: https://www.eudat.eu/services/b2safe
@@ -2217,7 +1733,7 @@ services:
   B2SHARE:
     name: &b2share B2SHARE
     parents: [ *sharingAndDicoveryParent, *dataManagementParent ]
-    providers: [ *eudat, *csc ]
+    resource_organisation: *eudat
     logo: b2share.png
     open_access: false
     webpage_url: https://www.eudat.eu/services/b2share
@@ -2347,7 +1863,7 @@ services:
   B2STAGE:
     name: &b2stage B2STAGE
     parents: *storageParent
-    providers: [ *eudat, *all ]
+    resource_organisation: *eudat
     logo: b2stage.png
     open_access: false
     webpage_url: https://www.eudat.eu/services/b2stage
@@ -2411,7 +1927,7 @@ services:
   B2ACCESS:
     name: &b2access B2ACCESS
     parents: *securityAndOperationsParent
-    providers: [ *eudat, *all ]
+    resource_organisation: *eudat
     logo: b2access.png
     open_access: false
     webpage_url: https://b2access.eudat.eu
@@ -2455,7 +1971,7 @@ services:
   EGI Archive storage:
     name: EGI Archive storage
     parents: *storageParent
-    providers: [ *egi ]
+    resource_organisation: *egi
     logo: archive-storage.png
     open_access: false
     webpage_url: https://www.egi.eu/services/archive-storage/
@@ -2524,7 +2040,7 @@ services:
   EGI Online Storage:
     name: &egiOnlineStorage EGI Online Storage
     parents: *storageParent
-    providers: [ *egi ]
+    resource_organisation: *egi
     logo: archive-storage.png
     open_access: false
     webpage_url: https://www.egi.eu/services/online-storage/
@@ -2722,9 +2238,10 @@ services:
   #          which can be accessed through various data viewers.
   #          Data from individual floats are also available from a certain region or time.
   GEOSS Portal:
+    status: "draft"
     name: &geossPortal GEOSS Web Portal
     parents: *sharingAndDicoveryParent
-    providers: [ *esa ]
+    resource_organisation: *esa
     logo: geoss-portal.png
     external: true
     webpage_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
@@ -2742,7 +2259,7 @@ services:
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Access to resources from the Global Earth Observation System of Systems
-    platforms: [ *ecopotential, *geossPlatform ]
+    platforms: [ *geossPlatform ]
     description: |
       The GEOSS (Global Earth Observation System of Systems) Web Portal is the main entry point
       for discovering and accessing GEOSS data. GEOSS Platform interconnects more than 170 data systems globally,
@@ -2755,9 +2272,10 @@ services:
         description: *notSpecified
         order_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
   GEO DAB:
+    status: unverified
     name: &geossDab GEO DAB
     parents: *sharingAndDicoveryParent
-    providers: [ *cnr ]
+    resource_organisation: *cnr 
     logo: geo-dab.jpg
     open_access: true
     webpage_url: http://www.geodab.net
@@ -2799,7 +2317,8 @@ services:
   VLO:
     name: &vloService Virtual Language Observatory
     parents: *sharingAndDicoveryParent
-    providers: [ *clarin ]
+    providers: [ *eudat ]
+    resource_organistation: *clarin
     logo: vlo-logo.png #component-metadata-infrastructure.png
     open_access: false
     webpage_url: https://vlo.clarin.eu
@@ -2848,6 +2367,7 @@ services:
     name: &lrsService Language Resource Switchboard
     parents: *sharingAndDicoveryParent
     providers: [ *clarin ]
+    resource_organisation: *clarin
     logo: lrs-logo.png #component-metadata-infrastructure.png
     open_access: true
     webpage_url: https://switchboard.clarin.eu/ #https://clarin.eu/
@@ -2914,6 +2434,7 @@ services:
     name: &vcrService Virtual Collection Registry
     parents: *sharingAndDicoveryParent
     providers: [ *clarin ]
+    resource_organisation: *clarin
     logo: vcr-logo.png #component-metadata-infrastructure.png
     open_access: false
     webpage_url: https://www.clarin.eu/content/virtual-collections
@@ -2971,508 +2492,13 @@ services:
 
           The collection metadata is openly available and accessible via the Virtual Language Observatory.
           The referenced digital objects can also be processed with the Language Resource Switchboard.
-  #    EIDA Data Archive:
-  #        name: EIDA Data Archive
-  #        parents: *sharingAndDicoveryParent
-  #        providers: *eida
-  #        logo: orfeus-european-integrated-data-archive-eida.png
-  #        open_access: false
-  #        webpage_url: https://www.orfeus-eu.org/data/eida/
-  #        manual_url:
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        target_users: ["Reaserchers"] #TODO: but not specified
-  #        language_availability: *english
-  #        domain: *earthAndEnvironmentalScience
-  #        geographical_availabilities: *poland
-  ##        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: *notSpecified
-  #        # platforms: [*eopillar, *ec3]
-  #        description: |
-  #          ORFEUS provides access to high quality seismic waveforms and station metadata
-  #          from EIDA and strong motion products.
-  #          Access to waveform and station metadata is possible through modern APIs and interfaces,
-  #          such as the Rapid Raw Strong Motion system."
-  #    Applications on Demand:
-  #        name: Applications on Demand
-  #        parents: *applicationsParent
-  #        webpage_url: https://www.egi.eu/services/applications-on-demand/
-  #        manual_url: https://wiki.egi.eu/wiki/AoD
-  #        helpdesk_url: https://www.egi.eu/more-information/
-  #        training_information_url: https://wiki.egi.eu/wiki/HowToAccessTheEGIMarketPlace
-  #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-  #        sla_url:
-  #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-  #        language_availability: *english
-  #        geographical_availabilities: *poland
-  #        domain: *otherOther
-  #        target_users: ["Researchers", "Research organisations"]
-  #        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-  #        description: "Features:
-  #
-  #                         User-friendly access to online applications that can be executed on parallel architectures (EGI Cloud and High-Throughput Compute)
-  #                         Application development and hosting frameworks where custom applications can be executed on EGI Cloud Compute and High-Throughput Compute services
-  #                         User support is available by an international network of consultants.
-  #
-  #                     Development frameworks:
-  #
-  #                         The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal) is a Liferay-based web portal. WS-PGRADE provides a 'job wizard' interface for the user. Through this wizard the user can define, with a few clicks, a computational job that WS-PGRADE will execute on cloud resources of the EGI Applications On Demand infrastructure. The job can be easily scaled up into a parameter study, executing the same simulation on many different input sets. WS-PGRADE takes care of instantiation of a Virtual Machine image for jobs, sending user input for the jobs, and retrieving the results of computations.
-  #                         The Elastic Cloud Computing Cluster (EC3) is a platform that allows creating elastic virtual clusters on top of Infrastructure as a Service (IaaS) providers. Through a 'job wizard' interface, the user can configure the cluster with a pre-defined set of applications that will be deployed in the clouds underpinning the EGI Applications On Demand infrastructure. The installation and the configuration of the cluster are performed by means of the execution of Ansible receipts. The cluster configured by EC3 is private: as soon as it is configured You will have root access to the environment, and can setup and configure the cluster installing additional libraries and software to their needs.
-  #                         The EGI VMOps dashboard,a framework allows users to perform Virtual Machine (VM) management operations on the EGI Federated Cloud. The graphical interfaces of the dashboard allows the user to choose VMs from the AppDB Catalogue, to define an execution topology for them, and then to instantiate them on infrastructure as a service clouds.
-  #
-  #                     Featured use cases:
-  #
-  #                         New viruses implicated in fatal snake disease  how the  platform helped virologists to make sense of millions of virus genomes"
-  #    GNU Octave:
-  #        name: GNU Octave
-  #        parents: *processingAndAnalysisParent
-  #        providers: [*ics, *recas, *cyfro, *begrid, *cesga]
-  #        logo: gnu-octave.png
-  #        open_access: false
-  #        webpage_url: https://www.gnu.org/software/octave/
-  #        manual_url: https://octave.org/doc/interpreter/
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        language_availability: *english
-  #        geographical_availabilities: *poland
-  #        domain: *mathematics
-  #        target_users: ["Researchers", "Research organisations"]
-  #        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-  #        # platforms: [*eopillar, *ec3]
-  #        description: |
-  #          GNU Octave is a high-level interpreted language, primarily intended for numerical computations.
-  #          It provides capabilities for the numerical solution of linear and nonlinear problems,
-  #          and for performing other numerical experiments.
-  #        offers:
-  #          1:
-  #            name: GNU Octave
-  #            description: |
-  #              GNU Octave is a high-level interpreted language, primarily intended for numerical computations.
-  #              It provides capabilities for the numerical solution of linear and nonlinear problems,
-  #              and for performing other numerical experiments.
-  #            parameters: &appParameters
-  #            - id: "id1"
-  #              label: "Number of CPU cores"
-  #              description:  "Number of cores for this offer is constant"
-  #              type:  "attribute"
-  #              value_type:  "integer"
-  #              value: 20
-  #            - id: "id2"
-  #              label: "Total amount of RAM"
-  #              description:  "Amount of RAM for this offer is constant"
-  #              type:  "attribute"
-  #              unit: "GB"
-  #              value_type:  "integer"
-  #              value: 4
-  #            - id: "id3"
-  #              label: "Storage capacity"
-  #              description:  "Storage capacity for this offer is constant"
-  #              type:  "attribute"
-  #              unit: "GB"
-  #              value_type:  "integer"
-  #              value: 100
-  #            - id: "id4"
-  #              label: "Access type"
-  #              description:  "Access type for this offer is constant"
-  #              type:  "attribute"
-  #              value_type:  "string"
-  #              value: "opportunistic"
-  #            - id: "id5"
-  #              label: "Start of service"
-  #              description:  "Choose service start date"
-  #              type:  "date"
-  #              value_type:  "string"
-  #            - id: "id6"
-  #              label: "Number of days"
-  #              description:  "Choose service start date"
-  #              type:  "input"
-  #              value_type:  "integer"
-  #              value: 365
-  #              config:
-  #                minimum: 1
-  #                maximum: 730
-  #
-  #
-  #    Galaxy:
-  #        name: Galaxy
-  #        parents: *processingAndAnalysisParent
-  #        providers: [*cesga, *recas, *ics]
-  #        logo: galaxy.png
-  #        open_access: false
-  #        webpage_url:
-  #        manual_url:
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
-  #        domain: *otherOther
-  #        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-  #        # platforms: [*eopillar, *ec3]
-  #        description: |
-  #          Galaxy is an open, web-based platform for data-intensive biomedical research.
-  #        offers:
-  #          1:
-  #            name: Galaxy
-  #            description: Galaxy is an open, web-based platform for data-intensive biomedical research.
-  #            parameters: *appParameters
-  #    NAMD:
-  #        name: NAMD
-  #        parents: *processingAndAnalysisParent
-  #        providers: [*cesga, *recas, *ics]
-  #        logo: namd.png
-  #        open_access: false
-  #        webpage_url:
-  #        manual_url:
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
-  #        domain: *other
-  ##        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-  #        platforms: [*egiPlatform, *ec3, *aodp]
-  #        description: |
-  #          NAMD is a parallel molecular dynamics code designed for high-performance simulation
-  #          of large bio-molecular systems.
-  #        offers:
-  #          1:
-  #            name: NAMD
-  #            description: |
-  #              NAMD is a parallel molecular dynamics code designed for high-performance simulation
-  #              of large bio-molecular systems.
-  #            parameters: &appParameters
-  #            - id: "id1"
-  #              label: "Number of CPU cores"
-  #              description:  "Number of cores for this offer is constant"
-  #              type:  "attribute"
-  #              value_type:  "integer"
-  #              value: 20
-  #            - id: "id2"
-  #              label: "Total amount of RAM"
-  #              description:  "Amount of RAM for this offer is constant"
-  #              type:  "attribute"
-  #              unit: "GB"
-  #              value_type:  "integer"
-  #              value: 4
-  #            - id: "id3"
-  #              label: "Storage capacity"
-  #              description:  "Storage capacity for this offer is constant"
-  #              type:  "attribute"
-  #              unit: "GB"
-  #              value_type:  "integer"
-  #              value: 100
-  #            - id: "id4"
-  #              label: "Access type"
-  #              description:  "Access type for this offer is constant"
-  #              type:  "attribute"
-  #              value_type:  "string"
-  #              value: "opportunistic"
-  #            - id: "id5"
-  #              label: "Start of service"
-  #              description:  "Choose service start date"
-  #              type:  "date"
-  #              value_type:  "string"
-  #            - id: "id6"
-  #              label: "Number of days"
-  #              description:  "Choose service start date"
-  #              type:  "range"
-  #              value_type:  "integer"
-  #              value: 365
-  #              config:
-  #                minimum: 1
-  #                maximum: 730
-  #    Apache Tomcat:
-  #        name: Apache Tomcat
-  #        parents: *networkingParent
-  #        providers: [*cesga, *recas, *ics]
-  #        logo: apache-tomcat.png
-  #        open_access: false
-  #        webpage_url:
-  #        manual_url:
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
-  #        domain: *earthAndEnvironmentalScience
-  #        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: |
-  #          Applications on Demand gives you access to online applications and application-development
-  #          and hosting frameworks to support compute-intensive data analysis
-  #        # platforms: [*eopillar, *ec3]
-  #        description: |
-  #          Apache Tomcat is an open source implementation of the Java Servlet, JavaServer Pages,
-  #          Java Expression Language and Java WebSocket technologies.
-  #        offers:
-  #          1:
-  #            name: Apache Tomcat
-  #            description: |
-  #              Apache Tomcat is an open source implementation of the Java Servlet, JavaServer Pages,
-  #              Java Expression Language and Java WebSocket technologies.
-  #            parameters: *appParameters
-  #    Gnuplot:
-  #        name: Gnuplot
-  #        parents: *processingAndAnalysisParent
-  #        providers: [*cesga, *recas, *ics]
-  #        logo: gnuplot.png
-  #        open_access: false
-  #        webpage_url: http://gnuplot.sourceforge.net
-  #        manual_url: http://gnuplot.sourceforge.net/documentation.html
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
-  #        domain: *otherOther
-  ##        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-  #        platforms: [*egiPlatform, *ec3, *aodp]
-  #        description: |
-  #          Gnuplot is a portable command-line driven graphing utility for Linux,
-  #          OS/2, MS Windows, OSX, VMS, and other platforms.
-  #        offers:
-  #          1:
-  #            name: Gnuplot
-  #            description: |
-  #              Gnuplot is a portable command-line driven graphing utility for Linux,
-  #              OS/2, MS Windows, OSX, VMS, and other platforms.
-  #            parameters: *appParameters
-  #    Docker:
-  #        name: Docker
-  #        parents: *networkingParent
-  #        providers: [*cesga, *recas, *ics]
-  #        logo: docker.png
-  #        open_access: false
-  #        webpage_url: https://www.docker.com/
-  #        manual_url:
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
-  #        domain: *applicationFrameworks
-  #        #restrictions: *notSpecified
-  #        phase: production
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-  #        # platforms: [*eopillar, *ec3]
-  #        description: |
-  #          Docker is an open-source project that automates the deployment of Linux applications inside software containers.
-  #        offers:
-  #          1:
-  #            name: Docker
-  #            description: |
-  #              Docker is an open-source project that automates the deployment
-  #              of Linux applications inside software containers.
-  #            parameters: *appParameters
-  #    Hadoop:
-  #        name: Hadoop
-  #        parents: *processingAndAnalysisParent
-  #        providers: [*cesga, *recas, *ics]
-  #        logo: hadoop.png
-  #        open_access: false
-  #        webpage_url: http://hadoop.apache.org/
-  #        manual_url: http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
-  #        domain: *applicationFrameworks
-  ##        #restrictions: *notSpecified
-  #        phase: production
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-  #        platforms: [*egiPlatform, *ec3, *aodp]
-  #        description: |
-  #          Hadoop is a framework that allows for the distributed processing
-  #          of large data sets across clusters of computers using simple programming models.
-  #        offers:
-  #          1:
-  #            name: Hadoop
-  #            description: |
-  #              Hadoop is a framework that allows for the distributed processing
-  #              of large data sets across clusters of computers using simple programming models.
-  #            parameters: *appParameters
-  #    Marathon:
-  #        name: Marathon
-  #        parents: *dataManagementParent
-  #        providers: [*cesga, *recas, *ics]
-  #        logo: marathon.png
-  #        open_access: false
-  #        webpage_url: https://mesosphere.github.io/marathon/
-  #        manual_url:
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
-  #        domain: *applicationFrameworks
-  ##        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-  #        platforms: [*egiPlatform, *ec3, *aodp]
-  #        description: |
-  #          Marathon a production-grade container orchestration platform
-  #          for Mesosphere's Data Center/Operating System (DC/OS) and Apache Mesos.
-  #        offers:
-  #          1:
-  #            name: Marathon
-  #            description: |
-  #              Marathon a production-grade container orchestration platform
-  #              for Mesosphere's Data Center/Operating System (DC/OS) and Apache Mesos.
-  #            parameters: *appParameters
-  #    Chronos:
-  #        name: Chronos
-  #        open_access: false
-  #        providers: [*cesga, *recas, *ics]
-  #        logo: chronos.png
-  #        parents: *processingAndAnalysisParent
-  #        webpage_url: https://github.com/mesos/chronos
-  #        manual_url: https://mesos.github.io/chronos/
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
-  #        domain: *applicationFrameworks
-  #        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-  #        # platforms: [*eopillar, *ec3]
-  #        description: |
-  #          Chronos is a distributed and fault-tolerant scheduler that runs on top
-  #          of Apache Mesos that can be used for job orchestration.
-  #        offers:
-  #          1:
-  #            name: Chronos
-  #            description: |
-  #              Chronos is a distributed and fault-tolerant scheduler that runs on top
-  #              of Apache Mesos that can be used for job orchestration.
-  #            parameters: *appParameters
 
-
-  #    The R project for statistical computing:
-  #        name: The R project for statistical computing
-  #        parents: *processingAndAnalysisParent
-  #        providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
-  #        logo: the-r-project-for-statistical-computing.png
-  #        open_access: false
-  #        webpage_url: https://www.r-project.org
-  #        manual_url: https://cran.r-project.org/manuals.html
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
-  #        domain: *dataAnalysis
-  #        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-  #        # platforms: [*eopillar, *ec3]
-  #        description: |
-  #          The R Project for Statistical Computing (v3.2.2)
-  #          is a language and environment for statistical computing and graphics.
-  #        offers:
-  #          1:
-  #            name: The R project for statistical computing
-  #            description: |
-  #              The R Project for Statistical Computing (v3.2.2)
-  #              is a language and environment for statistical computing and graphics.
-  #            parameters: *appParameters
-  #    The Semantic Search Engine (SSE):
-  #        name: The Semantic Search Engine (SSE)
-  #        parents: *dataManagementParent
-  #        providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
-  #        logo: the-semantic-search-engine-sse.png
-  #        open_access: false
-  #        webpage_url:
-  #        manual_url:
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
-  #        domain: *otherHumanities
-  #        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-  #        platforms: [*egiPlatform, *ec3, *aodp]
-  #        description: |
-  #          The Semantic Search Engine (SSE) is an application conceived to demonstrate the potential of information
-  #          coupled with semantic web technologies to address the issues of data discovery and correlation.
-  #        offers:
-  #          1:
-  #            name: The Semantic Search Engine (SSE)
-  #            description: |
-  #              The Semantic Search Engine (SSE) is an application conceived to demonstrate the potential of information
-  #              coupled with semantic web technologies to address the issues of data discovery and correlation.
-  #            parameters: *appParameters
   Chipster:
+    status: "errored"
     name: &chipster Chipster
     parents: *processingAndAnalysisParent
-    providers: [ *infn, *csc ]
+    providers: [ *infn ]
+    resource_organisation: *csc
     logo: chipster.png
     open_access: false
     webpage_url: https://csgf.egi.eu/
@@ -3517,72 +2543,11 @@ services:
           Users can save and share automatic analysis workflows, and visualize data interactively using
           a built-in genome browser and many other visualizations.
 
-
-  #    ClustalW2:
-  #        name: ClustalW2
-  #        parents: *processingAndAnalysisParent
-  #        providers: [*infnc, *infnb, *cyfro, *begrid, *cesga]
-  #        logo: clustalw2.png
-  #        open_access: false
-  #        webpage_url: http://www.clustal.org/clustal2/
-  #        manual_url: http://www.clustal.org/clustal2/#Documentation
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
-  #        domain: *otherOther
-  #        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-  #        # platforms: [*eopillar, *ec3]
-  #        description: |
-  #          ClustalW2 is a multiple sequence alignment tool for the alignment of DNA or protein sequences.
-  #        offers:
-  #          1:
-  #            name: ClustalW2
-  #            description: ClustalW2 is a multiple sequence alignment tool for the alignment of DNA or protein sequences.
-  #            parameters: *appParameters
-  #    AutoDock Vina:
-  #        name: AutoDock Vina
-  #        parents: *processingAndAnalysisParent
-  #        providers: [*cesga, *recas, *ics]
-  #        logo: autodock-vina.png
-  #        open_access: false
-  #        webpage_url:
-  #        manual_url:
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
-  #        domain: *otherOther
-  #        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: |
-  #          Applications on Demand gives you access to online applications and application-development
-  #          and hosting frameworks to support compute-intensive data analysis
-  #        # platforms: [*eopillar, *ec3]
-  #        description: |
-  #          AutoDock Vina is an open-source software for doing molecular docking.
-  #        offers:
-  #          1:
-  #            name: AutoDock Vina
-  #            description: AutoDock Vina is an open-source software for doing molecular docking.
-  #            parameters: *appParameters
   EGI Notebooks:
     pid: egi-fed.notebook
     name: &notebook EGI Notebooks
     parents: *processingAndAnalysisParent
-    providers: [ *egi ]
+    resource_organisation: *egi
     open_access: false
     webpage_url: https://www.egi.eu/services/notebooks/
     manual_url: https://wiki.egi.eu/wiki/EGI_Notebooks
@@ -3679,51 +2644,11 @@ services:
             description: "Choose amount of storage"
             type: "input"
             value_type: "integer"
-  #    Component Metadata Infrastructure:
-  #        name: Component Metadata Infrastructure
-  #        parents: *thematicServicesParent
-  #        providers: [*not]
-  #        open_access: false
-  #        webpage_url: https://www.clarin.eu/content/component-metadata
-  #        manual_url: https://www.clarin.eu/content/component-metadata
-  #        helpdesk_url: https://www.clarin.eu/content/support
-  #        training_information_url: https://www.eosc-hub.eu/training-material/component-metadata-infrastructure-services
-  #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-  #        sla_url:
-  #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers"] #TODO: but not specified
-  #        domain: *otherOther
-  #        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: Services for Social Sciences and Humanities provided via the national CLARIN centres
-  #        description: |
-  #          CLARIN-ERIC is a consortium of national service providers dedicated to Social Sicences and Humanities. The CLARIN Metadata Infrastructure offers several services through EOSC-hub:
-  #
-  #            - The Virtual Language Observatory
-  #            - The Virtual Collection Registry
-  #            - The Language Resource Switchboard
-  #
-  #          ### How to access the services:
-  #
-  #          The services are freely available online.
-  #
-  #          ### Service provided by
-  #
-  #          The majority of the CMI service components were developed at the CLARIN ERIC.
-  #
-  #          CMI will rely on and connect to the following EOSC-hub services:
-  #
-  #            - INDIGO-DataCloud components, currently used by the DARIAH community), in the context of providing interoperable metadata for (digital) humanities between CLARIN and DARIAH.
-  #            - EGI Federated Cloud, e.g. through the hosting of services at the CESNET computing centre.
-  #            - EUDAT, by the integration with several services, such as B2SHARE, B2ACCESS and B2DROP.
-
+  
   DARIAH:
     name: &dariah DARIAH Science Gateway
     parents: *processingAndAnalysisParent
-    providers: [ *rbi ]
+    resource_organisation: *rbi
     logo: dariah.png
     open_access: false
     webpage_url: https://dariah-gateway.lpds.sztaki.hu/
@@ -3784,7 +2709,7 @@ services:
   Dynamic On Demand Analysis Service:
     name: Dynamic On Demand Analysis Service (DODAS Portal)
     parents: *processingAndAnalysisParent
-    providers: [ *infn ]
+    resource_organisation: *infn
     logo: dynamic-on-demand-analysis-service.png
     open_access: false
     webpage_url: https://dodas-iam.cloud.cnaf.infn.it/login
@@ -3861,10 +2786,11 @@ services:
             type: "input"
             value_type: "integer"
             value: 365
-  D4 Science Particle Formation:
+  New Particle Formation Event Analysis:
+    status: "deleted"
     name: &d4scienceService New Particle Formation Event Analysis
     parents: *processingAndAnalysisParent
-    providers: [ *d4science, *egi, *smartSmear ]
+    resource_organisation: *d4science
     logo: vre.png
     open_access: true
     webpage_url: https://services.d4science.org/web/particleformation/
@@ -3898,7 +2824,6 @@ services:
     name: &enes ENES Climate Analytics Service
     parents: *processingAndAnalysisParent
     logo: enes-climate-analytics-service.png
-    providers: [ *ccmc, *dkrz ]
     open_access: false
     webpage_url: https://portal.enes.org/data/data-metadata-service/processing/ecas
     manual_url:
@@ -3970,7 +2895,7 @@ services:
   LifeWatch ERIC Plants Identification App:
     name: &lifewatchERICPlants LifeWatch ERIC Plants Identification App
     parents: *processingAndAnalysisParent
-    providers: [ *lifewatch ]
+    resource_organisation: *lifewatch
     logo: lifewatch-eric-plants-identification-app.png
     open_access: false
     webpage_url: https://www.lifewatch.eu/
@@ -4031,217 +2956,12 @@ services:
             type: "input"
             value_type: "integer"
             value: 365
-  #    ELIXIR Core Data Resources:
-  #        name: ELIXIR Core Data Resources
-  #        parents: *sharingAndDicoveryParent
-  #        providers: [*not]
-  #        open_access: false
-  #        webpage_url:
-  #        manual_url:
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers"] #TODO: but not specified
-  #        domain: *otherOther
-  #        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: *notSpecified
-  #        platforms: [*elixirPlatform]
-  #        description: *notSpecified
-  #    EISCAT:
-  #        name: EISCAT
-  #        parents: *sharingAndDicoveryParent
-  #        providers: [*not]
-  #        open_access: false
-  #        webpage_url:
-  #        manual_url:
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers"] #TODO: but not specified
-  #        domain: *otherOther
-  #        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: *notSpecified
-  #        # platforms: [*eopillar, *ec3]
-  #        description: *notSpecified
-  #    LOFAR:
-  #        name: LOFAR
-  #        parents: *sharingAndDicoveryParent
-  #        providers: [*astron, *rug, *surfsara, *fzj, *psnc]
-  #        open_access: false
-  #        webpage_url:
-  #        manual_url:
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers"] #TODO: but not specified
-  #        domain: *otherOther
-  #        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: *notSpecified
-  #        # platforms: [*eopillar, *ec3]
-  #        description: *notSpecified
-  OPENCoastS:
-    name: &openCoastS OPENCoastS Portal
-    parents: *processingAndAnalysisParent
-    providers: [ *pncel ]
-    logo: opencoasts.png
-    open_access: false
-    webpage_url: https://opencoasts.ncg.ingrid.pt/
-    manual_url: https://opencoasts.ncg.ingrid.pt/static/OPENCoastS_manual.pdf
-    helpdesk_url:
-    training_information_url: https://www.eosc-hub.eu/training-material/opencoasts-service
-    terms_of_use_url:
-    sla_url:
-    access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [ *researchers, *research_organisations ]
-    domain: *earthAndEnvironmentalScience
-    #restrictions: *notSpecified
-    trl: *trl_9
-    life_cycle_status: *prod
-    tagline: On-demand operational coastal circulation forecast service
-    # platforms: [*eopillar, *ec3]
-    description: |
-      OPENCoastS builds on-demand circulation forecast systems for user-selected sections
-      of the North Atlantic coast and maintains them running operationally for the timeframe defined by the user.
-      This daily service generates forecasts of water levels and 2D velocities over the spatial region
-      of interest for periods of 48 hours, based on numerical simulations of the relevant physical processes.
-      Forcing conditions at the boundaries and over the domain are defined by the user
-      from global forecast databases. Automatic comparison with real-time in-situ sensor data can be provided
-      for a number of user specified locations.
 
-      It takes advantage of LNEC’s team long-term work on coastal modelling as model developers,
-      integrated in several open source modelling communities (SCHISM, ELCIRC, SELFE, ADCIRC),
-      and in its advanced competences  in developing forecast frameworks and operating forecasts deployments.
-
-      ### Users and application potential
-
-      OPENCoastS can contribute directly to the development of new research methodologies
-      and workflows regarding water quality, biological, biochemical and coastal erosion studies.
-
-      SMEs will benefit from these operational systems to feed their own higher-level service portfolios
-      to respond to other societal needs, without the need
-      to invest time and resources to deploy forecast systems from scratch.
-
-      Port and coastal authorities –Through the use of this platform coastal managers have all the information
-      required to fulfill their responsibilities (examples of uses include facilitating navigation,
-      reducing port operation costs, reducing emergency planning and response of coastal hazards,
-      and better exploring recreational uses of the coast).
-
-
-      ### How to request a service
-
-      To request use of the OPENCoastS, please fill in thee request form and register at
-      https://opencoasts.ncg.ingrid.pt/. After analysis and validation of the request,
-      you will be allowed to log in and start building your forecasts.
-
-
-      Service provided by
-
-      OPENCoastS is provided by the Portuguese National Civil Engineering Laboratory,
-      and was jointly developed by LNEC and LIP.
-
-      Currently, the service is deployed at a single computing site (NCG-INGRID-PT,
-      part of [INCD][1] and the [EGI Federation][2]).
-
-      Through EOSC-hub, OPENCoastS will be expanded to include a more diverse set of geographical data,
-      and improved with integration of new features from the EGI, EUDAT and INDIGO-DataCloud service catalogues.
-
-      [1]: http://www.incd.pt/
-      [2]: https://www.egi.eu/federation/
-    offers:
-      1:
-        name: OPENCoastS Portal
-        description: |
-          The OPENCoastS service assembles on-demand circulation forecast systems for selected areas
-          in the Atlantic coast and keeps them running operationally for a period defined by the user.
-          This service generates daily forecasts of water levels and vertically averaged velocities
-          over the region of interest for 48 hours.
-          The system is useful in anticipating natural disasters and accidents in the coast,
-          for example floods and chemical spills and can help in search and rescue operations.
-        parameters:
-          - id: "id1"
-            label: "Start of service"
-            description: "Please choose the start date"
-            type: "date"
-            value_type: "string"
-          - id: "id2"
-            label: "Number of days"
-            description: "Choose number of days"
-            type: "input"
-            value_type: "integer"
-            value: 365
-
-  #    WeNMR Suite for Structural Biology:
-  #        name: WeNMR Suite for Structural Biology
-  #        parents: *thematicServicesParent
-  #        webpage_url: https://www.wenmr.eu/
-  #        manual_url: https://www.wenmr.eu/tutorials/
-  #        helpdesk_url: https://www.wenmr.eu/support/
-  #        training_information_url: https://www.wenmr.eu/tutorials/
-  #        terms_of_use_url:
-  #        sla_url:
-  #        access_policies_url:
-  #        language_availability: *english
-  #        domain: *otherOther
-  #        geographical_availabilities: *poland
-  #        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: A suite of computational tools for structural biology
-  #        description: "The WeNMR suite of computational tools is composed of eight individual platforms:
-  #
-  #                          DISVIS to visualise and quantify the accessible interaction space in macromolecular complexes
-  #
-  #                          POWERFIT for rigid body fitting of atomic structures into cryo-EM density maps
-  #
-  #                          HADDOCK to model complexes of proteins and other biomolecules
-  #
-  #                          GROMACS to simulate the Newtonian equations of motion for systems with hundreds to millions of particles
-  #
-  #                          AMPS-NMR a web portal for Nuclear Magnetic Resonance (NMR) structures
-  #
-  #                          CS-ROSETTA to model the 3D structure of proteins
-  #
-  #                          FANTEN for multiple alignment of nucleic acid and protein sequences
-  #
-  #                          SPOTON to identify and classify interfacial residues as Hot-Spots (HS) in protein-protein complexes
-  #
-  #
-  #                      Service provided by
-  #
-  #                      The WeNMR tools are provided by the University of Utrecht, the University of Florence, and the Interuniversity consortium CIRMMP.
-  #
-  #
-  #                      How to access the service
-  #
-  #                      The WeNMR platforms are freely available online and can be accessed by researchers upon registration.
-  #
-  #                      The tools are powered by High-Throughput Compute capabilities provided by the EGI Federation and enhanced with software components developed by the INDIGO DataCloud project.
-  #
-  #                      During EOSC-hub, the WeNMR services will be integrated with EUDAT services and other components from the INDIGO catalogue."
   HADDOCK:
     name: &haddock HADDOCK
     parents: *processingAndAnalysisParent
     providers: [ *uou ]
+    resource_organisation: *WeNMR
     logo: haddock.png
     open_access: true
     webpage_url: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
@@ -4277,10 +2997,11 @@ services:
           with a platform integrating and streamlining the computational approaches
           necessary for data analysis and modelling.
         order_url: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
-  PowerFit:
-    name: &powerFit PowerFit
+  PowerFit web portal:
+    name: &powerFit PowerFit web portal
     parents: *processingAndAnalysisParent
     providers: [ *uou ]
+    resource_organisation: *WeNMR
     logo: powerfit.png
     open_access: true
     webpage_url: http://haddock.science.uu.nl/enmr/services/POWERFIT
@@ -4310,6 +3031,7 @@ services:
     name: &disVis DisVis
     parents: *processingAndAnalysisParent
     providers: [ *uou ]
+    resource_organisation: *WeNMR
     logo: disvis.png
     open_access: true
     webpage_url: http://haddock.science.uu.nl/enmr/services/DISVIS
@@ -4371,6 +3093,7 @@ services:
     name: &amber AMBER
     parents: *processingAndAnalysisParent
     providers: [ *cerm, *cirmmp ]
+    resource_organisation: *WeNMR
     logo: amber.png
     open_access: true
     webpage_url: http://py-enmr.cerm.unifi.it/access/index
@@ -4407,6 +3130,7 @@ services:
     name: &fanten FANTEN
     parents: *processingAndAnalysisParent
     providers: [ *cerm, *cirmmp ]
+    resource_organisation: *WeNMR
     logo: fanten.png
     open_access: true
     webpage_url: http://abs.cerm.unifi.it:8080
@@ -4439,6 +3163,7 @@ services:
     name: &spotOn SpotOn
     parents: *processingAndAnalysisParent
     providers: [ *uou ]
+    resource_organistation: *WeNMR
     logo: SpotOn-logo.png
     open_access: true
     webpage_url: https://haddock.science.uu.nl/enmr/services/SPOTON
@@ -4465,77 +3190,11 @@ services:
       1:
         <<: *wenMRService
         order_url: https://haddock.science.uu.nl/enmr/services/SPOTON
-  GEP - HRCM:
-    name: &gepHRCM GEP - High-Resolution Change Monitoring for the Alpine Region
-    parents: *processingAndAnalysisParent
-    providers: [ *terradue ]
-    logo: gep-alpine.png
-    open_access: false
-    webpage_url: https://geohazards-tep.eo.esa.int/#!communities/details/eoschub
-    manual_url: https://terradue.github.io/doc-tep-geohazards/
-    helpdesk_url: https://helpdesk.terradue.com
-    #contect: support@terradue.com
-    training_information_url: https://discuss.terradue.com/t/interpreting-the-layers-of-dlr-s-insar-browse-service/216 #TODO: should be able to link several urls
-    terms_of_use_url:
-    sla_url:
-    access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [ *researchers, *research_organisations, *business ]
-    domain: [ *earthAndEnvironmentalScience, *otherOther ]
-    restrictions: " Research affiliation needed, user account registration needed."
-    trl: *trl_9
-    life_cycle_status: *prod
-    tagline: "Continuous systematic interferogram generation with Sentinel-1 data over the Alpine Region."
-    platforms: [ *gepPlatform, *esaPlatform ]
-    description: |
-      This service provides an interferometric product at 50m resolution and 25m pixel spacing systematically
-      for every 6-day Sentinel-1 SLC pair over the Alpine Region.
-      It allows rapid response to earthquakes occurring within the processing mask by automatic generation
-      of co-seismic interferograms that are published in a dedicated GeoBrowser
-      and made available for visualization and download.
-    offers:
-      1:
-        name: GEP Portal
-        description: description
-        order_url: https://geohazards-tep.eo.esa.int/
-  GEP - EO:
-    name: &gepEO GEP - EO Services for Earthquake Response and Landslides Analysis
-    parents: *sharingAndDicoveryParent
-    providers: [ *terradue ]
-    logo: gep-eo.png
-    open_access: false
-    webpage_url: https://geohazards-tep.eo.esa.int/#!communities/details/eoschub
-    manual_url: https://terradue.github.io/doc-tep-geohazards/
-    helpdesk_url: https://helpdesk.terradue.com
-    #contect: support@terradue.com
-    training_information_url: https://terradue.github.io/doc-tep-geohazards/tutorials/index.html
-    terms_of_use_url:
-    sla_url:
-    access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [ *researchers, *research_organisations, *business ]
-    domain: [ *earthAndEnvironmentalScience, *otherOther ]
-    restrictions: " Research affiliation needed, user account registration needed."
-    trl: *trl_9
-    life_cycle_status: *prod
-    tagline: "On-demand EO processing services for Earthquake Response and Landslides Analysis."
-    platforms: [ *gepPlatform, *esaPlatform ]
-    description: |
-      This is a Thematic Application of the Geohazards Thematic Exploitation Platform providing access to a set
-      of on-demand terrain motion services supporting interferogram generation, co-seismic displacement mapping,
-      landslide rapid mapping and landslide displacement field monitoring with Sentinel-1 and Sentinel-2 data.
-    offers:
-      1:
-        name: GEP Portal
-        description: description
-        order_url: https://geohazards-tep.eo.esa.int/#!
 
   EODC JupyterHub for global Copernicus data:
     name: &eodcJH EODC JupyterHub for global Copernicus data
     parents: *processingAndAnalysisParent
-    providers: [ *eodc ]
+    resource_organisation: *eodc
     logo: eodc-jupyter.png
     open_access: false
     #contact: support@eodc.eu
@@ -4593,7 +3252,7 @@ services:
   EODC Data Catalogue Service:
     name: &eodcDCS EODC Data Catalogue Service
     parents: *dataManagementParent
-    providers: [ *eodc ]
+    resource_organisation: *eodc
     logo: eodc-jupyter.png
     open_access: true
     webpage_url: https://www.eodc.eu/support-request/
@@ -4630,65 +3289,11 @@ services:
         description: |
           Catalog Service for the Web (CSW)
         order_url: https://csw.eodc.eu
-  Sentinel hub:
-    name: &sentinelHub Sentinel Hub
-    parents: *sharingAndDicoveryParent
-    providers: [ *sinergise ]
-    open_access: false
-    webpage_url: http://sentinel-hub.com/
-    manual_url: https://www.sentinel-hub.com/develop/documentation
-    helpdesk_url:
-    training_information_url:
-    terms_of_use_url:
-    sla_url:
-    access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [ *researchers, *research_organisations ]
-    domain: *earthAndEnvironmentalScience
-    #restrictions: *notSpecified
-    trl: *trl_9
-    life_cycle_status: *prod
-    tagline: Big data satellite imagery service
-    platforms: [ *eopillar ]
-    description: |
-      Sentinel Hub is a multi- spectral and multi-temporal big data satellite imagery service,
-      capable of fully automated archiving, real-time processing and distribution
-      of remote sensing data and related EO products.
-      Users can use OGC compliant and proprietary APIs to retrieve satellite data over their AOI
-      and specific time range from full archives in a matter of seconds.
-      Sentinel Hub received Copernicus Masters Award 2016.
-  MEA Platform:
-    name: &meaPlatform MEA Platform (Data access and exploitation service)
-    parents: *sharingAndDicoveryParent
-    providers: [ *meeo ]
-    open_access: false
-    webpage_url: https://eodataservice.org
-    manual_url: https://www.youtube.com/channel/UCqy-bd6CpXMOlRqfHmBqlZw
-    helpdesk_url:
-    training_information_url:
-    terms_of_use_url:
-    sla_url:
-    access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [ *researchers, *research_organisations ]
-    domain: *earthAndEnvironmentalScience
-    #restrictions: *notSpecified
-    trl: *trl_9
-    life_cycle_status: *prod
-    tagline: Cross-domain application supporting various application fields
-    platforms: [ *eopillar ]
-    description: |
-      MEA platform implements the concept of Digital Earth making global environmental geospatial data Findable,
-      Accessible, Interoperable and Reusable (FAIR). MEA platform provides an effective subsetting functionality
-      that accesses the data only when requested and serves to the client
-      only the data amount that is really needed.
-      MEA platform exposes OGC-standardised discovery (openSearch) and access (WCS 2.0) interfaces.
-  Rasdaman EO Datacube:
-    name: &rasdamanDatacube Rasdaman EO Datacube
+  Datacube:
+    name: &rasdamanDatacube Datacube
     parents: *processingAndAnalysisParent
     providers: [ *terradue ]
+    resource_organisation: *rasdaman
     logo: rasdaman-eo-datacube.png
     open_access: false
     webpage_url: http://eoschub.rasdaman.com:8080/rasdaman/ows
@@ -4741,7 +3346,7 @@ services:
   CloudFerro Data Collections Catalog:
     name: &cfdcc CloudFerro Data Collections Catalog
     parents: *dataManagementParent
-    providers: [ *cloudFerro ]
+    resource_organisation: *cloudFerro
     logo: &cfLogo cloud-ferro.png
     open_access: true
     webpage_url: https://discovery.creodias.eu/dataset
@@ -4785,7 +3390,7 @@ services:
   CloudFerro Infrastructure:
     name: &cfi CloudFerro Infrastructure
     parents: [ *computeParent, *storageParent, *processingAndAnalysisParent ]
-    providers: [ *cloudFerro ]
+    resource_organisation: *cloudFerro
     logo: *cfLogo
     open_access: true
     webpage_url: https://creodias.eu
@@ -4825,7 +3430,7 @@ services:
   Cloudferro Data related Services - EO Finder:
     name: &cfdrsEOF Cloudferro Data related Services - EO Finder
     parents: [ *dataManagementParent ]
-    providers: [ *cloudFerro ]
+    resource_organisation: *cloudFerro
     logo: *cfLogo
     open_access: true
     webpage_url: https://finder.creodias.eu/www
@@ -4857,7 +3462,7 @@ services:
   Cloudferro Data related Services - EO browser:
     name: &cfdrsEOB Cloudferro Data related Services - EO browser
     parents: *dataManagementParent
-    providers: [ *cloudFerro ]
+    resource_organisation: *cloudFerro
     logo: cloud-ferro-eo-browser.png
     open_access: true
     webpage_url: https://browser.creodias.eu
@@ -4900,7 +3505,7 @@ services:
   Check-in:
     name: &checkIn EGI Check-in
     parents: *securityAndOperationsParent
-    providers: [ *egi ]
+    resource_organisation: *egi
     open_access: false
     webpage_url: https://www.egi.eu/services/check-in/
     manual_url:
@@ -4953,41 +3558,11 @@ services:
 
 
       Brochure: https://www.egi.eu/wp-content/uploads/2017/09/Check-in.pdf
-  #    Attribute management:
-  #        name: Attribute management
-  #        parents: *securityAndOperationsParent
-  #        providers: [*grnet, *cesnet]
-  #        open_access: false
-  #        webpage_url: https://www.egi.eu/internal-services/attribute-management/
-  #        manual_url:
-  #        helpdesk_url:
-  #        training_information_url:
-  #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-  #        sla_url: https://documents.egi.eu/document/2733
-  #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Research organisations"]
-  #        domain: *otherOther
-  #        #restrictions: *notSpecified
-  #        trl: *trl_9
-  #        life_cycle_status: *prod
-  #        tagline: ToFill
-  #        platforms: [*egiPlatform]
-  #        description: |
-  #          EGI provides services to manage user membership, where users can register and ask to be part of a VO,
-  #          and where the VO supervisor can approve or remove users from the VO.
-  #          The service is a third party service that can be queried by service providers
-  #          to decide on user authorization.
-  #
-  #          Currently EGI has in production: VOMS an X.509 based service
-  #
-  #          In the wake of extending AAI capabilities, EGI will provide similar capabilities also
-  #          for other authentication technologies, like OpenID and SAML2, for example.
+  
   Training infrastructure:
     name: Training infrastructure
     parents: *trainingAndSupportParent
-    providers: [ *egi ]
+    resource_organisation: *egi
     logo: training-infrastructure.png
     open_access: false
     webpage_url: https://www.egi.eu/services/training-infrastructure/
@@ -5102,7 +3677,7 @@ services:
   FitSM:
     name: FitSM
     parents: *trainingAndSupportParent
-    providers: [ *egi ]
+    resource_organisation: *egi
     logo: fitsm.png
     open_access: false
     webpage_url: https://www.egi.eu/services/fitsm-training/
@@ -5194,9 +3769,11 @@ services:
             type: "input"
             value_type: "string"
   Alien and Invasive Species:
+    status: "deleted"
     name: &alien Alien and Invasive Species Virtual Research Environment
     parents: *processingAndAnalysisParent
     providers: [ *d4science ]
+    resource_organisation: *d4science
     logo: alien.png
     open_access: true
     webpage_url: https://services.d4science.org/web/alienandinvasivespecies
@@ -5216,7 +3793,7 @@ services:
     tagline: |
       A web-based, collaborative working environment enacting to predict the spread of an invasive species
       (possibly alien) in a new environment
-    platforms: [ *egiPlatform, *gbif, *obis, *d4sciencePlatform, *gCube, *seaDataCloud ]
+    platforms: [ *egiPlatform, *d4sciencePlatform]
     description: |
       Alien and Invasive Species Virtual Research Environment (VRE) is a web-based, comprehensive,
       collaborative working environment supporting decision makers and scientists in predicting the spread
@@ -5241,37 +3818,10 @@ services:
         description: "a"
         order_url: https://services.d4science.org/web/alienandinvasivespecies
 
-  #    OpenAIRE:
-  #      name: &openAIRE OpenAIRE
-  #      parents: *sharingAndDicoveryParent
-  #      providers: [*not]
-  ##      logo: training-infrastructure. TODO: logo
-  #      open_access: false
-  #      webpage_url:
-  #      manual_url:
-  #      helpdesk_url:
-  #      training_information_url:
-  #      terms_of_use_url:
-  #      sla_url:
-  #      access_policies_url:
-  #      geographical_availabilities: *poland
-  #      language_availability: *english
-  #      target_users: ["Research groups", "Research organisations"]
-  #      domain: *otherOther
-  #      #restrictions: *notSpecified
-  #      trl: *trl_9
-  #      life_cycle_status: *prod
-  #      tagline: *notSpecified
-  #      # platforms: [*eopillar, *ec3]
-  #      description: *notSpecified
-  #      offers:
-  #        1:
-  #          name: *notSpecified
-  #          description: *notSpecified
   PROMINENCE:
     name: &prominence PROMINENCE
     parents: *computeParent
-    providers: [ *egi ] #TODO: change to United Kingdom Atomic Energy Authority (or UKAEA)
+    resource_organisation: *UKAEA
     logo: prominence-logo.png
     open_access: false
     webpage_url: https://alahiff.github.io/prominence/
@@ -5312,7 +3862,7 @@ services:
   PAN data:
     name: &panData PaN data
     parents: *storageParent
-    providers: [ *desyProvider ]
+    resource_organisation: *desyProvider
     logo: panData.png
     open_access: false
     webpage_url: https://dcache-xdc.desy.de
@@ -5350,7 +3900,7 @@ services:
   Pan faas:
     name: &panFaas PaN faas
     parents: *computeParent
-    providers: [ *desyProvider ]
+    resource_organisation: *desyProvider
     logo: panFaas.png
     open_access: false
     webpage_url: https://eosc-pan-git.desy.de/pan/support/
@@ -5439,7 +3989,7 @@ services:
   PAN notebook:
     name: &panNotebook PaN notebook
     parents: *computeParent
-    providers: [ *desyProvider ]
+    resource_organisation: *desyProvider
     logo: panFaas.png
     open_access: false
     webpage_url: https://eosc-pan-jhub.desy.de
@@ -5474,7 +4024,7 @@ services:
   PAN gitlab:
     name: &panGitlab PAN gitlab
     parents: *computeParent
-    providers: [ *desyProvider ]
+    resource_organisation: *desyProvider
     logo: panFaas.png
     open_access: false
     webpage_url: https://eosc-pan-git.desy.de
@@ -5507,56 +4057,12 @@ services:
           gitlab repos and the ability to invoke functions. Please contact eosc-pan-info@desy.de
           in case of special requests for write access to backend storage, cloud functions from
           new gitlab repositories, events streaming from the dCache backend.
-  WS-PGRADE:
-    name: &wsPgrade WS-PGRADE
-    parents: *processingAndAnalysisParent
-    providers: [ *mtaSztaki ]
-    logo: wspgrade.png
-    open_access: false
-    webpage_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard
-    manual_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/help
-    helpdesk_url: https://wiki.egi.eu/wiki/GGUS:WS-PGRADE/gUSE_FAQ
-    training_information_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/help
-    terms_of_use_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/terms-of-use
-    sla_url: https://documents.egi.eu/document/2733
-    access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [ *researchers, *research_organisations, *business ]
-    domain: *otherOther
-    #restrictions: *notSpecified
-    trl: *trl_9
-    life_cycle_status: *prod
-    tagline: Setup and run parameter studies in the cloud with a few clicks.
-    platforms: [ *eoscHub, *aodp ]
-    description: |
-      The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal)
-      is the Liferay-based web portal (WS-PGRADE web application) of gUSE high level middleware system.
-      This WS-PGRADE deployment is operated within the EGI ‘Applications on Demand’ service and provides
-      an easy to use 'Job Wizard' environment for users. Through the Job Wizard one can define with
-      a few clicks computational jobs that WS-PGRADE will execute on Infrastructure as a Service
-      clouds pre-configured by EGI. WS-PGRADE takes care of all aspects of job management in the cloud,
-      including instantiation of Virtual Machine images and retrieval of outputs. Jobs can be single processor
-      applications or 'parameter study' type applications where each instance
-      of the job takes different input parameters.
-
-      ### Features:
-
-        - Federated authentication through the EGI Applications on Demand service.
-        - Graphical interfaces for job definition, job execution, inspection of results.
-        - Web based access.
-        - Interoperability with most widely used IaaS cloud technologies
-        - Job wizard interface to streamline analytical steps.
-        - Use of ‘per-user subproxies’ from EGI to access X.509-protected resources on the users’ behalf.
-    offers:
-      1:
-        name: WS Demo
-        description: |
-          demo
+  
   CSC ePouta:
+    status: errored
     name: &cscEpouta CSC ePouta
     parents: [ *processingAndAnalysisParent, *computeParent ]
-    providers: [ *csc ]
+    resource_organisation: *csc
     logo: ePouta-logo.jpg
     open_access: false
     webpage_url: https://research.csc.fi/epouta
@@ -5586,10 +4092,10 @@ services:
         name: CSC Demo
         description: |
           demo
-  TDS:
-    name: &tds TDS
+  Services for Sensitive Data (TSD):
+    name: &tds Services for Sensitive Data (TSD)
     parents: [ *processingAndAnalysisParent, *storageParent ]
-    providers: [ *uioProider ]
+    resource_organisation: *uioProider 
     #logo: panFaas.png TODO: nologo
     open_access: false
     webpage_url: https://www.uio.no/english/services/it/research/sensitive-data/
@@ -5620,10 +4126,79 @@ services:
         name: TDS Demo
         description: |
           demo
+  
+  GEP - HRCM:
+    name: &gepHRCM GEP - High-Resolution Change Monitoring for the Alpine Region
+    parents: *processingAndAnalysisParent
+    providers: [ *terradue ]
+    logo: gep-alpine.png
+    open_access: false
+    webpage_url: https://geohazards-tep.eo.esa.int/#!communities/details/eoschub
+    manual_url: https://terradue.github.io/doc-tep-geohazards/
+    helpdesk_url: https://helpdesk.terradue.com
+    #contect: support@terradue.com
+    training_information_url: https://discuss.terradue.com/t/interpreting-the-layers-of-dlr-s-insar-browse-service/216 #TODO: should be able to link several urls
+    terms_of_use_url:
+    sla_url:
+    access_policies_url:
+    geographical_availabilities: *poland
+    language_availability: *english
+    target_users: [ *researchers, *research_organisations, *business ]
+    domain: [ *earthAndEnvironmentalScience, *otherOther ]
+    restrictions: " Research affiliation needed, user account registration needed."
+    trl: *trl_9
+    life_cycle_status: *prod
+    tagline: "Continuous systematic interferogram generation with Sentinel-1 data over the Alpine Region."
+    platforms: [ *gepPlatform, *esaPlatform ]
+    description: |
+      This service provides an interferometric product at 50m resolution and 25m pixel spacing systematically
+      for every 6-day Sentinel-1 SLC pair over the Alpine Region.
+      It allows rapid response to earthquakes occurring within the processing mask by automatic generation
+      of co-seismic interferograms that are published in a dedicated GeoBrowser
+      and made available for visualization and download.
+    offers:
+      1:
+        name: GEP Portal
+        description: description
+        order_url: https://geohazards-tep.eo.esa.int/
+  
+  GEP - EO:
+    name: &gepEO GEP - EO Services for Earthquake Response and Landslides Analysis
+    parents: *sharingAndDicoveryParent
+    providers: [ *terradue ]
+    logo: gep-eo.png
+    open_access: false
+    webpage_url: https://geohazards-tep.eo.esa.int/#!communities/details/eoschub
+    manual_url: https://terradue.github.io/doc-tep-geohazards/
+    helpdesk_url: https://helpdesk.terradue.com
+    #contect: support@terradue.com
+    training_information_url: https://terradue.github.io/doc-tep-geohazards/tutorials/index.html
+    terms_of_use_url:
+    sla_url:
+    access_policies_url:
+    geographical_availabilities: *poland
+    language_availability: *english
+    target_users: [ *researchers, *research_organisations, *business ]
+    domain: [ *earthAndEnvironmentalScience, *otherOther ]
+    restrictions: " Research affiliation needed, user account registration needed."
+    trl: *trl_9
+    life_cycle_status: *prod
+    tagline: "On-demand EO processing services for Earthquake Response and Landslides Analysis."
+    platforms: [ *gepPlatform, *esaPlatform ]
+    description: |
+      This is a Thematic Application of the Geohazards Thematic Exploitation Platform providing access to a set
+      of on-demand terrain motion services supporting interferogram generation, co-seismic displacement mapping,
+      landslide rapid mapping and landslide displacement field monitoring with Sentinel-1 and Sentinel-2 data.
+    offers:
+      1:
+        name: GEP Portal
+        description: description
+        order_url: https://geohazards-tep.eo.esa.int/#!
+
   Elastic Cloud Compute Cluster (EC3):
     name: &ec3Service Elastic Cloud Compute Cluster (EC3)
     parents: *processingAndAnalysisParent
-    providers: [ *grycap ]
+    resource_organisation: *GRyCAP
     logo: ec3.png
     open_access: false
     webpage_url: https://servproject.i3m.upv.es/ec3-ltos/index.php
@@ -5670,22 +4245,6 @@ services:
 
 
 relations:
-  HaddockToPowerFit:
-    both: true
-    source: *haddock
-    target: *powerFit
-  HaddockToDisVis:
-    both: true
-    source: *haddock
-    target: *disVis
-  HaddockToRoseta:
-    both: true
-    source: *haddock
-    target: *csRoseta
-  HaddockToAmber:
-    both: true
-    source: *haddock
-    target: *amber
   HaddockToFanten:
     both: true
     source: *haddock
@@ -5698,122 +4257,18 @@ relations:
     both: true
     source: *powerFit
     target: *disVis
-  PowerFitToRoseta:
-    both: true
-    source: *powerFit
-    target: *csRoseta
-  PowerFitToAmber:
-    both: true
-    source: *powerFit
-    target: *amber
-  PowerFitToFanten:
-    both: true
-    source: *powerFit
-    target: *fanten
   PowerFitToSpotOn:
     both: true
     source: *powerFit
-    target: *spotOn
-  DisVisToRoseta:
-    both: true
-    source: *disVis
-    target: *csRoseta
-  DisVisToAmber:
-    both: true
-    source: *disVis
-    target: *amber
-  DisVisToFanten:
-    both: true
-    source: *disVis
-    target: *fanten
-  DisVisToSpotOn:
-    both: true
-    source: *disVis
-    target: *spotOn
-  csRosetaToAmber:
-    both: true
-    source: *csRoseta
-    target: *amber
-  csRosetaToFanten:
-    both: true
-    source: *csRoseta
-    target: *fanten
-  csRosetaToSpotOn:
-    both: true
-    source: *csRoseta
     target: *spotOn
   AmberToFanten:
     both: true
     source: *amber
     target: *fanten
-  AmberToSpotOn:
-    both: true
-    source: *amber
-    target: *spotOn
-  FantenToSpotOn:
-    both: true
-    source: *fanten
-    target: *spotOn
-  notebookToD4Science:
-    both: true
-    source: *notebook
-    target: *spotOn
-  egiToD4Science:
-    both: true
-    source: *egiCloud
-    target: *d4scienceService
-  vloToB2Find:
-    both: false
-    source: *vloService
-    target: *b2find
-  vloToB2Share:
-    both: false
-    source: *vloService
-    target: *b2share
-  vloToEGICompute:
-    both: false
-    source: *vloService
-    target: *egiCloud
-  lrsToB2Find:
-    both: false
-    source: *lrsService
-    target: *b2find
-  lrsToB2Drop:
-    both: false
-    source: *lrsService
-    target: *b2drop
-  lrsToB2Share:
-    both: false
-    source: *lrsService
-    target: *b2share
   lrsToEGICompute:
     both: false
     source: *lrsService
     target: *egiCloud
-  vcrToB2Find:
-    both: false
-    source: *vcrService
-    target: *b2find
-  vcrToB2Share:
-    both: false
-    source: *vcrService
-    target: *b2share
-  vcrToEGICompute:
-    both: false
-    source: *vcrService
-    target: *egiCloud
-  vloToVcr:
-    both: true
-    source: *vloService
-    target: *vcrService
-  VloToLrs:
-    both: true
-    source: *vloService
-    target: *lrsService
-  vcrToLrs:
-    both: true
-    source: *vcrService
-    target: *lrsService
   b2findToB2Share:
     both: true
     source: *b2find
@@ -5822,244 +4277,17 @@ relations:
     both: true
     source: *egiCloud
     target: *geossPortal
-  egiToGeossDab:
-    both: true
-    source: *egiCloud
-    target: *geossDab
-  geossPortalToDab:
-    both: true
-    source: *geossDab
-    target: *geossPortal
-  cloudFerroEOFTocloudFerroDCC:
-    both: false
-    source: *cfdrsEOF
-    target: *cfdcc
-  enesTob2find:
-    both: true
-    source: *enes
-    target: *b2find
-  enesTob2handle:
-    both: true
-    source: *enes
-    target: *b2handle
-  dariahToEgiCloud:
-    both: false
-    source: *dariah
-    target: *egiCloud
-  dariahToCheckIn:
-    both: false
-    source: *dariah
-    target: *checkIn
-  openCoastsToEgiCloud:
-    both: false
-    source: *openCoastS
-    target: *egiCloud
-  gepHRCMToegiCloud:
-    both: true
-    source: *gepHRCM
-    target: *egiCloud
-  gepEOToegiVloud:
-    both: false
-    source: *gepEO
-    target: *egiCloud
-  eodcJHToEodcDCS:
-    both: false
-    source: *eodcJH
-    target: *eodcDCS
-  amberToEgiCloud:
-    both: false
-    source: *amber
-    target: *egiCloud
-  amberToEgiHTC:
-    both: false
-    source: *amber
-    target: *egiHTC
-  amberToCheckIn:
-    both: false
-    source: *amber
-    target: *checkIn
-  gepEOToCFI:
-    both: true
-    source: *gepEO
-    target: *cfi
-  cfiToGEPAlpine:
-    both: false
-    source: *cfi
-    target: *gepHRCM
-  cfiToRasdamanDatacube:
-    both: false
-    source: *cfi
-    target: *rasdamanDatacube
-  cfiToSentinelHub:
-    both: false
-    source: *cfi
-    target: *sentinelHub
-  EObrowserToSentinelHub:
-    both: true
-    source: *cfdrsEOB
-    target: *sentinelHub
-
-
-
-  #  amberToEgiWM:
-  #    both: false
-  #    source: *amber
-  #    target: *egiWM
-  csRosetaToEgiCloud:
-    both: false
-    source: *csRoseta
-    target: *egiCloud
-  csRosetaToEgiHTC:
-    both: false
-    source: *csRoseta
-    target: *egiHTC
-  csRosetaToCheckIn:
-    both: false
-    source: *csRoseta
-    target: *checkIn
-  #  csRosetaToEgiWM:
-  #    both: false
-  #    source: *csRoseta
-  #    target: *egiWM
-  disVisToEgiCloud:
-    both: false
-    source: *disVis
-    target: *egiCloud
   disVisToEgiHTC:
     both: false
     source: *disVis
     target: *egiHTC
-  disVisToCheckIn:
-    both: false
-    source: *disVis
-    target: *checkIn
-  #  disVisToEgiWM:
-  #    both: false
-  #    source: *disVis
-  #    target: *egiWM
-  fantenToEgiCloud:
-    both: false
-    source: *fanten
-    target: *egiCloud
-  fantenToEgiHTC:
-    both: false
-    source: *fanten
-    target: *egiHTC
-  fantenToCheckIn:
-    both: false
-    source: *fanten
-    target: *checkIn
-  #  fantenToEgiWM:
-  #    both: false
-  #    source: *fanten
-  #    target: *egiWM
   haddockToEgiCloud:
     both: false
     source: *haddock
     target: *egiCloud
-  haddockToEgiHTC:
-    both: false
-    source: *haddock
-    target: *egiHTC
-  haddockToCheckIn:
-    both: false
-    source: *haddock
-    target: *checkIn
-  #  haddockToEgiWM:
-  #    both: false
-  #    source: *haddock
-  #    target: *egiWM
-  powerFitToEgiCloud:
-    both: false
-    source: *powerFit
-    target: *egiCloud
-  powerFitToEgiHTC:
-    both: false
-    source: *powerFit
-    target: *egiHTC
-  powerFitToCheckIn:
-    both: false
-    source: *powerFit
-    target: *checkIn
-  #  powerFitToEgiWM:
-  #    both: false
-  #    source: *powerFit
-  #    target: *egiWM
-  spotOnToEgiCloud:
-    both: false
-    source: *spotOn
-    target: *egiCloud
-  spotOnToEgiHTC:
-    both: false
-    source: *spotOn
-    target: *egiHTC
-  spotOnToCheckIn:
-    both: false
-    source: *spotOn
-    target: *checkIn
-  particleFormationToEgiNotebook:
-    both: true
-    source: *d4scienceService
-    target: *notebook
-  particleFormationToAlien:
-    both: true
-    source: *d4scienceService
-    target: *alien
-  egiCloudToProminence:
-    both: true
-    source: *egiCloud
-    target: *prominence
-  egiCLoudToAlien:
-    both: true
-    source: *egiCloud
-    target: *alien
-  #  egiToOpenAire:
-  #    both: true
-  #    source: *egiCloud
-  #    target: *openAIRE
-  #  alienToOpenAire:
-  #    both: true
-  #    source: *alien
-  #    target: *openAIRE
-  lifewatchERICPlantsToEgiCloud:
-    both: true
-    source: *lifewatchERICPlants
-    target: *egiCloud
-  egiCloudToCheckIn:
-    both: false
-    source: *egiCloud
-    target: *checkIn
-  panDataToPanFaas:
-    both: true
-    source: *panData
-    target: *panFaas
-  panDataToPanGitlab:
-    both: true
-    source: *panData
-    target: *panGitlab
-  panDataToPanNotebook:
-    both: true
-    source: *panData
-    target: *panNotebook
-  panFaasToPanNotebook:
-    both: true
-    source: *panFaas
-    target: *panNotebook
-  panFaasToPanGitlab:
-    both: true
-    source: *panFaas
-    target: *panGitlab
-  panNotebookToPanGitlab:
-    both: true
-    source: *panNotebook
-    target: *panGitlab
   chipsterToCheckin:
     both: false
     source: *chipster
-    target: *checkIn
-  WSPtoCheckIn:
-    both: false
-    source: *wsPgrade
     target: *checkIn
   ePoutaToTDS:
     both: true
@@ -6070,152 +4298,3 @@ relations:
     source: *ec3Service
     target: *tds
 
-
-
-#  haddockToB2drop:
-#    both: true
-#    source: *haddock
-#    target: *b2drop
-#  powerFitToB2drop:
-#    both: true
-#    source: *powerFit
-#    target: *b2drop
-#  disVisToB2drop:
-#    both: true
-#    source: *disVis
-#    target: *b2drop
-
-
-#  spotOnToEgiWM:
-#    both: false
-#    source: *spotOn
-#    target: *egiWM
-
-#  notebookToDesyCloud:
-#    both: true
-#    source: *haddock
-#    target: *disVis
-#  HaddockToRoseta:
-#    both: true
-#    source: *haddock
-#    target: *csRoseta
-#  HaddockToAmber:
-#    both: true
-#    source: *haddock
-#    target: *amber
-#  HaddockToFanten:
-#    both: true
-#    source: *haddock
-#    target: *fanten
-#  HaddockToSpotOn:
-#    both: true
-#    source: *haddock
-#    target: *spotOn
-#  PowerFitToDisVis:
-#    both: true
-#    source: *powerFit
-#    target: *disVis
-#  PowerFitToRoseta:
-#    both: true
-#    source: *powerFit
-#    target: *csRoseta
-#  PowerFitToAmber:
-#    both: true
-#    source: *powerFit
-#    target: *amber
-#  PowerFitToFanten:
-#    both: true
-#    source: *powerFit
-#    target: *fanten
-#  PowerFitToSpotOn:
-#    both: true
-#    source: *powerFit
-#    target: *spotOn
-#  DisVisToRoseta:
-#    both: true
-#    source: *disVis
-#    target: *csRoseta
-#  DisVisToAmber:
-#    both: true
-#    source: *disVis
-#    target: *amber
-#  DisVisToFanten:
-#    both: true
-#    source: *disVis
-#    target: *fanten
-#  DisVisToSpotOn:
-#    both: true
-#    source: *disVis
-#    target: *spotOn
-#  RosetaToAmber:
-#    both: true
-#    source: *csRoseta
-#    target: *amber
-#  RosetaToFanten:
-#    both: true
-#    source: *csRoseta
-#    target: *fanten
-#  RosetaToSpotOn:
-#    both: true
-#    source: *csRoseta
-#    target: *spotOn
-#  AmberToFanten:
-#    both: true
-#    source: *amber
-#    target: *fanten
-#  AmberToSpotOn:
-#    both: true
-#    source: *amber
-#    target: *spotOn
-#  FantenToSpotOn:
-#    both: true
-#    source: *fanten
-#    target: *spotOn
-#  notebookToD4Science:
-#    both: true
-#    source: *notebook
-#    target: *spotOn
-#  egiToD4Science:
-#    both: true
-#    source: *egiCloud
-#    target: *d4scienceService
-#  b2findToB2Share:
-#    both: true
-#    source: *b2find
-#    target: *b2share
-#  egiToGeossPortal:
-#    both: true
-#    source: *egiCloud
-#    target: *geossPortal
-#  egiToGeossDab:
-#    both: true
-#    source: *egiCloud
-#    target: *geossDab
-#  geossPortalToDab:
-#    both: true
-#    source: *geossDab
-#    target: *geossPortal
-##  notebookToDesyCloud:
-##    both: true
-##    source: *notebook
-##    target: *
-##  notebookToXFEL:
-##    both: true
-##    source: *notebook
-##    target: *
-##  notebookToFaas:
-##    both: true
-##    source: *notebook
-##    target: *
-##  desyCloudToXFEL:
-##    both: true
-##    source: *
-##    target: *
-##  desyCloudToFaas:
-##    both: true
-##    source: *
-##    target: *
-##  XFELToFaas:
-##    both: true
-##    source: *
-##    target: *
