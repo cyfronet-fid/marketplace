@@ -104,7 +104,7 @@ namespace :dev do
       categories = Category.where(name: hash["parents"])
       providers = Provider.where(name: hash["providers"])
       domain = ScientificDomain.where(name: hash["domain"])
-      resource_organisation = Provider.find_by(name: "not specified yet")
+      resource_organisation = Provider.find_by(name: hash["resource_organisation"] || "not specified yet")
       platforms = Platform.where(name: hash["platforms"])
       funding_bodies = Vocabulary::FundingBody.where(eid: hash["funding_bodies"])
       funding_programs = Vocabulary::FundingProgram.where(eid: hash["funding_programs"])
@@ -140,7 +140,7 @@ namespace :dev do
                       categories: categories,
                       tag_list: hash["tags"],
                       platforms: platforms,
-                      status: :published)
+                      status: hash["status"] || :published)
       service.save(validate: false)
 
       service.logo.attached? && service.logo.purge_later
