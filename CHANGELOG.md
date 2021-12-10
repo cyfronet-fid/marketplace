@@ -21,6 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Logic for multiple ordering of bundle and bundled offers (@kmarszalek)
 - Fix RWD CSS Styles (@jarekzet)
 - Fix Offer CSS Styles on Resource view (@jarekzet)
+- Fix redirect from MP to Resource dashboard in PC (@kmarszalek)
 
 ### Security
 
