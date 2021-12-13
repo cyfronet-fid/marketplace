@@ -6,24 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.27.0-milestone]
-
-### Added
+## [3.27.0] 2021-12-13
 
 ### Changed
 - Show all offer's technical parameters in a resource view (@goreck888)
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Logic for multiple ordering of bundle and bundled offers (@kmarszalek)
 - Fix RWD CSS Styles (@jarekzet)
 - Fix Offer CSS Styles on Resource view (@jarekzet)
 - Fix redirect from MP to Resource dashboard in PC (@kmarszalek)
-
-### Security
 
 ## [3.26.0] 2021-11-29
 
