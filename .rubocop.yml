@@ -1,9 +1,16 @@
 inherit_gem:
-  rubocop-rails_config:
-    - config/rails.yml
+  prettier: rubocop.yml
 
 AllCops:
   TargetRubyVersion: 3.0.2
+  NewCops: enable
+  SuggestExtensions: true
+  Exclude:
+    - '**/tmp/**/*'
+    - '**/vendor/**/*'
+    - '**/node_modules/**/*'
+    - 'bin/**/*'
+    - 'db/schema.rb'
 
 Layout/LineLength:
   Enabled: true
@@ -50,3 +57,295 @@ Metrics/CyclomaticComplexity:
     - 'app/services/importers/service.rb'
     - 'app/services/service/pc_create_or_update.rb'
     - 'lib/jira/console_checker.rb'
+    - 'app/services/project_item/create.rb'
+
+Style/StringLiterals:
+  Enabled: false
+
+# Allow private methods
+Lint/UselessAccessModifier:
+  Enabled: false
+
+# Allow private methods
+Lint/IneffectiveAccessModifier:
+  Enabled: false
+
+# Skip if/else one liner check
+Style/ConditionalAssignment:
+  Enabled: false
+
+# Turn off due error
+Style/HashConversion:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false
+################################
+# TODO Check, enable or forbid rules beneath
+################################
+
+Metrics/BlockLength:
+  Enabled: false
+    
+Style/Documentation:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Lint/ConstantDefinitionInBlock:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Lint/ShadowedException:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Enabled: false
+
+Security/Open:
+  Enabled: false
+
+Naming/MethodParameterName:
+  Enabled: false
+
+Naming/PredicateName:
+  Enabled: false
+
+Style/OptionalBooleanParameter:
+  Enabled: false
+
+Lint/EmptyBlock:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/MixinUsage:
+  Enabled: false
+
+Style/StringConcatenation:
+  Enabled: false
+
+Naming/FileName:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+Style/MissingRespondToMissing:
+  Enabled: false
+
+Lint/DuplicateMethods:
+  Enabled: false
+
+Naming/VariableName:
+  Enabled: false
+
+Naming/BlockParameterName:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Style/ClassVars:
+  Enabled: false
+    
+Style/FormatStringToken:
+  Enabled: false
+
+Lint/NonLocalExitFromIterator:
+  Enabled: false
+
+Lint/DuplicateBranch:
+  Enabled: false
+
+Lint/SafeNavigationChain:
+  Enabled: false
+
+Style/QuotedSymbols:
+  Enabled: false
+
+Style/StringLiteralsInInterpolation:
+  Enabled: false
+
+Style/CaseLikeIf:
+  Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
+
+Style/FormatString:
+  Enabled: false
+
+Lint/SymbolConversion:
+  Enabled: false
+
+Style/RedundantInterpolation:
+  Enabled: false
+
+Style/SymbolProc:
+  Enabled: false
+
+Style/UnlessElse:
+  Enabled: false
+
+Style/RedundantParentheses:
+  Enabled: false
+
+Lint/DuplicateHashKey:
+  Enabled: false
+
+Style/SoleNestedConditional:
+  Enabled: false
+
+Lint/UnusedBlockArgument:
+  Enabled: false
+
+Style/RescueStandardError:
+  Enabled: false
+
+Style/SafeNavigation:
+  Enabled: false
+
+Style/For:
+  Enabled: false
+
+Style/NegatedIf:
+  Enabled: false
+
+Style/HashAsLastArrayItem:
+  Enabled: false
+
+Lint/ImplicitStringConcatenation:
+  Enabled: false
+
+Style/NegatedIfElseCondition:
+  Enabled: false
+
+Style/NilComparison:
+  Enabled: false
+
+Style/RedundantArgument:
+  Enabled: false
+
+Style/IdenticalConditionalBranches:
+  Enabled: false
+
+Style/ZeroLengthPredicate:
+  Enabled: false
+
+Lint/ShadowingOuterLocalVariable:
+  Enabled: false
+
+Lint/ParenthesesAsGroupedExpression:
+  Enabled: false
+
+Style/IfInsideElse:
+  Enabled: false
+
+Lint/UnderscorePrefixedVariableName:
+  Enabled: false
+
+Style/RedundantSelf:
+  Enabled: false
+
+Style/PercentLiteralDelimiters:
+  Enabled: false
+
+Lint/NestedMethodDefinition:
+  Enabled: false
+
+Lint/Void:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false
+
+Lint/Debugger:
+  Enabled: false
+
+Lint/MissingSuper:
+  Enabled: false
+
+Lint/AssignmentInCondition:
+  Enabled: false
+
+Style/CaseEquality:
+  Enabled: false
+
+Lint/RescueException:
+  Enabled: false
+
+Style/EmptyElse:
+  Enabled: false
+
+Lint/LiteralAsCondition:
+  Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false
+
+Style/AccessModifierDeclarations:
+  Enabled: false
+
+Style/LineEndConcatenation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/MutableConstant:
+  Enabled: false
+
+Style/RedundantFetchBlock:
+  Enabled: false
+
+Style/InverseMethods:
+  Enabled: false
+
+Lint/UselessMethodDefinition:
+  Enabled: false
+
+Style/GlobalStdStream:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Lint/RedundantSafeNavigation:
+  Enabled: false
+
+Style/SlicingWithRange:
+  Enabled: false
+
+Lint/AmbiguousRange:
+  Enabled: false
+
+Style/SingleArgumentDig:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Lint/Loop:
+  Enabled: false
+
+Style/StructInheritance:
+  Enabled: false
+
+Style/PreferredHashMethods:
+  Enabled: false
+
+

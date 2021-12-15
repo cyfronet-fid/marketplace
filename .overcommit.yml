@@ -72,15 +72,15 @@ PreCommit:
 
   HamlLint:
     enabled: true
-    exclude: ['lib/**/*.haml']
+    exclude: ["lib/**/*.haml"]
 
   ScssLint:
     enabled: true
 
+  Prettier:
+    enabled: true
+    command: ["bin/bundle", "exec", "rbprettier", "--check", "."]
+
   RuboCop:
     enabled: true
-    command: ['bin/bundle', 'exec', 'rubocop']
-
-PrePush:
-  RSpec:
-    enabled: true
+    command: ["bin/bundle", "exec", "rubocop"]

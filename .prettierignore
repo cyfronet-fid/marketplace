@@ -1,0 +1,33 @@
+# Ignore all in root directory
+/*
+  
+# Ignore HAML files
+*.haml
+
+# Ignore ERB files
+*.erb
+
+# Ignore images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.tiff
+*.svg
+*.ico
+
+# Ignore fonts
+*.ttf
+
+# Include
+!/app
+!/db
+!/docs
+!/lib
+!/spec
+!/swagger
+
+# Ignore styles
+app/javascript/stylesheets/*
+
+
