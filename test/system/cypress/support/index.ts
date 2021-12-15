@@ -37,6 +37,7 @@ import './resources';
 import './category';
 import './scientific-domain';
 import './providers';
+import './platforms'
 
 /**
  * Don't fail on uncaught exception
