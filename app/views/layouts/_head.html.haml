@@ -2,18 +2,14 @@
   %meta{ content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }/
   %meta{ charset: "utf-8" }/
   %meta{ content: "width=device-width, initial-scale=1, shrink-to-fit=no", name: "viewport" }/
-  = meta_robots
-  %title
-    = "#{yield :title} - " if content_for?(:title)
-    = _("EOSC Marketplace")
+  %title= _("EGI Marketplace")
   = csrf_meta_tags
   = csp_meta_tag
   = favicon_pack_tag "favicon.ico"
   = favicon_pack_tag "favicon-180x180.png", rel: "apple-touch-icon", type: "image/png"
   = stylesheet_pack_tag "application"
   = javascript_pack_tag "application"
-  = render "layouts/version"
-  - if Rails.env.production?
+  -# if Rails.env.production?
     = render "layouts/matomo"
     = render "layouts/google_analytics"
     = render "layouts/hotjar_trackingcode"
