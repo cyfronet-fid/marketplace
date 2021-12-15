@@ -1,21 +1,11 @@
 .container
-  = render "info"
-
   = render "products",
     scientific_domains: @main_scientific_domains,
     categories: @root_categories_with_logos
 
-  = render "communities",
-    platforms: @home_platforms, more_platforms_count: @home_platforms_counter,
-    providers: @home_providers, more_providers_count: @home_providers_counter,
-    target_users: @home_target_users, more_target_users_count: @home_target_users_counter
+  = render "info"
 
   = render_sections("learn-more")
 
   = render "services", services: @services
 
-  .row
-    .col-12.col-lg-4.col-sm-5
-      = render "opinions", opinion: @opinion
-    .col-12.col-lg-8.col-sm-7
-      = render_sections("use-cases")
