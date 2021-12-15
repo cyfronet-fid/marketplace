@@ -1,24 +1,29 @@
-.social-wrapper
-  %ul
-    %li
-      = mail_to "contact@eosc-portal.eu", subject: "EOSC Portal" do
-        %i.fa.fa-envelope
-    %li
-      = link_to "https://twitter.com/eoscportal" do
-        %i.fab.fa-twitter
-    %li
-      = link_to "https://www.youtube.com/playlist?index=1&list=UUHsaUFy5LJ3rJ28qDg2StGA&playnext=1" do
-        %i.fab.fa-youtube
-
-%nav
-  %eosc-common-main-header.common-header{ username: current_user.present? ? current_user.full_name : "",
-                                          "profile-links": eosc_commons_profile_links,
-                                          "show-eosc-links": "true",
-                                          "login-url": user_checkin_omniauth_authorize_url,
-                                          "(on-logout)": "document.getElementById('hidden_logout').click()" }
-  = link_to "logout",
-            destroy_user_session_path,
-            "data-turbo-method": :delete,
-            id: "hidden_logout",
-            style: "display: none;",
-            "data-e2e": "logout"
+%nav.top
+  .container
+    %ul
+      %li
+        %a{ href: "https://www.egi.eu/about/egi-foundation/how-to-reach-the-egi-foundation/", target: "_blank" }
+          = _("Contact us")
+      - if policy([:backoffice, :backoffice]).show?
+        %li
+          = link_to _("Backoffice"), backoffice_path,
+            class: "#{"active" if local_assigns[:section] == :backoffice}"
+      - if policy([:admin, :admin]).show?
+        %li
+          = link_to _("Admin"), admin_path, section: "admin",
+            class: "#{"active" if local_assigns[:section] == :admin}"
+      - if policy([:executive, :executive]).show?
+        %li
+          = link_to _("Executive"), executive_path, section: "admin",
+            class: "#{"active" if local_assigns[:section] == :executive}"
+      - if user_signed_in?
+        %li
+          %i.fas.fa-user.mr-1
+          = current_user.first_name
+          = current_user.last_name
+        %li
+          %strong= link_to _("Logout"), destroy_user_session_path, method: :delete,
+          data: { turbo_method: :delete, e2e: "logout" }
+      - else
+        %li
+          %strong= link_to _("Login"), user_checkin_omniauth_authorize_path

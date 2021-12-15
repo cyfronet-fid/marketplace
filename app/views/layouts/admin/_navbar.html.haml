@@ -25,3 +25,5 @@
           = link_to "Features", admin_features_path, class: "nav-link pl-2 py-1"
         = nav_link controller: :admins, html_options: { class: "nav-item" } do
           = link_to "Tour Feedback", admin_tour_feedbacks_path, class: "nav-link pl-2 py-1"
+        = nav_link controller: :admins, html_options: { class: "nav-item" } do
+          = link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link px-2 py-1"

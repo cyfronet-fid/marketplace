@@ -1,29 +1,20 @@
-#tab-anchor.products.home-tabs.container{ "data-controller" => "home-page", "data-shepherd-tour-target": "overview_2" }
-  %ul.tabs
-    %li.tab-link.current{ data: { "target" => "home-page.changeTab",
-                  "action" => "click->home-page#changeTab", "tab" => "tab-1" },
-                  href: "#" } Scientific Domains
-    %li.tab-link{ data: { "home-page-target" => "changeTab",
-                  "action" => "click->home-page#changeTab", "tab" => "tab-2" },
-                  href: "#" } Categories
-  #tab-1.tab-content-home.current{ "data-home-page-target" => "tab" }
+#tab-anchor.home-tabs.container.p-0.mt-5{ "data-controller" => "home-page" }
+
+  #tab-1.tab-content-home.current{ "data-target" => "home-page.tab" }
     .container
       .row
         = render "home/products/cards",
-          cards: scientific_domains,
-          url: -> (sd) { search_link_router(sd) },
-          default_logo: "ico_ra_default.png"
+          cards: categories,
+          url: ->(category) { category },
+          default_logo: "ico_default.png"
 
   #tab-2.tab-content-home{ "data-home-page-target" => "tab" }
     .container
       .row
         = render "home/products/cards",
-          cards: categories,
-          url: -> (category) { category[:url] },
-          default_logo: "ico_default.png"
+            cards: scientific_domains,
+            url: ->(ra) { services_path(scientific_domains: ra.to_param) },
+            default_logo: "ico_ra_default.png"
 
 .row.d-flex.justify-content-center.mt-4
-  = link_to "Browse all services",
-      home_page_external_links_enabled? ? "#{search_service_base_url}/search/all?q=*": services_path,
-      class: "button button--primary",
-      "data-shepherd-tour-target": "overview_4"
+  = link_to _("Browse all services"), services_path, class: "button button--primary"
