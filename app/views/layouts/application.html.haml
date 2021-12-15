@@ -23,14 +23,11 @@
         query_params: @query_params || {}
     %main
       = render "layouts/breadcrumb"
-
       = yield
 
-  = render "layouts/eosc_commons_footer"
+  = render "layouts/report", report: @report
+  = render "layouts/modal"
+  = render "layouts/footer", root_categories: @root_categories
   = render "layouts/jira_collector"
   = tour @tour, @show_welcome_modal unless controller.tour_disabled
   = render "layouts/recommendation"
-
-  - file_base = Mp::Application.config.eosc_commons_base_url + "index." + Mp::Application.config.eosc_commons_env
-  %script{ src: file_base + ".min.js" }
-  %link{ rel: "stylesheet", href: file_base + ".min.css" }

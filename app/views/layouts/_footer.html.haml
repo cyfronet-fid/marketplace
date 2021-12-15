@@ -1,14 +1,13 @@
 %footer.footer.pt-3.pb-3
   - portal_base = Mp::Application.config.portal_base_url
   .container
-    %a.arrow-up{ href: "#top" }
     .row.h-100
       .col-md-3.my-auto
-        %a.eosc-logo-mono.d-block{ href: portal_base }
-          = image_tag "eosc-logo-mono.png"
+        %a.egi-logo-mono.d-block{ href: portal_base }
+          = image_tag "egi-footer-logo.png"
       .col-md-9.my-auto.copyright
         %span.copy-text
-          = _("Copyright 2020 - All rights reserved")
+          = _("Copyright 2024 - All rights reserved")
         %a.ml-4.text-uppercase{ href: "https://eosc-portal.eu/privacy-policy-summary" }
           = _("privacy policy")
     %hr.mb-4
@@ -16,122 +15,95 @@
       .col-md
         %ul
           %li
-            .title
-              %a{ href: "#{portal_base}/about-eosc-portal" }
-                = _("About")
+            .title= _("About")
           %li.mb-1
-            %a{ href: "#{portal_base}/about/eosc" }
-              = _("EOSC")
+            %a{ href: "#{portal_base}/about/eosc" }= _("EGI")
           %li.mb-1
-            %a{ href: "#{portal_base}/about-eosc-portal" }
-              = _("EOSC Portal")
+            %a{ href: "#{portal_base}/about/eosc-doers" }= _("EGI Doers")
           %li.mb-1
-            %a{ href: "#{portal_base}/about/eosc-doers" }
-              = _("EOSC Doers")
+            %a{ href: "#{portal_base}/about/eosc-projects" }= _("EGI Projects")
           %li.mb-1
-            %a{ href: "#{portal_base}/glossarry" }
-              = _("EOSC Glossary")
+            %a{ href: "#{portal_base}/about/funding-opportunities" }= _("Funding Opportunities")
           %li.mb-1
-            %a{ href: "#{portal_base}/about/eosc-projects" }
-              = _("EOSC Projects")
+            %a{ href: "#{root_url}about" }= _("Marketplace")
           %li.mb-1
-            %a{ href: "#{portal_base}/governance" }
-              = _("EOSC Governance")
+            %a{ href: "#{portal_base}/about/faqs" }= _("FAQs")
           %li.mb-1
-            %a{ href: "#{portal_base}/about/faqs" }
-              = _("EOSC Portal FAQs")
-          %li.mb-1
-            %a{ href: "#{portal_base}" }
-              = _("EOSC Association")
-          %li.mb-1
-            %a{ href: "#{portal_base}/enhance" }
-              = _("EOSC Enhance")
-      .col-md.resources
+            %a{ href: "#{portal_base}/contact-us" }= _("Contact us")
+      .col-md
         %ul
           %li
-            .title
-              %a{ href: "#{portal_base}/services-resources" }
-                = _("Services & Resources")
-          - Category.roots.partition { |sd|  sd.name != "Other" }.flatten(1).each do |category|
+            .title= _("Governance")
+          %li.mb-1
+            %a{ href: "#{portal_base}/governance" }= _("EGI Governance")
+          %li.mb-1
+            %a{ href: "#{portal_base}/governance/rules-participation" }= _("Rules of participation")
+          %li.mb-1
+            %a{ href: "#{portal_base}/governance/best-practices" }= _("Best Practices")
+      .col-md
+        %ul
+          %li
+            .title= _("Services & Resources")
+          %li.mb-1
+            %a{ href: "#{portal_base}/services-resources/sharing-discovery" }= _("Sharing & Discovery")
+          %li.mb-1
+            %a{ href: "#{portal_base}/services-resources/processing-analysis" }= _("Processing & Analysis")
+          %li.mb-1
+            %a{ href: "#{portal_base}/services-resources/data-management" }= _("Data Management")
+          %li.mb-1
+            %a{ href: "#{portal_base}/services-resources/compute" }= _("Compute")
+          %li.mb-1
+            %a{ href: "#{portal_base}/services-resources/storage" }= _("Storage")
+          %li.mb-1
+            %a{ href: "#{portal_base}/services-resources/networking" }= _("Networking")
+          %li.mb-1
+            %a{ href: "#{portal_base}/services-resources/training" }= _("Training & Support")
+          %li.mb-1
+            %a{ href: "#{portal_base}/services-resources/security-operations" }= _("Security & Operations")
+      .col-md
+        %ul
+          %li
+            .title= _("Policy")
+          %li.mb-1
+            %a{ href: "#{portal_base}/policy/ec-documents" }= _("EC Documents")
+          %li.mb-1
+            %a{ href: "#{portal_base}/policy/europe" }= _("Europe")
+          %li.mb-1
+            %a{ href: "#{portal_base}/policy/eu-member-states" }= _("Member States")
+      .col-md
+        %ul
+          %li
+            .title= _("EOSC IN PRACTICE")
+          %li.mb-1
+            %a{ href: "#{portal_base}/eosc-in-practice/use-cases" }= _("Use Cases")
+          %li.mb-1
+            %a{ href: "#{portal_base}/eosc-in-practice/open-call" }= _("Open Call")
+      .col-md
+        %ul
+          %li
+            .title= _("Media")
+          %li.mb-1
+            %a{ href: "#{portal_base}/media/news" }= _("News")
+          %li.mb-1
+            %a{ href: "#{portal_base}/media/events" }= _("Forthcoming events")
+          %li.mb-1
+            %a{ href: "#{portal_base}/media/past-events" }= _("Past Events")
+      .col-md
+        %ul
+          %li.mb-1
+            .title= _("MARKETPLACE")
+          %li.mb-1
+            %a{ href: "#{root_url}about" }= _("About")
+          %li.mb-1
+            = link_to _("All Services"), services_path
+          - @root_categories.each do |root_category|
             %li.mb-1
-              = link_to category.name, category_path(category)
+              = link_to root_category.name, root_category
           %li.mb-1
-            %a{ href: "#{portal_base}/helpdesk" }
-              = _("Help Desk")
-      .col-md
-        %ul
-          %li
-            .title
-              = _("Policy")
+            %a{ href: "#{portal_base}/for-providers" }= _("For providers")
           %li.mb-1
-            %a{ href: "#{portal_base}/policy/europe" }
-              = _("Europe")
-          %li.mb-1
-            %a{ href: "#{portal_base}/policy/eu-member-states" }
-              = _("Member States")
-      .col-md
-        %ul
-          %li
-            .title
-              = _("Use Cases")
-          %li.mb-1
-            %a{ href: "#{portal_base}/eosc-in-practice/use-cases" }
-              = _("Community Use Cases")
-          %li.mb-1
-            %a{ href: "#{portal_base}/eosc-in-practice/open-call" }
-              = _("Submit Use Case")
-          %li.mb-1
-            %a{ href: "#{portal_base}/industry-use-cases" }
-              = _("Industry Use Case")
-      .col-md
-        %ul
-          %li
-            .title
-              = _("Media")
-          %li.mb-1
-            %a{ href: "#{portal_base}/media/news" }
-              = _("News")
-          %li.mb-1
-            %a{ href: "#{portal_base}/media/events" }
-              = _("Forthcoming events")
-          %li.mb-1
-            %a{ href: "#{portal_base}/media/past-events" }
-              = _("Past Events")
-          %li.mb-1
-            %a{ href: "#{portal_base}/contribute-to-eosc" }
-              = _("Submit your News/Event")
-          %li.mb-1
-            = _("Documents")
-          %li.mb-1
-            %a{ href: "#{portal_base}/documents/ec-documents" }
-              = _("European Commission")
-          %li.mb-1
-            %a{ href: "#{portal_base}/documents/community" }
-              = _("Community")
-          %li.mb-1
-            %a{ href: "#{portal_base}/documents/member-states" }
-              = _("Member States")
-      .col-md
-        %ul
-          %li.mb-1
-            .title
-              %a{ href: "#{portal_base}/for-providers" }
-                = _("For providers")
-          %li.mb-1
-            %a{ href: "#{portal_base}/providers-documentation" }
-              = _("Providers Documentation")
-      .col-md
-        %ul
-          %li.mb-1
-            .title
-              %a{ href: "#{portal_base}/subscribe" }
-                = _("Subscribe")
-      .col-md
-        %ul
-          %li.mb-1
-            .title
-              %a{ href: "#{portal_base}/using-the-portal" }
-                = _("Using the Portal")
+            = link_to _("Help"), help_path
+
 
     .row.mt-4.socials
       .col-md-6
@@ -141,10 +113,4 @@
 .eu-information.p-4
   .container
     %p.mb-1
-      -# haml-lint:disable MultilinePipe
-      = _("The EOSC Portal is operated by the EOSC Enhance (Grant Agreement no. 871160), " + |
-          "EOSC-hub (Grant Agreement no. 777536), and OpenAIRE-Advance (Grant Agreement no. 777541) " + |
-          "projects funded by the European Union’s Horizon 2020 research and innovation programme." + |
-          "For a complete list of contributors, visit the ") |
-      -# haml-lint:enable MultilinePipe
-      = link_to _("About EOSC Portal"), "https://www.eosc-portal.eu/about-eosc-portal"
+      = image_tag "egi-ue-info.png"

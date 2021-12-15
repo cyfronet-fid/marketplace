@@ -3,36 +3,49 @@
                                               "action" => "scroll@window->home-page#onScroll" } }
   = image_tag("main-link.png")
 
+
 .contentbox
-  %div
+  .left-column
+    %a{ href: "/services/c/data-management" }
+      = image_tag "main-info-01.jpg"
+  .right-column
+    %a{ href: "/services/c/compute" }
+      = image_tag "main-info-02.jpg"
+
+.contentbox
+  .first
     %p.contentbox__title
-      = _("Welcome to the EOSC Catalogue and Marketplace")
-    %p.contentbox__lead
-      -# haml-lint:disable MultilinePipe
-      = _("Integrated platform that allows easy access to lots of services for various research domains along" + |
-          " with data and integrated data analytics tools. Browse by scientific domain, your current research " + |
-          "activity or provider that you know and trust and, if you need help, we are here for you!") |
-      -# haml-lint:enable MultilinePipe
+      = _("About the Marketplace")
 
-    .intro-box-wrapper
-      .intro-box
-        = _("Find EOSC Services that suit your use case yourself")
+    -# haml-lint:disable MultilinePipe
+    %p.contantbox__lead
+      = _("We believe that having access to top scientific computing resources is essential to help researchers " + |
+          "to be competitive. The Marketplace is the entry point for researchers to discover and access the " + |
+          "advanced computing services and tools they need for their work.") |
+    %p
+      = _("The services available in the Marketplace cover the areas of Compute, Storage and Data. " + |
+          "The Marketplace also provides Applications on demand and Training modules. " + |
+          "All services are provided by the EGI Federation and partner institutions.") |
+    %p
+      = _("The EGI Federation brings together almost 300 data and compute centres and " + |
+          "21 cloud providers worldwide, united with a mission of supporting science and innovation.") |
+    -# haml-lint:enable MultilinePipe
 
-        %a{ href: "#{search_service_base_url}/search/all?q=*",
-            title: "Discover research products and services all together" }
-          %i.fas.fa-arrow-right
-          = _("Discover research products and services all together")
-
-        %a{ href: "https://marketplace.eosc-portal.eu/services/",
-            title: "Browse through service catalogue" }
-          %i.fas.fa-arrow-right
-          = _("Browse through service catalogue")
-
-      .intro-box
-        =  _("Describe your use case and get support from our experts")
-        = link_to projects_path, "data-e2e" => "goToProjectsBtn" do
-          %i.fas.fa-arrow-right
-          = _("Go to your projects")
-
-  %aside
-    = image_tag "gfx_whole_illustation_desktop.png"
+  .last
+    %ul
+      %li
+        %i.fas.fa-check-circle
+        .list-title= _("Easy to find")
+        %p= _("advanced filtering and lots of information on capability and service levels")
+      %li
+        %i.fas.fa-check-circle
+        .list-title= _("Easy to access")
+        %p= _("log in with your own credentials")
+      %li
+        %i.fas.fa-check-circle
+        .list-title= _("Customizable")
+        %p= _("views can be pre-defined for labs, communities and organisations")
+      %li
+        %i.fas.fa-check-circle
+        .list-title= _("Simple")
+        %p= _("purchase resources and services or access them free of charge")

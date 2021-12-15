@@ -11,9 +11,4 @@
       = render "layouts/breadcrumb"
       .container
         = yield
-
-  = render "layouts/eosc_commons_footer"
-
-  - file_base = Mp::Application.config.eosc_commons_base_url + "index." + Mp::Application.config.eosc_commons_env
-  %script{ src: file_base + ".min.js" }
-  %link{ rel: "stylesheet", href: file_base + ".min.css" }
+  = render "layouts/footer", root_categories: @root_categories
