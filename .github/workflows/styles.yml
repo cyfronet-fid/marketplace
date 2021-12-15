@@ -11,7 +11,7 @@ jobs:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Sign overcommit
       run: |
-        bundle exec overcommit --sign
+        bundle exec overcommit --sign && bundle exec overcommit --sign pre-commit
     - name: Run overcommit
       run: |
         bundle exec overcommit --run
