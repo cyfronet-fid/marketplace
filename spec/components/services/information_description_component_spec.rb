@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Services::InformationDescriptionComponent, type: :component do
-  [:open_access, :fully_open_access, :other].each do |type|
+  [:open_access, :fully_open_access].each do |type|
     it "shows correct information page for #{type} order type" do
       service = create(:service, order_type: type)
       offer = create(:offer, service: service, order_type: type)
@@ -19,6 +19,22 @@ RSpec.describe Services::InformationDescriptionComponent, type: :component do
         "\nOrganise your resources and orders into logical blocks\n\n\n\n" +
         "To find out more about Projects in EOSC Marketplace, please refer to our\nFAQ")
     end
+  end
+
+  it "shows correct information page for other order type" do
+    service = create(:service, order_type: :other)
+    offer = create(:offer, service: service, order_type: :other)
+
+    render_inline(Services::InformationDescriptionComponent.new(order_type: :other,
+                                                                service_title: service.name,
+                                                                offer: offer))
+
+    expect(page).to have_text("\nThis is an offer of the #{service.name} resource." +
+                              "\nPress\nGo to the resource\nbutton to reach the resource website." +
+                              "\nYou may also add the resource to a\nProject\nin order to:" +
+      "\n\nGain EOSC experts support\nEasily access the selected resource" +
+      "\nOrganise your resources and orders into logical blocks\n\n\n\n" +
+      "To find out more about Projects in EOSC Marketplace, please refer to our\nFAQ")
   end
 
   it "shows correct information page for order_required order type" do
