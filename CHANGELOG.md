@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.28.0]-milestone
+
+### Added
+
+### Changed
+- Improve wizard description for other order type resources (@Marcelinna)
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
 ## [3.27.0] 2021-12-13
 
 ### Changed
