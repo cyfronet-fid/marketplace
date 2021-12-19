@@ -7,7 +7,7 @@
 }
 
 .contentbox {
-  padding-top: 5rem;
+  padding-top: 4rem;
 
   .left-column {
     display: inline;
@@ -46,12 +46,12 @@
           float: left;
           margin-right: 16px;
           font-size: 55px;
-          color: $color-primary;
+          color: $palette-orange;
           margin-top: 3px;
         }
 
         .list-title {
-          font-size: 25px;
+          font-size: 21px;
           font-weight: bold;
           color: $color-primary;
         }
@@ -72,7 +72,7 @@
 
 
 .footer {
-  border-top: 10px solid $color-primary;
+  border-top: 10px solid $palette-orange;
 
   .egi-logo-mono {
     img {
