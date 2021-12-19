@@ -18,7 +18,7 @@ body {
 
   > main {
     padding: 0 15px;
-    margin-bottom: 5.5rem;
+    margin-bottom: 3rem;
   }
 }
 
@@ -102,6 +102,8 @@ ul {
 }
 
 a {
+  color: $link-color;
+
   &:hover {
     text-decoration: none;
     color: $body-color;
@@ -163,14 +165,21 @@ a {
   }
 }
 
+.btn,
+.btn-sm {
+  border-radius: 6px;
+}
+
 // Redefine these .btn-#{variant} forcibly because there is no way to control hover-focus-active
 // color directly. Also, gradients.
 
 .btn-primary {
   @include button-variant($btn-primary-hover, $white, $btn-primary-hover, $white, $btn-primary-hover, $white);
-  background-color: $btn-primary-gradient-end;
+  background: $palette-orange;
+  font-weight: bold;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
   border-radius: 8px;
-  padding: 0.5rem 2rem;
 
   @include hover-focus-active {
     background-image: unset;
@@ -231,6 +240,11 @@ a {
   font-size: 15px;
   font-weight: 300;
   color: $text-muted;
+
+  &.data-probe {
+    border-bottom: 1px solid $palette-gray-10;
+    padding-bottom: 10px;
+  }
 
   a {
     padding: 0 2px;
@@ -2106,7 +2120,20 @@ h5 {
 }
 
 .main {
-  background-position: 50% -120px;
+  &::before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-position: 50% 50px;
+    background-image: url('../images/home-bg.png');
+    opacity: 0.2;
+    background-repeat: no-repeat;
+  }
+
 }
 
 .box {
@@ -3638,7 +3665,7 @@ label[data-multicheckbox].small {
   padding: 2em 1.2em !important;
 
   .cc-message {
-    font-family: "Inter";
+    font-family: "DM Sans";
     line-height: 1.3;
     width: 80%;
     float: left;
@@ -3646,7 +3673,7 @@ label[data-multicheckbox].small {
 
   .btn-close {
     width: 160px;
-    font-family: "Inter";
+    font-family: "DM Sans";
     float: right;
   }
 }
@@ -5012,7 +5039,7 @@ abbr[title] {
 
 .home-title {
   font-size: 28px;
-  margin-top: 3rem;
+  margin-top: 3.2rem;
   margin-bottom: 2rem;
 }
 
@@ -5719,14 +5746,15 @@ abbr[title] {
       float: left;
       padding-left: 16px;
       position: relative;
-      margin-right: 25px;
+      margin-right: 20px;
+      font-size: 14px;
 
       svg {
         font-size: 10px;
         position: absolute;
         top: 7px;
         left: 0;
-        color: $palette-yellow;
+        color: $palette-orange;
       }
     }
   }

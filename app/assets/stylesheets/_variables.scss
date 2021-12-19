@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 
-$font-family-sans-serif: "Inter", "Helvetica Neue", "Arial", sans-serif;
+$font-family-sans-serif: 'DM Sans', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
 $fa-font-path: "font-awesome" !default;
 
@@ -10,12 +10,12 @@ $font-size-xs: 0.75 * $font-size-base;
 $font-size-navbar: 1 * $font-size-base;
 $font-size-footer: 0.75 * $font-size-base;
 
-$font-weight-light: 100; // Ubuntu light
+$font-weight-light: 300; // Ubuntu light
 $font-weight-normal: 300; // Ubuntu regular
-$font-weight-bold: 400; // Ubuntu medium
-$font-weight-bolder: 600; // Ubuntu bold
+$font-weight-bold: 700; // Ubuntu medium
+$font-weight-bolder: 700; // Ubuntu bold
 
-$link-color: #3d4db6;
+$link-color: #005faa;
 $font-size-base: 1rem;
 
 $headings-font-weight: $font-weight-bolder;
@@ -50,6 +50,8 @@ $palette-solid-100: #1c313a;
 
 $palette-white: #fff;
 
+$palette-blue: #005faa;
+$palette-dark-blue: #1e315d;
 $palette-new-background: rgba(25, 117, 255, 0.08);
 $palette-new-darkblue: #1a2128;
 $palette-new-blue: #144b9e;
@@ -58,9 +60,9 @@ $palette-blue: #040f81;
 $palette-light-blue: #e6fafd;
 $palette-yellow: #ffcd00;
 $palette-yellow-opacity: rgba(255, 205, 0, 0.2);
-$palette-orange: #ffa900;
+$palette-orange: #f07e13;
 $palette-salmon: #ff715b;
-$palette-gradient-start: #3d4db6;
+$palette-gradient-start: #05cae7;
 $palette-gradient-end: $palette-blue;
 $palette-lightblue: #e1f9fb;
 $palette-lightblue2: #f9fcfe;
@@ -73,7 +75,7 @@ $palette-end-opacity: rgba(27, 48, 58, 0.85);
 $palette-box-shadow: rgba(0, 0, 0, 0.04);
 
 $primary: $palette-blue;
-$secondary: #e6eef7;
+$secondary: $palette-orange;
 $info: $palette-gray-30;
 $error: $palette-salmon;
 $body-color: #233d4c;
@@ -148,6 +150,7 @@ $status-bg-rejected: rgba(232, 62, 62, 0.32);
 $status-bg-ready: rgba(48, 174, 55, 0.3);
 $status-bg-registered: rgba(255, 205, 0, 0.3);
 $services-list-bg: rgba(28, 49, 58, 0.03);
+$ice-blue: #f1f8ff;
 $alert-bg: #edf4ff;
 $alert-color: #3d4db6;
 $button-blue: #144b9e;
