@@ -1,6 +1,6 @@
 {
   "baseUrl": "http://localhost:3000",
-  "defaultCommandTimeout": 120000,
+  "defaultCommandTimeout": 20000,
   "pageLoadTimeout": 140000,
   "viewportWidth": 1400,
   "viewportHeight": 1200,
@@ -16,6 +16,7 @@
   "videoUploadOnPasses": false,
   "video": false,
   "env": {
-    "debug": false
+    "debug": false,
+    "FAIL_FAST": true
   }
 }

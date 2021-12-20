@@ -1,8 +1,8 @@
-import {IUser, UserFactory} from "../factories/user.factory";
-import {IProject, ProjectFactory} from "../factories/project.factory";
-import {Utilities} from "../support/utilities";
-import {accessType, IResource} from "../support/offers";
-import {IJiraResource} from "../support/jira";
+import {IUser, UserFactory} from "../../factories/user.factory";
+import {IProject, ProjectFactory} from "../../factories/project.factory";
+import {Utilities} from "../../support/utilities";
+import {accessType, IResource} from "../../support/offers";
+import {IJiraResource} from "../../support/jira";
 
 Cypress.Cookies.defaults({
     preserve: ['user', 'project', 'resources', 'message']
@@ -38,6 +38,7 @@ describe('Offers', () => {
         );
     });
     it('Should go to new project', () => {
+      const user = UserFactory.create();
         cy.visit("/");
         cy.getCookie('user')
             .then(cookie => JSON.parse(cookie.value) as IUser)

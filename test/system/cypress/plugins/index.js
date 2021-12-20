@@ -12,6 +12,7 @@
 /**
  * @type {Cypress.PluginConfig}
  */
+
 module.exports = (on, config) => {
     if (config.env['debug']) {
         console.log("!!!!!!!!!!!!! You're running cypress in debug mode !!!!!!!!!!!!");
@@ -50,5 +51,7 @@ module.exports = (on, config) => {
             return launchOptions;
         }
     });
-};
 
+    require("cypress-fail-fast/plugin")(on, config);
+    return config;
+};

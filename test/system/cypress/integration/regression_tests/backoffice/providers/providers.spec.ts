@@ -28,7 +28,7 @@ describe("Providers", () => {
       .should("contain", "/backoffice/providers");
     cy.get("[data-e2e='backoffice-providers-list'] a")
       .eq(0)
-        .click();
+      .click();
     cy.contains("a", "Edit")
       .should("be.visible");
     cy.contains("a", "Delete")
@@ -108,7 +108,7 @@ describe("Providers", () => {
       .click();
     cy.location("href")
       .should("contain", "/providers/new");
-    cy.fillFormCreateProvider({basicWebpage_url:"wrongFormat", adminEmail:"wrongFormat"}, wrongLogo);
+    cy.fillFormCreateProvider({...provider, basicWebpage_url:"wrongFormat", contactEmail:"wrongFormat"}, wrongLogo);
     cy.get("[data-e2e='create-provider-btn']")
       .click();
     cy.contains(

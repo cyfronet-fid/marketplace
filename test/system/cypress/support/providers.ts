@@ -36,24 +36,24 @@
  };
  
  Cypress.Commands.add("fillFormCreateProvider", (provider: IProviders, logo) => {
-   cy.get("#basic-header")
-     .click();
- 
+    cy.get("#basic-header")
+    .click();
+
    if (provider.basicName) {
      cy.get("#provider_name")
-       .clear({ force: true })
+       .clear()
        .type(provider.basicName);
    }
  
    if (provider.basicAbbreviation) {
      cy.get("#provider_abbreviation")
-       .clear({ force: true })
+       .clear()
        .type(provider.basicName);
    }
  
    if (provider.basicWebpage_url) {
      cy.get("#provider_website")
-       .clear({ force: true })
+       .clear()
        .type(provider.basicWebpage_url);
    }
  
@@ -93,19 +93,19 @@
 
      if (provider.locationStreet) {
       cy.get("#provider_street_name_and_number")
-        .clear({ force: true })
+        .clear()
         .type(provider.locationStreet);
     }
   
     if (provider.locationPostCode) {
       cy.get("#provider_postal_code")
-        .clear({ force: true })
+        .clear()
         .type(provider.locationPostCode);
     }
   
     if (provider.locationCity) {
       cy.get("#provider_city")
-        .clear({ force: true })
+        .clear()
         .type(provider.locationCity);
     }
   
@@ -116,28 +116,28 @@
  
    cy.get("#contact-header")
      .click();
- 
+   
    if (provider.contactFirstname) {
      cy.get("#provider_main_contact_attributes_first_name")
-       .clear({ force: true })
+       .clear()
        .type(provider.contactFirstname);
    }
  
    if (provider.contactLastname) {
      cy.get("#provider_main_contact_attributes_last_name")
-       .clear({ force: true })
+       .clear()
        .type(provider.contactLastname);
    }
  
    if (provider.contactEmail) {
      cy.get("#provider_main_contact_attributes_email")
-       .clear({ force: true })
+       .clear()
        .type(provider.contactEmail);
    }
  
    if (provider.publicContactsEmail) {
      cy.get("#provider_public_contacts_attributes_0_email")
-       .clear({ force: true })
+       .clear()
        .type(provider.publicContactsEmail);
    }
 
@@ -146,19 +146,19 @@
 
     if (provider.adminFirstName) {
       cy.get("#provider_data_administrators_attributes_0_first_name")
-        .clear({ force: true })
+        .clear()
         .type(provider.adminFirstName);
     }
   
     if (provider.adminLastName) {
       cy.get("#provider_data_administrators_attributes_0_last_name")
-        .clear({ force: true })
+        .clear()
         .type(provider.adminLastName);
     }
   
     if (provider.adminEmail) {
       cy.get("#provider_data_administrators_attributes_0_email")
-        .clear({ force: true })
+        .clear()
         .type(provider.adminEmail);
     }
  });

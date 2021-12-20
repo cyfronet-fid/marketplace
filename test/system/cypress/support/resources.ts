@@ -47,7 +47,7 @@ Cypress.Commands.add("fillFormCreateResource", (resource: IResources, logo) => {
 
   if (resource.basicName) {
     cy.get("#service_name")
-      .clear({ force: true })
+      .clear()
       .type(resource.basicName);
   }
 
@@ -61,7 +61,7 @@ Cypress.Commands.add("fillFormCreateResource", (resource: IResources, logo) => {
 
   if (resource.basicWebpage_url) {
     cy.get("#service_webpage_url")
-      .clear({ force: true })
+      .clear()
       .type(resource.basicWebpage_url);
   }
 
@@ -112,28 +112,28 @@ Cypress.Commands.add("fillFormCreateResource", (resource: IResources, logo) => {
 
   cy.get("#contact-header")
     .click();
-
+  
   if (resource.contactsFirstname) {
     cy.get("#service_main_contact_attributes_first_name")
-      .clear({ force: true })
+      .clear()
       .type(resource.contactsFirstname);
   }
 
   if (resource.contactsLastname) {
     cy.get("#service_main_contact_attributes_last_name")
-      .clear({ force: true })
+      .clear()
       .type(resource.contactsLastname);
   }
 
   if (resource.contactsEmail) {
     cy.get("#service_main_contact_attributes_email")
-      .clear({ force: true })
+      .clear()
       .type(resource.contactsEmail);
   }
 
   if (resource.publicContactsEmail) {
     cy.get("#service_public_contacts_attributes_0_email")
-      .clear({ force: true })
+      .clear()
       .type(resource.publicContactsEmail);
   }
 
@@ -154,13 +154,13 @@ Cypress.Commands.add("fillFormCreateResource", (resource: IResources, logo) => {
 Cypress.Commands.add("fillFormCreateOffer", (offer: IOffers) => {
   if (offer.name) {
     cy.get("#offer_name")
-      .clear({ force: true })
+      .clear()
       .type(offer.name);
   }
 
   if (offer.description) {
     cy.get("#offer_description")
-      .clear({ force: true })
+      .clear()
       .type(offer.description);
   }
 
@@ -176,13 +176,13 @@ Cypress.Commands.add("fillFormCreateOffer", (offer: IOffers) => {
 
   if (offer.orderAccessUrl && !offer.internalOrder) {
     cy.get("#offer_order_url")
-      .clear({force:true})
+      .clear()
       .type(offer.orderAccessUrl)
   }
 
   if (offer.orderTargetUrl && offer.internalOrder) {
     cy.get('#offer_oms_params_order_target')
-      .clear({force:true})
+      .clear()
       .type(offer.orderTargetUrl)
   }
 });
@@ -197,19 +197,19 @@ Cypress.Commands.add("fillFormCreateParameter", (parameter: IParameters) => {
   
   if (parameter.constantName) {
     cy.get("[id^=offer_parameters_attributes_][id$=_name]")
-      .clear({force:true})
+      .clear()
       .type(parameter.constantName)
   }
 
   if (parameter.constantHint) {
     cy.get("[id^=offer_parameters_attributes_][id$=_hint]")
-      .clear({force:true})
+      .clear()
       .type(parameter.constantName)
   }
 
   if (parameter.constantValue) {
     cy.get("[id^=offer_parameters_attributes_][id$=_value]")
-      .clear({force:true})
+      .clear()
       .type(parameter.constantName)
   }
   

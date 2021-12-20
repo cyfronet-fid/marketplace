@@ -17,7 +17,7 @@
    
   if (platform.name) {
     cy.get("#platform_name")
-      .clear({ force: true })
+      .clear()
       .type(platform.name);
   }
  });

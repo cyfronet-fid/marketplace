@@ -23,13 +23,13 @@
 
   if (scientificDomain.name) {
     cy.get("#scientific_domain_name")
-      .clear({ force: true })
+      .clear()
       .type(scientificDomain.name);
   }
 
   if (scientificDomain.description) {
     cy.get("#scientific_domain_description")
-      .clear({ force: true })
+      .clear()
       .type(scientificDomain.description);
   }
 
