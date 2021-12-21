@@ -11,7 +11,7 @@ RSpec.feature "Providers in backoffice" do
 
     before { checkin_sign_in_as(user) }
 
-    scenario "I can edit provider when upstream is set to MP (nil)", js: true  do
+    scenario "I can edit provider when upstream is set to MP (nil)", js: true do
       provider = create(:provider, name: "Old name", upstream: nil)
       stub_website_check(provider)
 
@@ -26,7 +26,7 @@ RSpec.feature "Providers in backoffice" do
       expect(page).to have_content("New name")
     end
 
-    scenario "I can not edit provider when upstream is not set to MP (nil)", js: true  do
+    scenario "I can not edit provider when upstream is not set to MP (nil)", js: true do
       provider = create(:provider, name: "Old name")
       provider_source = create(:provider_source, provider: provider)
       provider.upstream = provider_source
@@ -107,6 +107,7 @@ RSpec.feature "Providers in backoffice" do
       click_on "Location", match: :first
       save_and_open_screenshot
       expect(page).to have_content("Street name and number")
+
       # fill_in "Street name and number", with: provider.street_name_and_number
       fill_in "provider_street_name_and_number", with: provider.street_name_and_number
       fill_in "Postal code", with: provider.postal_code
@@ -209,7 +210,7 @@ RSpec.feature "Providers in backoffice" do
       expect { click_on "Create Provider" }.to change { Provider.count }.by(1)
 
       expect(page).to have_content(provider.name)
-      expect(page).to have_content("eosc_registry: #{ provider.sources.first.eid }")
+      expect(page).to have_content("eosc_registry: #{provider.sources.first.eid}")
     end
 
     scenario "I can change external id of the provider" do

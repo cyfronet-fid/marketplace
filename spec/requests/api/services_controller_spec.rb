@@ -10,9 +10,7 @@ RSpec.describe "Api::ServicesController" do
   let!(:errored_service) { create(:service, public_contacts: [build(:public_contact)], status: :errored) }
 
   describe "GET /api/services" do
-    before(:each) do
-      get api_services_api_path
-    end
+    before(:each) { get api_services_api_path }
 
     it "have 200 status code response" do
       expect(response).to have_http_status(:ok)
@@ -23,12 +21,14 @@ RSpec.describe "Api::ServicesController" do
       body = JSON.parse(response.body)
       expect(body.size).to eq(2)
 
-      expect(body[0].keys).to contain_exactly("Service Unique ID",
-                                              "SERVICE_TYPE",
-                                              "CONTACT_EMAIL",
-                                              "SITENAME-SERVICEGROUP",
-                                              "COUNTRY_NAME",
-                                              "URL")
+      expect(body[0].keys).to contain_exactly(
+        "Service Unique ID",
+        "SERVICE_TYPE",
+        "CONTACT_EMAIL",
+        "SITENAME-SERVICEGROUP",
+        "COUNTRY_NAME",
+        "URL"
+      )
 
       expect(body[0]["Service Unique ID"]).to eq(published_service.id)
       expect(body[0]["SERVICE_TYPE"]).to eq("eu.eosc.portal.services.url")
@@ -37,12 +37,14 @@ RSpec.describe "Api::ServicesController" do
       expect(body[0]["COUNTRY_NAME"]).to eq(published_service.geographical_availabilities.as_json)
       expect(body[0]["URL"]).to eq(published_service.webpage_url)
 
-      expect(body[1].keys).to contain_exactly("Service Unique ID",
-                                              "SERVICE_TYPE",
-                                              "CONTACT_EMAIL",
-                                              "SITENAME-SERVICEGROUP",
-                                              "COUNTRY_NAME",
-                                              "URL")
+      expect(body[1].keys).to contain_exactly(
+        "Service Unique ID",
+        "SERVICE_TYPE",
+        "CONTACT_EMAIL",
+        "SITENAME-SERVICEGROUP",
+        "COUNTRY_NAME",
+        "URL"
+      )
 
       expect(body[1]["Service Unique ID"]).to eq(unverified_service.id)
       expect(body[1]["SERVICE_TYPE"]).to eq("eu.eosc.portal.services.url")

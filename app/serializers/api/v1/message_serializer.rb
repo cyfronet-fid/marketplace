@@ -9,17 +9,9 @@ class Api::V1::MessageSerializer < ActiveModel::Serializer
 
   def author
     if object.role_user?
-      {
-        uid: object.author&.uid,
-        email: object.author&.email,
-        name: object.author&.full_name
-      }
+      { uid: object.author&.uid, email: object.author&.email, name: object.author&.full_name }
     else
-      {
-        uid: object.author_uid,
-        email: object.author_email,
-        name: object.author_name
-      }
+      { uid: object.author_uid, email: object.author_email, name: object.author_name }
     end.merge({ role: object.author_role }).select { |_, value| value.present? }
   end
 
@@ -29,11 +21,7 @@ class Api::V1::MessageSerializer < ActiveModel::Serializer
   end
 
   def filtered_content
-    if object.user_direct_scope? && !instance_options[:keep_content?]
-      "<OBFUSCATED>"
-    else
-      object.message
-    end
+    object.user_direct_scope? && !instance_options[:keep_content?] ? "<OBFUSCATED>" : object.message
   end
 
   def created_at

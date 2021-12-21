@@ -144,41 +144,55 @@ RSpec.feature "Service browsing" do
       # waiting for select parameter type
       service = create(:service)
       offer1 = create(:offer, service: service)
-      offer = create(:offer, service: service, parameters: [ build(:select_parameter,
-                                                 name: "Number of CPU Cores",
-                                                 hint: "Select number of cores you want",
-                                                 mode: "buttons",
-                                                 value_type: "integer",
-                                                 values: [1, 2, 4, 8]),
-                                           build(:select_parameter,
-                                                 unit: "GB",
-                                                 name: "Amount of RAM per CPU core",
-                                                 hint: "Select amount of RAM per core",
-                                                 mode: "buttons",
-                                                 value_type: "integer",
-                                                 values: [1, 2, 4]),
-                                           build(:select_parameter,
-                                                 name: "Local disk",
-                                                 hint: "Amount of local disk space",
-                                                 unit: "GB",
-                                                 value_type: "integer",
-                                                 mode: "buttons",
-                                                 values: [10, 20, 40]),
-                                           build(:range_parameter,
-                                                 name: "Number of VM instances",
-                                                 hint: "Type number of VM instances from 1-50",
-                                                 min: 1,
-                                                 max: 50),
-                                           build(:select_parameter,
-                                                 name: "Access type",
-                                                 hint: "Choose access type",
-                                                 mode: "buttons",
-                                                 value_type: "string",
-                                                 values: ["opportunistic", "reserved"]),
-                                           build(:date_parameter,
-                                                 name: "Start of service",
-                                                 hint: "Please choose start date")])
-
+      offer =
+        create(
+          :offer,
+          service: service,
+          parameters: [
+            build(
+              :select_parameter,
+              name: "Number of CPU Cores",
+              hint: "Select number of cores you want",
+              mode: "buttons",
+              value_type: "integer",
+              values: [1, 2, 4, 8]
+            ),
+            build(
+              :select_parameter,
+              unit: "GB",
+              name: "Amount of RAM per CPU core",
+              hint: "Select amount of RAM per core",
+              mode: "buttons",
+              value_type: "integer",
+              values: [1, 2, 4]
+            ),
+            build(
+              :select_parameter,
+              name: "Local disk",
+              hint: "Amount of local disk space",
+              unit: "GB",
+              value_type: "integer",
+              mode: "buttons",
+              values: [10, 20, 40]
+            ),
+            build(
+              :range_parameter,
+              name: "Number of VM instances",
+              hint: "Type number of VM instances from 1-50",
+              min: 1,
+              max: 50
+            ),
+            build(
+              :select_parameter,
+              name: "Access type",
+              hint: "Choose access type",
+              mode: "buttons",
+              value_type: "string",
+              values: %w[opportunistic reserved]
+            ),
+            build(:date_parameter, name: "Start of service", hint: "Please choose start date")
+          ]
+        )
 
       visit service_path(offer.service)
 
@@ -219,9 +233,7 @@ RSpec.feature "Service browsing" do
       visit services_path
 
       names = ["Service a", "service b", "Service c"]
-      all(@services_selector).each_with_index do |service_box, i|
-        expect(service_box).to have_content(names[i])
-      end
+      all(@services_selector).each_with_index { |service_box, i| expect(service_box).to have_content(names[i]) }
 
       # Above implementation can be replaced with below after fixing split gem use_ab_test
       # expect(page.body.index("Service a")).to be < page.body.index("Service b")
@@ -236,9 +248,7 @@ RSpec.feature "Service browsing" do
       visit services_path(sort: "-sort_name")
 
       names = ["Service c", "service b", "Service a"]
-      all(@services_selector).each_with_index do |service_box, i|
-        expect(service_box).to have_content(names[i])
-      end
+      all(@services_selector).each_with_index { |service_box, i| expect(service_box).to have_content(names[i]) }
 
       # Above implementation can be replaced with below after fixing split gem use_ab_test
       # expect(page.body.index("Service a")).to be < page.body.index("Service b")
@@ -252,9 +262,7 @@ RSpec.feature "Service browsing" do
       visit services_path(per_page: "1")
 
       expect(page).to have_text("Service a")
-      all(@services_selector).each do |element|
-        expect(element).to_not have_text("Service b")
-      end
+      all(@services_selector).each { |element| expect(element).to_not have_text("Service b") }
     end
 
     scenario "OpenAIRE explore integration for EGI Notebooks" do

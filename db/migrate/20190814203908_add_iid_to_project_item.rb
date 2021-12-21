@@ -3,8 +3,7 @@
 class AddIidToProjectItem < ActiveRecord::Migration[5.2]
   def up
     add_column :project_items, :iid, :integer, index: true
-    execute(
-      <<~SQL
+    execute(<<~SQL)
         UPDATE project_items
         SET iid =
         (
@@ -13,7 +12,6 @@ class AddIidToProjectItem < ActiveRecord::Migration[5.2]
           WHERE project_items.project_id = pi.project_id
         ) + 1
       SQL
-    )
   end
 
   def down

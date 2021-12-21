@@ -1,33 +1,29 @@
-import {Controller} from 'stimulus'
+import { Controller } from "stimulus";
 
 export default class extends Controller {
-    static targets = ['categorySelect', 'form', 'selected', 'type'];
+  static targets = ["categorySelect", "form", "selected", "type"];
 
-    connect() {
-        this.SERVICES_URL = this.data.get("servicesPath");
-        this.CATEGORIES_URL = this.data.get("categoriesPath");
+  connect() {
+    this.SERVICES_URL = this.data.get("servicesPath");
+    this.CATEGORIES_URL = this.data.get("categoriesPath");
 
-        this.categorySelectTarget.value = "";
-        let match = window.location.pathname.match(new RegExp(`^.*${this.CATEGORIES_URL}/([^/]+$)`));
-        if(match !== null)
-            this.categorySelectTarget.value = match[1];
+    this.categorySelectTarget.value = "";
+    let match = window.location.pathname.match(new RegExp(`^.*${this.CATEGORIES_URL}/([^/]+$)`));
+    if (match !== null) this.categorySelectTarget.value = match[1];
 
-        this.refresh();
-    }
+    this.refresh();
+  }
 
-    refresh() {
-        let actionURL = this.SERVICES_URL;
+  refresh() {
+    let actionURL = this.SERVICES_URL;
 
-        if (this.categorySelectTarget.value !== "")
-            actionURL = `${this.CATEGORIES_URL}/${this.categorySelectTarget.value}`;
+    if (this.categorySelectTarget.value !== "") actionURL = `${this.CATEGORIES_URL}/${this.categorySelectTarget.value}`;
 
-        this.selectedTarget.innerHTML = this.getSelectedText();
-        this.formTarget.setAttribute("action", actionURL);
-    }
+    this.selectedTarget.innerHTML = this.getSelectedText();
+    this.formTarget.setAttribute("action", actionURL);
+  }
 
-    getSelectedText() {
-        return this.categorySelectTarget
-          .options[this.categorySelectTarget.selectedIndex].text;
-
-    }
+  getSelectedText() {
+    return this.categorySelectTarget.options[this.categorySelectTarget.selectedIndex].text;
+  }
 }

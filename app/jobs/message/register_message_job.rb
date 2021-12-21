@@ -15,8 +15,6 @@ class Message::RegisterMessageJob < ApplicationJob
   end
 
   def perform(message)
-    if message.question?
-      Message::RegisterMessage.new(message).call
-    end
+    Message::RegisterMessage.new(message).call if message.question?
   end
 end

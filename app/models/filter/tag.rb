@@ -2,9 +2,7 @@
 
 class Filter::Tag < Filter
   def initialize(params = {})
-    super(params: params.fetch(:params, {}),
-          field_name: "tag", type: :select,
-          title: "Tags", index: "tags")
+    super(params: params.fetch(:params, {}), field_name: "tag", type: :select, title: "Tags", index: "tags")
   end
 
   def visible?
@@ -12,13 +10,12 @@ class Filter::Tag < Filter
   end
 
   private
-    def fetch_options
-      ActsAsTaggableOn::Tag.all.
-        map { |t| { name: t.name, id: t.name } }.
-        sort { |x, y| x[:name] <=> y[:name] }
-    end
 
-    def where_constraint
-      { @index.to_sym => values }
-    end
+  def fetch_options
+    ActsAsTaggableOn::Tag.all.map { |t| { name: t.name, id: t.name } }.sort { |x, y| x[:name] <=> y[:name] }
+  end
+
+  def where_constraint
+    { @index.to_sym => values }
+  end
 end

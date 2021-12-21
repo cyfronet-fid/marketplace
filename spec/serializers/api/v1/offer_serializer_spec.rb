@@ -4,11 +4,16 @@ require "rails_helper"
 
 RSpec.describe Api::V1::OfferSerializer do
   it "properly serializes an order_required internal offer" do
-    offer = create(:offer,
-                   parameters: [build(:constant_parameter)],
-                   primary_oms: create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "asd" } }),
-                   oms_params: { a: "XD" },
-                   order_type: :order_required)
+    offer =
+      create(
+        :offer,
+        parameters: [build(:constant_parameter)],
+        primary_oms: create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "asd" } }),
+        oms_params: {
+          a: "XD"
+        },
+        order_type: :order_required
+      )
 
     serialized = JSON.parse(described_class.new(offer).to_json)
 

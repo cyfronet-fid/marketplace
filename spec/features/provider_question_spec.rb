@@ -23,9 +23,7 @@ RSpec.feature "Question about provider" do
 
       click_on "Ask this provider a question"
 
-      within("#ajax-modal") do
-        fill_in("provider_question_text", with: "text")
-      end
+      within("#ajax-modal") { fill_in("provider_question_text", with: "text") }
 
       expect do
         click_on "SEND"

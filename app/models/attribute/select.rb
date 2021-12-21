@@ -9,17 +9,17 @@ class Attribute::Select < Attribute
 
   def config_schema
     {
-        "type": "object",
-        "properties": {
-            "values": {
-                "type": "array",
-                "items": @value_type
-            },
-            "mode": {
-                "type": "string",
-                "enum": ["dropdown", "buttons"]
-            }
+      "type": "object",
+      "properties": {
+        "values": {
+          "type": "array",
+          "items": @value_type
+        },
+        "mode": {
+          "type": "string",
+          "enum": %w[dropdown buttons]
         }
+      }
     }
   end
 
@@ -28,7 +28,12 @@ class Attribute::Select < Attribute
     if param.length > 0
       case @value_type
       when "integer"
-        @value = Integer(param.first) rescue param.first
+        @value =
+          begin
+            Integer(param.first)
+          rescue StandardError
+            param.first
+          end
       else
         @value = param.first
       end
@@ -36,5 +41,6 @@ class Attribute::Select < Attribute
   end
 
   protected
-    TYPE = "select"
+
+  TYPE = "select"
 end

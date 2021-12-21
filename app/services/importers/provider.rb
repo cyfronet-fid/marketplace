@@ -13,28 +13,32 @@ class Importers::Provider
     case @source
     when "jms"
       multimedia = Array(@data.dig("multimedia", "multimedia")) || []
-      scientific_domains = @data.dig("scientificDomains", "scientificDomain").is_a?(Array) ?
-        @data.dig("scientificDomains", "scientificDomain").map { |sd|  sd["scientificSubdomain"] } :
-        @data.dig("scientificDomains", "scientificDomain", "scientificSubdomain")
+      scientific_domains =
+        if @data.dig("scientificDomains", "scientificDomain").is_a?(Array)
+          @data.dig("scientificDomains", "scientificDomain").map { |sd| sd["scientificSubdomain"] }
+        else
+          @data.dig("scientificDomains", "scientificDomain", "scientificSubdomain")
+        end
       tag_list = Array(@data.dig("tags", "tag")) || []
-      public_contacts = Array.wrap(@data.dig("publicContacts", "publicContact")).
-        map { |c| PublicContact.new(map_contact(c)) } || []
+      public_contacts =
+        Array.wrap(@data.dig("publicContacts", "publicContact")).map { |c| PublicContact.new(map_contact(c)) } || []
       certifications = Array(@data.dig("certifications", "certification"))
-      participating_countries = Array(@data.dig("participatingCountries",
-                                                      "participatingCountry")) || []
+      participating_countries = Array(@data.dig("participatingCountries", "participatingCountry")) || []
       affiliations = Array(@data.dig("affiliations", "affiliation"))
       networks = Array(@data.dig("networks", "network"))
       structure_types = Array(@data.dig("structureTypes", "structureType"))
       esfri_domains = Array(@data.dig("esfriDomains", "esfriDomain"))
-      meril_scientific_domains = @data.dig("merilScientificDomains", "merilScientificDomain").is_a?(Array) ?
-        @data.dig("merilScientificDomains", "merilScientificDomain").
-          map { |sd|  sd["merilScientificSubdomain"] } :
-        @data.dig("merilScientificDomains", "merilScientificDomain", "merilScientificSubdomain")
+      meril_scientific_domains =
+        if @data.dig("merilScientificDomains", "merilScientificDomain").is_a?(Array)
+          @data.dig("merilScientificDomains", "merilScientificDomain").map { |sd| sd["merilScientificSubdomain"] }
+        else
+          @data.dig("merilScientificDomains", "merilScientificDomain", "merilScientificSubdomain")
+        end
       areas_of_activity = Array(@data.dig("areasOfActivity", "areaOfActivity"))
       societal_grand_challenges = Array(@data.dig("societalGrandChallenges", "societalGrandChallenge"))
       national_roadmaps = Array(@data.dig("nationalRoadmaps", "nationalRoadmap"))
-      data_administrators = Array.wrap(@data.dig("users", "user")).
-        map { |da| DataAdministrator.new(map_data_administrator(da)) } || []
+      data_administrators =
+        Array.wrap(@data.dig("users", "user")).map { |da| DataAdministrator.new(map_data_administrator(da)) } || []
     when "rest"
       multimedia = Array(@data["multimedia"]) || []
       scientific_domains = @data["scientificDomains"]&.map { |sd| sd["scientificSubdomain"] } || []
@@ -46,13 +50,11 @@ class Importers::Provider
       networks = Array(@data["networks"])
       structure_types = Array(@data["structureTypes"])
       esfri_domains = Array(@data["esfriDomains"])
-      meril_scientific_domains = @data["merilScientificDomains"]&.
-        map { |sd| sd["merilScientificSubdomain"] } || []
+      meril_scientific_domains = @data["merilScientificDomains"]&.map { |sd| sd["merilScientificSubdomain"] } || []
       areas_of_activity = @data["areasOfActivity"]
       societal_grand_challenges = Array(@data["societalGrandChallenges"])
       national_roadmaps = Array(@data["nationalRoadmaps"])
-      data_administrators = Array(@data["users"])&.
-        map { |da| DataAdministrator.new(map_data_administrator(da)) } || []
+      data_administrators = Array(@data["users"])&.map { |da| DataAdministrator.new(map_data_administrator(da)) } || []
     end
 
     main_contact = MainContact.new(map_contact(@data["mainContact"])) if @data["mainContact"] || nil

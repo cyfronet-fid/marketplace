@@ -28,35 +28,44 @@ module TourHelper
 
         activation_strategy = tour_content["activation_strategy"] || "default"
 
-        data = data.merge(
-          {
-            activation_strategy: activation_strategy,
-            tour_name: tour_name,
-            steps: tour_content["steps"]
-                     .values.map { |step| { **step.transform_keys(&:to_sym), text: markdown(step["text"]) } },
-            feedback: tour_content["feedback"],
-          })
+        data =
+          data.merge(
+            {
+              activation_strategy: activation_strategy,
+              tour_name: tour_name,
+              steps:
+                tour_content["steps"].values.map do |step|
+                  { **step.transform_keys(&:to_sym), text: markdown(step["text"]) }
+                end,
+              feedback: tour_content["feedback"]
+            }
+          )
 
         if activation_strategy == "default"
-          data = data.merge(
-            {
-              cookies_names: {
-                skip: "tours-marketplace-#{controller_name}-#{action_name}-#{tour_name}",
-                completed: "tours-marketplace-#{controller_name}-#{action_name}-completed",
-              },
-            })
+          data =
+            data.merge(
+              {
+                cookies_names: {
+                  skip: "tours-marketplace-#{controller_name}-#{action_name}-#{tour_name}",
+                  completed: "tours-marketplace-#{controller_name}-#{action_name}-completed"
+                }
+              }
+            )
         end
 
         if tour_content["next"].present?
           next_tour = tour_content["next"]
-          data = data.merge(
-            {
-              next_tour_link: next_tour_link(
-                next_tour["redirect_to"],
-                next_tour["controller_params"] || {},
-                next_tour["controller_params_map"] || {}),
-            }
-          )
+          data =
+            data.merge(
+              {
+                next_tour_link:
+                  next_tour_link(
+                    next_tour["redirect_to"],
+                    next_tour["controller_params"] || {},
+                    next_tour["controller_params_map"] || {}
+                  )
+              }
+            )
         end
       end
 

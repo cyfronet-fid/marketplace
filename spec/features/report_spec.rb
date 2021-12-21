@@ -17,7 +17,6 @@ RSpec.feature "Reports", js: true do
         fill_in "Describe problem precisely", with: report.text
       end
 
-
       click_on "SEND"
       expect(page).to have_content("Your report was successfully sent")
     end

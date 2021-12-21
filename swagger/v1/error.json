@@ -1,7 +1,7 @@
 {
-  "type":"object",
-  "properties":{
-    "error":{
+  "type": "object",
+  "properties": {
+    "error": {
       "oneOf": [
         {
           "type": "string"
@@ -12,7 +12,5 @@
       ]
     }
   },
-  "required":[
-    "error"
-  ]
+  "required": ["error"]
 }

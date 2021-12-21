@@ -1,11 +1,27 @@
-import { Controller } from "stimulus"
-
+import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["array", "form", "input", "publicContacts", "publicContact",
-    "destroy", "addContact", "multimedia", "changelog", "grantProjectNames",
-    "certifications", "standards", "openSourceTechnologies", "useCasesUrl",
-    "relatedPlatforms", "affiliations", "national_roadmaps", "fixme", "tag_list"];
+  static targets = [
+    "array",
+    "form",
+    "input",
+    "publicContacts",
+    "publicContact",
+    "destroy",
+    "addContact",
+    "multimedia",
+    "changelog",
+    "grantProjectNames",
+    "certifications",
+    "standards",
+    "openSourceTechnologies",
+    "useCasesUrl",
+    "relatedPlatforms",
+    "affiliations",
+    "national_roadmaps",
+    "fixme",
+    "tag_list",
+  ];
 
   initialize() {
     this.addListenersForCollapse();
@@ -16,12 +32,12 @@ export default class extends Controller {
   onScroll(event) {
     const titlePosition = document.getElementById("title").offsetTop;
     const footerPosition = document.getElementsByTagName("footer")[0].offsetTop;
-    if (window.scrollY > titlePosition && window.scrollY < (footerPosition - 500)) {
+    if (window.scrollY > titlePosition && window.scrollY < footerPosition - 500) {
       this.fixmeTarget.style.position = "fixed";
       this.fixmeTarget.style.top = "10px";
-    } else if (window.scrollY > (footerPosition - 750)) {
+    } else if (window.scrollY > footerPosition - 750) {
       this.fixmeTarget.style.position = "absolute";
-      this.fixmeTarget.style.top = (footerPosition - 750) + "px";
+      this.fixmeTarget.style.top = footerPosition - 750 + "px";
     } else {
       this.fixmeTarget.style.position = "static";
     }
@@ -30,7 +46,7 @@ export default class extends Controller {
   disableFormButtons() {
     if (this.formTarget.dataset.disabled === "true") {
       const elements = document.getElementsByClassName("disablable");
-      for (let i = 0; i<elements.length; i++) {
+      for (let i = 0; i < elements.length; i++) {
         elements[i].classList.add("disabled");
       }
     }
@@ -38,11 +54,12 @@ export default class extends Controller {
 
   addListenersForCollapse() {
     // TODO: change this function if bootstrap events will be enabled without jQuery
-    $(".accordion").find(".collapse").on('shown.bs.collapse', function () {
-      this.previousElementSibling.scrollIntoView({ behavior: "smooth" });
-    })
+    $(".accordion")
+      .find(".collapse")
+      .on("shown.bs.collapse", function () {
+        this.previousElementSibling.scrollIntoView({ behavior: "smooth" });
+      });
   }
-
 
   addNewArrayField(event) {
     event.preventDefault();
@@ -51,17 +68,17 @@ export default class extends Controller {
     const parent = document.getElementsByClassName(parentName)[0];
 
     lastArrayField.name = event.target.dataset.name;
-    lastArrayField.id = parentName + "_" + (parent.getElementsByTagName("textarea").length);
+    lastArrayField.id = parentName + "_" + parent.getElementsByTagName("textarea").length;
     lastArrayField.classList = event.target.dataset.class;
 
     const removeLink = document.createElement("a");
 
-    const linkText = document.createTextNode("Remove")
+    const linkText = document.createTextNode("Remove");
 
     removeLink.id = "remove_" + lastArrayField.id;
-    removeLink.dataset.target= event.target;
-    removeLink.dataset.action= "click->form#removeField";
-    removeLink.dataset.value= lastArrayField.id;
+    removeLink.dataset.target = event.target;
+    removeLink.dataset.action = "click->form#removeField";
+    removeLink.dataset.value = lastArrayField.id;
     removeLink.appendChild(linkText);
     removeLink.classList.add("btn-sm", "btn-danger", "remove", "float-right");
 
@@ -75,25 +92,26 @@ export default class extends Controller {
     event.target.remove();
   }
 
-  addContact(event){
+  addContact(event) {
     event.preventDefault();
-    event.target.insertAdjacentHTML('beforebegin',
-        event.target.dataset.fields.replace(/new_field/g, this.publicContactTargets.length));
+    event.target.insertAdjacentHTML(
+      "beforebegin",
+      event.target.dataset.fields.replace(/new_field/g, this.publicContactTargets.length)
+    );
   }
 
-  removeContact(event){
+  removeContact(event) {
     event.preventDefault();
     event.target.parentElement.previousElementSibling.value = "true";
     event.target.closest(".contact").classList.add("d-none");
   }
 
   handleRelatedFields() {
-    Array.from(this.formTarget.querySelectorAll("[data-child-field]"))
-        .forEach(parent => {
-          const childId = parent.getAttribute("data-child-field");
-          const child = this.formTarget.querySelector("[class*=" + childId + "]");
-          this._hasInputValue(parent) ? child.classList.remove("d-none") : child.classList.add("d-none");
-        });
+    Array.from(this.formTarget.querySelectorAll("[data-child-field]")).forEach((parent) => {
+      const childId = parent.getAttribute("data-child-field");
+      const child = this.formTarget.querySelector("[class*=" + childId + "]");
+      this._hasInputValue(parent) ? child.classList.remove("d-none") : child.classList.add("d-none");
+    });
   }
 
   refreshRelatedFields(event) {
@@ -103,18 +121,14 @@ export default class extends Controller {
     }
 
     const child = this.formTarget.querySelector("[class*=" + childId + "]");
-    this._hasInputValue(event.target)
-        ? child.classList.remove("d-none")
-        : child.classList.add("d-none");
+    this._hasInputValue(event.target) ? child.classList.remove("d-none") : child.classList.add("d-none");
   }
 
   _hasInputValue(input) {
     const tag = input.tagName;
     switch (tag.toLowerCase()) {
       case "input":
-        return input.type === "checkbox"
-            ? input.checked
-            : !!input.value && input.value !== "";
+        return input.type === "checkbox" ? input.checked : !!input.value && input.value !== "";
       case "textarea":
         return input.val();
       default:

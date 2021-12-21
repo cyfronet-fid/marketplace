@@ -4,25 +4,22 @@ module Recommendation::Followable
   extend ActiveSupport::Concern
   include ValidationHelper
 
-  included do
-    before_action :set_follow_context
-  end
+  included { before_action :set_follow_context }
 
   private
-    def set_follow_context
-      # otherwise the chain of SARS elements will be broken, as AJAX request do not reload whole page
-      if request.xhr?
-        return
-      end
 
-      # Set unique client id per device per system
-      client_uid = cookies[:client_uid]
-      if client_uid.nil? || !validate_uuid_format(client_uid)
-        cookies[:client_uid] = { value: SecureRandom.uuid, expires: 1.week.from_now }
-      end
+  def set_follow_context
+    # otherwise the chain of SARS elements will be broken, as AJAX request do not reload whole page
+    return if request.xhr?
 
-      @recommendation_previous = cookies[:source]
-      @recommendation_source_id = cookies[:targetId]
-      @last_page_id = cookies[:lastPageId]
+    # Set unique client id per device per system
+    client_uid = cookies[:client_uid]
+    if client_uid.nil? || !validate_uuid_format(client_uid)
+      cookies[:client_uid] = { value: SecureRandom.uuid, expires: 1.week.from_now }
     end
+
+    @recommendation_previous = cookies[:source]
+    @recommendation_source_id = cookies[:targetId]
+    @last_page_id = cookies[:lastPageId]
+  end
 end

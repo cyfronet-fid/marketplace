@@ -5,31 +5,35 @@ require "rails_helper"
 RSpec.describe Filter do
   class MyFilter < Filter
     def initialize(params = {})
-      super(params: params.fetch(:params, {}),
-            field_name: "my_filter", type: :select,
-            title: "My Filter", index: "test")
+      super(
+        params: params.fetch(:params, {}),
+        field_name: "my_filter",
+        type: :select,
+        title: "My Filter",
+        index: "test"
+      )
     end
 
     protected
-      def fetch_options
-        unless @my_options
-          @my_options = [{ name: "A", id: "1", count: 1 }, { name: "B", id: "2", count: 2 }]
-        else
-          raise "boom! fetching options for the second time"
-        end
-      end
 
-      def where_constraint
-        { key: :value }
+    def fetch_options
+      unless @my_options
+        @my_options = [{ name: "A", id: "1", count: 1 }, { name: "B", id: "2", count: 2 }]
+      else
+        raise "boom! fetching options for the second time"
       end
+    end
+
+    def where_constraint
+      { key: :value }
+    end
   end
 
   context "#options" do
     it "returns filter select options" do
       filter = MyFilter.new
 
-      expect(filter.options).to contain_exactly(
-        { name: "A", id: "1", count: 1 }, { name: "B", id: "2", count: 2 })
+      expect(filter.options).to contain_exactly({ name: "A", id: "1", count: 1 }, { name: "B", id: "2", count: 2 })
     end
 
     it "are cached" do
@@ -56,19 +60,17 @@ RSpec.describe Filter do
 
   context "#active_filters" do
     it "returns list of active filters when params are a list" do
-      params = ActionController::Parameters.new("my_filter" => ["1", "2"])
+      params = ActionController::Parameters.new("my_filter" => %w[1 2])
       filter = MyFilter.new(params: params)
 
-      expect(filter.active_filters).
-        to contain_exactly(["My Filter", "A", anything], ["My Filter", "B", anything])
+      expect(filter.active_filters).to contain_exactly(["My Filter", "A", anything], ["My Filter", "B", anything])
     end
 
     it "returns one active filter when param is a value" do
       params = ActionController::Parameters.new("my_filter" => "1")
       filter = MyFilter.new(params: params)
 
-      expect(filter.active_filters).
-        to contain_exactly(["My Filter", "A", anything])
+      expect(filter.active_filters).to contain_exactly(["My Filter", "A", anything])
     end
 
     it "ignores non existing filter values" do
@@ -82,8 +84,7 @@ RSpec.describe Filter do
       params = ActionController::Parameters.new("my_filter" => "1", "a" => "b")
       filter = MyFilter.new(params: params)
 
-      expect(filter.active_filters).
-        to contain_exactly(["My Filter", "A", "a" => "b"])
+      expect(filter.active_filters).to contain_exactly(["My Filter", "A", "a" => "b"])
     end
   end
 end

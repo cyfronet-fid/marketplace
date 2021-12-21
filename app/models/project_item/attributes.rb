@@ -5,9 +5,7 @@ class ProjectItem::Attributes
 
   def initialize(offer:, parameters: nil)
     @offer = offer
-    if parameters.blank?
-      parameters = offer.parameters.map { |p| p.dump }
-    end
+    parameters = offer.parameters.map { |p| p.dump } if parameters.blank?
     @attributes = attributes_from_params(parameters)
   end
 
@@ -20,15 +18,16 @@ class ProjectItem::Attributes
   end
 
   private
-    def attributes_from_params(parameters)
-      parameters.map { |p| Attribute.from_json(p) }
-    end
 
-    def update_attribute(id, value)
-      attributes_hsh[id]&.value_from_param(value)
-    end
+  def attributes_from_params(parameters)
+    parameters.map { |p| Attribute.from_json(p) }
+  end
 
-    def attributes_hsh
-      @attributes_hsh ||= attributes.index_by(&:id)
-    end
+  def update_attribute(id, value)
+    attributes_hsh[id]&.value_from_param(value)
+  end
+
+  def attributes_hsh
+    @attributes_hsh ||= attributes.index_by(&:id)
+  end
 end

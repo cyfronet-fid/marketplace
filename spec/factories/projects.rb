@@ -13,7 +13,7 @@ FactoryBot.define do
     sequence(:project_name) { |n| "Project name #{n}" }
     sequence(:scientific_domains) { |n| [create(:scientific_domain)] }
     sequence(:country_of_origin) { Country.all.sample }
-    sequence(:countries_of_partnership) { [ Country.all.sample ] }
+    sequence(:countries_of_partnership) { [Country.all.sample] }
     sequence(:project_website_url) { "htpps://project_website.url" }
     sequence(:company_name) { |n| "company name #{n}" }
     sequence(:company_website_url) { "https://company_website.url" }

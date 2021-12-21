@@ -22,10 +22,8 @@ RSpec.feature "Help" do
 
     visit help_path
 
-    expect(page.body.index(first_section.title))
-      .to be < page.body.index(second_section.title)
-    expect(page.body.index(second_section.title)).
-      to be < page.body.index(third_section.title)
+    expect(page.body.index(first_section.title)).to be < page.body.index(second_section.title)
+    expect(page.body.index(second_section.title)).to be < page.body.index(third_section.title)
   end
 
   scenario "section items are sorted using postion field" do
@@ -37,9 +35,7 @@ RSpec.feature "Help" do
 
     visit help_path
 
-    expect(page.body.index(first_item.title))
-      .to be < page.body.index(second_item.title)
-    expect(page.body.index(second_item.title)).
-      to be < page.body.index(third_item.title)
+    expect(page.body.index(first_item.title)).to be < page.body.index(second_item.title)
+    expect(page.body.index(second_item.title)).to be < page.body.index(third_item.title)
   end
 end

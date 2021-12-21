@@ -2,9 +2,7 @@
 
 class OMS < ApplicationRecord
   has_many :oms_administrations, dependent: :destroy
-  has_many :administrators,
-           through: :oms_administrations,
-           source: :user
+  has_many :administrators, through: :oms_administrations, source: :user
   has_many :oms_providers, dependent: :destroy
   has_many :providers, through: :oms_providers
   has_many :offers, foreign_key: "primary_oms_id", dependent: :nullify
@@ -13,11 +11,7 @@ class OMS < ApplicationRecord
   has_one :trigger, class_name: "OMS::Trigger", dependent: :destroy
 
   self.inheritance_column = nil
-  enum type: {
-    global: "global",
-    provider_group: "provider_group",
-    resource_dedicated: "resource_dedicated"
-  }
+  enum type: { global: "global", provider_group: "provider_group", resource_dedicated: "resource_dedicated" }
 
   validates :name, presence: true, uniqueness: true
   validates :type, presence: true, inclusion: { in: types }
@@ -40,11 +34,7 @@ class OMS < ApplicationRecord
   end
 
   def project_items_for(project)
-    if default?
-      project.project_items
-    else
-      project.project_items.where(offers: { primary_oms: self }).joins(:offer).distinct
-    end
+    default? ? project.project_items : project.project_items.where(offers: { primary_oms: self }).joins(:offer).distinct
   end
 
   def projects
@@ -61,10 +51,11 @@ class OMS < ApplicationRecord
     else
       # Outer join Message with ProjectItem OR Project messageables
       # and look for OMS inside their respective offers.primary_oms
-      Message.where("offers.primary_oms_id = ?", self)
-             .or(Message.where("offers_project_items.primary_oms_id = ?", self))
-             .left_outer_joins(project_item: :offer, project:  { project_items: :offer })
-             .distinct
+      Message
+        .where("offers.primary_oms_id = ?", self)
+        .or(Message.where("offers_project_items.primary_oms_id = ?", self))
+        .left_outer_joins(project_item: :offer, project: { project_items: :offer })
+        .distinct
     end
   end
 
@@ -74,52 +65,64 @@ class OMS < ApplicationRecord
     else
       # Outer join Event with ProjectItem OR Project OR Message eventables
       # and look for OMS inside their respective offers.primary_oms
-      Event.where("offers.primary_oms_id = ?", self)
-           .or(Event.where("offers_project_items.primary_oms_id = ?", self))
-           .or(Event.where("offers_project_items_2.primary_oms_id = ?", self))
-           .or(Event.where("offers_project_items_3.primary_oms_id = ?", self))
-           .left_outer_joins({ project_item: :offer },
-                             { project: { project_items: :offer } },
-                             { message: { project_item: :offer } },
-                             { message: { project: { project_items: :offer } } })
-           .distinct
+      Event
+        .where("offers.primary_oms_id = ?", self)
+        .or(Event.where("offers_project_items.primary_oms_id = ?", self))
+        .or(Event.where("offers_project_items_2.primary_oms_id = ?", self))
+        .or(Event.where("offers_project_items_3.primary_oms_id = ?", self))
+        .left_outer_joins(
+          { project_item: :offer },
+          { project: { project_items: :offer } },
+          { message: { project_item: :offer } },
+          { message: { project: { project_items: :offer } } }
+        )
+        .distinct
     end
   end
 
   private
-    def single_default_oms?
-      if OMS.default_scoped.where.not(name: name).pluck(:default).any?
-        errors.add(:default, "there can't be more than one default OMS")
-      end
-    end
 
-    def validate_custom_params
-      unless custom_params.values.all? { |param| JSON::Validator.validate(CUSTOM_PARAMS_SCHEMA, param) }
-        errors.add(
-          :custom_params,
-          "custom_params values must be either {mandatory: false}, or {mandatory: true, default: 'value'}"
-        )
-      end
+  def single_default_oms?
+    if OMS.default_scoped.where.not(name: name).pluck(:default).any?
+      errors.add(:default, "there can't be more than one default OMS")
     end
+  end
 
-    CUSTOM_PARAMS_SCHEMA = {
-      type: "object",
-      oneOf: [
-        {
-          properties: {
-            mandatory: { type: "boolean", enum: [true] },
-            default: { type: "string" }
+  def validate_custom_params
+    unless custom_params.values.all? { |param| JSON::Validator.validate(CUSTOM_PARAMS_SCHEMA, param) }
+      errors.add(
+        :custom_params,
+        "custom_params values must be either {mandatory: false}, or {mandatory: true, default: 'value'}"
+      )
+    end
+  end
+
+  CUSTOM_PARAMS_SCHEMA = {
+    type: "object",
+    oneOf: [
+      {
+        properties: {
+          mandatory: {
+            type: "boolean",
+            enum: [true]
           },
-          additionalProperties: false,
-          required: [:mandatory, :default]
+          default: {
+            type: "string"
+          }
         },
-        {
-          properties: {
-            mandatory: { type: "boolean", enum: [false] }
-          },
-          additionalProperties: false,
-          required: [:mandatory]
-        }
-      ]
+        additionalProperties: false,
+        required: %i[mandatory default]
+      },
+      {
+        properties: {
+          mandatory: {
+            type: "boolean",
+            enum: [false]
+          }
+        },
+        additionalProperties: false,
+        required: [:mandatory]
+      }
+    ]
   }
 end

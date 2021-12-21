@@ -9,6 +9,6 @@ class CreateServiceProviders < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
-    add_index :service_providers, [:service_id, :provider_id], unique: true
+    add_index :service_providers, %i[service_id provider_id], unique: true
   end
 end

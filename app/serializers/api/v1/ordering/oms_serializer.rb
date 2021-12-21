@@ -14,14 +14,10 @@ class Api::V1::Ordering::OMSSerializer < ActiveModel::Serializer
   end
 
   private
-    def trigger_authorization
-      auth = object.trigger&.authorization
-      return nil if auth.blank?
-      if auth.is_a?(OMS::Authorization::Basic)
-        {
-          user: auth.user,
-          password: auth.password
-        }
-      end
-    end
+
+  def trigger_authorization
+    auth = object.trigger&.authorization
+    return nil if auth.blank?
+    { user: auth.user, password: auth.password } if auth.is_a?(OMS::Authorization::Basic)
+  end
 end

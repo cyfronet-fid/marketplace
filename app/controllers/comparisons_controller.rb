@@ -25,11 +25,12 @@ class ComparisonsController < ApplicationController
   end
 
   private
-    def render_json
-      render json: { data: @services&.map(&:slug), html: bottom_bar }
-    end
 
-    def bottom_bar
-      render_to_string(partial: "comparisons/service", collection: @services, formats: [:html])
-    end
+  def render_json
+    render json: { data: @services&.map(&:slug), html: bottom_bar }
+  end
+
+  def bottom_bar
+    render_to_string(partial: "comparisons/service", collection: @services, formats: [:html])
+  end
 end

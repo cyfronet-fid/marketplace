@@ -20,7 +20,10 @@ FactoryBot.define do
     sources { [build(:provider_source)] }
 
     after(:build) do |provider|
-      image = MiniMagick::Image.read(Base64.decode64("iVBORw0KGgoAAAANSUhEUgAAALQAAAB4CAYAAABb59j9AAAABGdBTUEAALGPC
+      image =
+        MiniMagick::Image.read(
+          Base64.decode64(
+            "iVBORw0KGgoAAAANSUhEUgAAALQAAAB4CAYAAABb59j9AAAABGdBTUEAALGPC
           /xhBQAAB19JREFUeAHtnYlPIlkQxh9egIj36KizJrPZZP//f2eT2R3HWzw4vEBh9n0de1LTAaSRPqr6q8Tw
           6Lu++nVT/S5LP705GhUwosCcET/oBhUIFCDQBMGUAgTaVDjpDIEmA6YUINCmwklnCDQZMKUAgTYVTjpDoMm
           AKQUItKlw0hkCTQZMKUCgTYWTzhBoMmBKAQJtKpx0hkCTAVMKEGhT4aQzBJoMmFKAQJsKJ50h0GTAlAIE2l
@@ -51,20 +54,16 @@ FactoryBot.define do
           XHkB4IBQi0EINF/QoQaP0xpAdCAQItxGBRvwIEWn8M6YFQgEALMVjUrwCB1h9DeiAUINBCDBb1K0Cg9ceQH
           ggFCLQQg0X9ChBo/TGkB0IBAi3EYFG/AgRafwzpgVCAQAsxWNSvAIHWH0N6IBQg0EIMFvUrQKD1x5AeCAUI
           tBCDRf0KEGj9MaQHQgECLcRgUb8CBFp/DOmBUIBACzFY1K8AgdYfQ3ogFCDQQgwW9StAoPXHkB4IBQi0EIN
-          F/QoQaP0xpAdCAQItxGBRvwIEWn8M6YFQ4H/g4U11p2PhtgAAAABJRU5ErkJggg=="))
+          F/QoQaP0xpAdCAQItxGBRvwIEWn8M6YFQ4H/g4U11p2PhtgAAAABJRU5ErkJggg=="
+          )
+        )
       logo = StringIO.new
       logo.write(image.to_blob)
       logo.seek(0)
 
-      provider.logo.attach(
-        io: logo,
-        filename: provider.pid + ".png",
-        content_type: "image/png"
-      )
+      provider.logo.attach(io: logo, filename: provider.pid + ".png", content_type: "image/png")
     end
 
-    after(:create) do |provider, _evaluator|
-      provider.reindex(refresh: true)
-    end
+    after(:create) { |provider, _evaluator| provider.reindex(refresh: true) }
   end
 end

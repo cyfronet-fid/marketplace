@@ -1,4 +1,4 @@
-import Choices from 'choices.js'
+import Choices from "choices.js";
 
 export default function initChoices(scope = document) {
   // The "=true" portion ensures that the function will apply only to previously unhandled elements,
@@ -6,11 +6,11 @@ export default function initChoices(scope = document) {
   // This makes this function idempotent.
   const elements = scope.querySelectorAll('[data-choice="true"]');
 
-  elements.forEach(function(element) {
+  elements.forEach(function (element) {
     new Choices(element, {
       removeItems: true,
       placeholder: true,
-      placeholderValue: '+ start typing to add',
+      placeholderValue: "+ start typing to add",
       removeItemButton: true,
     });
   });

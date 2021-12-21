@@ -2,18 +2,22 @@
 
 class Filter::Provider < Filter::Multiselect
   def initialize(params = {})
-    super(params: params.fetch(:params, {}),
-          field_name: "providers",
-          title: "Providers",
-          model: ::Provider,
-          index: "providers",
-          search: true)
+    super(
+      params: params.fetch(:params, {}),
+      field_name: "providers",
+      title: "Providers",
+      model: ::Provider,
+      index: "providers",
+      search: true
+    )
   end
 
   protected
-    def fetch_options
-      @model.distinct
-            .filter_map { |e| { name: e.name, id: e.id, count: @counters[e.id] || 0 } unless e.deleted? }
-            .sort_by! { |e| [-e[:count], e[:name]] }
-    end
+
+  def fetch_options
+    @model
+      .distinct
+      .filter_map { |e| { name: e.name, id: e.id, count: @counters[e.id] || 0 } unless e.deleted? }
+      .sort_by! { |e| [-e[:count], e[:name]] }
+  end
 end

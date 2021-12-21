@@ -5,16 +5,16 @@ require "json-schema"
 class Attribute::RangeProperty < Attribute
   def value_schema
     {
-        "type": "object",
-        "required": ["minimum", "maximum"],
-        "properties": {
-            "minimum": {
-                "type": @value_type
-            },
-            "maximum": {
-                "type": @value_type
-            },
+      "type": "object",
+      "required": %w[minimum maximum],
+      "properties": {
+        "minimum": {
+          "type": @value_type
+        },
+        "maximum": {
+          "type": @value_type
         }
+      }
     }
   end
 
@@ -23,5 +23,6 @@ class Attribute::RangeProperty < Attribute
   end
 
   protected
-    TYPE = "range-property"
+
+  TYPE = "range-property"
 end

@@ -116,8 +116,7 @@ RSpec.feature "My Services" do
     scenario "I cannot see other users' project_items" do
       other_user_project_item = create(:project_item, offer: offer)
 
-      visit project_service_path(other_user_project_item.project,
-                                 other_user_project_item)
+      visit project_service_path(other_user_project_item.project, other_user_project_item)
 
       # TODO: the given service is showing up in Others pane in home view
       # expect(page).to_not have_text(other_user_project_item.service.name)
@@ -140,8 +139,8 @@ RSpec.feature "My Services" do
     end
 
     scenario "I can see voucher id" do
-      project_item = create(:project_item, project: project, offer: create(:offer, voucherable: true),
-                            voucher_id: "V123V")
+      project_item =
+        create(:project_item, project: project, offer: create(:offer, voucherable: true), voucher_id: "V123V")
 
       visit project_service_path(project, project_item)
 
@@ -149,8 +148,16 @@ RSpec.feature "My Services" do
     end
 
     scenario "I can see voucher id if the voucher is requested and delivered" do
-      project_item = create(:project_item, project: project, offer: create(:offer, voucherable: true),
-                            request_voucher: true, user_secrets: { "voucher_id" => "V123V" })
+      project_item =
+        create(
+          :project_item,
+          project: project,
+          offer: create(:offer, voucherable: true),
+          request_voucher: true,
+          user_secrets: {
+            "voucher_id" => "V123V"
+          }
+        )
 
       visit project_service_path(project, project_item)
 
@@ -166,8 +173,8 @@ RSpec.feature "My Services" do
     end
 
     scenario "I can see that the voucher has been requested" do
-      project_item = create(:project_item, project: project, offer: create(:offer, voucherable: true),
-                            request_voucher: true)
+      project_item =
+        create(:project_item, project: project, offer: create(:offer, voucherable: true), request_voucher: true)
 
       visit project_service_path(project, project_item)
 
@@ -198,9 +205,10 @@ RSpec.feature "My Services" do
 
         visit project_service_conversation_path(project, project_item)
 
-        message_label = "#{Message.last.created_at.to_s(:db)}, "\
-                        "#{provider_message.author_name} "\
-                        "(#{provider_message.author_email}), Provider"
+        message_label =
+          "#{Message.last.created_at.to_s(:db)}, " \
+            "#{provider_message.author_name} " \
+            "(#{provider_message.author_email}), Provider"
 
         expect(page).to have_text(provider_message.message)
         expect(page).to have_text(message_label)
@@ -212,8 +220,9 @@ RSpec.feature "My Services" do
 
         visit project_service_conversation_path(project, project_item)
 
-        message_label = "#{Message.last.created_at.to_s(:db)}, "\
-                        "#{provider_message.author_name}, Provider"
+        message_label =
+          "#{Message.last.created_at.to_s(:db)}, " \
+            "#{provider_message.author_name}, Provider"
 
         expect(page).to have_text(provider_message.message)
         expect(page).to have_text(message_label)
@@ -225,8 +234,9 @@ RSpec.feature "My Services" do
 
         visit project_service_conversation_path(project, project_item)
 
-        message_label = "#{Message.last.created_at.to_s(:db)}, "\
-                        "#{provider_message.author_email}, Provider"
+        message_label =
+          "#{Message.last.created_at.to_s(:db)}, " \
+            "#{provider_message.author_email}, Provider"
 
         expect(page).to have_text(provider_message.message)
         expect(page).to have_text(message_label)

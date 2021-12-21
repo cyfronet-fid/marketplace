@@ -21,31 +21,34 @@ RSpec.feature "Executive stistics" do
     let(:user) { create(:user, roles: [:executive]) }
 
     scenario "I can see executive statistics" do
-      report = instance_double(UsageReport,
-                               orderable_count: 1,
-                               not_orderable_count: 2,
-                               all_services_count: 3,
-                               order_required_count: 1,
-                               fully_open_access_count: 0,
-                               open_access_count: 1,
-                               other_count: 1,
-                               providers: ["p_a", "p_b", "p_c"],
-                               domains: ["d_a", "d_b", "d_c", "d_d"],
-                               countries: ["c_a", "c_b", "c_c", "c_d", "c_e"])
+      report =
+        instance_double(
+          UsageReport,
+          orderable_count: 1,
+          not_orderable_count: 2,
+          all_services_count: 3,
+          order_required_count: 1,
+          fully_open_access_count: 0,
+          open_access_count: 1,
+          other_count: 1,
+          providers: %w[p_a p_b p_c],
+          domains: %w[d_a d_b d_c d_d],
+          countries: %w[c_a c_b c_c c_d c_e]
+        )
       allow(UsageReport).to receive(:new).and_return(report)
 
       visit executive_statistics_path
 
       expect(page.body).to have_selector("h1", text: "Statistics")
-      expect(page.body)
-        .to have_text("1\nNumber of EOSC resources with offerings using EOSC Marketplace ordering process")
+      expect(page.body).to have_text(
+        "1\nNumber of EOSC resources with offerings using EOSC Marketplace ordering process"
+      )
       expect(page.body).to have_text("2\nNumber of EOSC resources not using EOSC Marketplace ordering process")
       expect(page.body).to have_text("3\nNumber of all EOSC resources registered in the EOSC Marketplace")
       expect(page.body).to have_text("0\nNumber of resources with at least one fully open access offer")
       expect(page.body).to have_text("1\nNumber of resources with at least one open access offer")
       expect(page.body).to have_text("1\nNumber of resources with at least one offer requiring ordering")
       expect(page.body).to have_text("1\nNumber of resources with at least one other offer.")
-
 
       expect(page.body).to have_text("Providers (3)")
       expect(page.body).to have_text("Domains (4)")

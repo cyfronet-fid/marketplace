@@ -3,8 +3,7 @@
 class User < ApplicationRecord
   acts_as_token_authenticatable
 
-  devise :database_authenticatable, :rememberable, :trackable,
-         :omniauthable, omniauth_providers: %i[checkin]
+  devise :database_authenticatable, :rememberable, :trackable, :omniauthable, omniauth_providers: %i[checkin]
 
   include RoleModel
   roles :admin, :service_portfolio_manager, :executive
@@ -12,23 +11,15 @@ class User < ApplicationRecord
   has_many :projects, dependent: :destroy
 
   has_many :service_user_relationships, dependent: :destroy
-  has_many :owned_services,
-           through: :service_user_relationships,
-           source: :service,
-           class_name: "Service"
+  has_many :owned_services, through: :service_user_relationships, source: :service, class_name: "Service"
   has_many :user_categories, dependent: :destroy
   has_many :categories, through: :user_categories
   has_many :user_scientific_domains, dependent: :destroy
   has_many :scientific_domains, through: :user_scientific_domains
   has_many :oms_administrations, dependent: :destroy
-  has_many :administrated_omses,
-           through: :oms_administrations,
-           source: :oms
+  has_many :administrated_omses, through: :oms_administrations, source: :oms
   has_many :user_service, dependent: :destroy
-  has_many :favourite_services,
-           through: :user_service,
-           source: :service,
-           class_name: "Service"
+  has_many :favourite_services, through: :user_service, source: :service, class_name: "Service"
 
   validates :first_name, presence: true
   validates :last_name, presence: true

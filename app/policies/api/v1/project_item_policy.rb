@@ -20,14 +20,12 @@ class Api::V1::ProjectItemPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [
-      user_secrets: {},
-      status: [:value, :type]
-    ]
+    [user_secrets: {}, status: %i[value type]]
   end
 
   private
-    def project_item_managed_by_user?
-      user.administrated_omses.include? record.offer.current_oms
-    end
+
+  def project_item_managed_by_user?
+    user.administrated_omses.include? record.offer.current_oms
+  end
 end

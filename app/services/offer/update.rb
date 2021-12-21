@@ -7,11 +7,7 @@ class Offer::Update
   end
 
   def call
-    if @offer.service.offers.published.size == 1
-      @offer.update(@params)
-    else
-      @offer.update(@params.merge(default: false))
-    end
+    @offer.service.offers.published.size == 1 ? @offer.update(@params) : @offer.update(@params.merge(default: false))
     @offer.service.reindex
     @offer.valid?
   end

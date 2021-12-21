@@ -10,11 +10,12 @@ class ArrayValidator < ActiveModel::EachValidator
         next if value.blank? && !validator_options[:presence]
 
         validator_class_name = "#{key.to_s.camelize}Validator"
-        validator_class = begin
-          validator_class_name.constantize
-        rescue NameError
-          "ActiveModel::Validations::#{validator_class_name}".constantize
-        end
+        validator_class =
+          begin
+            validator_class_name.constantize
+          rescue NameError
+            "ActiveModel::Validations::#{validator_class_name}".constantize
+          end
 
         validator = validator_class.new(validator_options)
         validator.validate_each(record, attribute, value)

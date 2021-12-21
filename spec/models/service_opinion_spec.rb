@@ -15,10 +15,7 @@ RSpec.describe ServiceOpinion, type: :model do
 
     expect(service.rating).to eq(0.0)
 
-    create(:service_opinion,
-           project_item: create(:project_item, offer: offer),
-           service_rating: "3",
-           order_rating: "3")
+    create(:service_opinion, project_item: create(:project_item, offer: offer), service_rating: "3", order_rating: "3")
 
     expect(service.rating).to eq(3.0)
   end

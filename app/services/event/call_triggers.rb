@@ -6,8 +6,6 @@ class Event::CallTriggers
   end
 
   def call
-    @event.omses.each do |oms|
-      OMS::CallTriggerJob.perform_later(oms)
-    end
+    @event.omses.each { |oms| OMS::CallTriggerJob.perform_later(oms) }
   end
 end

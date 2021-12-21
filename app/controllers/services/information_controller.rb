@@ -9,9 +9,7 @@ class Services::InformationController < Services::ApplicationController
       @step = step(saved_state)
       @offer = @step.offer
 
-      unless @step.visible?
-        redirect_to url_for([@service, next_step_key])
-      end
+      redirect_to url_for([@service, next_step_key]) unless @step.visible?
     else
       redirect_to url_for([@service, prev_visible_step_key]), alert: prev_visible_step.error
     end
@@ -27,7 +25,8 @@ class Services::InformationController < Services::ApplicationController
   end
 
   private
-    def step_key
-      :information
-    end
+
+  def step_key
+    :information
+  end
 end

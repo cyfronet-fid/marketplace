@@ -9,6 +9,6 @@ class CreateUserResearchAreas < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_index :user_research_areas, [:user_id, :research_area_id], unique: true
+    add_index :user_research_areas, %i[user_id research_area_id], unique: true
   end
 end

@@ -28,11 +28,12 @@ class Admin::LeadSectionPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:slug, :title, :template]
+    %i[slug title template]
   end
 
   private
-    def admin?
-      user&.admin?
-    end
+
+  def admin?
+    user&.admin?
+  end
 end

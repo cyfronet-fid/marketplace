@@ -75,12 +75,14 @@ class UpdateScientificDomains < ActiveRecord::Migration[6.0]
     ActiveRecord::Base.transaction do
       to_other = ScientificDomain.where.not(name: eosc_scientific_domains + domains_to_be_mapped)
       target_id = ScientificDomain.find_by(name: "Other", ancestry_depth: 1).id
-      to_other.map(&:id).each do |source_id|
-        cast_and_remove_sources(ServiceScientificDomain, source_id, target_id, "service_id")
-        cast_and_remove_sources(UserScientificDomain, source_id, target_id, "user_id")
-        cast_and_remove_sources(ProviderScientificDomain, source_id, target_id, "provider_id")
-        cast_and_remove_sources(ProjectScientificDomain, source_id, target_id, "project_id")
-      end
+      to_other
+        .map(&:id)
+        .each do |source_id|
+          cast_and_remove_sources(ServiceScientificDomain, source_id, target_id, "service_id")
+          cast_and_remove_sources(UserScientificDomain, source_id, target_id, "user_id")
+          cast_and_remove_sources(ProviderScientificDomain, source_id, target_id, "provider_id")
+          cast_and_remove_sources(ProjectScientificDomain, source_id, target_id, "project_id")
+        end
       to_other.delete_all
 
       domains_map = {
@@ -116,41 +118,30 @@ class UpdateScientificDomains < ActiveRecord::Migration[6.0]
   end
 
   private
-    def cast_and_remove_sources(domains_group, source_id, target_id, id_field_name)
-      source_relation_ids = domains_group
-                           .where(scientific_domain_id: source_id)
-                           .map { |sd| sd[id_field_name.to_sym] }
-                           .uniq
-      target_relation_ids = domains_group
-                              .where(scientific_domain_id: target_id)
-                              .map { |sd| sd[id_field_name.to_sym] }
-                              .uniq
-      skip_update = source_relation_ids.blank?
-      if skip_update
-        return
-      end
 
-      source_relation_ids_to_update = (source_relation_ids - target_relation_ids) | (target_relation_ids - source_relation_ids)
-      only_remove = source_relation_ids_to_update.blank?
-      if only_remove
-        domains_group
-          .where(scientific_domain_id: source_id)
-          .delete_all
-        return
-      end
+  def cast_and_remove_sources(domains_group, source_id, target_id, id_field_name)
+    source_relation_ids =
+      domains_group.where(scientific_domain_id: source_id).map { |sd| sd[id_field_name.to_sym] }.uniq
+    target_relation_ids =
+      domains_group.where(scientific_domain_id: target_id).map { |sd| sd[id_field_name.to_sym] }.uniq
+    skip_update = source_relation_ids.blank?
+    return if skip_update
 
-      domains_group
-        .where(id_field_name => source_relation_ids_to_update, scientific_domain_id: source_id)
-        .update_all(scientific_domain_id: target_id)
-      all_target_records = domains_group
-        .where(scientific_domain_id: target_id)
-        .map { |sd| sd[id_field_name.to_sym] }
-        .uniq
-      unless all_target_records.length === (target_relation_ids + source_relation_ids).uniq.length
-        raise StandardError("Not all sources have been casted")
-      end
-      domains_group
-        .where(scientific_domain_id: source_id)
-        .delete_all
+    source_relation_ids_to_update =
+      (source_relation_ids - target_relation_ids) | (target_relation_ids - source_relation_ids)
+    only_remove = source_relation_ids_to_update.blank?
+    if only_remove
+      domains_group.where(scientific_domain_id: source_id).delete_all
+      return
     end
+
+    domains_group
+      .where(id_field_name => source_relation_ids_to_update, :scientific_domain_id => source_id)
+      .update_all(scientific_domain_id: target_id)
+    all_target_records = domains_group.where(scientific_domain_id: target_id).map { |sd| sd[id_field_name.to_sym] }.uniq
+    unless all_target_records.length === (target_relation_ids + source_relation_ids).uniq.length
+      raise StandardError("Not all sources have been casted")
+    end
+    domains_group.where(scientific_domain_id: source_id).delete_all
+  end
 end

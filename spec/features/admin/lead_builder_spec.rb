@@ -40,9 +40,7 @@ RSpec.feature "Marketplace lead builder" do
 
       visit admin_leads_path
 
-      accept_confirm do
-        find("#delete-lead-section-#{section.id}").click
-      end
+      accept_confirm { find("#delete-lead-section-#{section.id}").click }
 
       expect(page).to have_current_path(admin_leads_path)
       expect(page).to_not have_content(section.title)
@@ -59,9 +57,7 @@ RSpec.feature "Marketplace lead builder" do
       fill_in "Header", with: "New header"
       fill_in "Body", with: "New body"
       fill_in "Url", with: "https://test.test"
-      attach_file("lead[picture]",
-                   File.join(Rails.root, "spec", "factories",
-                             "images", "test.png"), visible: false)
+      attach_file("lead[picture]", File.join(Rails.root, "spec", "factories", "images", "test.png"), visible: false)
       click_on "Create Lead"
 
       expect(page).to have_current_path(admin_leads_path)
@@ -89,9 +85,7 @@ RSpec.feature "Marketplace lead builder" do
 
       visit admin_leads_path
 
-      accept_confirm do
-        find("#delete-lead-#{item.id}").click
-      end
+      accept_confirm { find("#delete-lead-#{item.id}").click }
 
       expect(page).to have_current_path(admin_leads_path)
       expect(page).to_not have_content(item.header)

@@ -20,14 +20,10 @@
       ],
       "get": {
         "summary": "lists events",
-        "tags": [
-          "Events"
-        ],
+        "tags": ["Events"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -118,14 +114,10 @@
       ],
       "get": {
         "summary": "lists messages",
-        "tags": [
-          "Messages"
-        ],
+        "tags": ["Messages"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -211,19 +203,13 @@
       },
       "post": {
         "summary": "creates a message",
-        "tags": [
-          "Messages"
-        ],
+        "tags": ["Messages"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
-        "parameters": [
-
-        ],
+        "parameters": [],
         "responses": {
           "201": {
             "description": "message created",
@@ -310,14 +296,10 @@
       ],
       "get": {
         "summary": "retrieves a message",
-        "tags": [
-          "Messages"
-        ],
+        "tags": ["Messages"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "responses": {
@@ -365,19 +347,13 @@
       },
       "patch": {
         "summary": "updates a message",
-        "tags": [
-          "Messages"
-        ],
+        "tags": ["Messages"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
-        "parameters": [
-
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "message updated",
@@ -464,14 +440,10 @@
       ],
       "get": {
         "summary": "lists project items",
-        "tags": [
-          "Project items"
-        ],
+        "tags": ["Project items"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -570,14 +542,10 @@
       ],
       "get": {
         "summary": "retrieves a project item",
-        "tags": [
-          "Project items"
-        ],
+        "tags": ["Project items"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "responses": {
@@ -625,19 +593,13 @@
       },
       "patch": {
         "summary": "updates a project item",
-        "tags": [
-          "Project items"
-        ],
+        "tags": ["Project items"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
-        "parameters": [
-
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "project item updated",
@@ -705,14 +667,10 @@
       ],
       "get": {
         "summary": "lists projects",
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -802,14 +760,10 @@
       ],
       "get": {
         "summary": "retrieves a project",
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "responses": {
@@ -859,14 +813,10 @@
     "/api/v1/oms": {
       "get": {
         "summary": "lists OMSes",
-        "tags": [
-          "OMS"
-        ],
+        "tags": ["OMS"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "responses": {
@@ -907,14 +857,10 @@
       ],
       "get": {
         "summary": "retrieves an OMS",
-        "tags": [
-          "OMS"
-        ],
+        "tags": ["OMS"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "responses": {

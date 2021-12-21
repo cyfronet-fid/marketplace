@@ -12,16 +12,16 @@ RSpec.describe "Backoffice: manage providers" do
       it "without any service" do
         provider = create(:provider)
 
-        expect { delete backoffice_provider_path(provider) }.
-          to change { Provider.where.not(status: :deleted).count }.by(-1)
+        expect { delete backoffice_provider_path(provider) }.to change { Provider.where.not(status: :deleted).count }
+          .by(-1)
       end
 
       it "with all deleted services" do
         provider = create(:provider)
         create(:service, resource_organisation: provider, status: :deleted)
 
-        expect { delete backoffice_provider_path(provider) }.
-          to change { Provider.where.not(status: :deleted).count }.by(-1)
+        expect { delete backoffice_provider_path(provider) }.to change { Provider.where.not(status: :deleted).count }
+          .by(-1)
       end
     end
 
@@ -29,28 +29,28 @@ RSpec.describe "Backoffice: manage providers" do
       provider = create(:provider)
       create(:service, status: :unverified, resource_organisation: provider)
 
-      expect { delete backoffice_provider_path(provider) }.
-        to change { Provider.where.not(status: :deleted).count }.by(0)
+      expect { delete backoffice_provider_path(provider) }.to change { Provider.where.not(status: :deleted).count }.by(
+        0
+      )
 
       provider = create(:provider)
       create(:service, status: :errored, resource_organisation: provider)
 
-      expect { delete backoffice_provider_path(provider) }.
-        to change { Provider.where.not(status: :deleted).count }.by(0)
+      expect { delete backoffice_provider_path(provider) }.to change { Provider.where.not(status: :deleted).count }.by(
+        0
+      )
 
       provider = create(:provider)
       create(:service, status: :draft, resource_organisation: provider)
 
-      expect { delete backoffice_provider_path(provider) }.
-        to change { Provider.where.not(status: :deleted).count }.by(0)
+      expect { delete backoffice_provider_path(provider) }.to change { Provider.where.not(status: :deleted).count }.by(
+        0
+      )
     end
 
     it "should call permitted_attributes with provider with form upstream_id" do
       provider = create(:provider)
-      new_params = {
-        name: "test1111111",
-        abbreviation: "test 111111"
-      }
+      new_params = { name: "test1111111", abbreviation: "test 111111" }
       put backoffice_provider_path(provider), params: { provider: { upstream_id: nil, **new_params } }
 
       provider.reload

@@ -8,6 +8,6 @@ class CreateProviderSourcesTable < ActiveRecord::Migration[5.2]
       t.belongs_to :provider, index: true, null: false
       t.timestamps
     end
-    add_index :provider_sources, [:eid, :source_type, :provider_id], unique: true
+    add_index :provider_sources, %i[eid source_type provider_id], unique: true
   end
 end

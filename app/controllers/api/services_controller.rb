@@ -2,13 +2,19 @@
 
 class Api::ServicesController < ActionController::API
   def index
-    @json = Service.where(status: [:published, :unverified]).map {
-            |s| { "Service Unique ID": s.id,
+    @json =
+      Service
+        .where(status: %i[published unverified])
+        .map do |s|
+          {
+            "Service Unique ID": s.id,
             "SERVICE_TYPE": "eu.eosc.portal.services.url",
             "CONTACT_EMAIL": s.public_contacts.map(&:email),
             "SITENAME-SERVICEGROUP": s.name,
             "COUNTRY_NAME": s.geographical_availabilities,
-            "URL": s.webpage_url } }
+            "URL": s.webpage_url
+          }
+        end
     render json: @json
   end
 end

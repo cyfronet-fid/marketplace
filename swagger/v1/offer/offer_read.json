@@ -1,14 +1,10 @@
 {
-  "allOf": [{ "$ref": "offer_definitions.json#offer"}],
+  "allOf": [{ "$ref": "offer_definitions.json#offer" }],
   "properties": {
-    "id":{
-      "type":"integer",
-      "readOnly":true
+    "id": {
+      "type": "integer",
+      "readOnly": true
     }
   },
-  "required":[
-    "name",
-    "description",
-    "order_type"
-  ]
+  "required": ["name", "description", "order_type"]
 }

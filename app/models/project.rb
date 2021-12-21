@@ -12,17 +12,14 @@ class Project < ApplicationRecord
   }
 
   ISSUE_STATUSES = {
-      jira_require_migration: 100,
-      jira_active: 0,
-      jira_deleted: 1,
-      jira_uninitialized: 2,
-      jira_errored: 3
+    jira_require_migration: 100,
+    jira_active: 0,
+    jira_deleted: 1,
+    jira_uninitialized: 2,
+    jira_errored: 3
   }
 
-  PROJECT_STATUSES = {
-    active: "active",
-    archived: "archived"
-  }
+  PROJECT_STATUSES = { active: "active", archived: "archived" }
 
   enum status: PROJECT_STATUSES
   enum customer_typology: CUSTOMER_TYPOLOGIES
@@ -39,12 +36,16 @@ class Project < ApplicationRecord
 
   validates :name,
             presence: true,
-            length: { maximum: 255 },
-            uniqueness: { scope: :user, message: "Project name need to be unique" }
+            length: {
+              maximum: 255
+            },
+            uniqueness: {
+              scope: :user,
+              message: "Project name need to be unique"
+            }
   validates :email, email: true, presence: true
   validates :reason_for_access, presence: true
-  validates :country_of_origin, presence: true, if: :single_user_or_private_company?,
-            inclusion: { in: Country.all }
+  validates :country_of_origin, presence: true, if: :single_user_or_private_company?, inclusion: { in: Country.all }
   validates :customer_typology, presence: true
 
   validates :organization, length: { maximum: 255 }, presence: true, if: :single_user_or_community?
@@ -56,8 +57,12 @@ class Project < ApplicationRecord
   validates :project_website_url, mp_url: true, length: { maximum: 255 }, presence: true, if: :project?
 
   validates :company_name, presence: true, length: { maximum: 255 }, if: :private_company?
-  validates :countries_of_partnership, presence: true, if: :research_or_project?,
-            multiselect_choices: { collection: Country.all }
+  validates :countries_of_partnership,
+            presence: true,
+            if: :research_or_project?,
+            multiselect_choices: {
+              collection: Country.all
+            }
   validates :company_website_url, mp_url: true, length: { maximum: 255 }, presence: true, if: :private_company?
 
   validates :issue_id, presence: true, if: :require_jira_issue?
@@ -91,7 +96,7 @@ class Project < ApplicationRecord
   end
 
   def eventable_attributes
-    Set.new()
+    Set.new
   end
 
   def items_have_new_messages?
@@ -101,13 +106,14 @@ class Project < ApplicationRecord
   def eventable_omses
     project_items
       .map(&:eventable_omses)
-      .map { |omses| omses.index_by(&:id) } # map each to { <id>: oms }
-      .reduce({}) { |memo, oms_h| memo.merge(oms_h) } # merge, removing duplicates
+      .map { |omses| omses.index_by(&:id) }
+      .reduce({}) { |memo, oms_h| memo.merge(oms_h) }
       .values
   end
 
   private
-    def require_jira_issue?
-      jira_active? || jira_deleted?
-    end
+
+  def require_jira_issue?
+    jira_active? || jira_deleted?
+  end
 end

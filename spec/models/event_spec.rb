@@ -95,9 +95,9 @@ RSpec.describe Event, type: :model do
       allow(Faraday).to receive(:post)
 
       event = build(:event)
-      allow(event).to receive(:omses).and_return(%w[url1 url2].map { |trigger_url|
-        create(:oms, trigger: build(:trigger, url: trigger_url))
-      })
+      allow(event).to receive(:omses).and_return(
+        %w[url1 url2].map { |trigger_url| create(:oms, trigger: build(:trigger, url: trigger_url)) }
+      )
 
       assert_performed_jobs(2, only: OMS::CallTriggerJob, queue: :orders) { event.save! }
 

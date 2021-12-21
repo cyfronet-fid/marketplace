@@ -6,15 +6,16 @@ namespace :projects do
   desc "Remove default projects without services attached"
   task migrate_from_affiliation: :environment do
     Project.transaction do
-      Project.includes(:project_items, user: :affiliations)
-            .find_each do |project|
-        case
-        when to_remove?(project)
-          destroy!(project)
-        when to_fill_in?(project)
-          fill_in!(project)
+      Project
+        .includes(:project_items, user: :affiliations)
+        .find_each do |project|
+          case
+          when to_remove?(project)
+            destroy!(project)
+          when to_fill_in?(project)
+            fill_in!(project)
+          end
         end
-      end
     end
   end
 

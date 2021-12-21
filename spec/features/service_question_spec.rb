@@ -27,14 +27,13 @@ RSpec.feature "Question about service" do
       create_list(:public_contact, 2, contactable: service)
 
       visit service_path(service)
+
       # close shepherd's tour
       click_on "I'll do it later"
 
       click_on "Ask a question about this resource?"
 
-      within("#ajax-modal") do
-        fill_in("service_question_text", with: "text")
-      end
+      within("#ajax-modal") { fill_in("service_question_text", with: "text") }
 
       expect do
         click_on "SEND"
@@ -49,9 +48,9 @@ RSpec.feature "Question about service" do
       create_list(:public_contact, 2, contactable: service)
 
       visit service_path(service)
+
       # close shepherd's tour
       click_on "I'll do it later"
-
 
       click_on "Ask a question about this resource?"
 
@@ -69,6 +68,7 @@ RSpec.feature "Question about service" do
       create_list(:public_contact, 2, contactable: service)
 
       visit service_path(service)
+
       # close shepherd's tour
       click_on "I'll do it later"
 
@@ -93,6 +93,7 @@ RSpec.feature "Question about service" do
       create_list(:public_contact, 2, contactable: service)
 
       visit service_path(service)
+
       # close shepherd's tour
       click_on "I'll do it later"
 

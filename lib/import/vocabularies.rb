@@ -28,12 +28,14 @@ class Import::Vocabularies
     PROVIDER_MERIL_SCIENTIFIC_SUBDOMAIN: Vocabulary::MerilScientificDomain
   }
 
-  def initialize(eosc_registry_base_url,
-                 dry_run: true,
-                 filepath: nil,
-                 faraday: Faraday,
-                 logger: ->(msg) { puts msg },
-                 token: nil)
+  def initialize(
+    eosc_registry_base_url,
+    dry_run: true,
+    filepath: nil,
+    faraday: Faraday,
+    logger: ->(msg) { puts msg },
+    token: nil
+  )
     @eosc_registry_base_url = eosc_registry_base_url
     @dry_run = dry_run
     @faraday = faraday
@@ -64,52 +66,46 @@ class Import::Vocabularies
 
     log "[INFO] Vocabularies types #{@not_implemented.keys} are not implemented and won't be imported"
 
-    @vocabularies.slice(*ACCEPTED_VOCABULARIES.keys.map(&:to_s)).each do |type, vocabularies_array|
-      vocabularies_array.each do |vocabulary_data|
-        output.append(vocabulary_data)
+    @vocabularies
+      .slice(*ACCEPTED_VOCABULARIES.keys.map(&:to_s))
+      .each do |type, vocabularies_array|
+        vocabularies_array.each do |vocabulary_data|
+          output.append(vocabulary_data)
 
-        updated_vocabulary_data = Importers::Vocabulary.new(vocabulary_data,
-                                                            clazz(type), @token).call
+          updated_vocabulary_data = Importers::Vocabulary.new(vocabulary_data, clazz(type), @token).call
 
-        mapped_vocabulary = clazz(type).find_by(eid: vocabulary_data["id"])
+          mapped_vocabulary = clazz(type).find_by(eid: vocabulary_data["id"])
 
-        if mapped_vocabulary.blank?
-          created += 1
-          log "Adding [NEW] vocabulary type: #{clazz(type)}, " +
-              "name: #{updated_vocabulary_data[:name]}, eid: #{updated_vocabulary_data[:eid]}"
-          unless @dry_run
-            clazz(type).create!(updated_vocabulary_data)
+          if mapped_vocabulary.blank?
+            created += 1
+            log "Adding [NEW] vocabulary type: #{clazz(type)}, " +
+                  "name: #{updated_vocabulary_data[:name]}, eid: #{updated_vocabulary_data[:eid]}"
+            clazz(type).create!(updated_vocabulary_data) unless @dry_run
+          else
+            updated += 1
+            log "Updating [EXISTING] vocabulary type: #{clazz(type)}, " +
+                  "name: #{updated_vocabulary_data[:name]}, eid: #{updated_vocabulary_data[:eid]}"
+            mapped_vocabulary.update!(updated_vocabulary_data) unless @dry_run
           end
-        else
-          updated += 1
-          log "Updating [EXISTING] vocabulary type: #{clazz(type)}, " +
-                "name: #{updated_vocabulary_data[:name]}, eid: #{updated_vocabulary_data[:eid]}"
-          unless @dry_run
-            mapped_vocabulary.update!(updated_vocabulary_data)
-          end
+        rescue ActiveRecord::RecordInvalid => e
+          log "[WARN] Vocabulary type: #{clazz(type)}, " +
+                "name: #{updated_vocabulary_data[:name]} eid: #{updated_vocabulary_data[:eid]} cannot be created. #{e}"
         end
-      rescue ActiveRecord::RecordInvalid => e
-        log "[WARN] Vocabulary type: #{clazz(type)}, " +
-              "name: #{updated_vocabulary_data[:name]} eid: #{updated_vocabulary_data[:eid]} cannot be created. #{e}"
       end
-    end
 
     log "TOTAL: #{total_vocabularies_count}, CREATED: #{created}, " +
           "UPDATED: #{updated}, UNPROCESSED: #{not_implemented_count}"
 
-    unless @filepath.nil?
-      open(@filepath, "w") do |file|
-        file << JSON.pretty_generate(output)
-      end
-    end
+    open(@filepath, "w") { |file| file << JSON.pretty_generate(output) } unless @filepath.nil?
   end
 
   private
-    def clazz(type)
-      ACCEPTED_VOCABULARIES[type.to_sym]
-    end
 
-    def log(msg)
-      @logger.call(msg)
-    end
+  def clazz(type)
+    ACCEPTED_VOCABULARIES[type.to_sym]
+  end
+
+  def log(msg)
+    @logger.call(msg)
+  end
 end

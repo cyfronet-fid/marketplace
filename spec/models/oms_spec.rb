@@ -66,16 +66,30 @@ RSpec.describe OMS, type: :model do
   context "#projects" do
     let(:project1) { create(:project) }
     let(:project2) { create(:project) }
-    let(:default_oms) { create(:oms,
-                               offers: [create(:offer),
-                                        create(:offer, project_items: [create(:project_item, project: project1)]),
-                                        create(:offer, project_items: [create(:project_item, project: project1),
-                                                                       create(:project_item, project: project2)])]) }
+    let(:default_oms) do
+      create(
+        :oms,
+        offers: [
+          create(:offer),
+          create(:offer, project_items: [create(:project_item, project: project1)]),
+          create(
+            :offer,
+            project_items: [create(:project_item, project: project1), create(:project_item, project: project2)]
+          )
+        ]
+      )
+    end
 
-    let(:oms) { create(:oms,
-                       default: true,
-                       offers: [create(:offer, project_items: [create(:project_item, project: project1)]),
-                                create(:offer, project_items: [create(:project_item, project: project1)])]) }
+    let(:oms) do
+      create(
+        :oms,
+        default: true,
+        offers: [
+          create(:offer, project_items: [create(:project_item, project: project1)]),
+          create(:offer, project_items: [create(:project_item, project: project1)])
+        ]
+      )
+    end
     let(:other_oms) { create(:oms, offers: create_list(:offer, 2)) }
 
     it "should return all project when oms is default" do
@@ -92,23 +106,30 @@ RSpec.describe OMS, type: :model do
     let(:oms1) { create(:oms) }
     let(:oms2) { create(:oms) }
     let(:default_oms) { create(:oms, default: true) }
-    let(:project_items1) { [
-      build(:project_item, offer: build(:offer, primary_oms: oms1)),
-      build(:project_item, offer: build(:offer, primary_oms: oms1)),
-      build(:project_item, offer: build(:offer, primary_oms: oms2)),
-      build(:project_item, offer: build(:offer, primary_oms: oms1)),
-      build(:project_item, offer: build(:offer, primary_oms: oms2))
-    ] }
-    let(:project_items2) { [
-      build(:project_item, offer: build(:offer, primary_oms: oms1)),
-      build(:project_item, offer: build(:offer, primary_oms: oms1))
-    ] }
+    let(:project_items1) do
+      [
+        build(:project_item, offer: build(:offer, primary_oms: oms1)),
+        build(:project_item, offer: build(:offer, primary_oms: oms1)),
+        build(:project_item, offer: build(:offer, primary_oms: oms2)),
+        build(:project_item, offer: build(:offer, primary_oms: oms1)),
+        build(:project_item, offer: build(:offer, primary_oms: oms2))
+      ]
+    end
+    let(:project_items2) do
+      [
+        build(:project_item, offer: build(:offer, primary_oms: oms1)),
+        build(:project_item, offer: build(:offer, primary_oms: oms1))
+      ]
+    end
     let(:project) { create(:project, project_items: project_items1) }
     let(:other_project) { create(:project, project_items: project_items2) }
 
     it "returns only associated project_items for a single project" do
-      expect(oms1.project_items_for(project)).to contain_exactly(project_items1[0], project_items1[1],
-project_items1[3])
+      expect(oms1.project_items_for(project)).to contain_exactly(
+        project_items1[0],
+        project_items1[1],
+        project_items1[3]
+      )
       expect(oms2.project_items_for(project)).to contain_exactly(project_items1[2], project_items1[4])
 
       expect(oms1.project_items_for(other_project)).to eq(project_items2)
@@ -128,14 +149,8 @@ project_items1[3])
     let!(:project1) { create(:project) }
     let!(:project2) { create(:project) }
 
-    let!(:project_item1) {
-      create(:project_item,
-             project: project1,
-             offer: build(:offer, primary_oms: default_oms)) }
-    let!(:project_item2) {
-      create(:project_item,
-             project: project2,
-             offer: build(:offer, primary_oms: oms)) }
+    let!(:project_item1) { create(:project_item, project: project1, offer: build(:offer, primary_oms: default_oms)) }
+    let!(:project_item2) { create(:project_item, project: project2, offer: build(:offer, primary_oms: oms)) }
 
     let!(:message1) { create(:message, messageable: project1) }
     let!(:message2) { create(:message, messageable: project_item1) }

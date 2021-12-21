@@ -16,7 +16,7 @@ class Importers::Logo
   end
 
   def call
-    Timeout.timeout(10) {
+    Timeout.timeout(10) do
       begin
         logo = URI.open(@image_url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
         logo_content_type = logo.content_type
@@ -36,39 +36,40 @@ class Importers::Logo
       rescue Exception => e
         puts "ERROR - there was a unexpected problem processing image for #{@object.name} #{@image_url}: #{e}"
       end
-    }
+    end
   rescue Timeout::Error => e
     puts "ERROR - there was a problem with image loading from #{@image_url}: #{e}"
   end
 
   private
-    def convert_to_png(logo, extension)
-      img = MiniMagick::Image.read(logo, extension)
-      img.format "png" do |convert|
-        convert.args.unshift "800x800"
-        convert.args.unshift "-resize"
-        convert.args.unshift "1200"
-        convert.args.unshift "-density"
-        convert.args.unshift "none"
-        convert.args.unshift "-background"
-      end
-      logo = StringIO.new
-      logo.write(img.to_blob)
-      logo.seek(0)
-      logo
-    end
 
-    def to_slug(ret)
-      ret
-        .downcase
-        .strip
-        .gsub(/['`]/, "")
-        .gsub(/\s*@\s*/, " at ")
-        .gsub(/\s*&\s*/, " and ")
-        .gsub(/\s*[^A-Za-z0-9.-]\s*/, "-")
-        .gsub(/_+/, "_")
-        .gsub(/\A[_.]+|[_.]+\z/, "")
-        .gsub(/-+/, "-")
-        .gsub(/-$/, "")
+  def convert_to_png(logo, extension)
+    img = MiniMagick::Image.read(logo, extension)
+    img.format "png" do |convert|
+      convert.args.unshift "800x800"
+      convert.args.unshift "-resize"
+      convert.args.unshift "1200"
+      convert.args.unshift "-density"
+      convert.args.unshift "none"
+      convert.args.unshift "-background"
     end
+    logo = StringIO.new
+    logo.write(img.to_blob)
+    logo.seek(0)
+    logo
+  end
+
+  def to_slug(ret)
+    ret
+      .downcase
+      .strip
+      .gsub(/['`]/, "")
+      .gsub(/\s*@\s*/, " at ")
+      .gsub(/\s*&\s*/, " and ")
+      .gsub(/\s*[^A-Za-z0-9.-]\s*/, "-")
+      .gsub(/_+/, "_")
+      .gsub(/\A[_.]+|[_.]+\z/, "")
+      .gsub(/-+/, "-")
+      .gsub(/-$/, "")
+  end
 end

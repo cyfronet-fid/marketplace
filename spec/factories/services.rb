@@ -19,13 +19,13 @@ FactoryBot.define do
     factory :order_required_service do
       sequence(:order_type) { :order_required }
     end
-    sequence(:webpage_url) { "https://wabpage.url"  }
-    sequence(:manual_url) { "https://manual.url"  }
-    sequence(:helpdesk_url) { "https://helpdesk.url"  }
-    sequence(:training_information_url) { "https://tutorial.url"  }
-    sequence(:terms_of_use_url) { "https://terms.of.use.url"  }
-    sequence(:sla_url) { "https://corporate.sla.url"  }
-    sequence(:access_policies_url) { "https://access.policies.url"  }
+    sequence(:webpage_url) { "https://wabpage.url" }
+    sequence(:manual_url) { "https://manual.url" }
+    sequence(:helpdesk_url) { "https://helpdesk.url" }
+    sequence(:training_information_url) { "https://tutorial.url" }
+    sequence(:terms_of_use_url) { "https://terms.of.use.url" }
+    sequence(:sla_url) { "https://corporate.sla.url" }
+    sequence(:access_policies_url) { "https://access.policies.url" }
 
     sequence(:language_availability) { [I18nData.languages.values.sample] }
     sequence(:geographical_availabilities) { |n| ["EU"] }
@@ -43,9 +43,7 @@ FactoryBot.define do
 
     upstream { nil }
 
-    after(:create) do |service, _evaluator|
-      service.reindex(refresh: true)
-    end
+    after(:create) { |service, _evaluator| service.reindex(refresh: true) }
     factory :external_service do
       sequence(:order_type) { :order_required }
       sequence(:order_url) { "http://order.com" }

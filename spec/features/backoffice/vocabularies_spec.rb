@@ -86,18 +86,39 @@ RSpec.feature "Vocabularies in backoffice" do
           association_service = create(:service)
           association_provider = create(:provider)
 
-          association_service.try(:update, { "#{vocabulary.to_s.pluralize}": [to_associate] }) rescue nil
-          association_service.try(:update, { "#{vocabulary}": [to_associate] }) rescue nil
-          association_service.try(:update, { "#{vocabulary}": to_associate }) rescue nil
-          association_provider.try(:update, { "#{vocabulary.to_s.pluralize}": [to_associate] }) rescue nil
-          association_provider.try(:update, { "#{vocabulary}": to_associate }) rescue nil
+          begin
+            association_service.try(:update, { "#{vocabulary.to_s.pluralize}": [to_associate] })
+          rescue StandardError
+            nil
+          end
+          begin
+            association_service.try(:update, { "#{vocabulary}": [to_associate] })
+          rescue StandardError
+            nil
+          end
+          begin
+            association_service.try(:update, { "#{vocabulary}": to_associate })
+          rescue StandardError
+            nil
+          end
+          begin
+            association_provider.try(:update, { "#{vocabulary.to_s.pluralize}": [to_associate] })
+          rescue StandardError
+            nil
+          end
+          begin
+            association_provider.try(:update, { "#{vocabulary}": to_associate })
+          rescue StandardError
+            nil
+          end
 
           visit send("backoffice_#{vocabulary}_path", to_associate)
 
           click_on "Delete"
 
-          expect(page).to have_text("This vocabulary has resources connected to it, remove associations to delete it.").
-            or have_text("This vocabulary has providers connected to it, remove associations to delete it.")
+          expect(page).to have_text(
+            "This vocabulary has resources connected to it, remove associations to delete it."
+          ).or have_text("This vocabulary has providers connected to it, remove associations to delete it.")
         end
 
         scenario "I cannot remove a vocabulary if it has children" do
@@ -108,9 +129,11 @@ RSpec.feature "Vocabularies in backoffice" do
 
           click_on "Delete"
 
-          expect(page).to have_text("This #{humanized} has successors connected to it, " +
-                                      "therefore is not possible to remove it. If you want to remove it, " +
-                                      "edit them so they are not associated with this #{humanized} anymore")
+          expect(page).to have_text(
+            "This #{humanized} has successors connected to it, " +
+              "therefore is not possible to remove it. If you want to remove it, " +
+              "edit them so they are not associated with this #{humanized} anymore"
+          )
         end
       end
     end

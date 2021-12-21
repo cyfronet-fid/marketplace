@@ -10,98 +10,79 @@ module Service::SidebarHelper
   end
 
   private
-    def scientific_categorisation
-      {
-        name: "scientific_categorisation",
-        template: "classification",
-        fields: ["scientific_domains"],
-        nested: {
-            scientific_domains: "name"
-        }
-      }
-    end
 
-    def categorisation
-      {
-        name: "categorisation",
-        template: "array",
-        fields: ["categories"],
-        type: "tree",
-        nested: {
-            pc_categories: "name"
-        }
+  def scientific_categorisation
+    {
+      name: "scientific_categorisation",
+      template: "classification",
+      fields: ["scientific_domains"],
+      nested: {
+        scientific_domains: "name"
       }
-    end
+    }
+  end
 
-    def target_users
-      {
-        name: "target_users",
-        template: "array",
-        fields: ["target_users"],
-        nested: {
-            target_users: "name"
-        }
+  def categorisation
+    {
+      name: "categorisation",
+      template: "array",
+      fields: ["categories"],
+      type: "tree",
+      nested: {
+        pc_categories: "name"
       }
-    end
+    }
+  end
 
-    def resource_availability_and_languages
-      {
-        name: "resource_availability_and_languages",
-        template: "map",
-        fields: %w[languages geographical_availabilities]
-      }
-    end
+  def target_users
+    { name: "target_users", template: "array", fields: ["target_users"], nested: { target_users: "name" } }
+  end
 
-    def provider_scientific_categorisation
-      {
-        name: "classification",
-        template: "classification",
-        fields: ["scientific_domains"],
-        nested: {
-          scientific_domains: "name"
-        }
-      }
-    end
+  def resource_availability_and_languages
+    { name: "resource_availability_and_languages", template: "map", fields: %w[languages geographical_availabilities] }
+  end
 
-    def provider_categorisation
-      {
-        name: "provider_categorisation",
-        template: "array",
-        fields: ["pc_categories"],
-        type: "tree",
-        nested: {
-          pc_categories: "name"
-        }
+  def provider_scientific_categorisation
+    {
+      name: "classification",
+      template: "classification",
+      fields: ["scientific_domains"],
+      nested: {
+        scientific_domains: "name"
       }
-    end
+    }
+  end
 
-    def multimedia
-      {
-        name: "multimedia",
-        template: "links",
-        fields: %w[multimedia],
-        type: "array"
+  def provider_categorisation
+    {
+      name: "provider_categorisation",
+      template: "array",
+      fields: ["pc_categories"],
+      type: "tree",
+      nested: {
+        pc_categories: "name"
       }
-    end
+    }
+  end
 
-    def address
-      {
-        name: "address",
-        template: "plain_text",
-        fields: %w[address]
-      }
-    end
+  def multimedia
+    { name: "multimedia", template: "links", fields: %w[multimedia], type: "array" }
+  end
 
-    def provider_contacts
-      {
-        name: "contact",
-        template: "object",
-        fields: %w[full_name email phone position],
-        type: "array",
-        clazz: "public_contacts",
-        nested: {
-          email: "email"
-        }
+  def address
+    { name: "address", template: "plain_text", fields: %w[address] }
+  end
+
+  def provider_contacts
+    {
+      name: "contact",
+      template: "object",
+      fields: %w[full_name email phone position],
+      type: "array",
+      clazz: "public_contacts",
+      nested: {
+        email: "email"
       }
-    end
+    }
+  end
 end

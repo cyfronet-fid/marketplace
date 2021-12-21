@@ -8,9 +8,7 @@ RSpec.feature "Recommended services" do
 
   it "should display recommended", js: true do
     use_ab_test(recommendation_panel: "v1")
-    allow(Mp::Application.config).to(
-      receive(:recommender_host).and_return("localhost:5000")
-    )
+    allow(Mp::Application.config).to(receive(:recommender_host).and_return("localhost:5000"))
 
     services_ids = [1, 2, 3]
     services_ids.each { |id| create(:service, id: id) }
@@ -25,9 +23,7 @@ RSpec.feature "Recommended services" do
 
   it "should not display recommended on faraday error", js: true do
     use_ab_test(recommendation_panel: "v1")
-    allow(Mp::Application.config).to(
-      receive(:recommender_host).and_return("localhost:5000")
-    )
+    allow(Mp::Application.config).to(receive(:recommender_host).and_return("localhost:5000"))
 
     allow(Faraday).to receive(:post).and_raise(ArgumentError)
     allow(Sentry).to receive(:capture_message)

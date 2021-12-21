@@ -1,24 +1,22 @@
 {
   "type": "object",
   "properties": {
-    "id": {"type": "integer"},
-    "name": {"type": "string"},
-    "type": {"type": "string",
-      "enum": ["global", "provider_group", "resource_dedicated"]
-    },
-    "default": {"type": "boolean"},
-    "custom_params": {"type": "object"},
-    "trigger": { "type":  "object",
+    "id": { "type": "integer" },
+    "name": { "type": "string" },
+    "type": { "type": "string", "enum": ["global", "provider_group", "resource_dedicated"] },
+    "default": { "type": "boolean" },
+    "custom_params": { "type": "object" },
+    "trigger": {
+      "type": "object",
       "properties": {
-        "url": {"type": "string"},
-        "method": {"type": "string",
-          "enum": ["get", "post", "put"]
-        },
-        "authorization": {"type": "object",
+        "url": { "type": "string" },
+        "method": { "type": "string", "enum": ["get", "post", "put"] },
+        "authorization": {
+          "type": "object",
           "properties": {
-            "type": {"type": "string", "const": "basic" },
-            "user": {"type": "string"},
-            "password": {"type": "string"}
+            "type": { "type": "string", "const": "basic" },
+            "user": { "type": "string" },
+            "password": { "type": "string" }
           },
           "required": ["type", "user", "password"]
         }

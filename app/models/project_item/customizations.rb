@@ -8,8 +8,7 @@ module ProjectItem::Customizations
   end
 
   def bundled_services
-    @bundled_services ||= (properties["bundled_services"] || []).map do |parameters|
-      ProjectItem::ReadonlyPart.new(parameters: parameters)
-    end
+    @bundled_services ||=
+      (properties["bundled_services"] || []).map { |parameters| ProjectItem::ReadonlyPart.new(parameters: parameters) }
   end
 end

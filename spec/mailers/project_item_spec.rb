@@ -36,9 +36,10 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       mail = described_class.waiting_for_response(project_item).deliver_now
       encoded_body = mail.body.encoded
 
-      expect(mail.subject)
-          .to match("Status of your service access request " \
-                    "in the EOSC Portal Marketplace has changed to WAITING FOR RESPONSE")
+      expect(mail.subject).to match(
+        "Status of your service access request " \
+          "in the EOSC Portal Marketplace has changed to WAITING FOR RESPONSE"
+      )
       expect(encoded_body).to match(/You have received a message from a customer service expert related/)
       expect(encoded_body).to match(/#{project_services_url(project)}/)
       expect(mail.to).to contain_exactly(user.email)
@@ -50,9 +51,10 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       mail = described_class.rejected(project_item).deliver_now
       encoded_body = mail.body.encoded
 
-      expect(mail.subject)
-          .to match("Status of your service access request in the EOSC Portal Marketplace " \
-                    "has changed to REJECTED")
+      expect(mail.subject).to match(
+        "Status of your service access request in the EOSC Portal Marketplace " \
+          "has changed to REJECTED"
+      )
       expect(encoded_body).to match("n rejected.=0D")
       expect(encoded_body).to match(/#{project_service_conversation_url(project, project_item)}/)
       expect(mail.to).to contain_exactly(user.email)
@@ -64,9 +66,10 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       mail = described_class.closed(project_item).deliver_now
       encoded_body = mail.body.encoded
 
-      expect(mail.subject)
-          .to match("Status of your service access request in the EOSC Portal Marketplace " \
-                    "has changed to CLOSED")
+      expect(mail.subject).to match(
+        "Status of your service access request in the EOSC Portal Marketplace " \
+          "has changed to CLOSED"
+      )
       expect(encoded_body).to match(/has been closed/)
       expect(encoded_body).to match(/#{project_service_conversation_url(project, project_item)}/)
       expect(mail.to).to contain_exactly(user.email)
@@ -78,9 +81,10 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       mail = described_class.approved(project_item).deliver_now
       encoded_body = mail.body.encoded
 
-      expect(mail.subject)
-          .to match("Status of your service access request in the EOSC Portal Marketplace " \
-                    "has changed to APPROVED")
+      expect(mail.subject).to match(
+        "Status of your service access request in the EOSC Portal Marketplace " \
+          "has changed to APPROVED"
+      )
       expect(encoded_body).to match(/is approved/)
       expect(encoded_body).to match(/#{project_service_url(project, project_item)}/)
       expect(mail.to).to contain_exactly(user.email)
@@ -104,8 +108,10 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       encoded_body = mail.body.encoded
 
       expect(mail.subject).to match(/EGI Applications on Demand service approved/)
-      expect(encoded_body).to include("This email is to inform you that your request to access the EGI\r\n" + \
-                                      "Applications on Demand (AoD) service has been approved.")
+      expect(encoded_body).to include(
+        "This email is to inform you that your request to access the EGI\r\n" +
+          "Applications on Demand (AoD) service has been approved."
+      )
     end
 
     it "notify if voucher accepted with voucher_id" do
@@ -138,7 +144,9 @@ RSpec.describe ProjectItemMailer, type: :mailer do
 
       expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) service with voucher approved/)
       expect(encoded_body).to match(/To redeem an Exoscale voucher:/)
-      expect(encoded_body).to have_content("Open your web browser at https://portal.exoscale.com/register?coupon=3D=\n1234=0D\n")
+      expect(encoded_body).to have_content(
+        "Open your web browser at https://portal.exoscale.com/register?coupon=3D=\n1234=0D\n"
+      )
     end
 
     it "notify if voucher rejected with voucher_id" do

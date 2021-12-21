@@ -12,7 +12,7 @@ RSpec.describe Api::V1::ProjectItemSerializer do
       project_id: project_item.project.id,
       status: {
         value: project_item.status,
-        type: project_item.status_type,
+        type: project_item.status_type
       },
       attributes: {
         category: project_item.service.categories&.first.name,
@@ -21,10 +21,10 @@ RSpec.describe Api::V1::ProjectItemSerializer do
         offer_properties: project_item.properties,
         platforms: project_item.service.platforms.pluck(:name),
         request_voucher: project_item.request_voucher,
-        order_type: project_item.order_type,
+        order_type: project_item.order_type
       },
       oms_params: project_item.offer.oms_params,
-      user_secrets: {},
+      user_secrets: {}
     }
 
     expect(serialized).to eq(expected)
@@ -39,7 +39,7 @@ RSpec.describe Api::V1::ProjectItemSerializer do
       project_id: project_item.project.id,
       status: {
         value: project_item.status,
-        type: project_item.status_type,
+        type: project_item.status_type
       },
       attributes: {
         category: project_item.service.categories&.first.name,
@@ -48,9 +48,9 @@ RSpec.describe Api::V1::ProjectItemSerializer do
         offer_properties: project_item.properties,
         platforms: project_item.service.platforms.pluck(:name),
         request_voucher: project_item.request_voucher,
-        order_type: project_item.order_type,
+        order_type: project_item.order_type
       },
-      user_secrets: {},
+      user_secrets: {}
     }
 
     expect(serialized).to eq(expected)
@@ -65,7 +65,7 @@ RSpec.describe Api::V1::ProjectItemSerializer do
       project_id: nil,
       status: {
         value: "created",
-        type: nil,
+        type: nil
       },
       attributes: {
         category: nil,
@@ -74,9 +74,9 @@ RSpec.describe Api::V1::ProjectItemSerializer do
         offer_properties: [],
         platforms: [],
         request_voucher: false,
-        order_type: nil,
+        order_type: nil
       },
-      user_secrets: {},
+      user_secrets: {}
     }
 
     expect(serialized).to eq(expected)

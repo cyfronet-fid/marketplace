@@ -72,7 +72,12 @@ class Attribute
     if !param.blank?
       case value_type
       when "integer"
-        @value = Integer(param) rescue String(param)
+        @value =
+          begin
+            Integer(param)
+          rescue StandardError
+            String(param)
+          end
       when "string"
         @value = String(param)
       else
@@ -83,25 +88,18 @@ class Attribute
 
   def value_type_schema
     # overload to reflect support for other types for attribute
-    {
-        "type": "string",
-        "enum": ["string", "integer"]
-    }
+    { "type": "string", "enum": %w[string integer] }
   end
 
   def value_schema
     # overload this method to create other schemas for values
-    {
-        "type": value_type
-    }
+    { "type": value_type }
   end
 
   def config_schema
     # you need to overload this to create attribute types
     # by default attribute is property without any configuration
-    {
-        "type": "null"
-    }
+    { "type": "null" }
   end
 
   def self.from_json(json)
@@ -137,33 +135,32 @@ class Attribute
   end
 
   protected
-    ATTRIBUTE_SCHEMA = {
-      "type": "object",
-      "required": ["id", "label", "type", "value_type"],
-      "properties": {
-        "id": {
-            "type": "string"
-        },
-        "label": {
-            "type": "string"
-        },
-        "description": {
-            "type": "string"
-        },
-        "type": {
-            "type": "string",
-            "enum": [
-              "attribute", "input", "range-property", "select",
-              "multiselect", "range", "date", "quantity_price"]
-        },
-        # maybe value type support should be validated per attribute type
-        "value_type": {
-            "type": "string",
-        },
-        "value": {},
-        "config": {}
-      }
-    }
 
-    TYPE = "attribute"
+  ATTRIBUTE_SCHEMA = {
+    "type": "object",
+    "required": %w[id label type value_type],
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "label": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string",
+        "enum": %w[attribute input range-property select multiselect range date quantity_price]
+      },
+      # maybe value type support should be validated per attribute type
+      "value_type": {
+        "type": "string"
+      },
+      "value": {},
+      "config": {}
+    }
+  }
+
+  TYPE = "attribute"
 end

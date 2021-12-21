@@ -5,8 +5,18 @@ require "jira/project_migrator"
 
 describe Jira::Setup do
   let(:jira_project_key) { "MP" }
-  let(:jira_client) { double("Jira::Client", jira_project_key: jira_project_key, jira_config: { username: "admin" },
-                             custom_fields: { "Epic Link": "EpicLinkCustomFieldID" }) }
+  let(:jira_client) do
+    double(
+      "Jira::Client",
+      jira_project_key: jira_project_key,
+      jira_config: {
+        username: "admin"
+      },
+      custom_fields: {
+        "Epic Link": "EpicLinkCustomFieldID"
+      }
+    )
+  end
   let(:project_migrator) { Jira::ProjectMigrator.new(jira_client) }
   let(:project) { create(:project, issue_status: :jira_require_migration, issue_key: nil, issue_id: nil) }
   let(:project_issue) { double("Issue", id: 1, key: "MP-1") }
@@ -60,7 +70,8 @@ describe Jira::Setup do
     expect(jira_client).to receive(:create_project_issue).with(project).and_return(project_issue)
 
     expect(jira_client).to receive_message_chain("Issue.find")
-                             .with(pi.issue_id).and_raise(JIRA::HTTPError.new(double(message: "", code: "404")))
+      .with(pi.issue_id)
+      .and_raise(JIRA::HTTPError.new(double(message: "", code: "404")))
 
     project_migrator.call
 
@@ -78,7 +89,8 @@ describe Jira::Setup do
     expect(jira_client).to receive(:create_project_issue).with(project).and_return(project_issue)
 
     expect(jira_client).to receive_message_chain("Issue.find")
-                             .with(pi.issue_id).and_raise(JIRA::HTTPError.new(double(message: "", code: "405")))
+      .with(pi.issue_id)
+      .and_raise(JIRA::HTTPError.new(double(message: "", code: "405")))
 
     project_migrator.call
 

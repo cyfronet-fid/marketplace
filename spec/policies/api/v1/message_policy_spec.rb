@@ -37,21 +37,27 @@ RSpec.describe Api::V1::MessagePolicy, type: :policy do
 
   permissions ".scope" do
     it "shows all project's and project_items' messages when user is a default oms admin" do
-      expect(subject::Scope.new(default_oms_admin, project1.messages).resolve).to contain_exactly(message1,
-                                                                                                  message2)
-      expect(subject::Scope.new(default_oms_admin, project2.messages).resolve).to contain_exactly(message3,
-                                                                                                  message4)
-      expect(subject::Scope.new(default_oms_admin, project3.messages).resolve).to contain_exactly(message5,
-                                                                                                  message6,
-                                                                                                  message7)
+      expect(subject::Scope.new(default_oms_admin, project1.messages).resolve).to contain_exactly(message1, message2)
+      expect(subject::Scope.new(default_oms_admin, project2.messages).resolve).to contain_exactly(message3, message4)
+      expect(subject::Scope.new(default_oms_admin, project3.messages).resolve).to contain_exactly(
+        message5,
+        message6,
+        message7
+      )
 
-      expect(subject::Scope.new(default_oms_admin, project_item1.messages).resolve).to contain_exactly(message8,
-                                                                                                       message9)
-      expect(subject::Scope.new(default_oms_admin, project_item2.messages).resolve).to contain_exactly(message10,
-                                                                                                       message11)
-      expect(subject::Scope.new(default_oms_admin, project_item3.messages).resolve).to contain_exactly(message12,
-                                                                                                       message13,
-                                                                                                       message14)
+      expect(subject::Scope.new(default_oms_admin, project_item1.messages).resolve).to contain_exactly(
+        message8,
+        message9
+      )
+      expect(subject::Scope.new(default_oms_admin, project_item2.messages).resolve).to contain_exactly(
+        message10,
+        message11
+      )
+      expect(subject::Scope.new(default_oms_admin, project_item3.messages).resolve).to contain_exactly(
+        message12,
+        message13,
+        message14
+      )
     end
 
     it "shows messages which offers' primary_oms is administrated by user" do

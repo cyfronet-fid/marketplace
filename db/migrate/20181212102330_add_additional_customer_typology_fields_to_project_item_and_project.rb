@@ -14,22 +14,30 @@ class AddAdditionalCustomerTypologyFieldsToProjectItemAndProject < ActiveRecord:
     add_column :projects, :company_website_url, :string
 
     execute("UPDATE project_items SET user_group_name = 'Not provided' WHERE customer_typology = 'research'")
-    execute("UPDATE project_items SET project_name = 'Not provided', " \
-            "project_website_url = 'https://not.provided' " \
-            "WHERE customer_typology = 'private_company'")
+    execute(
+      "UPDATE project_items SET project_name = 'Not provided', " \
+        "project_website_url = 'https://not.provided' " \
+        "WHERE customer_typology = 'private_company'"
+    )
 
-    execute("UPDATE project_items SET company_name = 'Not provided', " \
-            "company_website_url = 'https://not.provided' " \
-            "WHERE customer_typology = 'private_company'")
+    execute(
+      "UPDATE project_items SET company_name = 'Not provided', " \
+        "company_website_url = 'https://not.provided' " \
+        "WHERE customer_typology = 'private_company'"
+    )
 
     execute("UPDATE projects SET user_group_name = 'Not provided' WHERE customer_typology = 'research'")
-    execute("UPDATE projects SET project_name = 'Not provided', " \
-            "project_website_url = 'https://not.provided' " \
-            "WHERE customer_typology = 'private_company'")
+    execute(
+      "UPDATE projects SET project_name = 'Not provided', " \
+        "project_website_url = 'https://not.provided' " \
+        "WHERE customer_typology = 'private_company'"
+    )
 
-    execute("UPDATE projects SET company_name = 'Not provided', " \
-            "company_website_url = 'https://not.provided' " \
-            "WHERE customer_typology = 'private_company'")
+    execute(
+      "UPDATE projects SET company_name = 'Not provided', " \
+        "company_website_url = 'https://not.provided' " \
+        "WHERE customer_typology = 'private_company'"
+    )
   end
 
   def down

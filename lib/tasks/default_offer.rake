@@ -7,9 +7,7 @@ namespace :default_offer do
 
     one_offer_services.each do |service|
       puts "Updating offer for #{service.name}"
-      service.offers.each do |offer|
-        offer.update(default: true)
-      end
+      service.offers.each { |offer| offer.update(default: true) }
     end
   end
 end

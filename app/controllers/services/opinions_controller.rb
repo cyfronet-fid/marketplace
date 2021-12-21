@@ -19,8 +19,11 @@ class Services::OpinionsController < ApplicationController
     authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] === "backoffice_service"), :show?)
     @related_services = @service.related_services
     @related_services_title = "Related resources"
-    @service_opinions = ServiceOpinion.includes(project_item: :offer).
-        where(offers: { service_id: @service }).includes(project_item: :project)
+    @service_opinions =
+      ServiceOpinion
+        .includes(project_item: :offer)
+        .where(offers: { service_id: @service })
+        .includes(project_item: :project)
     @question = Service::Question.new(service: @service)
   end
 end

@@ -7,9 +7,7 @@ class Service::Publish
   end
 
   def call
-    if @service.offers.size == 1
-      Offer::Publish.new(@service.offers.first).call
-    end
+    Offer::Publish.new(@service.offers.first).call if @service.offers.size == 1
     @service.update(status: @status)
     Service::Mailer::SendToSubscribers.new(@service).call
   end

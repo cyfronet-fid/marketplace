@@ -70,10 +70,7 @@ RSpec.feature "Project services" do
   end
 
   scenario "Project service is immutable to the offer change" do
-    offer = create(:offer, service: service,
-                   order_type: :open_access,
-                   order_url: "http://old.pl",
-                   voucherable: false)
+    offer = create(:offer, service: service, order_type: :open_access, order_url: "http://old.pl", voucherable: false)
     project_item = create(:project_item, offer: offer, project: project)
     offer.update(order_type: :order_required, voucherable: true, order_url: "http://new.pl")
 

@@ -8,8 +8,12 @@ module Messageable
     before_create :set_conversation_last_seen
 
     def new_messages_to_user
-      messages.where("created_at > ? AND scope != ? AND author_role IN (?)",
-                     conversation_last_seen, "internal", %w[provider mediator])
+      messages.where(
+        "created_at > ? AND scope != ? AND author_role IN (?)",
+        conversation_last_seen,
+        "internal",
+        %w[provider mediator]
+      )
     end
 
     def user_has_new_messages?
@@ -21,8 +25,9 @@ module Messageable
     end
 
     private
-      def set_conversation_last_seen
-        self.conversation_last_seen = created_at
-      end
+
+    def set_conversation_last_seen
+      self.conversation_last_seen = created_at
+    end
   end
 end

@@ -8,12 +8,16 @@ class Parameter::Input < Parameter
 
   def dump
     ActiveSupport::HashWithIndifferentAccess.new(
-      id: id, type: type, label: name, description: hint,
-      unit: unit, value_type: value_type)
+      id: id,
+      type: type,
+      label: name,
+      description: hint,
+      unit: unit,
+      value_type: value_type
+    )
   end
 
   def self.load(hsh)
-    new(id: hsh["id"], name: hsh["label"], hint: hsh["description"],
-        unit: hsh["unit"], value_type: hsh["value_type"])
+    new(id: hsh["id"], name: hsh["label"], hint: hsh["description"], unit: hsh["unit"], value_type: hsh["value_type"])
   end
 end

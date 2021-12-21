@@ -24,21 +24,36 @@ class Parameter::Multiselect < Parameter
 
   def dump
     ActiveSupport::HashWithIndifferentAccess.new(
-      id: id, type: type, label: name, description: hint,
-      config: { values: cast(values), minItems: (min || 1), maxItems: (max || values.length) },
-      value_type: value_type, unit: unit)
+      id: id,
+      type: type,
+      label: name,
+      description: hint,
+      config: {
+        values: cast(values),
+        minItems: (min || 1),
+        maxItems: (max || values.length)
+      },
+      value_type: value_type,
+      unit: unit
+    )
   end
 
   def self.load(hsh)
-    new(id: hsh["id"], name: hsh["label"], hint: hsh["description"],
-        values: hsh.dig("config", "values"), min: hsh.dig("config", "minItems"),
-        value_type: hsh["value_type"], max: hsh.dig("config", "maxItems"), unit: hsh["unit"])
+    new(
+      id: hsh["id"],
+      name: hsh["label"],
+      hint: hsh["description"],
+      values: hsh.dig("config", "values"),
+      min: hsh.dig("config", "minItems"),
+      value_type: hsh["value_type"],
+      max: hsh.dig("config", "maxItems"),
+      unit: hsh["unit"]
+    )
   end
 
   private
-    def duplicates
-      if values.uniq.length != values.length
-        errors.add(:values, "there are duplicate elements")
-      end
-    end
+
+  def duplicates
+    errors.add(:values, "there are duplicate elements") if values.uniq.length != values.length
+  end
 end

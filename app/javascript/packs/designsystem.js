@@ -1,2 +1,1 @@
-import "designsystem"
-
+import "designsystem";

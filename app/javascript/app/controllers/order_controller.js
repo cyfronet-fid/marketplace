@@ -1,19 +1,15 @@
-import { Controller } from "stimulus"
+import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["form", "select"]
+  static targets = ["form", "select"];
 
-  connect() {
-  }
+  connect() {}
 
-  initialize() {
-  }
+  initialize() {}
 
   reload(event) {
     let form = this.formTarget;
     form.submit();
-    document.getElementsByClassName("spinner-background")[0].style.display = 'flex';
+    document.getElementsByClassName("spinner-background")[0].style.display = "flex";
   }
 }
-
-

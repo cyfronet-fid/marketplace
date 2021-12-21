@@ -27,48 +27,39 @@ class Jms::Publisher
   end
 
   private
-    def conf_hash(login, pass, host, ssl)
-      {
-        hosts: [
-          {
-            login: login,
-            passcode: pass,
-            host: host,
-            port: 61613,
-            ssl: ssl,
-          }
-        ],
-        connect_timeout: 5,
-        max_reconnect_attempts: 5,
-        connect_headers: {
-          "accept-version": "1.2", # mandatory
-          "host": "localhost", # mandatory
-          "heart-beat": "0,20000",
-        }
+
+  def conf_hash(login, pass, host, ssl)
+    {
+      hosts: [{ login: login, passcode: pass, host: host, port: 61_613, ssl: ssl }],
+      connect_timeout: 5,
+      max_reconnect_attempts: 5,
+      connect_headers: {
+        "accept-version": "1.2", # mandatory
+        "host": "localhost", # mandatory
+        "heart-beat": "0,20000"
       }
-    end
+    }
+  end
 
-    def verify_connection!
-      unless @client.open?
-        raise ConnectionError.new("Connection failed!!")
-      end
-      if @client.connection_frame.command == Stomp::CMD_ERROR
-        raise ConnectionError.new("Connection error: #{@client.connection_frame.body}")
-      end
+  def verify_connection!
+    raise ConnectionError.new("Connection failed!!") unless @client.open?
+    if @client.connection_frame.command == Stomp::CMD_ERROR
+      raise ConnectionError.new("Connection error: #{@client.connection_frame.body}")
     end
+  end
 
-    def msg_destination
-      "/topic/#{@topic}"
-    end
+  def msg_destination
+    "/topic/#{@topic}"
+  end
 
-    def msg_headers
-      {
-        "persistent": true,
-        # Without suppress_content_length ActiveMQ interprets the message as a BytesMessage, instead of a TextMessage.
-        # See https://github.com/stompgem/stomp/blob/v1.4.10/lib/connection/netio.rb#L245
-        # and https://activemq.apache.org/stomp.html.
-        "suppress_content_length": true,
-        "content-type": "application/json"
-      }
-    end
+  def msg_headers
+    {
+      "persistent": true,
+      # Without suppress_content_length ActiveMQ interprets the message as a BytesMessage, instead of a TextMessage.
+      # See https://github.com/stompgem/stomp/blob/v1.4.10/lib/connection/netio.rb#L245
+      # and https://activemq.apache.org/stomp.html.
+      "suppress_content_length": true,
+      "content-type": "application/json"
+    }
+  end
 end

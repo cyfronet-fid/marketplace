@@ -1,28 +1,24 @@
-import {Controller} from 'stimulus'
+import { Controller } from "stimulus";
 
 export default class extends Controller {
-    static targets = ["share", "email", "form"];
+  static targets = ["share", "email", "form"];
 
-    connect() {
-    }
+  connect() {}
 
-    initialize() {
-    }
+  initialize() {}
 
-    share(event) {
-        if (this.emailTarget) {
-            event.target.checked
-                ? this.emailTarget.classList.add('show')
-                : this.emailTarget.classList.remove('show')
-        }
+  share(event) {
+    if (this.emailTarget) {
+      event.target.checked ? this.emailTarget.classList.add("show") : this.emailTarget.classList.remove("show");
     }
+  }
 
-    onPostSuccess(event) {
-        $(document.getElementById('tour-feedback-modal')).modal("hide");
-    }
+  onPostSuccess(event) {
+    $(document.getElementById("tour-feedback-modal")).modal("hide");
+  }
 
-    onPostError(event) {
-        let [data, status, xhr] = event.detail;
-        this.formTarget.parentElement.innerHTML = xhr.response;
-    }
+  onPostError(event) {
+    let [data, status, xhr] = event.detail;
+    this.formTarget.parentElement.innerHTML = xhr.response;
+  }
 }
