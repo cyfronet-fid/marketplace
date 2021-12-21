@@ -21,7 +21,7 @@ class Project::Archive
     issue = client.Issue.find(@project.issue_key)
     trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_archived_id }
 
-    if trs.length > 0
+    if !trs.empty?
       transition = issue.transitions.build
       transition.save!("transition" => { "id" => trs.first.id })
       @project.update(issue_id: issue.id, issue_status: :jira_active)

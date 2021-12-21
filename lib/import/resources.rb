@@ -89,12 +89,12 @@ module Import
                 end
               else
                 not_modified += 1
-                log "Service upstream is not set to EOSC Registry," +
+                log "Service upstream is not set to EOSC Registry," \
                       " not updating #{existing_service.name}, id: #{service_source.id}"
               end
             end
           rescue ActiveRecord::RecordInvalid => e
-            log "ERROR - #{e}! #{service[:name]} (eid: #{service[:pid]}) " +
+            log "ERROR - #{e}! #{service[:name]} (eid: #{service[:pid]}) " \
                   "will NOT be created (please contact catalog manager)"
           rescue StandardError => e
             log "ERROR - Unexpected #{e}! #{service[:name]} (eid: #{service[:pid]}) will NOT be created!"

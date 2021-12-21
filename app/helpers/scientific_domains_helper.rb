@@ -18,7 +18,7 @@ module ScientificDomainsHelper
   private
 
   def group_scientific_domains!(result, current_path, key, values)
-    if values.size > 0
+    if !values.empty?
       new_current_path = "#{current_path}#{key.name}/"
       values.each { |k, v| group_scientific_domains!(result, new_current_path, k, v) }
     else

@@ -1,5 +1,5 @@
 - if value.is_a?(Array)
   - value.each_with_index do |element, idx|
     = hidden_field_tag "#{key}[]", element, id: "#{key}_#{idx}", multiple: true
-- else
-  = hidden_field_tag key, value if params[key].present?
+- elsif params[key].present?
+  = hidden_field_tag key, value

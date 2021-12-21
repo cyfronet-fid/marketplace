@@ -4,7 +4,7 @@ module TourHelper
   def tour(tour, show_welcome_modal)
     if tour.present? || show_welcome_modal
       data = {
-        is_logged_in: !!current_user,
+        is_logged_in: !current_user.nil?,
         show_welcome_modal: show_welcome_modal,
         tour_controller_action: action_name,
         tour_controller_name: controller_name,

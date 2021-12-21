@@ -57,7 +57,7 @@ class Importers::Provider
       data_administrators = Array(@data["users"])&.map { |da| DataAdministrator.new(map_data_administrator(da)) } || []
     end
 
-    main_contact = MainContact.new(map_contact(@data["mainContact"])) if @data["mainContact"] || nil
+    main_contact = MainContact.new(map_contact(@data["mainContact"])) if @data["mainContact"]
 
     {
       pid: @data["id"],

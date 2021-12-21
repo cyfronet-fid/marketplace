@@ -4,14 +4,14 @@ class Services::QuestionsController < ApplicationController
   def new
     @question = Service::Question.new
     @service = Service.friendly.find(params[:service_id])
-    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] === "backoffice_service"), :show?)
+    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"), :show?)
 
     respond_to { |format| format.js { render_modal_form } }
   end
 
   def create
     @service = Service.friendly.find(params[:service_id])
-    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] === "backoffice_service"), :show?)
+    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"), :show?)
     user = current_user
     @question =
       Service::Question.new(

@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
 def migrate(from, to)
+  # IMPORTANT!!!
+  # without including Blob, migration from local to s3 may not work
+  # rubocop:disable Lint/Void
   ActiveStorage::Blob
+
+  # rubocop:enable Lint/Void
+
   configs = Rails.configuration.active_storage.service_configurations
   source = ActiveStorage::Service.configure from, configs
   target = ActiveStorage::Service.configure to, configs

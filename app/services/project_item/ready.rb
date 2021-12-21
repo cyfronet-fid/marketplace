@@ -28,7 +28,7 @@ class ProjectItem::Ready
 
       trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_ready_id }
 
-      if trs.length > 0
+      if !trs.empty?
         transition = issue.transitions.build
         transition.save!("transition" => { "id" => trs.first.id })
         @project_item.update(issue_id: issue.id, issue_status: :jira_active)

@@ -19,8 +19,8 @@ class ApiDocsController < ApplicationController
     subsection = params[:subsection]&.to_sym
     if subsection.blank?
       :introduction
-    else
-      subsection if helpers.api_wiki_subsections.include? subsection
+    elsif helpers.api_wiki_subsections.include? subsection
+      subsection
     end
   end
 

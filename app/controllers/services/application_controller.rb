@@ -31,7 +31,7 @@ class Services::ApplicationController < ApplicationController
 
   def load_and_authenticate_service!
     @service = Service.friendly.find(params[:service_id])
-    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] === "backoffice_service"), :order?)
+    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"), :order?)
     @wizard = ProjectItem::Wizard.new(@service)
   end
 
@@ -65,7 +65,7 @@ class Services::ApplicationController < ApplicationController
   def find_next_visible_step_key(step_key)
     next_step_key = wizard.next_step_key(step_key)
 
-    next_step_key == nil || step_for(next_step_key).visible? ? next_step_key : find_next_visible_step_key(next_step_key)
+    next_step_key.nil? || step_for(next_step_key).visible? ? next_step_key : find_next_visible_step_key(next_step_key)
   end
 
   def prev_visible_step_key
@@ -75,7 +75,7 @@ class Services::ApplicationController < ApplicationController
   def find_prev_visible_step_key(step_key)
     prev_step_key = wizard.prev_step_key(step_key)
 
-    prev_step_key == nil || step_for(prev_step_key).visible? ? prev_step_key : find_prev_visible_step_key(prev_step_key)
+    prev_step_key.nil? || step_for(prev_step_key).visible? ? prev_step_key : find_prev_visible_step_key(prev_step_key)
   end
 
   def prev_step_key

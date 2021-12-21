@@ -24,7 +24,7 @@ module ImageHelper
     tmp_logo.path
   end
 
-  def self.to_base_64(path)
+  def self.to_base64(path)
     content_type = MiniMagick::Image.open(path).mime_type
     File.open(path, "rb") { |img| "data:" + content_type + ";base64," + Base64.strict_encode64(img.read) }
   rescue Exception
@@ -44,9 +44,9 @@ module ImageHelper
     end
   end
 
-  def self.base_64_to_blob_stream(base_64)
-    extension = ImageHelper.base_64_extension(base_64)
-    decoded_image = Base64.decode64(base_64[(base_64.index("base64,") + "base64,".size)..-1])
+  def self.base_64_to_blob_stream(base64)
+    extension = ImageHelper.base_64_extension(base64)
+    decoded_image = Base64.decode64(base64[(base64.index("base64,") + "base64,".size)..])
     blob = MiniMagick::Image.read(decoded_image, extension).to_blob
     logo = StringIO.new
     logo.write(blob)
@@ -75,8 +75,8 @@ module ImageHelper
     %w[.jpg .jpeg .pjpeg .png .gif .tiff].include?(extension)
   end
 
-  def self.base_64_extension(base_64)
-    metadata = base_64.split("base64,")[0]
+  def self.base_64_extension(base64)
+    metadata = base64.split("base64,")[0]
     extension = "." + metadata[%r{image/[a-zA-Z]+}].gsub!(%r{image/}, "")
     unless ImageHelper.image_ext_permitted?(extension)
       msg = "Conversion of binary image to base64 can't be done on file with extension #{extension}"

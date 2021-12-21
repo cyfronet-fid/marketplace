@@ -117,14 +117,14 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     if logo
       session[preview_session_key]["logo"] = {
         "filename" => logo.original_filename,
-        "base64" => ImageHelper.to_base_64(logo.path),
+        "base64" => ImageHelper.to_base64(logo.path),
         "type" => logo.content_type
       }
     end
   end
 
   def clear_session_attributes!
-    session[preview_session_key].delete("attributes") if session[preview_session_key]
+    session[preview_session_key]&.delete("attributes")
   end
 
   def add_missing_nested_models

@@ -6,7 +6,7 @@
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum; this matches the default thread size of Active Record.
 #
-max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
+max_threads_count = ENV.fetch("RAILS_MAX_THREADS", 5)
 min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
 
@@ -17,14 +17,14 @@ worker_timeout 3600 if ENV.fetch("RAILS_ENV", "development") == "development"
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 #
-port        ENV.fetch("PORT") { 3000 }
+port        ENV.fetch("PORT", 3000)
 
 # Specifies the `environment` that Puma will run in.
 #
-environment ENV.fetch("RAILS_ENV") { "development" }
+environment ENV.fetch("RAILS_ENV", "development")
 
 # Specifies the `pidfile` that Puma will use.
-pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
+pidfile ENV.fetch("PIDFILE", "tmp/pids/server.pid")
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked web server processes. If using threads and workers together
@@ -50,9 +50,9 @@ before_fork do
   require "puma_worker_killer"
 
   PumaWorkerKiller.config do |config|
-    config.ram = ENV.fetch("PUMA_KILLER_MACHINE_RAM_MB") { 7168 }.to_i
-    config.frequency = ENV.fetch("PUMA_KILLER_CHECK_FREQ") { 10 }.to_i
-    config.percent_usage = ENV.fetch("PUMA_KILLER_RAM_UTILIZATION_PERCENT") { 0.07 }.to_f
+    config.ram = ENV.fetch("PUMA_KILLER_MACHINE_RAM_MB", 7168).to_i
+    config.frequency = ENV.fetch("PUMA_KILLER_CHECK_FREQ", 10).to_i
+    config.percent_usage = ENV.fetch("PUMA_KILLER_RAM_UTILIZATION_PERCENT", 0.07).to_f
 
     # Prevent logging puma killer info about RAM consumption
     config.reaper_status_logs = false
@@ -71,5 +71,5 @@ before_fork do
     }
   end
 
-  PumaWorkerKiller.start if ENV.fetch("PUMA_KILLER_ENABLE") { false }
+  PumaWorkerKiller.start if ENV.fetch("PUMA_KILLER_ENABLE", false)
 end

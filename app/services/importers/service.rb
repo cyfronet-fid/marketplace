@@ -80,7 +80,7 @@ class Importers::Service
 
     status = ENV["RESOURCE_IMPORT_STATUS"] || "published"
 
-    main_contact = MainContact.new(map_contact(@data["mainContact"])) if @data["mainContact"] || nil
+    main_contact = MainContact.new(map_contact(@data["mainContact"])) if @data["mainContact"]
 
     {
       pid: @data["id"],

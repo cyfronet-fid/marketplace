@@ -17,7 +17,7 @@ class ProjectItem::OfferValues
     id_to_part = all_parts.index_by { |p| p.offer.id.to_s }
     values.each do |id, part_values|
       part = id_to_part[id.to_s]
-      part.update(part_values) if part
+      part&.update(part_values)
     end
   end
 
