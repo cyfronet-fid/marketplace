@@ -8,7 +8,7 @@ describe "block_error_handling" do
     block_error_handling :sample_error_method!
 
     def sample_error_method!
-      raise StandardError.new
+      raise StandardError
     end
 
     def sample_method!; end
@@ -235,9 +235,9 @@ describe Jira::Checker do
           comment_deleted: false
         }
 
-        expect {
+        expect do
           checker.check_webhook_params!(MockWebhook.new(checker.client.jira_project_key, events))
-        }.to raise_error { |error|
+        end.to raise_error { |error|
           expect(error).to be_a(Jira::Checker::CheckerCompositeError)
           expect(error.statuses).to eq(expected_statuses)
         }

@@ -21,7 +21,7 @@ class Message::RegisterMessage
     if comment.save(body: message)
       question.update(iid: comment.id)
     else
-      raise JIRACommentCreateError.new(question)
+      raise JIRACommentCreateError, question
     end
   end
 end

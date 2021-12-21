@@ -71,7 +71,5 @@ before_fork do
     }
   end
 
-  if ENV.fetch("PUMA_KILLER_ENABLE") { false }
-    PumaWorkerKiller.start
-  end
+  PumaWorkerKiller.start if ENV.fetch("PUMA_KILLER_ENABLE") { false }
 end

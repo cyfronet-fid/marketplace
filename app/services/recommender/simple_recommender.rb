@@ -52,7 +52,7 @@ class Recommender::SimpleRecommender
   def fill_missing(recommended_services, n)
     if recommended_services.length < n
       additional_services = Service.all[0..(n - recommended_services.length - 1)]
-      recommended_services = recommended_services + additional_services
+      recommended_services += additional_services
     end
     recommended_services
   end

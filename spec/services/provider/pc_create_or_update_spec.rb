@@ -32,12 +32,12 @@ RSpec.describe Provider::PcCreateOrUpdate do
         sources: [build(:provider_source, provider: provider, source_type: "eosc_registry", eid: "new.provider")]
       )
 
-    expect {
+    expect do
       described_class.new(
         create(:jms_provider_response, eid: "new.provider", name: "Supper new name for updated  provider"),
         Time.now.to_i
       ).call
-    }.to change { Provider.count }.by(0)
+    end.to change { Provider.count }.by(0)
 
     updated_provider = Provider.find(provider.id)
 

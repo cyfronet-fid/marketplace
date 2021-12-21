@@ -21,7 +21,7 @@ class ProjectItemPolicy < ApplicationPolicy
     attributes =
       record.offer.attributes.map do |a|
         (a.value_schema[:type] == "array" || a.type == "select" ? { a.id => [] } : a.id)
-        # TODO handle other attribute value types
+        # TODO: handle other attribute value types
       end
     [
       :service_id,

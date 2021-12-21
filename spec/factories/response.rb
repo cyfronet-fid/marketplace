@@ -10,7 +10,7 @@ FactoryBot.define do
     transient do
       code { "200" }
       message { "" }
-      headers { Hash.new }
+      headers { {} }
     end
 
     initialize_with do

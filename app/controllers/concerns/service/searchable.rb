@@ -50,7 +50,7 @@ module Service::Searchable
   end
 
   def search_for_filters(scope, filters, current_filter)
-    filters = filters - [current_filter]
+    filters -= [current_filter]
     Service.search(
       query,
       **common_params.merge(
@@ -72,9 +72,8 @@ module Service::Searchable
     {}.tap do |hash|
       unless current_filter.index.blank?
         services = search_for_filters(scope, filters, current_filter)
-        services.aggregations[current_filter.index][current_filter.index]["buckets"].inject(hash) do |h, e|
+        services.aggregations[current_filter.index][current_filter.index]["buckets"].each_with_object(hash) do |e, h|
           h[e["key"]] = e["doc_count"]
-          h
         end
       end
     end
@@ -82,7 +81,7 @@ module Service::Searchable
 
   private
 
-  def service_offers(services, offers)
+  def service_offers(_services, offers)
     offers.with_highlights.group_by { |o, _| o.service_id }.to_h
   end
 

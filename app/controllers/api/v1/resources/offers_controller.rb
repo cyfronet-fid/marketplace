@@ -64,7 +64,7 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
   end
 
   def validate_payload
-    schema_file = (action_name == "create") ? "offer_write.json" : "offer_update.json"
+    schema_file = action_name == "create" ? "offer_write.json" : "offer_update.json"
     JSON::Validator.validate!(Rails.root.join("swagger", "v1", "offer", schema_file).to_s, params[:offer].as_json)
   rescue JSON::Schema::ValidationError => e
     render json: { error: e.message }, status: 400

@@ -23,7 +23,7 @@ class Jms::ManageMessage
     log body
     resource = @parser.parse(body["resource"])
 
-    raise ResourceParseError.new("Cannot parse resource") if resource.empty?
+    raise ResourceParseError, "Cannot parse resource" if resource.empty?
 
     case body["resourceType"]
     when "infra_service"

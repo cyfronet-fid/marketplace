@@ -8,7 +8,7 @@ class Users::AuthMockController < ApplicationController
 
     return unless Mp::Application.config.auth_mock && Rails.env.development?
 
-    encrypted_password = ::BCrypt::Password.create("#{params[:password]}#{nil}", cost: 11).to_s
+    encrypted_password = ::BCrypt::Password.create("#{params[:password]}nil", cost: 11).to_s
     user =
       User.find_by(
         email: params[:email],

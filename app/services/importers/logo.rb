@@ -17,7 +17,7 @@ class Importers::Logo
 
   def call
     Timeout.timeout(10) do
-      begin
+      
         logo = URI.open(@image_url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
         logo_content_type = logo.content_type
         extension = Rack::Mime::MIME_TYPES.invert[logo_content_type]
@@ -35,7 +35,7 @@ class Importers::Logo
         puts "ERROR - there was a problem processing image for #{@object.name} #{@image_url}: #{e}"
       rescue Exception => e
         puts "ERROR - there was a unexpected problem processing image for #{@object.name} #{@image_url}: #{e}"
-      end
+      
     end
   rescue Timeout::Error => e
     puts "ERROR - there was a problem with image loading from #{@image_url}: #{e}"

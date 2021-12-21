@@ -22,7 +22,7 @@ class ProjectItem::Create
         bundled_project_items =
           @project_item.offer.bundled_offers.map do |offer|
             bundled_parameters =
-              if @bundle_params&.respond_to?(:has_key?) && @bundle_params.has_key?(offer.id)
+              if @bundle_params&.respond_to?(:has_key?) && @bundle_params&.has_key?(offer.id)
                 @bundle_params[offer.id].map(&:to_json)
               else
                 []

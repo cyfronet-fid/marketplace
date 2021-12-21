@@ -25,7 +25,7 @@ module Service::DetailsHelper
     [6, 12 / columns.length].min
   end
 
-  def details_column_width_sm(columns)
+  def details_column_width_sm(_columns)
     12
   end
 

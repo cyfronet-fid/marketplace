@@ -29,7 +29,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
-  def after_omniauth_failure_path_for(scope)
+  def after_omniauth_failure_path_for(_scope)
     root_path
   end
 end
