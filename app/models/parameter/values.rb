@@ -23,11 +23,9 @@ module Parameter::Values
   def cast(values)
     if value_type == "integer"
       values.map do |v|
-        
-          Integer(v)
-        rescue StandardError
-          String(v)
-        
+        Integer(v)
+      rescue StandardError
+        String(v)
       end
     else
       values

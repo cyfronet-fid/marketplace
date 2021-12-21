@@ -57,17 +57,15 @@ module ImageHelper
 
   def self.image_valid?(url)
     Timeout.timeout(10) do
-      
-        logo = open(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
-        extension = Rack::Mime::MIME_TYPES.invert[logo.content_type]
-        return false unless ImageHelper.image_ext_permitted?(extension)
+      logo = open(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
+      extension = Rack::Mime::MIME_TYPES.invert[logo.content_type]
+      return false unless ImageHelper.image_ext_permitted?(extension)
 
-        true
-      rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError
-        return false
-      rescue Exception
-        return false
-      
+      true
+    rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError
+      return false
+    rescue Exception
+      return false
     end
   rescue Timeout::Error
     false
