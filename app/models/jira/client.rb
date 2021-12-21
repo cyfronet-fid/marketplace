@@ -34,7 +34,21 @@ class Jira::Client < JIRA::Client
     end
   end
 
-  attr_reader :jira_config, :jira_project_key, :jira_issue_type_id, :jira_project_issue_type_id, :webhook_secret, :custom_fields, :wf_todo_id, :wf_in_progress_id, :wf_done_id, :wf_rejected_id, :wf_waiting_for_response_id, :wf_closed_id, :wf_ready_id, :wf_approved_id, :wf_archived_id
+  attr_reader :jira_config,
+              :jira_project_key,
+              :jira_issue_type_id,
+              :jira_project_issue_type_id,
+              :webhook_secret,
+              :custom_fields,
+              :wf_todo_id,
+              :wf_in_progress_id,
+              :wf_done_id,
+              :wf_rejected_id,
+              :wf_waiting_for_response_id,
+              :wf_closed_id,
+              :wf_ready_id,
+              :wf_approved_id,
+              :wf_archived_id
 
   def initialize
     # read required options and initialize jira client
