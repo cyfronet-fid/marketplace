@@ -1,26 +1,22 @@
 {
   "type": "object",
   "properties": {
-    "id": {"type": "integer"},
+    "id": { "type": "integer" },
     "author": {
       "type": "object",
       "properties": {
-        "uid": {"type": "string"},
-        "email": {"type": "string"},
-        "name": {"type": "string"},
-        "role": {"type": "string",
-          "enum": ["user","provider", "mediator"]
-        }
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "provider", "mediator"] }
       },
       "additionalProperties": false,
       "required": ["email", "name", "role"]
     },
-    "content": {"type": "string"},
-    "scope": {"type": "string",
-      "enum": ["public", "internal", "user_direct"]
-    },
-    "created_at": {"type": "string"},
-    "updated_at": {"type": "string"}
+    "content": { "type": "string" },
+    "scope": { "type": "string", "enum": ["public", "internal", "user_direct"] },
+    "created_at": { "type": "string" },
+    "updated_at": { "type": "string" }
   },
   "additionalProperties": false,
   "required": ["id", "author", "content", "scope", "created_at", "updated_at"]

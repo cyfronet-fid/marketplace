@@ -14,7 +14,8 @@ class TourHistoriesController < ApplicationController
   end
 
   private
-    def tour_history_params
-      params.require(:tour_history).permit(:controller_name, :action_name, :tour_name)
-    end
+
+  def tour_history_params
+    params.require(:tour_history).permit(:controller_name, :action_name, :tour_name)
+  end
 end

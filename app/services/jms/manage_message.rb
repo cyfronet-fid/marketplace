@@ -3,9 +3,11 @@
 require "nori"
 
 class Jms::ManageMessage
-  class ResourceParseError < StandardError; end
+  class ResourceParseError < StandardError
+  end
 
-  class WrongMessageError < StandardError; end
+  class WrongMessageError < StandardError
+  end
 
   def initialize(message, eosc_registry_base_url, logger, token = nil)
     @parser = Nori.new(strip_namespaces: true)
@@ -27,12 +29,13 @@ class Jms::ManageMessage
     when "infra_service"
       modified_at = modified_at(resource, "infraService")
       if action != "delete" && resource["infraService"]["latest"]
-        Service::PcCreateOrUpdateJob.perform_later(resource["infraService"]["service"],
-                                                   @eosc_registry_base_url,
-                                                   resource["infraService"]["active"],
-                                                   modified_at,
-                                                   @token)
-
+        Service::PcCreateOrUpdateJob.perform_later(
+          resource["infraService"]["service"],
+          @eosc_registry_base_url,
+          resource["infraService"]["active"],
+          modified_at,
+          @token
+        )
       elsif action == "delete"
         Service::DeleteJob.perform_later(resource["infraService"]["service"]["id"])
       end
@@ -52,16 +55,17 @@ class Jms::ManageMessage
   end
 
   private
-    def modified_at(resource, resource_type)
-      metadata  = resource[resource_type]["metadata"]
-      Time.at(metadata["modifiedAt"].to_i&./1000)
-    end
 
-    def log(msg)
-      @logger.info(msg)
-    end
+  def modified_at(resource, resource_type)
+    metadata = resource[resource_type]["metadata"]
+    Time.at(metadata["modifiedAt"].to_i&./ 1000)
+  end
 
-    def warn(msg)
-      @logger.warn(msg)
-    end
+  def log(msg)
+    @logger.info(msg)
+  end
+
+  def warn(msg)
+    @logger.warn(msg)
+  end
 end

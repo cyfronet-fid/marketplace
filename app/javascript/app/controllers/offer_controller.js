@@ -1,9 +1,8 @@
-import {Controller} from 'stimulus'
+import { Controller } from "stimulus";
 import initChoices from "../choices";
 
 export default class extends Controller {
-  static targets = ["parameters", "external",
-                    "attributes", "button", "attributeType"];
+  static targets = ["parameters", "external", "attributes", "button", "attributeType"];
 
   initialize() {
     this.indexCounter = 0;
@@ -13,8 +12,7 @@ export default class extends Controller {
   }
 
   add(event) {
-    const template = this.buttonTarget.dataset.template
-      .replace(/js_template_id/g, this.generateId());
+    const template = this.buttonTarget.dataset.template.replace(/js_template_id/g, this.generateId());
     const newElement = document.createRange().createContextualFragment(template).firstChild;
 
     this.attributesTarget.appendChild(newElement);
@@ -27,7 +25,7 @@ export default class extends Controller {
   }
 
   generateId() {
-    return new Date().getTime()%10000 + this.indexCounter++;
+    return (new Date().getTime() % 10000) + this.indexCounter++;
   }
 
   remove(event) {
@@ -37,25 +35,25 @@ export default class extends Controller {
     }
   }
 
-  selectParameterType(event){
-    const template = event.target.dataset.template
-    this.buttonTarget.disabled = false
-    this.setSelect(event)
-    this.buttonTarget.dataset.template = template
+  selectParameterType(event) {
+    const template = event.target.dataset.template;
+    this.buttonTarget.disabled = false;
+    this.setSelect(event);
+    this.buttonTarget.dataset.template = template;
     this.buttonTarget.classList.add("active");
   }
 
-  setSelect(event){
+  setSelect(event) {
     this.fromArrayRemoveSelect();
-    event.target.classList.add("selected")
+    event.target.classList.add("selected");
   }
 
   fromArrayRemoveSelect() {
-    this.attributeTypeTargets.forEach(this.removeSelect)
+    this.attributeTypeTargets.forEach(this.removeSelect);
   }
 
   removeSelect(elem, index) {
-    elem.classList.remove("selected")
+    elem.classList.remove("selected");
   }
 
   up(event) {

@@ -8,6 +8,4 @@ module SplitHelper
   end
 end
 
-RSpec.configure do |config|
-  config.include SplitHelper
-end
+RSpec.configure { |config| config.include SplitHelper }

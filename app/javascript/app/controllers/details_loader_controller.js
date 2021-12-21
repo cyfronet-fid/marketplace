@@ -1,4 +1,4 @@
-import { Controller } from "stimulus"
+import { Controller } from "stimulus";
 
 export default class extends Controller {
   static targets = ["idSource", "details"];
@@ -8,15 +8,14 @@ export default class extends Controller {
   }
 
   changed(event) {
-    this._fetchDetails(event.target.value)
+    this._fetchDetails(event.target.value);
   }
 
   _fetchDetails(id) {
     if (id) {
-      fetch(`${this.data.get("url")}/${id}`,
-            { headers: { "X-Requested-With": "XMLHttpRequest" }})
-        .then(response => response.text())
-        .then(html => this.detailsTarget.innerHTML = html)
+      fetch(`${this.data.get("url")}/${id}`, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+        .then((response) => response.text())
+        .then((html) => (this.detailsTarget.innerHTML = html));
     }
   }
 }

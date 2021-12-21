@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 class Api::Webhooks::JirasController < ActionController::API
-  class WebhookNotAuthorized < StandardError ; end
-
-  rescue_from(WebhookNotAuthorized) do
-    render json: { message: "Secret does not match" }, status: :bad_request
+  class WebhookNotAuthorized < StandardError
   end
+
+  rescue_from(WebhookNotAuthorized) { render json: { message: "Secret does not match" }, status: :bad_request }
 
   before_action :authenticate_jira!
 
@@ -14,8 +13,7 @@ class Api::Webhooks::JirasController < ActionController::API
   end
 
   def create
-    element_updated =
-      find_jira_item(ProjectItem) || find_jira_item(Project)
+    element_updated = find_jira_item(ProjectItem) || find_jira_item(Project)
 
     if element_updated
       case params["webhookEvent"]
@@ -31,16 +29,16 @@ class Api::Webhooks::JirasController < ActionController::API
   end
 
   private
-    def find_jira_item(clazz)
-      clazz.where.not(issue_id: nil).
-        find_by(issue_id: params["issue_id"])
-    end
 
-    def valid_jira_request?
-      params.fetch("secret", "") == jira_client.webhook_secret
-    end
+  def find_jira_item(clazz)
+    clazz.where.not(issue_id: nil).find_by(issue_id: params["issue_id"])
+  end
 
-    def jira_client
-      @jira_client ||= Jira::Client.new
-    end
+  def valid_jira_request?
+    params.fetch("secret", "") == jira_client.webhook_secret
+  end
+
+  def jira_client
+    @jira_client ||= Jira::Client.new
+  end
 end

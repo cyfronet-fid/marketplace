@@ -15,8 +15,7 @@ RSpec.describe Importers::Logo do
   it "saves logo for service" do
     url = "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png"
     logo_importer = described_class.new(service, url)
-    stub_http_file(logo_importer, "PhenoMeNal_logo.png",
-                   url)
+    stub_http_file(logo_importer, "PhenoMeNal_logo.png", url)
     logo_importer.call
 
     expect(service.logo).to_not be_nil
@@ -25,8 +24,7 @@ RSpec.describe Importers::Logo do
   it "saves logo for provider" do
     url = "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png"
     logo_importer = described_class.new(provider, url)
-    stub_http_file(logo_importer, "PhenoMeNal_logo.png",
-                   url)
+    stub_http_file(logo_importer, "PhenoMeNal_logo.png", url)
     logo_importer.call
 
     expect(service.logo).to_not be_nil

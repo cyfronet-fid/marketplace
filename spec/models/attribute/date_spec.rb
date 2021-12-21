@@ -50,11 +50,13 @@ RSpec.describe Attribute::Date do
   end
 
   def attr_json_with_config(config)
-    { "id" => "id6",
+    {
+      "id" => "id6",
       "label" => "Start of service",
       "description" => "Please choose start date",
       "type" => "date",
       "value_type" => "string",
-      "config" => config }
+      "config" => config
+    }
   end
 end

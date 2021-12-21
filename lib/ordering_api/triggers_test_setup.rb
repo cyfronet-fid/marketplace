@@ -14,10 +14,24 @@ class OrderingApi::TriggersTestSetup
     add_trigger(oms3, url: "http://localhost:1080/oms3", user: "magic", password: "mushroom")
 
     service = Service.find_by(name: "EGI Cloud compute")
-    Offer.create!(name: "offer_oms_2", description: "asd", service: service, status: "published",
-                  order_type: :order_required, internal: true, primary_oms: oms2)
-    Offer.create!(name: "offer_oms_3", description: "asd", service: service, status: "published",
-                  order_type: :order_required, internal: true, primary_oms: oms3)
+    Offer.create!(
+      name: "offer_oms_2",
+      description: "asd",
+      service: service,
+      status: "published",
+      order_type: :order_required,
+      internal: true,
+      primary_oms: oms2
+    )
+    Offer.create!(
+      name: "offer_oms_3",
+      description: "asd",
+      service: service,
+      status: "published",
+      order_type: :order_required,
+      internal: true,
+      primary_oms: oms3
+    )
 
     # The test scenario:
     # Create project p1 (triggers: OMS1)
@@ -31,11 +45,12 @@ class OrderingApi::TriggersTestSetup
   end
 
   private
-    def add_trigger(oms, url:, method: :post, user: nil, password: nil)
-      oms.trigger = OMS::Trigger.new(url: url, method: method)
-      if user.present? && password.present?
-        oms.trigger.authorization = OMS::Authorization::Basic.new(user: user, password: password)
-      end
-      oms.trigger
+
+  def add_trigger(oms, url:, method: :post, user: nil, password: nil)
+    oms.trigger = OMS::Trigger.new(url: url, method: method)
+    if user.present? && password.present?
+      oms.trigger.authorization = OMS::Authorization::Basic.new(user: user, password: password)
     end
+    oms.trigger
+  end
 end

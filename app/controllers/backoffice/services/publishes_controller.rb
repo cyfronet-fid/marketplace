@@ -9,13 +9,14 @@ class Backoffice::Services::PublishesController < Backoffice::ApplicationControl
   end
 
   private
-    def find_and_authorize
-      @service = Service.friendly.find(params[:service_id])
 
-      authorize(@service, verified? ? :publish? : :publish_unverified?)
-    end
+  def find_and_authorize
+    @service = Service.friendly.find(params[:service_id])
 
-    def verified?
-      params[:unverified] != "true"
-    end
+    authorize(@service, verified? ? :publish? : :publish_unverified?)
+  end
+
+  def verified?
+    params[:unverified] != "true"
+  end
 end

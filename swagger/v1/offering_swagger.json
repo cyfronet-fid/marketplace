@@ -9,14 +9,10 @@
     "/api/v1/resources/{resource_id}/offers": {
       "get": {
         "summary": "lists offers for an administered resource",
-        "tags": [
-          "Offers"
-        ],
+        "tags": ["Offers"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -65,14 +61,10 @@
       },
       "post": {
         "summary": "creates an offer for an administered resource",
-        "tags": [
-          "Offers"
-        ],
+        "tags": ["Offers"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -152,14 +144,10 @@
     "/api/v1/resources/{resource_id}/offers/{id}": {
       "get": {
         "summary": "retrieves an offer for an administered resource",
-        "tags": [
-          "Offers"
-        ],
+        "tags": ["Offers"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -227,14 +215,10 @@
       },
       "patch": {
         "summary": "updates an offer for an administered resource",
-        "tags": [
-          "Offers"
-        ],
+        "tags": ["Offers"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -311,14 +295,10 @@
       },
       "delete": {
         "summary": "deletes an offer for an administered resource",
-        "tags": [
-          "Offers"
-        ],
+        "tags": ["Offers"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -381,14 +361,10 @@
     "/api/v1/resources": {
       "get": {
         "summary": "lists resources administered by user",
-        "tags": [
-          "Resources"
-        ],
+        "tags": ["Resources"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "responses": {
@@ -418,14 +394,10 @@
     "/api/v1/resources/{id}": {
       "get": {
         "summary": "retrieves an administered resource",
-        "tags": [
-          "Resources"
-        ],
+        "tags": ["Resources"],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [

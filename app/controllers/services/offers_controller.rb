@@ -26,24 +26,23 @@ class Services::OffersController < Services::ApplicationController
   end
 
   private
-    def step_key
-      :offers
-    end
 
-    def step_params
-      { offer_id: offer&.id, project_id: session[:selected_project] }
-    end
+  def step_key
+    :offers
+  end
 
-    def offer
-      form_params = params
-                      .fetch(:customizable_project_item, session[session_key] || {})
-                      .permit(:offer_id)
-      @service.offers.find_by(iid: form_params[:offer_id])
-    end
+  def step_params
+    { offer_id: offer&.id, project_id: session[:selected_project] }
+  end
 
-    def init_step_data
-      @offers = policy_scope(@service.offers.published).order(:created_at).select { |o| o.bundle? == false }
-      @bundles = policy_scope(@service.offers.published).order(:created_at).select { |o| o.bundle? }
-      @step = step(session[session_key])
-    end
+  def offer
+    form_params = params.fetch(:customizable_project_item, session[session_key] || {}).permit(:offer_id)
+    @service.offers.find_by(iid: form_params[:offer_id])
+  end
+
+  def init_step_data
+    @offers = policy_scope(@service.offers.published).order(:created_at).select { |o| o.bundle? == false }
+    @bundles = policy_scope(@service.offers.published).order(:created_at).select { |o| o.bundle? }
+    @step = step(session[session_key])
+  end
 end

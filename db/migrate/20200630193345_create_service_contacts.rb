@@ -14,6 +14,6 @@ class CreateServiceContacts < ActiveRecord::Migration[6.0]
       t.belongs_to :contactable, index: true, null: false
       t.timestamps
     end
-    add_index :contacts, [:id, :contactable_id, :contactable_type], unique: true
+    add_index :contacts, %i[id contactable_id contactable_type], unique: true
   end
 end

@@ -4,21 +4,29 @@ require "json-schema"
 
 class Attribute::QuantityPrice < Attribute
   def value_type_schema
-    {
-        "type": "string",
-        "enum": ["integer"]
-    }
+    { "type": "string", "enum": ["integer"] }
   end
 
   def config_schema
     {
       "type": "object",
-      "required": ["start_price", "step_price", "currency"],
+      "required": %w[start_price step_price currency],
       "properties": {
-        "start_price": { "type": "integer", "minimum": 0 },
-        "step_price":  { "type": "integer", "minimum": 0 },
-        "currency":    { "type": "string" },
-        "max":         { "type": "integer", "minimum": 0 }
+        "start_price": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "step_price": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "currency": {
+          "type": "string"
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 0
+        }
       }
     }
   end
@@ -30,13 +38,16 @@ class Attribute::QuantityPrice < Attribute
     errors.add(:id, "Quantity need to be lower or equal to #{max}") if to_big?
   end
 
-
   def value_type
     "integer"
   end
 
   def value_valid?
-    Integer(@value) rescue false
+    begin
+      Integer(@value)
+    rescue StandardError
+      false
+    end
   end
 
   def start_price
@@ -56,14 +67,16 @@ class Attribute::QuantityPrice < Attribute
   end
 
   protected
-    TYPE = "quantity_price"
+
+  TYPE = "quantity_price"
 
   private
-    def to_small?
-      value && value < 0
-    end
 
-    def to_big?
-      value && max && value > max
-    end
+  def to_small?
+    value && value < 0
+  end
+
+  def to_big?
+    value && max && value > max
+  end
 end

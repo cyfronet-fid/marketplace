@@ -2,8 +2,7 @@
 
 class ChangeServiceAndOfferTypeValues < ActiveRecord::Migration[5.2]
   def up
-    execute(
-      <<~SQL
+    execute(<<~SQL)
       UPDATE services
       SET service_type = CASE
         WHEN service_type='normal' THEN 'orderable'
@@ -11,10 +10,8 @@ class ChangeServiceAndOfferTypeValues < ActiveRecord::Migration[5.2]
       END
       WHERE service_type <> 'open_access';
       SQL
-    )
 
-    execute(
-      <<~SQL
+    execute(<<~SQL)
       UPDATE offers
       SET offer_type = CASE
         WHEN offer_type='normal' THEN 'orderable'
@@ -22,12 +19,10 @@ class ChangeServiceAndOfferTypeValues < ActiveRecord::Migration[5.2]
       END
       WHERE offer_type <> 'open_access';
       SQL
-    )
   end
 
   def down
-    execute(
-      <<~SQL
+    execute(<<~SQL)
       UPDATE services
       SET service_type = CASE
         WHEN service_type='orderable' THEN 'normal'
@@ -35,10 +30,8 @@ class ChangeServiceAndOfferTypeValues < ActiveRecord::Migration[5.2]
       END
       WHERE service_type <> 'open_access';
       SQL
-    )
 
-    execute(
-      <<~SQL
+    execute(<<~SQL)
       UPDATE offers
       SET offer_type = CASE
         WHEN offer_type='orderable' THEN 'normal'
@@ -46,6 +39,5 @@ class ChangeServiceAndOfferTypeValues < ActiveRecord::Migration[5.2]
       END
       WHERE offer_type <> 'open_access';
       SQL
-    )
   end
 end

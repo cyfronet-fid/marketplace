@@ -15,12 +15,7 @@ class Service::PcCreateOrUpdate
     end
   end
 
-  def initialize(eosc_registry_service,
-                 eosc_registry_base_url,
-                 is_active,
-                 modified_at,
-                 token,
-                 faraday: Faraday)
+  def initialize(eosc_registry_service, eosc_registry_base_url, is_active, modified_at, token, faraday: Faraday)
     @faraday = faraday
     @eosc_registry_base_url = eosc_registry_base_url
     @eid = eosc_registry_service["id"]
@@ -32,8 +27,8 @@ class Service::PcCreateOrUpdate
 
   def call
     service_hash = Importers::Service.new(@eosc_registry_service, @modified_at, @eosc_registry_base_url, @token).call
-    mapped_service = Service.joins(:sources).find_by("service_sources.source_type": "eosc_registry",
-                                                     "service_sources.eid": @eid)
+    mapped_service =
+      Service.joins(:sources).find_by("service_sources.source_type": "eosc_registry", "service_sources.eid": @eid)
     source_id = mapped_service.nil? ? nil : mapped_service.sources.find_by(source_type: "eosc_registry")
 
     is_newer_update = mapped_service&.synchronized_at.present? ? (@modified_at >= mapped_service.synchronized_at) : true
@@ -46,8 +41,13 @@ class Service::PcCreateOrUpdate
         service.status = "errored"
         service.save(validate: false)
       end
-      source = ServiceSource.create!(service_id: service.id, source_type: "eosc_registry", eid: @eid,
-                                     errored: service.errors.to_hash)
+      source =
+        ServiceSource.create!(
+          service_id: service.id,
+          source_type: "eosc_registry",
+          eid: @eid,
+          errored: service.errors.to_hash
+        )
       service.update(upstream_id: source.id)
 
       Importers::Logo.new(service, @eosc_registry_service["logo"]).call

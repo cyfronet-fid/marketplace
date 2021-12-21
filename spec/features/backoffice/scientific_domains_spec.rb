@@ -39,8 +39,7 @@ RSpec.feature "Scientific domains in backoffice" do
       fill_in "Name", with: "My new scientific domain"
       select "parent", from: "Parent"
 
-      expect { click_on "Create Scientific domain" }.
-        to change { ScientificDomain.count }.by(1)
+      expect { click_on "Create Scientific domain" }.to change { ScientificDomain.count }.by(1)
 
       expect(page).to have_content("My new scientific domain")
       expect(page).to have_content("parent")

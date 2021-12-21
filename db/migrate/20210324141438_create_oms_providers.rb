@@ -9,6 +9,6 @@ class CreateOMSProviders < ActiveRecord::Migration[6.0]
       t.timestamps null: false
     end
 
-    add_index :oms_providers, [:oms_id, :provider_id], unique: true
+    add_index :oms_providers, %i[oms_id provider_id], unique: true
   end
 end

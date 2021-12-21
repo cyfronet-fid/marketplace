@@ -38,9 +38,7 @@ RSpec.feature "Marketplace help builder" do
 
       visit admin_help_path
 
-      accept_confirm do
-        click_on "Remove"
-      end
+      accept_confirm { click_on "Remove" }
 
       expect(page).to have_current_path(admin_help_path)
       expect(page).to_not have_content(section.title)
@@ -83,11 +81,7 @@ RSpec.feature "Marketplace help builder" do
 
       visit admin_help_path
 
-      accept_confirm do
-        within("div.accordion") do
-          click_on "Remove"
-        end
-      end
+      accept_confirm { within("div.accordion") { click_on "Remove" } }
 
       expect(page).to have_current_path(admin_help_path)
       expect(page).to_not have_content(item.title)

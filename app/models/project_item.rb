@@ -21,12 +21,7 @@ class ProjectItem < ApplicationRecord
     approved: "approved"
   }
 
-  ISSUE_STATUSES = {
-      jira_active: 0,
-      jira_deleted: 1,
-      jira_uninitialized: 2,
-      jira_errored: 3
-  }
+  ISSUE_STATUSES = { jira_active: 0, jira_deleted: 1, jira_uninitialized: 2, jira_errored: 3 }
 
   enum status_type: STATUS_TYPES
   enum issue_status: ISSUE_STATUSES
@@ -37,7 +32,7 @@ class ProjectItem < ApplicationRecord
   belongs_to :scientific_domain, required: false
   has_one :service_opinion, dependent: :restrict_with_error
   has_many :statuses, as: :status_holder
-  counter_culture [:offer, :service], column_name: "project_items_count"
+  counter_culture %i[offer service], column_name: "project_items_count"
 
   validates :offer, presence: true
   validates :status, presence: true
@@ -89,76 +84,66 @@ class ProjectItem < ApplicationRecord
     offer.primary_oms.present? ? [offer.primary_oms] : []
   end
 
-
   def to_s
     "\"#{project.name}##{id}\""
   end
 
   private
-    def scientific_domain_is_a_leaf
-      errors.add(:scientific_domain_id, "cannot have children") if scientific_domain&.has_children?
-    end
 
-    def properties_not_nil
-      if self.properties.nil?
-        errors.add :properties, "cannot be nil"
-      end
-    end
+  def scientific_domain_is_a_leaf
+    errors.add(:scientific_domain_id, "cannot have children") if scientific_domain&.has_children?
+  end
 
-    def user_secrets_is_simple
-      unless self.user_secrets&.values.all? { |v| v.is_a? String }
-        errors.add(:user_secrets, "values must be strings")
-      end
-    end
+  def properties_not_nil
+    errors.add :properties, "cannot be nil" if self.properties.nil?
+  end
 
-    def copy_offer_fields
-      self.order_type = offer&.order_type
-      self.name = offer&.name
-      self.description = offer&.description
-      self.voucherable = offer&.voucherable
-      self.order_url = offer&.order_url
-      self.internal = offer&.internal
-    end
+  def user_secrets_is_simple
+    errors.add(:user_secrets, "values must be strings") unless self.user_secrets&.values.all? { |v| v.is_a? String }
+  end
 
-    def saved_status_change?
-      saved_change_to_status_type? || saved_change_to_status?
-    end
+  def copy_offer_fields
+    self.order_type = offer&.order_type
+    self.name = offer&.name
+    self.description = offer&.description
+    self.voucherable = offer&.voucherable
+    self.order_url = offer&.order_url
+    self.internal = offer&.internal
+  end
 
-    def create_new_status
-      statuses.create(status: status, status_type: status_type)
-    end
+  def saved_status_change?
+    saved_change_to_status_type? || saved_change_to_status?
+  end
 
-    def voucher_id_changes!
-      return unless saved_change_to_user_secrets?
-      @prev_voucher_id, @curr_voucher_id = saved_change_to_user_secrets.map { |us| us["voucher_id"] }
-      @prev_voucher_id ||= ""
-    end
+  def create_new_status
+    statuses.create(status: status, status_type: status_type)
+  end
 
-    def saved_voucher_id_change?
-      @prev_voucher_id != @curr_voucher_id
-    end
+  def voucher_id_changes!
+    return unless saved_change_to_user_secrets?
+    @prev_voucher_id, @curr_voucher_id = saved_change_to_user_secrets.map { |us| us["voucher_id"] }
+    @prev_voucher_id ||= ""
+  end
 
-    def create_voucher_id_message
-      messages.create(
-        message: voucher_id_message,
-        author_role: :provider,
-        scope: :user_direct
-      )
-    end
+  def saved_voucher_id_change?
+    @prev_voucher_id != @curr_voucher_id
+  end
 
-    def voucher_id_message
-      if @prev_voucher_id.blank? && @curr_voucher_id.present?
-        "Voucher has been granted to you, ID: #{@curr_voucher_id}"
-      elsif @prev_voucher_id.present? && @curr_voucher_id.blank?
-        "Voucher has been revoked"
-      elsif @prev_voucher_id.present? && @curr_voucher_id.present?
-        "Voucher ID has been updated: #{@curr_voucher_id}"
-      end
-    end
+  def create_voucher_id_message
+    messages.create(message: voucher_id_message, author_role: :provider, scope: :user_direct)
+  end
 
-    def dispatch_emails
-      if saved_change_to_status_type?
-        ProjectItem::OnStatusTypeUpdated.new(self).call
-      end
+  def voucher_id_message
+    if @prev_voucher_id.blank? && @curr_voucher_id.present?
+      "Voucher has been granted to you, ID: #{@curr_voucher_id}"
+    elsif @prev_voucher_id.present? && @curr_voucher_id.blank?
+      "Voucher has been revoked"
+    elsif @prev_voucher_id.present? && @curr_voucher_id.present?
+      "Voucher ID has been updated: #{@curr_voucher_id}"
     end
+  end
+
+  def dispatch_emails
+    ProjectItem::OnStatusTypeUpdated.new(self).call if saved_change_to_status_type?
+  end
 end

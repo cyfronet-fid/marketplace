@@ -21,13 +21,16 @@ describe "import:resources", type: :task do
 
     allow(resource_importer).to receive(:call)
     import_class_stub = class_double(Import::Resources).as_stubbed_const(transfer_nested_constants: true)
-    allow(import_class_stub).to receive(:new).with("https://api.custom",
-                                                   dry_run: "1",
-                                                   ids: ["sampleeid", "sampleeid2"],
-                                                   filepath: "/tmp/output.json",
-                                                   default_upstream: :eosc_registry,
-                                                   token: "password")
-                                    .and_return(resource_importer)
+    allow(import_class_stub).to receive(:new)
+      .with(
+        "https://api.custom",
+        dry_run: "1",
+        ids: %w[sampleeid sampleeid2],
+        filepath: "/tmp/output.json",
+        default_upstream: :eosc_registry,
+        token: "password"
+      )
+      .and_return(resource_importer)
 
     subject.invoke
   end
@@ -35,15 +38,16 @@ describe "import:resources", type: :task do
   it "should call Import::Resources.call" do
     allow(resource_importer).to receive(:call)
     import_class_stub = class_double(Import::Resources).as_stubbed_const(transfer_nested_constants: true)
-    allow(import_class_stub).
-      to receive(:new).
-      with("https://beta.providers.eosc-portal.eu/api",
-           default_upstream: :mp,
-           dry_run: false,
-           filepath: nil,
-           ids: [],
-           token: nil).
-      and_return(resource_importer)
+    allow(import_class_stub).to receive(:new)
+      .with(
+        "https://beta.providers.eosc-portal.eu/api",
+        default_upstream: :mp,
+        dry_run: false,
+        filepath: nil,
+        ids: [],
+        token: nil
+      )
+      .and_return(resource_importer)
 
     subject.invoke
   end
@@ -51,12 +55,9 @@ describe "import:resources", type: :task do
   it "should call Import::Providers.call" do
     allow(provider_importer).to receive(:call)
     import_class_stub = class_double(Import::Providers).as_stubbed_const(transfer_nested_constants: true)
-    allow(import_class_stub).
-      to receive(:new).
-        with("https://beta.providers.eosc-portal.eu/api",
-             dry_run: false,
-             filepath: nil).
-        and_return(provider_importer)
+    allow(import_class_stub).to receive(:new)
+      .with("https://beta.providers.eosc-portal.eu/api", dry_run: false, filepath: nil)
+      .and_return(provider_importer)
 
     subject.invoke
   end

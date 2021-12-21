@@ -19,7 +19,7 @@ RSpec.feature "Home" do
     let(:service_opinion_published) { create(:service_opinion) }
     let(:service_opinion_draft) { create(:service_opinion) }
 
-    [:draft, :deleted].each do |status|
+    %i[draft deleted].each do |status|
       it "should show service opinions only for published resources" do
         draft = service_opinion_draft.project_item.service
         draft.update(status: status)

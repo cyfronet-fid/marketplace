@@ -4,18 +4,11 @@ require "json-schema"
 
 class Attribute::Date < Attribute
   def value_type_schema
-    {
-        "type": "string",
-        "enum": ["string"]
-    }
+    { "type": "string", "enum": ["string"] }
   end
 
   def value_schema
-    {
-        "type": "string",
-        "format": "date",
-        "minLength": 1
-    }
+    { "type": "string", "format": "date", "minLength": 1 }
   end
 
   def value_from_param(param)
@@ -34,37 +27,39 @@ class Attribute::Date < Attribute
   end
 
   protected
-    TYPE = "date"
+
+  TYPE = "date"
 
   private
-    def before_min?
-      min_date && value_date < min_date
-    end
 
-    def after_max?
-      max_date && value_date > max_date
-    end
+  def before_min?
+    min_date && value_date < min_date
+  end
 
-    def min_date
-      @min_date ||= parse_date(config&.[]("min"))
-    end
+  def after_max?
+    max_date && value_date > max_date
+  end
 
-    def max_date
-      @max_date ||= parse_date(config&.[]("max"))
-    end
+  def min_date
+    @min_date ||= parse_date(config&.[]("min"))
+  end
 
-    def value_date
-      @value_date ||= parse_date(value)
-    end
+  def max_date
+    @max_date ||= parse_date(config&.[]("max"))
+  end
 
-    def parse_date(date_str)
-      case date_str
-      when "now"
-        ::Date.today
-      when nil
-        nil
-      else
-        ::Date.strptime(date_str, date_format)
-      end
+  def value_date
+    @value_date ||= parse_date(value)
+  end
+
+  def parse_date(date_str)
+    case date_str
+    when "now"
+      ::Date.today
+    when nil
+      nil
+    else
+      ::Date.strptime(date_str, date_format)
     end
+  end
 end

@@ -7,7 +7,7 @@ to marketplace via JIRA's webhooks.
 
 JIRA integration require configuring mapping of several key properties. This can be done via ENV variables
 (described later on). JIRA instance itself should have workflow and custom fields which corresponds to what
-application itself expects (more in *JIRA instance requirements*), at the end to make marketplace respond to
+application itself expects (more in _JIRA instance requirements_), at the end to make marketplace respond to
 changes in JIRA webhook should be added to JIRA instance.
 
 ## How to? Instructions for admins
@@ -22,19 +22,19 @@ fulfill certain requirements described below.
 
 Additionally new service user must be added to JIRA and have following priviledges:
 
-* View issues & comments
-* Add issue
-* Add comment
-* Update issue
-* (optional) delete issue
-* (optional) delete comment
+- View issues & comments
+- Add issue
+- Add comment
+- Update issue
+- (optional) delete issue
+- (optional) delete comment
 
 Marketplace will perform all of it's operation as this user, it's credentials will have to be provided to
 the marketplace instance.
 
 #### JIRA instance requirements
 
-JIRA should fulfill following *workflow* and *custom fields* requirements
+JIRA should fulfill following _workflow_ and _custom fields_ requirements
 
 ##### Workflow requirements
 
@@ -66,11 +66,11 @@ is a rake task to make your life easier.
 
 As a starter you should configure JIRA credentials:
 
-* `MP_JIRA_USERNAME` - username of the service user as which application is accessing JIRA
-* `MP_JIRA_PASSWORD` - password of the service user as which application is accessing JIRA
-* `MP_JIRA_PROJECT`  - project key in which marketplace will create / update issues
-* `MP_JIRA_URL` - url to jira instance, (host and port, without part after `/`)
-* `MP_JIRA_CONTEXT_PATH` - part of the url after first `/`
+- `MP_JIRA_USERNAME` - username of the service user as which application is accessing JIRA
+- `MP_JIRA_PASSWORD` - password of the service user as which application is accessing JIRA
+- `MP_JIRA_PROJECT` - project key in which marketplace will create / update issues
+- `MP_JIRA_URL` - url to jira instance, (host and port, without part after `/`)
+- `MP_JIRA_CONTEXT_PATH` - part of the url after first `/`
 
 So if JIRA url is: `https://my.jira.net:8080/jira` then `MP_JIRA_URL` will be `https://my.jira.net:8080` and
 `MP_JIRA_CONTEXT_PATH` will be `/jira`. If there is no part after `/` then `MP_JIRA_CONTEXT_PATH` should be left undefined
@@ -175,6 +175,7 @@ Which means that that issue type has been configured correctly.
 #### Permissions
 
 If `jira:check` shows
+
 ```
 Trying to manipulate issue...
   - create issue... OK
@@ -183,8 +184,9 @@ Trying to manipulate issue...
   - add comment to issue... OK
   - delete issue... OK
 ```
+
 It means that user under which marketplace is accessing JIRA has all the necessary permissions. If any of these
-checks fail (apart from *delete*, which is optional) you should make sure that correct permissions are set up to the user.
+checks fail (apart from _delete_, which is optional) you should make sure that correct permissions are set up to the user.
 
 #### Workflow
 
@@ -223,11 +225,11 @@ AVAILABLE ISSUE STATES:
 
 using above suggestions you should configure following ENV variables:
 
-* `MP_JIRA_WF_TODO`
-* `MP_JIRA_WF_IN_PROGRESS`
-* `MP_JIRA_WF_WAITING_FOR_RESPONSE`
-* `MP_JIRA_WF_DONE`
-* `MP_JIRA_WF_REJECTED`
+- `MP_JIRA_WF_TODO`
+- `MP_JIRA_WF_IN_PROGRESS`
+- `MP_JIRA_WF_WAITING_FOR_RESPONSE`
+- `MP_JIRA_WF_DONE`
+- `MP_JIRA_WF_REJECTED`
 
 So for example `MP_JIRA_WF_IN_PROGRESS=3`
 
@@ -245,6 +247,7 @@ Checking workflow...
 Otherwise recheck assigned issue ids, and make sure they are part of the same workflow, used by specified JIRA project
 
 If everything is alright the following check
+
 ```
   - check workflow transitions... OK
 ```
@@ -304,9 +307,9 @@ be found you can look for list of custom fields and their IDs in `AVAILABLE CUST
 This field is actually an option in JIRA. So available option values must be provided. You need to configure
 following variables:
 
-* `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_single_user`
-* `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_research`
-* `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_private_company`
+- `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_single_user`
+- `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_research`
+- `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_private_company`
 
 To ids of values which that particular custom field can take. Unfortunately `jira:check` can not help you with this
 one task, you have to ask either a JIRA admin, or check yourself, if you have adequate permissions.
@@ -325,45 +328,45 @@ without it rake task will not be able to identify which webhook is pointing to y
 
 To sum up all the environmetnal variables which you need to make sure to have set are below:
 
-* `MP_JIRA_URL`
-* `MP_JIRA_PROJECT`
-* `MP_JIRA_USERNAME`
-* `MP_JIRA_PASSWORD`
-* `MP_JIRA_CONTEXT_PATH`
-* `MP_JIRA_ISSUE_TYPE_ID`
-* `MP_JIRA_WF_TODO`
-* `MP_JIRA_WF_IN_PROGRESS`
-* `MP_JIRA_WF_WAITING_FOR_RESPONSE`
-* `MP_JIRA_WF_DONE`
-* `MP_JIRA_WF_REJECTED`
-* `MP_JIRA_WEBHOOK_SECRET`
-* `MP_HOST`
-* `MP_JIRA_PROJECT`
-* `MP_JIRA_FIELD_Order_reference`
-* `MP_JIRA_FIELD_CI_Name`
-* `MP_JIRA_FIELD_CI_Surname`
-* `MP_JIRA_FIELD_CI_Email`
-* `MP_JIRA_FIELD_CI_DisplayName`
-* `MP_JIRA_FIELD_CI_EOSC_UniqueID`
-* `MP_JIRA_FIELD_CI_Institution`
-* `MP_JIRA_FIELD_CI_Department`
-* `MP_JIRA_FIELD_CI_SupervisorName`
-* `MP_JIRA_FIELD_CI_SupervisorProfile`
-* `MP_JIRA_FIELD_CP_CustomerTypology`
-* `MP_JIRA_FIELD_CP_ReasonForAccess`
-* `MP_JIRA_FIELD_CP_ScientificDiscipline`
-* `MP_JIRA_FIELD_SO_1`
-* `MP_JIRA_FIELD_CI_DepartmentalWebPage`
-* `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_single_user`
-* `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_research`
-* `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_private_company`
-* `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_project`
-* `MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_true`
-* `MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_false`
-* `MP_JIRA_FIELD_SO_ServiceOrderTarget`
-* `MP_JIRA_FIELD_CP_VoucherID`
-* `MP_JIRA_FIELD_CP_INeedAVoucher`
-* `MP_JIRA_FIELD_CP_Platforms`
-* `MP_JIRA_FIELD_SO_ProjectName`
-* `MP_JIRA_FIELD_CP_ProjectInformation`
-* `MP_JIRA_FIELD_CP_UserGroupName`
+- `MP_JIRA_URL`
+- `MP_JIRA_PROJECT`
+- `MP_JIRA_USERNAME`
+- `MP_JIRA_PASSWORD`
+- `MP_JIRA_CONTEXT_PATH`
+- `MP_JIRA_ISSUE_TYPE_ID`
+- `MP_JIRA_WF_TODO`
+- `MP_JIRA_WF_IN_PROGRESS`
+- `MP_JIRA_WF_WAITING_FOR_RESPONSE`
+- `MP_JIRA_WF_DONE`
+- `MP_JIRA_WF_REJECTED`
+- `MP_JIRA_WEBHOOK_SECRET`
+- `MP_HOST`
+- `MP_JIRA_PROJECT`
+- `MP_JIRA_FIELD_Order_reference`
+- `MP_JIRA_FIELD_CI_Name`
+- `MP_JIRA_FIELD_CI_Surname`
+- `MP_JIRA_FIELD_CI_Email`
+- `MP_JIRA_FIELD_CI_DisplayName`
+- `MP_JIRA_FIELD_CI_EOSC_UniqueID`
+- `MP_JIRA_FIELD_CI_Institution`
+- `MP_JIRA_FIELD_CI_Department`
+- `MP_JIRA_FIELD_CI_SupervisorName`
+- `MP_JIRA_FIELD_CI_SupervisorProfile`
+- `MP_JIRA_FIELD_CP_CustomerTypology`
+- `MP_JIRA_FIELD_CP_ReasonForAccess`
+- `MP_JIRA_FIELD_CP_ScientificDiscipline`
+- `MP_JIRA_FIELD_SO_1`
+- `MP_JIRA_FIELD_CI_DepartmentalWebPage`
+- `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_single_user`
+- `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_research`
+- `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_private_company`
+- `MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_project`
+- `MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_true`
+- `MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_false`
+- `MP_JIRA_FIELD_SO_ServiceOrderTarget`
+- `MP_JIRA_FIELD_CP_VoucherID`
+- `MP_JIRA_FIELD_CP_INeedAVoucher`
+- `MP_JIRA_FIELD_CP_Platforms`
+- `MP_JIRA_FIELD_SO_ProjectName`
+- `MP_JIRA_FIELD_CP_ProjectInformation`
+- `MP_JIRA_FIELD_CP_UserGroupName`

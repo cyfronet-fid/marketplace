@@ -1135,7 +1135,7 @@ life_cycle_status:
     description: Resource active, but generally not available to new users
     eid: life_cycle_status-in_containment
   Retirement:
-    name:  Retirement
+    name: Retirement
     description: Resource is not anymore offered
     eid: life_cycle_status-retirement
   Termination:
@@ -2489,7 +2489,7 @@ scientific_domain:
     name: Other Medical Sciences
     parentId: scientific_domain-medical_and_health_sciences
     type: SCIENTIFIC_SUBDOMAIN
-    extras: { }
+    extras: {}
   engineering_and_technology-other_engineering_and_technology_sciences:
     eid: scientific_subdomain-engineering_and_technology-other_engineering_and_technology_sciences
     name: Other Engineering & Technology Sciences

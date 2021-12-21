@@ -20,107 +20,89 @@ class Services::ApplicationController < ApplicationController
   }
 
   private
-    def session_key
-      @service.id.to_s
-    end
 
-    def ensure_in_session!
-      unless saved_state
-        redirect_to service_offers_path(@service),
-                    alert: "Service request template not found"
-      end
-    end
+  def session_key
+    @service.id.to_s
+  end
 
-    def load_and_authenticate_service!
-      @service = Service.friendly.find(params[:service_id])
-      authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] === "backoffice_service"), :order?)
-      @wizard = ProjectItem::Wizard.new(@service)
-    end
+  def ensure_in_session!
+    redirect_to service_offers_path(@service), alert: "Service request template not found" unless saved_state
+  end
 
-    def save_in_session(step)
-      session[session_key] = step.project_item.attributes
-      session[session_key][:bundled_parameters] =
-        step.project_item.bundled_parameters
-            .transform_keys { |offer| offer.id } if step.project_item.bundled_parameters.present?
-    end
+  def load_and_authenticate_service!
+    @service = Service.friendly.find(params[:service_id])
+    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] === "backoffice_service"), :order?)
+    @wizard = ProjectItem::Wizard.new(@service)
+  end
 
-    def saved_state
-      session[session_key]
-    end
+  def save_in_session(step)
+    session[session_key] = step.project_item.attributes
+    session[session_key][:bundled_parameters] =
+      step.project_item.bundled_parameters.transform_keys { |offer| offer.id } if step.project_item.bundled_parameters
+      .present?
+  end
 
-    def step(attrs = saved_state)
-      wizard.step(step_key, attrs)
-    end
+  def saved_state
+    session[session_key]
+  end
 
-    def step_for(step_key, attrs = saved_state)
-      wizard.step(step_key, attrs)
-    end
+  def step(attrs = saved_state)
+    wizard.step(step_key, attrs)
+  end
 
-    def next_step_key
-      wizard.next_step_key(step_key)
-    end
+  def step_for(step_key, attrs = saved_state)
+    wizard.step(step_key, attrs)
+  end
 
-    def next_visible_step_key
-      @next_visible_step_key ||= find_next_visible_step_key(step_key)
-    end
+  def next_step_key
+    wizard.next_step_key(step_key)
+  end
 
-    def find_next_visible_step_key(step_key)
-      next_step_key = wizard.next_step_key(step_key)
+  def next_visible_step_key
+    @next_visible_step_key ||= find_next_visible_step_key(step_key)
+  end
 
-      if next_step_key == nil || step_for(next_step_key).visible?
-        next_step_key
-      else
-        find_next_visible_step_key(next_step_key)
-      end
-    end
+  def find_next_visible_step_key(step_key)
+    next_step_key = wizard.next_step_key(step_key)
 
-    def prev_visible_step_key
-      @prev_visible_step_key ||= find_prev_visible_step_key(step_key)
-    end
+    next_step_key == nil || step_for(next_step_key).visible? ? next_step_key : find_next_visible_step_key(next_step_key)
+  end
 
-    def find_prev_visible_step_key(step_key)
-      prev_step_key = wizard.prev_step_key(step_key)
+  def prev_visible_step_key
+    @prev_visible_step_key ||= find_prev_visible_step_key(step_key)
+  end
 
-      if prev_step_key == nil || step_for(prev_step_key).visible?
-        prev_step_key
-      else
-        find_prev_visible_step_key(prev_step_key)
-      end
-    end
+  def find_prev_visible_step_key(step_key)
+    prev_step_key = wizard.prev_step_key(step_key)
 
-    def prev_step_key
-      wizard.prev_step_key(step_key)
-    end
+    prev_step_key == nil || step_for(prev_step_key).visible? ? prev_step_key : find_prev_visible_step_key(prev_step_key)
+  end
 
-    def prev_visible_step
-      wizard.step(prev_visible_step_key, saved_state)
-    end
+  def prev_step_key
+    wizard.prev_step_key(step_key)
+  end
 
-    def step_key
-      raise "Should be implemented in descendent class"
-    end
+  def prev_visible_step
+    wizard.step(prev_visible_step_key, saved_state)
+  end
 
-    def step_title(step_name = step_key)
-      if step_name == :summary && !@step.offer&.orderable?
-        "Pin to a project"
-      else
-        STEP_TITLES[step_name]
-      end
-    end
+  def step_key
+    raise "Should be implemented in descendent class"
+  end
 
-    def next_title
-      _("Next")
-    end
+  def step_title(step_name = step_key)
+    step_name == :summary && !@step.offer&.orderable? ? "Pin to a project" : STEP_TITLES[step_name]
+  end
 
-    def prev_title
-      _("Back to previous step - %{step_title}") % { step_title: step_title(prev_visible_step_key) }
-    end
+  def next_title
+    _("Next")
+  end
 
-    def wizard_title
-      if step.offer && (@service.offers_count > 1)
-        "#{@service.name} - #{step.offer.name}"
-      else
-        @service.name
-      end
-    end
+  def prev_title
+    _("Back to previous step - %{step_title}") % { step_title: step_title(prev_visible_step_key) }
+  end
+
+  def wizard_title
+    step.offer && (@service.offers_count > 1) ? "#{@service.name} - #{step.offer.name}" : @service.name
+  end
 end

@@ -13,10 +13,7 @@ class Api::V1::ProjectItemSerializer < ActiveModel::Serializer
   end
 
   def status
-    {
-      value: object.status,
-      type: object.status_type
-    }
+    { value: object.status, type: object.status_type }
   end
 
   def attribute_extractor
@@ -27,7 +24,7 @@ class Api::V1::ProjectItemSerializer < ActiveModel::Serializer
       offer_properties: object.properties || [],
       platforms: object.service&.platforms&.pluck(:name) || [],
       request_voucher: object.request_voucher,
-      order_type: object.order_type,
+      order_type: object.order_type
     }
     hash[:supplied_voucher_id] = object.voucher_id if object.voucher_id.present?
     hash
@@ -40,8 +37,6 @@ class Api::V1::ProjectItemSerializer < ActiveModel::Serializer
 
   def user_secrets
     non_obfuscated = instance_options[:non_obfuscated_user_secrets] || []
-    object.user_secrets&.map { |k, v|
-      non_obfuscated.include?(k) ? [k, v] : [k, "<OBFUSCATED>"]
-    }.to_h
+    object.user_secrets&.map { |k, v| non_obfuscated.include?(k) ? [k, v] : [k, "<OBFUSCATED>"] }.to_h
   end
 end

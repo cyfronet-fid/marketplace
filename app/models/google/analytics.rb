@@ -24,21 +24,24 @@ class Google::Analytics
   end
 
   private
-    def auth
-      Google::Auth::ServiceAccountCredentials.make_creds(json_key_io: key,
-                                                         scope: "https://www.googleapis.com/auth/analytics.readonly")
-    rescue StandardError => e
-      Rails.logger.warn("[WARN] Cannot make credentials for GA: #{e}")
-    end
 
-    def key
-      path = ENV["GOOGLE_AUTH_KEY_FILEPATH"] || "config/google_api_key.json"
-      File.open(path)
-    rescue StandardError => e
-      Rails.logger.warn("[WARN] Cannot load valid GA API key at path: #{path}: #{e}")
-    end
+  def auth
+    Google::Auth::ServiceAccountCredentials.make_creds(
+      json_key_io: key,
+      scope: "https://www.googleapis.com/auth/analytics.readonly"
+    )
+  rescue StandardError => e
+    Rails.logger.warn("[WARN] Cannot make credentials for GA: #{e}")
+  end
 
-    def google_view_id
-      ENV["GOOGLE_VIEW_ID"] || Rails.application.credentials.google[:view_id]
-    end
+  def key
+    path = ENV["GOOGLE_AUTH_KEY_FILEPATH"] || "config/google_api_key.json"
+    File.open(path)
+  rescue StandardError => e
+    Rails.logger.warn("[WARN] Cannot load valid GA API key at path: #{path}: #{e}")
+  end
+
+  def google_view_id
+    ENV["GOOGLE_VIEW_ID"] || Rails.application.credentials.google[:view_id]
+  end
 end

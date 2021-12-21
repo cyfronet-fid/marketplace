@@ -3,27 +3,24 @@
   "properties": {
     "status": {
       "type": "object",
-      "properties":{
-        "value": {"type": "string"},
-        "type": {"type": "string",
+      "properties": {
+        "value": { "type": "string" },
+        "type": {
+          "type": "string",
           "enum": ["rejected", "waiting_for_response", "registered", "in_progress", "ready", "closed", "approved"]
         }
       },
       "additionalProperties": false,
       "required": ["value", "type"]
     },
-    "user_secrets": {"type": "object"}
+    "user_secrets": { "type": "object" }
   },
   "anyOf": [
     {
-      "required": [
-        "status"
-      ]
+      "required": ["status"]
     },
     {
-      "required": [
-        "user_secrets"
-      ]
+      "required": ["user_secrets"]
     }
   ],
   "additionalProperties": false

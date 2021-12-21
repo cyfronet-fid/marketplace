@@ -7,16 +7,18 @@ class Recommender::SimpleRecommender
   end
 
   private
-    def get_records(n)
-      ActiveRecord::Base.connection.execute(sql_query % { n: n }).to_a
-    end
 
-    def get_recommended_services(n)
-      records2services get_records(n)
-    end
+  def get_records(n)
+    ActiveRecord::Base.connection.execute(sql_query % { n: n }).to_a
+  end
 
-    def sql_query
-      """
+  def get_recommended_services(n)
+    records2services get_records(n)
+  end
+
+  def sql_query
+    "" \
+      "
       select Services.id from Services
       -- Join projects
       join Offers on Offers.service_id=Services.id
@@ -39,18 +41,19 @@ class Recommender::SimpleRecommender
       group by Services.id
       order by count(Services.name) desc
       limit %{n}
-      """
-    end
+      " \
+      ""
+  end
 
-    def records2services(records_array)
-      records_array.map { |h| Service.find h["id"] }
-    end
+  def records2services(records_array)
+    records_array.map { |h| Service.find h["id"] }
+  end
 
-    def fill_missing(recommended_services, n)
-      if recommended_services.length < n
-        additional_services = Service.all[0..(n - recommended_services.length - 1)]
-        recommended_services = recommended_services + additional_services
-      end
-      recommended_services
+  def fill_missing(recommended_services, n)
+    if recommended_services.length < n
+      additional_services = Service.all[0..(n - recommended_services.length - 1)]
+      recommended_services = recommended_services + additional_services
     end
+    recommended_services
+  end
 end

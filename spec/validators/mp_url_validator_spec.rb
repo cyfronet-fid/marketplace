@@ -3,11 +3,12 @@
 require "rails_helper"
 
 module Test
-  MpUrlValidatable = Struct.new(:webpage) do
-    include ActiveModel::Validations
+  MpUrlValidatable =
+    Struct.new(:webpage) do
+      include ActiveModel::Validations
 
-    validates :webpage, mp_url: true
-  end
+      validates :webpage, mp_url: true
+    end
 end
 
 # Validator tests with the test object

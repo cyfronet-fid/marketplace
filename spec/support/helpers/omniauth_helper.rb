@@ -20,13 +20,7 @@ module OmniauthHelper
   end
 
   def stub_checkin(user)
-    stub_omniauth(
-      :checkin,
-      first_name: user.first_name,
-      last_name: user.last_name,
-      email: user.email,
-      uid: user.uid
-    )
+    stub_omniauth(:checkin, first_name: user.first_name, last_name: user.last_name, email: user.email, uid: user.uid)
   end
 
   def checkin_sign_in_as(user)

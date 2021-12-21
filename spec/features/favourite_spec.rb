@@ -92,7 +92,7 @@ RSpec.feature "Favourites" do
 
         checkin_sign_in_as(user)
 
-        visit favourites_path()
+        visit favourites_path
 
         expect(page).to have_content "Favourite resources"
         expect(page).to have_content fav1.name
@@ -105,7 +105,7 @@ RSpec.feature "Favourites" do
 
         checkin_sign_in_as(user)
 
-        visit favourites_path()
+        visit favourites_path
 
         expect(page).to have_content "Favourite resources"
         expect(page).to have_content fav1.name
@@ -127,6 +127,7 @@ RSpec.feature "Favourites" do
         checkin_sign_in_as(user)
 
         visit service_path(service)
+
         # close shepherd's tour
         click_on "I'll do it later"
         expect(page).to have_content "Add to favourites"
@@ -140,6 +141,7 @@ RSpec.feature "Favourites" do
         checkin_sign_in_as(user)
 
         visit service_path(fav2)
+
         # close shepherd's tour
         click_on "I'll do it later"
 
@@ -150,7 +152,7 @@ RSpec.feature "Favourites" do
         expect(page).to_not have_content "Add to favourites"
         expect(page).to have_content "Remove from favourites"
 
-        visit favourites_path()
+        visit favourites_path
 
         expect(page).to have_content fav1.name
         expect(page).to have_content fav2.name
@@ -164,6 +166,7 @@ RSpec.feature "Favourites" do
         checkin_sign_in_as(user)
 
         visit service_path(fav2)
+
         # close shepherd's tour
         click_on "I'll do it later"
 
@@ -174,7 +177,7 @@ RSpec.feature "Favourites" do
         expect(page).to have_content "Add to favourites"
         expect(page).to_not have_content "Remove from favourites"
 
-        visit favourites_path()
+        visit favourites_path
 
         expect(page).to have_content fav1.name
         expect(page).to_not have_content fav2.name
@@ -188,7 +191,7 @@ RSpec.feature "Favourites" do
 
         checkin_sign_in_as(user)
 
-        visit services_path()
+        visit services_path
 
         expect(page).to have_content "Add to favourites"
       end
@@ -199,13 +202,13 @@ RSpec.feature "Favourites" do
 
         checkin_sign_in_as(user)
 
-        visit services_path()
+        visit services_path
 
         expect(page).to have_content "Add to favourites"
 
         find("#favourite-#{fav2.id}", visible: false).click
 
-        visit favourites_path()
+        visit favourites_path
 
         expect(page).to have_content fav1.name
         expect(page).to have_content fav2.name
@@ -217,7 +220,7 @@ RSpec.feature "Favourites" do
 
         checkin_sign_in_as(user)
 
-        visit services_path()
+        visit services_path
 
         expect(page).to have_content "Remove from favourites"
 

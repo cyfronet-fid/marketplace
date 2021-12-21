@@ -26,9 +26,7 @@ RSpec.describe ApplicationController, type: :controller do
   end
 
   xit "Should fetch recommended service ids" do
-    allow(Mp::Application.config).to(
-      receive(:recommender_host).and_return("localhost:5000")
-    )
+    allow(Mp::Application.config).to(receive(:recommender_host).and_return("localhost:5000"))
 
     services_ids = [1, 2, 3, 4, 5]
     allow(Faraday).to receive(:post).and_return(double(status: 200, body: { "recommendations" => services_ids }))

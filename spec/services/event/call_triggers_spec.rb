@@ -3,9 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Event::CallTriggers do
-  before do
-    allow(OMS::CallTriggerJob).to receive(:perform_later)
-  end
+  before { allow(OMS::CallTriggerJob).to receive(:perform_later) }
 
   it "executes for each returned OMS" do
     oms1 = double

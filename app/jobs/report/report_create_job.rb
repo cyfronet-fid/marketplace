@@ -3,9 +3,7 @@
 class Report::ReportCreateJob < ApplicationJob
   queue_as :reports
 
-  rescue_from(Report::Client::XGUSIssueCreateError) do |exception|
-    raise exception
-  end
+  rescue_from(Report::Client::XGUSIssueCreateError) { |exception| raise exception }
 
   rescue_from(StandardError) do |exception|
     # This is general error, which should not occur, but should be

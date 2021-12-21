@@ -7,6 +7,6 @@ class CreateServiceTargetGroups < ActiveRecord::Migration[5.2]
       t.belongs_to :target_group, foreign_key: true, index: true
       t.timestamps
     end
-    add_index :service_target_groups, [:service_id, :target_group_id], unique: true
+    add_index :service_target_groups, %i[service_id target_group_id], unique: true
   end
 end

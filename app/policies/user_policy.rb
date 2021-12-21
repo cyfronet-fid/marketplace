@@ -20,10 +20,6 @@ class UserPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [
-        :email, [scientific_domain_ids: []],
-        [category_ids: []], :scientific_domains_updates,
-        :categories_updates
-    ]
+    [:email, [scientific_domain_ids: []], [category_ids: []], :scientific_domains_updates, :categories_updates]
   end
 end

@@ -11,10 +11,26 @@ RSpec.describe ApplicationController, type: :controller do
   let!(:providers) { create_list(:provider, 2) }
   let!(:categories) { create_list(:category, 2) }
 
-  let!(:service1) { create(:service, name: "duper super name", resource_organisation: providers.first,
-                           providers: providers, categories: [categories.first], tag_list: "tag1, tag2") }
-  let!(:service2) { create(:service, name: "very different title", resource_organisation: providers.first,
-                           providers: [providers.first], categories: categories, tag_list: "tag2") }
+  let!(:service1) do
+    create(
+      :service,
+      name: "duper super name",
+      resource_organisation: providers.first,
+      providers: providers,
+      categories: [categories.first],
+      tag_list: "tag1, tag2"
+    )
+  end
+  let!(:service2) do
+    create(
+      :service,
+      name: "very different title",
+      resource_organisation: providers.first,
+      providers: [providers.first],
+      categories: categories,
+      tag_list: "tag2"
+    )
+  end
   let!(:offer1) { create(:offer, service: service1, name: "Offer 1") }
   let!(:offer2) { create(:offer, service: service1, name: "Offer 2") }
   let!(:offer3) { create(:offer, service: service1, name: "Offer 3") }
@@ -22,16 +38,12 @@ RSpec.describe ApplicationController, type: :controller do
   let!(:params) { ActionController::Parameters.new }
   let!(:provider_filter) { Filter::Provider.new(params: params) }
   let!(:tag_filter) { Filter::Tag.new(params: params) }
-  let!(:filters) { [ provider_filter, tag_filter ] }
+  let!(:filters) { [provider_filter, tag_filter] }
 
-  before(:each) do
-    controller.params = params
-  end
+  before(:each) { controller.params = params }
 
   context "#search " do
-    before(:each) do
-      Offer.reindex
-    end
+    before(:each) { Offer.reindex }
 
     context "without filters set" do
       let!(:params) { ActionController::Parameters.new }
@@ -65,8 +77,9 @@ RSpec.describe ApplicationController, type: :controller do
     end
 
     context "with filters and category set" do
-      let!(:params) { ActionController::Parameters.new("providers" => providers.second.id,
-                                                       "category_id" => categories.second.id) }
+      let!(:params) do
+        ActionController::Parameters.new("providers" => providers.second.id, "category_id" => categories.second.id)
+      end
       it "returns empty service list when category contradicts provider filter" do
         results = controller.search(Service.all, filters)
         offers = results.second
@@ -78,8 +91,9 @@ RSpec.describe ApplicationController, type: :controller do
     end
 
     context "with filters and category set" do
-      let!(:params) { ActionController::Parameters.new("providers" => providers.first.id,
-                                                       "category_id" => categories.second.id) }
+      let!(:params) do
+        ActionController::Parameters.new("providers" => providers.first.id, "category_id" => categories.second.id)
+      end
       it "returns correct service list" do
         results = controller.search(Service.all, filters).first.results
         expect(results.size).to eq(1)
@@ -103,32 +117,34 @@ RSpec.describe ApplicationController, type: :controller do
     context "provider set" do
       let!(:params) { ActionController::Parameters.new("providers" => providers.first.id) }
       it "returns counters for providers when tag filter not set" do
-        expect(controller.filter_counters(Service.all, filters, provider_filter)).
-            to eq(providers.first.id => 2, providers.second.id => 1)
+        expect(controller.filter_counters(Service.all, filters, provider_filter)).to eq(
+          providers.first.id => 2,
+          providers.second.id => 1
+        )
       end
     end
 
     context "tag set" do
       let!(:params) { ActionController::Parameters.new("tag" => "tag1") }
       it "returns counters for providers when tag filter set and limits results" do
-        expect(controller.filter_counters(Service.all, filters, provider_filter)).
-            to eq(providers.first.id => 1, providers.second.id => 1)
+        expect(controller.filter_counters(Service.all, filters, provider_filter)).to eq(
+          providers.first.id => 1,
+          providers.second.id => 1
+        )
       end
     end
 
     context "provider and resource organisation set" do
       let!(:params) { ActionController::Parameters.new("providers" => providers.first.id) }
       it "returns counters for tags when provider filter set but does not limit results" do
-        expect(controller.filter_counters(Service.all, filters, tag_filter)).
-            to eq("tag1" => 1, "tag2" => 2)
+        expect(controller.filter_counters(Service.all, filters, tag_filter)).to eq("tag1" => 1, "tag2" => 2)
       end
     end
 
     context "provider and resource organisation set" do
       let!(:params) { ActionController::Parameters.new("providers" => providers.second.id) }
       it "returns counters for tags when provider filter set and limits results" do
-        expect(controller.filter_counters(Service.all, filters, tag_filter)).
-            to eq("tag1" => 1, "tag2" => 1)
+        expect(controller.filter_counters(Service.all, filters, tag_filter)).to eq("tag1" => 1, "tag2" => 1)
       end
     end
   end
@@ -162,8 +178,7 @@ RSpec.describe ApplicationController, type: :controller do
     end
 
     context "with query and filter" do
-      let!(:params) { ActionController::Parameters.new("q" => "very different",
-                                                       "providers" => providers.second.id) }
+      let!(:params) { ActionController::Parameters.new("q" => "very different", "providers" => providers.second.id) }
       it "checks if query, filters, and categories counters work together" do
         counters = controller.category_counters(Service.all, filters)
         expect(counters.class).to eq Hash
@@ -201,7 +216,7 @@ RSpec.describe ApplicationController, type: :controller do
     end
 
     context Filter::Tag do
-      let!(:collection) { ["tag1", "tag2", "tag3"] }
+      let!(:collection) { %w[tag1 tag2 tag3] }
       let!(:field_name) { :tag_list }
       let!(:param_name) { :tag }
       let!(:filter_class) { Filter::Tag }
@@ -243,9 +258,24 @@ RSpec.describe ApplicationController, type: :controller do
 
     context Filter::Rating do
       let!(:collection) { [5.0, 4.0, 1.0] }
-      let!(:service1) { create(:service).tap { |s| s.rating = collection.first; s.save } }
-      let!(:service2) { create(:service).tap { |s| s.rating = collection.second; s.save } }
-      let!(:service4) { create(:service).tap { |s| s.rating = collection.third; s.save } }
+      let!(:service1) do
+        create(:service).tap do |s|
+          s.rating = collection.first
+          s.save
+        end
+      end
+      let!(:service2) do
+        create(:service).tap do |s|
+          s.rating = collection.second
+          s.save
+        end
+      end
+      let!(:service4) do
+        create(:service).tap do |s|
+          s.rating = collection.third
+          s.save
+        end
+      end
       let!(:field_name) { :rating }
       let!(:param_name) { :rating }
       let!(:values) { 2.0 }
@@ -277,15 +307,19 @@ RSpec.describe ApplicationController, type: :controller do
     end
 
     context Filter::Location do
-      let!(:collection) { ["PL", "BR", "EO"] }
-      let!(:service1) {
-        create(:service,
-               geographical_availabilities:
-                 Array.wrap([Country.load(collection.first), Country.load(collection.third)])) }
-      let!(:service2) {
-        create(:service,
-               geographical_availabilities:
-                 Array.wrap([Country.load(collection.second), Country.load(collection.third)])) }
+      let!(:collection) { %w[PL BR EO] }
+      let!(:service1) do
+        create(
+          :service,
+          geographical_availabilities: Array.wrap([Country.load(collection.first), Country.load(collection.third)])
+        )
+      end
+      let!(:service2) do
+        create(
+          :service,
+          geographical_availabilities: Array.wrap([Country.load(collection.second), Country.load(collection.third)])
+        )
+      end
       let!(:service4) { create(:service, geographical_availabilities: Array.wrap(Country.load(collection.second))) }
       let!(:field_name) { :geographical_availabilities }
       let!(:param_name) { :geographical_availabilities }

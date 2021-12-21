@@ -1,15 +1,15 @@
 {
   "type": "object",
   "properties": {
-    "id": {"type": "integer"},
+    "id": { "type": "integer" },
     "owner": {
       "type": "object",
       "properties": {
-        "uid": {"type": "string"},
-        "email": {"type": "string"},
-        "name": {"type": "string"},
-        "first_name": {"type": "string"},
-        "last_name": {"type": "string"}
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "first_name": { "type": "string" },
+        "last_name": { "type": "string" }
       },
       "additionalProperties": false,
       "required": ["uid", "email", "name", "first_name", "last_name"]

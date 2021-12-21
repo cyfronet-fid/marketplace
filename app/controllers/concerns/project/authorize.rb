@@ -9,8 +9,9 @@ module Project::Authorize
   end
 
   private
-    def load_and_authorize_project!
-      @project = Project.find_by_id(params[:project_id])
-      authorize(@project, :show?)
-    end
+
+  def load_and_authorize_project!
+    @project = Project.find_by_id(params[:project_id])
+    authorize(@project, :show?)
+  end
 end

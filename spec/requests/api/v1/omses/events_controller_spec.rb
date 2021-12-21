@@ -3,7 +3,6 @@
 require "swagger_helper"
 require "rails_helper"
 
-
 RSpec.describe Api::V1::OMSes::EventsController, swagger_doc: "v1/ordering_swagger.json" do
   before(:all) do
     Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
@@ -19,11 +18,13 @@ RSpec.describe Api::V1::OMSes::EventsController, swagger_doc: "v1/ordering_swagg
     get "lists events" do
       tags "Events"
       produces "application/json"
-      security [ authentication_token: [] ]
-      parameter name: :from_timestamp, in: :query, type: :string, required: true,
+      security [authentication_token: []]
+      parameter name: :from_timestamp,
+                in: :query,
+                type: :string,
+                required: true,
                 description: "List events after, ISO8601 format"
-      parameter name: :limit, in: :query, type: :integer, required: false,
-                description: "number of returned elements"
+      parameter name: :limit, in: :query, type: :integer, required: false, description: "number of returned elements"
 
       response 200, "events found" do
         schema "$ref" => "event/event_index.json"

@@ -15,11 +15,12 @@ module OrderingApi
         return
       end
 
-      admin = User.find_or_initialize_by(uid: "iama#{@oms_name}admin") do |user|
-        user.first_name = @oms_name.titlecase
-        user.last_name = "admin"
-        user.email = "#{@oms_name}_admin@example.com"
-      end
+      admin =
+        User.find_or_initialize_by(uid: "iama#{@oms_name}admin") do |user|
+          user.first_name = @oms_name.titlecase
+          user.last_name = "admin"
+          user.email = "#{@oms_name}_admin@example.com"
+        end
       admin.authentication_token = @authentication_token if @authentication_token.present?
       admin.save!
 
@@ -34,8 +35,9 @@ module OrderingApi
     end
 
     private
-      def append_if_not_present(association, element)
-        association << element if association.exclude?(element)
-      end
+
+    def append_if_not_present(association, element)
+      association << element if association.exclude?(element)
+    end
   end
 end

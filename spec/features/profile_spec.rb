@@ -7,7 +7,6 @@ RSpec.feature "Profile page" do
 
   let(:user) { create(:user) }
 
-
   context "as logged in user" do
     before { checkin_sign_in_as(user) }
 
@@ -15,8 +14,6 @@ RSpec.feature "Profile page" do
       visit root_path
 
       click_link("Profile", match: :first)
-
-
 
       expect(page.body).to have_text(user.first_name)
       expect(page.body).to have_text(user.last_name)
@@ -53,8 +50,7 @@ RSpec.feature "Profile page" do
     scenario "I can delete my profile information" do
       c = create(:category)
       sd = create(:scientific_domain)
-      user.update(categories: [c], scientific_domains: [sd],
-                  categories_updates: true, scientific_domains_updates: true)
+      user.update(categories: [c], scientific_domains: [sd], categories_updates: true, scientific_domains_updates: true)
 
       visit profile_path
 
@@ -81,7 +77,6 @@ RSpec.feature "Profile page" do
       end
     end
   end
-
 
   scenario "link isn't visible to unauthenticated user" do
     visit root_path

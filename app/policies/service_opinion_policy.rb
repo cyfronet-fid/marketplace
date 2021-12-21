@@ -20,11 +20,12 @@ class ServiceOpinionPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:service_rating, :order_rating, :opinion]
+    %i[service_rating order_rating opinion]
   end
 
   private
-    def owner?
-      record.user == user
-    end
+
+  def owner?
+    record.user == user
+  end
 end

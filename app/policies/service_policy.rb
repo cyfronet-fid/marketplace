@@ -3,7 +3,7 @@
 class ServicePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(status: [:published, :unverified, :errored])
+      scope.where(status: %i[published unverified errored])
     end
   end
 
@@ -24,15 +24,16 @@ class ServicePolicy < ApplicationPolicy
   end
 
   private
-    def enough_to_show?
-      record.offers? && record.offers.published.size > 1
-    end
 
-    def has_bundled_offers?
-      record.offers? && record.offers.any? { |s| s.bundled_offers_count > 0 && s.published? }
-    end
+  def enough_to_show?
+    record.offers? && record.offers.published.size > 1
+  end
 
-    def has_offers?
-      record.offers? && record.offers.any? { |s| s.bundled_offers_count == 0 && s.published? }
-    end
+  def has_bundled_offers?
+    record.offers? && record.offers.any? { |s| s.bundled_offers_count > 0 && s.published? }
+  end
+
+  def has_offers?
+    record.offers? && record.offers.any? { |s| s.bundled_offers_count == 0 && s.published? }
+  end
 end

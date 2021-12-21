@@ -9,13 +9,9 @@ class Probes::Create
 
   def call
     # Set unique client id per device per system
-    if @cookies[:client_uid].nil?
-      @cookies.permanent[:client_uid] = SecureRandom.uuid
-    end
+    @cookies.permanent[:client_uid] = SecureRandom.uuid if @cookies[:client_uid].nil?
 
-    if Mp::Application.config.recommender_host.nil?
-      return
-    end
+    return if Mp::Application.config.recommender_host.nil?
 
     request_body = {
       timestamp: @params[:timestamp],
@@ -24,9 +20,7 @@ class Probes::Create
       action: JSON.parse(@params[:user_action].to_json)
     }
 
-    unless @current_user.nil?
-      request_body[:user_id] = @current_user.id
-    end
+    request_body[:user_id] = @current_user.id unless @current_user.nil?
 
     request_body[:unique_id] = @cookies[:client_uid]
 
@@ -35,9 +29,7 @@ class Probes::Create
     end
 
     is_recommendation_panel = @params[:source]["root"]["type"] != "other"
-    if is_recommendation_panel
-      request_body[:source]["root"]["panel_id"] = ab_test(:recommendation_panel)
-    end
+    request_body[:source]["root"]["panel_id"] = ab_test(:recommendation_panel) if is_recommendation_panel
 
     Probes::ProbesJob.perform_later(request_body.to_json)
   end

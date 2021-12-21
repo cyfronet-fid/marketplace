@@ -39,9 +39,14 @@ class Jira::Client < JIRA::Client
   attr_reader :jira_issue_type_id, :jira_project_issue_type_id
   attr_reader :webhook_secret
   attr_reader :custom_fields
-  attr_reader :wf_todo_id, :wf_in_progress_id, :wf_done_id,
-              :wf_rejected_id, :wf_waiting_for_response_id,
-              :wf_closed_id, :wf_ready_id, :wf_approved_id,
+  attr_reader :wf_todo_id,
+              :wf_in_progress_id,
+              :wf_done_id,
+              :wf_rejected_id,
+              :wf_waiting_for_response_id,
+              :wf_closed_id,
+              :wf_ready_id,
+              :wf_approved_id,
               :wf_archived_id
 
   def initialize
@@ -50,12 +55,12 @@ class Jira::Client < JIRA::Client
     @webhook_secret = @jira_config[:webhook_secret]
 
     options = {
-        username: @jira_config[:username],
-        password: @jira_config[:password],
-        site: @jira_config[:url],
-        context_path: @jira_config[:context_path],
-        auth_type: :basic,
-        use_ssl: (/^https:\/\// =~ @jira_config[:url])
+      username: @jira_config[:username],
+      password: @jira_config[:password],
+      site: @jira_config[:url],
+      context_path: @jira_config[:context_path],
+      auth_type: :basic,
+      use_ssl: (%r{^https:\/\/} =~ @jira_config[:url])
     }
 
     @jira_project_key = @jira_config[:project]
@@ -110,19 +115,22 @@ class Jira::Client < JIRA::Client
   def create_project_issue(project)
     issue = self.Issue.build
 
-    fields = { summary: "Project, #{project.user.first_name} " +
-                        "#{project.user.last_name}, " +
-                        "#{project.name}",
-               project: { key: @jira_project_key },
-               issuetype: { id: @jira_project_issue_type_id },
+    fields = {
+      summary: "Project, #{project.user.first_name} " + "#{project.user.last_name}, " + "#{project.name}",
+      project: {
+        key: @jira_project_key
+      },
+      issuetype: {
+        id: @jira_project_issue_type_id
+      }
     }
 
-    @custom_fields.reject { |k, v| v.empty? }.each do |field_name, field_id|
-      value = generate_project_custom_field_value(field_name.to_s, project)
-      unless value.nil?
-        fields[field_id.to_s] = value
+    @custom_fields
+      .reject { |k, v| v.empty? }
+      .each do |field_name, field_id|
+        value = generate_project_custom_field_value(field_name.to_s, project)
+        fields[field_id.to_s] = value unless value.nil?
       end
-    end
 
     if issue.save(fields: fields)
       issue
@@ -131,27 +139,29 @@ class Jira::Client < JIRA::Client
     end
   end
 
-
   def create_service_issue(project_item)
-    unless project_item.project.jira_active?
-      raise ProjectIssueDoesNotExist.new(project_item.project)
-    end
+    raise ProjectIssueDoesNotExist.new(project_item.project) unless project_item.project.jira_active?
 
     issue = self.Issue.build
 
-    fields = { summary: "Service order, #{project_item.project.user.first_name} " +
-                       "#{project_item.project.user.last_name}, " +
-                       "#{project_item.service.name}",
-              project: { key: @jira_project_key },
-              issuetype: { id: @jira_issue_type_id },
+    fields = {
+      summary:
+        "Service order, #{project_item.project.user.first_name} " + "#{project_item.project.user.last_name}, " +
+          "#{project_item.service.name}",
+      project: {
+        key: @jira_project_key
+      },
+      issuetype: {
+        id: @jira_issue_type_id
+      }
     }
 
-    @custom_fields.reject { |k, v| v.empty? }.each do |field_name, field_id|
-      value = generate_project_item_custom_field_value(field_name.to_s, project_item)
-      unless value.nil?
-        fields[field_id.to_s] = value
+    @custom_fields
+      .reject { |k, v| v.empty? }
+      .each do |field_name, field_id|
+        value = generate_project_item_custom_field_value(field_name.to_s, project_item)
+        fields[field_id.to_s] = value unless value.nil?
       end
-    end
 
     if issue.save(fields: fields)
       issue
@@ -161,21 +171,17 @@ class Jira::Client < JIRA::Client
   end
 
   def update_project_issue(project)
-    unless project.jira_active?
-      raise ProjectIssueDoesNotExist.new(project)
-    end
+    raise ProjectIssueDoesNotExist.new(project) unless project.jira_active?
 
     issue = self.Issue.find(project.issue_id)
 
-    fields = { summary: "Project, #{project.user.first_name} " +
-                       "#{project.user.last_name}, " +
-                       "#{project.name}" }
-    @custom_fields.reject { |k, v| v.empty? }.each do |field_name, field_id|
-      value = generate_project_custom_field_value(field_name.to_s, project)
-      unless value.nil?
-        fields[field_id.to_s] = value
+    fields = { summary: "Project, #{project.user.first_name} " + "#{project.user.last_name}, " + "#{project.name}" }
+    @custom_fields
+      .reject { |k, v| v.empty? }
+      .each do |field_name, field_id|
+        value = generate_project_custom_field_value(field_name.to_s, project)
+        fields[field_id.to_s] = value unless value.nil?
       end
-    end
 
     if issue.save(fields: fields)
       issue
@@ -196,9 +202,10 @@ class Jira::Client < JIRA::Client
     self.Project.find(@jira_project_key)
   end
 
-private
+  private
+
   def encode_properties(properties)
-    properties.map { |p| [ p["label"],  p["value"] ] }.to_h
+    properties.map { |p| [p["label"], p["value"]] }.to_h
   end
 
   def encode_order_properties(project_item)
@@ -234,29 +241,28 @@ private
       project.user.uid
     when "CP-CustomerTypology"
       if project.customer_typology
-        { "id" => @jira_config[:custom_fields][:select_values]["CP-CustomerTypology".to_sym][project.customer_typology.to_sym] }
+        {
+          "id" =>
+            @jira_config[:custom_fields][:select_values]["CP-CustomerTypology".to_sym][project.customer_typology.to_sym]
+        }
       else
         nil
       end
     when "CP-CustomerCountry"
       project.country_of_origin&.name || "N/A"
     when "CP-CollaborationCountry"
-      if project.countries_of_partnership&.present?
-        project.countries_of_partnership&.map(&:name).join(", ")
-      else
-        "N/A"
-      end
-    # when "CP-ReasonForAccess"
-    #   project.reason_for_access
-    # when "CP-ProjectInformation"
-    #   project.name
+      project.countries_of_partnership&.present? ? project.countries_of_partnership&.map(&:name).join(", ") : "N/A"
+      # when "CP-ReasonForAccess"
+      #   project.reason_for_access
+      # when "CP-ProjectInformation"
+      #   project.name
     when "CP-UserGroupName"
       project.user_group_name
     when "SO-ProjectName"
       "#{project&.name} (#{project&.id})"
-    # this is not a property of project
-    # when "CP-ScientificDiscipline"
-    #   project.scientific_domain&.name
+      # this is not a property of project
+      # when "CP-ScientificDiscipline"
+      #   project.scientific_domain&.name
     else
       nil
     end
@@ -285,7 +291,12 @@ private
     when "CP-Platforms"
       project_item.offer.service.platforms.pluck(:name).join(", ")
     when "CP-INeedAVoucher"
-      { "id" => @jira_config[:custom_fields][:select_values]["CP-INeedAVoucher".to_sym][project_item.request_voucher ? :yes : :no] }
+      {
+        "id" =>
+          @jira_config[:custom_fields][:select_values]["CP-INeedAVoucher".to_sym][
+            project_item.request_voucher ? :yes : :no
+          ]
+      }
     when "CP-VoucherID"
       project_item.voucher_id || nil
     when "SO-1"
@@ -293,7 +304,12 @@ private
     when "SO-ServiceOrderTarget"
       project_item.offer.oms_params&.fetch("order_target", nil) || ""
     when "SO-OfferType"
-      { "id" => @jira_config[:custom_fields][:select_values]["SO-OfferType".to_sym][map_to_jira_order_type(project_item).to_sym] }
+      {
+        "id" =>
+          @jira_config[:custom_fields][:select_values]["SO-OfferType".to_sym][
+            map_to_jira_order_type(project_item).to_sym
+          ]
+      }
     else
       nil
     end

@@ -19,10 +19,7 @@ class ProjectItem::Part
   end
 
   def to_hash
-    {
-      "offer_id" => offer.id,
-      "attributes" => attributes.map { |a| a.to_json }
-    }
+    { "offer_id" => offer.id, "attributes" => attributes.map { |a| a.to_json } }
   end
 
   def to_json
@@ -34,15 +31,16 @@ class ProjectItem::Part
   end
 
   private
-    def attributes_from_params(parameters)
-      parameters.map { |p| Attribute.from_json(p) }
-    end
 
-    def update_attribute(id, value)
-      attributes_hsh[id]&.value_from_param(value)
-    end
+  def attributes_from_params(parameters)
+    parameters.map { |p| Attribute.from_json(p) }
+  end
 
-    def attributes_hsh
-      @attributes_hsh ||= attributes.index_by { |p| p.id }
-    end
+  def update_attribute(id, value)
+    attributes_hsh[id]&.value_from_param(value)
+  end
+
+  def attributes_hsh
+    @attributes_hsh ||= attributes.index_by { |p| p.id }
+  end
 end

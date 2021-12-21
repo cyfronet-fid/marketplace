@@ -13,16 +13,29 @@ class Parameter::QuantityPrice < Parameter
 
   def dump
     ActiveSupport::HashWithIndifferentAccess.new(
-      id: id, type: type, label: name, description: hint, value_type: "integer",
+      id: id,
+      type: type,
+      label: name,
+      description: hint,
+      value_type: "integer",
       config: {
-        start_price: start_price, step_price: step_price,
-        max: max, currency: currency
-      })
+        start_price: start_price,
+        step_price: step_price,
+        max: max,
+        currency: currency
+      }
+    )
   end
 
   def self.load(hsh)
-    new(id: hsh["id"], name: hsh["label"], hint: hsh["description"],
-        start_price: hsh.dig("config", "start_price"), step_price: hsh.dig("config", "step_price"),
-        max: hsh.dig("config", "max"), currency: hsh.dig("config", "currency"))
+    new(
+      id: hsh["id"],
+      name: hsh["label"],
+      hint: hsh["description"],
+      start_price: hsh.dig("config", "start_price"),
+      step_price: hsh.dig("config", "step_price"),
+      max: hsh.dig("config", "max"),
+      currency: hsh.dig("config", "currency")
+    )
   end
 end

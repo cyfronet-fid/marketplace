@@ -4,8 +4,7 @@ class AddWebpageToOffer < ActiveRecord::Migration[5.2]
   def up
     add_column :offers, :webpage, :string
 
-    execute(
-      <<~SQL
+    execute(<<~SQL)
       UPDATE offers
       SET webpage = (
         SELECT connected_url
@@ -13,7 +12,6 @@ class AddWebpageToOffer < ActiveRecord::Migration[5.2]
         WHERE s.id = service_id
       )
       SQL
-    )
 
     remove_column :services, :connected_url, :string
   end
@@ -21,8 +19,7 @@ class AddWebpageToOffer < ActiveRecord::Migration[5.2]
   def down
     add_column :services, :connected_url, :string
 
-    execute(
-      <<~SQL
+    execute(<<~SQL)
       UPDATE services s
       SET connected_url = (
         SELECT o.webpage
@@ -31,7 +28,6 @@ class AddWebpageToOffer < ActiveRecord::Migration[5.2]
         LIMIT 1
       )
       SQL
-    )
     remove_column :offers, :webpage, :string
   end
 end

@@ -11,8 +11,7 @@ describe "block_error_handling" do
       raise StandardError.new
     end
 
-    def sample_method!
-    end
+    def sample_method!; end
   end
 
   let(:cls) { Sample.new(nil) }
@@ -30,16 +29,24 @@ describe "block_error_handling" do
   end
 end
 
-
 describe Jira::Checker do
-  let(:checker) {
-    jira_client = double("Jira::Client", jira_project_key: "MP",
-                         jira_issue_type_id: 1,
-                         jira_config: { username: "user", url: "http://localhost/jira" },
-                         custom_fields: { "CI-Name": "customfield_10000",
-                                          "CI-Surname": "customfield_10001" })
+  let(:checker) do
+    jira_client =
+      double(
+        "Jira::Client",
+        jira_project_key: "MP",
+        jira_issue_type_id: 1,
+        jira_config: {
+          username: "user",
+          url: "http://localhost/jira"
+        },
+        custom_fields: {
+          "CI-Name": "customfield_10000",
+          "CI-Surname": "customfield_10001"
+        }
+      )
     Jira::Checker.new(jira_client)
-  }
+  end
 
   it "check_connection! should call client.Project.all" do
     expect(checker.client).to receive_message_chain("Project.all")
@@ -47,13 +54,13 @@ describe Jira::Checker do
   end
 
   it "check_connection! should raise CriticalCheckerError on 401" do
-    expect(checker.client).to receive_message_chain("Project.all")
-                                .and_raise(JIRA::HTTPError.new(create(:response, code: "401")))
-    expect { checker.check_connection! }
-      .to raise_error(
-            Jira::Checker::CriticalCheckerError,
-            "Could not authenticate #{checker.client.jira_config["username"]} on #{checker.client.jira_config["url"]}"
-          )
+    expect(checker.client).to receive_message_chain("Project.all").and_raise(
+      JIRA::HTTPError.new(create(:response, code: "401"))
+    )
+    expect { checker.check_connection! }.to raise_error(
+      Jira::Checker::CriticalCheckerError,
+      "Could not authenticate #{checker.client.jira_config["username"]} on #{checker.client.jira_config["url"]}"
+    )
   end
 
   it "check_issue_type! should call client.mp_issue_type" do
@@ -63,12 +70,11 @@ describe Jira::Checker do
 
   it "check_issue_type! should raise CheckerError on 404" do
     expect(checker.client).to receive(:mp_issue_type).and_raise(JIRA::HTTPError.new(create(:response, code: "404")))
-    expect { checker.check_issue_type! }
-      .to raise_error(
-            Jira::Checker::CheckerError,
-            "It seems that ticket with id #{checker.client.jira_issue_type_id} does not exist, " \
-            "make sure to add existing issue type into configuration"
-          )
+    expect { checker.check_issue_type! }.to raise_error(
+      Jira::Checker::CheckerError,
+      "It seems that ticket with id #{checker.client.jira_issue_type_id} does not exist, " \
+        "make sure to add existing issue type into configuration"
+    )
   end
 
   it "check_project! should call client.mp_project" do
@@ -78,22 +84,30 @@ describe Jira::Checker do
 
   it "check_project! should raise CriticalCheckerError on 404" do
     expect(checker.client).to receive(:mp_project).and_raise(JIRA::HTTPError.new(create(:response, code: "404")))
-    expect { checker.check_project! }
-      .to raise_error(
-            Jira::Checker::CriticalCheckerError,
-            "Could not find project #{checker.client.jira_project_key}, " \
-            "make sure it exists and user #{checker.client.jira_config["username"]} has access to it"
-          )
+    expect { checker.check_project! }.to raise_error(
+      Jira::Checker::CriticalCheckerError,
+      "Could not find project #{checker.client.jira_project_key}, " \
+        "make sure it exists and user #{checker.client.jira_config["username"]} has access to it"
+    )
   end
 
   describe "issue" do
     let(:issue) { double("Issue") }
 
     it "check_create_issue!" do
-      expect(issue).to receive(:save).with(fields: { summary:   "TEST TICKET, TO CHECK WHETHER JIRA INTEGRATION WORKS",
-                                                     project:   { key: checker.client.jira_project_key },
-                                                     issuetype: { id: checker.client.jira_issue_type_id } })
-                           .and_return(true)
+      expect(issue).to receive(:save)
+        .with(
+          fields: {
+            summary: "TEST TICKET, TO CHECK WHETHER JIRA INTEGRATION WORKS",
+            project: {
+              key: checker.client.jira_project_key
+            },
+            issuetype: {
+              id: checker.client.jira_issue_type_id
+            }
+          }
+        )
+        .and_return(true)
       checker.check_create_issue! issue
     end
 
@@ -124,33 +138,34 @@ describe Jira::Checker do
     end
 
     it "should throw error if status is not found" do
-      expect(checker.client).to receive_message_chain("Status.find")
-                                  .and_raise(JIRA::HTTPError.new(create(:response, code: "404")))
+      expect(checker.client).to receive_message_chain("Status.find").and_raise(
+        JIRA::HTTPError.new(create(:response, code: "404"))
+      )
       expect { checker.check_workflow! id }.to raise_error(
-                                                 Jira::Checker::CheckerError,
-                                                 "STATUS WITH ID: #{id} DOES NOT EXIST IN JIRA"
-                                               )
+        Jira::Checker::CheckerError,
+        "STATUS WITH ID: #{id} DOES NOT EXIST IN JIRA"
+      )
     end
   end
 
   describe "check_custom_fields!" do
     it "should not raise error if all custom fields are matched" do
-      expect(checker.client).to receive_message_chain("Field.all").and_return([double("Field",
-                                                                                      id: "customfield_10000",
-                                                                                      name: "CI-Name"),
-                                                                               double("Field",
-                                                                                      id: "customfield_10001",
-                                                                                      name: "CI-Surname")])
+      expect(checker.client).to receive_message_chain("Field.all").and_return(
+        [
+          double("Field", id: "customfield_10000", name: "CI-Name"),
+          double("Field", id: "customfield_10001", name: "CI-Surname")
+        ]
+      )
       checker.check_custom_fields!
     end
     it "should raise error if any custom field is not mapped" do
-      expect(checker.client).to receive_message_chain("Field.all").and_return([double("Field",
-                                                                                      id: "customfield_10000",
-                                                                                      name: "CI-Name")])
+      expect(checker.client).to receive_message_chain("Field.all").and_return(
+        [double("Field", id: "customfield_10000", name: "CI-Name")]
+      )
       expect { checker.check_custom_fields! }.to raise_error(
-                                                   Jira::Checker::CheckerCompositeError,
-                                                   "CUSTOM FIELD mapping have some problems"
-                                                 )
+        Jira::Checker::CheckerCompositeError,
+        "CUSTOM FIELD mapping have some problems"
+      )
     end
   end
 
@@ -160,12 +175,8 @@ describe Jira::Checker do
       attr_reader :filters, :attrs, :enabled, :events
 
       def initialize(project_key, events = [])
-        @filters = {
-          "issue-related-events-section" => "project = #{project_key} "
-        }
-        @attrs = {
-          "url" => ("http://localhost:2990" + api_webhooks_jira_path + "?issue_id=${issue.id}")
-        }
+        @filters = { "issue-related-events-section" => "project = #{project_key} " }
+        @attrs = { "url" => ("http://localhost:2990" + api_webhooks_jira_path + "?issue_id=${issue.id}") }
         @events = events
         @enabled = true
       end
@@ -182,58 +193,54 @@ describe Jira::Checker do
       it "should raise CheckerWarning if jira instance has no webhooks" do
         expect(checker.client).to receive_message_chain("Webhook.all").and_return([])
         expect { checker.check_webhook!("http://localhost:2990") }.to raise_error(
-                                                                        Jira::Checker::CheckerWarning,
-                                                                        "JIRA instance has no defined webhooks"
-                                                                      )
+          Jira::Checker::CheckerWarning,
+          "JIRA instance has no defined webhooks"
+        )
       end
 
       it "should raise CheckerWarning if no webhook was matched" do
         webhook = MockWebhook.new("AAA")
         expect(checker.client).to receive_message_chain("Webhook.all").and_return([webhook])
-        expect { checker.check_webhook!("http://nonexistent") }
-          .to raise_error(
-                Jira::Checker::CheckerWarning,
-                "Could not find Webhook for this application, " +
-                "please confirm manually that webhook is defined for this host"
-              )
+        expect { checker.check_webhook!("http://nonexistent") }.to raise_error(
+          Jira::Checker::CheckerWarning,
+          "Could not find Webhook for this application, " +
+            "please confirm manually that webhook is defined for this host"
+        )
       end
     end
 
     describe "check_webhook_params!" do
       it "should not rise if webhook has all required events" do
-        events = [
-            "jira:issue_updated",
-            "comment_created",
-            "jira:issue_created",
-            "comment_updated",
-            "jira:issue_deleted",
-            "comment_deleted"
+        events = %w[
+          jira:issue_updated
+          comment_created
+          jira:issue_created
+          comment_updated
+          jira:issue_deleted
+          comment_deleted
         ]
 
         checker.check_webhook_params!(MockWebhook.new(checker.client.jira_project_key, events))
       end
 
       it "should rise CheckerCompositeError detailing which event was not set" do
-        events = [
-            "jira:issue_updated",
-            "comment_created",
-            "jira:issue_created",
-        ]
+        events = %w[jira:issue_updated comment_created jira:issue_created]
 
         expected_statuses = {
-            issue_updated: true,
-            comment_created: true,
-            issue_created: true,
-            comment_updated: false,
-            issue_deleted: false,
-            comment_deleted: false
+          issue_updated: true,
+          comment_created: true,
+          issue_created: true,
+          comment_updated: false,
+          issue_deleted: false,
+          comment_deleted: false
         }
 
-        expect { checker.check_webhook_params!(MockWebhook.new(checker.client.jira_project_key, events)) }
-          .to raise_error { |error|
-            expect(error).to be_a(Jira::Checker::CheckerCompositeError)
-            expect(error.statuses).to eq(expected_statuses)
-          }
+        expect {
+          checker.check_webhook_params!(MockWebhook.new(checker.client.jira_project_key, events))
+        }.to raise_error { |error|
+          expect(error).to be_a(Jira::Checker::CheckerCompositeError)
+          expect(error.statuses).to eq(expected_statuses)
+        }
       end
     end
   end

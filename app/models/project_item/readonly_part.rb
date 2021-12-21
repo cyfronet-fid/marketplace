@@ -1,4 +1,3 @@
-
 # frozen_string_literal: true
 
 class ProjectItem::ReadonlyPart
@@ -12,7 +11,8 @@ class ProjectItem::ReadonlyPart
   end
 
   private
-    def attributes_from_params(parameters)
-      parameters.map { |p| Attribute.from_json(p) }
-    end
+
+  def attributes_from_params(parameters)
+    parameters.map { |p| Attribute.from_json(p) }
+  end
 end

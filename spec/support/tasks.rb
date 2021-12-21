@@ -25,16 +25,11 @@ module TaskExampleGroup
   end
 end
 
-
 RSpec.configure do |config|
   # Tag Rake specs with `:task` metadata or put them in the spec/tasks dir
-  config.define_derived_metadata(file_path: %r{/spec/lib/tasks/}) do |metadata|
-    metadata[:type] = :task
-  end
+  config.define_derived_metadata(file_path: %r{/spec/lib/tasks/}) { |metadata| metadata[:type] = :task }
 
   config.include TaskExampleGroup, type: :task
 
-  config.before(:suite) do
-    Rails.application.load_tasks
-  end
+  config.before(:suite) { Rails.application.load_tasks }
 end

@@ -3,9 +3,7 @@
 module Parentable
   extend ActiveSupport::Concern
 
-  included do
-    has_ancestry cache_depth: true
-  end
+  included { has_ancestry cache_depth: true }
 
   def potential_parents
     persisted? ? self.class.where.not(id: descendant_ids + [id]) : self.class.all
@@ -29,9 +27,7 @@ module Parentable
     def child_names(records = self.arrange, parent_name = "", result = [])
       records.each do |r, sub_r|
         result << [name_with_path(parent_name, r.name), r]
-        unless sub_r.blank?
-          child_names(sub_r, name_with_path(parent_name, r.name), result)
-        end
+        child_names(sub_r, name_with_path(parent_name, r.name), result) unless sub_r.blank?
       end
       result
     end

@@ -26,66 +26,70 @@ class Services::SummariesController < Services::ApplicationController
   end
 
   private
-    def next_title
-      @offer.orderable? ? _("Send access request") : _("Pin!")
+
+  def next_title
+    @offer.orderable? ? _("Send access request") : _("Pin!")
+  end
+
+  def do_create(project_item_template, bundle_params)
+    authorize(project_item_template)
+
+    project_item = ProjectItem::Create.new(project_item_template, message_text, bundle_params: bundle_params).call
+
+    if project_item.persisted?
+      session.delete(session_key)
+      session.delete(:selected_project)
+      send_user_action
+      Matomo::SendRequestJob.perform_later(project_item, "AddToProject")
+      redirect_to project_service_path(project_item.project, project_item), notice: "Service ordered successfully"
+    else
+      redirect_to url_for([@service, prev_visible_step_key]), alert: "Service request configuration is invalid"
     end
+  end
 
-    def do_create(project_item_template, bundle_params)
-      authorize(project_item_template)
+  def step_key
+    :summary
+  end
 
-      project_item = ProjectItem::Create.new(project_item_template, message_text, bundle_params: bundle_params).call
+  def summary_params
+    session[session_key].merge(params.require(:customizable_project_item).permit(:project_id))
+  end
 
-      if project_item.persisted?
-        session.delete(session_key)
-        session.delete(:selected_project)
-        send_user_action
-        Matomo::SendRequestJob.perform_later(project_item, "AddToProject")
-        redirect_to project_service_path(project_item.project, project_item),
-                                  notice: "Service ordered successfully"
-      else
-        redirect_to url_for([@service, prev_visible_step_key]),
-                    alert: "Service request configuration is invalid"
-      end
-    end
+  def setup_show_variables!
+    @projects = policy_scope(current_user.projects.active)
+    @offer = @step.offer
+    @bundle_params = session[session_key][:bundled_parameters] || []
+  end
 
-    def step_key
-      :summary
-    end
+  def message_text
+    params[:customizable_project_item][:additional_comment]
+  end
 
-    def summary_params
-      session[session_key].merge(params.require(:customizable_project_item).permit(:project_id))
-    end
+  def project_item_template
+    CustomizableProjectItem.new(session[session_key])
+  end
 
-    def setup_show_variables!
-      @projects = policy_scope(current_user.projects.active)
-      @offer = @step.offer
-      @bundle_params = session[session_key][:bundled_parameters] || []
-    end
+  def send_user_action
+    return if Mp::Application.config.recommender_host.nil?
 
-    def message_text
-      params[:customizable_project_item][:additional_comment]
-    end
+    source_id = SecureRandom.uuid
 
-    def project_item_template
-      CustomizableProjectItem.new(session[session_key])
-    end
+    request_body = {
+      timestamp: Time.now.utc.iso8601,
+      source: JSON.parse(@recommendation_previous),
+      target: {
+        page_id: polymorphic_url(@service, routing_type: :path),
+        visit_id: source_id
+      },
+      action: {
+        order: true,
+        type: "button",
+        text: ""
+      },
+      user_id: current_user.id,
+      unique_id: cookies[:client_uid]
+    }
 
-    def send_user_action
-      if Mp::Application.config.recommender_host.nil?
-        return
-      end
-
-      source_id = SecureRandom.uuid
-
-      request_body = {
-        timestamp: Time.now.utc.iso8601,
-        source: JSON.parse(@recommendation_previous),
-        target: { page_id: polymorphic_url(@service, routing_type: :path), visit_id: source_id },
-        action: { order: true, type: "button", text: "" },
-        user_id: current_user.id,
-        unique_id: cookies[:client_uid]
-      }
-
-      Probes::ProbesJob.perform_later(request_body.to_json)
-    end
+    Probes::ProbesJob.perform_later(request_body.to_json)
+  end
 end

@@ -1,20 +1,20 @@
 {
-  "type":"object",
-  "properties":{
-    "timestamp": {"type":"string"},
-    "type": {"type":"string", "enum":  ["create", "update", "delete"]},
-    "resource": {"type":"string", "enum":  ["project", "project_item", "message"]},
-    "project_id": {"type":  "integer"},
-    "project_item_id": {"type":  "integer"},
-    "message_id": {"type":  "integer"},
+  "type": "object",
+  "properties": {
+    "timestamp": { "type": "string" },
+    "type": { "type": "string", "enum": ["create", "update", "delete"] },
+    "resource": { "type": "string", "enum": ["project", "project_item", "message"] },
+    "project_id": { "type": "integer" },
+    "project_item_id": { "type": "integer" },
+    "message_id": { "type": "integer" },
     "changes": {
-      "type":  "array",
+      "type": "array",
       "items": {
         "type": "object",
         "properties": {
-          "field": {"type":"string"},
-          "before": {"type":"string"},
-          "after": {"type":"string"}
+          "field": { "type": "string" },
+          "before": { "type": "string" },
+          "after": { "type": "string" }
         },
         "additionalProperties": false,
         "required": ["field", "before", "after"]

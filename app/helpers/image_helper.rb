@@ -3,7 +3,8 @@
 require "mini_magick"
 
 module ImageHelper
-  @@PERMITTED_EXT_MESSAGE = "format you're trying to attach is not supported.
+  @@PERMITTED_EXT_MESSAGE =
+    "format you're trying to attach is not supported.
            Supported formats: png, gif, jpg, jpeg, pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon."
   @@DEFAULT_LOGO_PATH = Webpacker.manifest.lookup("media/images/eosc-img.png")
 
@@ -25,11 +26,9 @@ module ImageHelper
 
   def self.to_base_64(path)
     content_type = MiniMagick::Image.open(path).mime_type
-    File.open(path, "rb") do |img|
-      "data:" + content_type + ";base64," + Base64.strict_encode64(img.read)
-    end
-    rescue Exception
-      "Not recognized or not permitted file type"
+    File.open(path, "rb") { |img| "data:" + content_type + ";base64," + Base64.strict_encode64(img.read) }
+  rescue Exception
+    "Not recognized or not permitted file type"
   end
 
   def self.binary_to_blob_stream(file_path)
@@ -57,21 +56,19 @@ module ImageHelper
   end
 
   def self.image_valid?(url)
-    Timeout.timeout(10) {
+    Timeout.timeout(10) do
       begin
         logo = open(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
         extension = Rack::Mime::MIME_TYPES.invert[logo.content_type]
-        unless ImageHelper.image_ext_permitted?(extension)
-          return false
-        end
+        return false unless ImageHelper.image_ext_permitted?(extension)
 
         true
-        rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError
-          return false
-        rescue Exception
-          return false
+      rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError
+        return false
+      rescue Exception
+        return false
       end
-    }
+    end
   rescue Timeout::Error
     false
   end
@@ -82,7 +79,7 @@ module ImageHelper
 
   def self.base_64_extension(base_64)
     metadata = base_64.split("base64,")[0]
-    extension = "." + metadata[/image\/[a-zA-Z]+/].gsub!(/image\//, "")
+    extension = "." + metadata[%r{image\/[a-zA-Z]+}].gsub!(%r{image\/}, "")
     unless ImageHelper.image_ext_permitted?(extension)
       msg = "Conversion of binary image to base64 can't be done on file with extension #{extension}"
       Sentry.capture_message(msg)
@@ -93,15 +90,16 @@ module ImageHelper
   end
 
   private
-    def self.get_file_extension(file_path)
-      file_name = file_path.split("/")[-1]
-      extension = "." + file_name.split(".")[-1]
-      unless ImageHelper.image_ext_permitted?(extension)
-        msg = "Conversion of binary image to base64 can't be done on file with extension #{extension}"
-        Sentry.capture_message(msg)
-        raise msg
-      end
 
-      extension
+  def self.get_file_extension(file_path)
+    file_name = file_path.split("/")[-1]
+    extension = "." + file_name.split(".")[-1]
+    unless ImageHelper.image_ext_permitted?(extension)
+      msg = "Conversion of binary image to base64 can't be done on file with extension #{extension}"
+      Sentry.capture_message(msg)
+      raise msg
     end
+
+    extension
+  end
 end

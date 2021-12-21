@@ -7,17 +7,12 @@ module ProjectItem::Customization
     validate do
       if offer&.bundle?
         bundled_property_values.each do |offer, parameters|
-          parameters
-            .select { |pv| pv.invalid? }
-            .each { |pv| errors.add(:bundled_property_values, :invalid, value: pv) }
+          parameters.select { |pv| pv.invalid? }.each { |pv| errors.add(:bundled_property_values, :invalid, value: pv) }
         end
       end
-      property_values
-        .select { |pv| pv.invalid? }
-        .each { |pv| errors.add(:property_values, :invalid, value: pv) }
+      property_values.select { |pv| pv.invalid? }.each { |pv| errors.add(:property_values, :invalid, value: pv) }
     end
   end
-
 
   def property_values
     part.attributes
@@ -31,8 +26,7 @@ module ProjectItem::Customization
   def bundled_property_values
     if defined?(self.bundled_parameters)
       if self&.bundled_parameters.present?
-        self.bundled_parameters
-          .transform_keys { |offer| offer.instance_of?(Offer) ? offer : Offer.find(offer) }
+        self.bundled_parameters.transform_keys { |offer| offer.instance_of?(Offer) ? offer : Offer.find(offer) }
       else
         offer_values.attributes_map.reject { |o, _| o == offer }
       end
@@ -50,16 +44,16 @@ module ProjectItem::Customization
   end
 
   private
-    def part
-      @part ||= ProjectItem::Attributes.new(offer: offer, parameters: properties)
-    end
 
-    def offer_values
-      @offers_values ||= ProjectItem::OfferValues.new(offer: offer,
-                                                      parameters: properties)
-    end
+  def part
+    @part ||= ProjectItem::Attributes.new(offer: offer, parameters: properties)
+  end
 
-    def id_to_bundled_offer
-      @id_to_offer ||= offer.bundled_offers.index_by { |o| "o#{o.id}" }
-    end
+  def offer_values
+    @offers_values ||= ProjectItem::OfferValues.new(offer: offer, parameters: properties)
+  end
+
+  def id_to_bundled_offer
+    @id_to_offer ||= offer.bundled_offers.index_by { |o| "o#{o.id}" }
+  end
 end

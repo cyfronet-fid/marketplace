@@ -5,7 +5,6 @@ require "rails_helper"
 RSpec.feature "Service ordering" do
   include OmniauthHelper
 
-
   context "as logged in user" do
     let(:user) do
       create(:user).tap { |u| create(:project, name: "Services", user: u, reason_for_access: "To pass test") }
@@ -41,29 +40,24 @@ RSpec.feature "Service ordering" do
       # Step 1
       expect(page).to have_current_path(service_offers_path(service))
       expect(page).to have_text(service.name)
-      expect(page).to have_selector(:link_or_button,
-                                    "Next", exact: true)
+      expect(page).to have_selector(:link_or_button, "Next", exact: true)
 
       choose "customizable_project_item_offer_id_#{offer.iid}"
       click_on "Next", match: :first
 
       # Step 2
       expect(page).to have_current_path(service_information_path(service))
-      expect(page).to have_selector(:link_or_button,
-                                    "Next", exact: true)
+      expect(page).to have_selector(:link_or_button, "Next", exact: true)
 
       click_on "Next", match: :first
 
       # Step 4
       expect(page).to have_current_path(service_summary_path(service))
-      expect(page).to have_selector(:link_or_button,
-                                    "Send access request", exact: true)
+      expect(page).to have_selector(:link_or_button, "Send access request", exact: true)
 
       select "Services"
 
-      expect do
-        click_on "Send access request", match: :first
-      end.to change { ProjectItem.count }.by(1)
+      expect { click_on "Send access request", match: :first }.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
       expect(project_item.offer_id).to eq(offer.id)
       expect(project_item.properties).to eq([])
@@ -75,9 +69,7 @@ RSpec.feature "Service ordering" do
 
     scenario "I can order service with offer containing range" do
       parameter = build(:range_parameter, name: "Attribute 1", max: 100)
-      offer = create(:offer, service: service,
-                          parameters: [parameter])
-
+      offer = create(:offer, service: service, parameters: [parameter])
 
       visit service_path(service)
 
@@ -85,14 +77,13 @@ RSpec.feature "Service ordering" do
 
       # Step 2
       expect(page).to have_current_path(service_information_path(service))
-      expect(page).to have_selector(:link_or_button,
-                                    "Next", exact: true)
+      expect(page).to have_selector(:link_or_button, "Next", exact: true)
 
       click_on "Next", match: :first
+
       # Step 3
       expect(page).to have_current_path(service_configuration_path(service))
-      expect(page).to have_selector(:link_or_button,
-                                    "Next", exact: true)
+      expect(page).to have_selector(:link_or_button, "Next", exact: true)
 
       fill_in "parameter_#{offer.parameters[0].id}", with: "95"
 
@@ -100,13 +91,10 @@ RSpec.feature "Service ordering" do
 
       # Step 4
       expect(page).to have_current_path(service_summary_path(service))
-      expect(page).to have_selector(:link_or_button,
-                                    "Send access request", exact: true)
+      expect(page).to have_selector(:link_or_button, "Send access request", exact: true)
       select "Services"
 
-      expect do
-        click_on "Send access request", match: :first
-      end.to change { ProjectItem.count }.by(1)
+      expect { click_on "Send access request", match: :first }.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
       expect(project_item.offer_id).to eq(offer.id)
 
@@ -115,11 +103,17 @@ RSpec.feature "Service ordering" do
       expect(page).to have_content(service.name)
     end
 
-    [:open_access_service, :fully_open_access_service, :other_service, :order_required_service].each do |type|
+    %i[open_access_service fully_open_access_service other_service order_required_service].each do |type|
       scenario "I cannot order #{type} resource twice in one project" do
         service = create(type)
-        _offer = create(:offer, service: service, internal: false,
-                        order_type: service.order_type, order_url: service.order_url)
+        _offer =
+          create(
+            :offer,
+            service: service,
+            internal: false,
+            order_type: service.order_type,
+            order_url: service.order_url
+          )
         _default_project = user.projects.find_by(name: "Services")
 
         visit service_path(service)
@@ -132,9 +126,7 @@ RSpec.feature "Service ordering" do
         # Project selection
         select "Services", from: "customizable_project_item_project_id"
 
-        expect do
-          click_on "Pin!", match: :first
-        end.to change { ProjectItem.count }.by(1)
+        expect { click_on "Pin!", match: :first }.to change { ProjectItem.count }.by(1)
 
         visit service_path(service)
 
@@ -156,8 +148,8 @@ RSpec.feature "Service ordering" do
     [:order_required_service].each do |type|
       scenario "I can order #{type} resource twice in one project" do
         service = create(type)
-        _offer = create(:offer, service: service, internal: true,
-                        order_type: service.order_type, order_url: service.order_url)
+        _offer =
+          create(:offer, service: service, internal: true, order_type: service.order_type, order_url: service.order_url)
         _default_project = user.projects.find_by(name: "Services")
 
         visit service_path(service)
@@ -167,9 +159,7 @@ RSpec.feature "Service ordering" do
 
         select "Services", from: "customizable_project_item_project_id"
 
-        expect do
-          click_on "Send access request", match: :first
-        end.to change { ProjectItem.count }.by(1)
+        expect { click_on "Send access request", match: :first }.to change { ProjectItem.count }.by(1)
 
         visit service_path(service)
 
@@ -178,19 +168,30 @@ RSpec.feature "Service ordering" do
 
         select "Services", from: "customizable_project_item_project_id"
 
-        expect do
-          click_on "Send access request", match: :first
-        end.to change { ProjectItem.count }.by(1)
+        expect { click_on "Send access request", match: :first }.to change { ProjectItem.count }.by(1)
       end
     end
 
     scenario "I can order bundle resource twice in one project" do
       service = create(:service)
       service2 = create(:service)
-      bundled = create(:offer, service: service2, internal: true,
-                        order_type: service2.order_type, order_url: service2.order_url)
-      _bundle = create(:offer, service: service, internal: true,
-                      order_type: service.order_type, order_url: service.order_url, bundled_offers: [bundled])
+      bundled =
+        create(
+          :offer,
+          service: service2,
+          internal: true,
+          order_type: service2.order_type,
+          order_url: service2.order_url
+        )
+      _bundle =
+        create(
+          :offer,
+          service: service,
+          internal: true,
+          order_type: service.order_type,
+          order_url: service.order_url,
+          bundled_offers: [bundled]
+        )
 
       _default_project = user.projects.find_by(name: "Services")
 
@@ -201,9 +202,7 @@ RSpec.feature "Service ordering" do
 
       select "Services", from: "customizable_project_item_project_id"
 
-      expect do
-        click_on "Send access request", match: :first
-      end.to change { ProjectItem.count }.by(2)
+      expect { click_on "Send access request", match: :first }.to change { ProjectItem.count }.by(2)
 
       visit service_path(service)
 
@@ -212,18 +211,29 @@ RSpec.feature "Service ordering" do
 
       select "Services", from: "customizable_project_item_project_id"
 
-      expect do
-        click_on "Send access request", match: :first
-      end.to change { ProjectItem.count }.by(2)
+      expect { click_on "Send access request", match: :first }.to change { ProjectItem.count }.by(2)
     end
 
     scenario "I can order bundle resource and its bundled resource" do
       service = create(:service)
       service2 = create(:service)
-      bundled = create(:offer, service: service2, internal: false,
-                       order_type: service2.order_type, order_url: service2.order_url)
-      _bundle = create(:offer, service: service, internal: true,
-                       order_type: service.order_type, order_url: service.order_url, bundled_offers: [bundled])
+      bundled =
+        create(
+          :offer,
+          service: service2,
+          internal: false,
+          order_type: service2.order_type,
+          order_url: service2.order_url
+        )
+      _bundle =
+        create(
+          :offer,
+          service: service,
+          internal: true,
+          order_type: service.order_type,
+          order_url: service.order_url,
+          bundled_offers: [bundled]
+        )
 
       _default_project = user.projects.find_by(name: "Services")
 
@@ -234,9 +244,7 @@ RSpec.feature "Service ordering" do
 
       select "Services", from: "customizable_project_item_project_id"
 
-      expect do
-        click_on "Send access request", match: :first
-      end.to change { ProjectItem.count }.by(2)
+      expect { click_on "Send access request", match: :first }.to change { ProjectItem.count }.by(2)
 
       visit service_path(service2)
 
@@ -245,21 +253,40 @@ RSpec.feature "Service ordering" do
 
       select "Services", from: "customizable_project_item_project_id"
 
-      expect do
-        click_on "Pin!", match: :first
-      end.to change { ProjectItem.count }.by(1)
+      expect { click_on "Pin!", match: :first }.to change { ProjectItem.count }.by(1)
     end
 
     scenario "I cannot order every 'open_access' type offer twice" do
       service = create(:service)
-      open_access = create(:offer, service: service, internal: false, iid: 1,
-                      order_type: :open_access, order_url: service.order_url)
-      fully_open_access = create(:offer, service: service, internal: false, iid: 2,
-                           order_type: :fully_open_access, order_url: service.order_url)
-      other = create(:offer, service: service, internal: false, iid: 3,
-                                 order_type: :other, order_url: service.order_url)
-      order_required_external = create(:offer, service: service, internal: false, iid: 4,
-                     order_type: :order_required, order_url: service.order_url)
+      open_access =
+        create(
+          :offer,
+          service: service,
+          internal: false,
+          iid: 1,
+          order_type: :open_access,
+          order_url: service.order_url
+        )
+      fully_open_access =
+        create(
+          :offer,
+          service: service,
+          internal: false,
+          iid: 2,
+          order_type: :fully_open_access,
+          order_url: service.order_url
+        )
+      other =
+        create(:offer, service: service, internal: false, iid: 3, order_type: :other, order_url: service.order_url)
+      order_required_external =
+        create(
+          :offer,
+          service: service,
+          internal: false,
+          iid: 4,
+          order_type: :order_required,
+          order_url: service.order_url
+        )
       _default_project = user.projects.find_by(name: "Services")
       service.offers_count = 4
 
@@ -268,6 +295,7 @@ RSpec.feature "Service ordering" do
       click_on "Access the resource"
 
       expect(page).to have_text "Offer selection"
+
       # Information step - open_access
       choose "customizable_project_item_offer_id_#{open_access.iid}"
       click_on "Next", match: :first
@@ -275,9 +303,7 @@ RSpec.feature "Service ordering" do
 
       select "Services", from: "customizable_project_item_project_id"
 
-      expect do
-        click_on "Pin!", match: :first
-      end.to change { ProjectItem.count }.by(1)
+      expect { click_on "Pin!", match: :first }.to change { ProjectItem.count }.by(1)
 
       visit service_path(service)
 
@@ -305,9 +331,7 @@ RSpec.feature "Service ordering" do
 
       select "Services", from: "customizable_project_item_project_id"
 
-      expect do
-        click_on "Pin!", match: :first
-      end.to change { ProjectItem.count }.by(1)
+      expect { click_on "Pin!", match: :first }.to change { ProjectItem.count }.by(1)
 
       visit service_path(service)
 
@@ -335,9 +359,7 @@ RSpec.feature "Service ordering" do
 
       select "Services", from: "customizable_project_item_project_id"
 
-      expect do
-        click_on "Pin!", match: :first
-      end.to change { ProjectItem.count }.by(1)
+      expect { click_on "Pin!", match: :first }.to change { ProjectItem.count }.by(1)
 
       visit service_path(service)
 
@@ -364,9 +386,7 @@ RSpec.feature "Service ordering" do
 
       select "Services", from: "customizable_project_item_project_id"
 
-      expect do
-        click_on "Pin!", match: :first
-      end.to change { ProjectItem.count }.by(1)
+      expect { click_on "Pin!", match: :first }.to change { ProjectItem.count }.by(1)
 
       visit service_path(service)
 
@@ -439,13 +459,10 @@ RSpec.feature "Service ordering" do
 
       # Summary page
       expect(page).to have_current_path(service_summary_path(open_access_service))
-      expect(page).to have_selector(:link_or_button,
-                                    "Pin!", exact: true)
+      expect(page).to have_selector(:link_or_button, "Pin!", exact: true)
       select "Services"
 
-      expect do
-        click_on "Pin!", match: :first
-      end.to change { ProjectItem.count }.by(1)
+      expect { click_on "Pin!", match: :first }.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
 
       expect(project_item.offer).to eq(offer)
@@ -464,13 +481,10 @@ RSpec.feature "Service ordering" do
 
       # Summary page
       expect(page).to have_current_path(service_summary_path(external_service))
-      expect(page).to have_selector(:link_or_button,
-                                    "Pin!", exact: true)
+      expect(page).to have_selector(:link_or_button, "Pin!", exact: true)
       select "Services"
 
-      expect {
-        click_on "Pin!", match: :first
-      }.to change { ProjectItem.count }.by(1)
+      expect { click_on "Pin!", match: :first }.to change { ProjectItem.count }.by(1)
       project_item = ProjectItem.last
 
       expect(project_item.offer).to eq(offer)
@@ -491,6 +505,7 @@ RSpec.feature "Service ordering" do
       create(:offer, service: service)
 
       visit service_path(service)
+
       # close shepherd's tour
       click_on "I'll do it later"
 
@@ -566,7 +581,6 @@ RSpec.feature "Service ordering" do
           find("label", text: "Scientific domains").click
           find("div", class: "choices__item", text: scientific_domain.name).click
         end
-
 
         select "Representing a private company", from: "Customer typology"
         fill_in "Email", with: "john@doe.com"
@@ -737,7 +751,6 @@ RSpec.feature "Service ordering" do
         expect(page).to have_css("#parameter_#{child1.parameters[0].id}")
         expect(page).to have_css("#parameter_#{child2.parameters[0].id}")
 
-
         fill_in "parameter_#{child1.parameters[0].id}", with: "value1"
         fill_in "parameter_#{child2.parameters[0].id}", with: "value2"
 
@@ -750,9 +763,7 @@ RSpec.feature "Service ordering" do
 
         select "Services"
 
-        expect do
-          click_on "Send access request", match: :first
-        end.to change { ProjectItem.count }.by(3)
+        expect { click_on "Send access request", match: :first }.to change { ProjectItem.count }.by(3)
 
         pi1, pi2, pi3 = ProjectItem.all
         expect(pi1.offer_id).to eq(parent.id)
@@ -814,7 +825,7 @@ RSpec.feature "Service ordering" do
     end
 
     scenario "I can see openaccess service order button" do
-      open_access_service =  create(:open_access_service)
+      open_access_service = create(:open_access_service)
       create(:offer, service: open_access_service)
 
       visit service_path(open_access_service)

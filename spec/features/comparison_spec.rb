@@ -3,9 +3,9 @@
 require "rails_helper"
 
 RSpec.feature "Comparison", js: true do
-  let!(:service1) { create(:open_access_service, geographical_availabilities: %w( EL )) }
-  let!(:service2) { create(:service, geographical_availabilities: %w( PL DE )) }
-  let!(:service3) { create(:external_service, tag_list: %w( tag1 tag2 tag3 )) }
+  let!(:service1) { create(:open_access_service, geographical_availabilities: %w[EL]) }
+  let!(:service2) { create(:service, geographical_availabilities: %w[PL DE]) }
+  let!(:service3) { create(:external_service, tag_list: %w[tag1 tag2 tag3]) }
 
   it "doesn't show comparison bar until I click the Add to compare checkbox" do
     visit services_path

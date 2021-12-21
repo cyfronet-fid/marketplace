@@ -5,7 +5,7 @@ class AddOrderUrlToOfferAndProjectItem < ActiveRecord::Migration[6.0]
     add_column :offers, :order_url, :string
     add_column :project_items, :order_url, :string
 
-    execute(<<~SQL
+    execute(<<~SQL)
       UPDATE offers
       SET order_url = (
         SELECT order_url
@@ -13,9 +13,8 @@ class AddOrderUrlToOfferAndProjectItem < ActiveRecord::Migration[6.0]
         WHERE s.id = service_id
       )
     SQL
-           )
 
-    execute(<<~SQL
+    execute(<<~SQL)
       UPDATE project_items
       SET order_url = (
         SELECT order_url
@@ -23,7 +22,6 @@ class AddOrderUrlToOfferAndProjectItem < ActiveRecord::Migration[6.0]
         WHERE o.id = offer_id
       )
     SQL
-           )
   end
 
   def down

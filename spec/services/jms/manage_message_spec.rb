@@ -10,10 +10,12 @@ describe Jms::ManageMessage do
   let(:parser) { Nori.new(strip_namespaces: true) }
   let(:service_resource) { create(:jms_xml_service) }
   let(:provider_resource) { create(:jms_xml_provider) }
-  let(:json_service) { double(body: service_resource.to_json,
-                              headers: { "destination" => "/topic/registry.infra_service.update" }) }
-  let(:json_provider) { double(body: provider_resource.to_json,
-                               headers: { "destination" => "/topic/registry.infra_service.update" }) }
+  let(:json_service) do
+    double(body: service_resource.to_json, headers: { "destination" => "/topic/registry.infra_service.update" })
+  end
+  let(:json_provider) do
+    double(body: provider_resource.to_json, headers: { "destination" => "/topic/registry.infra_service.update" })
+  end
   let(:service_create_or_update) { instance_double(Service::PcCreateOrUpdate) }
   let(:provider_create_or_update) { instance_double(Provider::PcCreateOrUpdate) }
 
@@ -21,15 +23,14 @@ describe Jms::ManageMessage do
     original_stdout = $stdout
     $stdout = StringIO.new
     resource = parser.parse(service_resource["resource"])
-    expect(Service::PcCreateOrUpdateJob)
-      .to receive(:perform_later).with(resource["infraService"]["service"],
-                                       eosc_registry_base,
-                                       true,
-                                       Time.at(resource["infraService"]["metadata"]["modifiedAt"].to_i&./1000),
-                                       nil)
-    expect {
-      described_class.new(json_service, eosc_registry_base, logger).call
-    }.to_not raise_error
+    expect(Service::PcCreateOrUpdateJob).to receive(:perform_later).with(
+      resource["infraService"]["service"],
+      eosc_registry_base,
+      true,
+      Time.at(resource["infraService"]["metadata"]["modifiedAt"].to_i&./ 1000),
+      nil
+    )
+    expect { described_class.new(json_service, eosc_registry_base, logger).call }.to_not raise_error
     $stdout = original_stdout
   end
 
@@ -37,13 +38,12 @@ describe Jms::ManageMessage do
     original_stdout = $stdout
     $stdout = StringIO.new
     resource = parser.parse(provider_resource["resource"])
-    expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).
-      with(resource["providerBundle"]["provider"],
-           Time.at(resource["providerBundle"]["metadata"]["modifiedAt"].to_i&./1000))
+    expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
+      resource["providerBundle"]["provider"],
+      Time.at(resource["providerBundle"]["metadata"]["modifiedAt"].to_i&./ 1000)
+    )
 
-    expect {
-      described_class.new(json_provider, eosc_registry_base, logger, nil).call
-    }.to_not raise_error
+    expect { described_class.new(json_provider, eosc_registry_base, logger, nil).call }.to_not raise_error
     $stdout = original_stdout
   end
 
@@ -52,13 +52,11 @@ describe Jms::ManageMessage do
     create(:provider_source, provider: provider, eid: "cyfronet")
     original_stdout = $stdout
     $stdout = StringIO.new
-    json_provider = double(body: provider_resource.to_json,
-                          headers: { "destination" => "/topic/registry.provider.delete" })
+    json_provider =
+      double(body: provider_resource.to_json, headers: { "destination" => "/topic/registry.provider.delete" })
     expect(Provider::DeleteJob).to receive(:perform_later).with("cyfronet")
 
-    expect {
-      described_class.new(json_provider, eosc_registry_base, logger).call
-    }.to_not raise_error
+    expect { described_class.new(json_provider, eosc_registry_base, logger).call }.to_not raise_error
     $stdout = original_stdout
   end
 
@@ -67,13 +65,11 @@ describe Jms::ManageMessage do
     create(:service_source, service: service, eid: "tp.openminted_catalogue_of_corpora_2")
     original_stdout = $stdout
     $stdout = StringIO.new
-    json_service = double(body: service_resource.to_json,
-                            headers: { "destination" => "/topic/registry.infra_service.delete" })
+    json_service =
+      double(body: service_resource.to_json, headers: { "destination" => "/topic/registry.infra_service.delete" })
     expect(Service::DeleteJob).to receive(:perform_later).with("tp.openminted_catalogue_of_corpora_2")
 
-    expect {
-      described_class.new(json_service, eosc_registry_base, logger).call
-    }.to_not raise_error
+    expect { described_class.new(json_service, eosc_registry_base, logger).call }.to_not raise_error
     $stdout = original_stdout
   end
 
@@ -83,9 +79,7 @@ describe Jms::ManageMessage do
     service_hash = { "some_happy_key": "some_happy_value" }
     error_service_message = double(body: service_hash.to_json, headers: { "destination" => "aaaa.update" })
 
-    expect {
-      described_class.new(error_service_message, eosc_registry_base, logger).call
-    }.to raise_error(StandardError)
+    expect { described_class.new(error_service_message, eosc_registry_base, logger).call }.to raise_error(StandardError)
     $stdout = original_stdout
   end
 end

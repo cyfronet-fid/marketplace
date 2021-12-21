@@ -7,13 +7,10 @@ RSpec.describe ProjectItem::Register do
   let(:issue) { double("Issue", id: 1) }
 
   context "(JIRA works without errors)" do
-    before(:each) {
+    before(:each) do
       jira_client = double("Jira::Client", jira_project_key: "MP", jira_issue_type_id: 5)
-      jira_class_stub = class_double(Jira::Client).
-          as_stubbed_const(transfer_nested_constants: true)
-      message_class = double("Message",
-                             message: "test1",
-                             messageable: project_item)
+      jira_class_stub = class_double(Jira::Client).as_stubbed_const(transfer_nested_constants: true)
+      message_class = double("Message", message: "test1", messageable: project_item)
       message_create_class_stub = instance_double(Message::Create)
 
       allow(jira_class_stub).to receive(:new).and_return(jira_client)
@@ -21,7 +18,7 @@ RSpec.describe ProjectItem::Register do
       allow(jira_client).to receive(:create_service_issue).and_return(issue)
       allow(message_create_class_stub).to receive(:call).and_return(message_class)
       allow(issue).to receive(:save).and_return(issue)
-    }
+    end
 
     it "creates new jira issue" do
       jira_client = Jira::Client.new
@@ -47,14 +44,14 @@ RSpec.describe ProjectItem::Register do
       # project_item change email is sent only when there is more than 1 change
       project_item.new_status(status: "custom_created", status_type: :created)
 
-      expect { described_class.new(project_item).call }.
-          to_not change { ActionMailer::Base.deliveries.count }
+      expect { described_class.new(project_item).call }.to_not change { ActionMailer::Base.deliveries.count }
     end
 
     context "With message text" do
       it "should create first comment message" do
-        expect { described_class.new(project_item, "First message").call }.
-          to change { project_item.messages.count }.by(1)
+        expect { described_class.new(project_item, "First message").call }.to change { project_item.messages.count }.by(
+          1
+        )
         last_message = project_item.messages.last
 
         expect(last_message.role_user?).to be_truthy
@@ -67,8 +64,7 @@ RSpec.describe ProjectItem::Register do
   context "(JIRA raises Errors)" do
     let!(:jira_client) do
       client = double("Jira::Client", jira_project_key: "MP")
-      jira_class_stub = class_double(Jira::Client).
-          as_stubbed_const(transfer_nested_constants: true)
+      jira_class_stub = class_double(Jira::Client).as_stubbed_const(transfer_nested_constants: true)
       allow(jira_class_stub).to receive(:new).and_return(client)
       client
     end

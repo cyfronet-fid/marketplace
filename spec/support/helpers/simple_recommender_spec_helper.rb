@@ -17,20 +17,23 @@ module SimpleRecommenderSpecHelper
   end
 
   private
-    def create_project_with(services)
-      create(:project, project_items: services.map { |service|
-        create(:project_item, offer: create(:offer, service: service)) })
-    end
 
-    def create_categories(n)
-      Array.new(n) { create(:category) }
-    end
+  def create_project_with(services)
+    create(
+      :project,
+      project_items: services.map { |service| create(:project_item, offer: create(:offer, service: service)) }
+    )
+  end
 
-    def create_services(n)
-      Array.new(n) { create(:service, categories: []) }
-    end
+  def create_categories(n)
+    Array.new(n) { create(:category) }
+  end
 
-    def assign_category_to_services(category, services)
-      services.each { |service| service.categories << category }
-    end
+  def create_services(n)
+    Array.new(n) { create(:service, categories: []) }
+  end
+
+  def assign_category_to_services(category, services)
+    services.each { |service| service.categories << category }
+  end
 end

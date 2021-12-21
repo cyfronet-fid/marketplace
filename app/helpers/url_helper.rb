@@ -6,9 +6,7 @@ require "net/http"
 module UrlHelper
   def self.media_url_valid?(url, content_type = "image/*")
     uri = URI.parse(url)
-    unless uri.is_a?(URI::HTTP)
-      return false
-    end
+    return false unless uri.is_a?(URI::HTTP)
 
     headers = { "Content-Type" => content_type }
     response = Faraday.get(url, headers)
@@ -19,9 +17,7 @@ module UrlHelper
 
   def self.url_valid?(url)
     uri = URI.parse(url)
-    unless uri.is_a?(URI::HTTP)
-      return false
-    end
+    return false unless uri.is_a?(URI::HTTP)
 
     response = Faraday.get(url)
     response.status == 200

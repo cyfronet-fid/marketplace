@@ -9,8 +9,7 @@ class Services::InlineOrderUrlComponent < ApplicationComponent
   end
 
   def call
-    link_to link_name, url,
-            class: @classes, target: "_blank", title: "External link", "data-probe": ""
+    link_to link_name, url, class: @classes, target: "_blank", title: "External link", "data-probe": ""
   end
 
   def url
@@ -18,11 +17,7 @@ class Services::InlineOrderUrlComponent < ApplicationComponent
   end
 
   def link_name
-    if @offerable.external?
-      _("Go to the order website")
-    else
-      _("Go to the resource")
-    end
+    @offerable.external? ? _("Go to the order website") : _("Go to the resource")
   end
 
   def render?

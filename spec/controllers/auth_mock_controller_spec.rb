@@ -4,15 +4,10 @@ require "rails_helper"
 require "bcrypt"
 
 RSpec.describe Users::AuthMockController, type: :controller do
-  controller do
-    attr_accessor :params
-  end
+  controller { attr_accessor :params }
 
   before(:each) do
-    @body = {
-      email: "test@mail.com",
-      password: "test123"
-    }
+    @body = { email: "test@mail.com", password: "test123" }
     controller.params = ActionController::Parameters.new(@body)
     @user = create(:user, email: @body[:email])
   end

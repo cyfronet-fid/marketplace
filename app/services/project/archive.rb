@@ -13,8 +13,7 @@ class Project::Archive
   end
 
   def call
-    ready_in_jira! &&
-    archive!
+    ready_in_jira! && archive!
   end
 
   def ready_in_jira!

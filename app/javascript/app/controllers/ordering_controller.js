@@ -1,4 +1,4 @@
-import {Controller} from 'stimulus'
+import { Controller } from "stimulus";
 
 export default class extends Controller {
   static targets = [
@@ -8,7 +8,7 @@ export default class extends Controller {
     "primaryOms",
     "primaryOmsWrapper",
     "orderUrlWrapper",
-    "omsParamsContainer"
+    "omsParamsContainer",
   ];
 
   initialize() {
@@ -22,7 +22,7 @@ export default class extends Controller {
       } else {
         el.classList.add("hidden-fields");
       }
-      el.querySelectorAll("input, select").forEach(el => {
+      el.querySelectorAll("input, select").forEach((el) => {
         if (show) {
           el.removeAttribute("disabled");
         } else {
@@ -32,10 +32,9 @@ export default class extends Controller {
     }
 
     const isOrderRequired =
-        // The undefined case is that of a default offer with order_type=order_required,
-        // for order_type!=order_required this controller shouldn't be registered at all.
-        !this.hasOrderTypeTarget ||
-        this.orderTypeTarget.value === "order_required";
+      // The undefined case is that of a default offer with order_type=order_required,
+      // for order_type!=order_required this controller shouldn't be registered at all.
+      !this.hasOrderTypeTarget || this.orderTypeTarget.value === "order_required";
     const isInternal = this.internalTarget.checked;
 
     doShowOrDisable(this.internalWrapperTarget, isOrderRequired);
@@ -47,9 +46,11 @@ export default class extends Controller {
     doShowOrDisable(this.primaryOmsWrapperTarget, isOrderRequired && isInternal);
 
     const selectedId = this.primaryOmsTarget.value;
-    const shouldShow = (isOrderRequired && isInternal && !!selectedId) ?
-        (el) => el.getAttribute("data-oms-id") === selectedId : () => false;
-    this.omsParamsContainerTarget.querySelectorAll("[data-oms-id]").forEach(el => {
+    const shouldShow =
+      isOrderRequired && isInternal && !!selectedId
+        ? (el) => el.getAttribute("data-oms-id") === selectedId
+        : () => false;
+    this.omsParamsContainerTarget.querySelectorAll("[data-oms-id]").forEach((el) => {
       doShowOrDisable(el, shouldShow(el));
     });
   }
