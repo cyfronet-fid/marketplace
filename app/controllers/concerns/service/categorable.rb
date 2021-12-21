@@ -8,9 +8,8 @@ module Service::Categorable
   def category_counters(scope, filters)
     services = search_for_categories(scope, filters)
     counters =
-      services.aggregations["categories"]["categories"]["buckets"].inject({}) do |h, e|
+      services.aggregations["categories"]["categories"]["buckets"].each_with_object({}) do |e, h|
         h[e["key"]] = e["doc_count"]
-        h
       end
     counters.tap { |c| c[nil] = services.aggregations["categories"]["doc_count"] }
   end
@@ -39,9 +38,8 @@ module Service::Categorable
   end
 
   def siblings_with_counters
-    siblings.inject({}) do |h, cat|
+    siblings.each_with_object({}) do |cat, h|
       h[cat.id] = { category: cat, counter: count_services(cat) }
-      h
     end
   end
 

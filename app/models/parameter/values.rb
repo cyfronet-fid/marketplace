@@ -23,11 +23,11 @@ module Parameter::Values
   def cast(values)
     if value_type == "integer"
       values.map do |v|
-        begin
+        
           Integer(v)
         rescue StandardError
           String(v)
-        end
+        
       end
     else
       values

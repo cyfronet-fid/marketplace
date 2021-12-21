@@ -4,7 +4,7 @@ class Filter
   attr_accessor :counters
   attr_reader :title, :field_name, :type, :index
 
-  def initialize(params: {}, field_name:, type:, title:, index:)
+  def initialize(field_name:, type:, title:, index:, params: {})
     @params = params
     @field_name = field_name
     @title = title

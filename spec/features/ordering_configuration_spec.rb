@@ -59,7 +59,7 @@ RSpec.feature "Services in ordering_configuration panel" do
       expect(page).to have_field("Name")
       expect(page).to have_field("Description")
 
-      expect {
+      expect do
         fill_in "Name", with: "new offer 1"
         fill_in "Description", with: "test offer"
         find("li", text: "Input").click
@@ -73,7 +73,7 @@ RSpec.feature "Services in ordering_configuration panel" do
         end
 
         click_on "Create Offer"
-      }.to change { service.offers.count }.by(1)
+      end.to change { service.offers.count }.by(1)
 
       service.reload
       expect(service.offers.last.name).to eq("new offer 1")
@@ -98,7 +98,7 @@ RSpec.feature "Services in ordering_configuration panel" do
 
       expect(page).to have_field("Name")
 
-      expect {
+      expect do
         fill_in "Name", with: "new offer 1"
         fill_in "Description", with: "test offer"
         find("li", text: "Input").click
@@ -111,7 +111,7 @@ RSpec.feature "Services in ordering_configuration panel" do
           select "integer", from: "Value type"
         end
         click_on "Create Offer"
-      }.to change { service_without_offers.offers.count }.by(1)
+      end.to change { service_without_offers.offers.count }.by(1)
 
       service_without_offers.reload
       expect(service_without_offers.offers.last.name).to eq("new offer 1")

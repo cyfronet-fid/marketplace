@@ -28,7 +28,7 @@ class Parameter
     false
   end
 
-  def as_json(options = nil)
+  def as_json(_options = nil)
     # This method is used by OfferSerializer
     dump.as_json
   end

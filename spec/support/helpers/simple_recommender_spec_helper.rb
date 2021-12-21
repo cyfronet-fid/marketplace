@@ -13,7 +13,7 @@ module SimpleRecommenderSpecHelper
     create_project_with services[0..6]
 
     # below categories and services are ordered by popularity
-    return categories, services
+    [categories, services]
   end
 
   private

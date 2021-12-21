@@ -27,7 +27,7 @@ class Project::Archive
       @project.update(issue_id: issue.id, issue_status: :jira_active)
     else
       @project.jira_errored!
-      raise JIRATransitionSaveError.new(@project)
+      raise JIRATransitionSaveError, @project
     end
   end
 

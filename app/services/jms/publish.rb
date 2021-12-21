@@ -10,7 +10,7 @@ class Jms::Publish
 
   def call
     unless @message&.respond_to?(:to_json)
-      raise ArgumentError.new("Message must have a :to_json method, passed: #{@message}")
+      raise ArgumentError, "Message must have a :to_json method, passed: #{@message}"
     end
 
     if publisher_disabled?

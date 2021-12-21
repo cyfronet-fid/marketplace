@@ -64,11 +64,11 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
               project_items:
                 project_items
                   .values_at(1, 3)
-                  .map { |pi|
+                  .map do |pi|
                     serialized = Api::V1::ProjectItemSerializer.new(pi).as_json
                     serialized[:user_secrets] = serialized[:user_secrets].transform_values { |_| "<OBFUSCATED>" }
                     serialized
-                  }
+                  end
             }.deep_stringify_keys
           )
         end

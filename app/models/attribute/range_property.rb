@@ -18,7 +18,7 @@ class Attribute::RangeProperty < Attribute
     }
   end
 
-  def value_from_param(param)
+  def value_from_param(_param)
     raise "not implemented yet"
   end
 

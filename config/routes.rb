@@ -4,9 +4,7 @@ Rails.application.routes.draw do
   ############################## IMPORTANT!!! ################################
   # !!! Code of high security risk impact !!!
   # AAI service authentication is skipped for tests purpose
-  if Rails.env.development? && Mp::Application.config.auth_mock
-    get "users/login" => "users/auth_mock#login"
-  end
+  get "users/login" => "users/auth_mock#login" if Rails.env.development? && Mp::Application.config.auth_mock
   #############################################################################
 
   devise_for :users,
@@ -20,7 +18,7 @@ Rails.application.routes.draw do
   get "/robots.txt" => "home#robots"
   post "user_action", to: "user_action#create"
 
-  resources :services, only: [:index, :show], constraints: { id: /[^\/]+/ } do
+  resources :services, only: [:index, :show], constraints: { id: %r{[^/]+} } do
     scope module: :services do
       resource :offers, only: [:show, :update]
       resource :configuration, only: [:show, :update]
@@ -81,7 +79,7 @@ Rails.application.routes.draw do
 
   resource :backoffice, only: :show
   namespace :backoffice do
-    resources :services, constraints: { id: /[^\/]+/ } do
+    resources :services, constraints: { id: %r{[^/]+} } do
       scope module: :services do
         resource :logo_preview, only: :show
         resources :offers
@@ -131,7 +129,7 @@ Rails.application.routes.draw do
     end
 
     namespace :v1 do
-      resources :resources, only: [:index, :show], constraints: { id: /[^\/]+/ } do
+      resources :resources, only: [:index, :show], constraints: { id: %r{[^/]+} } do
         resources :offers, only: [:index, :create, :show, :destroy, :update], module: :resources
       end
       resources :oms, controller: :omses, only: [:index, :show, :update] do

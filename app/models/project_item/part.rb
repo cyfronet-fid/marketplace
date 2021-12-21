@@ -22,7 +22,7 @@ class ProjectItem::Part
     { "offer_id" => offer.id, "attributes" => attributes.map { |a| a.to_json } }
   end
 
-  def to_json
+  def to_json(*_args)
     attributes.map { |a| a.to_json }
   end
 

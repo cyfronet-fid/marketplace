@@ -9,10 +9,9 @@ namespace :projects do
       Project
         .includes(:project_items, user: :affiliations)
         .find_each do |project|
-          case
-          when to_remove?(project)
+          if to_remove?(project)
             destroy!(project)
-          when to_fill_in?(project)
+          elsif to_fill_in?(project)
             fill_in!(project)
           end
         end

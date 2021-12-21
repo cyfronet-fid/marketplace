@@ -35,8 +35,7 @@ describe Jms::Subscriber do
       .and_return(config_hash)
 
     allow(client_stub).to receive(:new).and_return(client)
-    sub =
-      Jms::Subscriber.new(
+    Jms::Subscriber.new(
         "dummy_topic",
         "dummy_login",
         "dummy_pass",
@@ -48,7 +47,7 @@ describe Jms::Subscriber do
         client: client_stub,
         logger: logger
       )
-    sub
+    
   end
 
   def stub_good_message

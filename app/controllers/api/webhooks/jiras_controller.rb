@@ -9,7 +9,7 @@ class Api::Webhooks::JirasController < ActionController::API
   before_action :authenticate_jira!
 
   def authenticate_jira!
-    raise WebhookNotAuthorized.new unless valid_jira_request?
+    raise WebhookNotAuthorized unless valid_jira_request?
   end
 
   def create
