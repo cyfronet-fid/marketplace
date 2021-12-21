@@ -158,7 +158,7 @@ describe Import::Resources do
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal.phenomenal"], filepath: filename)
       expect(eosc_registry).to receive(:open).with(filename, "w").and_yield(mock_file)
       eosc_registry.call
-      expect(mock_file.string).to eq(file_fixture("eosc_registry_import_output.json").read)
+      expect(JSON.parse(mock_file.string)).to eq(JSON.parse(file_fixture("eosc_registry_import_output.json").read))
     end
 
     it "should gracefully handle error with logo download" do
