@@ -30,12 +30,12 @@ RSpec.feature "Service opinions" do
         click_on "Review resource"
 
         expect(page).to have_content(
-          "How satisfied you are with the #{service.name} resource on a scale " +
+          "How satisfied you are with the #{service.name} resource on a scale " \
             "of 1 - dissatisfied to 5 - very satisfied?"
         )
 
         expect(page).to have_content(
-          "Was adding the resource to the project useful for you on a scale " +
+          "Was adding the resource to the project useful for you on a scale " \
             "of 1 - not useful at all to 5 - very useful?"
         )
       end
@@ -56,7 +56,7 @@ RSpec.feature "Service opinions" do
         click_on "Review resource"
 
         expect(page).to have_content(
-          "How satisfied you are with the #{service.name} resource on a scale " +
+          "How satisfied you are with the #{service.name} resource on a scale " \
             "of 1 - dissatisfied to 5 - very satisfied?"
         )
         if internal
@@ -65,7 +65,7 @@ RSpec.feature "Service opinions" do
           )
         else
           expect(page).to have_content(
-            "Was adding the resource to the project useful for you on a scale " +
+            "Was adding the resource to the project useful for you on a scale " \
               "of 1 - not useful at all to 5 - very useful?"
           )
         end

@@ -19,7 +19,7 @@ class ServiceContextPolicy < ApplicationPolicy
   def self.permitted?(user, service, from_backoffice = false)
     has_permission =
       ServiceContextPolicy.has_public_access(service) ||
-        (service.status === "draft" && ServiceContextPolicy.has_additional_access(user, service) && from_backoffice)
+        (service.status == "draft" && ServiceContextPolicy.has_additional_access(user, service) && from_backoffice)
     raise ActiveRecord::RecordNotFound unless has_permission
     true
   end

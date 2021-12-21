@@ -147,17 +147,24 @@ describe Jira::ConsoleChecker do
     expect(checker).to receive(:check_create_project_issue).and_return(true)
 
     expect { con_checker.check }.to output(
-      "Checking JIRA instance on http://localhost:2990\n" + "Checking connection..." + " OK".green + "\n" +
-        "Checking issue type presence..." + " OK".green + "\n" + "Checking project existence..." + " OK".green + "\n" +
-        "Trying to manipulate issue...\n" + "  - create issue..." + " OK".green + "\n" +
-        "  - check workflow transitions..." + " OK".green + "\n" + "  - update issue..." + " OK".green + "\n" +
-        "  - add comment to issue..." + " OK".green + "\n" + "  - delete issue..." + " OK".green + "\n" +
-        "Checking workflow...\n" + "  - todo [id: 1]..." + " OK".green + "\n" + "  - in_progress [id: 2]..." +
+      "Checking JIRA instance on http://localhost:2990\n" + "Checking connection..." + " OK".green +
+        "\n" \
+          "Checking issue type presence..." + " OK".green + "\n" + "Checking project existence..." + " OK".green +
+        "\n" \
+          "Trying to manipulate issue...\n" + "  - create issue..." + " OK".green +
+        "\n" \
+          "  - check workflow transitions..." + " OK".green + "\n" + "  - update issue..." + " OK".green +
+        "\n" \
+          "  - add comment to issue..." + " OK".green + "\n" + "  - delete issue..." + " OK".green +
+        "\n" \
+          "Checking workflow...\n" + "  - todo [id: 1]..." + " OK".green + "\n" + "  - in_progress [id: 2]..." +
         " OK".green + "\n" + "  - waiting_for_response [id: 4]..." + " OK".green + "\n" + "  - done [id: 3]..." +
         " OK".green + "\n" + "  - rejected [id: 5]..." + " OK".green + "\n" + "Checking custom fields mappings..." +
-        " OK".green + "\n" + "Checking Project issue type presence..." + " OK".green + "\n" +
-        "Trying to manipulate project issue...\n" + "  - create issue..." + " OK".green + "\n" + "  - update issue..." +
-        " OK".green + "\n" + "  - delete issue..." + " OK".green + "\n" +
+        " OK".green + "\n" + "Checking Project issue type presence..." + " OK".green +
+        "\n" \
+          "Trying to manipulate project issue...\n" + "  - create issue..." + " OK".green +
+        "\n" \
+          "  - update issue..." + " OK".green + "\n" + "  - delete issue..." + " OK".green + "\n" +
         "WARNING: Webhook won't be check, set MP_HOST env variable if you want to check it".yellow + "\n"
     ).to_stdout
   end

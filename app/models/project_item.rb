@@ -53,7 +53,7 @@ class ProjectItem < ApplicationRecord
   after_commit :dispatch_emails
 
   def service
-    offer.service unless offer.nil?
+    offer&.service
   end
 
   def public_statuses

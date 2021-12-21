@@ -147,7 +147,8 @@ class Jira::Client < JIRA::Client
 
     fields = {
       summary:
-        "Service order, #{project_item.project.user.first_name} " + "#{project_item.project.user.last_name}, " +
+        "Service order, #{project_item.project.user.first_name} " \
+          "#{project_item.project.user.last_name}, " \
           "#{project_item.service.name}",
       project: {
         key: @jira_project_key
@@ -246,8 +247,6 @@ class Jira::Client < JIRA::Client
           "id" =>
             @jira_config[:custom_fields][:select_values]["CP-CustomerTypology".to_sym][project.customer_typology.to_sym]
         }
-      else
-        nil
       end
     when "CP-CustomerCountry"
       project.country_of_origin&.name || "N/A"
@@ -264,8 +263,6 @@ class Jira::Client < JIRA::Client
       # this is not a property of project
       # when "CP-ScientificDiscipline"
       #   project.scientific_domain&.name
-    else
-      nil
     end
   end
 
@@ -311,8 +308,6 @@ class Jira::Client < JIRA::Client
             map_to_jira_order_type(project_item).to_sym
           ]
       }
-    else
-      nil
     end
   end
 end

@@ -5,8 +5,9 @@
 # backoffice controllers. Taka a look into
 # app/controllers/backoffice/application_controller.rb where default pundit
 # methods are overriden to add :backoffice prefix in automatic way.
-class Admin::AdminPolicy < Struct.new(:user, :admin)
-  def show?
-    user&.admin?
+Admin::AdminPolicy =
+  Struct.new(:user, :admin) do
+    def show?
+      user&.admin?
+    end
   end
-end

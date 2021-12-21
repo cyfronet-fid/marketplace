@@ -13,13 +13,14 @@ module Parentable
     object_array = [self]
     i = 0
     current = self
-    begin
+    loop do
       if current.parent.present?
         object_array << current.parent unless current.parent.blank?
         current = current.parent
       end
       i += 1
-    end while i < level_up && current.parent.present?
+      break unless i < level_up && current.parent.present?
+    end
     method.present? ? object_array.map(&method.to_sym).join(separator) : object_array
   end
 

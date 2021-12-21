@@ -7,7 +7,7 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
 
   def new
     @offer = Offer.new(service: @service)
-    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] === "backoffice_service"), :show?)
+    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"), :show?)
     authorize @offer
   end
 

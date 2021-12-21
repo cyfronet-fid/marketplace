@@ -9,15 +9,15 @@
 %div{ "data-target": "ordering.omsParamsContainer" }
   = form.simple_fields_for Offer::OMSParams.new(offer.oms_params) do |field|
     - available_omses.each do |oms|
-      - if oms.custom_params&.present?
-        %label{ "data-oms-id": oms.id }
+      %label{ "data-oms-id": oms.id }
+        - if oms.custom_params&.present?
           Below we show parameters specified by #{oms.name}, which values will be sent to it alongside
           the orders for your offer.
-        - oms.custom_params.each do |param, param_options|
-          = field.input param,
+        - else
+          #{oms.name} doesn't specify any parameters.
+
+      - oms.custom_params&.each do |param, param_options|
+        = field.input param,
             required: param_options["mandatory"],
             wrapper_html: { "data-oms-id": oms.id },
             input_html: { class: is_offer_missing(param, param_options) ? "is-invalid" : "" }
-      - else
-        %label{ "data-oms-id": oms.id }
-          #{oms.name} doesn't specify any parameters.

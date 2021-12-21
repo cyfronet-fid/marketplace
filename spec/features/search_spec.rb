@@ -154,10 +154,10 @@ RSpec.feature "Service searching in top bar", js: true do
     visit services_path
     fill_in "q", with: "Cyfr"
 
-    expect(page).to have_text ("Cyfronet")
-    expect(page).to_not have_text ("Cyfronet > DDDD Something 1")
-    expect(page).to_not have_text ("Cyfronet > DDDD Something 2")
-    expect(page).to_not have_text ("Cyfronet > DDDD Something 3")
+    expect(page).to have_text("Cyfronet")
+    expect(page).to_not have_text("Cyfronet > DDDD Something 1")
+    expect(page).to_not have_text("Cyfronet > DDDD Something 2")
+    expect(page).to_not have_text("Cyfronet > DDDD Something 3")
   end
 
   scenario "After starting searching autocomplete shows provider without service", js: true, search: true do
@@ -169,10 +169,10 @@ RSpec.feature "Service searching in top bar", js: true do
     visit services_path
     fill_in "q", with: "Cyfr"
 
-    expect(page).to have_text ("Cyfronet")
-    expect(page).to_not have_text ("Cyfronet > DDDD Something 1")
-    expect(page).to_not have_text ("Cyfronet > DDDD Something 2")
-    expect(page).to_not have_text ("Cyfronet > DDDD Something 3")
+    expect(page).to have_text("Cyfronet")
+    expect(page).to_not have_text("Cyfronet > DDDD Something 1")
+    expect(page).to_not have_text("Cyfronet > DDDD Something 2")
+    expect(page).to_not have_text("Cyfronet > DDDD Something 3")
   end
 
   scenario "Search query respects active filters", js: true, search: true do

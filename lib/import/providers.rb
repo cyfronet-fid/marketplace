@@ -60,7 +60,7 @@ class Import::Providers
     Provider.reindex
 
     not_modified = @request_providers.length - @created_count - @updated_count
-    log "PROCESSED: #{@request_providers.length}, CREATED: #{@created_count}, " +
+    log "PROCESSED: #{@request_providers.length}, CREATED: #{@created_count}, " \
           "UPDATED: #{@updated_count}, NOT MODIFIED: #{not_modified}"
 
     unless @filepath.nil?
@@ -84,7 +84,7 @@ class Import::Providers
       @updated_count += 1
       log "Updating [EXISTING] provider: #{parsed_provider_data[:name]}, eid: #{parsed_provider_data[:pid]}"
     else
-      log "Provider upstream is not set to EOSC Registry, " +
+      log "Provider upstream is not set to EOSC Registry, " \
             "not updating #{current_provider.name}, id: #{current_provider.pid}"
     end
   end

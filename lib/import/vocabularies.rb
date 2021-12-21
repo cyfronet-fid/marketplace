@@ -78,22 +78,22 @@ class Import::Vocabularies
 
           if mapped_vocabulary.blank?
             created += 1
-            log "Adding [NEW] vocabulary type: #{clazz(type)}, " +
+            log "Adding [NEW] vocabulary type: #{clazz(type)}, " \
                   "name: #{updated_vocabulary_data[:name]}, eid: #{updated_vocabulary_data[:eid]}"
             clazz(type).create!(updated_vocabulary_data) unless @dry_run
           else
             updated += 1
-            log "Updating [EXISTING] vocabulary type: #{clazz(type)}, " +
+            log "Updating [EXISTING] vocabulary type: #{clazz(type)}, " \
                   "name: #{updated_vocabulary_data[:name]}, eid: #{updated_vocabulary_data[:eid]}"
             mapped_vocabulary.update!(updated_vocabulary_data) unless @dry_run
           end
         rescue ActiveRecord::RecordInvalid => e
-          log "[WARN] Vocabulary type: #{clazz(type)}, " +
+          log "[WARN] Vocabulary type: #{clazz(type)}, " \
                 "name: #{updated_vocabulary_data[:name]} eid: #{updated_vocabulary_data[:eid]} cannot be created. #{e}"
         end
       end
 
-    log "TOTAL: #{total_vocabularies_count}, CREATED: #{created}, " +
+    log "TOTAL: #{total_vocabularies_count}, CREATED: #{created}, " \
           "UPDATED: #{updated}, UNPROCESSED: #{not_implemented_count}"
 
     open(@filepath, "w") { |file| file << JSON.pretty_generate(output) } unless @filepath.nil?

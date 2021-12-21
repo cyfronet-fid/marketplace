@@ -7,7 +7,7 @@ class Class
         self.send(method_name, *args)
         return true
       rescue => e
-        error_handler.call(e) if error_handler
+        error_handler&.call(e)
       end
     end
   end
@@ -94,7 +94,7 @@ class Jira::Checker
   end
 
   def check_create_issue!(issue = nil)
-    issue = self.client.Issue.build if issue == nil
+    issue = self.client.Issue.build if issue.nil?
 
     unless issue.save(
              fields: {
@@ -113,7 +113,7 @@ class Jira::Checker
   end
 
   def check_create_project_issue!(issue = nil)
-    issue = self.client.Issue.build if issue == nil
+    issue = self.client.Issue.build if issue.nil?
 
     fields = {
       summary: "TEST PROJECT, TO CHECK WHETHER JIRA INTEGRATION WORKS",
@@ -166,7 +166,7 @@ class Jira::Checker
 
   def check_workflow_transitions!(issue)
     trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_done_id }
-    if trs.length == 0
+    if trs.empty?
       raise CheckerError,
             "Could not transition from 'TODO' to 'DONE' state, " + "this will affect open access services "
     end
@@ -202,7 +202,7 @@ class Jira::Checker
           webhook = wh
         else
           raise CheckerWarning,
-                "Webhook \"#{wh.name}\" does not define proper \"Issue related events\" - required: " +
+                "Webhook \"#{wh.name}\" does not define proper \"Issue related events\" - required: " \
                   "\"project = #{self.client.jira_project_key}\", current: \"#{wh.filters["issue-related-events-section"]}\""
         end
       end
@@ -211,7 +211,7 @@ class Jira::Checker
         raise CheckerWarning, "JIRA instance has no defined webhooks"
       end
 
-    if webhook == nil
+    if webhook.nil?
       raise CheckerWarning,
             "Could not find Webhook for this application, please confirm manually that webhook is defined for this host"
     end
@@ -229,7 +229,7 @@ class Jira::Checker
       comment_deleted: webhook.events.include?("comment_deleted")
     }
 
-    if statuses.select { |key, val| !val }.length > 0
+    unless statuses.select { |key, val| !val }.empty?
       # noinspection RubyArgCount
       raise CheckerCompositeError.new("Webhook notifications are lacking", statuses)
     end
