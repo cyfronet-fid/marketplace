@@ -9,6 +9,6 @@ class CreateServiceVocabulary < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
-    add_index :service_vocabularies, [:service_id, :vocabulary_id], unique: true
+    add_index :service_vocabularies, %i[service_id vocabulary_id], unique: true
   end
 end

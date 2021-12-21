@@ -1,25 +1,21 @@
 {
   "type": "object",
   "properties": {
-    "project_id": {"type": "integer"},
-    "project_item_id": {"type": "integer"},
+    "project_id": { "type": "integer" },
+    "project_item_id": { "type": "integer" },
     "author": {
       "type": "object",
       "properties": {
-        "uid": {"type": "string"},
-        "email": {"type": "string"},
-        "name": {"type": "string"},
-        "role": {"type": "string",
-          "enum": ["provider", "mediator"]
-        }
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["provider", "mediator"] }
       },
       "additionalProperties": false,
       "required": ["email", "name", "role"]
     },
-    "content": {"type": "string"},
-    "scope": {"type": "string",
-      "enum": ["public", "internal", "user_direct"]
-    }
+    "content": { "type": "string" },
+    "scope": { "type": "string", "enum": ["public", "internal", "user_direct"] }
   },
   "additionalProperties": false,
   "required": ["project_id", "author", "content", "scope"]

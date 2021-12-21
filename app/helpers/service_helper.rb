@@ -3,6 +3,7 @@
 module ServiceHelper
   def print_rating_stars(rating)
     result = ""
+
     # full stars
     (0...rating.floor).each { result += content_tag(:i, "", class: "fas fa-star fa-lg") }
 
@@ -42,7 +43,7 @@ module ServiceHelper
 
   def field_tree(service, field)
     parents = service.send(field).map { |f| f.parent.blank? ? f : f.parent }
-    Hash[parents.map { |parent| [parent.name, (parent.children & service.send(field)).map(&:name)] } ]
+    Hash[parents.map { |parent| [parent.name, (parent.children & service.send(field)).map(&:name)] }]
   end
 
   def scientific_domains_text(service)
@@ -69,35 +70,33 @@ module ServiceHelper
   end
 
   def resource_organisation_and_providers(service)
-    service.resource_organisation_and_providers.
-      map { |target| link_to(target.name, provider_path(target)) }
+    service.resource_organisation_and_providers.map { |target| link_to(target.name, provider_path(target)) }
   end
 
   def resource_organisation_and_providers_text(service)
-    service.resource_organisation_and_providers.
-      map { |target| target.name }
+    service.resource_organisation_and_providers.map { |target| target.name }
   end
 
   def providers(service, highlights = nil, preview = false)
     highlighted = highlights.present? ? sanitize(highlights[:provider_names])&.to_str : ""
     preview_options = preview ? { "data-target": "preview.link" } : {}
-    service.providers
-           .reject(&:blank?)
-           .reject(&:deleted?)
-           .reject { |p| p == service.resource_organisation }.uniq.map do |target|
-      if highlighted.present? && highlighted.strip == target.name.strip
-        link_to_unless target.deleted?, highlights[:provider_names].html_safe, provider_path(target), preview_options
-      else
-        link_to_unless target.deleted?, target.name, provider_path(target), preview_options
+    service
+      .providers
+      .reject(&:blank?)
+      .reject(&:deleted?)
+      .reject { |p| p == service.resource_organisation }
+      .uniq
+      .map do |target|
+        if highlighted.present? && highlighted.strip == target.name.strip
+          link_to_unless target.deleted?, highlights[:provider_names].html_safe, provider_path(target), preview_options
+        else
+          link_to_unless target.deleted?, target.name, provider_path(target), preview_options
+        end
       end
-    end
   end
 
   def providers_text(service)
-    service.providers
-           .reject(&:blank?)
-           .reject { |p| p == service.resource_organisation }
-           .map { |target| target.name }
+    service.providers.reject(&:blank?).reject { |p| p == service.resource_organisation }.map { |target| target.name }
   end
 
   def filtered_offers(offers)
@@ -109,20 +108,12 @@ module ServiceHelper
   end
 
   def map_view_to_order_type(service_or_offer)
-    if service_or_offer.external?
-      "external"
-    else
-      service_or_offer.order_type
-    end
+    service_or_offer.external? ? "external" : service_or_offer.order_type
   end
 
   def order_type(service)
     types = ([service&.order_type] + service&.offers.published.map { |o| o.order_type }).compact.uniq
-    if types.size > 1
-      "various"
-    else
-      service&.order_type || "other"
-    end
+    types.size > 1 ? "various" : service&.order_type || "other"
   end
 
   def highlighted_for(field, model, highlights)
@@ -139,30 +130,26 @@ module ServiceHelper
 
   def data_for_map(geographical_availabilities)
     countries = []
-    geographical_availabilities.each { |place|
+    geographical_availabilities.each do |place|
       co = []
       co = Country.countries_for_region(place&.name) if place
       co = [place] if co.empty?
       countries = countries | co if co.any?
-    }
-    countries.map(&:alpha2).map { |c| [c.downcase, 1] }
-                           .map { |c| c == ["uk", 1] ? ["gb", 1] : c }
-                           .map { |c| c == ["el", 1] ? ["gr", 1] : c }
+    end
+    countries
+      .map(&:alpha2)
+      .map { |c| [c.downcase, 1] }
+      .map { |c| c == ["uk", 1] ? ["gb", 1] : c }
+      .map { |c| c == ["el", 1] ? ["gr", 1] : c }
   end
 
   def data_for_region(countries)
-    if is_any_non_european(countries) &&
-        (countries != ["EO"]) &&
-        (countries != ["EU"])
-      countries.append("WW")
-    end
+    countries.append("WW") if is_any_non_european(countries) && (countries != ["EO"]) && (countries != ["EU"])
     countries
   end
 
   def is_any_non_european(countries)
-    (countries -
-     Country.countries_for_region("Europe").map(&:alpha2))
-      .present?
+    (countries - Country.countries_for_region("Europe").map(&:alpha2)).present?
   end
 
   def trl_description_text(service)

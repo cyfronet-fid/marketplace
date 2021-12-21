@@ -18,29 +18,25 @@ module Jira
 
       case e
       when Errno::ECONNREFUSED
-        puts "ERROR".red + ": Could not connect to JIRA: #{ @checker.client.jira_config["url"] }"
+        puts "ERROR".red + ": Could not connect to JIRA: #{@checker.client.jira_config["url"]}"
         self.abort!
-
       when Jira::Checker::CheckerError
         puts(("  " * indent) + "- ERROR".red + ": #{e.message}")
         false
-
       when Jira::Checker::CheckerWarning
         puts(("  " * indent) + "- WARNING".yellow + ": #{e.message}")
         false
-
       when Jira::Checker::CheckerCompositeError
         puts(("  " * indent) + "- ERROR".red + ": #{e.message}")
 
-        e.statuses.each { |hash, value|
+        e.statuses.each do |hash, value|
           print(("  " * (indent + 1)) + "- #{hash}:")
-          if value then self.ok! else puts(" ✕".red) end
-        }
+          value ? self.ok! : puts(" ✕".red)
+        end
         false
       when Jira::Checker::CriticalCheckerError
         puts(("  " * indent) + "- ERROR".red + ": #{e.message}")
         self.abort!
-
       else
         puts "ERROR".red + ": Unexpected error occurred #{e.message}\n\n#{e.backtrace}"
         self.abort!
@@ -49,18 +45,14 @@ module Jira
 
     def show_available_issue_types
       puts "AVAILABLE ISSUE TYPES: ".yellow
-      if (@checker.client.Issuetype.all.each do |issue|
-        puts "  - #{issue.name} [id: #{issue.id}]"
-      end).empty?
+      if (@checker.client.Issuetype.all.each { |issue| puts "  - #{issue.name} [id: #{issue.id}]" }).empty?
         puts "  - NO ISSUE TYPES"
       end
     end
 
     def show_available_issue_states
       puts "AVAILABLE ISSUE STATES:".yellow
-      @checker.client.Status.all.each do |state|
-        puts "  - #{state.name} [id: #{state.id}]"
-      end
+      @checker.client.Status.all.each { |state| puts "  - #{state.name} [id: #{state.id}]" }
     end
 
     def show_suggested_fields_mapping(mismatched_fields)
@@ -68,19 +60,18 @@ module Jira
 
       puts "SUGGESTED MAPPINGS"
       mismatched_fields.each do |field_name|
-        suggested_field_description = if (f = fields.find { |_f| _f.name == field_name.to_s })
-          "#{f.id.yellow} (export MP_JIRA_FIELD_#{f.name.gsub(/[- ]/, "_")}='#{f.id}')"
-        else
-          "NO MATCH FOUND".red
-        end
+        suggested_field_description =
+          if (f = fields.find { |_f| _f.name == field_name.to_s })
+            "#{f.id.yellow} (export MP_JIRA_FIELD_#{f.name.gsub(/[- ]/, "_")}='#{f.id}')"
+          else
+            "NO MATCH FOUND".red
+          end
 
         puts "  - #{field_name}: #{suggested_field_description}"
       end
 
       puts "AVAILABLE CUSTOM FIELDS"
-      fields.each do |field|
-        puts "  - #{field.name} [id: #{field.id}]"
-      end
+      fields.each { |field| puts "  - #{field.name} [id: #{field.id}]" }
     end
 
     def initialize(checker = Jira::Checker.new, env = ENV)
@@ -128,9 +119,7 @@ module Jira
       @checker.check_custom_fields do |e|
         self.error_and_abort!(e)
 
-        if e.instance_of?(Jira::Checker::CheckerCompositeError)
-          self.show_suggested_fields_mapping(e.statuses.keys)
-        end
+        self.show_suggested_fields_mapping(e.statuses.keys) if e.instance_of?(Jira::Checker::CheckerCompositeError)
       end && self.ok!
 
       # in case of mismatched issue states, print all available
@@ -138,8 +127,9 @@ module Jira
 
       print "Checking Project issue type presence..."
 
-      self.show_available_issue_types unless
-        @checker.check_project_issue_type { |e| self.error_and_abort!(e) } && self.ok!
+      unless @checker.check_project_issue_type { |e| self.error_and_abort!(e) } && self.ok!
+        self.show_available_issue_types
+      end
 
       puts "Trying to manipulate project issue..."
       print "  - create issue..."

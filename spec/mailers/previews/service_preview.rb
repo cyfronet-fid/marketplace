@@ -11,9 +11,16 @@ class ServicePreview < ActionMailer::Preview
 
   def new_service
     service = Service.first
-    subscriber = User.new(first_name: "John", last_name: "Doe", email: "john@doe.com",
-                          categories: service.categories, scientific_domains: service.scientific_domains,
-                          categories_updates: true, scientific_domains_updates: true)
+    subscriber =
+      User.new(
+        first_name: "John",
+        last_name: "Doe",
+        email: "john@doe.com",
+        categories: service.categories,
+        scientific_domains: service.scientific_domains,
+        categories_updates: true,
+        scientific_domains_updates: true
+      )
     ServiceMailer.new_service(service, service.categories, service.scientific_domains, subscriber.email)
   end
 end

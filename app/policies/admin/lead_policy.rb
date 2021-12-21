@@ -28,12 +28,12 @@ class Admin::LeadPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:header, :position, :body,
-     :picture, :lead_section_id, :url]
+    %i[header position body picture lead_section_id url]
   end
 
   private
-    def admin?
-      user&.admin?
-    end
+
+  def admin?
+    user&.admin?
+  end
 end

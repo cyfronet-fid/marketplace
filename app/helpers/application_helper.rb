@@ -2,6 +2,7 @@
 
 module ApplicationHelper
   include Pagy::Frontend
+
   # Check if a particular controller is the current one
   #
   # args - One or more controller names to check
@@ -39,9 +40,9 @@ module ApplicationHelper
 
   def meta_robots
     if ENV["MP_INSTANCE"].present? || Rails.env.development?
-      '<meta name="robots" content="noindex, nofollow">'.html_safe
+      "<meta name=\"robots\" content=\"noindex, nofollow\">".html_safe
     else
-      '<meta name="robots" content="index, follow">'.html_safe
+      "<meta name=\"robots\" content=\"index, follow\">".html_safe
     end
   end
 

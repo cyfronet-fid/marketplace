@@ -14,9 +14,7 @@ RSpec.feature "User action", js: true do
   # due to redirections on page some events are triggered few times
   xit "should update params and call job" do
     use_ab_test(recommendation_panel: "v1")
-    allow(Mp::Application.config).to(
-      receive(:recommender_host).and_return("localhost:5000")
-    )
+    allow(Mp::Application.config).to(receive(:recommender_host).and_return("localhost:5000"))
 
     services_ids = [1, 2, 3]
     services_ids.each { |id| create(:service, id: id) }

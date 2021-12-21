@@ -14,7 +14,7 @@ RSpec.describe Api::V1::ProjectSerializer do
         name: project.user.full_name,
         email: project.user.email,
         first_name: project.user.first_name,
-        last_name: project.user.last_name,
+        last_name: project.user.last_name
       },
       project_items: project.project_items.pluck(:iid),
       attributes: {
@@ -34,9 +34,7 @@ RSpec.describe Api::V1::ProjectSerializer do
   end
 
   it "properly serializes an empty project" do
-    project = Project.new(
-      user: build(:user)
-    )
+    project = Project.new(user: build(:user))
 
     serialized = described_class.new(project).as_json
     expected = {
@@ -46,7 +44,7 @@ RSpec.describe Api::V1::ProjectSerializer do
         name: project.user.full_name,
         email: project.user.email,
         first_name: project.user.first_name,
-        last_name: project.user.last_name,
+        last_name: project.user.last_name
       },
       project_items: [],
       attributes: {

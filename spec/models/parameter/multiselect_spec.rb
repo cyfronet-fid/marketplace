@@ -12,7 +12,7 @@ RSpec.describe Parameter::Multiselect do
 
     it "serializes to valid attribute attribute" do
       attribute = Attribute.from_json(subject.dump)
-      attribute.value_from_param(["a", "b"])
+      attribute.value_from_param(%w[a b])
 
       expect(attribute).to be_value_valid
     end
@@ -27,7 +27,7 @@ RSpec.describe Parameter::Multiselect do
 
     it "serializes to valid attribute attribute" do
       attribute = Attribute.from_json(subject.dump)
-      attribute.value_from_param(["1", "2"])
+      attribute.value_from_param(%w[1 2])
 
       expect(attribute).to be_value_valid
     end

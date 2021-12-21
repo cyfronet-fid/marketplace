@@ -10,6 +10,6 @@ class CreateOffers < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
-    add_index :offers, [:service_id, :iid], unique: true
+    add_index :offers, %i[service_id iid], unique: true
   end
 end

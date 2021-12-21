@@ -21,12 +21,10 @@ RSpec.describe ProjectItem do
     [
       { status: "other status", status_type: :ready },
       { status: "other status" },
-      { status_type: :ready },
+      { status_type: :ready }
     ].each do |changes|
       it "creates status for update!(#{changes})" do
-        expect {
-          subject.update!(changes)
-        }.to change { subject.statuses.size }.by(1)
+        expect { subject.update!(changes) }.to change { subject.statuses.size }.by(1)
 
         last_status = subject.statuses.last
         expect(last_status.status).to eq(subject.status)
@@ -35,9 +33,7 @@ RSpec.describe ProjectItem do
     end
 
     it "doesn't create status if status not changed" do
-      expect {
-        subject.update!(user_secrets: { "key": "value" })
-      }.not_to change { subject.statuses.size }
+      expect { subject.update!(user_secrets: { "key": "value" }) }.not_to change { subject.statuses.size }
     end
   end
 
@@ -85,8 +81,7 @@ RSpec.describe ProjectItem do
   context "eventable" do
     describe "#eventable_identity" do
       it "has proper identity" do
-        expect(subject.eventable_identity).to eq({ project_id: subject.project.id,
-                                                   project_item_id: subject.iid })
+        expect(subject.eventable_identity).to eq({ project_id: subject.project.id, project_item_id: subject.iid })
       end
     end
 
@@ -130,10 +125,10 @@ RSpec.describe ProjectItem do
 
       expect(project_item.events.second.eventable).to eq(project_item)
       expect(project_item.events.second.action).to eq("update")
-      expect(project_item.events.second.updates)
-        .to contain_exactly(
-              { field: "status_type", before: "created", after: "ready" }.stringify_keys,
-              { field: "status", before: "custom created status", after: "custom ready status" }.stringify_keys)
+      expect(project_item.events.second.updates).to contain_exactly(
+        { field: "status_type", before: "created", after: "ready" }.stringify_keys,
+        { field: "status", before: "custom created status", after: "custom ready status" }.stringify_keys
+      )
     end
   end
 

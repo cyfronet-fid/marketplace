@@ -37,7 +37,6 @@ RSpec.describe Service do
     expect(old_main.main).to be_falsy
   end
 
-
   it "has main category" do
     main, other = create_list(:category, 2)
     service = create(:service, categories: [main, other])

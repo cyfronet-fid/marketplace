@@ -19,13 +19,15 @@ describe Jira::Setup do
     original_stdout = $stdout
     $stdout = StringIO.new
 
-    expect(project)
-      .to receive(:save)
-            .with(key: jira_client.jira_project_key,
-                  name: jira_client.jira_project_key,
-                  projectTemplateKey: "com.atlassian.jira-core-project-templates:jira-core-project-management",
-                  projectTypeKey: "business",
-                  lead: jira_client.jira_config["username"]).and_return(true)
+    expect(project).to receive(:save)
+      .with(
+        key: jira_client.jira_project_key,
+        name: jira_client.jira_project_key,
+        projectTemplateKey: "com.atlassian.jira-core-project-templates:jira-core-project-management",
+        projectTypeKey: "business",
+        lead: jira_client.jira_config["username"]
+      )
+      .and_return(true)
 
     expect(jira_client).to receive(:mp_project).and_raise(JIRA::HTTPError.new(create(:response, code: "404")))
     expect(jira_client).to receive_message_chain("Project.build").and_return(project)

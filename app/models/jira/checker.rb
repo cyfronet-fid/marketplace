@@ -16,7 +16,8 @@ end
 class Jira::Checker
   include Rails.application.routes.url_helpers
 
-  class CheckerError < StandardError; end
+  class CheckerError < StandardError
+  end
   class CheckerCompositeError < StandardError
     attr_accessor :statuses
 
@@ -25,8 +26,10 @@ class Jira::Checker
       @statuses = statuses
     end
   end
-  class CheckerWarning < StandardError; end
-  class CriticalCheckerError < StandardError; end
+  class CheckerWarning < StandardError
+  end
+  class CriticalCheckerError < StandardError
+  end
 
   def initialize(client = Jira::Client.new)
     @client = client
@@ -52,7 +55,9 @@ class Jira::Checker
     self.client.Project.all
   rescue JIRA::HTTPError => e
     if e.response.code == "401"
-      raise CriticalCheckerError.new("Could not authenticate #{self.client.jira_config["username"]} on #{self.client.jira_config["url"]}")
+      raise CriticalCheckerError.new(
+              "Could not authenticate #{self.client.jira_config["username"]} on #{self.client.jira_config["url"]}"
+            )
     else
       raise e
     end
@@ -62,7 +67,9 @@ class Jira::Checker
     self.client.mp_issue_type
   rescue JIRA::HTTPError => e
     if e.response.code == "404"
-      raise CheckerError.new("It seems that ticket with id #{client.jira_issue_type_id} does not exist, make sure to add existing issue type into configuration")
+      raise CheckerError.new(
+              "It seems that ticket with id #{client.jira_issue_type_id} does not exist, make sure to add existing issue type into configuration"
+            )
     end
     raise e
   end
@@ -71,7 +78,9 @@ class Jira::Checker
     self.client.mp_project_issue_type
   rescue JIRA::HTTPError => e
     if e.response.code == "404"
-      raise CheckerError.new("It seems that ticket with id #{client.jira_project_issue_type_id} does not exist, make sure to add existing issue type into configuration")
+      raise CheckerError.new(
+              "It seems that ticket with id #{client.jira_project_issue_type_id} does not exist, make sure to add existing issue type into configuration"
+            )
     end
     raise e
   end
@@ -87,25 +96,35 @@ class Jira::Checker
   end
 
   def check_create_issue!(issue = nil)
-    if issue == nil
-      issue = self.client.Issue.build
-    end
+    issue = self.client.Issue.build if issue == nil
 
-    unless issue.save(fields: { summary: "TEST TICKET, TO CHECK WHETHER JIRA INTEGRATION WORKS",
-                                project: { key: self.client.jira_project_key },
-                                issuetype: { id: self.client.jira_issue_type_id } })
+    unless issue.save(
+             fields: {
+               summary: "TEST TICKET, TO CHECK WHETHER JIRA INTEGRATION WORKS",
+               project: {
+                 key: self.client.jira_project_key
+               },
+               issuetype: {
+                 id: self.client.jira_issue_type_id
+               }
+             }
+           )
       raise CriticalCheckerError.new "Could not create issue in project: #{self.client.jira_project_key} and issuetype: #{self.client.jira_issue_type_id}"
     end
   end
 
   def check_create_project_issue!(issue = nil)
-    if issue == nil
-      issue = self.client.Issue.build
-    end
+    issue = self.client.Issue.build if issue == nil
 
-    fields = { summary: "TEST PROJECT, TO CHECK WHETHER JIRA INTEGRATION WORKS",
-               project: { key: self.client.jira_project_key },
-               issuetype: { id: self.client.jira_project_issue_type_id } }
+    fields = {
+      summary: "TEST PROJECT, TO CHECK WHETHER JIRA INTEGRATION WORKS",
+      project: {
+        key: self.client.jira_project_key
+      },
+      issuetype: {
+        id: self.client.jira_project_issue_type_id
+      }
+    }
     fields[self.client.custom_fields["Epic Name".to_sym]] = "TEST EPIC"
 
     unless issue.save(fields: fields)
@@ -121,16 +140,16 @@ class Jira::Checker
 
   def check_add_comment!(issue)
     c = issue.comments.build
-    unless c.save(body: "TEST QUESTION")
-      raise CheckerError.new "Could not post comment"
-    end
+    raise CheckerError.new "Could not post comment" unless c.save(body: "TEST QUESTION")
   end
 
   def check_delete_issue!(issue)
     issue.delete
   rescue JIRA::HTTPError => e
     if e.response.code == "403"
-      raise CheckerWarning.new("Could not delete issue #{issue.key}, this is not critical but you will have to delete it manually from the project")
+      raise CheckerWarning.new(
+              "Could not delete issue #{issue.key}, this is not critical but you will have to delete it manually from the project"
+            )
     else
       raise CheckerError.new("Could not delete issue, reason: #{e.response.code}: #{e.response.body}")
     end
@@ -149,45 +168,58 @@ class Jira::Checker
   def check_workflow_transitions!(issue)
     trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_done_id }
     if trs.length == 0
-      raise CheckerError.new("Could not transition from 'TODO' to 'DONE' state, " +
-                                  "this will affect open access services ")
+      raise CheckerError.new(
+              "Could not transition from 'TODO' to 'DONE' state, " + "this will affect open access services "
+            )
     end
   end
 
   def check_custom_fields!
     fields = client.Field.all
 
-    statuses = self.client.custom_fields.map do |field_name, field_id|
-      [field_name, fields.any? { |f| f.id == field_id && f.name.to_sym == field_name }]
-    end .to_h
+    statuses =
+      self
+        .client
+        .custom_fields
+        .map do |field_name, field_id|
+          [field_name, fields.any? { |f| f.id == field_id && f.name.to_sym == field_name }]
+        end
+        .to_h
 
-    if statuses.any? { |k, v| !v  }
-      raise CheckerCompositeError.new("CUSTOM FIELD mapping have some problems",
-                                      statuses)
-    end
+    raise CheckerCompositeError.new("CUSTOM FIELD mapping have some problems", statuses) if statuses.any? { |k, v| !v }
   end
 
   def check_webhook!(host)
     webhook = nil
-    # noinspection RubyDeadCode
-    client.Webhook.all.each do |wh|
-      if wh.attrs["url"] == (host + api_webhooks_jira_path + "?issue_id=${issue.id}")
-        unless wh.enabled
-          raise CheckerWarning.new("Webhook \"#{wh.name}\" is not enabled")
-        end
 
-        if wh.filters["issue-related-events-section"].match?(/project = #{self.client.jira_project_key}/)
-          webhook = wh
-        else
-          raise CheckerWarning.new("Webhook \"#{wh.name}\" does not define proper \"Issue related events\" - required: " +
-                                   "\"project = #{self.client.jira_project_key}\", current: \"#{wh.filters["issue-related-events-section"]}\"")
+    # noinspection RubyDeadCode
+    client
+      .Webhook
+      .all
+      .each do |wh|
+        if wh.attrs["url"] == (host + api_webhooks_jira_path + "?issue_id=${issue.id}")
+          raise CheckerWarning.new("Webhook \"#{wh.name}\" is not enabled") unless wh.enabled
+
+          if wh.filters["issue-related-events-section"].match?(/project = #{self.client.jira_project_key}/)
+            webhook = wh
+          else
+            raise CheckerWarning.new(
+                    "Webhook \"#{wh.name}\" does not define proper \"Issue related events\" - required: " +
+                      "\"project = #{self.client.jira_project_key}\", current: \"#{wh.filters["issue-related-events-section"]}\""
+                  )
+          end
         end
       end
-    end.empty? && begin
-      raise CheckerWarning.new("JIRA instance has no defined webhooks")
-    end
+      .empty? &&
+      begin
+        raise CheckerWarning.new("JIRA instance has no defined webhooks")
+      end
 
-    raise CheckerWarning.new("Could not find Webhook for this application, please confirm manually that webhook is defined for this host") if webhook == nil
+    if webhook == nil
+      raise CheckerWarning.new(
+              "Could not find Webhook for this application, please confirm manually that webhook is defined for this host"
+            )
+    end
 
     self.check_webhook_params!(webhook)
   end

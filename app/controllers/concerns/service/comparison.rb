@@ -3,9 +3,7 @@
 module Service::Comparison
   extend ActiveSupport::Concern
 
-  included do
-    before_action :init_comparison_variables, only: [:index, :show]
-  end
+  included { before_action :init_comparison_variables, only: %i[index show] }
 
   def init_comparison_variables
     @compare_services = Service.where(slug: session[:comparison])

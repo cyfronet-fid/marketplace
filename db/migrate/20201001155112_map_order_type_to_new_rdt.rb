@@ -2,8 +2,7 @@
 
 class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
   def up
-    execute(
-        <<~SQL
+    execute(<<~SQL)
       UPDATE offers
       SET internal = CASE
         WHEN order_type='orderable' THEN true
@@ -11,10 +10,8 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
       END
       WHERE order_type <> 'open_access';
     SQL
-      )
 
-    execute(
-        <<~SQL
+    execute(<<~SQL)
       UPDATE project_items
       SET internal = CASE
         WHEN order_type='orderable' THEN true
@@ -22,36 +19,28 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
       END
       WHERE order_type <> 'open_access';
     SQL
-      )
 
-    execute(
-        <<~SQL
+    execute(<<~SQL)
       UPDATE services
       SET order_type = 'order_required'
       WHERE order_type <> 'open_access';
     SQL
-      )
 
-    execute(
-        <<~SQL
+    execute(<<~SQL)
       UPDATE offers
       SET order_type = 'order_required'
       WHERE order_type <> 'open_access';
     SQL
-      )
 
-    execute(
-        <<~SQL
+    execute(<<~SQL)
       UPDATE project_items
       SET order_type = 'order_required'
       WHERE order_type <> 'open_access';
     SQL
-      )
   end
 
   def down
-    execute(
-        <<~SQL
+    execute(<<~SQL)
       UPDATE project_items
       SET order_type = CASE
         WHEN internal=true THEN 'orderable'
@@ -59,10 +48,8 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
       END
       WHERE order_type <> 'open_access';
     SQL
-      )
 
-    execute(
-        <<~SQL
+    execute(<<~SQL)
       UPDATE project_items
       SET order_type = CASE
         WHEN internal=true THEN 'orderable'
@@ -70,10 +57,8 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
       END
       WHERE order_type <> 'open_access';
     SQL
-      )
 
-    execute(
-        <<~SQL
+    execute(<<~SQL)
       UPDATE services
       SET order_type = CASE
         WHEN internal=true THEN 'orderable'
@@ -81,10 +66,8 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
       END
       WHERE order_type <> 'open_access';
     SQL
-      )
 
-    execute(
-        <<~SQL
+    execute(<<~SQL)
       UPDATE offers
       SET order_type = CASE
         WHEN internal=true THEN 'orderable'
@@ -92,6 +75,5 @@ class MapOrderTypeToNewRdt < ActiveRecord::Migration[6.0]
       END
       WHERE order_type <> 'open_access';
     SQL
-      )
   end
 end

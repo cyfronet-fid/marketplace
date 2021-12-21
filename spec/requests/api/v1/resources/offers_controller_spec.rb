@@ -8,9 +8,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
     Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
   end
 
-  before(:each) do
-    create(:oms, default: true)
-  end
+  before(:each) { create(:oms, default: true) }
 
   after(:all) do
     Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
@@ -20,7 +18,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
     get "lists offers for an administered resource" do
       tags "Offers"
       produces "application/json"
-      security [ authentication_token: [] ]
+      security [authentication_token: []]
       parameter name: :resource_id, in: :path, type: :string, description: "Resource identifier (id or eid)"
 
       response 200, "offers found" do
@@ -31,9 +29,13 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:draft_offer) { build(:offer, status: "draft") }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [published_offer1, published_offer2, draft_offer]) }
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [published_offer1, published_offer2, draft_offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
@@ -66,8 +68,9 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator])) }
+        let!(:service) do
+          create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator]))
+        end
 
         let(:diff_data_admin_user) { create(:user) }
         let!(:diff_data_administrator) { create(:data_administrator, email: diff_data_admin_user.email) }
@@ -111,7 +114,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
       tags "Offers"
       produces "application/json"
       consumes "application/json"
-      security [ authentication_token: [] ]
+      security [authentication_token: []]
       parameter name: :resource_id, in: :path, type: :string, description: "Resource identifier (id or eid)"
       parameter name: :offer_payload, in: :body, schema: { "$ref" => "offer/offer_write.json" }
 
@@ -120,8 +123,9 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
+        let!(:service) do
+          create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator]))
+        end
         let(:offer) { build(:offer_with_all_parameters) }
         let(:offer_payload) { JSON.parse(Api::V1::OfferSerializer.new(offer).to_json) }
         let(:resource_id) { service.slug }
@@ -148,11 +152,14 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service, order_type: "open_access",
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
-        let(:offer_payload) { { name: "New offer",
-                                description: "sample description",
-                                order_type: "open_access" } }
+        let!(:service) do
+          create(
+            :service,
+            order_type: "open_access",
+            resource_organisation: create(:provider, data_administrators: [data_administrator])
+          )
+        end
+        let(:offer_payload) { { name: "New offer", description: "sample description", order_type: "open_access" } }
         let(:resource_id) { service.slug }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
@@ -178,15 +185,21 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:oms) { create(:oms, type: :global, custom_params: { "a": { mandatory: true, default: "qwe" } }) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
-        let(:offer_payload) { { name: "New offer",
-                                description: "sample description",
-                                order_type: "order_required",
-                                internal: true,
-                                primary_oms_id: oms.id,
-                                oms_params: { "a": "asd" }
-        } }
+        let!(:service) do
+          create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator]))
+        end
+        let(:offer_payload) do
+          {
+            name: "New offer",
+            description: "sample description",
+            order_type: "order_required",
+            internal: true,
+            primary_oms_id: oms.id,
+            oms_params: {
+              "a": "asd"
+            }
+          }
+        end
         let(:resource_id) { service.slug }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
@@ -211,15 +224,25 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service, order_type: "open_access",
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
-        let(:offer_payload) { { name: "New offer",
-                                description: "sample description",
-                                order_type: "open_access",
-                                internal: true,
-                                primary_oms_id: 1,
-                                oms_params: { a: "b" }
-        } }
+        let!(:service) do
+          create(
+            :service,
+            order_type: "open_access",
+            resource_organisation: create(:provider, data_administrators: [data_administrator])
+          )
+        end
+        let(:offer_payload) do
+          {
+            name: "New offer",
+            description: "sample description",
+            order_type: "open_access",
+            internal: true,
+            primary_oms_id: 1,
+            oms_params: {
+              a: "b"
+            }
+          }
+        end
         let(:resource_id) { service.slug }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
@@ -244,15 +267,25 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service, order_type: "open_access",
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
-        let(:offer_payload) { { name: "New offer",
-                                description: "sample description",
-                                order_type: "open_access",
-                                internal: false,
-                                primary_oms_id: 1,
-                                oms_params: { a: "b" }
-        } }
+        let!(:service) do
+          create(
+            :service,
+            order_type: "open_access",
+            resource_organisation: create(:provider, data_administrators: [data_administrator])
+          )
+        end
+        let(:offer_payload) do
+          {
+            name: "New offer",
+            description: "sample description",
+            order_type: "open_access",
+            internal: false,
+            primary_oms_id: 1,
+            oms_params: {
+              a: "b"
+            }
+          }
+        end
         let(:resource_id) { service.slug }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
@@ -277,13 +310,11 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
+        let!(:service) do
+          create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator]))
+        end
         let(:resource_id) { service.slug }
-        let(:offer_payload) { {
-            name: "New offer",
-            description: "asd",
-            order_type: "lol" } }
+        let(:offer_payload) { { name: "New offer", description: "asd", order_type: "lol" } }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
         run_test! do |response|
@@ -297,14 +328,18 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
-        let(:offer_payload) { { name: "New offer",
-                                description: "sample description",
-                                order_type: "order_required",
-                                internal: true,
-                                primary_oms_id: 9999,
-        } }
+        let!(:service) do
+          create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator]))
+        end
+        let(:offer_payload) do
+          {
+            name: "New offer",
+            description: "sample description",
+            order_type: "order_required",
+            internal: true,
+            primary_oms_id: 9999
+          }
+        end
         let(:resource_id) { service.slug }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
@@ -319,24 +354,27 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
+        let!(:service) do
+          create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator]))
+        end
         let(:resource_id) { service.slug }
-        let(:offer_payload) { {
-          name: "New offer",
-          description: "asd",
-          order_type: "order_required",
-          parameters: [
-            {
-              "id": "0",
-              "type": "aasd",
-              "label": "constant_example",
-              "description": "constant_hint",
-              "value": "12",
-              "value_type": "integer"
-            },
-          ]
-        } }
+        let(:offer_payload) do
+          {
+            name: "New offer",
+            description: "asd",
+            order_type: "order_required",
+            parameters: [
+              {
+                "id": "0",
+                "type": "aasd",
+                "label": "constant_example",
+                "description": "constant_hint",
+                "value": "12",
+                "value_type": "integer"
+              }
+            ]
+          }
+        end
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
         run_test! do |response|
@@ -350,23 +388,26 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
+        let!(:service) do
+          create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator]))
+        end
         let(:resource_id) { service.slug }
-        let(:offer_payload) { {
-          name: "New offer",
-          description: "asd",
-          order_type: "order_required",
-          parameters: [
-            {
-              "id": "0",
-              "type": "attribute",
-              "label": "constant_example",
-              "description": "constant_hint",
-              "value_type": "integer"
-            }
-          ]
-        } }
+        let(:offer_payload) do
+          {
+            name: "New offer",
+            description: "asd",
+            order_type: "order_required",
+            parameters: [
+              {
+                "id": "0",
+                "type": "attribute",
+                "label": "constant_example",
+                "description": "constant_hint",
+                "value_type": "integer"
+              }
+            ]
+          }
+        end
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
         run_test! do |response|
@@ -380,28 +421,31 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
+        let!(:service) do
+          create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator]))
+        end
         let(:resource_id) { service.slug }
-        let(:offer_payload) { {
-          name: "New offer",
-          description: "asd",
-          order_type: "order_required",
-          parameters: [
-            {
-              "id": "2",
-              "type": "select",
-              "label": "select_example",
-              "description": "select_example",
-              "config": {
-                "values": [],
-                "mode": "dropdown"
-              },
-              "value_type": "integer",
-              "unit": "CPUs"
-            },
-          ]
-        } }
+        let(:offer_payload) do
+          {
+            name: "New offer",
+            description: "asd",
+            order_type: "order_required",
+            parameters: [
+              {
+                "id": "2",
+                "type": "select",
+                "label": "select_example",
+                "description": "select_example",
+                "config": {
+                  "values": [],
+                  "mode": "dropdown"
+                },
+                "value_type": "integer",
+                "unit": "CPUs"
+              }
+            ]
+          }
+        end
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
         run_test! do |response|
@@ -415,32 +459,35 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
+        let!(:service) do
+          create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator]))
+        end
         let(:resource_id) { service.slug }
-        let(:offer_payload) { {
-          name: "New offer",
-          description: "asd",
-          order_type: "order_required",
-          parameters: [
-            {
-              "id": "0",
-              "type": "attribute",
-              "label": "constant_example",
-              "description": "constant_hint",
-              "value": "12",
-              "value_type": "integer",
-            },
-            {
-              "id": "0",
-              "type": "attribute",
-              "label": "constant_example",
-              "description": "constant_hint",
-              "value": "12",
-              "value_type": "integer",
-            },
-          ]
-        } }
+        let(:offer_payload) do
+          {
+            name: "New offer",
+            description: "asd",
+            order_type: "order_required",
+            parameters: [
+              {
+                "id": "0",
+                "type": "attribute",
+                "label": "constant_example",
+                "description": "constant_hint",
+                "value": "12",
+                "value_type": "integer"
+              },
+              {
+                "id": "0",
+                "type": "attribute",
+                "label": "constant_example",
+                "description": "constant_hint",
+                "value": "12",
+                "value_type": "integer"
+              }
+            ]
+          }
+        end
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
         run_test! do |response|
@@ -454,24 +501,27 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
+        let!(:service) do
+          create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator]))
+        end
         let(:resource_id) { service.slug }
-        let(:offer_payload) { {
-          name: "New offer",
-          description: "asd",
-          order_type: "order_required",
-          parameters: [
-            {
-              "id": "0",
-              "type": "attribute",
-              "label": "constant_example",
-              "description": "constant_hint",
-              "value": "asd",
-              "value_type": "integer",
-            }
-          ]
-        } }
+        let(:offer_payload) do
+          {
+            name: "New offer",
+            description: "asd",
+            order_type: "order_required",
+            parameters: [
+              {
+                "id": "0",
+                "type": "attribute",
+                "label": "constant_example",
+                "description": "constant_hint",
+                "value": "asd",
+                "value_type": "integer"
+              }
+            ]
+          }
+        end
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
         run_test! do |response|
@@ -485,12 +535,12 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]))}
-        let(:offer_payload) { { name: "New offer",
-                                description: "sample description",
-                                order_type: "order_required",
-                                status: "draft" } }
+        let!(:service) do
+          create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator]))
+        end
+        let(:offer_payload) do
+          { name: "New offer", description: "sample description", order_type: "order_required", status: "draft" }
+        end
         let(:resource_id) { service.slug }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
@@ -518,9 +568,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
         let!(:service) { create(:service) }
-        let(:offer_payload) { { name: "New offer",
-                                description: "sample description",
-                                order_type: "order_required" } }
+        let(:offer_payload) { { name: "New offer", description: "sample description", order_type: "order_required" } }
         let(:resource_id) { service.slug }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
@@ -556,7 +604,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
     get "retrieves an offer for an administered resource" do
       tags "Offers"
       produces "application/json"
-      security [ authentication_token: [] ]
+      security [authentication_token: []]
       parameter name: :resource_id, in: :path, type: :string, description: "Resource identifier (id or eid)"
       parameter name: :id, in: :path, type: :string, description: "Offer identifier"
 
@@ -566,9 +614,13 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:offer) { build(:offer_with_all_parameters) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [offer]) }
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
@@ -592,9 +644,13 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:offer) { build(:offer) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [offer]) }
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
@@ -616,9 +672,13 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:offer) { build(:offer, internal: false, order_type: :order_required) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [offer]) }
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
@@ -641,9 +701,13 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:offer) { build(:offer, order_type: :open_access, internal: false) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [offer]) }
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
@@ -678,9 +742,13 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:draft_offer) { build(:offer, status: "draft") }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [draft_offer]) }
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [draft_offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { draft_offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
@@ -712,9 +780,13 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:offer) { build(:offer_with_all_parameters) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [offer]) }
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { "doesnt-exist" }
         let(:"X-User-Token") { data_admin_user.authentication_token }
@@ -730,7 +802,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
       tags "Offers"
       produces "application/json"
       consumes "application/json"
-      security [ authentication_token: [] ]
+      security [authentication_token: []]
       parameter name: :resource_id, in: :path, type: :string, description: "Resource identifier (id or eid)"
       parameter name: :id, in: :path, type: :string, description: "Offer identifier"
       parameter name: :offer_payload, in: :body, schema: { "$ref" => "offer/offer_update.json" }
@@ -743,17 +815,19 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:offer) { build(:offer, primary_oms: previous_oms) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [offer])}
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
-        let(:offer_payload) { { name: "New offer",
-                                description: "sample description",
-                                primary_oms_id: oms.id,
-                                oms_params: { a: "b" }
-        } }
+        let(:offer_payload) do
+          { name: "New offer", description: "sample description", primary_oms_id: oms.id, oms_params: { a: "b" } }
+        end
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -776,15 +850,17 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:offer) { build(:offer) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [offer])}
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
-        let(:offer_payload) { {
-          parameters: []
-        } }
+        let(:offer_payload) { { parameters: [] } }
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -807,24 +883,30 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:offer) { build(:offer) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [offer])}
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
-        let(:offer_payload) { {
-          parameters: [
-            {
-              "id": "0",
-              "type": "attribute",
-              "label": "constant_example",
-              "description": "constant_hint",
-              "value": "12",
-              "value_type": "integer",
-            },
-          ]
-        } }
+        let(:offer_payload) do
+          {
+            parameters: [
+              {
+                "id": "0",
+                "type": "attribute",
+                "label": "constant_example",
+                "description": "constant_hint",
+                "value": "12",
+                "value_type": "integer"
+              }
+            ]
+          }
+        end
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -848,18 +930,27 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:offer) { build(:offer, primary_oms: previous_oms) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [offer])}
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
-        let(:offer_payload) { { name: "New offer",
-                                description: "sample description",
-                                internal: false,
-                                primary_oms_id: oms.id,
-                                oms_params: { a: "b" }
-        } }
+        let(:offer_payload) do
+          {
+            name: "New offer",
+            description: "sample description",
+            internal: false,
+            primary_oms_id: oms.id,
+            oms_params: {
+              a: "b"
+            }
+          }
+        end
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -884,19 +975,28 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:offer) { build(:offer, primary_oms: previous_oms) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [offer])}
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
-        let(:offer_payload) { { name: "New offer",
-                                description: "sample description",
-                                order_type: "open_access",
-                                internal: true,
-                                primary_oms_id: oms.id,
-                                oms_params: { a: "b" }
-        } }
+        let(:offer_payload) do
+          {
+            name: "New offer",
+            description: "sample description",
+            order_type: "open_access",
+            internal: true,
+            primary_oms_id: oms.id,
+            oms_params: {
+              a: "b"
+            }
+          }
+        end
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -915,23 +1015,23 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
       end
 
-
       response 400, "primary_oms model validation failed", document: false do
         schema "$ref" => "error.json"
         let(:oms) { create(:oms, type: :global, custom_params: { "a": { mandatory: true, default: "qwe" } }) }
         let(:offer) { build(:offer) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [offer])}
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
-        let(:offer_payload) { { name: "New offer",
-                                description: "sample description",
-                                primary_oms_id: oms.id
-        } }
+        let(:offer_payload) { { name: "New offer", description: "sample description", primary_oms_id: oms.id } }
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -939,15 +1039,19 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
       end
 
-      response 400, "doesnt allow to update status", document: false  do
+      response 400, "doesnt allow to update status", document: false do
         schema "$ref" => "error.json"
 
         let(:offer) { build(:offer) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [offer])}
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
@@ -968,7 +1072,6 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:id) { 9999 }
         let(:offer_payload) { {} }
 
-
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data).to eq({ error: "You need to sign in or sign up before continuing." }.deep_stringify_keys)
@@ -981,14 +1084,17 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:draft_offer) { build(:offer, status: "draft") }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [draft_offer])}
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [draft_offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { draft_offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
-        let(:offer_payload) { { name: "New offer",
-                                description: "sample description" } }
+        let(:offer_payload) { { name: "New offer", description: "sample description" } }
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -1018,9 +1124,13 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:offer) { build(:offer_with_all_parameters) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [offer]) }
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { "doesnt-exist" }
         let(:"X-User-Token") { data_admin_user.authentication_token }
@@ -1038,7 +1148,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
     delete "deletes an offer for an administered resource" do
       tags "Offers"
       produces "application/json"
-      security [ authentication_token: [] ]
+      security [authentication_token: []]
       parameter name: :resource_id, in: :path, type: :string, description: "Resource identifier (id or eid)"
       parameter name: :id, in: :path, type: :string, description: "Offer identifier"
 
@@ -1048,9 +1158,13 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:offer3) { build(:offer) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [offer1, offer2, offer3]) }
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [offer1, offer2, offer3]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { offer2.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
@@ -1083,14 +1197,17 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:offer) { build(:offer) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [offer, draft_offer])}
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [offer, draft_offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { draft_offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
-        let(:offer_payload) { { name: "New offer",
-                                description: "sample description" } }
+        let(:offer_payload) { { name: "New offer", description: "sample description" } }
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -1119,9 +1236,13 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:offer) { build(:offer_with_all_parameters) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator]),
-                                offers: [offer]) }
+        let!(:service) do
+          create(
+            :service,
+            resource_organisation: create(:provider, data_administrators: [data_administrator]),
+            offers: [offer]
+          )
+        end
         let(:resource_id) { service.slug }
         let(:id) { "doesnt-exist" }
         let(:"X-User-Token") { data_admin_user.authentication_token }

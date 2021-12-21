@@ -32,9 +32,13 @@ RSpec.describe Tourable, type: :controller do
     it "should prefer query param tour" do
       controller.params = { tour: "some_tour" }
       controller.available_tours = {
-        "explicitly_default_tour" => { "activation_strategy" => "default" },
+        "explicitly_default_tour" => {
+          "activation_strategy" => "default"
+        },
         "implicitly_default_tour" => {},
-        "some_tour" => { "activation_strategy" => "query_param" },
+        "some_tour" => {
+          "activation_strategy" => "query_param"
+        }
       }
 
       controller.send(:determine_tour)

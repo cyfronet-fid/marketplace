@@ -9,18 +9,16 @@ module ProjectItem::ProjectValidation
   end
 
   private
-    def one_per_project
-      return if project.blank?
 
-      offer_duplicated = project
-                           .project_items
-                           .reject { |pi| pi.parent.present? }
-                           .count { |pi| pi.offer.id == offer.id }
+  def one_per_project
+    return if project.blank?
 
-      errors.add(:project, :repeated_in_project) if offer_duplicated.positive?
-    end
+    offer_duplicated = project.project_items.reject { |pi| pi.parent.present? }.count { |pi| pi.offer.id == offer.id }
 
-    def excluded?
-      offer.blank? || offer.internal? || offer.bundle? || parent.present?
-    end
+    errors.add(:project, :repeated_in_project) if offer_duplicated.positive?
+  end
+
+  def excluded?
+    offer.blank? || offer.internal? || offer.bundle? || parent.present?
+  end
 end

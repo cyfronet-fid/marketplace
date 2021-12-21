@@ -19,16 +19,23 @@ class ProjectItem::Create
       end
 
       if @project_item&.offer.bundle?
-        bundled_project_items = @project_item.offer.bundled_offers.map do |offer|
-          bundled_parameters = @bundle_params&.respond_to?(:has_key?) && @bundle_params.has_key?(offer.id) ?
-                                 @bundle_params[offer.id].map(&:to_json) : []
-          ProjectItem.create(status: "created",
-                             status_type: :created,
-                             parent_id: @project_item.id,
-                             project_id: @project.id,
-                             offer_id: offer.id,
-                             properties: bundled_parameters)
-        end
+        bundled_project_items =
+          @project_item.offer.bundled_offers.map do |offer|
+            bundled_parameters =
+              if @bundle_params&.respond_to?(:has_key?) && @bundle_params.has_key?(offer.id)
+                @bundle_params[offer.id].map(&:to_json)
+              else
+                []
+              end
+            ProjectItem.create(
+              status: "created",
+              status_type: :created,
+              parent_id: @project_item.id,
+              project_id: @project.id,
+              offer_id: offer.id,
+              properties: bundled_parameters
+            )
+          end
 
         if bundled_project_items.any? { |pi| pi.nil? || !pi.persisted? }
           rolled_back = true
@@ -59,7 +66,8 @@ class ProjectItem::Create
   end
 
   private
-    def orderable?(project_item)
-      project_item.offer.orderable?
-    end
+
+  def orderable?(project_item)
+    project_item.offer.orderable?
+  end
 end

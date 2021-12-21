@@ -15,15 +15,17 @@ FactoryBot.define do
     end
 
     factory :offer_with_all_parameters do
-      sequence(:parameters) { [
-        build(:constant_parameter),
-        build(:input_parameter),
-        build(:select_parameter),
-        build(:multiselect_parameter),
-        build(:range_parameter),
-        build(:date_parameter),
-        build(:quantity_price_parameter),
-      ] }
+      sequence(:parameters) do
+        [
+          build(:constant_parameter),
+          build(:input_parameter),
+          build(:select_parameter),
+          build(:multiselect_parameter),
+          build(:range_parameter),
+          build(:date_parameter),
+          build(:quantity_price_parameter)
+        ]
+      end
     end
 
     factory :open_access_offer do

@@ -9,6 +9,6 @@ class CreateServiceRelationships < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
-    add_index :service_relationships, [:source_id, :target_id], unique: true
+    add_index :service_relationships, %i[source_id target_id], unique: true
   end
 end

@@ -1,7 +1,7 @@
-import {Controller} from 'stimulus'
+import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ['form']
+  static targets = ["form"];
 
   pageShow() {
     this.checkActiveMulticheckboxFilters();
@@ -18,26 +18,28 @@ export default class extends Controller {
   reload(event) {
     let form = this.formTarget;
     for (const element of form) {
-      if (!element.dataset.indelible && ((element.tagName === "INPUT" && !element.checked) ||
-          (element.tagName === "SELECT" && element.value == ""))) {
+      if (
+        !element.dataset.indelible &&
+        ((element.tagName === "INPUT" && !element.checked) || (element.tagName === "SELECT" && element.value == ""))
+      ) {
         element.disabled = true;
       }
     }
     form.submit();
-    document.getElementsByClassName("spinner-background")[0].style.display = 'flex';
+    document.getElementsByClassName("spinner-background")[0].style.display = "flex";
   }
 
   checkActiveMulticheckboxFilters() {
     let checkboxes = this.formTarget.getElementsByTagName("input");
     const urlSearchParams = new URLSearchParams(window.location.search);
 
-    for(const element of checkboxes) {
+    for (const element of checkboxes) {
       const params = urlSearchParams.getAll(element.name);
-        if(!(params === element.value || params.includes(element.value)) && element.type == "checkbox" ) {
-          element.checked = false;
-        } else if (element.type == "checkbox") {
-          element.checked = true;
-        }
+      if (!(params === element.value || params.includes(element.value)) && element.type == "checkbox") {
+        element.checked = false;
+      } else if (element.type == "checkbox") {
+        element.checked = true;
+      }
     }
   }
 
@@ -46,9 +48,9 @@ export default class extends Controller {
 
     const urlSearchParams = new URLSearchParams(window.location.search);
 
-    for(const element of selectable) {
+    for (const element of selectable) {
       const param = urlSearchParams.get(element.name);
-      if(param === element.value) {
+      if (param === element.value) {
         element.value = param;
       } else {
         element.value = "";
@@ -58,6 +60,6 @@ export default class extends Controller {
 
   expireAtString() {
     // 30 minutes
-    return new Date(new Date().getTime() + 1000*1800).toGMTString();
+    return new Date(new Date().getTime() + 1000 * 1800).toGMTString();
   }
 }

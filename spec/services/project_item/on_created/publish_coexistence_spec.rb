@@ -27,10 +27,8 @@ describe ProjectItem::OnCreated::PublishCoexistence do
 
   it "enqueues if service with upstream.eosc_registry?" do
     project = double(Project, id: 1)
-    pi1 = double(ProjectItem,
-                 service: double(Service,
-                                 pid: "foo",
-                                 upstream: double(ServiceSource, eosc_registry?: true)))
+    pi1 =
+      double(ProjectItem, service: double(Service, pid: "foo", upstream: double(ServiceSource, eosc_registry?: true)))
     expect(project).to receive(:project_items).and_return([pi1])
     allow(Jms::PublishJob).to receive(:perform_later)
 

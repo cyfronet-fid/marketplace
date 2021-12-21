@@ -6,6 +6,6 @@ class CreateServiceRelatedPlatforms < ActiveRecord::Migration[5.2]
       t.belongs_to :service, foreign_key: true, index: true
       t.belongs_to :platform, foreign_key: true, index: true
     end
-    add_index :service_related_platforms, [:service_id, :platform_id], unique: true
+    add_index :service_related_platforms, %i[service_id platform_id], unique: true
   end
 end

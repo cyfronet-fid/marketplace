@@ -19,7 +19,8 @@ class Executive::ApplicationController < ApplicationController
   end
 
   private
-    def admin_authorization!
-      authorize :executive, :show?
-    end
+
+  def admin_authorization!
+    authorize :executive, :show?
+  end
 end

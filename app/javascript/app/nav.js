@@ -1,7 +1,7 @@
-window.openNav = function() {
+window.openNav = function () {
   document.getElementById("mynav").style.height = "100%";
-}
+};
 
-window.closeNav = function() {
+window.closeNav = function () {
   document.getElementById("mynav").style.height = "0%";
-}
+};

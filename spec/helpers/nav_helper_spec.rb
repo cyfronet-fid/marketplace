@@ -18,13 +18,13 @@ describe NavHelper do
     it "performs checks on the current controller" do
       expect(nav_link(controller: :foo)).to match(/<li class="active">/)
       expect(nav_link(controller: :bar)).to_not match(/active/)
-      expect(nav_link(controller: [:foo, :bar])).to match(/active/)
+      expect(nav_link(controller: %i[foo bar])).to match(/active/)
     end
 
     it "performs checks on the current action" do
       expect(nav_link(action: :foo)).to match(/<li class="active">/)
       expect(nav_link(action: :bar)).to_not match(/active/)
-      expect(nav_link(action: [:foo, :bar])).to match(/active/)
+      expect(nav_link(action: %i[foo bar])).to match(/active/)
     end
 
     it "performs checks on both controller and action when both are present" do
@@ -39,15 +39,12 @@ describe NavHelper do
     end
 
     it "passes active class option" do
-      expect(nav_link(controller: :foo, active_class: "current-page")).
-        to match(/<li class="current-page">/)
+      expect(nav_link(controller: :foo, active_class: "current-page")).to match(/<li class="current-page">/)
     end
 
     it "passes extra html options to the list element" do
-      expect(nav_link(action: :foo, html_options: { class: "home" })).
-        to match(/<li class="home active">/)
-      expect(nav_link(html_options: { class: "active" })).
-        to match(/<li class="active">/)
+      expect(nav_link(action: :foo, html_options: { class: "home" })).to match(/<li class="home active">/)
+      expect(nav_link(html_options: { class: "active" })).to match(/<li class="active">/)
     end
   end
 

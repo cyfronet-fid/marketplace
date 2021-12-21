@@ -1,54 +1,21 @@
 # frozen_string_literal: true
 
 class Country
-  SCHENGEN = ["AT", "BE", "CH", "CZ", "DE", "DK",
-              "EE", "GR", "ES", "FI", "FR", "HU",
-              "IS", "IT", "LI", "LT", "LU", "LV",
-              "MT", "NL", "NO", "PL", "PT", "SE", "SI", "SK"].freeze
+  SCHENGEN = %w[AT BE CH CZ DE DK EE GR ES FI FR HU IS IT LI LT LU LV MT NL NO PL PT SE SI SK].freeze
 
-  REGIONS = ["WW", "EO", "EU", "EZ", "AH"].freeze
+  REGIONS = %w[WW EO EU EZ AH].freeze
 
-  ISO3166::Data.register(
-    alpha2: "WW",
-    name: "World",
-    translations: {
-        "en" => "Worldwide"
-    })
+  ISO3166::Data.register(alpha2: "WW", name: "World", translations: { "en" => "Worldwide" })
 
-  ISO3166::Data.register(
-    alpha2: "EO",
-    name: "Europe",
-    translations: {
-        "en" => "Europe"
-    })
+  ISO3166::Data.register(alpha2: "EO", name: "Europe", translations: { "en" => "Europe" })
 
-  ISO3166::Data.register(
-    alpha2: "EU",
-    name: "European Union",
-    translations: {
-        "en" => "European Union"
-    })
+  ISO3166::Data.register(alpha2: "EU", name: "European Union", translations: { "en" => "European Union" })
 
-  ISO3166::Data.register(
-    alpha2: "EZ",
-    name: "Euro Zone",
-    translations: {
-        "en" => "Euro Zone"
-    })
+  ISO3166::Data.register(alpha2: "EZ", name: "Euro Zone", translations: { "en" => "Euro Zone" })
 
-  ISO3166::Data.register(
-    alpha2: "AH",
-    name: "Schengen Area",
-    translations: {
-        "en" => "Schengen Area"
-    })
+  ISO3166::Data.register(alpha2: "AH", name: "Schengen Area", translations: { "en" => "Schengen Area" })
 
-  ISO3166::Data.register(
-    alpha2: "N/E",
-    name: "non-European",
-    translations: {
-        "en" => "non-European"
-    })
+  ISO3166::Data.register(alpha2: "N/E", name: "non-European", translations: { "en" => "non-European" })
 
   ISO3166::Data.unregister("GB")
   ISO3166::Data.unregister("GR")
@@ -60,8 +27,9 @@ class Country
     eu_member: false,
     eea_member: false,
     translations: {
-        "en" => "United Kingdom of Great Britain and Northern Ireland"
-    })
+      "en" => "United Kingdom of Great Britain and Northern Ireland"
+    }
+  )
 
   ISO3166::Data.register(
     alpha2: "EL",
@@ -70,19 +38,16 @@ class Country
     eu_member: true,
     eea_member: true,
     translations: {
-        "en" => "Greece"
-    })
+      "en" => "Greece"
+    }
+  )
 
   class << self
     def for(value)
-      if value.is_a?(ISO3166::Country)
-        return value
-      end
+      return value if value.is_a?(ISO3166::Country)
 
       searched_country = ISO3166::Country.new(value)
-      if searched_country.present? || value.blank?
-        return searched_country
-      end
+      return searched_country if searched_country.present? || value.blank?
 
       Sentry.capture_message("Country with alpha2 code: #{value}, couldn't be found")
       ISO3166::Country.new("N/E")
@@ -99,8 +64,7 @@ class Country
     end
 
     def all
-      @all ||= (ISO3166::Country.find_all_countries_by_region("Europe") +
-                [ISO3166::Country.new("N/E")]).sort
+      @all ||= (ISO3166::Country.find_all_countries_by_region("Europe") + [ISO3166::Country.new("N/E")]).sort
     end
 
     def options
@@ -157,9 +121,7 @@ class Country
 
     def regions_for_country(country)
       regions = []
-      if Country.world.include?(Country.find_by_name(country))
-        regions.push(convert_name_to_code("World"))
-      end
+      regions.push(convert_name_to_code("World")) if Country.world.include?(Country.find_by_name(country))
       if Country.european_union.include?(Country.find_by_name(country))
         regions.push(convert_name_to_code("European Union"))
       end

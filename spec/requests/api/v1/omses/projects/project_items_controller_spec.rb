@@ -3,7 +3,6 @@
 require "swagger_helper"
 require "rails_helper"
 
-
 RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.json" do
   before(:all) do
     Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
@@ -20,11 +19,13 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
     get "lists project items" do
       tags "Project items"
       produces "application/json"
-      security [ authentication_token: [] ]
-      parameter name: :from_id, in: :query, type: :integer, required: false,
+      security [authentication_token: []]
+      parameter name: :from_id,
+                in: :query,
+                type: :integer,
+                required: false,
                 description: "List project items with project_item_id greater than from_id"
-      parameter name: :limit, in: :query, type: :integer, required: false,
-                description: "Number of returned elements"
+      parameter name: :limit, in: :query, type: :integer, required: false, description: "Number of returned elements"
 
       response 200, "project items found" do
         schema "$ref" => "project_item/project_item_index.json"
@@ -32,19 +33,23 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:other_oms) { create(:oms, administrators: [oms_admin]) }
         let(:project) { create(:project) }
-        let!(:project_items) {
+        let!(:project_items) do
           [
             create(:project_item, offer: build(:offer, primary_oms: oms), project: project, iid: 1),
-            create(:project_item,
-                   offer: build(:offer, primary_oms: oms),
-                   project: project,
-                   iid: 2,
-                   user_secrets: { "key": "value" }),
+            create(
+              :project_item,
+              offer: build(:offer, primary_oms: oms),
+              project: project,
+              iid: 2,
+              user_secrets: {
+                "key": "value"
+              }
+            ),
             create(:project_item, offer: build(:offer, primary_oms: other_oms), project: project, iid: 3),
             create(:project_item, offer: build(:offer, primary_oms: oms), project: project, iid: 4),
             create(:project_item, offer: build(:offer, primary_oms: oms), project: project, iid: 5)
           ]
-        }
+        end
 
         let(:from_id) { 1 }
         let(:limit) { 2 }
@@ -54,14 +59,18 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to eq({
-                               project_items: project_items.values_at(1, 3).map { |pi|
-                                 serialized = Api::V1::ProjectItemSerializer.new(pi).as_json
-                                 serialized[:user_secrets] =
-                                   serialized[:user_secrets].transform_values { |_| "<OBFUSCATED>" }
-                                 serialized
-                               }
-                             }.deep_stringify_keys)
+          expect(data).to eq(
+            {
+              project_items:
+                project_items
+                  .values_at(1, 3)
+                  .map { |pi|
+                    serialized = Api::V1::ProjectItemSerializer.new(pi).as_json
+                    serialized[:user_secrets] = serialized[:user_secrets].transform_values { |_| "<OBFUSCATED>" }
+                    serialized
+                  }
+            }.deep_stringify_keys
+          )
         end
       end
 
@@ -148,17 +157,23 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
     get "retrieves a project item" do
       tags "Project items"
       produces "application/json"
-      security [ authentication_token: [] ]
+      security [authentication_token: []]
 
       response 200, "project item found" do
         schema "$ref" => "project_item/project_item_read.json"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project) { create(:project) }
-        let(:project_item) { create(:project_item,
-                                    project: project,
-                                    user_secrets: { "key": "value" },
-                                    offer: create(:offer, primary_oms: oms)) }
+        let(:project_item) do
+          create(
+            :project_item,
+            project: project,
+            user_secrets: {
+              "key": "value"
+            },
+            offer: create(:offer, primary_oms: oms)
+          )
+        end
 
         let(:oms_id) { oms.id }
         let(:p_id) { project.id }
@@ -282,7 +297,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       tags "Project items"
       produces "application/json"
       consumes "application/json"
-      security [ authentication_token: [] ]
+      security [authentication_token: []]
       parameter name: :project_item_payload, in: :body, schema: { "$ref" => "project_item/project_item_update.json" }
 
       response 200, "project item updated" do
@@ -291,29 +306,26 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project) { create(:project) }
-        let(:project_item) { create(
-          :project_item,
-          status_type: :created,
-          project: project,
-          status: "old value",
-          user_secrets: { "other": "something" },
-          offer: build(:offer, primary_oms: oms)) }
+        let(:project_item) do
+          create(
+            :project_item,
+            status_type: :created,
+            project: project,
+            status: "old value",
+            user_secrets: {
+              "other": "something"
+            },
+            offer: build(:offer, primary_oms: oms)
+          )
+        end
 
         let(:oms_id) { oms.id }
         let(:p_id) { project.id }
         let(:pi_id) { project_item.iid }
         let(:"X-User-Token") { oms_admin.authentication_token }
-        let(:project_item_payload) {
-          {
-            "status": {
-              "value": "new value",
-              "type": "ready"
-            },
-            "user_secrets": {
-              "key": "value"
-            }
-          }
-        }
+        let(:project_item_payload) do
+          { "status": { "value": "new value", "type": "ready" }, "user_secrets": { "key": "value" } }
+        end
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data["status"]).to eq({ value: "new value", type: "ready" }.deep_stringify_keys)
@@ -331,27 +343,24 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
 
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
-        let(:project_item) { create(:project_item,
-                                    status_type: "created",
-                                    status: "old value",
-                                    offer: create(:offer, primary_oms: oms)) }
+        let(:project_item) do
+          create(:project_item, status_type: "created", status: "old value", offer: create(:offer, primary_oms: oms))
+        end
         let(:project) { create(:project, project_items: [project_item]) }
 
         let(:oms_id) { oms.id }
         let(:p_id) { project.id }
         let(:pi_id) { project_item.iid }
         let(:"X-User-Token") { oms_admin.authentication_token }
-        let(:project_item_payload) {
-          {
-            "status": {
-              "value": "new value",
-              "type": "LOL"
-            }
-          }
-        }
+        let(:project_item_payload) { { "status": { "value": "new value", "type": "LOL" } } }
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to eq({ error: %{The property '#/status/type' value "LOL" did not match one of the following values: rejected, waiting_for_response, registered, in_progress, ready, closed, approved} }.deep_stringify_keys)
+          expect(data).to eq(
+            {
+              error:
+                "The property '#/status/type' value \"LOL\" did not match one of the following values: rejected, waiting_for_response, registered, in_progress, ready, closed, approved"
+            }.deep_stringify_keys
+          )
 
           project_item.reload
           expect(project_item.status).to eq("old value")
@@ -371,22 +380,10 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
         let(:p_id) { project.id }
         let(:pi_id) { project_item.iid }
         let(:"X-User-Token") { oms_admin.authentication_token }
-        let(:project_item_payload) {
-          {
-            "user_secrets": {
-              "key": 123
-            }
-          }
-        }
+        let(:project_item_payload) { { "user_secrets": { "key": 123 } } }
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to eq({
-                               error: {
-                                 user_secrets: [
-                                   "values must be strings"
-                                 ]
-                               }
-                             }.deep_stringify_keys)
+          expect(data).to eq({ error: { user_secrets: ["values must be strings"] } }.deep_stringify_keys)
 
           project_item.reload
           expect(project_item.user_secrets).to eq({})
@@ -416,8 +413,15 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
         let(:default_oms_admin) { create(:user) }
         let(:default_oms) { create(:oms, default: true, administrators: [default_oms_admin]) }
         let(:other_oms) { create(:oms) }
-        let(:project_item) { create(:project_item, status: "ready", status_type: "ready",
-                                    offer: create(:offer, primary_oms: other_oms), iid: 1) }
+        let(:project_item) do
+          create(
+            :project_item,
+            status: "ready",
+            status_type: "ready",
+            offer: create(:offer, primary_oms: other_oms),
+            iid: 1
+          )
+        end
         let(:project) { create(:project, project_items: [project_item]) }
 
         let(:oms_id) { default_oms.id }

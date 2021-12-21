@@ -8,7 +8,9 @@ class CreateProviderScientificDomains < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
-    add_index :provider_scientific_domains, [:provider_id, :scientific_domain_id],
-              unique: true, name: "index_psd_on_provider_id_and_sd_id"
+    add_index :provider_scientific_domains,
+              %i[provider_id scientific_domain_id],
+              unique: true,
+              name: "index_psd_on_provider_id_and_sd_id"
   end
 end

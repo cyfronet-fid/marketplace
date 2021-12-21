@@ -25,34 +25,37 @@ class Jms::Publish
   end
 
   private
-    def logger_path
-      ENV["MP_STOMP_PUBLISHER_LOGGER_PATH"] || "#{Rails.root}/log/jms.publisher.log"
-    end
 
-    def publisher_disabled?
-      ENV["MP_STOMP_PUBLISHER_ENABLED"] != "true"
-    end
+  def logger_path
+    ENV["MP_STOMP_PUBLISHER_LOGGER_PATH"] || "#{Rails.root}/log/jms.publisher.log"
+  end
 
-    def publisher
-      stomp_config = Mp::Application.config_for(:stomp_publisher)
+  def publisher_disabled?
+    ENV["MP_STOMP_PUBLISHER_ENABLED"] != "true"
+  end
 
-      Jms::Publisher.new(stomp_config["topic"],
-                         stomp_config["login"],
-                         stomp_config["password"],
-                         stomp_config["host"],
-                         stomp_config["ssl-enabled"],
-                         @logger)
-    end
+  def publisher
+    stomp_config = Mp::Application.config_for(:stomp_publisher)
 
-    def finalize!
-      close_publisher!
-      @logger.close
-    end
+    Jms::Publisher.new(
+      stomp_config["topic"],
+      stomp_config["login"],
+      stomp_config["password"],
+      stomp_config["host"],
+      stomp_config["ssl-enabled"],
+      @logger
+    )
+  end
 
-    def close_publisher!
-      @publisher_instance&.close
-    rescue Error => e
-      @logger.warn("Cannot close publisher #{e}")
-      Sentry.capture_exception(e)
-    end
+  def finalize!
+    close_publisher!
+    @logger.close
+  end
+
+  def close_publisher!
+    @publisher_instance&.close
+  rescue Error => e
+    @logger.warn("Cannot close publisher #{e}")
+    Sentry.capture_exception(e)
+  end
 end

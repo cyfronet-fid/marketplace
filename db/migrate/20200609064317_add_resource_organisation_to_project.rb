@@ -3,8 +3,7 @@
 class AddResourceOrganisationToProject < ActiveRecord::Migration[6.0]
   def up
     add_reference :services, :resource_organisation, foreign_key: { to_table: :providers }
-    execute(
-      <<~SQL
+    execute(<<~SQL)
         UPDATE services
         SET resource_organisation_id =
         (
@@ -13,7 +12,6 @@ class AddResourceOrganisationToProject < ActiveRecord::Migration[6.0]
           WHERE p.name  LIKE 'not specified yet'
         )
       SQL
-    )
   end
 
   def down

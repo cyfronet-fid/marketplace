@@ -30,12 +30,12 @@ FactoryBot.define do
               "region" => "WW",
               "country" => "N/E"
             },
-            "publicContacts" => { "publicContact" => [{ "email" => "test@mail.pl" }] },
-            "users" => { "user" => [{
-                                      "email" => "test@mail.pl",
-                                      "name" => "test",
-                                      "surname" => "test"
-                                    }] }
+            "publicContacts" => {
+              "publicContact" => [{ "email" => "test@mail.pl" }]
+            },
+            "users" => {
+              "user" => [{ "email" => "test@mail.pl", "name" => "test", "surname" => "test" }]
+            }
           },
           {
             "id" => "phenomenal",
@@ -57,12 +57,12 @@ FactoryBot.define do
               "region" => "WW",
               "country" => "N/E"
             },
-            "publicContacts" => { "publicContact" => [{ "email" => "test@mail.pl" }] },
-            "users" => { "user" => [{
-                                      "email" => "test@mail.pl",
-                                      "name" => "test",
-                                      "surname" => "test"
-                                    }] }
+            "publicContacts" => {
+              "publicContact" => [{ "email" => "test@mail.pl" }]
+            },
+            "users" => {
+              "user" => [{ "email" => "test@mail.pl", "name" => "test", "surname" => "test" }]
+            }
           },
           {
             "id" => "West-Life",
@@ -71,7 +71,8 @@ FactoryBot.define do
             "catalogueOfResources" => "https://bio.tools/",
             "publicDescOfResources" => "https://about.west-life.eu/network/west-life/services",
             "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
-            "additionalInfo" => "https://about.west-life.eu/network/west-life/about/project. For more information contact chris.morris@stfc.ac.uk",
+            "additionalInfo" =>
+              "https://about.west-life.eu/network/west-life/about/project. For more information contact chris.morris@stfc.ac.uk",
             "contactInformation" => "+44 1925 603689",
             "active" => true,
             "status" => "approved",
@@ -84,12 +85,12 @@ FactoryBot.define do
               "region" => "WW",
               "country" => "N/E"
             },
-            "publicContacts" => { "publicContact" => [{ "email" => "test@mail.pl" }] },
-            "users" => { "user" => [{
-                                      "email" => "test@mail.pl",
-                                      "name" => "test",
-                                      "surname" => "test"
-                                    }] }
+            "publicContacts" => {
+              "publicContact" => [{ "email" => "test@mail.pl" }]
+            },
+            "users" => {
+              "user" => [{ "email" => "test@mail.pl", "name" => "test", "surname" => "test" }]
+            }
           },
           {
             "id" => "awesome",
@@ -111,25 +112,19 @@ FactoryBot.define do
               "region" => "WW",
               "country" => "N/E"
             },
-            "publicContacts" => { "publicContact" => [{ "email" => "test@mail.pl" }] },
-            "users" => { "user" => [{
-                                      "email" => "test@mail.pl",
-                                      "name" => "test",
-                                      "surname" => "test"
-                                    }] }
-          },
+            "publicContacts" => {
+              "publicContact" => [{ "email" => "test@mail.pl" }]
+            },
+            "users" => {
+              "user" => [{ "email" => "test@mail.pl", "name" => "test", "surname" => "test" }]
+            }
+          }
         ],
         "facets" => [
           {
             "field" => "resourceType",
             "label" => "Resource Type",
-            "values" => [
-              {
-                "value" => "provider",
-                "label" => nil,
-                "count" => 21
-              }
-            ]
+            "values" => [{ "value" => "provider", "label" => nil, "count" => 21 }]
           }
         ]
       }
@@ -162,12 +157,18 @@ FactoryBot.define do
           "region" => "WW",
           "country" => "N/E"
         },
-        "publicContacts" => { "publicContact" => { "email" => "test@mail.pl" } },
-        "users" => { "user" => {
-                                  "email" => "test@mail.pl",
-                                  "name" => "test",
-                                  "surname" => "test"
-                                } }
+        "publicContacts" => {
+          "publicContact" => {
+            "email" => "test@mail.pl"
+          }
+        },
+        "users" => {
+          "user" => {
+            "email" => "test@mail.pl",
+            "name" => "test",
+            "surname" => "test"
+          }
+        }
       }
     end
   end

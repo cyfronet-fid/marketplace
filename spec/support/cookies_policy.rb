@@ -7,7 +7,6 @@ RSpec.configure do |config|
     # it leads to strange errors in JS tests saying that element cannot
     # be clicked because cookie policy popup is above the element.
     visit root_path
-    page.driver.browser.manage.add_cookie(
-      name: :cookieconsent_status, value: "dismiss")
+    page.driver.browser.manage.add_cookie(name: :cookieconsent_status, value: "dismiss")
   end
 end

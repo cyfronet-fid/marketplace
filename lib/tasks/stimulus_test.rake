@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-task default: ["test:system", "test", "test:js"]
+task default: %w[test:system test test:js]
 
 namespace :test do
   task :js do

@@ -9,6 +9,6 @@ class CreateProviderVocabulary < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
-    add_index :provider_vocabularies, [:provider_id, :vocabulary_id], unique: true
+    add_index :provider_vocabularies, %i[provider_id vocabulary_id], unique: true
   end
 end

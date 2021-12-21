@@ -21,14 +21,14 @@ FactoryBot.define do
   factory :select_parameter, class: "Parameter::Select", parent: :parameter do
     sequence(:name) { |n| "select parameter #{n}" }
     value_type { "string" }
-    values { ["a", "b", "c"] }
+    values { %w[a b c] }
     mode { "buttons" }
   end
 
   factory :multiselect_parameter, class: "Parameter::Multiselect", parent: :parameter do
     sequence(:name) { |n| "multiselect parameter #{n}" }
     value_type { "string" }
-    values { ["a", "b", "c", "d"] }
+    values { %w[a b c d] }
     minItems { 1 }
     maxItems { 3 }
   end

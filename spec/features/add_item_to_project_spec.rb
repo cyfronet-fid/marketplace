@@ -21,7 +21,6 @@ RSpec.feature "Add project item to project" do
     visit service_information_path(service)
     click_on "Next", match: :first
 
-    expect(page).to have_select("customizable_project_item_project_id",
-                                selected: "my fancy project")
+    expect(page).to have_select("customizable_project_item_project_id", selected: "my fancy project")
   end
 end

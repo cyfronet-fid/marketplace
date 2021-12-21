@@ -6,34 +6,32 @@ module AttributesHelper
   def parse_offer_parameter_value(parameter)
     return unless parameter
 
-    value = if parameter["value"]
-      parameter["value"] # .to_s if needed
-    elsif parameter["type"] == "input"
-      "#{parameter["value_type"]}"
-    elsif parameter["type"] == "date"
-      "#{parameter["type"]}"
-    elsif parameter["config"]
-      config = parameter["config"]
-      if config["minimum"] || config["maximum"]
-        from_to(config["minimum"], config["maximum"])
-      elsif config["values"]
-        from_to(config["values"][0], config["values"][-1])
+    value =
+      if parameter["value"]
+        parameter["value"] # .to_s if needed
+      elsif parameter["type"] == "input"
+        "#{parameter["value_type"]}"
+      elsif parameter["type"] == "date"
+        "#{parameter["type"]}"
+      elsif parameter["config"]
+        config = parameter["config"]
+        if config["minimum"] || config["maximum"]
+          from_to(config["minimum"], config["maximum"])
+        elsif config["values"]
+          from_to(config["values"][0], config["values"][-1])
+        end
       end
-    end
 
     "#{value} #{parameter["unit"]}"
   end
 
   def hideable_options(index)
-    if index > 3
-      { class: "d-none", "data-target": "parameter.hideableParameter" }
-    else
-      {}
-    end
+    index > 3 ? { class: "d-none", "data-target": "parameter.hideableParameter" } : {}
   end
 
   private
-    def from_to(from, to)
-      "#{from || "?"} - #{to || "?"}"
-    end
+
+  def from_to(from, to)
+    "#{from || "?"} - #{to || "?"}"
+  end
 end

@@ -5,9 +5,9 @@ require "json-schema"
 class Api::V1::Resources::OffersController < Api::V1::ApplicationController
   before_action :find_service
   before_action :load_offers, only: :index
-  before_action :find_and_authorize, only: [:show, :update, :destroy]
-  before_action :validate_payload, only: [:create, :update]
-  after_action :reindex_offer, only: [:create, :update, :destroy]
+  before_action :find_and_authorize, only: %i[show update destroy]
+  before_action :validate_payload, only: %i[create update]
+  after_action :reindex_offer, only: %i[create update destroy]
 
   def index
     render json: { offers: @offers.map { |o| Api::V1::OfferSerializer.new(o).as_json } }
@@ -45,45 +45,42 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
   end
 
   private
-    def find_service
-      @service = Service.friendly.find(params[:resource_id])
-    rescue ActiveRecord::RecordNotFound
-      render json: { error: "Resource not found" }, status: 404
-    end
 
-    def load_offers
-      @offers = policy_scope(@service.offers).order(:iid)
-    end
+  def find_service
+    @service = Service.friendly.find(params[:resource_id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Resource not found" }, status: 404
+  end
 
-    def find_and_authorize
-      @offer = @service.offers.find_by!(iid: params[:id])
-      authorize @offer
-    rescue ActiveRecord::RecordNotFound
-      render json: { error: "Offer not found." }, status: 404
-    end
+  def load_offers
+    @offers = policy_scope(@service.offers).order(:iid)
+  end
 
-    def validate_payload
-      schema_file = (action_name == "create") ? "offer_write.json" : "offer_update.json"
-      JSON::Validator.validate!(Rails.root.join("swagger", "v1", "offer", schema_file).to_s, params[:offer].as_json)
-    rescue JSON::Schema::ValidationError => e
-      render json: { error: e.message }, status: 400
-    end
+  def find_and_authorize
+    @offer = @service.offers.find_by!(iid: params[:id])
+    authorize @offer
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Offer not found." }, status: 404
+  end
 
-    def transform(attributes)
-      if attributes[:parameters].present?
-        attributes[:parameters] = Parameter::Array.load(attributes[:parameters])
-      end
-      attributes
-    end
+  def validate_payload
+    schema_file = (action_name == "create") ? "offer_write.json" : "offer_update.json"
+    JSON::Validator.validate!(Rails.root.join("swagger", "v1", "offer", schema_file).to_s, params[:offer].as_json)
+  rescue JSON::Schema::ValidationError => e
+    render json: { error: e.message }, status: 400
+  end
 
-    def offer_template
-      temp = transform(permitted_attributes(Offer))
-      Offer.new(temp.merge(service: @service, status: :published))
-    end
+  def transform(attributes)
+    attributes[:parameters] = Parameter::Array.load(attributes[:parameters]) if attributes[:parameters].present?
+    attributes
+  end
 
-    def reindex_offer
-      if @service.offers.size > 1
-        @service.offers.reindex
-      end
-    end
+  def offer_template
+    temp = transform(permitted_attributes(Offer))
+    Offer.new(temp.merge(service: @service, status: :published))
+  end
+
+  def reindex_offer
+    @service.offers.reindex if @service.offers.size > 1
+  end
 end

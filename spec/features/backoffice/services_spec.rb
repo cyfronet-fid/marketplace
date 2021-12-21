@@ -42,7 +42,6 @@ RSpec.feature "Services in backoffice" do
       access_type = create(:access_type)
       access_mode = create(:access_mode)
 
-
       visit backoffice_services_path
       click_on "Create new Resource"
 
@@ -94,9 +93,9 @@ RSpec.feature "Services in backoffice" do
 
       fill_in "service_sources_attributes_0_eid", with: "12345a"
 
-      expect { click_on "Create Resource" }.
-        to change { user.owned_services.count }.by(1)
-               .and change { Offer.count }.by(1)
+      expect { click_on "Create Resource" }.to change { user.owned_services.count }.by(1).and change { Offer.count }.by(
+                                                       1
+                                                     )
 
       expect(page).to have_content("service name")
       expect(page).to have_content("service description")
@@ -149,7 +148,6 @@ RSpec.feature "Services in backoffice" do
 
       click_on "Details"
 
-
       expect(page).to have_content("jane@doe.com")
       expect(page).to have_content("johny@does.com")
       expect(page).to have_content("john@doe.com")
@@ -177,9 +175,10 @@ RSpec.feature "Services in backoffice" do
 
       visit backoffice_service_path(service)
 
-      expect(page)
-          .to have_content("This resource has no offers. " \
-                           "Add one offer to make possible for a user to Access the service.")
+      expect(page).to have_content(
+        "This resource has no offers. " \
+          "Add one offer to make possible for a user to Access the service."
+      )
     end
 
     scenario "I can preview service before create" do
@@ -208,8 +207,14 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "I cannot do any action on service preview", js: true do
-      service = create(:service, related_services: [create(:service)], tag_list: ["tag"],
-                       public_contacts: [build(:public_contact)], offers: [create(:offer)])
+      service =
+        create(
+          :service,
+          related_services: [create(:service)],
+          tag_list: ["tag"],
+          public_contacts: [build(:public_contact)],
+          offers: [create(:offer)]
+        )
 
       visit edit_backoffice_service_path(service)
 
@@ -241,8 +246,7 @@ RSpec.feature "Services in backoffice" do
       select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
 
-      expect { click_on "Create Resource" }.
-        to change { user.owned_services.count }.by(0)
+      expect { click_on "Create Resource" }.to change { user.owned_services.count }.by(0)
 
       expect(page).to have_content("Logo format you're trying to attach is not supported.")
     end
@@ -421,17 +425,17 @@ RSpec.feature "Services in backoffice" do
 
       visit backoffice_service_path(service)
 
-      expect(page).to have_content("This resource has no offers. " \
-                                   "Add one offer to make possible for a user to Access the service.")
+      expect(page).to have_content(
+        "This resource has no offers. " \
+          "Add one offer to make possible for a user to Access the service."
+      )
       offer = create(:offer, service: service)
       service.reload
       expect(service.offers).to eq([offer])
     end
 
     scenario "Offer are converted from markdown to html on service view" do
-      offer = create(:offer,
-                     name: "offer1",
-                     description: "# Test offer\r\n\rDescription offer")
+      offer = create(:offer, name: "offer1", description: "# Test offer\r\n\rDescription offer")
       create(:offer, service: offer.service)
 
       visit backoffice_service_path(offer.service)
@@ -454,12 +458,14 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I can edit offer", js: true do
       service = create(:service, name: "my service", status: :draft)
-      parameter = build(:input_parameter,
-                         name: "Number of CPU Cores",
-                         hint: "Select number of cores you want",
-                         value_type: "integer")
-      offer = create(:offer, name: "offer1", description: "desc", service: service,
-                     parameters: [parameter])
+      parameter =
+        build(
+          :input_parameter,
+          name: "Number of CPU Cores",
+          hint: "Select number of cores you want",
+          value_type: "integer"
+        )
+      offer = create(:offer, name: "offer1", description: "desc", service: service, parameters: [parameter])
       create(:offer, service: service)
 
       service.reload
@@ -476,12 +482,14 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I can delete existed parameters", js: true do
       service = create(:service, name: "my service", status: :draft)
-      parameter = build(:input_parameter,
-                         name: "Number of CPU Cores",
-                         hint: "Select number of cores you want",
-                         value_type: "integer")
-      offer = create(:offer, name: "offer1", description: "desc", service: service,
-                     parameters: [parameter, parameter])
+      parameter =
+        build(
+          :input_parameter,
+          name: "Number of CPU Cores",
+          hint: "Select number of cores you want",
+          value_type: "integer"
+        )
+      offer = create(:offer, name: "offer1", description: "desc", service: service, parameters: [parameter, parameter])
       create(:offer, service: service)
 
       visit backoffice_service_path(service)
@@ -511,7 +519,6 @@ RSpec.feature "Services in backoffice" do
       expect(service.offers.first.reload.parameters).to eq([])
     end
 
-
     scenario "I can delete offer if they are more than 2" do
       service = create(:service, name: "my service")
       _offer = create(:offer, name: "offer1", description: "desc", service: service)
@@ -531,8 +538,10 @@ RSpec.feature "Services in backoffice" do
 
       visit backoffice_service_path(service)
 
-      expect(page).to have_content("This resource has no offers. " \
-                                   "Add one offer to make possible for a user to Access the service.")
+      expect(page).to have_content(
+        "This resource has no offers. " \
+          "Add one offer to make possible for a user to Access the service."
+      )
     end
 
     scenario "I can change service status from publish to draft" do

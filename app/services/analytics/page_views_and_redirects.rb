@@ -15,24 +15,26 @@ class Analytics::PageViewsAndRedirects
     metrics << Google::Apis::AnalyticsreportingV4::Metric.new(expression: "ga:pageviews")
     metrics << Google::Apis::AnalyticsreportingV4::Metric.new(expression: "ga:exits")
 
-    request = Google::Apis::AnalyticsreportingV4::GetReportsRequest.new(
-      report_requests: [
-        Google::Apis::AnalyticsreportingV4::ReportRequest.new(
-          view_id: @analytics.view_id.to_s,
-          dimensions: [dimension],
-          metrics: metrics,
-          date_ranges: [date_range],
-          filters_expression: "ga:pagePath=~^#{page_path}($|[^/])"
-        )
-      ]
-    )
+    request =
+      Google::Apis::AnalyticsreportingV4::GetReportsRequest.new(
+        report_requests: [
+          Google::Apis::AnalyticsreportingV4::ReportRequest.new(
+            view_id: @analytics.view_id.to_s,
+            dimensions: [dimension],
+            metrics: metrics,
+            date_ranges: [date_range],
+            filters_expression: "ga:pagePath=~^#{page_path}($|[^/])"
+          )
+        ]
+      )
 
     response = @analytics.service.batch_get_reports(request)
-    { views: response.reports.first.data.totals.first.values.first,
-      redirects: response.reports.first.data.totals.first.values.second }
+    {
+      views: response.reports.first.data.totals.first.values.first,
+      redirects: response.reports.first.data.totals.first.values.second
+    }
   rescue StandardError => e
     puts e
-    { views: "GA not initialized",
-      redirects: "GA not initialized" }
+    { views: "GA not initialized", redirects: "GA not initialized" }
   end
 end

@@ -7,8 +7,6 @@ class ProviderMailer < ApplicationMailer
     @author = author
     @email = email
 
-    mail(to: recipient_email,
-         subject: "Question about #{@provider.name}",
-         template_name: "new_question")
+    mail(to: recipient_email, subject: "Question about #{@provider.name}", template_name: "new_question")
   end
 end

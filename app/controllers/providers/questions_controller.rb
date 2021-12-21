@@ -5,18 +5,19 @@ class Providers::QuestionsController < ApplicationController
     @question = Provider::Question.new
     @provider = Provider.friendly.find(params[:provider_id])
 
-    respond_to do |format|
-      format.js { render_modal_form }
-    end
+    respond_to { |format| format.js { render_modal_form } }
   end
 
   def create
     @provider = Provider.friendly.find(params[:provider_id])
     user = current_user
-    @question = Provider::Question.new(author: user&.full_name || params[:provider_question][:author],
-                                     email: user&.email || params[:provider_question][:email],
-                                     text: params[:provider_question][:text],
-                                     provider: @provider)
+    @question =
+      Provider::Question.new(
+        author: user&.full_name || params[:provider_question][:author],
+        email: user&.email || params[:provider_question][:email],
+        text: params[:provider_question][:text],
+        provider: @provider
+      )
     respond_to do |format|
       if @question.valid? && verify_recaptcha(model: @question, attribute: :verified_recaptcha)
         Provider::Question::Deliver.new(@question).call
@@ -29,14 +30,18 @@ class Providers::QuestionsController < ApplicationController
   end
 
   private
-    def render_modal_form
-      render "layouts/show_modal",
-             content_type: "text/javascript",
-             locals: {
-                title: "Ask provider",
-                action_btn: t("simple_form.labels.question.new"),
-                form: "providers/questions/form",
-                form_locals: { provider: @provider, question: @question }
+
+  def render_modal_form
+    render "layouts/show_modal",
+           content_type: "text/javascript",
+           locals: {
+             title: "Ask provider",
+             action_btn: t("simple_form.labels.question.new"),
+             form: "providers/questions/form",
+             form_locals: {
+               provider: @provider,
+               question: @question
              }
-    end
+           }
+  end
 end

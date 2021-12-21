@@ -34,8 +34,7 @@ RSpec.feature "Platforms in backoffice" do
 
       fill_in "Name", with: "My new platform"
 
-      expect { click_on "Create Platform" }.
-        to change { Platform.count }.by(1)
+      expect { click_on "Create Platform" }.to change { Platform.count }.by(1)
 
       expect(page).to have_content("My new platform")
     end

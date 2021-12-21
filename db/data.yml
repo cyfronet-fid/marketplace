@@ -1,5 +1,4 @@
 platforms:
-
   EGI:
     name: &egiPlatform "EGI"
   EUDAT:
@@ -55,10 +54,7 @@ platforms:
   NIRD:
     name: &nird "National Infrastructure for Research Data (NIRD)"
 
-
-
 categories:
-
   Sharing & Discovery:
     name: &sharingAndDicoveryParent "Sharing & Discovery"
     description: Services to search and discover data, publications, tools and other resources useful for your research
@@ -95,7 +91,6 @@ categories:
 #    Science gateway:
 #        name: &scienceGateway Science gateway
 #        parent: *processingAndAnalysisParent
-
 
 providers:
   EGI Federation:
@@ -1104,10 +1099,7 @@ domain:
     name: &otherOther "Other"
     parent: *other
 
-
-
 target_users:
-
   Researchers:
     name: &researchers "Researchers"
     description: "Someone who conducts scientific research, i.e., an organized and systematic investigation by using scientific methods."
@@ -1178,11 +1170,10 @@ target_users:
     eid: "target_user-other"
 
 services:
-
   Cloud compute:
     name: &egiCloud EGI Cloud compute
     parents: *computeParent
-    providers: [ *egi ]
+    providers: [*egi]
     logo: cloud-compute.png
     open_access: false
     webpage_url: https://www.egi.eu/services/cloud-compute/
@@ -1195,14 +1186,14 @@ services:
     language_availability: &english EN
     geographical_availabilities: &poland PL
     domain: *otherOther
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     restrictions: &notSpecified not yet specified
-    funding_bodies: [ "funding_body-innoviris","funding_body-ec" ]
-    funding_programs: [ "funding_program-icfs", "funding_program-insc2020", "funding_program-isf" ]
-    trl: &trl_9 [ "trl-9" ]
-    life_cycle_status: &prod [ "life_cycle_status-production" ]
+    funding_bodies: ["funding_body-innoviris", "funding_body-ec"]
+    funding_programs: ["funding_program-icfs", "funding_program-insc2020", "funding_program-isf"]
+    trl: &trl_9 ["trl-9"]
+    life_cycle_status: &prod ["life_cycle_status-production"]
     tagline: Run virtual machines on-demand with complete control over computing resources
-    platforms: [ *egiPlatform ]
+    platforms: [*egiPlatform]
     description: |
       With Cloud Compute you can deploy and scale virtual machines
       on­demand. Cloud Compute offers guaranteed computational resources in
@@ -1251,7 +1242,7 @@ services:
             value_type: "integer"
             config:
               mode: "buttons"
-              values: [ 1, 2, 4, 8 ]
+              values: [1, 2, 4, 8]
           - id: "id2"
             label: "Amount of RAM per CPU core"
             description: "Select amount of RAM per core"
@@ -1260,7 +1251,7 @@ services:
             unit: "GB"
             config:
               mode: "buttons"
-              values: [ 1, 2, 4 ]
+              values: [1, 2, 4]
           - id: "id3"
             label: "Local disk"
             description: "Amount of local disk space"
@@ -1269,7 +1260,7 @@ services:
             unit: "GB"
             config:
               mode: "buttons"
-              values: [ 10, 20, 40 ]
+              values: [10, 20, 40]
           - id: "id4"
             label: "Number of VM instances"
             description: "Type number of VM instances from 1-50"
@@ -1285,7 +1276,7 @@ services:
             value_type: "string"
             config:
               mode: "buttons"
-              values: [ "opportunistic", "reserved" ]
+              values: ["opportunistic", "reserved"]
           - id: "id6"
             label: "Start of service"
             description: "Please choose start date"
@@ -1314,7 +1305,7 @@ services:
             value_type: "integer"
             config:
               mode: "buttons"
-              values: [ 8, 12, 16, 20, 24, 28, 32, 64 ]
+              values: [8, 12, 16, 20, 24, 28, 32, 64]
           - id: "id2"
             label: "Amount of RAM per CPU core"
             description: "Select amount of RAM per core"
@@ -1323,7 +1314,7 @@ services:
             unit: "GB"
             config:
               mode: "buttons"
-              values: [ 2, 4, 8 ]
+              values: [2, 4, 8]
           - id: "id3"
             label: "Local disk"
             description: "Amount of local disk space"
@@ -1332,7 +1323,7 @@ services:
             unit: "GB"
             config:
               mode: "buttons"
-              values: [ 10, 20, 40 ]
+              values: [10, 20, 40]
           - id: "id4"
             label: "Number of VM instances"
             description: "Type number of VM instances from 1-50"
@@ -1375,7 +1366,7 @@ services:
             value_type: "integer"
             config:
               mode: "buttons"
-              values: [ 2, 4, 8, 12, 16 ]
+              values: [2, 4, 8, 12, 16]
           - id: "id2"
             label: "Amount of RAM per CPU core"
             description: "Select amount of RAM per core"
@@ -1384,7 +1375,7 @@ services:
             unit: "GB"
             config:
               mode: "buttons"
-              values: [ 16, 32, 48, 64, 80, 96, 112, 120 ]
+              values: [16, 32, 48, 64, 80, 96, 112, 120]
           - id: "id3"
             label: "Local disk"
             description: "Amount of local disk space"
@@ -1393,7 +1384,7 @@ services:
             unit: "GB"
             config:
               mode: "buttons"
-              values: [ 10, 20, 40 ]
+              values: [10, 20, 40]
           - id: "id4"
             label: "Number of VM instances"
             description: "Type number of VM instances from 1-50"
@@ -1434,7 +1425,7 @@ services:
             value_type: "integer"
             config:
               mode: "buttons"
-              values: [ 1, 2 ]
+              values: [1, 2]
           - id: "id2"
             label: "Number of CPU Cores"
             description: "For GPU instance number of CPU cores is constant"
@@ -1449,7 +1440,7 @@ services:
             unit: "GB"
             config:
               mode: "buttons"
-              values: [ 24, 50 ]
+              values: [24, 50]
           - id: "id4"
             label: "Local disk"
             description: "Amount of local disk space is constant"
@@ -1487,7 +1478,7 @@ services:
   High-Throughput compute:
     name: &egiHTC EGI High-Throughput compute
     parents: *computeParent
-    providers: [ *egi ]
+    providers: [*egi]
     logo: high-throughput-compute.png
     open_access: false
     webpage_url: https://www.egi.eu/services/high-throughput-compute/
@@ -1500,12 +1491,12 @@ services:
     language_availability: *english
     geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Execute thousands of computational tasks to analyse large datasets
-    platforms: [ *egiPlatform ]
+    platforms: [*egiPlatform]
     description: |
       With High-Throughput Compute you can run computational jobs at scale on the EGI infrastructure. It allows you to analyse large datasets and execute thousands of parallel computing tasks.
 
@@ -1559,7 +1550,7 @@ services:
             value_type: "integer"
             config:
               mode: "buttons"
-              values: [ 4, 8 ]
+              values: [4, 8]
           - id: "id4"
             label: "Access type"
             description: "Choose access type"
@@ -1567,7 +1558,7 @@ services:
             value_type: "string"
             config:
               mode: "buttons"
-              values: [ "opportunistic", "reserved" ]
+              values: ["opportunistic", "reserved"]
           - id: "id5"
             label: "Other technical requirements"
             description: "Type other requirements"
@@ -1616,7 +1607,7 @@ services:
             value_type: "integer"
             config:
               mode: "buttons"
-              values: [ 4, 8 ]
+              values: [4, 8]
           - id: "id4"
             label: "Parallelism (Threads)"
             description: "Choose number of threads from 8 to 24"
@@ -1632,7 +1623,7 @@ services:
             value_type: "string"
             config:
               mode: "buttons"
-              values: [ "opportunistic", "reserved" ]
+              values: ["opportunistic", "reserved"]
           - id: "id6"
             label: "Other technical requirements"
             description: "Type other requirements"
@@ -1654,7 +1645,7 @@ services:
   Cloud container compute:
     name: EGI Cloud container compute BETA
     parents: *computeParent
-    providers: [ *egi ]
+    providers: [*egi]
     logo: cloud-container-compute.png
     open_access: false
     webpage_url: https://www.egi.eu/services/cloud-compute/
@@ -1667,12 +1658,12 @@ services:
     language_availability: *english
     geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Run Docker containers in a lightweight virtualised environment
-    platforms: [ *egiPlatform ]
+    platforms: [*egiPlatform]
     description: |
       With Cloud Container Compute you can deploy and scale Docker containers on-demand. It offers guaranteed computational resources in a secure and isolated environment with standard API access, without the overhead of managing the operating system.
 
@@ -1688,8 +1679,8 @@ services:
     offers: *cloudComputeOffers
   B2DROP:
     name: &b2drop B2DROP
-    parents: [ *storageParent, *sharingAndDicoveryParent ]
-    providers: [ *eudat, *jsc ]
+    parents: [*storageParent, *sharingAndDicoveryParent]
+    providers: [*eudat, *jsc]
     logo: b2drop.png
     open_access: false
     webpage_url: https://b2drop.eudat.eu
@@ -1702,12 +1693,12 @@ services:
     language_availability: *english
     geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Secure and trusted data exchange service for researchers
-    platforms: [ *eudatPlatform ]
+    platforms: [*eudatPlatform]
     description: |
       B2DROP is a secure and trusted data exchange service for researchers and scientists to keep their research data synchronized and up-to-date and to exchange with other researchers. B2DROP is an ideal solution to store and exchange data with colleagues and team members, synchronise multiple versions of data, ensure automatic desktop synchronisation of large files.
 
@@ -1774,7 +1765,7 @@ services:
             unit: "TB"
             config:
               mode: "buttons"
-              values: [ 0.5, 1, 5, 10 ]
+              values: [0.5, 1, 5, 10]
           - id: "id2"
             label: "Requested quota per user"
             description: "Choose quota per user"
@@ -1783,7 +1774,7 @@ services:
             unit: "GB"
             config:
               mode: "buttons"
-              values: [ 100, 200, 500 ]
+              values: [100, 200, 500]
           - id: "id3"
             label: "Access type"
             description: "Choose number of days"
@@ -1791,7 +1782,7 @@ services:
             value_type: "string"
             config:
               mode: "buttons"
-              values: [ "opportunistic", "reserved" ]
+              values: ["opportunistic", "reserved"]
           - id: "id4"
             label: "Start of service"
             description: "Please choose start date"
@@ -1821,8 +1812,8 @@ services:
 
   B2FIND:
     name: &b2find B2FIND
-    parents: [ *sharingAndDicoveryParent, *dataManagementParent ]
-    providers: [ *eudat, *dkrz ]
+    parents: [*sharingAndDicoveryParent, *dataManagementParent]
+    providers: [*eudat, *dkrz]
     logo: b2find.png
     open_access: false
     webpage_url: http://b2find.eudat.eu/
@@ -1835,14 +1826,14 @@ services:
     language_availability: *english
     geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [ *researchers, *providers, *research_organisations ]
+    target_users: [*researchers, *providers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Metadata based data-discovery
-    platforms: [ *eudatPlatform ]
-    funding_bodies: [ "funding_body-fapesp","funding_body-rpf" ]
-    funding_programs: [ "funding_program-icfs", "funding_program-insc2020", "funding_program-iter" ]
+    platforms: [*eudatPlatform]
+    funding_bodies: ["funding_body-fapesp", "funding_body-rpf"]
+    funding_programs: ["funding_program-icfs", "funding_program-insc2020", "funding_program-iter"]
     description: |
       B2FIND is the EUDAT metadata service and provides a discovery portal which allows users
       to find data collections within an international and inter-disciplinary scope.
@@ -1924,7 +1915,7 @@ services:
             value_type: "string"
             config:
               mode: "buttons"
-              values: [ "OAI-PMH", "JSON-API", "CSW 2.0", "Other" ]
+              values: ["OAI-PMH", "JSON-API", "CSW 2.0", "Other"]
           - id: "id3"
             label: "Harvesting endpoint"
             description: "Type harvesting endpoint"
@@ -1951,8 +1942,8 @@ services:
           in the metadata, Local B2FIND instace. Ideal for: Community/organisational data managers.
   B2HANDLE:
     name: &b2handle B2HANDLE
-    parents: [ *dataManagementParent, *sharingAndDicoveryParent ]
-    providers: [ *eudat, *surfsara, *grnet ]
+    parents: [*dataManagementParent, *sharingAndDicoveryParent]
+    providers: [*eudat, *surfsara, *grnet]
     logo: b2handle.png
     open_access: false
     webpage_url: https://www.eudat.eu/services/b2handle
@@ -1965,12 +1956,12 @@ services:
     language_availability: *english
     geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Secure and trusted data exchange service for researchers
-    platforms: [ *eudatPlatform ]
+    platforms: [*eudatPlatform]
     description: |
       B2HANDLE is the distributed service for minting, storing, managing and accessing persistent identifiers (PIDs) and essential metadata (PID records) as well as managing PID namespaces. The implementation of the service relies on the DONA/Handle persistent identifier solution.
 
@@ -2051,7 +2042,7 @@ services:
             value_type: "string"
             config:
               mode: "buttons"
-              values: [ "yes", "no" ]
+              values: ["yes", "no"]
           - id: "id3"
             label: "Prefered service provider"
             description: "Choose preferred service provider"
@@ -2059,7 +2050,7 @@ services:
             value_type: "string"
             config:
               mode: "buttons"
-              values: [ "SURFsara", "GRNET" ]
+              values: ["SURFsara", "GRNET"]
           - id: "id4"
             label: "Start of service"
             description: "Choose start of the service"
@@ -2073,8 +2064,8 @@ services:
             value: 365
   B2NOTE:
     name: &b2note B2NOTE
-    parents: [ *sharingAndDicoveryParent, *dataManagementParent ]
-    providers: [ *eudat, *bsc ]
+    parents: [*sharingAndDicoveryParent, *dataManagementParent]
+    providers: [*eudat, *bsc]
     logo: b2note.png
     open_access: false
     webpage_url: https://www.eudat.eu/catalogue/B2NOTE
@@ -2087,12 +2078,12 @@ services:
     language_availability: *english
     geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Data annotation service to create annotations on research data
-    platforms: [ *eudatPlatform ]
+    platforms: [*eudatPlatform]
     description: |
       B2Note allows to easily create, search and manage annotations. An annotation is a keyword or commentary attached to a dete object (data collection, file) that explains or classifies it. B2NOTE is a standalone service for annotating data content hosted within the EUDAT CDI.
 
@@ -2141,7 +2132,7 @@ services:
             value_type: "string"
             config:
               mode: "buttons"
-              values: [ "opportunistic", "reserved" ]
+              values: ["opportunistic", "reserved"]
           - id: "id2"
             label: "Amount of data"
             description: "Prefix"
@@ -2161,8 +2152,8 @@ services:
             value: 365
   B2SAFE:
     name: &b2safe B2SAFE
-    parents: [ *dataManagementParent, *storageParent ]
-    providers: [ *eudat, *all ]
+    parents: [*dataManagementParent, *storageParent]
+    providers: [*eudat, *all]
     logo: b2safe.png
     open_access: false
     webpage_url: https://www.eudat.eu/services/b2safe
@@ -2175,12 +2166,12 @@ services:
     language_availability: *english
     geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Distribute and store large volumes of data based on data policies
-    platforms: [ *eudatPlatform ]
+    platforms: [*eudatPlatform]
     description: |
       B2SAFE is a robust, safe and highly available service which allows community
       and departmental repositories to implement data management policies on their research data across
@@ -2216,8 +2207,8 @@ services:
           (expected in the next stable release).
   B2SHARE:
     name: &b2share B2SHARE
-    parents: [ *sharingAndDicoveryParent, *dataManagementParent ]
-    providers: [ *eudat, *csc ]
+    parents: [*sharingAndDicoveryParent, *dataManagementParent]
+    providers: [*eudat, *csc]
     logo: b2share.png
     open_access: false
     webpage_url: https://www.eudat.eu/services/b2share
@@ -2230,12 +2221,12 @@ services:
     language_availability: *english
     geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [ *researchers, *providers, *research_organisations ]
+    target_users: [*researchers, *providers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Store and publish research data
-    platforms: [ *eudatPlatform ]
+    platforms: [*eudatPlatform]
     description: |
       B2SHARE is a user-friendly, reliable and trustworthy way for researchers,
       scientific communities and citizen scientists to store and publish small-scale
@@ -2319,7 +2310,7 @@ services:
             value_type: "string"
             config:
               mode: "buttons"
-              values: [ "OAI-PMH", "JSON-API", "CSW 2.0", "Other" ]
+              values: ["OAI-PMH", "JSON-API", "CSW 2.0", "Other"]
           - id: "id3"
             label: "Harvesting endpoint"
             description: "Choose number of days"
@@ -2347,7 +2338,7 @@ services:
   B2STAGE:
     name: &b2stage B2STAGE
     parents: *storageParent
-    providers: [ *eudat, *all ]
+    providers: [*eudat, *all]
     logo: b2stage.png
     open_access: false
     webpage_url: https://www.eudat.eu/services/b2stage
@@ -2360,12 +2351,12 @@ services:
     language_availability: *english
     domain: *otherOther
     geographical_availabilities: *poland
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Transfer of data between data resources and external computational facilities
-    platforms: [ *eudatPlatform ]
+    platforms: [*eudatPlatform]
     description: |
       B2STAGE is for communities who need to transfert large data collection from EUDAT CDI to HPC.
       B2STAGE service is a customer-facing service that allow high performance transfers
@@ -2396,7 +2387,7 @@ services:
             value_type: "string"
             config:
               mode: "buttons"
-              values: [ "FTS3", "globus online" ]
+              values: ["FTS3", "globus online"]
           - id: "id2"
             label: "Start of service"
             description: "Please choose the start date"
@@ -2411,7 +2402,7 @@ services:
   B2ACCESS:
     name: &b2access B2ACCESS
     parents: *securityAndOperationsParent
-    providers: [ *eudat, *all ]
+    providers: [*eudat, *all]
     logo: b2access.png
     open_access: false
     webpage_url: https://b2access.eudat.eu
@@ -2424,12 +2415,12 @@ services:
     language_availability: *english
     domain: *otherOther
     geographical_availabilities: *poland
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: AAI platform for federated authentication to EUDAT services
-    platforms: [ *eudatPlatform ]
+    platforms: [*eudatPlatform]
     description: |
       The B2ACCESS AAI proxy service is arbitrating access to registered Service Providers via different protocols.
       Integrated Service Providers consume Attribute assertions from the B2ACCESS service when the End User
@@ -2451,11 +2442,10 @@ services:
         description: |
           Demo
 
-
   EGI Archive storage:
     name: EGI Archive storage
     parents: *storageParent
-    providers: [ *egi ]
+    providers: [*egi]
     logo: archive-storage.png
     open_access: false
     webpage_url: https://www.egi.eu/services/archive-storage/
@@ -2468,12 +2458,12 @@ services:
     language_availability: *english
     geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Back-up your data for the long term and future use in a secure environment.
-    platforms: [ *egiPlatform ]
+    platforms: [*egiPlatform]
     description: |
       Archive Storage allows you to store large amounts of data in a secure environment freeing up
       your usual file storage resources. Access to the archive can be given at an individual,
@@ -2524,7 +2514,7 @@ services:
   EGI Online Storage:
     name: &egiOnlineStorage EGI Online Storage
     parents: *storageParent
-    providers: [ *egi ]
+    providers: [*egi]
     logo: archive-storage.png
     open_access: false
     webpage_url: https://www.egi.eu/services/online-storage/
@@ -2537,12 +2527,12 @@ services:
     language_availability: *english
     geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Store, share and access your files and their metadata on a global scale.
-    platforms: [ *egiPlatform ]
+    platforms: [*egiPlatform]
     description: |
       Store, share and access your files and their metadata on a global scale.
 
@@ -2585,7 +2575,7 @@ services:
             value_type: "string"
             config:
               mode: "buttons"
-              values: [ "opportunistic", "reserved" ]
+              values: ["opportunistic", "reserved"]
           - id: "id3"
             label: "Special requirements"
             description: "Type special requirements"
@@ -2623,7 +2613,7 @@ services:
             value_type: "string"
             config:
               minItems: 1
-              values: [ "CDMI", "POSIX", "SWIFT", "Others" ]
+              values: ["CDMI", "POSIX", "SWIFT", "Others"]
           - id: "id3"
             label: "Access type"
             description: "Choose access type"
@@ -2631,7 +2621,7 @@ services:
             value_type: "string"
             config:
               mode: "buttons"
-              values: [ "opportunistic", "reserved" ]
+              values: ["opportunistic", "reserved"]
           - id: "id4"
             label: "Special requirements"
             description: "Type special requirements"
@@ -2669,7 +2659,7 @@ services:
             value_type: "string"
             config:
               minItems: 1
-              values: [ "DPM", "DCache", "Storm",  "Others" ]
+              values: ["DPM", "DCache", "Storm", "Others"]
           - id: "id3"
             label: "Access type"
             description: "Choose access type"
@@ -2677,7 +2667,7 @@ services:
             value_type: "string"
             config:
               mode: "buttons"
-              values: [ "opportunistic", "reserved" ]
+              values: ["opportunistic", "reserved"]
           - id: "id4"
             label: "Special requirements"
             description: "Type special requirements"
@@ -2724,7 +2714,7 @@ services:
   GEOSS Portal:
     name: &geossPortal GEOSS Web Portal
     parents: *sharingAndDicoveryParent
-    providers: [ *esa ]
+    providers: [*esa]
     logo: geoss-portal.png
     external: true
     webpage_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
@@ -2736,13 +2726,13 @@ services:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers ] #TODO: but not specified
+    target_users: [*researchers] #TODO: but not specified
     domain: *earthAndEnvironmentalScience
     #        #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Access to resources from the Global Earth Observation System of Systems
-    platforms: [ *ecopotential, *geossPlatform ]
+    platforms: [*ecopotential, *geossPlatform]
     description: |
       The GEOSS (Global Earth Observation System of Systems) Web Portal is the main entry point
       for discovering and accessing GEOSS data. GEOSS Platform interconnects more than 170 data systems globally,
@@ -2757,7 +2747,7 @@ services:
   GEO DAB:
     name: &geossDab GEO DAB
     parents: *sharingAndDicoveryParent
-    providers: [ *cnr ]
+    providers: [*cnr]
     logo: geo-dab.jpg
     open_access: true
     webpage_url: http://www.geodab.net
@@ -2769,13 +2759,13 @@ services:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_groups, *research_organisations ]
-    domain: [ *earthAndEnvironmentalScience, *otherOther ]
+    target_users: [*researchers, *research_groups, *research_organisations]
+    domain: [*earthAndEnvironmentalScience, *otherOther]
     restrictions:
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Multi-disciplinary discovery, access, and use of resources from the Global Earth Observation System of Systems
-    platforms: [ *geo, *geossPlatform ]
+    platforms: [*geo, *geossPlatform]
     description: |
 
       GEO Discovery and Access Broker (GEO DAB) is a key component of the GEOSS Platform,
@@ -2799,7 +2789,7 @@ services:
   VLO:
     name: &vloService Virtual Language Observatory
     parents: *sharingAndDicoveryParent
-    providers: [ *clarin ]
+    providers: [*clarin]
     logo: vlo-logo.png #component-metadata-infrastructure.png
     open_access: false
     webpage_url: https://vlo.clarin.eu
@@ -2810,14 +2800,14 @@ services:
     sla_url:
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
     language_availability: *english
-    domain: [ *otherSocialSciences, *otherHumanities ]
+    domain: [*otherSocialSciences, *otherHumanities]
     geographical_availabilities: *poland
-    target_users: [ *researchers ] #TODO: but not specified
+    target_users: [*researchers] #TODO: but not specified
     #        #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: A facet browser for fast navigation and searching in huge amounts of metadata.
-    platforms: [ *clarinPlatform, *eudatPlatform, *europeana ]
+    platforms: [*clarinPlatform, *eudatPlatform, *europeana]
     description: |
       A facet browser for fast navigation and searching in large amounts of metadata.
       This portal enables the discovery of language data and tools, provided by over 40 CLARIN centres,
@@ -2843,11 +2833,10 @@ services:
           The VLO also provides access to the Virtual Collection Registry metadata
           and can be used as a starting point to process language data with the Language Resource Switchboard.
 
-
   LRS:
     name: &lrsService Language Resource Switchboard
     parents: *sharingAndDicoveryParent
-    providers: [ *clarin ]
+    providers: [*clarin]
     logo: lrs-logo.png #component-metadata-infrastructure.png
     open_access: true
     webpage_url: https://switchboard.clarin.eu/ #https://clarin.eu/
@@ -2858,14 +2847,14 @@ services:
     sla_url:
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
     language_availability: *english
-    domain: [ *otherSocialSciences, *otherHumanities ]
+    domain: [*otherSocialSciences, *otherHumanities]
     geographical_availabilities: *poland
-    target_users: [ *researchers ] #TODO: but not specified
+    target_users: [*researchers] #TODO: but not specified
     #        #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: A web application that suggests language analysis tools for specific data sets.
-    platforms: [ *clarinPlatform, *eudatPlatform, *europeana ]
+    platforms: [*clarinPlatform, *eudatPlatform, *europeana]
     description: |
       A web application that suggests language analysis tools for specific
       data sets, enabling the following tasks:
@@ -2913,7 +2902,7 @@ services:
   VCR:
     name: &vcrService Virtual Collection Registry
     parents: *sharingAndDicoveryParent
-    providers: [ *clarin ]
+    providers: [*clarin]
     logo: vcr-logo.png #component-metadata-infrastructure.png
     open_access: false
     webpage_url: https://www.clarin.eu/content/virtual-collections
@@ -2926,12 +2915,12 @@ services:
     language_availability: *english
     geographical_availabilities: *poland
     domain: *otherHumanities
-    target_users: [ *researchers ] #TODO: but not specified
+    target_users: [*researchers] #TODO: but not specified
     #        #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: A service that allows researchers to create their own citable digital bookmarks.
-    platforms: [ *clarinPlatform, *eudatPlatform, *europeana ]
+    platforms: [*clarinPlatform, *eudatPlatform, *europeana]
     description: |
       A service that allows researchers to create their own citable digital bookmarks.
 
@@ -3404,7 +3393,6 @@ services:
   #              of Apache Mesos that can be used for job orchestration.
   #            parameters: *appParameters
 
-
   #    The R project for statistical computing:
   #        name: The R project for statistical computing
   #        parents: *processingAndAnalysisParent
@@ -3472,7 +3460,7 @@ services:
   Chipster:
     name: &chipster Chipster
     parents: *processingAndAnalysisParent
-    providers: [ *infn, *csc ]
+    providers: [*infn, *csc]
     logo: chipster.png
     open_access: false
     webpage_url: https://csgf.egi.eu/
@@ -3485,13 +3473,13 @@ services:
     access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations, *business ]
+    target_users: [*researchers, *research_organisations, *business]
     domain: *otherOther
     restrictions: "Research affiliation needed"
     trl: *trl_9
     life_cycle_status: *prod
     tagline: NGS and microarray analysis in the cloud.
-    platforms: [ *eoscHub, *aodp ]
+    platforms: [*eoscHub, *aodp]
     description: |
       Chipster is a user-friendly analysis software for high-throughput data.
       It contains over 300 analysis tools for next generation sequencing (NGS),
@@ -3516,7 +3504,6 @@ services:
           microarray, proteomics and sequence data.
           Users can save and share automatic analysis workflows, and visualize data interactively using
           a built-in genome browser and many other visualizations.
-
 
   #    ClustalW2:
   #        name: ClustalW2
@@ -3582,7 +3569,7 @@ services:
     pid: egi-fed.notebook
     name: &notebook EGI Notebooks
     parents: *processingAndAnalysisParent
-    providers: [ *egi ]
+    providers: [*egi]
     open_access: false
     webpage_url: https://www.egi.eu/services/notebooks/
     manual_url: https://wiki.egi.eu/wiki/EGI_Notebooks
@@ -3591,7 +3578,7 @@ services:
     terms_of_use_url:
     sla_url:
     access_policies_url:
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     language_availability: *english
     domain: *otherOther
     geographical_availabilities: *poland
@@ -3599,7 +3586,7 @@ services:
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Create interactive documents with live code, visualisations and narrative text powered by the Jupyter technology
-    platforms: [ *egiPlatform ]
+    platforms: [*egiPlatform]
     description: |
       The service provides a browser-based tool for interactive analysis of data using EGI storage
       and compute infrastructures based on the JupyterHub technology. The notebooks can combine text,
@@ -3627,7 +3614,7 @@ services:
             value_type: "integer"
             config:
               mode: "buttons"
-              values: [ 0.5, 1 ]
+              values: [0.5, 1]
           - id: "id2"
             label: "Number of cores"
             description: "Choose number of cores"
@@ -3635,7 +3622,7 @@ services:
             value_type: "integer"
             config:
               mode: "buttons"
-              values: [ 1, 2, 4 ]
+              values: [1, 2, 4]
           - id: "id3"
             label: "Persistent storage"
             unit: "GB"
@@ -3644,7 +3631,7 @@ services:
             value_type: "integer"
             config:
               mode: "buttons"
-              values: [ 1, 10, 20 ]
+              values: [1, 10, 20]
       2:
         name: Community Notebook
         description: |
@@ -3672,7 +3659,7 @@ services:
             value_type: "integer"
             config:
               mode: "buttons"
-              values: [ 1, 2, 4 ]
+              values: [1, 2, 4]
           - id: "id4"
             label: "Storage per user"
             unit: "GB"
@@ -3723,7 +3710,7 @@ services:
   DARIAH:
     name: &dariah DARIAH Science Gateway
     parents: *processingAndAnalysisParent
-    providers: [ *rbi ]
+    providers: [*rbi]
     logo: dariah.png
     open_access: false
     webpage_url: https://dariah-gateway.lpds.sztaki.hu/
@@ -3735,7 +3722,7 @@ services:
     access_policies_url: https://www.dariah.eu/privacy-notice/
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     domain: *otherHumanities
     #restrictions: *notSpecified
     trl: *trl_9
@@ -3784,7 +3771,7 @@ services:
   Dynamic On Demand Analysis Service:
     name: Dynamic On Demand Analysis Service (DODAS Portal)
     parents: *processingAndAnalysisParent
-    providers: [ *infn ]
+    providers: [*infn]
     logo: dynamic-on-demand-analysis-service.png
     open_access: false
     webpage_url: https://dodas-iam.cloud.cnaf.infn.it/login
@@ -3796,7 +3783,7 @@ services:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     domain: &highEnergyPhysics High-Energy Physics
     #restrictions: *notSpecified
     trl: *trl_9
@@ -3864,7 +3851,7 @@ services:
   D4 Science Particle Formation:
     name: &d4scienceService New Particle Formation Event Analysis
     parents: *processingAndAnalysisParent
-    providers: [ *d4science, *egi, *smartSmear ]
+    providers: [*d4science, *egi, *smartSmear]
     logo: vre.png
     open_access: true
     webpage_url: https://services.d4science.org/web/particleformation/
@@ -3876,13 +3863,13 @@ services:
     access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     domain: *earthAndEnvironmentalScience
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: D4Science Service
-    platforms: [ *egiPlatform, *d4sciencePlatform ]
+    platforms: [*egiPlatform, *d4sciencePlatform]
     description: |
       The VRE supports new particle formation event analysis on interoperable e-Infrastructures.
       It provides access to Jupyter notebooks to classify events and process information about them.
@@ -3898,7 +3885,7 @@ services:
     name: &enes ENES Climate Analytics Service
     parents: *processingAndAnalysisParent
     logo: enes-climate-analytics-service.png
-    providers: [ *ccmc, *dkrz ]
+    providers: [*ccmc, *dkrz]
     open_access: false
     webpage_url: https://portal.enes.org/data/data-metadata-service/processing/ecas
     manual_url:
@@ -3909,13 +3896,13 @@ services:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Analyze and process data from multiple communities with the Ophidia Big Data Analytics framework
-    platforms: [ *enesPlatform ]
+    platforms: [*enesPlatform]
     description: |
       Users can define parallel processing workflows, executed remotely without needing
       to download data or provide own computing resources as these are provided by ECAS.
@@ -3970,7 +3957,7 @@ services:
   LifeWatch ERIC Plants Identification App:
     name: &lifewatchERICPlants LifeWatch ERIC Plants Identification App
     parents: *processingAndAnalysisParent
-    providers: [ *lifewatch ]
+    providers: [*lifewatch]
     logo: lifewatch-eric-plants-identification-app.png
     open_access: false
     webpage_url: https://www.lifewatch.eu/
@@ -3982,7 +3969,7 @@ services:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     domain: *earthAndEnvironmentalScience
     #restrictions: *notSpecified
     trl: *trl_9
@@ -4100,7 +4087,7 @@ services:
   OPENCoastS:
     name: &openCoastS OPENCoastS Portal
     parents: *processingAndAnalysisParent
-    providers: [ *pncel ]
+    providers: [*pncel]
     logo: opencoasts.png
     open_access: false
     webpage_url: https://opencoasts.ncg.ingrid.pt/
@@ -4112,7 +4099,7 @@ services:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     domain: *earthAndEnvironmentalScience
     #restrictions: *notSpecified
     trl: *trl_9
@@ -4241,7 +4228,7 @@ services:
   HADDOCK:
     name: &haddock HADDOCK
     parents: *processingAndAnalysisParent
-    providers: [ *uou ]
+    providers: [*uou]
     logo: haddock.png
     open_access: true
     webpage_url: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
@@ -4253,13 +4240,13 @@ services:
     access_policies_url: https://wenmr.science.uu.nl/conditions
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers ]
+    target_users: [*researchers]
     domain: *biologicalSciences
     restrictions: "Registration required, Limited to non-profit users"
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Integrative modeling of biomolecular complexes with the user-friendly, EGI HTC-enabled HADDOCK portal
-    platforms: [ *wenmr, *egiPlatform, *bioexcel, *instruct ]
+    platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
     description: |
       HADDOCK is a web portal that offers computational tools for structural biologists to model the structure
       of complexes of proteins and other biomolecules via a user-friendly interface. The portal offers a number
@@ -4280,7 +4267,7 @@ services:
   PowerFit:
     name: &powerFit PowerFit
     parents: *processingAndAnalysisParent
-    providers: [ *uou ]
+    providers: [*uou]
     logo: powerfit.png
     open_access: true
     webpage_url: http://haddock.science.uu.nl/enmr/services/POWERFIT
@@ -4292,13 +4279,13 @@ services:
     access_policies_url: https://wenmr.science.uu.nl/conditions
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers ]
+    target_users: [*researchers]
     domain: *biologicalSciences
     restrictions: "Registration required, Limited to non-profit users"
     trl: *trl_9
     life_cycle_status: *prod
     tagline: The PowerFit server allows you to fit your 3D structures in any map!
-    platforms: [ *wenmr, *egiPlatform, *bioexcel, *instruct ]
+    platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
     description: |
       PowerFit is a software designed to fit atomic structures into cryo-EM density maps,
       using an exhaustive 6-dimensional cross-correlation search.
@@ -4309,7 +4296,7 @@ services:
   DisVis:
     name: &disVis DisVis
     parents: *processingAndAnalysisParent
-    providers: [ *uou ]
+    providers: [*uou]
     logo: disvis.png
     open_access: true
     webpage_url: http://haddock.science.uu.nl/enmr/services/DISVIS
@@ -4321,7 +4308,7 @@ services:
     access_policies_url: https://wenmr.science.uu.nl/conditions
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers ]
+    target_users: [*researchers]
     domain: *biologicalSciences
     restrictions: "Registration required, Limited to non-profit users"
     trl: *trl_9
@@ -4329,7 +4316,7 @@ services:
     tagline: |
       Visualizes and quantify the information content of distance
       restraints between macromolecular complexes with DisVis
-    platforms: [ *wenmr, *egiPlatform, *bioexcel, *instruct ]
+    platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
     description: |
       DisVis is a software designed to visualize and quantify the accessible interaction space
       defined by distance restraints between biomolecules.
@@ -4340,7 +4327,7 @@ services:
   CS-ROSETTA:
     name: &csRoseta CS-ROSETTA
     parents: *processingAndAnalysisParent
-    providers: [ *uou ]
+    providers: [*uou]
     logo: cs-rosetta.png
     open_access: true
     webpage_url: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
@@ -4352,13 +4339,13 @@ services:
     access_policies_url: https://wenmr.science.uu.nl/conditions
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers ]
+    target_users: [*researchers]
     domain: *biologicalSciences
     restrictions: "Registration required, Limited to non-profit users"
     trl: *trl_9
     life_cycle_status: *prod
     tagline: NMR protein structure prediction using the EGI HTC-enabled CS-ROSETTA portal
-    platforms: [ *wenmr, *egiPlatform, *instruct ]
+    platforms: [*wenmr, *egiPlatform, *instruct]
     description: |
       The CS-ROSETTA3 web portal allows structural biologists to model the 3D structure of proteins
       using only the 13CA, 13CB, 13C’, 15N, 1HA and 1HN NMR chemical shifts as input.
@@ -4370,7 +4357,7 @@ services:
   AMBER:
     name: &amber AMBER
     parents: *processingAndAnalysisParent
-    providers: [ *cerm, *cirmmp ]
+    providers: [*cerm, *cirmmp]
     logo: amber.png
     open_access: true
     webpage_url: http://py-enmr.cerm.unifi.it/access/index
@@ -4382,15 +4369,15 @@ services:
     access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers ]
+    target_users: [*researchers]
     domain: *biologicalSciences
     restrictions: "Limited to non-profit users, For-profit users can use the service if they a license agreement with the University of California for the AMBER toolkit"
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Web portal for Nuclear Magnetic Resonance (NMR) structure refinement
-    platforms: [ *wenmr, *egiPlatform, *instruct ]
-    funding_bodies: [ "funding_body-esa", "funding_body-epsrc" ]
-    funding_programs: [ "funding_program-h2020","funding_program-health" ]
+    platforms: [*wenmr, *egiPlatform, *instruct]
+    funding_bodies: ["funding_body-esa", "funding_body-epsrc"]
+    funding_programs: ["funding_program-h2020", "funding_program-health"]
     description: |
       Simple and user-friendly NMR-based refinement of the 3D structures of biological macromolecules
       thought the AMPS-NMR portal. Amber (Assisted Model Building with Energy Refinement) is a suite
@@ -4406,7 +4393,7 @@ services:
   FANTEN:
     name: &fanten FANTEN
     parents: *processingAndAnalysisParent
-    providers: [ *cerm, *cirmmp ]
+    providers: [*cerm, *cirmmp]
     logo: fanten.png
     open_access: true
     webpage_url: http://abs.cerm.unifi.it:8080
@@ -4418,13 +4405,13 @@ services:
     access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers ]
+    target_users: [*researchers]
     domain: *biologicalSciences
     restrictions: "Limited to non-profit users"
     trl: *trl_9
     life_cycle_status: *prod
     tagline: FANTEN for the analysis of magnetic anisotropy-induced NMR data
-    platforms: [ *wenmr, *egiPlatform, *instruct ]
+    platforms: [*wenmr, *egiPlatform, *instruct]
     description: |
       FANTEN is a user-friendly web tool for the
       determination of anisotropy tensors. It is freely available through the WeNMR gateway.
@@ -4438,7 +4425,7 @@ services:
   SpotOn:
     name: &spotOn SpotOn
     parents: *processingAndAnalysisParent
-    providers: [ *uou ]
+    providers: [*uou]
     logo: SpotOn-logo.png
     open_access: true
     webpage_url: https://haddock.science.uu.nl/enmr/services/SPOTON
@@ -4450,13 +4437,13 @@ services:
     access_policies_url: https://wenmr.science.uu.nl/conditions
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers ]
-    domain: [ *biologicalSciences, *otherOther ]
+    target_users: [*researchers]
+    domain: [*biologicalSciences, *otherOther]
     restrictions: "Registration required, Limited to non-profit users"
     trl: *trl_9
     life_cycle_status: *prod
     tagline: "SpotOn: determination of Hot-Spots at protein-protein interfaces"
-    platforms: [ *wenmr, *egiPlatform, *bioexcel, *instruct ]
+    platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
     description: |
       SpotOn is a robust algorithm developed to identify and classify the interfacial residues
       as Hot-Spots (HS) and Null-Spots (NS) with a final accuracy of 0.95
@@ -4468,7 +4455,7 @@ services:
   GEP - HRCM:
     name: &gepHRCM GEP - High-Resolution Change Monitoring for the Alpine Region
     parents: *processingAndAnalysisParent
-    providers: [ *terradue ]
+    providers: [*terradue]
     logo: gep-alpine.png
     open_access: false
     webpage_url: https://geohazards-tep.eo.esa.int/#!communities/details/eoschub
@@ -4481,13 +4468,13 @@ services:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations, *business ]
-    domain: [ *earthAndEnvironmentalScience, *otherOther ]
+    target_users: [*researchers, *research_organisations, *business]
+    domain: [*earthAndEnvironmentalScience, *otherOther]
     restrictions: " Research affiliation needed, user account registration needed."
     trl: *trl_9
     life_cycle_status: *prod
     tagline: "Continuous systematic interferogram generation with Sentinel-1 data over the Alpine Region."
-    platforms: [ *gepPlatform, *esaPlatform ]
+    platforms: [*gepPlatform, *esaPlatform]
     description: |
       This service provides an interferometric product at 50m resolution and 25m pixel spacing systematically
       for every 6-day Sentinel-1 SLC pair over the Alpine Region.
@@ -4502,7 +4489,7 @@ services:
   GEP - EO:
     name: &gepEO GEP - EO Services for Earthquake Response and Landslides Analysis
     parents: *sharingAndDicoveryParent
-    providers: [ *terradue ]
+    providers: [*terradue]
     logo: gep-eo.png
     open_access: false
     webpage_url: https://geohazards-tep.eo.esa.int/#!communities/details/eoschub
@@ -4515,13 +4502,13 @@ services:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations, *business ]
-    domain: [ *earthAndEnvironmentalScience, *otherOther ]
+    target_users: [*researchers, *research_organisations, *business]
+    domain: [*earthAndEnvironmentalScience, *otherOther]
     restrictions: " Research affiliation needed, user account registration needed."
     trl: *trl_9
     life_cycle_status: *prod
     tagline: "On-demand EO processing services for Earthquake Response and Landslides Analysis."
-    platforms: [ *gepPlatform, *esaPlatform ]
+    platforms: [*gepPlatform, *esaPlatform]
     description: |
       This is a Thematic Application of the Geohazards Thematic Exploitation Platform providing access to a set
       of on-demand terrain motion services supporting interferogram generation, co-seismic displacement mapping,
@@ -4535,7 +4522,7 @@ services:
   EODC JupyterHub for global Copernicus data:
     name: &eodcJH EODC JupyterHub for global Copernicus data
     parents: *processingAndAnalysisParent
-    providers: [ *eodc ]
+    providers: [*eodc]
     logo: eodc-jupyter.png
     open_access: false
     #contact: support@eodc.eu
@@ -4548,8 +4535,8 @@ services:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations, *research_groups ]
-    domain: [ *otherSocialSciences, *physicalSciences, *otherOther ]
+    target_users: [*researchers, *research_organisations, *research_groups]
+    domain: [*otherSocialSciences, *physicalSciences, *otherOther]
     restrictions: "Research affiliation needed"
     trl: *trl_9
     life_cycle_status: *prod
@@ -4593,7 +4580,7 @@ services:
   EODC Data Catalogue Service:
     name: &eodcDCS EODC Data Catalogue Service
     parents: *dataManagementParent
-    providers: [ *eodc ]
+    providers: [*eodc]
     logo: eodc-jupyter.png
     open_access: true
     webpage_url: https://www.eodc.eu/support-request/
@@ -4606,13 +4593,13 @@ services:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations, *research_groups, *providers ]
-    domain: [ *otherSocialSciences, *physicalSciences, *otherOther ]
+    target_users: [*researchers, *research_organisations, *research_groups, *providers]
+    domain: [*otherSocialSciences, *physicalSciences, *otherOther]
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: "Catalog Service for the Web (CSW), OGC compliant catalogue service to expose metadata of geospatial records hosted at EODC"
-    platforms: [ *openGC ]
+    platforms: [*openGC]
     description: |
       The EODC Data Catalogue service allows querying the Copernicus Sentinel satellite data hosted at EODC.
       The service is available through a  simple Web GUI, eomEX+, as well as an API. The back-end of eomEX+
@@ -4633,7 +4620,7 @@ services:
   Sentinel hub:
     name: &sentinelHub Sentinel Hub
     parents: *sharingAndDicoveryParent
-    providers: [ *sinergise ]
+    providers: [*sinergise]
     open_access: false
     webpage_url: http://sentinel-hub.com/
     manual_url: https://www.sentinel-hub.com/develop/documentation
@@ -4644,13 +4631,13 @@ services:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     domain: *earthAndEnvironmentalScience
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Big data satellite imagery service
-    platforms: [ *eopillar ]
+    platforms: [*eopillar]
     description: |
       Sentinel Hub is a multi- spectral and multi-temporal big data satellite imagery service,
       capable of fully automated archiving, real-time processing and distribution
@@ -4661,7 +4648,7 @@ services:
   MEA Platform:
     name: &meaPlatform MEA Platform (Data access and exploitation service)
     parents: *sharingAndDicoveryParent
-    providers: [ *meeo ]
+    providers: [*meeo]
     open_access: false
     webpage_url: https://eodataservice.org
     manual_url: https://www.youtube.com/channel/UCqy-bd6CpXMOlRqfHmBqlZw
@@ -4672,13 +4659,13 @@ services:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     domain: *earthAndEnvironmentalScience
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Cross-domain application supporting various application fields
-    platforms: [ *eopillar ]
+    platforms: [*eopillar]
     description: |
       MEA platform implements the concept of Digital Earth making global environmental geospatial data Findable,
       Accessible, Interoperable and Reusable (FAIR). MEA platform provides an effective subsetting functionality
@@ -4688,7 +4675,7 @@ services:
   Rasdaman EO Datacube:
     name: &rasdamanDatacube Rasdaman EO Datacube
     parents: *processingAndAnalysisParent
-    providers: [ *terradue ]
+    providers: [*terradue]
     logo: rasdaman-eo-datacube.png
     open_access: false
     webpage_url: http://eoschub.rasdaman.com:8080/rasdaman/ows
@@ -4700,13 +4687,13 @@ services:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations ]
+    target_users: [*researchers, *research_organisations]
     domain: *earthAndEnvironmentalScience
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Service providing analysis-ready EO data
-    platforms: [ *eopillar ]
+    platforms: [*eopillar]
     description: |
       Rasdaman is a datacube engine providing analysis-ready EO data by abstracting
       millions of satellite images into few spatio-temporal cubes.
@@ -4741,7 +4728,7 @@ services:
   CloudFerro Data Collections Catalog:
     name: &cfdcc CloudFerro Data Collections Catalog
     parents: *dataManagementParent
-    providers: [ *cloudFerro ]
+    providers: [*cloudFerro]
     logo: &cfLogo cloud-ferro.png
     open_access: true
     webpage_url: https://discovery.creodias.eu/dataset
@@ -4754,13 +4741,13 @@ services:
     access_policies_url: https://creodias.eu/legal-matters
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations, *research_groups, *providers, *business ]
-    domain: [ *otherSocialSciences, *physicalSciences, *otherOther ]
+    target_users: [*researchers, *research_organisations, *research_groups, *providers, *business]
+    domain: [*otherSocialSciences, *physicalSciences, *otherOther]
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: "Data Collections Catalog is based on two solutions  – CKAN - comprehensive frontend catalogue application for information discovery and EO Browser – specialized catalogue application for robust satellite imagery discovery and quick georeferenced preview"
-    platforms: [ *copernicus, *esaPlatform ]
+    platforms: [*copernicus, *esaPlatform]
     description: |
       The Catalogue is be based on CKAN open source software which is widely used for open data publications like
       e.g. European Data Portal, data.org.uk or danepubliczne.gov.pl. CKAN provides user friendly web interface
@@ -4784,8 +4771,8 @@ services:
         order_url: https://discovery.creodias.eu/dataset
   CloudFerro Infrastructure:
     name: &cfi CloudFerro Infrastructure
-    parents: [ *computeParent, *storageParent, *processingAndAnalysisParent ]
-    providers: [ *cloudFerro ]
+    parents: [*computeParent, *storageParent, *processingAndAnalysisParent]
+    providers: [*cloudFerro]
     logo: *cfLogo
     open_access: true
     webpage_url: https://creodias.eu
@@ -4798,13 +4785,13 @@ services:
     access_policies_url: https://creodias.eu/legal-matters
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations, *research_groups, *providers, *business ]
-    domain: [ *otherSocialSciences, *physicalSciences, *otherOther ]
+    target_users: [*researchers, *research_organisations, *research_groups, *providers, *business]
+    domain: [*otherSocialSciences, *physicalSciences, *otherOther]
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: "CREODIAS platform is a cloud infrastructure adapted to the processing of big amounts of EO data, including an EO Data storage cluster and a dedicated IaaS cloud infrastructure for the platform’s Users"
-    platforms: [ *copernicus, *esaPlatform ]
+    platforms: [*copernicus, *esaPlatform]
     description: |
       CREODIAS processing covers full set of virtual resources available in the solution:
       VM – Virtual Machines (or virtual computing servers) with several operating systems available
@@ -4824,8 +4811,8 @@ services:
         order_url: https://creodias.eu
   Cloudferro Data related Services - EO Finder:
     name: &cfdrsEOF Cloudferro Data related Services - EO Finder
-    parents: [ *dataManagementParent ]
-    providers: [ *cloudFerro ]
+    parents: [*dataManagementParent]
+    providers: [*cloudFerro]
     logo: *cfLogo
     open_access: true
     webpage_url: https://finder.creodias.eu/www
@@ -4838,13 +4825,13 @@ services:
     access_policies_url: https://creodias.eu/legal-matters
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations, *research_groups, *providers, *business ]
-    domain: [ *otherSocialSciences, *physicalSciences, *otherOther ]
+    target_users: [*researchers, *research_organisations, *research_groups, *providers, *business]
+    domain: [*otherSocialSciences, *physicalSciences, *otherOther]
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: "Manage your data products"
-    platforms: [ *copernicus, *esaPlatform ]
+    platforms: [*copernicus, *esaPlatform]
     description: |
       The Finder tool allows finding data products stored in the repository, obtained or processed at
       selected times with selected cloud coverage levels and with other selection criteria.
@@ -4857,7 +4844,7 @@ services:
   Cloudferro Data related Services - EO browser:
     name: &cfdrsEOB Cloudferro Data related Services - EO browser
     parents: *dataManagementParent
-    providers: [ *cloudFerro ]
+    providers: [*cloudFerro]
     logo: cloud-ferro-eo-browser.png
     open_access: true
     webpage_url: https://browser.creodias.eu
@@ -4870,13 +4857,13 @@ services:
     access_policies_url: https://creodias.eu/legal-matters
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations, *research_groups, *providers, *business ]
-    domain: [ *otherSocialSciences, *physicalSciences, *otherOther ]
+    target_users: [*researchers, *research_organisations, *research_groups, *providers, *business]
+    domain: [*otherSocialSciences, *physicalSciences, *otherOther]
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: "The EO Browser allows visualization and basic processing of selected data collections (like Sentinel-1 L1 GRD or Sentinel-2 L1C)"
-    platforms: [ *copernicus, *esaPlatform ]
+    platforms: [*copernicus, *esaPlatform]
     description: |
       CreoDias EO browser allows browsing wide archive of Earth Observation products, created  by
       ESA’s [Sentinel 1][1], [Sentinel 2][2], [Sentinel 3][3], ESA’s archives of [Landsat 5][4], [Landsat 7][5],
@@ -4900,7 +4887,7 @@ services:
   Check-in:
     name: &checkIn EGI Check-in
     parents: *securityAndOperationsParent
-    providers: [ *egi ]
+    providers: [*egi]
     open_access: false
     webpage_url: https://www.egi.eu/services/check-in/
     manual_url:
@@ -4911,13 +4898,13 @@ services:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *research_organisations ]
+    target_users: [*research_organisations]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Handle transparent Single Sign-On from multiple heterogeneous identity providers
-    platforms: [ *egiPlatform ]
+    platforms: [*egiPlatform]
     description: |
       Check-in is a proxy service that operates as a central hub to connect federated Identity Providers (IdPs)
       with service providers. Check-in allows users to select their preferred IdP so that they can access and use
@@ -4987,7 +4974,7 @@ services:
   Training infrastructure:
     name: Training infrastructure
     parents: *trainingAndSupportParent
-    providers: [ *egi ]
+    providers: [*egi]
     logo: training-infrastructure.png
     open_access: false
     webpage_url: https://www.egi.eu/services/training-infrastructure/
@@ -4999,13 +4986,13 @@ services:
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *research_groups, *research_organisations ]
+    target_users: [*research_groups, *research_organisations]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Dedicated computing and storage for training and education
-    platforms: [ *egiPlatform ]
+    platforms: [*egiPlatform]
     description: |
       The Training Infrastructure is a cloud­based computing and storage resources for training events.
       It is useful to organise onsite tutorials or workshops and online training courses or as a platform
@@ -5060,7 +5047,7 @@ services:
             type: "select"
             value_type: "integer"
             config:
-              values: [ 1, 2, 3, 4, 5, 6, 7, 8 ]
+              values: [1, 2, 3, 4, 5, 6, 7, 8]
               mode: "dropdown"
           - id: "id5"
             label: "Amount od RAM"
@@ -5102,7 +5089,7 @@ services:
   FitSM:
     name: FitSM
     parents: *trainingAndSupportParent
-    providers: [ *egi ]
+    providers: [*egi]
     logo: fitsm.png
     open_access: false
     webpage_url: https://www.egi.eu/services/fitsm-training/
@@ -5114,13 +5101,13 @@ services:
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *research_organisations ]
+    target_users: [*research_organisations]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Learn how to manage IT services with a pragmatic and lightweight standard
-    platforms: [ *egiPlatform ]
+    platforms: [*egiPlatform]
     description: |
       FitSM is a lightweight standards family aimed at facilitating service management in IT service provision,
       including federated scenarios. FitSM training aims at providing those involved in operating
@@ -5196,7 +5183,7 @@ services:
   Alien and Invasive Species:
     name: &alien Alien and Invasive Species Virtual Research Environment
     parents: *processingAndAnalysisParent
-    providers: [ *d4science ]
+    providers: [*d4science]
     logo: alien.png
     open_access: true
     webpage_url: https://services.d4science.org/web/alienandinvasivespecies
@@ -5207,7 +5194,7 @@ services:
     sla_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies#Service_Level_Agreement
     access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
     geographical_availabilities: *poland
-    target_users: [ *research_groups ]
+    target_users: [*research_groups]
     restrictions: No restrictions
     language_availability: *english
     domain: *otherOther
@@ -5216,7 +5203,7 @@ services:
     tagline: |
       A web-based, collaborative working environment enacting to predict the spread of an invasive species
       (possibly alien) in a new environment
-    platforms: [ *egiPlatform, *gbif, *obis, *d4sciencePlatform, *gCube, *seaDataCloud ]
+    platforms: [*egiPlatform, *gbif, *obis, *d4sciencePlatform, *gCube, *seaDataCloud]
     description: |
       Alien and Invasive Species Virtual Research Environment (VRE) is a web-based, comprehensive,
       collaborative working environment supporting decision makers and scientists in predicting the spread
@@ -5271,7 +5258,7 @@ services:
   PROMINENCE:
     name: &prominence PROMINENCE
     parents: *computeParent
-    providers: [ *egi ] #TODO: change to United Kingdom Atomic Energy Authority (or UKAEA)
+    providers: [*egi] #TODO: change to United Kingdom Atomic Energy Authority (or UKAEA)
     logo: prominence-logo.png
     open_access: false
     webpage_url: https://alahiff.github.io/prominence/
@@ -5283,7 +5270,7 @@ services:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *research_groups, *research_organisations ]
+    target_users: [*research_groups, *research_organisations]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
@@ -5312,7 +5299,7 @@ services:
   PAN data:
     name: &panData PaN data
     parents: *storageParent
-    providers: [ *desyProvider ]
+    providers: [*desyProvider]
     logo: panData.png
     open_access: false
     webpage_url: https://dcache-xdc.desy.de
@@ -5324,7 +5311,7 @@ services:
     access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers ]
+    target_users: [*researchers]
     domain: *otherOther
     restrictions: |
       Access to the platform is granted based on motivation / proposal,
@@ -5332,7 +5319,7 @@ services:
     trl: *trl_9
     life_cycle_status: *prod
     tagline: dCache backend storage for the EOSC PAN Science Demonstrator
-    platforms: [ *eoscPan ]
+    platforms: [*eoscPan]
     description: |
       Data backend storage service for EOSC PAN notebooks and cloud functions for EOSC PAN FaaS.
       Streams for storage events via kafka and Server Sent Events.
@@ -5350,7 +5337,7 @@ services:
   Pan faas:
     name: &panFaas PaN faas
     parents: *computeParent
-    providers: [ *desyProvider ]
+    providers: [*desyProvider]
     logo: panFaas.png
     open_access: false
     webpage_url: https://eosc-pan-git.desy.de/pan/support/
@@ -5362,13 +5349,13 @@ services:
     access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers ]
+    target_users: [*researchers]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: OpenWhisk, cloud functions for the EOSC PAN Science Demonstrator
-    platforms: [ *eoscPan ]
+    platforms: [*eoscPan]
     description: |
       Compute backend service for EOSC PAN notebooks and EOSC PAN data.
       Continuous integration and deployments of docker containers as cloud functions on the DESY Compute Cloud.
@@ -5385,7 +5372,7 @@ services:
   "da|ra - DOI Registration Service for social science and economic data":
     name: &daRaDoiRegistrationServiceForSocialScienceAndEconomicData "da|ra - DOI Registration Service for social science and economic data"
     parents: *sharingAndDicoveryParent
-    providers: [ *desyProvider ]
+    providers: [*desyProvider]
     logo: panFaas.png
     open_access: false
     webpage_url: https://eosc-pan-git.desy.de/pan/support/
@@ -5397,13 +5384,13 @@ services:
     access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers ]
+    target_users: [*researchers]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    platforms: [ *eoscPan ]
+    platforms: [*eoscPan]
     description: |
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lacinia risus velit,
       in tempus erat interdum vel. Suspendisse elit metus, lobortis et felis a,
@@ -5439,7 +5426,7 @@ services:
   PAN notebook:
     name: &panNotebook PaN notebook
     parents: *computeParent
-    providers: [ *desyProvider ]
+    providers: [*desyProvider]
     logo: panFaas.png
     open_access: false
     webpage_url: https://eosc-pan-jhub.desy.de
@@ -5451,13 +5438,13 @@ services:
     access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers ]
+    target_users: [*researchers]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: JupyterHub for the EOSC PAN Science Demonstrator
-    platforms: [ *eoscPan ]
+    platforms: [*eoscPan]
     description: |
       Spawn Jupyter Servers in the DESY Compute Cloud and run notebooks which can make use
       of the EOSC PaN FaaS Service and connect to EOSC PaN Data Service.
@@ -5474,7 +5461,7 @@ services:
   PAN gitlab:
     name: &panGitlab PAN gitlab
     parents: *computeParent
-    providers: [ *desyProvider ]
+    providers: [*desyProvider]
     logo: panFaas.png
     open_access: false
     webpage_url: https://eosc-pan-git.desy.de
@@ -5486,13 +5473,13 @@ services:
     access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers ]
+    target_users: [*researchers]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: GitLab for the EOSC PAN Science Demonstrator
-    platforms: [ *eoscPan ]
+    platforms: [*eoscPan]
     description: |
       Repository service for EOSC PAN notebooks and cloud functions for EOSC PAN FaaS. Gitlab runners
       for continuous integration in the DESY Compute Cloud,
@@ -5510,7 +5497,7 @@ services:
   WS-PGRADE:
     name: &wsPgrade WS-PGRADE
     parents: *processingAndAnalysisParent
-    providers: [ *mtaSztaki ]
+    providers: [*mtaSztaki]
     logo: wspgrade.png
     open_access: false
     webpage_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard
@@ -5522,13 +5509,13 @@ services:
     access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations, *business ]
+    target_users: [*researchers, *research_organisations, *business]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Setup and run parameter studies in the cloud with a few clicks.
-    platforms: [ *eoscHub, *aodp ]
+    platforms: [*eoscHub, *aodp]
     description: |
       The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal)
       is the Liferay-based web portal (WS-PGRADE web application) of gUSE high level middleware system.
@@ -5555,8 +5542,8 @@ services:
           demo
   CSC ePouta:
     name: &cscEpouta CSC ePouta
-    parents: [ *processingAndAnalysisParent, *computeParent ]
-    providers: [ *csc ]
+    parents: [*processingAndAnalysisParent, *computeParent]
+    providers: [*csc]
     logo: ePouta-logo.jpg
     open_access: false
     webpage_url: https://research.csc.fi/epouta
@@ -5568,13 +5555,13 @@ services:
     access_policies_url: https://research.csc.fi/pricing-of-computing-services
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations, *research_groups, *providers ]
-    domain: [ *otherSocialSciences, *otherHumanities, *otherOther, *philosophy ]
+    target_users: [*researchers, *research_organisations, *research_groups, *providers]
+    domain: [*otherSocialSciences, *otherHumanities, *otherOther, *philosophy]
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Secure and cost-effective cloud computing for processing sensitive data
-    platforms: [ *eudatPlatform, *elixirPlatform ]
+    platforms: [*eudatPlatform, *elixirPlatform]
     description: |
       This service provides a infrastructure as a-service for running analysis on sensitive data.
       The ePouta Virtual Private Cloud service allows customers to provision virtual machines and
@@ -5588,8 +5575,8 @@ services:
           demo
   TDS:
     name: &tds TDS
-    parents: [ *processingAndAnalysisParent, *storageParent ]
-    providers: [ *uioProider ]
+    parents: [*processingAndAnalysisParent, *storageParent]
+    providers: [*uioProider]
     #logo: panFaas.png TODO: nologo
     open_access: false
     webpage_url: https://www.uio.no/english/services/it/research/sensitive-data/
@@ -5601,13 +5588,13 @@ services:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers ]
+    target_users: [*researchers]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Services for sensitive data
-    platforms: [ *eudatPlatform, *nird ]
+    platforms: [*eudatPlatform, *nird]
     description: |
       This service provides researchers with a desktop with secure storage and software
       to run your collection and analysis of sensitive data. The system is built on the idea
@@ -5623,7 +5610,7 @@ services:
   Elastic Cloud Compute Cluster (EC3):
     name: &ec3Service Elastic Cloud Compute Cluster (EC3)
     parents: *processingAndAnalysisParent
-    providers: [ *grycap ]
+    providers: [*grycap]
     logo: ec3.png
     open_access: false
     webpage_url: https://servproject.i3m.upv.es/ec3-ltos/index.php
@@ -5635,13 +5622,13 @@ services:
     access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
     geographical_availabilities: *poland
     language_availability: *english
-    target_users: [ *researchers, *research_organisations, *business ]
+    target_users: [*researchers, *research_organisations, *business]
     domain: *otherOther
     restrictions: Research affiliation needed
     trl: *trl_9
     life_cycle_status: *prod
     tagline: Deploy a virtual cluster on top of IaaS infrastructures with a few clicks.
-    platforms: [ *eoscHub, *aodp ]
+    platforms: [*eoscHub, *aodp]
     description: |
       The Elastic Cloud Computing Cluster (EC3) is a platform that allows creating elastic virtual clusters
       on top of Infrastructure as a Service (IaaS) providers, either public (such as Amazon Web Services,
@@ -5667,7 +5654,6 @@ services:
         name: EC3 Demo
         description: |
           demo
-
 
 relations:
   HaddockToPowerFit:
@@ -5899,8 +5885,6 @@ relations:
     source: *cfdrsEOB
     target: *sentinelHub
 
-
-
   #  amberToEgiWM:
   #    both: false
   #    source: *amber
@@ -6069,9 +6053,6 @@ relations:
     both: true
     source: *ec3Service
     target: *tds
-
-
-
 #  haddockToB2drop:
 #    both: true
 #    source: *haddock
@@ -6084,7 +6065,6 @@ relations:
 #    both: true
 #    source: *disVis
 #    target: *b2drop
-
 
 #  spotOnToEgiWM:
 #    both: false

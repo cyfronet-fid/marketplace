@@ -17,24 +17,29 @@ class Importers::Service
       providers = Array(@data.dig("resourceProviders", "resourceProvider"))
       multimedia = Array(@data.dig("multimedia", "multimedia")) || []
       use_cases_url = Array(@data.dig("useCases", "useCase")) || []
-      scientific_domains = @data.dig("scientificDomains", "scientificDomain").is_a?(Array) ?
-        @data.dig("scientificDomains", "scientificDomain").map { |sd|  sd["scientificSubdomain"] } :
-        @data.dig("scientificDomains", "scientificDomain", "scientificSubdomain")
-      categories = @data.dig("categories", "category").is_a?(Array) ?
-        @data.dig("categories", "category").map { |c| c["subcategory"] } :
-        @data.dig("categories", "category", "subcategory")
+      scientific_domains =
+        if @data.dig("scientificDomains", "scientificDomain").is_a?(Array)
+          @data.dig("scientificDomains", "scientificDomain").map { |sd| sd["scientificSubdomain"] }
+        else
+          @data.dig("scientificDomains", "scientificDomain", "scientificSubdomain")
+        end
+      categories =
+        if @data.dig("categories", "category").is_a?(Array)
+          @data.dig("categories", "category").map { |c| c["subcategory"] }
+        else
+          @data.dig("categories", "category", "subcategory")
+        end
       target_users = @data.dig("targetUsers", "targetUser")
       access_types = Array(@data.dig("accessTypes", "accessType"))
       access_modes = Array(@data.dig("accessModes", "accessMode"))
       tag_list = Array(@data.dig("tags", "tag")) || []
-      geographical_availabilities = Array(@data.dig("geographicalAvailabilities",
-                                                    "geographicalAvailability") || "WW")
-      language_availability = Array(@data.dig("languageAvailabilities", "languageAvailability")).
-        map { |lang| lang.upcase } || ["EN"]
-      resource_geographic_locations = Array(@data.dig("resourceGeographicLocations",
-                                                      "resourceGeographicLocation")) || []
-      public_contacts = Array.wrap(@data.dig("publicContacts", "publicContact")).
-        map { |c| PublicContact.new(map_contact(c)) } || []
+      geographical_availabilities = Array(@data.dig("geographicalAvailabilities", "geographicalAvailability") || "WW")
+      language_availability =
+        Array(@data.dig("languageAvailabilities", "languageAvailability")).map { |lang| lang.upcase } || ["EN"]
+      resource_geographic_locations =
+        Array(@data.dig("resourceGeographicLocations", "resourceGeographicLocation")) || []
+      public_contacts =
+        Array.wrap(@data.dig("publicContacts", "publicContact")).map { |c| PublicContact.new(map_contact(c)) } || []
       certifications = Array(@data.dig("certifications", "certification"))
       standards = Array(@data.dig("standards", "standard"))
       open_source_technologies = Array(@data.dig("openSourceTechnologies", "openSourceTechnology"))
@@ -46,7 +51,6 @@ class Importers::Service
       funding_bodies = map_funding_bodies(@data.dig("fundingBody", "fundingBody"))
       funding_programs = map_funding_programs(@data.dig("fundingPrograms", "fundingProgram"))
       grant_project_names = Array(@data.dig("grantProjectNames", "grantProjectName"))
-
     when "rest"
       providers = Array(@data["resourceProviders"]) || []
       multimedia = Array(@data["multimedia"]) || []
@@ -82,11 +86,8 @@ class Importers::Service
       pid: @data["id"],
       # Basic
       name: @data["name"],
-      resource_organisation: map_provider(@data["resourceOrganisation"],
-                                          @eosc_registry_base_url,
-                                          token: @token),
-      providers: providers.uniq.map { |p| map_provider(p, @eosc_registry_base_url,
-                                                   token: @token) },
+      resource_organisation: map_provider(@data["resourceOrganisation"], @eosc_registry_base_url, token: @token),
+      providers: providers.uniq.map { |p| map_provider(p, @eosc_registry_base_url, token: @token) },
       webpage_url: @data["webpage"] || "",
       # Marketing
       description: @data["description"],

@@ -1,16 +1,16 @@
 {
-  "type":"object",
-  "properties":{
-    "id":{
-      "type":"string"
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
     },
-    "name":{
-      "type":"string"
+    "name": {
+      "type": "string"
     },
-    "description":{
-      "type":"string"
+    "description": {
+      "type": "string"
     },
-    "status":{
+    "status": {
       "oneOf": [
         {
           "type": "string"
@@ -20,7 +20,7 @@
         }
       ]
     },
-    "eid":{
+    "eid": {
       "oneOf": [
         {
           "type": "string"
@@ -38,11 +38,5 @@
     }
   },
   "additionalProperties": false,
-  "required":[
-    "id",
-    "name",
-    "description",
-    "status",
-    "available_omses"
-  ]
+  "required": ["id", "name", "description", "status", "available_omses"]
 }

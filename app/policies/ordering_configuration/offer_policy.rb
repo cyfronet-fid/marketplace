@@ -28,17 +28,39 @@ class OrderingConfiguration::OfferPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:id, :name, :description, :order_type, :order_url, :default, :internal,
-     :primary_oms_id, oms_params: {},
-     parameters_attributes: [:type, :name, :hint, :min, :max,
-                             :unit, :value_type, :start_price, :step_price, :currency,
-                             :exclusive_min, :exclusive_max, :mode, :values, :value]]
+    [
+      :id,
+      :name,
+      :description,
+      :order_type,
+      :order_url,
+      :default,
+      :internal,
+      :primary_oms_id,
+      oms_params: {},
+      parameters_attributes: %i[
+        type
+        name
+        hint
+        min
+        max
+        unit
+        value_type
+        start_price
+        step_price
+        currency
+        exclusive_min
+        exclusive_max
+        mode
+        values
+        value
+      ]
+    ]
   end
 
   private
-    def offer_editor?
-      record.service.administered_by?(user) ||
-        user&.service_portfolio_manager? ||
-        user&.service_owner?
-    end
+
+  def offer_editor?
+    record.service.administered_by?(user) || user&.service_portfolio_manager? || user&.service_owner?
+  end
 end

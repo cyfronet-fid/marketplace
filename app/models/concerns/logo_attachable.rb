@@ -4,8 +4,6 @@ module LogoAttachable
   include ImageHelper
 
   def logo_variable
-    if logo.present? && !logo.variable?
-      errors.add(:logo, ImageHelper.permitted_ext_message)
-    end
+    errors.add(:logo, ImageHelper.permitted_ext_message) if logo.present? && !logo.variable?
   end
 end

@@ -10,9 +10,7 @@ class Services::ConfigurationsController < Services::ApplicationController
       @step = step(saved_state)
       @offer = @step.offer
 
-      unless @step.visible?
-        redirect_to url_for([@service, next_step_key])
-      end
+      redirect_to url_for([@service, next_step_key]) unless @step.visible?
     else
       redirect_to url_for([@service, prev_visible_step_key]), alert: prev_visible_step.error
     end
@@ -23,9 +21,7 @@ class Services::ConfigurationsController < Services::ApplicationController
     @project_item = CustomizableProjectItem.new(configuration_params)
     @offer = @step.offer
 
-    if @step.request_voucher
-      @step.voucher_id = ""
-    end
+    @step.voucher_id = "" if @step.request_voucher
 
     if @step.valid?
       save_in_session(@step)
@@ -37,14 +33,13 @@ class Services::ConfigurationsController < Services::ApplicationController
   end
 
   private
-    def configuration_params
-      template = CustomizableProjectItem.new(saved_state)
-      saved_state
-          .merge(permitted_attributes(template))
-          .merge(status: :created)
-    end
 
-    def step_key
-      :configuration
-    end
+  def configuration_params
+    template = CustomizableProjectItem.new(saved_state)
+    saved_state.merge(permitted_attributes(template)).merge(status: :created)
+  end
+
+  def step_key
+    :configuration
+  end
 end

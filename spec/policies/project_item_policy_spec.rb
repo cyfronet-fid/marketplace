@@ -15,17 +15,13 @@ RSpec.describe ProjectItemPolicy do
 
   permissions :create? do
     it "grants access to create item in owned project" do
-      expect(subject).
-        to permit(user, build(:project_item,
-                              project: build(:project, user: user)))
+      expect(subject).to permit(user, build(:project_item, project: build(:project, user: user)))
     end
   end
 
   permissions :show? do
     it "grants access for project_item owner" do
-      expect(subject).to permit(user,
-                                build(:project_item,
-                                      project: build(:project, user: user)))
+      expect(subject).to permit(user, build(:project_item, project: build(:project, user: user)))
     end
 
     it "denies to see other user owners" do

@@ -32,11 +32,12 @@ class Backoffice::PlatformPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name, :eid]
+    %i[name eid]
   end
 
   private
-    def service_portfolio_manager?
-      user&.service_portfolio_manager?
-    end
+
+  def service_portfolio_manager?
+    user&.service_portfolio_manager?
+  end
 end

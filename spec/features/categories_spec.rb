@@ -65,9 +65,7 @@ RSpec.feature "Service categories" do
     expect(page.body).to have_content s1.name
     expect(page.body).to have_content s2.name
     expect(page.body).to have_content s3.name
-    all(@services_selector).each do |element|
-      expect(element).to_not have_content other_service.name
-    end
+    all(@services_selector).each { |element| expect(element).to_not have_content other_service.name }
   end
 
   scenario "limit number of services per page" do

@@ -4,15 +4,9 @@ require "rails_helper"
 
 RSpec.describe ProjectPolicy do
   let(:user) { create(:user) }
-  let(:project_with_project_item) do
-    create(:project) do |project|
-      create(:project_item,  project: project)
-    end
-  end
+  let(:project_with_project_item) { create(:project) { |project| create(:project_item, project: project) } }
   let(:project_with_ended_project_item) do
-    create(:project) do |project|
-      create(:project_item,  project: project, status: "closed", status_type: :closed)
-    end
+    create(:project) { |project| create(:project_item, project: project, status: "closed", status_type: :closed) }
   end
 
   subject { described_class }

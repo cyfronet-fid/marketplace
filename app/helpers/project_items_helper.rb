@@ -6,11 +6,12 @@ module ProjectItemsHelper
 
     case message.author_role
     when "user"
-      "#{_('You')}, #{date}"
+      "#{_("You")}, #{date}"
     when "provider"
-      "#{date}#{author_identity(message)}, #{_('Provider')}"
-    else # mediator
-      "#{date}#{author_identity(message)}, #{_('Customer service')}"
+      "#{date}#{author_identity(message)}, #{_("Provider")}"
+    else
+      # mediator
+      "#{date}#{author_identity(message)}, #{_("Customer service")}"
     end
   end
 
@@ -33,20 +34,22 @@ module ProjectItemsHelper
   end
 
   def webpage(project_item)
-    if project_item.order_url.blank?
-      project_item.service.webpage_url
-    else
-      project_item.order_url
-    end
+    project_item.order_url.blank? ? project_item.service.webpage_url : project_item.order_url
   end
 
   def project_item_status(project_item)
     if project_item.in_progress?
-      content_tag(:div,  "#{t "project_items.status.#{project_item.status_type}"}",
-                  class: "status-box status-bg-progress")
+      content_tag(
+        :div,
+        "#{t "project_items.status.#{project_item.status_type}"}",
+        class: "status-box status-bg-progress"
+      )
     else
-      content_tag(:div,  "#{t "project_items.status.#{project_item.status_type}"}",
-                  class: "status-box status-bg-#{project_item.status_type}")
+      content_tag(
+        :div,
+        "#{t "project_items.status.#{project_item.status_type}"}",
+        class: "status-box status-bg-#{project_item.status_type}"
+      )
     end
   end
 
@@ -57,8 +60,12 @@ module ProjectItemsHelper
 
   def service_providers_list(project_item)
     organisation = project_item.service.resource_organisation
-    providers = project_item.service.providers.reject { |p| p == organisation }.
-      map { |p| link_to(p.name, services_path(providers: p.id)) }
+    providers =
+      project_item
+        .service
+        .providers
+        .reject { |p| p == organisation }
+        .map { |p| link_to(p.name, services_path(providers: p.id)) }
     safe_join(providers, ", ")
   end
 end

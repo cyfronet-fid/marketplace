@@ -16,7 +16,7 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
     get "lists resources administered by user" do
       tags "Resources"
       produces "application/json"
-      security [ authentication_token: [] ]
+      security [authentication_token: []]
 
       response 200, "resources found" do
         schema "$ref" => "resource/resource_index.json"
@@ -71,7 +71,7 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
     get "retrieves an administered resource" do
       tags "Resources"
       produces "application/json"
-      security [ authentication_token: [] ]
+      security [authentication_token: []]
       parameter name: :id, in: :path, type: :string, description: "Resource identifier (id or eid)"
 
       response 200, "resource found" do
@@ -79,8 +79,9 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator])) }
+        let!(:service) do
+          create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator]))
+        end
         let(:"X-User-Token") { data_admin_user.authentication_token }
         let(:id) { service.slug }
 
@@ -95,9 +96,13 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                pid: "qwe.asd",
-                                resource_organisation: create(:provider, data_administrators: [data_administrator])) }
+        let!(:service) do
+          create(
+            :service,
+            pid: "qwe.asd",
+            resource_organisation: create(:provider, data_administrators: [data_administrator])
+          )
+        end
         let(:"X-User-Token") { data_admin_user.authentication_token }
         let(:id) { service.pid }
 
@@ -117,9 +122,22 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
         let(:provider2) { create(:provider) }
         let(:service) { create(:service, resource_organisation: provider1) }
 
-        let!(:default_oms) { create(:oms, type: :global, default: true,
-                                    custom_params: { param: { mandatory: true, default: "some_default" },
-                                                     other_param: { mandatory: false } }) }
+        let!(:default_oms) do
+          create(
+            :oms,
+            type: :global,
+            default: true,
+            custom_params: {
+              param: {
+                mandatory: true,
+                default: "some_default"
+              },
+              other_param: {
+                mandatory: false
+              }
+            }
+          )
+        end
         let!(:provider_group_oms) { create(:oms, type: :provider_group, providers: [provider1, provider2]) }
         let!(:provider2_group_oms) { create(:oms, type: :provider_group, providers: [provider2]) }
         let!(:resource_oms) { create(:oms, service: service, type: :resource_dedicated) }
@@ -130,13 +148,25 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data["available_omses"])
-            .to eq([
-                     { id: default_oms.id, name: default_oms.name, type: default_oms.type,
-                       custom_params: { param: { mandatory: true }, other_param: { mandatory: false } } },
-                     { id: resource_oms.id, name: resource_oms.name, type: resource_oms.type },
-                     { id: provider_group_oms.id, name: provider_group_oms.name, type: provider_group_oms.type }
-                   ].map(&:deep_stringify_keys))
+          expect(data["available_omses"]).to eq(
+            [
+              {
+                id: default_oms.id,
+                name: default_oms.name,
+                type: default_oms.type,
+                custom_params: {
+                  param: {
+                    mandatory: true
+                  },
+                  other_param: {
+                    mandatory: false
+                  }
+                }
+              },
+              { id: resource_oms.id, name: resource_oms.name, type: resource_oms.type },
+              { id: provider_group_oms.id, name: provider_group_oms.name, type: provider_group_oms.type }
+            ].map(&:deep_stringify_keys)
+          )
         end
       end
 
@@ -156,8 +186,9 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) { create(:service,
-                                resource_organisation: create(:provider, data_administrators: [data_administrator])) }
+        let!(:service) do
+          create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator]))
+        end
 
         let(:diff_data_admin_user) { create(:user) }
         let!(:diff_data_administrator) { create(:data_administrator, email: diff_data_admin_user.email) }

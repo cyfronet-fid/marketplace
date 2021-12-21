@@ -6,8 +6,7 @@ class Projects::ArchivesController < ApplicationController
   def create
     authorize(@project, :archive?)
     if Project::Archive.new(@project).call
-      redirect_to projects_path,
-                  notice: "Project archived"
+      redirect_to projects_path, notice: "Project archived"
     else
       flash[:alert] = "Project cannot be archived"
       redirect_to project_path(@project)

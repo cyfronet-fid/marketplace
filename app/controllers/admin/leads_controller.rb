@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::LeadsController < Admin::ApplicationController
-  before_action :find_and_authorize, only: [:edit, :update, :destroy]
-
+  before_action :find_and_authorize, only: %i[edit update destroy]
 
   def index
     @sections = LeadSection.includes(:leads).all
@@ -25,13 +24,11 @@ class Admin::LeadsController < Admin::ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @lead.update(permitted_attributes(Lead))
-      redirect_to admin_leads_path,
-        notice: "Lead was updated successfully"
+      redirect_to admin_leads_path, notice: "Lead was updated successfully"
     else
       render :edit, status: :bad_request
     end
@@ -43,8 +40,9 @@ class Admin::LeadsController < Admin::ApplicationController
   end
 
   private
-    def find_and_authorize
-      @lead = Lead.find(params["id"])
-      authorize(@lead)
-    end
+
+  def find_and_authorize
+    @lead = Lead.find(params["id"])
+    authorize(@lead)
+  end
 end
