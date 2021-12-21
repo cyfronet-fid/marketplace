@@ -83,6 +83,17 @@ Style/NumericLiterals:
 
 Bundler/OrderedGems:
   Enabled: false
+
+Lint/ImplicitStringConcatenation:
+  Enabled: false
+
+# Turn off due conflict with prettier
+Style/LineEndConcatenation:
+  Enabled: false
+
+Style/InverseMethods:
+  Enabled: false
+
 ################################
 # TODO Check, enable or forbid rules beneath
 ################################
@@ -216,91 +227,21 @@ Lint/UnusedBlockArgument:
 Style/RescueStandardError:
   Enabled: false
 
-Style/SafeNavigation:
-  Enabled: false
-
-Style/For:
-  Enabled: false
-
-Style/NegatedIf:
-  Enabled: false
-
-Style/HashAsLastArrayItem:
-  Enabled: false
-
-Lint/ImplicitStringConcatenation:
-  Enabled: false
-
-Style/NegatedIfElseCondition:
-  Enabled: false
-
-Style/NilComparison:
-  Enabled: false
-
-Style/RedundantArgument:
-  Enabled: false
-
-Style/IdenticalConditionalBranches:
-  Enabled: false
-
-Style/ZeroLengthPredicate:
-  Enabled: false
-
-Lint/ShadowingOuterLocalVariable:
-  Enabled: false
-
-Lint/ParenthesesAsGroupedExpression:
-  Enabled: false
-
-Style/IfInsideElse:
-  Enabled: false
-
+### Large change with small impact
 Lint/UnderscorePrefixedVariableName:
   Enabled: false
 
-Style/RedundantSelf:
-  Enabled: false
-
-Style/PercentLiteralDelimiters:
-  Enabled: false
-
-Lint/NestedMethodDefinition:
-  Enabled: false
-
-Lint/Void:
-  Enabled: false
-
-Naming/VariableNumber:
-  Enabled: false
-
-Lint/Debugger:
-  Enabled: false
-
+### Beneath rules require double check before turning on
 Lint/MissingSuper:
   Enabled: false
 
 Lint/AssignmentInCondition:
   Enabled: false
 
-Style/CaseEquality:
-  Enabled: false
-
 Lint/RescueException:
   Enabled: false
 
-Style/EmptyElse:
-  Enabled: false
-
-Lint/LiteralAsCondition:
-  Enabled: false
-
 Naming/AccessorMethodName:
-  Enabled: false
-
-Style/AccessModifierDeclarations:
-  Enabled: false
-
-Style/LineEndConcatenation:
   Enabled: false
 
 Style/ClassAndModuleChildren:
@@ -309,43 +250,26 @@ Style/ClassAndModuleChildren:
 Style/MutableConstant:
   Enabled: false
 
-Style/RedundantFetchBlock:
-  Enabled: false
-
-Style/InverseMethods:
-  Enabled: false
-
 Lint/UselessMethodDefinition:
-  Enabled: false
-
-Style/GlobalStdStream:
   Enabled: false
 
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-Lint/RedundantSafeNavigation:
-  Enabled: false
-
-Style/SlicingWithRange:
-  Enabled: false
-
-Lint/AmbiguousRange:
-  Enabled: false
-
 Style/SingleArgumentDig:
   Enabled: false
 
-Style/DoubleNegation:
+Style/NegatedIfElseCondition:
   Enabled: false
 
-Lint/Loop:
+Style/RedundantArgument:
   Enabled: false
 
-Style/StructInheritance:
+Lint/NestedMethodDefinition:
   Enabled: false
 
-Style/PreferredHashMethods:
+Style/HashAsLastArrayItem:
   Enabled: false
 
-
+Style/RedundantSelf:
+  Enabled: false
