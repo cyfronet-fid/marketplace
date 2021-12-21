@@ -38,9 +38,7 @@ module Service::Categorable
   end
 
   def siblings_with_counters
-    siblings.each_with_object({}) do |cat, h|
-      h[cat.id] = { category: cat, counter: count_services(cat) }
-    end
+    siblings.each_with_object({}) { |cat, h| h[cat.id] = { category: cat, counter: count_services(cat) } }
   end
 
   def subcategories_with_counters

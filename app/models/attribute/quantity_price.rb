@@ -43,11 +43,9 @@ class Attribute::QuantityPrice < Attribute
   end
 
   def value_valid?
-    
-      Integer(@value)
-    rescue StandardError
-      false
-    
+    Integer(@value)
+  rescue StandardError
+    false
   end
 
   def start_price

@@ -36,18 +36,17 @@ describe Jms::Subscriber do
 
     allow(client_stub).to receive(:new).and_return(client)
     Jms::Subscriber.new(
-        "dummy_topic",
-        "dummy_login",
-        "dummy_pass",
-        "dummy_host",
-        "MPClientTest",
-        "localhost",
-        false,
-        nil,
-        client: client_stub,
-        logger: logger
-      )
-    
+      "dummy_topic",
+      "dummy_login",
+      "dummy_pass",
+      "dummy_host",
+      "MPClientTest",
+      "localhost",
+      false,
+      nil,
+      client: client_stub,
+      logger: logger
+    )
   end
 
   def stub_good_message
