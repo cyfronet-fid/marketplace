@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-if ENV["CUSTOMIZATION_PATH"].present?
-  require "#{Rails.root}/lib/core_extensions/webpacker/helper.rb"
-end
+require "#{Rails.root}/lib/core_extensions/webpacker/helper.rb" if ENV["CUSTOMIZATION_PATH"].present?
 # Be sure to restart your server when you modify this file.
 
 # Version of your assets, change this if you want to expire all your assets.

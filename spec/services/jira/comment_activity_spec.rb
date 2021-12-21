@@ -43,9 +43,9 @@ RSpec.describe Jira::CommentActivity do
       end
 
       it "update message" do
-        expect {
+        expect do
           described_class.new(project_item, comment(message: "First edited message", id: 123)).call
-        }.not_to change { project.messages.count }
+        end.not_to change { project.messages.count }
 
         first_message = project_item.messages.last
 

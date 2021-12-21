@@ -354,7 +354,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field("Name")
       expect(page).to have_field("Description")
 
-      expect {
+      expect do
         fill_in "Name", with: "new offer 1"
         fill_in "Description", with: "test offer"
         find("li", text: "Input").click
@@ -368,7 +368,7 @@ RSpec.feature "Services in backoffice" do
         end
 
         click_on "Create Offer"
-      }.to change { service.offers.count }.by(1)
+      end.to change { service.offers.count }.by(1)
 
       service.reload
       expect(service.offers.last.name).to eq("new offer 1")
@@ -450,10 +450,10 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
       click_on "Add new offer"
 
-      expect {
+      expect do
         fill_in "Description", with: "test offer"
         click_on "Create Offer"
-      }.to change { service.offers.count }.by(0)
+      end.to change { service.offers.count }.by(0)
     end
 
     scenario "I can edit offer", js: true do

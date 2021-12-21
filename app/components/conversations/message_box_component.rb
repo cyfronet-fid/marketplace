@@ -14,6 +14,6 @@ class Conversations::MessageBoxComponent < ApplicationComponent
       project = @message.messageable.project
     end
 
-    not project.archived?
+    !project.archived?
   end
 end

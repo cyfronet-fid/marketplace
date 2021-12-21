@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ArrayInput < SimpleForm::Inputs::TextInput
-  def input(wrapper_options)
+  def input(_wrapper_options)
     input_html_options[:type] ||= input_type
     existing_value =
       Array(object.public_send(attribute_name))

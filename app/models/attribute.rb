@@ -18,7 +18,7 @@ class Attribute
       # this needs to be like that - simple form is based on the f.input :id
       errors.add(:id, "Invalid attribute value")
     end
-    # TODO add more speciffic errors under type speciffic fieds eg. :min, :max, and handle them in views
+    # TODO: add more speciffic errors under type speciffic fieds eg. :min, :max, and handle them in views
     # examples
     # errors.add(:min, "Minimum value not met")
   end
@@ -55,7 +55,7 @@ class Attribute
     self.class::TYPE
   end
 
-  def to_json
+  def to_json(*_args)
     json = {}
     json["id"] = id
     json["label"] = label

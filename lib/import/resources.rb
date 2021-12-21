@@ -93,11 +93,11 @@ module Import
                       " not updating #{existing_service.name}, id: #{service_source.id}"
               end
             end
-          rescue ActiveRecord::RecordInvalid => invalid
-            log "ERROR - #{invalid}! #{service[:name]} (eid: #{service[:pid]}) " +
+          rescue ActiveRecord::RecordInvalid => e
+            log "ERROR - #{e}! #{service[:name]} (eid: #{service[:pid]}) " +
                   "will NOT be created (please contact catalog manager)"
-          rescue StandardError => error
-            log "ERROR - Unexpected #{error}! #{service[:name]} (eid: #{service[:pid]}) will NOT be created!"
+          rescue StandardError => e
+            log "ERROR - Unexpected #{e}! #{service[:name]} (eid: #{service[:pid]}) will NOT be created!"
           end
         end
       log "PROCESSED: #{total_service_count}, CREATED: #{created}, UPDATED: #{updated}, NOT MODIFIED: #{not_modified}"

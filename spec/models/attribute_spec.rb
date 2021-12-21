@@ -46,7 +46,7 @@ RSpec.describe Attribute do
     expect(attr.value_valid?).to be true
   end
 
-  # TODO - known issue for now. Rails auto-coerces to numeric types. Bring this test back once fixed
+  # TODO: - known issue for now. Rails auto-coerces to numeric types. Bring this test back once fixed
   # it "creates attribute number string assigned to string" do
   #   attr = Attribute.from_json({
   #                                  "id" => "id7",
@@ -84,7 +84,7 @@ RSpec.describe Attribute do
   end
 
   it "fails on invalid attribute type" do
-    expect {
+    expect do
       Attribute.from_json(
         "id" => "id1",
         "label" => "Attribute 1",
@@ -95,7 +95,7 @@ RSpec.describe Attribute do
           "values" => %w[a b c]
         }
       )
-    }.to raise_exception(JSON::Schema::ValidationError)
+    end.to raise_exception(JSON::Schema::ValidationError)
   end
 
   it "creates correct integer select with value from json" do
@@ -178,7 +178,7 @@ RSpec.describe Attribute do
   end
 
   it "creates correct number range with invalid value from json" do
-    expect {
+    expect do
       Attribute.from_json(
         "id" => "id1",
         "label" => "Attribute 1",
@@ -191,7 +191,7 @@ RSpec.describe Attribute do
           "exclusiveMinimum" => true
         }
       )
-    }.to raise_exception(JSON::Schema::ValidationError)
+    end.to raise_exception(JSON::Schema::ValidationError)
   end
 
   it "integer attribute should not raise when created with non integer value [,], should not validate" do
@@ -271,6 +271,6 @@ RSpec.describe Attribute do
     expect { Attribute.from_json("id" => "id1") }.to raise_exception(JSON::Schema::ValidationError)
   end
 
-  # TODO test individual attribute types in their respective specs
+  # TODO: test individual attribute types in their respective specs
   # TODO much more testing
 end

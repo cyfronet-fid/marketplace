@@ -134,7 +134,7 @@ module ServiceHelper
       co = []
       co = Country.countries_for_region(place&.name) if place
       co = [place] if co.empty?
-      countries = countries | co if co.any?
+      countries |= co if co.any?
     end
     countries
       .map(&:alpha2)

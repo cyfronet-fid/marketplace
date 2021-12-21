@@ -36,7 +36,7 @@ class ProjectItem::Ready
       else
         @project_item.update(issue_id: issue.id)
         @project_item.jira_errored!
-        raise JIRATransitionSaveError.new(@project_item)
+        raise JIRATransitionSaveError, @project_item
       end
     rescue Jira::Client::JIRAIssueCreateError => e
       @project_item.jira_errored!

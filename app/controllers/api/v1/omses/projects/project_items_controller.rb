@@ -68,7 +68,7 @@ class Api::V1::OMSes::Projects::ProjectItemsController < Api::V1::ApplicationCon
   end
 
   def transform(attributes)
-    transformed = Hash.new
+    transformed = {}
     if attributes[:status].present?
       transformed[:status] = attributes[:status][:value]
       transformed[:status_type] = attributes[:status][:type]

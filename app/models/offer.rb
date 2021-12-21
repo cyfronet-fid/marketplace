@@ -85,7 +85,7 @@ class Offer < ApplicationRecord
   end
 
   def offers_count
-    service && service.offers.maximum(:iid).to_i || 0
+    (service && service.offers.maximum(:iid).to_i) || 0
   end
 
   def oms_params_match?

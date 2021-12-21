@@ -13,7 +13,7 @@ class ProjectItem::Attributes
     values.each { |id, value| update_attribute(id, value) }
   end
 
-  def to_json
+  def to_json(*_args)
     attributes.map(&:to_json)
   end
 

@@ -34,20 +34,7 @@ class Jira::Client < JIRA::Client
     end
   end
 
-  attr_reader :jira_config
-  attr_reader :jira_project_key
-  attr_reader :jira_issue_type_id, :jira_project_issue_type_id
-  attr_reader :webhook_secret
-  attr_reader :custom_fields
-  attr_reader :wf_todo_id,
-              :wf_in_progress_id,
-              :wf_done_id,
-              :wf_rejected_id,
-              :wf_waiting_for_response_id,
-              :wf_closed_id,
-              :wf_ready_id,
-              :wf_approved_id,
-              :wf_archived_id
+  attr_reader :jira_config, :jira_project_key, :jira_issue_type_id, :jira_project_issue_type_id, :webhook_secret, :custom_fields, :wf_todo_id, :wf_in_progress_id, :wf_done_id, :wf_rejected_id, :wf_waiting_for_response_id, :wf_closed_id, :wf_ready_id, :wf_approved_id, :wf_archived_id
 
   def initialize
     # read required options and initialize jira client
@@ -60,7 +47,7 @@ class Jira::Client < JIRA::Client
       site: @jira_config[:url],
       context_path: @jira_config[:context_path],
       auth_type: :basic,
-      use_ssl: (%r{^https:\/\/} =~ @jira_config[:url])
+      use_ssl: (%r{^https://} =~ @jira_config[:url])
     }
 
     @jira_project_key = @jira_config[:project]
@@ -140,7 +127,7 @@ class Jira::Client < JIRA::Client
   end
 
   def create_service_issue(project_item)
-    raise ProjectIssueDoesNotExist.new(project_item.project) unless project_item.project.jira_active?
+    raise ProjectIssueDoesNotExist, project_item.project unless project_item.project.jira_active?
 
     issue = self.Issue.build
 
@@ -171,7 +158,7 @@ class Jira::Client < JIRA::Client
   end
 
   def update_project_issue(project)
-    raise ProjectIssueDoesNotExist.new(project) unless project.jira_active?
+    raise ProjectIssueDoesNotExist, project unless project.jira_active?
 
     issue = self.Issue.find(project.issue_id)
 

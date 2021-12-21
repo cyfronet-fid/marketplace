@@ -6,11 +6,10 @@ module ScientificDomainsHelper
     ScientificDomain.arrange.each { |k, v| group_scientific_domains!(result, "/", k, v) }
 
     result
-      .inject({}) do |acc, record|
+      .each_with_object({}) do |record, acc|
         k, v = record
         acc[k] ||= []
         acc[k] << v
-        acc
       end
       .map { |k, v| [k, v] }
       .sort { |v1, v2| v1.first <=> v2.first }

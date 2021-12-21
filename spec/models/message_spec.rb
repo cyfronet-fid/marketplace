@@ -171,9 +171,9 @@ RSpec.describe Message do
             %i[public user_direct].each do |scope|
               context ":#{scope}_scope?" do
                 it "sends email" do
-                  expect {
+                  expect do
                     create(:message, scope: scope, author_role: author_role, messageable: project_item)
-                  }.to change { ActionMailer::Base.deliveries.count }.by(1)
+                  end.to change { ActionMailer::Base.deliveries.count }.by(1)
                   email = ActionMailer::Base.deliveries.last
 
                   expect(email.to).to contain_exactly(project_item.user.email)
@@ -185,9 +185,9 @@ RSpec.describe Message do
 
             context ":internal_scope?" do
               it "doesn't send email" do
-                expect {
+                expect do
                   create(:message, scope: :internal, author_role: author_role, messageable: project_item)
-                }.not_to change { ActionMailer::Base.deliveries.count }
+                end.not_to change { ActionMailer::Base.deliveries.count }
               end
             end
           end
@@ -214,9 +214,9 @@ RSpec.describe Message do
 
             context ":internal_scope?" do
               it "doesn't send email" do
-                expect {
+                expect do
                   create(:message, scope: :internal, author_role: author_role, messageable: project)
-                }.not_to change { ActionMailer::Base.deliveries.count }
+                end.not_to change { ActionMailer::Base.deliveries.count }
               end
             end
           end

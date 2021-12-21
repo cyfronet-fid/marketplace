@@ -57,7 +57,7 @@ module ImageHelper
 
   def self.image_valid?(url)
     Timeout.timeout(10) do
-      begin
+      
         logo = open(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
         extension = Rack::Mime::MIME_TYPES.invert[logo.content_type]
         return false unless ImageHelper.image_ext_permitted?(extension)
@@ -67,7 +67,7 @@ module ImageHelper
         return false
       rescue Exception
         return false
-      end
+      
     end
   rescue Timeout::Error
     false
@@ -79,7 +79,7 @@ module ImageHelper
 
   def self.base_64_extension(base_64)
     metadata = base_64.split("base64,")[0]
-    extension = "." + metadata[%r{image\/[a-zA-Z]+}].gsub!(%r{image\/}, "")
+    extension = "." + metadata[%r{image/[a-zA-Z]+}].gsub!(%r{image/}, "")
     unless ImageHelper.image_ext_permitted?(extension)
       msg = "Conversion of binary image to base64 can't be done on file with extension #{extension}"
       Sentry.capture_message(msg)

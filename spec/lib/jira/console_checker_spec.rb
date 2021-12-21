@@ -85,9 +85,9 @@ describe Jira::ConsoleChecker do
       output = true
 
       # noinspection RubyArgCount
-      expect {
+      expect do
         output = con_checker.error_and_abort!(Jira::Checker::CheckerCompositeError.new(message, status: false))
-      }.to output(" FAIL".red + "\n" + "  " + "- ERROR".red + ": #{message}\n    - status:" + " ✕".red + "\n").to_stdout
+      end.to output(" FAIL".red + "\n" + "  " + "- ERROR".red + ": #{message}\n    - status:" + " ✕".red + "\n").to_stdout
       expect(output).to be_falsey
     end
   end

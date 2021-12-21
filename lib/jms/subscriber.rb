@@ -51,9 +51,9 @@ module Jms
         error_block(msg, e)
       end
 
-      raise ConnectionError.new("Connection failed!!") unless @client.open?
+      raise ConnectionError, "Connection failed!!" unless @client.open?
       if @client.connection_frame.command == Stomp::CMD_ERROR
-        raise ConnectionError.new("Connection error: #{@client.connection_frame.body}")
+        raise ConnectionError, "Connection error: #{@client.connection_frame.body}"
       end
 
       @client.join
