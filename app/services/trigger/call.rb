@@ -8,11 +8,7 @@ class Trigger::Call
   end
 
   def call
-    if @trigger.authorization&.is_a?(OMS::Authorization::Basic)
-      handle_basic_auth(@trigger.authorization)
-    else
-      handle_no_auth
-    end
+    @trigger.authorization.is_a?(OMS::Authorization::Basic) ? handle_basic_auth(@trigger.authorization) : handle_no_auth
   end
 
   private

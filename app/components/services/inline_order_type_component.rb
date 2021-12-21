@@ -10,7 +10,8 @@ class Services::InlineOrderTypeComponent < ApplicationComponent
     various: _("Resource has various order types, check offers to know the details."),
     external:
       _(
-        "Resource orders are handled externally," + "\nbut access requests coming from EOSC-hub can be tracked" +
+        "Resource orders are handled externally," \
+          "\nbut access requests coming from EOSC-hub can be tracked" \
           "\nand reflected in the Management Back Office."
       )
   }

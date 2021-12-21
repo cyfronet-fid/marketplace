@@ -18,7 +18,7 @@ class Attribute::Range < Attribute
   end
 
   def value_from_param(param)
-    if !param.blank?
+    unless param.blank?
       case value_type
       when "integer"
         @value =

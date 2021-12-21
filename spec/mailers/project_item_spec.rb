@@ -109,7 +109,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
 
       expect(mail.subject).to match(/EGI Applications on Demand service approved/)
       expect(encoded_body).to include(
-        "This email is to inform you that your request to access the EGI\r\n" +
+        "This email is to inform you that your request to access the EGI\r\n" \
           "Applications on Demand (AoD) service has been approved."
       )
     end

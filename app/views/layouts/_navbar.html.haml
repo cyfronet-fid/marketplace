@@ -51,7 +51,7 @@
               = _("Portal Home")
           %li.list-inline-item.ml-2
             = link_to "Catalogue & Marketplace", root_path,
-              class: "#{"active" if local_assigns[:section] == nil}"
+              class: "#{"active" if local_assigns[:section].nil?}"
           %li.list-inline-item.ml-2
             %a{ href: Mp::Application.config.providers_dashboard_url }
               = _("Providers Dashboard")

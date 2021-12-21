@@ -89,13 +89,13 @@ class Offer < ApplicationRecord
   end
 
   def oms_params_match?
-    if (Set.new(oms_params.keys) - Set.new(current_oms.custom_params.keys)).length > 0
+    unless (Set.new(oms_params.keys) - Set.new(current_oms.custom_params.keys)).empty?
       errors.add(:oms_params, "additional unspecified keys added")
       return
     end
 
     missing_keys = Set.new(current_oms.custom_params.keys) - Set.new(oms_params.keys)
-    if (missing_keys & Set.new(current_oms.mandatory_defaults.keys)).length > 0
+    unless (missing_keys & Set.new(current_oms.mandatory_defaults.keys)).empty?
       errors.add(:oms_params, "missing mandatory keys")
     end
   end
@@ -105,8 +105,8 @@ class Offer < ApplicationRecord
       if current_oms.mandatory_defaults.present?
         oms_params.blank? ? errors.add(:oms_params, "can't be blank") : oms_params_match?
       end
-    else
-      errors.add(:oms_params, "must be blank if primary OMS' custom params are blank") if oms_params.present?
+    elsif oms_params.present?
+      errors.add(:oms_params, "must be blank if primary OMS' custom params are blank")
     end
   end
 

@@ -13,7 +13,7 @@ class ProjectItem::Create
     bundled_project_items = []
 
     ProjectItem.transaction do
-      if !@project_item.update(status: "created", status_type: :created)
+      unless @project_item.update(status: "created", status_type: :created)
         rolled_back = true
         raise ActiveRecord::Rollback
       end
@@ -22,7 +22,7 @@ class ProjectItem::Create
         bundled_project_items =
           @project_item.offer.bundled_offers.map do |offer|
             bundled_parameters =
-              if @bundle_params&.respond_to?(:has_key?) && @bundle_params&.has_key?(offer.id)
+              if @bundle_params.respond_to?(:has_key?) && @bundle_params&.key?(offer.id)
                 @bundle_params[offer.id].map(&:to_json)
               else
                 []
@@ -44,7 +44,7 @@ class ProjectItem::Create
       end
     end
 
-    if !rolled_back
+    unless rolled_back
       persisted_project_items = [@project_item] + bundled_project_items
 
       persisted_project_items.each do |project_item|

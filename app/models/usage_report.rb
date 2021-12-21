@@ -57,7 +57,7 @@ class UsageReport
       Service
         .left_outer_joins(:offers)
         .where(
-          "(services.order_type IN (?) OR (offers.order_type IN (?) AND " +
+          "(services.order_type IN (?) OR (offers.order_type IN (?) AND " \
             "offers.status = ?)) AND services.status IN (?)",
           types.to_a,
           types.to_a,

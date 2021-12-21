@@ -29,8 +29,6 @@ class ProjectItem::OnStatusTypeUpdated
       end
     when :closed
       ProjectItemMailer.closed(@project_item).deliver_later
-    else
-      # nothing to send
     end
   end
 

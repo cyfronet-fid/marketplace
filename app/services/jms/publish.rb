@@ -9,7 +9,7 @@ class Jms::Publish
   end
 
   def call
-    unless @message&.respond_to?(:to_json)
+    unless @message.respond_to?(:to_json)
       raise ArgumentError, "Message must have a :to_json method, passed: #{@message}"
     end
 

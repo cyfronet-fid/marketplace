@@ -37,7 +37,7 @@ class ServicesController < ApplicationController
   def show
     @service = Service.includes(:offers, :target_relationships).friendly.find(params[:id])
 
-    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] === "backoffice_service"))
+    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"))
     @offers = policy_scope(@service.offers.published).order(:created_at).select { |o| o.bundle? == false }
     @bundles = policy_scope(@service.offers.published).order(:created_at).select { |o| o.bundle? }
     @related_services = @service.target_relationships

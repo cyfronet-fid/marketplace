@@ -25,7 +25,7 @@ RSpec.feature "User action", js: true do
       expect(body["timestamp"].to_s).not_to be_nil
 
       expect(body["source"]["visit_id"].to_s).not_to be_nil
-      !expect(body["source"]["page_id"]).not_to be_nil
+      expect(body["source"]["page_id"]).not_to be_nil
       expect(body["source"]["root"]["type"]).to eq "other"
       expect(body["source"]["root"]["panel_id"]).to be_nil
 

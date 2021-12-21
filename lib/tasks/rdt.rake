@@ -141,7 +141,7 @@ namespace :rdt do
           slug: hash["slug"],
           parent: parent
         )
-        puts "Updated existing category: #{existing_category.name}, eid: #{existing_category.eid}, " +
+        puts "Updated existing category: #{existing_category.name}, eid: #{existing_category.eid}, " \
                "slug: #{existing_category.slug}"
       end
     end

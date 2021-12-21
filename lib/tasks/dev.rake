@@ -159,37 +159,35 @@ namespace :dev do
   end
 
   def create_offers(service, offers_hash)
-    offers_hash &&
-      offers_hash.each do |_, h|
-        effective_order_url = h["order_url"] || service.order_url
-        service.offers.create!(
-          name: h["name"],
-          description: h["description"],
-          parameters: Parameter::Array.load(h["parameters"] || []),
-          order_type: h["order_type"].blank? ? service.order_type : h["order_type"],
-          order_url: effective_order_url.present? ? effective_order_url : "",
-          internal: effective_order_url.blank?,
-          status: :published
-        )
-        puts "    - #{h["name"]} offer generated"
-      end
+    offers_hash&.each do |_, h|
+      effective_order_url = h["order_url"] || service.order_url
+      service.offers.create!(
+        name: h["name"],
+        description: h["description"],
+        parameters: Parameter::Array.load(h["parameters"] || []),
+        order_type: h["order_type"].blank? ? service.order_type : h["order_type"],
+        order_url: effective_order_url.present? ? effective_order_url : "",
+        internal: effective_order_url.blank?,
+        status: :published
+      )
+      puts "    - #{h["name"]} offer generated"
+    end
   end
 
   def create_relations(relations_hash)
     puts "Generating service relations from yaml (remove all relations and crating new one):"
     ServiceRelationship.delete_all
 
-    relations_hash &&
-      relations_hash.each do |_, hash|
-        source = Service.find_by(name: hash["source"])
-        target = Service.find_by(name: hash["target"])
-        ManualServiceRelationship.create!(source: source, target: target)
-        if hash["both"]
-          ManualServiceRelationship.create!(source: target, target: source)
-          puts "  - Relation from #{target.name} to #{source.name} generated"
-        end
-        puts "  - Relation from #{source.name} to #{target.name} generated"
+    relations_hash&.each do |_, hash|
+      source = Service.find_by(name: hash["source"])
+      target = Service.find_by(name: hash["target"])
+      ManualServiceRelationship.create!(source: source, target: target)
+      if hash["both"]
+        ManualServiceRelationship.create!(source: target, target: source)
+        puts "  - Relation from #{target.name} to #{source.name} generated"
       end
+      puts "  - Relation from #{source.name} to #{target.name} generated"
+    end
   end
 
   def create_vocabularies

@@ -16,7 +16,7 @@ class Service::Update
           status: "published"
         }
       ).call
-    elsif @service.offers.published.size == 0
+    elsif @service.offers.published.empty?
       Offer::Create.new(
         Offer.new(
           name: "Offer",

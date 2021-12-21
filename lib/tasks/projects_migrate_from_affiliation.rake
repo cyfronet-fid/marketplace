@@ -31,7 +31,7 @@ namespace :projects do
   end
 
   def fill_in!(project)
-    if project.user.affiliations.size == 0
+    if project.user.affiliations.empty?
       puts "Unable to fill in project #{project.name} for #{project.user.full_name} (#{project.user.email})"
     else
       project.customer_typology = "single_user" if project.customer_typology.nil?

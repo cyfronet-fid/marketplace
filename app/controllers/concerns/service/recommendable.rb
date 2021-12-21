@@ -98,19 +98,17 @@ module Service::Recommendable
 
   def get_filters_by(params)
     filters = {}
-    unless params.nil?
-      params.each do |key, value|
-        next if ALLOWED_SEARCH_DATA_FIELDS.exclude?(key.to_sym) || value.blank?
+    params&.each do |key, value|
+      next if ALLOWED_SEARCH_DATA_FIELDS.exclude?(key.to_sym) || value.blank?
 
-        filter_name = key.sub "-filter", ""
-        filters[filter_name] = value
-        if @@filter_param_transformers.key? filter_name.to_sym
-          filters[filter_name] = @@filter_param_transformers[filter_name.to_sym].call value
-        end
+      filter_name = key.sub "-filter", ""
+      filters[filter_name] = value
+      if @@filter_param_transformers.key? filter_name.to_sym
+        filters[filter_name] = @@filter_param_transformers[filter_name.to_sym].call value
+      end
 
-        if @@filter_key_transformers.key? filter_name.to_sym
-          filters[@@filter_key_transformers[filter_name.to_sym]] = filters.delete filter_name
-        end
+      if @@filter_key_transformers.key? filter_name.to_sym
+        filters[@@filter_key_transformers[filter_name.to_sym]] = filters.delete filter_name
       end
     end
     filters

@@ -130,8 +130,8 @@ RSpec.feature "Vocabularies in backoffice" do
           click_on "Delete"
 
           expect(page).to have_text(
-            "This #{humanized} has successors connected to it, " +
-              "therefore is not possible to remove it. If you want to remove it, " +
+            "This #{humanized} has successors connected to it, " \
+              "therefore is not possible to remove it. If you want to remove it, " \
               "edit them so they are not associated with this #{humanized} anymore"
           )
         end

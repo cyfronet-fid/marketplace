@@ -203,7 +203,7 @@ describe Jira::Checker do
         expect(checker.client).to receive_message_chain("Webhook.all").and_return([webhook])
         expect { checker.check_webhook!("http://nonexistent") }.to raise_error(
           Jira::Checker::CheckerWarning,
-          "Could not find Webhook for this application, " +
+          "Could not find Webhook for this application, " \
             "please confirm manually that webhook is defined for this host"
         )
       end
