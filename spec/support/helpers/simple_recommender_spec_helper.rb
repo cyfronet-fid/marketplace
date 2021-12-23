@@ -25,12 +25,12 @@ module SimpleRecommenderSpecHelper
     )
   end
 
-  def create_categories(n)
-    Array.new(n) { create(:category) }
+  def create_categories(size)
+    Array.new(size) { create(:category) }
   end
 
-  def create_services(n)
-    Array.new(n) { create(:service, categories: []) }
+  def create_services(size)
+    Array.new(size) { create(:service, categories: []) }
   end
 
   def assign_category_to_services(category, services)

@@ -235,12 +235,12 @@ describe Jira::Checker do
           comment_deleted: false
         }
 
-        expect do
-          checker.check_webhook_params!(MockWebhook.new(checker.client.jira_project_key, events))
-        end.to raise_error { |error|
-          expect(error).to be_a(Jira::Checker::CheckerCompositeError)
-          expect(error.statuses).to eq(expected_statuses)
-        }
+        expect { checker.check_webhook_params!(MockWebhook.new(checker.client.jira_project_key, events)) }.to(
+          raise_error do |error|
+            expect(error).to be_a(Jira::Checker::CheckerCompositeError)
+            expect(error.statuses).to eq(expected_statuses)
+          end
+        )
       end
     end
   end

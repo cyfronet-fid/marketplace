@@ -34,8 +34,7 @@ class Importers::Service
       access_modes = Array(@data.dig("accessModes", "accessMode"))
       tag_list = Array(@data.dig("tags", "tag")) || []
       geographical_availabilities = Array(@data.dig("geographicalAvailabilities", "geographicalAvailability") || "WW")
-      language_availability =
-        Array(@data.dig("languageAvailabilities", "languageAvailability")).map { |lang| lang.upcase } || ["EN"]
+      language_availability = Array(@data.dig("languageAvailabilities", "languageAvailability")).map(&:upcase) || ["EN"]
       resource_geographic_locations =
         Array(@data.dig("resourceGeographicLocations", "resourceGeographicLocation")) || []
       public_contacts =
@@ -62,7 +61,7 @@ class Importers::Service
       access_modes = Array(@data["accessModes"])
       tag_list = Array(@data["tags"]) || []
       geographical_availabilities = Array(@data["geographicalAvailabilities"] || "WW")
-      language_availability = @data["languageAvailabilities"].map { |lang| lang.upcase } || ["EN"]
+      language_availability = @data["languageAvailabilities"].map(&:upcase) || ["EN"]
       resource_geographic_locations = Array(@data["resourceGeographicLocations"]) || []
       public_contacts = Array(@data["publicContacts"])&.map { |c| PublicContact.new(map_contact(c)) } || []
       certifications = Array(@data["certifications"])

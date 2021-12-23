@@ -86,14 +86,7 @@ module Service::Recommendable
   end
 
   def get_services_size_by(ab_test_version)
-    case ab_test_version
-    when "v1"
-      3
-    when "v2"
-      2
-    else
-      3
-    end
+    { "v1": 3, "v2": 2 }[ab_test_version] || 3
   end
 
   def get_filters_by(params)

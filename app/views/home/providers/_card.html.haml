@@ -5,7 +5,7 @@
     %li
       = link_to record.name, provider_path(record), "data-e2e": "provider-link"
 
-- if remaining_count > 0
+- if remaining_count&.positive?
   - if local_assigns[:more_path]
     = link_to more_path, "data-e2e": "more-link-providers", class: "more-link d-block" do
       %i.fas.fa-arrow-right

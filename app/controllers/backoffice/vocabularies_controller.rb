@@ -108,16 +108,16 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
 
   def destroy
     if @vocabulary.descendant_ids.present?
-      redirect_back fallback_location: send("backoffice_#{@vocabulary.model_name.element}_path", (@vocabulary)),
+      redirect_back fallback_location: send("backoffice_#{@vocabulary.model_name.element}_path", @vocabulary),
                     alert:
                       "This #{@type} has successors connected to it,
                             therefore is not possible to remove it. If you want to remove it,
                             edit them so they are not associated with this #{@type} anymore"
     elsif @vocabulary.try(:services).present?
-      redirect_back fallback_location: send("backoffice_#{@vocabulary.model_name.element}_path", (@vocabulary)),
+      redirect_back fallback_location: send("backoffice_#{@vocabulary.model_name.element}_path", @vocabulary),
                     alert: "This vocabulary has resources connected to it, remove associations to delete it."
     elsif @vocabulary.try(:providers).present?
-      redirect_back fallback_location: send("backoffice_#{@vocabulary.model_name.element}_path", (@vocabulary)),
+      redirect_back fallback_location: send("backoffice_#{@vocabulary.model_name.element}_path", @vocabulary),
                     alert: "This vocabulary has providers connected to it, remove associations to delete it."
     else
       @vocabulary.destroy!

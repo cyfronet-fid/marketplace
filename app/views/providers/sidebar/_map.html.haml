@@ -1,6 +1,6 @@
 %ul.list-group
   - fields.each do |field|
-    - unless field == "geographical_availabilities"
+    - if field != "geographical_availabilities"
       - service.send(field).each do |element|
         %li.list-group-item
           - if nested.present? && nested[field.to_sym].present?

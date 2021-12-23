@@ -9,7 +9,7 @@ Check now at:
 You are receiving this message because
 you have opted up for updates in
 - if @common_categories.present?
-  category #{@common_categories.map { |cc| cc.name }.join(", ")}
+  category #{@common_categories.map(&:name).join(", ")}
 #{"and " if @common_categories.present? && @common_scientific_domains.present?}
 - if @common_scientific_domains.present?
-  scientific domain #{@common_scientific_domains.map { |csd| csd.name }.join(", ")}
+  scientific domain #{@common_scientific_domains.map(&:name).join(", ")}

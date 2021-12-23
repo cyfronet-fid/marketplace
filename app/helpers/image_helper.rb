@@ -3,17 +3,17 @@
 require "mini_magick"
 
 module ImageHelper
-  @@PERMITTED_EXT_MESSAGE =
+  @@permitted_ext_message =
     "format you're trying to attach is not supported.
            Supported formats: png, gif, jpg, jpeg, pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon."
-  @@DEFAULT_LOGO_PATH = Webpacker.manifest.lookup("media/images/eosc-img.png")
+  @@default_logo_path = Webpacker.manifest.lookup("media/images/eosc-img.png")
 
   def self.default_logo_path
-    @@DEFAULT_LOGO_PATH
+    @@default_logo_path
   end
 
   def self.permitted_ext_message
-    @@PERMITTED_EXT_MESSAGE
+    @@permitted_ext_message
   end
 
   def self.to_temp_file(logo, ext)
@@ -32,9 +32,9 @@ module ImageHelper
   end
 
   def self.binary_to_blob_stream(file_path)
-    File.open(file_path, "rb") do |binaryImg|
+    File.open(file_path, "rb") do |binary_img|
       extension = ImageHelper.get_file_extension(file_path)
-      encoded_image = Base64.strict_encode64(binaryImg.read)
+      encoded_image = Base64.strict_encode64(binary_img.read)
       decoded_image = Base64.decode64(encoded_image)
       blob = MiniMagick::Image.read(decoded_image, extension).to_blob
       logo = StringIO.new
@@ -62,9 +62,7 @@ module ImageHelper
       return false unless ImageHelper.image_ext_permitted?(extension)
 
       true
-    rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError
-      return false
-    rescue Exception
+    rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError, Exception
       return false
     end
   rescue Timeout::Error

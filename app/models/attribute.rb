@@ -5,7 +5,8 @@ class Attribute
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  attr_accessor :id, :label, :description, :type, :value_type, :unit, :config, :value
+  attr_accessor :id, :label, :description, :value_type, :unit, :config, :value
+  attr_writer :type
 
   validate :value_validity
 

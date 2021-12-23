@@ -1,5 +1,5 @@
 %ul.list-group
-  - Array(provider.send(clazz)).map.with_index do |object, idx|
+  - Array(provider.send(clazz)).map do |object|
     %li.list-group-item
       - fields.map do |field|
         - if object.send(field).present?

@@ -28,14 +28,14 @@ FactoryBot.define do
     sequence(:access_policies_url) { "https://access.policies.url" }
 
     sequence(:language_availability) { [I18nData.languages.values.sample] }
-    sequence(:geographical_availabilities) { |n| ["EU"] }
+    sequence(:geographical_availabilities) { |_n| ["EU"] }
     sequence(:dedicated_for) { |n| ["service #{n} dedicated for"] }
     sequence(:restrictions) { |n| "service #{n} restrictions" }
-    sequence(:scientific_domains) { |n| [create(:scientific_domain)] }
-    sequence(:resource_organisation) { |n| create(:provider) }
-    sequence(:providers) { |n| [create(:provider)] }
-    sequence(:life_cycle_status) { |n| [create(:life_cycle_status)] }
-    sequence(:categories) { |n| [create(:category)] }
+    sequence(:scientific_domains) { |_n| [create(:scientific_domain)] }
+    sequence(:resource_organisation) { |_n| create(:provider) }
+    sequence(:providers) { |_n| [create(:provider)] }
+    sequence(:life_cycle_status) { |_n| [create(:life_cycle_status)] }
+    sequence(:categories) { |_n| [create(:category)] }
     sequence(:status) { :published }
     sequence(:version) { nil }
     sequence(:trl) { [create(:trl)] }

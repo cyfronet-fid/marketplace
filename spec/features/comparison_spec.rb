@@ -28,7 +28,7 @@ RSpec.feature "Comparison", js: true do
     expect(page).to have_text(service1.name)
     find("#comparison-#{service1.id}", visible: false).click
 
-    click_on "#{service1.name}", match: :first
+    click_on service1.name.to_s, match: :first
 
     expect(page).to have_selector("#comparison-bar")
   end

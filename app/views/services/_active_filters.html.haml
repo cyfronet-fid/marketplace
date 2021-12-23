@@ -1,6 +1,6 @@
 .col-md-12.mb-2
   %h1.categories
-    - unless params[:q].blank?
+    - if params[:q].present?
       %span
         = _("Looking for") + ":"
       #{params[:q]}

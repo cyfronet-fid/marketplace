@@ -60,8 +60,8 @@ class Import::Vocabularies
 
     updated = 0
     created = 0
-    total_vocabularies_count = (@vocabularies&.reduce(0) { |p, (k, v)| p + v.size }).to_i
-    not_implemented_count = (@not_implemented&.reduce(0) { |p, (k, v)| p + v.size }).to_i
+    total_vocabularies_count = (@vocabularies&.reduce(0) { |p, (_k, v)| p + v.size }).to_i
+    not_implemented_count = (@not_implemented&.reduce(0) { |p, (_k, v)| p + v.size }).to_i
     output = []
 
     log "[INFO] Vocabularies types #{@not_implemented.keys} are not implemented and won't be imported"

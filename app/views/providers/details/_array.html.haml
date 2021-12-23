@@ -33,7 +33,7 @@
                   #{element.send(nested[field.to_sym]).upcase}
             - else
               %span
-                #{element.send(nested[field.to_sym])}#{idx == (Array(provider.send(field)).map.size) - 1 ? nil : ", "}
+                #{element.send(nested[field.to_sym])}#{idx == Array(provider.send(field)).size - 1 ? nil : ", "}
           - else
             %span
-              #{element}#{idx == (Array(provider.send(field)).map.size) - 1 ? nil : ", "}
+              #{element}#{idx == Array(provider.send(field)).size - 1 ? nil : ", "}

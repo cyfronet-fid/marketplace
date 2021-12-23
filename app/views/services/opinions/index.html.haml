@@ -2,16 +2,17 @@
 - breadcrumb :resource_opinions, @service
 .container{ "data-controller": "comparison" }
   .border.pt-4.pl-3.pr-3.shadow-sm.rounded.service-box.service-detail
-    - if params[:from] == "ordering_configuration"
+    - case params[:from]
+    - when "ordering_configuration"
       = render "services/ordering_configurations/header", service: @service, params: { from: params[:from] }
-    - elsif params[:from] == "backoffice_service"
+    - when "backoffice_service"
       = render "backoffice/services/header", service: @service, params: { from: params[:from] }
     - else
       = render "services/header", service: @service, question: @question, comparison_enabled: @comparison_enabled,
       favourite_services: @favourite_services
     = render "services/tabs", service: @service
-    #comparison-bar.comparison-bar.fixed-bottom{ class: (session[:comparison]&.size || 0) > 0 ? "d-block" : "d-none",
-    "data-target": "comparison.bar" }
+    #comparison-bar.comparison-bar.fixed-bottom{ class: (session[:comparison]&.size || 0).positive? ?
+    "d-block" : "d-none", "data-target": "comparison.bar" }
       = render "comparisons/bar", services: @compare_services, category: @category
 
 .tab-content

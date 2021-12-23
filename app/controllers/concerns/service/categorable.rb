@@ -19,9 +19,9 @@ module Service::Categorable
   def init_categories_tree
     @siblings = siblings
     @subcategories = subcategories
-    @siblings_with_counters = siblings_with_counters.partition { |cid, c| c[:category][:name] != "Other" }.flatten(1)
+    @siblings_with_counters = siblings_with_counters.partition { |_cid, c| c[:category][:name] != "Other" }.flatten(1)
     @subcategories_with_counters =
-      subcategories_with_counters&.partition { |cid, c| c[:category][:name] != "Other" }&.flatten(1)
+      subcategories_with_counters&.partition { |_cid, c| c[:category][:name] != "Other" }&.flatten(1)
     @services_total ||= counters[nil]
   end
 

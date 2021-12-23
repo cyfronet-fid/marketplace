@@ -4,7 +4,7 @@
     - has_errors = attr.errors[:id].present?
     - valid = !has_errors && attr.value
     = field.input_field attr.id,
-      value: "#{attr.value}", id: "parameter_#{attr.id}",
+      value: "#{attr.value}",
       class: "form-control #{"is-invalid" if has_errors} #{"is-valid" if valid}",
       name: "#{field.object_name}[#{attr.id}]",
       input_html: { "data-date-format": to_js_date_format(attr.date_format) },

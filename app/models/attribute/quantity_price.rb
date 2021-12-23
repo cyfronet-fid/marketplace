@@ -71,7 +71,7 @@ class Attribute::QuantityPrice < Attribute
   private
 
   def to_small?
-    value && value < 0
+    value&.negative?
   end
 
   def to_big?

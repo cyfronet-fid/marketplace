@@ -34,7 +34,7 @@ class UsageReport
   end
 
   def domains
-    ScientificDomain.joins(:projects).where(projects: { id: used_projects.map { |p| p.id } }).uniq.pluck(:name)
+    ScientificDomain.joins(:projects).where(projects: { id: used_projects.map(&:id) }).uniq.pluck(:name)
   end
 
   def countries
@@ -53,7 +53,19 @@ class UsageReport
 
   def service_count_by_order_type(*types, internal: false)
     statuses = %w[published unverified errored]
-    unless internal
+    if internal
+      Service
+        .joins(:offers)
+        .where(
+          "offers.order_type IN (?) AND services.status IN (?) AND " + "offers.status IN (?) AND offers.internal = ?",
+          types.to_a,
+          statuses,
+          "published",
+          true
+        )
+        .uniq
+        .count
+    else
       Service
         .left_outer_joins(:offers)
         .where(
@@ -63,18 +75,6 @@ class UsageReport
           types.to_a,
           "published",
           statuses
-        )
-        .uniq
-        .count
-    else
-      Service
-        .joins(:offers)
-        .where(
-          "offers.order_type IN (?) AND services.status IN (?) AND " + "offers.status IN (?) AND offers.internal = ?",
-          types.to_a,
-          statuses,
-          "published",
-          true
         )
         .uniq
         .count

@@ -60,6 +60,27 @@ RSpec.describe ServicePolicy do
     end
   end
 
+  permissions :errors_show? do
+    let(:spm_user) { create(:user, roles: [:service_portfolio_manager]) }
+
+    it "grants access to data administrator" do
+      expect(subject).to permit(user, service)
+    end
+
+    it "grants access to service portfolio manager" do
+      expect(subject).to permit(spm_user, service)
+    end
+
+    it "denies when not data administrator" do
+      expect(subject).to_not permit(stranger, service)
+    end
+
+    it "denies when data administrator of another service" do
+      other_service = create(:service)
+      expect(subject).to_not permit(user, other_service)
+    end
+  end
+
   permissions :data_administrator? do
     it "grants access when data administrator" do
       expect(subject).to permit(user, service)

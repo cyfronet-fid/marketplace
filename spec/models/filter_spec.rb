@@ -17,10 +17,10 @@ RSpec.describe Filter do
     protected
 
     def fetch_options
-      unless @my_options
-        @my_options = [{ name: "A", id: "1", count: 1 }, { name: "B", id: "2", count: 2 }]
-      else
+      if @my_options
         raise "boom! fetching options for the second time"
+      else
+        @my_options = [{ name: "A", id: "1", count: 1 }, { name: "B", id: "2", count: 2 }]
       end
     end
 

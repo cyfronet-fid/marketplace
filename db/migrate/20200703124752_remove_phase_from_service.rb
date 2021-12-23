@@ -15,12 +15,13 @@ class RemovePhaseFromService < ActiveRecord::Migration[6.0]
       SQL
 
     execute("SELECT phase, id FROM services").each do |d|
-      if d["phase"] == "production"
+      case d["phase"]
+      when "production"
         execute(<<~SQL)
             INSERT INTO service_vocabularies(service_id, vocabulary_id, vocabulary_type, created_at, updated_at)
             VALUES ( #{d["id"]}, #{production_id[0]["id"]}, 'LifeCycleStatus', '#{Time.now}', '#{Time.now}')
             SQL
-      elsif d["phase"] == "beta"
+      when "beta"
         execute(<<~SQL)
             INSERT INTO service_vocabularies(service_id, vocabulary_id, vocabulary_type, created_at, updated_at)
             VALUES ( #{d["id"]}, #{beta_id[0]["id"]}, 'LifeCycleStatus', '#{Time.now}', '#{Time.now}')

@@ -72,23 +72,24 @@ class Country
     end
 
     def countries_for_region(region)
-      if region == "World"
+      case region
+      when "World"
         Country.world
-      elsif region == "European Union"
+      when "European Union"
         Country.european_union
-      elsif region == "Schengen Area"
+      when "Schengen Area"
         Country.schengen_area
-      elsif region == "Europe"
+      when "Europe"
         ISO3166::Country.find_all_countries_by_region("Europe")
-      elsif region == "Euro Zone"
-        ISO3166::Country.find_all_countries_by_currency_code("EUR").select { |c| c.in_eu? }
+      when "Euro Zone"
+        ISO3166::Country.find_all_countries_by_currency_code("EUR").select(&:in_eu?)
       else
         ISO3166::Country.find_all_countries_by_region(region)
       end
     end
 
     def european_union
-      ISO3166::Country.all.select { |c| c.in_eu? }
+      ISO3166::Country.all.select(&:in_eu?)
     end
 
     def world
@@ -144,7 +145,7 @@ class Country
 
       def dump(obj)
         return nil if obj.blank?
-        obj.compact.map { |o| o.alpha2 }
+        obj.compact.map(&:alpha2)
       end
 
       # def push(obj)
