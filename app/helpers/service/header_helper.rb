@@ -14,9 +14,10 @@ module Service::HeaderHelper
   end
 
   def about_link(service, from)
-    if from == "ordering_configuration"
+    case from
+    when "ordering_configuration"
       service_ordering_configuration_path(service, { from: from })
-    elsif from == "backoffice_service"
+    when "backoffice_service"
       backoffice_service_path(service, { from: from })
     else
       service_path(service)

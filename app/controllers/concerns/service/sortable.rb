@@ -12,17 +12,15 @@ module Service::Sortable
   def ordering
     {}.tap do |sort_options|
       sort_key = params[:sort]
-      unless sort_key.blank?
-        if sort_key == "_score"
-          return
-        elsif sort_key[0] == "-"
-          sort_key = sort_key[1..]
-          sort_options[sort_key] = :desc
-        else
-          sort_options[sort_key] = :asc
-        end
-      else
+      if sort_key.blank?
         sort_options[:sort_name] = :asc
+      elsif sort_key == "_score"
+        return
+      elsif sort_key[0] == "-"
+        sort_key = sort_key[1..]
+        sort_options[sort_key] = :desc
+      else
+        sort_options[sort_key] = :asc
       end
     end
   end

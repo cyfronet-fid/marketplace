@@ -117,7 +117,7 @@ class Jira::Client < JIRA::Client
     issue = self.Issue.build
 
     fields = {
-      summary: "Project, #{project.user.first_name} " + "#{project.user.last_name}, " + "#{project.name}",
+      summary: "Project, #{project.user.first_name} " + "#{project.user.last_name}, " + project.name.to_s,
       project: {
         key: @jira_project_key
       },
@@ -127,7 +127,7 @@ class Jira::Client < JIRA::Client
     }
 
     @custom_fields
-      .reject { |k, v| v.empty? }
+      .reject { |_k, v| v.empty? }
       .each do |field_name, field_id|
         value = generate_project_custom_field_value(field_name.to_s, project)
         fields[field_id.to_s] = value unless value.nil?
@@ -159,7 +159,7 @@ class Jira::Client < JIRA::Client
     }
 
     @custom_fields
-      .reject { |k, v| v.empty? }
+      .reject { |_k, v| v.empty? }
       .each do |field_name, field_id|
         value = generate_project_item_custom_field_value(field_name.to_s, project_item)
         fields[field_id.to_s] = value unless value.nil?
@@ -177,9 +177,9 @@ class Jira::Client < JIRA::Client
 
     issue = self.Issue.find(project.issue_id)
 
-    fields = { summary: "Project, #{project.user.first_name} " + "#{project.user.last_name}, " + "#{project.name}" }
+    fields = { summary: "Project, #{project.user.first_name} " + "#{project.user.last_name}, " + project.name.to_s }
     @custom_fields
-      .reject { |k, v| v.empty? }
+      .reject { |_k, v| v.empty? }
       .each do |field_name, field_id|
         value = generate_project_custom_field_value(field_name.to_s, project)
         fields[field_id.to_s] = value unless value.nil?

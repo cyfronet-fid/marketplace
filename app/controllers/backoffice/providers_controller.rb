@@ -53,12 +53,10 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     if valid_model_and_urls? && @provider.save(validate: false)
       redirect_to backoffice_provider_path(@provider), notice: "Provider updated correctly"
     else
-      if @provider.public_contacts.present? &&
-           @provider.public_contacts.all? { |contact| contact.marked_for_destruction? }
+      if @provider.public_contacts.present? && @provider.public_contacts.all?(&:marked_for_destruction?)
         @provider.public_contacts[0].reload
       end
-      if @provider.data_administrators.present? &&
-           @provider.data_administrators.all? { |admin| admin.marked_for_destruction? }
+      if @provider.data_administrators.present? && @provider.data_administrators.all?(&:marked_for_destruction?)
         @provider.data_administrators[0].reload
       end
       render :edit, status: :bad_request

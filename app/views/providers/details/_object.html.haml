@@ -1,4 +1,4 @@
-- Array(provider.send(clazz)).map.with_index do |object, idx|
+- Array(provider.send(clazz)).map do |object|
   %li
     - fields.map do |field|
       - if object.send(field).present?

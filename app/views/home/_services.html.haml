@@ -4,7 +4,7 @@
   - slices = services.each_slice(3)
   .carousel-inner
     - slices.with_index do |(*slice), i|
-      .carousel-item{ class: i == 0 ? "active" : nil }
+      .carousel-item{ class: i&.zero? ? "active" : nil }
         .card-deck
           - slice.each do |service|
             = render "carousel-card", service: service
@@ -12,4 +12,5 @@
   %ol.carousel-indicators
     - slices.with_index do |(*_), i|
       %li{ "data-target" => "#home-carousel", "data-slide-to" => i,
-             class: i == 0 ? "active" : nil }
+             class: i&.zero? ? "active" : nil }
+

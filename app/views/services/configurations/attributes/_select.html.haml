@@ -5,7 +5,6 @@
   - case attr.config["mode"]
   - when "buttons"
     = field.input_field attr.id,
-      id: "parameter_#{attr.id}",
       class: "form-check-input #{"is-invalid" if has_errors} #{"is-valid" if valid}",
       collection: attr.config["values"].map { |e| ["#{e} #{attr.unit}", e] },
       checked: "#{attr.value}",
@@ -13,7 +12,6 @@
       as: :radio_buttons
   - else
     = field.input_field attr.id,
-      id: "parameter_#{attr.id}",
       class: "form-control #{"is-invalid" if has_errors} #{"is-valid" if valid}",
       collection: attr.config["values"].map { |e| ["#{e} #{attr.unit}", e] },
       selected: "#{attr.value}",

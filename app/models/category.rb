@@ -51,6 +51,6 @@ class Category < ApplicationRecord
   end
 
   def update_main_categories!
-    @main_services.each { |s| s.set_first_category_as_main! }
+    @main_services.each(&:set_first_category_as_main!)
   end
 end

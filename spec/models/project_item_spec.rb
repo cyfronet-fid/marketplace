@@ -33,7 +33,7 @@ RSpec.describe ProjectItem do
     end
 
     it "doesn't create status if status not changed" do
-      expect { subject.update!(user_secrets: { "key": "value" }) }.not_to change { subject.statuses.size }
+      expect { subject.update!(user_secrets: { "key": "value" }) }.not_to(change { subject.statuses.size })
     end
   end
 

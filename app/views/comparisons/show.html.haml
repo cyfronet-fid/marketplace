@@ -87,7 +87,7 @@
           title: "Type of users/customers that commissions a Provider to deliver a Resource." }
             = _("Target Users")
           - @services.each do |service|
-            %td= service.target_users.map { |tg| tg.name }.join(", ")
+            %td= service.target_users.map(&:name).join(", ")
           - row_idx += 1
       - if @services.any? { |s| s.access_types.present? }
         %tr{ class: row_class(row_idx) }
@@ -95,7 +95,7 @@
           title: "The way a user can access the Resource (Remote, Physical, Virtual, etc.)" }
             = _("Resource Access Type")
           - @services.each do |service|
-            %td= service.access_types.map { |tg| tg.name }.join(", ")
+            %td= service.access_types.map(&:name).join(", ")
           - row_idx += 1
       - if @services.any? { |s| s.access_modes.present? }
         %tr{ class: row_class(row_idx) }
@@ -103,7 +103,7 @@
           title: "Eligibility/criteria for granting access to users (excellence-based, free-conditionally, free etc.)" }
             = _("Resource Access Mode")
           - @services.each do |service|
-            %td= service.access_modes.map { |sd| sd.name }.join(", ")
+            %td= service.access_modes.map(&:name).join(", ")
           - row_idx += 1
       - if @services.any? { |s| s.tags.present? }
         %tr{ class: row_class(row_idx) }

@@ -15,15 +15,15 @@ class ProjectItem::Part
   end
 
   def validate
-    attributes.map { |a| a.validate }.all?
+    attributes.map(&:validate).all?
   end
 
   def to_hash
-    { "offer_id" => offer.id, "attributes" => attributes.map { |a| a.to_json } }
+    { "offer_id" => offer.id, "attributes" => attributes.map(&:to_json) }
   end
 
   def to_json(*_args)
-    attributes.map { |a| a.to_json }
+    attributes.map(&:to_json)
   end
 
   def id
@@ -41,6 +41,6 @@ class ProjectItem::Part
   end
 
   def attributes_hsh
-    @attributes_hsh ||= attributes.index_by { |p| p.id }
+    @attributes_hsh ||= attributes.index_by(&:id)
   end
 end

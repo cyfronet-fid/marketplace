@@ -5,6 +5,6 @@ FactoryBot.define do
     sequence(:name) { |n| "Structure Type #{n}" }
     sequence(:eid) { |n| "provider_structure_type-#{n}" }
     sequence(:description) { |n| "Description #{n}" }
-    sequence(:extras) { |n| {} }
+    sequence(:extras) { |_n| {} }
   end
 end

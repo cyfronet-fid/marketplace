@@ -184,7 +184,7 @@ class Jira::Checker
         end
         .to_h
 
-    raise CheckerCompositeError.new("CUSTOM FIELD mapping have some problems", statuses) if statuses.any? { |k, v| !v }
+    raise CheckerCompositeError.new("CUSTOM FIELD mapping have some problems", statuses) if statuses.any? { |_k, v| !v }
   end
 
   def check_webhook!(host)
@@ -229,7 +229,7 @@ class Jira::Checker
       comment_deleted: webhook.events.include?("comment_deleted")
     }
 
-    unless statuses.select { |key, val| !val }.empty?
+    unless statuses.select { |_key, val| !val }.empty?
       # noinspection RubyArgCount
       raise CheckerCompositeError.new("Webhook notifications are lacking", statuses)
     end

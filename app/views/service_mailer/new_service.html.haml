@@ -16,9 +16,9 @@
     you have opted up for updates in
     - if @common_categories.present?
       %strong category:
-      = @common_categories.map { |cc| cc.name }.join(", ")
+      = @common_categories.map(&:name).join(", ")
     = "and " if @common_categories.present? && @common_scientific_domains.present?
     - if @common_scientific_domains.present?
       %strong scientific domain:
-      = @common_scientific_domains.map { |cra| cra.name }.join(", ")
+      = @common_scientific_domains.map(&:name).join(", ")
 

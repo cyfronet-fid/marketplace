@@ -93,7 +93,7 @@ RSpec.feature "Project" do
       visit new_project_path(source: project.id)
 
       fill_in "Project name", with: "Copy", match: :first
-      expect { click_on "Create" }.to_not change { user.projects.count }
+      expect { click_on "Create" }.to_not(change { user.projects.count })
     end
 
     scenario "I can edit a project" do

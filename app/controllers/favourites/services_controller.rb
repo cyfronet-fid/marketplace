@@ -15,7 +15,7 @@ class Favourites::ServicesController < FavouritesController
     else
       added.delete(@service.slug)
     end
-    respond_to { |format| format.js { render_empty_box } } if current_user&.favourite_services&.size == 0
+    respond_to { |format| format.js { render_empty_box } } if current_user&.favourite_services&.empty?
     cookies[:favourites] = added.reject(&:blank?)
   end
 

@@ -5,7 +5,7 @@
     %li
       = link_to record.name, services_path(key => record.to_param), "data-e2e": "communities_target-user"
 
-- if remaining_count > 0
+- if remaining_count&.positive?
   - if local_assigns[:more_path]
     = link_to more_path, "data-e2e": "more-link-communities_target-users", class: "more-link d-block" do
       %i.fas.fa-arrow-right

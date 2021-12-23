@@ -1169,7 +1169,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:id) { offer2.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
 
-        run_test! do |response|
+        run_test! do |_response|
           service.reload
 
           expect(service.offers.count).to eq(2)

@@ -21,7 +21,7 @@ module ServiceHelper
   end
 
   def any_present?(record, *fields)
-    fields.map { |f| record.send(f) }.any? { |v| v.present? }
+    fields.map { |f| record.send(f) }.any?(&:present?)
   end
 
   def get_terms_and_condition_hint_text(service)
@@ -34,7 +34,7 @@ module ServiceHelper
   end
 
   def dedicated_for_text(service)
-    service.target_users.map { |target| target.name }
+    service.target_users.map(&:name)
   end
 
   def scientific_domains(service)
@@ -47,7 +47,7 @@ module ServiceHelper
   end
 
   def scientific_domains_text(service)
-    service.scientific_domains.map { |target| target.name }
+    service.scientific_domains.map(&:name)
   end
 
   def resource_organisation(service, highlights = nil, preview = false)
@@ -74,7 +74,7 @@ module ServiceHelper
   end
 
   def resource_organisation_and_providers_text(service)
-    service.resource_organisation_and_providers.map { |target| target.name }
+    service.resource_organisation_and_providers.map(&:name)
   end
 
   def providers(service, highlights = nil, preview = false)
@@ -96,7 +96,7 @@ module ServiceHelper
   end
 
   def providers_text(service)
-    service.providers.reject(&:blank?).reject { |p| p == service.resource_organisation }.map { |target| target.name }
+    service.providers.reject(&:blank?).reject { |p| p == service.resource_organisation }.map(&:name)
   end
 
   def filtered_offers(offers)
@@ -112,7 +112,7 @@ module ServiceHelper
   end
 
   def order_type(service)
-    types = ([service&.order_type] + service&.offers.published.map { |o| o.order_type }).compact.uniq
+    types = ([service&.order_type] + service&.offers.published.map(&:order_type)).compact.uniq
     types.size > 1 ? "various" : service&.order_type || "other"
   end
 
@@ -165,9 +165,10 @@ module ServiceHelper
   end
 
   def edit_offer_link(service, offer, controller_name)
-    if controller_name == "ordering_configurations"
+    case controller_name
+    when "ordering_configurations"
       edit_service_ordering_configuration_offer_path(service, offer, from: params[:from])
-    elsif controller_name == "services"
+    when "services"
       edit_backoffice_service_offer_path(service, offer)
     end
   end

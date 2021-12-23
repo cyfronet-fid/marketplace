@@ -13,32 +13,32 @@ module Jira
       abort("jira:check exited with errors")
     end
 
-    def error_and_abort!(e, indent = 1)
+    def error_and_abort!(error, indent = 1)
       print " FAIL".red << "\n"
 
-      case e
+      case error
       when Errno::ECONNREFUSED
         puts "ERROR".red + ": Could not connect to JIRA: #{@checker.client.jira_config["url"]}"
         self.abort!
       when Jira::Checker::CheckerError
-        puts(("  " * indent) + "- ERROR".red + ": #{e.message}")
+        puts(("  " * indent) + "- ERROR".red + ": #{error.message}")
         false
       when Jira::Checker::CheckerWarning
-        puts(("  " * indent) + "- WARNING".yellow + ": #{e.message}")
+        puts(("  " * indent) + "- WARNING".yellow + ": #{error.message}")
         false
       when Jira::Checker::CheckerCompositeError
-        puts(("  " * indent) + "- ERROR".red + ": #{e.message}")
+        puts(("  " * indent) + "- ERROR".red + ": #{error.message}")
 
-        e.statuses.each do |hash, value|
+        error.statuses.each do |hash, value|
           print(("  " * (indent + 1)) + "- #{hash}:")
           value ? self.ok! : puts(" ✕".red)
         end
         false
       when Jira::Checker::CriticalCheckerError
-        puts(("  " * indent) + "- ERROR".red + ": #{e.message}")
+        puts(("  " * indent) + "- ERROR".red + ": #{error.message}")
         self.abort!
       else
-        puts "ERROR".red + ": Unexpected error occurred #{e.message}\n\n#{e.backtrace}"
+        puts "ERROR".red + ": Unexpected error occurred #{error.message}\n\n#{error.backtrace}"
         self.abort!
       end
     end
@@ -56,7 +56,7 @@ module Jira
     end
 
     def show_suggested_fields_mapping(mismatched_fields)
-      fields = @checker.client.Field.all.select { |_f| _f.custom }
+      fields = @checker.client.Field.all.select(&:custom)
 
       puts "SUGGESTED MAPPINGS"
       mismatched_fields.each do |field_name|

@@ -37,9 +37,8 @@ class Services::ApplicationController < ApplicationController
 
   def save_in_session(step)
     session[session_key] = step.project_item.attributes
-    session[session_key][:bundled_parameters] =
-      step.project_item.bundled_parameters.transform_keys { |offer| offer.id } if step.project_item.bundled_parameters
-      .present?
+    session[session_key][:bundled_parameters] = step.project_item.bundled_parameters.transform_keys(&:id) if step
+      .project_item.bundled_parameters.present?
   end
 
   def saved_state

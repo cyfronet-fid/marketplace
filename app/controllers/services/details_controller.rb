@@ -5,9 +5,10 @@ class Services::DetailsController < ApplicationController
   layout :choose_layout
 
   def choose_layout
-    if params[:from] == "backoffice_service"
+    case params[:from]
+    when "backoffice_service"
       "backoffice"
-    elsif params[:from] == "ordering_configuration"
+    when "ordering_configuration"
       "ordering_configuration"
     else
       "application"

@@ -185,9 +185,8 @@ RSpec.describe Message do
 
             context ":internal_scope?" do
               it "doesn't send email" do
-                expect do
-                  create(:message, scope: :internal, author_role: author_role, messageable: project_item)
-                end.not_to change { ActionMailer::Base.deliveries.count }
+                expect { create(:message, scope: :internal, author_role: author_role, messageable: project_item) }
+                  .not_to(change { ActionMailer::Base.deliveries.count })
               end
             end
           end
@@ -214,9 +213,9 @@ RSpec.describe Message do
 
             context ":internal_scope?" do
               it "doesn't send email" do
-                expect do
-                  create(:message, scope: :internal, author_role: author_role, messageable: project)
-                end.not_to change { ActionMailer::Base.deliveries.count }
+                expect { create(:message, scope: :internal, author_role: author_role, messageable: project) }.not_to(
+                  change { ActionMailer::Base.deliveries.count }
+                )
               end
             end
           end
@@ -253,9 +252,9 @@ RSpec.describe Message do
               let!(:message) { create(:message, scope: :internal, author_role: author_role, messageable: project_item) }
 
               it "doesn't send email" do
-                expect { message.update!(message: "something else") }.not_to change {
-                  ActionMailer::Base.deliveries.count
-                }
+                expect { message.update!(message: "something else") }.not_to(
+                  change { ActionMailer::Base.deliveries.count }
+                )
               end
             end
           end
@@ -286,9 +285,9 @@ RSpec.describe Message do
               let!(:message) { create(:message, scope: :internal, author_role: author_role, messageable: project) }
 
               it "doesn't send email" do
-                expect { message.update!(message: "something else") }.not_to change {
-                  ActionMailer::Base.deliveries.count
-                }
+                expect { message.update!(message: "something else") }.not_to(
+                  change { ActionMailer::Base.deliveries.count }
+                )
               end
             end
           end

@@ -3,7 +3,7 @@
 class Probes::ProbesJob < ApplicationJob
   queue_as :probes
 
-  rescue_from(StandardError) { |exception| }
+  rescue_from(StandardError) { |_| nil }
 
   def perform(body)
     url = Mp::Application.config.recommender_host + "/user_actions"

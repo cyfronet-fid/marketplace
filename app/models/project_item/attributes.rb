@@ -5,7 +5,7 @@ class ProjectItem::Attributes
 
   def initialize(offer:, parameters: nil)
     @offer = offer
-    parameters = offer.parameters.map { |p| p.dump } if parameters.blank?
+    parameters = offer.parameters.map(&:dump) if parameters.blank?
     @attributes = attributes_from_params(parameters)
   end
 

@@ -46,7 +46,7 @@ RSpec.describe Message::Create do
     end
 
     it "does not create new project_item change" do
-      expect { described_class.new(message).call }.to_not change { project_item.messages.count }
+      expect { described_class.new(message).call }.to_not(change { project_item.messages.count })
     end
 
     it "does not trigger message registration" do

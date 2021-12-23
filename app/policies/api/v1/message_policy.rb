@@ -40,9 +40,10 @@ class Api::V1::MessagePolicy < ApplicationPolicy
   private
 
   def write_permissions
-    if record.messageable_type == "Project"
+    case record.messageable_type
+    when "Project"
       project_message_write_permissions
-    elsif record.messageable_type == "ProjectItem"
+    when "ProjectItem"
       project_item_message_write_permissions
     end
   end
@@ -76,9 +77,10 @@ class Api::V1::MessagePolicy < ApplicationPolicy
   end
 
   def message_managed_by_user?
-    if record.messageable_type == "ProjectItem"
+    case record.messageable_type
+    when "ProjectItem"
       user.administrated_omses.include? record.messageable.offer.current_oms
-    elsif record.messageable_type == "Project"
+    when "Project"
       # Using .map instead of .joins, because we need .current_oms method and not .primary_oms relation
       Set
         .new(user.administrated_omses)

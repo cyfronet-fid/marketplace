@@ -13,12 +13,13 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def index
     if params["object_id"].present?
-      if params["type"] == "provider"
+      case params["type"]
+      when "provider"
         redirect_to backoffice_provider_path(
                       Provider.friendly.find(params["object_id"]),
                       anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
                     )
-      elsif params["type"] == "service"
+      when "service"
         redirect_to backoffice_service_path(
                       Service.friendly.find(params["object_id"]),
                       anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
@@ -112,7 +113,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     attributes = permitted_attributes(@service || Service)
     logo = attributes.delete(:logo)
     compact_attributes =
-      attributes.each { |k, v| v.reject!(&:blank?) if v.instance_of? Array }.reject { |k, v| v.blank? }
+      attributes.each { |_k, v| v.reject!(&:blank?) if v.instance_of? Array }.reject { |_k, v| v.blank? }
     session[preview_session_key] = { "attributes" => compact_attributes }
     if logo
       session[preview_session_key]["logo"] = {
