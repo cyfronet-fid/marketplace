@@ -25,7 +25,7 @@ module Jira
 
             issue = @client.Issue.find(pi.issue_id)
 
-            unless issue.save(fields: { "#{@client.custom_fields[:"Epic Link"]}" => project.issue_key })
+            unless issue.save(fields: { @client.custom_fields[:"Epic Link"].to_s => project.issue_key })
               puts "ERROR".red + " Could not link epic #{project.issue_key} to #{issue.key}"
             end
           rescue JIRA::HTTPError => e

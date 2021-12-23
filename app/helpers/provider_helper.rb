@@ -22,7 +22,7 @@ module ProviderHelper
   end
 
   def provider_any_present?(record, *fields)
-    fields.map { |f| record.send(f) }.any? { |v| v.present? }
+    fields.map { |f| record.send(f) }.any?(&:present?)
   end
 
   def field_tree(service, field)

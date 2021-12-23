@@ -6,11 +6,11 @@ module ProjectItem::Customization
   included do
     validate do
       if offer&.bundle?
-        bundled_property_values.each do |offer, parameters|
-          parameters.select { |pv| pv.invalid? }.each { |pv| errors.add(:bundled_property_values, :invalid, value: pv) }
+        bundled_property_values.each do |_offer, parameters|
+          parameters.select(&:invalid?).each { |pv| errors.add(:bundled_property_values, :invalid, value: pv) }
         end
       end
-      property_values.select { |pv| pv.invalid? }.each { |pv| errors.add(:property_values, :invalid, value: pv) }
+      property_values.select(&:invalid?).each { |pv| errors.add(:property_values, :invalid, value: pv) }
     end
   end
 
@@ -25,7 +25,7 @@ module ProjectItem::Customization
 
   def bundled_property_values
     if defined?(self.bundled_parameters)
-      if self&.bundled_parameters.present?
+      if self.bundled_parameters.present?
         self.bundled_parameters.transform_keys { |offer| offer.instance_of?(Offer) ? offer : Offer.find(offer) }
       else
         offer_values.attributes_map.reject { |o, _| o == offer }
@@ -50,10 +50,10 @@ module ProjectItem::Customization
   end
 
   def offer_values
-    @offers_values ||= ProjectItem::OfferValues.new(offer: offer, parameters: properties)
+    @offer_values ||= ProjectItem::OfferValues.new(offer: offer, parameters: properties)
   end
 
   def id_to_bundled_offer
-    @id_to_offer ||= offer.bundled_offers.index_by { |o| "o#{o.id}" }
+    @id_to_bundled_offer ||= offer.bundled_offers.index_by { |o| "o#{o.id}" }
   end
 end

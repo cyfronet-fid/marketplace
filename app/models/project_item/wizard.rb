@@ -20,7 +20,7 @@ class ProjectItem::Wizard
 
   def prev_step_key(step)
     index = step_names.index(step)
-    step_names[index - 1] if index > 0
+    step_names[index - 1] if index.positive?
   end
 
   def step_names

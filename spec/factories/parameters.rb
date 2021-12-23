@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :parameter, class: "Parameter" do
-    sequence(:id) { |n| n.to_s }
+    sequence(:id, &:to_s)
     hint { "description" }
     initialize_with { new(attributes) }
   end

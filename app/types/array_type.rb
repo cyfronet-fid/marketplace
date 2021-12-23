@@ -8,7 +8,7 @@ class ArrayType < ActiveModel::Type::Value
   end
 
   def cast(value)
-    value = value.split(@delimiter).map { |v| v.strip } if value.is_a?(::String)
+    value = value.split(@delimiter).map(&:strip) if value.is_a?(::String)
     value
   end
 end

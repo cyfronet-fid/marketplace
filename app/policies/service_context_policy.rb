@@ -13,7 +13,7 @@ class ServiceContextPolicy < ApplicationPolicy
 
   def order?
     ServiceContextPolicy.permitted?(user, record.service, record.from_backoffice) && record.service.offers? &&
-      record.service.offers.any? { |s| s.published? }
+      record.service.offers.any?(&:published?)
   end
 
   def self.permitted?(user, service, from_backoffice = false)

@@ -201,18 +201,22 @@ describe Jira::ConsoleChecker do
       block.call(error)
       next false
     }
-    expect(checker).to receive(:check_update_issue).twice { |&block|
-      block.call(error)
-      next false
-    }
+    expect(checker).to(
+      receive(:check_update_issue).twice do |&block|
+        block.call(error)
+        next false
+      end
+    )
     expect(checker).to receive(:check_add_comment) { |&block|
       block.call(error)
       next false
     }
-    expect(checker).to receive(:check_delete_issue).twice { |&block|
-      block.call(error)
-      next false
-    }
+    expect(checker).to(
+      receive(:check_delete_issue).twice do |&block|
+        block.call(error)
+        next false
+      end
+    )
     expect(checker).to receive(:check_workflow)
       .exactly(5) { |&block|
         block.call(error)

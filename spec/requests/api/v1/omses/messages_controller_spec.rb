@@ -321,7 +321,8 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         schema "$ref" => "error.json"
         let(:oms_id) { 1 }
         let(:project_id) { 1 }
-        let(:message_payload) {}
+
+        let(:message_payload) { nil }
         let(:"X-User-Token") { "asdasdasd" }
 
         run_test! do |response|
@@ -338,7 +339,8 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
 
         let(:oms_id) { oms.id }
         let(:project_id) { 9999 }
-        let(:message_payload) {}
+
+        let(:message_payload) { nil }
         let(:"X-User-Token") { user.authentication_token }
 
         run_test! do |response|
@@ -416,7 +418,8 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
 
         let(:oms_id) { 9999 }
         let(:project_id) { 9999 }
-        let(:message_payload) {}
+
+        let(:message_payload) { nil }
         let(:"X-User-Token") { user.authentication_token }
 
         run_test! do |response|

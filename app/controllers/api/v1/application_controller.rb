@@ -31,7 +31,7 @@ class Api::V1::ApplicationController < ActionController::API
 
   def validate_from_id
     @from_id = params[:from_id].present? ? params[:from_id].to_i : 0
-    render json: { error: "'from_id' must be a non-negative integer" }, status: 400 if @from_id < 0
+    render json: { error: "'from_id' must be a non-negative integer" }, status: 400 if @from_id.negative?
   end
 
   def validate_limit

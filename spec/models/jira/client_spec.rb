@@ -343,8 +343,8 @@ describe Jira::Client do
       },
       "SO-ProjectName-1" => "My Secret Project (#{project.id})",
       "CP-UserGroupName-1" => "User Group Name 1",
-      "CP-CustomerCountry-1" => "#{project.country_of_origin.name}",
-      "CP-CollaborationCountry-1" => "#{project.countries_of_partnership.map(&:name).join(", ")}"
+      "CP-CustomerCountry-1" => project.country_of_origin.name.to_s,
+      "CP-CollaborationCountry-1" => project.countries_of_partnership.map(&:name).join(", ").to_s
       # "CP-ReasonForAccess-1" => "some reason",
       # "CP-ProjectInformation-1" => "My Secret Project",
     }
@@ -395,8 +395,8 @@ describe Jira::Client do
       },
       "SO-ProjectName-1" => "My Updated Project Name (#{project.id})",
       "CP-UserGroupName-1" => "User Group Name 1",
-      "CP-CustomerCountry-1" => "#{project.country_of_origin.name}",
-      "CP-CollaborationCountry-1" => "#{project.countries_of_partnership.map(&:name).join(", ")}"
+      "CP-CustomerCountry-1" => project.country_of_origin.name.to_s,
+      "CP-CollaborationCountry-1" => project.countries_of_partnership.map(&:name).join(", ").to_s
     }
 
     expect(issue).to receive("save").with(fields: expected_updated_fields).and_return(true)

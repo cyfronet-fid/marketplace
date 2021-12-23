@@ -44,13 +44,13 @@ RSpec.describe ProjectItem::Register do
       # project_item change email is sent only when there is more than 1 change
       project_item.new_status(status: "custom_created", status_type: :created)
 
-      expect { described_class.new(project_item).call }.to_not change { ActionMailer::Base.deliveries.count }
+      expect { described_class.new(project_item).call }.to_not(change { ActionMailer::Base.deliveries.count })
     end
 
     context "With message text" do
       it "should create first comment message" do
-        expect { described_class.new(project_item, "First message").call }.to change { project_item.messages.count }.by(
-          1
+        expect { described_class.new(project_item, "First message").call }.to(
+          change { project_item.messages.count }.by(1)
         )
         last_message = project_item.messages.last
 

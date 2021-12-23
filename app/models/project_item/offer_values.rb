@@ -22,11 +22,11 @@ class ProjectItem::OfferValues
   end
 
   def validate
-    all_parts.map { |p| p.validate }.all?
+    all_parts.map(&:validate).all?
   end
 
   def to_hash
-    @main.to_hash.tap { |hsh| hsh["bundled_property_values"] = @parts.map { |p| p.to_hash } if @parts.present? }
+    @main.to_hash.tap { |hsh| hsh["bundled_property_values"] = @parts.map(&:to_hash) if @parts.present? }
   end
 
   def to_json(only_bundled = true)
@@ -47,8 +47,6 @@ class ProjectItem::OfferValues
   end
 
   def bundled_parts
-    offer.bundled_offers.map do |offer|
-      ProjectItem::Part.new(offer: offer, parameters: offer.parameters.map { |p| p.dump })
-    end
+    offer.bundled_offers.map { |offer| ProjectItem::Part.new(offer: offer, parameters: offer.parameters.map(&:dump)) }
   end
 end

@@ -5,12 +5,12 @@ FactoryBot.define do
     sequence(:name) { |n| "provider #{n}" }
     sequence(:abbreviation) { |n| "provider #{n}" }
     sequence(:website) { "https://website.com" }
-    sequence(:legal_entity) { |n| true }
+    sequence(:legal_entity) { |_n| true }
     sequence(:description) { |n| "description #{n}" }
     sequence(:street_name_and_number) { |n| "Saint St. #{n}" }
     sequence(:postal_code) { |n| "#{n}#{n + 1}-#{n + 2}#{n + 3}#{n + 4}" }
     sequence(:city) { |n| "city #{n}" }
-    sequence(:country) { |n| "N/E" }
+    sequence(:country) { |_n| "N/E" }
     sequence(:pid) { |n| "provider-pid#{n}" }
     sequence(:status) { :published }
 

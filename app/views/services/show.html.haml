@@ -12,8 +12,8 @@
     = render "services/tabs", service: @service
     #popup-modal.modal.show{ "data-target": "favourite.popup", tabindex: "-1",
                                     role: "dialog", aria: { hidden: "true" } }
-  #comparison-bar.comparison-bar.fixed-bottom{ class: (session[:comparison]&.size || 0) > 0 ? "d-block" : "d-none",
-  "data-target": "comparison.bar", "data-e2e": "comparison-bar" }
+  #comparison-bar.comparison-bar.fixed-bottom{ class: (session[:comparison]&.size || 0).positive? ?
+  "d-block" : "d-none", "data-target": "comparison.bar", "data-e2e": "comparison-bar" }
     = render "comparisons/bar", services: @compare_services, category: @category
 .tab-content
   = render "services/about", service: @service, offers: @offers, bundles: @bundles, analytics: @analytics

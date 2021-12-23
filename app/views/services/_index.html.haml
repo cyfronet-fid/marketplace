@@ -13,9 +13,8 @@
                "data-shepherd-tour-target": "overview_5" }
       .row.mb-4
         = render "services/active_filters", category: category, active_filters: active_filters
-        - if effective_show_recommendations
-          - if ab_test(:recommendation_panel) == "v1" && !recommended_services.blank?
-            = render partial: "services/recommendation_panel_v1",
+        - if effective_show_recommendations && ab_test(:recommendation_panel) == "v1" && !recommended_services.blank?
+          = render partial: "services/recommendation_panel_v1",
                      locals: { highlights: highlights, category: category, recommended_services: recommended_services }
         = render "services/pagination", sort_options: sort_options, services: services,
           pagy: pagy, query_params: query_params
@@ -30,9 +29,8 @@
                            remote: true,
                            tour_overview_9_target_on_counter: 0 }
 
-        - if effective_show_recommendations
-          - if ab_test(:recommendation_panel) == "v2" && !recommended_services.blank?
-            = render partial: "services/recommendation_panel_v2",
+        - if effective_show_recommendations && ab_test(:recommendation_panel) == "v2" && !recommended_services.blank?
+          = render partial: "services/recommendation_panel_v2",
                      locals: { highlights: highlights, category: category, recommended_services: recommended_services }
         = render partial: "service", collection: services[2..],
                  locals: { highlights: highlights,
@@ -46,6 +44,6 @@
         #popup-modal.modal.show{ "data-target": "favourite.popup", tabindex: "-1",
                                   role: "dialog", aria: { hidden: "true" } }
       - if effective_show_comparison
-        #comparison-bar.comparison-bar.fixed-bottom{ class: (session[:comparison]&.size || 0) > 0 ?
+        #comparison-bar.comparison-bar.fixed-bottom{ class: (session[:comparison]&.size || 0).positive? ?
         "d-block" : "d-none", "data-target": "comparison.bar", "data-e2e": "comparison-bar" }
           = render "comparisons/bar", services: compare_services, category: category

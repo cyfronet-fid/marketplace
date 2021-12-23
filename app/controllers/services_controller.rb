@@ -12,13 +12,14 @@ class ServicesController < ApplicationController
 
   def index
     if params["object_id"].present?
-      if params["type"] == "provider"
+      case params["type"]
+      when "provider"
         redirect_to provider_path(
                       Provider.friendly.find(params["object_id"]),
                       q: params["q"],
                       anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
                     )
-      elsif params["type"] == "service"
+      when "service"
         redirect_to service_path(
                       Service.friendly.find(params["object_id"]),
                       q: params["q"],
@@ -39,7 +40,7 @@ class ServicesController < ApplicationController
 
     authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"))
     @offers = policy_scope(@service.offers.published).order(:created_at).select { |o| o.bundle? == false }
-    @bundles = policy_scope(@service.offers.published).order(:created_at).select { |o| o.bundle? }
+    @bundles = policy_scope(@service.offers.published).order(:created_at).select(&:bundle?)
     @related_services = @service.target_relationships
     @related_services_title = "Suggested compatible resources"
 

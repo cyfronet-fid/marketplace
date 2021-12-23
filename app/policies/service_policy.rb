@@ -8,7 +8,7 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def order?
-    record.offers? && record.offers.any? { |s| s.published? }
+    record.offers? && record.offers.any?(&:published?)
   end
 
   def offers_show?
@@ -17,6 +17,10 @@ class ServicePolicy < ApplicationPolicy
 
   def bundles_show?
     has_bundled_offers?
+  end
+
+  def errors_show?
+    user.service_portfolio_manager? || record.administered_by?(user)
   end
 
   def data_administrator?
@@ -30,10 +34,10 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def has_bundled_offers?
-    record.offers? && record.offers.any? { |s| s.bundled_offers_count > 0 && s.published? }
+    record.offers? && record.offers.any? { |s| s.bundled_offers_count.positive? && s.published? }
   end
 
   def has_offers?
-    record.offers? && record.offers.any? { |s| s.bundled_offers_count == 0 && s.published? }
+    record.offers? && record.offers.any? { |s| s.bundled_offers_count.zero? && s.published? }
   end
 end

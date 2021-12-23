@@ -1,19 +1,19 @@
 #  frozen_string_literal: true
 
 class Recommender::SimpleRecommender
-  def call(n)
-    recommended_services = get_recommended_services n
-    fill_missing recommended_services, n
+  def call(size)
+    recommended_services = get_recommended_services size
+    fill_missing recommended_services, size
   end
 
   private
 
-  def get_records(n)
-    ActiveRecord::Base.connection.execute(sql_query % { n: n }).to_a
+  def get_records(size)
+    ActiveRecord::Base.connection.execute(format(sql_query, n: size)).to_a
   end
 
-  def get_recommended_services(n)
-    records2services get_records(n)
+  def get_recommended_services(size)
+    records2services get_records(size)
   end
 
   def sql_query
@@ -49,9 +49,9 @@ class Recommender::SimpleRecommender
     records_array.map { |h| Service.find h["id"] }
   end
 
-  def fill_missing(recommended_services, n)
-    if recommended_services.length < n
-      additional_services = Service.all[0..(n - recommended_services.length - 1)]
+  def fill_missing(recommended_services, expected_size)
+    if recommended_services.length < expected_size
+      additional_services = Service.all[0..(expected_size - recommended_services.length - 1)]
       recommended_services += additional_services
     end
     recommended_services
