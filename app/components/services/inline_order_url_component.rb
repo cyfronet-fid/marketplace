@@ -21,6 +21,6 @@ class Services::InlineOrderUrlComponent < ApplicationComponent
   end
 
   def render?
-    !url.blank? && !@offerable.orderable?
+    url.present? && !@offerable.orderable?
   end
 end

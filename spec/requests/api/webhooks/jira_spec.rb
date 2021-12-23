@@ -68,7 +68,7 @@ RSpec.describe "JIRA Webhook API", type: :request do
       end
 
       it "should update voucher ID" do
-        project_item.update user_secrets: { "voucher_id": "4321" }
+        project_item.update user_secrets: { voucher_id: "4321" }
         data =
           create(:jira_webhook_response, :voucher_id_change, issue_id: issue_id, issue_status: 6, voucher_id_to: "1234")
 
@@ -80,7 +80,7 @@ RSpec.describe "JIRA Webhook API", type: :request do
       end
 
       it "should remove voucher ID" do
-        project_item.update user_secrets: { "voucher_id": "4321" }
+        project_item.update user_secrets: { voucher_id: "4321" }
         data =
           create(:jira_webhook_response, :voucher_id_change, issue_id: issue_id, issue_status: 6, voucher_id_to: "")
 

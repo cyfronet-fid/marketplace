@@ -30,7 +30,7 @@ module Service::DetailsHelper
   end
 
   def display_detail?(detail, service)
-    (!detail[:clazz].present? && any_present?(service, *detail[:fields])) ||
+    (detail[:clazz].blank? && any_present?(service, *detail[:fields])) ||
       (detail[:clazz] && service.send(detail[:clazz]).present?)
   end
 

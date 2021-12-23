@@ -8,31 +8,34 @@ class ServiceContextPolicy < ApplicationPolicy
   end
 
   def show?
-    ServiceContextPolicy.permitted?(user, record.service, record.from_backoffice)
+    permitted?
   end
 
   def order?
-    ServiceContextPolicy.permitted?(user, record.service, record.from_backoffice) && record.service.offers? &&
-      record.service.offers.any?(&:published?)
-  end
-
-  def self.permitted?(user, service, from_backoffice = false)
-    has_permission =
-      ServiceContextPolicy.has_public_access(service) ||
-        (service.status == "draft" && ServiceContextPolicy.has_additional_access(user, service) && from_backoffice)
-    raise ActiveRecord::RecordNotFound unless has_permission
-    true
+    permitted? && record.service.offers? && record.service.offers.any?(&:published?)
   end
 
   private
 
-  def self.has_public_access(record)
-    record.published? || record.unverified? || record.errored?
+  def permitted?
+    service = record.service
+    from_backoffice = record.from_backoffice || false
+
+    has_permission = has_public_access? || (service.draft? && has_additional_access? && from_backoffice)
+    raise ActiveRecord::RecordNotFound unless has_permission
+    true
   end
 
-  def self.has_additional_access(user, record)
-    return false if user.blank?
+  def has_public_access?
+    service = record.service
 
-    user.service_portfolio_manager? || record.owned_by?(user) || record.administered_by?(user)
+    service.published? || service.unverified? || service.errored?
+  end
+
+  def has_additional_access?
+    return false if user.blank?
+    service = record.service
+
+    user.service_portfolio_manager? || service.owned_by?(user) || service.administered_by?(user)
   end
 end

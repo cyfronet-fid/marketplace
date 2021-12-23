@@ -34,8 +34,8 @@ class ProjectItem::OfferValues
       @parts.map { |part| [part.offer, part.attributes] }.to_h
     else
       {
-        "property_values": @main.to_json,
-        "bundled_property_values": @parts.map { |part| ["o#{part.offer.id}", part.to_json] }.to_h
+        property_values: @main.to_json,
+        bundled_property_values: @parts.map { |part| ["o#{part.offer.id}", part.to_json] }.to_h
       }
     end
   end

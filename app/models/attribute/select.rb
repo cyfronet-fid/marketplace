@@ -9,15 +9,15 @@ class Attribute::Select < Attribute
 
   def config_schema
     {
-      "type": "object",
-      "properties": {
-        "values": {
-          "type": "array",
-          "items": @value_type
+      type: "object",
+      properties: {
+        values: {
+          type: "array",
+          items: @value_type
         },
-        "mode": {
-          "type": "string",
-          "enum": %w[dropdown buttons]
+        mode: {
+          type: "string",
+          enum: %w[dropdown buttons]
         }
       }
     }
@@ -39,8 +39,6 @@ class Attribute::Select < Attribute
       end
     end
   end
-
-  protected
 
   TYPE = "select"
 end

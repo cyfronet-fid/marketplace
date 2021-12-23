@@ -85,8 +85,6 @@ module ImageHelper
     extension
   end
 
-  private
-
   def self.get_file_extension(file_path)
     file_name = file_path.split("/")[-1]
     extension = "." + file_name.split(".")[-1]

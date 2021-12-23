@@ -55,7 +55,7 @@ def rename_img(attachment, filename)
     logo.seek(0)
     logo_content_type = "image/png"
   end
-  if !logo.blank? && logo_content_type.start_with?("image")
+  if logo.present? && logo_content_type.start_with?("image")
     attachment.attach(io: logo, filename: filename + extension, content_type: logo_content_type)
   end
 rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError => e

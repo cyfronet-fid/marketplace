@@ -34,7 +34,7 @@ class Services::InlineOrderTypeComponent < ApplicationComponent
     content_tag(
       @tag.to_sym,
       TITLE[@order_type.to_sym],
-      { "data-toggle": "tootltip", "title": TOOLTIP[@order_type.to_sym] }
+      { "data-toggle": "tooltip", title: TOOLTIP[@order_type.to_sym] }
     )
   end
 end

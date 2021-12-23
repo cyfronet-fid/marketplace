@@ -8,28 +8,17 @@ class Attribute::Multiselect < Attribute::Select
   end
 
   def config_schema
-    {
-      "type": "object",
-      "properties": {
-        "values": {
-          "type": "array",
-          "items": @value_type
-        },
-        "minItems": {
-          "type": "integer"
-        }
-      }
-    }
+    { type: "object", properties: { values: { type: "array", items: @value_type }, minItems: { type: "integer" } } }
   end
 
   def value_schema
     {
-      "type": "array",
-      "items": {
-        "type": @value_type
+      type: "array",
+      items: {
+        type: @value_type
       },
-      "minItems": config["minItems"] || 0,
-      "maxItems": config["maxItems"] || config["values"].size
+      minItems: config["minItems"] || 0,
+      maxItems: config["maxItems"] || config["values"].size
     }
   end
 
@@ -42,8 +31,6 @@ class Attribute::Multiselect < Attribute::Select
       @value = param
     end
   end
-
-  protected
 
   TYPE = "multiselect"
 end

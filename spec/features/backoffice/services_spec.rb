@@ -521,12 +521,12 @@ RSpec.feature "Services in backoffice" do
 
     scenario "I can delete offer if they are more than 2" do
       service = create(:service, name: "my service")
-      _offer = create(:offer, name: "offer1", description: "desc", service: service)
+      offer = create(:offer, name: "offer1", description: "desc", service: service)
       _second_offer = create(:offer, service: service)
 
       service.reload
 
-      visit edit_backoffice_service_offer_path(service, _offer)
+      visit edit_backoffice_service_offer_path(service, offer)
 
       click_on "Delete Offer"
 
@@ -694,7 +694,7 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "I can edit offer OMS", js: true do
-      oms1 = create(:oms, name: "OMS1", custom_params: { "foo": { "mandatory": true, "default": "baz" } })
+      oms1 = create(:oms, name: "OMS1", custom_params: { foo: { mandatory: true, default: "baz" } })
       oms2 = create(:oms, name: "OMS2", custom_params: {})
       service = create(:service, name: "my service", status: :draft)
       offer = create(:offer, name: "offer1", description: "desc", service: service, internal: false)
@@ -731,7 +731,7 @@ RSpec.feature "Services in backoffice" do
     end
 
     scenario "I can edit default offer OMS", js: true do
-      oms1 = create(:oms, name: "OMS1", custom_params: { "foo": { "mandatory": true, "default": "baz" } })
+      oms1 = create(:oms, name: "OMS1", custom_params: { foo: { mandatory: true, default: "baz" } })
       oms2 = create(:oms, name: "OMS2", custom_params: {})
       service = create(:service, name: "my service", status: :draft)
       offer = create(:offer, name: "offer1", description: "desc", service: service, internal: false)

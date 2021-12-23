@@ -219,15 +219,15 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         let(:"X-User-Token") { oms_admin.authentication_token }
         let(:message_payload) do
           {
-            "project_id": project.id,
-            "author": {
-              "uid": "uid@idp",
-              "email": "smith@example.com",
-              "name": "Joe Smith",
-              "role": "provider"
+            project_id: project.id,
+            author: {
+              uid: "uid@idp",
+              email: "smith@example.com",
+              name: "Joe Smith",
+              role: "provider"
             },
-            "content": "<content>",
-            "scope": "public"
+            content: "<content>",
+            scope: "public"
           }
         end
         run_test! do |response|
@@ -258,15 +258,15 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         let(:"X-User-Token") { oms_admin.authentication_token }
         let(:message_payload) do
           {
-            "project_id": project.id,
-            "project_item_id": project_item.iid,
-            "author": {
-              "email": "smith@example.com",
-              "name": "Joe Smith",
-              "role": "provider"
+            project_id: project.id,
+            project_item_id: project_item.iid,
+            author: {
+              email: "smith@example.com",
+              name: "Joe Smith",
+              role: "provider"
             },
-            "content": "<content>",
-            "scope": "user_direct"
+            content: "<content>",
+            scope: "user_direct"
           }
         end
         run_test! do |response|
@@ -296,15 +296,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
         let(:message_payload) do
-          {
-            "project_id": project.id,
-            "author": {
-              "email": "<email>",
-              "name": "<name>",
-              "role": "provider"
-            },
-            "scope": "public"
-          }
+          { project_id: project.id, author: { email: "<email>", name: "<name>", role: "provider" }, scope: "public" }
         end
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -361,14 +353,14 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         let(:"X-User-Token") { oms_admin.authentication_token }
         let(:message_payload) do
           {
-            "project_id": project.id,
-            "author": {
-              "email": "<email>",
-              "name": "<name>",
-              "role": "provider"
+            project_id: project.id,
+            author: {
+              email: "<email>",
+              name: "<name>",
+              role: "provider"
             },
-            "content": "abc",
-            "scope": "user_direct"
+            content: "abc",
+            scope: "user_direct"
           }
         end
         run_test! do |response|
@@ -392,15 +384,15 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         let(:"X-User-Token") { default_oms_admin.authentication_token }
         let(:message_payload) do
           {
-            "project_id": project.id,
-            "project_item_id": project_item.iid,
-            "author": {
-              "email": "<email>",
-              "name": "<name>",
-              "role": "provider"
+            project_id: project.id,
+            project_item_id: project_item.iid,
+            author: {
+              email: "<email>",
+              name: "<name>",
+              role: "provider"
             },
-            "content": "abc",
-            "scope": "user_direct"
+            content: "abc",
+            scope: "user_direct"
           }
         end
         run_test! do |response|
@@ -437,14 +429,14 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         let(:"X-User-Token") { oms_admin.authentication_token }
         let(:message_payload) do
           {
-            "project_id": 1,
-            "author": {
-              "email": "<email>",
-              "name": "<name>",
-              "role": "provider"
+            project_id: 1,
+            author: {
+              email: "<email>",
+              name: "<name>",
+              role: "provider"
             },
-            "content": "<content>",
-            "scope": "public"
+            content: "<content>",
+            scope: "public"
           }
         end
         run_test! do |response|
@@ -463,15 +455,15 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         let(:"X-User-Token") { oms_admin.authentication_token }
         let(:message_payload) do
           {
-            "project_id": project.id,
-            "project_item_id": 1,
-            "author": {
-              "email": "<email>",
-              "name": "<name>",
-              "role": "provider"
+            project_id: project.id,
+            project_item_id: 1,
+            author: {
+              email: "<email>",
+              name: "<name>",
+              role: "provider"
             },
-            "content": "<content>",
-            "scope": "public"
+            content: "<content>",
+            scope: "public"
           }
         end
         run_test! do |response|

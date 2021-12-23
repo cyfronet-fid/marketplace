@@ -4,11 +4,11 @@ require "json-schema"
 
 class Attribute::Date < Attribute
   def value_type_schema
-    { "type": "string", "enum": ["string"] }
+    { type: "string", enum: ["string"] }
   end
 
   def value_schema
-    { "type": "string", "format": "date", "minLength": 1 }
+    { type: "string", format: "date", minLength: 1 }
   end
 
   def value_from_param(param)
@@ -25,8 +25,6 @@ class Attribute::Date < Attribute
   def date_format
     I18n.t("date.formats.default")
   end
-
-  protected
 
   TYPE = "date"
 

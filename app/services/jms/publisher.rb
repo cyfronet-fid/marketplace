@@ -35,7 +35,7 @@ class Jms::Publisher
       max_reconnect_attempts: 5,
       connect_headers: {
         "accept-version": "1.2", # mandatory
-        "host": "localhost", # mandatory
+        host: "localhost", # mandatory
         "heart-beat": "0,20000"
       }
     }
@@ -54,11 +54,11 @@ class Jms::Publisher
 
   def msg_headers
     {
-      "persistent": true,
+      persistent: true,
       # Without suppress_content_length ActiveMQ interprets the message as a BytesMessage, instead of a TextMessage.
       # See https://github.com/stompgem/stomp/blob/v1.4.10/lib/connection/netio.rb#L245
       # and https://activemq.apache.org/stomp.html.
-      "suppress_content_length": true,
+      suppress_content_length: true,
       "content-type": "application/json"
     }
   end

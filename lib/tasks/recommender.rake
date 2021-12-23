@@ -13,7 +13,7 @@ namespace :recommender do
     begin
       url = Mp::Application.config.recommender_host + "/database_dumps"
       puts "Sending database dump to recommender host (#{url})..."
-      response = Faraday.post url, serialized_db, { "Content-Type": "application/json", "Accept": "application/json" }
+      response = Faraday.post url, serialized_db, { "Content-Type": "application/json", Accept: "application/json" }
 
       case response.status
       when 204
@@ -38,7 +38,7 @@ namespace :recommender do
     begin
       url = Mp::Application.config.recommender_host + "/update"
       puts "Sending database dump to recommender host (#{url})..."
-      response = Faraday.post url, serialized_db, { "Content-Type": "application/json", "Accept": "application/json" }
+      response = Faraday.post url, serialized_db, { "Content-Type": "application/json", Accept: "application/json" }
 
       case response.status
       when 204

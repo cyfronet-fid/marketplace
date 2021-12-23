@@ -80,34 +80,34 @@ class Jira::Client < JIRA::Client
     fields_config = @jira_config[:custom_fields]
 
     @custom_fields = {
-      "Epic Link": fields_config["Epic Link".to_sym],
-      "Epic Name": fields_config["Epic Name".to_sym],
-      "Order reference": fields_config["Order reference".to_sym],
-      "CI-Name": fields_config["CI-Name".to_sym],
-      "CI-Surname": fields_config["CI-Surname".to_sym],
-      "CI-Email": fields_config["CI-Email".to_sym],
-      "CI-DisplayName": fields_config["CI-DisplayName".to_sym],
-      "CI-EOSC-UniqueID": fields_config["CI-EOSC-UniqueID".to_sym],
-      "CI-Institution": fields_config["CI-Institution".to_sym],
-      "CI-Department": fields_config["CI-Department".to_sym],
-      "CI-DepartmentalWebPage": fields_config["CI-DepartmentalWebPage".to_sym],
-      "CI-SupervisorName": fields_config["CI-SupervisorName".to_sym],
-      "CI-SupervisorProfile": fields_config["CI-SupervisorProfile".to_sym],
-      "CP-CustomerCountry": fields_config["CP-CustomerCountry".to_sym],
-      "CP-CustomerTypology": fields_config["CP-CustomerTypology".to_sym],
-      "CP-CollaborationCountry": fields_config["CP-CollaborationCountry".to_sym],
-      "CP-ReasonForAccess": fields_config["CP-ReasonForAccess".to_sym],
-      "CP-UserGroupName": fields_config["CP-UserGroupName".to_sym],
-      "CP-ProjectInformation": fields_config["CP-ProjectInformation".to_sym],
-      "CP-ScientificDiscipline": fields_config["CP-ScientificDiscipline".to_sym],
-      "CP-Platforms": fields_config["CP-Platforms".to_sym],
-      "CP-INeedAVoucher": fields_config["CP-INeedAVoucher".to_sym],
-      "CP-VoucherID": fields_config["CP-VoucherID".to_sym],
+      "Epic Link": fields_config[:"Epic Link"],
+      "Epic Name": fields_config[:"Epic Name"],
+      "Order reference": fields_config[:"Order reference"],
+      "CI-Name": fields_config[:"CI-Name"],
+      "CI-Surname": fields_config[:"CI-Surname"],
+      "CI-Email": fields_config[:"CI-Email"],
+      "CI-DisplayName": fields_config[:"CI-DisplayName"],
+      "CI-EOSC-UniqueID": fields_config[:"CI-EOSC-UniqueID"],
+      "CI-Institution": fields_config[:"CI-Institution"],
+      "CI-Department": fields_config[:"CI-Department"],
+      "CI-DepartmentalWebPage": fields_config[:"CI-DepartmentalWebPage"],
+      "CI-SupervisorName": fields_config[:"CI-SupervisorName"],
+      "CI-SupervisorProfile": fields_config[:"CI-SupervisorProfile"],
+      "CP-CustomerCountry": fields_config[:"CP-CustomerCountry"],
+      "CP-CustomerTypology": fields_config[:"CP-CustomerTypology"],
+      "CP-CollaborationCountry": fields_config[:"CP-CollaborationCountry"],
+      "CP-ReasonForAccess": fields_config[:"CP-ReasonForAccess"],
+      "CP-UserGroupName": fields_config[:"CP-UserGroupName"],
+      "CP-ProjectInformation": fields_config[:"CP-ProjectInformation"],
+      "CP-ScientificDiscipline": fields_config[:"CP-ScientificDiscipline"],
+      "CP-Platforms": fields_config[:"CP-Platforms"],
+      "CP-INeedAVoucher": fields_config[:"CP-INeedAVoucher"],
+      "CP-VoucherID": fields_config[:"CP-VoucherID"],
       # For now only single Service Offer is supported
-      "SO-ProjectName": fields_config["SO-ProjectName".to_sym],
-      "SO-1": fields_config["SO-1".to_sym],
-      "SO-ServiceOrderTarget": fields_config["SO-ServiceOrderTarget".to_sym],
-      "SO-OfferType": fields_config["SO-OfferType".to_sym]
+      "SO-ProjectName": fields_config[:"SO-ProjectName"],
+      "SO-1": fields_config[:"SO-1"],
+      "SO-ServiceOrderTarget": fields_config[:"SO-ServiceOrderTarget"],
+      "SO-OfferType": fields_config[:"SO-OfferType"]
     }
 
     super(options)
@@ -244,8 +244,7 @@ class Jira::Client < JIRA::Client
     when "CP-CustomerTypology"
       if project.customer_typology
         {
-          "id" =>
-            @jira_config[:custom_fields][:select_values]["CP-CustomerTypology".to_sym][project.customer_typology.to_sym]
+          "id" => @jira_config[:custom_fields][:select_values][:"CP-CustomerTypology"][project.customer_typology.to_sym]
         }
       end
     when "CP-CustomerCountry"
@@ -291,9 +290,7 @@ class Jira::Client < JIRA::Client
     when "CP-INeedAVoucher"
       {
         "id" =>
-          @jira_config[:custom_fields][:select_values]["CP-INeedAVoucher".to_sym][
-            project_item.request_voucher ? :yes : :no
-          ]
+          @jira_config[:custom_fields][:select_values][:"CP-INeedAVoucher"][project_item.request_voucher ? :yes : :no]
       }
     when "CP-VoucherID"
       project_item.voucher_id || nil
@@ -304,9 +301,7 @@ class Jira::Client < JIRA::Client
     when "SO-OfferType"
       {
         "id" =>
-          @jira_config[:custom_fields][:select_values]["SO-OfferType".to_sym][
-            map_to_jira_order_type(project_item).to_sym
-          ]
+          @jira_config[:custom_fields][:select_values][:"SO-OfferType"][map_to_jira_order_type(project_item).to_sym]
       }
     end
   end

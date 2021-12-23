@@ -38,7 +38,7 @@ module Jms
       log "Start subscriber on destination: #{@destination}"
       @client.subscribe(
         "/topic/#{@destination}.>",
-        { "ack": "client-individual", "activemq.subscriptionName": "mpSubscription" }
+        { ack: "client-individual", "activemq.subscriptionName": "mpSubscription" }
       ) do |msg|
         log "Arrived message"
         Jms::ManageMessage.new(msg, @eosc_registry_base_url, @logger, @token).call
@@ -77,7 +77,7 @@ module Jms
           "client-id": client_name,
           "heart-beat": "0,20000",
           "accept-version": "1.2",
-          "host": "localhost"
+          host: "localhost"
         }
       }
     end

@@ -182,7 +182,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
       response 201, "offer with oms_params created", document: false do
         schema "$ref" => "offer/offer_read.json"
 
-        let(:oms) { create(:oms, type: :global, custom_params: { "a": { mandatory: true, default: "qwe" } }) }
+        let(:oms) { create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "qwe" } }) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
         let!(:service) do
@@ -196,7 +196,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
             internal: true,
             primary_oms_id: oms.id,
             oms_params: {
-              "a": "asd"
+              a: "asd"
             }
           }
         end
@@ -215,7 +215,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
           expect(service.offers.first.status).to eq("published")
           expect(service.offers.first.internal).to eq(true)
           expect(service.offers.first.primary_oms).to eq(oms)
-          expect(service.offers.first.oms_params).to eq({ "a": "asd" }.deep_stringify_keys)
+          expect(service.offers.first.oms_params).to eq({ a: "asd" }.deep_stringify_keys)
         end
       end
 
@@ -365,12 +365,12 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
             order_type: "order_required",
             parameters: [
               {
-                "id": "0",
-                "type": "aasd",
-                "label": "constant_example",
-                "description": "constant_hint",
-                "value": "12",
-                "value_type": "integer"
+                id: "0",
+                type: "aasd",
+                label: "constant_example",
+                description: "constant_hint",
+                value: "12",
+                value_type: "integer"
               }
             ]
           }
@@ -399,11 +399,11 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
             order_type: "order_required",
             parameters: [
               {
-                "id": "0",
-                "type": "attribute",
-                "label": "constant_example",
-                "description": "constant_hint",
-                "value_type": "integer"
+                id: "0",
+                type: "attribute",
+                label: "constant_example",
+                description: "constant_hint",
+                value_type: "integer"
               }
             ]
           }
@@ -432,16 +432,16 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
             order_type: "order_required",
             parameters: [
               {
-                "id": "2",
-                "type": "select",
-                "label": "select_example",
-                "description": "select_example",
-                "config": {
-                  "values": [],
-                  "mode": "dropdown"
+                id: "2",
+                type: "select",
+                label: "select_example",
+                description: "select_example",
+                config: {
+                  values: [],
+                  mode: "dropdown"
                 },
-                "value_type": "integer",
-                "unit": "CPUs"
+                value_type: "integer",
+                unit: "CPUs"
               }
             ]
           }
@@ -470,20 +470,20 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
             order_type: "order_required",
             parameters: [
               {
-                "id": "0",
-                "type": "attribute",
-                "label": "constant_example",
-                "description": "constant_hint",
-                "value": "12",
-                "value_type": "integer"
+                id: "0",
+                type: "attribute",
+                label: "constant_example",
+                description: "constant_hint",
+                value: "12",
+                value_type: "integer"
               },
               {
-                "id": "0",
-                "type": "attribute",
-                "label": "constant_example",
-                "description": "constant_hint",
-                "value": "12",
-                "value_type": "integer"
+                id: "0",
+                type: "attribute",
+                label: "constant_example",
+                description: "constant_hint",
+                value: "12",
+                value_type: "integer"
               }
             ]
           }
@@ -512,12 +512,12 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
             order_type: "order_required",
             parameters: [
               {
-                "id": "0",
-                "type": "attribute",
-                "label": "constant_example",
-                "description": "constant_hint",
-                "value": "asd",
-                "value_type": "integer"
+                id: "0",
+                type: "attribute",
+                label: "constant_example",
+                description: "constant_hint",
+                value: "asd",
+                value_type: "integer"
               }
             ]
           }
@@ -897,12 +897,12 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
           {
             parameters: [
               {
-                "id": "0",
-                "type": "attribute",
-                "label": "constant_example",
-                "description": "constant_hint",
-                "value": "12",
-                "value_type": "integer"
+                id: "0",
+                type: "attribute",
+                label: "constant_example",
+                description: "constant_hint",
+                value: "12",
+                value_type: "integer"
               }
             ]
           }
@@ -1017,7 +1017,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
       response 400, "primary_oms model validation failed", document: false do
         schema "$ref" => "error.json"
-        let(:oms) { create(:oms, type: :global, custom_params: { "a": { mandatory: true, default: "qwe" } }) }
+        let(:oms) { create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "qwe" } }) }
         let(:offer) { build(:offer) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -1035,7 +1035,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to eq({ error: { "oms_params": ["can't be blank"] } }.deep_stringify_keys)
+          expect(data).to eq({ error: { oms_params: ["can't be blank"] } }.deep_stringify_keys)
         end
       end
 

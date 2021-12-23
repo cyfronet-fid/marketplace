@@ -124,7 +124,7 @@ class Jira::Checker
         id: self.client.jira_project_issue_type_id
       }
     }
-    fields[self.client.custom_fields["Epic Name".to_sym]] = "TEST EPIC"
+    fields[self.client.custom_fields[:"Epic Name"]] = "TEST EPIC"
 
     unless issue.save(fields: fields)
       raise CriticalCheckerError,
@@ -229,7 +229,7 @@ class Jira::Checker
       comment_deleted: webhook.events.include?("comment_deleted")
     }
 
-    unless statuses.select { |_key, val| !val }.empty?
+    unless statuses.reject { |_key, val| val }.empty?
       # noinspection RubyArgCount
       raise CheckerCompositeError.new("Webhook notifications are lacking", statuses)
     end
