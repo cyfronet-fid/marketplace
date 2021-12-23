@@ -25,7 +25,7 @@
       = project_item_status(project_item)
 
 - project_item.children.each do |child|
-  #collapse-example.bundle-box.padding.collapse{ "id": "#{project_item.id}" }
+  #collapse-example.bundle-box.padding.collapse{ id: "#{project_item.id}" }
     %li.projects-list
       = link_to child.service.name, project_service_path(project, child)
       .float-right.status

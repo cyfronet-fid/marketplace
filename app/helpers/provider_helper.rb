@@ -27,6 +27,6 @@ module ProviderHelper
 
   def field_tree(service, field)
     parents = service.send(field).map { |f| f.parent.blank? ? f : f.parent }
-    Hash[parents.map { |parent| [parent.name, (parent.children & service.send(field)).map(&:name)] }]
+    parents.map { |parent| [parent.name, (parent.children & service.send(field)).map(&:name)] }.to_h
   end
 end

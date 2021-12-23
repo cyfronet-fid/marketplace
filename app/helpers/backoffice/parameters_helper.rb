@@ -16,7 +16,7 @@ module Backoffice::ParametersHelper
                class: "float-right add-button",
                type: "button",
                id: "attributes-list-button",
-               "disabled": true,
+               disabled: true,
                "data-target": "offer.button",
                "data-action": "click->offer#add"
              )

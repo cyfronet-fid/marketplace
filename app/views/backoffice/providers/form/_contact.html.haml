@@ -1,9 +1,9 @@
 .card.shadow-sm.rounded
   %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(provider,
-            ["main_contact.first_name".to_sym, "main_contact.last_name".to_sym,
-            "main_contact.email".to_sym, "public_contacts.email".to_sym,
-            "main_contact.phone".to_sym, "public_contacts.phone".to_sym,
-            "public_contacts".to_sym])),
+            [:"main_contact.first_name", :"main_contact.last_name",
+            :"main_contact.email", :"public_contacts.email",
+            :"main_contact.phone", :"public_contacts.phone",
+            :public_contacts])),
               data: { toggle: "collapse", target: "#contact" },
               aria: { expanded: true, controls: "contact" } }
     .card-header.text-left{ id: "contact-header" }
@@ -16,9 +16,9 @@
             %i.fas.fa-chevron-up
 .collapse{ id: "contact", "aria-labelledby": "contact-header",
         "data-parent": "#accordion-form",
-        class: ("show" unless collapsed?(provider, ["main_contact.first_name".to_sym,
-        "main_contact.last_name".to_sym, "main_contact.email".to_sym, "public_contacts.email".to_sym,
-        "main_contact.phone".to_sym, "public_contacts.phone".to_sym, "public_contacts".to_sym])) }
+        class: ("show" unless collapsed?(provider, [:"main_contact.first_name",
+        :"main_contact.last_name", :"main_contact.email", :"public_contacts.email",
+        :"main_contact.phone", :"public_contacts.phone", :public_contacts])) }
   .card-body
     .row.service-contact-emails
       .col-12
@@ -42,8 +42,8 @@
           = render "backoffice/providers/form/public_contact_fields",
           public_contact_form: public_contact_form, provider: provider, provider_form: true
         = link_to _("Add additional public contact"), "#", class: "btn btn-primary disablable",
-          data: { "target": "form.addContact",
-          "action": "click->form#addContact",
-          "fields": f.fields_for(:public_contacts, PublicContact.new,
+          data: { target: "form.addContact",
+          action: "click->form#addContact",
+          fields: f.fields_for(:public_contacts, PublicContact.new,
           child_index: "new_field") { |public_contact_form| render "backoffice/providers/form/public_contact_fields",
           public_contact_form: public_contact_form, service: nil, provider: provider, provider_form: true } }

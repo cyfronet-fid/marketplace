@@ -4,28 +4,28 @@ require "json-schema"
 
 class Attribute::QuantityPrice < Attribute
   def value_type_schema
-    { "type": "string", "enum": ["integer"] }
+    { type: "string", enum: ["integer"] }
   end
 
   def config_schema
     {
-      "type": "object",
-      "required": %w[start_price step_price currency],
-      "properties": {
-        "start_price": {
-          "type": "integer",
-          "minimum": 0
+      type: "object",
+      required: %w[start_price step_price currency],
+      properties: {
+        start_price: {
+          type: "integer",
+          minimum: 0
         },
-        "step_price": {
-          "type": "integer",
-          "minimum": 0
+        step_price: {
+          type: "integer",
+          minimum: 0
         },
-        "currency": {
-          "type": "string"
+        currency: {
+          type: "string"
         },
-        "max": {
-          "type": "integer",
-          "minimum": 0
+        max: {
+          type: "integer",
+          minimum: 0
         }
       }
     }
@@ -63,8 +63,6 @@ class Attribute::QuantityPrice < Attribute
   def currency
     config["currency"]
   end
-
-  protected
 
   TYPE = "quantity_price"
 

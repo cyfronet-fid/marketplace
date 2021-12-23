@@ -30,9 +30,9 @@ describe Jira::Client do
             :offer,
             name: "off1",
             service: create(:service, name: "s1", categories: [create(:category, name: "cat1")]),
-            primary_oms: create(:oms, custom_params: { "order_target": { "mandatory": false } }),
+            primary_oms: create(:oms, custom_params: { order_target: { mandatory: false } }),
             oms_params: {
-              "order_target": "admin@example.com"
+              order_target: "admin@example.com"
             }
           ),
         project:
@@ -45,32 +45,32 @@ describe Jira::Client do
           ),
         properties: [
           {
-            "id": "id1",
-            "type": "input",
-            "label": "Data repository name",
-            "value": "aaaaaa",
-            "value_type": "string",
-            "description": "Type data repository name"
+            id: "id1",
+            type: "input",
+            label: "Data repository name",
+            value: "aaaaaa",
+            value_type: "string",
+            description: "Type data repository name"
           },
           {
-            "id": "id2",
-            "type": "select",
-            "label": "Harvesting method",
-            "value": "OAI-PMH",
-            "config": {
-              "mode": "buttons",
-              "values": ["OAI-PMH", "JSON-API", "CSW 2.0", "Other"]
+            id: "id2",
+            type: "select",
+            label: "Harvesting method",
+            value: "OAI-PMH",
+            config: {
+              mode: "buttons",
+              values: ["OAI-PMH", "JSON-API", "CSW 2.0", "Other"]
             },
-            "value_type": "string",
-            "description": "Choose harvesting method"
+            value_type: "string",
+            description: "Choose harvesting method"
           },
           {
-            "id": "id3",
-            "type": "input",
-            "label": "Harvesting endpoint",
-            "value": "aaaaa",
-            "value_type": "string",
-            "description": "Type harvesting endpoint"
+            id: "id3",
+            type: "input",
+            label: "Harvesting endpoint",
+            value: "aaaaa",
+            value_type: "string",
+            description: "Type harvesting endpoint"
           }
         ]
       )

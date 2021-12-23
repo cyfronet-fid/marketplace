@@ -27,7 +27,8 @@ module Import
       log "Importing resources from EOSC Registry..."
 
       begin
-        r = Importers::Request.new(@eosc_registry_base_url, "resource/rich", faraday: @faraday, token: @token).call
+        response =
+          Importers::Request.new(@eosc_registry_base_url, "resource/rich", faraday: @faraday, token: @token).call
       rescue Errno::ECONNREFUSED
         abort("import exited with errors - could not connect to #{@eosc_registry_base_url}")
       end
@@ -35,13 +36,13 @@ module Import
       updated = 0
       created = 0
       not_modified = 0
-      total_service_count = r.body["results"].length
+      total_service_count = response.body["results"].length
       output = []
 
       log "EOSC Registry - all services #{total_service_count}"
 
-      r.body["results"]
-        .select { |_r| @ids.empty? || @ids.include?(_r["service"]["id"]) }
+      response.body["results"]
+        .select { |res| @ids.empty? || @ids.include?(res["service"]["id"]) }
         .each do |service_data|
           service = service_data["service"]
           output.append(service_data)

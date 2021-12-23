@@ -4,5 +4,10 @@
 
 # Specify serializers for custom objects.
 Rails.application.reloader.to_prepare do
-  Rails.application.config.active_job.custom_serializers << ReportsSerializer
+  active_job = Rails.application.config.active_job
+
+  # Active job removes the key sometimes, which manifests when reloading the application.
+  # So we have to code around it.
+  active_job.custom_serializers ||= []
+  active_job.custom_serializers << ReportsSerializer if active_job.custom_serializers.exclude?(ReportsSerializer)
 end

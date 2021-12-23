@@ -137,7 +137,7 @@ RSpec.feature "Services in ordering_configuration panel" do
     end
 
     scenario "I can edit offer OMS", js: true do
-      oms1 = create(:oms, name: "OMS1", custom_params: { "foo": { "mandatory": true, "default": "baz" } })
+      oms1 = create(:oms, name: "OMS1", custom_params: { foo: { mandatory: true, default: "baz" } })
       oms2 = create(:oms, name: "OMS2", custom_params: {})
       service = create(:service, name: "my service", resource_organisation: provider, status: :draft)
       offer = create(:offer, name: "offer1", description: "desc", service: service, internal: false)
@@ -174,7 +174,7 @@ RSpec.feature "Services in ordering_configuration panel" do
     end
 
     scenario "I can edit default offer OMS", js: true do
-      oms1 = create(:oms, name: "OMS1", custom_params: { "foo": { "mandatory": true, "default": "baz" } })
+      oms1 = create(:oms, name: "OMS1", custom_params: { foo: { mandatory: true, default: "baz" } })
       oms2 = create(:oms, name: "OMS2", custom_params: {})
       service = create(:service, name: "my service", resource_organisation: provider, status: :draft)
       offer = create(:offer, name: "offer1", description: "desc", service: service, internal: false)

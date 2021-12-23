@@ -76,7 +76,7 @@ describe Jms::ManageMessage do
   it "should receive error if message is invalid" do
     original_stdout = $stdout
     $stdout = StringIO.new
-    service_hash = { "some_happy_key": "some_happy_value" }
+    service_hash = { some_happy_key: "some_happy_value" }
     error_service_message = double(body: service_hash.to_json, headers: { "destination" => "aaaa.update" })
 
     expect { described_class.new(error_service_message, eosc_registry_base, logger).call }.to raise_error(StandardError)

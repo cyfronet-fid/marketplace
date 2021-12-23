@@ -4,13 +4,13 @@
   .btn-group.voucher-radio.btn-group-toggle.mb-4.col-12.col-lg-8.p-0
     %label#have.btn.btn-secondary.p-2.pl-5.pr-5{ "data-target" => "project-item.iHaveVoucher",
                                             class: ("active" unless project_item.request_voucher) }
-      %input{ "type": "radio", "name": "customizable_project_item[request_voucher]",
+      %input{ type: "radio", name: "customizable_project_item[request_voucher]",
                    value: "false", "data-action" => "change->project-item#voucherChanged" }
         %i.fas.fa-check
         = _("I have a voucher, I want to use it")
     %label#ask.btn.btn-secondary.p-2.pl-5.pr-5{ "data-target" => "project-item.iDontHaveVoucher",
                                             class: ("active" if project_item.request_voucher) }
-      %input{ "type": "radio", "name": "customizable_project_item[request_voucher]",
+      %input{ type: "radio", name: "customizable_project_item[request_voucher]",
                   value: "true", "data-action" => "change->project-item#voucherChanged" }
         %i.fas.fa-check
         = _("I want to ask for vouchers")

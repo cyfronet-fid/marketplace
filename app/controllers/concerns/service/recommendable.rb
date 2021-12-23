@@ -60,7 +60,7 @@ module Service::Recommendable
 
   def get_recommended_services_by(body, size)
     url = Mp::Application.config.recommender_host + "/recommendations"
-    response = Faraday.post(url, body.to_json, { "Content-Type": "application/json", "Accept": "application/json" })
+    response = Faraday.post(url, body.to_json, { "Content-Type": "application/json", Accept: "application/json" })
     ids = JSON.parse(response.body)["recommendations"]
     services = Service.where(id: ids, status: %i[published unverified]).sort_by { |s| ids.index(s.id) }.take(size)
 
@@ -86,7 +86,7 @@ module Service::Recommendable
   end
 
   def get_services_size_by(ab_test_version)
-    { "v1": 3, "v2": 2 }[ab_test_version] || 3
+    { v1: 3, v2: 2 }[ab_test_version] || 3
   end
 
   def get_filters_by(params)

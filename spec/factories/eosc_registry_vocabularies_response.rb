@@ -146,8 +146,8 @@ FactoryBot.define do
             "parentId" => "supercategory-access_physical_and_eInfrastructures",
             "type" => "Category",
             "extras" => {
-              "icon": "ic_compute.svg",
-              "icon_active": "ic_compute_active.svg"
+              icon: "ic_compute.svg",
+              icon_active: "ic_compute_active.svg"
             }
           }
         ],
@@ -169,8 +169,8 @@ FactoryBot.define do
             "parentId" => nil,
             "type" => "Scientific domain",
             "extras" => {
-              "icon": "ic_analytics.svg",
-              "icon_active": "ic_analytics_active.svg"
+              icon: "ic_analytics.svg",
+              icon_active: "ic_analytics_active.svg"
             }
           }
         ],
@@ -244,8 +244,8 @@ FactoryBot.define do
             "parentId" => nil,
             "type" => "Supercategory",
             "extras" => {
-              "icon": "ic_security.svg",
-              "icon_active": "ic_security_active.svg"
+              icon: "ic_security.svg",
+              icon_active: "ic_security_active.svg"
             }
           }
         ],

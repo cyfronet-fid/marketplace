@@ -51,7 +51,7 @@ describe Jms::Subscriber do
 
   def stub_good_message
     allow(client).to receive(:subscribe)
-      .with("/topic/dummy_topic.>", { "ack": "client-individual", "activemq.subscriptionName": "mpSubscription" })
+      .with("/topic/dummy_topic.>", { ack: "client-individual", "activemq.subscriptionName": "mpSubscription" })
       .and_yield(json_service)
 
     allow(client).to receive(:ack).with(json_service)
@@ -93,7 +93,7 @@ describe Jms::Subscriber do
     $stdout = StringIO.new
     $stderr = StringIO.new
     allow(client).to receive(:subscribe)
-      .with("/topic/dummy_topic.>", { "ack": "client-individual", "activemq.subscriptionName": "mpSubscription" })
+      .with("/topic/dummy_topic.>", { ack: "client-individual", "activemq.subscriptionName": "mpSubscription" })
       .and_yield({})
 
     allow(Jms::ManageMessage).to receive(:new)
@@ -117,7 +117,7 @@ describe Jms::Subscriber do
         "client-id": "MPClientTest",
         "heart-beat": "0,20000",
         "accept-version": "1.2",
-        "host": "localhost"
+        host: "localhost"
       }
     }
   end

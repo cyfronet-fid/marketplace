@@ -1,4 +1,3 @@
-- if Rails.env.production? && !ENV["JIRA_COLLECTOR_SCRIPTS"].blank?
+- if Rails.env.production? && ENV["JIRA_COLLECTOR_SCRIPTS"].present?
   - ENV["JIRA_COLLECTOR_SCRIPTS"].split(" ") do |src|
     %script{ src: src }
-

@@ -51,9 +51,9 @@
         %h2
           = humanized_subsection(@subsection)
         = render "api_docs/subsections/#{@subsection}"
-        - _next_subsection = next_subsection(@subsection)
-        - if _next_subsection.present?
+        - next_subsection = next_subsection(@subsection)
+        - if next_subsection.present?
           %hr.bottom-hr.mb-4
           %p.next
             Next:
-            #{link_to humanized_subsection(_next_subsection), api_docs_path(subsection: _next_subsection)}
+            #{link_to humanized_subsection(next_subsection), api_docs_path(subsection: next_subsection)}
