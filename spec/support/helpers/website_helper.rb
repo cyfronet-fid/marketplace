@@ -5,10 +5,10 @@ module WebsiteHelper
     stub_request(:get, source.website)
       .with(
         headers: {
-          "Accept": "*/*",
+          Accept: "*/*",
           "User-Agent": "faraday-my-app",
           "Accept-Encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
-          "Host": source.website.gsub(%r{http(s?)://}, "")
+          Host: source.website.gsub(%r{http(s?)://}, "")
         }
       )
       .to_return(status: 200, body: "", headers: {})

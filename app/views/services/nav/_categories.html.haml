@@ -11,7 +11,7 @@
   - view = content_for(:category_view) || "services/nav/category"
   - categories.each do |_cid, category|
     = render view, category: category[:category], current: current, counter: category[:counter]
-    - if current == category[:category] && !subcategories.blank?
+    - if current == category[:category] && subcategories.present?
       %ul.ml-3{ "data-e2e": "sub-categories-list" }
         - subcategories.each do |_sid, subcategory|
           = render view, category: subcategory[:category], current: current, counter: subcategory[:counter]

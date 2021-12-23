@@ -10,8 +10,8 @@ module ComparisonsHelper
       {
         "data-toggle": "tooltip",
         "data-trigger": "hover",
-        "tabindex": "0",
-        "title": "You have reached the maximum number of items you can compare"
+        tabindex: "0",
+        title: "You have reached the maximum number of items you can compare"
       }
     else
       {}

@@ -61,7 +61,7 @@ module Jira
       puts "SUGGESTED MAPPINGS"
       mismatched_fields.each do |field_name|
         suggested_field_description =
-          if (f = fields.find { |_f| _f.name == field_name.to_s })
+          if (f = fields.find { |fld| fld.name == field_name.to_s })
             "#{f.id.yellow} (export MP_JIRA_FIELD_#{f.name.gsub(/[- ]/, "_")}='#{f.id}')"
           else
             "NO MATCH FOUND".red

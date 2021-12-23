@@ -42,7 +42,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
               project: project,
               iid: 2,
               user_secrets: {
-                "key": "value"
+                key: "value"
               }
             ),
             create(:project_item, offer: build(:offer, primary_oms: other_oms), project: project, iid: 3),
@@ -169,7 +169,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
             :project_item,
             project: project,
             user_secrets: {
-              "key": "value"
+              key: "value"
             },
             offer: create(:offer, primary_oms: oms)
           )
@@ -313,7 +313,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
             project: project,
             status: "old value",
             user_secrets: {
-              "other": "something"
+              other: "something"
             },
             offer: build(:offer, primary_oms: oms)
           )
@@ -323,9 +323,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
         let(:p_id) { project.id }
         let(:pi_id) { project_item.iid }
         let(:"X-User-Token") { oms_admin.authentication_token }
-        let(:project_item_payload) do
-          { "status": { "value": "new value", "type": "ready" }, "user_secrets": { "key": "value" } }
-        end
+        let(:project_item_payload) { { status: { value: "new value", type: "ready" }, user_secrets: { key: "value" } } }
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data["status"]).to eq({ value: "new value", type: "ready" }.deep_stringify_keys)
@@ -352,7 +350,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
         let(:p_id) { project.id }
         let(:pi_id) { project_item.iid }
         let(:"X-User-Token") { oms_admin.authentication_token }
-        let(:project_item_payload) { { "status": { "value": "new value", "type": "LOL" } } }
+        let(:project_item_payload) { { status: { value: "new value", type: "LOL" } } }
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data).to eq(
@@ -380,7 +378,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
         let(:p_id) { project.id }
         let(:pi_id) { project_item.iid }
         let(:"X-User-Token") { oms_admin.authentication_token }
-        let(:project_item_payload) { { "user_secrets": { "key": 123 } } }
+        let(:project_item_payload) { { user_secrets: { key: 123 } } }
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data).to eq({ error: { user_secrets: ["values must be strings"] } }.deep_stringify_keys)

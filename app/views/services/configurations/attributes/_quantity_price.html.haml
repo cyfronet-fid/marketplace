@@ -1,6 +1,6 @@
 = field.input :id, label: attr.label, hint: attr.description,
   error: attr.errors.messages_for(:id).join(" ") do
-  .input-group.pl-0{ data: { "controller": "quantity-price",
+  .input-group.pl-0{ data: { controller: "quantity-price",
     "quantity-price": { "start-price": attr.start_price, "step-price": attr.step_price } } }
     - has_errors = attr.errors[:id].present?
     - valid = !has_errors && attr.value

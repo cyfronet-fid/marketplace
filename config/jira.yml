@@ -20,47 +20,47 @@ default: &default
     archived: <%= ENV["MP_JIRA_WF_ARCHIVED"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :workflow, :archived) || 8 %>
 
   custom_fields:
-    "Epic Link": <%= "'" + (ENV["MP_JIRA_FIELD_Epic_Link"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "Epic Link".to_sym) || "") + "'" %>
-    "Epic Name": <%= "'" + (ENV["MP_JIRA_FIELD_Epic_Name"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "Epic Name".to_sym) || "") + "'" %>
-    "Order reference": <%= "'" + (ENV["MP_JIRA_FIELD_Order_reference"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "Order reference".to_sym) || "") + "'" %>
-    CI-Name: <%= "'" + (ENV["MP_JIRA_FIELD_CI_Name"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CI-Name".to_sym) || "") + "'" %>
-    CI-Surname: <%= "'" + (ENV["MP_JIRA_FIELD_CI_Surname"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CI-Surname".to_sym) || "") + "'" %>
-    CI-Email: <%= "'" + (ENV["MP_JIRA_FIELD_CI_Email"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CI-Email".to_sym) || "") + "'" %>
-    CI-DisplayName: <%= "'" + (ENV["MP_JIRA_FIELD_CI_DisplayName"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CI-DisplayName".to_sym) || "") + "'" %>
-    CI-EOSC-UniqueID: <%= "'" + (ENV["MP_JIRA_FIELD_CI_EOSC_UniqueID"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CI-EOSC-UniqueID".to_sym) || "") + "'" %>
-    CI-Institution: <%= "'" + (ENV["MP_JIRA_FIELD_CI_Institution"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CI-Institution".to_sym) || "") + "'" %>
-    CI-Department: <%= "'" + (ENV["MP_JIRA_FIELD_CI_Department"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CI-Department".to_sym) || "") + "'" %>
-    CI-DepartmentalWebPage: <%= "'" + (ENV["MP_JIRA_FIELD_CI_DepartmentalWebPage"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CI-DepartmentalWebPage".to_sym) || "") + "'" %>
-    CI-SupervisorName: <%= "'" + (ENV["MP_JIRA_FIELD_CI_SupervisorName"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CI-SupervisorName".to_sym) || "") + "'" %>
-    CI-SupervisorProfile: <%= "'" + (ENV["MP_JIRA_FIELD_CI_SupervisorProfile"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CI-SupervisorProfile".to_sym) || "") + "'" %>
-    CP-CustomerTypology: <%= "'" + (ENV["MP_JIRA_FIELD_CP_CustomerTypology"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CP-CustomerTypology".to_sym) || "") + "'" %>
-    CP-ReasonForAccess: <%= "'" + (ENV["MP_JIRA_FIELD_CP_ReasonForAccess"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CP-ReasonForAccess".to_sym) || "") + "'" %>
-    CP-UserGroupName: <%= "'" + (ENV["MP_JIRA_FIELD_CP_UserGroupName"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CP-UserGroupName".to_sym) || "") + "'" %>
-    CP-ProjectInformation: <%= "'" + (ENV["MP_JIRA_FIELD_CP_ProjectInformation"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CP-ProjectInformation".to_sym) || "") + "'" %>
-    SO-ProjectName: <%= "'" + (ENV["MP_JIRA_FIELD_SO_ProjectName"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "SO-ProjectName".to_sym) || "") + "'" %>
-    CP-ScientificDiscipline: <%= "'" + (ENV["MP_JIRA_FIELD_CP_ScientificDiscipline"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CP-ScientificDiscipline".to_sym) || "") + "'" %>
-    CP-Platforms: <%= "'" + (ENV["MP_JIRA_FIELD_CP_Platforms"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CP-Platforms".to_sym) || "") + "'" %>
-    CP-INeedAVoucher: <%= "'" + (ENV["MP_JIRA_FIELD_CP_INeedAVoucher"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CP-INeedAVoucher".to_sym) || "") + "'" %>
-    CP-VoucherID: <%= "'" + (ENV["MP_JIRA_FIELD_CP_VoucherID"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CP-VoucherID".to_sym) || "") + "'" %>
-    SO-1: <%= "'" + (ENV["MP_JIRA_FIELD_SO_1"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "SO-1".to_sym) || "") + "'" %>
-    SO-ServiceOrderTarget: <%= "'" + (ENV["MP_JIRA_FIELD_SO_ServiceOrderTarget"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "SO-ServiceOrderTarget".to_sym) || "") + "'" %>
-    SO-OfferType:  <%= "'" + (ENV["MP_JIRA_FIELD_SO_OfferType"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "SO-OfferType".to_sym) || "") + "'" %>
-    CP-CustomerCountry: <%= "'" + (ENV["MP_JIRA_FIELD_CP_CustomerCountry"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CP-CustomerCountry".to_sym) || "") + "'" %>
-    CP-CollaborationCountry: <%= "'" + (ENV["MP_JIRA_FIELD_CP_CollaborationCountry"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, "CP-CollaborationCountry".to_sym) || "") + "'" %>
+    "Epic Link": <%= "'" + (ENV["MP_JIRA_FIELD_Epic_Link"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"Epic Link") || "") + "'" %>
+    "Epic Name": <%= "'" + (ENV["MP_JIRA_FIELD_Epic_Name"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"Epic Name") || "") + "'" %>
+    "Order reference": <%= "'" + (ENV["MP_JIRA_FIELD_Order_reference"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"Order reference") || "") + "'" %>
+    CI-Name: <%= "'" + (ENV["MP_JIRA_FIELD_CI_Name"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CI-Name") || "") + "'" %>
+    CI-Surname: <%= "'" + (ENV["MP_JIRA_FIELD_CI_Surname"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CI-Surname") || "") + "'" %>
+    CI-Email: <%= "'" + (ENV["MP_JIRA_FIELD_CI_Email"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CI-Email") || "") + "'" %>
+    CI-DisplayName: <%= "'" + (ENV["MP_JIRA_FIELD_CI_DisplayName"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CI-DisplayName") || "") + "'" %>
+    CI-EOSC-UniqueID: <%= "'" + (ENV["MP_JIRA_FIELD_CI_EOSC_UniqueID"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CI-EOSC-UniqueID") || "") + "'" %>
+    CI-Institution: <%= "'" + (ENV["MP_JIRA_FIELD_CI_Institution"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CI-Institution") || "") + "'" %>
+    CI-Department: <%= "'" + (ENV["MP_JIRA_FIELD_CI_Department"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CI-Department") || "") + "'" %>
+    CI-DepartmentalWebPage: <%= "'" + (ENV["MP_JIRA_FIELD_CI_DepartmentalWebPage"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CI-DepartmentalWebPage") || "") + "'" %>
+    CI-SupervisorName: <%= "'" + (ENV["MP_JIRA_FIELD_CI_SupervisorName"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CI-SupervisorName") || "") + "'" %>
+    CI-SupervisorProfile: <%= "'" + (ENV["MP_JIRA_FIELD_CI_SupervisorProfile"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CI-SupervisorProfile") || "") + "'" %>
+    CP-CustomerTypology: <%= "'" + (ENV["MP_JIRA_FIELD_CP_CustomerTypology"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CP-CustomerTypology") || "") + "'" %>
+    CP-ReasonForAccess: <%= "'" + (ENV["MP_JIRA_FIELD_CP_ReasonForAccess"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CP-ReasonForAccess") || "") + "'" %>
+    CP-UserGroupName: <%= "'" + (ENV["MP_JIRA_FIELD_CP_UserGroupName"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CP-UserGroupName") || "") + "'" %>
+    CP-ProjectInformation: <%= "'" + (ENV["MP_JIRA_FIELD_CP_ProjectInformation"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CP-ProjectInformation") || "") + "'" %>
+    SO-ProjectName: <%= "'" + (ENV["MP_JIRA_FIELD_SO_ProjectName"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"SO-ProjectName") || "") + "'" %>
+    CP-ScientificDiscipline: <%= "'" + (ENV["MP_JIRA_FIELD_CP_ScientificDiscipline"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CP-ScientificDiscipline") || "") + "'" %>
+    CP-Platforms: <%= "'" + (ENV["MP_JIRA_FIELD_CP_Platforms"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CP-Platforms") || "") + "'" %>
+    CP-INeedAVoucher: <%= "'" + (ENV["MP_JIRA_FIELD_CP_INeedAVoucher"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CP-INeedAVoucher") || "") + "'" %>
+    CP-VoucherID: <%= "'" + (ENV["MP_JIRA_FIELD_CP_VoucherID"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CP-VoucherID") || "") + "'" %>
+    SO-1: <%= "'" + (ENV["MP_JIRA_FIELD_SO_1"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"SO-1") || "") + "'" %>
+    SO-ServiceOrderTarget: <%= "'" + (ENV["MP_JIRA_FIELD_SO_ServiceOrderTarget"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"SO-ServiceOrderTarget") || "") + "'" %>
+    SO-OfferType:  <%= "'" + (ENV["MP_JIRA_FIELD_SO_OfferType"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"SO-OfferType") || "") + "'" %>
+    CP-CustomerCountry: <%= "'" + (ENV["MP_JIRA_FIELD_CP_CustomerCountry"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CP-CustomerCountry") || "") + "'" %>
+    CP-CollaborationCountry: <%= "'" + (ENV["MP_JIRA_FIELD_CP_CollaborationCountry"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :"CP-CollaborationCountry") || "") + "'" %>
 
     select_values:
       CP-CustomerTypology:
-        single_user: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_single_user"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, "CP-CustomerTypology".to_sym, :single_user) || "") + "'" %>
-        research: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_research"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, "CP-CustomerTypology".to_sym, :research) || "") + "'" %>
-        private_company: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_private_company"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, "CP-CustomerTypology".to_sym, :private_company) || "") + "'" %>
-        project: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_project"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, "CP-CustomerTypology".to_sym, :project) || "") + "'" %>
+        single_user: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_single_user"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"CP-CustomerTypology", :single_user) || "") + "'" %>
+        research: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_research"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"CP-CustomerTypology", :research) || "") + "'" %>
+        private_company: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_private_company"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"CP-CustomerTypology", :private_company) || "") + "'" %>
+        project: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_project"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"CP-CustomerTypology", :project) || "") + "'" %>
       CP-INeedAVoucher:
-        'yes': <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_true"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, "CP-INeedAVoucher".to_sym, true) || "") + "'" %>
-        'no': <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_false"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, "CP-INeedAVoucher".to_sym, false) || "") + "'" %>
+        'yes': <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_true"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"CP-INeedAVoucher", true) || "") + "'" %>
+        'no': <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_false"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"CP-INeedAVoucher", false) || "") + "'" %>
       SO-OfferType:
-        orderable: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_SO_OfferType_normal"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, "SO-OfferType".to_sym, :normal) || "") + "'" %>
-        open_access: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_SO_OfferType_open_access"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, "SO-OfferType".to_sym, :open_access) || "") + "'" %>
-        external: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_SO_OfferType_catalog"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, "SO-OfferType".to_sym, :catalog) || "") + "'" %>
+        orderable: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_SO_OfferType_normal"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"SO-OfferType", :normal) || "") + "'" %>
+        open_access: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_SO_OfferType_open_access"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"SO-OfferType", :open_access) || "") + "'" %>
+        external: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_SO_OfferType_catalog"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"SO-OfferType", :catalog) || "") + "'" %>
 
 development:
   <<: *default

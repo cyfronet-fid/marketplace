@@ -60,31 +60,19 @@ Metrics/CyclomaticComplexity:
     - 'app/services/project_item/create.rb'
 
 Style/StringLiterals:
-  Enabled: false
+  Enabled: true
+  EnforcedStyle: double_quotes
 
-# Allow private methods
-Lint/UselessAccessModifier:
-  Enabled: false
-
-# Allow private methods
-Lint/IneffectiveAccessModifier:
-  Enabled: false
-
-# Skip if/else one liner check
+# Not necessary to enforce this, both forms are useful sometimes.
 Style/ConditionalAssignment:
   Enabled: false
 
-# Turn off due error
-Style/HashConversion:
-  Enabled: false
-
+# We don't really use such big numbers outside of port configuration, where it's counterproductive.
 Style/NumericLiterals:
   Enabled: false
 
+# We didn't order gems from the beginning. Turning this on would mess history up.
 Bundler/OrderedGems:
-  Enabled: false
-
-Lint/ImplicitStringConcatenation:
   Enabled: false
 
 # Turn off due conflict with prettier
@@ -92,7 +80,9 @@ Style/LineEndConcatenation:
   Enabled: false
 
 Style/InverseMethods:
-  Enabled: false
+  Enabled: true
+  InverseMethods:
+    :present?: :blank?
 
 Style/FormatString:
   Enabled: false
@@ -138,19 +128,12 @@ Style/Documentation:
 Style/RedundantInterpolation:
   Enabled: false
 
+Style/StringConcatenation:
+  Enabled: false
+
 ################################
 # TODO Check, enable or forbid rules beneath
 ################################
-
-### Large change with small impact
-Lint/UnderscorePrefixedVariableName:
-  Enabled: false
-
-Lint/SymbolConversion:
-  Enabled: false
-
-Style/StringConcatenation:
-  Enabled: false
 
 ### Beneath rules require double check before turning on
 Style/RescueStandardError:

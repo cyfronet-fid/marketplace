@@ -16,6 +16,6 @@
       = link_to _("Show more"), "#", class: "show-more-#{offer.id}",
                                   data: { "target" => "paragraph.showMore",
                                           "action" => "click->paragraph#showMore",
-                                          "text": markdown(offer.description) }
+                                          text: markdown(offer.description) }
     - else
       = markdown(offer.description)

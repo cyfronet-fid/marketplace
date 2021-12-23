@@ -1,7 +1,7 @@
 = render "layouts/sections"
 
 #mynav.overlay
-  %a.closebtn{ "href": "javascript:void(0)", "onclick": "closeNav()" }
+  %a.closebtn{ href: "javascript:void(0)", onclick: "closeNav()" }
   .overlay-content
     .mobile-links
       %ul
@@ -107,7 +107,7 @@
                 %a.dropdown-item.dropdown-profile{ href: executive_path }
                   = _("Executive")
 
-      .menu__hamburger{ "onclick": "openNav()" }
+      .menu__hamburger{ onclick: "openNav()" }
         %span
         %span
         %span

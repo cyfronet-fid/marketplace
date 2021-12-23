@@ -10,5 +10,5 @@
   .row.mt-5
     .col-12
       = f.button :submit, button_name, class: "btn btn-primary pl-5 pr-5 mr-5"
-      %a.text-left.flex-grow-1.text-uppercase{ "href": "/backoffice/vocabularies/#{snake_cased(type).pluralize}" }
+      %a.text-left.flex-grow-1.text-uppercase{ href: "/backoffice/vocabularies/#{snake_cased(type).pluralize}" }
         = _("Cancel and back to previous page")

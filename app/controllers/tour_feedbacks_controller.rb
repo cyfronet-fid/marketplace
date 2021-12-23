@@ -18,11 +18,10 @@ class TourFeedbacksController < ApplicationController
 
     @form = params.require(:content).permit(@feedback["questions"].map { |question| question["name"].to_sym })
     @errors =
-      Hash[
-        @feedback["questions"]
-          .select { |question| !@form[question["name"]].present? }
-          .collect { |question| [question["name"], "This field is required"] }
-      ]
+      @feedback["questions"]
+        .reject { |question| @form[question["name"]].present? }
+        .collect { |question| [question["name"], "This field is required"] }
+        .to_h
 
     check_and_set_email(tour_params)
 
@@ -67,7 +66,7 @@ class TourFeedbacksController < ApplicationController
   def check_and_set_email(tour_params)
     if tour_params["share"] && tour_params["email"].blank? && current_user.nil?
       @errors["email"] = "This field is required"
-    elsif tour_params["share"] && current_user.nil? && !(tour_params["email"] =~ /^(.+)@(.+)$/)
+    elsif tour_params["share"] && current_user.nil? && tour_params["email"] !~ /^(.+)@(.+)$/
       @errors["email"] = "Email required"
     elsif tour_params["share"] && current_user.present?
       tour_params["email"] = current_user.email

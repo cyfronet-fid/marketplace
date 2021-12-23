@@ -95,7 +95,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
       @provider.errors.add(:website, "isn't valid or website doesn't exist, please check URL")
     end
 
-    invalid_multimedia = @provider.multimedia.select { |media| !UrlHelper.url_valid?(media) }
+    invalid_multimedia = @provider.multimedia.reject { |media| UrlHelper.url_valid?(media) }
     if @provider.multimedia_changed? && invalid_multimedia.present?
       valid = false
       @provider.errors.add(

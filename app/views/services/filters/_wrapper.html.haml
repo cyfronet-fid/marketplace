@@ -1,8 +1,8 @@
 - collapsed = cookies["#{filter.field_name}-filter"] == "true"
-%a{ "href": "#collapse_#{filter.field_name}", "data-toggle": "collapse",
-    "id": "#{filter.field_name}-filter",
+%a{ href: "#collapse_#{filter.field_name}", "data-toggle": "collapse",
+    id: "#{filter.field_name}-filter",
     "data-action": "click->filter#toggle",
-    "data-parent": "#filters", "role": "button",
+    "data-parent": "#filters", role: "button",
     class: ("collapsed" if collapsed) }
   .row
     .col-10
@@ -18,6 +18,6 @@
         %i.fas.fa-chevron-up
 
 .row
-  .col-md-12.panel-collapse.collapse{ "id": "collapse_#{filter.field_name}",
+  .col-md-12.panel-collapse.collapse{ id: "collapse_#{filter.field_name}",
     "data-target": "filters.filter", class: ("show" unless collapsed) }
     = yield

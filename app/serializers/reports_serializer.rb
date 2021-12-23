@@ -6,7 +6,7 @@ class ReportsSerializer < ActiveJob::Serializers::ObjectSerializer
   end
 
   def serialize(report)
-    super ({ "author" => report.author, "email" => report.email, "text" => report.text })
+    super({ "author" => report.author, "email" => report.email, "text" => report.text })
   end
 
   def deserialize(hash)
