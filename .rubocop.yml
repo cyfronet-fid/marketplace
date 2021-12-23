@@ -94,144 +94,68 @@ Style/LineEndConcatenation:
 Style/InverseMethods:
   Enabled: false
 
-################################
-# TODO Check, enable or forbid rules beneath
-################################
-
-Metrics/BlockLength:
-  Enabled: false
-    
-Style/Documentation:
-  Enabled: false
-
-Metrics/MethodLength:
-  Enabled: false
-
-Metrics/AbcSize:
-  Enabled: false
-
-Lint/ConstantDefinitionInBlock:
-  Enabled: false
-
-Lint/AmbiguousBlockAssociation:
-  Enabled: false
-
-Lint/ShadowedException:
-  Enabled: false
-
-Metrics/ClassLength:
-  Enabled: false
-
-Metrics/ParameterLists:
-  Enabled: false
-
-Security/Open:
-  Enabled: false
-
-Naming/MethodParameterName:
-  Enabled: false
-
-Naming/PredicateName:
-  Enabled: false
-
-Style/OptionalBooleanParameter:
-  Enabled: false
-
-Lint/EmptyBlock:
-  Enabled: false
-
-Style/GuardClause:
-  Enabled: false
-
-Style/MixinUsage:
-  Enabled: false
-
-Style/StringConcatenation:
-  Enabled: false
-
-Naming/FileName:
-  Enabled: false
-
-Naming/MemoizedInstanceVariableName:
-  Enabled: false
-
-Style/MissingRespondToMissing:
-  Enabled: false
-
-Lint/DuplicateMethods:
-  Enabled: false
-
-Naming/VariableName:
-  Enabled: false
-
-Naming/BlockParameterName:
-  Enabled: false
-
-Metrics/ModuleLength:
-  Enabled: false
-
-Style/ClassVars:
-  Enabled: false
-    
-Style/FormatStringToken:
-  Enabled: false
-
-Lint/NonLocalExitFromIterator:
-  Enabled: false
-
-Lint/DuplicateBranch:
-  Enabled: false
-
-Lint/SafeNavigationChain:
-  Enabled: false
-
-Style/QuotedSymbols:
+Style/FormatString:
   Enabled: false
 
 Style/StringLiteralsInInterpolation:
   Enabled: false
 
-Style/CaseLikeIf:
+# Interpolation thing
+Style/QuotedSymbols:
   Enabled: false
 
-Style/NumericPredicate:
+# No return in ifs
+Lint/NonLocalExitFromIterator:
   Enabled: false
 
-Style/FormatString:
+# Expect to very small files
+Metrics/ModuleLength:
   Enabled: false
 
-Lint/SymbolConversion:
+Style/MissingRespondToMissing:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+# Problematic
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+# Require docs for each class
+Style/Documentation:
   Enabled: false
 
 Style/RedundantInterpolation:
   Enabled: false
 
-Style/SymbolProc:
-  Enabled: false
-
-Style/UnlessElse:
-  Enabled: false
-
-Style/RedundantParentheses:
-  Enabled: false
-
-Lint/DuplicateHashKey:
-  Enabled: false
-
-Style/SoleNestedConditional:
-  Enabled: false
-
-Lint/UnusedBlockArgument:
-  Enabled: false
-
-Style/RescueStandardError:
-  Enabled: false
+################################
+# TODO Check, enable or forbid rules beneath
+################################
 
 ### Large change with small impact
 Lint/UnderscorePrefixedVariableName:
   Enabled: false
 
+Lint/SymbolConversion:
+  Enabled: false
+
+Style/StringConcatenation:
+  Enabled: false
+
 ### Beneath rules require double check before turning on
+Style/RescueStandardError:
+  Enabled: false
+
 Lint/MissingSuper:
   Enabled: false
 
@@ -272,4 +196,44 @@ Style/HashAsLastArrayItem:
   Enabled: false
 
 Style/RedundantSelf:
+  Enabled: false
+
+Lint/SafeNavigationChain:
+  Enabled: false
+
+Style/FormatStringToken:
+  Enabled: false
+
+Style/ClassVars:
+  Enabled: false
+
+Naming/FileName:
+  Enabled: false
+
+Style/MixinUsage:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/OptionalBooleanParameter:
+  Enabled: false
+
+### Problematic, but worth effort
+
+Metrics/ParameterLists:
+  Enabled: false
+
+# remove get_, has_
+Naming/PredicateName:
+  Enabled: false
+
+# todo: check how to secure/replace usage of Kernel#open
+Security/Open:
+  Enabled: false
+
+Lint/ShadowedException:
+  Enabled: false
+
+Lint/ConstantDefinitionInBlock:
   Enabled: false
