@@ -28,6 +28,7 @@
   %hr.bottom-hr.mb-5
   .row
     .col-12
-      = f.button :submit, class: "btn btn-primary pl-5 pr-5"
+      .button-wrapper.mr-5
+        = f.button :submit, class: "btn btn-primary"
       = link_to _("cancel and back to previous page"), back_link,
-      class: "btn btn-link text-uppercase"
+      class: "text-left flex-grow-1 text-uppercase float-left mt-2"

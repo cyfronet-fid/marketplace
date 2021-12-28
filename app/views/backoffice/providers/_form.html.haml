@@ -19,7 +19,8 @@
       %hr.bottom-hr.mt-5.mb-4
       .row.mt-5
         .col-12
-          = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin",
+          .button-wrapper.mr-5
+            = f.button :submit, class: "btn btn-primary mobile-bottom-margin",
           "data-e2e": "create-provider-btn"
-          %a.text-left.flex-grow-1.text-uppercase.mobile-bottom-margin{ "href": "/backoffice/providers/#{provider.id}" }
-            = _("Cancel and back to previous page")
+          = back_link_to _("Cancel and back to previous page"), provider, prefix: :backoffice,
+              class: "text-left flex-grow-1 text-uppercase float-left mt-2"

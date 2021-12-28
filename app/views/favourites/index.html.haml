@@ -10,7 +10,7 @@
       .mt-4
       - unless @favourites.blank?
         = link_to "Go back to the resources list", services_path,
-        class: "btn btn-sm btn-outline-primary d-block mb-3", "data-target": "favourite.backlink"
+        class: "btn btn-sm btn-primary d-block mb-3", "data-target": "favourite.backlink"
     .col-lg-9.favourites{ "data-target": "favourite.serviceBox" }
       - if @favourites.blank?
         = render "empty_box"

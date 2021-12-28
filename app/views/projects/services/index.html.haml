@@ -29,5 +29,5 @@
     %hr.bottom-hr.mt-3.mb-4
     - if !@project.archived?
       = link_to (("Add resource to this project")), project_add_path(@project),
-        class: "btn btn btn-primary pl-5 pr-5 mr-5",
+        class: "btn btn btn-primary mr-5",
         method: :post

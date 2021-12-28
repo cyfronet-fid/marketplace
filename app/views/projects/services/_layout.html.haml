@@ -20,7 +20,7 @@
             -# TODO: refactor dynamic translation
             %span{ class: "status-#{project_item.status_type}" }= t("project_items.status.#{project_item.status_type}")
         = render Services::InlineOrderUrlComponent.new(offerable: project_item,
-          classes: "btn btn-primary float-right pl-3 pr-3")
+          classes: "btn btn-primary float-right")
         - if project_item.offer.bundle?
           .project-badge.text-uppercase.d-inline.float-right.font-weight-bold.mb-0.ml-2
             = _("BUNDLE")
