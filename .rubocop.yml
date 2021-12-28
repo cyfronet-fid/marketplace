@@ -172,9 +172,6 @@ Style/NegatedIfElseCondition:
 Style/RedundantArgument:
   Enabled: false
 
-Lint/NestedMethodDefinition:
-  Enabled: false
-
 Style/HashAsLastArrayItem:
   Enabled: false
 
@@ -209,10 +206,4 @@ Metrics/ParameterLists:
 
 # remove get_, has_
 Naming/PredicateName:
-  Enabled: false
-
-Lint/ShadowedException:
-  Enabled: false
-
-Lint/ConstantDefinitionInBlock:
   Enabled: false
