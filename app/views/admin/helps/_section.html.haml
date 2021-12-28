@@ -3,7 +3,7 @@
   = section.title
   = link_to _("Add new help item"),
             new_admin_help_item_path(section: section.slug),
-            class: "btn btn-sm btn-success float-right"
+            class: "btn btn-sm btn-primary float-right"
 .accordion.faq-list{ id: "s-#{section.slug}" }
   = render partial: "item",
     collection: section.help_items, locals: { parent: "s-#{section.slug}" }

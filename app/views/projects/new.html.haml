@@ -8,8 +8,8 @@
   %hr.bottom-hr.mt-5.mb-4
   .row
     .col-12
-      %button.btn.btn-primary.pl-5.pr-5{ type: "submit",
+      %button.btn.btn-primary.mr-5{ type: "submit",
                                form: "modal-form", "data-e2e": "updateProjectBtn" }
         = _("Create new project")
       = back_link_to _("Cancel"), @project,
-        class: "btn btn-link text-uppercase"
+        class: "text-left flex-grow-1 text-uppercase"

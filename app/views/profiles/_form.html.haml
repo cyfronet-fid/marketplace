@@ -25,10 +25,11 @@
   %hr.bottom-hr.mt-5.mb-4
   .row.mt-5
     .col-12.col-md-7
-      = f.button :submit, method: :patch, class: "btn btn-primary pl-5 pr-5 mr-5",
-        "data-shepherd-tour-target": "profile-submit", "data-e2e": "submit-btn"
+      .button-wrapper.mr-5
+        = f.button :submit, method: :patch, class: "btn btn-primary",
+          "data-shepherd-tour-target": "profile-submit", "data-e2e": "submit-btn"
       = link_to _("Cancel and back to previous page"), profile_path,
-        class: "text-left flex-grow-1 text-uppercase"
+        class: "text-left float-left mt-2 flex-grow-1 text-uppercase"
     .col-12.col-md-5.delete-info
       .delete-text
         -# haml-lint:disable MultilinePipe
