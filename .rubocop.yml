@@ -199,10 +199,9 @@ Style/GuardClause:
 Style/OptionalBooleanParameter:
   Enabled: false
 
-### Problematic, but worth effort
-
 Metrics/ParameterLists:
-  Enabled: false
+  Enabled: true
+  CountKeywordArgs: false
 
 # remove get_, has_
 Naming/PredicateName:
