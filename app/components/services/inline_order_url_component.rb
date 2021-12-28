@@ -4,6 +4,7 @@ class Services::InlineOrderUrlComponent < ApplicationComponent
   include ProjectItemsHelper
 
   def initialize(offerable:, classes: "btn btn-outline-primary mt-3")
+    super()
     @offerable = offerable
     @classes = classes
   end

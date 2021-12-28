@@ -7,7 +7,7 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
     end
   end
 
-  MP_INTERNAL_FIELDS = [:upstream_id, [sources_attributes: %i[id source_type eid _destroy]]]
+  MP_INTERNAL_FIELDS = [:upstream_id, [sources_attributes: %i[id source_type eid _destroy]]].freeze
 
   def index?
     service_portfolio_manager?

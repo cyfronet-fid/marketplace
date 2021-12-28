@@ -112,7 +112,7 @@ class UpdateScientificDomains < ActiveRecord::Migration[6.0]
         cast_and_remove_sources(ProjectScientificDomain, source_id, target_id, "project_id")
         source.delete
       end
-    rescue Exception
+    rescue StandardError
       raise ActiveRecord::Rollback
     end
   end

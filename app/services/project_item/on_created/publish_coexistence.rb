@@ -2,6 +2,7 @@
 
 class ProjectItem::OnCreated::PublishCoexistence < ApplicationService
   def initialize(project)
+    super()
     @project = project
   end
 

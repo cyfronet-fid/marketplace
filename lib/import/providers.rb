@@ -29,7 +29,7 @@ class Import::Providers
 
   def call
     log "Importing providers from EOSC Registry..."
-    @request_providers = get_external_providers_data.select { |id, _| @ids.empty? || @ids.include?(id) }
+    @request_providers = external_providers_data.select { |id, _| @ids.empty? || @ids.include?(id) }
     @request_providers.each do |eid, external_provider_data|
       parsed_provider_data = Importers::Provider.new(external_provider_data, Time.now.to_i, "rest").call
       eosc_registry_provider =
@@ -117,7 +117,7 @@ class Import::Providers
     end
   end
 
-  def get_external_providers_data
+  def external_providers_data
     begin
       rp = Importers::Request.new(@eosc_registry_base_url, "provider", faraday: @faraday, token: @token).call
     rescue Errno::ECONNREFUSED

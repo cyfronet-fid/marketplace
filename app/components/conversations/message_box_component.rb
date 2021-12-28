@@ -2,6 +2,7 @@
 
 class Conversations::MessageBoxComponent < ApplicationComponent
   def initialize(message, message_post_path, message_input_label)
+    super()
     @message = message
     @message_post_path = message_post_path
     @message_input_label = message_input_label

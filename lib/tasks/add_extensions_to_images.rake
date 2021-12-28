@@ -20,9 +20,6 @@ ensure
 end
 
 class LogoNotAvailableError < StandardError
-  def initialize(msg)
-    super(msg)
-  end
 end
 
 def add_extension_to_images
@@ -60,7 +57,7 @@ def rename_img(attachment, filename)
   end
 rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError => e
   Rails.logger.warn "ERROR - there was a problem processing image for #{filename} #{url_for(attachment)}: #{e}"
-rescue => e
+rescue StandardError => e
   Rails
     .logger.warn "ERROR - there was a unexpected problem processing image for #{filename} #{url_for(attachment)}: #{e}"
 end

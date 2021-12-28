@@ -53,7 +53,7 @@ module Service::Recommendable
       return Rails.env.production? ? [] : Recommender::SimpleRecommender.new.call(size)
     end
 
-    get_recommended_services_by(get_service_search_state, size)
+    get_recommended_services_by(service_search_state, size)
   end
 
   private
@@ -70,8 +70,8 @@ module Service::Recommendable
     []
   end
 
-  def get_service_search_state
-    service_search_state = {
+  def service_search_state
+    state = {
       timestamp: Time.now.strftime("%Y-%m-%dT%H:%M:%S.%L%z"),
       unique_id: cookies[:client_uid],
       visit_id: cookies[:targetId],
@@ -80,9 +80,9 @@ module Service::Recommendable
       search_data: get_filters_by(@params)
     }
 
-    service_search_state[:user_id] = current_user.id unless current_user.nil?
+    state[:user_id] = current_user.id unless current_user.nil?
 
-    service_search_state
+    state
   end
 
   def get_services_size_by(ab_test_version)

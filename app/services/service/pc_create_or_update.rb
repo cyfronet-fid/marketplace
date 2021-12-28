@@ -4,15 +4,9 @@ require "mini_magick"
 
 class Service::PcCreateOrUpdate
   class ConnectionError < StandardError
-    def initialize(msg)
-      super(msg)
-    end
   end
 
   class NotUpdatedError < StandardError
-    def initialize(msg)
-      super(msg)
-    end
   end
 
   def initialize(eosc_registry_service, eosc_registry_base_url, is_active, modified_at, token, faraday: Faraday)

@@ -57,5 +57,5 @@ class Event < ApplicationRecord
       additionalProperties: false,
       required: %i[field before after]
     }
-  }
+  }.freeze
 end
