@@ -46,7 +46,7 @@ namespace :whitelabel do
 
   def attach_logos(collection)
     collection.each do |record|
-      record.logo.attach(io: File.open(logo_path(record.name.split.first)), filename: "logo.png") if has_logo?(record)
+      record.logo.attach(io: File.open(logo_path(record.name.split.first)), filename: "logo.png") if logo?(record)
     end
   end
 
@@ -64,7 +64,7 @@ namespace :whitelabel do
     "app/assets/images/ico_#{name}.png".underscore
   end
 
-  def has_logo?(record)
+  def logo?(record)
     File.exist?(logo_path(record))
   end
 end
