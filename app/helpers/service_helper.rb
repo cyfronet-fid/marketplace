@@ -144,11 +144,11 @@ module ServiceHelper
   end
 
   def data_for_region(countries)
-    countries.append("WW") if is_any_non_european(countries) && (countries != ["EO"]) && (countries != ["EU"])
+    countries.append("WW") if any_non_european?(countries) && (countries != ["EO"]) && (countries != ["EU"])
     countries
   end
 
-  def is_any_non_european(countries)
+  def any_non_european?(countries)
     (countries - Country.countries_for_region("Europe").map(&:alpha2)).present?
   end
 

@@ -12,11 +12,11 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def offers_show?
-    enough_to_show? && has_offers?
+    enough_to_show? && any_published_offers?
   end
 
   def bundles_show?
-    has_bundled_offers?
+    any_published_bundled_offers?
   end
 
   def errors_show?
@@ -33,11 +33,11 @@ class ServicePolicy < ApplicationPolicy
     record.offers? && record.offers.published.size > 1
   end
 
-  def has_bundled_offers?
+  def any_published_bundled_offers?
     record.offers? && record.offers.any? { |s| s.bundled_offers_count.positive? && s.published? }
   end
 
-  def has_offers?
+  def any_published_offers?
     record.offers? && record.offers.any? { |s| s.bundled_offers_count.zero? && s.published? }
   end
 end

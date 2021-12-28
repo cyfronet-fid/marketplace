@@ -25,7 +25,7 @@ module Backoffice::ServicesHelper
     (service.errors.attribute_names & fields).blank?
   end
 
-  def is_offer_missing(param, param_options)
+  def offer_missing?(param, param_options)
     param_options["mandatory"] && @offer.errors[:oms_params].present? && @offer.oms_params[param].blank?
   end
 

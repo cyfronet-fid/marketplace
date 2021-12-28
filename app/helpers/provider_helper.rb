@@ -17,7 +17,7 @@ module ProviderHelper
   end
 
   def data_for_region_provider(countries)
-    countries.append("WW") if is_any_non_european(countries) && (countries != ["EO"]) && (countries != ["EU"])
+    countries.append("WW") if any_non_european?(countries) && (countries != ["EO"]) && (countries != ["EU"])
     countries
   end
 
