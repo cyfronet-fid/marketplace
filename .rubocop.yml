@@ -211,10 +211,6 @@ Metrics/ParameterLists:
 Naming/PredicateName:
   Enabled: false
 
-# todo: check how to secure/replace usage of Kernel#open
-Security/Open:
-  Enabled: false
-
 Lint/ShadowedException:
   Enabled: false
 

@@ -7,7 +7,7 @@ RSpec.describe Importers::Logo do
   let(:provider) { create(:provider) }
 
   def stub_http_file(logo_importer, file_fixture_name, url, content_type: "image/png")
-    r = open(file_fixture(file_fixture_name))
+    r = File.open(file_fixture(file_fixture_name))
     r.define_singleton_method(:content_type) { content_type }
     allow(logo_importer).to receive(:open).with(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_return(r)
   end

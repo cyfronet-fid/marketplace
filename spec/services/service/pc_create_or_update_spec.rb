@@ -91,7 +91,7 @@ RSpec.describe Service::PcCreateOrUpdate do
   end
 
   def stub_http_file(service, file_fixture_name, url, content_type: "image/png")
-    r = open(file_fixture(file_fixture_name))
+    r = File.open(file_fixture(file_fixture_name))
     r.define_singleton_method(:content_type) { content_type }
     allow(service).to receive(:open).with(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_return(r)
   end
