@@ -9,8 +9,7 @@ body > main {
   padding: 0 15px;
 }
 
-a,
-a:hover {
+a {
   text-decoration: none;
 }
 
@@ -257,7 +256,9 @@ li {
     text-decoration: none;
 
     .branch-name {
-      color: $palette-orange;
+      color: $color-primary;
+      text-decoration: underline;
+      text-decoration-color: $palette-orange;
     }
   }
 
@@ -347,6 +348,8 @@ li {
 
       .title {
         color: $color-primary;
+        text-decoration: underline;
+        text-decoration-color: $palette-orange;
       }
     }
   }
@@ -433,11 +436,10 @@ li {
     font-weight: bold;
     line-height: 1.4rem;
     font-size: 1.3em;
-    text-decoration: none;
     color: $palette-blue;
 
     &:hover {
-      color: $palette-gray-100;
+      color: $palette-blue;
     }
   }
 
@@ -582,7 +584,7 @@ li {
 
 .footer {
   width: 100%;
-  background-color: $palette-dark-blue;
+  background-color: $palette-dark-grey;
   font-weight: 300;
   padding: 1rem 0;
 
@@ -632,7 +634,7 @@ li {
 
     li {
       margin-bottom: 0.25rem;
-      font-size: 0.68rem;
+      font-size: 0.73rem;
       font-weight: 300;
       color: $color-white;
 
@@ -643,6 +645,7 @@ li {
 
         &:hover {
           text-decoration: none;
+          color: $palette-dark-blue;
         }
       }
 
@@ -668,7 +671,7 @@ li {
     font-size: 1rem;
 
     &:hover {
-      color: $color-secondary;
+      color: $palette-dark-blue;
     }
   }
 
@@ -721,6 +724,7 @@ li {
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 6px;
+  transition: all 0.3s ease;
 
   &:hover {
     color: $color-white;
@@ -732,7 +736,19 @@ li {
     background: $palette-orange;
 
     &:hover {
-      background: $palette-blue;
+      padding: 0.58rem 3.2rem 0.58rem 1.2rem;
+      background: $palette-orange;
+
+      &::after {
+        transition: all 0.3s ease;
+        font-family: 'Font Awesome 5 Free';
+        content: '\f061';
+        font-size: 14px;
+        font-weight: 900;
+        position: absolute;
+        right: 12px;
+        top: 8px;
+      }
     }
   }
 
@@ -862,7 +878,7 @@ li {
 .top {
   padding: 5px 0;
   margin-bottom: 20px;
-  background: $palette-dark-blue;
+  background: $palette-dark-grey;
 
   .left-links {
     float: left;
@@ -899,7 +915,7 @@ li {
         }
 
         &:hover {
-          color: $palette-orange;
+          color: $palette-dark-blue;
         }
       }
     }
@@ -1001,7 +1017,7 @@ li {
 
         &:hover,
         &:active {
-          color: $color-link;
+          color: $palette-dark-blue;
           background: transparent;
         }
       }
@@ -1177,11 +1193,98 @@ li {
   }
 }
 
-
 .bundle-status {
   font-size: 12px;
   font-weight: bold;
   margin-right: 10px;
+}
+
+.btn-primary {
+  position: relative;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: $palette-orange;
+    padding-left: 1.3rem;
+    padding-right: 2.7rem;
+
+    &::after {
+      transition: all 0.3s ease;
+      font-family: 'Font Awesome 5 Free';
+      content: '\f061';
+      font-size: 14px;
+      font-weight: 900;
+      position: absolute;
+      right: 12px;
+      top: 8px;
+    }
+  }
+
+  &.btn-sm {
+    &:hover {
+      &::after {
+        top: 6px;
+        font-size: 12px;
+        right: 15px;
+      }
+    }
+  }
+}
+
+.alert-danger {
+  color: $error-color;
+  border-color: $error-color;
+  background: $palette-white;
+}
+
+.alert-warning {
+  color: $warning-color;
+  border-color: $warning-color;
+  background: $palette-white;
+}
+
+.alert-success {
+  color: $success-color;
+  border-color: $success-color;
+  background: $palette-white;
+}
+
+.button-wrapper {
+  display: inline;
+  float: left;
+  position: relative;
+
+  input,
+  button {
+    margin-right: 0;
+  }
+
+  &:hover {
+    &::before {
+      transition: all 0.3s ease;
+      font-family: 'Font Awesome 5 Free';
+      content: '\f061';
+      font-size: 14px;
+      font-weight: 900;
+      position: absolute;
+      top: 8px;
+      right: 14px;
+      z-index: 10;
+      color: $palette-white;
+    }
+  }
+}
+
+.btn-primary:focus,
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:active {
+  background: $palette-orange;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background: none;
+  color: $palette-orange;
 }
 
 @import 'ref_mobile';
