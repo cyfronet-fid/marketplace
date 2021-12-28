@@ -122,7 +122,10 @@ class ProjectItem < ApplicationRecord
   def voucher_id_changes!
     return unless saved_change_to_user_secrets?
     @prev_voucher_id, @curr_voucher_id = saved_change_to_user_secrets.map { |us| us["voucher_id"] }
+
+    # rubocop:disable Naming/MemoizedInstanceVariableName
     @prev_voucher_id ||= ""
+    # rubocop:enable Naming/MemoizedInstanceVariableName
   end
 
   def saved_voucher_id_change?

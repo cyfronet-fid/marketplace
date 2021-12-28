@@ -23,7 +23,7 @@ Layout/LineLength:
     - 'spec/factories/jms_xml_provider.rb'
     - 'spec/factories/jms_xml_service.rb'
     - 'spec/factories/jms_service.rb'
-    - 'spec/factories/jms_providers_repsonse.rb'
+    - 'spec/factories/jms_providers_response.rb'
     - 'spec/factories/eosc_registry_vocabularies_response.rb'
     - 'spec/factories/eosc_registry_services_response.rb'
     - 'spec/factories/eosc_registry_providers_response.rb'
@@ -84,35 +84,19 @@ Style/InverseMethods:
   InverseMethods:
     :present?: :blank?
 
+# We do it a lot in HAMLs which are not auto-correctable
 Style/FormatString:
   Enabled: false
 
 Style/StringLiteralsInInterpolation:
-  Enabled: false
+  Enabled: true
+  EnforcedStyle: double_quotes
 
-# Interpolation thing
-Style/QuotedSymbols:
-  Enabled: false
-
-# No return in ifs
-Lint/NonLocalExitFromIterator:
-  Enabled: false
-
-# Expect to very small files
+# These four force very small files, we don't really want that
 Metrics/ModuleLength:
   Enabled: false
 
-Style/MissingRespondToMissing:
-  Enabled: false
-
 Metrics/ClassLength:
-  Enabled: false
-
-# Problematic
-Naming/MemoizedInstanceVariableName:
-  Enabled: false
-
-Metrics/AbcSize:
   Enabled: false
 
 Metrics/MethodLength:
@@ -121,16 +105,31 @@ Metrics/MethodLength:
 Metrics/BlockLength:
   Enabled: false
 
+# Make it more lax
+Metrics/AbcSize:
+  Enabled: true
+  Max: 60
+  Exclude:
+    - 'db/migrate/**/*'
+    - 'app/services/importers/service.rb'
+    - 'app/services/importers/provider.rb'
+    - 'lib/import/resources.rb'
+    - 'lib/jira/console_checker.rb'
+    - 'app/services/service/pc_create_or_update.rb'
+
 # Require docs for each class
 Style/Documentation:
   Enabled: false
 
+# We do it a lot in HAMLs which are not auto-correctable
 Style/RedundantInterpolation:
   Enabled: false
 
+# We do it in HAMLs to avoid other banned operations
 Style/StringConcatenation:
   Enabled: false
 
+# We usually go for compact style, but in some places exploded version is necessary. Don't force
 Style/ClassAndModuleChildren:
   Enabled: false
 

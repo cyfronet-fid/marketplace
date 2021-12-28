@@ -15,7 +15,7 @@ module Service::Sortable
       if sort_key.blank?
         sort_options[:sort_name] = :asc
       elsif sort_key == "_score"
-        return
+        break
       elsif sort_key[0] == "-"
         sort_key = sort_key[1..]
         sort_options[sort_key] = :desc
