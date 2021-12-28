@@ -95,11 +95,11 @@ class ProjectItem < ApplicationRecord
   end
 
   def properties_not_nil
-    errors.add :properties, "cannot be nil" if self.properties.nil?
+    errors.add :properties, "cannot be nil" if properties.nil?
   end
 
   def user_secrets_is_simple
-    errors.add(:user_secrets, "values must be strings") unless self.user_secrets&.values.all? { |v| v.is_a? String }
+    errors.add(:user_secrets, "values must be strings") unless user_secrets&.values&.all? { |v| v.is_a? String }
   end
 
   def copy_offer_fields

@@ -11,6 +11,6 @@ class TargetUser < ApplicationRecord
   validates :name, uniqueness: true, presence: true
 
   def to_s
-    self.name
+    name
   end
 end

@@ -50,7 +50,7 @@ module ServiceHelper
     service.scientific_domains.map(&:name)
   end
 
-  def resource_organisation(service, highlights = nil, preview = false)
+  def resource_organisation(service, highlights = nil, preview: false)
     target = service.resource_organisation
     preview_options = preview ? { "data-target": "preview.link" } : {}
     link_to_unless(
@@ -77,7 +77,7 @@ module ServiceHelper
     service.resource_organisation_and_providers.map(&:name)
   end
 
-  def providers(service, highlights = nil, preview = false)
+  def providers(service, highlights = nil, preview: false)
     highlighted = highlights.present? ? sanitize(highlights[:provider_names])&.to_str : ""
     preview_options = preview ? { "data-target": "preview.link" } : {}
     service
@@ -101,7 +101,7 @@ module ServiceHelper
 
   def filtered_offers(offers)
     if params[:service_type] && offers
-      offers&.each.select { |o| o.first.dig("offer_type") == params[:service_type] }
+      offers.each.select { |o| o.first["offer_type"] == params[:service_type] }
     else
       offers
     end
@@ -112,7 +112,7 @@ module ServiceHelper
   end
 
   def order_type(service)
-    types = ([service&.order_type] + service&.offers.published.map(&:order_type)).compact.uniq
+    types = ([service&.order_type] + service&.offers&.published&.map(&:order_type)).compact.uniq
     types.size > 1 ? "various" : service&.order_type || "other"
   end
 

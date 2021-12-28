@@ -28,15 +28,15 @@ class ProjectItem::Ready
 
       trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_ready_id }
 
-      if !trs.empty?
+      if trs.empty?
+        @project_item.update(issue_id: issue.id)
+        @project_item.jira_errored!
+        raise JIRATransitionSaveError, @project_item
+      else
         transition = issue.transitions.build
         transition.save!("transition" => { "id" => trs.first.id })
         @project_item.update(issue_id: issue.id, issue_status: :jira_active)
         @project_item.save
-      else
-        @project_item.update(issue_id: issue.id)
-        @project_item.jira_errored!
-        raise JIRATransitionSaveError, @project_item
       end
     rescue Jira::Client::JIRAIssueCreateError => e
       @project_item.jira_errored!

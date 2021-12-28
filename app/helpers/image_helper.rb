@@ -3,18 +3,10 @@
 require "mini_magick"
 
 module ImageHelper
-  @@permitted_ext_message =
+  PERMITTED_EXT_MESSAGE =
     "format you're trying to attach is not supported.
            Supported formats: png, gif, jpg, jpeg, pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon."
-  @@default_logo_path = Webpacker.manifest.lookup("media/images/eosc-img.png")
-
-  def self.default_logo_path
-    @@default_logo_path
-  end
-
-  def self.permitted_ext_message
-    @@permitted_ext_message
-  end
+  DEFAULT_LOGO_PATH = Webpacker.manifest.lookup("media/images/eosc-img.png")
 
   def self.to_temp_file(logo, ext)
     tmp_logo = Tempfile.new(["logo_temp", ext])

@@ -250,7 +250,7 @@ class Jira::Client < JIRA::Client
     when "CP-CustomerCountry"
       project.country_of_origin&.name || "N/A"
     when "CP-CollaborationCountry"
-      project.countries_of_partnership&.present? ? project.countries_of_partnership&.map(&:name).join(", ") : "N/A"
+      project.countries_of_partnership&.present? ? project.countries_of_partnership&.map(&:name)&.join(", ") : "N/A"
       # when "CP-ReasonForAccess"
       #   project.reason_for_access
       # when "CP-ProjectInformation"

@@ -105,9 +105,9 @@ class Provider < ApplicationRecord
   end
 
   def legal_status
-    return nil if self.legal_statuses.blank?
+    return nil if legal_statuses.blank?
 
-    self.legal_statuses[0].id
+    legal_statuses[0].id
   end
 
   def esfri_type=(type_id)
@@ -115,9 +115,9 @@ class Provider < ApplicationRecord
   end
 
   def esfri_type
-    return nil if self.esfri_types.blank?
+    return nil if esfri_types.blank?
 
-    self.esfri_types[0].id
+    esfri_types[0].id
   end
 
   def provider_life_cycle_status=(status_id)
@@ -125,9 +125,9 @@ class Provider < ApplicationRecord
   end
 
   def provider_life_cycle_status
-    return nil if self.provider_life_cycle_statuses.blank?
+    return nil if provider_life_cycle_statuses.blank?
 
-    self.provider_life_cycle_statuses[0].id
+    provider_life_cycle_statuses[0].id
   end
 
   def participating_countries=(value)
@@ -151,7 +151,7 @@ class Provider < ApplicationRecord
       .left_joins(:service_providers)
       .where(
         "(status = 'unverified' OR status = 'published') AND
-    (service_providers.provider_id = #{self.id} OR resource_organisation_id = #{self.id})"
+    (service_providers.provider_id = #{id} OR resource_organisation_id = #{id})"
       )
   end
 
@@ -160,11 +160,7 @@ class Provider < ApplicationRecord
     default_logo_name = "eosc-img.png"
     extension = ".png"
     io = ImageHelper.binary_to_blob_stream(assets_path + "/" + default_logo_name)
-    self.logo.attach(
-      io: io,
-      filename: SecureRandom.uuid + extension,
-      content_type: "image/#{extension.delete(".", "")}"
-    )
+    logo.attach(io: io, filename: SecureRandom.uuid + extension, content_type: "image/#{extension.delete(".", "")}")
   end
 
   def administered_by?(user)
@@ -208,7 +204,7 @@ class Provider < ApplicationRecord
   end
 
   def strip_input_fields
-    self.attributes.each { |key, value| self[key] = value.strip if value.respond_to?("strip") }
+    attributes.each { |key, value| self[key] = value.strip if value.respond_to?("strip") }
   end
 
   def logo_changed?

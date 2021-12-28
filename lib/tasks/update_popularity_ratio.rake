@@ -5,7 +5,7 @@ namespace :services do
     puts "Service popularity ratio update"
     analytics = Google::Analytics.new
     total_views = Analytics::TotalServicesViews.new(analytics).call.to_d
-    total_project_items = !ProjectItem.all.empty? ? ProjectItem.all.size : 1
+    total_project_items = ProjectItem.all.empty? ? 1 : ProjectItem.all.size
     Service.find_each do |service|
       path = "/services/#{service.slug}"
       views = Analytics::PageViewsAndRedirects.new(analytics).call(path)[:views].to_d

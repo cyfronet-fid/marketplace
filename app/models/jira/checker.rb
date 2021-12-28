@@ -4,7 +4,7 @@ class Class
   def block_error_handling(*attrs)
     attrs.each do |method_name|
       define_method(method_name[0...-1]) do |*args, &error_handler|
-        self.send(method_name, *args)
+        send(method_name, *args)
         return true
       rescue => e
         error_handler&.call(e)
@@ -52,18 +52,18 @@ class Jira::Checker
   block_error_handling :check_custom_fields!
 
   def check_connection!
-    self.client.Project.all
+    client.Project.all
   rescue JIRA::HTTPError => e
     if e.response.code == "401"
       raise CriticalCheckerError,
-            "Could not authenticate #{self.client.jira_config["username"]} on #{self.client.jira_config["url"]}"
+            "Could not authenticate #{client.jira_config["username"]} on #{client.jira_config["url"]}"
     else
       raise e
     end
   end
 
   def check_issue_type!
-    self.client.mp_issue_type
+    client.mp_issue_type
   rescue JIRA::HTTPError => e
     if e.response.code == "404"
       raise CheckerError,
@@ -73,7 +73,7 @@ class Jira::Checker
   end
 
   def check_project_issue_type!
-    self.client.mp_project_issue_type
+    client.mp_project_issue_type
   rescue JIRA::HTTPError => e
     if e.response.code == "404"
       raise CheckerError,
@@ -83,7 +83,7 @@ class Jira::Checker
   end
 
   def check_project!
-    self.client.mp_project
+    client.mp_project
   rescue JIRA::HTTPError => e
     if e.response.code == "404"
       raise CriticalCheckerError,
@@ -94,41 +94,41 @@ class Jira::Checker
   end
 
   def check_create_issue!(issue = nil)
-    issue = self.client.Issue.build if issue.nil?
+    issue = client.Issue.build if issue.nil?
 
     unless issue.save(
              fields: {
                summary: "TEST TICKET, TO CHECK WHETHER JIRA INTEGRATION WORKS",
                project: {
-                 key: self.client.jira_project_key
+                 key: client.jira_project_key
                },
                issuetype: {
-                 id: self.client.jira_issue_type_id
+                 id: client.jira_issue_type_id
                }
              }
            )
       raise CriticalCheckerError,
-            "Could not create issue in project: #{self.client.jira_project_key} and issuetype: #{self.client.jira_issue_type_id}"
+            "Could not create issue in project: #{client.jira_project_key} and issuetype: #{client.jira_issue_type_id}"
     end
   end
 
   def check_create_project_issue!(issue = nil)
-    issue = self.client.Issue.build if issue.nil?
+    issue = client.Issue.build if issue.nil?
 
     fields = {
       summary: "TEST PROJECT, TO CHECK WHETHER JIRA INTEGRATION WORKS",
       project: {
-        key: self.client.jira_project_key
+        key: client.jira_project_key
       },
       issuetype: {
-        id: self.client.jira_project_issue_type_id
+        id: client.jira_project_issue_type_id
       }
     }
-    fields[self.client.custom_fields[:"Epic Name"]] = "TEST EPIC"
+    fields[client.custom_fields[:"Epic Name"]] = "TEST EPIC"
 
     unless issue.save(fields: fields)
       raise CriticalCheckerError,
-            "Could not create product issue in project: #{self.client.jira_project_key} and issuetype: #{self.client.jira_project_issue_type_id}"
+            "Could not create product issue in project: #{client.jira_project_key} and issuetype: #{client.jira_project_issue_type_id}"
     end
   end
 
@@ -155,7 +155,7 @@ class Jira::Checker
   end
 
   def check_workflow!(id)
-    self.client.Status.find(id)
+    client.Status.find(id)
   rescue JIRA::HTTPError => e
     if e.response.code == "404"
       raise CheckerError, "STATUS WITH ID: #{id} DOES NOT EXIST IN JIRA"
@@ -176,8 +176,7 @@ class Jira::Checker
     fields = client.Field.all
 
     statuses =
-      self
-        .client
+      client
         .custom_fields
         .map do |field_name, field_id|
           [field_name, fields.any? { |f| f.id == field_id && f.name.to_sym == field_name }]
@@ -198,12 +197,12 @@ class Jira::Checker
         next unless wh.attrs["url"] == (host + api_webhooks_jira_path + "?issue_id=${issue.id}")
         raise CheckerWarning, "Webhook \"#{wh.name}\" is not enabled" unless wh.enabled
 
-        if wh.filters["issue-related-events-section"].match?(/project = #{self.client.jira_project_key}/)
+        if wh.filters["issue-related-events-section"].match?(/project = #{client.jira_project_key}/)
           webhook = wh
         else
           raise CheckerWarning,
                 "Webhook \"#{wh.name}\" does not define proper \"Issue related events\" - required: " \
-                  "\"project = #{self.client.jira_project_key}\", current: \"#{wh.filters["issue-related-events-section"]}\""
+                  "\"project = #{client.jira_project_key}\", current: \"#{wh.filters["issue-related-events-section"]}\""
         end
       end
       .empty? &&
@@ -216,7 +215,7 @@ class Jira::Checker
             "Could not find Webhook for this application, please confirm manually that webhook is defined for this host"
     end
 
-    self.check_webhook_params!(webhook)
+    check_webhook_params!(webhook)
   end
 
   def check_webhook_params!(webhook)

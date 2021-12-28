@@ -25,6 +25,6 @@ class ScientificDomain < ApplicationRecord
   end
 
   def to_s
-    self.name
+    name
   end
 end

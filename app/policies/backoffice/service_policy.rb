@@ -20,7 +20,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
     :activate_message,
     :upstream_id,
     [owner_ids: []],
-    sources_attributes: %i[id source_type eid _destroy]
+    [sources_attributes: %i[id source_type eid _destroy]]
   ]
 
   def index?
@@ -60,12 +60,11 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   end
 
   def destroy?
-    service_portfolio_manager? && (project_items && project_items.count.zero?) && record.draft?
+    service_portfolio_manager? && project_items&.count&.zero? && record.draft?
   end
 
   def permitted_attributes
     attrs = [
-      { sources_attributes: %i[id source_type eid _destroy] },
       :name,
       :description,
       :tagline,
@@ -120,8 +119,9 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       :version,
       [life_cycle_status_ids: []],
       :resource_organisation_id,
-      { main_contact_attributes: %i[id first_name last_name email phone organisation position] },
-      { public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy] }
+      [main_contact_attributes: %i[id first_name last_name email phone organisation position]],
+      [sources_attributes: %i[id source_type eid _destroy]],
+      [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]]
     ]
 
     !@record.is_a?(Service) || @record.upstream.nil? ? attrs : MP_INTERNAL_FIELDS
