@@ -36,11 +36,12 @@
   %hr.bottom-hr.mb-5
   .row
     .col-12
-      = f.button :submit, class: "btn btn-primary pl-5 pr-5 mobile-bottom-margin", "data-e2e": "create-offer-btn"
+      .button-wrapper.mr-5
+        = f.button :submit, class: "btn btn-primary mobile-bottom-margin", "data-e2e": "create-offer-btn"
       - if show_delete_button
         = link_to "Delete Offer", offer_delete_link,
           data: { confirm: _("Are you sure?") },
           method: :delete, class: "btn btn-danger pl-5 pr-5"
       = link_to _("cancel and back to previous page"), back_link,
-      class: "btn btn-link text-uppercase mobile-bottom-margin"
+      class: "text-left flex-grow-1 text-uppercase float-left mt-2 mobile-bottom-margin"
 
