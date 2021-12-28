@@ -25,7 +25,7 @@ module Parentable
   end
 
   module ClassMethods
-    def child_names(records = self.arrange, parent_name = "", result = [])
+    def child_names(records = arrange, parent_name = "", result = [])
       records.each do |r, sub_r|
         result << [name_with_path(parent_name, r.name), r]
         child_names(sub_r, name_with_path(parent_name, r.name), result) unless sub_r.blank?

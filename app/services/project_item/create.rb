@@ -18,7 +18,7 @@ class ProjectItem::Create
         raise ActiveRecord::Rollback
       end
 
-      if @project_item&.offer.bundle?
+      if @project_item&.offer&.bundle?
         bundled_project_items =
           @project_item.offer.bundled_offers.map do |offer|
             bundled_parameters =

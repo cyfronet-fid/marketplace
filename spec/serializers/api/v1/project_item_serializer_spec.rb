@@ -15,7 +15,7 @@ RSpec.describe Api::V1::ProjectItemSerializer do
         type: project_item.status_type
       },
       attributes: {
-        category: project_item.service.categories&.first.name,
+        category: project_item.service.categories&.first&.name,
         service: project_item.service.name,
         offer: project_item.name,
         offer_properties: project_item.properties,
@@ -42,7 +42,7 @@ RSpec.describe Api::V1::ProjectItemSerializer do
         type: project_item.status_type
       },
       attributes: {
-        category: project_item.service.categories&.first.name,
+        category: project_item.service.categories&.first&.name,
         service: project_item.service.name,
         offer: project_item.name,
         offer_properties: project_item.properties,

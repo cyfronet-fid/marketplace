@@ -5,11 +5,7 @@
   .overlay-content
     .mobile-links
       %ul
-        - if !user_signed_in?
-          %li
-            = link_to user_checkin_omniauth_authorize_path, class: "btn btn-primary" do
-              = _("Login to EOSC marketplace")
-        - else
+        - if user_signed_in?
           %li
             %a.simple-item{ href: "/projects" }
               = _("My projects")
@@ -39,6 +35,10 @@
             = link_to _("Logout"), destroy_user_session_path, method: :delete,
             class: "btn btn-primary font-weight-bold mt-3 logout-link",
             onclick: domains.map { |domain| expired_autologin_cookie + domain + "';" }.join
+        - else
+          %li
+            = link_to user_checkin_omniauth_authorize_path, class: "btn btn-primary" do
+              = _("Login to EOSC marketplace")
 
     .bottom-links
       .container
@@ -68,12 +68,7 @@
 
     .menu.dropdown
 
-      - if !user_signed_in?
-        = link_to user_checkin_omniauth_authorize_path, class: "menu__label menu__label--unauth" do
-          = _("My EOSC Marketplace")
-
-
-      - else
+      - if user_signed_in?
         %a#dropdown-menu-button.dropdown-toggle{ "aria-expanded" => "false",
                                                   "aria-haspopup" => "true",
                                                   "data-e2e" => "my-eosc-button",
@@ -106,6 +101,9 @@
               %li
                 %a.dropdown-item.dropdown-profile{ href: executive_path }
                   = _("Executive")
+      - else
+        = link_to user_checkin_omniauth_authorize_path, class: "menu__label menu__label--unauth" do
+          = _("My EOSC Marketplace")
 
       .menu__hamburger{ onclick: "openNav()" }
         %span

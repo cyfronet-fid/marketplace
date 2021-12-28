@@ -121,11 +121,11 @@ class Offer < ApplicationRecord
   end
 
   def set_internal
-    self.internal = false unless self.order_required?
+    self.internal = false unless order_required?
   end
 
   def set_oms_details
-    unless self.internal?
+    unless internal?
       self.primary_oms = nil
       self.oms_params = nil
     end

@@ -28,7 +28,7 @@ class Category < ApplicationRecord
   after_destroy :update_main_categories!
 
   def to_s
-    self.name
+    name
   end
 
   def slug_candidates

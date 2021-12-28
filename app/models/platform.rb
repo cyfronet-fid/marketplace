@@ -9,6 +9,6 @@ class Platform < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   def to_s
-    self.name
+    name
   end
 end
