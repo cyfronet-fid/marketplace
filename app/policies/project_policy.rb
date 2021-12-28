@@ -20,7 +20,7 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def destroy?
-    owner? && !has_project_item?
+    owner? && !any_project_item?
   end
 
   def archive?
@@ -54,7 +54,7 @@ class ProjectPolicy < ApplicationPolicy
     record.user == user
   end
 
-  def has_project_item?
+  def any_project_item?
     record.project_items.count.positive?
   end
 

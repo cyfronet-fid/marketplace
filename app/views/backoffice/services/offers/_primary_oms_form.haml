@@ -20,4 +20,4 @@
         = field.input param,
             required: param_options["mandatory"],
             wrapper_html: { "data-oms-id": oms.id },
-            input_html: { class: is_offer_missing(param, param_options) ? "is-invalid" : "" }
+            input_html: { class: offer_missing?(param, param_options) ? "is-invalid" : "" }

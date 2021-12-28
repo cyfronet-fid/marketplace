@@ -9,7 +9,7 @@ class Favourites::ServicesController < FavouritesController
     added = Array(cookies[:favourites].split("&"))
     if params.fetch(:update) == "true"
       current_user.present? ? UserService.new(user: current_user, service: @service).save : added << @service.slug
-      respond_to { |format| format.js { render_popup_json(title, text, logged?) } } unless has_many?
+      respond_to { |format| format.js { render_popup_json(title, text, logged?) } } unless many?
     elsif current_user.present?
       UserService.find_by(user: current_user, service: @service)&.destroy
     else
@@ -21,7 +21,7 @@ class Favourites::ServicesController < FavouritesController
 
   private
 
-  def has_many?
+  def many?
     UserService.where(user: current_user).size > 1 || cookies[:favourites]&.size > 1
   end
 

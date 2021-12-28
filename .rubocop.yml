@@ -187,9 +187,6 @@ Style/FormatStringToken:
 Style/ClassVars:
   Enabled: false
 
-Naming/FileName:
-  Enabled: false
-
 Style/MixinUsage:
   Enabled: false
 
@@ -203,6 +200,7 @@ Metrics/ParameterLists:
   Enabled: true
   CountKeywordArgs: false
 
-# remove get_, has_
+# This cop makes sure that predicates are named properly
 Naming/PredicateName:
-  Enabled: false
+  Enabled: true
+  AllowedMethods: has_attribute?

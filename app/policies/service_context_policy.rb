@@ -21,18 +21,18 @@ class ServiceContextPolicy < ApplicationPolicy
     service = record.service
     from_backoffice = record.from_backoffice || false
 
-    has_permission = has_public_access? || (service.draft? && has_additional_access? && from_backoffice)
+    has_permission = public_access? || (service.draft? && additional_access? && from_backoffice)
     raise ActiveRecord::RecordNotFound unless has_permission
     true
   end
 
-  def has_public_access?
+  def public_access?
     service = record.service
 
     service.published? || service.unverified? || service.errored?
   end
 
-  def has_additional_access?
+  def additional_access?
     return false if user.blank?
     service = record.service
 
