@@ -17,6 +17,6 @@
     locals: { parent: section.slug }
   .col-12.col-lg-4.col-sm-6.my-auto
     = link_to new_admin_lead_path(section: section.slug),
-      class: "btn btn-success" do
+      class: "btn btn-secondary mt-3" do
       %i.fa.fa-plus.mr-0{ id: "add-new-lead-#{section.id}" }
 
