@@ -48,6 +48,7 @@ $palette-white: #fff;
 
 $palette-blue: #005faa;
 $palette-dark-blue: #1e315d;
+$palette-dark-grey: #999;
 $palette-light-blue: #e6fafd;
 $palette-yellow: #ffcd00;
 $palette-yellow-opacity: rgba(255, 205, 0, 0.2);
@@ -98,7 +99,7 @@ $btn-padding-x-sm: 1.8rem;
 $navbar-light-active-color:  #233c4c;
 $navbar-light-color: #233d4c;
 
-$radius-common: 2px;
+$radius-common: 6px;
 $footer-color: #fff;
 $tag-bg-color: #fff5cc;
 $footer-header-color: #a6aeb1;
@@ -135,4 +136,7 @@ $status-bg-ready: rgba(48, 174, 55, 0.3);
 $status-bg-registered: rgba(255, 205, 0, 0.3);
 $services-list-bg: rgba(28, 49, 58, 0.03);
 $ice-blue: #f1f8ff;
+$error-color: #ff000e;
+$success-color: #63c247;
+$warning-color: #ffc000;
 
