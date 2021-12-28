@@ -260,7 +260,7 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   checkin_host = ENV["CHECKIN_HOST"] || "aai.eosc-portal.eu"
-  root_url = ENV["ROOT_URL"] || "http://localhost:#{ENV['PORT'] || 3000}"
+  root_url = ENV["ROOT_URL"] || "http://localhost:#{ENV["PORT"] || 3000}"
   scope = ENV["CHECKIN_SCOPE"].nil? ? %w[openid profile email refeds_edu] : ENV["CHECKIN_SCOPE"].split(",")
   config.omniauth :openid_connect,
                   name: :checkin,

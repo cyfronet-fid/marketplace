@@ -1,6 +1,6 @@
 .form-group
   = label_tag name.to_sym, label
-  = text_area_tag "content[#{name}]", value, class: "form-control #{'is-invalid' if error}",
+  = text_area_tag "content[#{name}]", value, class: "form-control #{"is-invalid" if error}",
   "data-controller": "clearerrors",
   "data-action": "click->clearerrors#change"
 
