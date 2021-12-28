@@ -75,7 +75,7 @@ module TourHelper
 
   def next_tour_link(next_tour_path, controller_params, controller_params_map)
     mapped_params =
-      controller_params_map.map { |param_id, mapped_id| [mapped_id.to_sym, self.controller.params[param_id]] }.to_h
+      controller_params_map.map { |param_id, mapped_id| [mapped_id.to_sym, controller.params[param_id]] }.to_h
     params = mapped_params.merge(controller_params)
     next_tour_path.blank? ? nil : send(next_tour_path, params).to_s
   end

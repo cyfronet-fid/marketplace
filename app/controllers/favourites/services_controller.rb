@@ -22,7 +22,7 @@ class Favourites::ServicesController < FavouritesController
   private
 
   def many?
-    UserService.where(user: current_user).size > 1 || cookies[:favourites]&.size > 1
+    (UserService.where(user: current_user).size > 1) || ((cookies[:favourites]&.size || 0) > 1)
   end
 
   def text

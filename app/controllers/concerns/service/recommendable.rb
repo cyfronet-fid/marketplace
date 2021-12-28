@@ -17,9 +17,9 @@ module Service::Recommendable
     target_users
     geographical_availabilities
     category_id
-  ]
+  ].freeze
 
-  @@filter_param_transformers = {
+  FILTER_PARAM_TRANSFORMERS = {
     geographical_availabilities: ->(name) { Country.convert_to_regions_add_country(name) },
     scientific_domains: ->(ids) do
       if ids.instance_of?(Array)
@@ -32,8 +32,8 @@ module Service::Recommendable
     providers: ->(ids) { ids.instance_of?(Array) ? ids.map(&:to_i) : ids.first.to_i },
     related_platforms: ->(ids) { ids.instance_of?(Array) ? ids.map(&:to_i) : ids.first.to_i },
     target_users: ->(ids) { ids.instance_of?(Array) ? ids.map(&:to_i) : ids.first.to_i }
-  }
-  @@filter_key_transformers = { category_id: "categories" }
+  }.freeze
+  FILTER_KEY_TRANSFORMERS = { category_id: "categories" }.freeze
 
   included do
     before_action only: :index do
@@ -96,12 +96,12 @@ module Service::Recommendable
 
       filter_name = key.sub "-filter", ""
       filters[filter_name] = value
-      if @@filter_param_transformers.key? filter_name.to_sym
-        filters[filter_name] = @@filter_param_transformers[filter_name.to_sym].call value
+      if FILTER_PARAM_TRANSFORMERS.key? filter_name.to_sym
+        filters[filter_name] = FILTER_PARAM_TRANSFORMERS[filter_name.to_sym].call value
       end
 
-      if @@filter_key_transformers.key? filter_name.to_sym
-        filters[@@filter_key_transformers[filter_name.to_sym]] = filters.delete filter_name
+      if FILTER_KEY_TRANSFORMERS.key? filter_name.to_sym
+        filters[FILTER_KEY_TRANSFORMERS[filter_name.to_sym]] = filters.delete filter_name
       end
     end
     filters

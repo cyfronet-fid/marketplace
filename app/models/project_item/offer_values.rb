@@ -9,8 +9,8 @@ class ProjectItem::OfferValues
     @parts = bundled_parts
   end
 
-  def attributes_map(all = false)
-    all ? all_parts.map { |p| [p.offer, p.attributes] }.to_h : @parts.map { |p| [p.offer, p.attributes] }.to_h
+  def attributes_map
+    @parts.map { |p| [p.offer, p.attributes] }.to_h
   end
 
   def update(values)
@@ -29,15 +29,8 @@ class ProjectItem::OfferValues
     @main.to_hash.tap { |hsh| hsh["bundled_property_values"] = @parts.map(&:to_hash) if @parts.present? }
   end
 
-  def to_json(only_bundled = true)
-    if only_bundled
-      @parts.map { |part| [part.offer, part.attributes] }.to_h
-    else
-      {
-        property_values: @main.to_json,
-        bundled_property_values: @parts.map { |part| ["o#{part.offer.id}", part.to_json] }.to_h
-      }
-    end
+  def to_json(*_args)
+    @parts.map { |part| [part.offer, part.attributes] }.to_h
   end
 
   private

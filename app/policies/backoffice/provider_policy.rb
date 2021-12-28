@@ -7,7 +7,7 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
     end
   end
 
-  MP_INTERNAL_FIELDS = [:upstream_id, sources_attributes: %i[id source_type eid _destroy]]
+  MP_INTERNAL_FIELDS = [:upstream_id, [sources_attributes: %i[id source_type eid _destroy]]]
 
   def index?
     service_portfolio_manager?
@@ -72,10 +72,10 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
       [areas_of_activity_ids: []],
       [societal_grand_challenge_ids: []],
       [national_roadmaps: []],
-      sources_attributes: %i[id source_type eid _destroy],
-      main_contact_attributes: %i[id first_name last_name email phone organisation position],
-      public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy],
-      data_administrators_attributes: %i[id first_name last_name email _destroy]
+      [sources_attributes: %i[id source_type eid _destroy]],
+      [main_contact_attributes: %i[id first_name last_name email phone organisation position]],
+      [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]],
+      [data_administrators_attributes: %i[id first_name last_name email _destroy]]
     ]
 
     !@record.is_a?(Provider) || @record.upstream_id.blank? ? attrs : attrs & MP_INTERNAL_FIELDS

@@ -90,7 +90,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
     logo = session[preview_session_key]["logo"]
     if logo.present? && !ImageHelper.image_ext_permitted?(Rack::Mime::MIME_TYPES.invert[logo["type"]])
-      @service.errors.add(:logo, ImageHelper.permitted_ext_message)
+      @service.errors.add(:logo, ImageHelper::PERMITTED_EXT_MESSAGE)
       render error_view, status: :bad_request
       return
     end

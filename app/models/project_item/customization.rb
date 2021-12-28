@@ -24,9 +24,9 @@ module ProjectItem::Customization
   end
 
   def bundled_property_values
-    if defined?(self.bundled_parameters)
-      if self.bundled_parameters.present?
-        self.bundled_parameters.transform_keys { |offer| offer.instance_of?(Offer) ? offer : Offer.find(offer) }
+    if defined?(bundled_parameters)
+      if bundled_parameters.present?
+        bundled_parameters.transform_keys { |offer| offer.instance_of?(Offer) ? offer : Offer.find(offer) }
       else
         offer_values.attributes_map.reject { |o, _| o == offer }
       end

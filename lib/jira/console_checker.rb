@@ -19,7 +19,7 @@ module Jira
       case error
       when Errno::ECONNREFUSED
         puts "ERROR".red + ": Could not connect to JIRA: #{@checker.client.jira_config["url"]}"
-        self.abort!
+        abort!
       when Jira::Checker::CheckerError
         puts(("  " * indent) + "- ERROR".red + ": #{error.message}")
         false
@@ -31,15 +31,15 @@ module Jira
 
         error.statuses.each do |hash, value|
           print(("  " * (indent + 1)) + "- #{hash}:")
-          value ? self.ok! : puts(" ✕".red)
+          value ? ok! : puts(" ✕".red)
         end
         false
       when Jira::Checker::CriticalCheckerError
         puts(("  " * indent) + "- ERROR".red + ": #{error.message}")
-        self.abort!
+        abort!
       else
         puts "ERROR".red + ": Unexpected error occurred #{error.message}\n\n#{error.backtrace}"
-        self.abort!
+        abort!
       end
     end
 
@@ -82,67 +82,65 @@ module Jira
     def check
       puts "Checking JIRA instance on #{@checker.client.jira_config["url"]}"
       print "Checking connection..."
-      @checker.check_connection { |e| self.error_and_abort!(e) } && self.ok!
+      @checker.check_connection { |e| error_and_abort!(e) } && ok!
 
       print "Checking issue type presence..."
 
-      self.show_available_issue_types unless @checker.check_issue_type { |e| self.error_and_abort!(e) } && self.ok!
+      show_available_issue_types unless @checker.check_issue_type { |e| error_and_abort!(e) } && ok!
 
       print "Checking project existence..."
-      @checker.check_project { |e| self.error_and_abort!(e) } && self.ok!
+      @checker.check_project { |e| error_and_abort!(e) } && ok!
 
       puts "Trying to manipulate issue..."
       print "  - create issue..."
       issue = @checker.client.Issue.build
-      @checker.check_create_issue(issue) { |e| self.error_and_abort!(e, 2) } && self.ok!
+      @checker.check_create_issue(issue) { |e| error_and_abort!(e, 2) } && ok!
 
       print "  - check workflow transitions..."
-      @checker.check_workflow_transitions(issue) { |e| self.error_and_abort!(e, 2) } && self.ok!
+      @checker.check_workflow_transitions(issue) { |e| error_and_abort!(e, 2) } && ok!
 
       print "  - update issue..."
-      @checker.check_update_issue(issue) { |e| self.error_and_abort!(e, 2) } && self.ok!
+      @checker.check_update_issue(issue) { |e| error_and_abort!(e, 2) } && ok!
 
       print "  - add comment to issue..."
-      @checker.check_add_comment(issue) { |e| self.error_and_abort!(e, 2) } && self.ok!
+      @checker.check_add_comment(issue) { |e| error_and_abort!(e, 2) } && ok!
 
       print "  - delete issue..."
-      @checker.check_delete_issue(issue) { |e| self.error_and_abort!(e, 2) } && self.ok!
+      @checker.check_delete_issue(issue) { |e| error_and_abort!(e, 2) } && ok!
 
       puts "Checking workflow..."
       show_issue_states = false
       @checker.client.jira_config["workflow"].each do |key, id|
         print "  - #{key} [id: #{id}]..."
-        show_issue_states = true unless @checker.check_workflow(id) { |e| self.error_and_abort!(e, 2) } && self.ok!
+        show_issue_states = true unless @checker.check_workflow(id) { |e| error_and_abort!(e, 2) } && ok!
       end
 
       print "Checking custom fields mappings..."
       @checker.check_custom_fields do |e|
-        self.error_and_abort!(e)
+        error_and_abort!(e)
 
-        self.show_suggested_fields_mapping(e.statuses.keys) if e.instance_of?(Jira::Checker::CheckerCompositeError)
-      end && self.ok!
+        show_suggested_fields_mapping(e.statuses.keys) if e.instance_of?(Jira::Checker::CheckerCompositeError)
+      end && ok!
 
       # in case of mismatched issue states, print all available
-      self.show_available_issue_states if show_issue_states
+      show_available_issue_states if show_issue_states
 
       print "Checking Project issue type presence..."
 
-      unless @checker.check_project_issue_type { |e| self.error_and_abort!(e) } && self.ok!
-        self.show_available_issue_types
-      end
+      show_available_issue_types unless @checker.check_project_issue_type { |e| error_and_abort!(e) } && ok!
 
       puts "Trying to manipulate project issue..."
       print "  - create issue..."
       issue = @checker.client.Issue.build
-      @checker.check_create_project_issue(issue) { |e| self.error_and_abort!(e, 2) } && self.ok!
+      @checker.check_create_project_issue(issue) { |e| error_and_abort!(e, 2) } && ok!
 
       print "  - update issue..."
-      @checker.check_update_issue(issue) { |e| self.error_and_abort!(e, 2) } && self.ok!
+      @checker.check_update_issue(issue) { |e| error_and_abort!(e, 2) } && ok!
 
       print "  - delete issue..."
-      @checker.check_delete_issue(issue) { |e| self.error_and_abort!(e, 2) } && self.ok!
+      @checker.check_delete_issue(issue) { |e| error_and_abort!(e, 2) } && ok!
 
-      self.check_webhook
+      check_webhook
     end
 
     def check_webhook
@@ -150,7 +148,7 @@ module Jira
         puts "WARNING: Webhook won't be check, set MP_HOST env variable if you want to check it".yellow
       else
         print "Checking webhooks for hostname \"#{@env["MP_HOST"]}\"..."
-        @checker.check_webhook(@env["MP_HOST"]) { |e| self.error_and_abort!(e) } && self.ok!
+        @checker.check_webhook(@env["MP_HOST"]) { |e| error_and_abort!(e) } && ok!
       end
     end
   end

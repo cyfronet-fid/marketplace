@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "split/dashboard"
-include Split::Helper
 
 cookie_adapter = Split::Persistence::CookieAdapter
 redis_adapter = Split::Persistence::RedisAdapter.with_config(

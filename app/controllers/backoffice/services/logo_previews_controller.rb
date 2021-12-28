@@ -22,8 +22,8 @@ class Backoffice::Services::LogoPreviewsController < Backoffice::ApplicationCont
     logo = get_session_logo
     has_service_logo = @service&.logo && @service.logo.attached? && @service.logo.variable?
     if logo.present? && !ImageHelper.image_ext_permitted?(File.extname(logo["filename"]))
-      @service.errors.add(:logo, ImageHelper.permitted_ext_message)
-      redirect_to ImageHelper.default_logo_path
+      @service.errors.add(:logo, ImageHelper::PERMITTED_EXT_MESSAGE)
+      redirect_to ImageHelper::DEFAULT_LOGO_PATH
     elsif logo.present?
       blob, ext = ImageHelper.base_64_to_blob_stream(logo["base64"])
       path = ImageHelper.to_temp_file(blob, ext)
@@ -32,7 +32,7 @@ class Backoffice::Services::LogoPreviewsController < Backoffice::ApplicationCont
     elsif has_service_logo
       redirect_to url_for(@service.logo.variant(resize: "180x120"))
     else
-      redirect_to ImageHelper.default_logo_path
+      redirect_to ImageHelper::DEFAULT_LOGO_PATH
     end
   end
 

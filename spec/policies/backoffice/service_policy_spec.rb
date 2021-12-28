@@ -72,9 +72,9 @@ RSpec.describe Backoffice::ServicePolicy do
           :upstream_id,
           :version,
           :resource_organisation_id,
-          { main_contact_attributes: %i[id first_name last_name email phone organisation position] },
-          { sources_attributes: %i[id source_type eid _destroy] },
-          { public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy] }
+          [main_contact_attributes: %i[id first_name last_name email phone organisation position]],
+          [sources_attributes: %i[id source_type eid _destroy]],
+          [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]]
         ]
       )
     end
@@ -92,7 +92,7 @@ RSpec.describe Backoffice::ServicePolicy do
           [owner_ids: []],
           :status,
           :upstream_id,
-          sources_attributes: %i[id source_type eid _destroy]
+          [sources_attributes: %i[id source_type eid _destroy]]
         ]
       )
     end
