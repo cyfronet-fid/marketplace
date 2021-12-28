@@ -57,7 +57,7 @@ module ImageHelper
 
   def self.image_valid?(url)
     Timeout.timeout(10) do
-      logo = open(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
+      logo = URI.parse(url).open(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
       extension = Rack::Mime::MIME_TYPES.invert[logo.content_type]
       return false unless ImageHelper.image_ext_permitted?(extension)
 

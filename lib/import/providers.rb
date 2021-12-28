@@ -64,7 +64,7 @@ class Import::Providers
           "UPDATED: #{@updated_count}, NOT MODIFIED: #{not_modified}"
 
     unless @filepath.nil?
-      open(@filepath, "w") do |file|
+      File.open(@filepath, "w") do |file|
         file << JSON.pretty_generate(@request_providers.map { |_, request_data| request_data })
       end
     end
