@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ProjectItem::Wizard
-  STEPS = %i[offers information configuration summary]
+  STEPS = %i[offers information configuration summary].freeze
 
   def initialize(service)
     @service = service

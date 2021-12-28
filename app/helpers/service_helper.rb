@@ -16,17 +16,12 @@ module ServiceHelper
     result.html_safe
   end
 
-  def get_providers_list
+  def providers_list
     Provider.all
   end
 
   def any_present?(record, *fields)
     fields.map { |f| record.send(f) }.any?(&:present?)
-  end
-
-  def get_terms_and_condition_hint_text(service)
-    "You are about to order #{service.name} service. Please accept " \
-      "#{link_to service.name, service.terms_of_use_url} terms and conditions to proceed.".html_safe
   end
 
   def dedicated_for_links(service)
@@ -100,11 +95,7 @@ module ServiceHelper
   end
 
   def filtered_offers(offers)
-    if params[:service_type] && offers
-      offers.each.select { |o| o.first["offer_type"] == params[:service_type] }
-    else
-      offers
-    end
+    params[:service_type] && offers ? offers.each.select { |o| o.first["offer_type"] == params[:service_type] } : offers
   end
 
   def map_view_to_order_type(service_or_offer)

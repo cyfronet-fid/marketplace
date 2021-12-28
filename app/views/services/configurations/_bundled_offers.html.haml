@@ -18,5 +18,5 @@
           - property_values.each do |attr|
             = f.simple_fields_for "bundled_property_values[o#{offer.id}]", attr do |field|
               = render "services/configurations/attributes/#{attr.type}", attr: attr, field: field
-            - rescue => e
+            - rescue StandardError => e
               = e.message

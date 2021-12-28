@@ -35,7 +35,7 @@ class Service < ApplicationRecord
     draft: "draft",
     errored: "errored",
     deleted: "deleted"
-  }
+  }.freeze
 
   enum status: STATUSES
 

@@ -5,9 +5,6 @@ require "timeout"
 
 class Importers::Logo
   class LogoNotAvailableError < StandardError
-    def initialize(msg)
-      super(msg)
-    end
   end
 
   def initialize(object, image_url)
@@ -32,7 +29,7 @@ class Importers::Logo
       end
     rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError => e
       puts "ERROR - there was a problem processing image for #{@object.name} #{@image_url}: #{e}"
-    rescue Exception => e
+    rescue StandardError => e
       puts "ERROR - there was a unexpected problem processing image for #{@object.name} #{@image_url}: #{e}"
     end
   rescue Timeout::Error => e

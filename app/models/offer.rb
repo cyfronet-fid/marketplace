@@ -7,7 +7,7 @@ class Offer < ApplicationRecord
 
   searchkick word_middle: %i[offer_name description], highlight: %i[offer_name description]
 
-  STATUSES = { published: "published", draft: "draft", deleted: "deleted" }
+  STATUSES = { published: "published", draft: "draft", deleted: "deleted" }.freeze
 
   def search_data
     { offer_name: name, description: description, service_id: service_id, order_type: order_type }

@@ -2,6 +2,7 @@
 
 class ProjectItem::OnCreated::PublishAddition < ApplicationService
   def initialize(project, added_project_items)
+    super()
     @project = project
     @added_project_items = added_project_items
   end

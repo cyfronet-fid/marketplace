@@ -5,10 +5,6 @@ class ApplicationService
     new(...).call
   end
 
-  def initialize
-    raise "Should be implemented in descendent class"
-  end
-
   def call
     raise "Should be implemented in descendent class"
   end

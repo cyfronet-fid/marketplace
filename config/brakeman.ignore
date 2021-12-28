@@ -15,7 +15,7 @@
           "type": "controller",
           "class": "Backoffice::ServicesController",
           "method": "index",
-          "line": 23,
+          "line": 33,
           "file": "app/controllers/backoffice/services_controller.rb",
           "rendered": {
             "name": "backoffice/services/index",
@@ -25,7 +25,7 @@
         {
           "type": "template",
           "name": "backoffice/services/index",
-          "line": 18,
+          "line": 19,
           "file": "app/views/backoffice/services/index.html.haml",
           "rendered": {
             "name": "services/_index",
@@ -35,7 +35,7 @@
         {
           "type": "template",
           "name": "services/_index",
-          "line": 17,
+          "line": 19,
           "file": "app/views/services/_index.html.haml",
           "rendered": {
             "name": "services/_pagination",
@@ -76,7 +76,7 @@
           "type": "controller",
           "class": "Backoffice::ServicesController",
           "method": "index",
-          "line": 23,
+          "line": 33,
           "file": "app/controllers/backoffice/services_controller.rb",
           "rendered": {
             "name": "backoffice/services/index",
@@ -86,7 +86,7 @@
         {
           "type": "template",
           "name": "backoffice/services/index",
-          "line": 18,
+          "line": 19,
           "file": "app/views/backoffice/services/index.html.haml",
           "rendered": {
             "name": "services/_index",
@@ -96,7 +96,7 @@
         {
           "type": "template",
           "name": "services/_index",
-          "line": 17,
+          "line": 19,
           "file": "app/views/services/_index.html.haml",
           "rendered": {
             "name": "services/_pagination",
@@ -125,13 +125,13 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "28c3d5ff08d0ca32331fd33852f7e7268409aaacfce931769df6d9ecf5903484",
+      "fingerprint": "32bfe85c62b38164429a0fe25e2414a08769e9a7fd40496bd66a28857ff44529",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "config/initializers/friendly_id.rb",
       "line": 20,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "find_by(\"#{friendly_id_config.query_field} = ? OR #{(self.column_names & [\"pid\", \"eid\"]).first} = ?\", id, id)",
+      "code": "find_by(\"#{friendly_id_config.query_field} = ? OR #{(column_names & [\"pid\", \"eid\"]).first} = ?\", id, id)",
       "render_path": null,
       "location": null,
       "user_input": "friendly_id_config.query_field",
@@ -153,7 +153,7 @@
           "type": "controller",
           "class": "Backoffice::ServicesController",
           "method": "index",
-          "line": 23,
+          "line": 33,
           "file": "app/controllers/backoffice/services_controller.rb",
           "rendered": {
             "name": "backoffice/services/index",
@@ -163,7 +163,7 @@
         {
           "type": "template",
           "name": "backoffice/services/index",
-          "line": 18,
+          "line": 19,
           "file": "app/views/backoffice/services/index.html.haml",
           "rendered": {
             "name": "services/_index",
@@ -173,7 +173,7 @@
         {
           "type": "template",
           "name": "services/_index",
-          "line": 17,
+          "line": 19,
           "file": "app/views/services/_index.html.haml",
           "rendered": {
             "name": "services/_pagination",
@@ -224,7 +224,7 @@
         {
           "type": "template",
           "name": "layouts/application",
-          "line": 28,
+          "line": 32,
           "file": "app/views/layouts/application.html.haml",
           "rendered": {
             "name": "layouts/_recommendation",
@@ -247,7 +247,7 @@
       "check_name": "Render",
       "message": "Render path contains parameter value",
       "file": "app/controllers/designsystem_controller.rb",
-      "line": 10,
+      "line": 9,
       "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
       "code": "render(action => params.require(:file), {})",
       "render_path": null,
@@ -321,7 +321,7 @@
         {
           "type": "template",
           "name": "layouts/application",
-          "line": 28,
+          "line": 32,
           "file": "app/views/layouts/application.html.haml",
           "rendered": {
             "name": "layouts/_recommendation",
@@ -338,6 +338,6 @@
       "note": ""
     }
   ],
-  "updated": "2021-06-21 14:20:25 +0200",
-  "brakeman_version": "5.0.1"
+  "updated": "2021-12-28 14:16:42 +0100",
+  "brakeman_version": "5.2.0"
 }

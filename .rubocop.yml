@@ -131,36 +131,7 @@ Style/RedundantInterpolation:
 Style/StringConcatenation:
   Enabled: false
 
-################################
-# TODO Check, enable or forbid rules beneath
-################################
-
-### Beneath rules require double check before turning on
-Style/RescueStandardError:
-  Enabled: false
-
-Lint/MissingSuper:
-  Enabled: false
-
-Lint/AssignmentInCondition:
-  Enabled: false
-
-Lint/RescueException:
-  Enabled: false
-
-Naming/AccessorMethodName:
-  Enabled: false
-
 Style/ClassAndModuleChildren:
-  Enabled: false
-
-Style/MutableConstant:
-  Enabled: false
-
-Lint/UselessMethodDefinition:
-  Enabled: false
-
-Style/FrozenStringLiteralComment:
   Enabled: false
 
 Style/HashAsLastArrayItem:

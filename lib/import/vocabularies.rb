@@ -26,7 +26,7 @@ class Import::Vocabularies
     PROVIDER_STRUCTURE_TYPE: Vocabulary::StructureType,
     PROVIDER_MERIL_SCIENTIFIC_DOMAIN: Vocabulary::MerilScientificDomain,
     PROVIDER_MERIL_SCIENTIFIC_SUBDOMAIN: Vocabulary::MerilScientificDomain
-  }
+  }.freeze
 
   def initialize(
     eosc_registry_base_url,

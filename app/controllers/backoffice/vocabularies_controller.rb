@@ -69,7 +69,7 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
       name: "MERIL Scientific Domain",
       klass: Vocabulary::MerilScientificDomain
     }
-  }
+  }.freeze
 
   def index
     authorize(vocabulary_type)

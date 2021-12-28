@@ -6,6 +6,7 @@ class SortableFakeController < ApplicationController
   attr_accessor :params
 
   def initialize
+    super
     @params = {}
   end
 
