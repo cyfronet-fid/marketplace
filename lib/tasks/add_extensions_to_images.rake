@@ -36,7 +36,7 @@ def add_extension_to_images
 end
 
 def rename_img(attachment, filename)
-  logo = open(url_for(attachment), ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
+  logo = URI.parse(url_for(attachment)).open(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
   logo_content_type = logo.content_type
   extension = Rack::Mime::MIME_TYPES.invert[logo_content_type]
 

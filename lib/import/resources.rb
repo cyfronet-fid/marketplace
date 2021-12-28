@@ -105,7 +105,7 @@ module Import
 
       Service.reindex
 
-      open(@filepath, "w") { |file| file << JSON.pretty_generate(output) } unless @filepath.nil?
+      File.open(@filepath, "w") { |file| file << JSON.pretty_generate(output) } unless @filepath.nil?
     end
 
     private

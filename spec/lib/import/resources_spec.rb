@@ -17,7 +17,7 @@ describe Import::Resources do
     eosc_registry = Import::Resources.new(test_url, **options)
 
     def stub_http_file(eosc_registry, file_fixture_name, url, content_type: "image/png")
-      r = open(file_fixture(file_fixture_name))
+      r = File.open(file_fixture(file_fixture_name))
       r.define_singleton_method(:content_type) { content_type }
       allow(eosc_registry).to receive(:open).with(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_return(r)
     end
@@ -156,30 +156,35 @@ describe Import::Resources do
       filename = "eosc_registry_output.json"
       mock_file = StringIO.new
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal.phenomenal"], filepath: filename)
-      expect(eosc_registry).to receive(:open).with(filename, "w").and_yield(mock_file)
+      expect(File).to receive(:open).with(filename, "w").and_yield(mock_file)
+      allow(File).to receive(:open).and_call_original
       eosc_registry.call
       expect(JSON.parse(mock_file.string)).to eq(JSON.parse(file_fixture("eosc_registry_import_output.json").read))
     end
 
-    it "should gracefully handle error with logo download" do
+    it "should gracefully handle 404 status with logo download" do
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal.phenomenal"])
-      allow(eosc_registry).to receive(:open)
-        .with(
-          "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-          ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
-        )
+      mock_uri = double
+      expect(URI).to receive(:parse)
+        .with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png")
+        .and_return(mock_uri)
+      allow(URI).to receive(:parse).and_call_original
+      expect(mock_uri).to receive(:open)
+        .with(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
         .and_raise(OpenURI::HTTPError.new("", status: 404))
       eosc_registry.call
       expect(Service.first.logo.attached?).to be_falsey
     end
 
-    it "should gracefully handle error with logo download" do
+    it "should gracefully handle unreachable host error with logo download" do
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal.phenomenal"])
-      allow(eosc_registry).to receive(:open)
-        .with(
-          "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-          ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
-        )
+      mock_uri = double
+      expect(URI).to receive(:parse)
+        .with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png")
+        .and_return(mock_uri)
+      allow(URI).to receive(:parse).and_call_original
+      expect(mock_uri).to receive(:open)
+        .with(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
         .and_raise(Errno::EHOSTUNREACH.new)
       eosc_registry.call
       expect(Service.first.logo.attached?).to be_falsey
