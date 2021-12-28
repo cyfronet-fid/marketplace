@@ -8,4 +8,4 @@
           class: "nav-link text-uppercase #{"active" if about_active }", role: "tab"
       %li.nav-item
         = link_to _("Details"), provider_details_path(provider, from.present? ? { from: from } : nil),
-          class: "nav-link text-uppercase #{"active" if controller.controller_name == 'details' }", role: "tab"
+          class: "nav-link text-uppercase #{"active" if controller.controller_name == "details" }", role: "tab"

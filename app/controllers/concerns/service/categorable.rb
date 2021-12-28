@@ -22,7 +22,10 @@ module Service::Categorable
     @siblings_with_counters = siblings_with_counters.partition { |_cid, c| c[:category][:name] != "Other" }.flatten(1)
     @subcategories_with_counters =
       subcategories_with_counters&.partition { |_cid, c| c[:category][:name] != "Other" }&.flatten(1)
+
+    # rubocop:disable Naming/MemoizedInstanceVariableName
     @services_total ||= counters[nil]
+    # rubocop:enable Naming/MemoizedInstanceVariableName
   end
 
   def category
