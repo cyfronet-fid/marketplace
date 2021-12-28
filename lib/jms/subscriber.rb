@@ -43,10 +43,7 @@ module Jms
         log "Arrived message"
         Jms::ManageMessage.new(msg, @eosc_registry_base_url, @logger, @token).call
         @client.ack(msg)
-      rescue Jms::ManageMessage::ResourceParseError,
-             Jms::ManageMessage::WrongMessageError,
-             JSON::ParserError,
-             StandardError => e
+      rescue StandardError => e
         @client.unreceive(msg)
         error_block(msg, e)
       end

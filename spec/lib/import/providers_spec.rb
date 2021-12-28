@@ -16,12 +16,6 @@ describe Import::Providers do
 
     eosc_registry = Import::Providers.new(test_url, **options)
 
-    def stub_http_file(eosc_registry, file_fixture_name, url, content_type: "image/png")
-      r = File.open(file_fixture(file_fixture_name))
-      r.define_singleton_method(:content_type) { content_type }
-      allow(eosc_registry).to receive(:open).with(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_return(r)
-    end
-
     stub_http_file(
       eosc_registry,
       "PhenoMeNal_logo.png",
@@ -38,6 +32,12 @@ describe Import::Providers do
     )
 
     eosc_registry
+  end
+
+  def stub_http_file(eosc_registry, file_fixture_name, url, content_type: "image/png")
+    r = File.open(file_fixture(file_fixture_name))
+    r.define_singleton_method(:content_type) { content_type }
+    allow(eosc_registry).to receive(:open).with(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_return(r)
   end
 
   let(:eosc_registry) { make_and_stub_eosc_registry(log: true) }
