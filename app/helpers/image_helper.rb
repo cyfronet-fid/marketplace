@@ -62,7 +62,7 @@ module ImageHelper
       return false unless ImageHelper.image_ext_permitted?(extension)
 
       true
-    rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError, Exception
+    rescue Exception
       return false
     end
   rescue Timeout::Error

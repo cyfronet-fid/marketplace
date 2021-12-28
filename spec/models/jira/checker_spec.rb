@@ -2,18 +2,30 @@
 
 require "rails_helper"
 
-describe "block_error_handling" do
-  class Sample < Jira::Checker
-    block_error_handling :sample_method!
-    block_error_handling :sample_error_method!
+class Sample < Jira::Checker
+  block_error_handling :sample_method!
+  block_error_handling :sample_error_method!
 
-    def sample_error_method!
-      raise StandardError
-    end
-
-    def sample_method!; end
+  def sample_error_method!
+    raise StandardError
   end
 
+  def sample_method!; end
+end
+
+class MockWebhook
+  include Rails.application.routes.url_helpers
+  attr_reader :filters, :attrs, :enabled, :events
+
+  def initialize(project_key, events = [])
+    @filters = { "issue-related-events-section" => "project = #{project_key} " }
+    @attrs = { "url" => ("http://localhost:2990" + api_webhooks_jira_path + "?issue_id=${issue.id}") }
+    @events = events
+    @enabled = true
+  end
+end
+
+describe "block_error_handling" do
   let(:cls) { Sample.new(nil) }
 
   it "should wrap error in block" do
@@ -170,18 +182,6 @@ describe Jira::Checker do
   end
 
   describe "webhooks" do
-    class MockWebhook
-      include Rails.application.routes.url_helpers
-      attr_reader :filters, :attrs, :enabled, :events
-
-      def initialize(project_key, events = [])
-        @filters = { "issue-related-events-section" => "project = #{project_key} " }
-        @attrs = { "url" => ("http://localhost:2990" + api_webhooks_jira_path + "?issue_id=${issue.id}") }
-        @events = events
-        @enabled = true
-      end
-    end
-
     describe "check_webhook!" do
       it "should call client.Webhook.all and not raise if webhook was found" do
         webhook = MockWebhook.new(checker.client.jira_project_key)

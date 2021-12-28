@@ -2,33 +2,27 @@
 
 require "rails_helper"
 
-RSpec.describe Filter do
-  class MyFilter < Filter
-    def initialize(params = {})
-      super(
-        params: params.fetch(:params, {}),
-        field_name: "my_filter",
-        type: :select,
-        title: "My Filter",
-        index: "test"
-      )
-    end
+class MyFilter < Filter
+  def initialize(params = {})
+    super(params: params.fetch(:params, {}), field_name: "my_filter", type: :select, title: "My Filter", index: "test")
+  end
 
-    protected
+  protected
 
-    def fetch_options
-      if @my_options
-        raise "boom! fetching options for the second time"
-      else
-        @my_options = [{ name: "A", id: "1", count: 1 }, { name: "B", id: "2", count: 2 }]
-      end
-    end
-
-    def where_constraint
-      { key: :value }
+  def fetch_options
+    if @my_options
+      raise "boom! fetching options for the second time"
+    else
+      @my_options = [{ name: "A", id: "1", count: 1 }, { name: "B", id: "2", count: 2 }]
     end
   end
 
+  def where_constraint
+    { key: :value }
+  end
+end
+
+RSpec.describe Filter do
   context "#options" do
     it "returns filter select options" do
       filter = MyFilter.new
