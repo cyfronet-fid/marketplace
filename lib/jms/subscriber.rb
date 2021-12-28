@@ -13,6 +13,7 @@ module Jms
       end
     end
 
+    # rubocop:disable Metrics/ParameterLists
     def initialize(
       topic,
       login,
@@ -25,6 +26,7 @@ module Jms
       client: Stomp::Client,
       logger: Logger.new("#{Rails.root}/log/jms.log")
     )
+      # rubocop:enable Metrics/ParameterLists
       @logger = logger
       $stdout.sync = true
       @client = client.new(conf_hash(login, pass, host, client_name, ssl_enabled))

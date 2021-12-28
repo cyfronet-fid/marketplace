@@ -7,7 +7,9 @@ class Jms::Publisher
     end
   end
 
+  # rubocop:disable Metrics/ParameterLists
   def initialize(topic, login, pass, host, ssl_enabled, logger)
+    # rubocop:enable Metrics/ParameterLists
     @logger = logger
 
     conf_hash_res = conf_hash(login, pass, host, ssl_enabled)
