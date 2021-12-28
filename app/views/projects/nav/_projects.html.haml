@@ -17,7 +17,7 @@
           class: "nav-link #{"active" if project == current}"
         = image_tag "ico_message.svg", class: "new-message-icon" if project.user_has_new_messages? || project.items_have_new_messages?
 
-= link_to "Create new project", new_project_path, class: "btn btn-sm btn-primary pl-5 pr-5 mt-4 text-center w-100",
+= link_to "Create new project", new_project_path, class: "btn btn-sm btn-primary pl-5 pr-5 mt-3 text-center w-100",
   "data-e2e" => "go-to-create-project-form-btn"
 
 - if projects.archived.any?
