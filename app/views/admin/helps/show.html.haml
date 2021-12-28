@@ -3,7 +3,7 @@
     = _("Frequently Asked Questions Builder")
     = link_to _("Add new help section"),
               new_admin_help_section_path,
-              class: "btn btn-sm btn-success float-right"
+              class: "btn btn-primary btn-sm float-right"
 
   %ul.list-group
     = render partial: "toc", collection: @sections, as: :section

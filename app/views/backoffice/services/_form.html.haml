@@ -471,8 +471,9 @@
           = f.button :button, _("Preview"),
               name: "commit",
               value: "Preview",
-              class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin",
+              class: "btn btn-primary mr-5 mobile-bottom-margin float-left",
               data: { e2e: "preview-btn" }
-          = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin", "data-e2e": "submit-btn"
+          .button-wrapper.mr-5
+            = f.button :submit, class: "btn btn-primary mobile-bottom-margin", "data-e2e": "submit-btn"
           = back_link_to _("Cancel and back to previous page"), service, prefix: :backoffice,
-              class: "text-left flex-grow-1 text-uppercase"
+              class: "text-left flex-grow-1 text-uppercase float-left mt-2"
