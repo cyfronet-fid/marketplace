@@ -11,5 +11,5 @@
           %td
             - begin
               = render "attributes/#{attr.type}", attr: attr
-            - rescue
+            - rescue StandardError
               = render "attributes/default", attr: attr

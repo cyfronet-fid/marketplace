@@ -3,7 +3,7 @@
 require "net/http"
 
 class Matomo::CreateEvent
-  ACTIONS = { add_to_project: "AddToProject", rate: "Rate" }
+  ACTIONS = { add_to_project: "AddToProject", rate: "Rate" }.freeze
 
   def initialize(project_item, action, value = nil, category = "Service")
     @project_item = project_item

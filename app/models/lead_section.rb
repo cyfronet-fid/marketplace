@@ -2,7 +2,7 @@
 
 class LeadSection < ApplicationRecord
   extend FriendlyId
-  TEMPLATES = { learn_more: "learn_more", use_case: "use_case" }
+  TEMPLATES = { learn_more: "learn_more", use_case: "use_case" }.freeze
 
   enum template: TEMPLATES
   friendly_id :title, use: :slugged

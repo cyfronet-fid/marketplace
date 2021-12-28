@@ -19,7 +19,7 @@ module ImageHelper
   def self.to_base64(path)
     content_type = MiniMagick::Image.open(path).mime_type
     File.open(path, "rb") { |img| "data:" + content_type + ";base64," + Base64.strict_encode64(img.read) }
-  rescue Exception
+  rescue StandardError
     "Not recognized or not permitted file type"
   end
 
@@ -54,7 +54,7 @@ module ImageHelper
       return false unless ImageHelper.image_ext_permitted?(extension)
 
       true
-    rescue Exception
+    rescue StandardError
       return false
     end
   rescue Timeout::Error

@@ -11,7 +11,7 @@ class Provider < ApplicationRecord
 
   searchkick word_middle: [:provider_name]
 
-  STATUSES = { published: "published", deleted: "deleted" }
+  STATUSES = { published: "published", deleted: "deleted" }.freeze
 
   enum status: STATUSES
 

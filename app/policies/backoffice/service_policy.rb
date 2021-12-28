@@ -21,7 +21,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
     :upstream_id,
     [owner_ids: []],
     [sources_attributes: %i[id source_type eid _destroy]]
-  ]
+  ].freeze
 
   def index?
     service_portfolio_manager? || service_owner?

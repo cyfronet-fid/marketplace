@@ -19,9 +19,9 @@ class ProjectItem < ApplicationRecord
     rejected: "rejected",
     closed: "closed",
     approved: "approved"
-  }
+  }.freeze
 
-  ISSUE_STATUSES = { jira_active: 0, jira_deleted: 1, jira_uninitialized: 2, jira_errored: 3 }
+  ISSUE_STATUSES = { jira_active: 0, jira_deleted: 1, jira_uninitialized: 2, jira_errored: 3 }.freeze
 
   enum status_type: STATUS_TYPES
   enum issue_status: ISSUE_STATUSES

@@ -2,9 +2,6 @@
 
 class Jms::Publisher
   class ConnectionError < StandardError
-    def initialize(msg)
-      super(msg)
-    end
   end
 
   # rubocop:disable Metrics/ParameterLists

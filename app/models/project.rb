@@ -9,7 +9,7 @@ class Project < ApplicationRecord
     research: "research",
     private_company: "private_company",
     project: "project"
-  }
+  }.freeze
 
   ISSUE_STATUSES = {
     jira_require_migration: 100,
@@ -17,9 +17,9 @@ class Project < ApplicationRecord
     jira_deleted: 1,
     jira_uninitialized: 2,
     jira_errored: 3
-  }
+  }.freeze
 
-  PROJECT_STATUSES = { active: "active", archived: "archived" }
+  PROJECT_STATUSES = { active: "active", archived: "archived" }.freeze
 
   enum status: PROJECT_STATUSES
   enum customer_typology: CUSTOMER_TYPOLOGIES

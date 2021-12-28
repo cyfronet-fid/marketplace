@@ -17,7 +17,7 @@ class Services::ApplicationController < ApplicationController
     information: "Access instructions",
     configuration: "Configuration",
     summary: "Final details"
-  }
+  }.freeze
 
   private
 

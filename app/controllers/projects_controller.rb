@@ -65,7 +65,7 @@ class ProjectsController < ApplicationController
     Project.new(attributes.merge(status: :active))
   end
 
-  IGNORED_ATTRIBUTES = %w[id name issue_key issue_status issue_key]
+  IGNORED_ATTRIBUTES = %w[id name issue_key issue_status issue_key].freeze
   def attributes
     source = params[:source] && current_user.projects.find_by(id: params[:source])
     if source

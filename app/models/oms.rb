@@ -124,5 +124,5 @@ class OMS < ApplicationRecord
         required: [:mandatory]
       }
     ]
-  }
+  }.freeze
 end

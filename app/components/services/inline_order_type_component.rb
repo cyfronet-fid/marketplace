@@ -14,7 +14,7 @@ class Services::InlineOrderTypeComponent < ApplicationComponent
           "\nbut access requests coming from EOSC-hub can be tracked" \
           "\nand reflected in the Management Back Office."
       )
-  }
+  }.freeze
 
   TITLE = {
     order_required: _("Order Required"),
@@ -23,9 +23,10 @@ class Services::InlineOrderTypeComponent < ApplicationComponent
     other: _("Other"),
     various: _("Various"),
     external: _("External")
-  }
+  }.freeze
 
   def initialize(tag, order_type)
+    super()
     @tag = tag
     @order_type = order_type
   end

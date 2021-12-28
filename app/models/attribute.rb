@@ -159,7 +159,7 @@ class Attribute
       value: {},
       config: {}
     }
-  }
+  }.freeze
 
   TYPE = "attribute"
 end
