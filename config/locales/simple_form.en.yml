@@ -45,8 +45,8 @@ en:
       user:
         categories: Categories of interests
         scientific_domains: Scientific domains of interests
-        categories_updates: New service in Category of interest
-        scientific_domains_updates: New service in Scientific domain of interest
+        categories_updates: New resource in Category of interest
+        scientific_domains_updates: New resource in Scientific domain of interest
       project:
         name: Project name
         reason_for_access: Reason to request access to the EOSC resources
@@ -82,7 +82,7 @@ en:
           You will receive an answer to %{email} email address.
       question:
         text: |
-          We will send your question to the Service provider.
+          We will send your question to the resource provider.
           You will receive an answer to %{email} email address.
       lead:
         header: |
@@ -98,7 +98,7 @@ en:
           Url should start with http:// or https:// prefix [e.g. https://example.com]
         webpage_url: |
           Url should start with http:// or https:// prefix [e.g. https://example.com]<br/>
-          This url will be available under "Webpage" in Support section in the service view
+          This url will be available under "Webpage" in Support section in the resource view
         sla_url: |
           Url should start with http:// or https:// prefix [e.g. https://example.com]
         access_policies_url: |

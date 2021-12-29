@@ -62,12 +62,12 @@ RSpec.describe ProjectItem::Ready do
       expect { described_class.new(project_item).call }.to change { ActionMailer::Base.deliveries.count }.by(3)
 
       expect(ActionMailer::Base.deliveries[-3].subject).to eq(
-        "Status of your service access request in the EOSC Portal Marketplace has changed to READY TO USE"
+        "Status of your resource access request in the EOSC Portal Marketplace has changed to READY TO USE"
       )
       expect(ActionMailer::Base.deliveries[-2].subject).to eq(
         "[EOSC marketplace] #{service.name} is ready - usage instructions"
       )
-      expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
+      expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your resource")
     end
 
     it "do not send email with activate message if not present" do
@@ -80,9 +80,9 @@ RSpec.describe ProjectItem::Ready do
       expect { described_class.new(project_item).call }.to change { ActionMailer::Base.deliveries.count }.by(2)
 
       expect(ActionMailer::Base.deliveries[-2].subject).to eq(
-        "Status of your service access request in the EOSC Portal Marketplace has changed to READY TO USE"
+        "Status of your resource access request in the EOSC Portal Marketplace has changed to READY TO USE"
       )
-      expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
+      expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your resource")
     end
 
     it "creates new JIRA issue and do the transition" do
@@ -103,9 +103,9 @@ RSpec.describe ProjectItem::Ready do
 
         expect { described_class.new(project_item).call }.to change { ActionMailer::Base.deliveries.count }.by(2)
         expect(ActionMailer::Base.deliveries[-2].subject).to eq(
-          "Status of your service access request in the EOSC Portal Marketplace has changed to READY TO USE"
+          "Status of your resource access request in the EOSC Portal Marketplace has changed to READY TO USE"
         )
-        expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
+        expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your resource")
       end
     end
 
@@ -131,7 +131,7 @@ RSpec.describe ProjectItem::Ready do
         project_item.new_status(status: "custom_ready", status_type: :ready)
 
         expect { described_class.new(project_item).call }.to change { ActionMailer::Base.deliveries.count }.by(1)
-        expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
+        expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your resource")
         expect(ActionMailer::Base.deliveries.last.subject).to_not start_with("[ProjectItem #")
       end
     end

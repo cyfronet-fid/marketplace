@@ -59,7 +59,7 @@ RSpec.describe Jira::IssueUpdated do
       }.by(1)
       mail = ActionMailer::Base.deliveries.last
 
-      expect(mail.subject).to eq("EGI Applications on Demand service approved")
+      expect(mail.subject).to eq("EGI Applications on Demand resource approved")
     end
 
     it "notify if voucher accepted" do
@@ -73,7 +73,7 @@ RSpec.describe Jira::IssueUpdated do
       }.by(1)
       mail = ActionMailer::Base.deliveries.last
 
-      expect(mail.subject).to eq("Elastic Cloud Compute Cluster (EC3) service with voucher approved")
+      expect(mail.subject).to eq("Elastic Cloud Compute Cluster (EC3) resource with voucher approved")
     end
 
     it "notify if voucher rejected" do
@@ -87,7 +87,7 @@ RSpec.describe Jira::IssueUpdated do
       }.by(1)
       mail = ActionMailer::Base.deliveries.last
 
-      expect(mail.subject).to eq("Elastic Cloud Compute Cluster (EC3) service with voucher rejected")
+      expect(mail.subject).to eq("Elastic Cloud Compute Cluster (EC3) resource with voucher rejected")
     end
 
     it "updates user_secrets if voucher requested and granted" do
