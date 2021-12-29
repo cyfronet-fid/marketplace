@@ -11,6 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2021_11_16_143044) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,7 +22,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.bigint "record_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index %w[record_type record_id name], name: "index_action_text_rich_texts_uniqueness", unique: true
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -31,7 +32,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index %w[record_type record_id name blob_id], name: "index_active_storage_attachments_uniqueness", unique: true
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
   create_table "active_storage_blobs", force: :cascade do |t|
@@ -49,7 +50,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
   create_table "active_storage_variant_records", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
-    t.index %w[blob_id variation_digest], name: "index_active_storage_variant_records_uniqueness", unique: true
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "categories", force: :cascade do |t|
@@ -63,7 +64,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.string "eid"
     t.index ["ancestry"], name: "index_categories_on_ancestry"
     t.index ["description"], name: "index_categories_on_description"
-    t.index %w[name ancestry], name: "index_categories_on_name_and_ancestry", unique: true
+    t.index ["name", "ancestry"], name: "index_categories_on_name_and_ancestry", unique: true
   end
 
   create_table "categorizations", force: :cascade do |t|
@@ -89,9 +90,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["contactable_id"], name: "index_contacts_on_contactable_id"
-    t.index %w[id contactable_id contactable_type],
-            name: "index_contacts_on_id_and_contactable_id_and_contactable_type",
-            unique: true
+    t.index ["id", "contactable_id", "contactable_type"], name: "index_contacts_on_id_and_contactable_id_and_contactable_type", unique: true
   end
 
   create_table "data_administrators", force: :cascade do |t|
@@ -112,7 +111,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.jsonb "updates", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index %w[eventable_type eventable_id], name: "index_events_on_eventable_type_and_eventable_id"
+    t.index ["eventable_type", "eventable_id"], name: "index_events_on_eventable_type_and_eventable_id"
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -121,10 +120,8 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.string "sluggable_type", limit: 50
     t.string "scope"
     t.datetime "created_at"
-    t.index %w[slug sluggable_type scope],
-            name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope",
-            unique: true
-    t.index %w[slug sluggable_type], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
@@ -182,7 +179,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.string "author_uid"
     t.index ["author_id"], name: "index_messages_on_author_id"
     t.index ["author_role"], name: "index_messages_on_author_role"
-    t.index %w[messageable_type messageable_id], name: "index_messages_on_messageable_type_and_messageable_id"
+    t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id"
     t.index ["scope"], name: "index_messages_on_scope"
   end
 
@@ -191,7 +188,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.bigint "target_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index %w[source_id target_id], name: "index_offer_links_on_source_id_and_target_id", unique: true
+    t.index ["source_id", "target_id"], name: "index_offer_links_on_source_id_and_target_id", unique: true
     t.index ["source_id"], name: "index_offer_links_on_source_id"
     t.index ["target_id"], name: "index_offer_links_on_target_id"
   end
@@ -215,7 +212,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.integer "bundled_offers_count", default: 0, null: false
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["primary_oms_id"], name: "index_offers_on_primary_oms_id"
-    t.index %w[service_id iid], name: "index_offers_on_service_id_and_iid", unique: true
+    t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
     t.index ["service_id"], name: "index_offers_on_service_id"
   end
 
@@ -224,7 +221,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index %w[oms_id user_id], name: "index_oms_administrations_on_oms_id_and_user_id", unique: true
+    t.index ["oms_id", "user_id"], name: "index_oms_administrations_on_oms_id_and_user_id", unique: true
     t.index ["oms_id"], name: "index_oms_administrations_on_oms_id"
     t.index ["user_id"], name: "index_oms_administrations_on_user_id"
   end
@@ -244,7 +241,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.bigint "provider_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index %w[oms_id provider_id], name: "index_oms_providers_on_oms_id_and_provider_id", unique: true
+    t.index ["oms_id", "provider_id"], name: "index_oms_providers_on_oms_id_and_provider_id", unique: true
     t.index ["oms_id"], name: "index_oms_providers_on_oms_id"
     t.index ["provider_id"], name: "index_oms_providers_on_provider_id"
   end
@@ -312,7 +309,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.bigint "scientific_domain_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index %w[project_id scientific_domain_id], name: "index_psd_on_service_id_and_sd_id", unique: true
+    t.index ["project_id", "scientific_domain_id"], name: "index_psd_on_service_id_and_sd_id", unique: true
     t.index ["project_id"], name: "index_project_scientific_domains_on_project_id"
     t.index ["scientific_domain_id"], name: "index_project_scientific_domains_on_scientific_domain_id"
   end
@@ -341,7 +338,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "conversation_last_seen", null: false
-    t.index %w[name user_id], name: "index_projects_on_name_and_user_id", unique: true
+    t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -359,7 +356,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.bigint "scientific_domain_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index %w[provider_id scientific_domain_id], name: "index_psd_on_provider_id_and_sd_id", unique: true
+    t.index ["provider_id", "scientific_domain_id"], name: "index_psd_on_provider_id_and_sd_id", unique: true
     t.index ["provider_id"], name: "index_provider_scientific_domains_on_provider_id"
     t.index ["scientific_domain_id"], name: "index_provider_scientific_domains_on_scientific_domain_id"
   end
@@ -371,9 +368,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "errored"
-    t.index %w[eid source_type provider_id],
-            name: "index_provider_sources_on_eid_and_source_type_and_provider_id",
-            unique: true
+    t.index ["eid", "source_type", "provider_id"], name: "index_provider_sources_on_eid_and_source_type_and_provider_id", unique: true
     t.index ["provider_id"], name: "index_provider_sources_on_provider_id"
   end
 
@@ -383,9 +378,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.string "vocabulary_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index %w[provider_id vocabulary_id],
-            name: "index_provider_vocabularies_on_provider_id_and_vocabulary_id",
-            unique: true
+    t.index ["provider_id", "vocabulary_id"], name: "index_provider_vocabularies_on_provider_id_and_vocabulary_id", unique: true
     t.index ["provider_id"], name: "index_provider_vocabularies_on_provider_id"
     t.index ["vocabulary_id"], name: "index_provider_vocabularies_on_vocabulary_id"
   end
@@ -423,7 +416,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.integer "ancestry_depth", default: 0
     t.string "eid"
     t.text "description"
-    t.index %w[name ancestry], name: "index_scientific_domains_on_name_and_ancestry", unique: true
+    t.index ["name", "ancestry"], name: "index_scientific_domains_on_name_and_ancestry", unique: true
   end
 
   create_table "service_opinions", force: :cascade do |t|
@@ -442,7 +435,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["provider_id"], name: "index_service_providers_on_provider_id"
-    t.index %w[service_id provider_id], name: "index_service_providers_on_service_id_and_provider_id", unique: true
+    t.index ["service_id", "provider_id"], name: "index_service_providers_on_service_id_and_provider_id", unique: true
     t.index ["service_id"], name: "index_service_providers_on_service_id"
   end
 
@@ -450,9 +443,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.bigint "service_id"
     t.bigint "platform_id"
     t.index ["platform_id"], name: "index_service_related_platforms_on_platform_id"
-    t.index %w[service_id platform_id],
-            name: "index_service_related_platforms_on_service_id_and_platform_id",
-            unique: true
+    t.index ["service_id", "platform_id"], name: "index_service_related_platforms_on_service_id_and_platform_id", unique: true
     t.index ["service_id"], name: "index_service_related_platforms_on_service_id"
   end
 
@@ -462,9 +453,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "type"
-    t.index %w[source_id target_id type],
-            name: "index_service_relationships_on_source_id_and_target_id_and_type",
-            unique: true
+    t.index ["source_id", "target_id", "type"], name: "index_service_relationships_on_source_id_and_target_id_and_type", unique: true
     t.index ["source_id"], name: "index_service_relationships_on_source_id"
     t.index ["target_id"], name: "index_service_relationships_on_target_id"
   end
@@ -475,7 +464,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["scientific_domain_id"], name: "index_service_scientific_domains_on_scientific_domain_id"
-    t.index %w[service_id scientific_domain_id], name: "index_ssd_on_service_id_and_sd_id", unique: true
+    t.index ["service_id", "scientific_domain_id"], name: "index_ssd_on_service_id_and_sd_id", unique: true
     t.index ["service_id"], name: "index_service_scientific_domains_on_service_id"
   end
 
@@ -486,9 +475,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "errored"
-    t.index %w[eid source_type service_id],
-            name: "index_service_sources_on_eid_and_source_type_and_service_id",
-            unique: true
+    t.index ["eid", "source_type", "service_id"], name: "index_service_sources_on_eid_and_source_type_and_service_id", unique: true
     t.index ["service_id"], name: "index_service_sources_on_service_id"
   end
 
@@ -497,9 +484,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.bigint "target_user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index %w[service_id target_user_id],
-            name: "index_service_target_users_on_service_id_and_target_user_id",
-            unique: true
+    t.index ["service_id", "target_user_id"], name: "index_service_target_users_on_service_id_and_target_user_id", unique: true
     t.index ["service_id"], name: "index_service_target_users_on_service_id"
     t.index ["target_user_id"], name: "index_service_target_users_on_target_user_id"
   end
@@ -519,9 +504,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.string "vocabulary_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index %w[service_id vocabulary_id],
-            name: "index_service_vocabularies_on_service_id_and_vocabulary_id",
-            unique: true
+    t.index ["service_id", "vocabulary_id"], name: "index_service_vocabularies_on_service_id_and_vocabulary_id", unique: true
     t.index ["service_id"], name: "index_service_vocabularies_on_service_id"
     t.index ["vocabulary_id"], name: "index_service_vocabularies_on_vocabulary_id"
   end
@@ -590,7 +573,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.datetime "updated_at", null: false
     t.string "status", null: false
     t.index ["author_id"], name: "index_statuses_on_author_id"
-    t.index %w[status_holder_type status_holder_id], name: "index_statuses_on_status_holder_type_and_status_holder_id"
+    t.index ["status_holder_type", "status_holder_id"], name: "index_statuses_on_status_holder_type_and_status_holder_id"
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
@@ -602,13 +585,13 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.string "context", limit: 128
     t.datetime "created_at"
     t.index ["context"], name: "index_taggings_on_context"
-    t.index %w[tag_id taggable_id taggable_type context tagger_id tagger_type], name: "taggings_idx", unique: true
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
-    t.index %w[taggable_id taggable_type context], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
-    t.index %w[taggable_id taggable_type tagger_id context], name: "taggings_idy"
+    t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
     t.index ["taggable_id"], name: "index_taggings_on_taggable_id"
     t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
-    t.index %w[tagger_id tagger_type], name: "index_taggings_on_tagger_id_and_tagger_type"
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
     t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
   end
 
@@ -663,7 +646,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_user_categories_on_category_id"
-    t.index %w[user_id category_id], name: "index_user_categories_on_user_id_and_category_id", unique: true
+    t.index ["user_id", "category_id"], name: "index_user_categories_on_user_id_and_category_id", unique: true
     t.index ["user_id"], name: "index_user_categories_on_user_id"
   end
 
@@ -673,7 +656,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["scientific_domain_id"], name: "index_user_scientific_domains_on_scientific_domain_id"
-    t.index %w[user_id scientific_domain_id], name: "index_usd_on_service_id_and_sd_id", unique: true
+    t.index ["user_id", "scientific_domain_id"], name: "index_usd_on_service_id_and_sd_id", unique: true
     t.index ["user_id"], name: "index_user_scientific_domains_on_user_id"
   end
 
@@ -682,7 +665,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index %w[service_id user_id], name: "index_user_services_on_service_id_and_user_id", unique: true
+    t.index ["service_id", "user_id"], name: "index_user_services_on_service_id_and_user_id", unique: true
     t.index ["service_id"], name: "index_user_services_on_service_id"
     t.index ["user_id"], name: "index_user_services_on_user_id"
   end
