@@ -46,7 +46,7 @@ describe("Owned resources", () => {
       .should("contain", "/services/new")
     cy.fillFormCreateResource(resource, correctLogo);
     cy.get("[data-e2e='submit-btn']").click()
-    cy.contains("div.alert-success", "New service created successfully")
+    cy.contains("div.alert-success", "New resource created successfully")
       .should("be.visible");
     cy.contains("a","Edit resource")
       .should("be.visible") 
@@ -181,7 +181,7 @@ describe("Owned resources", () => {
       .click();
     cy.get("[data-e2e='submit-btn']")
       .click()
-    cy.contains("div.alert-success", "New service created successfully")
+    cy.contains("div.alert-success", "New resource created successfully")
       .should("be.visible");
     cy.contains("a","Edit resource")
       .should("be.visible") 
@@ -198,7 +198,7 @@ describe("Owned resources", () => {
       .should("be.visible")
     cy.get("[data-e2e='confirm-changes-btn']")
       .click();
-    cy.contains("div.alert-success", "New service created successfully")
+    cy.contains("div.alert-success", "New resource created successfully")
       .should("be.visible");
     cy.contains("a","Edit resource")
       .should("be.visible");

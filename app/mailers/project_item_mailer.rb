@@ -8,7 +8,7 @@ class ProjectItemMailer < ApplicationMailer
     if @project_item.created?
       mail(
         to: @user.email,
-        subject: "New request for the service access in the EOSC Marketplace - CREATED",
+        subject: "New request for the resource access in the EOSC Marketplace - CREATED",
         template_name: "created"
       )
     end
@@ -19,7 +19,7 @@ class ProjectItemMailer < ApplicationMailer
 
     mail(
       to: @user.email,
-      subject: "The service #{@project_item.service.name} has been added to your project",
+      subject: "The resource #{@project_item.service.name} has been added to your project",
       template_name: "added_to_project"
     )
   end
@@ -30,7 +30,7 @@ class ProjectItemMailer < ApplicationMailer
     mail(
       to: @user.email,
       subject:
-        "Status of your service access request " \
+        "Status of your resource access request " \
           "in the EOSC Portal Marketplace has changed to WAITING FOR RESPONSE",
       template_name: "waiting_for_response"
     )
@@ -41,7 +41,7 @@ class ProjectItemMailer < ApplicationMailer
 
     mail(
       to: @user.email,
-      subject: "Status of your service access request in the EOSC Portal Marketplace has changed to APPROVED",
+      subject: "Status of your resource access request in the EOSC Portal Marketplace has changed to APPROVED",
       template_name: "approved"
     )
   end
@@ -51,7 +51,7 @@ class ProjectItemMailer < ApplicationMailer
 
     mail(
       to: @user.email,
-      subject: "Status of your service access request in the EOSC Portal Marketplace has changed to READY TO USE",
+      subject: "Status of your resource access request in the EOSC Portal Marketplace has changed to READY TO USE",
       template_name: "ready_to_use"
     )
   end
@@ -61,7 +61,7 @@ class ProjectItemMailer < ApplicationMailer
 
     mail(
       to: @user.email,
-      subject: "Status of your service access request in the EOSC Portal Marketplace has changed to REJECTED",
+      subject: "Status of your resource access request in the EOSC Portal Marketplace has changed to REJECTED",
       template_name: "rejected"
     )
   end
@@ -71,7 +71,7 @@ class ProjectItemMailer < ApplicationMailer
 
     mail(
       to: @user.email,
-      subject: "Status of your service access request in the EOSC Portal Marketplace has changed to CLOSED",
+      subject: "Status of your resource access request in the EOSC Portal Marketplace has changed to CLOSED",
       template_name: "closed"
     )
   end
@@ -81,7 +81,7 @@ class ProjectItemMailer < ApplicationMailer
     @project = project_item.project
     @user = project_item.user
 
-    mail(to: @user.email, subject: "EOSC Portal - Rate your service", template_name: "rating_service")
+    mail(to: @user.email, subject: "EOSC Portal - Rate your resource", template_name: "rating_service")
   end
 
   def aod_voucher_accepted(project_item)
@@ -90,7 +90,7 @@ class ProjectItemMailer < ApplicationMailer
 
     mail(
       to: @user.email,
-      subject: "Elastic Cloud Compute Cluster (EC3) service with voucher approved",
+      subject: "Elastic Cloud Compute Cluster (EC3) resource with voucher approved",
       template_name: "aod_voucher_accepted"
     )
   end
@@ -101,7 +101,7 @@ class ProjectItemMailer < ApplicationMailer
 
     mail(
       to: @user.email,
-      subject: "Elastic Cloud Compute Cluster (EC3) service with voucher rejected",
+      subject: "Elastic Cloud Compute Cluster (EC3) resource with voucher rejected",
       template_name: "aod_voucher_rejected"
     )
   end
@@ -109,7 +109,7 @@ class ProjectItemMailer < ApplicationMailer
   def aod_accepted(project_item)
     @user = project_item.user
 
-    mail(to: @user.email, subject: "EGI Applications on Demand service approved", template_name: "aod_accepted")
+    mail(to: @user.email, subject: "EGI Applications on Demand resource approved", template_name: "aod_accepted")
   end
 
   def activate_message(project_item, service)
