@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.29.0-milestone]
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Adding providers with improper data to the resource (@goreck888)
+
+### Security
+
 ## [3.28.0] 2021-12-22
 
 ### Changed

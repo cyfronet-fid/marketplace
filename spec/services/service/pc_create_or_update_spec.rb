@@ -68,6 +68,38 @@ RSpec.describe Service::PcCreateOrUpdate do
       expect(offer.service.id).to eq(service.id)
       expect(service.upstream_id).to eq(service.sources.first.id)
     end
+
+    it "should add provider with improper data to the resource" do
+      invalid_provider = create(:provider, name: "Test Provider 3")
+
+      invalid_provider.website = nil
+      invalid_provider.save(validate: false)
+
+      expect(invalid_provider.valid?).to be_falsey
+
+      provider_tp = create(:provider, name: "Test Provider tp")
+
+      create(:provider_source, source_type: "eosc_registry", eid: "new.prov", provider: invalid_provider)
+
+      create(:provider_source, source_type: "eosc_registry", eid: "tp", provider: provider_tp)
+
+      # first create a service
+      jms_service = build(:jms_service, prov_eid: "tp")
+      stub_described_class(jms_service, faraday: faraday)
+
+      service = Service.last
+      expect(service.name).to eq("Title")
+      expect(service.providers.map(&:id)).to eq([provider_tp.id])
+
+      # only then attach an invalid provider
+      jms_service = build(:jms_service, prov_eid: "new.prov", name: "New supper service")
+      stub_described_class(jms_service, faraday: faraday)
+
+      service.reload
+
+      expect(service.name).to eq("New supper service")
+      expect(service.providers.map(&:id)).to eq([invalid_provider.id])
+    end
   end
 
   private
