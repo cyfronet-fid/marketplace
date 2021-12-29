@@ -177,7 +177,7 @@ RSpec.describe Message do
                   email = ActionMailer::Base.deliveries.last
 
                   expect(email.to).to contain_exactly(project_item.user.email)
-                  expect(email.body.encoded).to include("A new message was added to your service request")
+                  expect(email.body.encoded).to include("A new message was added to your resource request")
                   expect(email.subject).to eq("Question about your resource access request in EOSC Portal Marketplace")
                 end
               end
@@ -242,7 +242,7 @@ RSpec.describe Message do
                   email = ActionMailer::Base.deliveries.last
 
                   expect(email.to).to contain_exactly(project_item.user.email)
-                  expect(email.body.encoded).to include("has been modified by the service provider")
+                  expect(email.body.encoded).to include("has been modified by the resource provider")
                   expect(email.subject).to eq("Message updated")
                 end
               end
@@ -275,7 +275,7 @@ RSpec.describe Message do
                   email = ActionMailer::Base.deliveries.last
 
                   expect(email.to).to contain_exactly(project.user.email)
-                  expect(email.body.encoded).to include("has been modified by the service provider")
+                  expect(email.body.encoded).to include("has been modified by the resource provider")
                   expect(email.subject).to eq("Message updated")
                 end
               end

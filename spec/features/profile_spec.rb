@@ -31,7 +31,7 @@ RSpec.feature "Profile page" do
       select c1.name, from: "Categories of interests"
       select sd2.name, from: "Scientific domains of interests"
 
-      check "New service in Category of interest"
+      check "New resource in Category of interest"
 
       click_on "Save changes"
 
