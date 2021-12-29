@@ -163,7 +163,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     if Service::Update.new(@service, attributes).call
       update_logo_from_session!
       session.delete(preview_session_key)
-      redirect_to backoffice_service_path(@service), notice: "Service updated correctly"
+      redirect_to backoffice_service_path(@service), notice: "Resource updated correctly"
     else
       add_missing_nested_models
       render :edit, status: :bad_request
