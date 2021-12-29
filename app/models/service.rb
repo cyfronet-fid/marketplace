@@ -47,7 +47,7 @@ class Service < ApplicationRecord
   has_many :service_scientific_domains, dependent: :destroy
   has_many :scientific_domains, through: :service_scientific_domains
   has_many :service_providers, dependent: :destroy
-  has_many :providers, through: :service_providers
+  has_many :providers, through: :service_providers, validate: false
   has_many :service_related_platforms, dependent: :destroy
   has_many :platforms, through: :service_related_platforms
   has_many :service_vocabularies, dependent: :destroy
