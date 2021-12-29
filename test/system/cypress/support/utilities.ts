@@ -77,7 +77,7 @@ Cypress.Commands.add('forceVisit', url => {
         return win.open(url, '_self');
     });
 });
-Cypress.Commands.add('checkCaptcha', () => {
+Cypress.Commands.add('checkCaptcha', (nr = 0) => {
     cy.wait(500);
     cy.get('iframe')
         .first()

@@ -21,6 +21,7 @@ import '@cypress/skip-test/support';
 import 'cypress-promise/register';
 import 'cypress-wait-until';
 import 'cypress-file-upload';
+import "cypress-fail-fast";
 
 
 
@@ -32,7 +33,7 @@ import './coverage';
 import './utilities';
 
 import './jira';
-import './offers';
+import './project';
 import './resources';
 import './category';
 import './scientific-domain';

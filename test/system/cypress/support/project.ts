@@ -16,7 +16,7 @@ declare global {
             /**
              * Return projectData object with project details
              */
-            fillFormProject(project: IProject): Cypress.Chainable<void>;
+            fillFormProject(project: Partial<IProject>): Cypress.Chainable<void>;
 
             /**
              * Compare project details with data on site
@@ -113,8 +113,7 @@ Cypress.Commands.add('fillFormProject', (project: IProject) => {
             }
         });
 
-    cy.get('button[data-e2e="updateProjectBtn"]')
-        .click();
+   
 });
 Cypress.Commands.add("hasProjectDetails", (project: IProject) => {
     cy.location('pathname').should('match', /\/projects\/[0-9]+/);

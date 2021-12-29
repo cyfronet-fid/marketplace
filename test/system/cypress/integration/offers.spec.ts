@@ -1,13 +1,14 @@
 import {IUser, UserFactory} from "../factories/user.factory";
 import {IProject, ProjectFactory} from "../factories/project.factory";
 import {Utilities} from "../support/utilities";
-import {accessType, IResource} from "../support/offers";
+import {accessType, IResource} from "../support/project";
 import {IJiraResource} from "../support/jira";
 
-Cypress.Cookies.defaults({
+describe('Offers', () => {
+  Cypress.Cookies.defaults({
     preserve: ['user', 'project', 'resources', 'message']
 });
-describe('Offers', () => {
+
     // Hack: Before hook is running twice on baseUrl origin change
     // In that case "it" is used to run only once
     it('Setup cookies data', () => {
@@ -42,7 +43,7 @@ describe('Offers', () => {
         cy.getCookie('user')
             .then(cookie => JSON.parse(cookie.value) as IUser)
             .then(user => {
-                cy.loginAs(user);
+                   cy.loginAs(user);
 
                 cy.get('a[data-e2e="goToProjectsBtn"]')
                     .click();
@@ -52,7 +53,7 @@ describe('Offers', () => {
                     .click();
                 cy.location('pathname')
                     .should('equal', '/projects/new');
-            });
+             });
     });
     it('Should add project', () => {
         cy.visit("/");
@@ -66,6 +67,8 @@ describe('Offers', () => {
 
                         cy.visit('/projects/new');
                         cy.fillFormProject(project);
+                        cy.contains("button", "Create new project")
+                          .click()
                         cy.hasProjectDetails(project);
                     });
             });
@@ -90,6 +93,8 @@ describe('Offers', () => {
 
                         const newProject = ProjectFactory.create();
                         cy.fillFormProject(newProject);
+                        cy.contains("button", "Update")
+                          .click()
                         cy.hasProjectDetails(newProject);
 
                         cy.clearCookie('project');
@@ -128,6 +133,7 @@ describe('Offers', () => {
                             .should("include.text", "You have no resources in this project yet");
                     });
             });
+            cy.clearCookie('_mp_session')
     });
     it('Add open access', () => {
         cy.visit('/');
@@ -391,6 +397,8 @@ describe('Offers messages', () => {
 
                         cy.visit('/projects/new');
                         cy.fillFormProject(project);
+                        cy.contains("button", "Create new project")
+                          .click()
 
                         cy.get(".services-menu")
                             .contains("a", "contact with eosc experts", {matchCase: false})
@@ -443,3 +451,4 @@ describe('Offers messages', () => {
     });
     xit('Should send message from JIRA to app', () => {});
 });
+

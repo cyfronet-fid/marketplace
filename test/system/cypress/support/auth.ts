@@ -10,7 +10,7 @@ declare global {
             jiraLogin(): Cypress.Chainable<void>;
             jiraLogout(): Cypress.Chainable<void>;
 
-            setSessionId(user: IUser): Cypress.Chainable<string>;
+            setSessionId(user: IUser): Cypress.Chainable<any>;
             loginAs(user: IUser): Cypress.Chainable<void>;
             logout(): Cypress.Chainable<void>;
         }
@@ -52,8 +52,9 @@ Cypress.Commands.add('setSessionId', (user: IUser) => {
 Cypress.Commands.add('loginAs', function (user: IUser) {
     cy.setSessionId(user);
     cy.reload();
-    cy.get('a[data-e2e="logout"]').should('be.visible');
+    cy.get('a[data-e2e="logout"]').should('be.visible')
 });
+
 Cypress.Commands.add('logout', () => {
     cy.clearCookie(APP_SESSION_COOKIE_NAME);
     cy.reload();
