@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:14.1
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432"
+    networks:
+      - mp-local
+    environment:
+      POSTGRES_DB: ${DB_POSTGRES_DB:-mp}
+      POSTGRES_USER: ${DB_POSTGRES_USER:-mp}
+      POSTGRES_PASSWORD: ${DB_POSTGRES_PASSWORD:-mp}
+  el:
+    image: elasticsearch:7.5.2
+    ports:
+      - "127.0.0.1:9200:9200"
+      - "127.0.0.1:9300:9300"
+    networks:
+      - mp-local
+    environment:
+      discovery.type: single-node
+  redis:
+    image: redis:6.2.6
+    ports:
+      - "127.0.0.1:6379:6379"
+    networks:
+      - mp-local
+
+volumes:
+  db-data:
+
+networks:
+  mp-local:
+
