@@ -106,6 +106,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       render :preview
     else
       render error_view, status: :bad_request
+      session.delete(preview_session_key)
     end
   end
 
