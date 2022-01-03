@@ -19,8 +19,7 @@
             %span.ml-1.font-weight-bold
               (#{service.rating} /5)
             - if service.persisted?
-              = link_to "#{service.service_opinion_count} reviews", service_opinions_path(service),
-              class: "ml-1 default-color", "data-target": local_assigns[:preview] ? "preview.link" : ""
+              = service_opinions_link(service, local_assigns[:preview])
           %fieldset{ preview_link_parameters(local_assigns[:preview]) }
             .comparison
               %span.compare
