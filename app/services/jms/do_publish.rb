@@ -12,8 +12,11 @@ class Jms::DoPublish
   def call
     @publisher.publish(@serialized_message)
     @logger.info("Published message #{@serialized_message}")
+  rescue Jms::Publisher::PublishError => e
+    @logger.warn("Publish error for message: #{@serialized_message}, #{e}")
+    Sentry.capture_exception(e)
   rescue StandardError => e
-    @logger.warn("Exception when publishing a message: #{@serialized_message}, #{e}")
+    @logger.warn("Error for message: #{@serialized_message}, #{e}")
     Sentry.capture_exception(e)
   end
 end
