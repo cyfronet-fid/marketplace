@@ -43,8 +43,12 @@ class Jms::ManageMessage
       modified_at = modified_at(resource, "providerBundle")
       if action == "delete"
         Provider::DeleteJob.perform_later(resource["providerBundle"]["provider"]["id"])
-      elsif resource["providerBundle"]["active"]
-        Provider::PcCreateOrUpdateJob.perform_later(resource["providerBundle"]["provider"], modified_at)
+      else
+        Provider::PcCreateOrUpdateJob.perform_later(
+          resource["providerBundle"]["provider"],
+          resource["providerBundle"]["active"],
+          modified_at
+        )
       end
     else
       raise WrongMessageError

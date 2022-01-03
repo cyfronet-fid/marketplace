@@ -8,7 +8,7 @@ class ProviderPolicy < ApplicationPolicy
   end
 
   def show?
-    has_permission = !record.deleted?
+    has_permission = !record.deleted? && !record.draft?
     raise ActiveRecord::RecordNotFound unless has_permission
     true
   end

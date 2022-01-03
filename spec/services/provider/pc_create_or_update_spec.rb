@@ -11,7 +11,7 @@ RSpec.describe Provider::PcCreateOrUpdate do
   it "should create provider with source and upstream" do
     original_stdout = $stdout
     $stdout = StringIO.new
-    expect { described_class.new(provider_response, Time.now).call }.to change { Provider.count }.by(1)
+    expect { described_class.new(provider_response, true, Time.now).call }.to change { Provider.count }.by(1)
 
     provider = Provider.last
 
@@ -19,10 +19,11 @@ RSpec.describe Provider::PcCreateOrUpdate do
     expect(provider.sources.length).to eq(1)
     expect(provider.sources[0].eid).to eq("tp")
     expect(provider.upstream_id).to eq(provider.sources[0].id)
+    expect(provider.published?).to be_truthy
     $stdout = original_stdout
   end
 
-  it "should update provider" do
+  it "should update provider when is_active is true" do
     original_stdout = $stdout
     $stdout = StringIO.new
     provider =
@@ -35,6 +36,7 @@ RSpec.describe Provider::PcCreateOrUpdate do
     expect do
       described_class.new(
         create(:jms_provider_response, eid: "new.provider", name: "Supper new name for updated  provider"),
+        true,
         Time.now.to_i
       ).call
     end.to change { Provider.count }.by(0)
@@ -45,6 +47,42 @@ RSpec.describe Provider::PcCreateOrUpdate do
     expect(updated_provider.sources.length).to eq(1)
     expect(updated_provider.sources[0].eid).to eq("new.provider")
     expect(updated_provider.upstream_id).to eq(updated_provider.sources[0].id)
+    expect(updated_provider.published?).to be_truthy
+    $stdout = original_stdout
+  end
+
+  it "should update provider when is_active is false" do
+    original_stdout = $stdout
+    $stdout = StringIO.new
+    provider =
+      create(
+        :provider,
+        name: "new provider",
+        sources: [build(:provider_source, provider: provider, source_type: "eosc_registry", eid: "new.provider")]
+      )
+
+    expect do
+      described_class.new(
+        create(:jms_provider_response, eid: "new.provider", name: "Supper new name for updated  provider"),
+        false,
+        Time.now.to_i
+      ).call
+    end.to change { Provider.count }.by(0)
+
+    updated_provider = Provider.find(provider.id)
+
+    expect(updated_provider.name).to eq("Supper new name for updated  provider")
+    expect(updated_provider.sources.length).to eq(1)
+    expect(updated_provider.sources[0].eid).to eq("new.provider")
+    expect(updated_provider.upstream_id).to eq(updated_provider.sources[0].id)
+    expect(updated_provider.draft?).to be_truthy
+    $stdout = original_stdout
+  end
+
+  it "should raise error if provider not found and active false" do
+    original_stdout = $stdout
+    $stdout = StringIO.new
+    expect { described_class.new(provider_response, false, Time.now).call }.to raise_error
     $stdout = original_stdout
   end
 end

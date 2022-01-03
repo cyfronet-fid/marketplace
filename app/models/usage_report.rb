@@ -30,7 +30,7 @@ class UsageReport
   end
 
   def providers
-    Provider.pluck(:name)
+    Provider.active.pluck(:name)
   end
 
   def domains
