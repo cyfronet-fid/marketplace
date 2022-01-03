@@ -11,7 +11,7 @@ class Provider < ApplicationRecord
 
   searchkick word_middle: [:provider_name]
 
-  STATUSES = { published: "published", deleted: "deleted" }.freeze
+  STATUSES = { published: "published", deleted: "deleted", draft: "draft" }.freeze
 
   enum status: STATUSES
 
@@ -19,7 +19,7 @@ class Provider < ApplicationRecord
     { provider_id: id, provider_name: name, service_ids: service_ids }
   end
 
-  scope :active, -> { where.not(status: :deleted) }
+  scope :active, -> { where.not(status: %i[deleted draft]) }
 
   has_one_attached :logo
 
