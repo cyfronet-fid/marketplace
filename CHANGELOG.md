@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Adding providers with improper data to the resource (@goreck888)
 - Clear a resource form if clicked on Preview button on an empty form (@goreck888)
+- Resource's reviews counters (@goreck888)
 
 ### Security
 
