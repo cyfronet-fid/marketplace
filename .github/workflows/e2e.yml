@@ -3,21 +3,6 @@ on: [push]
 jobs:
   tests:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:10.11
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: mp_test,mp_development
-        ports:
-        - 5432:5432
-        # needed because the postgres container does not provide a healthcheck
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-      redis:
-        image: redis
-        ports:
-        - 6379:6379
         
     steps:
     - name: Configure sysctl limits
@@ -26,11 +11,9 @@ jobs:
         sudo sysctl -w vm.swappiness=1
         sudo sysctl -w fs.file-max=262144
         sudo sysctl -w vm.max_map_count=262144
-    - name: Runs Elasticsearch
-      uses: elastic/elastic-github-actions/elasticsearch@master
-      with:
-        stack-version: 7.5.0
     - uses: actions/checkout@v2
+    - name: Start containers
+      run: docker-compose up -d
     - uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
@@ -54,10 +37,6 @@ jobs:
     - name: Setup and seed db
       env:
         RAILS_ENV: development
-        MP_DATABASE_HOST: 127.0.0.1
-        MP_DATABASE_PORT: 5432
-        MP_DATABASE_USERNAME: postgres
-        MP_DATABASE_PASSWORD: password
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
       run: |
         bundle exec rake db:drop db:setup searchkick:reindex:all
@@ -66,10 +45,6 @@ jobs:
       uses: cypress-io/github-action@v2
       env:
         RAILS_ENV: development
-        MP_DATABASE_HOST: 127.0.0.1
-        MP_DATABASE_PORT: 5432
-        MP_DATABASE_USERNAME: postgres
-        MP_DATABASE_PASSWORD: password
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         AUTH_MOCK: true
         MP_JIRA_USERNAME: ${{ secrets.JIRA_TEST_USER }}
@@ -95,3 +70,9 @@ jobs:
       with:
         name: cypress-screenshots
         path: ./test/system/cypress/screenshots
+    - name: Containers logs
+      if: failure()
+      run: docker-compose logs
+    - name: Stop containers
+      if: always()
+      run: docker-compose down

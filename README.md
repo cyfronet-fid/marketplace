@@ -19,32 +19,28 @@ We will need:
   * nodejs (specific version can be found in [.tool-versions](.tool-versions)).
     Recommended way to manage nodejs versions is to use [asdf](https://github.com/asdf-vm/asdf)
     with [asdf-nodejs](https://github.com/asdf-vm/asdf-nodejs) plugin.
-  * elasticsearch (specific version can be found in [.tool-versions](.tool-versions)).
-    Recommended way to manage elasticsearch versions is to use [asdf](https://github.com/asdf-vm/asdf)
-    with [asdf-elasticsearch](https://github.com/asdf-community/asdf-elasticsearch) plugin.
+  * yarn (specific version can be found in [.tool-versions](.tool-versions)).
+    Recommended way to manage yarn versions is to use [asdf](https://github.com/asdf-vm/asdf)
+    with [asdf-yarn](https://github.com/twuni/asdf-yarn) plugin.
   * [imagemagick](https://imagemagick.org/script/install-source.php). After installation use `convert --version`
     to verify your delegates. If `png` is missing please refer to the
     [related issue](https://askubuntu.com/questions/745660/imagemagick-png-delegate-install-problems).
-  * [postgresql](https://www.postgresql.org)
-  * [redis](https://redis.io)
-  * [yarn](https://classic.yarnpkg.com/en/docs/install#debian-stable)
+  * [docker-compose 1](https://docs.docker.com/compose/) (Compose 2 is still in the making)
 
 If you are using [asdf](https://github.com/asdf-vm/asdf) the easiest way to
-install required ruby, nodejs and elasticsearch version is to type
+install required ruby and nodejs versions is to type
 
 ```
 asdf install
 ```
 
 in marketplace root directory. Ruby and nodejs versions will be set in automatic
-way. To start correct elasticsearch version type `elasticsearch` in the
-marketplace root directory.
+way.
 
 ### Setup
 Before running `./bin/setup` you need to:
   * create file `config/master.key` with appropriate content in order to make `config/credentials.yml.enc` decryptable.
-  * setup postgres <system_username> role with SUPERUSER and CREATEDB privileges (see [database section](#database))
-  * run elasticsearch server in the background (described in the [section below](#elasticsearch))
+  * run docker services (i.e. postgresql, redis and elasticsearch) (see [docker-compose](#docker-compose)).
 
 To set up the environment run `./bin/setup`. It will install bundler, foreman, 
 dependencies and setup databases (development and test).
@@ -85,56 +81,28 @@ is present in the classpath and uses it instead of `foreman`.
 > use `2.0.3` instead.
 
 By default application should start on [http://localhost:5000](). You can change
-port by setting [env variable](#environmental-variables) `PORT`. You also need to run 
-[elasticsearch](#elasticsearch) and [redis](#redis) in the background before starting the application server.
-
-## Elasticsearch
-Elasticsearch is used for full text resource search.
-
-If you installed elasticsearch using asdf, run this command in the marketplace root directory:
-```
-elasticsearch --daemonize --pidfile <pidfile_path> 
-```
-It will run elasticsearch server in the background, on the default port (9200) 
-and record the pid of the server to the <pidfile_path>.
-
-To shut down the server run:
-```
-pkill -F <pidfile_path> 
-```
-... or just shut down your OS.
+port by setting [env variable](#environmental-variables) `PORT`.
+You also need to run postgresql, Elasticsearch and Redis in the [background](#docker-compose) before starting the
+application server.
 
 
-Alternatively, you can install elasticsearch on Debian/Ubuntu/Mint:
-(but it doesn't always work, see below):
-```
-sudo apt-get install elasticsearch
-```
+## Docker-compose
 
-The version included in ubuntu 16.04 and 17.10 is buggy and outdated, so it should be
-installed manually through deb file as described below.
+Docker-compose is used to manage background services: postgresql, Elasticsearch and Redis.
+The service containers are named `db`, `el` and `redis`, accordingly.
+Inspect the `docker-compose.yml` file for their configuration.
 
-If your distro does not include this package use [instructions from
-elasticsearch.org](https://www.elastic.co/guide/en/elastic-stack/current/index.html).
+- postgresql is used to store data,
+- Elasticsearch is used for full text resource search,
+- Redis is used to pass state to sidekiq (for running background jobs).
 
-Use `service` command to control the server:
-```
-sudo service elasticsearch start
-```
-or you can also use `systemctl`, it shouldn't matter which one you use.
+To run all the services at once `$ docker-compose up -d` (remove `-d` to run in foreground).
+You can later inspect logs `$ docker-compose logs`.
+Lastly, to remove the containers (with data) `$ docker-compose down -v` (remove `-v` not to remove DB data).
 
--In order to inspect it you can use
- -[ElasticHQ](http://www.elastichq.org/gettingstarted.html) (plugin option is
- -quick and easy).
+To run specific service `<serv>` in foreground `$ docker-compose up <serv>`.
+To stop it `$ docker-compose stop <serv>`, and to remove its state: `$ docker-compose rm <serv>`
 
-## Redis
-
-Marketplace uses [redis](https://redis.io) server to run jobs in the background. 
-After installing it, run the server with:
-```
-redis-server
-```
-...which will start the server on default port (6379).
 
 ## JIRA
 
@@ -280,15 +248,33 @@ sourcing commands at the end of your `.profile` file which is inherited by graph
 Other solutions could be:
   * For OSX: calling `sudo launchctl config user path $PATH`
   * For Linux systems: modifying `PATH` in `/etc/environment`.
-  
-**Remember** that before pushing to git, `overcommit` runs rspec tests and it needs running 
-[Elasticsearch server](#elasticsearch) in the background. 
 
 You can also skip githooks altogether using:
 ```
  git <command> --no-verify
 ```
-... or by unchecking 'run Git hooks' in RubyMine IDE when applying git operations.
+... or by unchecking 'run Git hooks' in RubyMine IDE when applying git operations, or setting `OVERCOMMIT_DISABLE=1`
+envvar globally in your system.
+
+### Linting and code formatting
+
+We use prettier for code formatting and a specifically configured Rubocop, inspect `.prettierrc`, `.prettierignore` and
+`rubocop.yml` for specifics.
+
+To correct formatting with prettier `$ rbprettier --write .` (it will take some time), you may want to run it
+selectively on modified files only (just pass them as explicit arguments instead of a dot `.`).
+
+To manually run all overcommit checks `$ overcommit --run` (you may need to sign configs, first, just follow its
+instructions).
+It's configured in `.overcommit.yml`.
+
+To run rubocop manually `$ rubocop`.
+
+To run haml-lint manually `$ haml-lint --exclude 'lib/**/*.haml'`.
+
+To run brakeman (it's only run directly in CI though, not through overcommit) manually (in interactive mode)
+`$ brakeman -I`.
+
 
 ## Designing UI without dedicated controller
 
@@ -304,6 +290,10 @@ existence checks.
 
 ## Database
 
+In general, [docker-compose](#docker-compose) correctly manages DB permissions.
+Nevertheless, if using a direct postgresql install or you want to use socket communication, than the below info may
+be useful.
+
 To setup development and test databases, you need to have a proper postgres role defined:
 ```
 <your_system_username>:~$ sudo -u postgres -i
@@ -311,9 +301,9 @@ postgres:~$ psql
 postgres=# CREATE ROLE <your_system_username> PASSWORD <your_system_password> SUPERUSER CREATEDB LOGIN;
 ```
 
-By default we are using pure rails database configuration in development and
+You may configure the application to use pure rails database configuration in development and
 test environments (sockets and database login the same as your system login).
-If this is not enough you can customize it by using environment variables:
+You can customize it by using environment variables:
   * `MP_DATABASE_HOST` - PostgreSQL database host
   * `MP_DATABASE_USERNAME` - PostgreSQL database username
   * `MP_DATABASE_PASSWORD` - PostgreSQL database password

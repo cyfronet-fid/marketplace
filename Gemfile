@@ -97,7 +97,7 @@ group :development do
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "spring-commands-rspec"
-  gem "prettier"
+  gem "prettier", require: false
   gem "overcommit", require: false
   gem "haml_lint", require: false
   gem "scss_lint", require: false
