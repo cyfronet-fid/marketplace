@@ -40,6 +40,7 @@ describe Jms::ManageMessage do
     resource = parser.parse(provider_resource["resource"])
     expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
       resource["providerBundle"]["provider"],
+      resource["providerBundle"]["active"],
       Time.at(resource["providerBundle"]["metadata"]["modifiedAt"].to_i&./ 1000)
     )
 

@@ -17,7 +17,7 @@ class Filter::Provider < Filter::Multiselect
   def fetch_options
     @model
       .distinct
-      .filter_map { |e| { name: e.name, id: e.id, count: @counters[e.id] || 0 } unless e.deleted? }
+      .filter_map { |e| { name: e.name, id: e.id, count: @counters[e.id] || 0 } unless e.deleted? || e.draft? }
       .sort_by! { |e| [-e[:count], e[:name]] }
   end
 end

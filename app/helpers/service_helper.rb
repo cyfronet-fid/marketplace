@@ -49,7 +49,7 @@ module ServiceHelper
     target = service.resource_organisation
     preview_options = preview ? { "data-target": "preview.link" } : {}
     link_to_unless(
-      target.deleted?,
+      target.deleted? || target.draft?,
       highlighted_for(:resource_organisation_name, service, highlights),
       provider_path(target),
       preview_options
@@ -83,9 +83,12 @@ module ServiceHelper
       .uniq
       .map do |target|
         if highlighted.present? && highlighted.strip == target.name.strip
-          link_to_unless target.deleted?, highlights[:provider_names].html_safe, provider_path(target), preview_options
+          link_to_unless target.deleted? || target.draft?,
+                         highlights[:provider_names].html_safe,
+                         provider_path(target),
+                         preview_options
         else
-          link_to_unless target.deleted?, target.name, provider_path(target), preview_options
+          link_to_unless target.deleted? || target.draft?, target.name, provider_path(target), preview_options
         end
       end
   end

@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [3.29.0-milestone]
 
 ### Added
+- Extend providers with draft status (@kmarszalek)
 
 ### Changed
 - Missed misspellings and typos (@goreck888)
@@ -21,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Adding providers with improper data to the resource (@goreck888)
 - Clear a resource form if clicked on Preview button on an empty form (@goreck888)
 - Resource's reviews counters (@goreck888)
+- Providers section on the home page to not show draft or deleted (@kmarszalek)
 
 ### Security
 

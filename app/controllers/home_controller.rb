@@ -31,8 +31,8 @@ class HomeController < ApplicationController
   end
 
   def load_providers
-    @home_providers = Provider.joins(:services).uniq.sample(5)
-    @home_providers_counter = Provider.all.count - @home_providers.count
+    @home_providers = Provider.active.joins(:services).uniq.sample(5)
+    @home_providers_counter = Provider.active.count - @home_providers.count
   end
 
   def load_target_users
