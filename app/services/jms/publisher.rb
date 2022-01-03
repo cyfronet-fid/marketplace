@@ -4,6 +4,9 @@ class Jms::Publisher
   class ConnectionError < StandardError
   end
 
+  class PublishError < StandardError
+  end
+
   # rubocop:disable Metrics/ParameterLists
   def initialize(topic, login, pass, host, ssl_enabled, logger)
     # rubocop:enable Metrics/ParameterLists
@@ -17,8 +20,10 @@ class Jms::Publisher
   end
 
   def publish(msg)
-    @logger.info("Publishing to #{@topic}, message #{msg}")
+    @logger.debug("Publishing to #{@topic}, message #{msg}")
     @client.publish(msg_destination, msg, msg_headers)
+  rescue RuntimeError => e
+    raise PublishError, "Error when publishing a message", cause: e
   end
 
   def close
