@@ -121,6 +121,34 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content(life_cycle_status.name)
     end
 
+    scenario "I can create a service after clicking `preview` in an empty form" do
+      resource_organisation = create(:provider)
+      scientific_domain = create(:scientific_domain)
+
+      visit new_backoffice_service_path
+
+      click_on "Preview"
+
+      expect(page).to have_content("Please review the problems below:")
+
+      fill_in "Name", with: "service name"
+      select resource_organisation.name, from: "Resource organisation"
+      fill_in "Description", with: "service description"
+      fill_in "Tagline", with: "service tagline"
+      select scientific_domain.name, from: "Scientific domains"
+      select "Poland", from: "Geographical availabilities"
+
+      click_on "Create Resource"
+
+      expect(page).to have_content("New resource created successfully")
+
+      expect(page).to have_content("service name")
+      expect(page).to have_content("service description")
+      expect(page).to have_content("service tagline")
+      expect(page).to have_content(scientific_domain.name)
+      expect(page).to have_content(resource_organisation.name)
+    end
+
     scenario "I can add additional public contacts", js: true do
       service = create(:service)
 
