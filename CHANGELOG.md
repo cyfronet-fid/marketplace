@@ -23,6 +23,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Clear a resource form if clicked on Preview button on an empty form (@goreck888)
 - Resource's reviews counters (@goreck888)
 - Providers section on the home page to not show draft or deleted (@kmarszalek)
+- Contact fields visibility in the resource form on error (@goreck888)
 
 ### Security
 
