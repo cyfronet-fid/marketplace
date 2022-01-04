@@ -105,6 +105,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       end
       render :preview
     else
+      add_missing_nested_models
       render error_view, status: :bad_request
       session.delete(preview_session_key)
     end
