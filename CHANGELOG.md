@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.28.1] 2022-01-05
+
+### Fixed
+- Bundle project_items don't register Jira issue_id (@jswk)
+
 ## [3.28.0] 2021-12-22
 
 ### Changed
