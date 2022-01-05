@@ -4,6 +4,10 @@ class ProjectItem::Register
   def initialize(project_item, message = nil)
     @project_item = project_item
     @message = message
+
+    if @project_item.class != ProjectItem
+      raise ArgumentError, "project_item must be exactly ProjectItem, not its subclass: received #{@project_item.class}"
+    end
   end
 
   def call
@@ -14,14 +18,14 @@ class ProjectItem::Register
 
   def register_in_jira!
     client = Jira::Client.new
-    @project_item.save
+    @project_item.save!
 
     begin
       Project::Register.new(@project_item.project).call unless @project_item.project.jira_active?
 
       issue = client.create_service_issue(@project_item)
-      @project_item.update(issue_id: issue.id, issue_status: :jira_active)
-      @project_item.save
+      @project_item.update!(issue_id: issue.id, issue_status: :jira_active)
+      @project_item.save!
     rescue Jira::Client::JIRAIssueCreateError => e
       @project_item.jira_errored!
       raise e
@@ -29,7 +33,7 @@ class ProjectItem::Register
   end
 
   def update_status!
-    @project_item.new_status(status: "registered", status_type: :registered)
+    @project_item.new_status!(status: "registered", status_type: :registered)
     true
   end
 

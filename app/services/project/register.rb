@@ -17,8 +17,8 @@ class Project::Register
 
     begin
       issue = client.create_project_issue(@project)
-      @project.update(issue_id: issue.id, issue_key: issue.key, issue_status: :jira_active)
-      @project.save
+      @project.update!(issue_id: issue.id, issue_key: issue.key, issue_status: :jira_active)
+      @project.save!
       true
     rescue Jira::Client::JIRAIssueCreateError => e
       @project.jira_errored!
