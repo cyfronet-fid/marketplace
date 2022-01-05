@@ -11,6 +11,10 @@ class ProjectItem::Ready
   def initialize(project_item, message = nil)
     @project_item = project_item
     @message = message
+
+    if @project_item.class != ProjectItem
+      raise ArgumentError, "project_item must be exactly ProjectItem, not its subclass: received #{@project_item.class}"
+    end
   end
 
   def call
@@ -29,14 +33,14 @@ class ProjectItem::Ready
       trs = issue.transitions.all.select { |tr| tr.to.id.to_i == client.wf_ready_id }
 
       if trs.empty?
-        @project_item.update(issue_id: issue.id)
+        @project_item.update!(issue_id: issue.id)
         @project_item.jira_errored!
         raise JIRATransitionSaveError, @project_item
       else
         transition = issue.transitions.build
         transition.save!("transition" => { "id" => trs.first.id })
-        @project_item.update(issue_id: issue.id, issue_status: :jira_active)
-        @project_item.save
+        @project_item.update!(issue_id: issue.id, issue_status: :jira_active)
+        @project_item.save!
       end
     rescue Jira::Client::JIRAIssueCreateError => e
       @project_item.jira_errored!
@@ -45,7 +49,7 @@ class ProjectItem::Ready
   end
 
   def update_status!
-    @project_item.new_status(status: "ready", status_type: :ready)
+    @project_item.new_status!(status: "ready", status_type: :ready)
   end
 
   def enqueue_rate_service!

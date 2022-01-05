@@ -30,7 +30,8 @@ RSpec.describe ProjectItem::Create do
   it "triggers register project_item in external system" do
     project_item = described_class.new(project_item_template).call
 
-    expect(ProjectItem::RegisterJob).to have_been_enqueued.with(project_item, nil)
+    non_customizable_project_item = ProjectItem.find_by(id: project_item.id)
+    expect(ProjectItem::RegisterJob).to have_been_enqueued.with(non_customizable_project_item, nil)
   end
 
   context "for service with :eosc_registry upstream" do

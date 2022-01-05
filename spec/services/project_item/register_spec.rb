@@ -20,6 +20,11 @@ RSpec.describe ProjectItem::Register do
       allow(issue).to receive(:save).and_return(issue)
     end
 
+    it "refuses to work with ProjectItem subclass" do
+      customizable_project_item = CustomizableProjectItem.find_by(id: project_item.id)
+      expect { described_class.new(customizable_project_item).call }.to raise_error(ArgumentError)
+    end
+
     it "creates new jira issue" do
       jira_client = Jira::Client.new
 

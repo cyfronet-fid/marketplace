@@ -40,6 +40,11 @@ RSpec.describe ProjectItem::Ready do
       allow(message_create_class_stub).to receive(:call).and_return(message_class)
     end
 
+    it "refuses to work with ProjectItem subclass" do
+      customizable_project_item = CustomizableProjectItem.find_by(id: project_item.id)
+      expect { described_class.new(customizable_project_item).call }.to raise_error(ArgumentError)
+    end
+
     it "creates new project_item status change" do
       described_class.new(project_item).call
 

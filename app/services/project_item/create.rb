@@ -45,7 +45,8 @@ class ProjectItem::Create
     end
 
     unless rolled_back
-      persisted_project_items = [@project_item] + bundled_project_items
+      non_customizable_project_item = ProjectItem.find_by(id: @project_item.id)
+      persisted_project_items = [non_customizable_project_item] + bundled_project_items
 
       persisted_project_items.each do |project_item|
         if orderable?(project_item)
