@@ -68,6 +68,10 @@ class ProjectItem < ApplicationRecord
     update(status: status, status_type: status_type)
   end
 
+  def new_status!(status:, status_type:)
+    update!(status: status, status_type: status_type)
+  end
+
   def new_voucher_change(voucher_id)
     update(user_secrets: user_secrets.merge("voucher_id" => voucher_id))
   end
