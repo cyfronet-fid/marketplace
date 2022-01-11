@@ -179,7 +179,8 @@ describe("Providers", () => {
   it("should delete provider with resources with deleted status", () => {
     cy.visit("/backoffice/providers");
     cy.contains("a", "D4Science Infrastructure")
-      .next()
+      .parents('li.providers')
+      .find("a.delete-icon")
       .click();
     cy.contains("div.alert-success", "Provider has been removed")
       .should("be.visible");
@@ -188,7 +189,8 @@ describe("Providers", () => {
   it("shouldn't delete provider with resources with draft status", () => {
     cy.visit("/backoffice/providers");
     cy.contains("a", "European Space Agency (ESA)")
-      .next()
+      .parents('li.providers')
+      .find("a.delete-icon")
       .click();
     cy.contains("div.alert-danger", 
       "This Provider has resources connected to it, therefore is not possible to remove it.")
@@ -198,7 +200,8 @@ describe("Providers", () => {
   it("shouldn't delete provider with resources with published status", () => {
     cy.visit("/backoffice/providers");
     cy.contains("a", "EUDAT")
-      .next()
+      .parents('li.providers')
+      .find("a.delete-icon")
       .click();
     cy.contains("div.alert-danger", 
       "This Provider has resources connected to it, therefore is not possible to remove it.")
@@ -208,7 +211,8 @@ describe("Providers", () => {
   it("shouldn't delete provider with resources with errored status", () => {
     cy.visit("/backoffice/providers");
     cy.contains("a", "CSC")
-      .next()
+      .parents('li.providers')
+      .find("a.delete-icon")
       .click();
     cy.contains("div.alert-danger", 
       "This Provider has resources connected to it, therefore is not possible to remove it.")
@@ -218,7 +222,8 @@ describe("Providers", () => {
   it("shouldn't delete provider with resources with unverified status", () => {
     cy.visit("/backoffice/providers");
     cy.contains("a", "Institute of Atmospheric Pollution - National Research Council of Italy (CNR-IIA)")
-      .next()
+      .parents('li.providers')
+      .find("a.delete-icon")
       .click();
     cy.contains("div.alert-danger", 
       "This Provider has resources connected to it, therefore is not possible to remove it.")
@@ -228,7 +233,8 @@ describe("Providers", () => {
   it("should delete provider which is resources provider for published resources", () => {
     cy.visit("/backoffice/providers");
     cy.contains("a", "Interuniversity consortium CIRMMP")
-      .next()
+      .parents('li.providers')
+      .find("a.delete-icon")
       .click();
     cy.contains("div.alert-success", "Provider has been removed")
       .should("be.visible");
