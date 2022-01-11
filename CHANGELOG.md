@@ -6,6 +6,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.30.0-milestone]
+
+### Added
+- Visual representation of statuses for providers in BO (@jarekzet)
+
+### Changed
+- Badge color for draft resources in BO (@jarekzet)
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
 ## [3.29.0-milestone]
 
 ### Added

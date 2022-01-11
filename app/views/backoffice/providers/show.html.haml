@@ -2,6 +2,11 @@
 - breadcrumb :backoffice_provider, @provider
 
 %h1= @provider.name
+.status-row
+  %span Status:
+  %span.font-weight-bold
+    = @provider.status
+
 .service-box.shadow-sm.p-4.mt-3.backoffice-form
   .logo-wrapper
     %span.helper
