@@ -2347,6 +2347,37 @@ label[data-multicheckbox].small {
         float: left;
         max-width: 80%;
       }
+
+      &.provider-name {
+        max-width: 100%;
+      }
+    }
+
+    .actions {
+      float: right;
+      height: 25px;
+      width: 130px;
+    }
+
+    .status {
+      float: right;
+      margin: 0 20px 0 0;
+      width: 85px;
+      text-align: center;
+      color: $palette-white;
+      font-size: 12px;
+      text-transform: uppercase;
+      padding: 6px 0;
+      line-height: 1.1;
+      background: $palette-solid-50;
+
+      &.published {
+        background: $green;
+      }
+
+      &.deleted {
+        background: $danger;
+      }
     }
   }
 
@@ -2541,6 +2572,11 @@ label[data-multicheckbox].small {
     &.badge-success,
     &.badge-warning,
     &.badge-error {
+      color: $white;
+    }
+
+    &.badge-draft {
+      background: $palette-solid-50;
       color: $white;
     }
   }

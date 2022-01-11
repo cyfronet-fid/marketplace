@@ -455,6 +455,22 @@
   .comment-log-frame {
     margin: 20px 0 30px;
   }
+
+  .backoffice-list {
+    .list-group-item {
+      .provider-name {
+        width: 100%;
+        max-width: 100% !important;
+        margin-bottom: 7px;
+      }
+
+      .status {
+        float: left;
+        padding: 5px 0;
+        margin-right: 0;
+      }
+    }
+  }
 }
 
 @media (max-width: 576px) {
@@ -793,5 +809,6 @@
   .img-service-detail {
     margin-bottom: 30px;
   }
+
 }
 
