@@ -10,11 +10,19 @@ describe Jms::ManageMessage do
   let(:parser) { Nori.new(strip_namespaces: true) }
   let(:service_resource) { create(:jms_xml_service) }
   let(:provider_resource) { create(:jms_xml_provider) }
+  let(:draft_provider_resource) { build(:jms_xml_draft_provider) }
+  let(:rejected_provider_resource) { build(:jms_xml_rejected_provider) }
   let(:json_service) do
     double(body: service_resource.to_json, headers: { "destination" => "/topic/registry.infra_service.update" })
   end
   let(:json_provider) do
-    double(body: provider_resource.to_json, headers: { "destination" => "/topic/registry.infra_service.update" })
+    double(body: provider_resource.to_json, headers: { "destination" => "/topic/registry.provider.update" })
+  end
+  let(:json_draft_provider) do
+    double(body: draft_provider_resource.to_json, headers: { "destination" => "/topic/registry.provider.update" })
+  end
+  let(:json_rejected_provider) do
+    double(body: rejected_provider_resource.to_json, headers: { "destination" => "/topic/registry.provider.update" })
   end
   let(:service_create_or_update) { instance_double(Service::PcCreateOrUpdate) }
   let(:provider_create_or_update) { instance_double(Provider::PcCreateOrUpdate) }
@@ -34,7 +42,7 @@ describe Jms::ManageMessage do
     $stdout = original_stdout
   end
 
-  it "should receive provider message" do
+  it "should receive update active provider message" do
     original_stdout = $stdout
     $stdout = StringIO.new
     resource = parser.parse(provider_resource["resource"])
@@ -45,6 +53,43 @@ describe Jms::ManageMessage do
     )
 
     expect { described_class.new(json_provider, eosc_registry_base, logger, nil).call }.to_not raise_error
+    $stdout = original_stdout
+  end
+
+  it "should receive update to draft provider message" do
+    original_stdout = $stdout
+    $stdout = StringIO.new
+    resource = parser.parse(provider_resource["resource"])
+    expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
+      resource["providerBundle"]["provider"],
+      resource["providerBundle"]["active"],
+      Time.at(resource["providerBundle"]["metadata"]["modifiedAt"].to_i&./ 1000)
+    )
+
+    expect { described_class.new(json_provider, eosc_registry_base, logger, nil).call }.to_not raise_error
+
+    resource = parser.parse(draft_provider_resource["resource"])
+    expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
+      resource["providerBundle"]["provider"],
+      resource["providerBundle"]["active"],
+      Time.at(resource["providerBundle"]["metadata"]["modifiedAt"].to_i&./ 1000)
+    )
+
+    expect { described_class.new(json_draft_provider, eosc_registry_base, logger, nil).call }.to_not raise_error
+    $stdout = original_stdout
+  end
+
+  it "should do nothing for update rejected provider message" do
+    original_stdout = $stdout
+    $stdout = StringIO.new
+    resource = parser.parse(rejected_provider_resource["resource"])
+    expect(Provider::PcCreateOrUpdateJob).to_not receive(:perform_later).with(
+      resource["providerBundle"]["provider"],
+      resource["providerBundle"]["active"],
+      Time.at(resource["providerBundle"]["metadata"]["modifiedAt"].to_i&./ 1000)
+    )
+
+    expect { described_class.new(json_rejected_provider, eosc_registry_base, logger, nil).call }.to_not raise_error
     $stdout = original_stdout
   end
 
