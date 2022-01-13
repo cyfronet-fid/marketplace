@@ -57,6 +57,14 @@ class Offer < ApplicationRecord
   validate :proper_oms?, if: -> { primary_oms.present? }
   validates :oms_params, absence: true, if: -> { current_oms.blank? }
   validate :check_oms_params, if: -> { current_oms.present? }
+  validate :same_order_type_as_in_service,
+           if: -> {
+             service&.order_type&.present? &&
+               (
+                 (new_record? && service.offers.published.size.zero?) ||
+                   (persisted? && service.offers.published.size == 1)
+               )
+           }
 
   def current_oms
     primary_oms || OMS.find_by(default: true)
@@ -97,6 +105,12 @@ class Offer < ApplicationRecord
     missing_keys = Set.new(current_oms.custom_params.keys) - Set.new(oms_params.keys)
     unless (missing_keys & Set.new(current_oms.mandatory_defaults.keys)).empty?
       errors.add(:oms_params, "missing mandatory keys")
+    end
+  end
+
+  def same_order_type_as_in_service
+    unless order_type == service.order_type
+      errors.add(:order_type, "must be the same as in the resource: #{service.order_type}")
     end
   end
 

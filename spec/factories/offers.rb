@@ -5,9 +5,9 @@ FactoryBot.define do
     sequence(:iid) { |n| n }
     sequence(:name) { |n| "offer #{n}" }
     sequence(:description) { |n| "offer #{n} description" }
-    sequence(:service) { |_n| create(:service, offers_count: 1) }
-    sequence(:status) { :published }
     sequence(:order_type) { :order_required }
+    sequence(:service) { |_n| create(:service, offers_count: 1, order_type: order_type) }
+    sequence(:status) { :published }
     sequence(:internal) { true }
 
     factory :offer_with_parameters do

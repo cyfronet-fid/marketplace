@@ -7,6 +7,11 @@ class Service::Update
   end
 
   def call
+    if @service.errored? && @service.valid?
+      @service.update(@params.merge(status: :unverified))
+    else
+      @service.update(@params)
+    end
     if @service.offers.published.size == 1
       Offer::Update.new(
         @service.offers.first,
@@ -27,11 +32,6 @@ class Service::Update
           service: @service
         )
       ).call
-    end
-    if @service.errored? && @service.valid?
-      @service.update(@params.merge(status: :unverified))
-    else
-      @service.update(@params)
     end
   end
 end

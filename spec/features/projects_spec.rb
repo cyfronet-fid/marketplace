@@ -136,7 +136,7 @@ RSpec.feature "Project" do
     scenario "I cannot delete a project with a project item" do
       project = create(:project, name: "First Project", user: user)
       service = create(:open_access_service)
-      offer = create(:offer, service: service)
+      offer = create(:open_access_offer, service: service)
 
       create(:project_item, offer: offer, project: project)
 
@@ -172,7 +172,7 @@ RSpec.feature "Project" do
       scenario "I can see the archive button when all project_items have a 'closed' status" do
         project = create(:project, name: "First Project", user: user)
         service = create(:open_access_service)
-        offer = create(:offer, service: service)
+        offer = create(:open_access_offer, service: service)
 
         create(:project_item, offer: offer, project: project, status: "closed", status_type: :closed)
 
@@ -184,7 +184,7 @@ RSpec.feature "Project" do
       scenario "I cannot see the archive button while there is a project item that is not 'closed'" do
         project = create(:project, name: "First Project", user: user)
         service = create(:open_access_service)
-        create(:offer, service: service)
+        create(:open_access_offer, service: service)
 
         visit project_path(project)
 
@@ -194,7 +194,7 @@ RSpec.feature "Project" do
       scenario "I can see the archived status after archivization" do
         project = create(:project, name: "First Project", user: user)
         service = create(:open_access_service)
-        offer = create(:offer, service: service)
+        offer = create(:open_access_offer, service: service)
 
         create(:project_item, offer: offer, project: project, status: "closed", status_type: :closed)
 

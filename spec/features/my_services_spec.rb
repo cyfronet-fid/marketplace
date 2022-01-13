@@ -104,7 +104,7 @@ RSpec.feature "My Services" do
 
     # Test added after hotfix for a bug in `project_items/show.html.haml:30` (v1.2.0)
     scenario "I can see project_item details without a scientific_domain" do
-      offer = create(:offer, service: create(:open_access_service))
+      offer = create(:open_access_offer, service: create(:open_access_service))
       project = create(:project, user: user, scientific_domains: [])
       project_item = create(:project_item, project: project, offer: offer)
 

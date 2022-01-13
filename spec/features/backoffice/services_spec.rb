@@ -358,6 +358,38 @@ RSpec.feature "Services in backoffice" do
       expect(offer.parameters.first.hint).to eq(parameter.hint)
     end
 
+    scenario "I can't set different order type of first offer in a service" do
+      service = create(:service, order_type: :open_access)
+
+      visit backoffice_service_path(service)
+
+      click_on "Add new offer"
+
+      fill_in "Name", with: "Offer"
+      fill_in "Description", with: "desc"
+      select "order_required", from: "Order type"
+
+      click_on "Create Offer"
+
+      expect(page).to have_text("must be the same as in the resource: open_access")
+    end
+
+    scenario "I can set different order type in the second offer" do
+      service = create(:service, order_type: :open_access, offers: [create(:offer)])
+
+      visit backoffice_service_path(service)
+
+      click_on "Add new offer"
+
+      fill_in "Name", with: "Offer"
+      fill_in "Description", with: "desc"
+      select "order_required", from: "Order type"
+
+      expect { click_on "Create Offer" }.to change { Offer.count }.by(1)
+
+      expect(page).to have_text("New offer has been created")
+    end
+
     scenario "I can see service preview" do
       service = create(:service, name: "my service")
 
