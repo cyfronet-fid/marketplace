@@ -6,7 +6,7 @@ RSpec.describe ProjectItem::Create do
   let(:user) { create(:user) }
   let(:project) { create(:project, user: user) }
   let(:service) { create(:service) }
-  let(:offer) { create(:offer, service: service) }
+  let(:offer) { create(:offer, service: service, order_type: service.order_type) }
   let(:project_item_template) { build(:customizable_project_item, project: project, offer: offer) }
 
   it "creates project_item and set initial project_item status" do

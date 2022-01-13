@@ -76,7 +76,18 @@ RSpec.describe Offer do
 
     it "should set internal to false and primary_oms, oms_params to nil when order_type != order_required on update" do
       oms = create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "asd" } })
-      offer = create(:offer, order_type: :order_required, internal: true, primary_oms: oms, oms_params: { a: "qwe" })
+      service = create(:service, offers: [create(:offer)])
+      offer =
+        create(
+          :offer,
+          service: service,
+          order_type: :order_required,
+          internal: true,
+          primary_oms: oms,
+          oms_params: {
+            a: "qwe"
+          }
+        )
       expect(offer.internal).to be_truthy
       expect(offer.primary_oms).to eq(oms)
       expect(offer.oms_params).to eq({ a: "qwe" }.deep_stringify_keys)

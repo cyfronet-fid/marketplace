@@ -703,7 +703,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
         let!(:service) do
           create(
-            :service,
+            :open_access_service,
             resource_organisation: create(:provider, data_administrators: [data_administrator]),
             offers: [offer]
           )
@@ -972,12 +972,12 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:previous_oms) { create(:oms, type: :global) }
         let(:oms) { create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "qwe" } }) }
-        let(:offer) { build(:offer, primary_oms: previous_oms) }
+        let(:offer) { build(:open_access_offer, primary_oms: previous_oms) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
         let!(:service) do
           create(
-            :service,
+            :open_access_service,
             resource_organisation: create(:provider, data_administrators: [data_administrator]),
             offers: [offer]
           )

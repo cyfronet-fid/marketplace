@@ -23,7 +23,7 @@ RSpec.feature "Service ordering" do
 
     scenario "I see order open access service button" do
       open_access_service = create(:open_access_service)
-      create(:offer, service: open_access_service)
+      create(:open_access_offer, service: open_access_service)
 
       visit service_path(open_access_service)
 
@@ -257,7 +257,7 @@ RSpec.feature "Service ordering" do
     end
 
     scenario "I cannot order every 'open_access' type offer twice" do
-      service = create(:service)
+      service = create(:open_access_service)
       open_access =
         create(
           :offer,
@@ -692,7 +692,7 @@ RSpec.feature "Service ordering" do
 
     context "On information step" do
       scenario "I can see link to external service webpage when offert is open_access" do
-        service = create(:service)
+        service = create(:open_access_service)
         create(:open_access_offer, service: service)
 
         visit service_path(service)
@@ -826,7 +826,7 @@ RSpec.feature "Service ordering" do
 
     scenario "I can see openaccess service order button" do
       open_access_service = create(:open_access_service)
-      create(:offer, service: open_access_service)
+      create(:open_access_offer, service: open_access_service)
 
       visit service_path(open_access_service)
 
@@ -835,7 +835,7 @@ RSpec.feature "Service ordering" do
 
     scenario "I can see catalog service button" do
       external = create(:external_service)
-      create(:offer, service: external)
+      create(:external_offer, service: external)
 
       visit service_path(external)
       expect(page).to have_selector(:link_or_button, "Access the resource", exact: true)

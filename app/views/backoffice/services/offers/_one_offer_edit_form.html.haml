@@ -4,6 +4,7 @@
   .col-lg-8.pl-0{ "data-controller": offer.order_required? ? "ordering" : "" }
     = f.error_notification
     = f.hidden_field :id
+    = f.hidden_field :order_type, value: service.order_type
     - if offer.order_required?
       = f.input :internal,
         wrapper_html: { "data-target": "ordering.internalWrapper" },
