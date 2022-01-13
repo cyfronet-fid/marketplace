@@ -5374,7 +5374,7 @@ services:
     parents: *sharingAndDicoveryParent
     providers: [*desyProvider]
     logo: panFaas.png
-    open_access: false
+    open_access: true
     webpage_url: https://eosc-pan-git.desy.de/pan/support/
     manual_url: https://eosc-pan-git.desy.de/support
     helpdesk_url: https://eosc-pan-git.desy.de/support

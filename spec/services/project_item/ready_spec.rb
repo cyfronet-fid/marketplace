@@ -59,16 +59,13 @@ RSpec.describe ProjectItem::Ready do
 
     it "send email with activate message" do
       service = create(:open_access_service, activate_message: "Welcome!!!")
-      offer = create(:offer, service: service)
+      offer = create(:open_access_offer, service: service)
       project_item = create(:project_item, offer: offer)
 
       project_item.new_status(status: "custom_created", status_type: :created)
 
-      expect { described_class.new(project_item).call }.to change { ActionMailer::Base.deliveries.count }.by(3)
+      expect { described_class.new(project_item).call }.to change { ActionMailer::Base.deliveries.count }.by(2)
 
-      expect(ActionMailer::Base.deliveries[-3].subject).to eq(
-        "Status of your resource access request in the EOSC Portal Marketplace has changed to READY TO USE"
-      )
       expect(ActionMailer::Base.deliveries[-2].subject).to eq(
         "[EOSC marketplace] #{service.name} is ready - usage instructions"
       )
@@ -77,16 +74,13 @@ RSpec.describe ProjectItem::Ready do
 
     it "do not send email with activate message if not present" do
       service = create(:open_access_service, activate_message: " ")
-      offer = create(:offer, service: service)
+      offer = create(:open_access_offer, service: service)
       project_item = create(:project_item, offer: offer)
 
       project_item.new_status(status: "custom_created", status_type: :created)
 
-      expect { described_class.new(project_item).call }.to change { ActionMailer::Base.deliveries.count }.by(2)
+      expect { described_class.new(project_item).call }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      expect(ActionMailer::Base.deliveries[-2].subject).to eq(
-        "Status of your resource access request in the EOSC Portal Marketplace has changed to READY TO USE"
-      )
       expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your resource")
     end
 

@@ -12,7 +12,7 @@ RSpec.feature "Add project item to project" do
 
   scenario "Project is selected when item is ordered from project view" do
     service = create(:open_access_service)
-    create(:offer, service: service)
+    create(:open_access_offer, service: service)
     project = create(:project, user: user, name: "my fancy project")
 
     visit project_services_path(project)

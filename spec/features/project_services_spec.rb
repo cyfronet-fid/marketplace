@@ -42,6 +42,7 @@ RSpec.feature "Project services" do
     end
 
     scenario "The label reads 'Added to the project' for open_access project_item" do
+      service.update(order_type: :open_access)
       offer = create(:open_access_offer, service: service)
       project_item = create(:project_item, offer: offer, project: project)
 
@@ -52,6 +53,7 @@ RSpec.feature "Project services" do
   end
 
   scenario "I cannot see timeline for open_access order" do
+    service.update(order_type: :open_access)
     offer = create(:open_access_offer, service: service)
     project_item = create(:project_item, offer: offer, project: project)
 
@@ -70,6 +72,7 @@ RSpec.feature "Project services" do
   end
 
   scenario "Project service is immutable to the offer change" do
+    create(:offer, service: service)
     offer = create(:offer, service: service, order_type: :open_access, order_url: "http://old.pl", voucherable: false)
     project_item = create(:project_item, offer: offer, project: project)
     offer.update(order_type: :order_required, voucherable: true, order_url: "http://new.pl")
