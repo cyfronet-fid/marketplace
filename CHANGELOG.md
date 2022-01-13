@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+
 ## [3.30.0-milestone]
 
 ### Added
@@ -22,7 +23,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
-## [3.29.0-milestone]
+## [3.29.0] 2022-01-13
 
 ### Added
 - Extend providers with draft status (@kmarszalek)
@@ -30,18 +31,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - Missed misspellings and typos (@goreck888)
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 - Adding providers with improper data to the resource (@goreck888)
 - Clear a resource form if clicked on Preview button on an empty form (@goreck888)
 - Resource's reviews counters (@goreck888)
 - Providers section on the home page to not show draft or deleted (@kmarszalek)
 - Contact fields visibility in the resource form on error (@goreck888)
-
-### Security
 
 ## [3.28.1] 2022-01-05
 
