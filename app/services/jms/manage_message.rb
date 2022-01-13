@@ -43,7 +43,7 @@ class Jms::ManageMessage
       modified_at = modified_at(resource, "providerBundle")
       if action == "delete"
         Provider::DeleteJob.perform_later(resource["providerBundle"]["provider"]["id"])
-      else
+      elsif action == "update" && process_provider_update?(resource)
         Provider::PcCreateOrUpdateJob.perform_later(
           resource["providerBundle"]["provider"],
           resource["providerBundle"]["active"],
@@ -71,5 +71,15 @@ class Jms::ManageMessage
 
   def warn(msg)
     @logger.warn(msg)
+  end
+
+  def process_provider_update?(resource)
+    if resource["providerBundle"]["active"]
+      true
+    elsif resource["providerBundle"]["latestOnboardingInfo"].nil?
+      false
+    else
+      resource["providerBundle"]["latestOnboardingInfo"]["actionType"] == "approved"
+    end
   end
 end

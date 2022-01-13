@@ -200,6 +200,8 @@ We are currently using the following ENV variables:
   * `S3_STORAGE` - set true to change ActiveStorage to S3
   * `S3_BUCKET` - active storage S3 bucket
   * `S3_ENDPOINT` - active storage S3 endpoint
+  * `S3_ACCESS_KEY_ID` - active storage S3 access key
+  * `S3_SECRET_ACCESS_KEY` - active storage S3 secret access key
   * `SMTP_ADDRESS` - smtp mail server address
   * `SMTP_USERNAME` - smtp user name or email address
   * `SMTP_PASSWORD` - smtp password
@@ -396,8 +398,8 @@ To use S3 first, you need:
 * `S3_STORAGE`
 * `S3_ENDPOINT`
 * `S3_BUCKET`
-* s3:access_key_id credentials
-* s3:secret_access_key credentials
+* s3:access_key_id credentials or in `S3_ACCESS_KEY_ID`
+* s3:secret_access_key credentials or in `S3_SECRET_ACCESS_KEY`
   
 Store s3 access and secret_access keys in encrypted credentials.
 Set env variables and you should be able to run the app.
@@ -408,8 +410,8 @@ To upload files registered in db from `local` to `S3` you need:
 * working db with registered `local` files
 * `S3_ENDPOINT`
 * `S3_BUCKET`
-* s3:access_key_id credentials
-* s3:secret_access_key credentials
+* s3:access_key_id credentials or in `S3_ACCESS_KEY_ID`
+* s3:secret_access_key credentials or in `S3_SECRET_ACCESS_KEY`
 
 Task: `rake storage:upload_to_s3`
 
@@ -419,8 +421,8 @@ To upload files registered in db from `S3` to `local` you need:
 * working db with registered `local` files
 * `S3_ENDPOINT`
 * `S3_BUCKET`
-* s3:access_key_id credentials
-* s3:secret_access_key credentials
+* s3:access_key_id credentials or in `S3_ACCESS_KEY_ID`
+* s3:secret_access_key credentials or in `S3_SECRET_ACCESS_KEY`
 
 Task: `rake storage:upload_to_local`
 
