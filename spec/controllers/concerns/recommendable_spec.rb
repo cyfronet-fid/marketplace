@@ -11,12 +11,7 @@ RSpec.describe ApplicationController, type: :controller do
   let!(:params) { ActionController::Parameters.new }
   let!(:active_filters) { [] }
 
-  before(:each) do
-    controller.params = params
-
-    @panel_id = "v1"
-    use_ab_test(recommendation_panel: @panel_id)
-  end
+  before(:each) { controller.params = params }
 
   it "Should use simple recommender on unknown recommender host" do
     allow(Mp::Application.config).to(receive(:recommender_host).and_return(nil))
@@ -36,7 +31,7 @@ RSpec.describe ApplicationController, type: :controller do
       expect(body["unique_id"].to_i).not_to be_nil
       expect(body["visit_id"].to_i).not_to be_nil
       expect(body["page_id"]).to eq "/service"
-      expect(body["panel_id"]).to eq @panel_id
+      expect(body["panel_id"]).to eq "v1"
       expect(body["search_phrase"]).to be nil
       expect(body["logged_user"]).to be false
       expect(body["filters"]).to be nil

@@ -21,7 +21,7 @@ class UserActionController < ApplicationController
     end
 
     is_recommendation_panel = params[:source]["root"]["type"] != "other"
-    request_body[:source]["root"]["panel_id"] = ab_test(:recommendation_panel) if is_recommendation_panel
+    request_body[:source]["root"]["panel_id"] = "v1" if is_recommendation_panel
 
     Probes::ProbesJob.perform_later(request_body.to_json)
   end

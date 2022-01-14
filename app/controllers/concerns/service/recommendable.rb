@@ -48,7 +48,7 @@ module Service::Recommendable
       cookies[:client_uid] = { value: SecureRandom.uuid, expires: 1.week.from_now }
     end
 
-    size = get_services_size_by(ab_test(:recommendation_panel))
+    size = 3 # The number of recommendations
     if Mp::Application.config.recommender_host.nil?
       return Rails.env.production? ? [] : Recommender::SimpleRecommender.new.call(size)
     end
@@ -76,17 +76,13 @@ module Service::Recommendable
       unique_id: cookies[:client_uid],
       visit_id: cookies[:targetId],
       page_id: "/service",
-      panel_id: ab_test(:recommendation_panel),
+      panel_id: "v1",
       search_data: get_filters_by(@params)
     }
 
     state[:user_id] = current_user.id unless current_user.nil?
 
     state
-  end
-
-  def get_services_size_by(ab_test_version)
-    { v1: 3, v2: 2 }[ab_test_version] || 3
   end
 
   def get_filters_by(params)
