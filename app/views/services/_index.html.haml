@@ -13,14 +13,14 @@
                "data-shepherd-tour-target": "overview_5" }
       .row.mb-4
         = render "services/active_filters", category: category, active_filters: active_filters
-        - if effective_show_recommendations && ab_test(:recommendation_panel) == "v1" && recommended_services.present?
+        - if effective_show_recommendations && recommended_services.present?
           = render partial: "services/recommendation_panel_v1",
                      locals: { highlights: highlights, category: category, recommended_services: recommended_services }
         = render "services/pagination", sort_options: sort_options, services: services,
           pagy: pagy, query_params: query_params
 
       %p
-        = render partial: "service", collection: services[0..1],
+        = render partial: "service", collection: services,
                  locals: { highlights: highlights,
                            category: category,
                            offers: offers,
@@ -29,16 +29,6 @@
                            remote: true,
                            tour_overview_9_target_on_counter: 0 }
 
-        - if effective_show_recommendations && ab_test(:recommendation_panel) == "v2" && recommended_services.present?
-          = render partial: "services/recommendation_panel_v2",
-                     locals: { highlights: highlights, category: category, recommended_services: recommended_services }
-        = render partial: "service", collection: services[2..],
-                 locals: { highlights: highlights,
-                           category: category,
-                           offers: offers,
-                           favourite_services: favourite_services,
-                           comparison_enabled: comparison_enabled,
-                           remote: true }
         = render "services/paginate", pagy: pagy
 
         #popup-modal.modal.show{ "data-target": "favourite.popup", tabindex: "-1",

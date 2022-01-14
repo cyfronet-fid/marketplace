@@ -156,14 +156,12 @@ Rails.application.routes.draw do
     post "features/disable_modal"
     resources :lead_sections, except: :show
     resources :leads, except: :show
-    resource :ab_tests, only: :show
   end
 
   # Sidekiq monitoring and split dashboard
   authenticate :user, ->(u) { u.admin? } do
     require "sidekiq/web"
     mount Sidekiq::Web => "/admin/sidekiq"
-    mount Split::Dashboard, at: "/admin/split"
   end
 
   resource :tour_histories, only: :create

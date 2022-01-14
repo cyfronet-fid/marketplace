@@ -1,8 +1,0 @@
-recommendation_panel:
-  alternatives:
-    - name: disabled
-      percent: 0
-    - name: v1
-      percent: 50
-    - name: v2
-      percent: 50

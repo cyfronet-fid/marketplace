@@ -234,10 +234,6 @@ RSpec.feature "Service browsing" do
 
       names = ["Service a", "service b", "Service c"]
       all(@services_selector).each_with_index { |service_box, i| expect(service_box).to have_content(names[i]) }
-
-      # Above implementation can be replaced with below after fixing split gem use_ab_test
-      # expect(page.body.index("Service a")).to be < page.body.index("Service b")
-      # expect(page.body.index("Service b")).to be < page.body.index("Service c")
     end
 
     scenario "should sort services by name, descending" do
@@ -249,10 +245,6 @@ RSpec.feature "Service browsing" do
 
       names = ["Service c", "service b", "Service a"]
       all(@services_selector).each_with_index { |service_box, i| expect(service_box).to have_content(names[i]) }
-
-      # Above implementation can be replaced with below after fixing split gem use_ab_test
-      # expect(page.body.index("Service a")).to be < page.body.index("Service b")
-      # expect(page.body.index("Service b")).to be < page.body.index("Service c")
     end
 
     scenario "limit number of services per page" do

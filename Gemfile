@@ -74,7 +74,6 @@ gem "sidekiq"
 
 gem "stomp"
 
-gem "split", require: "split/dashboard"
 gem "aws-sdk-s3", require: false
 
 group :development, :test do
