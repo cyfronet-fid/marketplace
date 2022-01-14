@@ -14,11 +14,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Badge color for draft resources in BO (@jarekzet)
+- Parameter panel_id from recommendations is always set to v1 (@Michal-Kolomanski)
 
 ### Deprecated
 
 ### Removed
-
+- Remove AB experiments from admin in BO (@Michal-Kolomanski)
 ### Fixed
 - Redirection after Scientific Domain deletion in backoffice (@kmarszalek)
 - Consistence of Resource/Offer order types (@goreck888)

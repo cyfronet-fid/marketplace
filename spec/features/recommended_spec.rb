@@ -7,7 +7,6 @@ RSpec.feature "Recommended services" do
   include OmniauthHelper
 
   it "should display recommended", js: true do
-    use_ab_test(recommendation_panel: "v1")
     allow(Mp::Application.config).to(receive(:recommender_host).and_return("localhost:5000"))
 
     services_ids = [1, 2, 3]
@@ -22,7 +21,6 @@ RSpec.feature "Recommended services" do
   end
 
   it "should not display recommended on faraday error", js: true do
-    use_ab_test(recommendation_panel: "v1")
     allow(Mp::Application.config).to(receive(:recommender_host).and_return("localhost:5000"))
 
     allow(Faraday).to receive(:post).and_raise(ArgumentError)
@@ -37,7 +35,6 @@ RSpec.feature "Recommended services" do
   end
 
   it "should display simple recommended services on unknown outer service host", js: true do
-    use_ab_test(recommendation_panel: "v1")
     allow(Mp::Application.config).to(receive(:recommender_host).and_return(nil))
 
     services_ids = [1, 2, 3]
@@ -49,7 +46,6 @@ RSpec.feature "Recommended services" do
   end
 
   it "should not display recommended on unknown host, when run on production", js: true do
-    use_ab_test(recommendation_panel: "v1")
     allow(Mp::Application.config).to(receive(:recommender_host).and_return(nil))
     allow(Rails.env).to receive(:production?).and_return(true)
 

@@ -289,8 +289,6 @@ GEM
     msgpack (1.4.2)
     multi_json (1.15.0)
     multipart-post (2.1.1)
-    mustermann (1.1.1)
-      ruby2_keywords (~> 0.0.1)
     nio4r (2.5.8)
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
@@ -352,8 +350,6 @@ GEM
       httpclient
       json-jwt (>= 1.11.0)
       rack (>= 2.1.0)
-    rack-protection (2.1.0)
-      rack
     rack-proxy (0.7.0)
       rack
     rack-test (1.1.0)
@@ -518,7 +514,6 @@ GEM
       faraday (>= 0.17.3, < 2.0)
       jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
-    simple-random (1.0.3)
     simple_form (5.1.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
@@ -526,17 +521,8 @@ GEM
       actionmailer (>= 3.2.6, < 7)
       actionpack (>= 3.2.6, < 7)
       devise (>= 3.2, < 6)
-    sinatra (2.1.0)
-      mustermann (~> 1.0)
-      rack (~> 2.2)
-      rack-protection (= 2.1.0)
-      tilt (~> 2.0)
     sixarm_ruby_unaccent (1.2.0)
     socksify (1.7.1)
-    split (3.4.1)
-      redis (>= 2.1)
-      simple-random (>= 0.9.3)
-      sinatra (>= 1.2.6)
     spring (2.1.1)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -689,7 +675,6 @@ DEPENDENCIES
   sidekiq
   simple_form
   simple_token_authentication
-  split
   spring
   spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)

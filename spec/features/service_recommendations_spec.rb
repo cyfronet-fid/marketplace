@@ -18,40 +18,14 @@ RSpec.feature "recommended services panel", js: true do
     @categories, @services = populate_database
   end
 
-  it "has no recommendations if they are disabled" do
-    use_ab_test(recommendation_panel: "disabled")
-    visit services_path
-
-    expect(page).to_not have_content(_("SUGGESTED"))
-  end
-
   it "has header with 'SUGGESTED' box in version 1" do
     services_ids = [@services[0].id, @services[1].id, @services[2].id]
     response = double(Faraday::Response, status: 200, body: "{ \"recommendations\": #{services_ids} }")
     allow_any_instance_of(Faraday::Connection).to receive(:post).and_return(response)
 
-    use_ab_test(recommendation_panel: "v1")
     visit services_path
 
     expect(page).to have_content(_("SUGGESTED"))
     expect(find(@recommended_services_bar)).to have_content(_("SUGGESTED"))
-  end
-
-  it "has 'SUGGESTED' box in each recommended service in version 2" do
-    services_ids = [@services[0].id, @services[1].id]
-    response = double(Faraday::Response, status: 200, body: "{ \"recommendations\": #{services_ids} }")
-    allow_any_instance_of(Faraday::Connection).to receive(:post).and_return(response)
-
-    use_ab_test(recommendation_panel: "v2")
-    visit services_path
-
-    expect(page).to have_content(_("SUGGESTED"))
-    all(@recommended_services).each do |element|
-      expect(element.has_css?(".recommend-box"))
-      expect(element).to have_text(_("SUGGESTED"))
-      expect(element.has_css?(".image-frame"))
-      expect(element).to have_text(_("Organisation") + ":")
-      expect(element).to have_text(_("Dedicated for") + ":")
-    end
   end
 end
