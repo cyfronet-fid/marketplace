@@ -3,7 +3,7 @@
 .container
   %h1
     Platforms
-    - if policy([:backoffice, Category]).new?
+    - if policy([:backoffice, Platform]).new?
       .float-right
         = link_to _("Add new Platform"),
                   new_backoffice_platform_path,
