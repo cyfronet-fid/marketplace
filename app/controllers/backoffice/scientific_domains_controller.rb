@@ -5,7 +5,7 @@ class Backoffice::ScientificDomainsController < Backoffice::ApplicationControlle
 
   def index
     authorize(ScientificDomain)
-    @scientific_domains = policy_scope(ScientificDomain)
+    @scientific_domains = policy_scope(ScientificDomain).with_attached_logo
   end
 
   def show; end
@@ -52,7 +52,7 @@ class Backoffice::ScientificDomainsController < Backoffice::ApplicationControlle
                     alert: "This scientific domain has providers connected to it, remove associations to delete it."
     else
       @scientific_domain.destroy!
-      redirect_to backoffice_categories_path, notice: "Scientific Domain removed"
+      redirect_to backoffice_scientific_domains_path, notice: "Scientific Domain removed"
     end
   end
 

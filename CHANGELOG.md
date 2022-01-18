@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Redirection after Scientific Domain deletion in backoffice (@kmarszalek)
 
 ### Security
 
