@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_16_143044) do
+ActiveRecord::Schema.define(version: 2022_01_20_112130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -179,7 +179,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.string "author_uid"
     t.index ["author_id"], name: "index_messages_on_author_id"
     t.index ["author_role"], name: "index_messages_on_author_role"
-    t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id"
+    t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable"
     t.index ["scope"], name: "index_messages_on_scope"
   end
 
@@ -532,7 +532,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.integer "offers_count", default: 0
     t.text "activate_message"
     t.string "slug"
-    t.string "order_type"
+    t.string "order_type", null: false
     t.string "status"
     t.integer "upstream_id"
     t.string "helpdesk_email", default: ""
@@ -573,7 +573,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_143044) do
     t.datetime "updated_at", null: false
     t.string "status", null: false
     t.index ["author_id"], name: "index_statuses_on_author_id"
-    t.index ["status_holder_type", "status_holder_id"], name: "index_statuses_on_status_holder_type_and_status_holder_id"
+    t.index ["status_holder_type", "status_holder_id"], name: "index_statuses_on_status_holder"
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
