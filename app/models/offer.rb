@@ -59,7 +59,7 @@ class Offer < ApplicationRecord
   validate :check_oms_params, if: -> { current_oms.present? }
   validate :same_order_type_as_in_service,
            if: -> {
-             service&.order_type&.present? &&
+             service&.order_type.present? &&
                (
                  (new_record? && service.offers.published.size.zero?) ||
                    (persisted? && service.offers.published.size == 1)

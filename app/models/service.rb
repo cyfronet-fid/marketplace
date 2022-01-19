@@ -136,6 +136,7 @@ class Service < ApplicationRecord
   validates :access_policies_url, mp_url: true, if: :access_policies_url?
   validates :sla_url, mp_url: true, if: :sla_url?
   validates :webpage_url, mp_url: true, if: :webpage_url?
+  validates :order_type, presence: true
   validates :status_monitoring_url, mp_url: true, if: :status_monitoring_url?
   validates :maintenance_url, mp_url: true, if: :maintenance_url?
   validates :order_url, mp_url: true, if: :order_url?
