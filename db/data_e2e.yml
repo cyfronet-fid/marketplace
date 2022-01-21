@@ -1277,11 +1277,6 @@ services:
           Ideal for: Researchers seeking a central place to dtorage and ahre research data.
         parameters:
           - id: "id1"
-            label: "Start of service"
-            description: "Please choose start date"
-            type: "date"
-            value_type: "string"
-          - id: "id2"
             label: "Number of days"
             description: "Choose number of days"
             type: "input"

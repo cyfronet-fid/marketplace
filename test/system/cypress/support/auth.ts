@@ -10,8 +10,8 @@ declare global {
             jiraLogin(): Cypress.Chainable<void>;
             jiraLogout(): Cypress.Chainable<void>;
 
-            setSessionId(user: IUser): Cypress.Chainable<string>;
-            loginAs(user: IUser): Cypress.Chainable<void>;
+            setSessionId(user: IUser, preserveUser: boolean): Cypress.Chainable<string>;
+            loginAs(user: IUser, preserveUser?: boolean): Cypress.Chainable<void>;
             logout(): Cypress.Chainable<void>;
         }
     }
@@ -22,8 +22,8 @@ declare global {
  */
 let TEMP_SESSIONID = null;
 const APP_SESSION_COOKIE_NAME = "_mp_session";
-Cypress.Commands.add('setSessionId', (user: IUser) => {
-    if (!!TEMP_SESSIONID) {
+Cypress.Commands.add('setSessionId', (user: IUser, preserveUser) => {
+    if (!!TEMP_SESSIONID && preserveUser) {
         cy.setCookie(APP_SESSION_COOKIE_NAME, TEMP_SESSIONID);
         return cy.wrap(TEMP_SESSIONID);
     }
@@ -49,8 +49,8 @@ Cypress.Commands.add('setSessionId', (user: IUser) => {
         .as("sessionId");
     return cy.get("@sessionId");
 });
-Cypress.Commands.add('loginAs', function (user: IUser) {
-    cy.setSessionId(user);
+Cypress.Commands.add('loginAs', function (user: IUser, preserveUser: boolean = false) {
+    cy.setSessionId(user, preserveUser);
     cy.reload();
     cy.get('a[data-e2e="logout"]').should('be.visible');
 });

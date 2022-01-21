@@ -1,13 +1,13 @@
 import {IUser, UserFactory} from "../factories/user.factory";
 import {IProject, ProjectFactory} from "../factories/project.factory";
 import {Utilities} from "../support/utilities";
-import {accessType, IResource} from "../support/offers";
+import {accessType, IResource} from "../support/project";
 import {IJiraResource} from "../support/jira";
 
 Cypress.Cookies.defaults({
     preserve: ['user', 'project', 'resources', 'message']
 });
-describe('Offers', () => {
+describe.skip('Offers', () => {
     // Hack: Before hook is running twice on baseUrl origin change
     // In that case "it" is used to run only once
     it('Setup cookies data', () => {
@@ -37,23 +37,6 @@ describe('Offers', () => {
             {domain: Cypress.config().baseUrl.replace(/(^\w+:|^)\/\//, '')}
         );
     });
-    it('Should go to new project', () => {
-        cy.visit("/");
-        cy.getCookie('user')
-            .then(cookie => JSON.parse(cookie.value) as IUser)
-            .then(user => {
-                cy.loginAs(user);
-
-                cy.get('a[data-e2e="goToProjectsBtn"]')
-                    .click();
-                cy.location('pathname')
-                    .should('equal', '/projects');
-                cy.get('a[data-e2e="goToNewProjectFormBtn"]')
-                    .click();
-                cy.location('pathname')
-                    .should('equal', '/projects/new');
-            });
-    });
     it('Should add project', () => {
         cy.visit("/");
         cy.getCookie('user')
@@ -62,70 +45,13 @@ describe('Offers', () => {
                 cy.getCookie('project')
                     .then(project => JSON.parse(project.value) as IProject)
                     .then(project => {
-                        cy.loginAs(user);
+                        cy.loginAs(user, true);
 
                         cy.visit('/projects/new');
                         cy.fillFormProject(project);
+                        cy.contains("button", "Create new project")
+                          .click()
                         cy.hasProjectDetails(project);
-                    });
-            });
-    });
-    it('Should update project', () => {
-        cy.visit('/');
-        cy.getCookie('user')
-            .then(user => JSON.parse(user.value) as IUser)
-            .then(user => {
-                cy.getCookie('project')
-                    .then(project => JSON.parse(project.value) as IProject)
-                    .then(project => {
-                        cy.loginAs(user);
-                        cy.visit("/projects");
-
-                        cy.get(".project-menu")
-                            .contains("a", project.name, {matchCase: false})
-                            .click();
-                        cy.get(".buttons-panel")
-                            .contains("a", "edit", {matchCase: false})
-                            .click({force: true});
-
-                        const newProject = ProjectFactory.create();
-                        cy.fillFormProject(newProject);
-                        cy.hasProjectDetails(newProject);
-
-                        cy.clearCookie('project');
-                        cy.setCookie(
-                            'project',
-                            JSON.stringify(newProject),
-                            {domain: Cypress.env('MP_JIRA_URL').replace(/(^\w+:|^)\/\//, '')}
-                        );
-                        cy.setCookie(
-                            'project',
-                            JSON.stringify(newProject),
-                            {domain: Cypress.config().baseUrl.replace(/(^\w+:|^)\/\//, '')}
-                        );
-                    });
-            });
-    });
-    it("Should have none resources description", () => {
-        cy.visit('/');
-        cy.getCookie('user')
-            .then(user => JSON.parse(user.value) as IUser)
-            .then(user => {
-                cy.getCookie('project')
-                    .then(project => JSON.parse(project.value) as IProject)
-                    .then(project => {
-                        cy.loginAs(user);
-                        cy.visit("/projects");
-
-                        cy.get(".project-menu")
-                            .contains("a", project.name, {matchCase: false})
-                            .click();
-                        cy.get(".services-menu")
-                            .contains("a", "resources", {matchCase: false})
-                            .click({force: true});
-                        cy.get(".order-last")
-                            .find("h3")
-                            .should("include.text", "You have no resources in this project yet");
                     });
             });
     });
@@ -137,7 +63,7 @@ describe('Offers', () => {
                 cy.getCookie('project')
                     .then(project => JSON.parse(project.value) as IProject)
                     .then(project => {
-                        cy.loginAs(user);
+                        cy.loginAs(user, true);
                         cy.visit("/services");
 
                         cy.get('select[name="order_type"]')
@@ -201,7 +127,7 @@ describe('Offers', () => {
                 cy.getCookie('project')
                     .then(project => JSON.parse(project.value) as IProject)
                     .then(project => {
-                        cy.loginAs(user);
+                        cy.loginAs(user, true);
                         cy.visit("/services");
 
                         cy.get('select[name="order_type"]')
@@ -351,7 +277,7 @@ describe('Offers', () => {
     });
 });
 
-describe('Offers messages', () => {
+describe.skip('Offers messages', () => {
     it('Should setup cookies', () => {
         const user = UserFactory.create();
         cy.clearCookie('user');
@@ -387,10 +313,12 @@ describe('Offers messages', () => {
                 cy.getCookie('project')
                     .then(project => JSON.parse(project.value) as IProject)
                     .then(project => {
-                        cy.loginAs(user);
+                        cy.loginAs(user, true);
 
                         cy.visit('/projects/new');
                         cy.fillFormProject(project);
+                        cy.contains("button", "Create new project")
+                          .click()
 
                         cy.get(".services-menu")
                             .contains("a", "contact with eosc experts", {matchCase: false})
