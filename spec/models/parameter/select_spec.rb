@@ -32,4 +32,19 @@ RSpec.describe Parameter::Select do
       expect(attribute).to be_value_valid
     end
   end
+
+  context "with numerical string value type" do
+    subject { build(:select_parameter, value_type: "string", values: %w[1 2 3 >4]) }
+
+    it "sertializes to attribute schema" do
+      expect(Attribute.from_json(subject.dump)).to be_config_valid
+    end
+
+    it "serializes to valid attribute attribute" do
+      attribute = Attribute.from_json(subject.dump)
+      attribute.value_from_param(["2"])
+
+      expect(attribute).to be_value_valid
+    end
+  end
 end
