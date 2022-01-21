@@ -50,5 +50,8 @@ module.exports = (on, config) => {
             return launchOptions;
         }
     });
+
+    require("cypress-fail-fast/plugin")(on, config);
+    return config;
 };
 

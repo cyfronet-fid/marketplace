@@ -21,6 +21,7 @@ import '@cypress/skip-test/support';
 import 'cypress-promise/register';
 import 'cypress-wait-until';
 import 'cypress-file-upload';
+import "cypress-fail-fast";
 
 
 
