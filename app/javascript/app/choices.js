@@ -9,6 +9,8 @@ export default function initChoices(scope = document) {
   elements.forEach(function (element) {
     new Choices(element, {
       removeItems: true,
+      allowHTML: true,
+      duplicateItemsAllowed: false,
       placeholder: true,
       placeholderValue: "+ start typing to add",
       removeItemButton: true,
