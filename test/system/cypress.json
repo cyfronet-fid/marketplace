@@ -16,6 +16,7 @@
   "videoUploadOnPasses": false,
   "video": false,
   "env": {
-    "debug": false
+    "debug": false,
+    "FAIL_FAST_ENABLED": true
   }
 }
