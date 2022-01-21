@@ -28,7 +28,7 @@ module Parameter::Values
         String(v)
       end
     else
-      values
+      values.map { |v| CGI.unescape_html(v) }
     end
   end
 end

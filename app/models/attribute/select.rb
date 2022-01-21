@@ -4,7 +4,8 @@ require "json-schema"
 
 class Attribute::Select < Attribute
   def value_valid?
-    JSON::Validator.validate(value_schema, value) && config["values"].include?(value)
+    proper_type_value = value_schema[:type] == "string" ? "\"#{value}\"" : value
+    JSON::Validator.validate(value_schema, proper_type_value) && config["values"].include?(value)
   end
 
   def config_schema
