@@ -10,6 +10,13 @@ describe("Providers", () => {
   const correctLogo = "logo.jpg";
   const wrongLogo = "logo.svg";
 
+  const providerWithResourceDeleted = "D4Science Infrastructure";
+  const providerWithResourceDraft = "European Space Agency (ESA)";
+  const providerWithResourcePublished = "EUDAT";
+  const providerWithResourceErrored = "CSC";
+  const providerWithResourceUnverified = "Institute of Atmospheric Pollution - National Research Council of Italy (CNR-IIA)"
+  const resourceProviderForPublishedResource = "Interuniversity consortium CIRMMP";
+
   beforeEach(() => {
     cy.visit("/");
     cy.loginAs(user);
@@ -108,7 +115,7 @@ describe("Providers", () => {
       .click();
     cy.location("href")
       .should("contain", "/providers/new");
-    cy.fillFormCreateProvider({basicWebpage_url:"wrongFormat", adminEmail:"wrongFormat"}, wrongLogo);
+    cy.fillFormCreateProvider({...provider, basicWebpage_url:"wrongFormat", adminEmail:"wrongFormat"}, wrongLogo);
     cy.get("[data-e2e='create-provider-btn']")
       .click();
     cy.contains(
@@ -178,7 +185,7 @@ describe("Providers", () => {
 
   it("should delete provider with resources with deleted status", () => {
     cy.visit("/backoffice/providers");
-    cy.contains("a", "D4Science Infrastructure")
+    cy.contains("a", providerWithResourceDeleted)
       .parents('li.providers')
       .find("a.delete-icon")
       .click();
@@ -188,7 +195,7 @@ describe("Providers", () => {
 
   it("shouldn't delete provider with resources with draft status", () => {
     cy.visit("/backoffice/providers");
-    cy.contains("a", "European Space Agency (ESA)")
+    cy.contains("a", providerWithResourceDraft)
       .parents('li.providers')
       .find("a.delete-icon")
       .click();
@@ -199,7 +206,7 @@ describe("Providers", () => {
 
   it("shouldn't delete provider with resources with published status", () => {
     cy.visit("/backoffice/providers");
-    cy.contains("a", "EUDAT")
+    cy.contains("a", providerWithResourcePublished)
       .parents('li.providers')
       .find("a.delete-icon")
       .click();
@@ -210,7 +217,7 @@ describe("Providers", () => {
 
   it("shouldn't delete provider with resources with errored status", () => {
     cy.visit("/backoffice/providers");
-    cy.contains("a", "CSC")
+    cy.contains("a", providerWithResourceErrored)
       .parents('li.providers')
       .find("a.delete-icon")
       .click();
@@ -221,7 +228,7 @@ describe("Providers", () => {
 
   it("shouldn't delete provider with resources with unverified status", () => {
     cy.visit("/backoffice/providers");
-    cy.contains("a", "Institute of Atmospheric Pollution - National Research Council of Italy (CNR-IIA)")
+    cy.contains("a", providerWithResourceUnverified)
       .parents('li.providers')
       .find("a.delete-icon")
       .click();
@@ -232,7 +239,7 @@ describe("Providers", () => {
 
   it("should delete provider which is resources provider for published resources", () => {
     cy.visit("/backoffice/providers");
-    cy.contains("a", "Interuniversity consortium CIRMMP")
+    cy.contains("a", resourceProviderForPublishedResource)
       .parents('li.providers')
       .find("a.delete-icon")
       .click();

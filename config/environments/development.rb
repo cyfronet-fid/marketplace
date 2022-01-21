@@ -3,6 +3,9 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  # Allows to receive messages from other host (JIRA)
+  config.hosts = []
+  
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = true
 
