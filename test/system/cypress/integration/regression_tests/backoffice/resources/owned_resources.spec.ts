@@ -208,7 +208,7 @@ describe("Owned resources", () => {
 
   it("shouldn't go to Preview mode with wrong data format", ()=> {;
     cy.visit("/backoffice/services/new");
-    cy.fillFormCreateResource({basicWebpage_url:"wrongFormat", contactsEmail:"wrongFormat"}, correctLogo);
+    cy.fillFormCreateResource({...resource, basicWebpage_url:"wrongFormat", contactsEmail:"wrongFormat"}, correctLogo);
     cy.get("[data-e2e='preview-btn']")
       .click();
     cy.contains("div.invalid-feedback", "Email is not a valid email address")

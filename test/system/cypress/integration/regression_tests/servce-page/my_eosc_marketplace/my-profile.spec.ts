@@ -5,15 +5,15 @@ describe("My profile", () => {
   beforeEach(() => {
     cy.visit("/services");
     cy.loginAs(user);
+  });
+
+  it("should add and remove Additional information", () => {
     cy.get("[data-e2e='my-eosc-button']")
       .click();
     cy.get("[data-e2e='profile']")
       .click();
     cy.location("href")
       .should("contain", "/profile");
-  });
-
-  it("should add and remove Additional information", () => {
     cy.get("[data-e2e='additional-inf-edit']")
       .click();
     cy.get("[data-e2e='categories-select']")
@@ -59,6 +59,7 @@ describe("My profile", () => {
   });
 
   it("should add and remove Email notifications", () => {
+    cy.visit('/profile')
     cy.get("[data-e2e='email-notif-edit']")
       .click();
     cy.get("#user_categories_updates")

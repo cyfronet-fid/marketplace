@@ -32,7 +32,7 @@ import './coverage';
 import './utilities';
 
 import './jira';
-import './offers';
+import './project';
 import './resources';
 import './category';
 import './scientific-domain';
