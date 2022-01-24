@@ -1,6 +1,22 @@
 # frozen_string_literal: true
 
 class Jira::Client < JIRA::Client
+  DEFAULT_UNTRUNCATED_FIELDS = %w[
+    CP-CollaborationCountry
+    CP-CustomerCountry
+    CP-ProjectInformation
+    CP-ReasonForAccess
+    CP-Nationality
+    SO-1
+    SO-2
+    SO-3
+    SO-4
+    SO-5
+    SO-ServiceOrderTarget
+    SO-ServiceName
+    SO-ServiceOfferName
+  ].freeze
+
   include Rails.application.routes.url_helpers
 
   class JIRAIssueCreateError < StandardError
@@ -110,6 +126,9 @@ class Jira::Client < JIRA::Client
       "SO-OfferType": fields_config[:"SO-OfferType"]
     }
 
+    @untruncated_fields = @jira_config[:untruncated_fields].presence || DEFAULT_UNTRUNCATED_FIELDS
+    @truncate_length = @jira_config[:truncate_length]
+
     super(options)
   end
 
@@ -117,7 +136,8 @@ class Jira::Client < JIRA::Client
     issue = self.Issue.build
 
     fields = {
-      summary: "Project, #{project.user.first_name} " + "#{project.user.last_name}, " + project.name.to_s,
+      summary:
+        truncate("Project, #{project.user.first_name} " + "#{project.user.last_name}, " + project.name.to_s, :summary),
       project: {
         key: @jira_project_key
       },
@@ -130,7 +150,7 @@ class Jira::Client < JIRA::Client
       .reject { |_k, v| v.empty? }
       .each do |field_name, field_id|
         value = generate_project_custom_field_value(field_name.to_s, project)
-        fields[field_id.to_s] = value unless value.nil?
+        fields[field_id.to_s] = truncate(value, field_name) unless value.nil?
       end
 
     if issue.save(fields: fields)
@@ -147,9 +167,12 @@ class Jira::Client < JIRA::Client
 
     fields = {
       summary:
-        "Service order, #{project_item.project.user.first_name} " \
-          "#{project_item.project.user.last_name}, " \
-          "#{project_item.service.name}",
+        truncate(
+          "Service order, #{project_item.project.user.first_name} " \
+            "#{project_item.project.user.last_name}, " \
+            "#{project_item.service.name}",
+          :summary
+        ),
       project: {
         key: @jira_project_key
       },
@@ -162,7 +185,7 @@ class Jira::Client < JIRA::Client
       .reject { |_k, v| v.empty? }
       .each do |field_name, field_id|
         value = generate_project_item_custom_field_value(field_name.to_s, project_item)
-        fields[field_id.to_s] = value unless value.nil?
+        fields[field_id.to_s] = truncate(value, field_name) unless value.nil?
       end
 
     if issue.save(fields: fields)
@@ -177,12 +200,15 @@ class Jira::Client < JIRA::Client
 
     issue = self.Issue.find(project.issue_id)
 
-    fields = { summary: "Project, #{project.user.first_name} " + "#{project.user.last_name}, " + project.name.to_s }
+    fields = {
+      summary:
+        truncate("Project, #{project.user.first_name} " + "#{project.user.last_name}, " + project.name.to_s, :summary)
+    }
     @custom_fields
       .reject { |_k, v| v.empty? }
       .each do |field_name, field_id|
         value = generate_project_custom_field_value(field_name.to_s, project)
-        fields[field_id.to_s] = value unless value.nil?
+        fields[field_id.to_s] = truncate(value, field_name) unless value.nil?
       end
 
     if issue.save(fields: fields)
@@ -304,5 +330,10 @@ class Jira::Client < JIRA::Client
           @jira_config[:custom_fields][:select_values][:"SO-OfferType"][map_to_jira_order_type(project_item).to_sym]
       }
     end
+  end
+
+  def truncate(value, field_name)
+    return value unless value.is_a?(String)
+    @untruncated_fields.include?(field_name.to_s) ? value : value[..(@truncate_length - 1)]
   end
 end
