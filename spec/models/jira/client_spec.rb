@@ -4,6 +4,7 @@ require "rails_helper"
 
 describe Jira::Client do
   let(:client) { Jira::Client.new }
+  let(:over_255_characters) { "f" * 256 }
 
   it "should Issuetype when calling mp_issue_type" do
     return_val = :issue_type
@@ -356,6 +357,61 @@ describe Jira::Client do
     expect(client.create_project_issue(project)).to be(issue)
   end
 
+  it "create_project_issue should truncate fields to 255 chars" do
+    allow(ENV).to receive(:[]).and_call_original
+    allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
+
+    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2", email: "john.doe@email.eu")
+    project =
+      create(
+        :project,
+        user: user,
+        name: "e" * 255,
+        email: "project@email.com",
+        user_group_name: "User Group Name 1",
+        customer_typology: "research",
+        reason_for_access: "some reason",
+        department: "dep",
+        webpage: "http://dep-wwww.pl",
+        organization: "org",
+        scientific_domains: [create(:scientific_domain, name: over_255_characters)],
+        countries_of_partnership: Country.all
+      )
+
+    expected_fields = {
+      :summary => "Project, John Doe, #{"e" * (255 - 19)}",
+      :project => {
+        key: "MP"
+      },
+      :issuetype => {
+        id: 10_001
+      },
+      "Epic Name-1" => "e" * 255,
+      "CI-Name-1" => "John",
+      "CI-Surname-1" => "Doe",
+      "CI-DisplayName-1" => "John Doe",
+      "CI-Email-1" => "project@email.com",
+      "CI-Institution-1" => "org",
+      "CI-Department-1" => "dep",
+      "CI-DepartmentalWebPage-1" => "http://dep-wwww.pl",
+      "CI-EOSC-UniqueID-1" => "uid2",
+      "CP-ScientificDiscipline-1" => over_255_characters[..254],
+      "CP-CustomerTypology-1" => {
+        "id" => "20001"
+      },
+      "SO-ProjectName-1" => "e" * 255,
+      "CP-UserGroupName-1" => "User Group Name 1",
+      "CP-CustomerCountry-1" => project.country_of_origin.name.to_s,
+      "CP-CollaborationCountry-1" => project.countries_of_partnership.map(&:name).join(", ").to_s
+    }
+
+    issue = double(:Issue)
+    expect(issue).to receive("save").with(fields: expected_fields).and_return(true)
+    expect(client).to receive_message_chain("Issue.build").and_return(issue)
+
+    expect(client.create_project_issue(project)).to be(issue)
+  end
+
   it "update_project_issue should update issue with correct fields" do
     allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
@@ -394,6 +450,55 @@ describe Jira::Client do
         "id" => "20001"
       },
       "SO-ProjectName-1" => "My Updated Project Name (#{project.id})",
+      "CP-UserGroupName-1" => "User Group Name 1",
+      "CP-CustomerCountry-1" => project.country_of_origin.name.to_s,
+      "CP-CollaborationCountry-1" => project.countries_of_partnership.map(&:name).join(", ").to_s
+    }
+
+    expect(issue).to receive("save").with(fields: expected_updated_fields).and_return(true)
+    expect(client).to receive_message_chain("Issue.find").and_return(issue)
+    expect(client.update_project_issue(project)).to be(issue)
+  end
+
+  it "update_project_issue should truncate fields to 255 chars" do
+    allow(ENV).to receive(:[]).and_call_original
+    allow(ENV).to receive(:[]).with("ROOT_URL").and_return("https://mp.edu")
+
+    user = create(:user, first_name: "John", last_name: "Doe", uid: "uid2", email: "john.doe@email.eu")
+    project =
+      create(
+        :project,
+        user: user,
+        name: "e" * 255,
+        email: "project@email.com",
+        user_group_name: "User Group Name 1",
+        customer_typology: "research",
+        reason_for_access: "some reason",
+        department: "dep",
+        webpage: "http://dep-wwww.pl",
+        organization: "org",
+        issue_id: "1234",
+        scientific_domains: [create(:scientific_domain, name: over_255_characters)],
+        countries_of_partnership: Country.all
+      )
+
+    issue = double(:Issue)
+    expected_updated_fields = {
+      :summary => "Project, John Doe, #{"e" * (255 - 19)}",
+      "Epic Name-1" => "e" * 255,
+      "CI-Name-1" => "John",
+      "CI-Surname-1" => "Doe",
+      "CI-DisplayName-1" => "John Doe",
+      "CI-Email-1" => "project@email.com",
+      "CI-Institution-1" => "org",
+      "CI-Department-1" => "dep",
+      "CI-DepartmentalWebPage-1" => "http://dep-wwww.pl",
+      "CI-EOSC-UniqueID-1" => "uid2",
+      "CP-ScientificDiscipline-1" => over_255_characters[..254],
+      "CP-CustomerTypology-1" => {
+        "id" => "20001"
+      },
+      "SO-ProjectName-1" => "e" * 255,
       "CP-UserGroupName-1" => "User Group Name 1",
       "CP-CustomerCountry-1" => project.country_of_origin.name.to_s,
       "CP-CollaborationCountry-1" => project.countries_of_partnership.map(&:name).join(", ").to_s
