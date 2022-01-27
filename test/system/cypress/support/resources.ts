@@ -30,7 +30,7 @@ const selectItem = (resource: string[], selector: string) => {
   if (resource && resource.length > 0) {
     resource.forEach((el) => {
       cy.get(selector)
-        .find('.choices__input[type="text"]')
+        .find('.choices__input[type="search"]')
         .type(el)
         .type("{enter}");
       cy.get(selector)

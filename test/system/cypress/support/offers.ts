@@ -55,7 +55,7 @@ Cypress.Commands.add('fillFormProject', (project: IProject) => {
         project.scientificDomains
             .forEach(domain => {
                 cy.get(".project_scientific_domains")
-                    .find('.choices__input[type="text"]')
+                    .find('.choices__input[type="search"]')
                     .type(domain)
                     .type("{enter}");
                 cy.get(".project_scientific_domains")
