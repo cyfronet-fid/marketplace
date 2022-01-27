@@ -20,6 +20,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Removed
 - Remove AB experiments from admin in BO (@Michal-Kolomanski)
+- All resources that are not agreed upon (@kmarszalek)
+
 ### Fixed
 - Redirection after Scientific Domain deletion in backoffice (@kmarszalek)
 - Consistence of Resource/Offer order types (@goreck888)
