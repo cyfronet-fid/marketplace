@@ -75,7 +75,7 @@
 
   .egi-logo-mono {
     img {
-      max-width: 90px;
+      max-width: 155px;
     }
   }
 
@@ -154,6 +154,51 @@
       }
     }
   }
+}
+
+@media (max-width: 768px) {
+
+  .footer {
+
+    .title {
+      margin: 25px 0 10px;
+    }
+
+    .egi-logo-mono {
+      text-align: center;
+
+      img {
+        max-width: 100px;
+      }
+    }
+
+    .socials-box {
+      text-align: center;
+      padding-bottom: 0.7rem;
+    }
+
+    .copyright {
+      text-align: center;
+
+      a {
+        font-size: 11px;
+      }
+    }
+
+    .contact-list {
+      li {
+        font-size: 0.8rem;
+        line-height: 1.5;
+
+        svg {
+          font-size: 0.95rem;
+          margin-right: 7px;
+        }
+      }
+    }
+
+  }
+
 }
 
 .branch-box .branch-icon img {
