@@ -16,12 +16,12 @@
         %li
           = link_to _("Executive"), executive_path, section: "admin",
             class: "#{"active" if local_assigns[:section] == :executive}"
-      - if !user_signed_in?
-        %li
-          %strong= link_to _("Login"), user_checkin_omniauth_authorize_path
-      - else
+      - if user_signed_in?
         %li
           %i.fas.fa-user.mr-1
-          #{"%s %s" % [current_user.first_name, current_user.last_name]}
+          = _("#{current_user.first_name}" "#{current_user.last_name}")
         %li
           %strong= link_to _("Logout"), destroy_user_session_path, method: :delete
+      - else
+        %li
+          %strong= link_to _("Login"), user_checkin_omniauth_authorize_path
