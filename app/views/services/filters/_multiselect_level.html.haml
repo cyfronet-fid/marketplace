@@ -2,16 +2,17 @@
   - options.each do |option|
     - muted = option[:count].to_i.zero?
     - target = root ? "element item" : "item"
-    %li{ "data-multicheckbox-target": target }
-      %label{ class: ("text-muted" if muted) }
-        %input.form-check-input{ type: "checkbox", name: "#{name}[]",
-          multiple: true, checked: values.include?(option[:id].to_s) || values.include?(parent.to_s),
-          value: option[:id],
-          "data-action" => "change->filter#reload", "data-probe" => "", "data-e2e": "filter-checkbox",
-          "data-parent": parent, class: checkbox_class(option, values) }
-        %span= option[:name]
-      %span.float-right.small{ class: ("text-muted" if muted) }= option[:count]
-      - if option[:children]
-        = render "services/filters/multiselect_level",
-          options: option[:children], html_classes: "pl-3 pr-0",
-          name: name, values: values, root: false, parent: option[:id]
+    - unless muted
+      %li{ "data-multicheckbox-target": target }
+        %label{ class: ("text-muted" if muted) }
+          %input.form-check-input{ type: "checkbox", name: "#{name}[]",
+            multiple: true, checked: values.include?(option[:id].to_s) || values.include?(parent.to_s),
+            value: option[:id],
+            "data-action" => "change->filter#reload", "data-probe" => "", "data-e2e": "filter-checkbox",
+            "data-parent": parent, class: checkbox_class(option, values) }
+          %span= option[:name]
+        %span.float-right.small{ class: ("text-muted" if muted) }= option[:count]
+        - if option[:children]
+          = render "services/filters/multiselect_level",
+            options: option[:children], html_classes: "pl-3 pr-0",
+            name: name, values: values, root: false, parent: option[:id]
