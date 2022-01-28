@@ -62,6 +62,9 @@ default: &default
         open_access: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_SO_OfferType_open_access"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"SO-OfferType", :open_access) || "") + "'" %>
         external: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_SO_OfferType_catalog"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"SO-OfferType", :catalog) || "") + "'" %>
 
+  truncate_length: <%= ENV["MP_JIRA_TRUNCATE_LENGTH"].presence || "255" %>
+  untruncated_fields: <%= "[#{(ENV["MP_JIRA_UNTTRUNCATED_FIELDS"] || "").split(",").map { |f| "\"#{f}\""}.join(",")}]" %>
+
 development:
   <<: *default
 
