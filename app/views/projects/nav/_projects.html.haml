@@ -22,7 +22,7 @@
 
 - if projects.archived.any?
   %h5.mt-5.font-weight-bold.projects-title.text-uppercase My archived projects
-  %ul.nav.flex-column.project-menu
+  %ul.nav.flex-column.project-menu.pb-2
     - projects.archived.each do |project|
       %li.nav-item
         = link_to project.name, [project, :services],

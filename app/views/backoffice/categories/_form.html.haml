@@ -10,8 +10,8 @@
   %hr.bottom-hr.mt-5.mb-4
   .row.mt-5
     .col-12
-      .button-wrapper
+      .button-wrapper.mr-5
         = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin",
-        "data-e2e": "create-category-btn"
+        data_e2e: "create-category-btn"
       %a.text-left.flex-grow-1.text-uppercase.float-left.mt-2.mobile-bottom-margin{ href: "/backoffice/categories" }
         = _("Cancel and back to previous page")
