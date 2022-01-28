@@ -6,8 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-
-## [3.30.0-milestone]
+## [3.30.0] 2022-01-28
 
 ### Added
 - Visual representation of statuses for providers in BO (@jarekzet)
@@ -16,16 +15,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Badge color for draft resources in BO (@jarekzet)
 - Parameter panel_id from recommendations is always set to v1 (@Michal-Kolomanski)
 
-### Deprecated
-
 ### Removed
 - Remove AB experiments from admin in BO (@Michal-Kolomanski)
 
 ### Fixed
 - Redirection after Scientific Domain deletion in backoffice (@kmarszalek)
 - Consistence of Resource/Offer order types (@goreck888)
-
-### Security
 
 ## [3.29.1] 2022-01-28
 
