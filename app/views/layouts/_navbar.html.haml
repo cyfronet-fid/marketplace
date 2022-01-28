@@ -1,17 +1,13 @@
 = render "layouts/sections"
 
 #mynav.overlay
-  %a.closebtn{ "href": "javascript:void(0)", "onclick": "closeNav()" }
+  %a.closebtn{ href: "javascript:void(0)", onclick: "closeNav()" }
   .overlay-content
     .mobile-links
       %ul
-        - if !user_signed_in?
+        - if user_signed_in?
           %li
-            = link_to user_checkin_omniauth_authorize_path, class: "btn btn-primary" do
-              = _("Login to EGI marketplace")
-        - else
-          %li
-            %a.simple-item{ href: "/projects" }= _("My projects")
+          %a.simple-item{ href: "/projects" }= _("My projects")
           %li
             %a.simple-item{ href: "/favourites" }= _("Favourite Resources")
           %li
@@ -19,6 +15,10 @@
           %li
             = link_to _("Logout"), destroy_user_session_path, method: :delete,
             class: "btn btn-primary font-weight-bold mt-5 logout-link"
+        - else
+          %li
+          = link_to user_checkin_omniauth_authorize_path, class: "btn btn-primary" do
+            = _("Login to EGI marketplace")
 
     .bottom-links
       .container
@@ -26,10 +26,10 @@
           %li.list-inline-item.ml-2
             %a{ href: "https://www.egi.eu/about/egi-foundation/how-to-reach-the-egi-foundation/" }= _("Contact us")
           %li.list-inline-item.ml-2
-            %a{ href: Mp::Application.config.portal_base_url }= ("Portal Home")
+            %a{ href: Mp::Application.config.portal_base_url }= _("Portal Home")
           %li.list-inline-item.ml-2
             = link_to _("Catalogue & Marketplace"), root_path,
-              class: "#{"active" if local_assigns[:section] == nil}"
+              class: "#{"active" if local_assigns[:section].nil?}"
           %li.list-inline-item.ml-2
             %a{ href: Mp::Application.config.providers_dashboard_url }= _("Providers Dashboard")
           - if policy([:backoffice, :backoffice]).show?
@@ -57,11 +57,7 @@
 
     .menu.dropdown
 
-      - if !user_signed_in?
-        = link_to user_checkin_omniauth_authorize_path, class: "menu__label menu__label--unauth" do
-          = _("My EGI Marketplace")
-
-      - else
+      - if user_signed_in?
         %a#dropdown-menu-button.dropdown-toggle{ "aria-expanded" => "false",
                                                       "aria-haspopup" => "true",
                                                       "data-toggle" => "dropdown",
@@ -75,9 +71,12 @@
               %a.dropdown-item{ href: "/favourites" }= _("Favourite Resources")
             %li
               %a.dropdown-item{ href: "/profile" }= _("Profile")
+      - else
+        = link_to user_checkin_omniauth_authorize_path, class: "menu__label menu__label--unauth" do
+          = _("My EGI Marketplace")
 
 
-      .menu__hamburger{ "onclick": "openNav()" }
+      .menu__hamburger{ onclick: "openNav()" }
         %span
         %span
         %span
