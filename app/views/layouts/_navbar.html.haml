@@ -14,7 +14,7 @@
             %a.simple-item{ href: "/profile" }= _("Profile")
           %li
             = link_to _("Logout"), destroy_user_session_path, method: :delete, "data-e2e" => "logout",
-            class: "btn btn-primary font-weight-bold mt-5 logout-link"
+            class: "btn btn-primary font-weight-bold mt-5"
         - else
           %li
           = link_to user_checkin_omniauth_authorize_path, "data-e2e" => "my-eosc-button", class: "btn btn-primary" do
