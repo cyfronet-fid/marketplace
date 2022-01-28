@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.29.1] 2022-01-24
+## [3.29.1] 2022-01-28
 
 ### Fixed
 - It was possible to create an order which wouldn't be propagated to Jira (@jswk)
