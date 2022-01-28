@@ -137,6 +137,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Tagline", with: "service tagline"
       select scientific_domain.name, from: "Scientific domains"
       select "Poland", from: "Geographical availabilities"
+      select "open_access", from: "Order type"
 
       click_on "Create Resource"
 
@@ -224,6 +225,7 @@ RSpec.feature "Services in backoffice" do
       select provider.name, from: "Providers"
       select "Poland", from: "Geographical availabilities"
       select resource_organisation.name, from: "Resource organisation"
+      select "open_access", from: "Order type"
 
       click_on "Preview"
 
