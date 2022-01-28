@@ -603,13 +603,11 @@ li {
 
   .copyright {
     text-align: right;
-    font-size: 0.875rem;
-    font-weight: 700;
+    font-size: 0.85rem;
 
     a {
-      text-transform: uppercase;
-      font-size: 0.75rem;
       margin-left: 10px;
+      font-size: 0.85rem;
 
       &:hover {
         text-decoration: none;
@@ -624,13 +622,13 @@ li {
     margin: 0;
 
     li {
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.5rem;
       font-size: 0.73rem;
       font-weight: 300;
       color: $color-white;
 
       a {
-        font-size: 0.68rem;
+        font-size: 0.9rem;
         font-weight: 300;
         line-height: 1.1;
 
@@ -642,12 +640,27 @@ li {
     }
   }
 
+  .contact-list {
+    li {
+      margin-bottom: 14px;
+      line-height: 1.4;
+      font-size: 0.95rem;
+
+      svg {
+        width: 20px;
+        float: left;
+        font-size: 1.1rem;
+        margin-right: 10px;
+      }
+    }
+  }
+
   .title {
     color: $color-white;
     font-weight: 800;
     line-height: 1.2;
-    font-size: 0.875rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.95rem;
 
     a {
       font-size: 0.875rem;
@@ -686,6 +699,11 @@ li {
 
   .yt-logo {
     background: url("yt-icon.svg") top center no-repeat;
+  }
+
+  .linkedin-logo {
+    background: url('../images/linkedin-icon.png') top center no-repeat;
+    background-size: contain;
   }
 }
 

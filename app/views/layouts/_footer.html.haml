@@ -1,114 +1,64 @@
-%footer.footer.pt-3.pb-3
+%footer.footer.pt-5.pb-3
   - portal_base = Mp::Application.config.portal_base_url
   .container
-    .row.h-100
-      .col-md-3.my-auto
-        %a.egi-logo-mono.d-block{ href: portal_base }
+    .row
+      .col-md-4
+        .egi-logo-mono.d-block{ href: portal_base }
           = image_tag "egi-footer-logo.png"
+      .col-md-2
+        %ul
+          %li
+            .title= _("Information")
+          %li
+            %a{ href: "#" }= _("Contact us")
+          %li
+            %a{ href: "#" }= _("Terms and conditions")
+          %li
+            %a{ href: "#{root_url}about" }= _("About us")
+          %li
+            %a{ href: "#" }= _("SLA")
+          %li
+            %a{ href: "#" }= _("Sitemap")
+
+
+      .col-md-2
+        %ul
+          %li
+            .title= _("My account")
+          %li
+            %a{ href: "#" }= _("My orders")
+          %li
+            %a{ href: "#" }= _("My credit slips")
+          %li
+            %a{ href: "#" }= _("My addresses")
+          %li
+            %a{ href: "#" }= _("My personal info")
+      .col-md-4
+        %ul.contact-list
+          %li
+            .title= _("Store information")
+          %li
+            %i.fas.fa-map-marker
+            = _("EGI Foundation, Science Park 140 1098 XG Amsterdam The Netherlands")
+          %li
+            %i.fas.fa-phone-alt
+            = _("Phone number: +31 (0)20 89 32 007")
+          %li
+            %i.fas.fa-envelope
+            = _("E-mail: marketplace-support@mailman.egi.eu")
+
+
+    %hr.mb-4
+    .row.h-100
+      .col-md-3.my-auto.socials-box
+        %a.social-logo.twitter-logo.d-inline-block.mr-2{ href: "https://twitter.com/egi_einfra" }
+        %a.social-logo.linkedin-logo.d-inline-block{ href: "https://www.linkedin.com/company/egi-foundation" }
       .col-md-9.my-auto.copyright
         %span.copy-text
           = _("Copyright 2024 - All rights reserved")
-        %a.ml-4.text-uppercase{ href: "https://eosc-portal.eu/privacy-policy-summary" }
-          = _("privacy policy")
-    %hr.mb-4
-    .row
-      .col-md
-        %ul
-          %li
-            .title= _("About")
-          %li.mb-1
-            %a{ href: "#{portal_base}/about/eosc" }= _("EGI")
-          %li.mb-1
-            %a{ href: "#{portal_base}/about/eosc-doers" }= _("EGI Doers")
-          %li.mb-1
-            %a{ href: "#{portal_base}/about/eosc-projects" }= _("EGI Projects")
-          %li.mb-1
-            %a{ href: "#{portal_base}/about/funding-opportunities" }= _("Funding Opportunities")
-          %li.mb-1
-            %a{ href: "#{root_url}about" }= _("Marketplace")
-          %li.mb-1
-            %a{ href: "#{portal_base}/about/faqs" }= _("FAQs")
-          %li.mb-1
-            %a{ href: "#{portal_base}/contact-us" }= _("Contact us")
-      .col-md
-        %ul
-          %li
-            .title= _("Governance")
-          %li.mb-1
-            %a{ href: "#{portal_base}/governance" }= _("EGI Governance")
-          %li.mb-1
-            %a{ href: "#{portal_base}/governance/rules-participation" }= _("Rules of participation")
-          %li.mb-1
-            %a{ href: "#{portal_base}/governance/best-practices" }= _("Best Practices")
-      .col-md
-        %ul
-          %li
-            .title= _("Services & Resources")
-          %li.mb-1
-            %a{ href: "#{portal_base}/services-resources/sharing-discovery" }= _("Sharing & Discovery")
-          %li.mb-1
-            %a{ href: "#{portal_base}/services-resources/processing-analysis" }= _("Processing & Analysis")
-          %li.mb-1
-            %a{ href: "#{portal_base}/services-resources/data-management" }= _("Data Management")
-          %li.mb-1
-            %a{ href: "#{portal_base}/services-resources/compute" }= _("Compute")
-          %li.mb-1
-            %a{ href: "#{portal_base}/services-resources/storage" }= _("Storage")
-          %li.mb-1
-            %a{ href: "#{portal_base}/services-resources/networking" }= _("Networking")
-          %li.mb-1
-            %a{ href: "#{portal_base}/services-resources/training" }= _("Training & Support")
-          %li.mb-1
-            %a{ href: "#{portal_base}/services-resources/security-operations" }= _("Security & Operations")
-      .col-md
-        %ul
-          %li
-            .title= _("Policy")
-          %li.mb-1
-            %a{ href: "#{portal_base}/policy/ec-documents" }= _("EC Documents")
-          %li.mb-1
-            %a{ href: "#{portal_base}/policy/europe" }= _("Europe")
-          %li.mb-1
-            %a{ href: "#{portal_base}/policy/eu-member-states" }= _("Member States")
-      .col-md
-        %ul
-          %li
-            .title= _("EOSC IN PRACTICE")
-          %li.mb-1
-            %a{ href: "#{portal_base}/eosc-in-practice/use-cases" }= _("Use Cases")
-          %li.mb-1
-            %a{ href: "#{portal_base}/eosc-in-practice/open-call" }= _("Open Call")
-      .col-md
-        %ul
-          %li
-            .title= _("Media")
-          %li.mb-1
-            %a{ href: "#{portal_base}/media/news" }= _("News")
-          %li.mb-1
-            %a{ href: "#{portal_base}/media/events" }= _("Forthcoming events")
-          %li.mb-1
-            %a{ href: "#{portal_base}/media/past-events" }= _("Past Events")
-      .col-md
-        %ul
-          %li.mb-1
-            .title= _("MARKETPLACE")
-          %li.mb-1
-            %a{ href: "#{root_url}about" }= _("About")
-          %li.mb-1
-            = link_to _("All Services"), services_path
-          - @root_categories.each do |root_category|
-            %li.mb-1
-              = link_to root_category.name, root_category
-          %li.mb-1
-            %a{ href: "#{portal_base}/for-providers" }= _("For providers")
-          %li.mb-1
-            = link_to _("Help"), help_path
+        %a.ml-4{ href: "https://eosc-portal.eu/privacy-policy-summary" }
+          = _("Privacy policy")
 
-
-    .row.mt-4.socials
-      .col-md-6
-        %a.social-logo.twitter-logo.d-inline-block.mr-2{ href: "https://twitter.com/EoscPortal" }
-        %a.social-logo.yt-logo.d-inline-block{ href: "https://www.youtube.com/channel/UCHsaUFy5LJ3rJ28qDg2StGA" }
 
 .eu-information.p-4
   .container
