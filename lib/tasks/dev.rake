@@ -22,10 +22,10 @@ namespace :dev do
 
     create_vocabularies
     create_categories(yaml_hash["categories"])
-    create_providers(yaml_hash["providers"])
     create_scientific_domains(yaml_hash["domain"])
     create_platforms(yaml_hash["platforms"])
     create_target_users(yaml_hash["target_users"])
+    create_providers(yaml_hash["providers"])
     create_services(yaml_hash["services"])
     create_relations(yaml_hash["relations"])
 
@@ -50,12 +50,20 @@ namespace :dev do
       provider.website = hash["website"]
       provider.legal_entity = hash["legal_entity"]
       provider.description = hash["description"]
+      provider.multimedia = hash["multimedia"]
+      provider.tag_list = hash["tags"]
       provider.street_name_and_number = hash["street_name_and_number"]
       provider.postal_code = hash["postal_code"]
       provider.city = hash["city"]
+      provider.region = hash["region"]
       provider.country = Country.for(hash["country_alpha2"])
+      provider.certifications = %w[ISO AES VESA].sample(rand(1..3))
+      provider.hosting_legal_entity = ["Lorem ipsum", "Test", "Some Entity"].sample(rand(1..3))
+      provider.affiliations = ["Affiliation A", "Affiliation test", "Affiliation 1"].sample(rand(1..3))
+      provider.national_roadmaps = ["Roadmap 1", "Roadmap 2", "Roadmap 3"].sample(rand(1..3))
       provider.pid = provider.abbreviation
       provider.status = hash["status"]
+      assign_sample_associations_to_provider(provider)
 
       io, extension = ImageHelper.base_64_to_blob_stream(hash["image_base_64"])
       provider.logo.attach(
@@ -67,6 +75,26 @@ namespace :dev do
       provider.save(validate: false)
       puts "  - #{hash["name"]} provider generated"
     end
+  end
+
+  def samples_of(vocabulary, max_size = 3)
+    vocabulary.all.sample(rand(1..max_size))
+  end
+
+  def assign_sample_associations_to_provider(provider)
+    provider.provider_life_cycle_status = Vocabulary::ProviderLifeCycleStatus.all.sample.id
+    provider.networks = samples_of(Vocabulary::Network)
+    provider.structure_types = samples_of(Vocabulary::StructureType)
+    provider.esfri_domains = samples_of(Vocabulary::EsfriDomain)
+    provider.esfri_type = Vocabulary::EsfriType.all.sample.id
+    provider.meril_scientific_domains = samples_of(Vocabulary::MerilScientificDomain)
+    provider.areas_of_activity = samples_of(Vocabulary::AreaOfActivity)
+    provider.societal_grand_challenges = samples_of(Vocabulary::SocietalGrandChallenge)
+    provider.scientific_domains = samples_of(ScientificDomain)
+    provider.legal_status = Vocabulary::LegalStatus.all.sample.id
+    provider.participating_countries = samples_of(Country)
+
+    provider
   end
 
   def create_scientific_domains(scientific_domains_hash)
@@ -98,10 +126,11 @@ namespace :dev do
   def create_services(services_hash)
     puts "Generating services:"
     services_hash.each do |_, hash|
+      prov = hash["providers"] || []
       categories = Category.where(name: hash["parents"])
-      providers = Provider.where(name: hash["providers"])
+      resource_organisation = Provider.find_by(name: hash["resource_organisation"] || prov.shift)
+      providers = Provider.where(name: prov)
       domain = ScientificDomain.where(name: hash["domain"])
-      resource_organisation = Provider.find_by(name: hash["resource_organisation"] || "not specified yet")
       platforms = Platform.where(name: hash["platforms"])
       funding_bodies = Vocabulary::FundingBody.where(eid: hash["funding_bodies"])
       funding_programs = Vocabulary::FundingProgram.where(eid: hash["funding_programs"])
@@ -109,7 +138,6 @@ namespace :dev do
       trl = Vocabulary::Trl.where(eid: hash["trl"])
       life_cycle_status = Vocabulary::LifeCycleStatus.where(eid: hash["life_cycle_status"])
       target_users = TargetUser.where(name: hash["target_users"])
-      order_type = order_type_from(hash)
 
       service.assign_attributes(
         pid: hash["pid"] || nil,
@@ -117,7 +145,7 @@ namespace :dev do
         description: hash["description"],
         scientific_domains: domain,
         providers: providers,
-        order_type: order_type,
+        order_type: order_type_from(hash),
         order_url: hash["order_url"] || "",
         resource_organisation: resource_organisation,
         webpage_url: hash["webpage_url"],
