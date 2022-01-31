@@ -86,6 +86,8 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: &default_multimedia
+      - https://google.com
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -138,6 +140,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -158,6 +161,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -178,6 +182,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -198,6 +203,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -218,6 +224,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -238,6 +245,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -258,6 +266,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -278,6 +287,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -298,6 +308,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -318,6 +329,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -338,6 +350,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -358,6 +371,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -378,6 +392,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -398,6 +413,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -418,6 +434,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -438,6 +455,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -458,6 +476,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -478,6 +497,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -498,6 +518,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -518,6 +539,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -538,6 +560,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -558,6 +581,7 @@ providers:
       Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
     street_name_and_number: "Malcolm St. 4"
     postal_code: "332-332"
     city: "Test City"
@@ -2813,6 +2837,7 @@ services:
   ENES Climate Analytics Service:
     name: &enes ENES Climate Analytics Service
     parents: *processingAndAnalysisParent
+    resource_organisation: *esa
     logo: enes-climate-analytics-service.png
     open_access: false
     webpage_url: https://portal.enes.org/data/data-metadata-service/processing/ecas
