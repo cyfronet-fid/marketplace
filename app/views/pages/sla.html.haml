@@ -1,0 +1,19 @@
+- content_for :title, _("SLA")
+- breadcrumb :sla
+-# haml-lint:disable MultilinePipe
+%main
+  .container.mt-5
+    %h1.mb-4.display-1 SLA
+    .media.border-0
+      .media-body
+        .row
+          .col-xs-12.col-sm-12
+            %p
+              The Coorporate Level Service Level Agreement (SLA) is valid for all the services provided to support
+              business processes according to the current valid
+              = link_to _("EGI service catalogue"), "https://www.egi.eu/services/"
+              , if no other agreeements
+              are in place. The Coorporate Level SLA may be extended or replaced by specific SLAs.
+            %p
+              Full text of the SLA is available at
+              = link_to _("https://documents.egi.eu/document/2733"), "https://documents.egi.eu/document/2733"
