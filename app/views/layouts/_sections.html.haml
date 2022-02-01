@@ -19,7 +19,7 @@
       - if user_signed_in?
         %li
           %i.fas.fa-user.mr-1
-          = _("#{current_user.first_name}" "#{current_user.last_name}")
+          = _("#{current_user.first_name} #{current_user.last_name}")
         %li
           %strong= link_to _("Logout"), destroy_user_session_path, method: :delete,
           data: { turbo_method: :delete, e2e: "logout" }

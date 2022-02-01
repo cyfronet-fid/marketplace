@@ -157,6 +157,16 @@ crumb :about do
   parent :marketplace_root
 end
 
+crumb :sla do
+  link "SLA", about_path
+  parent :marketplace_root
+end
+
+crumb :terms_and_conditions do
+  link "Terms and conditions", about_path
+  parent :marketplace_root
+end
+
 crumb :target_users do
   link "Target users", target_users_path
   parent :marketplace_root
