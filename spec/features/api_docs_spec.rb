@@ -64,7 +64,7 @@ RSpec.feature "Api docs page" do
     scenario "My token persists after signing out", js: true do
       token = user.authentication_token
 
-      expect(page).to have_content("Welcome to the EOSC")
+      expect(page).to have_content("About the Marketplace")
       expect(page).to have_content("Successfully authenticated from Checkin account.")
       find_link("Logout").click
       expect(page).to have_content("Signed out successfully.")
