@@ -19,9 +19,9 @@
       - if user_signed_in?
         %li
           %i.fas.fa-user.mr-1
-          = _("#{current_user.first_name}" "#{current_user.last_name}")
+          = _("#{current_user.first_name} #{current_user.last_name}")
         %li
-          %strong= link_to _("Logout"), destroy_user_session_path, method: :delete
+          %strong= link_to _("Logout"), destroy_user_session_path, method: :delete, "data-e2e" => "logout"
       - else
         %li
           %strong= link_to _("Login"), user_checkin_omniauth_authorize_path
