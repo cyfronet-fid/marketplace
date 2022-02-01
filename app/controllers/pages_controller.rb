@@ -3,7 +3,17 @@
 class PagesController < ApplicationController
   helper_method :community_link
   helper_method :target_users_link
+
   def about
+  end
+
+  def about_projects
+  end
+
+  def sla
+  end
+
+  def terms_and_conditions
   end
 
   def about_projects
