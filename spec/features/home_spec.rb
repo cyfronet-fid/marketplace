@@ -15,7 +15,7 @@ RSpec.feature "Home", end_user_frontend: true do
     expect(page).to have_selector("#q[value='Something']")
   end
 
-  context "service opinions" do
+  context "service opinions", skip: "due to diff between egi mp and default mp" do
     let(:service_opinion_published) { create(:service_opinion) }
     let(:service_opinion_draft) { create(:service_opinion) }
 
@@ -54,13 +54,13 @@ RSpec.feature "Home", end_user_frontend: true do
       let(:admin) { create(:user, roles: [:admin]) }
       before { checkin_sign_in_as(admin) }
 
-      it "should see error" do
+      it "should see error", skip: "due to diff between egi mp and default mp" do
         visit "/"
         expect(page).to have_text("Cannot find lead_section with slug \"learn-more\"")
         expect(page).to have_text("Cannot find lead_section with slug \"use-cases\"")
       end
 
-      it "should see section" do
+      it "should see section", skip: "due to diff between egi mp and default mp" do
         lead_section = create(:lead_section, slug: "learn-more", title: "Learn More Section")
         create(:lead, lead_section: lead_section)
         visit "/"
