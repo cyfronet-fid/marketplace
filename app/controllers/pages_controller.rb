@@ -2,6 +2,8 @@
 
 class PagesController < ApplicationController
   def about; end
+  def sla; end
+  def terms_and_conditions; end
 
   def about_projects; end
 

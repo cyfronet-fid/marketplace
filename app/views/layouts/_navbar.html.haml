@@ -25,7 +25,7 @@
             onclick: domains.map { |domain| expired_autologin_cookie + domain + "';" }.join
         - else
           %li
-          = link_to user_checkin_omniauth_authorize_path, "data-e2e" => "my-eosc-button", class: "btn btn-primary" do
+          = link_to user_checkin_omniauth_authorize_path, class: "btn btn-primary" do
             = _("Login to EGI marketplace")
 
     .bottom-links
