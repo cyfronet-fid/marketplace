@@ -7,17 +7,17 @@
       %ul
         - if user_signed_in?
           %li
-          %a.simple-item{ href: "/projects" }= _("My projects")
+            %a.simple-item{ href: "/projects" }= _("My projects")
           %li
             %a.simple-item{ href: "/favourites" }= _("Favourite Resources")
           %li
             %a.simple-item{ href: "/profile" }= _("Profile")
           %li
-            = link_to _("Logout"), destroy_user_session_path, method: :delete, "data-e2e" => "logout",
+            = link_to _("Logout"), destroy_user_session_path, method: :delete,
             class: "btn btn-primary font-weight-bold mt-5"
         - else
           %li
-          = link_to user_checkin_omniauth_authorize_path, "data-e2e" => "my-eosc-button", class: "btn btn-primary" do
+          = link_to user_checkin_omniauth_authorize_path, class: "btn btn-primary" do
             = _("Login to EGI marketplace")
 
     .bottom-links
@@ -60,8 +60,8 @@
       - if user_signed_in?
         %a#dropdown-menu-button.dropdown-toggle{ "aria-expanded" => "false",
                                                       "aria-haspopup" => "true",
-                                                      "data-e2e" => "my-eosc-button",
                                                       "data-toggle" => "dropdown",
+                                                      "data-e2e" => "my-eosc-button",
                                                       type: "button" }
           .menu__label= _("My EGI Marketplace")
         .dropdown-menu.w-auto
