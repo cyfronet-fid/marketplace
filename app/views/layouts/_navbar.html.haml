@@ -13,11 +13,11 @@
           %li
             %a.simple-item{ href: "/profile" }= _("Profile")
           %li
-            = link_to _("Logout"), destroy_user_session_path, method: :delete,
+            = link_to _("Logout"), destroy_user_session_path, method: :delete, "data-e2e" => "logout",
             class: "btn btn-primary font-weight-bold mt-5 logout-link"
         - else
           %li
-          = link_to user_checkin_omniauth_authorize_path, class: "btn btn-primary" do
+          = link_to user_checkin_omniauth_authorize_path, "data-e2e" => "my-eosc-button", class: "btn btn-primary" do
             = _("Login to EGI marketplace")
 
     .bottom-links
@@ -60,6 +60,7 @@
       - if user_signed_in?
         %a#dropdown-menu-button.dropdown-toggle{ "aria-expanded" => "false",
                                                       "aria-haspopup" => "true",
+                                                      "data-e2e" => "my-eosc-button",
                                                       "data-toggle" => "dropdown",
                                                       type: "button" }
           .menu__label= _("My EGI Marketplace")
