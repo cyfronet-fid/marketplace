@@ -47,11 +47,14 @@ RSpec.feature "Provider browsing" do
     expect(body).to_not have_content "Recently added resources"
   end
 
-  scenario "I can see 'Manage the resource' button if i am an admin provider" do
+  scenario "I can see 'Manage the resource' button if i am an admin provider and its eosc_registry" do
     admin = create(:user)
     data_admin =
       create(:data_administrator, first_name: admin.first_name, last_name: admin.last_name, email: admin.email)
     provider = create(:provider, data_administrators: [data_admin])
+    provider_source = create(:eosc_registry_provider_source, provider: provider)
+    provider.upstream = provider_source
+    provider.save!
 
     checkin_sign_in_as(admin)
 
@@ -61,13 +64,30 @@ RSpec.feature "Provider browsing" do
     expect(page).to have_content("Manage the provider")
   end
 
-  scenario "I cannnot see 'Manage the resource' button if i am not an admin provider" do
+  scenario "I cannnot see 'Manage the resource' button if it is 'eosc_registry' resource and i am not an admin" do
     user, admin = create_list(:user, 2)
     data_admin =
       create(:data_administrator, first_name: admin.first_name, last_name: admin.last_name, email: admin.email)
     provider = create(:provider, data_administrators: [data_admin])
+    provider_source = create(:eosc_registry_provider_source, provider: provider)
+    provider.upstream = provider_source
+    provider.save!
 
     checkin_sign_in_as(user)
+
+    visit provider_path(provider)
+
+    expect(page).to have_link("Browse resources")
+    expect(page).to_not have_content("Manage the provider")
+  end
+
+  scenario "I cannnot see 'Manage the resource' button if it not eosc_registry provider and i am an admin" do
+    admin = create(:user)
+    data_admin =
+      create(:data_administrator, first_name: admin.first_name, last_name: admin.last_name, email: admin.email)
+    provider = create(:provider, data_administrators: [data_admin])
+
+    checkin_sign_in_as(admin)
 
     visit provider_path(provider)
 

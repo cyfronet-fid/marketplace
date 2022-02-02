@@ -52,7 +52,7 @@
                       "data-e2e": "access-resource-btn",
                       "data-probe": "",
                       "data-target": local_assigns[:preview] ? "preview.link" : ""
-      - if user_signed_in? && policy(service).data_administrator? && !local_assigns[:preview]
+      - if user_signed_in? && show_manage_button?(service) && !local_assigns[:preview]
         %a#dropdown-menu-button.dropdown-toggle.btn.btn-outline-secondary.d-block.mb-3{ "aria-expanded" => "false",
                                                       "aria-haspopup" => "true",
                                                       "data-toggle" => "dropdown",
