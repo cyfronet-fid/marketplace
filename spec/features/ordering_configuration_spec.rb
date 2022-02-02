@@ -11,7 +11,14 @@ RSpec.feature "Services in ordering_configuration panel" do
     let(:provider) { create(:provider, data_administrators: [data_administrator]) }
     let(:service) { create(:service, resource_organisation: provider, offers: [create(:offer)]) }
 
-    before { checkin_sign_in_as(user) }
+    before do
+      provider_source = create(:eosc_registry_provider_source, provider: provider)
+      provider.update!(upstream: provider_source)
+
+      service_source = create(:eosc_registry_service_source, service: service)
+      service.update!(resource_organisation: provider, upstream: service_source)
+      checkin_sign_in_as(user)
+    end
 
     scenario "I can see ordering_configuration panel" do
       visit service_ordering_configuration_path(service)
@@ -89,6 +96,8 @@ RSpec.feature "Services in ordering_configuration panel" do
 
     scenario "I can add an offer if none exists", js: true do
       service_without_offers = create(:service, resource_organisation: provider, offers: [])
+      service_source = create(:eosc_registry_service_source, service: service_without_offers)
+      service_without_offers.update!(resource_organisation: provider, upstream: service_source)
 
       visit service_ordering_configuration_path(service_without_offers)
 
@@ -140,6 +149,8 @@ RSpec.feature "Services in ordering_configuration panel" do
       oms1 = create(:oms, name: "OMS1", custom_params: { foo: { mandatory: true, default: "baz" } })
       oms2 = create(:oms, name: "OMS2", custom_params: {})
       service = create(:service, name: "my service", resource_organisation: provider, status: :draft)
+      service_source = create(:eosc_registry_service_source, service: service)
+      service.update!(upstream: service_source)
       offer = create(:offer, name: "offer1", description: "desc", service: service, internal: false)
       create(:offer, service: service)
 
@@ -177,6 +188,8 @@ RSpec.feature "Services in ordering_configuration panel" do
       oms1 = create(:oms, name: "OMS1", custom_params: { foo: { mandatory: true, default: "baz" } })
       oms2 = create(:oms, name: "OMS2", custom_params: {})
       service = create(:service, name: "my service", resource_organisation: provider, status: :draft)
+      service_source = create(:eosc_registry_service_source, service: service)
+      service.update!(upstream: service_source)
       offer = create(:offer, name: "offer1", description: "desc", service: service, internal: false)
 
       service.reload
@@ -216,7 +229,14 @@ RSpec.feature "Services in ordering_configuration panel" do
       let(:provider) { create(:provider) }
       let(:service) { create(:service, resource_organisation: provider, offers: [create(:offer)]) }
 
-      before { checkin_sign_in_as(user) }
+      before do
+        provider_source = create(:eosc_registry_provider_source, provider: provider)
+        provider.update!(upstream: provider_source)
+
+        service_source = create(:eosc_registry_service_source, service: service)
+        service.update!(resource_organisation: provider, upstream: service_source)
+        checkin_sign_in_as(user)
+      end
 
       scenario "I am#{authorized ? nil : " not"} authorized to see the ordering_configuration panel" do
         visit service_ordering_configuration_path(service)

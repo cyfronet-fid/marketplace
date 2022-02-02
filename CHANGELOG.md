@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Strip leading and trailing whitespaces from Resource and Provider name (@kmarszalek)
 
 ### Changed
+- Show 'Manage the provider/resource' button only when upstream set to 'eosc_registry' (@kmarszalek)
 
 ### Deprecated
 

@@ -65,8 +65,6 @@ describe("Providers", () => {
           .click();
         cy.contains("h2", value)
           .should("be.visible");
-        cy.contains("div", "Manage the provider")
-          .should("be.visible");
         cy.get("[data-e2e='btn-browse-resource']")
           .click();
         cy.location("href")
