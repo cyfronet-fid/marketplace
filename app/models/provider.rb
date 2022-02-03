@@ -9,6 +9,7 @@ class Provider < ApplicationRecord
 
   acts_as_taggable
 
+  before_save :strip_whitespace
   searchkick word_middle: [:provider_name]
 
   STATUSES = { published: "published", deleted: "deleted", draft: "draft" }.freeze
@@ -168,6 +169,10 @@ class Provider < ApplicationRecord
   end
 
   private
+
+  def strip_whitespace
+    self.name = name&.strip
+  end
 
   def remove_empty_array_fields
     array_fields = %i[multimedia certifications affiliations national_roadmaps tag_list]
