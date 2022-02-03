@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.32.0-milestone]
+
+### Added
+- Strip leading and trailing whitespaces from Resource and Provider name (@kmarszalek)
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
 ## [3.31.0-milestone]
 
 ### Added
