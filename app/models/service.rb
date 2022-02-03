@@ -9,6 +9,7 @@ class Service < ApplicationRecord
 
   acts_as_taggable
 
+  before_save :strip_whitespace
   before_save :remove_empty_array_fields
 
   has_one_attached :logo
@@ -226,6 +227,10 @@ class Service < ApplicationRecord
   end
 
   private
+
+  def strip_whitespace
+    self.name = name&.strip
+  end
 
   def remove_empty_array_fields
     array_fields = %i[
