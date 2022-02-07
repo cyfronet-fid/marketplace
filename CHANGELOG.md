@@ -22,20 +22,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
-## [3.31.0-milestone]
-
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
+## [3.31.0] 2022-02-07
 
 ### Fixed
 - Improper casting numerical string to a number in offer's parameters (@goreck888)
-
-### Security
 
 ## [3.30.0] 2022-01-28
 
