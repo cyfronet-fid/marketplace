@@ -1,7 +1,7 @@
 %ul.list-group
 - fields.each do |field|
-  - if service.send(field).present?
+  - if object.send(field).present?
     %li.list-group-item
       %span
         -# TODO: refactor dynamic translation
-        = t(".fields.#{field}.#{service.send(field)}")
+        = t(".fields.#{field}.#{object.send(field)}")

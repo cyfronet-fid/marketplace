@@ -57,4 +57,12 @@ module ApplicationHelper
   def show_manage_button?(record)
     policy(record).data_administrator? && record.upstream&.eosc_registry?
   end
+
+  def object_logo(object, classes = "align-self-center mr-4 float-left img-responsive", resize = "100x67")
+    if object.logo.attached? && object.logo.variable?
+      image_tag object.logo.variant(resize: resize), class: classes
+    else
+      image_pack_tag("eosc-img.png", size: resize, class: classes)
+    end
+  end
 end

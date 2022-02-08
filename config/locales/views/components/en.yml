@@ -1,0 +1,39 @@
+en:
+  components:
+    presentable:
+      header_links_component:
+        list:
+          legal_statuses: Legal status
+          provider_life_cycle_statuses: Life cycle
+      sidebar_component:
+        links:
+          multimedia: Multimedia %{idx}
+        places_and_languages: Places and languages
+        platforms: Related Infrastructures and Platforms
+        support: Support
+        documents: Documents
+        restrictions: Resource restrictions
+        phase: Resource phase
+        scientific_categorisation: Scientific categorisation
+        categorisation: Categorisation
+        target_users: Target users
+        resource_availability_and_languages: Resource availability and languages
+      details_component:
+        details:
+          title:
+            statuses: Statuses
+            certifications: Certifications
+            esfri_type: ESFRI Type
+            esfri_domain: ESFRI Domain
+            meril_scientific_categorisation: MERIL Scientific Categorisation
+            affiliations: Affiliations
+            structure_types: Structure Types
+            areas_of_activity: Areas of Activity
+            societal_grand_challenges: Societal Grand Challenges
+            networks: Networks
+            hosting_legal_entity: Hosting Legal Entity
+            national_roadmaps: National Roadmaps
+        array:
+          legal_statuses: Legal Status
+          provider_life_cycle_statuses: Provider Life Cycle Status
+          tag_list: Tags

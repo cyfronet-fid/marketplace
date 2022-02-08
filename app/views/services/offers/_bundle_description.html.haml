@@ -5,9 +5,9 @@
       %span
         = _("Voucher")
   %span.bundle-logo
-    = service_logo(offer.service, "align-self-center img-fluid bundle-img", "180x90")
+    = object_logo(offer.service, "align-self-center img-fluid bundle-img", "180x90")
     - offer.bundled_offers.each do |item|
-      = service_logo(item.service, "align-self-center img-fluid bundle-img", "180x90")
+      = object_logo(item.service, "align-self-center img-fluid bundle-img", "180x90")
   %h4.card-title= offer.name
   %p
     .card-text.mb-2{ "data-controller" => "paragraph" }

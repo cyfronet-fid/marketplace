@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Service::HeaderHelper
+module Presentable::HeaderHelper
   def service_header_fields
     [links]
   end
@@ -29,6 +29,14 @@ module Service::HeaderHelper
       backoffice_service_path(service, { from: from })
     else
       service_path(service)
+    end
+  end
+
+  def preview_link_parameters(is_preview)
+    if is_preview
+      { disabled: true, tabindex: -1, class: "disabled", "data-tooltip": "Element disabled in the preview mode" }
+    else
+      {}
     end
   end
 
