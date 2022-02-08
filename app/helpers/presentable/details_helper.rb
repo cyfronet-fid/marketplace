@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Service::DetailsHelper
+module Presentable::DetailsHelper
   def service_details_columns
     [
       [classification, availability, marketing, dependencies, attribution, order],

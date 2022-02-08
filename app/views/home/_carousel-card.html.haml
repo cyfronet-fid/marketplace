@@ -3,7 +3,7 @@
     = link_to service.name.truncate(29), service, class: "title"
   %article
     %p
-      = service_logo(service)
+      = object_logo(service)
       = truncate(markdown(service.tagline), length: 120, escape: false)
   %footer
     .column-left

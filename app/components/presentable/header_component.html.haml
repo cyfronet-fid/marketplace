@@ -1,0 +1,80 @@
+.row
+  .col-12.col-lg-9.row
+    .col-12.col-sm-3.d-flex.img-service-detail
+      - if @preview
+        = image_tag backoffice_service_logo_preview_path(service_id: @object.id || "new"),
+        class: "align-self-center img-fluid"
+      - else
+        = object_logo(@object)
+    .col-12.col-sm-9.service-details-header
+      %h2.font-weight-bolder= @title
+      %p.mb-1= @subtitle
+      - if @object.instance_of?(Service)
+        = render "components/presentable/header_component/categorization",
+          service: @object, highlights: nil, preview: @preview
+
+        .row.mt-2
+          .col
+            .stars
+              = print_rating_stars(@object.rating)
+            .rating
+              %span.ml-1.font-weight-bold
+                (#{@object.rating} /5)
+              - if @object.persisted?
+                = service_opinions_link(@object, @preview)
+            %fieldset{ preview_link_parameters(@preview) }
+              .comparison
+                %span.compare
+                  %label{ @preview ? {} : options(@object.slug, @comparison_enabled) }
+                    = check_box_tag "comparison", @object.slug, checked?(@object.slug), id: "comparison-#{@object.id}",
+                            class: @preview ? "form-check-input disabled" : "form-check-input",
+                            disabled: !checked?(@object.slug) && @comparison_enabled,
+                            "data-probe" => "",
+                            "data-e2e": "comparison-checkbox",
+                            "data-target": "comparison.checkbox",
+                            "data-action": "click->comparison#update"
+                    %span.smaller
+                      = _("Add to comparison")
+              .comparison
+                %span.compare
+                  %label
+                    = check_box_tag "favourite", @object.slug, favourite?(Array(@favourite_services), @object.slug),
+                      id: "favourite-#{@object.id}",
+                          class: "form-check-input",
+                          "data-target": "favourite.checkbox",
+                          "data-action": "click->favourite#updateFromRes"
+                    %span.smaller
+                      = _("Add to favourites")
+  .col-12.col-lg-3.text-center.vertical-center
+    .vertical-center-inner.access-type
+      - if @object.instance_of?(Service)
+        - if @orderable || @preview
+          = link_to _("Access the resource"),
+                        service_offers_path(@object),
+                        class: "btn btn-primary d-block mb-3",
+                        "data-e2e": "access-resource-btn",
+                        "data-probe": "",
+                        "data-target": @preview ? "preview.link" : ""
+        - if @show_manage_button
+          = render "components/presentable/header_component/service_drop_down_menu", service: @object
+        %span.ordertype-label
+          %i{ class: "ordertype #{order_type(@object)}" }
+          -# TODO: refactor dynamic translation
+          = t("offers.type.#{order_type(@object)}")
+      - elsif @object.instance_of?(Provider)
+        = link_to _("Browse resources"),
+                    services_path(providers: @object.id),
+                    class: "btn btn-primary d-block mb-3", "data-e2e": "btn-browse-resource"
+        - if @show_manage_button
+          = render "components/presentable/header_component/provider_drop_down_menu", provider: @object
+.row.service-links
+  .col-12.col-lg-9.row
+    .col-12.col-sm-3
+    .col-12.col-sm-9
+      = render Presentable::HeaderLinksComponent.new(object: @object, preview: @preview)
+  .col-12.col-sm-3.question-col
+    - if !@object.public_contacts.empty? && (@question || @preview)
+      = render "components/presentable/header_component/ask_question", question_link: new_question_link,
+        question: @question,
+        prompt: new_question_prompt,
+        preview: @preview

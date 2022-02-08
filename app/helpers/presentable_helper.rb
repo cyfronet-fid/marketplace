@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ProviderHelper
+module PresentableHelper
   def data_for_map_provider(geographical_availabilities)
     countries = []
     geographical_availabilities.each do |place|
@@ -25,8 +25,8 @@ module ProviderHelper
     fields.map { |f| record.send(f) }.any?(&:present?)
   end
 
-  def field_tree(service, field)
-    parents = service.send(field).map { |f| f.parent.blank? ? f : f.parent }
-    parents.map { |parent| [parent.name, (parent.children & service.send(field)).map(&:name)] }.to_h
+  def field_tree(record, field)
+    parents = record.send(field).map { |f| f.parent.blank? ? f : f.parent }
+    parents.map { |parent| [parent.name, (parent.children & record.send(field)).map(&:name)] }.to_h
   end
 end
