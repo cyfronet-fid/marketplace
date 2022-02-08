@@ -1,4 +1,4 @@
-- service.scientific_domains.map(&:root).uniq.map.with_index do |scientific_domain, idx|
+- object.scientific_domains.map(&:root).uniq.map.with_index do |scientific_domain, idx|
   - if scientific_domain.present?
     .category-box{ class: ("last" if idx == 2) }
       .category-icon
@@ -12,8 +12,8 @@
 
 %ul.list-group.domains.mt-3.mb-4
   - fields.map do |field|
-    - if service.send(field).present?
-      - field_tree(service, field).each do |parent, children|
+    - if object.send(field).present?
+      - field_tree(object, field).each do |parent, children|
         %li.list-group-item
           %span
             = parent

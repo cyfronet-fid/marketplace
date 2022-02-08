@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Service::SidebarHelper
+module Presentable::SidebarHelper
   def service_sidebar_fields
     [scientific_categorisation, categorisation, target_users, resource_availability_and_languages]
   end

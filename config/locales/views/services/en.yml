@@ -1,7 +1,5 @@
 en:
   services:
-    header:
-      order: Access the resource
     about:
       sidebar:
         title:

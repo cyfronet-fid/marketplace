@@ -4,7 +4,7 @@
     "data-target": local_assigns[:preview] ? "preview.link" : ""
     .row.card-description
       .col-4
-        = service_logo(service)
+        = object_logo(service)
       .col
         = service.tagline.truncate(105, separator: " ")
     .clearfix

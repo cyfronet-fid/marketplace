@@ -36,11 +36,6 @@ module ServiceHelper
     service.scientific_domains.map { |target| link_to(target.name, services_path(scientific_domains: target)) }
   end
 
-  def field_tree(service, field)
-    parents = service.send(field).map { |f| f.parent.blank? ? f : f.parent }
-    parents.map { |parent| [parent.name, (parent.children & service.send(field)).map(&:name)] }.to_h
-  end
-
   def scientific_domains_text(service)
     service.scientific_domains.map(&:name)
   end
@@ -112,14 +107,6 @@ module ServiceHelper
 
   def highlighted_for(field, model, highlights)
     highlights&.dig(field)&.html_safe || model.send(field)
-  end
-
-  def service_logo(service, classes = "align-self-center mr-4 float-left img-responsive", resize = "100x67")
-    if service.logo.attached? && service.logo.variable?
-      image_tag service.logo.variant(resize: resize), class: classes
-    else
-      image_pack_tag("eosc-img.png", size: resize, class: classes)
-    end
   end
 
   def data_for_map(geographical_availabilities)

@@ -1,0 +1,12 @@
+%ul
+  - fields.each do |field|
+    - if object.send(field).present?
+      %li
+        %i.fas.fa-arrow-right
+        - if field.end_with? "_email"
+          = mail_to(object.send(field), t("services.about.sidebar.fields.#{field}"), "data-probe": "",
+            "data-target": preview ? "preview.link" : "")
+        - else
+          = link_to(t("services.about.sidebar.fields.#{field}"), object.send(field), "data-probe": "",
+            "data-target": preview ? "preview.link" : "")
+          -# TODO: refactor dynamic translation (above)
