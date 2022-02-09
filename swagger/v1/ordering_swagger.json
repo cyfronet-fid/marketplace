@@ -31,7 +31,7 @@
             "name": "from_timestamp",
             "in": "query",
             "required": true,
-            "description": "List events after, ISO8601 format",
+            "description": "List events after, ISO8601 format, e.g. 2021-04-07T15:31:46.123456Z",
             "schema": {
               "type": "string"
             }

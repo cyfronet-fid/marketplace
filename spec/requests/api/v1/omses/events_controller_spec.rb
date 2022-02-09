@@ -23,7 +23,7 @@ RSpec.describe Api::V1::OMSes::EventsController, swagger_doc: "v1/ordering_swagg
                 in: :query,
                 type: :string,
                 required: true,
-                description: "List events after, ISO8601 format"
+                description: "List events after, ISO8601 format, e.g. 2021-04-07T15:31:46.123456Z"
       parameter name: :limit, in: :query, type: :integer, required: false, description: "number of returned elements"
 
       response 200, "events found" do
@@ -40,7 +40,7 @@ RSpec.describe Api::V1::OMSes::EventsController, swagger_doc: "v1/ordering_swagg
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
-        let(:from_timestamp) { "2001-04-07T15:31:46+02:00" }
+        let(:from_timestamp) { CGI.escape("2000-04-07T15:31:46.09Z") }
         let(:limit) { 4 }
 
         run_test! do |response|
@@ -76,7 +76,7 @@ RSpec.describe Api::V1::OMSes::EventsController, swagger_doc: "v1/ordering_swagg
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
-        let(:from_timestamp) { "2000-04-07T15:31:46+02:00" }
+        let(:from_timestamp) { CGI.escape("2000-04-07T15:31:46.30Z") }
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -85,17 +85,19 @@ RSpec.describe Api::V1::OMSes::EventsController, swagger_doc: "v1/ordering_swagg
       end
 
       response 400, "bad request" do
-        schema "$ref" => "error.json"
-        let(:oms_admin) { create(:user) }
-        let(:oms) { create(:oms, administrators: [oms_admin]) }
+        %w[100 asd].each do |val|
+          schema "$ref" => "error.json"
+          let(:oms_admin) { create(:user) }
+          let(:oms) { create(:oms, administrators: [oms_admin]) }
 
-        let(:oms_id) { oms.id }
-        let(:"X-User-Token") { oms_admin.authentication_token }
-        let(:from_timestamp) { "asd" }
+          let(:oms_id) { oms.id }
+          let(:"X-User-Token") { oms_admin.authentication_token }
+          let(:from_timestamp) { val }
 
-        run_test! do |response|
-          data = JSON.parse(response.body)
-          expect(data).to eq({ error: "invalid date" }.stringify_keys)
+          run_test! do |response|
+            data = JSON.parse(response.body)
+            expect(data).to eq({ error: "invalid date" }.stringify_keys)
+          end
         end
       end
 
@@ -103,7 +105,7 @@ RSpec.describe Api::V1::OMSes::EventsController, swagger_doc: "v1/ordering_swagg
         schema "$ref" => "error.json"
         let(:oms_id) { 1 }
         let(:"X-User-Token") { "asdasdasd" }
-        let(:from_timestamp) { "2000-04-07T15:31:46+02:00" }
+        let(:from_timestamp) { CGI.escape("2000-04-07T15:31:46+02:00") }
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -119,7 +121,7 @@ RSpec.describe Api::V1::OMSes::EventsController, swagger_doc: "v1/ordering_swagg
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { user.authentication_token }
-        let(:from_timestamp) { "2000-04-07T15:31:46+02:00" }
+        let(:from_timestamp) { CGI.escape("2000-04-07T15:31:46+02:00") }
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -133,7 +135,7 @@ RSpec.describe Api::V1::OMSes::EventsController, swagger_doc: "v1/ordering_swagg
 
         let(:oms_id) { 9999 }
         let(:"X-User-Token") { user.authentication_token }
-        let(:from_timestamp) { "2000-04-07T15:31:46+02:00" }
+        let(:from_timestamp) { CGI.escape("2000-04-07T15:31:46+02:00") }
 
         run_test! do |response|
           data = JSON.parse(response.body)
