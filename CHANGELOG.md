@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Date parsing on /events endpoint in OMS API (@kmarszalek)
 
 ### Security
 
