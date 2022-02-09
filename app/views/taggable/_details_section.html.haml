@@ -2,5 +2,5 @@
   .container
     = _("Tags") + ":"
     - taggable.tag_list.sort.each do |tag|
-      = link_to tag, services_path(tag: tag), class: "badge badge-light",
+      = link_to tag, services_path(tag: tag), class: "badge badge-light", "data-e2e": "tag-btn",
       "data-target": local_assigns[:preview] ? "preview.link" : ""
