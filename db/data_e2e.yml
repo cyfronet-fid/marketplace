@@ -294,7 +294,7 @@ providers:
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   LifeWatch ERIC:
-    status: "published"
+    status: "draft"
     name: &lifewatch "LifeWatch ERIC"
     abbreviation: "life-watch-eric"
     website: "http://life-watch-eric.com"
@@ -2903,6 +2903,7 @@ services:
             value_type: "integer"
             value: 365
   LifeWatch ERIC Plants Identification App:
+    status: draft
     name: &lifewatchERICPlants LifeWatch ERIC Plants Identification App
     parents: *processingAndAnalysisParent
     resource_organisation: *lifewatch
