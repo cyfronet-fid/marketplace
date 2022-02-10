@@ -1,5 +1,0 @@
-%ul.list-group
-  - fields.each do |field|
-    - if provider.send(field).present?
-      %li.list-group-item
-        %span= l provider.send(field), format: :short

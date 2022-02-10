@@ -1,11 +1,11 @@
 %ul.list-group
-  - Array(provider.send(clazz)).map do |object|
+  - Array(object.send(clazz)).map do |record|
     %li.list-group-item
       - fields.map do |field|
-        - if object.send(field).present?
+        - if record.send(field).present?
           - if nested[field.to_sym].present? && nested[field.to_sym] == "email"
-            %span= mail_to object.send(field), object.send(field)
+            %span= mail_to record.send(field), record.send(field)
             %br
           - else
-            %span= object.send(field)
+            %span= record.send(field)
             %br
