@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Presentable::HeaderLinksComponent < ApplicationComponent
-  include ViewComponent::Translatable
   include Presentable::HeaderHelper
 
   def initialize(object:, preview: false)

@@ -1,7 +1,0 @@
-%ul
-  - fields.each do |field|
-    - if provider.send(field).present?
-      %li
-        %i.fas.fa-arrow-right
-        = link_to(t("provider.about.sidebar.fields.#{field}"), provider.send(field))
-        -# TODO: refactor dynamic translation (above)

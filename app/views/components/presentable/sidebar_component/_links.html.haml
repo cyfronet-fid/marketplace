@@ -1,7 +1,7 @@
 %ul.list-group
   - fields.each do |field|
-    - if provider.send(field).present?
-      - provider.send(field).each_with_index do |link, idx|
+    - if object.send(field).present?
+      - object.send(field).each_with_index do |link, idx|
         %li.list-group-item
           = link_to(t(".#{field}", idx: idx + 1), link)
           -# TODO: refactor dynamic translation
