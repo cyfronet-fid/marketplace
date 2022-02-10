@@ -8,8 +8,15 @@
       - if policy(service).order? && (policy(service).offers_show? || policy(service).bundles_show?)
         = render "services/offers", offers: offers, service: service, bundles: bundles, preview: local_assigns[:preview]
     %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
-      = render Presentable::SidebarComponent.new(service)
-      -# TODO: refactor dynamic translation (above)
+      - service_sidebar_fields.each do |group|
+        - if any_present?(service, *group[:fields])
+          %h5= t(".sidebar.title.#{group[:name]}")
+          = render "components/presentable/sidebar_links_component/#{group[:template]}",
+                    object: service,
+                    fields: group[:fields],
+                    type: group[:type] || "",
+                    nested: group[:nested] || ""
+          -# TODO: refactor dynamic translation (above)
       - if current_user&.executive?
         %h5
           = _("Statistics")
