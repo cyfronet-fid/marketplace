@@ -28,7 +28,13 @@ class ServicesController < ApplicationController
       end
     end
     @services, @offers = search(scope)
-    @pagy = Pagy.new_from_searchkick(@services, items: params[:per_page])
+    begin
+      @pagy = Pagy.new_from_searchkick(@services, items: params[:per_page])
+    rescue Pagy::OverflowError
+      params[:page] = 1
+      @services, @offers = search(scope)
+      @pagy = Pagy.new_from_searchkick(@services, items: params[:per_page])
+    end
     @highlights = highlights(@services)
     @recommended_services = fetch_recommended
     @favourite_services =

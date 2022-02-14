@@ -1,128 +1,6 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "Mass Assignment",
-      "warning_code": 70,
-      "fingerprint": "0b0b808d8841fc9690e7fcaf7a60b846d6f6f70453b446772bd45cda32f0ec80",
-      "check_name": "MassAssignment",
-      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
-      "file": "app/views/services/_paginate_simple.haml",
-      "line": 8,
-      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
-      "code": "params.permit!",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "Backoffice::ServicesController",
-          "method": "index",
-          "line": 33,
-          "file": "app/controllers/backoffice/services_controller.rb",
-          "rendered": {
-            "name": "backoffice/services/index",
-            "file": "app/views/backoffice/services/index.html.haml"
-          }
-        },
-        {
-          "type": "template",
-          "name": "backoffice/services/index",
-          "line": 19,
-          "file": "app/views/backoffice/services/index.html.haml",
-          "rendered": {
-            "name": "services/_index",
-            "file": "app/views/services/_index.html.haml"
-          }
-        },
-        {
-          "type": "template",
-          "name": "services/_index",
-          "line": 19,
-          "file": "app/views/services/_index.html.haml",
-          "rendered": {
-            "name": "services/_pagination",
-            "file": "app/views/services/_pagination.html.haml"
-          }
-        },
-        {
-          "type": "template",
-          "name": "services/_pagination",
-          "line": 10,
-          "file": "app/views/services/_pagination.html.haml",
-          "rendered": {
-            "name": "services/_paginate_simple",
-            "file": "app/views/services/_paginate_simple.haml"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "services/_paginate_simple"
-      },
-      "user_input": null,
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
-      "warning_type": "Mass Assignment",
-      "warning_code": 70,
-      "fingerprint": "26ed0731ae68a388b2b3f2322bedc8cec22960f77acf1bd2f22a73ad8f8484c5",
-      "check_name": "MassAssignment",
-      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
-      "file": "app/views/services/_paginate_simple.haml",
-      "line": 6,
-      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
-      "code": "params.permit!",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "Backoffice::ServicesController",
-          "method": "index",
-          "line": 33,
-          "file": "app/controllers/backoffice/services_controller.rb",
-          "rendered": {
-            "name": "backoffice/services/index",
-            "file": "app/views/backoffice/services/index.html.haml"
-          }
-        },
-        {
-          "type": "template",
-          "name": "backoffice/services/index",
-          "line": 19,
-          "file": "app/views/backoffice/services/index.html.haml",
-          "rendered": {
-            "name": "services/_index",
-            "file": "app/views/services/_index.html.haml"
-          }
-        },
-        {
-          "type": "template",
-          "name": "services/_index",
-          "line": 19,
-          "file": "app/views/services/_index.html.haml",
-          "rendered": {
-            "name": "services/_pagination",
-            "file": "app/views/services/_pagination.html.haml"
-          }
-        },
-        {
-          "type": "template",
-          "name": "services/_pagination",
-          "line": 10,
-          "file": "app/views/services/_pagination.html.haml",
-          "rendered": {
-            "name": "services/_paginate_simple",
-            "file": "app/views/services/_paginate_simple.haml"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "services/_paginate_simple"
-      },
-      "user_input": null,
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "32bfe85c62b38164429a0fe25e2414a08769e9a7fd40496bd66a28857ff44529",
@@ -135,67 +13,6 @@
       "render_path": null,
       "location": null,
       "user_input": "friendly_id_config.query_field",
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
-      "warning_type": "Mass Assignment",
-      "warning_code": 70,
-      "fingerprint": "3aa961f8b2b6468e0677efc995ada5be6554337f13351cf422ccd777714a94b4",
-      "check_name": "MassAssignment",
-      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
-      "file": "app/views/services/_paginate_simple.haml",
-      "line": 11,
-      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
-      "code": "params.permit!",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "Backoffice::ServicesController",
-          "method": "index",
-          "line": 33,
-          "file": "app/controllers/backoffice/services_controller.rb",
-          "rendered": {
-            "name": "backoffice/services/index",
-            "file": "app/views/backoffice/services/index.html.haml"
-          }
-        },
-        {
-          "type": "template",
-          "name": "backoffice/services/index",
-          "line": 19,
-          "file": "app/views/backoffice/services/index.html.haml",
-          "rendered": {
-            "name": "services/_index",
-            "file": "app/views/services/_index.html.haml"
-          }
-        },
-        {
-          "type": "template",
-          "name": "services/_index",
-          "line": 19,
-          "file": "app/views/services/_index.html.haml",
-          "rendered": {
-            "name": "services/_pagination",
-            "file": "app/views/services/_pagination.html.haml"
-          }
-        },
-        {
-          "type": "template",
-          "name": "services/_pagination",
-          "line": 10,
-          "file": "app/views/services/_pagination.html.haml",
-          "rendered": {
-            "name": "services/_paginate_simple",
-            "file": "app/views/services/_paginate_simple.haml"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "services/_paginate_simple"
-      },
-      "user_input": null,
       "confidence": "Medium",
       "note": ""
     },
@@ -279,6 +96,67 @@
     {
       "warning_type": "Mass Assignment",
       "warning_code": 70,
+      "fingerprint": "76ddb05b9974791f865b25b27bda950d14f7a0770a8df1933835c854412f668e",
+      "check_name": "MassAssignment",
+      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
+      "file": "app/views/services/_paginate_simple.haml",
+      "line": 11,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.permit!",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Backoffice::ServicesController",
+          "method": "index",
+          "line": 39,
+          "file": "app/controllers/backoffice/services_controller.rb",
+          "rendered": {
+            "name": "backoffice/services/index",
+            "file": "app/views/backoffice/services/index.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "backoffice/services/index",
+          "line": 19,
+          "file": "app/views/backoffice/services/index.html.haml",
+          "rendered": {
+            "name": "services/_index",
+            "file": "app/views/services/_index.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "services/_index",
+          "line": 19,
+          "file": "app/views/services/_index.html.haml",
+          "rendered": {
+            "name": "services/_pagination",
+            "file": "app/views/services/_pagination.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "services/_pagination",
+          "line": 10,
+          "file": "app/views/services/_pagination.html.haml",
+          "rendered": {
+            "name": "services/_paginate_simple",
+            "file": "app/views/services/_paginate_simple.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "services/_paginate_simple"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
       "fingerprint": "d06e1c85551aa02f3f8da3a7d5c309ed69783a1fa39928ea676b0bf9646f3d0c",
       "check_name": "MassAssignment",
       "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
@@ -291,6 +169,67 @@
         "type": "method",
         "class": "CategoriesHelper",
         "method": "category_query_params"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "e679b43adb3506869a59d56bde79384bc1956c117736427b648cc8a57ec546da",
+      "check_name": "MassAssignment",
+      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
+      "file": "app/views/services/_paginate_simple.haml",
+      "line": 8,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.permit!",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Backoffice::ServicesController",
+          "method": "index",
+          "line": 39,
+          "file": "app/controllers/backoffice/services_controller.rb",
+          "rendered": {
+            "name": "backoffice/services/index",
+            "file": "app/views/backoffice/services/index.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "backoffice/services/index",
+          "line": 19,
+          "file": "app/views/backoffice/services/index.html.haml",
+          "rendered": {
+            "name": "services/_index",
+            "file": "app/views/services/_index.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "services/_index",
+          "line": 19,
+          "file": "app/views/services/_index.html.haml",
+          "rendered": {
+            "name": "services/_pagination",
+            "file": "app/views/services/_pagination.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "services/_pagination",
+          "line": 10,
+          "file": "app/views/services/_pagination.html.haml",
+          "rendered": {
+            "name": "services/_paginate_simple",
+            "file": "app/views/services/_paginate_simple.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "services/_paginate_simple"
       },
       "user_input": null,
       "confidence": "Medium",
@@ -336,8 +275,69 @@
       "user_input": "cookies[:targetId]",
       "confidence": "Weak",
       "note": ""
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "f10a9795541747546183875bfc6b2d204202fd9a2f564d64ada38cf6f2ba886f",
+      "check_name": "MassAssignment",
+      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
+      "file": "app/views/services/_paginate_simple.haml",
+      "line": 6,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.permit!",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Backoffice::ServicesController",
+          "method": "index",
+          "line": 39,
+          "file": "app/controllers/backoffice/services_controller.rb",
+          "rendered": {
+            "name": "backoffice/services/index",
+            "file": "app/views/backoffice/services/index.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "backoffice/services/index",
+          "line": 19,
+          "file": "app/views/backoffice/services/index.html.haml",
+          "rendered": {
+            "name": "services/_index",
+            "file": "app/views/services/_index.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "services/_index",
+          "line": 19,
+          "file": "app/views/services/_index.html.haml",
+          "rendered": {
+            "name": "services/_pagination",
+            "file": "app/views/services/_pagination.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "services/_pagination",
+          "line": 10,
+          "file": "app/views/services/_pagination.html.haml",
+          "rendered": {
+            "name": "services/_paginate_simple",
+            "file": "app/views/services/_paginate_simple.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "services/_paginate_simple"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "note": ""
     }
   ],
-  "updated": "2021-12-28 14:16:42 +0100",
-  "brakeman_version": "5.2.0"
+  "updated": "2022-02-17 08:58:02 +0100",
+  "brakeman_version": "5.2.1"
 }
