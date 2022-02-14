@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Presentable::HeaderComponent < ApplicationComponent
-  include ApplicationHelper
+  include PresentableHelper
   include Presentable::HeaderHelper
   include ServiceHelper
   include ComparisonsHelper
@@ -9,7 +9,16 @@ class Presentable::HeaderComponent < ApplicationComponent
 
   renders_one :buttons
 
-  def initialize(object:, title:, subtitle:, comparison_enabled:, preview:, question:, favourite_services: [])
+  def initialize(
+    object:,
+    title:,
+    subtitle:,
+    comparison_enabled:,
+    preview:,
+    question:,
+    favourite_services: [],
+    show_checkboxes: true
+  )
     super()
     @object = object
     @title = title
@@ -18,9 +27,10 @@ class Presentable::HeaderComponent < ApplicationComponent
     @preview = preview
     @question = question
     @favourite_services = favourite_services
+    @show_checkboxes = show_checkboxes
   end
 
-  def object_logo(object, classes = "align-self-center img-fluid", resize = "180x120")
+  def presentable_logo(object, classes = "align-self-center img-fluid", resize = "180x120")
     super
   end
 

@@ -21,6 +21,10 @@ module Presentable::HeaderHelper
     "#{Mp::Application.config.providers_dashboard_url}/provider/my"
   end
 
+  def show_manage_button?(record)
+    policy(record).data_administrator? && record.upstream&.eosc_registry?
+  end
+
   def about_link(service, from)
     case from
     when "ordering_configuration"

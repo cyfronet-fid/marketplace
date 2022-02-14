@@ -10,7 +10,7 @@
           - if display_detail?(group, @object)
             .details-box{ class: ("special-box" if group[:name] == "dependencies") }
               .details-header
-                %h5= t(".details.title.#{group[:name]}")
+                %h5= t("components.presentable.details_component.details.title.#{group[:name]}")
               .details-content
                 %ul.list-group
                   = render "components/presentable/details_component/#{group[:template]}",
