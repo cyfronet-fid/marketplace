@@ -24,7 +24,7 @@ export const ProvidersFactory = {
     create: (args: {[field: string]: string} = {}): IProviders => ({
         basicName: Utilities.getUUID4(),
         basicAbbreviation: Utilities.getUUID4(),
-        basicWebpage_url: 'https://example.org/',
+        basicWebpage_url: 'http://localhost/get',
         marketingDescription: Utilities.getRandomString(8).toLowerCase(),
         classificationScientificDomains: ["Agricultural Sciences ⇒ Agricultural Biotechnology"],
         classificationTag: Utilities.getRandomString(8).toLowerCase(),
@@ -69,9 +69,9 @@ export const ProvidersFactoryExtended = {
   create: (args: {[field: string]: string} = {}): IProvidersExtended => ({
       basicName: Utilities.getUUID4(),
       basicAbbreviation: Utilities.getUUID4(),
-      basicWebpage_url: 'https://example.org/',
+      basicWebpage_url: 'http://localhost/get',
       marketingDescription: Utilities.getRandomString(8).toLowerCase(),
-      marketingMultimedia: 'https://example.org/',
+      marketingMultimedia: 'http://localhost/get',
       classificationScientificDomains: ["Agricultural Sciences ⇒ Agricultural Biotechnology"],
       classificationTag: Utilities.getRandomString(8).toLowerCase(),
       locationStreet:Utilities.getRandomString(8).toLowerCase(),
