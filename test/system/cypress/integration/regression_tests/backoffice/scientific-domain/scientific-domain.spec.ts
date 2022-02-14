@@ -143,7 +143,7 @@ describe("Scientific Domain", () => {
         cy.visit("/backoffice/scientific_domains");
         cy.contains(value).parent().find("a.delete-icon").click();
         cy.get(".alert-success")
-          .contains("Scientific Domain removed")
+          .contains("Scientific Domain removed successfully")
           .should("be.visible");
       });
   });
@@ -159,7 +159,7 @@ describe("Scientific Domain", () => {
     cy.get("[data-e2e='create-scientific-domain-btn']")
       .click();
     cy.get(".alert-success")
-      .contains("Scientific domain updated correctly")
+      .contains("Scientific domain updated successfully")
       .should("be.visible");
   });
 });

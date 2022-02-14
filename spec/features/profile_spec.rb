@@ -66,7 +66,7 @@ RSpec.feature "Profile page" do
 
       click_on "Delete"
 
-      expect(page).to have_text("Profile information deleted successfully")
+      expect(page).to have_text("Profile information removed successfully")
 
       within "#profile-information" do
         expect(page).to_not have_text(c.name)

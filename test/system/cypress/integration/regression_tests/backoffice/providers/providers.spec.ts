@@ -141,7 +141,7 @@ describe("Providers", () => {
       .then((value) => {
         cy.contains("a", "Delete")
           .click();
-        cy.contains("div.alert-success", "Provider has been removed")
+        cy.contains("div.alert-success", "Provider removed successfully")
           .should("be.visible");
         cy.visit("/");
         cy.get("a[data-e2e='more-link-providers']")
@@ -187,7 +187,7 @@ describe("Providers", () => {
       .parents('li.providers')
       .find("a.delete-icon")
       .click();
-    cy.contains("div.alert-success", "Provider has been removed")
+    cy.contains("div.alert-success", "Provider removed successfully")
       .should("be.visible");
   });
 
@@ -241,7 +241,7 @@ describe("Providers", () => {
       .parents('li.providers')
       .find("a.delete-icon")
       .click();
-    cy.contains("div.alert-success", "Provider has been removed")
+    cy.contains("div.alert-success", "Provider removed successfully")
       .should("be.visible");
   });
 
@@ -256,7 +256,7 @@ describe("Providers", () => {
     cy.get("[data-e2e='create-provider-btn']")
       .click();
     cy.get(".alert-success")
-      .contains("Provider updated correctly")
+      .contains("Provider updated successfully")
       .should("be.visible");
     cy.contains("h1", "Edited provider")
       .should("be.visible");

@@ -32,7 +32,7 @@ class Admin::LeadSectionsController < Admin::ApplicationController
   def destroy
     @lead_section.destroy!
 
-    redirect_to admin_leads_path, notice: "Lead section destroyed"
+    redirect_to admin_leads_path, notice: "Lead section removed successfully"
   end
 
   private
