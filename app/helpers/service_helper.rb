@@ -105,30 +105,6 @@ module ServiceHelper
     highlights&.dig(field)&.html_safe || model.send(field)
   end
 
-  def data_for_map(geographical_availabilities)
-    countries = []
-    geographical_availabilities.each do |place|
-      co = []
-      co = Country.countries_for_region(place&.name) if place
-      co = [place] if co.empty?
-      countries |= co if co.any?
-    end
-    countries
-      .map(&:alpha2)
-      .map { |c| [c.downcase, 1] }
-      .map { |c| c == ["uk", 1] ? ["gb", 1] : c }
-      .map { |c| c == ["el", 1] ? ["gr", 1] : c }
-  end
-
-  def data_for_region(countries)
-    countries.append("WW") if any_non_european?(countries) && (countries != ["EO"]) && (countries != ["EU"])
-    countries
-  end
-
-  def any_non_european?(countries)
-    (countries - Country.countries_for_region("Europe").map(&:alpha2)).present?
-  end
-
   def trl_description_text(service)
     service.trl.first.description
   end

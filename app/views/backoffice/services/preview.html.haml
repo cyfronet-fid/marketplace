@@ -29,7 +29,7 @@
                             question: @question,
                             favourite_services: @favourite_services) do |c|
         - c.buttons do
-          = render "components/presentable/header_component/order_buttons", service: @service
+          = render "components/presentable/header_component/order_buttons", service: @service, preview: true
       = render "services/tabs", service: @service, preview: true
 
   .tab-content
