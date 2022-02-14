@@ -47,26 +47,7 @@
                       = _("Add to favourites")
   .col-12.col-lg-3.text-center.vertical-center
     .vertical-center-inner.access-type
-      - if @object.instance_of?(Service)
-        - if @orderable || @preview
-          = link_to _("Access the resource"),
-                        service_offers_path(@object),
-                        class: "btn btn-primary d-block mb-3",
-                        "data-e2e": "access-resource-btn",
-                        "data-probe": "",
-                        "data-target": @preview ? "preview.link" : ""
-        - if @show_manage_button
-          = render "components/presentable/header_component/service_drop_down_menu", service: @object
-        %span.ordertype-label
-          %i{ class: "ordertype #{order_type(@object)}" }
-          -# TODO: refactor dynamic translation
-          = t("offers.type.#{order_type(@object)}")
-      - elsif @object.instance_of?(Provider)
-        = link_to _("Browse resources"),
-                    services_path(providers: @object.id),
-                    class: "btn btn-primary d-block mb-3", "data-e2e": "btn-browse-resource"
-        - if @show_manage_button
-          = render "components/presentable/header_component/provider_drop_down_menu", provider: @object
+      = buttons
 .row.service-links
   .col-12.col-lg-9.row
     .col-12.col-sm-3

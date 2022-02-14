@@ -21,7 +21,7 @@ module PresentableHelper
     countries
   end
 
-  def provider_any_present?(record, *fields)
+  def any_present?(record, *fields)
     fields.map { |f| record.send(f) }.any?(&:present?)
   end
 

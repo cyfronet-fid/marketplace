@@ -1,0 +1,15 @@
+- Array(object.send(clazz)).map do |record|
+  %li
+    - fields.map do |field|
+      - if record.send(field).present?
+        - if nested[field.to_sym].present? && nested[field.to_sym] == "email"
+
+          %span
+            - if local_assigns[:preview]
+              = link_to record.send(field), "javascript:;"
+            - else
+              = mail_to record.send(field), record.send(field)
+          %br
+        - else
+          %span= record.send(field)
+          %br
