@@ -55,7 +55,45 @@ en:
             networks: Networks
             hosting_legal_entity: Hosting Legal Entity
             national_roadmaps: National Roadmaps
+            classification: Classification
+            availability: Availability
+            order: Order
+            marketing: Marketing
+            dependencies: Dependencies
+            attribution: Attribution
+            financial_information: Financial Information
+            public_contacts: Public Contacts
+            maturity_information: Maturity Information
+            management: Management
+            changelog: Changelog
+        links:
+          use_cases_url: Use case %{idx}
+          multimedia: Multimedia %{idx}
+        object:
+          public_contacts: Public contact %{idx}
         array:
           legal_statuses: Legal Status
           provider_life_cycle_statuses: Provider Life Cycle Status
           tag_list: Tags
+          order_type: Order type
+          target_users: Target Users
+          access_types: Access Types
+          access_modes: Access Modes
+          geographical_availabilities: Geographical Availabilities
+          languages: Languages
+          fully_open_access: Fully Open Access
+          open_access: Open Access
+          order_required: Order Required
+          other: Other Order Type
+          standards: Standards
+          certifications: Certifications
+          open_source_technologies: Open Source Technologies
+          version: Version
+          funding_bodies: Funding Bodies
+          funding_programs: Funding Programs
+          grant_project_names: Grant Project Names
+          trl: Trl
+          life_cycle_status: Life Cycle Status
+          required_services: Required Resources
+          related_services: Related Resources
+          related_platforms: Related Platforms

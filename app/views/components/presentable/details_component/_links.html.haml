@@ -18,5 +18,5 @@
       %li.links
         %i.fas.fa-arrow-right
         -# TODO: refactor dynamic translation
-        = link_to(t("services.about.sidebar.fields.#{field}"), object.send(field), "data-probe": "",
+        = link_to(t("components.presentable.sidebar_component.fields.#{field}"), object.send(field), "data-probe": "",
         "data-target": local_assigns[:preview] ? "preview.link" : "")

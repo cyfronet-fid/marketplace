@@ -3,8 +3,8 @@
     - if object.send(field).present?
       %li.list-group-item
         %span
-          - if field.end_with? "_url"
-            = link_to(t("services.about.sidebar.fields.#{field}"), object.send(field))
-          - elsif field.end_with? "_email"
-            = mail_to(object.send(field), t("services.about.sidebar.fields.#{field}"))
+          - if field.end_with? "_email"
+            = mail_to(object.send(field), t("components.presentable.sidebar_component.fields.#{field}"))
+          - else
+            = link_to(t("components.presentable.sidebar_component.fields.#{field}"), object.send(field))
           -# TODO: refactor dynamic translation (above)

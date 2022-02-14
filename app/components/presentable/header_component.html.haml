@@ -5,7 +5,7 @@
         = image_tag backoffice_service_logo_preview_path(service_id: @object.id || "new"),
         class: "align-self-center img-fluid"
       - else
-        = object_logo(@object)
+        = presentable_logo(@object)
     .col-12.col-sm-9.service-details-header
       %h2.font-weight-bolder= @title
       %p.mb-1= @subtitle
@@ -22,29 +22,31 @@
                 (#{@object.rating} /5)
               - if @object.persisted?
                 = service_opinions_link(@object, @preview)
-            %fieldset{ preview_link_parameters(@preview) }
-              .comparison
-                %span.compare
-                  %label{ @preview ? {} : options(@object.slug, @comparison_enabled) }
-                    = check_box_tag "comparison", @object.slug, checked?(@object.slug), id: "comparison-#{@object.id}",
-                            class: @preview ? "form-check-input disabled" : "form-check-input",
-                            disabled: !checked?(@object.slug) && @comparison_enabled,
-                            "data-probe" => "",
-                            "data-e2e": "comparison-checkbox",
-                            "data-target": "comparison.checkbox",
-                            "data-action": "click->comparison#update"
-                    %span.smaller
-                      = _("Add to comparison")
-              .comparison
-                %span.compare
-                  %label
-                    = check_box_tag "favourite", @object.slug, favourite?(Array(@favourite_services), @object.slug),
-                      id: "favourite-#{@object.id}",
-                          class: "form-check-input",
-                          "data-target": "favourite.checkbox",
-                          "data-action": "click->favourite#updateFromRes"
-                    %span.smaller
-                      = _("Add to favourites")
+            - if @show_checkboxes
+              %fieldset{ preview_link_parameters(@preview) }
+                .comparison
+                  %span.compare
+                    %label{ @preview ? {} : options(@object.slug, @comparison_enabled) }
+                      = check_box_tag "comparison", @object.slug, checked?(@object.slug),
+                        id: "comparison-#{@object.id}",
+                        class: @preview ? "form-check-input disabled" : "form-check-input",
+                        disabled: !checked?(@object.slug) && @comparison_enabled,
+                        "data-probe" => "",
+                        "data-e2e": "comparison-checkbox",
+                        "data-target": "comparison.checkbox",
+                        "data-action": "click->comparison#update"
+                      %span.smaller
+                        = _("Add to comparison")
+                .comparison
+                  %span.compare
+                    %label
+                      = check_box_tag "favourite", @object.slug, favourite?(Array(@favourite_services), @object.slug),
+                        id: "favourite-#{@object.id}",
+                            class: "form-check-input",
+                            "data-target": "favourite.checkbox",
+                            "data-action": "click->favourite#updateFromRes"
+                      %span.smaller
+                        = _("Add to favourites")
   .col-12.col-lg-3.text-center.vertical-center
     .vertical-center-inner.access-type
       = buttons
