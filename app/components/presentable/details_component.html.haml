@@ -1,23 +1,23 @@
 #opinions.tab-pane.container.pt-2.active{ "aria-labelledby": "opinions-tab", role: "tabpanel",
                                           "data-shepherd-tour-target": "service-details-content" }
   .row.pt-3
-    - service_details_columns.each do |column|
-      %span{ class: ["col-#{details_column_width_sm(service_details_columns)}",
-                     "col-sm#{details_column_width_sm(service_details_columns)}",
-                     "col-md#{details_column_width_md(service_details_columns)}",
-                     "col-lg-#{details_column_width_lg(service_details_columns)}"] }
+    - details_columns.each do |column|
+      %span{ class: ["col-#{details_column_width_sm(details_columns)}",
+                     "col-sm#{details_column_width_sm(details_columns)}",
+                     "col-md#{details_column_width_md(details_columns)}",
+                     "col-lg-#{details_column_width_lg(details_columns)}"] }
         - column.map do |group|
-          - if display_detail?(group, service)
+          - if display_detail?(group, @object)
             .details-box{ class: ("special-box" if group[:name] == "dependencies") }
               .details-header
                 %h5= t(".details.title.#{group[:name]}")
               .details-content
                 %ul.list-group
-                  = render "services/details/#{group[:template]}",
-                              service: service,
+                  = render "components/presentable/details_component/#{group[:template]}",
+                              object: @object,
                               fields: group[:fields],
                               type: group[:type] || "single",
                               clazz: group[:clazz] || "",
                               nested: group[:nested] || "",
                               with_desc: group[:with_desc] || false,
-                              preview: local_assigns[:preview]
+                              preview: @preview

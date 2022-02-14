@@ -13,9 +13,9 @@
                           comparison_enabled: @comparison_enabled,
                           preview: local_assigns[:preview],
                           question: @question,
-                          favourite_services: @favourite_services,
-                          show_manage_button: user_signed_in? && show_manage_button?(@service),
-                          orderable: policy(@service).order?)
+                          favourite_services: @favourite_services) do |c|
+      - c.buttons do
+        = render "components/presentable/header_component/order_buttons", service: @service
     = render "services/tabs", service: @service
     #popup-modal.modal.show{ "data-target": "favourite.popup", tabindex: "-1",
                                     role: "dialog", aria: { hidden: "true" } }
@@ -23,7 +23,15 @@
   "d-block" : "d-none", "data-target": "comparison.bar", "data-e2e": "comparison-bar" }
     = render "comparisons/bar", services: @compare_services, category: @category
 .tab-content
-  = render "services/about", service: @service, offers: @offers, bundles: @bundles, analytics: @analytics
+  = render Presentable::DescriptionComponent.new(object: @service) do |c|
+    - c.description_panels do
+      - if policy(@service).order? && (policy(@service).offers_show? || policy(@service).bundles_show?)
+        = render "services/offers", offers: @offers, service: @service,
+                                    bundles: @bundles, preview: local_assigns[:preview]
+    - c.analytics do
+      - if current_user&.executive?
+        = render "services/analytics", service: @service, analytics: @analytics
+
   = render "taggable/details_section", taggable: @service
 
 .container.mt-4.pt-4.related-container

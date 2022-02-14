@@ -1,26 +1,26 @@
 - fields.map do |field|
-  - if service.send(field).present?
+  - if object.send(field).present?
     %li{ class: ("links" if nested.present? && nested[field.to_sym] == "link") }
       - if with_desc && (nested.blank? || nested[field.to_sym] != "link")
         %span
           -# TODO: refactor dynamic translation
           = t(".#{field}") + ":"
         %br
-      - if service.send(field).is_a?(ActiveSupport::TimeWithZone)
+      - if object.send(field).is_a?(ActiveSupport::TimeWithZone)
         %span
-          = service.send(field).to_date
+          = object.send(field).to_date
       - elsif field == "geographical_availabilities"
         %span
-          = safe_join(get_only_regions(service.send(field)).map { |c| link_to c,
+          = safe_join(get_only_regions(object.send(field)).map { |c| link_to c,
             services_path(geographical_availabilities: c),
             "data-target": local_assigns[:preview] ? "preview.link" : "" }.sort, ", ")
-        - if get_only_countries(service.send(field)).present?
+        - if get_only_countries(object.send(field)).present?
           %span.geographical
-            = safe_join(get_only_countries(service.send(field)).map { |c| link_to c,
+            = safe_join(get_only_countries(object.send(field)).map { |c| link_to c,
             services_path(geographical_availabilities: c),
             "data-target": local_assigns[:preview] ? "preview.link" : "" }.sort, ", ")
       - else
-        - Array(service.send(field)).map.with_index do |element, idx|
+        - Array(object.send(field)).map.with_index do |element, idx|
           - if nested.present? && nested[field.to_sym].present?
             - if nested[field.to_sym] == "link"
               %li.links
@@ -42,11 +42,11 @@
                 = t(".#{element}")
             - elsif field == "trl"
               %span
-                %text{ "data-toggle": "tooltip", title: trl_description_text(service) }
+                %text{ "data-toggle": "tooltip", title: trl_description_text(object) }
                   #{element.send(nested[field.to_sym]).upcase}
             - else
               %span
-                #{element.send(nested[field.to_sym])}#{idx == Array(service.send(field)).size - 1 ? nil : ", "}
+                #{element.send(nested[field.to_sym])}#{idx == Array(object.send(field)).size - 1 ? nil : ", "}
           - else
             %span
-              #{element}#{idx == Array(service.send(field)).size - 1 ? nil : ", "}
+              #{element}#{idx == Array(object.send(field)).size - 1 ? nil : ", "}

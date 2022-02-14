@@ -1,0 +1,10 @@
+= link_to _("Back to the resource"), service_path(service),
+      class: "btn btn-outline-primary d-block mb-3"
+= link_to _("Set parameters and offers"), service_ordering_configuration_path(service,
+                                                                                anchor: "offers",
+                                                                                from: params[:from]),
+    class: "btn btn-outline-secondary d-block mb-3 no-arrow"
+%span.ordertype-label
+  %i{ class: "ordertype #{order_type(service)}" }
+    -# TODO: refactor dynamic translation
+  = t("offers.type.#{order_type(service)}")

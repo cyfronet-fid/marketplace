@@ -20,10 +20,6 @@ module ServiceHelper
     Provider.all
   end
 
-  def any_present?(record, *fields)
-    fields.map { |f| record.send(f) }.any?(&:present?)
-  end
-
   def dedicated_for_links(service)
     service.target_users.map { |target| link_to(target.name, services_path(target_users: target)) }
   end

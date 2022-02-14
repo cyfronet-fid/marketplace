@@ -7,9 +7,10 @@
                           subtitle: @provider.name,
                           comparison_enabled: @comparison_enabled,
                           preview: local_assigns[:preview],
-                          question: @question,
-                          show_manage_button: user_signed_in? && show_manage_button?(@provider))
+                          question: @question) do |c|
+      - c.buttons do
+        = render "components/presentable/header_component/provider_buttons", provider: @provider
     = render "providers/tabs", provider: @provider
 
 .tab-content
-  = render "providers/details", provider: @provider
+  = render Presentable::DetailsComponent.new(@provider)

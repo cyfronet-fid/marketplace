@@ -2,6 +2,7 @@
 
 class Presentable::SidebarComponent < ApplicationComponent
   include PresentableHelper
+  include Presentable::DetailsHelper
   include Presentable::SidebarHelper
   include ServiceHelper
 
