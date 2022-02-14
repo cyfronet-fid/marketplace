@@ -20,6 +20,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+
+- Fix researching resources from nth page of resources (@danielkryska)
 - Fix projects notifications (@danielkryska)
 - Date parsing on /events endpoint in OMS API (@kmarszalek)
 
