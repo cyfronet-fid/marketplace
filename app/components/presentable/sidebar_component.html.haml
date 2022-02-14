@@ -1,7 +1,7 @@
 - sidebar_fields.each do |group|
-  - if any_present?(@object, *group[:fields])
+  - if display_detail?(group, @object)
     %h5= t("components.presentable.sidebar_component.title.#{group[:name]}")
-    = render "components/presentable/sidebar_links_component/#{group[:template]}",
+    = render "components/presentable/sidebar_component/#{group[:template]}",
                   object: @object,
                   fields: group[:fields],
                   type: group[:type] || "",

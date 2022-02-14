@@ -8,7 +8,7 @@
       - service_sidebar_fields.each do |group|
         - if any_present?(service, *group[:fields])
           %h5= t(".sidebar.title.#{group[:name]}")
-          = render "components/presentable/sidebar_links_component/#{group[:template]}",
+          = render "components/presentable/sidebar_component/#{group[:template]}",
                     object: service,
                     fields: group[:fields],
                     type: group[:type] || "",

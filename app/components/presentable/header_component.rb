@@ -7,17 +7,9 @@ class Presentable::HeaderComponent < ApplicationComponent
   include ComparisonsHelper
   include FavouriteHelper
 
-  def initialize(
-    object:,
-    title:,
-    subtitle:,
-    comparison_enabled:,
-    preview:,
-    question:,
-    favourite_services: [],
-    orderable: false,
-    show_manage_button: false
-  )
+  renders_one :buttons
+
+  def initialize(object:, title:, subtitle:, comparison_enabled:, preview:, question:, favourite_services: [])
     super()
     @object = object
     @title = title
@@ -26,8 +18,6 @@ class Presentable::HeaderComponent < ApplicationComponent
     @preview = preview
     @question = question
     @favourite_services = favourite_services
-    @orderable = orderable
-    @show_manage_button = show_manage_button
   end
 
   def object_logo(object, classes = "align-self-center img-fluid", resize = "180x120")

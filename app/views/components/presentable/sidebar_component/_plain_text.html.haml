@@ -1,5 +1,5 @@
 %ul.list-group
-- fields.each do |field|
-  - if object.send(field).present?
-    %li.list-group-item
-      %span= object.send(field)
+  - fields.each do |field|
+    - if object.send(field).present?
+      %li.list-group-item
+        %span= object.send(field).html_safe
