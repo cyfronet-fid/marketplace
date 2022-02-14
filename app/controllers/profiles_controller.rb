@@ -13,7 +13,7 @@ class ProfilesController < ApplicationController
     @user = current_user
     attributes = permitted_attributes(@user)
     if Profile::Update.new(@user, attributes).call
-      redirect_to profile_path, notice: "Profile updated correctly"
+      redirect_to profile_path, notice: "Profile updated successfully"
     else
       render :edit, status: :bad_request
     end
@@ -21,6 +21,6 @@ class ProfilesController < ApplicationController
 
   def destroy
     @user = current_user
-    redirect_to profile_path, notice: "Profile information deleted successfully" if Profile::Destroy.new(@user).call
+    redirect_to profile_path, notice: "Profile information removed successfully" if Profile::Destroy.new(@user).call
   end
 end

@@ -32,7 +32,7 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       form_valid = @project.valid? & verify_recaptcha(model: @project, attribute: :verified_recaptcha)
       if form_valid && Project::Create.new(@project).call
-        format.html { redirect_to project_path(@project) }
+        format.html { redirect_to project_path(@project), notice: "Project created successfully" }
         format.js { render :show }
       else
         format.html { render :new, status: :bad_request }
@@ -45,7 +45,7 @@ class ProjectsController < ApplicationController
 
   def update
     if Project::Update.new(@project, permitted_attributes(@project)).call
-      redirect_to project_path(@project), notice: "Project updated correctly"
+      redirect_to project_path(@project), notice: "Project updated successfully"
     else
       render :edit, status: :bad_request
     end
@@ -53,7 +53,7 @@ class ProjectsController < ApplicationController
 
   def destroy
     if Project::Destroy.new(@project).call
-      redirect_to projects_path, notice: "Project destroyed"
+      redirect_to projects_path, notice: "Project removed successfully"
     else
       redirect_to project_path(@project), alert: "Unable to remove project"
     end

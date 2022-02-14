@@ -125,7 +125,7 @@ describe("Category", () => {
           .parent()
           .find("a.delete-icon")
           .click();
-        cy.contains(".alert-success", "Category removed")
+        cy.contains(".alert-success", "Category removed successfully")
           .should("be.visible");
     });
   })
@@ -140,6 +140,6 @@ describe("Category", () => {
     cy.fillFormCreateCategory({...category, name:"Edited category"}, false);
     cy.get("[data-e2e='create-category-btn']")
       .click();
-    cy.contains(".alert-success", "Category updated correctly") 
+    cy.contains(".alert-success", "Category updated successfully")
   });
 });

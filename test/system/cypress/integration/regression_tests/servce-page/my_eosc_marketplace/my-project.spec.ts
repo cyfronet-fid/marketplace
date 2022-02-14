@@ -99,7 +99,7 @@ describe("My project", () => {
       .click(); 
     cy.contains("h1", "Edited project")
       .should("be.visible");
-    cy.contains(".alert-success", "Project updated correctly")
+    cy.contains(".alert-success", "Project updated successfully")
       .should("be.visible");
   });
 
@@ -112,7 +112,7 @@ describe("My project", () => {
       .click();
     cy.contains("a", "Delete")
       .click();
-    cy.contains(".alert-success", "Project destroyed")
+    cy.contains(".alert-success", "Project removed successfully")
       .should("be.visible");
   });
 });

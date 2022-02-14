@@ -21,7 +21,7 @@ class Backoffice::ScientificDomainsController < Backoffice::ApplicationControlle
 
     if @scientific_domain.save
       redirect_to backoffice_scientific_domain_path(@scientific_domain),
-                  notice: "New scientific_domain created successfully"
+                  notice: "New scientific domain created successfully"
     else
       render :new, status: :bad_request
     end
@@ -31,7 +31,8 @@ class Backoffice::ScientificDomainsController < Backoffice::ApplicationControlle
 
   def update
     if @scientific_domain.update(permitted_attributes(@scientific_domain))
-      redirect_to backoffice_scientific_domain_path(@scientific_domain), notice: "Scientific domain updated correctly"
+      redirect_to backoffice_scientific_domain_path(@scientific_domain),
+                  notice: "Scientific domain updated successfully"
     else
       render :edit, status: :bad_request
     end
@@ -52,7 +53,7 @@ class Backoffice::ScientificDomainsController < Backoffice::ApplicationControlle
                     alert: "This scientific domain has providers connected to it, remove associations to delete it."
     else
       @scientific_domain.destroy!
-      redirect_to backoffice_scientific_domains_path, notice: "Scientific Domain removed"
+      redirect_to backoffice_scientific_domains_path, notice: "Scientific Domain removed successfully"
     end
   end
 

@@ -32,7 +32,7 @@ class Admin::HelpSectionsController < Admin::ApplicationController
   def destroy
     @help_section.destroy!
 
-    redirect_to admin_help_path, notice: "Help category destroyed"
+    redirect_to admin_help_path, notice: "Help category removed successfully"
   end
 
   private

@@ -17,7 +17,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     @offer = Offer::Create.new(template).call
 
     if @offer.persisted?
-      redirect_to backoffice_service_path(@service), notice: "New offer has been created"
+      redirect_to backoffice_service_path(@service), notice: "New offer created successfully"
     else
       render :new, status: :bad_request
     end
@@ -28,7 +28,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   def update
     template = permitted_attributes(Offer.new)
     if Offer::Update.new(@offer, transform_attributes(template)).call
-      redirect_to backoffice_service_path(@service), notice: "Offer updated correctly"
+      redirect_to backoffice_service_path(@service), notice: "Offer updated successfully"
     else
       render :edit, status: :bad_request
     end
