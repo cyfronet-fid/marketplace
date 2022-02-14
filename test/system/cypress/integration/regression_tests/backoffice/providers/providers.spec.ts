@@ -305,7 +305,7 @@ describe("Providers", () => {
       .should("be.visible");
   });
 
-  it("should go to Backoffice and create provider by filling in all fields", () => {
+  it("should go to Backoffice and create provider by filling in all fields", { tags: '@extended-test' }, () => {
     cy.visit("/backoffice/providers");
     cy.get("[data-e2e='add-new-provider']")
       .click();
