@@ -32,7 +32,7 @@ class Admin::HelpItemsController < Admin::ApplicationController
   def destroy
     @help_item.destroy!
 
-    redirect_to admin_help_path(anchor: @help_item.help_section.slug), notice: "Help item destroyed"
+    redirect_to admin_help_path(anchor: @help_item.help_section.slug), notice: "Help item removed successfully"
   end
 
   private

@@ -30,7 +30,7 @@ class Backoffice::CategoriesController < Backoffice::ApplicationController
 
   def update
     if @category.update(permitted_attributes(@category))
-      redirect_to backoffice_category_path(@category), notice: "Category updated correctly"
+      redirect_to backoffice_category_path(@category), notice: "Category updated successfully"
     else
       render :edit, status: :bad_request
     end
@@ -48,7 +48,7 @@ class Backoffice::CategoriesController < Backoffice::ApplicationController
                     alert: "This category has resources connected to it, remove associations to delete it."
     else
       @category.destroy!
-      redirect_to backoffice_categories_path, notice: "Category removed"
+      redirect_to backoffice_categories_path, notice: "Category removed successfully"
     end
   end
 

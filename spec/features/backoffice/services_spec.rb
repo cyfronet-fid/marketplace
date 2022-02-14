@@ -389,7 +389,7 @@ RSpec.feature "Services in backoffice" do
 
       expect { click_on "Create Offer" }.to change { Offer.count }.by(1)
 
-      expect(page).to have_text("New offer has been created")
+      expect(page).to have_text("New offer created successfully")
     end
 
     scenario "I can see service preview" do
@@ -879,7 +879,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Description", with: "New fancy offer"
       click_on "Create Offer"
 
-      expect(page).to have_content("New offer has been created")
+      expect(page).to have_content("New offer created successfully")
     end
   end
 end

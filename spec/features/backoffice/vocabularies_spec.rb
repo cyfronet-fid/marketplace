@@ -63,7 +63,7 @@ RSpec.feature "Vocabularies in backoffice" do
           fill_in "Eid", with: "updated_test_#{vocabulary}"
           click_on "Update #{humanized}"
 
-          expect(page).to have_text("#{humanized} updated correctly")
+          expect(page).to have_text("#{humanized} updated successfully")
 
           expect(page).to have_text("updated vocabulary #{humanized}")
           expect(page).to have_text("updated test")
@@ -78,7 +78,7 @@ RSpec.feature "Vocabularies in backoffice" do
 
           click_on "Delete"
 
-          expect(page).to have_text("#{humanized} removed")
+          expect(page).to have_text("#{humanized} removed successfully")
         end
 
         scenario "I cannot remove a #{humanized} if it is associated with a service/provider" do

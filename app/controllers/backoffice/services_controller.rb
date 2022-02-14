@@ -69,7 +69,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def destroy
     Service::Destroy.new(@service).call
-    redirect_to backoffice_services_path, notice: "Service destroyed"
+    redirect_to backoffice_services_path, notice: "Resource removed successfully"
   end
 
   def cant_edit(attribute)
@@ -165,7 +165,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     if Service::Update.new(@service, attributes).call
       update_logo_from_session!
       session.delete(preview_session_key)
-      redirect_to backoffice_service_path(@service), notice: "Resource updated correctly"
+      redirect_to backoffice_service_path(@service), notice: "Resource updated successfully"
     else
       add_missing_nested_models
       render :edit, status: :bad_request

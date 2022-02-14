@@ -36,7 +36,7 @@ class Admin::LeadsController < Admin::ApplicationController
 
   def destroy
     @lead.destroy!
-    redirect_to admin_leads_path, notice: "Lead destroyed"
+    redirect_to admin_leads_path, notice: "Lead removed successfully"
   end
 
   private

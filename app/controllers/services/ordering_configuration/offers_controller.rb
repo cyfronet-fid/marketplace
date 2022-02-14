@@ -21,7 +21,7 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
 
     if @offer.persisted?
       redirect_to service_ordering_configuration_path(@service, from: params[:offer][:from]),
-                  notice: "New offer has been created"
+                  notice: "New offer created successfully"
     else
       render :new, status: :bad_request, locals: { from: params[:offer][:from] }
     end
@@ -31,7 +31,7 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
     template = permitted_attributes(Offer.new)
     if Offer::Update.new(@offer, transform_attributes(template)).call
       redirect_to service_ordering_configuration_path(@service, from: params[:offer][:from]),
-                  notice: "Offer updated correctly"
+                  notice: "Offer updated successfully"
     else
       render :edit, status: :bad_request, locals: { from: params[:offer][:from] }
     end

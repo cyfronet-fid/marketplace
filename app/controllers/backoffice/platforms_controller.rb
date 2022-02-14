@@ -30,7 +30,7 @@ class Backoffice::PlatformsController < Backoffice::ApplicationController
 
   def update
     if @platform.update(permitted_attributes(@platform))
-      redirect_to backoffice_platform_path(@platform), notice: "Platform updated correctly"
+      redirect_to backoffice_platform_path(@platform), notice: "Platform updated successfully"
     else
       render :edit, status: :bad_request
     end
@@ -38,7 +38,7 @@ class Backoffice::PlatformsController < Backoffice::ApplicationController
 
   def destroy
     @platform.destroy!
-    redirect_to backoffice_platforms_path, notice: "Platform destroyed"
+    redirect_to backoffice_platforms_path, notice: "Platform removed successfully"
   end
 
   private

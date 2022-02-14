@@ -79,7 +79,7 @@ RSpec.feature "Providers in backoffice" do
       click_on "Other", match: :first
 
       click_on "Update Provider"
-      expect(page).to have_content("Provider updated correctly")
+      expect(page).to have_content("Provider updated successfully")
       expect(page).to have_content("Delete")
       expect(ProviderSource.count).to eq(count - 1)
     end
@@ -128,7 +128,7 @@ RSpec.feature "Providers in backoffice" do
       fill_in "provider_data_administrators_attributes_0_email", with: "john@doe.com"
 
       click_on "Create Provider"
-      expect(page).to have_content("New provider created correctly")
+      expect(page).to have_content("New provider created successfully")
       expect(page).to have_content("Delete")
       expect(ProviderSource.count).to eq(count + 1)
       # expect { click_on "Create Provider" }.to change { Provider.count }.by(1).

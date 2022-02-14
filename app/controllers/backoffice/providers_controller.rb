@@ -51,7 +51,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     @provider.assign_attributes(permitted_attributes)
 
     if valid_model_and_urls? && @provider.save(validate: false)
-      redirect_to backoffice_provider_path(@provider), notice: "Provider updated correctly"
+      redirect_to backoffice_provider_path(@provider), notice: "Provider updated successfully"
     else
       if @provider.public_contacts.present? && @provider.public_contacts.all?(&:marked_for_destruction?)
         @provider.public_contacts[0].reload
@@ -65,7 +65,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
 
   def destroy
     if Provider::Delete.new(@provider.id).call
-      redirect_to backoffice_providers_path, notice: "Provider has been removed"
+      redirect_to backoffice_providers_path, notice: "Provider removed successfully"
     else
       redirect_to backoffice_providers_path,
                   alert: "This Provider has resources connected to it, therefore is not possible to remove it."

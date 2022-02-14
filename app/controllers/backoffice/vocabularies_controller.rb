@@ -100,7 +100,7 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
   def update
     if @vocabulary.update(permitted_attributes(@vocabulary))
       redirect_to send("backoffice_#{@vocabulary.model_name.element}_path", @vocabulary),
-                  notice: "#{VOCABULARY_TYPES[@vocabulary.model_name.element.to_sym][:name]} updated correctly"
+                  notice: "#{VOCABULARY_TYPES[@vocabulary.model_name.element.to_sym][:name]} updated successfully"
     else
       render :edit, status: :bad_request
     end
@@ -121,7 +121,8 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
                     alert: "This vocabulary has providers connected to it, remove associations to delete it."
     else
       @vocabulary.destroy!
-      redirect_to send("backoffice_#{@vocabulary.model_name.element.pluralize}_path"), notice: "#{@type} removed"
+      redirect_to send("backoffice_#{@vocabulary.model_name.element.pluralize}_path"),
+                  notice: "#{@type} removed successfully"
     end
   end
 

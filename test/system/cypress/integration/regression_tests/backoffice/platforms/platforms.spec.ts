@@ -64,7 +64,7 @@ describe("Category", () => {
     cy.fillFormCreatePlatform({...platform, name:"Edited category"});
     cy.get("[data-e2e='create-platform-btn']")
       .click();
-    cy.contains("div.alert-success", "Platform updated correctly")
+    cy.contains("div.alert-success", "Platform updated successfully")
       .should("be.visible");
     });
 
@@ -74,7 +74,7 @@ describe("Category", () => {
       .eq(0)
       .find("a.delete-icon")
       .click();
-    cy.contains("div.alert-success", "Platform destroyed")
+    cy.contains("div.alert-success", "Platform removed successfully")
       .should("be.visible");
     });
 });
