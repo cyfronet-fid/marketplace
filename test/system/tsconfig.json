@@ -8,7 +8,8 @@
       "cypress",
       "node",
       "cypress-wait-until", 
-      "cypress-file-upload"
+      "cypress-file-upload",
+      "cypress-grep"
     ],
     "baseUrl": "./",
     "moduleResolution": "node",

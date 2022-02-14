@@ -4,10 +4,10 @@
   "description": "Integration tests",
   "main": "",
   "scripts": {
-    "cy:run": "TZ=Europe/Warsaw cypress run --browser chrome --headless --quiet",
+    "cy:run": "TZ=Europe/Warsaw cypress run --browser chrome --headless --quiet --env grepTags='-@extended-test'",
     "cy:run-debug": "DEBUG=cypress:* TZ=Europe/Warsaw cypress run --browser chrome --headless --quiet",
     "cy:run-browser": "TZ=Europe/Warsaw cypress run --browser chrome --quiet",
-    "cy:run-regression-tests": "TZ=Europe/Warsaw cypress run --browser chrome --headless --quiet --spec 'cypress/integration/regression_tests/*/*.spec.ts'"
+    "cy:run-all-regression-tests": "TZ=Europe/Warsaw cypress run --browser chrome --headless --quiet"
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +21,7 @@
     "@types/node": "^14.17.32",
     "cypress-fail-fast": "^3.3.0",
     "cypress-file-upload": "^5.0.8",
+    "cypress-grep": "^2.13.1",
     "cypress-promise": "^1.1.0",
     "cypress-terminal-report": "^3.3.4",
     "cypress-wait-until": "^1.7.1"

@@ -7,7 +7,7 @@ import {IJiraResource} from "../support/jira";
 Cypress.Cookies.defaults({
     preserve: ['user', 'project', 'resources', 'message']
 });
-describe.skip('Offers', () => {
+describe.skip('Integration with JIRA', { tags: '@extended-test' }, () => {
     // Hack: Before hook is running twice on baseUrl origin change
     // In that case "it" is used to run only once
     it('Setup cookies data', () => {
@@ -277,7 +277,7 @@ describe.skip('Offers', () => {
     });
 });
 
-describe.skip('Offers messages', () => {
+describe.skip('Offers messages', { tags: '@extended-test' }, () => {
     it('Should setup cookies', () => {
         const user = UserFactory.create();
         cy.clearCookie('user');
