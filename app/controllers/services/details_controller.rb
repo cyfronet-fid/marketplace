@@ -21,5 +21,7 @@ class Services::DetailsController < ApplicationController
     @related_services = @service.related_services
     @related_services_title = "Related resources"
     @question = Service::Question.new(service: @service)
+    @favourite_services =
+      current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
   end
 end

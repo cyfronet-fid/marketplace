@@ -6,6 +6,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.33.0-milestone]
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Fix resource subpages add to favourite button (@danielkryska)
+- Fix researching resources from nth page of resources (@danielkryska)
+
+### Security
+
 ## [3.32.0-milestone]
 
 ### Added
@@ -20,8 +36,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-
-- Fix researching resources from nth page of resources (@danielkryska)
 - Fix projects notifications (@danielkryska)
 - Date parsing on /events endpoint in OMS API (@kmarszalek)
 
