@@ -37,7 +37,7 @@
                         "data-action": "click->comparison#update"
                       %span.smaller
                         = _("Add to comparison")
-                .comparison
+                .comparison{ "data-controller": "favourite" }
                   %span.compare
                     %label
                       = check_box_tag "favourite", @object.slug, favourite?(Array(@favourite_services), @object.slug),
@@ -47,6 +47,9 @@
                             "data-action": "click->favourite#updateFromRes"
                       %span.smaller
                         = _("Add to favourites")
+                  #popup-modal.modal.show{ "data-target": "favourite.popup", tabindex: "-1",
+                                    role: "dialog", aria: { hidden: "true" } }
+
   .col-12.col-lg-3.text-center.vertical-center
     .vertical-center-inner.access-type
       = buttons

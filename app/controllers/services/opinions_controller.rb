@@ -26,5 +26,7 @@ class Services::OpinionsController < ApplicationController
         .where(offers: { service_id: @service })
         .includes(project_item: :project)
     @question = Service::Question.new(service: @service)
+    @favourite_services =
+      current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
   end
 end
