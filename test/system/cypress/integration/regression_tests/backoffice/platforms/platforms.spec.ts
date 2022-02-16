@@ -1,15 +1,17 @@
 import { PlatformFactory } from "cypress/factories/platform.factory";
 import { UserFactory } from "../../../../factories/user.factory";
+import { PlatformMessages } from "../../../../fixtures/messages";
 
 describe("Category", () => {
   const user = UserFactory.create({roles: ["service_portfolio_manager"]});
-  const [platform] = [...Array(1)].map(()=> PlatformFactory.create())
+  const [platform] = [...Array(1)].map(()=> PlatformFactory.create());
+  const message = PlatformMessages;
 
   beforeEach(() => {
     cy.visit("/");
     cy.loginAs(user);
   });
-  
+
   it("should create new platform", () => {
     cy.get("[data-e2e='my-eosc-button']")
       .click();
@@ -28,7 +30,7 @@ describe("Category", () => {
     cy.fillFormCreatePlatform(platform)
     cy.get("[data-e2e='create-platform-btn']")
       .click();
-    cy.contains("div.alert-success", "New platform created successfully")
+    cy.contains("div.alert-success", message.successCreationMessage)
       .should("be.visible")
     cy.get("h1")
       .invoke("text")
@@ -50,7 +52,7 @@ describe("Category", () => {
     cy.visit("/backoffice/platforms/new");
     cy.get("[data-e2e='create-platform-btn']")
       .click();
-    cy.contains("div.invalid-feedback", "Name can't be blank")
+    cy.contains("div.invalid-feedback", message.alertNameValidation)
       .should("be.visible");
     });
 
@@ -64,7 +66,7 @@ describe("Category", () => {
     cy.fillFormCreatePlatform({...platform, name:"Edited category"});
     cy.get("[data-e2e='create-platform-btn']")
       .click();
-    cy.contains("div.alert-success", "Platform updated successfully")
+    cy.contains("div.alert-success", message.successUpdationMessage)
       .should("be.visible");
     });
 
@@ -74,7 +76,7 @@ describe("Category", () => {
       .eq(0)
       .find("a.delete-icon")
       .click();
-    cy.contains("div.alert-success", "Platform removed successfully")
+    cy.contains("div.alert-success", message.successDeletionMessage)
       .should("be.visible");
     });
 });

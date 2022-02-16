@@ -1,15 +1,16 @@
 import { ProvidersFactory, ProvidersFactoryExtended } from "../../../../factories/provider.factory";
 import { UserFactory } from "../../../../factories/user.factory";
+import { ProviderMessages } from "../../../../fixtures/messages";
 
 describe("Providers", () => {
   const user = UserFactory.create({ roles: ["service_portfolio_manager"] });
   const [provider, provider2, provider3] = [...Array(3)].map(() =>
     ProvidersFactory.create()
   );
-
   const [providerExtented] = [...Array(1)].map(() =>  
-  ProvidersFactoryExtended.create()
+    ProvidersFactoryExtended.create()
   );
+  const message = ProviderMessages;
 
   const correctLogo = "logo.jpg";
   const wrongLogo = "logo.svg";
@@ -22,21 +23,12 @@ describe("Providers", () => {
   const providerWithResourceUnverified = "Institute of Atmospheric Pollution - National Research Council of Italy (CNR-IIA)"
   const resourceProviderForPublishedResource = "Interuniversity consortium CIRMMP";
 
-  const successCreationMessage = "New provider created successfully";
-  const successDeletionMessage = "Provider removed successfully";
-  const successUpdationMessage = "Provider updated successfully";
-  const alertDeletionMessage = "This Provider has resources connected to it, therefore is not possible to remove it.";
-  const alertLogoValidation = "Logo is not a valid file format and Logo format you're trying to attach is not supported. " +
-  "Supported formats: png, gif, jpg, jpeg, pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon";
-  const alertUrlValidation = "Website isn't valid or website doesn't exist, please check URL";
-  const alertEmailValidation = "Email is not a valid email address";
-
   beforeEach(() => {
     cy.visit("/");
     cy.loginAs(user);
   });
 
-  it("should go to Providers in Backoffice and select one of providers", () => {
+  it("should go to Providers in Backoffice and select one of providers", { tags: '@extended-test' }, () => {
     cy.get("[data-e2e='my-eosc-button']")
       .click();
     cy.get("[data-e2e='backoffice']")
@@ -49,7 +41,7 @@ describe("Providers", () => {
       .should("contain", "/backoffice/providers");
     cy.get("[data-e2e='backoffice-providers-list'] a")
       .eq(0)
-        .click();
+      .click();
     cy.contains("a", "Edit")
       .should("be.visible");
     cy.contains("a", "Delete")
@@ -66,7 +58,7 @@ describe("Providers", () => {
     cy.get("[data-e2e='create-provider-btn']")
       .click();
     cy.contains(
-      "div.alert-success", successCreationMessage)
+      "div.alert-success", message.successCreationMessage)
       .should("be.visible");
     cy.get("h1")
       .invoke("text")
@@ -78,7 +70,7 @@ describe("Providers", () => {
           .click();
         cy.contains("h2", value)
           .should("be.visible");
-        cy.get("[data-e2e='btn-browse-resource']")
+        cy.get("[data-e2e='btn-browse-service']")
           .click();
         cy.location("href")
           .should("include", "/services?providers=");
@@ -128,11 +120,11 @@ describe("Providers", () => {
     cy.get("[data-e2e='create-provider-btn']")
       .click();
     cy.contains(
-      "div.invalid-feedback", alertLogoValidation)
+      "div.invalid-feedback", message.alertLogoValidation)
       .should("be.visible");
-    cy.contains("div.invalid-feedback", alertUrlValidation )
+    cy.contains("div.invalid-feedback", message.alertUrlValidation )
       .should("be.visible");
-    cy.contains("div.invalid-feedback", alertEmailValidation)
+    cy.contains("div.invalid-feedback", message.alertEmailValidation)
       .should("be.visible");
   });
 
@@ -148,7 +140,7 @@ describe("Providers", () => {
       .then((value) => {
         cy.contains("a", "Delete")
           .click();
-        cy.contains("div.alert-success", successDeletionMessage)
+        cy.contains("div.alert-success", message.successDeletionMessage)
           .should("be.visible");
         cy.visit("/");
         cy.get("a[data-e2e='more-link-providers']")
@@ -194,7 +186,7 @@ describe("Providers", () => {
       .parents('li.providers')
       .find("a.delete-icon")
       .click();
-    cy.contains("div.alert-success", successDeletionMessage)
+    cy.contains("div.alert-success", message.successDeletionMessage)
       .should("be.visible");
   });
 
@@ -204,7 +196,7 @@ describe("Providers", () => {
       .parents('li.providers')
       .find("a.delete-icon")
       .click();
-    cy.contains("div.alert-danger", alertDeletionMessage)
+    cy.contains("div.alert-danger", message.alertDeletionMessage)
       .should("be.visible");
   });
 
@@ -214,7 +206,7 @@ describe("Providers", () => {
       .parents('li.providers')
       .find("a.delete-icon")
       .click();
-    cy.contains("div.alert-danger", alertDeletionMessage)
+    cy.contains("div.alert-danger", message.alertDeletionMessage)
       .should("be.visible");
   });
 
@@ -224,7 +216,7 @@ describe("Providers", () => {
       .parents('li.providers')
       .find("a.delete-icon")
       .click();
-    cy.contains("div.alert-danger", alertDeletionMessage)
+    cy.contains("div.alert-danger", message.alertDeletionMessage)
       .should("be.visible");
   });
 
@@ -234,7 +226,7 @@ describe("Providers", () => {
       .parents('li.providers')
       .find("a.delete-icon")
       .click();
-    cy.contains("div.alert-danger", alertDeletionMessage)
+    cy.contains("div.alert-danger", message.alertDeletionMessage)
       .should("be.visible");
   });
 
@@ -244,7 +236,7 @@ describe("Providers", () => {
       .parents('li.providers')
       .find("a.delete-icon")
       .click();
-    cy.contains("div.alert-success", successDeletionMessage)
+    cy.contains("div.alert-success", message.successDeletionMessage)
       .should("be.visible");
   });
 
@@ -258,7 +250,7 @@ describe("Providers", () => {
     cy.fillFormCreateProvider({basicName: "Edited provider"}, correctLogo);
     cy.get("[data-e2e='create-provider-btn']")
       .click();
-    cy.contains(".alert-success",successUpdationMessage)
+    cy.contains(".alert-success",message.successUpdationMessage)
       .should("be.visible");
     cy.contains("h1", "Edited provider")
       .should("be.visible");
@@ -315,7 +307,7 @@ describe("Providers", () => {
     cy.get("[data-e2e='create-provider-btn']")
       .click();
     cy.contains(
-      "div.alert-success", successCreationMessage)
+      "div.alert-success", message.successCreationMessage)
       .should("be.visible");
     cy.get("h1")
       .invoke("text")
@@ -329,13 +321,11 @@ describe("Providers", () => {
           .should("be.visible");
         cy.get("[data-e2e='provider-details-btn']")
           .click();
-        cy.location("href")
-          .should("contain", "/details")
-        cy.contains("h5", "Networks")
-          .should("be.visible");
+        cy.hasProviderDetails();
         cy.intercept("/providers/*").as("providerPage")
         cy.get("[data-e2e='provider-about-btn']")
           .click();
+        cy.hasProviderAbout();
         cy.wait("@providerPage")
         cy.get("a[data-e2e='tag-btn']")
           .should("be.visible")

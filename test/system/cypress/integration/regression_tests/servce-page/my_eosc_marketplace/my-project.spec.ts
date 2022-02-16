@@ -42,7 +42,7 @@ describe("My project", () => {
 
    cy.location("href")
      .should("contain", "/services/");
-   cy.get('[data-e2e="access-resource-btn"]')
+   cy.get('[data-e2e="access-service-btn"]')
      .click();
    cy.contains("a", "Pin to a project")
      .click();
@@ -57,8 +57,8 @@ describe("My project", () => {
      .should("match", /(\/projects\/.*\/services)/)
    cy.contains("a", "Details")
      .click();
-   cy.refreshUntilVisible('[data-e2e="review-resource-btn"]')
-   cy.get('[data-e2e="review-resource-btn"]')
+   cy.refreshUntilVisible('[data-e2e="review-service-btn"]')
+   cy.get('[data-e2e="review-service-btn"]')
      .should("be.visible")
      .click();
    cy.location("href")

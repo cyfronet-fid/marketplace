@@ -13,7 +13,7 @@ describe("Main Search", () => {
       .next()
       .click();
     cy.url().should("contain", "EGI");
-    cy.get("[data-e2e='access-resource-btn']")
+    cy.get("[data-e2e='access-service-btn']")
       .should("be.visible");
   });
 
@@ -28,7 +28,7 @@ describe("Main Search", () => {
       .click();
     cy.url().should("contain", "EGI")
       .and("contain", "#offer");
-    cy.get("[data-e2e='access-resource-btn']")
+    cy.get("[data-e2e='access-service-btn']")
       .should("be.visible");
   });
 
@@ -44,7 +44,7 @@ describe("Main Search", () => {
     cy.url()
       .should("contain", "EGI")
       .and("contain", "provider");
-    cy.get("[data-e2e='btn-browse-resource']")
+    cy.get("[data-e2e='btn-browse-service']")
       .should("be.visible");
   });
 

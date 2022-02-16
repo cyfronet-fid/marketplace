@@ -1,16 +1,19 @@
 import { CategoryFactory } from "cypress/factories/category.factory";
 import { UserFactory } from "../../../../factories/user.factory";
+import { CategoryMessages } from "../../../../fixtures/messages";
 
 describe("Category", () => {
   const user = UserFactory.create({roles: ["service_portfolio_manager"]});
   const [category, category1, category2, category3,category4] = [...Array(5)].map(()=> CategoryFactory.create())
+  const message = CategoryMessages;
 
   const correctLogo = "logo.jpg"
   const wrongLogo = "logo.svg"
-
+  
   beforeEach(() => {
     cy.visit("/");
     cy.loginAs(user);
+    
   });
   
   it("should create new category without parent", () => {
@@ -29,6 +32,7 @@ describe("Category", () => {
     cy.fillFormCreateCategory(category, correctLogo);
     cy.get("[data-e2e='create-category-btn']")
       .click();
+    cy.contains("div.alert-success", message.successCreationMessage)
     cy.get("h1")
       .invoke("text")
       .then(value=>{
@@ -93,22 +97,29 @@ describe("Category", () => {
     cy.fillFormCreateCategory({...category3, name:""}, wrongLogo);
     cy.get("[data-e2e='create-category-btn']")
       .click();
-    cy.contains("div.invalid-feedback", 
-      "Logo is not a valid file format and Logo format you're trying to attach is not supported")
+    cy.contains("div.invalid-feedback", message.alertLogoValidation)
       .should("be.visible");
-    cy.contains("div.invalid-feedback", "Name can't be blank")
+    cy.contains("div.invalid-feedback", message.alertNameValidation)
       .should("be.visible");
   });
 
-  it("shouldn't delete category with resources connected to it", () => {
+  it("shouldn't delete category with successors connected to it", () => {
     cy.visit("/backoffice/categories");
     cy.get("[data-e2e='backoffice-categories-list'] li")
       .eq(0)
       .find("a.delete-icon")
       .click();
-    cy.get(".alert-danger")
-      .contains("This category has successors connected to it, therefore is not possible to remove it. "+
-      "If you want to remove it, edit them so they are not associated with this category anymore")
+    cy.contains(".alert-danger", message.alertDeletionMessageSuccessors)
+      .should("be.visible");
+  });
+
+  it("shouldn't delete category with resource connected to it", () => {
+    cy.visit("/backoffice/categories");
+    cy.get("[data-e2e='backoffice-categories-list'] li")
+      .eq(2)
+      .find("a.delete-icon")
+      .click();
+    cy.contains(".alert-danger", message.alertDeletionMessageResource)
       .should("be.visible");
   });
 
@@ -125,7 +136,7 @@ describe("Category", () => {
           .parent()
           .find("a.delete-icon")
           .click();
-        cy.contains(".alert-success", "Category removed successfully")
+        cy.contains(".alert-success", message.successDeletionMessage)
           .should("be.visible");
     });
   })
@@ -137,9 +148,11 @@ describe("Category", () => {
       .find("a")
       .contains("Edit")
       .click();
-    cy.fillFormCreateCategory({...category, name:"Edited category"}, false);
+    cy.fillFormCreateCategory({description:"Edited category"}, false);
     cy.get("[data-e2e='create-category-btn']")
       .click();
-    cy.contains(".alert-success", "Category updated successfully")
+    cy.contains(".alert-success", message.successUpdationMessage )
+    cy.contains("p", "Edited category")
+      .should("be.visible");
   });
 });

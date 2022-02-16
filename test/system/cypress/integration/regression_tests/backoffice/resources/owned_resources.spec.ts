@@ -1,31 +1,38 @@
-import { ResourcesFactory } from "../../../../factories/resource.factory";
+import { ResourcesFactory, ResourcesFactoryExtended } from "../../../../factories/resource.factory";
 import { OfferFactory } from "../../../../factories/resource.factory";
 import { UserFactory } from "../../../../factories/user.factory";
 import { ParametersFactory } from "../../../../factories/resource.factory";
+import { ResourceMessages } from "../../../../fixtures/messages";
 
 describe("Owned resources", () => {
   const user = UserFactory.create({roles: ["service_portfolio_manager"]});
-  const [resource, resource2, resource3, resource4, resource5] = [...Array(5)].map(() =>
+  const [resource, resource2, resource3, resource4, resource5, resource6] = [...Array(6)].map(() =>
     ResourcesFactory.create()
   );
+  const [resourceExtented] = [...Array(1)].map(() =>  
+  ResourcesFactoryExtended.create()
+  );
+  const message = ResourceMessages;
+
   const offer = OfferFactory.create();
   const parameter = ParametersFactory.create();
-  const correctLogo = "logo.jpg"
-  const wrongLogo = "logo.svg"
- 
+  
+  const correctLogo = "logo.jpg";
+  const wrongLogo = "logo.svg";
+
   beforeEach(() => {
     cy.visit("/");
     cy.loginAs(user);
   });
   
-  it("should go to Owned resources in Backoffice and select one of resources", () => {
+  it("should go to Owned resources in Backoffice and select one of resources", { tags: '@extended-test' }, () => {
     cy.get("[data-e2e='my-eosc-button']")
       .click();
     cy.get("[data-e2e='backoffice']")
       .click();
     cy.location("href")
       .should("contain", "/backoffice");
-    cy.get("[data-e2e='owned-resources']")
+    cy.get("[data-e2e='owned-services']")
       .click();
     cy.location("href")
       .should("contain", "/backoffice/services")
@@ -37,16 +44,10 @@ describe("Owned resources", () => {
   });
 
   it("should add new resource and published it", () => {
-    cy.visit("/backoffice")
-    cy.get("[data-e2e='owned-resources']")
-      .click();
-    cy.get("[data-e2e='create-resource']")
-      .click();
-    cy.location("href")
-      .should("contain", "/services/new")
+    cy.visit("/backoffice/services/new")
     cy.fillFormCreateResource(resource, correctLogo);
     cy.get("[data-e2e='submit-btn']").click()
-    cy.contains("div.alert-success", "New resource created successfully")
+    cy.contains("div.alert-success", message.successCreationMessage)
       .should("be.visible");
     cy.contains("a","Edit resource")
       .should("be.visible") 
@@ -70,23 +71,23 @@ describe("Owned resources", () => {
           .should("include.text", value);
         cy.contains("[data-e2e='service-name']", value)
           .click()
-        cy.get("[data-e2e='access-resource-btn']")
+        cy.get("[data-e2e='access-service-btn']")
           .should("be.visible");
     });
   });
 
   it("shouldn't add new resource", ()=> {
     cy.visit("/backoffice/services/new")
-    cy.fillFormCreateResource({...resource, basicWebpage_url:"wrongFormat", contactsEmail:"wrongFormat"}, wrongLogo);
+    cy.fillFormCreateResource({...resource, basicWebpage_url:"wrongFormat", contactEmail:"wrongFormat"}, wrongLogo);
     cy.get("[data-e2e='submit-btn']")
       .click();
     cy.get("div.invalid-feedback")
       .should("be.visible")
-    cy.contains("div.invalid-feedback", "Logo is not a valid file format and Logo format you're trying to attach is not supported")
+    cy.contains("div.invalid-feedback", message.alertLogoValidation)
       .should("be.visible")
-    cy.contains("div.invalid-feedback", "Email is not a valid email address")
+    cy.contains("div.invalid-feedback", message.alertEmailValidation)
       .should("be.visible")
-    cy.contains("div.invalid-feedback", "Webpage url is not a valid URL")
+    cy.contains("div.invalid-feedback", message.alertUrlValidation)
       .should("be.visible"); 
   });
 
@@ -143,7 +144,7 @@ describe("Owned resources", () => {
           .should("include.text", value);
         cy.contains("[data-e2e='service-name']", value)
           .click()
-        cy.get("[data-e2e='access-resource-btn']")
+        cy.get("[data-e2e='access-service-btn']")
           .should("be.visible");
         cy.get("[data-e2e='select-offer-btn']")
           .eq(1)
@@ -170,9 +171,25 @@ describe("Owned resources", () => {
     });
   });
 
+  it("should go to Resources in Backoffice and edit one of resources", () => {
+    cy.visit("/backoffice/services/new");
+    cy.fillFormCreateResource(resource, correctLogo);
+    cy.get("[data-e2e='submit-btn']")
+      .click();
+    cy.contains("a","Edit")
+      .click();
+    cy.fillFormCreateResource({basicName: "Edited resource"}, correctLogo);
+    cy.get("[data-e2e='submit-btn']")
+      .click();
+    cy.contains(".alert-success",message.successUpdationMessage)
+      .should("be.visible");
+    cy.contains("h2", "Edited resource")
+      .should("be.visible");
+  });
+  
   it("should go to Preview mode, back to edit and create resource", ()=> {
     cy.visit("/backoffice/services/new")
-    cy.fillFormCreateResource(resource3, correctLogo);
+    cy.fillFormCreateResource(resource4, correctLogo);
     cy.get("[data-e2e='preview-btn']")
       .click();
     cy.contains("div", "Service preview")
@@ -181,7 +198,7 @@ describe("Owned resources", () => {
       .click();
     cy.get("[data-e2e='submit-btn']")
       .click()
-    cy.contains("div.alert-success", "New resource created successfully")
+    cy.contains("div.alert-success", message.successCreationMessage)
       .should("be.visible");
     cy.contains("a","Edit resource")
       .should("be.visible") 
@@ -191,14 +208,14 @@ describe("Owned resources", () => {
 
   it("should go to Preview mode and confirm changes", ()=> {
     cy.visit("/backoffice/services/new")
-    cy.fillFormCreateResource(resource4, correctLogo);
+    cy.fillFormCreateResource(resource5, correctLogo);
     cy.get("[data-e2e='preview-btn']")
       .click();
     cy.contains("div", "Service preview")
       .should("be.visible")
     cy.get("[data-e2e='confirm-changes-btn']")
       .click();
-    cy.contains("div.alert-success", "New resource created successfully")
+    cy.contains("div.alert-success", message.successCreationMessage)
       .should("be.visible");
     cy.contains("a","Edit resource")
       .should("be.visible");
@@ -208,25 +225,69 @@ describe("Owned resources", () => {
 
   it("shouldn't go to Preview mode with wrong data format", ()=> {;
     cy.visit("/backoffice/services/new");
-    cy.fillFormCreateResource({...resource, basicWebpage_url:"wrongFormat", contactsEmail:"wrongFormat"}, correctLogo);
+    cy.fillFormCreateResource({...resource, basicWebpage_url:"wrongFormat", contactEmail:"wrongFormat"}, correctLogo);
     cy.get("[data-e2e='preview-btn']")
       .click();
-    cy.contains("div.invalid-feedback", "Email is not a valid email address")
+    cy.contains("div.invalid-feedback", message.alertEmailValidation)
         .should("be.visible");
-    cy.contains("div.invalid-feedback", "Webpage url is not a valid URL")
+    cy.contains("div.invalid-feedback", message.alertUrlValidation)
       .should("be.visible");
   });
 
   it("shouldn't go to Preview mode with wrong logo", ()=> {
     cy.visit("/backoffice/services/new");
-    cy.fillFormCreateResource(resource5, wrongLogo);
+    cy.fillFormCreateResource(resource6, wrongLogo);
     cy.get("[data-e2e='preview-btn']")
       .click();
-    cy.contains(
-      "div.invalid-feedback",
-      "Logo format you're trying to attach is not supported. " +
-      "Supported formats: png, gif, jpg, jpeg, pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon")
+    cy.contains("div.invalid-feedback", message.alertLogoValidationPreview)
       .should("be.visible");
   });
-});
 
+  it("should go to Backoffice and create resource by filling in all fields", { tags: '@extended-test' }, () => {
+    cy.visit("/backoffice/services/new")
+    cy.fillFormCreateResource(resourceExtented, correctLogo);
+    cy.get("[data-e2e='submit-btn']").click()
+    cy.contains("div.alert-success", message.successCreationMessage)
+      .should("be.visible");
+    cy.contains("a","Edit resource")
+      .should("be.visible") 
+    cy.contains("a","Set parameters and offers")
+      .should("be.visible")  
+    cy.contains("span", "draft")
+      .should("be.visible") 
+    cy.get("[data-e2e='publish-btn']")
+      .click();
+    cy.contains("span", "published")
+      .should("be.visible")
+    cy.get(".service-details-header h2")
+      .invoke("text")
+      .then(value=>{
+        cy.visit("/")
+        cy.get("[data-e2e='searchbar-input']")
+          .type(value);
+        cy.get("[data-e2e='query-submit-btn']")
+          .click();
+        cy.get("[data-e2e='service-name']")
+          .should("include.text", value);
+        cy.contains("[data-e2e='service-name']", value)
+          .click()
+        cy.get("[data-e2e='access-service-btn']")
+          .should("be.visible");
+        cy.get("[data-e2e='service-details-btn']")
+          .click();
+        cy.hasResourceDetails();
+        cy.intercept("/services/*").as("servicesPage")
+        cy.get("[data-e2e='service-about-btn']")
+          .click();
+        cy.hasResourceAbout();
+        cy.wait("@servicesPage")
+        cy.get("a[data-e2e='tag-btn']")
+          .should("be.visible")
+          .click();
+        cy.location("href")
+          .should("contain", "/services?tag=");
+        cy.get("[data-e2e='filter-tag']")
+          .should("be.visible")
+    });
+  });
+});
