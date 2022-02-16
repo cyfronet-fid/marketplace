@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [3.33.0-milestone]
 
 ### Added
+- Missing notification about new message in bundled offers (@goreck888)
 
 ### Changed
 
