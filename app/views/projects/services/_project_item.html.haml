@@ -29,6 +29,10 @@
     %li.projects-list
       = link_to child.service.name, project_service_path(project, child)
       .float-right.status
+        - if child.user_has_new_messages?
+          %span.new-message
+            = image_pack_tag "ico_message.svg", class: "new-message-icon"
+            = _("You have a new message")
         - if child.offer.bundle?
           %span.bundle-status
             = _("BUNDLE")
